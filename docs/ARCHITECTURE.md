@@ -6,24 +6,34 @@ someone with no prior context on this project. It is updated in place as
 milestones land, rather than kept as a per-milestone snapshot — see
 "Milestone history" below for how to recover an earlier milestone exactly.
 
-## What exists right now (Milestone 6)
+## What exists right now (Milestone 7-A)
 
-Open a window. A large static sphere exists in 3D space with **radial**
-gravity pulling toward its center. A Judas-owned player (not a Jolt
-character controller of any kind — see "Player/controller ownership") falls
-onto the sphere, stands on its curved surface, and can walk all the way
-around it — including onto what would have been "the side" or "the
-underside" from the spawn point's perspective — because the player's own
-sense of "up" continuously reorients to match whichever way gravity is
-currently pulling. `Space` jumps away from the local surface; gravity
-brings the player back and Jolt's own collision queries detect the landing.
-`R` resets the player. As of this milestone, ordinary locomotion is
-visually smooth: the fixed-step simulation is unchanged, but what gets
-*rendered* each frame is a presentation-only interpolation between two
-authoritative simulation states rather than the latest one presented
-directly — see "Diagnosis" and "Simulation/presentation boundary" below.
-Nothing else. See the root `README.md` for build/run instructions and
-controls.
+Open a window. A large static sphere (radius `20m`, up from Milestone 5/6's
+`8m` — see "Physics test world") exists in 3D space with **radial** gravity
+pulling toward its center. A Judas-owned player (not a Jolt character
+controller of any kind — see "Player/controller ownership") falls onto the
+sphere, stands on its curved surface, and can walk all the way around it —
+including onto what would have been "the side" or "the underside" from the
+spawn point's perspective — because the player's own sense of "up"
+continuously reorients to match whichever way gravity is currently
+pulling. `Space` jumps away from the local surface; gravity brings the
+player back and Jolt's own collision queries detect the landing. `R`
+resets the player. Ordinary locomotion is visually smooth: the fixed-step
+simulation is unchanged, but what gets *rendered* each frame is a
+presentation-only interpolation between two authoritative simulation
+states rather than the latest one presented directly — see "Diagnosis" and
+"Simulation/presentation boundary" below.
+
+As of this milestone, the sphere also carries four ordinary Jolt dynamic
+bodies (two cubes, two spheres) scattered around it — see "Physics test
+world" and "Dynamic bodies." Each one samples the same `GravityField` the
+player does, purely from its own current position, with no knowledge of
+the sphere, the player, or which `GravityField` implementation is active.
+They fall, land, roll, and collide with the sphere and with each other
+under ordinary Jolt rigid-body dynamics — Judas supplies acceleration only,
+never orientation or resting position. The player can walk into one and
+push it — see "Player-to-object interaction." Nothing else. See the root
+`README.md` for build/run instructions and controls.
 
 ## Milestone history
 
@@ -41,6 +51,11 @@ preserved as parallel runtime code:
 - `milestone-5` — the player rebuilt as fully Judas-owned (no more
   `CharacterVirtual`); `RadicalGravity` added; a spherical demo world;
   the headless test harness added as permanent infrastructure.
+- `milestone-6` — diagnosed and fixed the locomotion judder discovered
+  during Milestone 5's human validation via presentation-only
+  interpolation (`GetPresentedPosition`/`GetPresentedOrientation`), added
+  `REALTIME` mode to the test harness to make the diagnosis possible; no
+  demo scene changes.
 
 Each milestone's demo content has been replaced (not extended) by the next;
 check out a tag to see or run an earlier milestone as it was.
@@ -332,6 +347,53 @@ Concretely:
   uses for ordinary bodies, just computed inside `PlayerController` since
   there's no Jolt body for `PhysicsWorld` to apply it to.
 
+## Multiple gravity consumers
+
+Through Milestone 6, the player was `GravityField`'s only real consumer.
+Milestone 7-A proves the interface was never player-specific: the four
+dynamic test objects (see "Physics test world") sample the exact same
+`GravityField&` the player does, each from its own current position, every
+fixed step:
+
+```
+active GravityField
+         |
+         +------ player        (samples inside PlayerController::FixedUpdate)
+         |
+         +------ dynamic cube A
+         +------ dynamic cube B    (all sampled the same way, from
+         +------ dynamic sphere A   src/DynamicBody.cpp's
+         +------ dynamic sphere B   PrepareDynamicBodiesForStep)
+```
+
+`PrepareDynamicBodiesForStep` (`src/DynamicBody.h/.cpp`) is the entire
+mechanism — a small free function, not a framework:
+
+```cpp
+for (DynamicBody& body : bodies) {
+    body.SnapshotPrevious();                                  // presentation history (see below)
+    const glm::vec3 acceleration = gravity.Sample(body.GetPosition());
+    physics.ApplyLinearAcceleration(body.Handle(), acceleration, fixedDeltaTime);
+}
+```
+
+called once per fixed step, before `PhysicsWorld::Step`, from both
+`Application::Run` and `TestHarness.cpp`'s two modes. A `DynamicBody`
+itself never sees a `GravityField`, a `RadicalGravity`, a sphere center, or
+a radius — it hands `PrepareDynamicBodiesForStep` its current position and
+receives an acceleration back, exactly the shape of knowledge
+`PlayerController` has always had. With `RadicalGravity` active, this was
+verified directly with the test harness: four objects spawned at
+deliberately different locations around the sphere fall along four
+different straight lines, each toward the sphere's center from its own
+starting point (confirmed by each object's logged velocity direction
+matching `normalize(center - position)` for its own position, not a shared
+direction) — see "Automated testing."
+
+`ApplyLinearAcceleration` already existed (added in Milestone 3, unused by
+the active demo since Milestone 5) and needed no changes — it was already
+exactly the right shape for this.
+
 ## Support
 
 **Gravity direction and supporting-surface normal are different concepts,
@@ -467,6 +529,148 @@ radius `0.3m`, capsule cylinder half-height `0.6m` (total capsule height
 jump speed `5 m/s`. All explicit, chosen for a readable demonstration, not
 tuned for feel.
 
+## Player-to-object interaction
+
+Added in Milestone 7-A. The player is still not a Jolt body (see
+"Player/controller ownership") — `SweepPlayerShape` is a read-only query,
+never something Jolt's own contact solver resolves — so contact with a
+dynamic test object would otherwise never move it: the object would simply
+act as one more static-feeling obstacle the player slides along. This is
+the genuine limitation the brief anticipated ("if player-to-dynamic-body
+interaction exposes a genuine limitation in the existing player
+collision/query boundary, make the smallest correction necessary and
+document it").
+
+**The correction** lives entirely inside `PlayerController::FixedUpdate`'s
+existing move-and-slide loop, at the point it already has a `ShapeSweepHit`
+from this step's movement sweep:
+
+```cpp
+if (physics.IsDynamicBody(hit.hitBody)) {
+    const glm::vec3 pushDirection = -hit.normal;
+    const float playerSpeedIntoObject = glm::dot(m_velocity, pushDirection);
+    if (playerSpeedIntoObject > objectSpeedIntoObject)  // never slows the object down
+        physics.SetLinearVelocity(hit.hitBody, objectVelocity + pushDirection *
+                                       (playerSpeedIntoObject - objectSpeedIntoObject));
+}
+```
+
+Only the component of the player's velocity *along the contact normal* is
+transferred, and only when it exceeds the object's own velocity along that
+same axis — so the player can shove an object but never slow one down or
+overwrite its motion along other axes (falling, rolling from an earlier
+hit). This is deliberately not a general impulse/momentum system: it seeds
+one velocity value and hands control straight back to Jolt, which owns
+everything that happens to the object from that point on (further
+integration, friction, contact with the sphere or another object). Static
+world geometry (`physics.IsDynamicBody` is false for it) is unaffected —
+`hit.hitBody` and `PhysicsWorld::IsDynamicBody`/`GetLinearVelocity`/
+`SetLinearVelocity` were the only additions `PhysicsWorld` needed (see
+`PhysicsWorld.h`).
+
+**A consequence worth recording plainly**: because only the along-normal
+component transfers, the player can only push an object in roughly the
+direction the contact normal already allows — nudging an object sideways
+by approaching from an angle and turning mid-push does not work well,
+since a face's normal doesn't rotate just because the player's own
+movement direction changes. This was discovered directly while devising a
+harness scenario for object-to-object collision (see "Automated testing")
+and is recorded here rather than "fixed," since a fuller push/carry system
+is explicitly out of scope for this milestone (no grabbing, no carrying —
+see "Deliberately Not Implemented").
+
+Verified with the harness: holding forward from spawn, the player reaches
+CubeA within ~40 fixed steps and its velocity jumps from a small falling
+speed to several m/s in the push direction; player and cube then travel
+together (roughly constant ~1m separation) for hundreds of further steps
+as the player keeps walking, confirming sustained contact rather than a
+single nudge — see "Automated testing."
+
+## Physics test world
+
+The demo sphere's radius grew from Milestone 5/6's `8m` to `20m`
+(`kSphereRadius`, `src/Application.cpp`) — still a small, hand-authored
+test environment, not a planet (see "Deliberately Not Implemented"), but
+large enough to hold the player and four separated dynamic objects without
+crowding the same few square meters, and to give a `4 m/s` walking player
+room to actually traverse distance between them. `20m` was chosen, not
+derived: large enough for the arrangement below to read as spatially
+separate locations with visibly different local gravity directions, small
+enough that a full "lap" (~125m circumference) stays a short, purposeful
+walk rather than a trek.
+
+This radius, like the sphere's existence at all, is **demo/composition-root
+knowledge only** — `Application.cpp`'s anonymous namespace is the only
+place it's named. `PlayerController`, `DynamicBody`, `GravityField`, and
+`PhysicsWorld` remain exactly as ignorant of it as they were in Milestone
+5/6; nothing about this milestone required loosening that boundary.
+
+**Object arrangement** (`kDynamicObjectSpawns`, `Application.cpp`): four
+bodies, placed via a small demo-only helper, `PointAboveSphere(center,
+radius, direction, heightAboveSurface)`, that normalizes `direction` and
+places a point that far beyond the sphere's own radius — a placement
+convenience, not something any engine type provides or needs.
+
+- **Cube A** and **Sphere A** spawn close together (~1.3m apart at rest),
+  near the player's own spawn point — Cube A begins `2m` above the surface
+  and visibly falls onto it (falling onto the surface); Sphere A begins
+  already resting on it (`0.05m` clearance, effectively touching at
+  spawn — resting on the surface). Both are within an easy walk of the
+  player's spawn, for the push test above, and close enough that Cube A's
+  own fall visibly disturbs Sphere A on landing (see "Automated testing"
+  for the logged evidence) — an object-to-object (cube↔sphere) collision
+  that needs no player involvement to demonstrate.
+- **Cube B** and **Sphere B** spawn at deliberately different locations
+  around the sphere (roughly the "equator" and the far "pole" relative to
+  the player's spawn point), each falling or resting independently, so
+  their own local gravity direction is visibly different from the
+  player's and from Cube A/Sphere A's — see "Multiple gravity consumers"
+  for the numerical confirmation.
+
+Exact coordinates are demo-authoring detail, not architecture — see
+`Application.cpp` if the literal numbers matter. Nothing about this
+arrangement is procedural, spawned at runtime, or editable; all four
+bodies are created once in `Application::Run` (via `SpawnDynamicObjects`)
+and destroyed once at shutdown, exactly like the static sphere already
+was.
+
+## Dynamic bodies
+
+**Representation** (`src/DynamicBody.h/.cpp`): a `DynamicBody` is the
+minimum shared state Milestone 7-A's cubes and spheres both need — a
+`BodyHandle`, a `Visual` (shape kind, half-extents or radius, and color,
+for `Renderer` only), and the same previous/current pose pair
+`PlayerController` uses for presentation (see below). It is deliberately
+**not** an entity/component: it has no update-dispatch, no type registry,
+no behavior of its own beyond snapshotting a pose and reading one back —
+see "Deliberately Not Implemented" for why nothing more general was built
+for four test objects.
+
+**How gravity reaches a body**: see "Multiple gravity consumers" —
+`PrepareDynamicBodiesForStep` samples the active `GravityField` at each
+body's own position and calls the existing (Milestone 3)
+`PhysicsWorld::ApplyLinearAcceleration`, exactly as `PlayerController`
+does for itself.
+
+**How Jolt owns the rest**: once gravity is handed over, `DynamicBody` (and
+everything above it) steps back completely. `PhysicsWorld::Step` — ordinary
+Jolt rigid-body integration, friction, restitution, and contact resolution
+— decides the body's resulting position **and orientation**. Nothing in
+this engine ever writes a dynamic body's orientation directly or aligns it
+to local gravity/up; a cube settles however contact with the sphere leaves
+it, and a sphere is free to roll. This mirrors "Support" above (gravity
+direction and contact response stay separately computed) applied to a body
+Judas doesn't move itself at all.
+
+**Transforms reaching rendering**: after `PhysicsWorld::Step`,
+`SyncDynamicBodiesFromPhysics` (a second small free function alongside
+`PrepareDynamicBodiesForStep`) reads each body's fresh
+`PhysicsWorld::GetTransform` — the same query `PhysicsWorld` has exposed
+since Milestone 3, previously unused by the active demo. `Application`'s
+`drawScene` then draws each body via `Renderer::DrawBox`/`DrawSphere` at
+its *presented* (interpolated) transform — see "Simulation/presentation
+boundary."
+
 ## Simulation timing
 
 Physics is stepped on a **fixed timestep of 1/60 second**
@@ -598,19 +802,42 @@ walk/turn/jump harness run naturally hit the catch-up cap twice
 (`stepsThisFrame == 8`) with `alpha` staying in `[0, 1]` throughout and no
 NaN/Inf anywhere in the log. No scheduler redesign was needed or attempted.
 
-### What doesn't need this (yet)
+### Extended to dynamic bodies (Milestone 7-A)
 
-The demo's only other rendered object is the static sphere, which never
-changes and therefore has no "previous state" to blend from —
-`Renderer::DrawSphere` still just takes the same fixed
-`kSphereCenter`/`kSphereRadius` it always has. `PhysicsWorld`'s general
-dynamic-body API (`CreateDynamicBox`, `GetTransform`, etc.) is unused by
-the active demo, so there is currently no second moving, rendered,
-simulation-driven object to generalize this mechanism to. If a future
-milestone adds one, the same shape (previous/current pose kept per object,
-blended by the same per-frame `alpha`) is the natural extension — but nothing
-resembling a generic "interpolated transform" framework was built
-speculatively ahead of that need; see "Deliberately Not Implemented."
+Milestone 6 predicted exactly this extension without building it ahead of
+need (see the git history of this section). Milestone 7-A's dynamic cubes
+and spheres are the second consumer, and needed exactly the shape already
+anticipated: `DynamicBody` (`src/DynamicBody.h/.cpp`) keeps its own
+`m_previousPosition`/`m_previousOrientation` alongside its current pose,
+and `GetPresentedPosition(alpha)`/`GetPresentedOrientation(alpha)` blend
+them with the identical `glm::mix`/`glm::slerp` pair `PlayerController`
+uses, driven by the identical per-frame `alpha` (`Application::drawScene`
+passes the same value to every body's presented-position call that it
+passes to the player's).
+
+**One real difference from the player, worth recording precisely**: for
+the player, snapshot-and-integrate both happen inside one Judas-owned
+method (`PlayerController::FixedUpdate`), so the snapshot naturally comes
+first in that same function. A dynamic body's actual motion happens inside
+`PhysicsWorld::Step` — Jolt's own integration, not Judas's — so
+`DynamicBody::SnapshotPrevious()` has to be called from the *outside*,
+immediately before `PhysicsWorld::Step`, rather than at the top of some
+Judas-owned per-body update. `PrepareDynamicBodiesForStep` does exactly
+that (snapshot, then sample gravity, then hand it to
+`ApplyLinearAcceleration`) for every body, once, right before
+`PhysicsWorld::Step` — see "Multiple gravity consumers." The authoritative
+rule is otherwise identical and just as absolute: `SyncDynamicBodiesFromPhysics`
+only ever *reads* `PhysicsWorld::GetTransform` after `Step`, never writes
+back, and nothing gravity/collision-related ever reads a presented value —
+verified the same way as the player: the fixed-step-mode CSV output (now
+carrying per-body columns — see "Automated testing") is unaffected by
+whether anything downstream chooses to interpolate for rendering, because
+presentation is purely a read-side view over state that was already
+final.
+
+The static sphere still needs none of this — it never moves, so it still
+has no "previous state" to blend from, and `Renderer::DrawSphere` still
+just takes the fixed `kSphereCenter`/`kSphereRadius` it always has.
 
 ## 3D rendering pipeline
 
@@ -735,6 +962,7 @@ Init PhysicsWorld (registers Jolt types, zeroes Jolt's own gravity)
 Construct a RadicalGravity centered on the demo sphere, bound to a GravityField&
 Create the static sphere body
 Create PlayerController, Spawn() it (creates its capsule Shape via PhysicsWorld — no body)
+dynamicBodies = SpawnDynamicObjects(physicsWorld)   // Milestone 7-A: 4 ordinary Jolt bodies
 
 while (!window.ShouldClose()):
     window.PollEvents()              // close request, Escape toggle, R/Space one-shot flags
@@ -744,11 +972,19 @@ while (!window.ShouldClose()):
 
     if window.ConsumeResetRequest():
         player.Reset()
+        for body in dynamicBodies: body.ResetToSpawn(physicsWorld)   // Milestone 7-A
 
     accumulator += frameDeltaTime
     while accumulator >= fixedTimestep and steps < cap:
-        physicsWorld.Step(fixedTimestep)
-        player.FixedUpdate(window, physicsWorld, gravity, fixedTimestep)  // see "Locomotion"
+        PrepareDynamicBodiesForStep(dynamicBodies, gravity, physicsWorld, fixedTimestep)
+            // Milestone 7-A: snapshot presentation history, sample gravity per body,
+            // ApplyLinearAcceleration — see "Multiple gravity consumers"
+        physicsWorld.Step(fixedTimestep)   // advances every Jolt body: sphere contact,
+                                            // dynamic-body integration, object<->object contact
+        player.FixedUpdate(window, physicsWorld, gravity, fixedTimestep)  // see "Locomotion";
+                                            // may also push a dynamic body it swept into — see
+                                            // "Player-to-object interaction"
+        SyncDynamicBodiesFromPhysics(dynamicBodies, physicsWorld)   // Milestone 7-A
         accumulator -= fixedTimestep
 
     alpha = accumulator / fixedTimestep   // presentation interpolation factor; see
@@ -759,40 +995,55 @@ while (!window.ShouldClose()):
     renderer.DrawSphere(sphereCenter, sphereRadius, sphereColor)
     renderer.DrawBox(player.GetPresentedPosition(alpha), player.GetPresentedOrientation(alpha),
                       player.GetRenderHalfExtents(), playerColor)
+    for body in dynamicBodies:            // Milestone 7-A
+        renderer.DrawBox/DrawSphere(body.GetPresentedPosition(alpha),
+                                     body.GetPresentedOrientation(alpha), ..., body visual)
     renderer.EndFrame()
     window.SwapBuffers()
 
 player.Destroy(physicsWorld)
+for body in dynamicBodies: physicsWorld.DestroyBody(body.Handle())   // Milestone 7-A
 physicsWorld.DestroyBody(sphere); physicsWorld.Shutdown()
 renderer.Shutdown()
 // Window's destructor tears down the GL context, the window, and SDL itself.
 ```
 
-The Milestone 3/4 flat floor and dynamic cube are not part of this
-milestone's active demo (recoverable via the `milestone-4` tag) — a flat
-floor under `FaithfulGravity` and a sphere under `RadicalGravity` active in
-the same scene would need two different simultaneous gravity fields, which
+The Milestone 3/4 flat floor is not part of this milestone's active demo
+(recoverable via the `milestone-4` tag) — a flat floor under
+`FaithfulGravity` and a sphere under `RadicalGravity` active in the same
+scene would need two different simultaneous gravity fields, which
 contradicts "the composition root selects one implementation," so keeping
-them would have meant either an incoherent scene or building
-multi-source/composite gravity that this milestone explicitly excludes.
-`PhysicsWorld::CreateStaticBox`/`CreateDynamicBox` remain in the engine,
-unused by this milestone's demo but not removed — general capability, not
-demo-specific.
+it would have meant either an incoherent scene or building multi-source/
+composite gravity that this milestone explicitly excludes. Milestone 3's
+original dynamic cube, specifically, is effectively superseded by
+Milestone 7-A's own dynamic test objects (see "Physics test world") —
+`PhysicsWorld::CreateDynamicBox`/`CreateDynamicSphere` are now genuinely
+exercised by the active demo rather than sitting unused.
 
 The engine-level split, updated for this milestone:
 
 - `Window` — window/input.
-- `Renderer` — graphics, now including sphere geometry.
-- `PhysicsWorld` — physics: ordinary Jolt bodies (unused by this
-  milestone's active demo but retained) plus the player's collision-query
+- `Renderer` — graphics: sphere and box geometry, drawn once per player/
+  dynamic body per frame.
+- `PhysicsWorld` — physics: ordinary Jolt bodies (the static sphere and
+  Milestone 7-A's dynamic test objects) plus the player's collision-query
   surface (`CreatePlayerShape`/`SweepPlayerShape`/`DestroyPlayerShape` —
-  replacing Milestone 4's `CharacterVirtual`-backed methods).
+  replacing Milestone 4's `CharacterVirtual`-backed methods) plus a few
+  generic per-body queries added this milestone (`IsDynamicBody`,
+  `GetLinearVelocity`/`SetLinearVelocity` — see "Player-to-object
+  interaction").
 - `GravityField` / `FaithfulGravity` / `RadicalGravity` — Judas's gravity
-  interface and its two implementations.
-- `PlayerController` — now owns the player's entire state and behavior
+  interface and its two implementations, now consumed by more than one
+  kind of caller — see "Multiple gravity consumers."
+- `PlayerController` — owns the player's entire state and behavior
   (position, velocity, orientation, locomotion, support, jumping, camera)
   — see "Player/controller ownership."
-- `Application` — wires the above together and owns the loop.
+- `DynamicBody` (Milestone 7-A) — the minimum shared representation for a
+  gravity-affected, presentation-interpolated test object; see "Dynamic
+  bodies."
+- `Application` — wires the above together, owns the loop, and is the only
+  place that knows the sphere's radius/center or the test objects' spawn
+  arrangement.
 
 ## Input handling
 
@@ -977,11 +1228,90 @@ automatic pass/fail checks against expected values) should wait until a
 specific future milestone actually needs that, not be built speculatively
 now.
 
+**Milestone 7-A: per-body columns, no new directives.** Both CSV modes now
+append six columns per dynamic body, in spawn order (`obj0PosX..Z,
+obj0VelX..Z`, `obj1...`, …), reading authoritative position and Jolt
+linear velocity — no presented/interpolated columns for bodies, unlike the
+player's real-time row, since the automated checks below only ever need
+ground truth. `RunTestHarness`, `RunFixedStepMode`, and `RunRealtimeMode`
+all take the same `std::vector<DynamicBody>&` `Application` already built,
+and drive it through the identical `PrepareDynamicBodiesForStep` →
+`PhysicsWorld::Step` → `SyncDynamicBodiesFromPhysics` sequence the real
+game loop uses, including on `TAP R` (resetting every body via
+`DynamicBody::ResetToSpawn`, not just the player). No new script
+directives were needed — `STEPS`/`LOG_EVERY`/`HOLD`/`TAP`/`REALTIME`
+already covered everything this milestone needed to demonstrate.
+
+What this evidence actually showed, run against the real build:
+
+- **Per-body gravity direction.** A 360-step run with no player input
+  showed all four objects converging toward the sphere's center along
+  straight lines from their own distinct starting positions — each
+  object's very first logged velocity direction matched
+  `normalize(sphereCenter - itsOwnPosition)` for its own position, not a
+  shared direction, confirming each body is sampling `GravityField` at its
+  own position rather than sharing one player-derived value.
+- **World collision, no tunneling.** The same run showed all four objects
+  settle to within centimeters of `sphereRadius + (halfExtent or radius)`
+  and stay there — never below it (tunneling) and never sinking further —
+  across the whole run.
+- **Determinism.** Running the same fixed-step script twice produced
+  byte-for-byte identical CSV output both times.
+- **Long-run stability.** A 900-step (15 simulated second) run with all
+  four bodies active logged zero non-finite (NaN/Inf) values across every
+  position/velocity column.
+- **Player-to-object push.** A 400-step run holding forward from spawn
+  showed Cube A's velocity jump from its small falling speed to several
+  m/s in the push direction around step 40 (first contact), with player
+  and cube then maintaining roughly constant ~1m separation for hundreds
+  of further steps — sustained pushing, not one nudge.
+- **Object-to-object collision.** With Cube A's spawn placed close enough
+  to Sphere A (see "Physics test world"), the same no-player 360-step run
+  showed Sphere A jump from exactly zero velocity to a sustained ~1 m/s
+  roll the moment Cube A's fall reached it, then continue rolling (slowly
+  decaying — ordinary Jolt angular damping on a smooth sphere, not a bug)
+  for hundreds of further steps, still exactly on the sphere's surface
+  throughout — a real cube↔sphere collision Jolt resolved, needing no
+  player or engine involvement to trigger.
+- **Reset.** A run that let everything fall/settle for 200 steps, then
+  issued `TAP R 200`, showed every body's logged position and velocity at
+  step 200 match its step-0 (spawn) values exactly, including a body
+  (Sphere A) that had picked up real velocity from the object-to-object
+  collision above moments earlier.
+- **Presentation non-interference.** Structurally guaranteed the same way
+  as the player (see "Simulation/presentation boundary") — confirmed
+  running the `REALTIME` mode with dynamic bodies and player movement both
+  active produced no crash, no non-finite values, and authoritative body
+  columns unaffected by the presence of the player's own presented
+  columns in the same row.
+
+Attempting to steer Cube A sideways into Sphere A via the player (rather
+than via spawn placement) is also what surfaced the push mechanism's
+along-normal-only limitation recorded in "Player-to-object interaction" —
+a case of the harness earning its keep as a design tool, not just a
+verification one.
+
 ## Remaining limitations
 
 Recorded honestly rather than left implicit — these are known, deliberately
 deferred, not oversights:
 
+- **Sub-millimeter per-step radial oscillation while walking, diagnosed
+  during Milestone 7-A validation, fix deferred to the next commit.**
+  `PlayerController`'s move-and-slide resolves movement as a straight-line
+  sweep each fixed step; any straight chord across a curve diverges from
+  it, so each step slightly overshoots the sphere's true surface and gets
+  pulled back the next — a real, continuous, every-fixed-step oscillation
+  in the authoritative radial distance (confirmed directly: walking
+  straight at constant speed once settled, ~`0.05`–`0.16mm` alternating
+  per-step delta, sign flips on ~43% of consecutive step pairs — not
+  settling noise, which shows as a smooth monotonic trend instead). Not a
+  regression and not related to dynamic bodies, gravity, or anything else
+  Milestone 7-A added — it predates this milestone and was invisible on
+  Milestone 5/6's small 8m sphere; the 20m sphere's room for sustained
+  fast straight-line walking is what made a previously sub-perceptible
+  per-step effect noticeable. Left unfixed in this commit at the
+  operator's explicit direction, to be addressed separately.
 - **Residual small motion jitter tracking genuine render-frame timing
   variance.** After the fix, presented per-frame motion still varies by
   about `±11%` of its mean in this environment's own test conditions (down
@@ -1003,12 +1333,21 @@ deferred, not oversights:
   would make input feel disconnected, which is why the brief's "preserve
   input responsiveness" requirement is satisfied by construction, not by
   measurement here.
-- **Only the player is interpolated for presentation.** The demo currently
-  renders nothing else that's both dynamic and driven by discrete
-  fixed-step state (the sphere is static). See "Future constraints
-  preserved" below for why the mechanism generalizes without rework, and
-  "Deliberately Not Implemented" for why that generalization wasn't built
-  ahead of an actual second consumer.
+- **The player-to-object push only transfers velocity along the contact
+  normal.** (Milestone 7-A — see "Player-to-object interaction".) A
+  player approaching from one angle and changing direction mid-push does
+  not steer the object sideways the way a full impulse/momentum transfer
+  would. Discovered while devising an object-to-object collision test
+  scenario, recorded rather than fixed, since a fuller push/carry system
+  is explicitly out of this milestone's scope.
+- **Dynamic-body rolling decays slowly.** (Milestone 7-A.) A sphere set
+  rolling by a collision (see "Automated testing") keeps rolling for
+  several real seconds, decaying only via Jolt's own default angular
+  damping rather than any rolling-resistance model — physically
+  unsurprising for a smooth sphere on a smooth-ish surface, not a
+  stability bug (verified finite/stable over a much longer window than it
+  takes to visibly slow down), and not something this milestone tunes
+  further.
 
 ## FUTURE CONSTRAINTS PRESERVED
 
@@ -1040,15 +1379,24 @@ blocking known future requirements. None of these are implemented yet.
   (`CastShape`) used twice differently. Terrain collision or more query
   types are a matter of calling more of what Jolt already provides through
   the same `PhysicsWorld` boundary, not new architecture.
-- **Interpolated presentation for future dynamic/simulated objects** — the
-  Milestone 6 presentation boundary (previous/current pose kept per object,
-  blended by one shared per-frame `alpha`) is demonstrated on exactly the
-  one object that currently needs it (the player). A future object that
-  needs the same treatment (a moving platform, a thrown item, anything
-  else driven by discrete fixed-step state) can reuse the identical shape
-  without rework — see "Simulation/presentation boundary," "What doesn't
-  need this (yet)." No generic multi-object interpolation system was built
-  ahead of that need.
+- **Interpolated presentation for future dynamic/simulated objects** —
+  **fulfilled in Milestone 7-A**, not merely still-preserved: the
+  Milestone 6 presentation boundary (previous/current pose kept per
+  object, blended by one shared per-frame `alpha`) now has a real second
+  consumer (`DynamicBody`, four of them) reusing the identical shape
+  without rework, exactly as predicted — see "Simulation/presentation
+  boundary," "Extended to dynamic bodies." Still no generic multi-object
+  *framework* beyond `DynamicBody` itself and the two small free
+  functions that drive it; a future object type (a moving platform, a
+  thrown item) is expected to reuse `DynamicBody` or the same pattern
+  directly, not a new abstraction layer.
+- **Many simultaneous dynamic objects, object-to-object interaction** —
+  Milestone 7-A is itself the evidence this is practical: four ordinary
+  Jolt dynamic bodies, sharing one `GravityField` and colliding with the
+  world and each other, needed no new physics architecture — `kMaxBodies`/
+  `kMaxBodyPairs`/`kMaxContactConstraints` (`PhysicsWorld.cpp`, currently
+  `128`, sized for this milestone's handful of bodies) are the only limits
+  that would need raising for more.
 
 ## DELIBERATELY NOT IMPLEMENTED
 
@@ -1092,6 +1440,20 @@ Explicitly deferred, not forgotten:
 - A generated OpenGL loader (glad/GLEW) — the GL surface didn't grow this
   milestone; `DrawSphere` reuses the exact same GL calls `DrawBox` already
   used
+- **Milestone 7-A additions:** an entity/component system, scene graph, or
+  prefab architecture merely because several test objects now exist —
+  `DynamicBody` is a plain struct-like class with two free functions
+  driving it, not a framework (see "Dynamic bodies"); runtime object
+  spawning, a spawn/placement UI, or any object-authoring tool — all four
+  bodies are created once in `Application::Run` and destroyed once at
+  shutdown; grabbing, carrying, throwing, or any interaction beyond
+  walking into an object (see "Player-to-object interaction"); gravity
+  volumes, multiple simultaneous gravity *sources*, or gravity priority
+  systems (Milestone 7-A proves multiple gravity *consumers* of one
+  source, a different axis from multiple sources — see "Multiple gravity
+  consumers"); a moving-platform or attached-rider system; object health,
+  destructibility, or pooling/lifecycle management beyond create-once/
+  destroy-once
 - A physics material/property system beyond per-body friction/restitution —
   the sphere gets explicit, sensible values; the player, having no Jolt
   body, has none to configure

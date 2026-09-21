@@ -116,9 +116,10 @@ public:
     }
 };
 
-// Small values, deliberately: this milestone's active demo has exactly one
-// static body (the sphere). A real scene would raise these, not architect
-// around them being large.
+// Small values, deliberately: this milestone's active demo has one static
+// body (the sphere) plus a handful of dynamic test objects (see
+// docs/ARCHITECTURE.md, "Physics test world") — nowhere near this many. A
+// real scene would raise these, not architect around them being large.
 constexpr unsigned int kMaxBodies = 128;
 constexpr unsigned int kNumBodyMutexes = 0;  // 0 = Jolt picks a sensible default
 constexpr unsigned int kMaxBodyPairs = 128;
@@ -257,6 +258,21 @@ BodyHandle PhysicsWorld::CreateDynamicBox(const glm::vec3& position, const glm::
     return ToHandle(id);
 }
 
+BodyHandle PhysicsWorld::CreateDynamicSphere(const glm::vec3& position, float radius, float mass,
+                                              float friction, float restitution) {
+    JPH::BodyCreationSettings settings(new JPH::SphereShape(radius), ToJolt(position),
+                                        JPH::Quat::sIdentity(), JPH::EMotionType::Dynamic,
+                                        Layers::kMoving);
+    settings.mFriction = friction;
+    settings.mRestitution = restitution;
+    settings.mOverrideMassProperties = JPH::EOverrideMassProperties::CalculateInertia;
+    settings.mMassPropertiesOverride.mMass = mass;
+
+    JPH::BodyID id = m_impl->physicsSystem.GetBodyInterface().CreateAndAddBody(
+        settings, JPH::EActivation::Activate);
+    return ToHandle(id);
+}
+
 void PhysicsWorld::DestroyBody(BodyHandle handle) {
     if (!handle.IsValid()) return;
     JPH::BodyInterface& bodyInterface = m_impl->physicsSystem.GetBodyInterface();
@@ -270,6 +286,22 @@ void PhysicsWorld::ApplyLinearAcceleration(BodyHandle handle, const glm::vec3& a
     if (!handle.IsValid()) return;
     m_impl->physicsSystem.GetBodyInterface().AddLinearVelocity(
         ToJoltId(handle), ToJolt(acceleration) * fixedDeltaTime);
+}
+
+bool PhysicsWorld::IsDynamicBody(BodyHandle handle) const {
+    if (!handle.IsValid()) return false;
+    return m_impl->physicsSystem.GetBodyInterface().GetMotionType(ToJoltId(handle)) ==
+           JPH::EMotionType::Dynamic;
+}
+
+glm::vec3 PhysicsWorld::GetLinearVelocity(BodyHandle handle) const {
+    if (!handle.IsValid()) return glm::vec3(0.0f);
+    return ToGlm(m_impl->physicsSystem.GetBodyInterface().GetLinearVelocity(ToJoltId(handle)));
+}
+
+void PhysicsWorld::SetLinearVelocity(BodyHandle handle, const glm::vec3& velocity) {
+    if (!handle.IsValid()) return;
+    m_impl->physicsSystem.GetBodyInterface().SetLinearVelocity(ToJoltId(handle), ToJolt(velocity));
 }
 
 void PhysicsWorld::Step(float fixedDeltaTime) {
@@ -336,6 +368,7 @@ ShapeSweepHit PhysicsWorld::SweepPlayerShape(const glm::vec3& fromCenter, const 
     if (collector.mHadHit) {
         result.hit = true;
         result.distance = collector.mHit.mFraction * length;
+        result.hitBody = ToHandle(collector.mHit.mBodyID2);
 
         glm::vec3 normal = ToGlm(collector.mHit.mPenetrationAxis);
         if (glm::length(normal) > 1.0e-6f) {

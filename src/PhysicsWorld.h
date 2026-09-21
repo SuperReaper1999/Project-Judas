@@ -29,6 +29,11 @@ struct ShapeSweepHit {
     glm::vec3 normal{0.0f};     // meaningful only when `hit` is true; contact normal,
                                  // pointing back toward the caster — no default direction
                                  // is implied when there was no hit
+    BodyHandle hitBody;         // meaningful only when `hit` is true; identifies what was
+                                 // hit (added in Milestone 7-A so a caller can distinguish
+                                 // static world geometry from a pushable dynamic body —
+                                 // still says nothing about WHAT that means, same as
+                                 // `normal`; interpretation stays the caller's job)
 };
 
 // Wraps the physics middleware (currently Jolt Physics — see
@@ -64,7 +69,23 @@ public:
                                    float restitution);
     BodyHandle CreateDynamicBox(const glm::vec3& position, const glm::vec3& halfExtents,
                                  float mass, float friction, float restitution);
+    BodyHandle CreateDynamicSphere(const glm::vec3& position, float radius, float mass,
+                                    float friction, float restitution);
     void DestroyBody(BodyHandle handle);
+
+    // True only for a body created via CreateDynamic*. Added in Milestone
+    // 7-A so a caller holding a ShapeSweepHit::hitBody can tell "pushable
+    // object" apart from "static world geometry" without needing to
+    // remember which handles it created dynamic vs. static itself.
+    bool IsDynamicBody(BodyHandle handle) const;
+
+    // Generic rigid-body velocity access — the same category as
+    // GetTransform/ResetBody below, just for velocity. Added in Milestone
+    // 7-A for the player's minimal push-on-contact behavior (see
+    // PlayerController::FixedUpdate); nothing about gravity or gameplay
+    // lives here, only the query/command itself.
+    glm::vec3 GetLinearVelocity(BodyHandle handle) const;
+    void SetLinearVelocity(BodyHandle handle, const glm::vec3& velocity);
 
     // Integrates `acceleration` into the body's linear velocity over
     // `fixedDeltaTime` (velocity += acceleration * dt). This is how Judas

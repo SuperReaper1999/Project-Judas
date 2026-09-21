@@ -5,10 +5,13 @@
 #include <algorithm>
 #include <cstdio>
 #include <cstdlib>
+#include <iterator>
+#include <vector>
 
 #include <glm/glm.hpp>
 #include <glm/gtc/quaternion.hpp>
 
+#include "DynamicBody.h"
 #include "GravityField.h"
 #include "PhysicsWorld.h"
 #include "PlayerController.h"
@@ -29,8 +32,14 @@ constexpr int kWindowHeight = 768;
 // would be physically incoherent — the demo picks ONE active GravityField
 // (see docs/ARCHITECTURE.md, "Gravity implementations"), and this milestone's
 // point is specifically to exercise the non-flat one.
+//
+// The radius grew from Milestone 5/6's 8m to 20m in Milestone 7-A — still a
+// small hand-authored test world, not a planet, but large enough to give a
+// walking player (4 m/s) and several separated dynamic test objects room to
+// exist without crowding the same few square meters. See
+// docs/ARCHITECTURE.md, "Physics test world."
 const glm::vec3 kSphereCenter(0.0f, 0.0f, 0.0f);
-constexpr float kSphereRadius = 8.0f;
+constexpr float kSphereRadius = 20.0f;
 const glm::vec3 kSphereColor(0.3f, 0.45f, 0.35f);
 constexpr float kSphereFriction = 0.8f;
 constexpr float kSphereRestitution = 0.1f;
@@ -46,6 +55,85 @@ constexpr float kRadicalGravityMagnitude = 9.81f;
 const glm::vec3 kPlayerSpawnPosition = kSphereCenter + glm::vec3(0.0f, kSphereRadius + 3.0f, 0.0f);
 constexpr float kPlayerSpawnYawDegrees = -90.0f;
 const glm::vec3 kPlayerColor(0.2f, 0.6f, 0.9f);
+
+// --- Milestone 7-A: dynamic test objects ---
+//
+// A small, hand-authored collection of ordinary Jolt dynamic bodies —
+// demo/composition-root data only, per docs/ARCHITECTURE.md, "Physics test
+// world." None of this is visible to DynamicBody, PlayerController, or
+// GravityField: those only ever see a position and an acceleration.
+constexpr float kDynamicObjectFriction = 0.6f;
+constexpr float kDynamicObjectRestitution = 0.15f;
+constexpr float kCubeHalfExtent = 0.5f;
+constexpr float kCubeMass = 5.0f;
+constexpr float kSphereObjectRadius = 0.5f;
+constexpr float kSphereObjectMass = 4.0f;
+const glm::vec3 kCubeColor(0.85f, 0.35f, 0.2f);
+const glm::vec3 kSphereObjectColor(0.9f, 0.8f, 0.2f);
+
+// A point offset from the sphere's center along `direction` (not
+// necessarily unit length — normalized here) at `heightAboveSurface`
+// beyond the sphere's own radius. Purely a demo-authoring convenience for
+// placing test objects at varied, legible locations around the sphere —
+// engine code never does this kind of sphere-relative placement itself.
+glm::vec3 PointAboveSphere(const glm::vec3& center, float radius, const glm::vec3& direction,
+                            float heightAboveSurface) {
+    return center + glm::normalize(direction) * (radius + heightAboveSurface);
+}
+
+// Four objects: two that begin slightly above the surface and fall onto
+// it, two that begin already resting on it (per the brief's minimum
+// arrangement). CubeA/SphereA sit close together near the player's own
+// spawn point — reachable on foot immediately, close enough to collide
+// with each other and to be pushed by the player. CubeB/SphereB sit at
+// deliberately different locations around the sphere (near the "equator"
+// and near the far pole) so their local gravity direction is visibly
+// different from the player's and from each other's.
+struct DynamicObjectSpawn {
+    DynamicBody::Shape shape;
+    glm::vec3 position;
+    glm::vec3 halfExtentsOrRadius;  // x = radius for spheres
+    glm::vec3 color;
+    float mass;
+};
+
+const DynamicObjectSpawn kDynamicObjectSpawns[] = {
+    {DynamicBody::Shape::Box,
+     PointAboveSphere(kSphereCenter, kSphereRadius, glm::vec3(2.5f, kSphereRadius, 0.9f), 2.0f),
+     glm::vec3(kCubeHalfExtent), kCubeColor, kCubeMass},
+    {DynamicBody::Shape::Sphere,
+     PointAboveSphere(kSphereCenter, kSphereRadius, glm::vec3(2.5f, kSphereRadius, 1.3f), 0.05f),
+     glm::vec3(kSphereObjectRadius), kSphereObjectColor, kSphereObjectMass},
+    {DynamicBody::Shape::Box,
+     PointAboveSphere(kSphereCenter, kSphereRadius, glm::vec3(1.0f, 0.3f, 0.0f), 1.5f),
+     glm::vec3(kCubeHalfExtent), kCubeColor, kCubeMass},
+    {DynamicBody::Shape::Sphere,
+     PointAboveSphere(kSphereCenter, kSphereRadius, glm::vec3(0.0f, -1.0f, 0.2f), 0.05f),
+     glm::vec3(kSphereObjectRadius), kSphereObjectColor, kSphereObjectMass},
+};
+
+std::vector<DynamicBody> SpawnDynamicObjects(PhysicsWorld& physics) {
+    std::vector<DynamicBody> bodies;
+    bodies.reserve(std::size(kDynamicObjectSpawns));
+    for (const DynamicObjectSpawn& spawn : kDynamicObjectSpawns) {
+        DynamicBody::Visual visual;
+        visual.shape = spawn.shape;
+        visual.color = spawn.color;
+
+        BodyHandle handle;
+        if (spawn.shape == DynamicBody::Shape::Box) {
+            visual.halfExtents = spawn.halfExtentsOrRadius;
+            handle = physics.CreateDynamicBox(spawn.position, visual.halfExtents, spawn.mass,
+                                               kDynamicObjectFriction, kDynamicObjectRestitution);
+        } else {
+            visual.radius = spawn.halfExtentsOrRadius.x;
+            handle = physics.CreateDynamicSphere(spawn.position, visual.radius, spawn.mass,
+                                                  kDynamicObjectFriction, kDynamicObjectRestitution);
+        }
+        bodies.emplace_back(handle, visual, spawn.position, glm::quat(1.0f, 0.0f, 0.0f, 0.0f));
+    }
+    return bodies;
+}
 }  // namespace
 
 int Application::Run() {
@@ -58,7 +146,7 @@ int Application::Run() {
     const bool isTestRun = testScriptPath != nullptr;
 
     Window window;
-    if (!window.Init("Project Judas - Milestone 6", kWindowWidth, kWindowHeight, !isTestRun)) {
+    if (!window.Init("Project Judas - Milestone 7-A", kWindowWidth, kWindowHeight, !isTestRun)) {
         std::fprintf(stderr, "Window initialization failed.\n");
         return 1;
     }
@@ -99,6 +187,13 @@ int Application::Run() {
         return 1;
     }
 
+    // Milestone 7-A: several ordinary Jolt dynamic bodies sharing the same
+    // GravityField the player uses — see docs/ARCHITECTURE.md, "Multiple
+    // gravity consumers." Created here (composition root), not inside
+    // PlayerController or DynamicBody, exactly like the static sphere
+    // above.
+    std::vector<DynamicBody> dynamicBodies = SpawnDynamicObjects(physicsWorld);
+
     // Shared between the normal interactive loop and the test harness, so
     // a screenshot taken by the harness shows exactly what the real game
     // would have rendered that frame. `presentationAlpha` blends the
@@ -107,18 +202,30 @@ int Application::Run() {
     // — the same value passed to PlayerController::GetViewMatrix so the
     // camera and the player box always move in visual lockstep. The sphere
     // is static and never interpolated; it has no "previous" pose to blend
-    // from.
+    // from. Dynamic bodies use the exact same alpha via DynamicBody's own
+    // GetPresentedPosition/Orientation.
     const auto drawScene = [&](Renderer& r, float presentationAlpha) {
         r.DrawSphere(kSphereCenter, kSphereRadius, kSphereColor);
         r.DrawBox(player.GetPresentedPosition(presentationAlpha),
                   player.GetPresentedOrientation(presentationAlpha), player.GetRenderHalfExtents(),
                   kPlayerColor);
+        for (const DynamicBody& body : dynamicBodies) {
+            const DynamicBody::Visual& visual = body.GetVisual();
+            if (visual.shape == DynamicBody::Shape::Box) {
+                r.DrawBox(body.GetPresentedPosition(presentationAlpha),
+                          body.GetPresentedOrientation(presentationAlpha), visual.halfExtents,
+                          visual.color);
+            } else {
+                r.DrawSphere(body.GetPresentedPosition(presentationAlpha), visual.radius,
+                             visual.color);
+            }
+        }
     };
 
     int exitCode = 0;
     if (isTestRun) {
-        exitCode =
-            RunTestHarness(window, renderer, physicsWorld, player, gravity, drawScene, testScriptPath);
+        exitCode = RunTestHarness(window, renderer, physicsWorld, player, gravity, dynamicBodies,
+                                   drawScene, testScriptPath);
     } else {
         float physicsAccumulator = 0.0f;
 
@@ -142,6 +249,9 @@ int Application::Run() {
 
             if (window.ConsumeResetRequest()) {
                 player.Reset();
+                for (DynamicBody& body : dynamicBodies) {
+                    body.ResetToSpawn(physicsWorld);
+                }
                 physicsAccumulator = 0.0f;
             }
 
@@ -152,8 +262,16 @@ int Application::Run() {
             int stepsThisFrame = 0;
             while (physicsAccumulator >= SimulationTiming::kFixedTimestep &&
                    stepsThisFrame < SimulationTiming::kMaxPhysicsStepsPerFrame) {
+                // Dynamic bodies sample gravity and hand it to Jolt BEFORE
+                // Step() integrates it into their position — the same
+                // "Judas samples, physics obeys" ordering the player uses,
+                // just applied to a list. See docs/ARCHITECTURE.md,
+                // "Multiple gravity consumers."
+                PrepareDynamicBodiesForStep(dynamicBodies, gravity, physicsWorld,
+                                             SimulationTiming::kFixedTimestep);
                 physicsWorld.Step(SimulationTiming::kFixedTimestep);
                 player.FixedUpdate(window, physicsWorld, gravity, SimulationTiming::kFixedTimestep);
+                SyncDynamicBodiesFromPhysics(dynamicBodies, physicsWorld);
 
                 physicsAccumulator -= SimulationTiming::kFixedTimestep;
                 ++stepsThisFrame;
@@ -191,6 +309,9 @@ int Application::Run() {
     }
 
     player.Destroy(physicsWorld);
+    for (const DynamicBody& body : dynamicBodies) {
+        physicsWorld.DestroyBody(body.Handle());
+    }
     physicsWorld.DestroyBody(sphereBody);
     physicsWorld.Shutdown();
     renderer.Shutdown();

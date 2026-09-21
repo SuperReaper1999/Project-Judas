@@ -2,6 +2,7 @@
 
 #include <SDL2/SDL.h>
 
+#include <cstddef>
 #include <cstdio>
 #include <fstream>
 #include <sstream>
@@ -152,6 +153,28 @@ bool LoadScript(const std::string& path, Script& outScript) {
     return true;
 }
 
+// Milestone 7-A: appends per-dynamic-body columns to the fixed-step and
+// real-time CSV headers/rows, in spawn order — authoritative position and
+// linear velocity only, enough for automated checks (falling, surface
+// contact, finite state, reset, per-body gravity direction inferred from
+// early velocity) without doubling row width by also logging presented
+// state for every body the way the player's single real-time row does.
+void PrintDynamicBodyHeaderColumns(std::size_t bodyCount) {
+    for (std::size_t i = 0; i < bodyCount; ++i) {
+        std::printf(",obj%zuPosX,obj%zuPosY,obj%zuPosZ,obj%zuVelX,obj%zuVelY,obj%zuVelZ", i, i, i,
+                    i, i, i);
+    }
+}
+
+void PrintDynamicBodyRowColumns(const std::vector<DynamicBody>& bodies,
+                                 const PhysicsWorld& physics) {
+    for (const DynamicBody& body : bodies) {
+        const glm::vec3 pos = body.GetPosition();
+        const glm::vec3 vel = physics.GetLinearVelocity(body.Handle());
+        std::printf(",%.4f,%.4f,%.4f,%.4f,%.4f,%.4f", pos.x, pos.y, pos.z, vel.x, vel.y, vel.z);
+    }
+}
+
 void TakeScreenshotIfRequested(int index, const std::vector<ScreenshotEvent>& screenshots,
                                 Window& window, Renderer& renderer, PlayerController& player,
                                 const std::function<void(Renderer&, float)>& drawScene,
@@ -184,9 +207,12 @@ void TakeScreenshotIfRequested(int index, const std::vector<ScreenshotEvent>& sc
 // gameplay/physics logic in isolation from any rendering-timing question.
 int RunFixedStepMode(Window& window, Renderer& renderer, PhysicsWorld& physicsWorld,
                       PlayerController& player, const GravityField& gravity,
+                      std::vector<DynamicBody>& dynamicBodies,
                       const std::function<void(Renderer&, float)>& drawScene,
                       const Script& script) {
-    std::printf("step,time,posX,posY,posZ,upX,upY,upZ,grounded,velX,velY,velZ\n");
+    std::printf("step,time,posX,posY,posZ,upX,upY,upZ,grounded,velX,velY,velZ");
+    PrintDynamicBodyHeaderColumns(dynamicBodies.size());
+    std::printf("\n");
 
     for (int step = 0; step < script.totalSteps; ++step) {
         for (const HoldEvent& hold : script.holds) {
@@ -209,18 +235,26 @@ int RunFixedStepMode(Window& window, Renderer& renderer, PhysicsWorld& physicsWo
         player.UpdateFrameInput(window);
         if (window.ConsumeResetRequest()) {
             player.Reset();
+            for (DynamicBody& body : dynamicBodies) {
+                body.ResetToSpawn(physicsWorld);
+            }
         }
 
+        PrepareDynamicBodiesForStep(dynamicBodies, gravity, physicsWorld,
+                                     SimulationTiming::kFixedTimestep);
         physicsWorld.Step(SimulationTiming::kFixedTimestep);
         player.FixedUpdate(window, physicsWorld, gravity, SimulationTiming::kFixedTimestep);
+        SyncDynamicBodiesFromPhysics(dynamicBodies, physicsWorld);
 
         if (script.logEvery > 0 && step % script.logEvery == 0) {
             const glm::vec3 pos = player.GetPosition();
             const glm::vec3 vel = player.GetVelocity();
             const glm::vec3 up = player.GetOrientation() * glm::vec3(0.0f, 1.0f, 0.0f);
-            std::printf("%d,%.4f,%.4f,%.4f,%.4f,%.4f,%.4f,%.4f,%d,%.4f,%.4f,%.4f\n", step,
+            std::printf("%d,%.4f,%.4f,%.4f,%.4f,%.4f,%.4f,%.4f,%d,%.4f,%.4f,%.4f", step,
                         step * SimulationTiming::kFixedTimestep, pos.x, pos.y, pos.z, up.x, up.y,
                         up.z, player.IsGrounded() ? 1 : 0, vel.x, vel.y, vel.z);
+            PrintDynamicBodyRowColumns(dynamicBodies, physicsWorld);
+            std::printf("\n");
         }
 
         // Fixed-step mode never has an "in between" — we're always exactly
@@ -242,6 +276,7 @@ int RunFixedStepMode(Window& window, Renderer& renderer, PhysicsWorld& physicsWo
 // "Diagnosis," for what this was used to find in Milestone 6.
 int RunRealtimeMode(Window& window, Renderer& renderer, PhysicsWorld& physicsWorld,
                      PlayerController& player, const GravityField& gravity,
+                     std::vector<DynamicBody>& dynamicBodies,
                      const std::function<void(Renderer&, float)>& drawScene,
                      const Script& script) {
     // "pres*" columns are what's actually presented that frame (see
@@ -253,7 +288,9 @@ int RunRealtimeMode(Window& window, Renderer& renderer, PhysicsWorld& physicsWor
     // on a zero-step frame.
     std::printf(
         "frame,wallDeltaMs,stepsThisFrame,alpha,posX,posY,posZ,upX,upY,upZ,presX,presY,presZ,"
-        "presUpX,presUpY,presUpZ,grounded\n");
+        "presUpX,presUpY,presUpZ,grounded");
+    PrintDynamicBodyHeaderColumns(dynamicBodies.size());
+    std::printf("\n");
 
     float physicsAccumulator = 0.0f;
     const Uint64 frequency = SDL_GetPerformanceFrequency();
@@ -288,6 +325,9 @@ int RunRealtimeMode(Window& window, Renderer& renderer, PhysicsWorld& physicsWor
         player.UpdateFrameInput(window);
         if (window.ConsumeResetRequest()) {
             player.Reset();
+            for (DynamicBody& body : dynamicBodies) {
+                body.ResetToSpawn(physicsWorld);
+            }
             physicsAccumulator = 0.0f;
         }
 
@@ -295,8 +335,11 @@ int RunRealtimeMode(Window& window, Renderer& renderer, PhysicsWorld& physicsWor
         int stepsThisFrame = 0;
         while (physicsAccumulator >= SimulationTiming::kFixedTimestep &&
                stepsThisFrame < SimulationTiming::kMaxPhysicsStepsPerFrame) {
+            PrepareDynamicBodiesForStep(dynamicBodies, gravity, physicsWorld,
+                                         SimulationTiming::kFixedTimestep);
             physicsWorld.Step(SimulationTiming::kFixedTimestep);
             player.FixedUpdate(window, physicsWorld, gravity, SimulationTiming::kFixedTimestep);
+            SyncDynamicBodiesFromPhysics(dynamicBodies, physicsWorld);
             physicsAccumulator -= SimulationTiming::kFixedTimestep;
             ++stepsThisFrame;
         }
@@ -322,10 +365,12 @@ int RunRealtimeMode(Window& window, Renderer& renderer, PhysicsWorld& physicsWor
         const glm::vec3 presUp =
             player.GetPresentedOrientation(presentationAlpha) * glm::vec3(0.0f, 1.0f, 0.0f);
         std::printf("%d,%.4f,%d,%.4f,%.4f,%.4f,%.4f,%.4f,%.4f,%.4f,%.4f,%.4f,%.4f,%.4f,%.4f,%.4f,"
-                    "%d\n",
+                    "%d",
                     frame, frameDeltaTime * 1000.0f, stepsThisFrame, presentationAlpha, pos.x,
                     pos.y, pos.z, up.x, up.y, up.z, presPos.x, presPos.y, presPos.z, presUp.x,
                     presUp.y, presUp.z, player.IsGrounded() ? 1 : 0);
+        PrintDynamicBodyRowColumns(dynamicBodies, physicsWorld);
+        std::printf("\n");
 
         TakeScreenshotIfRequested(frame, script.screenshots, window, renderer, player, drawScene,
                                    presentationAlpha);
@@ -337,6 +382,7 @@ int RunRealtimeMode(Window& window, Renderer& renderer, PhysicsWorld& physicsWor
 
 int RunTestHarness(Window& window, Renderer& renderer, PhysicsWorld& physicsWorld,
                     PlayerController& player, const GravityField& gravity,
+                    std::vector<DynamicBody>& dynamicBodies,
                     const std::function<void(Renderer&, float)>& drawScene,
                     const std::string& scriptPath) {
     Script script;
@@ -346,11 +392,11 @@ int RunTestHarness(Window& window, Renderer& renderer, PhysicsWorld& physicsWorl
 
     window.SetTestInputMode(true);
 
-    const int exitCode = script.realtime
-                              ? RunRealtimeMode(window, renderer, physicsWorld, player, gravity,
-                                                 drawScene, script)
-                              : RunFixedStepMode(window, renderer, physicsWorld, player, gravity,
-                                                  drawScene, script);
+    const int exitCode =
+        script.realtime ? RunRealtimeMode(window, renderer, physicsWorld, player, gravity,
+                                           dynamicBodies, drawScene, script)
+                         : RunFixedStepMode(window, renderer, physicsWorld, player, gravity,
+                                            dynamicBodies, drawScene, script);
 
     window.SetTestInputMode(false);
     return exitCode;

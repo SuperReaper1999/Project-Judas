@@ -2,6 +2,9 @@
 
 #include <functional>
 #include <string>
+#include <vector>
+
+#include "DynamicBody.h"
 
 class Window;
 class Renderer;
@@ -48,7 +51,17 @@ class GravityField;
 // step), real-time mode passes the same accumulator-derived value used for
 // that frame's own camera, so a requested screenshot shows exactly what
 // that render frame actually presented.
+//
+// `dynamicBodies` (added Milestone 7-A): the same objects Application
+// spawns for the interactive game, passed in non-const so both harness
+// modes can drive them through exactly the fixed-step order the real game
+// loop uses (PrepareDynamicBodiesForStep -> PhysicsWorld::Step ->
+// SyncDynamicBodiesFromPhysics) and reset them on a TAP R the same way
+// PlayerController::Reset is invoked. Logged to CSV alongside the player so
+// automated checks can verify gravity/collision/reset for every body, not
+// just the player. See docs/ARCHITECTURE.md, "Automated testing."
 int RunTestHarness(Window& window, Renderer& renderer, PhysicsWorld& physicsWorld,
                     PlayerController& player, const GravityField& gravity,
+                    std::vector<DynamicBody>& dynamicBodies,
                     const std::function<void(Renderer&, float)>& drawScene,
                     const std::string& scriptPath);
