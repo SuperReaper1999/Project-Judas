@@ -9,6 +9,7 @@
 #include <glm/gtc/quaternion.hpp>
 
 #include "Camera.h"
+#include "FaithfulGravity.h"
 #include "GravityField.h"
 #include "PhysicsWorld.h"
 #include "Renderer.h"
@@ -72,7 +73,13 @@ int Application::Run() {
         return 1;
     }
 
-    GravityField gravityField;
+    // Application (the composition root) is the one place that knows the
+    // concrete gravity implementation. Everything downstream — including
+    // the rest of this function — talks to it only through the GravityField
+    // interface, so it stays agnostic of which implementation is active.
+    // See GravityField.h and docs/ARCHITECTURE.md, "Ownership boundary."
+    FaithfulGravity faithfulGravity;
+    GravityField& gravity = faithfulGravity;
 
     const BodyHandle floorBody = physicsWorld.CreateStaticBox(
         kFloorPosition, kFloorHalfExtents, kFloorFriction, kFloorRestitution);
@@ -117,7 +124,7 @@ int Application::Run() {
             // the physics body itself; the physics middleware's global
             // gravity stays disabled (see PhysicsWorld::Init).
             const glm::vec3 cubePosition = physicsWorld.GetTransform(cubeBody).position;
-            const glm::vec3 acceleration = gravityField.Sample(cubePosition);
+            const glm::vec3 acceleration = gravity.Sample(cubePosition);
             physicsWorld.ApplyLinearAcceleration(cubeBody, acceleration, kFixedTimestep);
 
             physicsWorld.Step(kFixedTimestep);

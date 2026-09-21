@@ -127,21 +127,59 @@ The physics middleware (Jolt) owns collision detection, contact
 generation, rigid-body integration, and constraint solving — nothing more.
 ```
 
-Concretely, as of Milestone 3:
+### Gravity: one interface, interchangeable implementations
 
-- `GravityField` (`src/GravityField.h/.cpp`) is Judas's own gravity
-  abstraction: `Sample(worldPosition) -> acceleration`. It is the *only*
-  place gravity is decided.
+`GravityField` (`src/GravityField.h`) is an abstract interface — a single
+pure-virtual method, `Sample(worldPosition) -> acceleration` — and is
+Judas's *only* contract for gravity. Everything that needs gravity
+(currently just `Application::Run`) talks to a `GravityField&` and stays
+completely agnostic about which concrete implementation is behind it.
+
+`FaithfulGravity` (`src/FaithfulGravity.h/.cpp`) is the first, canonical
+implementation: conventional, uniform, constant-direction gravity suitable
+for an ordinary/local environment with a single fixed "down." For
+Milestone 3 it returns `(0, -9.81, 0)` everywhere — see "Current gravity"
+below for why that constant is not an engine-wide law. The name is
+intentional and permanent: `FaithfulGravity` names *this specific
+implementation* (faithful to conventional, ordinary gravity), not the
+concept of gravity in Judas generally — that's what the `GravityField`
+interface is for.
+
+This shape exists specifically so that later implementations —
+radial/planetary gravity, a composite field blending multiple sources —
+are new classes implementing `GravityField`, sitting next to
+`FaithfulGravity`, not modifications to it or to anything downstream:
+
+```
+GravityField (interface)
+    |
+    +-- FaithfulGravity            (uniform/constant-direction; Milestone 3)
+    |
+    +-- (future) radial/planetary gravity
+    |
+    +-- (future) composite/multi-source gravity
+```
+
+`Application::Run` is the composition root: it's the one place that
+constructs a concrete `FaithfulGravity` and binds it to a `GravityField&`.
+Every line of code after that construction — including the fixed-step
+physics loop — only ever calls `gravity.Sample(...)` through the interface
+reference.
+
+Concretely, as of this milestone:
+
 - Jolt's own built-in global gravity is explicitly disabled:
   `PhysicsSystem::SetGravity(Vec3::sZero())` in `PhysicsWorld::Init`
   (`src/PhysicsWorld.cpp`). Jolt defaults this to `(0, -9.81, 0)` applied
   automatically to every dynamic body — that default is never used here.
-- Every fixed physics step, `Application::Run` samples `GravityField` at
-  the dynamic body's current position and hands the resulting acceleration
-  to `PhysicsWorld::ApplyLinearAcceleration`, which integrates it into the
-  body's velocity (`velocity += acceleration * fixedDeltaTime`) via Jolt's
+- Every fixed physics step, `Application::Run` samples the active
+  `GravityField` at the dynamic body's current position and hands the
+  resulting acceleration to `PhysicsWorld::ApplyLinearAcceleration`, which
+  integrates it into the body's velocity
+  (`velocity += acceleration * fixedDeltaTime`) via Jolt's
   `BodyInterface::AddLinearVelocity`. Jolt never computes gravity; it only
-  receives the result of Judas having already computed it.
+  receives the result of a `GravityField` implementation having already
+  computed it.
 - `PhysicsWorld` (`src/PhysicsWorld.h/.cpp`) is the only file that includes
   a Jolt header. Its public interface (`PhysicsWorld.h`) exposes an opaque
   `BodyHandle`, plain `glm` types, and semantic operations
@@ -152,13 +190,14 @@ Concretely, as of Milestone 3:
   physics middleware itself swappable in principle, even though swapping
   it isn't a goal right now.
 
-**Why this matters:** if Milestone 4's radial planetary gravity required
-touching how `PhysicsWorld` integrates a body's motion, or required Jolt's
-own gravity settings, that would mean this boundary was drawn in the wrong
-place. It shouldn't: Milestone 4 only needs to change what
-`GravityField::Sample` returns (a position-dependent, radial vector instead
-of a constant), and everything downstream — `ApplyLinearAcceleration`,
-`Step`, the render read-back — stays exactly as it is.
+**Why this matters:** if a future radial-gravity implementation required
+touching how `PhysicsWorld` integrates a body's motion, `Application`'s
+physics loop, or Jolt's own gravity settings, that would mean this
+boundary was drawn in the wrong place. It shouldn't: a new `GravityField`
+implementation is a new class plus swapping which concrete type
+`Application::Run` constructs — everything downstream
+(`ApplyLinearAcceleration`, `Step`, the render read-back) stays exactly as
+it is.
 
 ## Simulation timing
 
@@ -201,15 +240,17 @@ Implemented").
 
 ## Current gravity
 
-`GravityField::Sample` returns a constant `(0, -9.81, 0)` for every
-position. **This is test data for Milestone 3, not an engine-wide
-definition of gravity.** Nothing about the vector's direction or magnitude
-is assumed anywhere else — `PhysicsWorld` takes whatever acceleration it's
-given and applies it, without interpreting it. Milestone 4 is expected to
-replace `GravityField::Sample`'s implementation with something that
-actually uses its `worldPosition` argument (radial gravity toward one or
-more sources) without changing anything about how a physics body *receives*
-gravity — see "Ownership boundary" above.
+`FaithfulGravity::Sample` returns a constant `(0, -9.81, 0)` for every
+position. **This is configuration/test data for `FaithfulGravity`, not an
+engine-wide definition of gravity or of "down."** Nothing about the
+vector's direction or magnitude is assumed anywhere outside
+`FaithfulGravity.cpp` — `PhysicsWorld` takes whatever acceleration the
+active `GravityField` implementation produces and applies it, without
+interpreting it. A future radial/planetary gravity implementation is
+expected to be a new class implementing `GravityField` (see "Gravity: one
+interface, interchangeable implementations" above) that actually uses its
+`worldPosition` argument, without changing anything about how a physics
+body *receives* gravity.
 
 ## 3D rendering pipeline
 
@@ -248,8 +289,8 @@ movement logic between simulation and rendering.
   "world units," used directly as Jolt's own simulation space (no unit
   conversion between Judas and the physics middleware yet).
 - `+Y` is used as "up" by the camera (see "Camera orientation") and, as of
-  this milestone, by `GravityField`'s constant test vector. **Neither is an
-  engine-wide law** — see "Current gravity" and "Future constraints
+  this milestone, by `FaithfulGravity`'s constant test vector. **Neither is
+  an engine-wide law** — see "Current gravity" and "Future constraints
   preserved."
 - There is still no distinction between authoritative large-world
   coordinates and local rendering/physics coordinates — see "Future
@@ -276,7 +317,7 @@ resize-event code path.
 ```
 Init Window, load GL functions, Init Renderer
 Init PhysicsWorld (registers Jolt types, zeroes Jolt's own gravity)
-Create GravityField
+Create a FaithfulGravity, bound to a GravityField& (see "Ownership boundary")
 Create the static floor body and the dynamic cube body
 Create Camera (positioned to see the whole scene at launch)
 
@@ -291,7 +332,7 @@ while (!window.ShouldClose()):
 
     accumulator += frameDeltaTime
     while accumulator >= fixedTimestep and steps < cap:
-        acceleration = gravityField.Sample(cube's current position)
+        acceleration = gravity.Sample(cube's current position)  // through the GravityField interface
         physicsWorld.ApplyLinearAcceleration(cube, acceleration, fixedTimestep)
         physicsWorld.Step(fixedTimestep)
         accumulator -= fixedTimestep
@@ -316,7 +357,8 @@ The engine-level split is unchanged in kind, with one addition:
 - `Window` — window/input.
 - `Renderer` — graphics.
 - `PhysicsWorld` — physics (new in Milestone 3).
-- `GravityField` — Judas's own gravity (new in Milestone 3).
+- `GravityField` / `FaithfulGravity` — Judas's own gravity interface and
+  its uniform-gravity implementation (new in Milestone 3).
 - `Camera` — the observational free-flight camera (no longer "the demo
   content" on its own — the floor/cube pairing in `Application.cpp` is now
   the demo content, driven by physics rather than by `Camera`).
@@ -343,8 +385,8 @@ Unchanged from Milestone 2: `Camera` keeps a fixed world `(0, 1, 0)`
 reference axis for mouse look and vertical movement, documented there and
 in `Camera.h` as a convention scoped to that one class, not an engine-wide
 definition of "up." The camera remains purely observational in Milestone 3
-— it has no physics body, is not affected by `GravityField`, and does not
-control anything with a rigid body. There is still no player controller.
+— it has no physics body, is not affected by gravity, and does not control
+anything with a rigid body. There is still no player controller.
 
 ## Frame timing
 
@@ -360,17 +402,19 @@ system.
 This section explains only how the current design avoids *unnecessarily*
 blocking known future requirements. None of these are implemented yet.
 
-- **Radial gravity / multiple gravity sources / planetary physics** —
-  `GravityField::Sample` already takes a `worldPosition` and its result is
-  already delivered to bodies through one path
+- **Radial gravity / multiple gravity sources / planetary physics** — the
+  `GravityField` interface already takes a `worldPosition` and its result
+  is already delivered to bodies through one path
   (`PhysicsWorld::ApplyLinearAcceleration`) with no assumption about the
-  vector's direction. Making gravity radial or multi-source is a change
-  entirely inside `GravityField::Sample`'s implementation. See "Ownership
-  boundary" and "Current gravity."
+  vector's direction. Radial or multi-source gravity is a new class
+  implementing `GravityField` alongside `FaithfulGravity`, not a change to
+  `FaithfulGravity`, `PhysicsWorld`, or `Application`'s physics loop. See
+  "Ownership boundary" and "Current gravity."
 - **No universal up** — the only places world `+Y` means anything are
-  `Camera` (observational, documented as local convention) and today's
-  constant `GravityField` test vector (also documented as temporary).
-  Nothing in `PhysicsWorld` or `Renderer` treats any axis as special.
+  `Camera` (observational, documented as local convention) and
+  `FaithfulGravity`'s constant test vector (also documented as temporary,
+  and scoped to that one implementation). Nothing in `PhysicsWorld` or
+  `Renderer` treats any axis as special.
 - **Moving spacecraft reference frames** — `PhysicsWorld` bodies are
   addressed by an opaque `BodyHandle` and positioned in one shared world
   space; nothing about that prevents a future frame concept from sitting
@@ -392,7 +436,11 @@ blocking known future requirements. None of these are implemented yet.
 
 Explicitly deferred, not forgotten:
 
-- Planets, spherical/radial gravity, terrain (including Terrain-ML)
+- Planets, spherical/radial gravity, composite/multi-source gravity, or
+  any gravity-source registration system — the `GravityField` interface is
+  shaped to allow these as future implementations (see "Ownership
+  boundary"), but only `FaithfulGravity` exists today
+- Terrain (including Terrain-ML)
 - A player controller or any character physics
 - Moving reference frames, floating origin, astronomical coordinates,
   spacecraft
