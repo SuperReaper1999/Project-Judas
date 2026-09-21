@@ -62,6 +62,13 @@ public:
     glm::quat GetRenderOrientation() const;
     glm::vec3 GetRenderHalfExtents() const;
 
+    // Debug/inspection accessors — not used by the normal render/gameplay
+    // path, but useful for the test harness (src/TestHarness.h) to log
+    // state without a way to see the window.
+    glm::vec3 GetPosition() const { return m_position; }
+    glm::vec3 GetVelocity() const { return m_velocity; }
+    bool IsGrounded() const { return m_lastGrounded; }
+
 private:
     glm::vec3 ComputeLocalUp(const glm::vec3& gravityAcceleration) const;
     void UpdateFrameOrientation(const glm::vec3& localUp);
@@ -71,6 +78,7 @@ private:
     glm::vec3 m_position;          // capsule center, world space
     glm::vec3 m_velocity{0.0f};
     glm::quat m_frameOrientation;  // local frame: (m_frameOrientation * +Y) is the current local up
+    bool m_lastGrounded = false;   // support state as of the most recent FixedUpdate
 
     float m_yaw;
     float m_pitch = 0.0f;

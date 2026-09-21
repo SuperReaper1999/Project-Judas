@@ -148,9 +148,24 @@ void PlayerController::FixedUpdate(const Window& window, PhysicsWorld& physics,
     // Support comes only from an actual geometry query, never a height or
     // distance-from-center comparison: sweep a short distance opposite
     // localUp and see what's there. See docs/ARCHITECTURE.md, "Support."
+    //
+    // The probe distance (kGroundProbeDistance) is deliberately generous
+    // enough to keep catching the surface while standing still or walking,
+    // which means a single fixed step's jump departure (kJumpSpeed *
+    // fixedDeltaTime, a few centimeters) doesn't move the player outside
+    // its reach — so the probe alone would immediately "catch" the very
+    // next step after a jump and cancel it before any real arc happened.
+    // The fix is the standard one: a hit only counts as support if the
+    // player wasn't already moving away from the surface as of last
+    // step's velocity — once ascending, the probe is ignored until that
+    // stops being true, i.e. until gravity has actually turned the jump
+    // around.
+    const bool wasAscending = glm::dot(m_velocity, localUp) > 0.0f;
     const ShapeSweepHit groundHit =
         physics.SweepPlayerShape(m_position, m_frameOrientation, -localUp * kGroundProbeDistance);
-    const bool isGrounded = groundHit.hit && glm::dot(groundHit.normal, localUp) > kMinGroundDot;
+    const bool isGrounded =
+        !wasAscending && groundHit.hit && glm::dot(groundHit.normal, localUp) > kMinGroundDot;
+    m_lastGrounded = isGrounded;
 
     // Vertical speed along `localUp`: held at zero while supported (so
     // standing still doesn't accumulate fall speed into the ground every

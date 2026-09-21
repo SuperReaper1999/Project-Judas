@@ -1,5 +1,6 @@
 #include "Renderer.h"
 
+#include <algorithm>
 #include <cmath>
 #include <cstdio>
 #include <vector>
@@ -268,6 +269,29 @@ void Renderer::DrawSphere(const glm::vec3& position, float radius, const glm::ve
 
     glBindVertexArray(m_sphereVao);
     glDrawArrays(GL_TRIANGLES, 0, m_sphereVertexCount);
+}
+
+void Renderer::CaptureFrame(int width, int height, std::vector<unsigned char>& outRgbPixels) const {
+    const size_t rowBytes = static_cast<size_t>(width) * 3;
+    outRgbPixels.assign(rowBytes * static_cast<size_t>(height), 0);
+
+    // glReadPixels has no alignment padding to worry about here since 3
+    // bytes/pixel with typical widths doesn't need a custom GL_PACK_ALIGNMENT
+    // for this tool's purposes (rows are read directly into the output
+    // buffer, then flipped below).
+    glReadPixels(0, 0, width, height, GL_RGB, GL_UNSIGNED_BYTE, outRgbPixels.data());
+
+    // OpenGL's framebuffer origin is bottom-left; flip rows so row 0 of the
+    // output is the top of the image, matching ordinary image conventions.
+    std::vector<unsigned char> rowBuffer(rowBytes);
+    for (int row = 0; row < height / 2; ++row) {
+        unsigned char* top = outRgbPixels.data() + static_cast<size_t>(row) * rowBytes;
+        unsigned char* bottom =
+            outRgbPixels.data() + static_cast<size_t>(height - 1 - row) * rowBytes;
+        std::copy(top, top + rowBytes, rowBuffer.begin());
+        std::copy(bottom, bottom + rowBytes, top);
+        std::copy(rowBuffer.begin(), rowBuffer.end(), bottom);
+    }
 }
 
 void Renderer::EndFrame() {

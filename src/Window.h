@@ -29,7 +29,10 @@ public:
     Window(const Window&) = delete;
     Window& operator=(const Window&) = delete;
 
-    bool Init(const char* title, int width, int height);
+    // `visible = false` creates the window hidden (still a real, usable GL
+    // context — just not shown on screen) for the headless test harness
+    // (see src/TestHarness.h). The normal game loop always uses the default.
+    bool Init(const char* title, int width, int height, bool visible = true);
     void Shutdown();
 
     void PollEvents();
@@ -62,6 +65,20 @@ public:
     int Width() const { return m_width; }
     int Height() const { return m_height; }
 
+    // --- Test/automation input override ---
+    //
+    // Developer tooling only (see src/TestHarness.h) — not used by the
+    // normal interactive game loop. When enabled, IsActionActive,
+    // GetMouseDelta, ConsumeJumpRequest, and ConsumeResetRequest all return
+    // scripted values below instead of querying real SDL keyboard/mouse
+    // state, so an automated test can drive the engine deterministically
+    // without a human at the keyboard.
+    void SetTestInputMode(bool enabled);
+    void SetTestActionState(Action action, bool active);
+    void QueueTestMouseDelta(int deltaX, int deltaY);
+    void RequestTestJump();
+    void RequestTestReset();
+
 private:
     SDL_Window* m_window = nullptr;
     SDL_GLContext m_glContext = nullptr;
@@ -72,4 +89,15 @@ private:
     bool m_jumpRequested = false;
     int m_width = 0;
     int m_height = 0;
+
+    bool m_testInputMode = false;
+    bool m_testActionState[4] = {false, false, false, false};
+    // mutable: GetMouseDelta is const (it only ever mutates external SDL
+    // state in the non-test path), but test mode needs "read once, then
+    // drain to zero" semantics on its own queued delta, matching real
+    // mouse behavior.
+    mutable int m_testMouseDeltaX = 0;
+    mutable int m_testMouseDeltaY = 0;
+    bool m_testJumpRequested = false;
+    bool m_testResetRequested = false;
 };

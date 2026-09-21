@@ -4,6 +4,7 @@
 
 #include <algorithm>
 #include <cstdio>
+#include <cstdlib>
 
 #include <glm/glm.hpp>
 #include <glm/gtc/quaternion.hpp>
@@ -13,6 +14,7 @@
 #include "PlayerController.h"
 #include "RadicalGravity.h"
 #include "Renderer.h"
+#include "TestHarness.h"
 #include "Window.h"
 #include "gl_core33.h"
 
@@ -49,8 +51,16 @@ const glm::vec3 kPlayerColor(0.2f, 0.6f, 0.9f);
 }  // namespace
 
 int Application::Run() {
+    // Opt-in developer/automation tooling (see docs/ARCHITECTURE.md,
+    // "Automated testing," and src/TestHarness.h): when set, this run is a
+    // scripted, headless verification pass rather than the interactive
+    // game. Checked before Window::Init so the window can be created
+    // hidden — it's a real GL context either way, just not shown on screen.
+    const char* testScriptPath = std::getenv("JUDAS_TEST_SCRIPT");
+    const bool isTestRun = testScriptPath != nullptr;
+
     Window window;
-    if (!window.Init("Project Judas - Milestone 5", kWindowWidth, kWindowHeight)) {
+    if (!window.Init("Project Judas - Milestone 5", kWindowWidth, kWindowHeight, !isTestRun)) {
         std::fprintf(stderr, "Window initialization failed.\n");
         return 1;
     }
@@ -91,65 +101,80 @@ int Application::Run() {
         return 1;
     }
 
-    float physicsAccumulator = 0.0f;
+    // Shared between the normal interactive loop and the test harness, so
+    // a screenshot taken by the harness shows exactly what the real game
+    // would have rendered that frame.
+    const auto drawScene = [&](Renderer& r) {
+        r.DrawSphere(kSphereCenter, kSphereRadius, kSphereColor);
+        r.DrawBox(player.GetRenderCenter(), player.GetRenderOrientation(),
+                  player.GetRenderHalfExtents(), kPlayerColor);
+    };
 
-    const Uint64 frequency = SDL_GetPerformanceFrequency();
-    Uint64 previousCounter = SDL_GetPerformanceCounter();
+    int exitCode = 0;
+    if (isTestRun) {
+        exitCode =
+            RunTestHarness(window, renderer, physicsWorld, player, gravity, drawScene, testScriptPath);
+    } else {
+        float physicsAccumulator = 0.0f;
 
-    while (!window.ShouldClose()) {
-        window.PollEvents();
+        const Uint64 frequency = SDL_GetPerformanceFrequency();
+        Uint64 previousCounter = SDL_GetPerformanceCounter();
 
-        const Uint64 currentCounter = SDL_GetPerformanceCounter();
-        float frameDeltaTime =
-            static_cast<float>(currentCounter - previousCounter) / static_cast<float>(frequency);
-        previousCounter = currentCounter;
-        if (frameDeltaTime > kMaxFrameDeltaTime) {
-            frameDeltaTime = kMaxFrameDeltaTime;
+        while (!window.ShouldClose()) {
+            window.PollEvents();
+
+            const Uint64 currentCounter = SDL_GetPerformanceCounter();
+            float frameDeltaTime = static_cast<float>(currentCounter - previousCounter) /
+                                    static_cast<float>(frequency);
+            previousCounter = currentCounter;
+            if (frameDeltaTime > kMaxFrameDeltaTime) {
+                frameDeltaTime = kMaxFrameDeltaTime;
+            }
+
+            // Mouse look and jump-key latching happen every render frame,
+            // independent of how many fixed physics steps run this frame.
+            player.UpdateFrameInput(window);
+
+            if (window.ConsumeResetRequest()) {
+                player.Reset();
+                physicsAccumulator = 0.0f;
+            }
+
+            // Fixed-timestep physics: render-frame delta time only decides
+            // how many fixed steps run this frame, never the size of a
+            // step itself.
+            physicsAccumulator += frameDeltaTime;
+            int stepsThisFrame = 0;
+            while (physicsAccumulator >= kFixedTimestep &&
+                   stepsThisFrame < kMaxPhysicsStepsPerFrame) {
+                physicsWorld.Step(kFixedTimestep);
+                player.FixedUpdate(window, physicsWorld, gravity, kFixedTimestep);
+
+                physicsAccumulator -= kFixedTimestep;
+                ++stepsThisFrame;
+            }
+            if (stepsThisFrame == kMaxPhysicsStepsPerFrame) {
+                // Hit the catch-up cap: drop the backlog instead of
+                // letting it compound into future frames.
+                physicsAccumulator = 0.0f;
+            }
+
+            const int windowHeight = std::max(window.Height(), 1);
+            const float aspectRatio =
+                static_cast<float>(window.Width()) / static_cast<float>(windowHeight);
+
+            renderer.BeginFrame(window.Width(), window.Height());
+            renderer.SetCamera(player.GetViewMatrix(), player.GetProjectionMatrix(aspectRatio));
+            drawScene(renderer);
+            renderer.EndFrame();
+
+            window.SwapBuffers();
         }
-
-        // Mouse look and jump-key latching happen every render frame,
-        // independent of how many fixed physics steps run this frame.
-        player.UpdateFrameInput(window);
-
-        if (window.ConsumeResetRequest()) {
-            player.Reset();
-            physicsAccumulator = 0.0f;
-        }
-
-        // Fixed-timestep physics: render-frame delta time only decides how
-        // many fixed steps run this frame, never the size of a step itself.
-        physicsAccumulator += frameDeltaTime;
-        int stepsThisFrame = 0;
-        while (physicsAccumulator >= kFixedTimestep && stepsThisFrame < kMaxPhysicsStepsPerFrame) {
-            physicsWorld.Step(kFixedTimestep);
-            player.FixedUpdate(window, physicsWorld, gravity, kFixedTimestep);
-
-            physicsAccumulator -= kFixedTimestep;
-            ++stepsThisFrame;
-        }
-        if (stepsThisFrame == kMaxPhysicsStepsPerFrame) {
-            // Hit the catch-up cap: drop the backlog instead of letting it
-            // compound into future frames.
-            physicsAccumulator = 0.0f;
-        }
-
-        const int windowHeight = std::max(window.Height(), 1);
-        const float aspectRatio =
-            static_cast<float>(window.Width()) / static_cast<float>(windowHeight);
-
-        renderer.BeginFrame(window.Width(), window.Height());
-        renderer.SetCamera(player.GetViewMatrix(), player.GetProjectionMatrix(aspectRatio));
-        renderer.DrawSphere(kSphereCenter, kSphereRadius, kSphereColor);
-        renderer.DrawBox(player.GetRenderCenter(), player.GetRenderOrientation(),
-                          player.GetRenderHalfExtents(), kPlayerColor);
-        renderer.EndFrame();
-
-        window.SwapBuffers();
     }
 
     player.Destroy(physicsWorld);
     physicsWorld.DestroyBody(sphereBody);
     physicsWorld.Shutdown();
     renderer.Shutdown();
-    return 0;
+    return exitCode;
 }

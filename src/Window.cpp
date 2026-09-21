@@ -2,7 +2,7 @@
 
 #include <cstdio>
 
-bool Window::Init(const char* title, int width, int height) {
+bool Window::Init(const char* title, int width, int height, bool visible) {
     if (SDL_Init(SDL_INIT_VIDEO) != 0) {
         std::fprintf(stderr, "SDL_Init failed: %s\n", SDL_GetError());
         return false;
@@ -15,8 +15,11 @@ bool Window::Init(const char* title, int width, int height) {
     SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
     SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 24);
 
+    Uint32 windowFlags = SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE;
+    windowFlags |= visible ? SDL_WINDOW_SHOWN : SDL_WINDOW_HIDDEN;
+
     m_window = SDL_CreateWindow(title, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width,
-                                 height, SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE);
+                                 height, windowFlags);
     if (!m_window) {
         std::fprintf(stderr, "SDL_CreateWindow failed: %s\n", SDL_GetError());
         return false;
@@ -30,10 +33,13 @@ bool Window::Init(const char* title, int width, int height) {
 
     SDL_GL_SetSwapInterval(1);
 
-    // The demo controls a player with mouse look, so start with the mouse
-    // captured for immediate look control.
-    SDL_SetRelativeMouseMode(SDL_TRUE);
-    m_mouseCaptured = true;
+    if (visible) {
+        // The demo controls a player with mouse look, so start with the
+        // mouse captured for immediate look control. A hidden (test
+        // harness) window has no real cursor to capture.
+        SDL_SetRelativeMouseMode(SDL_TRUE);
+        m_mouseCaptured = true;
+    }
 
     m_width = width;
     m_height = height;
@@ -93,6 +99,10 @@ void Window::SwapBuffers() {
 }
 
 bool Window::IsActionActive(Action action) const {
+    if (m_testInputMode) {
+        return m_testActionState[static_cast<int>(action)];
+    }
+
     const Uint8* keys = SDL_GetKeyboardState(nullptr);
     switch (action) {
         case Action::MoveForward:
@@ -108,6 +118,14 @@ bool Window::IsActionActive(Action action) const {
 }
 
 void Window::GetMouseDelta(int& deltaX, int& deltaY) const {
+    if (m_testInputMode) {
+        deltaX = m_testMouseDeltaX;
+        deltaY = m_testMouseDeltaY;
+        m_testMouseDeltaX = 0;
+        m_testMouseDeltaY = 0;
+        return;
+    }
+
     // Always drain SDL's accumulator, even while not captured, so motion
     // that happened while the mouse was released doesn't reappear as a
     // jump the moment it's recaptured.
@@ -125,13 +143,44 @@ void Window::GetMouseDelta(int& deltaX, int& deltaY) const {
 }
 
 bool Window::ConsumeResetRequest() {
+    if (m_testInputMode) {
+        const bool requested = m_testResetRequested;
+        m_testResetRequested = false;
+        return requested;
+    }
     const bool requested = m_resetRequested;
     m_resetRequested = false;
     return requested;
 }
 
 bool Window::ConsumeJumpRequest() {
+    if (m_testInputMode) {
+        const bool requested = m_testJumpRequested;
+        m_testJumpRequested = false;
+        return requested;
+    }
     const bool requested = m_jumpRequested;
     m_jumpRequested = false;
     return requested;
+}
+
+void Window::SetTestInputMode(bool enabled) {
+    m_testInputMode = enabled;
+}
+
+void Window::SetTestActionState(Action action, bool active) {
+    m_testActionState[static_cast<int>(action)] = active;
+}
+
+void Window::QueueTestMouseDelta(int deltaX, int deltaY) {
+    m_testMouseDeltaX += deltaX;
+    m_testMouseDeltaY += deltaY;
+}
+
+void Window::RequestTestJump() {
+    m_testJumpRequested = true;
+}
+
+void Window::RequestTestReset() {
+    m_testResetRequested = true;
 }

@@ -35,6 +35,7 @@ PFNGLDELETESHADER glDeleteShader = nullptr;
 PFNGLDELETEPROGRAM glDeleteProgram = nullptr;
 PFNGLDELETEBUFFERS glDeleteBuffers = nullptr;
 PFNGLDELETEVERTEXARRAYS glDeleteVertexArrays = nullptr;
+PFNGLREADPIXELS glReadPixels = nullptr;
 
 namespace {
 
@@ -84,5 +85,6 @@ bool LoadGLFunctions() {
     ok &= LoadOne(glDeleteProgram, "glDeleteProgram");
     ok &= LoadOne(glDeleteBuffers, "glDeleteBuffers");
     ok &= LoadOne(glDeleteVertexArrays, "glDeleteVertexArrays");
+    ok &= LoadOne(glReadPixels, "glReadPixels");
     return ok;
 }

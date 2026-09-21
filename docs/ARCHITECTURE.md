@@ -64,9 +64,17 @@ matching GLSL's own conventions. MIT-licensed. Installed via the system
 package manager (`libglm-dev`).
 
 **Jolt Physics** (added in Milestone 3) — see "Physics middleware" below.
-No new dependency was added this milestone; Milestone 5's work is a
-narrower use of Jolt (low-level shape queries instead of its character
-controller), not a new library.
+Milestone 5's player work is a narrower use of Jolt (low-level shape
+queries instead of its character controller), not a new dependency.
+
+**stb_image_write** (added in Milestone 5, `third_party/stb_image_write.h`)
+— a single-header, dependency-free PNG/BMP/TGA/JPG/HDR writer, public
+domain/MIT dual-licensed. Used only by the opt-in test harness (see
+"Automated testing") to save screenshots; the normal game never calls it.
+Vendored directly (one file, ~1700 lines, no transitive dependencies)
+rather than fetched via CMake — writing an image file from raw pixels is
+as commodity a problem as they come, and a package manager or
+`FetchContent` step would add process for a single self-contained header.
 
 ## Physics middleware
 
@@ -621,6 +629,76 @@ files, reported honestly rather than selectively:
   transformed by whatever rotation the caller supplies — not a world-up
   assumption, unrelated to gravity or locomotion, out of this audit's scope
   because it isn't a gravity-aware code path.
+
+## Automated testing
+
+Claude Code (the AI agent developing this engine alongside its human
+maintainer) has no way to see Judas's real window or send it keyboard/mouse
+input in this environment — there is no desktop-control tool available, and
+the window's pixels aren't reachable through the usual screen-capture route
+under a Wayland session either. Milestone 5's validation split accordingly:
+Claude verified the build, the architecture, and gravity's own behavior in
+isolation, but every claim about how the player actually behaves on screen
+had to wait on the human operator.
+
+`src/TestHarness.h/.cpp` closes most of that gap, permanently, for every
+milestone after this one — it is developer/automation tooling, not part of
+the game itself, and the normal interactive loop never touches it.
+
+**What it does:** when the `JUDAS_TEST_SCRIPT` environment variable is set
+to a script file's path, `Application::Run` creates the window *hidden*
+(`Window::Init`'s `visible` parameter — a real GL context, just not shown
+on screen) and hands off to `RunTestHarness` instead of the interactive
+loop. The harness runs a fixed number of physics steps as fast as
+possible — no real-time pacing, no vsync wait — driving `Window`'s input
+from the script (`Window::SetTestActionState`/`QueueTestMouseDelta`/
+`RequestTestJump`/`RequestTestReset`, all gated behind
+`SetTestInputMode(true)` so they touch nothing in the normal SDL input
+path) instead of a real keyboard/mouse. It prints one CSV line of player
+state (position, local up, grounded, velocity) per step to stdout, and, at
+any step the script names, renders the actual scene (through a `drawScene`
+callback `Application` supplies, since the harness itself has no idea what
+a "sphere" or a "player box" is) and writes it to a PNG via
+`Renderer::CaptureFrame` + the vendored `stb_image_write.h` (public
+domain/MIT, `third_party/stb_image_write.h` — writing images is a solved
+commodity problem, and this single dependency-free header was preferred
+over inventing a PNG encoder or adding a fetched dependency for something
+this small).
+
+The script format (one directive per line, `#` for comments) is
+deliberately minimal — `STEPS`, `LOG_EVERY`, `HOLD <key> <from> <to>`,
+`LOOK <dx> <dy> <atStep>`, `TAP <SPACE|R> <atStep>`, `SCREENSHOT <atStep>
+<file>` — exactly the primitives needed to script a walk/jump/look
+sequence, not a general input-recording or automation language.
+
+**It already found a real bug the first time it was used.** Milestone 5's
+initial jump implementation set the player's vertical velocity to
+`kJumpSpeed` on a grounded step, but the very next fixed step's ground
+probe (`kGroundProbeDistance = 0.15m`) reached further than that single
+step's outward travel at jump speed (`kJumpSpeed * fixedDeltaTime ≈
+0.083m`), so the probe immediately "found" the surface again and the
+grounded logic reset vertical speed back to zero — the jump collapsed into
+a barely-visible ~0.08m hop instead of a real arc. The state log made this
+unambiguous in a way a screenshot alone would not have (a 0.08m hop and a
+1.3m jump can look similar from some camera angles): `grounded` never
+dropped to `0` after the tap, and the distance-from-surface for the next
+several logged steps was far smaller than a 5 m/s launch should produce.
+The fix — a ground hit only counts as support if the player wasn't already
+moving away from the surface as of last step's velocity
+(`PlayerController::FixedUpdate`'s `wasAscending` check) — is the standard
+solution to this class of bug in any step-based character controller. This
+matched what the operator had independently noticed by hand, but the
+harness found and pinpointed it first, without anyone needing to watch the
+window.
+
+**What it deliberately is not:** a general test framework, a CI system, a
+replacement for the operator's own interactive pass, or a visual-diffing
+tool. It has no assertions of its own — reading the CSV output and looking
+at the PNGs is still a human (or Claude) judgment call, the same as
+reading any other diagnostic log. Extending it (new script directives,
+automatic pass/fail checks against expected values) should wait until a
+specific future milestone actually needs that, not be built speculatively
+now.
 
 ## FUTURE CONSTRAINTS PRESERVED
 

@@ -42,9 +42,17 @@ add_executable(judas
     src/FaithfulGravity.cpp
     src/RadicalGravity.cpp
     src/PhysicsWorld.cpp
+    src/TestHarness.cpp
     src/gl_core33.cpp
 )
 
 target_include_directories(judas PRIVATE ${SDL2_INCLUDE_DIRS})
 target_link_libraries(judas PRIVATE SDL2::SDL2 glm::glm-header-only Jolt)
 target_compile_options(judas PRIVATE -Wall -Wextra)
+
+# stb_image_write (public domain / MIT, see third_party/stb_image_write.h) —
+# used only by the opt-in test harness (src/TestHarness.cpp) to write
+# screenshots to PNG. A single vendored header, not fetched via CMake:
+# writing images is a solved commodity problem and the file has no
+# dependencies of its own, so there is nothing for a package manager or
+# FetchContent to add value over just committing the one file.

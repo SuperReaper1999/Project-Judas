@@ -2,13 +2,15 @@
 
 // Minimal hand-written OpenGL 3.3 core function loader.
 //
-// We declare only the ~30 GL entry points Milestone 1 actually calls, and
+// We declare only the ~35 GL entry points the engine actually calls, and
 // resolve them at runtime via SDL_GL_GetProcAddress (see gl_core33.cpp).
 // This avoids pulling in a full loader-generator (glad/GLEW) and its build
-// or network-fetch step for a surface this small. When later milestones
-// need a much larger GL surface (textures, framebuffers, compute, etc.),
-// replace this file with a generated glad loader instead of growing it by
-// hand indefinitely.
+// or network-fetch step for a surface this small. This decision is
+// re-evaluated each time new GL surface is needed (see docs/ARCHITECTURE.md)
+// and kept deliberately each time so far; when a future milestone needs a
+// much larger GL surface (textures, framebuffers, compute, etc.), replace
+// this file with a generated glad loader instead of growing it by hand
+// indefinitely.
 
 #include <cstddef>
 
@@ -38,6 +40,8 @@ constexpr GLenum GL_FRAGMENT_SHADER = 0x8B30;
 constexpr GLenum GL_COMPILE_STATUS = 0x8B81;
 constexpr GLenum GL_LINK_STATUS = 0x8B82;
 constexpr GLenum GL_INFO_LOG_LENGTH = 0x8B84;
+constexpr GLenum GL_RGB = 0x1907;
+constexpr GLenum GL_UNSIGNED_BYTE = 0x1401;
 
 using PFNGLVIEWPORT = void (*)(GLint, GLint, GLsizei, GLsizei);
 using PFNGLCLEARCOLOR = void (*)(GLfloat, GLfloat, GLfloat, GLfloat);
@@ -71,6 +75,7 @@ using PFNGLDELETESHADER = void (*)(GLuint);
 using PFNGLDELETEPROGRAM = void (*)(GLuint);
 using PFNGLDELETEBUFFERS = void (*)(GLsizei, const GLuint*);
 using PFNGLDELETEVERTEXARRAYS = void (*)(GLsizei, const GLuint*);
+using PFNGLREADPIXELS = void (*)(GLint, GLint, GLsizei, GLsizei, GLenum, GLenum, void*);
 
 extern PFNGLVIEWPORT glViewport;
 extern PFNGLCLEARCOLOR glClearColor;
@@ -104,6 +109,7 @@ extern PFNGLDELETESHADER glDeleteShader;
 extern PFNGLDELETEPROGRAM glDeleteProgram;
 extern PFNGLDELETEBUFFERS glDeleteBuffers;
 extern PFNGLDELETEVERTEXARRAYS glDeleteVertexArrays;
+extern PFNGLREADPIXELS glReadPixels;
 
 // Resolves every function pointer above via SDL_GL_GetProcAddress.
 // Must be called after an OpenGL context is current. Returns false (and

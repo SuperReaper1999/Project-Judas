@@ -80,6 +80,17 @@ walks the player relative to that look direction and the sphere's surface
 
 Close the window normally (window controls / `Alt+F4` / etc.) to exit.
 
+## Automated testing (developer tooling)
+
+Judas can also run headlessly, driven by a scripted input sequence instead
+of a real keyboard/mouse, logging player state and optionally dumping
+screenshots — see [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md#automated-testing)
+for the full script format:
+
+```bash
+JUDAS_TEST_SCRIPT=path/to/script.txt ./build/judas
+```
+
 ## License
 
 MIT — see [`LICENSE`](LICENSE). Do what you like with it.

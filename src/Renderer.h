@@ -1,5 +1,7 @@
 #pragma once
 
+#include <vector>
+
 #include <glm/glm.hpp>
 #include <glm/gtc/quaternion.hpp>
 
@@ -41,6 +43,14 @@ public:
     void DrawSphere(const glm::vec3& position, float radius, const glm::vec3& colorRgb);
 
     void EndFrame();
+
+    // Reads back the current color buffer as tightly-packed 8-bit RGB rows,
+    // top row first (`glReadPixels` itself returns bottom row first — this
+    // flips it, since that's what every common image format/library
+    // expects). Developer tooling only (see src/TestHarness.h) — nothing
+    // in the normal game loop calls this; it exists so the engine's actual
+    // rendered output can be inspected without a way to see the window.
+    void CaptureFrame(int width, int height, std::vector<unsigned char>& outRgbPixels) const;
 
 private:
     GLuint m_shaderProgram = 0;
