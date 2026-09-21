@@ -51,6 +51,11 @@
 //                                    (see "Real-time mode" below); HOLD/
 //                                    LOOK/TAP step numbers then mean
 //                                    render-frame index, not fixed-step index
+//   SAMPLE_GRAVITY <x> <y> <z>       (Milestone 7-B) print the effective
+//                                    GravityField result at an arbitrary
+//                                    world position, independent of the
+//                                    player/step loop — see "Gravity
+//                                    sampling" below
 namespace {
 
 Action ParseHoldKey(const std::string& key, bool& outOk) {
@@ -91,6 +96,7 @@ struct Script {
     std::vector<LookEvent> looks;
     std::vector<TapEvent> taps;
     std::vector<ScreenshotEvent> screenshots;
+    std::vector<glm::vec3> gravitySamples;
 };
 
 bool LoadScript(const std::string& path, Script& outScript) {
@@ -146,6 +152,10 @@ bool LoadScript(const std::string& path, Script& outScript) {
         } else if (directive == "REALTIME") {
             outScript.realtime = true;
             iss >> outScript.renderFrames;
+        } else if (directive == "SAMPLE_GRAVITY") {
+            float x = 0.0f, y = 0.0f, z = 0.0f;
+            iss >> x >> y >> z;
+            outScript.gravitySamples.push_back(glm::vec3(x, y, z));
         } else {
             std::fprintf(stderr, "[TestHarness] Unknown directive: %s\n", directive.c_str());
         }
@@ -172,6 +182,23 @@ void PrintDynamicBodyRowColumns(const std::vector<DynamicBody>& bodies,
         const glm::vec3 pos = body.GetPosition();
         const glm::vec3 vel = physics.GetLinearVelocity(body.Handle());
         std::printf(",%.4f,%.4f,%.4f,%.4f,%.4f,%.4f", pos.x, pos.y, pos.z, vel.x, vel.y, vel.z);
+    }
+}
+
+// Milestone 7-B: prints the effective GravityField result at each
+// SAMPLE_GRAVITY point, independent of the player or the step loop — lets
+// a script probe GravityResolver's spatial behavior directly (endpoints
+// deep inside each zone, and a dense sweep through the transition region)
+// without needing the player to physically be there. Printed once, before
+// the main step/frame loop, since it doesn't depend on simulation state.
+void PrintGravitySamples(const GravityField& gravity, const std::vector<glm::vec3>& points) {
+    if (points.empty()) return;
+    std::printf("sample,posX,posY,posZ,gravX,gravY,gravZ,gravMag\n");
+    for (std::size_t i = 0; i < points.size(); ++i) {
+        const glm::vec3& p = points[i];
+        const glm::vec3 g = gravity.Sample(p);
+        std::printf("%zu,%.4f,%.4f,%.4f,%.8f,%.8f,%.8f,%.8f\n", i, p.x, p.y, p.z, g.x, g.y, g.z,
+                    glm::length(g));
     }
 }
 
@@ -210,7 +237,7 @@ int RunFixedStepMode(Window& window, Renderer& renderer, PhysicsWorld& physicsWo
                       std::vector<DynamicBody>& dynamicBodies,
                       const std::function<void(Renderer&, float)>& drawScene,
                       const Script& script) {
-    std::printf("step,time,posX,posY,posZ,upX,upY,upZ,grounded,velX,velY,velZ");
+    std::printf("step,time,posX,posY,posZ,upX,upY,upZ,grounded,velX,velY,velZ,gravX,gravY,gravZ");
     PrintDynamicBodyHeaderColumns(dynamicBodies.size());
     std::printf("\n");
 
@@ -250,9 +277,11 @@ int RunFixedStepMode(Window& window, Renderer& renderer, PhysicsWorld& physicsWo
             const glm::vec3 pos = player.GetPosition();
             const glm::vec3 vel = player.GetVelocity();
             const glm::vec3 up = player.GetOrientation() * glm::vec3(0.0f, 1.0f, 0.0f);
-            std::printf("%d,%.4f,%.4f,%.4f,%.4f,%.4f,%.4f,%.4f,%d,%.4f,%.4f,%.4f", step,
-                        step * SimulationTiming::kFixedTimestep, pos.x, pos.y, pos.z, up.x, up.y,
-                        up.z, player.IsGrounded() ? 1 : 0, vel.x, vel.y, vel.z);
+            const glm::vec3 grav = gravity.Sample(pos);
+            std::printf("%d,%.4f,%.4f,%.4f,%.4f,%.4f,%.4f,%.4f,%d,%.4f,%.4f,%.4f,%.6f,%.6f,%.6f",
+                        step, step * SimulationTiming::kFixedTimestep, pos.x, pos.y, pos.z, up.x,
+                        up.y, up.z, player.IsGrounded() ? 1 : 0, vel.x, vel.y, vel.z, grav.x,
+                        grav.y, grav.z);
             PrintDynamicBodyRowColumns(dynamicBodies, physicsWorld);
             std::printf("\n");
         }
@@ -288,7 +317,7 @@ int RunRealtimeMode(Window& window, Renderer& renderer, PhysicsWorld& physicsWor
     // on a zero-step frame.
     std::printf(
         "frame,wallDeltaMs,stepsThisFrame,alpha,posX,posY,posZ,upX,upY,upZ,presX,presY,presZ,"
-        "presUpX,presUpY,presUpZ,grounded");
+        "presUpX,presUpY,presUpZ,grounded,gravX,gravY,gravZ");
     PrintDynamicBodyHeaderColumns(dynamicBodies.size());
     std::printf("\n");
 
@@ -364,11 +393,12 @@ int RunRealtimeMode(Window& window, Renderer& renderer, PhysicsWorld& physicsWor
         const glm::vec3 presPos = player.GetPresentedPosition(presentationAlpha);
         const glm::vec3 presUp =
             player.GetPresentedOrientation(presentationAlpha) * glm::vec3(0.0f, 1.0f, 0.0f);
+        const glm::vec3 grav = gravity.Sample(pos);
         std::printf("%d,%.4f,%d,%.4f,%.4f,%.4f,%.4f,%.4f,%.4f,%.4f,%.4f,%.4f,%.4f,%.4f,%.4f,%.4f,"
-                    "%d",
+                    "%d,%.6f,%.6f,%.6f",
                     frame, frameDeltaTime * 1000.0f, stepsThisFrame, presentationAlpha, pos.x,
                     pos.y, pos.z, up.x, up.y, up.z, presPos.x, presPos.y, presPos.z, presUp.x,
-                    presUp.y, presUp.z, player.IsGrounded() ? 1 : 0);
+                    presUp.y, presUp.z, player.IsGrounded() ? 1 : 0, grav.x, grav.y, grav.z);
         PrintDynamicBodyRowColumns(dynamicBodies, physicsWorld);
         std::printf("\n");
 
@@ -389,6 +419,8 @@ int RunTestHarness(Window& window, Renderer& renderer, PhysicsWorld& physicsWorl
     if (!LoadScript(scriptPath, script)) {
         return 1;
     }
+
+    PrintGravitySamples(gravity, script.gravitySamples);
 
     window.SetTestInputMode(true);
 

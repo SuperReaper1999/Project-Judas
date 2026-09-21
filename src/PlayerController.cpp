@@ -41,6 +41,14 @@ constexpr float kSkinMargin = 0.02f;           // stay this far from a surface a
 constexpr float kGroundProbeDistance = 0.15f;  // how far past the capsule to look for support
 constexpr float kMinGroundDot = 0.643f;        // cos(~50 degrees): matches Milestone 4's slope limit
 
+// Milestone 7-B: caps how fast the player's local frame can reorient in
+// response to a changing effective gravity direction — see
+// UpdateFrameOrientation for why this is needed now (GravityResolver can
+// swing the blended direction quickly near the edge of a zone's
+// influence) and why it's a rotation-rate cap rather than a
+// gravity-magnitude threshold.
+constexpr float kMaxReorientationDegreesPerSecond = 120.0f;
+
 // Returns the shortest-arc rotation that takes unit vector `from` to unit
 // vector `to`. Used once per fixed step to keep the player's local frame
 // tracking a changing gravity direction — see UpdateFrameOrientation. Not a
@@ -120,9 +128,37 @@ glm::vec3 PlayerController::ComputeLocalUp(const glm::vec3& gravityAcceleration)
     return -(gravityAcceleration / length);
 }
 
-void PlayerController::UpdateFrameOrientation(const glm::vec3& localUp) {
+void PlayerController::UpdateFrameOrientation(const glm::vec3& localUp, float fixedDeltaTime) {
     const glm::vec3 currentUp = m_frameOrientation * glm::vec3(0.0f, 1.0f, 0.0f);
-    const glm::quat delta = RotationBetweenUnitVectors(currentUp, localUp);
+    glm::quat delta = RotationBetweenUnitVectors(currentUp, localUp);
+
+    // Cap how far the frame can reorient in one fixed step. Milestones
+    // 3-7-A never needed this: a single GravityField's direction only
+    // ever changed as a smooth function of position, so the full
+    // per-step realignment above was already imperceptibly small change
+    // to change every step. Milestone 7-B's GravityResolver breaks that
+    // assumption — blending near the edge of two zones' influence, where
+    // both weights are small, can shift the blended DIRECTION by a large
+    // angle over a small change in position (see docs/ARCHITECTURE.md,
+    // "Transition semantics," for the measured case: an 85-degree
+    // single-step swing was observed and reproduced before this fix).
+    // Rather than guess at some gravity-magnitude threshold below which
+    // to distrust a sample — which would embed assumption about a
+    // concrete GravityField's typical magnitude into supposedly
+    // implementation-agnostic code, exactly what this class must not do
+    // — bounding the ROTATION RATE itself needs no such assumption: it's
+    // a pure kinematic limit on how fast the player's own sense of "up"
+    // can physically change, regardless of why the target moved. Chosen
+    // generously relative to ordinary gameplay (walking around this
+    // demo's sphere at full speed turns local up at roughly 11
+    // degrees/second) so it is never perceptible as sluggishness there,
+    // while still meaningfully bounding a transition-region swing.
+    const float maxRadiansThisStep = glm::radians(kMaxReorientationDegreesPerSecond) * fixedDeltaTime;
+    const float deltaAngle = glm::angle(delta);
+    if (deltaAngle > maxRadiansThisStep) {
+        delta = glm::angleAxis(maxRadiansThisStep, glm::axis(delta));
+    }
+
     m_frameOrientation = glm::normalize(delta * m_frameOrientation);
 }
 
@@ -161,7 +197,7 @@ void PlayerController::FixedUpdate(const Window& window, PhysicsWorld& physics,
 
     const glm::vec3 acceleration = gravity.Sample(m_position);
     const glm::vec3 localUp = ComputeLocalUp(acceleration);
-    UpdateFrameOrientation(localUp);
+    UpdateFrameOrientation(localUp, fixedDeltaTime);
 
     // Support comes only from an actual geometry query, never a height or
     // distance-from-center comparison: sweep a short distance opposite
@@ -185,26 +221,42 @@ void PlayerController::FixedUpdate(const Window& window, PhysicsWorld& physics,
         !wasAscending && groundHit.hit && glm::dot(groundHit.normal, localUp) > kMinGroundDot;
     m_lastGrounded = isGrounded;
 
-    // Vertical speed along `localUp`: held at zero while supported (so
-    // standing still doesn't accumulate fall speed into the ground every
-    // step), otherwise carried over from last step, then gravity is
-    // integrated in either case — same velocity += acceleration*dt pattern
-    // PhysicsWorld uses for ordinary bodies, just projected onto localUp so
-    // it never fights the horizontal intent below.
-    float verticalSpeed = (isGrounded ? 0.0f : glm::dot(m_velocity, localUp)) +
-                          glm::dot(acceleration, localUp) * fixedDeltaTime;
-
     // A jump only ever begins while actually supported, per this step's own
     // geometry query — never a height comparison. Once consumed, the
-    // request is cleared unconditionally: a jump attempt made while
+    // request is cleared unconditionally below: a jump attempt made while
     // airborne is discarded, not buffered until landing.
-    if (isGrounded && m_jumpRequested) {
-        verticalSpeed = kJumpSpeed;
+    if (isGrounded) {
+        // Grounded: instant, WASD-driven horizontal control — unchanged
+        // since Milestone 4, so direction changes feel immediate, never a
+        // build-up/carry-over. Vertical speed is held at (near) zero plus
+        // the same small per-step gravity nudge that's always been here
+        // (what keeps the player glued to a curved surface between
+        // steps — see "Locomotion," "Contact normal correctness"); a
+        // jump overrides it outright.
+        const glm::vec3 horizontalVelocity = ComputeTangentVelocity(window, localUp);
+        float verticalSpeed = glm::dot(acceleration, localUp) * fixedDeltaTime;
+        if (m_jumpRequested) {
+            verticalSpeed = kJumpSpeed;
+        }
+        m_velocity = horizontalVelocity + localUp * verticalSpeed;
+    } else {
+        // Airborne: ordinary integration of the FULL velocity vector —
+        // not just its component along localUp, and WASD input is not
+        // consulted at all. Milestone 7-B, "Velocity continuity": once
+        // effective gravity can rotate substantially while airborne (a
+        // gravity-context transition crossed mid-flight — the entire
+        // point of this milestone), recomputing "horizontal" velocity
+        // fresh from current WASD input every step (as the grounded
+        // branch correctly does) would silently discard whatever part of
+        // the player's existing momentum had become "tangential" to
+        // gravity's new direction — exactly the kind of arbitrary
+        // velocity destruction the brief forbids. Every previous
+        // milestone's gravity direction changed slowly enough in the air
+        // (a normal jump's brief arc) that this was never visible. See
+        // docs/ARCHITECTURE.md, "Velocity continuity."
+        m_velocity += acceleration * fixedDeltaTime;
     }
     m_jumpRequested = false;
-
-    const glm::vec3 horizontalVelocity = ComputeTangentVelocity(window, localUp);
-    m_velocity = horizontalVelocity + localUp * verticalSpeed;
 
     // Judas's own minimal move-and-slide: never trust a raw transform
     // write, always resolve displacement against Jolt's collision query.

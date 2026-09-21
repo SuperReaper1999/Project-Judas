@@ -12,7 +12,9 @@
 #include <glm/gtc/quaternion.hpp>
 
 #include "DynamicBody.h"
+#include "FaithfulGravity.h"
 #include "GravityField.h"
+#include "GravityResolver.h"
 #include "PhysicsWorld.h"
 #include "PlayerController.h"
 #include "RadicalGravity.h"
@@ -28,10 +30,11 @@ constexpr int kWindowHeight = 768;
 
 // Milestone 5's demo: a spherical world with radial gravity, replacing
 // Milestone 3/4's flat floor + cube (recoverable via the milestone-4 tag).
-// A flat-gravity floor and a radial-gravity sphere active in the same scene
-// would be physically incoherent — the demo picks ONE active GravityField
-// (see docs/ARCHITECTURE.md, "Gravity implementations"), and this milestone's
-// point is specifically to exercise the non-flat one.
+// As of Milestone 7-B, a second, genuinely simultaneous FaithfulGravity
+// environment also exists (see kPlatform* below and
+// docs/ARCHITECTURE.md, "Gravity resolution") — GravityResolver, not this
+// file, is what makes both coherent at once; Application still only ever
+// constructs the concrete implementations and wires them up.
 //
 // The radius grew from Milestone 5/6's 8m to 20m in Milestone 7-A — still a
 // small hand-authored test world, not a planet, but large enough to give a
@@ -51,7 +54,9 @@ constexpr float kRadicalGravityMagnitude = 9.81f;
 // Spawned above the sphere so the player visibly falls onto it. The
 // demo/composition-root layer is allowed to know the sphere exists;
 // PlayerController itself never does — see docs/ARCHITECTURE.md, "Spherical
-// physical test world."
+// physical test world." Unchanged from Milestone 5-7-A — see
+// kSphereGravityZoneCenter below for why Milestone 7-B's escape mechanism
+// doesn't require touching this.
 const glm::vec3 kPlayerSpawnPosition = kSphereCenter + glm::vec3(0.0f, kSphereRadius + 3.0f, 0.0f);
 constexpr float kPlayerSpawnYawDegrees = -90.0f;
 const glm::vec3 kPlayerColor(0.2f, 0.6f, 0.9f);
@@ -134,6 +139,82 @@ std::vector<DynamicBody> SpawnDynamicObjects(PhysicsWorld& physics) {
     }
     return bodies;
 }
+
+// --- Milestone 7-B: flat FaithfulGravity environment ---
+//
+// A second, simultaneously-active physical environment — demo/composition-
+// root data only, exactly like the sphere above. Positioned near the
+// sphere's "equator," along +Z specifically — not +X or +Y, which would
+// put it near existing Milestone 7-A dynamic-object spawns (see
+// kDynamicObjectSpawns above); +Z is otherwise unused — and deliberately
+// not near a pole, so a departing player experiences a dramatically
+// different local-up once FaithfulGravity takes over (see
+// docs/ARCHITECTURE.md, "Demonstration environment"). At the player's
+// default spawn orientation, reaching it is a plain strafe-right (`D`),
+// not a turn: `right = cross(forward, up)` at spawn's yaw already points
+// along +Z.
+//
+// The platform's own top surface sits below the world-space height its
+// influence zone is centered on, so a player entering that zone from
+// roughly the same height still has some room to visibly fall the last
+// stretch under FaithfulGravity before landing — not snapped or teleported
+// onto it (see docs/ARCHITECTURE.md, "Support remains physical").
+const glm::vec3 kPlatformCenter(0.0f, -3.0f, 38.0f);
+const glm::vec3 kPlatformHalfExtents(12.0f, 1.0f, 12.0f);
+const glm::vec3 kPlatformColor(0.5f, 0.5f, 0.55f);
+constexpr float kPlatformFriction = 0.8f;
+constexpr float kPlatformRestitution = 0.1f;
+
+// GravityResolver zone parameters (see docs/ARCHITECTURE.md, "Gravity
+// resolution" and "Transition semantics" for the full derivation,
+// including the two dead ends this replaced). Sized by simulating
+// GravityResolver's exact algorithm against the player's real jump speed
+// (5 m/s) and RadicalGravity's real 9.81 m/s^2 magnitude — not guessed:
+//
+// - A jump launched straight outward only ever reaches ~1.27m against
+//   undiminished 9.81 m/s^2 deceleration (v^2 = u^2 - 2*a*d), so *some*
+//   weakening of the sphere's own gravity within that reach is
+//   mathematically unavoidable for escape to be possible via an ordinary
+//   jump at all — no placement of the platform changes this, since
+//   FaithfulGravity's direction is always exactly -Y and can never have a
+//   component that assists outward (away-from-sphere-center) motion.
+// - That weakening must NOT be uniform across the whole sphere (measuring
+//   distance from the sphere's own center, kSphereCenter, does exactly
+//   that): reproduced directly — an ordinary standing jump taken at
+//   *spawn*, nowhere near the platform, escaped into the near-zero-gravity
+//   region and never came back down. So kSphereGravityZoneCenter is NOT
+//   kSphereCenter — it's a point 50m in -Z, far on the opposite side from
+//   the platform. RadicalGravity's own direction/magnitude still always
+//   comes from the sphere's true center (kSphereCenter) unchanged; only
+//   this zone's WEIGHT is measured from the offset point, which is what
+//   makes the falloff spatially localized to the departure/platform-facing
+//   region instead of affecting the entire sphere: verified directly that
+//   spawn, all four Milestone 7-A dynamic-object spawns, and the departure
+//   region's own antipode all remain at exactly full (1.0) weight, while
+//   only the vicinity of the departure point fades at all.
+// - The platform zone's own outer radius must NOT reach the sphere's true
+//   surface at the departure point, or the player's local-up starts
+//   tilting away from the sphere's true surface normal before they even
+//   leave the ground — which silently breaks the *grounded* check the
+//   jump itself depends on (a jump only ever begins while supported; see
+//   PlayerController::FixedUpdate), so the jump never fires at all.
+//
+// Verified (not just derived): jump speeds from 4.0 to 6.0 m/s all
+// successfully land on the platform; a spawn-area jump, far from the
+// departure point, now returns to the sphere exactly as it always has;
+// gravity at the platform's own surface remains exactly pure FaithfulGravity
+// — see docs/ARCHITECTURE.md, "Transition semantics," for the full numbers.
+// Falloff centers/radii are demo composition data, exactly like the
+// sphere/platform geometry above — GravityResolver itself has no idea any
+// of this corresponds to "a sphere" and "a platform," only points and
+// distances.
+const glm::vec3 kSphereGravityZoneCenter = kSphereCenter + glm::vec3(0.0f, 0.0f, -50.0f);
+constexpr float kSphereGravityZoneInnerRadius = 70.6f;
+constexpr float kSphereGravityZoneOuterRadius = 71.9f;
+
+const glm::vec3 kPlatformGravityZoneCenter = kPlatformCenter + glm::vec3(0.0f, kPlatformHalfExtents.y, 0.0f);
+constexpr float kPlatformGravityZoneInnerRadius = 8.0f;
+constexpr float kPlatformGravityZoneOuterRadius = 16.0f;
 }  // namespace
 
 int Application::Run() {
@@ -146,7 +227,7 @@ int Application::Run() {
     const bool isTestRun = testScriptPath != nullptr;
 
     Window window;
-    if (!window.Init("Project Judas - Milestone 7-A", kWindowWidth, kWindowHeight, !isTestRun)) {
+    if (!window.Init("Project Judas - Milestone 7-B", kWindowWidth, kWindowHeight, !isTestRun)) {
         std::fprintf(stderr, "Window initialization failed.\n");
         return 1;
     }
@@ -168,18 +249,30 @@ int Application::Run() {
         return 1;
     }
 
-    // Application (the composition root) is the one place that knows the
-    // concrete gravity implementation. Everything downstream — the player
-    // controller included — talks to it only through the GravityField
-    // interface. Swapping FaithfulGravity for RadicalGravity here is the
-    // entire change needed to move from Milestone 3/4's flat world to this
-    // milestone's spherical one; nothing else in the engine knows which
-    // implementation is active.
+    // Application (the composition root) is the one place that knows which
+    // concrete gravity implementations exist and where each is active.
+    // Milestone 5 proved a consumer needs zero changes when the ONE active
+    // implementation changes; Milestone 7-B proves the same is true when
+    // MORE THAN ONE is simultaneously active and a consumer can move
+    // between them — GravityResolver (itself a GravityField, see
+    // src/GravityResolver.h and docs/ARCHITECTURE.md, "Gravity
+    // resolution") is the only new piece, and it's the only thing bound to
+    // `gravity` below. RadicalGravity/FaithfulGravity are constructed
+    // exactly as before and never touch each other or know a resolver
+    // exists.
     RadicalGravity radicalGravity(kSphereCenter, kRadicalGravityMagnitude);
-    GravityField& gravity = radicalGravity;
+    FaithfulGravity flatGravity;
+    GravityResolver gravityResolver;
+    gravityResolver.AddZone(radicalGravity, kSphereGravityZoneCenter, kSphereGravityZoneInnerRadius,
+                             kSphereGravityZoneOuterRadius);
+    gravityResolver.AddZone(flatGravity, kPlatformGravityZoneCenter, kPlatformGravityZoneInnerRadius,
+                             kPlatformGravityZoneOuterRadius);
+    GravityField& gravity = gravityResolver;
 
     const BodyHandle sphereBody = physicsWorld.CreateStaticSphere(
         kSphereCenter, kSphereRadius, kSphereFriction, kSphereRestitution);
+    const BodyHandle platformBody = physicsWorld.CreateStaticBox(
+        kPlatformCenter, kPlatformHalfExtents, kPlatformFriction, kPlatformRestitution);
 
     PlayerController player(kPlayerSpawnPosition, kPlayerSpawnYawDegrees);
     if (!player.Spawn(physicsWorld)) {
@@ -206,6 +299,8 @@ int Application::Run() {
     // GetPresentedPosition/Orientation.
     const auto drawScene = [&](Renderer& r, float presentationAlpha) {
         r.DrawSphere(kSphereCenter, kSphereRadius, kSphereColor);
+        r.DrawBox(kPlatformCenter, glm::quat(1.0f, 0.0f, 0.0f, 0.0f), kPlatformHalfExtents,
+                  kPlatformColor);
         r.DrawBox(player.GetPresentedPosition(presentationAlpha),
                   player.GetPresentedOrientation(presentationAlpha), player.GetRenderHalfExtents(),
                   kPlayerColor);
@@ -313,6 +408,7 @@ int Application::Run() {
         physicsWorld.DestroyBody(body.Handle());
     }
     physicsWorld.DestroyBody(sphereBody);
+    physicsWorld.DestroyBody(platformBody);
     physicsWorld.Shutdown();
     renderer.Shutdown();
     return exitCode;

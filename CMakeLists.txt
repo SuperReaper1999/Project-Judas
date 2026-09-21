@@ -42,6 +42,7 @@ add_executable(judas
     src/DynamicBody.cpp
     src/FaithfulGravity.cpp
     src/RadicalGravity.cpp
+    src/GravityResolver.cpp
     src/PhysicsWorld.cpp
     src/TestHarness.cpp
     src/gl_core33.cpp

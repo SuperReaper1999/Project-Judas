@@ -8,7 +8,7 @@ This is **not** a general-purpose engine and is not trying to compete with
 Unity, Unreal, or Godot. It exists to serve one specific class of game, and
 its architecture is deliberately narrow.
 
-## Status: Milestone 7-A
+## Status: Milestone 7-B
 
 A controllable player walks, jumps, and falls under real physics
 ([Jolt Physics](https://github.com/jrouwe/JoltPhysics)) on the surface of a
@@ -25,21 +25,30 @@ simulation states rather than the latest one shown directly — see
 [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) for the measurements that
 showed this was needed and why.
 
-As of this milestone, the sphere also hosts four ordinary Jolt dynamic
-bodies (two cubes, two spheres) scattered around it. Each one samples the
-same Judas-owned gravity the player does, purely from its own position —
-proof that gravity was never player-specific. They fall, land, roll, and
-collide with the sphere and each other under real physics; walk into one
-and you can push it. See
-[`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) for how gravity reaches
-multiple simultaneous consumers, how the test world is arranged, and how
-this stays a physics playground rather than the start of an entity
-system. That's it — no lighting, terrain, real planets, or gameplay yet.
+The sphere also hosts four ordinary Jolt dynamic bodies (two cubes, two
+spheres) scattered around it. Each one samples the same Judas-owned gravity
+the player does, purely from its own position — proof that gravity was
+never player-specific. They fall, land, roll, and collide with the sphere
+and each other under real physics; walk into one and you can push it.
+
+A second, completely different physical environment now coexists with the
+sphere: a flat platform under **uniform** gravity, positioned near the
+sphere's equator. Strafe toward it and jump off the sphere's surface, and
+gravity smoothly hands off from radial to uniform as you cross — no code
+anywhere decides which implementation is "active" globally, and the
+player has no idea which one is currently governing it. You physically
+land on the platform under ordinary collision, walk and jump normally
+under its uniform gravity, and can walk back off the edge to fall back
+onto the sphere the same way. See
+[`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) for how gravity is resolved
+spatially, why a naive approach broke ordinary jumping everywhere on the
+sphere before the real design was found, and how the transition stays
+smooth. That's it — no lighting, terrain, real planets, or gameplay yet.
 
 This is intentional — see `docs/ARCHITECTURE.md` for why, what's
 deliberately not built yet, and how this small foundation avoids blocking
 the much larger long-term design. Earlier milestones are preserved as git
-tags (`milestone-1` through `milestone-6`) rather than kept running
+tags (`milestone-1` through `milestone-7a`) rather than kept running
 alongside the current demo.
 
 ## Building

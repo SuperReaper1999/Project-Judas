@@ -102,7 +102,7 @@ public:
 
 private:
     glm::vec3 ComputeLocalUp(const glm::vec3& gravityAcceleration) const;
-    void UpdateFrameOrientation(const glm::vec3& localUp);
+    void UpdateFrameOrientation(const glm::vec3& localUp, float fixedDeltaTime);
     glm::vec3 ComputeTangentVelocity(const Window& window, const glm::vec3& localUp) const;
 
     // Judas-owned player state. None of this is a Jolt body.
