@@ -3,3 +3,7 @@ build/
 *.obj
 compile_commands.json
 .cache/
+
+# Internal session-continuity notes (not part of the public deliverable) —
+# see the file itself for what it's for.
+Project_Persistent_Memory.md
