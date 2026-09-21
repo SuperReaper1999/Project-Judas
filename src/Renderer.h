@@ -1,12 +1,13 @@
 #pragma once
 
 #include <glm/glm.hpp>
+#include <glm/gtc/quaternion.hpp>
 
 #include "gl_core33.h"
 
 // Owns the GL objects and draw calls. Low-level calls (glClear, glDrawArrays,
 // ...) come from an external API, but the *concept* of "begin a frame / set
-// the active camera / draw a cube / end a frame" is this engine's own
+// the active camera / draw a box / end a frame" is this engine's own
 // boundary, and is what has to survive a future move to a different graphics
 // API. Callers (Application, Camera, demo scene code) never touch OpenGL
 // directly.
@@ -19,13 +20,20 @@ public:
     // window size.
     void BeginFrame(int windowWidth, int windowHeight);
 
-    // Sets the view/projection matrices used by all DrawCube calls until
+    // Sets the view/projection matrices used by all DrawBox calls until
     // the next SetCamera call. Recomputing this every frame (rather than
     // reacting to a resize event) is what keeps the projection's aspect
     // ratio correct across window resizes.
     void SetCamera(const glm::mat4& view, const glm::mat4& projection);
 
-    void DrawCube(const glm::vec3& position, const glm::vec3& colorRgb);
+    // Draws a box mesh: `halfExtents` sets its size along each axis (the
+    // local unit cube is scaled by 2*halfExtents), `rotation` its
+    // orientation. Callers pass whatever position/rotation they have —
+    // Milestone 3's physics-driven cube passes values read straight from
+    // PhysicsWorld::GetTransform, with no separate rendering-side motion
+    // logic.
+    void DrawBox(const glm::vec3& position, const glm::quat& rotation,
+                 const glm::vec3& halfExtents, const glm::vec3& colorRgb);
 
     void EndFrame();
 

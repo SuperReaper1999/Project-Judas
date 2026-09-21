@@ -71,14 +71,17 @@ void Window::PollEvents() {
                 m_width = event.window.data1;
                 m_height = event.window.data2;
             }
-        } else if (event.type == SDL_KEYDOWN && event.key.repeat == 0 &&
-                   event.key.keysym.scancode == SDL_SCANCODE_ESCAPE) {
-            // Toggle mouse capture so the cursor can be released without
-            // closing the application. This is the "sensible way to
-            // release/restore mouse control" called for by the brief, not
-            // a general input-remapping system.
-            m_mouseCaptured = !m_mouseCaptured;
-            SDL_SetRelativeMouseMode(m_mouseCaptured ? SDL_TRUE : SDL_FALSE);
+        } else if (event.type == SDL_KEYDOWN && event.key.repeat == 0) {
+            if (event.key.keysym.scancode == SDL_SCANCODE_ESCAPE) {
+                // Toggle mouse capture so the cursor can be released
+                // without closing the application. This is the "sensible
+                // way to release/restore mouse control" called for by the
+                // brief, not a general input-remapping system.
+                m_mouseCaptured = !m_mouseCaptured;
+                SDL_SetRelativeMouseMode(m_mouseCaptured ? SDL_TRUE : SDL_FALSE);
+            } else if (event.key.keysym.scancode == SDL_SCANCODE_R) {
+                m_resetRequested = true;
+            }
         }
     }
 }
@@ -121,4 +124,10 @@ void Window::GetMouseDelta(int& deltaX, int& deltaY) const {
         deltaX = 0;
         deltaY = 0;
     }
+}
+
+bool Window::ConsumeResetRequest() {
+    const bool requested = m_resetRequested;
+    m_resetRequested = false;
+    return requested;
 }

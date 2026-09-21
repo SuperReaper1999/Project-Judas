@@ -8,28 +8,35 @@ This is **not** a general-purpose engine and is not trying to compete with
 Unity, Unreal, or Godot. It exists to serve one specific class of game, and
 its architecture is deliberately narrow.
 
-## Status: Milestone 2
+## Status: Milestone 3
 
-The engine renders three cubes in 3D space with correct perspective and
-depth testing, and lets you fly a free camera through the scene with the
-keyboard and mouse. That's it — no lighting, physics, terrain, or gameplay
-yet.
+A dynamic cube falls onto a static floor under real rigid-body physics
+([Jolt Physics](https://github.com/jrouwe/JoltPhysics)) — gravity is
+supplied by the engine itself, not the physics library, and the collision
+is genuinely resolved by the physics middleware rather than scripted. The
+Milestone 2 free-flight camera still works, purely for observation. That's
+it — no lighting, terrain, planets, or gameplay yet.
 
 This is intentional — see [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) for
 why, what's deliberately not built yet, and how this small foundation avoids
-blocking the much larger long-term design. Milestone 1 (a 2D box moved by
-the keyboard) is preserved as the `milestone-1` git tag rather than kept
-running alongside this milestone's demo.
+blocking the much larger long-term design. Earlier milestones are preserved
+as git tags (`milestone-1`, `milestone-2`) rather than kept running
+alongside the current demo.
 
 ## Building
 
 ### Requirements
 
 - Linux (developed and tested on Ubuntu)
-- CMake 3.16+
+- CMake 3.20+ (Jolt Physics' own build requires 3.20)
 - A C++17 compiler (GCC or Clang)
 - SDL2 development headers
 - GLM development headers
+- Network access on first configure — [Jolt Physics](https://github.com/jrouwe/JoltPhysics)
+  is fetched automatically by CMake (`FetchContent`, pinned to `v5.6.0`);
+  it is not vendored in this repository or installed via a package
+  manager. Later configures use CMake's local cache and don't need network
+  access again.
 
 On Ubuntu/Debian:
 
@@ -64,6 +71,7 @@ The mouse is captured on launch and controls camera look directly.
 | Move down        | `Left Ctrl`           |
 | Look around      | Mouse movement        |
 | Release/recapture mouse | `Escape`       |
+| Reset the falling cube  | `R`            |
 
 Close the window normally (window controls / `Alt+F4` / etc.) to exit.
 

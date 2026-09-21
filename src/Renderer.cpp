@@ -172,8 +172,10 @@ void Renderer::SetCamera(const glm::mat4& view, const glm::mat4& projection) {
     m_projection = projection;
 }
 
-void Renderer::DrawCube(const glm::vec3& position, const glm::vec3& colorRgb) {
-    const glm::mat4 model = glm::translate(glm::mat4(1.0f), position);
+void Renderer::DrawBox(const glm::vec3& position, const glm::quat& rotation,
+                        const glm::vec3& halfExtents, const glm::vec3& colorRgb) {
+    const glm::mat4 model = glm::translate(glm::mat4(1.0f), position) * glm::mat4_cast(rotation) *
+                             glm::scale(glm::mat4(1.0f), halfExtents * 2.0f);
 
     glUseProgram(m_shaderProgram);
     glUniformMatrix4fv(m_uModel, 1, GL_FALSE, glm::value_ptr(model));

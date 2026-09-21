@@ -45,6 +45,12 @@ public:
     // capture state, so re-capturing doesn't produce a stale jump.
     void GetMouseDelta(int& deltaX, int& deltaY) const;
 
+    // Returns true exactly once per `R` key press (edge-triggered, not
+    // polled state), then clears itself — a minimal debug control, not a
+    // general input-remapping system. Used by Application to reset the
+    // Milestone 3 dynamic cube.
+    bool ConsumeResetRequest();
+
     int Width() const { return m_width; }
     int Height() const { return m_height; }
 
@@ -54,6 +60,7 @@ private:
     bool m_sdlInitialized = false;
     bool m_shouldClose = false;
     bool m_mouseCaptured = false;
+    bool m_resetRequested = false;
     int m_width = 0;
     int m_height = 0;
 };

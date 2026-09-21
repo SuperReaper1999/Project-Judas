@@ -6,114 +6,220 @@ someone with no prior context on this project. It is updated in place as
 milestones land, rather than kept as a per-milestone snapshot — see
 "Milestone history" below for how to recover an earlier milestone exactly.
 
-## What exists right now (Milestone 2)
+## What exists right now (Milestone 3)
 
-Open a window. Render three cubes in 3D space with correct perspective and
-depth testing. Fly a free camera through the scene with keyboard + mouse.
-Nothing else. See the root `README.md` for build/run instructions and
-controls.
+Open a window. A static floor and a dynamic cube exist in 3D space. Judas
+samples its own gravity and hands it to the physics middleware, which
+integrates the cube's motion, detects its collision with the floor, and
+resolves it — the cube falls, lands, and settles under real rigid-body
+simulation, not scripted motion. The rendered floor/cube use the transform
+the physics simulation produced. The Milestone 2 free-flight camera still
+works, purely for observation. `R` resets the cube. Nothing else. See the
+root `README.md` for build/run instructions and controls.
 
 ## Milestone history
 
 Each milestone is tagged in git so it can be recovered exactly, rather than
 preserved as parallel runtime code:
 
-- `milestone-1` — window creation, a single 2D box, keyboard movement. The
-  demo content this document originally described has since been replaced
-  (not extended) by Milestone 2's 3D scene; check out the tag to see or run
-  it as it was.
+- `milestone-1` — window creation, a single 2D box, keyboard movement.
+- `milestone-2` — 3D rendering, perspective, depth testing, a free-flight
+  camera, three static cubes.
+
+Each milestone's demo content has been replaced (not extended) by the next;
+check out a tag to see or run an earlier milestone as it was.
 
 ## Language: C++
 
 The long-term engine needs tight control over large-world coordinate math,
-and will eventually integrate physics middleware (rigidbody dynamics,
-collision detection) and possibly a low-level graphics API like Vulkan. The
-mature options in that space (Jolt Physics, PhysX, Vulkan itself) are C or
-C++ libraries with the most direct, lowest-overhead integration path in C++.
-Choosing C++ now avoids introducing an interop layer later for problems we
-already know we'll have.
+and integrates physics middleware (rigidbody dynamics, collision detection)
+and possibly a low-level graphics API like Vulkan. The mature options in
+that space (Jolt Physics, PhysX, Vulkan itself) are C or C++ libraries with
+the most direct, lowest-overhead integration path in C++. Choosing C++ now
+avoids introducing an interop layer later for problems we already know
+we'll have — Milestone 3's direct Jolt integration is a concrete case of
+this paying off.
 
 C# was considered and is workable (e.g. via Silk.NET), but it buys nothing
-here and adds friction for the physics/graphics integration work that's
-explicitly called out as a future requirement. There was no technical
-reason to prefer it.
+here and adds friction for physics/graphics integration. There was no
+technical reason to prefer it.
 
 ## Dependencies
 
-**SDL2** — provides window creation, OS event handling, keyboard/mouse
-state, and OpenGL context creation. This is a solved, commodity problem
-(cross-platform windowing/input) that every mature engine either uses a
-library for or reinvents badly. SDL2 is mature, widely used in shipped
-games, and its scope (window/input/context, plus audio and controller
-support we aren't using yet but will eventually want) matches this engine's
-needs without pulling in anything unnecessary. GLFW would have served the
-window/input/context role equally well; SDL2 was chosen because its
-broader scope (controller input, audio) is directly useful to this engine
-later at no cost now, and it was already present on this development
-machine.
+**SDL2** — window creation, OS event handling, keyboard/mouse state, and
+OpenGL context creation. A solved, commodity problem; SDL2 is mature,
+widely shipped, and its scope (window/input/context, plus audio/controller
+support not yet used) matches this engine's needs without pulling in
+anything unnecessary.
 
-**GLM** (added in Milestone 2) — a header-only C++ library providing
-`vec3`/`mat4` types and the standard operations 3D rendering needs
-(`lookAt`, `perspective`, `translate`, `cross`, `normalize`, ...). Real
-model/view/projection matrix math is a hard requirement starting this
-milestone. Vector/matrix math with correct, fast, well-tested
-implementations is a completely solved problem — GLM is the de facto
-standard in the OpenGL/Vulkan world, mirrors GLSL's own syntax and
-conventions (so shader code and C++ code read the same way), and is
-header-only, so it adds no linking complexity. Writing our own would mean
-re-deriving well-known linear algebra for no advantage. It's MIT-licensed,
-compatible with this repository's own MIT license. Installed via the
-system package manager (`libglm-dev`) rather than vendored, consistent with
-preferring package-manager integration over vendoring when it's sufficient.
+**GLM** (added in Milestone 2) — header-only C++ `vec3`/`mat4` math
+matching GLSL's own conventions. MIT-licensed. Installed via the system
+package manager (`libglm-dev`).
 
-Nothing else. No physics, no asset loading, no image libraries yet — see
-"Deliberately Not Implemented" below.
+**Jolt Physics** (added in Milestone 3) — see "Physics middleware" below.
 
-## Windowing & Graphics API
+## Physics middleware
 
-**SDL2 + OpenGL 3.3 core profile.**
+**Selected: [Jolt Physics](https://github.com/jrouwe/JoltPhysics), pinned
+to tag `v5.6.0`, MIT license.**
 
-Vulkan was considered again for this milestone, since 3D rendering is
-where its explicitness starts to look more appealing. It was rejected
-again for the same reason as Milestone 1: its setup cost (instance,
-physical/logical device selection, swapchain, pipeline objects, command
-buffers) buys nothing at the "prove we can render and navigate a 3D scene"
-stage, and the milestone brief explicitly excludes it.
+### What it provides / why we need it
 
-This is still not treated as locking out Vulkan later. `Renderer` (see
-`src/Renderer.h`) remains the sole owner of graphics state and draw calls:
-`Application` and `Camera` describe *what* to render (a camera, a cube at a
-position with a color) and never issue an OpenGL call themselves. Moving to
-Vulkan later means rewriting `Renderer`'s internals, not the call sites
-that use it.
+Rigid-body dynamics, collision detection, contact resolution, and
+constraint solving are a solved, extremely hard problem (robust narrow-phase
+collision, stable contact manifolds, a working constraint solver) that
+every shipped physics-using game either licenses or spends years building.
+Project Judas has no reason to re-derive any of that — see "Ownership
+boundary" below for exactly what we do keep for ourselves.
 
-### OpenGL function loading
+### Jolt vs. PhysX 5
 
-Milestone 1 introduced a small hand-written loader (`src/gl_core33.h/.cpp`)
-instead of a generated one (glad/GLEW), on the grounds that the ~30
-functions needed were too small a surface to justify a generator's
-build-time or vendoring cost — with an explicit note to reconsider once the
-surface grew.
+Both were evaluated against this engine's long-term requirements (arbitrary
+gravity, no universal up, large spherical worlds, moving reference frames,
+many terrain collision objects, raycasts/shape queries, rigid
+bodies/constraints, Linux + Windows, performance, clean integration,
+MIT-compatible licensing):
 
-Milestone 2 was the point to re-examine that. The actual new functions
-needed for 3D rendering with depth testing turned out to be exactly two:
-`glEnable` and `glDepthFunc` (everything else — buffers, shaders, uniform
-matrices — was already loaded for the 2D renderer). That's a small enough
-addition that hand-extending the existing loader remains the smaller,
-simpler option; switching to glad2 now would be a larger change than the
-actual requirement justifies. This decision should be revisited again the
-next time the GL surface needs to grow — likely when textures or
-framebuffers show up.
+|  | Jolt Physics | PhysX 5 |
+|---|---|---|
+| License | MIT | BSD-3-Clause |
+| Integration into a small CMake project | `add_subdirectory`/`FetchContent`, produces one `Jolt` target, no code generation step | Own Python-based project generator + platform-specific build scripts; heavier to embed in a foreign build system |
+| Large-world support | First-class: an optional `DOUBLE_PRECISION` build mode for large-coordinate worlds, explicitly designed for — and shipped in — Guerrilla Games' open-world *Horizon* titles | Single-precision floats; the usual advice is to keep the simulation origin near the camera (no first-class large-coordinate mode) |
+| Multithreading/perf | Built job-system-first, SIMD, used in shipped AAA titles | Also strong; both are production-grade |
+| Platform support | Windows, Linux, macOS, consoles, ARM | Windows, Linux, consoles |
+| API shape | Explicit body/shape/constraint API; middleware doesn't assume ownership of "the world" | Similar shape |
+
+Both licenses are compatible with this MIT-licensed public repository, and
+both are technically capable rigid-body engines — this was not a
+performance or correctness gap. The deciding factors were **large-world
+support** (a direct match for this engine's enormous-planet/large-world
+future, and something Jolt treats as a first-class use case rather than an
+afterthought) and **integration cost** (a `FetchContent` + `add_subdirectory`
+away vs. a separate generator toolchain), which matters for a small,
+solo-maintained public repository where every added build-system moving
+part is a maintenance and reproducibility cost. Popularity was not the
+deciding factor, though it's a supporting signal: Jolt is also the physics
+engine Unreal Engine added as a selectable backend from 5.4 onward, for
+similar large-world/performance reasons.
+
+### Integration
+
+Jolt is not packaged by apt (or any mainstream Linux distro package
+manager), so it's fetched at CMake configure time via `FetchContent`,
+pinned to the `v5.6.0` git tag for reproducibility (see `CMakeLists.txt`).
+This means a first configure needs network access to clone it; nothing
+about Jolt is vendored into this repository's own git history, and nothing
+about it is assumed pre-installed on a developer's machine. Jolt's own
+`Build/CMakeLists.txt` is used directly (via `SOURCE_SUBDIR Build`), which
+produces exactly one `Jolt` static-library target and — because it detects
+it's being used as a subdirectory dependency rather than built standalone —
+automatically skips building its own unit tests, samples, and viewer.
+
+## Ownership boundary
+
+This is the foundational rule Milestone 3 establishes, and the most
+important thing to preserve in every milestone after this one:
+
+```
+Judas owns gravity, reference frames, and world/large-world coordinates.
+
+The physics middleware (Jolt) owns collision detection, contact
+generation, rigid-body integration, and constraint solving — nothing more.
+```
+
+Concretely, as of Milestone 3:
+
+- `GravityField` (`src/GravityField.h/.cpp`) is Judas's own gravity
+  abstraction: `Sample(worldPosition) -> acceleration`. It is the *only*
+  place gravity is decided.
+- Jolt's own built-in global gravity is explicitly disabled:
+  `PhysicsSystem::SetGravity(Vec3::sZero())` in `PhysicsWorld::Init`
+  (`src/PhysicsWorld.cpp`). Jolt defaults this to `(0, -9.81, 0)` applied
+  automatically to every dynamic body — that default is never used here.
+- Every fixed physics step, `Application::Run` samples `GravityField` at
+  the dynamic body's current position and hands the resulting acceleration
+  to `PhysicsWorld::ApplyLinearAcceleration`, which integrates it into the
+  body's velocity (`velocity += acceleration * fixedDeltaTime`) via Jolt's
+  `BodyInterface::AddLinearVelocity`. Jolt never computes gravity; it only
+  receives the result of Judas having already computed it.
+- `PhysicsWorld` (`src/PhysicsWorld.h/.cpp`) is the only file that includes
+  a Jolt header. Its public interface (`PhysicsWorld.h`) exposes an opaque
+  `BodyHandle`, plain `glm` types, and semantic operations
+  (`CreateStaticBox`, `CreateDynamicBox`, `ApplyLinearAcceleration`,
+  `Step`, `GetTransform`, `ResetBody`) — no Jolt type is visible outside
+  `PhysicsWorld.cpp` (it uses the pImpl idiom specifically for this). No
+  other engine file needs to know Jolt exists, which is what makes the
+  physics middleware itself swappable in principle, even though swapping
+  it isn't a goal right now.
+
+**Why this matters:** if Milestone 4's radial planetary gravity required
+touching how `PhysicsWorld` integrates a body's motion, or required Jolt's
+own gravity settings, that would mean this boundary was drawn in the wrong
+place. It shouldn't: Milestone 4 only needs to change what
+`GravityField::Sample` returns (a position-dependent, radial vector instead
+of a constant), and everything downstream — `ApplyLinearAcceleration`,
+`Step`, the render read-back — stays exactly as it is.
+
+## Simulation timing
+
+Physics is stepped on a **fixed timestep of 1/60 second**
+(`kFixedTimestep` in `src/Application.cpp`), not the variable render-frame
+delta time — a common, well-tested rate for rigid-body simulation, chosen
+for that reason rather than anything specific to this scene. Running
+physics directly off render delta time would make the simulation's
+behavior (and therefore whether the cube's resting state is actually
+stable) depend on frame rate, which defeats the purpose of proving the
+integration works.
+
+`Application::Run` uses a conventional accumulator:
+
+```
+accumulator += (clamped) render-frame delta time
+while accumulator >= fixedTimestep and steps-this-frame < cap:
+    sample gravity at the body's current position, apply it
+    step physics by exactly fixedTimestep
+    accumulator -= fixedTimestep
+```
+
+Two independent guards prevent a stall (e.g. dragging the window) from
+causing an unbounded catch-up backlog ("spiral of death"):
+
+1. The render-frame delta time fed into the accumulator is itself clamped
+   to `kMaxFrameDeltaTime` (0.25s), same as Milestones 1–2.
+2. A hard cap, `kMaxPhysicsStepsPerFrame` (8), on how many fixed steps a
+   single render frame will run. If it's hit, the remaining accumulated
+   time is **dropped** rather than carried into the next frame — the
+   simulation loses a little wall-clock accuracy after a severe stall
+   rather than trying to fully catch up and risking never recovering.
+
+The rendered transform is simply whatever `PhysicsWorld::GetTransform`
+returns after the accumulator loop for that frame — there is currently no
+interpolation between physics steps and the render frame. At 1/60s physics
+alongside vsync-capped rendering this isn't visually necessary yet; it's a
+known, explicitly deferred refinement (see "Deliberately Not
+Implemented").
+
+## Current gravity
+
+`GravityField::Sample` returns a constant `(0, -9.81, 0)` for every
+position. **This is test data for Milestone 3, not an engine-wide
+definition of gravity.** Nothing about the vector's direction or magnitude
+is assumed anywhere else — `PhysicsWorld` takes whatever acceleration it's
+given and applies it, without interpreting it. Milestone 4 is expected to
+replace `GravityField::Sample`'s implementation with something that
+actually uses its `worldPosition` argument (radial gravity toward one or
+more sources) without changing anything about how a physics body *receives*
+gravity — see "Ownership boundary" above.
 
 ## 3D rendering pipeline
 
-`Renderer::DrawCube` implements the conventional model → world → view →
+`Renderer::DrawBox` implements the conventional model → world → view →
 clip-space pipeline entirely via matrices, computed with GLM and uploaded
 as uniforms to a single, simple shader (`src/Renderer.cpp`):
 
 ```
 local (unit cube, [-0.5, 0.5] per axis)
-    --(uModel: glm::translate to the cube's world position)-->
+    --(uModel: translate * rotate * scale, from position/rotation/halfExtents)-->
 world coordinates
     --(uView: Camera::GetViewMatrix(), a glm::lookAt)-->
 camera/view coordinates
@@ -127,211 +233,187 @@ The vertex shader is exactly:
 gl_Position = uProjection * uView * uModel * vec4(aLocalPos, 1.0);
 ```
 
-There is no per-object rotation or scale yet — `DrawCube` only translates —
-because nothing in this milestone needs it. The model matrix is still a
-full 4x4 transform, not a raw position add, so introducing rotation/scale
-later is a local change inside `DrawCube`, not a pipeline change.
+Milestone 3 added rotation and non-uniform scale to the model matrix
+(`glm::translate(position) * glm::mat4_cast(rotation) * glm::scale(halfExtents * 2)`)
+so the floor and cube can be different sizes and so the cube's rendered
+orientation can come from physics — both were previously translation-only.
+The floor and cube are both drawn with the **same transform their physics
+body reports** (`PhysicsWorld::GetTransform`); there is no separate
+rendering-side position/rotation for either of them, and no duplicated
+movement logic between simulation and rendering.
 
-### Coordinate conventions (current, local to this renderer)
+### Coordinate conventions (current, local to this renderer/physics setup)
 
 - World space is a conventional right-handed 3D space in engine-defined
-  units ("world units"); nothing currently maps a world unit to a physical
-  size, since there's no terrain or physical scale reference yet.
-- `+Y` is used as a reference "up" direction by the camera and by nothing
-  else. **This is explicitly not an engine-wide law** — see "Camera
-  orientation" below and "Future constraints preserved."
-  `-Z` is the camera's initial forward direction, matching OpenGL's
-  conventional default view direction.
-- These are the only coordinates that exist right now. There is no
-  distinction yet between authoritative large-world coordinates and local
-  rendering coordinates (see "Future constraints preserved") — introducing
-  that distinction is future work, not something this milestone had reason
-  to build.
+  "world units," used directly as Jolt's own simulation space (no unit
+  conversion between Judas and the physics middleware yet).
+- `+Y` is used as "up" by the camera (see "Camera orientation") and, as of
+  this milestone, by `GravityField`'s constant test vector. **Neither is an
+  engine-wide law** — see "Current gravity" and "Future constraints
+  preserved."
+- There is still no distinction between authoritative large-world
+  coordinates and local rendering/physics coordinates — see "Future
+  constraints preserved."
 
 ## Depth handling
 
-`Renderer::Init` enables depth testing once, at startup, and leaves it on
-for the lifetime of the program:
-
-```cpp
-glEnable(GL_DEPTH_TEST);
-glDepthFunc(GL_LESS);  // the GL default; set explicitly for clarity
-```
-
-`Renderer::BeginFrame` clears both the color and depth buffers each frame
-(`GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT`). A 24-bit depth buffer is
-requested at context creation via
-`SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 24)` in `Window::Init` — without
-this, the GL context has no depth buffer to test against regardless of
-`glEnable(GL_DEPTH_TEST)`. Draw order of the three demo cubes in
-`Application.cpp` is deliberately not sorted by depth, to make it obvious
-that correct occlusion comes from the depth buffer and not from paint
-order.
+Unchanged from Milestone 2: `Renderer::Init` enables depth testing once at
+startup (`glEnable(GL_DEPTH_TEST)`, `glDepthFunc(GL_LESS)`), a 24-bit depth
+buffer is requested at context creation, and `BeginFrame` clears both the
+color and depth buffers every frame.
 
 ## Projection handling
 
-`Camera::GetProjectionMatrix(aspectRatio)` builds a perspective projection
-via `glm::perspective(fov, aspectRatio, near, far)` fresh every frame,
-using the window's current width/height. `Application::Run` computes
-`aspectRatio` from `window.Width() / window.Height()` each iteration of the
-loop rather than caching it or reacting to a resize event specifically —
-the same "just recompute it every frame" approach Milestone 1 used for its
-2D projection. This means a window resize is handled automatically and
-correctly with no dedicated resize-handling code path to get wrong; window
-height is clamped to at least 1 to avoid a divide-by-zero if the window is
-minimized.
+Unchanged from Milestone 2: `Camera::GetProjectionMatrix(aspectRatio)`
+rebuilds the perspective projection every frame from the window's current
+width/height, so resizing is handled automatically with no dedicated
+resize-event code path.
 
 ## Main loop structure
 
 `Application::Run()` (`src/Application.cpp`) owns the loop:
 
 ```
-Init Window (SDL2 window + GL context + depth buffer request)
-Load GL functions
-Init Renderer (compile shaders, upload cube geometry, enable depth testing)
-Create Camera
+Init Window, load GL functions, Init Renderer
+Init PhysicsWorld (registers Jolt types, zeroes Jolt's own gravity)
+Create GravityField
+Create the static floor body and the dynamic cube body
+Create Camera (positioned to see the whole scene at launch)
 
 while (!window.ShouldClose()):
-    window.PollEvents()          // pump OS events, close request, Escape toggle
-    deltaTime = measured elapsed time since last frame
-    camera.Update(window, deltaTime)   // keyboard movement + mouse look
-    aspectRatio = window.Width() / window.Height()
-    renderer.BeginFrame(...)     // clear color+depth, set viewport
+    window.PollEvents()          // close request, Escape toggle, R (reset) flag
+    frameDeltaTime = measured elapsed time since last frame, clamped
+
+    camera.Update(window, frameDeltaTime)      // keyboard movement + mouse look
+
+    if window.ConsumeResetRequest():
+        physicsWorld.ResetBody(cube, initialPosition, initialRotation)
+
+    accumulator += frameDeltaTime
+    while accumulator >= fixedTimestep and steps < cap:
+        acceleration = gravityField.Sample(cube's current position)
+        physicsWorld.ApplyLinearAcceleration(cube, acceleration, fixedTimestep)
+        physicsWorld.Step(fixedTimestep)
+        accumulator -= fixedTimestep
+
+    floorTransform = physicsWorld.GetTransform(floor)
+    cubeTransform  = physicsWorld.GetTransform(cube)
+
+    renderer.BeginFrame(...)
     renderer.SetCamera(camera.GetViewMatrix(), camera.GetProjectionMatrix(aspectRatio))
-    for each demo cube: renderer.DrawCube(position, color)
+    renderer.DrawBox(floorTransform..., floorHalfExtents, floorColor)
+    renderer.DrawBox(cubeTransform...,  cubeHalfExtents,  cubeColor)
     renderer.EndFrame()
     window.SwapBuffers()
 
+physicsWorld.DestroyBody(cube); physicsWorld.DestroyBody(floor); physicsWorld.Shutdown()
 renderer.Shutdown()
 // Window's destructor tears down the GL context, the window, and SDL itself.
 ```
 
-The engine-level split from Milestone 1 is unchanged:
+The engine-level split is unchanged in kind, with one addition:
 
-- `Window` (`src/Window.h/.cpp`) — window/input, combined because input is
-  just "keyboard/mouse state of this window."
-- `Renderer` (`src/Renderer.h/.cpp`) — graphics.
-- `Camera` (`src/Camera.h/.cpp`) — the demo content/game-state layer for
-  this milestone (Milestone 1's equivalent was `Box`).
-- `Application` (`src/Application.h/.cpp`) — wires the above together and
-  owns the loop.
+- `Window` — window/input.
+- `Renderer` — graphics.
+- `PhysicsWorld` — physics (new in Milestone 3).
+- `GravityField` — Judas's own gravity (new in Milestone 3).
+- `Camera` — the observational free-flight camera (no longer "the demo
+  content" on its own — the floor/cube pairing in `Application.cpp` is now
+  the demo content, driven by physics rather than by `Camera`).
+- `Application` — wires the above together and owns the loop, including
+  the physics accumulator.
 
 ## Input handling
 
-`Window::IsActionActive(Action)` still exposes actions, not raw key codes,
-for the same reason as Milestone 1 — so a future input source (controller)
-can drive the same actions without callers changing. The action set
-changed to match a free-flight camera instead of a 2D box:
+Unchanged from Milestone 2 (`MoveForward`/`MoveBackward`/`StrafeLeft`/
+`StrafeRight`/`Ascend`/`Descend`, mouse look, `Escape` to release/recapture
+the mouse), plus one addition:
 
-`MoveForward` / `MoveBackward` / `StrafeLeft` / `StrafeRight` / `Ascend` /
-`Descend`, bound to `W`/`Up`, `S`/`Down`, `A`/`Left`, `D`/`Right`,
-`Space`, `Left Ctrl` respectively. "Forward" and "strafe" are relative to
-the camera's current look direction, not to any fixed world direction.
-
-**Mouse look** is new: `Window::GetMouseDelta` wraps
-`SDL_GetRelativeMouseState`, and the mouse is captured
-(`SDL_SetRelativeMouseMode`) on startup so it drives yaw/pitch immediately,
-as is conventional for a free-camera/first-person demo. `Escape` toggles
-capture on/off (handled as a discrete key-down event in
-`Window::PollEvents`, not a polled action) — this is the "sensible way to
-release/restore mouse control" called for by the brief, not a general
-input-remapping system. While released, `GetMouseDelta` reports zero
-motion (but still drains SDL's internal accumulator), so releasing the
-mouse also stops camera look, and re-capturing doesn't produce a jump from
-motion that happened while released.
+**`R` resets the dynamic cube.** Handled as a discrete key-down event in
+`Window::PollEvents` (like `Escape`, not like the continuously-polled
+movement actions), setting a flag that `Window::ConsumeResetRequest()`
+returns once and clears. `Application::Run` calls
+`PhysicsWorld::ResetBody(cube, initialPosition, initialRotation)`, which
+sets the body's pose and zeroes both linear and angular velocity — a
+minimal debug control, not a general save/restore or replay system.
 
 ## Camera orientation
 
-`Camera` (`src/Camera.h/.cpp`) is a conventional yaw/pitch free-fly camera.
-It keeps a fixed reference axis, world `(0, 1, 0)`, to build a stable local
-right/up/forward frame for mouse look and to give `Space`/`Left Ctrl` a
-consistent vertical direction.
-
-**This is a convention scoped to this one class for this one demo scene —
-explicitly not an engine-wide definition of "up."** Nothing outside
-`Camera.cpp` references it, and no other system in the engine treats
-world `+Y` as meaningful. The engine's long-term requirements include
-worlds with no universal up (arbitrary gravity, spherical planets, moving
-spacecraft frames), and this is called out here specifically so that fact
-isn't lost when this file is next extended: when reference frames exist,
-camera orientation will need to derive from whichever frame the camera is
-currently in, not from a hardcoded world axis. See `Camera.h`'s own comment
-for the same note at the point of use.
+Unchanged from Milestone 2: `Camera` keeps a fixed world `(0, 1, 0)`
+reference axis for mouse look and vertical movement, documented there and
+in `Camera.h` as a convention scoped to that one class, not an engine-wide
+definition of "up." The camera remains purely observational in Milestone 3
+— it has no physics body, is not affected by `GravityField`, and does not
+control anything with a rigid body. There is still no player controller.
 
 ## Frame timing
 
-Unchanged from Milestone 1: `Application::Run()` measures real elapsed
-time each frame via `SDL_GetPerformanceCounter()` /
-`SDL_GetPerformanceFrequency()`, clamped to a maximum of 0.25s to stop a
-stall (e.g. window drag) from producing one large visible jump.
-
-`Camera::Update` uses this `deltaTime` for **keyboard movement**
-(`position += direction * speed * deltaTime`), exactly like Milestone 1's
-box. Movement direction across all six keyboard actions (including
-vertical) is combined into one vector and normalized once, so pressing
-multiple movement keys at once doesn't move faster than one.
-
-**Mouse look deliberately does not use `deltaTime`.** `SDL_GetRelativeMouseState`
-already returns the pixels the mouse moved *since the last call*, i.e. it's
-already an amount of motion, not a rate — multiplying it by `deltaTime`
-would double-apply time and make sensitivity vary with frame rate instead
-of being independent of it. As long as the mouse delta is polled exactly
-once per frame (which it is, from `Camera::Update`), applying it directly
-is what makes look input frame-rate independent. This is explained at the
-point of use in `Camera.cpp` since it's the kind of thing that looks like a
-bug (a moving value with no `deltaTime` next to it) if you don't know why.
+Render-loop timing is unchanged from Milestones 1–2 (measured via
+`SDL_GetPerformanceCounter`, clamped to 0.25s). Physics timing is now
+separate from it — see "Simulation timing" above — which is itself an
+application of the same "trustworthy elapsed time, not an assumed rate"
+principle Milestone 1 established, applied to a second, independently-paced
+system.
 
 ## FUTURE CONSTRAINTS PRESERVED
 
 This section explains only how the current design avoids *unnecessarily*
 blocking known future requirements. None of these are implemented yet.
 
-- **Arbitrary gravity / reference frames / no universal up** — the only
-  place world `+Y` is treated as "up" is inside `Camera`, documented
-  explicitly as a local, temporary convention (see "Camera orientation").
-  No renderer, math, or engine-level code depends on it. Introducing real
-  reference frames later means changing how `Camera` (and later, other
-  objects) derive their orientation, not undoing an assumption baked into
-  the rendering pipeline.
-- **Large planetary coordinates** — `Renderer` takes plain `glm::vec3`
-  world positions and has no idea what scale they represent. There is
-  still no distinction between authoritative large-world coordinates and
-  local rendering coordinates (see "Deliberately Not Implemented"), but
-  nothing here actively assumes positions are small or that
-  render-space and world-space are the same representation forever —
-  that separation simply hasn't been needed yet.
-- **Spherical terrain** — still nothing here assumes an infinite flat
-  plane; there is no terrain of any kind, so there's nothing to unwind.
-- **Physics middleware** — the update step (`camera.Update`) and the
-  render step (`renderer.BeginFrame`/`DrawCube`/`EndFrame`) remain
-  separate stages of the loop, so a future physics step slots in as its
-  own stage.
-- **Moving spacecraft reference frames** — `Camera` computing its own view
-  matrix from position + orientation, independent of how the scene's
-  objects are drawn, is the same shape a moving-frame camera will
-  eventually need (a camera attached to a frame, not to fixed world axes).
-  Nothing here prevents that; it just isn't built yet.
+- **Radial gravity / multiple gravity sources / planetary physics** —
+  `GravityField::Sample` already takes a `worldPosition` and its result is
+  already delivered to bodies through one path
+  (`PhysicsWorld::ApplyLinearAcceleration`) with no assumption about the
+  vector's direction. Making gravity radial or multi-source is a change
+  entirely inside `GravityField::Sample`'s implementation. See "Ownership
+  boundary" and "Current gravity."
+- **No universal up** — the only places world `+Y` means anything are
+  `Camera` (observational, documented as local convention) and today's
+  constant `GravityField` test vector (also documented as temporary).
+  Nothing in `PhysicsWorld` or `Renderer` treats any axis as special.
+- **Moving spacecraft reference frames** — `PhysicsWorld` bodies are
+  addressed by an opaque `BodyHandle` and positioned in one shared world
+  space; nothing about that prevents a future frame concept from sitting
+  between "a body's position" and "the position Judas hands to physics."
+  It just isn't built yet.
+- **Large-world rebasing** — Jolt was specifically chosen (see "Physics
+  middleware") because it has a first-class path to large-coordinate
+  worlds (its optional double-precision build mode) if/when this engine's
+  coordinates grow past what single-precision floats represent well.
+  Nothing about today's integration (plain `glm::vec3` positions in and
+  out of `PhysicsWorld`) forecloses adopting that later.
+- **Many terrain collision objects, raycasts/shape queries, constraints** —
+  not built, but Jolt provides all of them; `PhysicsWorld`'s current
+  minimal surface (create/destroy/step/query-transform) is intentionally
+  small because that's all this milestone needs, not because the
+  underlying middleware can't do more.
 
 ## DELIBERATELY NOT IMPLEMENTED
 
 Explicitly deferred, not forgotten:
 
-- Physics, collision detection, gravity
-- Planets, terrain (including Terrain-ML), a player capsule/controller
+- Planets, spherical/radial gravity, terrain (including Terrain-ML)
+- A player controller or any character physics
+- Moving reference frames, floating origin, astronomical coordinates,
+  spacecraft
+- Physics interpolation between fixed steps (the render frame currently
+  just reads the latest stepped transform; not visibly necessary yet at
+  1/60s physics with vsync-capped rendering)
+- Complex constraint systems, vehicles, ragdolls, destructible physics
+- Jolt's debug renderer / any physics-debug-drawing (the rendered floor and
+  cube are enough to prove the simulation is real; adding a debug
+  wireframe overlay was judged not worth the scope for this milestone)
 - Lighting, shadows, textures, materials, model loading
 - Audio, networking
 - Entity/component systems, scene graphs
 - Editors, scripting, UI frameworks
-- Reference-frame systems, floating origin, astronomical coordinates
-- Vulkan (see "Windowing & Graphics API" above)
+- Vulkan (see "Windowing & Graphics API" — unchanged reasoning from
+  Milestones 1–2)
 - Gameplay of any kind
 - Controller input (the `Action` boundary exists for this, but only
   keyboard + mouse are wired up)
-- A generated OpenGL loader (glad/GLEW) — see "OpenGL function loading"
-  above; the hand-written loader was re-evaluated this milestone and kept
-  deliberately, not by default.
-- Per-object rotation/scale, indexed drawing, vertex colors/normals, or
-  any vertex format beyond bare position — the demo cubes don't need them.
-- Face culling — not enabled; irrelevant for solid opaque cubes viewed
-  with depth testing, and not worth the winding-order bookkeeping it would
-  require in `kCubeVertices` for this milestone.
+- A generated OpenGL loader (glad/GLEW) — the GL surface didn't grow this
+  milestone (no new GL calls were needed for physics itself), so there was
+  nothing to re-evaluate.
+- A physics material/property system beyond per-body friction/restitution/
+  mass — the floor and cube each just get explicit, sensible values.
