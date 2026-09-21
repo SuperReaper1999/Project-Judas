@@ -370,17 +370,40 @@ ShapeSweepHit PhysicsWorld::SweepPlayerShape(const glm::vec3& fromCenter, const 
         result.distance = collector.mHit.mFraction * length;
         result.hitBody = ToHandle(collector.mHit.mBodyID2);
 
-        glm::vec3 normal = ToGlm(collector.mHit.mPenetrationAxis);
+        // Jolt documents mPenetrationAxis as "direction to move shape 2 out
+        // of collision along the shortest path," and its own recommended
+        // contact normal is exactly -mPenetrationAxis.Normalized() —
+        // unconditionally, not something that needs re-deriving from the
+        // cast direction. An earlier version of this code instead flipped
+        // the sign based on dot(normal, displacement), reasoning that a
+        // contact normal should oppose the direction of travel. That
+        // happens to agree with Jolt's own convention for an ordinary
+        // in-flight hit (mFraction > 0, moving toward a surface not yet
+        // touched) — which is why it went unnoticed through Milestones
+        // 5-7-A — but travel direction has no necessary relationship to
+        // the true normal for a hit already at mFraction == 0 (shapes
+        // already touching at the start of the sweep, which a grounded
+        // move-and-slide step produces routinely): there, the old
+        // heuristic could and did pick the wrong sign, occasionally
+        // reporting a normal pointing INTO the sphere instead of out of
+        // it. That produced a sub-millimeter oscillation in ordinary
+        // grounded movement (some steps got a good outward normal and
+        // slid correctly, others didn't) and, in one reproduced case, a
+        // complete permanent lockup (every iteration of that step's
+        // already-zero-distance cast happened to return the same
+        // consistently-wrong sign, so the slide loop's "into surface"
+        // guard never triggered and no sliding correction was ever
+        // applied). Using Jolt's own unconditionally-correct convention
+        // fixes both. See docs/ARCHITECTURE.md, "Remaining limitations"
+        // (Milestone 7-A) for the diagnosis this fix resolves.
+        glm::vec3 normal = -ToGlm(collector.mHit.mPenetrationAxis);
         if (glm::length(normal) > 1.0e-6f) {
             normal = glm::normalize(normal);
-            // Jolt's convention for this field isn't guaranteed to point
-            // any particular way relative to the cast direction — enforce
-            // "points back toward the caster" ourselves so callers get a
-            // consistent, sane contact normal regardless.
-            if (glm::dot(normal, displacement) > 0.0f) {
-                normal = -normal;
-            }
         } else {
+            // No meaningful separating axis at all (fully degenerate
+            // input) — falling back to "opposes the direction of travel"
+            // is still the most reasonable default with zero other
+            // information available.
             normal = -glm::normalize(displacement);
         }
         result.normal = normal;

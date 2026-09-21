@@ -243,9 +243,30 @@ void PlayerController::FixedUpdate(const Window& window, PhysicsWorld& physics,
             }
         }
 
-        const float travelDistance = std::max(hit.distance - kSkinMargin, 0.0f);
-        const float travelFraction = travelDistance / remainingLength;
-        m_position += remaining * travelFraction;
+        // Ordinarily, travel toward the hit up to just short of it (the
+        // skin margin). But a grounded step's own small inward gravity
+        // nudge (see the vertical-speed integration above) continually
+        // pushes the capsule a hair closer to whatever it's walking on —
+        // over many steps that erodes the skin margin entirely, down to
+        // hit.distance == 0 (shapes already touching). The previous
+        // version of this code clamped travelDistance at a floor of zero
+        // in that case and did nothing further, which — combined with an
+        // unreliable contact normal specifically in the already-touching
+        // case (see SweepPlayerShape's normal computation) — could leave
+        // the capsule stuck at exactly zero clearance indefinitely, no
+        // longer making any forward progress at all. Restoring the margin
+        // directly (moving back out along the now-reliable normal) instead
+        // of merely refusing to move closer keeps clearance in a small
+        // band near kSkinMargin instead of letting it erode to zero. See
+        // docs/ARCHITECTURE.md, "Remaining limitations" (Milestone 7-A).
+        float travelFraction = 0.0f;
+        if (hit.distance < kSkinMargin) {
+            m_position += hit.normal * (kSkinMargin - hit.distance);
+        } else {
+            const float travelDistance = hit.distance - kSkinMargin;
+            travelFraction = travelDistance / remainingLength;
+            m_position += remaining * travelFraction;
+        }
 
         glm::vec3 leftover = remaining * (1.0f - travelFraction);
         const float intoSurface = glm::dot(leftover, hit.normal);

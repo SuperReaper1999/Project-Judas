@@ -484,16 +484,60 @@ directly from a desired velocity. Each fixed step, the desired displacement
 (`velocity * fixedDeltaTime`) is resolved by a small move-and-slide loop
 (up to 4 iterations): sweep the capsule along the remaining displacement
 via `PhysicsWorld::SweepPlayerShape`; if nothing is hit, apply the full
-displacement and stop; if something is hit, advance up to just short of it
-(a `0.02m` skin margin, to avoid ending each step already touching/
-overlapping a surface), remove the component of the *remaining* 
-displacement that points into the hit surface (an ordinary vector
-projection against the contact normal — "slide"), and repeat with what's
-left. This is Judas's own resolution of the conceptual pipeline the brief
-described (desired displacement → shape query → allowable movement →
-contact information → Judas's interpretation → resulting position) — not a
-general physics solver, just enough iterations to handle "hit one surface,
-then slide into a second" without visibly sticking.
+displacement and stop; if something is hit *and there's genuine clearance
+left* (`hit.distance >= 0.02m`, the skin margin), advance up to just short
+of it; if there's *not* — the capsule is already at or inside the intended
+skin-margin clearance from whatever it hit — move straight back out along
+the contact normal to restore exactly that margin instead. Either way,
+remove the component of the *remaining* displacement that points into the
+hit surface (an ordinary vector projection against the contact normal —
+"slide"), and repeat with what's left. This is Judas's own resolution of
+the conceptual pipeline the brief described (desired displacement → shape
+query → allowable movement → contact information → Judas's interpretation
+→ resulting position) — not a general physics solver, just enough
+iterations to handle "hit one surface, then slide into a second" without
+visibly sticking.
+
+### Contact normal correctness and the "already touching" case
+
+Fixed in Milestone 7-A, after human validation surfaced a visible ground
+vibration while walking that traced back to here. `SweepPlayerShape`
+(`PhysicsWorld.cpp`) previously derived the contact normal from Jolt's raw
+`mPenetrationAxis` by flipping its sign based on
+`dot(normal, displacement)` — reasoning that a contact normal should
+oppose the direction of travel. That happens to agree with Jolt's own
+convention for an ordinary in-flight hit (`mFraction > 0`, moving toward a
+surface not yet touched), which is why it went unnoticed through
+Milestones 5–7-A's earlier validation passes — but travel direction has no
+necessary relationship to the true normal for a hit already at
+`mFraction == 0` (shapes already touching at the start of the sweep),
+which a grounded step's own small inward gravity nudge (see "Simulation
+timing") produces routinely by design, eroding the skin margin toward zero
+over many steps. There, the old heuristic could and did pick the wrong
+sign — confirmed directly with a debug-instrumented harness run: the same
+already-touching hit alternated between a correct outward normal and one
+pointing straight into the sphere, iteration to iteration, within a single
+fixed step. Jolt documents its own unconditionally-correct convention —
+`-mPenetrationAxis.Normalized()` — which is what `SweepPlayerShape` uses
+now, dropping the travel-direction heuristic entirely (kept only as a
+last-resort fallback for the fully degenerate case where Jolt returns no
+penetration axis at all).
+
+That alone fixed the normal's reliability but not the underlying erosion:
+with the skin margin already at exactly zero and no mechanism to restore
+it (the move-and-slide loop only ever clamped closer-than-margin travel to
+"do nothing," never corrected it), the capsule could and — reproduced
+directly with a 60-second scripted walk — did reach a permanent, total
+lockup: a correct-but-immovable state where every iteration's already-zero
+distance produced a tangential "leftover" too close to perpendicular to
+the (now-correct) normal to ever redirect movement again. The margin-
+restoration change above (moving back out along the normal when
+`hit.distance < kSkinMargin`, rather than merely refusing to move closer)
+closes that gap. Verified with the same 60-second harness script: zero
+frozen steps (previously ~85% of a 3600-step run), and the radial
+distance-from-center — logged at full precision specifically to check for
+this — settles into a stable, bounded ~`1.2mm` oscillation band rather
+than eroding unboundedly toward (and getting stuck at) zero clearance.
 
 **Reset** (`R`) restores the player entirely from data `PlayerController`
 already holds (`Reset()`): spawn position, zero velocity, identity frame
@@ -1296,22 +1340,32 @@ verification one.
 Recorded honestly rather than left implicit — these are known, deliberately
 deferred, not oversights:
 
-- **Sub-millimeter per-step radial oscillation while walking, diagnosed
-  during Milestone 7-A validation, fix deferred to the next commit.**
-  `PlayerController`'s move-and-slide resolves movement as a straight-line
-  sweep each fixed step; any straight chord across a curve diverges from
-  it, so each step slightly overshoots the sphere's true surface and gets
-  pulled back the next — a real, continuous, every-fixed-step oscillation
-  in the authoritative radial distance (confirmed directly: walking
-  straight at constant speed once settled, ~`0.05`–`0.16mm` alternating
-  per-step delta, sign flips on ~43% of consecutive step pairs — not
-  settling noise, which shows as a smooth monotonic trend instead). Not a
-  regression and not related to dynamic bodies, gravity, or anything else
-  Milestone 7-A added — it predates this milestone and was invisible on
-  Milestone 5/6's small 8m sphere; the 20m sphere's room for sustained
-  fast straight-line walking is what made a previously sub-perceptible
-  per-step effect noticeable. Left unfixed in this commit at the
-  operator's explicit direction, to be addressed separately.
+- **Fixed (was: ground vibration while walking/pushing).** What first
+  looked like straight-line-sweep-on-a-curve drift turned out, once
+  instrumented directly, to be a real bug: `SweepPlayerShape`'s contact
+  normal used a travel-direction-based sign heuristic that Jolt's own docs
+  don't call for, and which is specifically wrong for an already-touching
+  (`mFraction == 0`) hit — a state a grounded step's own small inward
+  gravity nudge reaches routinely. Combined with the move-and-slide loop
+  never correcting *back out* when already inside the skin margin (only
+  ever refusing to move closer), this produced a visible oscillation in
+  ordinary walking and, in one reproduced case, a complete permanent
+  lockup after enough sustained straight-line walking. Both are fixed —
+  see "Locomotion," "Contact normal correctness and the 'already touching'
+  case" — verified via a 60-second scripted walk that previously froze
+  solid partway through (zero frozen steps afterward) and via full-
+  precision radial-distance logging (a stable, bounded ~`1.2mm`
+  oscillation band once settled, rather than unbounded erosion toward,
+  and lockup at, zero clearance). Not related to dynamic bodies, gravity,
+  or anything else Milestone 7-A added directly — the bug predates this
+  milestone (present since Milestone 5) but was invisible on the small 8m
+  sphere; the 20m sphere's room for sustained fast straight-line walking
+  is what first made it noticeable, and what let a 60-second scripted walk
+  reproduce the full lockup for diagnosis.
+- **Residual ~1.2mm steady-state radial oscillation while walking**, after
+  the fix above. Not evaluated for further reduction — small enough that
+  it wasn't the operator's concern, and chasing it further would require
+  evidence it's still visually significant, which hasn't been shown.
 - **Residual small motion jitter tracking genuine render-frame timing
   variance.** After the fix, presented per-frame motion still varies by
   about `±11%` of its mean in this environment's own test conditions (down
