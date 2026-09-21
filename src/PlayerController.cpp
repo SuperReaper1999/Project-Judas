@@ -67,6 +67,8 @@ glm::quat RotationBetweenUnitVectors(const glm::vec3& from, const glm::vec3& to)
 PlayerController::PlayerController(const glm::vec3& spawnCenterPosition, float spawnYawDegrees)
     : m_position(spawnCenterPosition),
       m_frameOrientation(1.0f, 0.0f, 0.0f, 0.0f),
+      m_previousPosition(spawnCenterPosition),
+      m_previousOrientation(1.0f, 0.0f, 0.0f, 0.0f),
       m_yaw(spawnYawDegrees),
       m_spawnPosition(spawnCenterPosition),
       m_spawnYawDegrees(spawnYawDegrees) {}
@@ -141,6 +143,13 @@ glm::vec3 PlayerController::ComputeTangentVelocity(const Window& window,
 
 void PlayerController::FixedUpdate(const Window& window, PhysicsWorld& physics,
                                     const GravityField& gravity, float fixedDeltaTime) {
+    // Presentation history: snapshot the state as of the END of the
+    // PREVIOUS step, before this step changes it. This is bookkeeping for
+    // rendering only — see GetPresentedPosition/Orientation — and reads
+    // nothing that affects the authoritative computation below.
+    m_previousPosition = m_position;
+    m_previousOrientation = m_frameOrientation;
+
     const glm::vec3 acceleration = gravity.Sample(m_position);
     const glm::vec3 localUp = ComputeLocalUp(acceleration);
     UpdateFrameOrientation(localUp);
@@ -219,19 +228,43 @@ void PlayerController::Reset() {
     m_position = m_spawnPosition;
     m_velocity = glm::vec3(0.0f);
     m_frameOrientation = glm::quat(1.0f, 0.0f, 0.0f, 0.0f);
+    // Synchronize presentation history to the same pose: with both
+    // endpoints identical, GetPresentedPosition/Orientation return exactly
+    // the reset pose regardless of `alpha`, so the very next render
+    // presents the reset position directly — never an interpolation
+    // across the world from wherever the player was. See
+    // docs/ARCHITECTURE.md, "Reset and discontinuities."
+    m_previousPosition = m_position;
+    m_previousOrientation = m_frameOrientation;
     m_yaw = m_spawnYawDegrees;
     m_pitch = 0.0f;
     m_jumpRequested = false;
 }
 
-glm::mat4 PlayerController::GetViewMatrix() const {
-    const glm::vec3 localUp = m_frameOrientation * glm::vec3(0.0f, 1.0f, 0.0f);
+glm::vec3 PlayerController::GetPresentedPosition(float alpha) const {
+    return glm::mix(m_previousPosition, m_position, std::clamp(alpha, 0.0f, 1.0f));
+}
+
+glm::quat PlayerController::GetPresentedOrientation(float alpha) const {
+    return glm::slerp(m_previousOrientation, m_frameOrientation, std::clamp(alpha, 0.0f, 1.0f));
+}
+
+glm::mat4 PlayerController::GetViewMatrix(float presentationAlpha) const {
+    const glm::vec3 presentedPosition = GetPresentedPosition(presentationAlpha);
+    const glm::quat presentedOrientation = GetPresentedOrientation(presentationAlpha);
+    const glm::vec3 localUp = presentedOrientation * glm::vec3(0.0f, 1.0f, 0.0f);
+
+    // Mouse look (yaw/pitch) is applied on top of the presented orientation
+    // unmodified — it already updates every render frame in
+    // UpdateFrameInput, so it's already as responsive as rendering itself
+    // and needs no interpolation of its own. See docs/ARCHITECTURE.md,
+    // "Input responsiveness."
     const glm::quat lookOrientation =
-        m_frameOrientation * glm::angleAxis(glm::radians(m_yaw), glm::vec3(0.0f, 1.0f, 0.0f)) *
+        presentedOrientation * glm::angleAxis(glm::radians(m_yaw), glm::vec3(0.0f, 1.0f, 0.0f)) *
         glm::angleAxis(glm::radians(m_pitch), glm::vec3(1.0f, 0.0f, 0.0f));
     const glm::vec3 front = glm::normalize(lookOrientation * glm::vec3(0.0f, 0.0f, -1.0f));
 
-    const glm::vec3 eyePosition = m_position + localUp * kEyeHeightAboveCenter;
+    const glm::vec3 eyePosition = presentedPosition + localUp * kEyeHeightAboveCenter;
     const glm::vec3 cameraPosition =
         eyePosition - front * kCameraFollowDistance + localUp * kCameraHeightOffset;
     return glm::lookAt(cameraPosition, cameraPosition + front, localUp);
@@ -239,14 +272,6 @@ glm::mat4 PlayerController::GetViewMatrix() const {
 
 glm::mat4 PlayerController::GetProjectionMatrix(float aspectRatio) const {
     return glm::perspective(glm::radians(kFovDegrees), aspectRatio, kNearPlane, kFarPlane);
-}
-
-glm::vec3 PlayerController::GetRenderCenter() const {
-    return m_position;
-}
-
-glm::quat PlayerController::GetRenderOrientation() const {
-    return m_frameOrientation;
 }
 
 glm::vec3 PlayerController::GetRenderHalfExtents() const {

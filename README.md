@@ -8,23 +8,28 @@ This is **not** a general-purpose engine and is not trying to compete with
 Unity, Unreal, or Godot. It exists to serve one specific class of game, and
 its architecture is deliberately narrow.
 
-## Status: Milestone 5
+## Status: Milestone 6
 
 A controllable player walks, jumps, and falls under real physics
 ([Jolt Physics](https://github.com/jrouwe/JoltPhysics)) on the surface of a
 large sphere, with **radial** gravity pulling toward its center. There is
 no universal "up": the player's own sense of up continuously reorients to
 match wherever gravity currently points, so you can walk all the way around
-the sphere onto what was originally "the other side." As of this milestone
-the player is no longer built on Jolt's character-controller class — Judas
-owns the player's movement, orientation, and support logic directly, using
-Jolt only for low-level collision queries. That's it — no lighting,
-terrain, real planets, or gameplay yet.
+the sphere onto what was originally "the other side." Judas owns the
+player's movement, orientation, and support logic directly, using Jolt only
+for low-level collision queries. As of this milestone, ordinary locomotion
+is visually smooth: the underlying fixed-timestep simulation is unchanged
+(still authoritative, still deterministic), but what actually gets rendered
+each frame is a presentation-only interpolation between two simulation
+states rather than the latest one shown directly — see
+[`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) for the measurements that
+showed this was needed and why. That's it — no lighting, terrain, real
+planets, or gameplay yet.
 
-This is intentional — see [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) for
-why, what's deliberately not built yet, and how this small foundation avoids
-blocking the much larger long-term design. Earlier milestones are preserved
-as git tags (`milestone-1` through `milestone-4`) rather than kept running
+This is intentional — see `docs/ARCHITECTURE.md` for why, what's
+deliberately not built yet, and how this small foundation avoids blocking
+the much larger long-term design. Earlier milestones are preserved as git
+tags (`milestone-1` through `milestone-5`) rather than kept running
 alongside the current demo.
 
 ## Building
@@ -84,8 +89,10 @@ Close the window normally (window controls / `Alt+F4` / etc.) to exit.
 
 Judas can also run headlessly, driven by a scripted input sequence instead
 of a real keyboard/mouse, logging player state and optionally dumping
-screenshots — see [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md#automated-testing)
-for the full script format:
+screenshots — including a real-time mode that reproduces actual
+render-frame timing for diagnosing presentation/smoothness issues. See
+[`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md#automated-testing) for the
+full script format:
 
 ```bash
 JUDAS_TEST_SCRIPT=path/to/script.txt ./build/judas

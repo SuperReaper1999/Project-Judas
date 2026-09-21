@@ -6,7 +6,7 @@ someone with no prior context on this project. It is updated in place as
 milestones land, rather than kept as a per-milestone snapshot — see
 "Milestone history" below for how to recover an earlier milestone exactly.
 
-## What exists right now (Milestone 5)
+## What exists right now (Milestone 6)
 
 Open a window. A large static sphere exists in 3D space with **radial**
 gravity pulling toward its center. A Judas-owned player (not a Jolt
@@ -17,8 +17,13 @@ underside" from the spawn point's perspective — because the player's own
 sense of "up" continuously reorients to match whichever way gravity is
 currently pulling. `Space` jumps away from the local surface; gravity
 brings the player back and Jolt's own collision queries detect the landing.
-`R` resets the player. Nothing else. See the root `README.md` for build/run
-instructions and controls.
+`R` resets the player. As of this milestone, ordinary locomotion is
+visually smooth: the fixed-step simulation is unchanged, but what gets
+*rendered* each frame is a presentation-only interpolation between two
+authoritative simulation states rather than the latest one presented
+directly — see "Diagnosis" and "Simulation/presentation boundary" below.
+Nothing else. See the root `README.md` for build/run instructions and
+controls.
 
 ## Milestone history
 
@@ -33,9 +38,100 @@ preserved as parallel runtime code:
 - `milestone-4` — a player standing on a flat floor, driven by Jolt's
   `CharacterVirtual`; WASD/mouse/jump; the Milestone 3 cube retained
   alongside it.
+- `milestone-5` — the player rebuilt as fully Judas-owned (no more
+  `CharacterVirtual`); `RadicalGravity` added; a spherical demo world;
+  the headless test harness added as permanent infrastructure.
 
 Each milestone's demo content has been replaced (not extended) by the next;
 check out a tag to see or run an earlier milestone as it was.
+
+## Diagnosis
+
+**Symptom (reported by the operator during Milestone 5 interactive
+validation):** ordinary continuous locomotion around the spherical world
+looked visibly jumpy/jerky, even though the underlying gameplay (walking,
+collision, jumping, orientation) was functionally correct.
+
+The brief for this milestone was explicit that this could be either of two
+different bugs — a genuinely unstable simulation, or a stable simulation
+being presented badly — and insisted on measuring before touching anything.
+Two measurements, both taken with `src/TestHarness.h/.cpp` (see
+"Automated testing" below for the `REALTIME` mode added specifically for
+the second one):
+
+**1. Is the authoritative fixed-step simulation itself smooth?** Walked in
+a straight line at constant input, logging every single fixed step
+(`LOG_EVERY 1`, no rendering involved at all). Across 150 consecutive
+steps, the per-step position delta was `0.06667m ± 0.00004m` — a relative
+standard deviation of about `0.06%`, and exactly `kMoveSpeed *
+kFixedTimestep = 4.0 * (1/60) = 0.0667m`. **The authoritative simulation
+was already producing a essentially perfectly uniform sequence of states.**
+No repeated penetration correction, no oscillating shape sweeps, no
+support-transition instability, no orientation snapping — none of the
+"simulation is actually broken" candidates listed in the brief were
+present.
+
+**2. Is that smooth state being presented smoothly?** Added a real-time
+diagnostic mode to the harness (`REALTIME <n>`) that mirrors
+`Application::Run`'s own interactive accumulator loop exactly — same
+`SimulationTiming` constants, same clamp/accumulate/catch-up-cap shape —
+so it reproduces the true render-frame-to-fixed-step relationship
+headlessly, logging one row per *rendered frame* (not per fixed step):
+how many fixed steps ran that frame, and the position that would have been
+handed to the renderer. Walking at the same constant input, over 289
+render frames:
+
+| | min | max | mean | relative stddev |
+|---|---|---|---|---|
+| fixed steps per rendered frame | 0 | 2 | ~0.96 | — |
+| per-frame position delta (old: direct presentation) | `0.000m` | `0.180m` | `0.071m` | `21%` |
+| implied instantaneous speed | `0.0 m/s` | `10.4 m/s` | `4.14 m/s` | `21%` |
+
+The render loop was running at roughly 58–59Hz against a 60Hz fixed
+timestep — close, but not an exact integer ratio (as is true of the
+overwhelming majority of real monitors: 59.94Hz, 75Hz, 144Hz, 165Hz, and
+even nominal "60Hz" displays with vsync-delivery jitter all fail to divide
+evenly into a 60Hz simulation). Most frames got exactly one new fixed step,
+but some got zero (the same authoritative position rendered twice in a
+row — a visible freeze) and some got two (a render frame showing double a
+normal step's worth of motion — a visible lurch). **Root cause: not
+simulation instability. The fixed-step state was correct at every step;
+directly presenting "whatever the latest fixed step happened to compute"
+on render frames whose timing doesn't line up 1:1 with the fixed rate
+produces temporal aliasing — the classic consequence of a fixed-timestep
+simulation rendered without interpolation.**
+
+**Why the chosen fix (presentation-only interpolation — see "Simulation/
+presentation boundary" below) addresses this and nothing else needed to
+change:** since the authoritative sequence of states was already smooth,
+correct, evenly-spaced ground truth, the only thing missing was a way to
+ask "what does the world look like at this render frame's actual moment in
+time, which usually falls *between* two fixed steps?" instead of snapping
+to whichever fixed step happened to have completed most recently.
+Interpolating between the previous and current authoritative
+position/orientation, weighted by how far into the next (not yet
+simulated) step real time has progressed, answers exactly that question —
+without touching gravity, collision, support, velocity, or any gameplay
+decision, all of which remain driven by the untouched fixed-step states.
+Interpolation was not assumed up front; it's what two rounds of measurement
+pointed at.
+
+**After the fix**, the same real-time measurement:
+
+| | min | max | mean | relative stddev |
+|---|---|---|---|---|
+| per-frame position delta (new: presented/interpolated) | `0.065m` | `0.113m` | `0.071m` | `11%` |
+| implied instantaneous speed | `4.0 m/s` | `6.5 m/s` | `4.14 m/s` | `11%` |
+
+Freeze frames (`0.0 m/s`) and double-step lurches (`~10 m/s`, over 2.5×
+target speed) are both gone. The remaining ~11% relative variation
+correlates with genuine render-frame delivery jitter (this environment's
+frame interval itself varies roughly 16.3–18.5ms) rather than being
+decoupled from real elapsed time the way the original quantization
+artifact was — proportional motion that tracks real elapsed time reads as
+smooth; motion that randomly alternates between "nothing happened" and
+"twice as much happened" does not. See "Human visual validation" for the
+operator's judgment on whether this reads as smooth in practice.
 
 ## Language: C++
 
@@ -347,6 +443,24 @@ Jolt-backed player, all state lives in `PlayerController` itself. Demo
 `Reset` logic is allowed to know the spawn point is "above the sphere";
 `PlayerController`'s own code does not know a sphere exists.
 
+### Reset and discontinuities
+
+Added this milestone, alongside presentation interpolation, because the
+two interact if not handled deliberately: `Reset()` also sets
+`m_previousPosition = m_position` and `m_previousOrientation =
+m_frameOrientation` — i.e. it synchronizes presentation history to the
+same reset pose, not just the authoritative one. With both interpolation
+endpoints identical, `GetPresentedPosition`/`GetPresentedOrientation`
+return exactly the reset pose *regardless of `alpha`* — so the very next
+render presents the reset position directly, never a blended "slide"
+across the world from wherever the player was a moment before. Verified
+directly with the harness: a `REALTIME` run holding forward movement and
+triggering `R` mid-walk shows the presented position jump straight from
+mid-walk coordinates to (within floating point) the exact spawn point on
+the very next logged frame, with no intermediate values between the two —
+a genuine teleport presented as a teleport, not smoothed into apparent
+high-speed travel.
+
 Tuning values (`src/PlayerController.cpp`, anonymous namespace): capsule
 radius `0.3m`, capsule cylinder half-height `0.6m` (total capsule height
 `1.8m`), eye height `0.7m` above the capsule center, move speed `4 m/s`,
@@ -356,8 +470,13 @@ tuned for feel.
 ## Simulation timing
 
 Physics is stepped on a **fixed timestep of 1/60 second**
-(`kFixedTimestep` in `src/Application.cpp`), unchanged since Milestone 3.
-`Application::Run` uses the same accumulator as before:
+(`SimulationTiming::kFixedTimestep`, `src/SimulationTiming.h`, added this
+milestone), unchanged in value since Milestone 3 — only pulled out of
+`Application.cpp`'s own anonymous namespace into a tiny shared header so
+the test harness's real-time diagnostic mode (see "Automated testing")
+mirrors the interactive loop's timing behavior by construction rather than
+by two files' literals happening to agree. `Application::Run` uses the
+same accumulator as before:
 
 ```
 accumulator += (clamped) render-frame delta time
@@ -395,6 +514,103 @@ PlayerController::FixedUpdate      — consumes m_jumpRequested unconditionally
                                       (grounded: jumps; airborne: discards —
                                       never buffered until a later landing)
 ```
+
+## Simulation/presentation boundary
+
+Added this milestone, in direct response to "Diagnosis" above. The rule:
+
+```
+Authoritative state (m_position, m_frameOrientation, m_velocity,
+m_lastGrounded, ...) is updated ONLY by PlayerController::FixedUpdate, at
+the fixed 1/60s rate, exactly as before this milestone.
+
+Presentation state is derived FROM authoritative state, purely for
+rendering, and is never read back by FixedUpdate, gravity sampling,
+collision queries, support/grounded logic, or jump logic.
+```
+
+**What may be interpolated:** the player's position and orientation, for
+display only (`PlayerController::GetPresentedPosition`/
+`GetPresentedOrientation`, and everything downstream of them —
+`GetViewMatrix`, the box passed to `Renderer::DrawBox`).
+
+**What must never be interpolated, and isn't:** authoritative position
+velocity, grounded/support state, contact/collision results, gravity
+sampling position, jump state, or any gameplay decision. `FixedUpdate`'s
+body is unchanged except for one addition — snapshotting the pre-step pose
+as the interpolation baseline (see below) — verified directly: the exact
+same fixed-step-mode harness script that produced Milestone 5's evidence
+produces **byte-for-byte identical CSV output** before and after this
+milestone's changes.
+
+### Mechanism
+
+`PlayerController` keeps two poses:
+
+```cpp
+glm::vec3 m_position;           // authoritative: end of the most recent fixed step
+glm::quat m_frameOrientation;   // authoritative: end of the most recent fixed step
+glm::vec3 m_previousPosition;   // presentation only: end of the step BEFORE that
+glm::quat m_previousOrientation;// presentation only: end of the step BEFORE that
+```
+
+`FixedUpdate` snapshots `m_previousPosition`/`m_previousOrientation` from
+the current `m_position`/`m_frameOrientation` at the very top, before
+anything else that step changes them — so after `FixedUpdate` returns, the
+two pairs hold exactly the two endpoints a render between now and the next
+fixed step needs to blend between.
+
+`GetPresentedPosition(alpha)`/`GetPresentedOrientation(alpha)` blend
+between them:
+
+```cpp
+position    = glm::mix  (m_previousPosition,    m_position,          clamp(alpha, 0, 1));
+orientation = glm::slerp(m_previousOrientation,  m_frameOrientation,  clamp(alpha, 0, 1));
+```
+
+Position uses ordinary linear interpolation (`glm::mix`); orientation uses
+spherical linear interpolation (`glm::slerp`) rather than a naive
+per-component lerp, because quaternion components don't blend linearly
+without renormalization artifacts — `slerp` is the mathematically correct
+interpolation for unit quaternions and is what GLM provides for exactly
+this. Verified directly: presented "up" vectors stayed within `6.4e-5` of
+unit length across a 300-frame run spanning a large reorientation — `slerp`
+is doing its job.
+
+`alpha` is computed once per render frame in `Application::Run`, right
+after the fixed-step `while` loop, as
+`physicsAccumulator / SimulationTiming::kFixedTimestep` — literally "how
+far real time has progressed into a fixed step that hasn't been simulated
+yet," the standard interpolation factor for this technique. It's clamped
+to `[0, 1]` defensively inside `GetPresentedPosition`/`GetPresentedOrientation`
+themselves, so even a pathological accumulator value can't produce an
+out-of-range blend or extrapolate past `m_position`.
+
+### Catch-up frames
+
+When a stall forces the `kMaxPhysicsStepsPerFrame` cap to fire,
+`Application::Run` resets `physicsAccumulator` to `0.0` (unchanged
+behavior from Milestone 3) — which makes `alpha = 0.0` for that one frame,
+i.e. that frame presents exactly `m_previousPosition`/`m_previousOrientation`
+(one fixed step "behind" `m_position`) rather than anything invalid. This
+was exercised directly, not just reasoned about: a 12-second combined
+walk/turn/jump harness run naturally hit the catch-up cap twice
+(`stepsThisFrame == 8`) with `alpha` staying in `[0, 1]` throughout and no
+NaN/Inf anywhere in the log. No scheduler redesign was needed or attempted.
+
+### What doesn't need this (yet)
+
+The demo's only other rendered object is the static sphere, which never
+changes and therefore has no "previous state" to blend from —
+`Renderer::DrawSphere` still just takes the same fixed
+`kSphereCenter`/`kSphereRadius` it always has. `PhysicsWorld`'s general
+dynamic-body API (`CreateDynamicBox`, `GetTransform`, etc.) is unused by
+the active demo, so there is currently no second moving, rendered,
+simulation-driven object to generalize this mechanism to. If a future
+milestone adds one, the same shape (previous/current pose kept per object,
+blended by the same per-frame `alpha`) is the natural extension — but nothing
+resembling a generic "interpolated transform" framework was built
+speculatively ahead of that need; see "Deliberately Not Implemented."
 
 ## 3D rendering pipeline
 
@@ -443,11 +659,13 @@ Unchanged reasoning from Milestone 4: the player is rendered as an
 axis-aligned box sized to the capsule's bounding dimensions
 (`PlayerController::GetRenderHalfExtents`), not a faithful capsule mesh —
 primitive geometry is explicitly sufficient for this milestone's purpose.
-Its orientation now uses `PlayerController::GetRenderOrientation()`
-(`m_frameOrientation`) rather than a fixed identity, so the box visibly
-reorients as the player walks around the sphere — matching the physical
-capsule's own up-alignment, even though the capsule shape itself (radially
-symmetric) would look the same in physics regardless.
+Its position and orientation come from
+`PlayerController::GetPresentedPosition`/`GetPresentedOrientation` (see
+"Simulation/presentation boundary") rather than the authoritative state
+directly, as of this milestone — so the box visibly reorients smoothly as
+the player walks around the sphere, matching the physical capsule's own
+up-alignment (interpolated for display; the capsule shape itself is
+radially symmetric and wouldn't visually change in physics regardless).
 
 ## Depth handling
 
@@ -464,21 +682,48 @@ resize-event code path.
 
 ## Camera and look controls
 
-Unchanged in shape from Milestone 4, adapted for arbitrary orientation:
-`PlayerController::GetViewMatrix` computes a fixed **third-person** offset
-— an eye point `0.7m` above the player's capsule center, then a camera
-position `4m` behind that eye point along the current look direction plus
-`1m` extra height along `localUp`, looking in that same direction. The one
-change from Milestone 4: `glm::lookAt`'s up vector is now the player's
-*live* `localUp` (`m_frameOrientation * (0,1,0)`), not a fixed world `+Y` —
-this is the specific change that keeps the camera from rolling incorrectly
-or flipping as the player walks over the sphere's horizon. Still no
-smoothing, no lag, no collision check against the world, and no
-interpolation.
+Unchanged in shape from Milestone 4/5: `PlayerController::GetViewMatrix`
+computes a fixed **third-person** offset — an eye point `0.7m` above the
+player's capsule center, then a camera position `4m` behind that eye point
+along the current look direction plus `1m` extra height along `localUp`,
+looking in that same direction. `glm::lookAt`'s up vector is the player's
+current `localUp`, not a fixed world `+Y` — this is what keeps the camera
+from rolling incorrectly or flipping as the player walks over the sphere's
+horizon.
 
-No free-fly debug mode exists (unchanged reasoning from Milestone 4: it
-would need a mode switch, which is more camera-system scope than either
-milestone calls for).
+**New this milestone:** `GetViewMatrix` now takes a `presentationAlpha`
+parameter and builds `eyePosition`/`localUp`/`front`/`cameraPosition` from
+`GetPresentedPosition`/`GetPresentedOrientation` (see "Simulation/
+presentation boundary") instead of the raw authoritative pose directly.
+This was necessary, not optional: a camera rigidly attached to discrete
+fixed-step player state judders even when the world itself is stationary
+and the simulation is correct, exactly as the milestone brief predicted —
+diagnosing the player's own visible motion (see "Diagnosis") and fixing
+only the player box while leaving the camera reading raw authoritative
+state would have "fixed" the box while leaving the exact same aliasing
+visible in every frame *anyway*, since the whole screen is composed
+through the camera. Camera and player box are always given the *same*
+`presentationAlpha` value each frame (`Application::Run` computes it once
+and passes it to both), so they move in visual lockstep — there is no
+scenario where the box is smooth but the world behind it isn't, or vice
+versa.
+
+**What did *not* change, deliberately:** mouse look (`m_yaw`/`m_pitch`) is
+still read and applied every render frame in `UpdateFrameInput`/
+`GetViewMatrix`, completely unaffected by `presentationAlpha` — it was
+already at full render-frequency responsiveness before this milestone, so
+there was nothing to fix there, and interpolating it would only have added
+latency to look input for no benefit. This is the "camera look can safely
+remain partially render-frequency-driven while physical orientation
+remains fixed-step authoritative" split the brief asked to preserve where
+it made sense; here it did.
+
+No spring-arm system, cinematic smoothing, camera lag, multiple camera
+modes, or configurable camera effects were added — the fix is exactly
+"read the same presentation state the player box reads," not a new camera
+system. No free-fly debug mode exists (unchanged reasoning from Milestone
+4: it would need a mode switch, which is more camera-system scope than any
+milestone so far calls for).
 
 ## Main loop structure
 
@@ -506,10 +751,13 @@ while (!window.ShouldClose()):
         player.FixedUpdate(window, physicsWorld, gravity, fixedTimestep)  // see "Locomotion"
         accumulator -= fixedTimestep
 
+    alpha = accumulator / fixedTimestep   // presentation interpolation factor; see
+                                           // "Simulation/presentation boundary"
+
     renderer.BeginFrame(...)
-    renderer.SetCamera(player.GetViewMatrix(), player.GetProjectionMatrix(aspectRatio))
+    renderer.SetCamera(player.GetViewMatrix(alpha), player.GetProjectionMatrix(aspectRatio))
     renderer.DrawSphere(sphereCenter, sphereRadius, sphereColor)
-    renderer.DrawBox(player.GetRenderCenter(), player.GetRenderOrientation(),
+    renderer.DrawBox(player.GetPresentedPosition(alpha), player.GetPresentedOrientation(alpha),
                       player.GetRenderHalfExtents(), playerColor)
     renderer.EndFrame()
     window.SwapBuffers()
@@ -649,16 +897,30 @@ the game itself, and the normal interactive loop never touches it.
 to a script file's path, `Application::Run` creates the window *hidden*
 (`Window::Init`'s `visible` parameter — a real GL context, just not shown
 on screen) and hands off to `RunTestHarness` instead of the interactive
-loop. The harness runs a fixed number of physics steps as fast as
-possible — no real-time pacing, no vsync wait — driving `Window`'s input
-from the script (`Window::SetTestActionState`/`QueueTestMouseDelta`/
-`RequestTestJump`/`RequestTestReset`, all gated behind
-`SetTestInputMode(true)` so they touch nothing in the normal SDL input
-path) instead of a real keyboard/mouse. It prints one CSV line of player
-state (position, local up, grounded, velocity) per step to stdout, and, at
-any step the script names, renders the actual scene (through a `drawScene`
-callback `Application` supplies, since the harness itself has no idea what
-a "sphere" or a "player box" is) and writes it to a PNG via
+loop, driving `Window`'s input from the script
+(`Window::SetTestActionState`/`QueueTestMouseDelta`/`RequestTestJump`/
+`RequestTestReset`, all gated behind `SetTestInputMode(true)` so they touch
+nothing in the normal SDL input path) instead of a real keyboard/mouse. Two
+modes, chosen by whether the script contains a `REALTIME` directive:
+
+- **Fixed-step mode** (default): runs a fixed number of physics steps as
+  fast as possible — no real-time pacing, no vsync wait. One logged row is
+  one fixed step. What Milestone 5 used to verify gameplay/physics logic
+  in isolation.
+- **Real-time mode** (`REALTIME <renderFrameCount>`, added in Milestone 6):
+  mirrors `Application::Run`'s own interactive accumulator loop exactly
+  (same `SimulationTiming` constants), so it reproduces the true
+  render-frame-to-fixed-step relationship headlessly. One logged row is one
+  *rendered frame*, including how many fixed steps ran that frame, the raw
+  authoritative position/orientation, and the presented (interpolated)
+  position/orientation — see "Diagnosis" for what this mode was built to
+  find. In this mode `HOLD`/`LOOK`/`TAP` step numbers mean render-frame
+  index rather than fixed-step index.
+
+Both modes print one CSV line per logged row to stdout, and, at any
+step/frame the script names, render the actual scene (through a
+`drawScene` callback `Application` supplies, since the harness itself has
+no idea what a "sphere" or a "player box" is) and write it to a PNG via
 `Renderer::CaptureFrame` + the vendored `stb_image_write.h` (public
 domain/MIT, `third_party/stb_image_write.h` — writing images is a solved
 commodity problem, and this single dependency-free header was preferred
@@ -666,10 +928,11 @@ over inventing a PNG encoder or adding a fetched dependency for something
 this small).
 
 The script format (one directive per line, `#` for comments) is
-deliberately minimal — `STEPS`, `LOG_EVERY`, `HOLD <key> <from> <to>`,
-`LOOK <dx> <dy> <atStep>`, `TAP <SPACE|R> <atStep>`, `SCREENSHOT <atStep>
-<file>` — exactly the primitives needed to script a walk/jump/look
-sequence, not a general input-recording or automation language.
+deliberately minimal — `STEPS`, `LOG_EVERY`, `REALTIME`, `HOLD <key>
+<from> <to>`, `LOOK <dx> <dy> <atStep>`, `TAP <SPACE|R> <atStep>`,
+`SCREENSHOT <atStep> <file>` — exactly the primitives needed to script a
+walk/jump/look sequence and measure its timing, not a general
+input-recording or automation language.
 
 **It already found a real bug the first time it was used.** Milestone 5's
 initial jump implementation set the player's vertical velocity to
@@ -691,6 +954,20 @@ matched what the operator had independently noticed by hand, but the
 harness found and pinpointed it first, without anyone needing to watch the
 window.
 
+**Milestone 6's real-time mode repeated the trick at the presentation
+layer.** The fixed-step mode alone couldn't have diagnosed Milestone 6's
+judder at all — it has no concept of "render frame," only fixed steps —
+which is exactly why `REALTIME` was added rather than trying to squeeze
+this diagnosis out of the existing mode. With it, one measurement
+(per-render-frame position deltas, and the distribution of fixed steps per
+frame) was enough to distinguish "the simulation itself is unstable" from
+"stable simulation, presented badly" conclusively — see "Diagnosis" for
+the full numbers. The lesson generalizes: when a new milestone's problem
+needs a shape of evidence the harness can't currently produce, extend it
+narrowly for that evidence rather than trying to force existing modes to
+answer a question they weren't built for — but don't add measurement
+capability nothing has asked for yet either.
+
 **What it deliberately is not:** a general test framework, a CI system, a
 replacement for the operator's own interactive pass, or a visual-diffing
 tool. It has no assertions of its own — reading the CSV output and looking
@@ -699,6 +976,39 @@ reading any other diagnostic log. Extending it (new script directives,
 automatic pass/fail checks against expected values) should wait until a
 specific future milestone actually needs that, not be built speculatively
 now.
+
+## Remaining limitations
+
+Recorded honestly rather than left implicit — these are known, deliberately
+deferred, not oversights:
+
+- **Residual small motion jitter tracking genuine render-frame timing
+  variance.** After the fix, presented per-frame motion still varies by
+  about `±11%` of its mean in this environment's own test conditions (down
+  from `±21%`, with the qualitative freeze/lurch artifacts eliminated
+  entirely — see "Diagnosis"). This tracks real, unavoidable jitter in when
+  frames are actually delivered (this environment's own frame interval
+  varies roughly `16.3`–`18.5ms` frame to frame) rather than being
+  decoupled from it the way the original bug was. No further smoothing was
+  applied on top of correct interpolation to chase this down further — a
+  render loop cannot present motion more smoothly than its own frame
+  delivery is spaced, and papering over that with additional smoothing
+  would just be adding latency for a difference this milestone's
+  diagnostics couldn't demonstrate is visible.
+- **Presentation always lags authoritative simulation by up to one fixed
+  step (~16.7ms).** This is the standard, accepted cost of this
+  interpolation technique (render `previous → current`, never extrapolate
+  past `current`) — not a bug, and not something this milestone attempts
+  to hide or avoid. At 1/60s this is far below the latency budget that
+  would make input feel disconnected, which is why the brief's "preserve
+  input responsiveness" requirement is satisfied by construction, not by
+  measurement here.
+- **Only the player is interpolated for presentation.** The demo currently
+  renders nothing else that's both dynamic and driven by discrete
+  fixed-step state (the sphere is static). See "Future constraints
+  preserved" below for why the mechanism generalizes without rework, and
+  "Deliberately Not Implemented" for why that generalization wasn't built
+  ahead of an actual second consumer.
 
 ## FUTURE CONSTRAINTS PRESERVED
 
@@ -730,6 +1040,15 @@ blocking known future requirements. None of these are implemented yet.
   (`CastShape`) used twice differently. Terrain collision or more query
   types are a matter of calling more of what Jolt already provides through
   the same `PhysicsWorld` boundary, not new architecture.
+- **Interpolated presentation for future dynamic/simulated objects** — the
+  Milestone 6 presentation boundary (previous/current pose kept per object,
+  blended by one shared per-frame `alpha`) is demonstrated on exactly the
+  one object that currently needs it (the player). A future object that
+  needs the same treatment (a moving platform, a thrown item, anything
+  else driven by discrete fixed-step state) can reuse the identical shape
+  without rework — see "Simulation/presentation boundary," "What doesn't
+  need this (yet)." No generic multi-object interpolation system was built
+  ahead of that need.
 
 ## DELIBERATELY NOT IMPLEMENTED
 
@@ -750,7 +1069,6 @@ Explicitly deferred, not forgotten:
   coordinates
 - A general gameplay/entity framework, ECS, or scene graph — one
   `PlayerController` for one player is enough
-- Physics interpolation between fixed steps
 - Character physics beyond the move-and-slide loop this milestone needed:
   no ragdolls, no skeletal physics, no complex constraint systems,
   vehicles, or destructible physics

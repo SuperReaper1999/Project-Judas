@@ -14,6 +14,7 @@
 #include "PlayerController.h"
 #include "RadicalGravity.h"
 #include "Renderer.h"
+#include "SimulationTiming.h"
 #include "TestHarness.h"
 #include "Window.h"
 #include "gl_core33.h"
@@ -21,9 +22,6 @@
 namespace {
 constexpr int kWindowWidth = 1024;
 constexpr int kWindowHeight = 768;
-constexpr float kMaxFrameDeltaTime = 0.25f;  // clamp stalls before they ever reach the accumulator
-constexpr float kFixedTimestep = 1.0f / 60.0f;
-constexpr int kMaxPhysicsStepsPerFrame = 8;
 
 // Milestone 5's demo: a spherical world with radial gravity, replacing
 // Milestone 3/4's flat floor + cube (recoverable via the milestone-4 tag).
@@ -60,7 +58,7 @@ int Application::Run() {
     const bool isTestRun = testScriptPath != nullptr;
 
     Window window;
-    if (!window.Init("Project Judas - Milestone 5", kWindowWidth, kWindowHeight, !isTestRun)) {
+    if (!window.Init("Project Judas - Milestone 6", kWindowWidth, kWindowHeight, !isTestRun)) {
         std::fprintf(stderr, "Window initialization failed.\n");
         return 1;
     }
@@ -103,11 +101,18 @@ int Application::Run() {
 
     // Shared between the normal interactive loop and the test harness, so
     // a screenshot taken by the harness shows exactly what the real game
-    // would have rendered that frame.
-    const auto drawScene = [&](Renderer& r) {
+    // would have rendered that frame. `presentationAlpha` blends the
+    // player's rendered box between its previous and current fixed-step
+    // pose — see docs/ARCHITECTURE.md, "Simulation/presentation boundary"
+    // — the same value passed to PlayerController::GetViewMatrix so the
+    // camera and the player box always move in visual lockstep. The sphere
+    // is static and never interpolated; it has no "previous" pose to blend
+    // from.
+    const auto drawScene = [&](Renderer& r, float presentationAlpha) {
         r.DrawSphere(kSphereCenter, kSphereRadius, kSphereColor);
-        r.DrawBox(player.GetRenderCenter(), player.GetRenderOrientation(),
-                  player.GetRenderHalfExtents(), kPlayerColor);
+        r.DrawBox(player.GetPresentedPosition(presentationAlpha),
+                  player.GetPresentedOrientation(presentationAlpha), player.GetRenderHalfExtents(),
+                  kPlayerColor);
     };
 
     int exitCode = 0;
@@ -127,8 +132,8 @@ int Application::Run() {
             float frameDeltaTime = static_cast<float>(currentCounter - previousCounter) /
                                     static_cast<float>(frequency);
             previousCounter = currentCounter;
-            if (frameDeltaTime > kMaxFrameDeltaTime) {
-                frameDeltaTime = kMaxFrameDeltaTime;
+            if (frameDeltaTime > SimulationTiming::kMaxFrameDeltaTime) {
+                frameDeltaTime = SimulationTiming::kMaxFrameDeltaTime;
             }
 
             // Mouse look and jump-key latching happen every render frame,
@@ -145,27 +150,40 @@ int Application::Run() {
             // step itself.
             physicsAccumulator += frameDeltaTime;
             int stepsThisFrame = 0;
-            while (physicsAccumulator >= kFixedTimestep &&
-                   stepsThisFrame < kMaxPhysicsStepsPerFrame) {
-                physicsWorld.Step(kFixedTimestep);
-                player.FixedUpdate(window, physicsWorld, gravity, kFixedTimestep);
+            while (physicsAccumulator >= SimulationTiming::kFixedTimestep &&
+                   stepsThisFrame < SimulationTiming::kMaxPhysicsStepsPerFrame) {
+                physicsWorld.Step(SimulationTiming::kFixedTimestep);
+                player.FixedUpdate(window, physicsWorld, gravity, SimulationTiming::kFixedTimestep);
 
-                physicsAccumulator -= kFixedTimestep;
+                physicsAccumulator -= SimulationTiming::kFixedTimestep;
                 ++stepsThisFrame;
             }
-            if (stepsThisFrame == kMaxPhysicsStepsPerFrame) {
+            if (stepsThisFrame == SimulationTiming::kMaxPhysicsStepsPerFrame) {
                 // Hit the catch-up cap: drop the backlog instead of
                 // letting it compound into future frames.
                 physicsAccumulator = 0.0f;
             }
+
+            // How far real time has progressed into an as-yet-unsimulated
+            // fixed step, as a fraction of one step — the presentation
+            // interpolation factor. See docs/ARCHITECTURE.md, "Diagnosis"
+            // and "Simulation/presentation boundary," for why this exists:
+            // render-frame timing doesn't divide evenly into the fixed
+            // 1/60s simulation rate, so presenting the latest fixed-step
+            // state directly (this value implicitly always 1.0) produced
+            // visible judder — some frames repeating a state, others
+            // jumping by two steps' worth of motion — even though the
+            // underlying simulation itself is smooth.
+            const float presentationAlpha = physicsAccumulator / SimulationTiming::kFixedTimestep;
 
             const int windowHeight = std::max(window.Height(), 1);
             const float aspectRatio =
                 static_cast<float>(window.Width()) / static_cast<float>(windowHeight);
 
             renderer.BeginFrame(window.Width(), window.Height());
-            renderer.SetCamera(player.GetViewMatrix(), player.GetProjectionMatrix(aspectRatio));
-            drawScene(renderer);
+            renderer.SetCamera(player.GetViewMatrix(presentationAlpha),
+                                player.GetProjectionMatrix(aspectRatio));
+            drawScene(renderer, presentationAlpha);
             renderer.EndFrame();
 
             window.SwapBuffers();
