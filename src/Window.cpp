@@ -30,7 +30,7 @@ bool Window::Init(const char* title, int width, int height) {
 
     SDL_GL_SetSwapInterval(1);
 
-    // Milestone 2 is a free-flight 3D camera demo, so start with the mouse
+    // The demo controls a player with mouse look, so start with the mouse
     // captured for immediate look control.
     SDL_SetRelativeMouseMode(SDL_TRUE);
     m_mouseCaptured = true;
@@ -81,6 +81,8 @@ void Window::PollEvents() {
                 SDL_SetRelativeMouseMode(m_mouseCaptured ? SDL_TRUE : SDL_FALSE);
             } else if (event.key.keysym.scancode == SDL_SCANCODE_R) {
                 m_resetRequested = true;
+            } else if (event.key.keysym.scancode == SDL_SCANCODE_SPACE) {
+                m_jumpRequested = true;
             }
         }
     }
@@ -101,10 +103,6 @@ bool Window::IsActionActive(Action action) const {
             return keys[SDL_SCANCODE_A] || keys[SDL_SCANCODE_LEFT];
         case Action::StrafeRight:
             return keys[SDL_SCANCODE_D] || keys[SDL_SCANCODE_RIGHT];
-        case Action::Ascend:
-            return keys[SDL_SCANCODE_SPACE];
-        case Action::Descend:
-            return keys[SDL_SCANCODE_LCTRL];
     }
     return false;
 }
@@ -129,5 +127,11 @@ void Window::GetMouseDelta(int& deltaX, int& deltaY) const {
 bool Window::ConsumeResetRequest() {
     const bool requested = m_resetRequested;
     m_resetRequested = false;
+    return requested;
+}
+
+bool Window::ConsumeJumpRequest() {
+    const bool requested = m_jumpRequested;
+    m_jumpRequested = false;
     return requested;
 }

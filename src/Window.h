@@ -6,16 +6,16 @@
 // action enum rather than raw key codes, so a later input source (mouse,
 // controller) can drive the same actions without callers changing.
 //
-// These are free-flight camera actions (Milestone 2). "Forward"/"strafe"
-// are relative to wherever the camera is currently looking, not to any
-// fixed world direction.
+// As of Milestone 4 these drive the player's grounded horizontal
+// locomotion (see PlayerController): "forward"/"strafe" are relative to
+// wherever the player is currently looking, not to any fixed world
+// direction. Vertical movement is not one of these — jumping is a discrete
+// event (see ConsumeJumpRequest below), not a held direction.
 enum class Action {
     MoveForward,
     MoveBackward,
     StrafeLeft,
     StrafeRight,
-    Ascend,
-    Descend,
 };
 
 // Owns the OS window, the GL context, and OS event pumping. Combines the
@@ -48,8 +48,16 @@ public:
     // Returns true exactly once per `R` key press (edge-triggered, not
     // polled state), then clears itself — a minimal debug control, not a
     // general input-remapping system. Used by Application to reset the
-    // Milestone 3 dynamic cube.
+    // demo's dynamic cube and player.
     bool ConsumeResetRequest();
+
+    // Returns true exactly once per `Space` key press (edge-triggered).
+    // Deliberately separate from the continuously-polled Action enum:
+    // jumping is a one-shot event, not a held direction. PlayerController
+    // latches this into its own longer-lived flag so a press during a
+    // render frame with zero fixed physics steps isn't lost — see
+    // docs/ARCHITECTURE.md, "Simulation timing."
+    bool ConsumeJumpRequest();
 
     int Width() const { return m_width; }
     int Height() const { return m_height; }
@@ -61,6 +69,7 @@ private:
     bool m_shouldClose = false;
     bool m_mouseCaptured = false;
     bool m_resetRequested = false;
+    bool m_jumpRequested = false;
     int m_width = 0;
     int m_height = 0;
 };

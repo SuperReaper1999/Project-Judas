@@ -13,7 +13,9 @@
 #include <Jolt/Core/TempAllocator.h>
 #include <Jolt/Physics/Body/BodyActivationListener.h>
 #include <Jolt/Physics/Body/BodyCreationSettings.h>
+#include <Jolt/Physics/Character/CharacterVirtual.h>
 #include <Jolt/Physics/Collision/Shape/BoxShape.h>
+#include <Jolt/Physics/Collision/Shape/CapsuleShape.h>
 #include <Jolt/Physics/PhysicsSettings.h>
 #include <Jolt/Physics/PhysicsSystem.h>
 #include <Jolt/RegisterTypes.h>
@@ -144,6 +146,11 @@ struct PhysicsWorld::Impl {
         static_cast<int>(std::max(1u, std::thread::hardware_concurrency() - 1))};
 
     JPH::PhysicsSystem physicsSystem;
+
+    // The one player. Not tracked by JPH::PhysicsSystem — CharacterVirtual
+    // is a kinematic controller the caller (this class) steps explicitly
+    // via UpdatePlayer, not a body physicsSystem.Update() advances itself.
+    JPH::Ref<JPH::CharacterVirtual> player;
 };
 
 bool PhysicsWorld::Init() {
@@ -257,4 +264,68 @@ void PhysicsWorld::ResetBody(BodyHandle handle, const glm::vec3& position,
                                           JPH::EActivation::Activate);
     bodyInterface.SetLinearVelocity(id, JPH::Vec3::sZero());
     bodyInterface.SetAngularVelocity(id, JPH::Vec3::sZero());
+}
+
+bool PhysicsWorld::CreatePlayer(const glm::vec3& feetPosition, const glm::vec3& up,
+                                 float capsuleRadius, float capsuleHalfHeight, float mass) {
+    JPH::CharacterVirtualSettings settings;
+    // Jolt's own convention: the shape's bottom must sit at the character's
+    // local origin, so the capsule (naturally centered on its own origin)
+    // is offset upward by its own half-extent along `up`.
+    settings.mShape = new JPH::CapsuleShape(capsuleHalfHeight, capsuleRadius);
+    settings.mShapeOffset = ToJolt(up) * (capsuleHalfHeight + capsuleRadius);
+    settings.mUp = ToJolt(up);
+    settings.mMass = mass;
+
+    m_impl->player = new JPH::CharacterVirtual(&settings, ToJolt(feetPosition), JPH::Quat::sIdentity(),
+                                                &m_impl->physicsSystem);
+    // The player collides with the same "moving" object layer the dynamic
+    // cube uses; both are allowed to collide with the static floor and
+    // with each other (see ObjectLayerPairFilterImpl above), which is all
+    // this milestone needs — no new layer was warranted.
+    return m_impl->player != nullptr;
+}
+
+void PhysicsWorld::DestroyPlayer() {
+    m_impl->player = nullptr;
+}
+
+void PhysicsWorld::SetPlayerVelocity(const glm::vec3& velocity) {
+    if (!m_impl->player) return;
+    m_impl->player->SetLinearVelocity(ToJolt(velocity));
+}
+
+glm::vec3 PhysicsWorld::GetPlayerVelocity() const {
+    if (!m_impl->player) return glm::vec3(0.0f);
+    return ToGlm(m_impl->player->GetLinearVelocity());
+}
+
+void PhysicsWorld::UpdatePlayer(float fixedDeltaTime, const glm::vec3& gravity) {
+    if (!m_impl->player) return;
+    m_impl->player->Update(fixedDeltaTime, ToJolt(gravity),
+                            m_impl->physicsSystem.GetDefaultBroadPhaseLayerFilter(Layers::kMoving),
+                            m_impl->physicsSystem.GetDefaultLayerFilter(Layers::kMoving),
+                            JPH::BodyFilter(), JPH::ShapeFilter(), m_impl->tempAllocator);
+}
+
+glm::vec3 PhysicsWorld::GetPlayerPosition() const {
+    if (!m_impl->player) return glm::vec3(0.0f);
+    return ToGlm(JPH::Vec3(m_impl->player->GetPosition()));
+}
+
+void PhysicsWorld::ResetPlayer(const glm::vec3& feetPosition) {
+    if (!m_impl->player) return;
+    m_impl->player->SetPosition(ToJolt(feetPosition));
+    m_impl->player->SetLinearVelocity(JPH::Vec3::sZero());
+}
+
+PlayerGroundContact PhysicsWorld::GetPlayerGroundContact() const {
+    PlayerGroundContact contact;
+    if (!m_impl->player) return contact;
+
+    contact.isGrounded =
+        m_impl->player->GetGroundState() == JPH::CharacterBase::EGroundState::OnGround;
+    contact.normal = ToGlm(m_impl->player->GetGroundNormal());
+    contact.velocity = ToGlm(m_impl->player->GetGroundVelocity());
+    return contact;
 }

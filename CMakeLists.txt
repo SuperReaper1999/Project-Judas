@@ -38,7 +38,7 @@ add_executable(judas
     src/Application.cpp
     src/Window.cpp
     src/Renderer.cpp
-    src/Camera.cpp
+    src/PlayerController.cpp
     src/FaithfulGravity.cpp
     src/PhysicsWorld.cpp
     src/gl_core33.cpp

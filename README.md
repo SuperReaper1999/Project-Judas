@@ -8,20 +8,23 @@ This is **not** a general-purpose engine and is not trying to compete with
 Unity, Unreal, or Godot. It exists to serve one specific class of game, and
 its architecture is deliberately narrow.
 
-## Status: Milestone 3
+## Status: Milestone 4
 
-A dynamic cube falls onto a static floor under real rigid-body physics
-([Jolt Physics](https://github.com/jrouwe/JoltPhysics)) — gravity is
-supplied by the engine itself, not the physics library, and the collision
-is genuinely resolved by the physics middleware rather than scripted. The
-Milestone 2 free-flight camera still works, purely for observation. That's
-it — no lighting, terrain, planets, or gameplay yet.
+A controllable player — a capsule-shaped physics character — stands on a
+floor, walks, jumps, and falls under real rigid-body physics
+([Jolt Physics](https://github.com/jrouwe/JoltPhysics)). Gravity is
+supplied by the engine itself (not the physics library), jump direction is
+derived from that same gravity rather than a hard-coded axis, and
+ground/support state comes from the physics controller's own contact
+detection rather than a height check. The Milestone 3 falling cube is
+still there too. That's it — no lighting, terrain, planets, or gameplay
+yet.
 
 This is intentional — see [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) for
 why, what's deliberately not built yet, and how this small foundation avoids
 blocking the much larger long-term design. Earlier milestones are preserved
-as git tags (`milestone-1`, `milestone-2`) rather than kept running
-alongside the current demo.
+as git tags (`milestone-1`, `milestone-2`, `milestone-3`) rather than kept
+running alongside the current demo.
 
 ## Building
 
@@ -59,19 +62,20 @@ cmake --build build -j"$(nproc)"
 
 ## Controls
 
-The mouse is captured on launch and controls camera look directly.
+The mouse is captured on launch and controls where the player looks. WASD
+walks the player relative to that look direction (not a free-flying
+camera).
 
-| Action           | Keys                  |
-|------------------|-----------------------|
-| Move forward     | `W` or `Up Arrow`     |
-| Move backward    | `S` or `Down Arrow`   |
-| Strafe left      | `A` or `Left Arrow`   |
-| Strafe right     | `D` or `Right Arrow`  |
-| Move up          | `Space`               |
-| Move down        | `Left Ctrl`           |
-| Look around      | Mouse movement        |
-| Release/recapture mouse | `Escape`       |
-| Reset the falling cube  | `R`            |
+| Action                  | Keys                  |
+|-------------------------|-----------------------|
+| Walk forward            | `W` or `Up Arrow`     |
+| Walk backward           | `S` or `Down Arrow`   |
+| Strafe left             | `A` or `Left Arrow`   |
+| Strafe right            | `D` or `Right Arrow`  |
+| Jump (only while grounded) | `Space`             |
+| Look around             | Mouse movement        |
+| Release/recapture mouse | `Escape`               |
+| Reset the player and the cube | `R`              |
 
 Close the window normally (window controls / `Alt+F4` / etc.) to exit.
 

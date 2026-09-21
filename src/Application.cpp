@@ -8,10 +8,10 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/quaternion.hpp>
 
-#include "Camera.h"
 #include "FaithfulGravity.h"
 #include "GravityField.h"
 #include "PhysicsWorld.h"
+#include "PlayerController.h"
 #include "Renderer.h"
 #include "Window.h"
 #include "gl_core33.h"
@@ -26,14 +26,14 @@ constexpr float kMaxFrameDeltaTime = 0.25f;  // clamp stalls before they ever re
 // specific to this scene.
 constexpr float kFixedTimestep = 1.0f / 60.0f;
 
-// Caps how many fixed steps a single render frame will run to catch up.
-// Combined with kMaxFrameDeltaTime above (which already bounds how much
-// time a single frame can hand the accumulator), this is a second,
-// explicit guard against a stall turning into an ever-growing backlog of
-// physics steps ("spiral of death"): if the cap is hit, the remaining
-// accumulated time is dropped rather than carried into future frames.
+// Caps how many fixed steps a single render frame will run to catch up;
+// see docs/ARCHITECTURE.md, "Simulation timing," for the full rationale
+// (unchanged since Milestone 3).
 constexpr int kMaxPhysicsStepsPerFrame = 8;
 
+// The Milestone 3 floor + falling cube are kept: harmless, and useful as a
+// second proof that PhysicsWorld/GravityField work generally, not only for
+// the player.
 const glm::vec3 kFloorHalfExtents(10.0f, 0.5f, 10.0f);
 const glm::vec3 kFloorPosition(0.0f, -0.5f, 0.0f);
 const glm::vec3 kFloorColor(0.35f, 0.35f, 0.4f);
@@ -41,17 +41,22 @@ constexpr float kFloorFriction = 0.8f;
 constexpr float kFloorRestitution = 0.1f;
 
 const glm::vec3 kCubeHalfExtents(0.5f, 0.5f, 0.5f);
-const glm::vec3 kCubeInitialPosition(0.0f, 5.0f, 0.0f);
+const glm::vec3 kCubeInitialPosition(3.0f, 5.0f, -2.0f);  // off to the side of the player's spawn
 const glm::quat kCubeInitialRotation(1.0f, 0.0f, 0.0f, 0.0f);  // identity
 const glm::vec3 kCubeColor(0.9f, 0.3f, 0.2f);
 constexpr float kCubeMass = 2.0f;
 constexpr float kCubeFriction = 0.5f;
 constexpr float kCubeRestitution = 0.3f;
+
+// The floor's top surface is at y = 0 (kFloorPosition.y + kFloorHalfExtents.y).
+const glm::vec3 kPlayerSpawnFeetPosition(0.0f, 0.0f, 3.0f);
+constexpr float kPlayerSpawnYawDegrees = -90.0f;
+const glm::vec3 kPlayerColor(0.2f, 0.6f, 0.9f);
 }  // namespace
 
 int Application::Run() {
     Window window;
-    if (!window.Init("Project Judas - Milestone 3", kWindowWidth, kWindowHeight)) {
+    if (!window.Init("Project Judas - Milestone 4", kWindowWidth, kWindowHeight)) {
         std::fprintf(stderr, "Window initialization failed.\n");
         return 1;
     }
@@ -75,9 +80,8 @@ int Application::Run() {
 
     // Application (the composition root) is the one place that knows the
     // concrete gravity implementation. Everything downstream — including
-    // the rest of this function — talks to it only through the GravityField
-    // interface, so it stays agnostic of which implementation is active.
-    // See GravityField.h and docs/ARCHITECTURE.md, "Ownership boundary."
+    // the player controller — talks to it only through the GravityField
+    // interface. See GravityField.h and docs/ARCHITECTURE.md.
     FaithfulGravity faithfulGravity;
     GravityField& gravity = faithfulGravity;
 
@@ -87,10 +91,11 @@ int Application::Run() {
         physicsWorld.CreateDynamicBox(kCubeInitialPosition, kCubeHalfExtents, kCubeMass,
                                        kCubeFriction, kCubeRestitution);
 
-    // Camera positioned to see the whole demo (floor + falling cube) at
-    // launch without requiring the user to fly around first; free-flight
-    // navigation from Milestone 2 is otherwise unchanged.
-    Camera camera(glm::vec3(0.0f, 4.0f, 12.0f), /*yawDegrees=*/-90.0f, /*pitchDegrees=*/-20.0f);
+    PlayerController player(kPlayerSpawnFeetPosition, kPlayerSpawnYawDegrees);
+    if (!player.Spawn(physicsWorld, gravity)) {
+        std::fprintf(stderr, "Player spawn failed.\n");
+        return 1;
+    }
 
     float physicsAccumulator = 0.0f;
 
@@ -108,10 +113,13 @@ int Application::Run() {
             frameDeltaTime = kMaxFrameDeltaTime;
         }
 
-        camera.Update(window, frameDeltaTime);
+        // Mouse look and jump-key latching happen every render frame,
+        // independent of how many fixed physics steps run this frame.
+        player.UpdateFrameInput(window);
 
         if (window.ConsumeResetRequest()) {
             physicsWorld.ResetBody(cubeBody, kCubeInitialPosition, kCubeInitialRotation);
+            player.Reset(physicsWorld);
             physicsAccumulator = 0.0f;
         }
 
@@ -121,13 +129,14 @@ int Application::Run() {
         int stepsThisFrame = 0;
         while (physicsAccumulator >= kFixedTimestep && stepsThisFrame < kMaxPhysicsStepsPerFrame) {
             // Judas samples its own gravity field and hands the result to
-            // the physics body itself; the physics middleware's global
+            // each physics body itself; the physics middleware's global
             // gravity stays disabled (see PhysicsWorld::Init).
             const glm::vec3 cubePosition = physicsWorld.GetTransform(cubeBody).position;
-            const glm::vec3 acceleration = gravity.Sample(cubePosition);
-            physicsWorld.ApplyLinearAcceleration(cubeBody, acceleration, kFixedTimestep);
-
+            physicsWorld.ApplyLinearAcceleration(cubeBody, gravity.Sample(cubePosition),
+                                                  kFixedTimestep);
             physicsWorld.Step(kFixedTimestep);
+
+            player.FixedUpdate(window, physicsWorld, gravity, kFixedTimestep);
 
             physicsAccumulator -= kFixedTimestep;
             ++stepsThisFrame;
@@ -146,16 +155,19 @@ int Application::Run() {
         const BodyTransform cubeTransform = physicsWorld.GetTransform(cubeBody);
 
         renderer.BeginFrame(window.Width(), window.Height());
-        renderer.SetCamera(camera.GetViewMatrix(), camera.GetProjectionMatrix(aspectRatio));
+        renderer.SetCamera(player.GetViewMatrix(physicsWorld), player.GetProjectionMatrix(aspectRatio));
         renderer.DrawBox(floorTransform.position, floorTransform.rotation, kFloorHalfExtents,
                           kFloorColor);
         renderer.DrawBox(cubeTransform.position, cubeTransform.rotation, kCubeHalfExtents,
                           kCubeColor);
+        renderer.DrawBox(player.GetRenderCenter(physicsWorld), glm::quat(1.0f, 0.0f, 0.0f, 0.0f),
+                          player.GetRenderHalfExtents(), kPlayerColor);
         renderer.EndFrame();
 
         window.SwapBuffers();
     }
 
+    player.Destroy(physicsWorld);
     physicsWorld.DestroyBody(cubeBody);
     physicsWorld.DestroyBody(floorBody);
     physicsWorld.Shutdown();

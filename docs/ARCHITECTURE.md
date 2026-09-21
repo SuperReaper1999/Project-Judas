@@ -6,15 +6,15 @@ someone with no prior context on this project. It is updated in place as
 milestones land, rather than kept as a per-milestone snapshot — see
 "Milestone history" below for how to recover an earlier milestone exactly.
 
-## What exists right now (Milestone 3)
+## What exists right now (Milestone 4)
 
-Open a window. A static floor and a dynamic cube exist in 3D space. Judas
-samples its own gravity and hands it to the physics middleware, which
-integrates the cube's motion, detects its collision with the floor, and
-resolves it — the cube falls, lands, and settles under real rigid-body
-simulation, not scripted motion. The rendered floor/cube use the transform
-the physics simulation produced. The Milestone 2 free-flight camera still
-works, purely for observation. `R` resets the cube. Nothing else. See the
+Open a window. A static floor and a Milestone 3 dynamic cube still exist
+and still fall/settle under real physics. A controllable player — a
+capsule-shaped character controller — stands on the floor: WASD walks it
+(relative to where it's looking), the mouse looks around, `Space` jumps
+(only while grounded, in a direction derived from the active gravity, not
+a hard-coded axis), and gravity brings it back down to a real physical
+landing. `R` resets both the cube and the player. Nothing else. See the
 root `README.md` for build/run instructions and controls.
 
 ## Milestone history
@@ -25,6 +25,8 @@ preserved as parallel runtime code:
 - `milestone-1` — window creation, a single 2D box, keyboard movement.
 - `milestone-2` — 3D rendering, perspective, depth testing, a free-flight
   camera, three static cubes.
+- `milestone-3` — Jolt Physics integration, `GravityField`/`FaithfulGravity`,
+  fixed-timestep simulation, a dynamic cube falling onto a static floor.
 
 Each milestone's demo content has been replaced (not extended) by the next;
 check out a tag to see or run an earlier milestone as it was.
@@ -115,6 +117,63 @@ produces exactly one `Jolt` static-library target and — because it detects
 it's being used as a subdirectory dependency rather than built standalone —
 automatically skips building its own unit tests, samples, and viewer.
 
+## Player/controller representation
+
+**Selected: Jolt's `CharacterVirtual`**, wrapped by a handful of methods on
+`PhysicsWorld` (`CreatePlayer`, `SetPlayerVelocity`, `UpdatePlayer`,
+`GetPlayerPosition`, `GetPlayerGroundContact`, `ResetPlayer`), driven by a
+new `PlayerController` (`src/PlayerController.h/.cpp`).
+
+### Why `CharacterVirtual` and not a dynamic rigid body
+
+Jolt offers two ways to represent a controllable character: a full dynamic
+`Body` (like the Milestone 3 cube, just capsule-shaped and rotation-locked),
+or `CharacterVirtual` — a kinematic controller that isn't tracked by
+`PhysicsSystem` at all and instead does its own collision-aware sweep-and-
+resolve each time the caller explicitly calls `Update()`.
+
+A dynamic rigid body was rejected for the player specifically because
+ordinary rigid-body dynamics (friction, restitution, torque from
+glancing contacts) are the wrong tool for player locomotion — they produce
+exactly the kind of unpredictable sliding, snagging, and orientation
+drift that makes rigid-body characters feel bad to control, which is a
+solved problem `CharacterVirtual` exists to avoid: the caller sets a
+*desired* velocity every step and `Update()` moves the character that far
+unless collision blocks it, reporting clean ground-contact state
+(`GetGroundState()`, `GetGroundNormal()`) instead of leaving the caller to
+infer support from contact/collision callbacks. This is Jolt's own
+purpose-built answer to exactly what this milestone needs (physical
+collision, grounded locomotion, falling, jumping, stable floor contact) —
+not a generic framework being built for its own sake, and not a choice
+made because "mature engines commonly do this": it was chosen because
+reading its actual API (`Jolt/Physics/Character/CharacterVirtual.h`) shows
+it solves this exact problem with less code and fewer footguns than
+driving a dynamic body would.
+
+Only the plain `Update()` call is used, not `ExtendedUpdate()` (which adds
+stair-stepping and floor-sticking on top). Milestone 4's flat floor has no
+stairs or steps to climb, so that extra machinery would be speculative.
+
+### What Judas owns vs. what Jolt owns, for the player specifically
+
+This mirrors the general ownership boundary below, applied one level
+deeper:
+
+- **Jolt (`CharacterVirtual`) owns**: collision-aware movement resolution,
+  contact/ground detection, and slope classification (its own `mUp` /
+  `mMaxSlopeAngle` settings — used only to decide "is this surface a floor
+  or a wall," a controller implementation detail, not gravity).
+- **`PhysicsWorld` owns**: translating that Jolt-specific API into plain
+  `glm` types and semantic calls, exactly like it does for ordinary bodies.
+  No Jolt type appears in `PhysicsWorld.h`.
+- **`PlayerController` owns**: input intent (WASD, mouse, jump key),
+  deciding what velocity the player *should* have this step, and reading
+  back where physics put it for the camera/render. It never touches Jolt
+  directly and never contains a gravity constant of its own — every
+  acceleration it uses comes from a `GravityField&` passed in.
+- **`Application::Run`** remains the composition root wiring all of the
+  above together, exactly as for the cube and floor.
+
 ## Ownership boundary
 
 This is the foundational rule Milestone 3 establishes, and the most
@@ -132,8 +191,12 @@ generation, rigid-body integration, and constraint solving — nothing more.
 `GravityField` (`src/GravityField.h`) is an abstract interface — a single
 pure-virtual method, `Sample(worldPosition) -> acceleration` — and is
 Judas's *only* contract for gravity. Everything that needs gravity
-(currently just `Application::Run`) talks to a `GravityField&` and stays
+(`Application::Run`'s cube-gravity step, and — new in Milestone 4 —
+`PlayerController::FixedUpdate`) talks to a `GravityField&` and stays
 completely agnostic about which concrete implementation is behind it.
+`PlayerController` never queries `FaithfulGravity` directly, never hard-codes
+`(0, -9.81, 0)`, and receives the interface reference as a parameter rather
+than owning or constructing one itself.
 
 `FaithfulGravity` (`src/FaithfulGravity.h/.cpp`) is the first, canonical
 implementation: conventional, uniform, constant-direction gravity suitable
@@ -199,6 +262,65 @@ implementation is a new class plus swapping which concrete type
 (`ApplyLinearAcceleration`, `Step`, the render read-back) stays exactly as
 it is.
 
+## Ground/support semantics
+
+**Gravity direction and supporting-surface normal are different concepts,
+even though they coincide on today's flat floor.** This distinction is
+deliberately kept visible in the code rather than collapsed into one
+vector:
+
+- **Support/grounded state comes only from the physics controller's own
+  contact information** — `PlayerGroundContact` (`PhysicsWorld.h`), backed
+  by Jolt's `CharacterVirtual::GetGroundState()`/`GetGroundNormal()`. A
+  jump is permitted only when `PlayerGroundContact::isGrounded` is true.
+  Nothing in `PlayerController` or `PhysicsWorld` ever asks "is the
+  player's Y coordinate close to some known floor height" — that would
+  hard-code knowledge of this one demo floor's placement into player logic,
+  which is exactly what's avoided (moving `kFloorPosition` in
+  `Application.cpp` requires touching nothing about the player).
+- **Jump direction comes only from the active `GravityField`**, resampled
+  fresh every fixed step in `PlayerController::FixedUpdate`
+  (`up = -normalize(gravity.Sample(position))`), not from
+  `PlayerGroundContact::normal` and not from a hard-coded `+Y`. On a flat
+  floor with `FaithfulGravity`, "away from gravity" and "the floor's
+  contact normal" happen to be the same direction — that's a property of
+  today's test geometry, not an engine law, and the code computes them
+  through entirely separate paths so that remains true even though the
+  numbers currently agree.
+- The one place a fixed `+Y` axis *is* used as a convenience is
+  `PlayerController::ComputeHorizontalVelocity`'s yaw/pitch-to-movement
+  math (matching Milestone 2/3's `Camera` precedent) — documented there as
+  this milestone's convention, not reused for anything support- or
+  gravity-related.
+
+## Locomotion
+
+**Movement** (`W`/`Up`, `S`/`Down`, `A`/`Left`, `D`/`Right`) is expressed
+each fixed step as a desired horizontal velocity
+(`PlayerController::ComputeHorizontalVelocity`, walking speed **4 m/s**,
+relative to the player's current look yaw) and handed to
+`CharacterVirtual` via `PhysicsWorld::SetPlayerVelocity` before
+`PhysicsWorld::UpdatePlayer` resolves it against the world — never a direct
+transform write, so it can't bypass collision.
+
+**Jump** (`Space`) only takes effect when
+`PlayerGroundContact::isGrounded` is true at the moment a fixed step
+consumes the request, imparting **5 m/s** away from the gravity direction
+sampled at that instant (see "Ground/support semantics"). No double jump,
+coyote time, jump buffering, or variable height: a jump attempted while
+airborne is simply discarded, not queued for the next landing.
+
+**Reset** (`R`) restores both the Milestone 3 cube (`PhysicsWorld::ResetBody`)
+and the player (`PlayerController::Reset` → `PhysicsWorld::ResetPlayer`,
+which sets the feet position and zeroes velocity, plus resets the
+controller's own yaw/pitch/pending-jump state) to their spawn conditions.
+
+Tuning values (`src/PlayerController.cpp`, anonymous namespace): capsule
+radius `0.3m`, capsule cylinder half-height `0.6m` (total height `1.8m`),
+mass `70kg` (also `CharacterVirtualSettings`' own default), move speed
+`4 m/s`, jump speed `5 m/s`, eye height `1.6m`. All explicit, chosen for a
+readable demonstration, not tuned for feel.
+
 ## Simulation timing
 
 Physics is stepped on a **fixed timestep of 1/60 second**
@@ -238,6 +360,40 @@ alongside vsync-capped rendering this isn't visually necessary yet; it's a
 known, explicitly deferred refinement (see "Deliberately Not
 Implemented").
 
+### Player input vs. the fixed step
+
+Mouse look and the jump key are read from `Window` at **render-frame**
+frequency (`PlayerController::UpdateFrameInput`, called once per iteration
+of the loop, outside the accumulator's `while`), because input should feel
+responsive regardless of how physics happens to be paced that frame.
+Movement and jumping themselves, however, are only ever resolved inside a
+fixed step (`PlayerController::FixedUpdate`, called once per accumulator
+iteration) — so the player's motion stays governed by the same trustworthy,
+frame-rate-independent timestep as every other physics body, and input
+sampling frequency never leaks into how far or how fast the player actually
+moves.
+
+This split creates one real hazard: a render frame can complete zero fixed
+steps (if it runs faster than 1/60s and the accumulator hasn't filled up
+yet), so a `Space` tap sampled that frame could otherwise vanish before any
+`FixedUpdate` call ever sees it. The fix is the smallest mechanism that
+solves exactly this and nothing more — no generic input-command buffer:
+
+```
+Window::ConsumeJumpRequest()       — one-shot: true on the render frame the
+                                      key transitioned down, then clears
+        |
+        v
+PlayerController::UpdateFrameInput — drains it into m_jumpRequested, which
+                                      persists across render frames if needed
+        |
+        v
+PlayerController::FixedUpdate      — consumes m_jumpRequested unconditionally
+                                      (grounded: jumps; airborne: discards —
+                                      see "Ground/support semantics" — never
+                                      buffered until a later landing)
+```
+
 ## Current gravity
 
 `FaithfulGravity::Sample` returns a constant `(0, -9.81, 0)` for every
@@ -246,11 +402,13 @@ engine-wide definition of gravity or of "down."** Nothing about the
 vector's direction or magnitude is assumed anywhere outside
 `FaithfulGravity.cpp` — `PhysicsWorld` takes whatever acceleration the
 active `GravityField` implementation produces and applies it, without
-interpreting it. A future radial/planetary gravity implementation is
-expected to be a new class implementing `GravityField` (see "Gravity: one
-interface, interchangeable implementations" above) that actually uses its
-`worldPosition` argument, without changing anything about how a physics
-body *receives* gravity.
+interpreting it, and (new in Milestone 4) `PlayerController` does the same
+for the player's vertical velocity and jump direction. A future
+radial/planetary gravity implementation is expected to be a new class
+implementing `GravityField` (see "Gravity: one interface, interchangeable
+implementations" above) that actually uses its `worldPosition` argument,
+without changing anything about how a physics body — or the player —
+*receives* gravity.
 
 ## 3D rendering pipeline
 
@@ -262,9 +420,9 @@ as uniforms to a single, simple shader (`src/Renderer.cpp`):
 local (unit cube, [-0.5, 0.5] per axis)
     --(uModel: translate * rotate * scale, from position/rotation/halfExtents)-->
 world coordinates
-    --(uView: Camera::GetViewMatrix(), a glm::lookAt)-->
+    --(uView: PlayerController::GetViewMatrix(), a glm::lookAt)-->
 camera/view coordinates
-    --(uProjection: Camera::GetProjectionMatrix(), a glm::perspective)-->
+    --(uProjection: PlayerController::GetProjectionMatrix(), a glm::perspective)-->
 clip space / screen
 ```
 
@@ -276,25 +434,43 @@ gl_Position = uProjection * uView * uModel * vec4(aLocalPos, 1.0);
 
 Milestone 3 added rotation and non-uniform scale to the model matrix
 (`glm::translate(position) * glm::mat4_cast(rotation) * glm::scale(halfExtents * 2)`)
-so the floor and cube can be different sizes and so the cube's rendered
+so different boxes can have different sizes and so a body's rendered
 orientation can come from physics — both were previously translation-only.
 The floor and cube are both drawn with the **same transform their physics
 body reports** (`PhysicsWorld::GetTransform`); there is no separate
 rendering-side position/rotation for either of them, and no duplicated
-movement logic between simulation and rendering.
+movement logic between simulation and rendering. The player (see "Player
+visual representation" below) is the one exception to exact transform
+matching, for a documented reason.
 
 ### Coordinate conventions (current, local to this renderer/physics setup)
 
 - World space is a conventional right-handed 3D space in engine-defined
   "world units," used directly as Jolt's own simulation space (no unit
   conversion between Judas and the physics middleware yet).
-- `+Y` is used as "up" by the camera (see "Camera orientation") and, as of
-  this milestone, by `FaithfulGravity`'s constant test vector. **Neither is
-  an engine-wide law** — see "Current gravity" and "Future constraints
-  preserved."
+- `+Y` is used as "up" by `PlayerController` (its camera math and its
+  horizontal-movement basis — see "Ground/support semantics") and by
+  `FaithfulGravity`'s constant test vector. **Neither is an engine-wide
+  law** — see "Current gravity," "Ground/support semantics," and "Future
+  constraints preserved."
 - There is still no distinction between authoritative large-world
   coordinates and local rendering/physics coordinates — see "Future
   constraints preserved."
+
+### Player visual representation
+
+The player is rendered as an axis-aligned box sized to the capsule
+collider's bounding dimensions (`PlayerController::GetRenderHalfExtents`:
+`(radius, halfCylinderHeight + radius, radius)`), **not a faithful capsule
+mesh** — unlike the floor and cube, this is an approximation of the actual
+collision shape, not an exact match. Building real capsule geometry
+(hemispherical end caps, tessellation) is real extra code for a
+demonstration that only needs a visible, debuggable stand-in for "where the
+physical player is"; primitive geometry is explicitly sufficient for this
+milestone's purpose. The box uses the player's actual physics position
+(feet position + half-height offset) and an identity rotation — the capsule
+itself never visibly rotates, so there is nothing to lose by not tracking
+orientation here.
 
 ## Depth handling
 
@@ -305,10 +481,40 @@ color and depth buffers every frame.
 
 ## Projection handling
 
-Unchanged from Milestone 2: `Camera::GetProjectionMatrix(aspectRatio)`
-rebuilds the perspective projection every frame from the window's current
-width/height, so resizing is handled automatically with no dedicated
-resize-event code path.
+Unchanged in mechanism from Milestone 2 — now on `PlayerController`:
+`GetProjectionMatrix(aspectRatio)` rebuilds the perspective projection
+every frame from the window's current width/height, so resizing is handled
+automatically with no dedicated resize-event code path.
+
+## Camera and look controls
+
+Milestone 2's standalone free-flight `Camera` has been removed (recoverable
+via the `milestone-2`/`milestone-3` tags) in favor of a camera attached to
+the player, since flying the camera independently of the character it's
+meant to help you inspect would need a mode switch — additional
+camera-system scope this milestone deliberately avoids.
+
+`PlayerController::GetViewMatrix` computes a fixed **third-person** offset:
+an eye point `1.6m` above the player's feet, then a camera position `4m`
+behind that eye point along the current look direction plus `1m` extra
+height, looking in that same direction
+(`glm::lookAt(cameraPosition, cameraPosition + front, worldUp)`). This is
+recomputed directly from the player's live physics position and the
+current yaw/pitch every frame — no smoothing, no lag, no collision check
+against the world, and no interpolation. It was chosen over a strict
+first-person view specifically so the player's own capsule (box
+approximation) stays visible, which is what makes it useful for seeing the
+physical body actually fall, land, and stand rather than only inspecting
+the world from inside it.
+
+Mouse movement changes yaw/pitch (`PlayerController::UpdateFrameInput`),
+which drives both this camera's look direction *and* which way WASD
+currently walks (see "Locomotion") — but looking around never writes to
+the player's physics position or velocity; it only changes numbers read
+back when computing the view matrix and the movement basis. A minimal
+free-fly debug mode was not retained: it would need input to route to two
+different consumers (camera vs. player) with a mode toggle, which is
+already more camera-system machinery than this milestone calls for.
 
 ## Main loop structure
 
@@ -319,83 +525,91 @@ Init Window, load GL functions, Init Renderer
 Init PhysicsWorld (registers Jolt types, zeroes Jolt's own gravity)
 Create a FaithfulGravity, bound to a GravityField& (see "Ownership boundary")
 Create the static floor body and the dynamic cube body
-Create Camera (positioned to see the whole scene at launch)
+Create PlayerController, Spawn() it (creates its CharacterVirtual via PhysicsWorld)
 
 while (!window.ShouldClose()):
-    window.PollEvents()          // close request, Escape toggle, R (reset) flag
+    window.PollEvents()              // close request, Escape toggle, R/Space one-shot flags
     frameDeltaTime = measured elapsed time since last frame, clamped
 
-    camera.Update(window, frameDeltaTime)      // keyboard movement + mouse look
+    player.UpdateFrameInput(window)  // mouse look + latch jump request; every frame
 
     if window.ConsumeResetRequest():
         physicsWorld.ResetBody(cube, initialPosition, initialRotation)
+        player.Reset(physicsWorld)
 
     accumulator += frameDeltaTime
     while accumulator >= fixedTimestep and steps < cap:
         acceleration = gravity.Sample(cube's current position)  // through the GravityField interface
         physicsWorld.ApplyLinearAcceleration(cube, acceleration, fixedTimestep)
         physicsWorld.Step(fixedTimestep)
+
+        player.FixedUpdate(window, physicsWorld, gravity, fixedTimestep)  // see "Locomotion"
+
         accumulator -= fixedTimestep
 
     floorTransform = physicsWorld.GetTransform(floor)
     cubeTransform  = physicsWorld.GetTransform(cube)
 
     renderer.BeginFrame(...)
-    renderer.SetCamera(camera.GetViewMatrix(), camera.GetProjectionMatrix(aspectRatio))
+    renderer.SetCamera(player.GetViewMatrix(physicsWorld), player.GetProjectionMatrix(aspectRatio))
     renderer.DrawBox(floorTransform..., floorHalfExtents, floorColor)
     renderer.DrawBox(cubeTransform...,  cubeHalfExtents,  cubeColor)
+    renderer.DrawBox(player.GetRenderCenter(physicsWorld), identity, player.GetRenderHalfExtents(), playerColor)
     renderer.EndFrame()
     window.SwapBuffers()
 
+player.Destroy(physicsWorld)
 physicsWorld.DestroyBody(cube); physicsWorld.DestroyBody(floor); physicsWorld.Shutdown()
 renderer.Shutdown()
 // Window's destructor tears down the GL context, the window, and SDL itself.
 ```
 
-The engine-level split is unchanged in kind, with one addition:
+The engine-level split, updated for this milestone:
 
 - `Window` — window/input.
 - `Renderer` — graphics.
-- `PhysicsWorld` — physics (new in Milestone 3).
+- `PhysicsWorld` — physics, including the player's `CharacterVirtual` (new
+  player surface in Milestone 4; body-based physics unchanged since
+  Milestone 3).
 - `GravityField` / `FaithfulGravity` — Judas's own gravity interface and
-  its uniform-gravity implementation (new in Milestone 3).
-- `Camera` — the observational free-flight camera (no longer "the demo
-  content" on its own — the floor/cube pairing in `Application.cpp` is now
-  the demo content, driven by physics rather than by `Camera`).
+  its uniform-gravity implementation (Milestone 3).
+- `PlayerController` — input intent, locomotion decisions, and the
+  player's camera (new in Milestone 4; replaces `Camera`).
 - `Application` — wires the above together and owns the loop, including
   the physics accumulator.
 
 ## Input handling
 
-Unchanged from Milestone 2 (`MoveForward`/`MoveBackward`/`StrafeLeft`/
-`StrafeRight`/`Ascend`/`Descend`, mouse look, `Escape` to release/recapture
-the mouse), plus one addition:
+The `Action` enum (`Window.h`) now describes grounded locomotion, not
+free-flight: `MoveForward`/`MoveBackward`/`StrafeLeft`/`StrafeRight`, bound
+to `W`/`Up`, `S`/`Down`, `A`/`Left`, `D`/`Right` — unchanged bindings, but
+now interpreted relative to the player's look direction (see "Locomotion")
+rather than a flying camera's. `Ascend`/`Descend` (`Space`/`Left Ctrl`) were
+removed: nothing consumes them any more now that the free camera is gone,
+and a grounded player doesn't have a "descend" concept.
 
-**`R` resets the dynamic cube.** Handled as a discrete key-down event in
-`Window::PollEvents` (like `Escape`, not like the continuously-polled
-movement actions), setting a flag that `Window::ConsumeResetRequest()`
-returns once and clears. `Application::Run` calls
-`PhysicsWorld::ResetBody(cube, initialPosition, initialRotation)`, which
-sets the body's pose and zeroes both linear and angular velocity — a
-minimal debug control, not a general save/restore or replay system.
+`Escape` still toggles mouse capture, unchanged from Milestone 2/3.
 
-## Camera orientation
+Two **discrete, one-shot** requests exist alongside the continuously-polled
+`Action`s, each its own edge-triggered flag on `Window` (drained by
+`Consume...Request()`, matching the existing `ConsumeResetRequest`
+pattern) rather than folded into the action-state model, because they're
+one-time events, not held directions:
 
-Unchanged from Milestone 2: `Camera` keeps a fixed world `(0, 1, 0)`
-reference axis for mouse look and vertical movement, documented there and
-in `Camera.h` as a convention scoped to that one class, not an engine-wide
-definition of "up." The camera remains purely observational in Milestone 3
-— it has no physics body, is not affected by gravity, and does not control
-anything with a rigid body. There is still no player controller.
+- **`R`** — `ConsumeResetRequest()`. `Application::Run` resets both the
+  cube (`PhysicsWorld::ResetBody`) and the player
+  (`PlayerController::Reset`).
+- **`Space`** — `ConsumeJumpRequest()`. Latched by `PlayerController` and
+  consumed by the next fixed step — see "Simulation timing," "Player input
+  vs. the fixed step."
 
 ## Frame timing
 
-Render-loop timing is unchanged from Milestones 1–2 (measured via
-`SDL_GetPerformanceCounter`, clamped to 0.25s). Physics timing is now
-separate from it — see "Simulation timing" above — which is itself an
-application of the same "trustworthy elapsed time, not an assumed rate"
-principle Milestone 1 established, applied to a second, independently-paced
-system.
+Render-loop timing is unchanged from Milestones 1–3 (measured via
+`SDL_GetPerformanceCounter`, clamped to 0.25s). Physics timing remains
+separate from it — see "Simulation timing" above, including this
+milestone's addition of how player input specifically interacts with the
+fixed step.
 
 ## FUTURE CONSTRAINTS PRESERVED
 
@@ -411,10 +625,13 @@ blocking known future requirements. None of these are implemented yet.
   `FaithfulGravity`, `PhysicsWorld`, or `Application`'s physics loop. See
   "Ownership boundary" and "Current gravity."
 - **No universal up** — the only places world `+Y` means anything are
-  `Camera` (observational, documented as local convention) and
-  `FaithfulGravity`'s constant test vector (also documented as temporary,
-  and scoped to that one implementation). Nothing in `PhysicsWorld` or
-  `Renderer` treats any axis as special.
+  `PlayerController` (its camera math and horizontal-movement basis,
+  documented as local convention) and `FaithfulGravity`'s constant test
+  vector (also documented as temporary, scoped to that one implementation).
+  Nothing in `PhysicsWorld` or `Renderer` treats any axis as special, and
+  the parts of `PlayerController` that *can* correctly derive direction
+  from live gravity (vertical integration, jump) already do — see "Ground/
+  support semantics."
 - **Moving spacecraft reference frames** — `PhysicsWorld` bodies are
   addressed by an opaque `BodyHandle` and positioned in one shared world
   space; nothing about that prevents a future frame concept from sitting
@@ -428,9 +645,16 @@ blocking known future requirements. None of these are implemented yet.
   out of `PhysicsWorld`) forecloses adopting that later.
 - **Many terrain collision objects, raycasts/shape queries, constraints** —
   not built, but Jolt provides all of them; `PhysicsWorld`'s current
-  minimal surface (create/destroy/step/query-transform) is intentionally
-  small because that's all this milestone needs, not because the
-  underlying middleware can't do more.
+  minimal surface (create/destroy/step/query-transform, plus the player
+  surface added this milestone) is intentionally small because that's all
+  each milestone needed, not because the underlying middleware can't do
+  more.
+- **Planetary character locomotion** — `PlayerController` never conflates
+  "opposite gravity direction" with "ground contact normal" (see "Ground/
+  support semantics"); a future planet's radial gravity and a slope's
+  actual contact normal disagreeing with each other is exactly the case
+  this milestone's code already keeps as two separate values, even though
+  today's flat floor makes them numerically identical.
 
 ## DELIBERATELY NOT IMPLEMENTED
 
@@ -441,19 +665,31 @@ Explicitly deferred, not forgotten:
   shaped to allow these as future implementations (see "Ownership
   boundary"), but only `FaithfulGravity` exists today
 - Terrain (including Terrain-ML)
-- A player controller or any character physics
 - Moving reference frames, floating origin, astronomical coordinates,
   spacecraft
+- A general gameplay/entity framework, ECS, or scene graph — one
+  `PlayerController` for one player is enough
 - Physics interpolation between fixed steps (the render frame currently
   just reads the latest stepped transform; not visibly necessary yet at
   1/60s physics with vsync-capped rendering)
-- Complex constraint systems, vehicles, ragdolls, destructible physics
-- Jolt's debug renderer / any physics-debug-drawing (the rendered floor and
-  cube are enough to prove the simulation is real; adding a debug
-  wireframe overlay was judged not worth the scope for this milestone)
+- Character physics beyond `CharacterVirtual`'s own collision/ground
+  detection: no ragdolls, no skeletal physics, no complex constraint
+  systems, vehicles, or destructible physics
+- Stair-climbing / `CharacterVirtual::ExtendedUpdate` — plain `Update()`
+  is sufficient for a flat floor; adding it isn't intrinsically required by
+  anything this demonstration proves
+- Sprinting, crouching, stamina, acceleration curves, movement states,
+  character models, skeletal animation, or any animation system
+- Double jump, coyote time, jump buffering, variable jump height, air
+  dashing, wall jumping — one reliable jump is the whole requirement
+- Cinematic cameras, camera collision, camera shake/smoothing frameworks,
+  or multiple gameplay camera modes (see "Camera and look controls")
+- Jolt's debug renderer / any physics-debug-drawing (the rendered floor,
+  cube, and player box are enough to prove the simulation is real; adding
+  a debug wireframe overlay was judged not worth the scope for this
+  milestone)
 - Lighting, shadows, textures, materials, model loading
-- Audio, networking
-- Entity/component systems, scene graphs
+- Audio, networking, NPCs, AI, inventory, weapons, interaction systems
 - Editors, scripting, UI frameworks
 - Vulkan (see "Windowing & Graphics API" — unchanged reasoning from
   Milestones 1–2)
@@ -461,7 +697,8 @@ Explicitly deferred, not forgotten:
 - Controller input (the `Action` boundary exists for this, but only
   keyboard + mouse are wired up)
 - A generated OpenGL loader (glad/GLEW) — the GL surface didn't grow this
-  milestone (no new GL calls were needed for physics itself), so there was
-  nothing to re-evaluate.
+  milestone (no new GL calls were needed for the player itself, only new
+  Jolt API surface), so there was nothing to re-evaluate.
 - A physics material/property system beyond per-body friction/restitution/
-  mass — the floor and cube each just get explicit, sensible values.
+  mass — the floor, cube, and player each just get explicit, sensible
+  values.

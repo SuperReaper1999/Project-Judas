@@ -18,6 +18,18 @@ struct BodyTransform {
     glm::quat rotation{1.0f, 0.0f, 0.0f, 0.0f};  // identity
 };
 
+// What the player is currently physically supported by, as reported by the
+// character controller's own collision/contact detection — never derived
+// from comparing a world-space height to a known floor coordinate. See
+// docs/ARCHITECTURE.md, "Ground/support semantics": `normal` is the actual
+// contact-surface normal, a distinct concept from "the direction opposite
+// gravity," even though the two happen to coincide on today's flat floor.
+struct PlayerGroundContact {
+    bool isGrounded = false;
+    glm::vec3 normal{0.0f, 1.0f, 0.0f};
+    glm::vec3 velocity{0.0f, 0.0f, 0.0f};  // world-space velocity of whatever the player is standing on
+};
+
 // Wraps the physics middleware (currently Jolt Physics — see
 // docs/ARCHITECTURE.md, "Physics middleware"). Owns collision detection,
 // contact resolution, and rigid-body integration.
@@ -66,6 +78,46 @@ public:
     // Restores a body to a pose with zero linear and angular velocity.
     // Used by the Milestone 3 debug reset control.
     void ResetBody(BodyHandle handle, const glm::vec3& position, const glm::quat& rotation);
+
+    // --- Player (character controller) ---
+    //
+    // Backed by a Jolt CharacterVirtual — a kinematic, collision-aware
+    // controller rather than a full dynamic rigid body. See
+    // docs/ARCHITECTURE.md, "Player/controller representation," for why.
+    // There is exactly one player; see PlayerController for the
+    // input/locomotion logic that drives these calls. As with everything
+    // else in this class, no Jolt type appears in this signature list.
+    //
+    // `feetPosition` is the position at the bottom of the player's capsule
+    // (its "feet"), not the capsule's center. `up` seeds the character
+    // controller's own internal reference axis (used only for classifying
+    // ground vs. too-steep-to-climb slopes) — callers derive it from the
+    // active GravityField at spawn time rather than hard-coding it, though
+    // it is not re-derived every frame in this milestone (FaithfulGravity
+    // is constant). This is a controller implementation detail, not the
+    // same concept as a contact normal — see PlayerGroundContact above.
+    bool CreatePlayer(const glm::vec3& feetPosition, const glm::vec3& up, float capsuleRadius,
+                       float capsuleHalfHeight, float mass);
+    void DestroyPlayer();
+
+    void SetPlayerVelocity(const glm::vec3& velocity);
+    glm::vec3 GetPlayerVelocity() const;
+
+    // Advances the player's own collision-aware movement by exactly one
+    // fixed step. `gravity` here is passed straight through to Jolt's
+    // CharacterVirtual::Update, which by its own documented contract uses
+    // it ONLY for the edge case of standing on a moving/rotating object —
+    // it does not integrate gravity into the player's velocity itself
+    // (that remains PlayerController's job, exactly like
+    // ApplyLinearAcceleration does for ordinary bodies).
+    void UpdatePlayer(float fixedDeltaTime, const glm::vec3& gravity);
+
+    glm::vec3 GetPlayerPosition() const;  // feet position
+
+    // Restores the player to a feet position with zero velocity.
+    void ResetPlayer(const glm::vec3& feetPosition);
+
+    PlayerGroundContact GetPlayerGroundContact() const;
 
 private:
     struct Impl;
