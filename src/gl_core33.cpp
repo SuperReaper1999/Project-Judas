@@ -6,6 +6,8 @@
 PFNGLVIEWPORT glViewport = nullptr;
 PFNGLCLEARCOLOR glClearColor = nullptr;
 PFNGLCLEAR glClear = nullptr;
+PFNGLENABLE glEnable = nullptr;
+PFNGLDEPTHFUNC glDepthFunc = nullptr;
 PFNGLGENBUFFERS glGenBuffers = nullptr;
 PFNGLBINDBUFFER glBindBuffer = nullptr;
 PFNGLBUFFERDATA glBufferData = nullptr;
@@ -53,6 +55,8 @@ bool LoadGLFunctions() {
     ok &= LoadOne(glViewport, "glViewport");
     ok &= LoadOne(glClearColor, "glClearColor");
     ok &= LoadOne(glClear, "glClear");
+    ok &= LoadOne(glEnable, "glEnable");
+    ok &= LoadOne(glDepthFunc, "glDepthFunc");
     ok &= LoadOne(glGenBuffers, "glGenBuffers");
     ok &= LoadOne(glBindBuffer, "glBindBuffer");
     ok &= LoadOne(glBufferData, "glBufferData");

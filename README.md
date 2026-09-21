@@ -8,14 +8,18 @@ This is **not** a general-purpose engine and is not trying to compete with
 Unity, Unreal, or Godot. It exists to serve one specific class of game, and
 its architecture is deliberately narrow.
 
-## Status: Milestone 1
+## Status: Milestone 2
 
-The engine currently does exactly one thing: it opens a window, renders a
-2D box, and lets you move that box around with the keyboard. That's it.
+The engine renders three cubes in 3D space with correct perspective and
+depth testing, and lets you fly a free camera through the scene with the
+keyboard and mouse. That's it — no lighting, physics, terrain, or gameplay
+yet.
 
 This is intentional — see [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) for
 why, what's deliberately not built yet, and how this small foundation avoids
-blocking the much larger long-term design.
+blocking the much larger long-term design. Milestone 1 (a 2D box moved by
+the keyboard) is preserved as the `milestone-1` git tag rather than kept
+running alongside this milestone's demo.
 
 ## Building
 
@@ -25,11 +29,12 @@ blocking the much larger long-term design.
 - CMake 3.16+
 - A C++17 compiler (GCC or Clang)
 - SDL2 development headers
+- GLM development headers
 
 On Ubuntu/Debian:
 
 ```bash
-sudo apt install cmake libsdl2-dev build-essential
+sudo apt install cmake libsdl2-dev libglm-dev build-essential
 ```
 
 ### Build
@@ -47,12 +52,18 @@ cmake --build build -j"$(nproc)"
 
 ## Controls
 
-| Action    | Keys                 |
-|-----------|-----------------------|
-| Move up   | `W` or `Up Arrow`    |
-| Move down | `S` or `Down Arrow`  |
-| Move left | `A` or `Left Arrow`  |
-| Move right| `D` or `Right Arrow` |
+The mouse is captured on launch and controls camera look directly.
+
+| Action           | Keys                  |
+|------------------|-----------------------|
+| Move forward     | `W` or `Up Arrow`     |
+| Move backward    | `S` or `Down Arrow`   |
+| Strafe left      | `A` or `Left Arrow`   |
+| Strafe right     | `D` or `Right Arrow`  |
+| Move up          | `Space`               |
+| Move down        | `Left Ctrl`           |
+| Look around      | Mouse movement        |
+| Release/recapture mouse | `Escape`       |
 
 Close the window normally (window controls / `Alt+F4` / etc.) to exit.
 

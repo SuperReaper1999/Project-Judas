@@ -13,9 +13,10 @@ bool Window::Init(const char* title, int width, int height) {
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 3);
     SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
+    SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 24);
 
     m_window = SDL_CreateWindow(title, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width,
-                                 height, SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN);
+                                 height, SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE);
     if (!m_window) {
         std::fprintf(stderr, "SDL_CreateWindow failed: %s\n", SDL_GetError());
         return false;
@@ -28,6 +29,11 @@ bool Window::Init(const char* title, int width, int height) {
     }
 
     SDL_GL_SetSwapInterval(1);
+
+    // Milestone 2 is a free-flight 3D camera demo, so start with the mouse
+    // captured for immediate look control.
+    SDL_SetRelativeMouseMode(SDL_TRUE);
+    m_mouseCaptured = true;
 
     m_width = width;
     m_height = height;
@@ -65,6 +71,14 @@ void Window::PollEvents() {
                 m_width = event.window.data1;
                 m_height = event.window.data2;
             }
+        } else if (event.type == SDL_KEYDOWN && event.key.repeat == 0 &&
+                   event.key.keysym.scancode == SDL_SCANCODE_ESCAPE) {
+            // Toggle mouse capture so the cursor can be released without
+            // closing the application. This is the "sensible way to
+            // release/restore mouse control" called for by the brief, not
+            // a general input-remapping system.
+            m_mouseCaptured = !m_mouseCaptured;
+            SDL_SetRelativeMouseMode(m_mouseCaptured ? SDL_TRUE : SDL_FALSE);
         }
     }
 }
@@ -76,14 +90,35 @@ void Window::SwapBuffers() {
 bool Window::IsActionActive(Action action) const {
     const Uint8* keys = SDL_GetKeyboardState(nullptr);
     switch (action) {
-        case Action::MoveUp:
+        case Action::MoveForward:
             return keys[SDL_SCANCODE_W] || keys[SDL_SCANCODE_UP];
-        case Action::MoveDown:
+        case Action::MoveBackward:
             return keys[SDL_SCANCODE_S] || keys[SDL_SCANCODE_DOWN];
-        case Action::MoveLeft:
+        case Action::StrafeLeft:
             return keys[SDL_SCANCODE_A] || keys[SDL_SCANCODE_LEFT];
-        case Action::MoveRight:
+        case Action::StrafeRight:
             return keys[SDL_SCANCODE_D] || keys[SDL_SCANCODE_RIGHT];
+        case Action::Ascend:
+            return keys[SDL_SCANCODE_SPACE];
+        case Action::Descend:
+            return keys[SDL_SCANCODE_LCTRL];
     }
     return false;
+}
+
+void Window::GetMouseDelta(int& deltaX, int& deltaY) const {
+    // Always drain SDL's accumulator, even while not captured, so motion
+    // that happened while the mouse was released doesn't reappear as a
+    // jump the moment it's recaptured.
+    int rawDeltaX = 0;
+    int rawDeltaY = 0;
+    SDL_GetRelativeMouseState(&rawDeltaX, &rawDeltaY);
+
+    if (m_mouseCaptured) {
+        deltaX = rawDeltaX;
+        deltaY = rawDeltaY;
+    } else {
+        deltaX = 0;
+        deltaY = 0;
+    }
 }

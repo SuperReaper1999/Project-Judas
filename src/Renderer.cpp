@@ -3,18 +3,20 @@
 #include <cstdio>
 #include <vector>
 
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
+
 namespace {
 
 const char* kVertexShaderSource = R"(#version 330 core
-layout(location = 0) in vec2 aLocalPos;
+layout(location = 0) in vec3 aLocalPos;
 
+uniform mat4 uModel;
+uniform mat4 uView;
 uniform mat4 uProjection;
-uniform vec2 uPosition;
-uniform vec2 uSize;
 
 void main() {
-    vec2 worldPos = aLocalPos * uSize + uPosition;
-    gl_Position = uProjection * vec4(worldPos, 0.0, 1.0);
+    gl_Position = uProjection * uView * uModel * vec4(aLocalPos, 1.0);
 }
 )";
 
@@ -70,18 +72,33 @@ bool LinkProgram(GLuint vertexShader, GLuint fragmentShader, GLuint& outProgram)
     return true;
 }
 
-// Builds a standard OpenGL orthographic projection for [0,w] x [0,h] with
-// the origin at the bottom-left and +y pointing up, written in GL's
-// column-major uniform layout.
-void BuildOrthographicProjection(float width, float height, float outMatrix[16]) {
-    for (int i = 0; i < 16; ++i) outMatrix[i] = 0.0f;
-    outMatrix[0] = 2.0f / width;
-    outMatrix[5] = 2.0f / height;
-    outMatrix[10] = -1.0f;
-    outMatrix[12] = -1.0f;
-    outMatrix[13] = -1.0f;
-    outMatrix[15] = 1.0f;
-}
+// A unit cube (36 vertices, position-only, two triangles per face) centered
+// on the origin in local [-0.5, 0.5] space. Winding order is not consistent
+// per face since face culling is not enabled — every face is drawn from
+// either side, which is fine for solid-colored opaque cubes with depth
+// testing and not worth the extra bookkeeping this milestone.
+// clang-format off
+const float kCubeVertices[] = {
+    // back face
+    -0.5f, -0.5f, -0.5f,   0.5f,  0.5f, -0.5f,   0.5f, -0.5f, -0.5f,
+     0.5f,  0.5f, -0.5f,  -0.5f, -0.5f, -0.5f,  -0.5f,  0.5f, -0.5f,
+    // front face
+    -0.5f, -0.5f,  0.5f,   0.5f, -0.5f,  0.5f,   0.5f,  0.5f,  0.5f,
+     0.5f,  0.5f,  0.5f,  -0.5f,  0.5f,  0.5f,  -0.5f, -0.5f,  0.5f,
+    // left face
+    -0.5f,  0.5f,  0.5f,  -0.5f,  0.5f, -0.5f,  -0.5f, -0.5f, -0.5f,
+    -0.5f, -0.5f, -0.5f,  -0.5f, -0.5f,  0.5f,  -0.5f,  0.5f,  0.5f,
+    // right face
+     0.5f,  0.5f,  0.5f,   0.5f, -0.5f, -0.5f,   0.5f,  0.5f, -0.5f,
+     0.5f, -0.5f, -0.5f,   0.5f,  0.5f,  0.5f,   0.5f, -0.5f,  0.5f,
+    // bottom face
+    -0.5f, -0.5f, -0.5f,   0.5f, -0.5f, -0.5f,   0.5f, -0.5f,  0.5f,
+     0.5f, -0.5f,  0.5f,  -0.5f, -0.5f,  0.5f,  -0.5f, -0.5f, -0.5f,
+    // top face
+    -0.5f,  0.5f, -0.5f,   0.5f,  0.5f,  0.5f,   0.5f,  0.5f, -0.5f,
+     0.5f,  0.5f,  0.5f,  -0.5f,  0.5f, -0.5f,  -0.5f,  0.5f,  0.5f,
+};
+// clang-format on
 
 }  // namespace
 
@@ -104,26 +121,19 @@ bool Renderer::Init() {
         return false;
     }
 
+    m_uModel = glGetUniformLocation(m_shaderProgram, "uModel");
+    m_uView = glGetUniformLocation(m_shaderProgram, "uView");
     m_uProjection = glGetUniformLocation(m_shaderProgram, "uProjection");
-    m_uPosition = glGetUniformLocation(m_shaderProgram, "uPosition");
-    m_uSize = glGetUniformLocation(m_shaderProgram, "uSize");
     m_uColor = glGetUniformLocation(m_shaderProgram, "uColor");
 
-    // Unit quad (two triangles), centered at the origin, in local [-0.5, 0.5] space.
-    const float quadVertices[] = {
-        -0.5f, -0.5f, 0.5f, -0.5f, 0.5f, 0.5f,
+    glGenVertexArrays(1, &m_cubeVao);
+    glBindVertexArray(m_cubeVao);
 
-        -0.5f, -0.5f, 0.5f,  0.5f, -0.5f, 0.5f,
-    };
+    glGenBuffers(1, &m_cubeVbo);
+    glBindBuffer(GL_ARRAY_BUFFER, m_cubeVbo);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(kCubeVertices), kCubeVertices, GL_STATIC_DRAW);
 
-    glGenVertexArrays(1, &m_vao);
-    glBindVertexArray(m_vao);
-
-    glGenBuffers(1, &m_vbo);
-    glBindBuffer(GL_ARRAY_BUFFER, m_vbo);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(quadVertices), quadVertices, GL_STATIC_DRAW);
-
-    glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), nullptr);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), nullptr);
     glEnableVertexAttribArray(0);
 
     glBindVertexArray(0);
@@ -131,17 +141,20 @@ bool Renderer::Init() {
 
     glClearColor(0.08f, 0.09f, 0.11f, 1.0f);
 
+    glEnable(GL_DEPTH_TEST);
+    glDepthFunc(GL_LESS);
+
     return true;
 }
 
 void Renderer::Shutdown() {
-    if (m_vbo) {
-        glDeleteBuffers(1, &m_vbo);
-        m_vbo = 0;
+    if (m_cubeVbo) {
+        glDeleteBuffers(1, &m_cubeVbo);
+        m_cubeVbo = 0;
     }
-    if (m_vao) {
-        glDeleteVertexArrays(1, &m_vao);
-        m_vao = 0;
+    if (m_cubeVao) {
+        glDeleteVertexArrays(1, &m_cubeVao);
+        m_cubeVao = 0;
     }
     if (m_shaderProgram) {
         glDeleteProgram(m_shaderProgram);
@@ -151,25 +164,29 @@ void Renderer::Shutdown() {
 
 void Renderer::BeginFrame(int windowWidth, int windowHeight) {
     glViewport(0, 0, windowWidth, windowHeight);
-    glClear(GL_COLOR_BUFFER_BIT);
-    BuildOrthographicProjection(static_cast<float>(windowWidth),
-                                 static_cast<float>(windowHeight), m_projection);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
 
-void Renderer::DrawRect(float centerX, float centerY, float width, float height, float r,
-                         float g, float b, float a) {
-    glUseProgram(m_shaderProgram);
-    glUniformMatrix4fv(m_uProjection, 1, GL_FALSE, m_projection);
-    glUniform2f(m_uPosition, centerX, centerY);
-    glUniform2f(m_uSize, width, height);
-    glUniform4f(m_uColor, r, g, b, a);
+void Renderer::SetCamera(const glm::mat4& view, const glm::mat4& projection) {
+    m_view = view;
+    m_projection = projection;
+}
 
-    glBindVertexArray(m_vao);
-    glDrawArrays(GL_TRIANGLES, 0, 6);
+void Renderer::DrawCube(const glm::vec3& position, const glm::vec3& colorRgb) {
+    const glm::mat4 model = glm::translate(glm::mat4(1.0f), position);
+
+    glUseProgram(m_shaderProgram);
+    glUniformMatrix4fv(m_uModel, 1, GL_FALSE, glm::value_ptr(model));
+    glUniformMatrix4fv(m_uView, 1, GL_FALSE, glm::value_ptr(m_view));
+    glUniformMatrix4fv(m_uProjection, 1, GL_FALSE, glm::value_ptr(m_projection));
+    glUniform4f(m_uColor, colorRgb.r, colorRgb.g, colorRgb.b, 1.0f);
+
+    glBindVertexArray(m_cubeVao);
+    glDrawArrays(GL_TRIANGLES, 0, 36);
 }
 
 void Renderer::EndFrame() {
-    // Nothing to do yet; this exists as an explicit boundary for future
-    // per-frame work (batching, multiple draw calls, etc.) rather than for
-    // any behavior Milestone 1 needs.
+    // Nothing to do yet; kept as an explicit boundary for future per-frame
+    // work (batching, multiple draw calls, etc.) rather than for any
+    // behavior this milestone needs.
 }

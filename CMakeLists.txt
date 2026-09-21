@@ -9,16 +9,17 @@ if(NOT CMAKE_BUILD_TYPE)
 endif()
 
 find_package(SDL2 REQUIRED)
+find_package(glm REQUIRED)
 
 add_executable(judas
     src/main.cpp
     src/Application.cpp
     src/Window.cpp
     src/Renderer.cpp
-    src/Box.cpp
+    src/Camera.cpp
     src/gl_core33.cpp
 )
 
 target_include_directories(judas PRIVATE ${SDL2_INCLUDE_DIRS})
-target_link_libraries(judas PRIVATE SDL2::SDL2)
+target_link_libraries(judas PRIVATE SDL2::SDL2 glm::glm-header-only)
 target_compile_options(judas PRIVATE -Wall -Wextra)
