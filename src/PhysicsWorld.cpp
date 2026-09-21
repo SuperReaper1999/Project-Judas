@@ -11,11 +11,13 @@
 #include <Jolt/Core/Factory.h>
 #include <Jolt/Core/JobSystemThreadPool.h>
 #include <Jolt/Core/TempAllocator.h>
-#include <Jolt/Physics/Body/BodyActivationListener.h>
 #include <Jolt/Physics/Body/BodyCreationSettings.h>
-#include <Jolt/Physics/Character/CharacterVirtual.h>
+#include <Jolt/Physics/Collision/CollisionCollector.h>
+#include <Jolt/Physics/Collision/NarrowPhaseQuery.h>
+#include <Jolt/Physics/Collision/ShapeCast.h>
 #include <Jolt/Physics/Collision/Shape/BoxShape.h>
 #include <Jolt/Physics/Collision/Shape/CapsuleShape.h>
+#include <Jolt/Physics/Collision/Shape/SphereShape.h>
 #include <Jolt/Physics/PhysicsSettings.h>
 #include <Jolt/Physics/PhysicsSystem.h>
 #include <Jolt/RegisterTypes.h>
@@ -43,8 +45,9 @@ bool JoltAssertFailedImpl(const char* expression, const char* message, const cha
 }
 #endif
 
-// Two object layers is all this milestone needs: one static floor, one
-// dynamic cube. Not a general layer system.
+// Two object layers is all this milestone needs: one static sphere/boxes,
+// and (for any future dynamic body) a "moving" layer. The player is not a
+// body at all, so it doesn't occupy either — see SweepPlayerShape.
 namespace Layers {
 constexpr ObjectLayer kNonMoving = 0;
 constexpr ObjectLayer kMoving = 1;
@@ -113,8 +116,9 @@ public:
     }
 };
 
-// Small values, deliberately: this milestone has exactly two bodies. A real
-// scene would raise these, not architect around them being large.
+// Small values, deliberately: this milestone's active demo has exactly one
+// static body (the sphere). A real scene would raise these, not architect
+// around them being large.
 constexpr unsigned int kMaxBodies = 128;
 constexpr unsigned int kNumBodyMutexes = 0;  // 0 = Jolt picks a sensible default
 constexpr unsigned int kMaxBodyPairs = 128;
@@ -133,6 +137,24 @@ BodyID ToJoltId(BodyHandle handle) { return BodyID(handle.id); }
 
 BodyHandle ToHandle(BodyID id) { return BodyHandle{id.GetIndexAndSequenceNumber()}; }
 
+// Keeps only the closest hit from a NarrowPhaseQuery::CastShape call. This
+// is the entire "collision collector" this engine needs — not a generic
+// collector framework, just the one policy (closest wins) the player
+// controller's move-and-slide and ground-probe queries both want.
+class ClosestHitCastShapeCollector final
+    : public JPH::CollisionCollector<JPH::ShapeCastResult, JPH::CollisionCollectorTraitsCastShape> {
+public:
+    void AddHit(const JPH::ShapeCastResult& result) override {
+        if (mHadHit && result.mFraction >= mHit.mFraction) return;
+        mHit = result;
+        mHadHit = true;
+        UpdateEarlyOutFraction(std::max(result.mFraction, 0.0f));
+    }
+
+    bool mHadHit = false;
+    JPH::ShapeCastResult mHit{};
+};
+
 }  // namespace
 
 struct PhysicsWorld::Impl {
@@ -147,10 +169,10 @@ struct PhysicsWorld::Impl {
 
     JPH::PhysicsSystem physicsSystem;
 
-    // The one player. Not tracked by JPH::PhysicsSystem — CharacterVirtual
-    // is a kinematic controller the caller (this class) steps explicitly
-    // via UpdatePlayer, not a body physicsSystem.Update() advances itself.
-    JPH::Ref<JPH::CharacterVirtual> player;
+    // The player's collision shape. Never added to physicsSystem as a body
+    // — it exists purely so SweepPlayerShape has something to cast. See
+    // PhysicsWorld.h.
+    JPH::RefConst<JPH::Shape> playerShape;
 };
 
 bool PhysicsWorld::Init() {
@@ -172,7 +194,8 @@ bool PhysicsWorld::Init() {
     // "Ownership boundary"). Jolt's own global gravity — which defaults to
     // (0, -9.81, 0) applied automatically to every dynamic body — must
     // never be relied upon, so it is explicitly zeroed here. Gravity only
-    // ever reaches a body through ApplyLinearAcceleration.
+    // ever reaches a body through ApplyLinearAcceleration, and the player
+    // (not a body at all) never touches Jolt gravity in any form.
     m_impl->physicsSystem.SetGravity(JPH::Vec3::sZero());
 
     return true;
@@ -196,6 +219,19 @@ void PhysicsWorld::Shutdown() {
 BodyHandle PhysicsWorld::CreateStaticBox(const glm::vec3& position, const glm::vec3& halfExtents,
                                           float friction, float restitution) {
     JPH::BodyCreationSettings settings(new JPH::BoxShape(ToJolt(halfExtents)), ToJolt(position),
+                                        JPH::Quat::sIdentity(), JPH::EMotionType::Static,
+                                        Layers::kNonMoving);
+    settings.mFriction = friction;
+    settings.mRestitution = restitution;
+
+    JPH::BodyID id = m_impl->physicsSystem.GetBodyInterface().CreateAndAddBody(
+        settings, JPH::EActivation::DontActivate);
+    return ToHandle(id);
+}
+
+BodyHandle PhysicsWorld::CreateStaticSphere(const glm::vec3& position, float radius,
+                                             float friction, float restitution) {
+    JPH::BodyCreationSettings settings(new JPH::SphereShape(radius), ToJolt(position),
                                         JPH::Quat::sIdentity(), JPH::EMotionType::Static,
                                         Layers::kNonMoving);
     settings.mFriction = friction;
@@ -266,66 +302,55 @@ void PhysicsWorld::ResetBody(BodyHandle handle, const glm::vec3& position,
     bodyInterface.SetAngularVelocity(id, JPH::Vec3::sZero());
 }
 
-bool PhysicsWorld::CreatePlayer(const glm::vec3& feetPosition, const glm::vec3& up,
-                                 float capsuleRadius, float capsuleHalfHeight, float mass) {
-    JPH::CharacterVirtualSettings settings;
-    // Jolt's own convention: the shape's bottom must sit at the character's
-    // local origin, so the capsule (naturally centered on its own origin)
-    // is offset upward by its own half-extent along `up`.
-    settings.mShape = new JPH::CapsuleShape(capsuleHalfHeight, capsuleRadius);
-    settings.mShapeOffset = ToJolt(up) * (capsuleHalfHeight + capsuleRadius);
-    settings.mUp = ToJolt(up);
-    settings.mMass = mass;
-
-    m_impl->player = new JPH::CharacterVirtual(&settings, ToJolt(feetPosition), JPH::Quat::sIdentity(),
-                                                &m_impl->physicsSystem);
-    // The player collides with the same "moving" object layer the dynamic
-    // cube uses; both are allowed to collide with the static floor and
-    // with each other (see ObjectLayerPairFilterImpl above), which is all
-    // this milestone needs — no new layer was warranted.
-    return m_impl->player != nullptr;
+bool PhysicsWorld::CreatePlayerShape(float radius, float halfHeight) {
+    m_impl->playerShape = new JPH::CapsuleShape(halfHeight, radius);
+    return m_impl->playerShape != nullptr;
 }
 
-void PhysicsWorld::DestroyPlayer() {
-    m_impl->player = nullptr;
+void PhysicsWorld::DestroyPlayerShape() {
+    m_impl->playerShape = nullptr;
 }
 
-void PhysicsWorld::SetPlayerVelocity(const glm::vec3& velocity) {
-    if (!m_impl->player) return;
-    m_impl->player->SetLinearVelocity(ToJolt(velocity));
-}
+ShapeSweepHit PhysicsWorld::SweepPlayerShape(const glm::vec3& fromCenter, const glm::quat& rotation,
+                                              const glm::vec3& displacement) const {
+    ShapeSweepHit result;
+    if (!m_impl->playerShape) return result;
 
-glm::vec3 PhysicsWorld::GetPlayerVelocity() const {
-    if (!m_impl->player) return glm::vec3(0.0f);
-    return ToGlm(m_impl->player->GetLinearVelocity());
-}
+    const float length = glm::length(displacement);
+    if (length < 1.0e-6f) return result;
 
-void PhysicsWorld::UpdatePlayer(float fixedDeltaTime, const glm::vec3& gravity) {
-    if (!m_impl->player) return;
-    m_impl->player->Update(fixedDeltaTime, ToJolt(gravity),
-                            m_impl->physicsSystem.GetDefaultBroadPhaseLayerFilter(Layers::kMoving),
-                            m_impl->physicsSystem.GetDefaultLayerFilter(Layers::kMoving),
-                            JPH::BodyFilter(), JPH::ShapeFilter(), m_impl->tempAllocator);
-}
+    const JPH::RMat44 startTransform =
+        JPH::RMat44::sRotationTranslation(ToJolt(rotation), ToJolt(fromCenter));
+    const JPH::RShapeCast shapeCast = JPH::RShapeCast::sFromWorldTransform(
+        m_impl->playerShape.GetPtr(), JPH::Vec3::sReplicate(1.0f), startTransform,
+        ToJolt(displacement));
 
-glm::vec3 PhysicsWorld::GetPlayerPosition() const {
-    if (!m_impl->player) return glm::vec3(0.0f);
-    return ToGlm(JPH::Vec3(m_impl->player->GetPosition()));
-}
+    JPH::ShapeCastSettings settings;
 
-void PhysicsWorld::ResetPlayer(const glm::vec3& feetPosition) {
-    if (!m_impl->player) return;
-    m_impl->player->SetPosition(ToJolt(feetPosition));
-    m_impl->player->SetLinearVelocity(JPH::Vec3::sZero());
-}
+    ClosestHitCastShapeCollector collector;
+    m_impl->physicsSystem.GetNarrowPhaseQuery().CastShape(
+        shapeCast, settings, ToJolt(fromCenter), collector,
+        m_impl->physicsSystem.GetDefaultBroadPhaseLayerFilter(Layers::kMoving),
+        m_impl->physicsSystem.GetDefaultLayerFilter(Layers::kMoving));
 
-PlayerGroundContact PhysicsWorld::GetPlayerGroundContact() const {
-    PlayerGroundContact contact;
-    if (!m_impl->player) return contact;
+    if (collector.mHadHit) {
+        result.hit = true;
+        result.distance = collector.mHit.mFraction * length;
 
-    contact.isGrounded =
-        m_impl->player->GetGroundState() == JPH::CharacterBase::EGroundState::OnGround;
-    contact.normal = ToGlm(m_impl->player->GetGroundNormal());
-    contact.velocity = ToGlm(m_impl->player->GetGroundVelocity());
-    return contact;
+        glm::vec3 normal = ToGlm(collector.mHit.mPenetrationAxis);
+        if (glm::length(normal) > 1.0e-6f) {
+            normal = glm::normalize(normal);
+            // Jolt's convention for this field isn't guaranteed to point
+            // any particular way relative to the cast direction — enforce
+            // "points back toward the caster" ourselves so callers get a
+            // consistent, sane contact normal regardless.
+            if (glm::dot(normal, displacement) > 0.0f) {
+                normal = -normal;
+            }
+        } else {
+            normal = -glm::normalize(displacement);
+        }
+        result.normal = normal;
+    }
+    return result;
 }

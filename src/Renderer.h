@@ -35,12 +35,20 @@ public:
     void DrawBox(const glm::vec3& position, const glm::quat& rotation,
                  const glm::vec3& halfExtents, const glm::vec3& colorRgb);
 
+    // Draws a sphere mesh of the given world-space radius. Added in
+    // Milestone 5 for the spherical test world; a sphere looks identical
+    // under any rotation, so unlike DrawBox there is no rotation parameter.
+    void DrawSphere(const glm::vec3& position, float radius, const glm::vec3& colorRgb);
+
     void EndFrame();
 
 private:
     GLuint m_shaderProgram = 0;
     GLuint m_cubeVao = 0;
     GLuint m_cubeVbo = 0;
+    GLuint m_sphereVao = 0;
+    GLuint m_sphereVbo = 0;
+    GLsizei m_sphereVertexCount = 0;
 
     GLint m_uModel = -1;
     GLint m_uView = -1;

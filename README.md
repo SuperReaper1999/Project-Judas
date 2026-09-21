@@ -8,23 +8,24 @@ This is **not** a general-purpose engine and is not trying to compete with
 Unity, Unreal, or Godot. It exists to serve one specific class of game, and
 its architecture is deliberately narrow.
 
-## Status: Milestone 4
+## Status: Milestone 5
 
-A controllable player — a capsule-shaped physics character — stands on a
-floor, walks, jumps, and falls under real rigid-body physics
-([Jolt Physics](https://github.com/jrouwe/JoltPhysics)). Gravity is
-supplied by the engine itself (not the physics library), jump direction is
-derived from that same gravity rather than a hard-coded axis, and
-ground/support state comes from the physics controller's own contact
-detection rather than a height check. The Milestone 3 falling cube is
-still there too. That's it — no lighting, terrain, planets, or gameplay
-yet.
+A controllable player walks, jumps, and falls under real physics
+([Jolt Physics](https://github.com/jrouwe/JoltPhysics)) on the surface of a
+large sphere, with **radial** gravity pulling toward its center. There is
+no universal "up": the player's own sense of up continuously reorients to
+match wherever gravity currently points, so you can walk all the way around
+the sphere onto what was originally "the other side." As of this milestone
+the player is no longer built on Jolt's character-controller class — Judas
+owns the player's movement, orientation, and support logic directly, using
+Jolt only for low-level collision queries. That's it — no lighting,
+terrain, real planets, or gameplay yet.
 
 This is intentional — see [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) for
 why, what's deliberately not built yet, and how this small foundation avoids
 blocking the much larger long-term design. Earlier milestones are preserved
-as git tags (`milestone-1`, `milestone-2`, `milestone-3`) rather than kept
-running alongside the current demo.
+as git tags (`milestone-1` through `milestone-4`) rather than kept running
+alongside the current demo.
 
 ## Building
 
@@ -63,8 +64,8 @@ cmake --build build -j"$(nproc)"
 ## Controls
 
 The mouse is captured on launch and controls where the player looks. WASD
-walks the player relative to that look direction (not a free-flying
-camera).
+walks the player relative to that look direction and the sphere's surface
+(not a free-flying camera).
 
 | Action                  | Keys                  |
 |-------------------------|-----------------------|
@@ -75,7 +76,7 @@ camera).
 | Jump (only while grounded) | `Space`             |
 | Look around             | Mouse movement        |
 | Release/recapture mouse | `Escape`               |
-| Reset the player and the cube | `R`              |
+| Reset the player        | `R`                    |
 
 Close the window normally (window controls / `Alt+F4` / etc.) to exit.
 

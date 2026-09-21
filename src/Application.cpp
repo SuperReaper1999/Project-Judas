@@ -8,10 +8,10 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/quaternion.hpp>
 
-#include "FaithfulGravity.h"
 #include "GravityField.h"
 #include "PhysicsWorld.h"
 #include "PlayerController.h"
+#include "RadicalGravity.h"
 #include "Renderer.h"
 #include "Window.h"
 #include "gl_core33.h"
@@ -20,43 +20,37 @@ namespace {
 constexpr int kWindowWidth = 1024;
 constexpr int kWindowHeight = 768;
 constexpr float kMaxFrameDeltaTime = 0.25f;  // clamp stalls before they ever reach the accumulator
-
-// A conventional fixed physics timestep. Chosen (1/60s) because it's a
-// common, well-tested rate for rigid-body simulation, not for any reason
-// specific to this scene.
 constexpr float kFixedTimestep = 1.0f / 60.0f;
-
-// Caps how many fixed steps a single render frame will run to catch up;
-// see docs/ARCHITECTURE.md, "Simulation timing," for the full rationale
-// (unchanged since Milestone 3).
 constexpr int kMaxPhysicsStepsPerFrame = 8;
 
-// The Milestone 3 floor + falling cube are kept: harmless, and useful as a
-// second proof that PhysicsWorld/GravityField work generally, not only for
-// the player.
-const glm::vec3 kFloorHalfExtents(10.0f, 0.5f, 10.0f);
-const glm::vec3 kFloorPosition(0.0f, -0.5f, 0.0f);
-const glm::vec3 kFloorColor(0.35f, 0.35f, 0.4f);
-constexpr float kFloorFriction = 0.8f;
-constexpr float kFloorRestitution = 0.1f;
+// Milestone 5's demo: a spherical world with radial gravity, replacing
+// Milestone 3/4's flat floor + cube (recoverable via the milestone-4 tag).
+// A flat-gravity floor and a radial-gravity sphere active in the same scene
+// would be physically incoherent — the demo picks ONE active GravityField
+// (see docs/ARCHITECTURE.md, "Gravity implementations"), and this milestone's
+// point is specifically to exercise the non-flat one.
+const glm::vec3 kSphereCenter(0.0f, 0.0f, 0.0f);
+constexpr float kSphereRadius = 8.0f;
+const glm::vec3 kSphereColor(0.3f, 0.45f, 0.35f);
+constexpr float kSphereFriction = 0.8f;
+constexpr float kSphereRestitution = 0.1f;
 
-const glm::vec3 kCubeHalfExtents(0.5f, 0.5f, 0.5f);
-const glm::vec3 kCubeInitialPosition(3.0f, 5.0f, -2.0f);  // off to the side of the player's spawn
-const glm::quat kCubeInitialRotation(1.0f, 0.0f, 0.0f, 0.0f);  // identity
-const glm::vec3 kCubeColor(0.9f, 0.3f, 0.2f);
-constexpr float kCubeMass = 2.0f;
-constexpr float kCubeFriction = 0.5f;
-constexpr float kCubeRestitution = 0.3f;
+// Comparable in magnitude to FaithfulGravity's 9.81 m/s^2, per the brief —
+// this demonstrates changing gravity DIRECTION, not different physics.
+constexpr float kRadicalGravityMagnitude = 9.81f;
 
-// The floor's top surface is at y = 0 (kFloorPosition.y + kFloorHalfExtents.y).
-const glm::vec3 kPlayerSpawnFeetPosition(0.0f, 0.0f, 3.0f);
+// Spawned above the sphere so the player visibly falls onto it. The
+// demo/composition-root layer is allowed to know the sphere exists;
+// PlayerController itself never does — see docs/ARCHITECTURE.md, "Spherical
+// physical test world."
+const glm::vec3 kPlayerSpawnPosition = kSphereCenter + glm::vec3(0.0f, kSphereRadius + 3.0f, 0.0f);
 constexpr float kPlayerSpawnYawDegrees = -90.0f;
 const glm::vec3 kPlayerColor(0.2f, 0.6f, 0.9f);
 }  // namespace
 
 int Application::Run() {
     Window window;
-    if (!window.Init("Project Judas - Milestone 4", kWindowWidth, kWindowHeight)) {
+    if (!window.Init("Project Judas - Milestone 5", kWindowWidth, kWindowHeight)) {
         std::fprintf(stderr, "Window initialization failed.\n");
         return 1;
     }
@@ -79,20 +73,20 @@ int Application::Run() {
     }
 
     // Application (the composition root) is the one place that knows the
-    // concrete gravity implementation. Everything downstream — including
-    // the player controller — talks to it only through the GravityField
-    // interface. See GravityField.h and docs/ARCHITECTURE.md.
-    FaithfulGravity faithfulGravity;
-    GravityField& gravity = faithfulGravity;
+    // concrete gravity implementation. Everything downstream — the player
+    // controller included — talks to it only through the GravityField
+    // interface. Swapping FaithfulGravity for RadicalGravity here is the
+    // entire change needed to move from Milestone 3/4's flat world to this
+    // milestone's spherical one; nothing else in the engine knows which
+    // implementation is active.
+    RadicalGravity radicalGravity(kSphereCenter, kRadicalGravityMagnitude);
+    GravityField& gravity = radicalGravity;
 
-    const BodyHandle floorBody = physicsWorld.CreateStaticBox(
-        kFloorPosition, kFloorHalfExtents, kFloorFriction, kFloorRestitution);
-    const BodyHandle cubeBody =
-        physicsWorld.CreateDynamicBox(kCubeInitialPosition, kCubeHalfExtents, kCubeMass,
-                                       kCubeFriction, kCubeRestitution);
+    const BodyHandle sphereBody = physicsWorld.CreateStaticSphere(
+        kSphereCenter, kSphereRadius, kSphereFriction, kSphereRestitution);
 
-    PlayerController player(kPlayerSpawnFeetPosition, kPlayerSpawnYawDegrees);
-    if (!player.Spawn(physicsWorld, gravity)) {
+    PlayerController player(kPlayerSpawnPosition, kPlayerSpawnYawDegrees);
+    if (!player.Spawn(physicsWorld)) {
         std::fprintf(stderr, "Player spawn failed.\n");
         return 1;
     }
@@ -118,8 +112,7 @@ int Application::Run() {
         player.UpdateFrameInput(window);
 
         if (window.ConsumeResetRequest()) {
-            physicsWorld.ResetBody(cubeBody, kCubeInitialPosition, kCubeInitialRotation);
-            player.Reset(physicsWorld);
+            player.Reset();
             physicsAccumulator = 0.0f;
         }
 
@@ -128,14 +121,7 @@ int Application::Run() {
         physicsAccumulator += frameDeltaTime;
         int stepsThisFrame = 0;
         while (physicsAccumulator >= kFixedTimestep && stepsThisFrame < kMaxPhysicsStepsPerFrame) {
-            // Judas samples its own gravity field and hands the result to
-            // each physics body itself; the physics middleware's global
-            // gravity stays disabled (see PhysicsWorld::Init).
-            const glm::vec3 cubePosition = physicsWorld.GetTransform(cubeBody).position;
-            physicsWorld.ApplyLinearAcceleration(cubeBody, gravity.Sample(cubePosition),
-                                                  kFixedTimestep);
             physicsWorld.Step(kFixedTimestep);
-
             player.FixedUpdate(window, physicsWorld, gravity, kFixedTimestep);
 
             physicsAccumulator -= kFixedTimestep;
@@ -151,16 +137,10 @@ int Application::Run() {
         const float aspectRatio =
             static_cast<float>(window.Width()) / static_cast<float>(windowHeight);
 
-        const BodyTransform floorTransform = physicsWorld.GetTransform(floorBody);
-        const BodyTransform cubeTransform = physicsWorld.GetTransform(cubeBody);
-
         renderer.BeginFrame(window.Width(), window.Height());
-        renderer.SetCamera(player.GetViewMatrix(physicsWorld), player.GetProjectionMatrix(aspectRatio));
-        renderer.DrawBox(floorTransform.position, floorTransform.rotation, kFloorHalfExtents,
-                          kFloorColor);
-        renderer.DrawBox(cubeTransform.position, cubeTransform.rotation, kCubeHalfExtents,
-                          kCubeColor);
-        renderer.DrawBox(player.GetRenderCenter(physicsWorld), glm::quat(1.0f, 0.0f, 0.0f, 0.0f),
+        renderer.SetCamera(player.GetViewMatrix(), player.GetProjectionMatrix(aspectRatio));
+        renderer.DrawSphere(kSphereCenter, kSphereRadius, kSphereColor);
+        renderer.DrawBox(player.GetRenderCenter(), player.GetRenderOrientation(),
                           player.GetRenderHalfExtents(), kPlayerColor);
         renderer.EndFrame();
 
@@ -168,8 +148,7 @@ int Application::Run() {
     }
 
     player.Destroy(physicsWorld);
-    physicsWorld.DestroyBody(cubeBody);
-    physicsWorld.DestroyBody(floorBody);
+    physicsWorld.DestroyBody(sphereBody);
     physicsWorld.Shutdown();
     renderer.Shutdown();
     return 0;

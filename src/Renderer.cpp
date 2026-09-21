@@ -1,8 +1,10 @@
 #include "Renderer.h"
 
+#include <cmath>
 #include <cstdio>
 #include <vector>
 
+#include <glm/gtc/constants.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
@@ -100,6 +102,47 @@ const float kCubeVertices[] = {
 };
 // clang-format on
 
+// A unit sphere (radius 1, position-only, non-indexed triangles), generated
+// as a conventional UV sphere. Kept non-indexed (like the cube above) so
+// drawing it needs no GL surface beyond what the cube already uses — no
+// element buffer, no glDrawElements.
+std::vector<float> GenerateUnitSphereVertices(int latitudeSegments, int longitudeSegments) {
+    auto pointOnSphere = [](float latFraction, float lonFraction) {
+        const float theta = latFraction * glm::pi<float>();       // 0 (top) .. pi (bottom)
+        const float phi = lonFraction * 2.0f * glm::pi<float>();  // 0 .. 2pi around
+        return glm::vec3(std::sin(theta) * std::cos(phi), std::cos(theta),
+                          std::sin(theta) * std::sin(phi));
+    };
+
+    std::vector<float> vertices;
+    vertices.reserve(static_cast<size_t>(latitudeSegments) * longitudeSegments * 6 * 3);
+
+    for (int lat = 0; lat < latitudeSegments; ++lat) {
+        const float v0 = static_cast<float>(lat) / latitudeSegments;
+        const float v1 = static_cast<float>(lat + 1) / latitudeSegments;
+        for (int lon = 0; lon < longitudeSegments; ++lon) {
+            const float u0 = static_cast<float>(lon) / longitudeSegments;
+            const float u1 = static_cast<float>(lon + 1) / longitudeSegments;
+
+            const glm::vec3 p00 = pointOnSphere(v0, u0);
+            const glm::vec3 p01 = pointOnSphere(v0, u1);
+            const glm::vec3 p10 = pointOnSphere(v1, u0);
+            const glm::vec3 p11 = pointOnSphere(v1, u1);
+
+            const glm::vec3 quad[6] = {p00, p10, p11, p00, p11, p01};
+            for (const glm::vec3& p : quad) {
+                vertices.push_back(p.x);
+                vertices.push_back(p.y);
+                vertices.push_back(p.z);
+            }
+        }
+    }
+    return vertices;
+}
+
+constexpr int kSphereLatitudeSegments = 16;
+constexpr int kSphereLongitudeSegments = 24;
+
 }  // namespace
 
 bool Renderer::Init() {
@@ -139,6 +182,24 @@ bool Renderer::Init() {
     glBindVertexArray(0);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
 
+    const std::vector<float> sphereVertices =
+        GenerateUnitSphereVertices(kSphereLatitudeSegments, kSphereLongitudeSegments);
+    m_sphereVertexCount = static_cast<GLsizei>(sphereVertices.size() / 3);
+
+    glGenVertexArrays(1, &m_sphereVao);
+    glBindVertexArray(m_sphereVao);
+
+    glGenBuffers(1, &m_sphereVbo);
+    glBindBuffer(GL_ARRAY_BUFFER, m_sphereVbo);
+    glBufferData(GL_ARRAY_BUFFER, static_cast<GLsizeiptr>(sphereVertices.size() * sizeof(float)),
+                 sphereVertices.data(), GL_STATIC_DRAW);
+
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), nullptr);
+    glEnableVertexAttribArray(0);
+
+    glBindVertexArray(0);
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+
     glClearColor(0.08f, 0.09f, 0.11f, 1.0f);
 
     glEnable(GL_DEPTH_TEST);
@@ -155,6 +216,14 @@ void Renderer::Shutdown() {
     if (m_cubeVao) {
         glDeleteVertexArrays(1, &m_cubeVao);
         m_cubeVao = 0;
+    }
+    if (m_sphereVbo) {
+        glDeleteBuffers(1, &m_sphereVbo);
+        m_sphereVbo = 0;
+    }
+    if (m_sphereVao) {
+        glDeleteVertexArrays(1, &m_sphereVao);
+        m_sphereVao = 0;
     }
     if (m_shaderProgram) {
         glDeleteProgram(m_shaderProgram);
@@ -185,6 +254,20 @@ void Renderer::DrawBox(const glm::vec3& position, const glm::quat& rotation,
 
     glBindVertexArray(m_cubeVao);
     glDrawArrays(GL_TRIANGLES, 0, 36);
+}
+
+void Renderer::DrawSphere(const glm::vec3& position, float radius, const glm::vec3& colorRgb) {
+    const glm::mat4 model =
+        glm::translate(glm::mat4(1.0f), position) * glm::scale(glm::mat4(1.0f), glm::vec3(radius));
+
+    glUseProgram(m_shaderProgram);
+    glUniformMatrix4fv(m_uModel, 1, GL_FALSE, glm::value_ptr(model));
+    glUniformMatrix4fv(m_uView, 1, GL_FALSE, glm::value_ptr(m_view));
+    glUniformMatrix4fv(m_uProjection, 1, GL_FALSE, glm::value_ptr(m_projection));
+    glUniform4f(m_uColor, colorRgb.r, colorRgb.g, colorRgb.b, 1.0f);
+
+    glBindVertexArray(m_sphereVao);
+    glDrawArrays(GL_TRIANGLES, 0, m_sphereVertexCount);
 }
 
 void Renderer::EndFrame() {

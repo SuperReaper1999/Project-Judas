@@ -3,6 +3,7 @@
 #include <algorithm>
 #include <cmath>
 
+#include <glm/gtc/constants.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
 #include "GravityField.h"
@@ -14,13 +15,12 @@ namespace {
 // Physical tuning. Explicit and small in number, per the brief — no
 // acceleration curves, no sprint, no crouch.
 constexpr float kCapsuleRadius = 0.3f;
-constexpr float kCapsuleHalfHeight = 0.6f;  // total capsule height: 1.8m
-constexpr float kMass = 70.0f;              // kg; also CharacterVirtualSettings' own default
-constexpr float kEyeHeight = 1.6f;          // above the feet position
-constexpr float kMoveSpeed = 4.0f;          // m/s, walking pace
-constexpr float kJumpSpeed = 5.0f;          // m/s, imparted opposite the sampled gravity direction
+constexpr float kCapsuleHalfHeight = 0.6f;    // total capsule height: 1.8m
+constexpr float kEyeHeightAboveCenter = 0.7f;
+constexpr float kMoveSpeed = 4.0f;            // m/s, walking pace
+constexpr float kJumpSpeed = 5.0f;            // m/s, imparted opposite the sampled gravity direction
 
-// Mouse look, matching Milestones 2-3's free camera exactly.
+// Mouse look, matching Milestones 2-4.
 constexpr float kMouseSensitivity = 0.12f;  // degrees per pixel of mouse motion
 constexpr float kMaxPitchDegrees = 89.0f;
 constexpr float kFovDegrees = 70.0f;
@@ -32,21 +32,51 @@ constexpr float kFarPlane = 500.0f;
 constexpr float kCameraFollowDistance = 4.0f;
 constexpr float kCameraHeightOffset = 1.0f;
 
+// Judas's own minimal movement resolution: sweep, stop just short of a hit,
+// slide the remainder along the surface, repeat a few times. Not a general
+// physics solver — just enough iterations to handle "hit one surface, then
+// slide into a second" without visibly getting stuck.
+constexpr int kMaxSlideIterations = 4;
+constexpr float kSkinMargin = 0.02f;           // stay this far from a surface after moving
+constexpr float kGroundProbeDistance = 0.15f;  // how far past the capsule to look for support
+constexpr float kMinGroundDot = 0.643f;        // cos(~50 degrees): matches Milestone 4's slope limit
+
+// Returns the shortest-arc rotation that takes unit vector `from` to unit
+// vector `to`. Used once per fixed step to keep the player's local frame
+// tracking a changing gravity direction — see UpdateFrameOrientation. Not a
+// general quaternion-math utility; this is the one rotation this class
+// needs.
+glm::quat RotationBetweenUnitVectors(const glm::vec3& from, const glm::vec3& to) {
+    const float d = std::clamp(glm::dot(from, to), -1.0f, 1.0f);
+    if (d > 0.9999f) {
+        return glm::quat(1.0f, 0.0f, 0.0f, 0.0f);  // already aligned
+    }
+    if (d < -0.9999f) {
+        // Exactly opposite: any axis perpendicular to `from` works.
+        const glm::vec3 axis = std::abs(from.x) < 0.9f
+                                    ? glm::cross(from, glm::vec3(1.0f, 0.0f, 0.0f))
+                                    : glm::cross(from, glm::vec3(0.0f, 1.0f, 0.0f));
+        return glm::angleAxis(glm::pi<float>(), glm::normalize(axis));
+    }
+    const glm::vec3 axis = glm::normalize(glm::cross(from, to));
+    return glm::angleAxis(std::acos(d), axis);
+}
+
 }  // namespace
 
-PlayerController::PlayerController(const glm::vec3& spawnFeetPosition, float spawnYawDegrees)
-    : m_spawnFeetPosition(spawnFeetPosition),
-      m_spawnYawDegrees(spawnYawDegrees),
+PlayerController::PlayerController(const glm::vec3& spawnCenterPosition, float spawnYawDegrees)
+    : m_position(spawnCenterPosition),
+      m_frameOrientation(1.0f, 0.0f, 0.0f, 0.0f),
       m_yaw(spawnYawDegrees),
-      m_pitch(0.0f) {}
+      m_spawnPosition(spawnCenterPosition),
+      m_spawnYawDegrees(spawnYawDegrees) {}
 
-bool PlayerController::Spawn(PhysicsWorld& physics, const GravityField& gravity) {
-    const glm::vec3 up = -glm::normalize(gravity.Sample(m_spawnFeetPosition));
-    return physics.CreatePlayer(m_spawnFeetPosition, up, kCapsuleRadius, kCapsuleHalfHeight, kMass);
+bool PlayerController::Spawn(PhysicsWorld& physics) {
+    return physics.CreatePlayerShape(kCapsuleRadius, kCapsuleHalfHeight);
 }
 
 void PlayerController::Destroy(PhysicsWorld& physics) {
-    physics.DestroyPlayer();
+    physics.DestroyPlayerShape();
 }
 
 void PlayerController::UpdateFrameInput(Window& window) {
@@ -54,8 +84,9 @@ void PlayerController::UpdateFrameInput(Window& window) {
     int mouseDeltaY = 0;
     window.GetMouseDelta(mouseDeltaX, mouseDeltaY);
 
-    // Not scaled by deltaTime — see Milestone 2/3's Camera for why relative
-    // mouse deltas are already frame-rate independent as-is.
+    // Not scaled by deltaTime — relative mouse deltas already represent
+    // motion since the last poll (see Milestone 2/3's Camera for the full
+    // reasoning), independent of frame rate as-is.
     m_yaw += static_cast<float>(mouseDeltaX) * kMouseSensitivity;
     m_pitch -= static_cast<float>(mouseDeltaY) * kMouseSensitivity;
     m_pitch = std::clamp(m_pitch, -kMaxPitchDegrees, kMaxPitchDegrees);
@@ -68,33 +99,39 @@ void PlayerController::UpdateFrameInput(Window& window) {
     }
 }
 
-glm::vec3 PlayerController::Front() const {
-    const float yawRad = glm::radians(m_yaw);
-    const float pitchRad = glm::radians(m_pitch);
-    glm::vec3 front;
-    front.x = std::cos(pitchRad) * std::cos(yawRad);
-    front.y = std::sin(pitchRad);
-    front.z = std::cos(pitchRad) * std::sin(yawRad);
-    return glm::normalize(front);
+glm::vec3 PlayerController::ComputeLocalUp(const glm::vec3& gravityAcceleration) const {
+    const float length = glm::length(gravityAcceleration);
+    if (length < 1.0e-6f) {
+        // Degenerate GravityField sample (no defined direction) — hold the
+        // existing frame's up rather than producing a NaN.
+        return m_frameOrientation * glm::vec3(0.0f, 1.0f, 0.0f);
+    }
+    return -(gravityAcceleration / length);
 }
 
-glm::vec3 PlayerController::ComputeHorizontalVelocity(const Window& window) const {
-    // This horizontal movement basis assumes a Y-up ground plane — this
-    // milestone's convention, matching FaithfulGravity's current constant
-    // direction, NOT a claim that "gravity direction" and "ground plane
-    // orientation" are the same concept in general. See
-    // docs/ARCHITECTURE.md, "Ground/support semantics." Vertical motion
-    // (gravity integration, jump direction) is computed separately in
-    // FixedUpdate from the actual sampled gravity, never from this axis.
-    const float yawRad = glm::radians(m_yaw);
-    const glm::vec3 frontFlat(std::cos(yawRad), 0.0f, std::sin(yawRad));
-    const glm::vec3 rightFlat = glm::normalize(glm::cross(frontFlat, glm::vec3(0.0f, 1.0f, 0.0f)));
+void PlayerController::UpdateFrameOrientation(const glm::vec3& localUp) {
+    const glm::vec3 currentUp = m_frameOrientation * glm::vec3(0.0f, 1.0f, 0.0f);
+    const glm::quat delta = RotationBetweenUnitVectors(currentUp, localUp);
+    m_frameOrientation = glm::normalize(delta * m_frameOrientation);
+}
+
+glm::vec3 PlayerController::ComputeTangentVelocity(const Window& window,
+                                                    const glm::vec3& localUp) const {
+    // The look-relative reference frame, yawed by mouse input but not
+    // pitched — so looking up/down doesn't tilt ground movement off the
+    // tangent plane. This mirrors Milestone 4's "flat forward," now
+    // expressed relative to the current LOCAL frame instead of world Y, so
+    // it stays correct as that frame rotates around the sphere.
+    const glm::quat yawedFrame =
+        m_frameOrientation * glm::angleAxis(glm::radians(m_yaw), glm::vec3(0.0f, 1.0f, 0.0f));
+    const glm::vec3 forward = glm::normalize(yawedFrame * glm::vec3(0.0f, 0.0f, -1.0f));
+    const glm::vec3 right = glm::normalize(glm::cross(forward, localUp));
 
     glm::vec3 direction(0.0f);
-    if (window.IsActionActive(Action::MoveForward)) direction += frontFlat;
-    if (window.IsActionActive(Action::MoveBackward)) direction -= frontFlat;
-    if (window.IsActionActive(Action::StrafeRight)) direction += rightFlat;
-    if (window.IsActionActive(Action::StrafeLeft)) direction -= rightFlat;
+    if (window.IsActionActive(Action::MoveForward)) direction += forward;
+    if (window.IsActionActive(Action::MoveBackward)) direction -= forward;
+    if (window.IsActionActive(Action::StrafeRight)) direction += right;
+    if (window.IsActionActive(Action::StrafeLeft)) direction -= right;
 
     if (glm::length(direction) > 0.0f) {
         direction = glm::normalize(direction);
@@ -104,60 +141,97 @@ glm::vec3 PlayerController::ComputeHorizontalVelocity(const Window& window) cons
 
 void PlayerController::FixedUpdate(const Window& window, PhysicsWorld& physics,
                                     const GravityField& gravity, float fixedDeltaTime) {
-    const glm::vec3 position = physics.GetPlayerPosition();
-    const glm::vec3 acceleration = gravity.Sample(position);
+    const glm::vec3 acceleration = gravity.Sample(m_position);
+    const glm::vec3 localUp = ComputeLocalUp(acceleration);
+    UpdateFrameOrientation(localUp);
 
-    // Direction away from gravity, resampled fresh every fixed step (never
-    // cached), so a jump always matches whatever the active GravityField
-    // currently reports at this position — never a hard-coded world axis.
-    const glm::vec3 up = -glm::normalize(acceleration);
+    // Support comes only from an actual geometry query, never a height or
+    // distance-from-center comparison: sweep a short distance opposite
+    // localUp and see what's there. See docs/ARCHITECTURE.md, "Support."
+    const ShapeSweepHit groundHit =
+        physics.SweepPlayerShape(m_position, m_frameOrientation, -localUp * kGroundProbeDistance);
+    const bool isGrounded = groundHit.hit && glm::dot(groundHit.normal, localUp) > kMinGroundDot;
 
-    const PlayerGroundContact ground = physics.GetPlayerGroundContact();
+    // Vertical speed along `localUp`: held at zero while supported (so
+    // standing still doesn't accumulate fall speed into the ground every
+    // step), otherwise carried over from last step, then gravity is
+    // integrated in either case — same velocity += acceleration*dt pattern
+    // PhysicsWorld uses for ordinary bodies, just projected onto localUp so
+    // it never fights the horizontal intent below.
+    float verticalSpeed = (isGrounded ? 0.0f : glm::dot(m_velocity, localUp)) +
+                          glm::dot(acceleration, localUp) * fixedDeltaTime;
 
-    // Vertical speed along `up`: start from whatever it already was
-    // (ground velocity if supported, the player's own velocity if not),
-    // then integrate this step's gravity — the same
-    // velocity-+= acceleration*dt pattern used for every other body in
-    // PhysicsWorld, just projected onto `up` so it never fights the
-    // horizontal intent below.
-    const glm::vec3 baseVelocity = ground.isGrounded ? ground.velocity : physics.GetPlayerVelocity();
-    float verticalSpeed = glm::dot(baseVelocity, up) + glm::dot(acceleration, up) * fixedDeltaTime;
-
-    // A jump only ever begins while actually supported, per the physics
-    // controller's own contact state — never a height comparison. Once
-    // consumed, the request is cleared unconditionally: a jump attempt
-    // made while airborne is discarded, not buffered until landing.
-    if (ground.isGrounded && m_jumpRequested) {
+    // A jump only ever begins while actually supported, per this step's own
+    // geometry query — never a height comparison. Once consumed, the
+    // request is cleared unconditionally: a jump attempt made while
+    // airborne is discarded, not buffered until landing.
+    if (isGrounded && m_jumpRequested) {
         verticalSpeed = kJumpSpeed;
     }
     m_jumpRequested = false;
 
-    const glm::vec3 horizontalVelocity = ComputeHorizontalVelocity(window);
-    physics.SetPlayerVelocity(horizontalVelocity + up * verticalSpeed);
-    physics.UpdatePlayer(fixedDeltaTime, acceleration);
+    const glm::vec3 horizontalVelocity = ComputeTangentVelocity(window, localUp);
+    m_velocity = horizontalVelocity + localUp * verticalSpeed;
+
+    // Judas's own minimal move-and-slide: never trust a raw transform
+    // write, always resolve displacement against Jolt's collision query.
+    glm::vec3 remaining = m_velocity * fixedDeltaTime;
+    for (int i = 0; i < kMaxSlideIterations; ++i) {
+        const float remainingLength = glm::length(remaining);
+        if (remainingLength < 1.0e-6f) break;
+
+        const ShapeSweepHit hit =
+            physics.SweepPlayerShape(m_position, m_frameOrientation, remaining);
+        if (!hit.hit) {
+            m_position += remaining;
+            break;
+        }
+
+        const float travelDistance = std::max(hit.distance - kSkinMargin, 0.0f);
+        const float travelFraction = travelDistance / remainingLength;
+        m_position += remaining * travelFraction;
+
+        glm::vec3 leftover = remaining * (1.0f - travelFraction);
+        const float intoSurface = glm::dot(leftover, hit.normal);
+        if (intoSurface < 0.0f) {
+            leftover -= hit.normal * intoSurface;
+        }
+        remaining = leftover;
+    }
 }
 
-void PlayerController::Reset(PhysicsWorld& physics) {
-    physics.ResetPlayer(m_spawnFeetPosition);
+void PlayerController::Reset() {
+    m_position = m_spawnPosition;
+    m_velocity = glm::vec3(0.0f);
+    m_frameOrientation = glm::quat(1.0f, 0.0f, 0.0f, 0.0f);
     m_yaw = m_spawnYawDegrees;
     m_pitch = 0.0f;
     m_jumpRequested = false;
 }
 
-glm::mat4 PlayerController::GetViewMatrix(const PhysicsWorld& physics) const {
-    const glm::vec3 eyePosition = physics.GetPlayerPosition() + glm::vec3(0.0f, kEyeHeight, 0.0f);
-    const glm::vec3 front = Front();
+glm::mat4 PlayerController::GetViewMatrix() const {
+    const glm::vec3 localUp = m_frameOrientation * glm::vec3(0.0f, 1.0f, 0.0f);
+    const glm::quat lookOrientation =
+        m_frameOrientation * glm::angleAxis(glm::radians(m_yaw), glm::vec3(0.0f, 1.0f, 0.0f)) *
+        glm::angleAxis(glm::radians(m_pitch), glm::vec3(1.0f, 0.0f, 0.0f));
+    const glm::vec3 front = glm::normalize(lookOrientation * glm::vec3(0.0f, 0.0f, -1.0f));
+
+    const glm::vec3 eyePosition = m_position + localUp * kEyeHeightAboveCenter;
     const glm::vec3 cameraPosition =
-        eyePosition - front * kCameraFollowDistance + glm::vec3(0.0f, kCameraHeightOffset, 0.0f);
-    return glm::lookAt(cameraPosition, cameraPosition + front, glm::vec3(0.0f, 1.0f, 0.0f));
+        eyePosition - front * kCameraFollowDistance + localUp * kCameraHeightOffset;
+    return glm::lookAt(cameraPosition, cameraPosition + front, localUp);
 }
 
 glm::mat4 PlayerController::GetProjectionMatrix(float aspectRatio) const {
     return glm::perspective(glm::radians(kFovDegrees), aspectRatio, kNearPlane, kFarPlane);
 }
 
-glm::vec3 PlayerController::GetRenderCenter(const PhysicsWorld& physics) const {
-    return physics.GetPlayerPosition() + glm::vec3(0.0f, kCapsuleHalfHeight + kCapsuleRadius, 0.0f);
+glm::vec3 PlayerController::GetRenderCenter() const {
+    return m_position;
+}
+
+glm::quat PlayerController::GetRenderOrientation() const {
+    return m_frameOrientation;
 }
 
 glm::vec3 PlayerController::GetRenderHalfExtents() const {

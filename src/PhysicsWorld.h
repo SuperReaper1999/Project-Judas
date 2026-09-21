@@ -18,16 +18,17 @@ struct BodyTransform {
     glm::quat rotation{1.0f, 0.0f, 0.0f, 0.0f};  // identity
 };
 
-// What the player is currently physically supported by, as reported by the
-// character controller's own collision/contact detection — never derived
-// from comparing a world-space height to a known floor coordinate. See
-// docs/ARCHITECTURE.md, "Ground/support semantics": `normal` is the actual
-// contact-surface normal, a distinct concept from "the direction opposite
-// gravity," even though the two happen to coincide on today's flat floor.
-struct PlayerGroundContact {
-    bool isGrounded = false;
-    glm::vec3 normal{0.0f, 1.0f, 0.0f};
-    glm::vec3 velocity{0.0f, 0.0f, 0.0f};  // world-space velocity of whatever the player is standing on
+// The result of sweeping a shape through the world: the only question
+// Judas's player controller ever asks the physics middleware ("how far can
+// this shape move, and what does it touch?"). What the answer MEANS —
+// sliding, support, grounded state — is entirely PlayerController's
+// decision; this struct carries no interpretation of its own.
+struct ShapeSweepHit {
+    bool hit = false;
+    float distance = 0.0f;      // world-space distance traveled before the hit
+    glm::vec3 normal{0.0f};     // meaningful only when `hit` is true; contact normal,
+                                 // pointing back toward the caster — no default direction
+                                 // is implied when there was no hit
 };
 
 // Wraps the physics middleware (currently Jolt Physics — see
@@ -44,7 +45,8 @@ struct PlayerGroundContact {
 // particular direction.
 //
 // No Jolt type appears in this header, so no other engine file needs to
-// include a Jolt header just to hold a body or ask for its transform.
+// include a Jolt header just to hold a body, ask for its transform, or
+// sweep the player's collision shape.
 class PhysicsWorld {
 public:
     PhysicsWorld() = default;
@@ -58,6 +60,8 @@ public:
 
     BodyHandle CreateStaticBox(const glm::vec3& position, const glm::vec3& halfExtents,
                                 float friction, float restitution);
+    BodyHandle CreateStaticSphere(const glm::vec3& position, float radius, float friction,
+                                   float restitution);
     BodyHandle CreateDynamicBox(const glm::vec3& position, const glm::vec3& halfExtents,
                                  float mass, float friction, float restitution);
     void DestroyBody(BodyHandle handle);
@@ -76,48 +80,29 @@ public:
     BodyTransform GetTransform(BodyHandle handle) const;
 
     // Restores a body to a pose with zero linear and angular velocity.
-    // Used by the Milestone 3 debug reset control.
     void ResetBody(BodyHandle handle, const glm::vec3& position, const glm::quat& rotation);
 
-    // --- Player (character controller) ---
+    // --- Player collision shape & queries ---
     //
-    // Backed by a Jolt CharacterVirtual — a kinematic, collision-aware
-    // controller rather than a full dynamic rigid body. See
-    // docs/ARCHITECTURE.md, "Player/controller representation," for why.
-    // There is exactly one player; see PlayerController for the
-    // input/locomotion logic that drives these calls. As with everything
-    // else in this class, no Jolt type appears in this signature list.
-    //
-    // `feetPosition` is the position at the bottom of the player's capsule
-    // (its "feet"), not the capsule's center. `up` seeds the character
-    // controller's own internal reference axis (used only for classifying
-    // ground vs. too-steep-to-climb slopes) — callers derive it from the
-    // active GravityField at spawn time rather than hard-coding it, though
-    // it is not re-derived every frame in this milestone (FaithfulGravity
-    // is constant). This is a controller implementation detail, not the
-    // same concept as a contact normal — see PlayerGroundContact above.
-    bool CreatePlayer(const glm::vec3& feetPosition, const glm::vec3& up, float capsuleRadius,
-                       float capsuleHalfHeight, float mass);
-    void DestroyPlayer();
+    // As of Milestone 5, the player is NOT a Jolt body or character
+    // controller of any kind — see docs/ARCHITECTURE.md, "Player/controller
+    // ownership." Judas (PlayerController) owns the player's position,
+    // velocity, orientation, and support interpretation entirely as plain
+    // data. The only thing this class provides is a capsule Shape used
+    // purely for on-demand geometry queries; it is never added to the
+    // PhysicsSystem as a body, so it never appears in the broadphase and
+    // never needs a layer, activation state, or mass of its own.
+    bool CreatePlayerShape(float radius, float halfHeight);
+    void DestroyPlayerShape();
 
-    void SetPlayerVelocity(const glm::vec3& velocity);
-    glm::vec3 GetPlayerVelocity() const;
-
-    // Advances the player's own collision-aware movement by exactly one
-    // fixed step. `gravity` here is passed straight through to Jolt's
-    // CharacterVirtual::Update, which by its own documented contract uses
-    // it ONLY for the edge case of standing on a moving/rotating object —
-    // it does not integrate gravity into the player's velocity itself
-    // (that remains PlayerController's job, exactly like
-    // ApplyLinearAcceleration does for ordinary bodies).
-    void UpdatePlayer(float fixedDeltaTime, const glm::vec3& gravity);
-
-    glm::vec3 GetPlayerPosition() const;  // feet position
-
-    // Restores the player to a feet position with zero velocity.
-    void ResetPlayer(const glm::vec3& feetPosition);
-
-    PlayerGroundContact GetPlayerGroundContact() const;
+    // Sweeps the player's capsule shape (at `fromCenter`/`rotation`) along
+    // `displacement` (direction and length together) and reports the
+    // closest thing it would hit, if any. This is Judas's ONLY question to
+    // Jolt about player movement or support — everything the answer is
+    // used for (sliding along a surface, deciding "grounded," permitting a
+    // jump) is PlayerController's decision, not this class's.
+    ShapeSweepHit SweepPlayerShape(const glm::vec3& fromCenter, const glm::quat& rotation,
+                                    const glm::vec3& displacement) const;
 
 private:
     struct Impl;
