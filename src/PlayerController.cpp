@@ -354,6 +354,13 @@ glm::quat PlayerController::GetPresentedOrientation(float alpha) const {
     return glm::slerp(m_previousOrientation, m_frameOrientation, std::clamp(alpha, 0.0f, 1.0f));
 }
 
+glm::vec3 PlayerController::GetLookDirection() const {
+    const glm::quat lookOrientation =
+        m_frameOrientation * glm::angleAxis(glm::radians(m_yaw), glm::vec3(0.0f, 1.0f, 0.0f)) *
+        glm::angleAxis(glm::radians(m_pitch), glm::vec3(1.0f, 0.0f, 0.0f));
+    return glm::normalize(lookOrientation * glm::vec3(0.0f, 0.0f, -1.0f));
+}
+
 glm::mat4 PlayerController::GetViewMatrix(float presentationAlpha) const {
     const glm::vec3 presentedPosition = GetPresentedPosition(presentationAlpha);
     const glm::quat presentedOrientation = GetPresentedOrientation(presentationAlpha);

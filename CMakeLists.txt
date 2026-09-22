@@ -11,27 +11,21 @@ endif()
 find_package(SDL2 REQUIRED)
 find_package(glm REQUIRED)
 
-# Jolt Physics (see docs/ARCHITECTURE.md, "Physics middleware", for why it
-# was chosen). Not packaged by apt, so it's fetched at configure time
-# rather than vendored into this repository or assumed pre-installed.
-# Pinned to an exact tag for reproducible builds.
-include(FetchContent)
+# No physics middleware. Judas owns rigid-body state, integration,
+# collision detection, contact generation, and contact resolution itself
+# (src/RigidBody.*, src/Contacts.*, src/ContactSolver.*, src/PhysicsWorld.cpp)
+# — see docs/ARCHITECTURE.md, "Physics ownership," for the milestone this
+# decision belongs to and why Jolt Physics (used through the first M7-Final
+# attempt, recoverable via git history/the milestone-7b tag for the last
+# Jolt-backed milestone) was replaced rather than kept as an authoritative
+# dependency.
 
-# Jolt's own CMakeLists enables "warnings as errors" for its own target by
-# default. That's a lint setting from a project we don't control, not a
-# guarantee about this repo's own compiler/version — disabling it avoids an
-# unrelated dependency breaking our build on a newer compiler than Jolt was
-# tested against. It has no effect on warnings for our own code.
-set(ENABLE_ALL_WARNINGS OFF CACHE BOOL "" FORCE)
-
-FetchContent_Declare(
-    JoltPhysics
-    GIT_REPOSITORY https://github.com/jrouwe/JoltPhysics.git
-    GIT_TAG        v5.6.0
-    GIT_SHALLOW    TRUE
-    SOURCE_SUBDIR  Build
+set(JUDAS_PHYSICS_SOURCES
+    src/RigidBody.cpp
+    src/RigidBodyGravity.cpp
+    src/Contacts.cpp
+    src/ContactSolver.cpp
 )
-FetchContent_MakeAvailable(JoltPhysics)
 
 add_executable(judas
     src/main.cpp
@@ -42,15 +36,48 @@ add_executable(judas
     src/DynamicBody.cpp
     src/FaithfulGravity.cpp
     src/RadicalGravity.cpp
-    src/GravityResolver.cpp
+    src/SphericalVolume.cpp
+    src/BoxVolume.cpp
+    src/GravityContextMap.cpp
+    ${JUDAS_PHYSICS_SOURCES}
     src/PhysicsWorld.cpp
     src/TestHarness.cpp
     src/gl_core33.cpp
 )
 
 target_include_directories(judas PRIVATE ${SDL2_INCLUDE_DIRS})
-target_link_libraries(judas PRIVATE SDL2::SDL2 glm::glm-header-only Jolt)
+target_link_libraries(judas PRIVATE SDL2::SDL2 glm::glm-header-only)
 target_compile_options(judas PRIVATE -Wall -Wextra)
+
+# Judas-owned physics primitive/collision tests: deterministic, headless,
+# no window/GL at all. Two separate executables (each its own `main`)
+# rather than a JUDAS_TEST_SCRIPT harness run, since these test the physics
+# primitives/collision/gravity-context layers in isolation, not end-to-end
+# gameplay.
+set(JUDAS_TEST_SUPPORT_SOURCES
+    ${JUDAS_PHYSICS_SOURCES}
+    src/FaithfulGravity.cpp
+    src/RadicalGravity.cpp
+    src/SphericalVolume.cpp
+    src/BoxVolume.cpp
+    src/GravityContextMap.cpp
+)
+
+add_executable(judas_physics_tests
+    tests/PhysicsPrimitiveTests.cpp
+    ${JUDAS_TEST_SUPPORT_SOURCES}
+)
+target_include_directories(judas_physics_tests PRIVATE src)
+target_link_libraries(judas_physics_tests PRIVATE glm::glm-header-only)
+target_compile_options(judas_physics_tests PRIVATE -Wall -Wextra)
+
+add_executable(judas_collision_tests
+    tests/CollisionTests.cpp
+    ${JUDAS_TEST_SUPPORT_SOURCES}
+)
+target_include_directories(judas_collision_tests PRIVATE src)
+target_link_libraries(judas_collision_tests PRIVATE glm::glm-header-only)
+target_compile_options(judas_collision_tests PRIVATE -Wall -Wextra)
 
 # stb_image_write (public domain / MIT, see third_party/stb_image_write.h) —
 # used only by the opt-in test harness (src/TestHarness.cpp) to write

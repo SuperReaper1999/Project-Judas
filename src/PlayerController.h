@@ -100,6 +100,16 @@ public:
     glm::vec3 GetVelocity() const { return m_velocity; }
     bool IsGrounded() const { return m_lastGrounded; }
 
+    // Mouse-look state and the resulting authoritative view/look direction
+    // (the same yaw/pitch-on-top-of-frame-orientation composition
+    // GetViewMatrix uses, but built from m_frameOrientation directly rather
+    // than a presented/interpolated one) — for diagnostics (live telemetry,
+    // the test harness) that need to know where the player is actually
+    // looking, not just which way its body is oriented.
+    float GetYaw() const { return m_yaw; }
+    float GetPitch() const { return m_pitch; }
+    glm::vec3 GetLookDirection() const;
+
 private:
     glm::vec3 ComputeLocalUp(const glm::vec3& gravityAcceleration) const;
     void UpdateFrameOrientation(const glm::vec3& localUp, float fixedDeltaTime);

@@ -1,412 +1,376 @@
 #include "PhysicsWorld.h"
 
 #include <algorithm>
-#include <cstdarg>
-#include <cstdio>
-#include <thread>
+#include <cmath>
+#include <limits>
+#include <tuple>
+#include <vector>
 
-// The Jolt headers don't include Jolt.h themselves — it must come first.
-#include <Jolt/Jolt.h>
+#include "CollisionShapes.h"
+#include "ContactSolver.h"
+#include "Contacts.h"
+#include "RigidBody.h"
 
-#include <Jolt/Core/Factory.h>
-#include <Jolt/Core/JobSystemThreadPool.h>
-#include <Jolt/Core/TempAllocator.h>
-#include <Jolt/Physics/Body/BodyCreationSettings.h>
-#include <Jolt/Physics/Collision/CollisionCollector.h>
-#include <Jolt/Physics/Collision/NarrowPhaseQuery.h>
-#include <Jolt/Physics/Collision/ShapeCast.h>
-#include <Jolt/Physics/Collision/Shape/BoxShape.h>
-#include <Jolt/Physics/Collision/Shape/CapsuleShape.h>
-#include <Jolt/Physics/Collision/Shape/SphereShape.h>
-#include <Jolt/Physics/PhysicsSettings.h>
-#include <Jolt/Physics/PhysicsSystem.h>
-#include <Jolt/RegisterTypes.h>
-
-// Every Jolt-specific detail (layers, filters, the job system, the factory)
-// lives in this file only. Nothing here is visible through PhysicsWorld.h.
+// Judas's own rigid-body physics — no middleware. Collision detection,
+// contact generation, contact resolution, and integration are all owned
+// here, built from RigidBody (state/integration), Contacts (narrowphase),
+// and ContactSolver (impulse resolution). See docs/ARCHITECTURE.md,
+// "Physics ownership" for the migration this replaces (Jolt Physics,
+// through Milestone 7-Final) and why: no subsystem here — broadphase,
+// narrowphase, contact resolution, the player's sweep query — assumes a
+// world-space up axis; every one of them is expressed purely in terms of
+// the shapes' and bodies' own positions/orientations. Judas already owned
+// gravity, reference frames, and world coordinates before this milestone;
+// this closes the remaining gap (collision/contact/rigid-body solving)
+// that used to belong to Jolt.
 namespace {
 
-using namespace JPH;
+// A handful of dynamic bodies plus two static planets and a static plank —
+// Project Judas's own bodies, not a general scene. Brute-force all-pairs
+// broadphase is exactly right at this scale (see PhysicsWorld::Step): a
+// spatial broadphase structure would be unused machinery here, not a
+// correctness requirement.
+constexpr int kSolverIterations = 4;
 
-void JoltTraceImpl(const char* fmt, ...) {
-    va_list args;
-    va_start(args, fmt);
-    char buffer[1024];
-    vsnprintf(buffer, sizeof(buffer), fmt, args);
-    va_end(args);
-    std::fprintf(stderr, "[Jolt] %s\n", buffer);
+// Uniform manifold dispatcher: sphere-involving pairs always produce at
+// most one contact point (wrapped in a 1-point manifold); box-vs-box uses
+// the real multi-point manifold (see Contacts.h for why that one
+// specifically needs more than one point).
+ContactManifold ComputeContacts(const Shape& shapeA, const RigidBody& bodyA, const Shape& shapeB,
+                                 const RigidBody& bodyB) {
+    ContactManifold manifold;
+    if (shapeA.type == ShapeType::Sphere && shapeB.type == ShapeType::Sphere) {
+        manifold.Add(SphereVsSphere(bodyA.position, shapeA.radius, bodyB.position, shapeB.radius));
+        return manifold;
+    }
+    if (shapeA.type == ShapeType::Sphere && shapeB.type == ShapeType::Box) {
+        manifold.Add(SphereVsBox(bodyA.position, shapeA.radius, bodyB.position, bodyB.orientation,
+                                  shapeB.halfExtents));
+        return manifold;
+    }
+    if (shapeA.type == ShapeType::Box && shapeB.type == ShapeType::Sphere) {
+        Contact contact = SphereVsBox(bodyB.position, shapeB.radius, bodyA.position,
+                                       bodyA.orientation, shapeA.halfExtents);
+        if (contact.hit) contact.normal = -contact.normal;  // keep the "points toward A" convention
+        manifold.Add(contact);
+        return manifold;
+    }
+    if (shapeA.type == ShapeType::Box && shapeB.type == ShapeType::Box) {
+        return BoxVsBoxManifold(bodyA.position, bodyA.orientation, shapeA.halfExtents, bodyB.position,
+                                 bodyB.orientation, shapeB.halfExtents);
+    }
+    return manifold;  // capsules never appear as world bodies -- only as the player's query shape
 }
-
-#ifdef JPH_ENABLE_ASSERTS
-bool JoltAssertFailedImpl(const char* expression, const char* message, const char* file,
-                           JPH::uint line) {
-    std::fprintf(stderr, "%s:%u: (%s) %s\n", file, line, expression, message ? message : "");
-    return true;  // trigger a breakpoint
-}
-#endif
-
-// Two object layers is all this milestone needs: one static sphere/boxes,
-// and (for any future dynamic body) a "moving" layer. The player is not a
-// body at all, so it doesn't occupy either — see SweepPlayerShape.
-namespace Layers {
-constexpr ObjectLayer kNonMoving = 0;
-constexpr ObjectLayer kMoving = 1;
-constexpr unsigned int kNumLayers = 2;
-}  // namespace Layers
-
-namespace BroadPhaseLayers {
-constexpr BroadPhaseLayer kNonMoving(0);
-constexpr BroadPhaseLayer kMoving(1);
-constexpr unsigned int kNumLayers = 2;
-}  // namespace BroadPhaseLayers
-
-class BroadPhaseLayerInterfaceImpl final : public BroadPhaseLayerInterface {
-public:
-    BroadPhaseLayerInterfaceImpl() {
-        mObjectToBroadPhase[Layers::kNonMoving] = BroadPhaseLayers::kNonMoving;
-        mObjectToBroadPhase[Layers::kMoving] = BroadPhaseLayers::kMoving;
-    }
-
-    uint GetNumBroadPhaseLayers() const override { return BroadPhaseLayers::kNumLayers; }
-
-    BroadPhaseLayer GetBroadPhaseLayer(ObjectLayer layer) const override {
-        return mObjectToBroadPhase[layer];
-    }
-
-    const char* GetBroadPhaseLayerName(BroadPhaseLayer layer) const override {
-        switch ((BroadPhaseLayer::Type)layer) {
-            case (BroadPhaseLayer::Type)BroadPhaseLayers::kNonMoving:
-                return "NON_MOVING";
-            case (BroadPhaseLayer::Type)BroadPhaseLayers::kMoving:
-                return "MOVING";
-            default:
-                return "INVALID";
-        }
-    }
-
-private:
-    BroadPhaseLayer mObjectToBroadPhase[Layers::kNumLayers];
-};
-
-class ObjectVsBroadPhaseLayerFilterImpl final : public ObjectVsBroadPhaseLayerFilter {
-public:
-    bool ShouldCollide(ObjectLayer layer1, BroadPhaseLayer layer2) const override {
-        switch (layer1) {
-            case Layers::kNonMoving:
-                return layer2 == BroadPhaseLayers::kMoving;
-            case Layers::kMoving:
-                return true;
-            default:
-                return false;
-        }
-    }
-};
-
-class ObjectLayerPairFilterImpl final : public ObjectLayerPairFilter {
-public:
-    bool ShouldCollide(ObjectLayer object1, ObjectLayer object2) const override {
-        switch (object1) {
-            case Layers::kNonMoving:
-                return object2 == Layers::kMoving;
-            case Layers::kMoving:
-                return true;
-            default:
-                return false;
-        }
-    }
-};
-
-// Small values, deliberately: this milestone's active demo has one static
-// body (the sphere) plus a handful of dynamic test objects (see
-// docs/ARCHITECTURE.md, "Physics test world") — nowhere near this many. A
-// real scene would raise these, not architect around them being large.
-constexpr unsigned int kMaxBodies = 128;
-constexpr unsigned int kNumBodyMutexes = 0;  // 0 = Jolt picks a sensible default
-constexpr unsigned int kMaxBodyPairs = 128;
-constexpr unsigned int kMaxContactConstraints = 128;
-constexpr int kCollisionStepsPerUpdate = 1;
-
-JPH::Vec3 ToJolt(const glm::vec3& v) { return JPH::Vec3(v.x, v.y, v.z); }
-
-JPH::Quat ToJolt(const glm::quat& q) { return JPH::Quat(q.x, q.y, q.z, q.w); }
-
-glm::vec3 ToGlm(JPH::Vec3Arg v) { return glm::vec3(v.GetX(), v.GetY(), v.GetZ()); }
-
-glm::quat ToGlm(JPH::QuatArg q) { return glm::quat(q.GetW(), q.GetX(), q.GetY(), q.GetZ()); }
-
-BodyID ToJoltId(BodyHandle handle) { return BodyID(handle.id); }
-
-BodyHandle ToHandle(BodyID id) { return BodyHandle{id.GetIndexAndSequenceNumber()}; }
-
-// Keeps only the closest hit from a NarrowPhaseQuery::CastShape call. This
-// is the entire "collision collector" this engine needs — not a generic
-// collector framework, just the one policy (closest wins) the player
-// controller's move-and-slide and ground-probe queries both want.
-class ClosestHitCastShapeCollector final
-    : public JPH::CollisionCollector<JPH::ShapeCastResult, JPH::CollisionCollectorTraitsCastShape> {
-public:
-    void AddHit(const JPH::ShapeCastResult& result) override {
-        if (mHadHit && result.mFraction >= mHit.mFraction) return;
-        mHit = result;
-        mHadHit = true;
-        UpdateEarlyOutFraction(std::max(result.mFraction, 0.0f));
-    }
-
-    bool mHadHit = false;
-    JPH::ShapeCastResult mHit{};
-};
 
 }  // namespace
 
+// Distance (and separating normal/owning body index) from the player's
+// capsule, placed at a given segment, to the closest world body — used by
+// SweepPlayerShape's substep march. `bodyIndex == -1` means no body was
+// found closer than `distance`'s initial +infinity (never happens once any
+// world geometry exists, but keeps the result total).
+struct ClosestBodyResult {
+    float distance = std::numeric_limits<float>::max();
+    glm::vec3 normal{0.0f};
+    int bodyIndex = -1;
+};
+
 struct PhysicsWorld::Impl {
-    BroadPhaseLayerInterfaceImpl broadPhaseLayerInterface;
-    ObjectVsBroadPhaseLayerFilterImpl objectVsBroadPhaseLayerFilter;
-    ObjectLayerPairFilterImpl objectLayerPairFilter;
+    struct Body {
+        RigidBody rigidBody;
+        Shape shape;
+        float friction = 0.5f;
+        float restitution = 0.0f;
+        bool isDynamic = false;
+        bool alive = false;
+    };
 
-    JPH::TempAllocatorImpl tempAllocator{10 * 1024 * 1024};
-    JPH::JobSystemThreadPool jobSystem{
-        JPH::cMaxPhysicsJobs, JPH::cMaxPhysicsBarriers,
-        static_cast<int>(std::max(1u, std::thread::hardware_concurrency() - 1))};
+    std::vector<Body> bodies;
 
-    JPH::PhysicsSystem physicsSystem;
+    bool hasPlayerShape = false;
+    Shape playerShape;
 
-    // The player's collision shape. Never added to physicsSystem as a body
-    // — it exists purely so SweepPlayerShape has something to cast. See
-    // PhysicsWorld.h.
-    JPH::RefConst<JPH::Shape> playerShape;
+    // A member of Impl (rather than a free function taking a body list)
+    // specifically so it can name `Body` without exposing this private
+    // nested type outside PhysicsWorld.cpp.
+    ClosestBodyResult ClosestBodyToCapsule(const glm::vec3& segA, const glm::vec3& segB,
+                                            float capsuleRadius) const {
+        ClosestBodyResult result;
+        for (std::size_t i = 0; i < bodies.size(); ++i) {
+            const Body& body = bodies[i];
+            if (!body.alive) continue;
+            CapsuleDistance capsuleDistance;
+            if (body.shape.type == ShapeType::Sphere) {
+                capsuleDistance = CapsuleDistanceToSphere(segA, segB, capsuleRadius,
+                                                            body.rigidBody.position,
+                                                            body.shape.radius);
+            } else if (body.shape.type == ShapeType::Box) {
+                capsuleDistance =
+                    CapsuleDistanceToBox(segA, segB, capsuleRadius, body.rigidBody.position,
+                                          body.rigidBody.orientation, body.shape.halfExtents);
+            } else {
+                continue;
+            }
+            if (capsuleDistance.distance < result.distance) {
+                result.distance = capsuleDistance.distance;
+                result.normal = capsuleDistance.normal;
+                result.bodyIndex = static_cast<int>(i);
+            }
+        }
+        return result;
+    }
+
+    Body* Get(BodyHandle handle) {
+        if (!handle.IsValid() || handle.id >= bodies.size() || !bodies[handle.id].alive) {
+            return nullptr;
+        }
+        return &bodies[handle.id];
+    }
+    const Body* Get(BodyHandle handle) const {
+        if (!handle.IsValid() || handle.id >= bodies.size() || !bodies[handle.id].alive) {
+            return nullptr;
+        }
+        return &bodies[handle.id];
+    }
+
+    BodyHandle AddBody(const Shape& shape, const glm::vec3& position, const glm::quat& rotation,
+                        bool isDynamic, float mass, float friction, float restitution) {
+        Body body;
+        body.shape = shape;
+        body.friction = friction;
+        body.restitution = restitution;
+        body.isDynamic = isDynamic;
+        body.alive = true;
+        body.rigidBody.position = position;
+        body.rigidBody.orientation = rotation;
+        if (isDynamic) {
+            body.rigidBody.inverseMass = mass > 0.0f ? 1.0f / mass : 0.0f;
+            body.rigidBody.inverseInertiaLocal =
+                shape.type == ShapeType::Sphere ? SolidSphereInverseInertia(mass, shape.radius)
+                                                 : SolidBoxInverseInertia(mass, shape.halfExtents);
+        }
+        // Static bodies keep inverseMass=0 / zero inverse inertia (RigidBody's own defaults),
+        // which is exactly what "never moved by force or impulse" means throughout this engine.
+        bodies.push_back(body);
+        BodyHandle handle;
+        handle.id = static_cast<unsigned int>(bodies.size() - 1);
+        return handle;
+    }
 };
 
 bool PhysicsWorld::Init() {
-    JPH::RegisterDefaultAllocator();
-
-    JPH::Trace = JoltTraceImpl;
-    JPH_IF_ENABLE_ASSERTS(JPH::AssertFailed = JoltAssertFailedImpl;)
-
-    JPH::Factory::sInstance = new JPH::Factory();
-    JPH::RegisterTypes();
-
     m_impl = new Impl();
-    m_impl->physicsSystem.Init(kMaxBodies, kNumBodyMutexes, kMaxBodyPairs, kMaxContactConstraints,
-                                m_impl->broadPhaseLayerInterface,
-                                m_impl->objectVsBroadPhaseLayerFilter,
-                                m_impl->objectLayerPairFilter);
-
-    // Judas owns gravity (see PhysicsWorld.h and docs/ARCHITECTURE.md,
-    // "Ownership boundary"). Jolt's own global gravity — which defaults to
-    // (0, -9.81, 0) applied automatically to every dynamic body — must
-    // never be relied upon, so it is explicitly zeroed here. Gravity only
-    // ever reaches a body through ApplyLinearAcceleration, and the player
-    // (not a body at all) never touches Jolt gravity in any form.
-    m_impl->physicsSystem.SetGravity(JPH::Vec3::sZero());
-
     return true;
 }
 
-PhysicsWorld::~PhysicsWorld() {
-    Shutdown();
-}
+PhysicsWorld::~PhysicsWorld() { Shutdown(); }
 
 void PhysicsWorld::Shutdown() {
     delete m_impl;
     m_impl = nullptr;
-
-    if (JPH::Factory::sInstance) {
-        JPH::UnregisterTypes();
-        delete JPH::Factory::sInstance;
-        JPH::Factory::sInstance = nullptr;
-    }
 }
 
 BodyHandle PhysicsWorld::CreateStaticBox(const glm::vec3& position, const glm::vec3& halfExtents,
                                           float friction, float restitution) {
-    JPH::BodyCreationSettings settings(new JPH::BoxShape(ToJolt(halfExtents)), ToJolt(position),
-                                        JPH::Quat::sIdentity(), JPH::EMotionType::Static,
-                                        Layers::kNonMoving);
-    settings.mFriction = friction;
-    settings.mRestitution = restitution;
-
-    JPH::BodyID id = m_impl->physicsSystem.GetBodyInterface().CreateAndAddBody(
-        settings, JPH::EActivation::DontActivate);
-    return ToHandle(id);
+    return m_impl->AddBody(Shape::Box(halfExtents), position, glm::quat(1.0f, 0.0f, 0.0f, 0.0f),
+                            false, 0.0f, friction, restitution);
 }
 
 BodyHandle PhysicsWorld::CreateStaticSphere(const glm::vec3& position, float radius,
                                              float friction, float restitution) {
-    JPH::BodyCreationSettings settings(new JPH::SphereShape(radius), ToJolt(position),
-                                        JPH::Quat::sIdentity(), JPH::EMotionType::Static,
-                                        Layers::kNonMoving);
-    settings.mFriction = friction;
-    settings.mRestitution = restitution;
-
-    JPH::BodyID id = m_impl->physicsSystem.GetBodyInterface().CreateAndAddBody(
-        settings, JPH::EActivation::DontActivate);
-    return ToHandle(id);
+    return m_impl->AddBody(Shape::Sphere(radius), position, glm::quat(1.0f, 0.0f, 0.0f, 0.0f),
+                            false, 0.0f, friction, restitution);
 }
 
 BodyHandle PhysicsWorld::CreateDynamicBox(const glm::vec3& position, const glm::vec3& halfExtents,
                                            float mass, float friction, float restitution) {
-    JPH::BodyCreationSettings settings(new JPH::BoxShape(ToJolt(halfExtents)), ToJolt(position),
-                                        JPH::Quat::sIdentity(), JPH::EMotionType::Dynamic,
-                                        Layers::kMoving);
-    settings.mFriction = friction;
-    settings.mRestitution = restitution;
-    settings.mOverrideMassProperties = JPH::EOverrideMassProperties::CalculateInertia;
-    settings.mMassPropertiesOverride.mMass = mass;
-
-    JPH::BodyID id = m_impl->physicsSystem.GetBodyInterface().CreateAndAddBody(
-        settings, JPH::EActivation::Activate);
-    return ToHandle(id);
+    return m_impl->AddBody(Shape::Box(halfExtents), position, glm::quat(1.0f, 0.0f, 0.0f, 0.0f),
+                            true, mass, friction, restitution);
 }
 
 BodyHandle PhysicsWorld::CreateDynamicSphere(const glm::vec3& position, float radius, float mass,
                                               float friction, float restitution) {
-    JPH::BodyCreationSettings settings(new JPH::SphereShape(radius), ToJolt(position),
-                                        JPH::Quat::sIdentity(), JPH::EMotionType::Dynamic,
-                                        Layers::kMoving);
-    settings.mFriction = friction;
-    settings.mRestitution = restitution;
-    settings.mOverrideMassProperties = JPH::EOverrideMassProperties::CalculateInertia;
-    settings.mMassPropertiesOverride.mMass = mass;
-
-    JPH::BodyID id = m_impl->physicsSystem.GetBodyInterface().CreateAndAddBody(
-        settings, JPH::EActivation::Activate);
-    return ToHandle(id);
+    return m_impl->AddBody(Shape::Sphere(radius), position, glm::quat(1.0f, 0.0f, 0.0f, 0.0f), true,
+                            mass, friction, restitution);
 }
 
 void PhysicsWorld::DestroyBody(BodyHandle handle) {
-    if (!handle.IsValid()) return;
-    JPH::BodyInterface& bodyInterface = m_impl->physicsSystem.GetBodyInterface();
-    JPH::BodyID id = ToJoltId(handle);
-    bodyInterface.RemoveBody(id);
-    bodyInterface.DestroyBody(id);
+    Impl::Body* body = m_impl->Get(handle);
+    if (body) body->alive = false;
 }
 
 void PhysicsWorld::ApplyLinearAcceleration(BodyHandle handle, const glm::vec3& acceleration,
                                             float fixedDeltaTime) {
-    if (!handle.IsValid()) return;
-    m_impl->physicsSystem.GetBodyInterface().AddLinearVelocity(
-        ToJoltId(handle), ToJolt(acceleration) * fixedDeltaTime);
+    Impl::Body* body = m_impl->Get(handle);
+    if (!body || body->rigidBody.IsStatic()) return;
+    body->rigidBody.linearVelocity += acceleration * fixedDeltaTime;
 }
 
 bool PhysicsWorld::IsDynamicBody(BodyHandle handle) const {
-    if (!handle.IsValid()) return false;
-    return m_impl->physicsSystem.GetBodyInterface().GetMotionType(ToJoltId(handle)) ==
-           JPH::EMotionType::Dynamic;
+    const Impl::Body* body = m_impl->Get(handle);
+    return body && body->isDynamic;
 }
 
 glm::vec3 PhysicsWorld::GetLinearVelocity(BodyHandle handle) const {
-    if (!handle.IsValid()) return glm::vec3(0.0f);
-    return ToGlm(m_impl->physicsSystem.GetBodyInterface().GetLinearVelocity(ToJoltId(handle)));
+    const Impl::Body* body = m_impl->Get(handle);
+    return body ? body->rigidBody.linearVelocity : glm::vec3(0.0f);
 }
 
 void PhysicsWorld::SetLinearVelocity(BodyHandle handle, const glm::vec3& velocity) {
-    if (!handle.IsValid()) return;
-    m_impl->physicsSystem.GetBodyInterface().SetLinearVelocity(ToJoltId(handle), ToJolt(velocity));
+    Impl::Body* body = m_impl->Get(handle);
+    if (body) body->rigidBody.linearVelocity = velocity;
 }
 
 void PhysicsWorld::Step(float fixedDeltaTime) {
-    m_impl->physicsSystem.Update(fixedDeltaTime, kCollisionStepsPerUpdate, &m_impl->tempAllocator,
-                                  &m_impl->jobSystem);
+    // 1) Integrate every dynamic body's position/orientation from its
+    // CURRENT velocity. Gravity has already been folded into that velocity
+    // by the caller's own ApplyLinearAcceleration call this step (the same
+    // "Judas samples gravity, hands it to physics" ordering every consumer
+    // already uses) -- this step only advances position/orientation, it
+    // does not sample or apply gravity itself.
+    for (Impl::Body& body : m_impl->bodies) {
+        if (!body.alive || !body.isDynamic) continue;
+        RigidBody& rigidBody = body.rigidBody;
+        rigidBody.position += rigidBody.linearVelocity * fixedDeltaTime;
+
+        const glm::quat angularVelocityQuat(0.0f, rigidBody.angularVelocity.x,
+                                             rigidBody.angularVelocity.y,
+                                             rigidBody.angularVelocity.z);
+        const glm::quat orientationDelta = angularVelocityQuat * rigidBody.orientation;
+        rigidBody.orientation =
+            glm::normalize(rigidBody.orientation + orientationDelta * (0.5f * fixedDeltaTime));
+    }
+
+    // 2) Broadphase (brute-force all pairs -- see the note above) +
+    // narrowphase + contact resolution, run for a few solver iterations so
+    // resting/stacked contacts converge within one fixed step rather than
+    // visibly settling over several. Static-static pairs (e.g. a planet
+    // against the plank) are skipped outright: neither side can move, so
+    // there is nothing to resolve.
+    const std::size_t bodyCount = m_impl->bodies.size();
+    for (int iteration = 0; iteration < kSolverIterations; ++iteration) {
+        for (std::size_t i = 0; i < bodyCount; ++i) {
+            Impl::Body& a = m_impl->bodies[i];
+            if (!a.alive) continue;
+            for (std::size_t j = i + 1; j < bodyCount; ++j) {
+                Impl::Body& b = m_impl->bodies[j];
+                if (!b.alive) continue;
+                if (a.rigidBody.IsStatic() && b.rigidBody.IsStatic()) continue;
+
+                const ContactManifold manifold =
+                    ComputeContacts(a.shape, a.rigidBody, b.shape, b.rigidBody);
+                if (manifold.count == 0) continue;
+
+                const float friction = std::sqrt(std::max(a.friction, 0.0f) * std::max(b.friction, 0.0f));
+                const float restitution = std::max(a.restitution, b.restitution);
+                for (int p = 0; p < manifold.count; ++p) {
+                    if (!manifold.points[p].hit) continue;
+                    ResolveContact(a.rigidBody, b.rigidBody, manifold.points[p], friction, restitution);
+                }
+            }
+        }
+    }
 }
 
 BodyTransform PhysicsWorld::GetTransform(BodyHandle handle) const {
     BodyTransform result;
-    if (!handle.IsValid()) return result;
-
-    JPH::RVec3 position;
-    JPH::Quat rotation;
-    m_impl->physicsSystem.GetBodyInterface().GetPositionAndRotation(ToJoltId(handle), position,
-                                                                      rotation);
-    result.position = ToGlm(JPH::Vec3(position));
-    result.rotation = ToGlm(rotation);
+    const Impl::Body* body = m_impl->Get(handle);
+    if (!body) return result;
+    result.position = body->rigidBody.position;
+    result.rotation = body->rigidBody.orientation;
     return result;
 }
 
 void PhysicsWorld::ResetBody(BodyHandle handle, const glm::vec3& position,
                               const glm::quat& rotation) {
-    if (!handle.IsValid()) return;
-    JPH::BodyInterface& bodyInterface = m_impl->physicsSystem.GetBodyInterface();
-    JPH::BodyID id = ToJoltId(handle);
-
-    bodyInterface.SetPositionAndRotation(id, ToJolt(position), ToJolt(rotation),
-                                          JPH::EActivation::Activate);
-    bodyInterface.SetLinearVelocity(id, JPH::Vec3::sZero());
-    bodyInterface.SetAngularVelocity(id, JPH::Vec3::sZero());
+    Impl::Body* body = m_impl->Get(handle);
+    if (!body) return;
+    body->rigidBody.position = position;
+    body->rigidBody.orientation = rotation;
+    body->rigidBody.linearVelocity = glm::vec3(0.0f);
+    body->rigidBody.angularVelocity = glm::vec3(0.0f);
+    body->rigidBody.ClearAccumulators();
 }
 
 bool PhysicsWorld::CreatePlayerShape(float radius, float halfHeight) {
-    m_impl->playerShape = new JPH::CapsuleShape(halfHeight, radius);
-    return m_impl->playerShape != nullptr;
+    m_impl->playerShape = Shape::Capsule(radius, halfHeight);
+    m_impl->hasPlayerShape = true;
+    return true;
 }
 
-void PhysicsWorld::DestroyPlayerShape() {
-    m_impl->playerShape = nullptr;
-}
+void PhysicsWorld::DestroyPlayerShape() { m_impl->hasPlayerShape = false; }
 
 ShapeSweepHit PhysicsWorld::SweepPlayerShape(const glm::vec3& fromCenter, const glm::quat& rotation,
                                               const glm::vec3& displacement) const {
     ShapeSweepHit result;
-    if (!m_impl->playerShape) return result;
+    if (!m_impl->hasPlayerShape) return result;
 
-    const float length = glm::length(displacement);
-    if (length < 1.0e-6f) return result;
+    const float displacementLength = glm::length(displacement);
+    if (displacementLength < 1.0e-6f) return result;
 
-    const JPH::RMat44 startTransform =
-        JPH::RMat44::sRotationTranslation(ToJolt(rotation), ToJolt(fromCenter));
-    const JPH::RShapeCast shapeCast = JPH::RShapeCast::sFromWorldTransform(
-        m_impl->playerShape.GetPtr(), JPH::Vec3::sReplicate(1.0f), startTransform,
-        ToJolt(displacement));
+    const glm::vec3 localSegA(0.0f, -m_impl->playerShape.halfHeight, 0.0f);
+    const glm::vec3 localSegB(0.0f, m_impl->playerShape.halfHeight, 0.0f);
+    const float capsuleRadius = m_impl->playerShape.radius;
 
-    JPH::ShapeCastSettings settings;
+    auto worldSegmentAt = [&](const glm::vec3& center) {
+        return std::make_pair(center + rotation * localSegA, center + rotation * localSegB);
+    };
+    auto evaluateAt = [&](float t) {
+        const glm::vec3 center = fromCenter + displacement * t;
+        const auto [segA, segB] = worldSegmentAt(center);
+        return m_impl->ClosestBodyToCapsule(segA, segB, capsuleRadius);
+    };
 
-    ClosestHitCastShapeCollector collector;
-    m_impl->physicsSystem.GetNarrowPhaseQuery().CastShape(
-        shapeCast, settings, ToJolt(fromCenter), collector,
-        m_impl->physicsSystem.GetDefaultBroadPhaseLayerFilter(Layers::kMoving),
-        m_impl->physicsSystem.GetDefaultLayerFilter(Layers::kMoving));
-
-    if (collector.mHadHit) {
+    // Already touching/overlapping at the very start of the sweep — report
+    // an immediate zero-distance hit rather than marching forward, mirroring
+    // the "already touching" case a grounded move-and-slide step produces
+    // routinely (see docs/ARCHITECTURE.md, "Contact normal correctness and
+    // the 'already touching' case," law #13 — this normal is likewise
+    // unconditional, never derived from travel direction).
+    const ClosestBodyResult startResult = evaluateAt(0.0f);
+    if (startResult.bodyIndex >= 0 && startResult.distance <= 0.0f) {
         result.hit = true;
-        result.distance = collector.mHit.mFraction * length;
-        result.hitBody = ToHandle(collector.mHit.mBodyID2);
-
-        // Jolt documents mPenetrationAxis as "direction to move shape 2 out
-        // of collision along the shortest path," and its own recommended
-        // contact normal is exactly -mPenetrationAxis.Normalized() —
-        // unconditionally, not something that needs re-deriving from the
-        // cast direction. An earlier version of this code instead flipped
-        // the sign based on dot(normal, displacement), reasoning that a
-        // contact normal should oppose the direction of travel. That
-        // happens to agree with Jolt's own convention for an ordinary
-        // in-flight hit (mFraction > 0, moving toward a surface not yet
-        // touched) — which is why it went unnoticed through Milestones
-        // 5-7-A — but travel direction has no necessary relationship to
-        // the true normal for a hit already at mFraction == 0 (shapes
-        // already touching at the start of the sweep, which a grounded
-        // move-and-slide step produces routinely): there, the old
-        // heuristic could and did pick the wrong sign, occasionally
-        // reporting a normal pointing INTO the sphere instead of out of
-        // it. That produced a sub-millimeter oscillation in ordinary
-        // grounded movement (some steps got a good outward normal and
-        // slid correctly, others didn't) and, in one reproduced case, a
-        // complete permanent lockup (every iteration of that step's
-        // already-zero-distance cast happened to return the same
-        // consistently-wrong sign, so the slide loop's "into surface"
-        // guard never triggered and no sliding correction was ever
-        // applied). Using Jolt's own unconditionally-correct convention
-        // fixes both. See docs/ARCHITECTURE.md, "Remaining limitations"
-        // (Milestone 7-A) for the diagnosis this fix resolves.
-        glm::vec3 normal = -ToGlm(collector.mHit.mPenetrationAxis);
-        if (glm::length(normal) > 1.0e-6f) {
-            normal = glm::normalize(normal);
-        } else {
-            // No meaningful separating axis at all (fully degenerate
-            // input) — falling back to "opposes the direction of travel"
-            // is still the most reasonable default with zero other
-            // information available.
-            normal = -glm::normalize(displacement);
-        }
-        result.normal = normal;
+        result.distance = 0.0f;
+        result.normal = startResult.normal;
+        result.hitBody.id = static_cast<unsigned int>(startResult.bodyIndex);
+        return result;
     }
-    return result;
+
+    // March forward in substeps looking for the first t where the capsule
+    // starts overlapping something, then refine that bracket by bisection.
+    // Per-step displacements in this engine are always small (a fraction
+    // of a meter — see docs/ARCHITECTURE.md's move-and-slide/ground-probe
+    // distances), so a modest fixed substep count plus a short bisection
+    // pass gives ample precision without needing closed-form continuous
+    // collision detection for every shape pair.
+    constexpr int kSubsteps = 24;
+    constexpr int kBisectionIterations = 20;
+    float previousT = 0.0f;
+    for (int step = 1; step <= kSubsteps; ++step) {
+        const float t = static_cast<float>(step) / static_cast<float>(kSubsteps);
+        const ClosestBodyResult stepResult = evaluateAt(t);
+        if (stepResult.bodyIndex >= 0 && stepResult.distance <= 0.0f) {
+            float lo = previousT;
+            float hi = t;
+            ClosestBodyResult refined = stepResult;
+            for (int iteration = 0; iteration < kBisectionIterations; ++iteration) {
+                const float mid = (lo + hi) * 0.5f;
+                const ClosestBodyResult midResult = evaluateAt(mid);
+                if (midResult.bodyIndex >= 0 && midResult.distance <= 0.0f) {
+                    hi = mid;
+                    refined = midResult;
+                } else {
+                    lo = mid;
+                }
+            }
+            result.hit = true;
+            result.distance = lo * displacementLength;
+            result.normal = refined.normal;
+            result.hitBody.id = static_cast<unsigned int>(refined.bodyIndex);
+            return result;
+        }
+        previousT = t;
+    }
+
+    return result;  // no hit across the entire displacement
 }

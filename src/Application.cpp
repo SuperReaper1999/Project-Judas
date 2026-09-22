@@ -11,15 +11,17 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/quaternion.hpp>
 
+#include "BoxVolume.h"
 #include "DynamicBody.h"
 #include "FaithfulGravity.h"
+#include "GravityContextMap.h"
 #include "GravityField.h"
-#include "GravityResolver.h"
 #include "PhysicsWorld.h"
 #include "PlayerController.h"
 #include "RadicalGravity.h"
 #include "Renderer.h"
 #include "SimulationTiming.h"
+#include "SphericalVolume.h"
 #include "TestHarness.h"
 #include "Window.h"
 #include "gl_core33.h"
@@ -28,45 +30,51 @@ namespace {
 constexpr int kWindowWidth = 1024;
 constexpr int kWindowHeight = 768;
 
-// Milestone 5's demo: a spherical world with radial gravity, replacing
-// Milestone 3/4's flat floor + cube (recoverable via the milestone-4 tag).
-// As of Milestone 7-B, a second, genuinely simultaneous FaithfulGravity
-// environment also exists (see kPlatform* below and
-// docs/ARCHITECTURE.md, "Gravity resolution") — GravityResolver, not this
-// file, is what makes both coherent at once; Application still only ever
-// constructs the concrete implementations and wires them up.
-//
-// The radius grew from Milestone 5/6's 8m to 20m in Milestone 7-A — still a
-// small hand-authored test world, not a planet, but large enough to give a
-// walking player (4 m/s) and several separated dynamic test objects room to
-// exist without crowding the same few square meters. See
-// docs/ARCHITECTURE.md, "Physics test world."
-const glm::vec3 kSphereCenter(0.0f, 0.0f, 0.0f);
-constexpr float kSphereRadius = 20.0f;
-const glm::vec3 kSphereColor(0.3f, 0.45f, 0.35f);
-constexpr float kSphereFriction = 0.8f;
-constexpr float kSphereRestitution = 0.1f;
+// Milestone 7-Final's demo: two independent spherical worlds, each with its
+// own RadicalGravity source, connected by one flat static plank — replacing
+// Milestone 7-B's single sphere + flat FaithfulGravity platform (recoverable
+// via the milestone-7b tag; see docs/ARCHITECTURE.md law #9, demo content is
+// replaced, not accumulated). This is the final proof that GravityResolver
+// (see src/GravityResolver.h, law #12) handles more than one *simultaneously
+// active radial source*, not just one radial + one uniform field — neither
+// planet is privileged, both are ordinary RadicalGravity instances wired up
+// identically. No new gravity implementation, no new zone shape: exactly the
+// same two systems Milestone 7-B built, used twice.
+const glm::vec3 kPlanetACenter(0.0f, 0.0f, 0.0f);
+constexpr float kPlanetARadius = 20.0f;
+const glm::vec3 kPlanetAColor(0.3f, 0.45f, 0.35f);
 
-// Comparable in magnitude to FaithfulGravity's 9.81 m/s^2, per the brief —
-// this demonstrates changing gravity DIRECTION, not different physics.
+// Separated from Planet A by 55m center-to-center, i.e. a genuine 15m
+// surface-to-surface gap (2*20m radius + 15m) — the two worlds are visibly,
+// physically distinct bodies, not a single world wearing two names. Placed
+// along +Z, mirroring Milestone 7-B's departure-direction convention.
+const glm::vec3 kPlanetBCenter(0.0f, 0.0f, 55.0f);
+constexpr float kPlanetBRadius = 20.0f;
+const glm::vec3 kPlanetBColor(0.35f, 0.3f, 0.45f);
+
+constexpr float kPlanetFriction = 0.8f;
+constexpr float kPlanetRestitution = 0.1f;
+
+// Both planets share the same magnitude — this demonstrates two
+// simultaneously active radial *sources*, not different physics per world.
 constexpr float kRadicalGravityMagnitude = 9.81f;
 
-// Spawned above the sphere so the player visibly falls onto it. The
-// demo/composition-root layer is allowed to know the sphere exists;
-// PlayerController itself never does — see docs/ARCHITECTURE.md, "Spherical
-// physical test world." Unchanged from Milestone 5-7-A — see
-// kSphereGravityZoneCenter below for why Milestone 7-B's escape mechanism
-// doesn't require touching this.
-const glm::vec3 kPlayerSpawnPosition = kSphereCenter + glm::vec3(0.0f, kSphereRadius + 3.0f, 0.0f);
-constexpr float kPlayerSpawnYawDegrees = -90.0f;
+// Spawned above Planet A, facing +Z (yaw 180 degrees puts "forward" toward
+// +Z — see PlayerController::GetViewMatrix's front-vector convention) so a
+// plain W-hold walks the player toward the plank with no turn needed.
+const glm::vec3 kPlayerSpawnPosition =
+    kPlanetACenter + glm::vec3(0.0f, kPlanetARadius + 3.0f, 0.0f);
+constexpr float kPlayerSpawnYawDegrees = 180.0f;
 const glm::vec3 kPlayerColor(0.2f, 0.6f, 0.9f);
 
-// --- Milestone 7-A: dynamic test objects ---
+// --- Milestone 7-A/7-Final: dynamic test objects ---
 //
-// A small, hand-authored collection of ordinary Jolt dynamic bodies —
-// demo/composition-root data only, per docs/ARCHITECTURE.md, "Physics test
-// world." None of this is visible to DynamicBody, PlayerController, or
-// GravityField: those only ever see a position and an acceleration.
+// Demo/composition-root data only, exactly as in Milestone 7-A — none of
+// this is visible to DynamicBody, PlayerController, or GravityField, which
+// only ever see a position and an acceleration. This milestone spreads
+// objects across all three useful regions (Planet A, the plank, Planet B)
+// specifically to prove the gravity-resolution mechanism is not
+// player-specific or region-specific — see docs/ARCHITECTURE.md.
 constexpr float kDynamicObjectFriction = 0.6f;
 constexpr float kDynamicObjectRestitution = 0.15f;
 constexpr float kCubeHalfExtent = 0.5f;
@@ -76,24 +84,17 @@ constexpr float kSphereObjectMass = 4.0f;
 const glm::vec3 kCubeColor(0.85f, 0.35f, 0.2f);
 const glm::vec3 kSphereObjectColor(0.9f, 0.8f, 0.2f);
 
-// A point offset from the sphere's center along `direction` (not
-// necessarily unit length — normalized here) at `heightAboveSurface`
-// beyond the sphere's own radius. Purely a demo-authoring convenience for
-// placing test objects at varied, legible locations around the sphere —
-// engine code never does this kind of sphere-relative placement itself.
+// A point offset from a sphere's center along `direction` (not necessarily
+// unit length — normalized here) at `heightAboveSurface` beyond that
+// sphere's own radius. Purely a demo-authoring convenience for placing test
+// objects at varied, legible locations around either planet — engine code
+// never does this kind of sphere-relative placement itself. Unchanged from
+// Milestone 7-A, now reused for two different sphere centers.
 glm::vec3 PointAboveSphere(const glm::vec3& center, float radius, const glm::vec3& direction,
                             float heightAboveSurface) {
     return center + glm::normalize(direction) * (radius + heightAboveSurface);
 }
 
-// Four objects: two that begin slightly above the surface and fall onto
-// it, two that begin already resting on it (per the brief's minimum
-// arrangement). CubeA/SphereA sit close together near the player's own
-// spawn point — reachable on foot immediately, close enough to collide
-// with each other and to be pushed by the player. CubeB/SphereB sit at
-// deliberately different locations around the sphere (near the "equator"
-// and near the far pole) so their local gravity direction is visibly
-// different from the player's and from each other's.
 struct DynamicObjectSpawn {
     DynamicBody::Shape shape;
     glm::vec3 position;
@@ -102,18 +103,35 @@ struct DynamicObjectSpawn {
     float mass;
 };
 
+// Six objects, two per region (Planet A, the plank, Planet B) — the minimum
+// arrangement that actually exercises all three gravity contexts
+// simultaneously, per the brief's "prove this architecture is not secretly
+// player-specific." Planet A/B objects are placed away from the plank
+// direction (their own local gravity stays undiminished full strength — see
+// docs/ARCHITECTURE.md's SAMPLE_GRAVITY verification), so they fall and
+// settle independent of anything happening on the bridge. Plank objects are
+// placed directly above its surface at different points along its length —
+// their resting positions are never scripted or aligned to gravity by hand;
+// they fall and land exactly like every other body here.
 const DynamicObjectSpawn kDynamicObjectSpawns[] = {
+    // Planet A
     {DynamicBody::Shape::Box,
-     PointAboveSphere(kSphereCenter, kSphereRadius, glm::vec3(2.5f, kSphereRadius, 0.9f), 2.0f),
+     PointAboveSphere(kPlanetACenter, kPlanetARadius, glm::vec3(1.0f, 1.0f, -0.5f), 2.0f),
      glm::vec3(kCubeHalfExtent), kCubeColor, kCubeMass},
     {DynamicBody::Shape::Sphere,
-     PointAboveSphere(kSphereCenter, kSphereRadius, glm::vec3(2.5f, kSphereRadius, 1.3f), 0.05f),
+     PointAboveSphere(kPlanetACenter, kPlanetARadius, glm::vec3(0.8f, 0.3f, -0.9f), 0.05f),
      glm::vec3(kSphereObjectRadius), kSphereObjectColor, kSphereObjectMass},
+    // The plank
+    {DynamicBody::Shape::Box, glm::vec3(-3.0f, 21.0f, 18.0f), glm::vec3(kCubeHalfExtent),
+     kCubeColor, kCubeMass},
+    {DynamicBody::Shape::Sphere, glm::vec3(3.0f, 19.0f, 40.0f), glm::vec3(kSphereObjectRadius),
+     kSphereObjectColor, kSphereObjectMass},
+    // Planet B
     {DynamicBody::Shape::Box,
-     PointAboveSphere(kSphereCenter, kSphereRadius, glm::vec3(1.0f, 0.3f, 0.0f), 1.5f),
+     PointAboveSphere(kPlanetBCenter, kPlanetBRadius, glm::vec3(1.0f, 1.0f, 0.5f), 2.0f),
      glm::vec3(kCubeHalfExtent), kCubeColor, kCubeMass},
     {DynamicBody::Shape::Sphere,
-     PointAboveSphere(kSphereCenter, kSphereRadius, glm::vec3(0.0f, -1.0f, 0.2f), 0.05f),
+     PointAboveSphere(kPlanetBCenter, kPlanetBRadius, glm::vec3(0.8f, 0.3f, 0.9f), 0.05f),
      glm::vec3(kSphereObjectRadius), kSphereObjectColor, kSphereObjectMass},
 };
 
@@ -140,81 +158,84 @@ std::vector<DynamicBody> SpawnDynamicObjects(PhysicsWorld& physics) {
     return bodies;
 }
 
-// --- Milestone 7-B: flat FaithfulGravity environment ---
+// --- Milestone 7-Final: the connecting plank ---
 //
-// A second, simultaneously-active physical environment — demo/composition-
-// root data only, exactly like the sphere above. Positioned near the
-// sphere's "equator," along +Z specifically — not +X or +Y, which would
-// put it near existing Milestone 7-A dynamic-object spawns (see
-// kDynamicObjectSpawns above); +Z is otherwise unused — and deliberately
-// not near a pole, so a departing player experiences a dramatically
-// different local-up once FaithfulGravity takes over (see
-// docs/ARCHITECTURE.md, "Demonstration environment"). At the player's
-// default spawn orientation, reaching it is a plain strafe-right (`D`),
-// not a turn: `right = cross(forward, up)` at spawn's yaw already points
-// along +Z.
+// A single flat static box bridging the gap between Planet A's and Planet
+// B's near-facing surfaces. Its own physical surface normal is fixed
+// (+Y, an ordinary flat box) for its entire length — deliberately NOT
+// reoriented or segmented to track gravity — because "the plank's fixed
+// surface normal and changing gravity direction remain separate concepts"
+// is an explicit requirement of this milestone (see docs/ARCHITECTURE.md,
+// "Support"): support comes from PhysicsWorld::SweepPlayerShape's real
+// collision query against this one static shape, never from which gravity
+// zone currently has the most weight at the player's position.
 //
-// The platform's own top surface sits below the world-space height its
-// influence zone is centered on, so a player entering that zone from
-// roughly the same height still has some room to visibly fall the last
-// stretch under FaithfulGravity before landing — not snapped or teleported
-// onto it (see docs/ARCHITECTURE.md, "Support remains physical").
-const glm::vec3 kPlatformCenter(0.0f, -3.0f, 38.0f);
-const glm::vec3 kPlatformHalfExtents(12.0f, 1.0f, 12.0f);
-const glm::vec3 kPlatformColor(0.5f, 0.5f, 0.55f);
-constexpr float kPlatformFriction = 0.8f;
-constexpr float kPlatformRestitution = 0.1f;
+// Placed close enough to each planet's own surface (a real but modest
+// ~1m gap/step at each end, well inside normal walk/jump range) that the
+// player is never required to leap through open space to reach it — see
+// "Physics ownership" below for why that no longer matters as much as it
+// once did anyway.
+//
+// This plank has now been through TWO failed gravity-model attempts before
+// this one — see docs/ARCHITECTURE.md, "Gravity context ownership," for
+// the full retrospective on both. First, GravityResolver (Milestone 7-B's
+// falloff-weighted blend of every source within reach): a consumer beside
+// the plank, off its own travel path, felt an artificial sideways pull
+// toward the line connecting the two planets, because both planets'
+// RadicalGravity were sampled and blended from anywhere within their
+// (necessarily generous) falloff radii. Second, this file's own prior
+// GravityContextMap design: it fixed the OFF-path contamination (bounded
+// regions, never sampling a field outside its own domain) but still
+// blended the two planets' raw radial math together INSIDE an explicit
+// transition — so standing ON the plank's own surface, near its edges,
+// still tilted ~18-20 degrees toward the planets' shared axis. Both
+// attempts shared the same deeper mistake: treating the plank as empty
+// space where two planetary fields happen to overlap, rather than giving
+// it its own coherent local gravity.
+//
+// This build does the latter: the plank is its own plain gravity-context
+// region, using the EXISTING, unmodified FaithfulGravity — its hardcoded
+// (0,-9.81,0) already matches this axis-aligned, flat-topped box's own
+// surface normal exactly, with no new gravity implementation needed.
+// Gravity is now IDENTICAL everywhere on the plank's surface: not
+// approximately vertical, not tilted less than before -- exactly
+// (0,-9.81,0), full stop, the same way a real flat room's gravity doesn't
+// care how far you are from the wall. Crossing from a planet's own region
+// onto the plank's is a literal, instantaneous change in the sampled
+// value between one fixed step and the next; PlayerController's existing
+// rate-capped reorientation and continuous airborne velocity integration
+// (architectural law #14) already turn that into a smooth reorientation
+// over about a second, exactly as they always have -- no blending was
+// ever needed to keep the takeover smooth.
+const glm::vec3 kPlankCenter(0.0f, 17.0f, 27.5f);
+const glm::vec3 kPlankHalfExtents(6.0f, 1.0f, 20.0f);
+const glm::vec3 kPlankColor(0.55f, 0.5f, 0.4f);
+constexpr float kPlankFriction = 0.8f;
+constexpr float kPlankRestitution = 0.1f;
 
-// GravityResolver zone parameters (see docs/ARCHITECTURE.md, "Gravity
-// resolution" and "Transition semantics" for the full derivation,
-// including the two dead ends this replaced). Sized by simulating
-// GravityResolver's exact algorithm against the player's real jump speed
-// (5 m/s) and RadicalGravity's real 9.81 m/s^2 magnitude — not guessed:
-//
-// - A jump launched straight outward only ever reaches ~1.27m against
-//   undiminished 9.81 m/s^2 deceleration (v^2 = u^2 - 2*a*d), so *some*
-//   weakening of the sphere's own gravity within that reach is
-//   mathematically unavoidable for escape to be possible via an ordinary
-//   jump at all — no placement of the platform changes this, since
-//   FaithfulGravity's direction is always exactly -Y and can never have a
-//   component that assists outward (away-from-sphere-center) motion.
-// - That weakening must NOT be uniform across the whole sphere (measuring
-//   distance from the sphere's own center, kSphereCenter, does exactly
-//   that): reproduced directly — an ordinary standing jump taken at
-//   *spawn*, nowhere near the platform, escaped into the near-zero-gravity
-//   region and never came back down. So kSphereGravityZoneCenter is NOT
-//   kSphereCenter — it's a point 50m in -Z, far on the opposite side from
-//   the platform. RadicalGravity's own direction/magnitude still always
-//   comes from the sphere's true center (kSphereCenter) unchanged; only
-//   this zone's WEIGHT is measured from the offset point, which is what
-//   makes the falloff spatially localized to the departure/platform-facing
-//   region instead of affecting the entire sphere: verified directly that
-//   spawn, all four Milestone 7-A dynamic-object spawns, and the departure
-//   region's own antipode all remain at exactly full (1.0) weight, while
-//   only the vicinity of the departure point fades at all.
-// - The platform zone's own outer radius must NOT reach the sphere's true
-//   surface at the departure point, or the player's local-up starts
-//   tilting away from the sphere's true surface normal before they even
-//   leave the ground — which silently breaks the *grounded* check the
-//   jump itself depends on (a jump only ever begins while supported; see
-//   PlayerController::FixedUpdate), so the jump never fires at all.
-//
-// Verified (not just derived): jump speeds from 4.0 to 6.0 m/s all
-// successfully land on the platform; a spawn-area jump, far from the
-// departure point, now returns to the sphere exactly as it always has;
-// gravity at the platform's own surface remains exactly pure FaithfulGravity
-// — see docs/ARCHITECTURE.md, "Transition semantics," for the full numbers.
-// Falloff centers/radii are demo composition data, exactly like the
-// sphere/platform geometry above — GravityResolver itself has no idea any
-// of this corresponds to "a sphere" and "a platform," only points and
-// distances.
-const glm::vec3 kSphereGravityZoneCenter = kSphereCenter + glm::vec3(0.0f, 0.0f, -50.0f);
-constexpr float kSphereGravityZoneInnerRadius = 70.6f;
-constexpr float kSphereGravityZoneOuterRadius = 71.9f;
+// The plank's own gravity-context region: a BoxVolume padded a little
+// beyond its own collision box in every direction (vs kPlankHalfExtents),
+// so positions just above, beside, or past either end of the plank's
+// physical surface -- e.g. mid-jump -- are still claimed by IT rather than
+// falling through to a planet's region or into unclaimed (zero-gravity)
+// space. This region is registered BEFORE either planet's (see Run()) so
+// it wins deliberately within its own footprint even where it geometrically
+// overlaps a planet's own spherical region near the plank's ends --
+// GravityContextMap resolves an overlap by registration order, and this is
+// that mechanism used on purpose: the more specific region (the plank)
+// takes priority over the more general one (an entire planet) wherever
+// both could apply.
+const glm::vec3 kPlankGravityRegionHalfExtents(8.0f, 7.0f, 22.0f);
 
-const glm::vec3 kPlatformGravityZoneCenter = kPlatformCenter + glm::vec3(0.0f, kPlatformHalfExtents.y, 0.0f);
-constexpr float kPlatformGravityZoneInnerRadius = 8.0f;
-constexpr float kPlatformGravityZoneOuterRadius = 16.0f;
+// Each planet's own plain gravity-context region: a SphericalVolume
+// comfortably covering its own surface plus a margin for jumping a little
+// above it (26m vs a 20m planet radius), but well short of the 27.5m
+// halfway point to the other planet's center -- so the two planets' own
+// regions never overlap EACH OTHER (registration order only needs to
+// settle the plank-vs-planet overlap above; two same-kind regions
+// overlapping would have no principled winner, so this composition root
+// keeps that from happening at all).
+constexpr float kPlanetGravityRegionRadius = 26.0f;
 }  // namespace
 
 int Application::Run() {
@@ -227,7 +248,8 @@ int Application::Run() {
     const bool isTestRun = testScriptPath != nullptr;
 
     Window window;
-    if (!window.Init("Project Judas - Milestone 7-B", kWindowWidth, kWindowHeight, !isTestRun)) {
+    if (!window.Init("Project Judas - Milestone 7-Final", kWindowWidth, kWindowHeight,
+                      !isTestRun)) {
         std::fprintf(stderr, "Window initialization failed.\n");
         return 1;
     }
@@ -250,29 +272,38 @@ int Application::Run() {
     }
 
     // Application (the composition root) is the one place that knows which
-    // concrete gravity implementations exist and where each is active.
-    // Milestone 5 proved a consumer needs zero changes when the ONE active
-    // implementation changes; Milestone 7-B proves the same is true when
-    // MORE THAN ONE is simultaneously active and a consumer can move
-    // between them — GravityResolver (itself a GravityField, see
-    // src/GravityResolver.h and docs/ARCHITECTURE.md, "Gravity
-    // resolution") is the only new piece, and it's the only thing bound to
-    // `gravity` below. RadicalGravity/FaithfulGravity are constructed
-    // exactly as before and never touch each other or know a resolver
-    // exists.
-    RadicalGravity radicalGravity(kSphereCenter, kRadicalGravityMagnitude);
-    FaithfulGravity flatGravity;
-    GravityResolver gravityResolver;
-    gravityResolver.AddZone(radicalGravity, kSphereGravityZoneCenter, kSphereGravityZoneInnerRadius,
-                             kSphereGravityZoneOuterRadius);
-    gravityResolver.AddZone(flatGravity, kPlatformGravityZoneCenter, kPlatformGravityZoneInnerRadius,
-                             kPlatformGravityZoneOuterRadius);
-    GravityField& gravity = gravityResolver;
+    // concrete gravity implementations exist and where each has authority.
+    // Both worlds use the exact same RadicalGravity class, constructed
+    // twice with different centers — proof that neither planet is
+    // privileged by the architecture itself, only by which coordinates
+    // Application happens to hand it. The plank gets the existing,
+    // unmodified FaithfulGravity — its own coherent local context, not a
+    // blend of the two planets. GravityContextMap (see src/
+    // GravityContextMap.h, docs/ARCHITECTURE.md "Gravity context
+    // ownership") is, again, the only thing bound to `gravity` below;
+    // every consumer stays exactly as implementation-agnostic as Milestone
+    // 7-B already proved — none of this region wiring is visible past this
+    // function. The plank's region is registered FIRST so it deliberately
+    // wins over a planet's more general region within its own footprint
+    // (see the comment on kPlankGravityRegionHalfExtents above).
+    RadicalGravity planetAGravity(kPlanetACenter, kRadicalGravityMagnitude);
+    RadicalGravity planetBGravity(kPlanetBCenter, kRadicalGravityMagnitude);
+    FaithfulGravity plankGravity;
+    const BoxVolume plankGravityRegion(kPlankCenter, kPlankGravityRegionHalfExtents);
+    const SphericalVolume planetAGravityRegion(kPlanetACenter, kPlanetGravityRegionRadius);
+    const SphericalVolume planetBGravityRegion(kPlanetBCenter, kPlanetGravityRegionRadius);
+    GravityContextMap gravityContext;
+    gravityContext.AddRegion(plankGravity, plankGravityRegion);
+    gravityContext.AddRegion(planetAGravity, planetAGravityRegion);
+    gravityContext.AddRegion(planetBGravity, planetBGravityRegion);
+    GravityField& gravity = gravityContext;
 
-    const BodyHandle sphereBody = physicsWorld.CreateStaticSphere(
-        kSphereCenter, kSphereRadius, kSphereFriction, kSphereRestitution);
-    const BodyHandle platformBody = physicsWorld.CreateStaticBox(
-        kPlatformCenter, kPlatformHalfExtents, kPlatformFriction, kPlatformRestitution);
+    const BodyHandle planetABody = physicsWorld.CreateStaticSphere(
+        kPlanetACenter, kPlanetARadius, kPlanetFriction, kPlanetRestitution);
+    const BodyHandle planetBBody = physicsWorld.CreateStaticSphere(
+        kPlanetBCenter, kPlanetBRadius, kPlanetFriction, kPlanetRestitution);
+    const BodyHandle plankBody = physicsWorld.CreateStaticBox(
+        kPlankCenter, kPlankHalfExtents, kPlankFriction, kPlankRestitution);
 
     PlayerController player(kPlayerSpawnPosition, kPlayerSpawnYawDegrees);
     if (!player.Spawn(physicsWorld)) {
@@ -280,11 +311,11 @@ int Application::Run() {
         return 1;
     }
 
-    // Milestone 7-A: several ordinary Jolt dynamic bodies sharing the same
-    // GravityField the player uses — see docs/ARCHITECTURE.md, "Multiple
-    // gravity consumers." Created here (composition root), not inside
-    // PlayerController or DynamicBody, exactly like the static sphere
-    // above.
+    // Milestone 7-A/7-Final: several ordinary Jolt dynamic bodies sharing
+    // the same GravityField the player uses — see docs/ARCHITECTURE.md,
+    // "Multiple gravity consumers." Created here (composition root), not
+    // inside PlayerController or DynamicBody, exactly like the static
+    // planets above.
     std::vector<DynamicBody> dynamicBodies = SpawnDynamicObjects(physicsWorld);
 
     // Shared between the normal interactive loop and the test harness, so
@@ -293,14 +324,15 @@ int Application::Run() {
     // player's rendered box between its previous and current fixed-step
     // pose — see docs/ARCHITECTURE.md, "Simulation/presentation boundary"
     // — the same value passed to PlayerController::GetViewMatrix so the
-    // camera and the player box always move in visual lockstep. The sphere
-    // is static and never interpolated; it has no "previous" pose to blend
-    // from. Dynamic bodies use the exact same alpha via DynamicBody's own
-    // GetPresentedPosition/Orientation.
+    // camera and the player box always move in visual lockstep. Both
+    // planets are static and never interpolated; neither has a "previous"
+    // pose to blend from. The plank is likewise static. Dynamic bodies use
+    // the exact same alpha via DynamicBody's own GetPresentedPosition/
+    // Orientation.
     const auto drawScene = [&](Renderer& r, float presentationAlpha) {
-        r.DrawSphere(kSphereCenter, kSphereRadius, kSphereColor);
-        r.DrawBox(kPlatformCenter, glm::quat(1.0f, 0.0f, 0.0f, 0.0f), kPlatformHalfExtents,
-                  kPlatformColor);
+        r.DrawSphere(kPlanetACenter, kPlanetARadius, kPlanetAColor);
+        r.DrawSphere(kPlanetBCenter, kPlanetBRadius, kPlanetBColor);
+        r.DrawBox(kPlankCenter, glm::quat(1.0f, 0.0f, 0.0f, 0.0f), kPlankHalfExtents, kPlankColor);
         r.DrawBox(player.GetPresentedPosition(presentationAlpha),
                   player.GetPresentedOrientation(presentationAlpha), player.GetRenderHalfExtents(),
                   kPlayerColor);
@@ -326,6 +358,23 @@ int Application::Run() {
 
         const Uint64 frequency = SDL_GetPerformanceFrequency();
         Uint64 previousCounter = SDL_GetPerformanceCounter();
+
+        // Opt-in live telemetry for the INTERACTIVE loop — distinct from
+        // JUDAS_TEST_SCRIPT, which replaces real input entirely. This lets
+        // a human play with the real window/keyboard/mouse while position,
+        // orientation, and the actual look/viewpoint direction stream to
+        // stdout for direct inspection, without affecting ordinary play
+        // when unset. Throttled (not every frame) since 60Hz would flood
+        // whatever's reading it.
+        const bool liveTelemetryEnabled = std::getenv("JUDAS_LIVE_TELEMETRY") != nullptr;
+        constexpr int kLiveTelemetryFrameInterval = 10;
+        int liveTelemetryFrameCounter = 0;
+        if (liveTelemetryEnabled) {
+            std::printf(
+                "frame,posX,posY,posZ,upX,upY,upZ,yaw,pitch,lookX,lookY,lookZ,grounded,velX,velY,"
+                "velZ,gravX,gravY,gravZ\n");
+            std::fflush(stdout);
+        }
 
         while (!window.ShouldClose()) {
             window.PollEvents();
@@ -377,6 +426,20 @@ int Application::Run() {
                 physicsAccumulator = 0.0f;
             }
 
+            if (liveTelemetryEnabled && (liveTelemetryFrameCounter++ % kLiveTelemetryFrameInterval) == 0) {
+                const glm::vec3 pos = player.GetPosition();
+                const glm::vec3 up = player.GetOrientation() * glm::vec3(0.0f, 1.0f, 0.0f);
+                const glm::vec3 look = player.GetLookDirection();
+                const glm::vec3 vel = player.GetVelocity();
+                const glm::vec3 grav = gravity.Sample(pos);
+                std::printf("%d,%.3f,%.3f,%.3f,%.3f,%.3f,%.3f,%.2f,%.2f,%.3f,%.3f,%.3f,%d,%.3f,%.3f,"
+                            "%.3f,%.3f,%.3f,%.3f\n",
+                            liveTelemetryFrameCounter, pos.x, pos.y, pos.z, up.x, up.y, up.z,
+                            player.GetYaw(), player.GetPitch(), look.x, look.y, look.z,
+                            player.IsGrounded() ? 1 : 0, vel.x, vel.y, vel.z, grav.x, grav.y, grav.z);
+                std::fflush(stdout);
+            }
+
             // How far real time has progressed into an as-yet-unsimulated
             // fixed step, as a fraction of one step — the presentation
             // interpolation factor. See docs/ARCHITECTURE.md, "Diagnosis"
@@ -407,8 +470,9 @@ int Application::Run() {
     for (const DynamicBody& body : dynamicBodies) {
         physicsWorld.DestroyBody(body.Handle());
     }
-    physicsWorld.DestroyBody(sphereBody);
-    physicsWorld.DestroyBody(platformBody);
+    physicsWorld.DestroyBody(planetABody);
+    physicsWorld.DestroyBody(planetBBody);
+    physicsWorld.DestroyBody(plankBody);
     physicsWorld.Shutdown();
     renderer.Shutdown();
     return exitCode;
