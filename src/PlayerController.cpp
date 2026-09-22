@@ -8,6 +8,7 @@
 
 #include "GravityField.h"
 #include "PhysicsWorld.h"
+#include "StepClimb.h"
 #include "Window.h"
 
 namespace {
@@ -19,6 +20,36 @@ constexpr float kCapsuleHalfHeight = 0.6f;    // total capsule height: 1.8m
 constexpr float kEyeHeightAboveCenter = 0.7f;
 constexpr float kMoveSpeed = 4.0f;            // m/s, walking pace
 constexpr float kJumpSpeed = 5.0f;            // m/s, imparted opposite the sampled gravity direction
+
+// Milestone 10: ground acceleration/deceleration model. Replaces the old
+// instant "snap to desired tangential velocity" with a clamped-delta
+// approach — the standard, simplest way to get smooth accel/decel with
+// deliberate (not merely friction-shaped) direction reversal: reversing
+// direction needs a delta of up to 2*kMoveSpeed, capped by the same rate
+// as an ordinary stop, so it takes longer than accelerating from rest,
+// exactly the "brake, then go the other way" feel a responsive controller
+// should have. kGroundDeceleration is higher than kGroundAcceleration
+// deliberately — stopping/reversing reads as snappier than getting up to
+// speed, matching most conventional character controllers.
+constexpr float kGroundAcceleration = 20.0f;   // m/s^2; reaches kMoveSpeed from rest in 0.2s
+constexpr float kGroundDeceleration = 28.0f;   // m/s^2; stops from kMoveSpeed in ~0.14s
+
+// Milestone 10: modest, momentum-preserving air control. Never replaces
+// the airborne velocity vector (see "Velocity continuity while airborne,"
+// unchanged) — only ever adds a small nudge toward kMoveSpeed in the
+// current input direction, and only up to kMoveSpeed's worth of speed IN
+// that direction specifically; existing momentum already exceeding that
+// (e.g. a fast jump-and-coast) is never reduced. The classic bounded
+// "air-accelerate" shape, not a full ground-style acceleration model.
+constexpr float kAirAcceleration = 8.0f;  // m/s^2
+
+// Milestone 10: automatic step-up/step-down (see src/StepClimb.h). Chosen
+// generously enough to comfortably clear the flying primitive's own edge
+// (its full box height is 0.5m — see Application.cpp's
+// kFlyingPrimitiveHalfExtents — so it becomes naturally boardable while
+// walking, per the brief) while staying well short of anything that should
+// still require a jump.
+constexpr float kMaxStepHeight = 0.55f;
 
 // Mouse look, matching Milestones 2-4.
 constexpr float kMouseSensitivity = 0.12f;  // degrees per pixel of mouse motion
@@ -162,8 +193,8 @@ void PlayerController::UpdateFrameOrientation(const glm::vec3& localUp, float fi
     m_frameOrientation = glm::normalize(delta * m_frameOrientation);
 }
 
-glm::vec3 PlayerController::ComputeTangentVelocity(const Window& window,
-                                                    const glm::vec3& localUp) const {
+glm::vec3 PlayerController::ComputeInputDirection(const Window& window,
+                                                   const glm::vec3& localUp) const {
     // The look-relative reference frame, yawed by mouse input but not
     // pitched — so looking up/down doesn't tilt ground movement off the
     // tangent plane. This mirrors Milestone 4's "flat forward," now
@@ -183,7 +214,7 @@ glm::vec3 PlayerController::ComputeTangentVelocity(const Window& window,
     if (glm::length(direction) > 0.0f) {
         direction = glm::normalize(direction);
     }
-    return direction * kMoveSpeed;
+    return direction;  // normalized, or exactly zero if nothing is held
 }
 
 void PlayerController::FixedUpdate(const Window& window, PhysicsWorld& physics,
@@ -195,6 +226,15 @@ void PlayerController::FixedUpdate(const Window& window, PhysicsWorld& physics,
     // nothing that affects the authoritative computation below.
     m_previousPosition = m_position;
     m_previousOrientation = m_frameOrientation;
+
+    // Milestone 10: snapshot of the velocity/ground-velocity as of the END
+    // of the PREVIOUS step, captured before anything below overwrites
+    // them — the acceleration/deceleration model needs "what was my own
+    // tangential velocity a moment ago" (see the grounded branch below),
+    // the same way `wasAscending` already needed "what was m_lastGroundVelocity
+    // a moment ago" for its own, unrelated purpose.
+    const glm::vec3 previousVelocity = m_velocity;
+    const glm::vec3 previousGroundVelocity = m_lastGroundVelocity;
 
     const glm::vec3 acceleration = gravity.Sample(m_position);
     const glm::vec3 localUp = ComputeLocalUp(acceleration);
@@ -230,10 +270,43 @@ void PlayerController::FixedUpdate(const Window& window, PhysicsWorld& physics,
     // "Milestone 8" — this is the moving-support interaction the brief
     // called out as the most important technical test here.
     const bool wasAscending = glm::dot(m_velocity - m_lastGroundVelocity, localUp) > 0.0f;
-    const ShapeSweepHit groundHit =
+    ShapeSweepHit groundHit =
         physics.SweepPlayerShape(m_position, m_frameOrientation, -localUp * kGroundProbeDistance);
-    const bool isGrounded =
+    bool isGrounded =
         !wasAscending && groundHit.hit && glm::dot(groundHit.normal, localUp) > kMinGroundDot;
+
+    // Milestone 10: step-down. The ordinary ground probe above only reaches
+    // kGroundProbeDistance (0.15m) — enough to keep catching a surface
+    // while standing still or walking on it, but a genuine step-down (a
+    // stair's riser height, a low ledge) is taller than that. Without this,
+    // walking off such a step would make the player fall airborne for a
+    // step or two before gravity brings them back down onto the lower
+    // surface — a small stutter rather than "walking down naturally." Only
+    // attempted as a fallback (the short probe found nothing) and only
+    // while the player was actually walking a moment ago (m_lastGrounded)
+    // and isn't mid-jump (wasAscending) — a genuine drop taller than
+    // kMaxStepHeight still free-falls exactly as it always has. See
+    // src/StepClimb.h; this reaches no further than kGroundProbeDistance's
+    // own ordinary check would ever need to for a player that's still on
+    // the ground, so it changes nothing about jump timing or ascent
+    // detection — TryStepDown physically moves the player onto the found
+    // floor, the same "operate relative to localUp, not world Y" contract
+    // as every other position update in this function.
+    if (!isGrounded && !wasAscending && m_lastGrounded) {
+        glm::vec3 steppedDownPosition;
+        glm::vec3 steppedDownNormal;
+        BodyHandle steppedDownBody;
+        if (TryStepDown(physics, m_position, m_frameOrientation, localUp, kMaxStepHeight,
+                         kMinGroundDot, kSkinMargin, steppedDownPosition, steppedDownNormal,
+                         steppedDownBody)) {
+            m_position = steppedDownPosition;
+            groundHit.hit = true;
+            groundHit.normal = steppedDownNormal;
+            groundHit.distance = 0.0f;
+            groundHit.hitBody = steppedDownBody;
+            isGrounded = true;
+        }
+    }
     m_lastGrounded = isGrounded;
     m_lastGroundHitBody = groundHit.hitBody;
 
@@ -278,40 +351,99 @@ void PlayerController::FixedUpdate(const Window& window, PhysicsWorld& physics,
     // request is cleared unconditionally below: a jump attempt made while
     // airborne is discarded, not buffered until landing (and so is one made
     // while `inputEnabled` is false — see FixedUpdate's own doc comment).
+    // `jumpedThisStep` (Milestone 10) is read below to skip the step-up
+    // attempt on a step that's actually a jump launch — see there.
+    bool jumpedThisStep = false;
     if (isGrounded) {
-        // Grounded: instant, WASD-driven horizontal control — unchanged
-        // since Milestone 4, so direction changes feel immediate, never a
-        // build-up/carry-over. Vertical speed is held at (near) zero plus
-        // the same small per-step gravity nudge that's always been here
-        // (what keeps the player glued to a curved surface between
-        // steps — see "Locomotion," "Contact normal correctness"); a
-        // jump overrides it outright. `groundVelocity` (zero on ordinary
-        // static ground) is added on top either way, so standing still on
-        // a moving support still means moving with it, and jumping from
-        // one launches relative to it rather than replacing its motion.
-        const glm::vec3 horizontalVelocity =
-            inputEnabled ? ComputeTangentVelocity(window, localUp) : glm::vec3(0.0f);
+        // Milestone 10: smooth acceleration/deceleration, replacing the old
+        // instant "snap to desired tangential velocity" — see the
+        // kGroundAcceleration/kGroundDeceleration constants' own comment
+        // for the reasoning. `previousTangentVelocity` is the player's OWN
+        // velocity (i.e. relative to whatever it was standing on) as of
+        // the end of the previous step — deliberately excludes
+        // `previousGroundVelocity` (last step's moving-support carry) so a
+        // support's own motion is never treated as something the player
+        // needs to "decelerate out of"; standing still on a fast-moving
+        // support still reads as zero input-driven velocity, exactly as
+        // before this milestone.
+        const glm::vec3 previousRelativeVelocity = previousVelocity - previousGroundVelocity;
+        const glm::vec3 previousTangentVelocity =
+            previousRelativeVelocity - localUp * glm::dot(previousRelativeVelocity, localUp);
+
+        const glm::vec3 desiredDirection =
+            inputEnabled ? ComputeInputDirection(window, localUp) : glm::vec3(0.0f);
+        const glm::vec3 desiredTangentVelocity = desiredDirection * kMoveSpeed;
+
+        const glm::vec3 velocityDelta = desiredTangentVelocity - previousTangentVelocity;
+        const float deltaLength = glm::length(velocityDelta);
+        // Deceleration (the higher-magnitude, snappier rate) applies
+        // whenever there's no input, OR the input direction actively
+        // opposes the player's own current motion (a deliberate direction
+        // reversal — see the constants' own comment); acceleration
+        // otherwise (speeding up toward, or continuing in roughly, the
+        // same direction already being moved in).
+        const bool hasInput = glm::length(desiredDirection) > 1.0e-6f;
+        const bool reversing = hasInput && glm::dot(previousTangentVelocity, desiredDirection) < 0.0f;
+        const float accelerationRate =
+            (!hasInput || reversing) ? kGroundDeceleration : kGroundAcceleration;
+        const float maxDelta = accelerationRate * fixedDeltaTime;
+
+        const glm::vec3 newTangentVelocity = deltaLength <= maxDelta
+                                                  ? desiredTangentVelocity
+                                                  : previousTangentVelocity +
+                                                        (velocityDelta / deltaLength) * maxDelta;
+
+        // Vertical speed is held at (near) zero plus the same small
+        // per-step gravity nudge that's always been here (what keeps the
+        // player glued to a curved surface between steps — see
+        // "Locomotion," "Contact normal correctness"); a jump overrides it
+        // outright — unchanged since Milestone 4/7-B, jumping stays
+        // instant, only ordinary ground movement is now smoothed.
+        // `groundVelocity` (zero on ordinary static ground) is added on
+        // top either way, so standing still on a moving support still
+        // means moving with it, and jumping from one launches relative to
+        // it rather than replacing its motion.
         float verticalSpeed = glm::dot(acceleration, localUp) * fixedDeltaTime;
         if (inputEnabled && m_jumpRequested) {
             verticalSpeed = kJumpSpeed;
+            jumpedThisStep = true;
         }
-        m_velocity = horizontalVelocity + localUp * verticalSpeed + groundVelocity;
+        m_velocity = newTangentVelocity + localUp * verticalSpeed + groundVelocity;
     } else {
         // Airborne: ordinary integration of the FULL velocity vector —
-        // not just its component along localUp, and WASD input is not
-        // consulted at all. Milestone 7-B, "Velocity continuity": once
-        // effective gravity can rotate substantially while airborne (a
-        // gravity-context transition crossed mid-flight — the entire
-        // point of this milestone), recomputing "horizontal" velocity
-        // fresh from current WASD input every step (as the grounded
-        // branch correctly does) would silently discard whatever part of
-        // the player's existing momentum had become "tangential" to
-        // gravity's new direction — exactly the kind of arbitrary
-        // velocity destruction the brief forbids. Every previous
-        // milestone's gravity direction changed slowly enough in the air
-        // (a normal jump's brief arc) that this was never visible. See
+        // not just its component along localUp. Milestone 7-B, "Velocity
+        // continuity": once effective gravity can rotate substantially
+        // while airborne (a gravity-context transition crossed mid-flight
+        // — the entire point of that milestone), recomputing "horizontal"
+        // velocity fresh from current WASD input every step (as the
+        // grounded branch correctly does) would silently discard whatever
+        // part of the player's existing momentum had become "tangential"
+        // to gravity's new direction — exactly the kind of arbitrary
+        // velocity destruction the brief forbids. Every previous milestone's
+        // gravity direction changed slowly enough in the air (a normal
+        // jump's brief arc) that this was never visible. See
         // docs/ARCHITECTURE.md, "Velocity continuity."
         m_velocity += acceleration * fixedDeltaTime;
+
+        // Milestone 10: modest air control, added ON TOP of the existing
+        // momentum above — never a replacement, never a reconstruction
+        // from scratch (see kAirAcceleration's own comment). Only ever
+        // pushes the TANGENTIAL (perpendicular to localUp) component of
+        // velocity up to kMoveSpeed in the current input direction; a
+        // component already exceeding that (e.g. a fast jump-and-coast
+        // still carrying real speed) is left completely alone.
+        if (inputEnabled) {
+            const glm::vec3 desiredDirection = ComputeInputDirection(window, localUp);
+            if (glm::length(desiredDirection) > 1.0e-6f) {
+                const glm::vec3 tangentVelocity = m_velocity - localUp * glm::dot(m_velocity, localUp);
+                const float speedInDesiredDirection = glm::dot(tangentVelocity, desiredDirection);
+                if (speedInDesiredDirection < kMoveSpeed) {
+                    const float accelAmount = std::min(kAirAcceleration * fixedDeltaTime,
+                                                        kMoveSpeed - speedInDesiredDirection);
+                    m_velocity += desiredDirection * accelAmount;
+                }
+            }
+        }
     }
     m_jumpRequested = false;
 
@@ -325,6 +457,28 @@ void PlayerController::FixedUpdate(const Window& window, PhysicsWorld& physics,
     // airborne, groundVelocity is exactly zero, so this is unchanged from
     // every milestone before this one.
     glm::vec3 remaining = (m_velocity - groundVelocity) * fixedDeltaTime;
+
+    // Milestone 10: step-up, tried once with the FULL remaining
+    // displacement before ordinary move-and-slide runs at all. Only
+    // attempted while grounded (stepping is a walking concept, not
+    // something that should intercept a jump's own launch or any airborne
+    // movement) and not on the very step a jump is launched (a jump's own
+    // upward velocity component would otherwise feed into the same
+    // sweeps and could be misread as "stepping"). See src/StepClimb.h for
+    // the actual up/forward/down sweep sequence — this function returns
+    // false (leaving `remaining` and `m_position` untouched) for ordinary
+    // flat ground, slopes (handled entirely by the unchanged move-and-slide
+    // loop below), and anything taller than kMaxStepHeight, so this is a
+    // pure addition with no effect on any pre-existing movement case.
+    if (isGrounded && !jumpedThisStep) {
+        glm::vec3 steppedPosition;
+        if (TryStepMove(physics, m_position, m_frameOrientation, localUp, remaining, kMaxStepHeight,
+                         kMinGroundDot, kSkinMargin, steppedPosition)) {
+            m_position = steppedPosition;
+            remaining = glm::vec3(0.0f);
+        }
+    }
+
     for (int i = 0; i < kMaxSlideIterations; ++i) {
         const float remainingLength = glm::length(remaining);
         if (remainingLength < 1.0e-6f) break;

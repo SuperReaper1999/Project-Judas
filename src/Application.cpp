@@ -3,6 +3,7 @@
 #include <SDL2/SDL.h>
 
 #include <algorithm>
+#include <cmath>
 #include <cstdio>
 #include <cstdlib>
 #include <iterator>
@@ -10,6 +11,7 @@
 #include <vector>
 
 #include <glm/glm.hpp>
+#include <glm/gtc/constants.hpp>
 #include <glm/gtc/quaternion.hpp>
 
 #include "BoxVolume.h"
@@ -97,6 +99,30 @@ const glm::vec3 kSphereObjectColor(0.9f, 0.8f, 0.2f);
 glm::vec3 PointAboveSphere(const glm::vec3& center, float radius, const glm::vec3& direction,
                             float heightAboveSurface) {
     return center + glm::normalize(direction) * (radius + heightAboveSurface);
+}
+
+// Milestone 10: the shortest-arc rotation that takes world +Y to an
+// arbitrary target direction — used only to ORIENT demo geometry (steps,
+// a ramp) so their own local "up" matches wherever local gravity actually
+// points at the spot they're placed, e.g. a bearing on the curved sphere
+// far from its pole, where that's nothing like world +Y. Demo-authoring
+// convenience only, deliberately re-derived here rather than shared with
+// PlayerController.cpp's own identical-shaped RotationBetweenUnitVectors —
+// that one is Judas's own runtime gravity-orientation logic; this one is
+// composition-root placement math for hand-authored static geometry, the
+// same category PointAboveSphere above already is.
+glm::quat RotationAligningUpTo(const glm::vec3& targetUp) {
+    const glm::vec3 from(0.0f, 1.0f, 0.0f);
+    const glm::vec3 to = glm::normalize(targetUp);
+    const float d = glm::clamp(glm::dot(from, to), -1.0f, 1.0f);
+    if (d > 0.9999f) return glm::quat(1.0f, 0.0f, 0.0f, 0.0f);
+    if (d < -0.9999f) {
+        const glm::vec3 axis = std::abs(from.x) < 0.9f ? glm::cross(from, glm::vec3(1.0f, 0.0f, 0.0f))
+                                                        : glm::cross(from, glm::vec3(0.0f, 1.0f, 0.0f));
+        return glm::angleAxis(glm::pi<float>(), glm::normalize(axis));
+    }
+    const glm::vec3 axis = glm::normalize(glm::cross(from, to));
+    return glm::angleAxis(std::acos(d), axis);
 }
 
 struct DynamicObjectSpawn {
@@ -306,6 +332,107 @@ const char* const kBeaconTexturePath = "assets/textures/beacon.png";
 const glm::vec3 kLightDirection = glm::normalize(glm::vec3(0.4f, 0.7f, 0.35f));
 const glm::vec3 kLightColor(1.0f, 0.98f, 0.92f);
 const glm::vec3 kAmbientColor(0.16f, 0.17f, 0.19f);
+
+// --- Milestone 10: step/slope test geometry ---
+//
+// A small staircase and one ramp, both placed on Planet A a short walk
+// from spawn but at a bearing measurably off its exact pole — see
+// docs/ARCHITECTURE.md, "Milestone 10" — deliberately NOT at the pole
+// itself (where local radial "up" exactly coincides with world +Y and
+// would silently hide any accidental world-Y assumption in the step-climb
+// code), and deliberately not placed FAR off the pole either: an easy,
+// short, reliably-aimable walk from spawn matters for a human tester
+// actually finding and trying these — see "Milestone 10" for the
+// standalone unit tests (tests/StepClimbTests.cpp) that separately verify
+// the step-climb primitives themselves under a much more extreme rotation
+// than this demo placement bothers with. Both pieces use
+// RotationAligningUpTo so each one's own local "up" matches the actual
+// radial direction at its bearing, the same way a real object resting on
+// a sphere would need to.
+//
+// The staircase: kStepCount steps, each riser comfortably under
+// PlayerController's own kMaxStepHeight (0.55m) so it's climbable purely
+// by walking into it, no jump — the main point of this milestone. Each
+// step is a full "pillar" from the planet's surface up to its own top
+// (rather than separate floating risers+treads), so there's no gap
+// between consecutive steps for a sweep to fall through.
+constexpr float kStepRise = 0.3f;
+constexpr float kStepRun = 0.7f;
+constexpr float kStepHalfWidth = 1.0f;
+constexpr int kStepCount = 4;
+const glm::vec3 kStaircaseColor(0.5f, 0.45f, 0.55f);
+// Zero X component deliberately: this sits exactly along the player's own
+// default spawn-facing direction (yaw 180 -> +Z, see kPlayerSpawnYawDegrees)
+// tilted toward Planet A's own local "forward," so a plain W-hold from
+// spawn walks straight into it with no turn needed — reachable by
+// accident on the way to the plank, not just by deliberate aiming.
+const glm::vec3 kStaircaseBearing = glm::normalize(glm::vec3(0.0f, 0.95f, 0.3f));
+constexpr float kStaircaseFriction = 0.8f;
+constexpr float kStaircaseRestitution = 0.0f;
+
+// The ramp: one long, shallow-angled box (kRampTiltDegrees from the local
+// surface normal — comfortably under the ~50-degree walkable-slope limit,
+// PlayerController.cpp's own kMinGroundDot), tilted about its own local
+// tangent "right" axis so it reads as an ordinary incline rather than a
+// step at all — proving slopes remain collision-derived and gravity-
+// relative under an arbitrary local frame, not merely "still work on the
+// one sphere direction already exercised by the main traversal path."
+const glm::vec3 kRampHalfExtents(1.5f, 0.15f, 2.5f);
+const glm::vec3 kRampColor(0.45f, 0.5f, 0.55f);
+const glm::vec3 kRampBearing = glm::normalize(glm::vec3(-0.35f, 0.9f, 0.25f));
+constexpr float kRampTiltDegrees = 25.0f;
+constexpr float kRampFriction = 0.8f;
+constexpr float kRampRestitution = 0.0f;
+
+// A static body whose position/rotation/half-extents/color are already
+// fully known at spawn time (nothing about it ever moves) — the same
+// reasoning the planets/plank already rely on to draw themselves from
+// their own authored constants rather than querying
+// PhysicsWorld::GetTransform every frame for a transform that can never
+// change. Just enough to draw and, at shutdown, destroy each one.
+struct StaticTestBody {
+    BodyHandle handle;
+    glm::vec3 position;
+    glm::quat rotation;
+    glm::vec3 halfExtents;
+    glm::vec3 color;
+};
+
+// Builds the staircase's `kStepCount` static boxes and the one ramp box.
+// Demo-authoring geometry only — none of this is visible to
+// PlayerController, which only ever sees the resulting collision shapes
+// through ordinary SweepPlayerShape queries, exactly like every other
+// piece of static world geometry.
+std::vector<StaticTestBody> SpawnStepTestGeometry(PhysicsWorld& physics) {
+    std::vector<StaticTestBody> bodies;
+
+    const glm::vec3 baseSurfacePoint =
+        PointAboveSphere(kPlanetACenter, kPlanetARadius, kStaircaseBearing, 0.0f);
+    const glm::quat staircaseRotation = RotationAligningUpTo(kStaircaseBearing);
+    const glm::vec3 climbDirection = glm::normalize(staircaseRotation * glm::vec3(0.0f, 0.0f, 1.0f));
+
+    for (int i = 0; i < kStepCount; ++i) {
+        const float topHeight = static_cast<float>(i + 1) * kStepRise;
+        const glm::vec3 center = baseSurfacePoint + kStaircaseBearing * (topHeight * 0.5f) +
+                                  climbDirection * (static_cast<float>(i) * kStepRun + kStepRun * 0.5f);
+        const glm::vec3 halfExtents(kStepHalfWidth, topHeight * 0.5f, kStepRun * 0.5f);
+        const BodyHandle handle = physics.CreateStaticBox(center, staircaseRotation, halfExtents,
+                                                            kStaircaseFriction, kStaircaseRestitution);
+        bodies.push_back({handle, center, staircaseRotation, halfExtents, kStaircaseColor});
+    }
+
+    const glm::quat rampBaseRotation = RotationAligningUpTo(kRampBearing);
+    const glm::vec3 rampRight = rampBaseRotation * glm::vec3(1.0f, 0.0f, 0.0f);
+    const glm::quat rampRotation =
+        glm::angleAxis(glm::radians(kRampTiltDegrees), rampRight) * rampBaseRotation;
+    const glm::vec3 rampCenter =
+        PointAboveSphere(kPlanetACenter, kPlanetARadius, kRampBearing, kRampHalfExtents.y);
+    const BodyHandle rampHandle = physics.CreateStaticBox(rampCenter, rampRotation, kRampHalfExtents,
+                                                            kRampFriction, kRampRestitution);
+    bodies.push_back({rampHandle, rampCenter, rampRotation, kRampHalfExtents, kRampColor});
+
+    return bodies;
+}
 }  // namespace
 
 int Application::Run() {
@@ -398,6 +525,11 @@ int Application::Run() {
     const BodyHandle plankBody = physicsWorld.CreateStaticBox(
         kPlankCenter, kPlankHalfExtents, kPlankFriction, kPlankRestitution);
 
+    // Milestone 10: the staircase + ramp step/slope test geometry — see
+    // SpawnStepTestGeometry's own comment and docs/ARCHITECTURE.md,
+    // "Milestone 10."
+    const std::vector<StaticTestBody> stepTestBodies = SpawnStepTestGeometry(physicsWorld);
+
     PlayerController player(kPlayerSpawnPosition, kPlayerSpawnYawDegrees);
     if (!player.Spawn(physicsWorld)) {
         std::fprintf(stderr, "Player spawn failed.\n");
@@ -447,6 +579,11 @@ int Application::Run() {
         r.DrawSphere(kPlanetACenter, kPlanetARadius, kPlanetAColor);
         r.DrawSphere(kPlanetBCenter, kPlanetBRadius, kPlanetBColor);
         r.DrawBox(kPlankCenter, glm::quat(1.0f, 0.0f, 0.0f, 0.0f), kPlankHalfExtents, kPlankColor);
+        // Milestone 10: the staircase + ramp — static, drawn from their own
+        // authored transforms exactly like the plank above.
+        for (const StaticTestBody& body : stepTestBodies) {
+            r.DrawBox(body.position, body.rotation, body.halfExtents, body.color);
+        }
         // Milestone 9: the one imported, textured, lit model in this demo —
         // static, undressed by any physics transform (see kBeaconPosition's
         // own comment). A white tint so the texture's own colors show
@@ -624,6 +761,9 @@ int Application::Run() {
     player.Destroy(physicsWorld);
     for (const DynamicBody& body : dynamicBodies) {
         physicsWorld.DestroyBody(body.Handle());
+    }
+    for (const StaticTestBody& body : stepTestBodies) {
+        physicsWorld.DestroyBody(body.handle);
     }
     physicsWorld.DestroyBody(planetABody);
     physicsWorld.DestroyBody(planetBBody);

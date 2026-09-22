@@ -54,9 +54,13 @@ public:
     // via a geometry query (never a height comparison), integrates
     // gravity/jump into vertical velocity, combines it with WASD's
     // tangent-plane movement intent, and resolves the resulting
-    // displacement against collision via a minimal move-and-slide loop.
-    // Also records the pre-step position/orientation as the interpolation
-    // baseline for presentation — see GetPresentedPosition/Orientation.
+    // displacement against collision via a minimal move-and-slide loop —
+    // as of Milestone 10, with a small acceleration/deceleration model on
+    // the ground, modest momentum-preserving air control while airborne,
+    // and an automatic step-up/step-down pass (src/StepClimb.h) tried
+    // before ordinary sliding. Also records the pre-step position/
+    // orientation as the interpolation baseline for presentation — see
+    // GetPresentedPosition/Orientation.
     // `inputEnabled` (Milestone 8, default true): when false, WASD/jump are
     // ignored — the player still runs gravity, support detection,
     // moving-support velocity carry (see below), and collision-aware
@@ -144,7 +148,12 @@ public:
 private:
     glm::vec3 ComputeLocalUp(const glm::vec3& gravityAcceleration) const;
     void UpdateFrameOrientation(const glm::vec3& localUp, float fixedDeltaTime);
-    glm::vec3 ComputeTangentVelocity(const Window& window, const glm::vec3& localUp) const;
+    // Milestone 10: renamed from ComputeTangentVelocity — now returns a
+    // normalized (or zero) DIRECTION only, not a speed-scaled velocity, so
+    // both the grounded acceleration model and the airborne air-control
+    // addition can each apply their own speed/acceleration constant to the
+    // same underlying input direction. See FixedUpdate.
+    glm::vec3 ComputeInputDirection(const Window& window, const glm::vec3& localUp) const;
     glm::mat4 BuildViewMatrix(const glm::vec3& position, const glm::quat& orientation) const;
 
     // Judas-owned player state. None of this is a physics-engine body.

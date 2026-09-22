@@ -172,8 +172,15 @@ void PhysicsWorld::Shutdown() {
 
 BodyHandle PhysicsWorld::CreateStaticBox(const glm::vec3& position, const glm::vec3& halfExtents,
                                           float friction, float restitution) {
-    return m_impl->AddBody(Shape::Box(halfExtents), position, glm::quat(1.0f, 0.0f, 0.0f, 0.0f),
-                            false, 0.0f, friction, restitution);
+    return CreateStaticBox(position, glm::quat(1.0f, 0.0f, 0.0f, 0.0f), halfExtents, friction,
+                            restitution);
+}
+
+BodyHandle PhysicsWorld::CreateStaticBox(const glm::vec3& position, const glm::quat& rotation,
+                                          const glm::vec3& halfExtents, float friction,
+                                          float restitution) {
+    return m_impl->AddBody(Shape::Box(halfExtents), position, rotation, false, 0.0f, friction,
+                            restitution);
 }
 
 BodyHandle PhysicsWorld::CreateStaticSphere(const glm::vec3& position, float radius,

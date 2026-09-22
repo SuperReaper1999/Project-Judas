@@ -6,7 +6,7 @@ someone with no prior context on this project. It is updated in place as
 milestones land, rather than kept as a per-milestone snapshot — see
 "Milestone history" below for how to recover an earlier milestone exactly.
 
-## What exists right now (Milestone 9)
+## What exists right now (Milestone 10)
 
 Open a window. Two independent static spheres ("planets," radius `20m`
 each, centers `55m` apart — see "Physics test world") exist in 3D space,
@@ -74,7 +74,20 @@ the existing primitive boxes/spheres, now carries real surface normals and
 is shaded by one small ambient term plus one directional light — nothing
 about lighting derives from gravity, local up, or any other Judas concept
 (the light is a plain world-space direction, same as any other; see
-"Milestone 9" below). See the root `README.md` for build/run instructions
+"Milestone 9" below).
+
+**As of Milestone 10, ordinary locomotion is deliberately playable rather
+than merely functionally correct.** Ground movement accelerates and
+decelerates smoothly instead of snapping instantly to a desired velocity;
+a modest, momentum-preserving air control lets input nudge the player
+while airborne; a small staircase and one ramp were added to Planet A
+(a short walk from spawn) to prove the player can climb and descend
+ordinary steps by walking into them, no jump required — the same
+mechanism that also makes the flying primitive's own low edge naturally
+boardable now. All of it is expressed purely relative to the player's own
+local gravity/support frame; see "Milestone 10" below for the full design,
+including a real edge-case bug found and fixed while building the
+step-climb primitive. See the root `README.md` for build/run instructions
 and controls.
 
 ## Milestone history
@@ -140,6 +153,16 @@ preserved as parallel runtime code:
   capability; the existing box/sphere primitives were migrated onto the
   same generalized mesh/lighting path rather than kept on a separate
   flat-color-only shader — see "Milestone 9" for the full design and why.
+- `milestone-10` — smooth ground acceleration/deceleration (replacing
+  instant grounded velocity), modest momentum-preserving air control, and
+  automatic step-up/step-down (`src/StepClimb.*`) — walking into a short
+  obstruction (a stair riser, the flying primitive's own edge) climbs it
+  without jumping, expressed purely via `PhysicsWorld::SweepPlayerShape`
+  queries relative to the player's own local gravity frame. A small
+  staircase and one ramp were added to Planet A to demonstrate and test
+  it. See "Milestone 10" for the full design, the real edge-case bug found
+  while building the step-up sweep sequence, and why moving-support
+  behavior from Milestone 8 needed no changes at all.
 
 Each milestone's demo content has been replaced (not extended) by the next;
 check out a tag to see or run an earlier milestone as it was.
@@ -837,15 +860,19 @@ The player's rendered box uses `m_frameOrientation` directly (no yaw/pitch)
 
 ## Locomotion
 
-**Movement** (`W`/`Up`, `S`/`Down`, `A`/`Left`, `D`/`Right`) is computed
-each fixed step by `PlayerController::ComputeTangentVelocity`: the look
-direction (frame orientation + yaw, pitch excluded so looking up/down
-doesn't tilt movement off the surface) is projected onto the tangent plane
-perpendicular to `localUp`, giving forward/right vectors that lie *along
-the curved surface* rather than a permanently fixed world XZ plane. Walking
-speed is a constant **4 m/s**. As of Milestone 7-B, this instant,
-input-driven velocity applies **only while grounded** — see "Velocity
-continuity while airborne" below for why.
+**Movement** (`W`/`Up`, `S`/`Down`, `A`/`Left`, `D`/`Right`) direction is
+computed each fixed step by `PlayerController::ComputeInputDirection`
+(renamed from `ComputeTangentVelocity` in Milestone 10 — see "Milestone
+10" below): the look direction (frame orientation + yaw, pitch excluded so
+looking up/down doesn't tilt movement off the surface) is projected onto
+the tangent plane perpendicular to `localUp`, giving forward/right vectors
+that lie *along the curved surface* rather than a permanently fixed world
+XZ plane. Walking speed is a constant **4 m/s**. As of Milestone 7-B, this
+input-driven direction applies **only while grounded** — see "Velocity
+continuity while airborne" below for why. As of Milestone 10, reaching
+that speed (and stopping, and reversing) is a smooth acceleration/
+deceleration, not an instant snap — see "Milestone 10, Ground acceleration
+and deceleration."
 
 **Jumping** (`Space`) preserves the Milestone 4 rule exactly: direction is
 `-normalize(gravity.Sample(position))` (never a hard-coded axis, never
@@ -900,14 +927,22 @@ if (isGrounded) {
 }
 ```
 
-While airborne, WASD held or released now has no effect at all — the
-player is not given new "air control" this milestone, just protected from
-having existing momentum erased. Verified directly: the same jump-and-coast
-scenario that used to lose its outward momentum now carries it through the
-full transition and lands on the platform; a full regression pass (push,
-object-to-object collision, a 60-second sustained walk, determinism,
-15-second stability) confirmed no other behavior changed — see "Automated
-testing."
+Through Milestone 9, WASD held or released while airborne had no effect at
+all — the player wasn't given "air control," just protected from having
+existing momentum erased. Verified directly at the time: the same
+jump-and-coast scenario that used to lose its outward momentum carried it
+through the full transition and landed on the platform; a full regression
+pass (push, object-to-object collision, a 60-second sustained walk,
+determinism, 15-second stability) confirmed no other behavior changed —
+see "Automated testing."
+
+**Milestone 10 adds a small, capped nudge on top of this unchanged
+foundation** — see "Milestone 10, Air control" below for the exact
+formula. It is deliberately additive (`m_velocity +=`, never a
+reassignment) so everything above still holds character-for-character:
+this milestone's own regression pass re-ran the identical jump-and-coast
+scenario and confirmed momentum still carries through a gravity-context
+transition exactly as it always has.
 
 **Collision-aware movement**: `PlayerController` never writes `m_position`
 directly from a desired velocity. Each fixed step, the desired displacement
@@ -1029,6 +1064,265 @@ radius `0.3m`, capsule cylinder half-height `0.6m` (total capsule height
 `1.8m`), eye height `0.7m` above the capsule center, move speed `4 m/s`,
 jump speed `5 m/s`. All explicit, chosen for a readable demonstration, not
 tuned for feel.
+
+## Milestone 10
+
+The existing player controller, taken from a minimal architectural test
+harness to something deliberately pleasant and robust to play — smooth
+ground acceleration/deceleration, modest air control, and automatic
+step-up/step-down — while preserving everything already established:
+gravity direction != support normal, no universal up or down, Milestone
+8's moving-support behavior, Milestone 9's rendering. `PlayerController`
+was not replaced and no generic character-controller framework was built;
+every addition here is a small, explicit piece of `FixedUpdate` or one new
+pair of free functions.
+
+### Ground acceleration and deceleration
+
+Replaces the instant "snap to desired tangential velocity"
+`PlayerController` used from Milestone 4 through Milestone 9 with a small
+clamped-delta model — the standard, simplest way to get smooth accel/decel
+with *deliberate* (not merely friction-shaped) direction changes:
+
+```cpp
+previousTangentVelocity = (previousVelocity - previousGroundVelocity) minus its localUp component;
+desiredTangentVelocity = ComputeInputDirection(...) * kMoveSpeed;   // zero if nothing held
+
+velocityDelta = desiredTangentVelocity - previousTangentVelocity;
+rate = (no input, or input opposes current motion) ? kGroundDeceleration : kGroundAcceleration;
+maxDelta = rate * fixedDeltaTime;
+
+newTangentVelocity = length(velocityDelta) <= maxDelta
+    ? desiredTangentVelocity
+    : previousTangentVelocity + normalize(velocityDelta) * maxDelta;
+```
+
+`kGroundAcceleration` (`20 m/s²`, reaches the `4 m/s` walk speed from rest
+in `0.2s`) and `kGroundDeceleration` (`28 m/s²`, stops in about `0.14s`)
+are deliberately different: stopping/reversing reads as snappier than
+speeding up, matching most conventional character controllers, and it's
+*why* direction reversal reads as deliberate rather than an accidental
+consequence of friction — reversing needs a velocity delta of up to
+`2 * kMoveSpeed`, capped by the same (higher) deceleration rate an
+ordinary stop uses, so a full reversal takes measurably longer than
+accelerating from a standstill: the player visibly "brakes, then goes the
+other way," not a physics-model side effect. Verified directly: holding
+`W` then immediately holding `S` shows the logged tangential velocity
+decelerating through zero and continuing into the reverse direction at a
+constant measured rate of `~28 m/s²`, matching `kGroundDeceleration`
+exactly, across the *entire* reversal — the same rate, not two different
+regimes glued together.
+
+`previousTangentVelocity` deliberately excludes `previousGroundVelocity`
+(Milestone 8's moving-support carry, see "Milestone 8") — standing still
+on a fast-moving support still reads as zero input-driven velocity to
+accelerate away from, exactly as before this milestone; only the player's
+*own* motion relative to whatever it's standing on is ever smoothed.
+Jumping is untouched: `verticalSpeed` is still set to `kJumpSpeed`
+instantly the moment a jump is taken, only ordinary horizontal ground
+movement is now smoothed.
+
+### Air control
+
+A small, capped, strictly additive nudge on top of the unchanged Milestone
+7-B airborne integration (see "Velocity continuity while airborne" above):
+
+```cpp
+m_velocity += acceleration * fixedDeltaTime;   // unchanged — full momentum integration
+
+if (inputEnabled) {
+    desiredDirection = ComputeInputDirection(...);
+    if (desiredDirection is non-zero) {
+        tangentVelocity = m_velocity minus its localUp component;
+        speedInDesiredDirection = dot(tangentVelocity, desiredDirection);
+        if (speedInDesiredDirection < kMoveSpeed) {
+            accelAmount = min(kAirAcceleration * fixedDeltaTime, kMoveSpeed - speedInDesiredDirection);
+            m_velocity += desiredDirection * accelAmount;
+        }
+    }
+}
+```
+
+`kAirAcceleration` (`8 m/s²`) never reduces existing velocity and never
+pushes the tangential speed *in the input direction* past `kMoveSpeed` —
+a fast jump-and-coast that's already carrying more speed than that (from
+ground momentum at launch, or a moving support's own contribution) is left
+completely alone; this only ever helps a player who wants to *steer*
+modestly while airborne, never a way to accelerate indefinitely by holding
+a direction key in the air. The classic bounded "air-accelerate" shape,
+deliberately not a second ground-style acceleration model. Verified
+directly: jumping from a standstill and holding a direction shows
+tangential speed climbing at exactly `kAirAcceleration`'s own rate every
+step while airborne, asymptotically approaching (never exceeding)
+`kMoveSpeed`.
+
+### Step-up / step-down (the main architectural test)
+
+`src/StepClimb.h/.cpp` — two small free functions, `TryStepMove` and
+`TryStepDown`, deliberately NOT a class or a general "character
+controller" abstraction. `PlayerController::FixedUpdate` is still the only
+place that decides *when* to call them and what to do with the result;
+both are expressed purely in terms of `PhysicsWorld::SweepPlayerShape`
+queries relative to a caller-supplied `localUp` — **never** a
+`position.y` comparison, a world-height check, a teleport onto known
+geometry, or any check for what kind of object is being climbed. Neither
+function knows the flying primitive, a planet, or a staircase exists; they
+only ever see collision geometry through the same query every other piece
+of movement code already uses.
+
+**`TryStepMove`** (called once per grounded fixed step, before the
+ordinary move-and-slide loop, using the player's full remaining
+displacement for that step) is the standard "step up, move forward, step
+back down" three-sweep pattern:
+
+1. A flat sweep from the current position. If unobstructed, or blocked by
+   something *already walkable* (a slope — see below), there's nothing to
+   step over; return false and let the unchanged move-and-slide loop
+   handle it.
+2. Sweep up by up to `kMaxStepHeight` (`0.55m` — chosen to comfortably
+   clear the flying primitive's own edge, a `0.5m`-tall box, per the
+   brief's explicit "the existing flying primitive's low edge should also
+   become naturally boardable"; a low ceiling right above the player
+   correctly limits how far this sweep can actually rise).
+3. Sweep forward by the same displacement from the raised position. If
+   this makes no more progress than the flat sweep already did, stepping
+   didn't help; return false — this is what correctly rejects a wall
+   taller than `kMaxStepHeight` (the up-sweep clears alongside it, but the
+   forward sweep from up there is blocked exactly as much as before).
+4. Sweep back down by up to `kMaxStepHeight` to reacquire a *walkable*
+   floor (same `kMinGroundDot` threshold `PlayerController` already uses
+   for ordinary grounding). Landing in open air, or on something too
+   steep, means it wasn't a real step; return false.
+
+Only returns true (and moves the player) when all four succeed — a pure
+addition with provably zero effect on flat ground or slopes, since both
+cases are explicitly declined at step 1.
+
+**A real bug, worth knowing before touching this again.** The very first
+version returned false on a genuinely climbable step, every time: a flat
+sweep from a position *already resting exactly on the ground* immediately
+reports that same ground as an "already touching" hit at distance `0`
+(see `SweepPlayerShape`'s own `t=0` check) — **regardless of the sweep's
+own direction** — since it's the single closest body from that exact
+point. Every flat/up/forward sweep in step 1–3 above would therefore only
+ever see the floor the player was already standing on, never a wall ahead.
+Fixed by lifting the query origin by `skinMargin` before any of these
+sweeps — the same margin-restore idiom the ordinary move-and-slide loop
+already discovers iteratively, just applied once up front instead. A
+second, subtler bug surfaced only once real geometry (the flying
+primitive) was tested interactively: the down-sweep in step 4 often lands
+right at the *front edge* of the step just climbed (a forward sweep that
+"just barely" clears an obstruction very often stops right at its lip),
+where a box's closest-point-on-OBB calculation blends the top face's and
+front face's normals together — reading as just barely too steep to count
+as walkable (observed: `dot ≈ 0.619` against a `0.643` threshold) even
+though the surface is a perfectly ordinary flat top. Fixed with a small
+forward look-ahead on the down-probe's own origin only (`kDownProbeLookAhead`,
+`8cm`, capped at half the step's own forward travel so a tiny step isn't
+disproportionately nudged) — the same category of small, deliberate
+approximation `kSkinMargin` already is throughout this engine's move-and-
+slide code, not a new kind of imprecision.
+
+**`TryStepDown`** is the smaller, symmetric half: reaches further than
+`PlayerController`'s own ordinary ground probe (`kGroundProbeDistance`,
+`0.15m` — enough to keep catching a surface while standing still or
+walking on it, but shorter than a real stair's riser height) — up to
+`kMaxStepHeight` along `-localUp` — so walking off a short step or ledge
+doesn't produce an intermediate free-fall frame before landing on the
+lower surface. Only attempted as a fallback, when the ordinary probe finds
+nothing *and* the player was grounded a moment ago *and* isn't mid-jump
+(`wasAscending`) — a genuine drop taller than `kMaxStepHeight` still
+free-falls exactly as it always has; verified directly in the interactive
+demo by walking off the FAR edge of the staircase's top step (a `~1.2m`
+drop, deliberately built taller than `kMaxStepHeight` by stacking four
+risers), which correctly free-falls rather than being caught. Also fills
+`outHitBody` — the moving-support carry (`groundVelocity`) and the flying
+primitive's own take-control gating both need to know *what* the player
+landed on, not just where.
+
+**No world-axis assumption — verified, not just argued by inspection.**
+`tests/StepClimbTests.cpp` (a fourth standalone, headless test executable
+— no window, no GL, a real `PhysicsWorld`, same `judas_physics_tests`/
+`judas_collision_tests` spirit) extends this project's signature
+rotate-the-scenario technique to the step-climb primitives directly: build
+a small staircase scenario, call `TryStepMove`/`TryStepDown`, record the
+result; rebuild the *identical* scenario (every body's position **and**
+orientation) rotated by an arbitrary quaternion, call the same function
+with the same displacement/`localUp` rotated the same way, and confirm the
+rotated-back result matches the unrotated reference exactly. Both
+functions pass this for both a successful step and the boundary rejection
+cases (too tall to climb, nothing to step over, too far to catch on the
+way down).
+
+### Demonstration: staircase and ramp
+
+`Application.cpp`'s `SpawnStepTestGeometry` adds a small four-riser
+staircase and one `25`-degree ramp to Planet A, both a short, reliably
+walkable distance from the player's own spawn point but at a bearing
+measurably off the sphere's exact pole (`~21`/`~26` degrees respectively)
+— deliberately NOT at the pole itself, where local radial "up" happens to
+exactly coincide with world `+Y` and would silently hide any accidental
+world-Y assumption in the step-climb code, and deliberately not placed far
+off the pole either, since an easy, short, reliably-aimable walk from
+spawn matters for a human tester actually finding and trying these (the
+much more demanding rotation-invariance claim is what
+`tests/StepClimbTests.cpp` exists to prove rigorously instead).
+
+Each stair riser is `0.3m` (comfortably under `kMaxStepHeight`), built as
+a "stacked pillar" (each step is a full box from the planet's own surface
+up to its own top, not a separate floating riser+tread) so there's no gap
+between consecutive steps and no ambiguity about what's underneath one.
+Both pieces use `RotationAligningUpTo` — a small demo-authoring helper
+(the shortest-arc rotation from world `+Y` to an arbitrary target
+direction, the same shape as `PlayerController.cpp`'s own
+`RotationBetweenUnitVectors` but deliberately not shared with it — one is
+Judas's own runtime gravity-orientation logic, the other is
+composition-root placement math for hand-authored static geometry) — so
+each piece's own local "up" matches the actual radial direction at its
+bearing, the same way a real object resting on a sphere would need to.
+
+This required a small `PhysicsWorld` API addition: `CreateStaticBox`
+gained an overload taking an explicit `glm::quat` orientation (the
+original 4-argument overload is unchanged, and still exactly equivalent
+to passing an identity rotation to the new one) — every static box before
+this milestone (planets are spheres; the plank, and every dynamic cube,
+were always axis-aligned) never needed one.
+
+Verified directly in the interactive demo (not just the unit tests above):
+walking straight into the staircase climbs all four risers with the
+player's radial distance from the planet's center rising continuously
+(each riser producing at most a one-frame "not grounded" transition,
+imperceptible at 60Hz — `TryStepMove` moves the player in the same fixed
+step the obstruction is detected, but that step's OWN grounded flag was
+already decided earlier from the pre-step position, so the very next
+step's ground probe is what re-confirms support at the new height);
+walking off the staircase's far edge afterward correctly free-falls (a
+genuine `~1.2m` drop, taller than `kMaxStepHeight`); walking into the
+flying primitive's own low edge climbs onto it the same way, with no
+special-casing anywhere in `PlayerController`/`StepClimb.cpp` — it's
+simply one more `0.5m`-ish obstruction under `kMaxStepHeight`.
+
+### Why Milestone 8's moving-support behavior needed no changes
+
+The moving-support velocity carry (`groundVelocity`, `m_lastGroundVelocity`,
+the direct position-carry in `FixedUpdate` — see "Milestone 8") sits
+*upstream* of everything this milestone added: `groundVelocity` is
+computed once per step from whatever the player is standing on, then (a)
+excluded from the tangential velocity the new acceleration model smooths
+(so a moving support's own motion is never something the player
+"decelerates out of"), and (b) already fully applied as a direct position
+carry before `TryStepMove` is ever attempted. `TryStepMove` itself is only
+ever attempted while grounded and not mid-jump, using the player's own
+already-computed `remaining` displacement — it has no idea a support might
+be moving, and doesn't need to: by the time it runs, any moving-support
+motion has already been folded in. Verified directly: the full Milestone 8
+scripted scenario (board the primitive by walking onto it with no jump —
+now possible for the first time, see above — ascend, hover, yaw, release
+control mid-descent, land) still produces the same qualitative behavior
+end to end; the *exact* logged numbers differ from Milestone 8/9's own
+runs (expected and correct — grounded velocity is no longer instant, so
+approach timing shifts slightly), but boarding, riding, releasing control,
+jumping from, and landing back on the primitive all still work.
 
 ## Player-to-object interaction
 
@@ -2498,6 +2792,33 @@ correctness... if practical, include...") was read as calling for real
 verification, not necessarily a new maintained test suite for a two-line,
 symmetric shading formula with nothing axis-dependent left to regress.
 
+**Milestone 10: a fourth standalone test executable, `judas_step_climb_tests`
+(`tests/StepClimbTests.cpp`), extending the rotate-the-scenario technique
+to gameplay-level movement code for the first time.** Same shape as the
+other three (no window, no GL context, plain `Check`/exit-code), but a real
+`PhysicsWorld` with a handful of static bodies — `TryStepMove`/
+`TryStepDown` (`src/StepClimb.h`) need genuine collision geometry to sweep
+against, which `PhysicsWorld::Init()` provides with no GL dependency at
+all. Covers: a riser within `kMaxStepHeight` succeeds; one taller fails
+(stays a wall); an unobstructed flat sweep needs no stepping; a drop within
+reach is caught, one beyond it is correctly left to free-fall; and, for
+both functions, the full rotate-the-whole-scenario check (every body's
+position AND orientation rotated by an arbitrary quaternion, the resulting
+position rotated back and compared to the unrotated reference) — this is
+the first time this project's signature "no global up" verification
+technique has been applied above the pure-physics-primitive layer, to
+code that decides how the PLAYER moves, not just how a rigid body responds
+to a force.
+
+Ground acceleration/deceleration, air control, and the interactive
+staircase/ramp/flying-primitive-boarding demonstrations were verified via
+`JUDAS_TEST_SCRIPT` gameplay scripts instead (the same category M8's
+moving-support carry was) — logged velocity curves confirmed the exact
+acceleration/deceleration/air-control rates match their own constants
+step-for-step, and logged radial-distance-from-planet-center traces
+confirmed the staircase climbs smoothly, the far edge correctly free-falls
+(too tall to catch), and the flying primitive boards by walking alone.
+
 ## Remaining limitations
 
 Recorded honestly rather than left implicit — these are known, deliberately
@@ -2640,6 +2961,32 @@ deferred, not oversights:
   position/normal/UV combination. Correct and adequate at this asset's
   size; would be real wasted GPU memory/bandwidth for a much larger
   imported model.
+- **`TryStepMove` attempts stepping exactly once per fixed step, using the
+  player's full remaining displacement, not the iterative multi-surface
+  handling the ordinary move-and-slide loop has.** (Milestone 10.) A
+  step encountered at a diagonal, alongside a second unrelated wall in the
+  same step, isn't specially handled — it either fully succeeds (using the
+  complete displacement) or fully fails and falls back to ordinary
+  sliding, never a partial resolution. Adequate for this demo's geometry
+  (a straightforward staircase, a single ramp, the flying primitive's own
+  edge); a much more geometrically complex step scenario might need a
+  real multi-attempt version.
+- **Moving-support velocity carry (Milestone 8) still approximates the
+  contact point using the player's own capsule center**, unchanged by this
+  milestone — see law #16's own note. Stepping onto or off a ROTATING
+  support was not re-tested at the exact moment a step-up/step-down also
+  fires in the same step; both mechanisms are independently correct and
+  compose the same way any two independently-verified pieces of
+  `FixedUpdate` do, but that specific combination wasn't a dedicated test
+  scenario this milestone.
+- **The staircase and ramp are placed only ~20-26 degrees off Planet A's
+  pole**, not at an extreme bearing, so the interactive demo itself is
+  only modest evidence against a world-Y assumption — deliberately
+  favoring a short, reliably-aimable walk for a human tester over a
+  dramatic rotation (see "Milestone 10, Demonstration" for why). The far
+  more rigorous claim — genuinely arbitrary rotation — is proven instead
+  by `tests/StepClimbTests.cpp`'s rotate-the-scenario checks, which do use
+  an arbitrary, unaligned quaternion.
 
 ## FUTURE CONSTRAINTS PRESERVED
 
@@ -2851,3 +3198,22 @@ Explicitly deferred, not forgotten:
   at startup, exactly like every other piece of this demo's fixed
   geometry; an editor, a material graph, or a shader graph — one hand-
   written GLSL shader pair, not authored or edited at runtime by anything
+- **Milestone 10 additions:** mantling, ledge grabbing, climbing, ladders,
+  wall running, sliding, prone, swimming, parkour — `TryStepMove` is
+  exactly "walk into a short obstruction and rise onto it," nothing else
+  about traversal changed; double jump, variable jump height, coyote time
+  beyond the existing single-frame input latch — jumping is untouched from
+  Milestone 4/7-B; stamina, weight classes, or any configurable character
+  stat — `kMoveSpeed`, `kGroundAcceleration`/`kGroundDeceleration`,
+  `kAirAcceleration`, `kMaxStepHeight` are fixed constants, not per-player
+  or per-character data; animation, IK, footsteps — this milestone is
+  entirely about `m_position`/`m_velocity`, the player still renders as
+  the same plain box it always has; controller/gamepad support or
+  configurable keybinds — `Window`'s `Action` enum and its fixed key
+  bindings are unchanged; character models — none exist to add to; a
+  movement-state framework (walking/running/crouching/etc. as named
+  states) — grounded vs. airborne remains the only distinction
+  `FixedUpdate` makes, exactly as before; a generic character-controller
+  library or reusable framework — `StepClimb.h`'s two free functions are
+  the entire new surface, deliberately not a class hierarchy or plugin
+  system for future movement abilities

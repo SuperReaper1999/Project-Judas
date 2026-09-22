@@ -8,7 +8,7 @@ This is **not** a general-purpose engine and is not trying to compete with
 Unity, Unreal, or Godot. It exists to serve one specific class of game, and
 its architecture is deliberately narrow.
 
-## Status: Milestone 9
+## Status: Milestone 10
 
 A controllable player walks, jumps, and falls under real physics — Judas's
 own physics engine, not a third-party library — across two independent
@@ -60,13 +60,26 @@ bodies, the flying primitive) now carries real surface normals and is lit
 the same way, through the same shader. See
 [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md), "Milestone 9," for the
 model/texture format choices, the mesh/texture ownership boundary, and the
-exact lighting model. That's it — no terrain, real planets, vehicles,
-shadows, or further gameplay yet.
+exact lighting model.
+
+**New this milestone:** ordinary walking is deliberately pleasant to play,
+not just functionally correct. Starting, stopping, and reversing direction
+now accelerate and decelerate smoothly instead of snapping instantly to a
+new velocity; the player can nudge their movement modestly while airborne
+without losing existing momentum; and a short staircase plus one ramp
+(a walk from spawn on Planet A) can be climbed and descended just by
+walking into them — no jump required. The same mechanism makes the flying
+primitive's own low edge naturally boardable now too. See
+[`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md), "Milestone 10," for the
+exact acceleration model and the step-up/step-down design (including a
+real edge-case bug found and fixed along the way). That's it — no
+mantling, climbing, terrain, real planets, vehicles, shadows, or further
+gameplay yet.
 
 This is intentional — see `docs/ARCHITECTURE.md` for why, what's
 deliberately not built yet, and how this small foundation avoids blocking
 the much larger long-term design. Earlier milestones are preserved as git
-tags (`milestone-1` through `milestone-9`, once this one is tagged) rather
+tags (`milestone-1` through `milestone-10`, once this one is tagged) rather
 than kept running alongside the current demo.
 
 ## Building
@@ -136,11 +149,22 @@ primitive" below.
 
 Close the window normally (window controls / `Alt+F4` / etc.) to exit.
 
+### Steps and slopes
+
+A short staircase and one ramp stand a walk from spawn on Planet A —
+just walk into them. Ordinary steps and low ledges (including the flying
+primitive's own edge — see below) are climbed and descended automatically
+while walking; nothing extra to press. See
+[`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md), "Milestone 10," for how
+this works and its limits (how tall a step counts, how steep a slope stays
+walkable).
+
 ### The flying primitive
 
-A flat, boardable box rests on the plank. Walk up to it (a short hop may
-be needed to clear its edge, the same as boarding any low platform) and
-press `F` to take control:
+A flat, boardable box rests on the plank. Walk straight into it — as of
+Milestone 10 its edge is a normal step, not a wall, so it's boarded by
+ordinary walking, no jump needed (see "Milestone 10" below) — and press
+`F` to take control:
 
 | Action                    | Keys        |
 |----------------------------|-------------|
@@ -169,16 +193,19 @@ full script format:
 JUDAS_TEST_SCRIPT=path/to/script.txt ./build/judas
 ```
 
-Three standalone, headless test executables also exist (no window, no GL
+Four standalone, headless test executables also exist (no window, no GL
 context): `judas_physics_tests` and `judas_collision_tests` (rigid-body/
-collision/gravity-context primitives) and, as of Milestone 9,
-`judas_asset_tests` (model/texture loading — parses the real committed
-demo assets and checks vertex/index/UV/normal data and texture dimensions;
-run from the repository root, same reason as `judas` itself):
+collision/gravity-context primitives); `judas_asset_tests` (Milestone 9 —
+model/texture loading, parses the real committed demo assets and checks
+vertex/index/UV/normal data and texture dimensions; run from the
+repository root, same reason as `judas` itself); and `judas_step_climb_tests`
+(Milestone 10 — the step-up/step-down primitives behind automatic stair
+climbing, including the same rotate-the-whole-scenario "no global up"
+check the physics suites use):
 
 ```bash
-cmake --build build --target judas_physics_tests judas_collision_tests judas_asset_tests
-./build/judas_physics_tests && ./build/judas_collision_tests && ./build/judas_asset_tests
+cmake --build build --target judas_physics_tests judas_collision_tests judas_asset_tests judas_step_climb_tests
+./build/judas_physics_tests && ./build/judas_collision_tests && ./build/judas_asset_tests && ./build/judas_step_climb_tests
 ```
 
 ## Assets

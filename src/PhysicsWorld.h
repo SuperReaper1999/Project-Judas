@@ -65,6 +65,16 @@ public:
 
     BodyHandle CreateStaticBox(const glm::vec3& position, const glm::vec3& halfExtents,
                                 float friction, float restitution);
+
+    // Same as above, with an explicit orientation. Added in Milestone 10
+    // so demo geometry (steps, ramps) can be authored with its own "up"
+    // aligned to wherever local gravity actually points at that position
+    // — e.g. a step on a curved planet's surface, whose own local up is
+    // radial, not world +Y — rather than being restricted to axis-aligned
+    // boxes. The original 4-argument overload is unchanged and still
+    // exactly equivalent to passing an identity rotation here.
+    BodyHandle CreateStaticBox(const glm::vec3& position, const glm::quat& rotation,
+                                const glm::vec3& halfExtents, float friction, float restitution);
     BodyHandle CreateStaticSphere(const glm::vec3& position, float radius, float friction,
                                    float restitution);
     BodyHandle CreateDynamicBox(const glm::vec3& position, const glm::vec3& halfExtents,
