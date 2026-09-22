@@ -547,6 +547,35 @@ void PlayerController::FixedUpdate(const Window& window, PhysicsWorld& physics,
     }
 }
 
+void PlayerController::FixedUpdateAttached(const glm::vec3& newPosition,
+                                            const glm::quat& newOrientation) {
+    // Presentation history: identical bookkeeping to the start of
+    // FixedUpdate — snapshot the state as of the end of the PREVIOUS step
+    // before this step overwrites it.
+    m_previousPosition = m_position;
+    m_previousOrientation = m_frameOrientation;
+
+    m_position = newPosition;
+    m_frameOrientation = glm::normalize(newOrientation);
+
+    // No independent locomotion happens while attached — see this
+    // function's own header comment. Zeroing support/ground-carry state
+    // (rather than leaving whatever they last held) means the very first
+    // ordinary FixedUpdate call after release starts from a clean,
+    // unambiguous "not grounded, no support" state and runs its own real
+    // geometry probe, exactly like any other newly-airborne player —
+    // never a stale support reference to an object the player is no
+    // longer physically touching.
+    m_velocity = glm::vec3(0.0f);
+    m_lastGrounded = false;
+    m_lastGroundHitBody = BodyHandle();
+    m_lastGroundVelocity = glm::vec3(0.0f);
+    // A jump press during piloting is discarded, not buffered until
+    // release — mirrors FixedUpdate's own "airborne/disabled input is
+    // never buffered" rule for m_jumpRequested.
+    m_jumpRequested = false;
+}
+
 void PlayerController::Reset() {
     m_position = m_spawnPosition;
     m_velocity = glm::vec3(0.0f);

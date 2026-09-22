@@ -22,6 +22,8 @@
 #include "GravityField.h"
 #include "ModelLoader.h"
 #include "PhysicsWorld.h"
+#include "PilotAttachment.h"
+#include "PilotControl.h"
 #include "PlayerController.h"
 #include "RadicalGravity.h"
 #include "Renderer.h"
@@ -323,6 +325,19 @@ const glm::vec3 kBeaconPosition = kPlanetACenter + glm::vec3(-4.0f, kPlanetARadi
 const char* const kBeaconModelPath = "assets/models/beacon.obj";
 const char* const kBeaconTexturePath = "assets/textures/beacon.png";
 
+// --- Milestone 11: the spacecraft's mesh (assets/models/plane.obj) ---
+//
+// The Milestone 8 flying primitive, repurposed rather than replaced (see
+// docs/ARCHITECTURE.md, "Milestone 11") — same DynamicBody, same box
+// collider, same kFlyingPrimitive* spawn constants below; only its visual
+// representation changes, from a plain DrawBox call to this imported mesh.
+// Untextured (an invalid TextureHandle draws through Renderer's existing
+// 1x1 white fallback — see Renderer::DrawMesh), tinted by
+// kFlyingPrimitiveColor exactly as the box used to be. Authored directly at
+// the collider's own footprint (see plane.obj's own header comment), so no
+// separate model-to-body correction is needed — scale 1, identity offset.
+const char* const kSpacecraftModelPath = "assets/models/plane.obj";
+
 // One directional light plus a small constant ambient term — see
 // docs/ARCHITECTURE.md, "Milestone 9, Lighting." A plain, fixed world-space
 // direction chosen only to rake visibly across both the beacon and the
@@ -445,7 +460,7 @@ int Application::Run() {
     const bool isTestRun = testScriptPath != nullptr;
 
     Window window;
-    if (!window.Init("Project Judas - Milestone 9", kWindowWidth, kWindowHeight,
+    if (!window.Init("Project Judas - Milestone 11", kWindowWidth, kWindowHeight,
                       !isTestRun)) {
         std::fprintf(stderr, "Window initialization failed.\n");
         return 1;
@@ -483,6 +498,17 @@ int Application::Run() {
     }
     const MeshHandle beaconMesh = renderer.CreateMesh(beaconMeshData);
     const TextureHandle beaconTexture = renderer.CreateTexture(beaconTextureData);
+
+    // Milestone 11: the spacecraft's mesh — same load-and-fail-cleanly
+    // pattern as the beacon above, no texture (see kSpacecraftModelPath's
+    // own comment).
+    MeshData spacecraftMeshData;
+    if (!LoadObjMesh(kSpacecraftModelPath, spacecraftMeshData, assetError)) {
+        std::fprintf(stderr, "%s\n", assetError.c_str());
+        return 1;
+    }
+    const MeshHandle spacecraftMesh = renderer.CreateMesh(spacecraftMeshData);
+
     renderer.SetLighting(kLightDirection, kLightColor, kAmbientColor);
 
     PhysicsWorld physicsWorld;
@@ -563,6 +589,13 @@ int Application::Run() {
     const std::size_t flyingPrimitiveBodyIndex = dynamicBodies.size() - 1;
     FlyingPrimitiveControl flyingPrimitiveControl;
     flyingPrimitiveControl.handle = dynamicBodies[flyingPrimitiveBodyIndex].Handle();
+    // Milestone 11: the secured-pilot relationship (see src/PilotAttachment.h)
+    // — always established/cleared in lockstep with flyingPrimitiveControl's
+    // own `controlled` flag (see src/PilotControl.h), but kept as a
+    // separate struct since it is genuinely a distinct concept: `controlled`
+    // is an input-routing flag, `pilotAttachment` is fixed-step simulation
+    // state (the player's own authoritative pose derives from it).
+    PilotAttachment pilotAttachment;
 
     // Shared between the normal interactive loop and the test harness, so
     // a screenshot taken by the harness shows exactly what the real game
@@ -591,10 +624,44 @@ int Application::Run() {
         // sensible size — see assets/models/beacon.obj).
         r.DrawMesh(beaconMesh, kBeaconPosition, glm::quat(1.0f, 0.0f, 0.0f, 0.0f), glm::vec3(1.0f),
                    beaconTexture, glm::vec3(1.0f));
-        r.DrawBox(player.GetPresentedPosition(presentationAlpha),
-                  player.GetPresentedOrientation(presentationAlpha), player.GetRenderHalfExtents(),
+
+        // Milestone 11: while attached, render the pilot coherently with
+        // the SAME presented spacecraft pose used for the camera and the
+        // spacecraft's own mesh below — applying the stored attachment
+        // transform to that presented pose (rather than interpolating the
+        // player's own authoritative before/after snapshots independently)
+        // avoids any visible relative separation during rotation. Reuses
+        // ApplyPilotAttachment unchanged: a BodyTransform is just a
+        // position+rotation pair, and the presented spacecraft pose is
+        // exactly that. See docs/ARCHITECTURE.md, "Milestone 11, Camera
+        // and presentation."
+        glm::vec3 playerRenderPosition;
+        glm::quat playerRenderOrientation;
+        if (flyingPrimitiveControl.controlled && pilotAttachment.attached) {
+            const BodyTransform shipPresented{
+                dynamicBodies[flyingPrimitiveBodyIndex].GetPresentedPosition(presentationAlpha),
+                dynamicBodies[flyingPrimitiveBodyIndex].GetPresentedOrientation(presentationAlpha)};
+            ApplyPilotAttachment(pilotAttachment, shipPresented, playerRenderPosition,
+                                  playerRenderOrientation);
+        } else {
+            playerRenderPosition = player.GetPresentedPosition(presentationAlpha);
+            playerRenderOrientation = player.GetPresentedOrientation(presentationAlpha);
+        }
+        r.DrawBox(playerRenderPosition, playerRenderOrientation, player.GetRenderHalfExtents(),
                   kPlayerColor);
-        for (const DynamicBody& body : dynamicBodies) {
+
+        for (std::size_t i = 0; i < dynamicBodies.size(); ++i) {
+            const DynamicBody& body = dynamicBodies[i];
+            if (i == flyingPrimitiveBodyIndex) {
+                // Milestone 11: the spacecraft draws through the imported
+                // mesh path instead of DrawBox — see kSpacecraftModelPath's
+                // own comment for why no separate model-to-body correction
+                // or texture is needed here.
+                r.DrawMesh(spacecraftMesh, body.GetPresentedPosition(presentationAlpha),
+                           body.GetPresentedOrientation(presentationAlpha), glm::vec3(1.0f),
+                           TextureHandle{}, kFlyingPrimitiveColor);
+                continue;
+            }
             const DynamicBody::Visual& visual = body.GetVisual();
             if (visual.shape == DynamicBody::Shape::Box) {
                 r.DrawBox(body.GetPresentedPosition(presentationAlpha),
@@ -610,7 +677,7 @@ int Application::Run() {
     int exitCode = 0;
     if (isTestRun) {
         exitCode = RunTestHarness(window, renderer, physicsWorld, player, gravity, dynamicBodies,
-                                   flyingPrimitiveControl, drawScene, testScriptPath);
+                                   flyingPrimitiveControl, pilotAttachment, drawScene, testScriptPath);
     } else {
         float physicsAccumulator = 0.0f;
 
@@ -655,21 +722,19 @@ int Application::Run() {
                     body.ResetToSpawn(physicsWorld);
                 }
                 flyingPrimitiveControl.controlled = false;
+                pilotAttachment.attached = false;
                 physicsAccumulator = 0.0f;
             }
 
-            // Milestone 8: F toggles input authority between the player and
-            // the flying primitive. Taking control is gated on the player's
-            // OWN current support state (never a global teleport-to-it) —
-            // releasing control is always allowed. See
-            // docs/ARCHITECTURE.md, "Milestone 8."
+            // Milestone 8/11: F toggles input authority (and, as of
+            // Milestone 11, the secured-pilot attachment — see
+            // src/PilotControl.h) between the player and the spacecraft.
+            // Taking control is gated on the player's OWN current support
+            // state (never a global teleport-to-it) — releasing control is
+            // always allowed, in any orientation. See
+            // docs/ARCHITECTURE.md, "Milestone 11."
             if (window.ConsumeControlToggleRequest()) {
-                if (flyingPrimitiveControl.controlled) {
-                    flyingPrimitiveControl.controlled = false;
-                } else if (player.IsGrounded() &&
-                           player.GetSupportBodyHandle().id == flyingPrimitiveControl.handle.id) {
-                    flyingPrimitiveControl.controlled = true;
-                }
+                HandlePilotToggleRequest(flyingPrimitiveControl, pilotAttachment, player, physicsWorld);
             }
 
             // Fixed-timestep physics: render-frame delta time only decides
@@ -692,10 +757,10 @@ int Application::Run() {
                 // and the primitive falls/rests like any other body.
                 PrepareDynamicBodiesForStep(dynamicBodies, gravity, physicsWorld,
                                              SimulationTiming::kFixedTimestep);
-                ApplyFlyingPrimitiveControl(flyingPrimitiveControl, window, physicsWorld, gravity);
+                ApplyFlyingPrimitiveControl(flyingPrimitiveControl, window, physicsWorld);
                 physicsWorld.Step(SimulationTiming::kFixedTimestep);
-                player.FixedUpdate(window, physicsWorld, gravity, SimulationTiming::kFixedTimestep,
-                                    !flyingPrimitiveControl.controlled);
+                AdvancePlayerForPiloting(flyingPrimitiveControl, pilotAttachment, player, physicsWorld,
+                                          window, gravity, SimulationTiming::kFixedTimestep);
                 SyncDynamicBodiesFromPhysics(dynamicBodies, physicsWorld);
 
                 physicsAccumulator -= SimulationTiming::kFixedTimestep;
@@ -771,6 +836,7 @@ int Application::Run() {
     physicsWorld.Shutdown();
     renderer.DestroyMesh(beaconMesh);
     renderer.DestroyTexture(beaconTexture);
+    renderer.DestroyMesh(spacecraftMesh);
     renderer.Shutdown();
     return exitCode;
 }

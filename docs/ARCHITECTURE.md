@@ -6,7 +6,7 @@ someone with no prior context on this project. It is updated in place as
 milestones land, rather than kept as a per-milestone snapshot — see
 "Milestone history" below for how to recover an earlier milestone exactly.
 
-## What exists right now (Milestone 10)
+## What exists right now (Milestone 11)
 
 Open a window. Two independent static spheres ("planets," radius `20m`
 each, centers `55m` apart — see "Physics test world") exist in 3D space,
@@ -87,8 +87,30 @@ mechanism that also makes the flying primitive's own low edge naturally
 boardable now. All of it is expressed purely relative to the player's own
 local gravity/support frame; see "Milestone 10" below for the full design,
 including a real edge-case bug found and fixed while building the
-step-climb primitive. See the root `README.md` for build/run instructions
-and controls.
+step-climb primitive.
+
+**As of Milestone 11, the Milestone 8 flying primitive is a proper
+spacecraft with full 6-degree-of-freedom control and a secured pilot.**
+It renders as a real imported model (`assets/models/plane.obj`) instead of
+a plain box, through the same Milestone 9 model/texture/lighting path.
+Boarding and pressing `F` now does two things at once: input authority
+moves to the spacecraft exactly as it did in Milestone 8, AND the player
+is explicitly, physically secured to it — a real fixed-step simulation
+relationship (`src/PilotAttachment.h`), not a render-only parent transform
+and not ordinary moving-platform support. Every control axis (three
+translation, three rotation) is relative to the spacecraft's own current
+orientation, never gravity or a fixed world direction, so it flies
+identically right-side up, upside down, or spinning in any combination.
+The secured pilot stays attached through all of that — roll the
+spacecraft upside down under real gravity and the player does not fall
+off. Releasing control (`F` again) preserves the player's exact pose and
+hands it the spacecraft's own real velocity at that instant, including
+the extra motion its own rotation imparts at an off-center point, then
+ordinary gravity/support/locomotion resumes exactly as if the player had
+always been an ordinary (if suddenly airborne) participant. See
+"Milestone 11" below for the full design, the attachment math, and the
+two dedicated headless test suites it added. See the root `README.md` for
+build/run instructions and controls.
 
 ## Milestone history
 
@@ -163,6 +185,24 @@ preserved as parallel runtime code:
   it. See "Milestone 10" for the full design, the real edge-case bug found
   while building the step-up sweep sequence, and why moving-support
   behavior from Milestone 8 needed no changes at all.
+- `milestone-11` — the Milestone 8 flying primitive upgraded to full
+  6-degree-of-freedom spacecraft control (translation along all three of
+  its own local axes, plus independent pitch/yaw/roll — never gravity or
+  a fixed world axis) and a new secured-pilot attachment
+  (`src/PilotAttachment.*`): an explicit, authoritative kinematic
+  relationship that keeps the piloting player rigidly glued to the
+  spacecraft's own pose through arbitrary rotation, including upside
+  down — a genuinely new capability, not an extension of Milestone 8's
+  ordinary moving-support carry, which remains exactly what runs whenever
+  nobody is piloting the spacecraft. Releasing control hands the player
+  the spacecraft's own real point velocity (linear plus the rotational
+  contribution at the player's own offset) rather than resetting it. The
+  spacecraft now renders as an imported model (`assets/models/plane.obj`)
+  through the Milestone 9 mesh path instead of a plain box. See
+  "Milestone 11" for the full design, the two new headless test suites
+  (`judas_pilot_attachment_tests`, `judas_spacecraft_control_tests`), and
+  why the acquisition/release logic had to be factored into shared
+  functions (`src/PilotControl.*`) rather than copy-pasted a third time.
 
 Each milestone's demo content has been replaced (not extended) by the next;
 check out a tag to see or run an earlier milestone as it was.
@@ -1324,7 +1364,363 @@ runs (expected and correct — grounded velocity is no longer instant, so
 approach timing shifts slightly), but boarding, riding, releasing control,
 jumping from, and landing back on the primitive all still work.
 
-## Player-to-object interaction
+## Milestone 11
+
+Upgrades the Milestone 8 flying primitive into a controllable spacecraft
+with full 6-degree-of-freedom translation and independent pitch/yaw/roll,
+and adds the milestone's central new capability: an explicit,
+authoritative attachment that physically secures the piloting player to
+the spacecraft through arbitrary rotation, including upside down. This is
+NOT a general reference-frame system, a vehicle framework, or artificial
+gravity — see "What was deliberately not built" at the end of this
+section.
+
+### Repurposing, not replacing
+
+The spacecraft is still the exact same `DynamicBody` Milestone 8 created —
+same box collider, same spawn position on the plank, same gravity/
+collision/presentation/reset mechanism every other dynamic body shares.
+`FlyingPrimitiveControl` (`src/FlyingPrimitiveControl.h`) is still "one
+handle, one bool"; only `ApplyFlyingPrimitiveControl`'s own body grew, from
+a 2-axis-translation-plus-yaw controller into a full 6DOF one. Nothing
+about the underlying object's identity changed — the brief was explicit
+that this had to be a repurposing, not a second competing flight path, and
+the diff for this milestone reflects that: `FlyingPrimitiveControl.cpp` is
+rewritten, not duplicated.
+
+### The spacecraft's mesh: `assets/models/plane.obj`
+
+A small, deliberately boxy aircraft — a fuselage, wings, a vertical tail
+fin (placed off the fuselage's own top/bottom symmetry specifically so a
+180-degree roll is visually unambiguous, not invisible), and a horizontal
+tailplane — four hand-placed rectangular prisms, flat-shaded with one
+explicit per-face normal each, same authoring style as `beacon.obj`
+(Milestone 9): no shared/averaged vertex normals, no material file,
+loaded through the exact same `LoadObjMesh`/`Renderer::CreateMesh` path.
+Original content authored for this project, same public-domain/
+CC0-equivalent provenance as every other hand-authored asset here.
+Untextured — it draws through `Renderer::DrawMesh` with an invalid
+`TextureHandle`, which resolves to the existing 1x1 white fallback (see
+"Milestone 9, Textures"), tinted by the same `kFlyingPrimitiveColor` the
+old `DrawBox` call used, so it costs nothing new in the texture/asset
+system.
+
+Authored directly at the spacecraft's own physics-box footprint
+(`kFlyingPrimitiveHalfExtents`, 2.0 x 0.25 x 3.0) with the same forward
+convention every other forward vector in this engine already uses
+(`orientation * (0,0,-1)`) — so it renders correctly at scale 1 with an
+identity model-to-body transform, no separate correction needed. (The
+brief explicitly anticipated a mismatch here; there wasn't one, because
+the mesh was authored against the collider's own dimensions from the
+start rather than imported from an existing model with its own
+conventions.)
+
+### Full local-space flight controls
+
+Every control axis — all three translation directions and all three
+rotation axes — is derived from the spacecraft's own CURRENT orientation,
+never gravity and never a fixed world direction:
+
+```
+worldForward = shipOrientation * (0, 0, -1)
+worldRight   = shipOrientation * (1, 0, 0)
+worldUp      = shipOrientation * (0, 1, 0)   // a body-axis convention, NOT gravity-derived
+```
+
+Through Milestone 8/10, the primitive's vertical control ("ascend/
+descend") was gravity-relative — the same `ComputeLocalUp`-shaped fallback
+`PlayerController` uses. Milestone 11 deliberately breaks that coupling:
+`ApplyFlyingPrimitiveControl` no longer takes a `GravityField` parameter
+at all. "Local up" for the spacecraft is now a pure body-axis concept, so
+after a 180-degree roll, holding "ascend" moves the spacecraft toward
+where its own roof now points, not toward whatever "away from gravity"
+still means. Gravity remains a completely independent input to the same
+body, applied every step by the unchanged `PrepareDynamicBodiesForStep`;
+`ApplyFlyingPrimitiveControl` only ever OVERRIDES what that contributed
+that step (by unconditionally calling `SetLinearVelocity` — a zero
+`desiredDirection` while nothing is held commands exactly zero velocity,
+canceling gravity outright, the same "boring controls" idiom Milestone 8
+already established) — it never changes what gravity IS, and never reads
+gravity to decide anything.
+
+Translation reuses the existing `Action` enum (`MoveForward`/
+`MoveBackward`/`StrafeLeft`/`StrafeRight`/`MoveUp`/`MoveDown` — W/S/A/D/
+E/Q) exactly as Milestone 8 did, with one meaningful difference: A/D now
+mean an actual strafe again, not yaw (Milestone 8 repurposed them as yaw
+since the primitive had no independent yaw control yet). Rotation gets
+six brand-new `Action` values (`PitchUp`/`PitchDown`/`YawLeft`/`YawRight`/
+`RollLeft`/`RollRight`, mapped to I/K/J/L/U/O — see `src/Window.h`), each
+commanding a fixed-rate angular velocity about the spacecraft's own
+right/up/forward axis respectively:
+
+```
+angularVelocity = worldRight * pitchRate + worldUp * yawRate + worldForward * rollRate
+```
+
+This is an ordinary commanded angular velocity vector — the same
+"assemble world-space axis contributions, hand the sum to
+`SetAngularVelocity`" idiom Milestone 8's single yaw axis already used,
+just with three independent rates instead of one. There is no Euler-angle
+state anywhere: only the spacecraft's current quaternion orientation
+(read fresh via `PhysicsWorld::GetTransform` every step) and this step's
+commanded rate. Sign conventions (verified by
+`judas_spacecraft_control_tests`, "Section D"): `PitchUp` rotates the nose
+toward the spacecraft's own local up; `YawLeft` turns the nose toward the
+spacecraft's own local -right (the ordinary sense of "turning left");
+`RollRight` banks the local right axis downward. All three are direct
+velocity commands via `PhysicsWorld::SetAngularVelocity`/
+`SetLinearVelocity` and ordinary ensuing rigid-body integration — not
+teleporting the body's transform, matching every other piece of directly-
+commanded motion in this engine.
+
+**Why mouse look was deliberately excluded from spacecraft attitude:** the
+brief explicitly called out a specific bug risk — if mouse deltas drove
+both the spacecraft's own orientation AND the player's independent free
+look (still active while piloting, anchored to the spacecraft's presented
+pose — see "Camera and presentation" below), the same input would be
+applied twice, doubling the effective turn rate and coupling two
+conceptually separate things (where the camera looks vs. which way the
+ship is pointed). Rather than carefully threading a "only apply this once"
+flag through both consumers, Milestone 11 avoids the whole class of bug by
+keeping attitude control entirely keyboard-driven and leaving mouse
+deltas meaning exactly what they always have: free look, camera-only,
+never fed into any physics body's orientation. This also makes the
+spacecraft's own attitude fully scriptable and deterministic for the
+`JUDAS_TEST_SCRIPT` harness (`HOLD I/K/J/L/U/O`), which a mouse-driven
+rate would not be.
+
+**Flight policy, stated explicitly (per the brief's own requirement):**
+releasing a translation key commands exactly zero velocity along that
+axis immediately — there is no coast, no momentum preserved from input
+alone (though real physical momentum from gravity/collision impulses
+before `ApplyFlyingPrimitiveControl` overrides it is, naturally,
+overwritten the same way it always was). Active control (any translation
+key held) fully overrides whatever gravity contributed that same step, so
+holding nothing keeps the spacecraft motionless against gravity — matching
+Milestone 8's original "boring controls are correct" behavior exactly.
+Releasing ALL control (pressing `F`) leaves the spacecraft's THEN-CURRENT
+velocity in place; the very next step it receives, it is an ordinary
+ungoverned dynamic body again, gravity applies uninterrupted, and it falls/
+drifts/rests exactly like any other object here. Translation speed
+(`kFlightSpeed`, 8 m/s) and attitude rate (`kAttitudeRateRadiansPerSecond`,
+~74.5°/s) are fixed constants, each axis independently capped at that
+rate, and diagonal/combined input is normalized before scaling — no
+combined-input speed boost from holding two translation keys at once. This
+is direct velocity control, explicitly not a realistic force/thrust flight
+model, exactly as Milestone 8 already documented for its own simpler
+version of the same idiom.
+
+### The secured-pilot attachment (`src/PilotAttachment.h`)
+
+This is the milestone's central new capability, and the reason ordinary
+Milestone 8 moving-support carry is not sufficient here: standing on a
+moving/rotating support (the existing mechanism —
+`PlayerController::FixedUpdate`'s grounded branch, `groundVelocity`,
+`m_lastGroundVelocity`) works by resolving the player's own capsule
+against the support's collision geometry every step via the ordinary
+move-and-slide sweep. That is fundamentally a *contact* relationship —
+gravity keeps the player pressed against the support's surface, and the
+sweep keeps finding it there. It has no way to keep a player "attached" to
+a surface that has rotated to face away from gravity, or upside down: the
+instant the support's own surface normal no longer opposes gravity, there
+is nothing left holding the player against it, exactly as ordinary contact
+physics should behave for anything that ISN'T explicitly secured. Piloting
+a spacecraft that can roll upside down needs a genuinely different
+relationship — not "resting on," but "bolted to."
+
+`PilotAttachment` is a tiny struct (`attached: bool`,
+`localOffset: vec3`, `localOrientation: quat`) plus three free functions,
+the same "small free functions, not a class or a character-controller
+abstraction" shape `src/StepClimb.h` already established for a smaller
+problem:
+
+```
+BeginPilotAttachment(attachment, shipTransform, playerPosition, playerOrientation)
+    // captures the player's CURRENT pose relative to the spacecraft's
+    // CURRENT transform — called once, at the instant control is acquired
+    localOffset      = inverse(shipRotation) * (playerPosition - shipPosition)
+    localOrientation = inverse(shipRotation) * playerOrientation
+
+ApplyPilotAttachment(attachment, shipTransform, outPosition, outOrientation)
+    // reconstructs a world pose from the spacecraft's CURRENT transform
+    // and the stored local pose — called every fixed step while attached
+    outPosition    = shipPosition + shipRotation * localOffset
+    outOrientation = normalize(shipRotation * localOrientation)
+```
+
+The critical property, verified directly by
+`judas_pilot_attachment_tests` ("Section D: repeated rotations accumulate
+zero attachment drift"): `ApplyPilotAttachment` is a PURE function of the
+spacecraft's current transform and the two fields captured once at
+acquisition — never an incremental update, never accumulated frame over
+frame. A long flight with hundreds of rotations produces EXACTLY zero
+attachment drift by construction, because there is nothing to drift: the
+player's world pose is recomputed fresh from scratch every step, the same
+way `PlayerController`'s own orientation is recomputed fresh from gravity
+every step rather than integrated incrementally from itself.
+
+`PlayerController::FixedUpdateAttached(newPosition, newOrientation)` is
+called INSTEAD OF the ordinary `FixedUpdate` for any step the player is
+attached (see `src/PilotControl.h` below for exactly when). It snapshots
+presentation history exactly like `FixedUpdate` always has, then
+overwrites `m_position`/`m_frameOrientation` directly from the
+attachment's own computation — no gravity sampling, no support probe, no
+move-and-slide. This matters: ordinary grounding and locomotion **must
+not fight the secured pose** (the brief's own words) — if
+`FixedUpdate`'s ordinary ground probe ran while attached, it could find
+nothing walkable (the spacecraft might be upside down) and report
+`isGrounded = false`, or worse, find some unrelated piece of world
+geometry and silently reground the player there, fighting the attachment
+every step. Skipping ordinary locomotion outright while attached is the
+smallest mechanism that avoids that class of bug entirely, rather than
+threading an "ignore this" flag through several of `FixedUpdate`'s
+existing checks. Support/velocity/jump bookkeeping is reset to a neutral
+state each attached step (never grounded, zero ground-carry velocity, no
+buffered jump) specifically so the very first ordinary `FixedUpdate` after
+release starts clean — never a stale reference to a support the player
+is no longer touching.
+
+`m_velocity` reads exactly zero for the entire duration of piloting — see
+`PlayerController::GetVelocity`'s own updated doc comment. There is no
+independent "player velocity" concept while secured; the spacecraft's own
+velocity is separately queryable via `PhysicsWorld::GetLinearVelocity`. A
+meaningful value is written back exactly once, at the instant of release
+(`PlayerController::SetVelocityAfterRelease` — the only place outside
+`FixedUpdate`/`FixedUpdateAttached` that ever writes `m_velocity`
+directly), so the very next ordinary `FixedUpdate` call integrates gravity
+and collision on top of a real starting velocity, exactly as it would for
+any other newly-airborne player.
+
+### Acquisition, release, and detachment velocity (`src/PilotControl.h`)
+
+Acquisition is gated on the player's own current support state exactly as
+Milestone 8 required — `F` from anywhere else is a no-op — but now also
+captures the attachment:
+
+```
+if F pressed and player is grounded on the spacecraft's own handle:
+    shipTransform = physics.GetTransform(spacecraftHandle)   // its REAL, resolved transform
+    BeginPilotAttachment(attachment, shipTransform, player.GetPosition(), player.GetOrientation())
+    control.controlled = true
+```
+
+Release is always available, in any orientation, support state, or
+gravity context — the brief was explicit that this must never be
+conditional. It computes the player's inherited world-space velocity
+BEFORE clearing the attachment, using ordinary rigid-body point velocity:
+
+```
+r = playerPosition - shipPosition
+releaseVelocity = shipLinearVelocity + cross(shipAngularVelocity, r)
+```
+
+This is the exact same `v + omega x r` formula `PlayerController`'s own
+Milestone 8 moving-support carry already uses for a rotating support (see
+"Milestone 8" below) — a spinning spacecraft imparts real tangential
+velocity to a player standing off-center from it, and dropping that
+angular contribution (releasing with only the spacecraft's CENTER velocity)
+would be exactly the kind of silent momentum loss this engine's own
+"velocity continuity" law (#14) already forbids elsewhere. Verified
+directly by `judas_pilot_attachment_tests` ("Sections F/G/H") with a
+non-zero offset and non-zero angular velocity, confirming the angular
+term is neither dropped nor double-counted.
+
+Both `Application::Run`'s interactive loop and BOTH `JUDAS_TEST_SCRIPT`
+harness modes now call two small shared functions
+(`HandlePilotToggleRequest`, `AdvancePlayerForPiloting` —
+`src/PilotControl.h/.cpp`) instead of each carrying its own copy of this
+logic. Milestone 8's original toggle-only version of this was small
+enough to tolerate being duplicated three times; Milestone 11's
+acquisition (capturing an attachment from real physics state) and
+per-step handling (attached vs. ordinary `FixedUpdate`) are not — three
+independently-maintained copies is exactly the kind of drift risk that
+produces "it works in the harness but not interactively" bugs, so this
+was factored out instead. `AdvancePlayerForPiloting`'s attached/
+not-attached branch also fully subsumes the old always-present
+`inputEnabled` parameter on `FixedUpdate`: Milestone 11 only ever disables
+player input WHILE attached, so there is no longer a separate flag to keep
+in sync with `control.controlled`.
+
+### Camera and presentation
+
+Camera anchoring is unchanged from Milestone 8: while controlled, the
+SAME camera (`PlayerController::GetViewMatrix`'s anchor-pose overload) is
+built from the spacecraft's own presented pose instead of the player's,
+using identical offset/look math either way — no cockpit camera, no
+separate camera system. `glm::lookAt` with an arbitrary up vector handles
+upside-down/rolled orientations correctly with no special-casing; the only
+real risk this milestone had to avoid was mouse deltas double-driving both
+the free-look camera and the spacecraft's own attitude (see "Full
+local-space flight controls" above for why that risk was designed out
+entirely rather than patched around).
+
+Rendering the pilot itself needed one new piece: `ApplyPilotAttachment`
+is reused UNCHANGED for presentation, not just simulation. A
+`BodyTransform` is just a position+rotation pair, and the spacecraft's own
+PRESENTED (interpolated) transform is exactly that — so the same function
+that drives the player's authoritative pose each fixed step also computes
+its rendered pose each frame, from the spacecraft's presented pose instead
+of its authoritative one:
+
+```
+shipPresented = { dynamicBody.GetPresentedPosition(alpha), dynamicBody.GetPresentedOrientation(alpha) }
+ApplyPilotAttachment(attachment, shipPresented, playerRenderPosition, playerRenderOrientation)
+```
+
+This was a deliberate choice over interpolating the player's own
+authoritative before/after snapshots independently (which `GetPresentedPosition`/
+`GetPresentedOrientation` would otherwise do, and which remains exactly
+what happens while NOT attached): applying the attachment to the SAME
+presented spacecraft pose used for the camera and the spacecraft's own
+mesh guarantees the rendered pilot, the rendered spacecraft, and the
+camera all agree on one coherent in-between pose every frame, with no
+possibility of visible relative separation during rapid rotation — the
+brief's own suggested approach, and the smaller mechanism (one function
+reused, not two separate interpolation paths that have to be kept
+consistent by hand).
+
+### Attachment, support, and collision
+
+While attached, the spacecraft's own collision stays fully active — a
+piloted spacecraft still collides with the planets, the plank, and every
+other body exactly as an unpiloted one does (`PhysicsWorld::Step` makes no
+distinction). Attachment is a relationship between the PLAYER's
+authoritative pose and the spacecraft's; it grants the spacecraft no new
+license to pass through anything, and grants the player no new collision
+behavior of its own (the player was never a physics-engine body to begin
+with — see "Player/controller ownership" — so there was nothing to
+disable). Ordinary grounding/support are simply never evaluated for the
+player while attached (see `FixedUpdateAttached` above) rather than
+disabled via a flag on an otherwise-running system — there is no
+`grounded = true` fakery anywhere in this path, and no derivation of
+gravity from the spacecraft's own surface normal; gravity continues to
+come from the unmodified `GravityContextMap`, sampled at the spacecraft's
+own position, exactly as it always has.
+
+### What was deliberately not built
+
+A general moving-reference-frame system, nested physics worlds, or
+anything that would let OTHER code treat "attached to a moving body" as a
+reusable primitive — `PilotAttachment` models exactly the one relationship
+this milestone needs (one player, one spacecraft, captured/released by
+one input), the same restraint `FlyingPrimitiveControl` already showed for
+"one handle, one bool." No spacecraft interior, artificial/spacecraft-local
+gravity, or automatic alignment to gravity — the spacecraft's own local
+axes exist purely because it has an orientation, in zero gravity exactly
+as much as anywhere else, never because "zero gravity has an up." No
+multiple controllable spacecraft or generalized possession framework — one
+`FlyingPrimitiveControl`, one `PilotAttachment`, exactly as before. No
+thruster/fuel/reaction-wheel/aerodynamics model or orbital mechanics —
+translation and rotation remain direct velocity/angular-velocity commands,
+explicitly documented as "boring controls," the same category Milestone 8
+already established. No mesh collision or automatic collider generation
+from `plane.obj` — the spacecraft's collision remains the same simple box
+it always was; render mesh and collision shape stay separate concepts,
+consistent with Milestone 9's own beacon (which has no collider at all).
+No gamepad support or rebindable controls — six new fixed keyboard
+bindings, same as every previous milestone's input additions.
+
+
 
 Added in Milestone 7-A, unchanged in mechanism through the Milestone
 7-Final physics migration. The player is still not a physics-engine body
@@ -2391,7 +2787,13 @@ player's current look direction; `Escape` toggles mouse capture; `R`
 (`ConsumeResetRequest`) and `Space` (`ConsumeJumpRequest`) are discrete,
 edge-triggered one-shot requests, not continuously-polled actions.
 `R` now resets only the player (there is no cube in this milestone's active
-demo to also reset).
+demo to also reset). Milestone 8 added `MoveUp`/`MoveDown` (Q/E) and `F`
+(`ConsumeControlToggleRequest`, also edge-triggered/one-shot) for the
+flying primitive. Milestone 11 adds six more — `PitchUp`/`PitchDown`/
+`YawLeft`/`YawRight`/`RollLeft`/`RollRight`, bound to I/K/J/L/U/O — for the
+spacecraft's attitude control (see "Milestone 11"); like `MoveUp`/
+`MoveDown`, the player itself never consults any of these, and they share
+no scancode with any existing binding, including the arrow-key aliases.
 
 ## Frame timing
 
@@ -2471,6 +2873,17 @@ files, reported honestly rather than selectively:
   transformed by whatever rotation the caller supplies — not a world-up
   assumption, unrelated to gravity or locomotion, out of this audit's scope
   because it isn't a gravity-aware code path.
+- **Milestone 11: `ApplyFlyingPrimitiveControl`'s `worldRight`/`worldUp` and
+  `PilotAttachment`'s `localOffset`/`localOrientation`** are both
+  local-body-space conventions of the same kind as `PlayerController`'s own
+  `m_frameOrientation * (0,1,0)` above — a fixed answer to "which way is
+  THIS object's own up/right," always transformed by that object's current
+  orientation, never a world-space assumption. `ApplyFlyingPrimitiveControl`
+  no longer takes a `GravityField` parameter at all (see "Milestone 11"),
+  so there is no gravity-derived "up" left in it to audit. Verified
+  directly, not just by inspection: `judas_spacecraft_control_tests` and
+  `judas_pilot_attachment_tests` both include a rotate-the-whole-scenario
+  equivalence check against an arbitrary, unaligned quaternion.
 
 ## Automated testing
 
@@ -2819,6 +3232,62 @@ step-for-step, and logged radial-distance-from-planet-center traces
 confirmed the staircase climbs smoothly, the far edge correctly free-falls
 (too tall to catch), and the flying primitive boards by walking alone.
 
+**Milestone 11: two more standalone test executables,
+`judas_pilot_attachment_tests` and `judas_spacecraft_control_tests`.**
+`judas_pilot_attachment_tests` (`tests/PilotAttachmentTests.cpp`) needs
+only the `BodyTransform` struct from `src/PhysicsWorld.h` (a header
+dependency, not a running `PhysicsWorld`) and `src/PilotAttachment.cpp`
+itself — pure CPU math against hand-crafted transforms. Covers: an
+immediate begin/apply round trip reproduces the original pose; a pure ship
+translation carries the attachment rigidly; a 180-degree roll about the
+ship's own forward axis correctly inverts the player's offset in the two
+axes perpendicular to the roll while leaving the along-axis component
+unchanged, and the attachment is never silently cleared by it; 500
+incremental ship rotations preserve the world-space offset length and a
+unit-length orientation exactly (verifying `ApplyPilotAttachment` recomputes
+fresh from the stored local pose rather than accumulating error
+incrementally); the rotate-the-whole-scenario equivalence check (this
+project's fourth application of that technique, after `StepClimbTests`);
+and the release-velocity formula (`v + omega x r`) against hand-computed
+expected values for pure translation, pure rotation at a non-zero offset,
+and combined motion — confirming the angular contribution is neither
+dropped nor double-counted.
+
+`judas_spacecraft_control_tests` (`tests/SpacecraftControlTests.cpp`) uses
+a real `PhysicsWorld` (one dynamic box, orientation set directly via
+`ResetBody`) and a real `Window` constructed WITHOUT calling `Init` — safe
+because `Window::IsActionActive`/etc. check `m_testInputMode` and return
+before ever touching real SDL state, so `SetTestInputMode(true)` plus
+`SetTestActionState` alone is enough to drive `ApplyFlyingPrimitiveControl`
+deterministically with no window, no GL context, and no real keyboard.
+Because that function commands velocity directly (no integration), these
+tests read `PhysicsWorld::GetLinearVelocity`/`GetAngularVelocity` straight
+back after one call, with no need to ever `Step()` the world. Covers: all
+six translation directions map to the correct spacecraft-local axis
+(verified both at an arbitrary orientation, confirming it's body-relative
+and not world-fixed, and at identity, confirming each individual axis);
+releasing all input commands exactly zero velocity, not leftover momentum;
+each of pitch/yaw/roll produces angular velocity about the correct single
+axis with the documented sign, and contributes nothing to the other two; a
+complete no-op (both linear and angular velocity provably untouched) when
+`controlled` is false, even with every key held; and the rotate-the-whole-
+scenario equivalence check for translation control.
+
+Full 6DOF flight, the secured-pilot attachment through translation and
+rotation (including a deliberate upside-down roll while attached), release
+under various conditions, and reboarding were additionally verified via
+interactive `JUDAS_TEST_SCRIPT` gameplay scripts — the same category
+Milestone 10's staircase/ramp/boarding demonstrations were. Logged the
+player's distance from the spacecraft's own position remaining constant
+(matching the attachment's own guarantee) through a translate-then-roll
+sequence; confirmed `FixedUpdateAttached` reports `grounded = 0` for the
+entire attached duration (never fighting the attachment with a stray
+support probe); and confirmed a release mid-flight hands the player
+exactly the spacecraft's own current velocity (logged player velocity at
+the release step matched the spacecraft's own logged velocity to four
+decimal places), after which ordinary gravity integration, collision, and
+landing resumed with no snapping or double-counted motion.
+
 ## Remaining limitations
 
 Recorded honestly rather than left implicit — these are known, deliberately
@@ -2987,6 +3456,37 @@ deferred, not oversights:
   more rigorous claim — genuinely arbitrary rotation — is proven instead
   by `tests/StepClimbTests.cpp`'s rotate-the-scenario checks, which do use
   an arbitrary, unaligned quaternion.
+- **The spacecraft's collider is still the same simple, non-cubic box it
+  was in Milestone 8** (2.0 x 0.25 x 3.0 half-extents), now rotating
+  through arbitrary attitudes rather than staying roughly level. Observed
+  directly while validating this milestone: a sustained roll can bring a
+  corner of that box close enough to nearby static geometry to trigger the
+  contact solver's ordinary positional correction (see "Physics
+  ownership"/`ContactSolver.cpp`'s `kPositionalCorrectionPercent`), nudging
+  the spacecraft's position slightly even with zero commanded linear
+  velocity — correct, intentional contact-resolution behavior (the same
+  mechanism keeps any two overlapping bodies from interpenetrating
+  anywhere else in this engine), not a bug in the attachment or flight
+  controls, but worth naming: a spacecraft flown very close to world
+  geometry while rotating can pick up small unintended positional nudges
+  from ordinary collision response, the same as any other rotating box in
+  this engine would.
+- **The secured-pilot attachment models exactly one relationship (one
+  player, one spacecraft) with no smoothing or interpolation of the
+  attachment itself** — `ApplyPilotAttachment` is an exact, rigid
+  transform, by design (see "Milestone 11"). A spacecraft whose own
+  per-step rotation is extremely large (well beyond anything this demo's
+  `kAttitudeRateRadiansPerSecond` produces at 1/60s) would carry the
+  attached player through that same large rotation in one step, exactly as
+  a rigidly bolted object should — not evaluated at rotation rates far
+  beyond what this milestone's own controls can ever command.
+- **Reboarding after release requires the same ordinary support-gated
+  walk/step onto the spacecraft as the first boarding** — there is no
+  quick-reboard, auto-magnetize, or reduced gating the second time; every
+  boarding goes through the identical `HandlePilotToggleRequest` check.
+  Deliberate, not an oversight: a separate "already familiar with this
+  spacecraft" fast path would be exactly the kind of special-casing the
+  brief's "no generic possession framework" constraint rules out.
 
 ## FUTURE CONSTRAINTS PRESERVED
 
@@ -3008,7 +3508,13 @@ blocking known future requirements. None of these are implemented yet.
   Milestone 4: `PhysicsWorld` bodies are addressed by opaque handles in one
   shared world space; a future frame concept can sit between "an object's
   position" and "the position Judas hands to physics" without requiring
-  today's code to be undone.
+  today's code to be undone. **Partially exercised, not fulfilled, by
+  Milestone 11:** `PilotAttachment` proves one object CAN be rigidly
+  expressed relative to another's moving/rotating frame without a general
+  reference-frame system existing yet — but it remains one hard-coded
+  relationship (player-to-spacecraft), not a reusable primitive; a real
+  moving-reference-frame system (e.g. "everything near a moving spacecraft
+  treats it as locally stationary") is still unbuilt.
 - **Large-world rebasing** — through Milestone 7-B this relied on Jolt's
   optional double-precision build mode. As of Milestone 7-Final's own
   physics engine (`src/RigidBody.h` and friends, all plain `glm::vec3`
@@ -3217,3 +3723,25 @@ Explicitly deferred, not forgotten:
   library or reusable framework — `StepClimb.h`'s two free functions are
   the entire new surface, deliberately not a class hierarchy or plugin
   system for future movement abilities
+- **Milestone 11 additions:** general moving reference frames, nested
+  physics worlds, or a reusable "attach to a moving body" primitive other
+  code can call — `PilotAttachment` models exactly the one player/one
+  spacecraft relationship this milestone needs; spacecraft interiors,
+  artificial/spacecraft-local gravity, or automatic alignment to gravity —
+  the spacecraft's own local axes exist purely because it has an
+  orientation, gravity itself is never touched by control ownership;
+  multiple controllable spacecraft or a generalized possession framework —
+  one `FlyingPrimitiveControl`, one `PilotAttachment`, unchanged in shape
+  from Milestone 8's "one handle, one bool"; a thruster/fuel/reaction-wheel/
+  aerodynamics model, realistic flight dynamics, or orbital mechanics —
+  translation and rotation remain direct velocity/angular-velocity
+  commands, explicitly "boring controls," the same category Milestone 8
+  already established; mesh collision or automatic collider generation
+  from `plane.obj` — the spacecraft's collision remains the same simple
+  box it always was; gamepad support or rebindable controls — six new
+  fixed keyboard bindings (I/K/J/L/U/O), same fixed-binding approach every
+  previous milestone's input additions used; a cockpit camera, cinematic
+  camera, or any new camera system — Milestone 8's existing anchor-pose
+  `GetViewMatrix` overload is reused completely unchanged; renderer/API
+  migration or any expansion of the asset system beyond one more OBJ mesh
+  loaded through the exact same Milestone 9 path.

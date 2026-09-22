@@ -6,6 +6,7 @@
 
 #include "DynamicBody.h"
 #include "FlyingPrimitiveControl.h"
+#include "PilotAttachment.h"
 
 class Window;
 class Renderer;
@@ -62,17 +63,20 @@ class GravityField;
 // automated checks can verify gravity/collision/reset for every body, not
 // just the player. See docs/ARCHITECTURE.md, "Automated testing."
 //
-// `flyingPrimitiveControl` (Milestone 8): the same control-ownership state
-// Application::Run drives — TAP F toggles it (gated on the player's own
-// support state, same rule as the interactive game), ApplyFlyingPrimitiveControl
-// runs each fixed step in the same position the real loop uses, and
-// player.FixedUpdate is called with the same `!controlled` inputEnabled
-// flag. The primitive's own physics state is already covered by its entry
-// in `dynamicBodies`; the CSV additionally logs a `controlled` flag so a
-// script can verify exactly when control was held.
+// `flyingPrimitiveControl` (Milestone 8) and `pilotAttachment` (Milestone
+// 11): the same control-ownership/attachment state Application::Run
+// drives — TAP F calls the exact same src/PilotControl.h functions the
+// interactive game uses (HandlePilotToggleRequest, AdvancePlayerForPiloting),
+// so acquisition gating, attachment capture, and per-step attached-vs-
+// ordinary handling are identical between this harness and real play, not
+// a separately-maintained approximation of it. The spacecraft's own
+// physics state is already covered by its entry in `dynamicBodies`; the
+// CSV additionally logs a `controlled` flag so a script can verify exactly
+// when control (and, in lockstep with it this milestone, attachment) was
+// held.
 int RunTestHarness(Window& window, Renderer& renderer, PhysicsWorld& physicsWorld,
                     PlayerController& player, const GravityField& gravity,
                     std::vector<DynamicBody>& dynamicBodies,
-                    FlyingPrimitiveControl& flyingPrimitiveControl,
+                    FlyingPrimitiveControl& flyingPrimitiveControl, PilotAttachment& pilotAttachment,
                     const std::function<void(Renderer&, float)>& drawScene,
                     const std::string& scriptPath);

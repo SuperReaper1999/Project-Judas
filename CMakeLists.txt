@@ -36,6 +36,8 @@ add_executable(judas
     src/StepClimb.cpp
     src/DynamicBody.cpp
     src/FlyingPrimitiveControl.cpp
+    src/PilotAttachment.cpp
+    src/PilotControl.cpp
     src/ModelLoader.cpp
     src/TextureLoader.cpp
     src/FaithfulGravity.cpp
@@ -113,6 +115,34 @@ add_executable(judas_step_climb_tests
 target_include_directories(judas_step_climb_tests PRIVATE src)
 target_link_libraries(judas_step_climb_tests PRIVATE glm::glm-header-only)
 target_compile_options(judas_step_climb_tests PRIVATE -Wall -Wextra)
+
+# Milestone 11: headless tests for the secured-pilot attachment primitives
+# (see src/PilotAttachment.*) — pure CPU math against hand-crafted
+# BodyTransform values, no PhysicsWorld simulation needed at all (only the
+# BodyTransform struct from src/PhysicsWorld.h, a header dependency).
+add_executable(judas_pilot_attachment_tests
+    tests/PilotAttachmentTests.cpp
+    src/PilotAttachment.cpp
+)
+target_include_directories(judas_pilot_attachment_tests PRIVATE src)
+target_link_libraries(judas_pilot_attachment_tests PRIVATE glm::glm-header-only)
+target_compile_options(judas_pilot_attachment_tests PRIVATE -Wall -Wextra)
+
+# Milestone 11: headless tests for the spacecraft's full 6DOF control (see
+# src/FlyingPrimitiveControl.*) — a real PhysicsWorld plus a real Window
+# constructed without Init (test-input mode only, no SDL/GL call ever
+# happens — see tests/SpacecraftControlTests.cpp's own header comment).
+add_executable(judas_spacecraft_control_tests
+    tests/SpacecraftControlTests.cpp
+    src/FlyingPrimitiveControl.cpp
+    src/Window.cpp
+    ${JUDAS_PHYSICS_SOURCES}
+    src/PhysicsWorld.cpp
+)
+target_include_directories(judas_spacecraft_control_tests PRIVATE src)
+target_include_directories(judas_spacecraft_control_tests PRIVATE ${SDL2_INCLUDE_DIRS})
+target_link_libraries(judas_spacecraft_control_tests PRIVATE SDL2::SDL2 glm::glm-header-only)
+target_compile_options(judas_spacecraft_control_tests PRIVATE -Wall -Wextra)
 
 # stb_image_write (public domain / MIT, see third_party/stb_image_write.h) —
 # used only by the opt-in test harness (src/TestHarness.cpp) to write

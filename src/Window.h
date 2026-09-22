@@ -17,6 +17,15 @@
 // as the rest — needed for the flying primitive's vertical control (see
 // src/FlyingPrimitiveControl.h), which has no "jump" concept. The player
 // itself still never consults these two.
+//
+// Milestone 11 adds Pitch/Yaw/Roll (six more, one per rotation direction),
+// used only by the spacecraft's attitude control (see
+// src/FlyingPrimitiveControl.h) while piloting — keyboard-only and
+// deliberately separate from mouse look, so mouse deltas keep meaning
+// "free camera look" the entire time and never also drive the spacecraft's
+// own orientation (see docs/ARCHITECTURE.md, "Milestone 11," for why
+// double-applying the same input to both would be a real bug, not a
+// style choice). The player itself never consults these six either.
 enum class Action {
     MoveForward,
     MoveBackward,
@@ -24,6 +33,12 @@ enum class Action {
     StrafeRight,
     MoveUp,
     MoveDown,
+    PitchUp,
+    PitchDown,
+    YawLeft,
+    YawRight,
+    RollLeft,
+    RollRight,
 };
 
 // Owns the OS window, the GL context, and OS event pumping. Combines the
@@ -110,7 +125,8 @@ private:
     int m_height = 0;
 
     bool m_testInputMode = false;
-    bool m_testActionState[6] = {false, false, false, false, false, false};
+    bool m_testActionState[12] = {false, false, false, false, false, false,
+                                   false, false, false, false, false, false};
     // mutable: GetMouseDelta is const (it only ever mutates external SDL
     // state in the non-test path), but test mode needs "read once, then
     // drain to zero" semantics on its own queued delta, matching real

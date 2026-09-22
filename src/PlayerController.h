@@ -73,6 +73,31 @@ public:
     void FixedUpdate(const Window& window, PhysicsWorld& physics, const GravityField& gravity,
                       float fixedDeltaTime, bool inputEnabled = true);
 
+    // Milestone 11: advances the player by exactly one fixed step while
+    // SECURED to a spacecraft (see src/PilotAttachment.h) — called INSTEAD
+    // OF FixedUpdate for a step where the player is attached (see
+    // src/PilotControl.h). Snapshots presentation history exactly like
+    // FixedUpdate, then overwrites position/orientation directly from the
+    // attachment's own computation rather than running gravity/support/
+    // locomotion at all — ordinary grounding and move-and-slide must not
+    // fight the secured pose (see docs/ARCHITECTURE.md, "Milestone 11").
+    // Clears support/velocity/jump bookkeeping to a neutral state (never
+    // grounded, zero ground-carry velocity, no buffered jump) so ordinary
+    // FixedUpdate resumes cleanly the moment attachment ends — see
+    // GetVelocity's own note below for why authoritative velocity itself
+    // reads zero throughout the attached period.
+    void FixedUpdateAttached(const glm::vec3& newPosition, const glm::quat& newOrientation);
+
+    // Milestone 11: injects the player's inherited world-space velocity at
+    // the exact instant piloting control is released (see
+    // src/PilotAttachment.h's ComputePilotReleaseVelocity and
+    // src/PilotControl.h's HandlePilotToggleRequest) — the ONLY place
+    // outside FixedUpdate/FixedUpdateAttached that ever writes m_velocity
+    // directly. The very next ordinary FixedUpdate call integrates gravity
+    // and collision on top of this starting velocity exactly as it would
+    // for any other airborne player.
+    void SetVelocityAfterRelease(const glm::vec3& velocity) { m_velocity = velocity; }
+
     // All player state lives in this class (position, velocity,
     // orientation, pending jump) — there is no physics-side state to reset
     // separately, unlike Milestone 4's Jolt-backed player. Also
@@ -124,6 +149,12 @@ public:
     // ground truth, and internally as the interpolation endpoints above.
     glm::vec3 GetPosition() const { return m_position; }
     glm::quat GetOrientation() const { return m_frameOrientation; }
+    // Milestone 11: while attached to a spacecraft (see FixedUpdateAttached),
+    // this reads exactly zero — there is no independent "player velocity"
+    // concept while secured; the spacecraft's own velocity is queryable
+    // separately via PhysicsWorld::GetLinearVelocity(shipHandle). A fresh,
+    // meaningful value is written the instant control is released (see
+    // SetVelocityAfterRelease).
     glm::vec3 GetVelocity() const { return m_velocity; }
     bool IsGrounded() const { return m_lastGrounded; }
 

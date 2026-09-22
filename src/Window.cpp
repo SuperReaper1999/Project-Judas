@@ -119,6 +119,22 @@ bool Window::IsActionActive(Action action) const {
             return keys[SDL_SCANCODE_E];
         case Action::MoveDown:
             return keys[SDL_SCANCODE_Q];
+        // Milestone 11: spacecraft attitude control while piloting (see
+        // src/FlyingPrimitiveControl.h) — a fresh keyboard cluster (IJKL +
+        // U/O) chosen specifically so it shares no scancode with anything
+        // above, including the arrow-key aliases.
+        case Action::PitchUp:
+            return keys[SDL_SCANCODE_I];
+        case Action::PitchDown:
+            return keys[SDL_SCANCODE_K];
+        case Action::YawLeft:
+            return keys[SDL_SCANCODE_J];
+        case Action::YawRight:
+            return keys[SDL_SCANCODE_L];
+        case Action::RollLeft:
+            return keys[SDL_SCANCODE_U];
+        case Action::RollRight:
+            return keys[SDL_SCANCODE_O];
     }
     return false;
 }

@@ -32,6 +32,7 @@
 
 #include "GravityField.h"
 #include "PhysicsWorld.h"
+#include "PilotControl.h"
 #include "PlayerController.h"
 #include "Renderer.h"
 #include "SimulationTiming.h"
@@ -63,11 +64,19 @@ Action ParseHoldKey(const std::string& key, bool& outOk) {
     if (key == "S") return Action::MoveBackward;
     if (key == "A") return Action::StrafeLeft;
     if (key == "D") return Action::StrafeRight;
-    // Milestone 8: Q/E, only meaningful while the flying primitive is
+    // Milestone 8: Q/E, only meaningful while the spacecraft is
     // controlled (see src/FlyingPrimitiveControl.h) — the player itself
     // never consults these two.
     if (key == "Q") return Action::MoveDown;
     if (key == "E") return Action::MoveUp;
+    // Milestone 11: spacecraft attitude control, only meaningful while
+    // controlled — see src/Window.h's own comment for the key layout.
+    if (key == "I") return Action::PitchUp;
+    if (key == "K") return Action::PitchDown;
+    if (key == "J") return Action::YawLeft;
+    if (key == "L") return Action::YawRight;
+    if (key == "U") return Action::RollLeft;
+    if (key == "O") return Action::RollRight;
     outOk = false;
     return Action::MoveForward;
 }
@@ -244,7 +253,7 @@ void TakeScreenshotIfRequested(int index, const std::vector<ScreenshotEvent>& sc
 int RunFixedStepMode(Window& window, Renderer& renderer, PhysicsWorld& physicsWorld,
                       PlayerController& player, const GravityField& gravity,
                       std::vector<DynamicBody>& dynamicBodies,
-                      FlyingPrimitiveControl& flyingPrimitiveControl,
+                      FlyingPrimitiveControl& flyingPrimitiveControl, PilotAttachment& pilotAttachment,
                       const std::function<void(Renderer&, float)>& drawScene,
                       const Script& script) {
     std::printf(
@@ -277,24 +286,20 @@ int RunFixedStepMode(Window& window, Renderer& renderer, PhysicsWorld& physicsWo
                 body.ResetToSpawn(physicsWorld);
             }
             flyingPrimitiveControl.controlled = false;
+            pilotAttachment.attached = false;
         }
-        // Milestone 8: identical gating rule as the interactive loop — see
-        // Application::Run.
+        // Milestone 8/11: identical gating/attachment rule as the
+        // interactive loop — see Application::Run, src/PilotControl.h.
         if (window.ConsumeControlToggleRequest()) {
-            if (flyingPrimitiveControl.controlled) {
-                flyingPrimitiveControl.controlled = false;
-            } else if (player.IsGrounded() &&
-                       player.GetSupportBodyHandle().id == flyingPrimitiveControl.handle.id) {
-                flyingPrimitiveControl.controlled = true;
-            }
+            HandlePilotToggleRequest(flyingPrimitiveControl, pilotAttachment, player, physicsWorld);
         }
 
         PrepareDynamicBodiesForStep(dynamicBodies, gravity, physicsWorld,
                                      SimulationTiming::kFixedTimestep);
-        ApplyFlyingPrimitiveControl(flyingPrimitiveControl, window, physicsWorld, gravity);
+        ApplyFlyingPrimitiveControl(flyingPrimitiveControl, window, physicsWorld);
         physicsWorld.Step(SimulationTiming::kFixedTimestep);
-        player.FixedUpdate(window, physicsWorld, gravity, SimulationTiming::kFixedTimestep,
-                            !flyingPrimitiveControl.controlled);
+        AdvancePlayerForPiloting(flyingPrimitiveControl, pilotAttachment, player, physicsWorld, window,
+                                  gravity, SimulationTiming::kFixedTimestep);
         SyncDynamicBodiesFromPhysics(dynamicBodies, physicsWorld);
 
         if (script.logEvery > 0 && step % script.logEvery == 0) {
@@ -330,7 +335,7 @@ int RunFixedStepMode(Window& window, Renderer& renderer, PhysicsWorld& physicsWo
 int RunRealtimeMode(Window& window, Renderer& renderer, PhysicsWorld& physicsWorld,
                      PlayerController& player, const GravityField& gravity,
                      std::vector<DynamicBody>& dynamicBodies,
-                     FlyingPrimitiveControl& flyingPrimitiveControl,
+                     FlyingPrimitiveControl& flyingPrimitiveControl, PilotAttachment& pilotAttachment,
                      const std::function<void(Renderer&, float)>& drawScene,
                      const Script& script) {
     // "pres*" columns are what's actually presented that frame (see
@@ -382,15 +387,11 @@ int RunRealtimeMode(Window& window, Renderer& renderer, PhysicsWorld& physicsWor
                 body.ResetToSpawn(physicsWorld);
             }
             flyingPrimitiveControl.controlled = false;
+            pilotAttachment.attached = false;
             physicsAccumulator = 0.0f;
         }
         if (window.ConsumeControlToggleRequest()) {
-            if (flyingPrimitiveControl.controlled) {
-                flyingPrimitiveControl.controlled = false;
-            } else if (player.IsGrounded() &&
-                       player.GetSupportBodyHandle().id == flyingPrimitiveControl.handle.id) {
-                flyingPrimitiveControl.controlled = true;
-            }
+            HandlePilotToggleRequest(flyingPrimitiveControl, pilotAttachment, player, physicsWorld);
         }
 
         physicsAccumulator += frameDeltaTime;
@@ -399,10 +400,10 @@ int RunRealtimeMode(Window& window, Renderer& renderer, PhysicsWorld& physicsWor
                stepsThisFrame < SimulationTiming::kMaxPhysicsStepsPerFrame) {
             PrepareDynamicBodiesForStep(dynamicBodies, gravity, physicsWorld,
                                          SimulationTiming::kFixedTimestep);
-            ApplyFlyingPrimitiveControl(flyingPrimitiveControl, window, physicsWorld, gravity);
+            ApplyFlyingPrimitiveControl(flyingPrimitiveControl, window, physicsWorld);
             physicsWorld.Step(SimulationTiming::kFixedTimestep);
-            player.FixedUpdate(window, physicsWorld, gravity, SimulationTiming::kFixedTimestep,
-                                !flyingPrimitiveControl.controlled);
+            AdvancePlayerForPiloting(flyingPrimitiveControl, pilotAttachment, player, physicsWorld,
+                                      window, gravity, SimulationTiming::kFixedTimestep);
             SyncDynamicBodiesFromPhysics(dynamicBodies, physicsWorld);
             physicsAccumulator -= SimulationTiming::kFixedTimestep;
             ++stepsThisFrame;
@@ -449,7 +450,7 @@ int RunRealtimeMode(Window& window, Renderer& renderer, PhysicsWorld& physicsWor
 int RunTestHarness(Window& window, Renderer& renderer, PhysicsWorld& physicsWorld,
                     PlayerController& player, const GravityField& gravity,
                     std::vector<DynamicBody>& dynamicBodies,
-                    FlyingPrimitiveControl& flyingPrimitiveControl,
+                    FlyingPrimitiveControl& flyingPrimitiveControl, PilotAttachment& pilotAttachment,
                     const std::function<void(Renderer&, float)>& drawScene,
                     const std::string& scriptPath) {
     Script script;
@@ -462,10 +463,11 @@ int RunTestHarness(Window& window, Renderer& renderer, PhysicsWorld& physicsWorl
     window.SetTestInputMode(true);
 
     const int exitCode =
-        script.realtime ? RunRealtimeMode(window, renderer, physicsWorld, player, gravity,
-                                           dynamicBodies, flyingPrimitiveControl, drawScene, script)
-                         : RunFixedStepMode(window, renderer, physicsWorld, player, gravity,
-                                            dynamicBodies, flyingPrimitiveControl, drawScene, script);
+        script.realtime
+            ? RunRealtimeMode(window, renderer, physicsWorld, player, gravity, dynamicBodies,
+                               flyingPrimitiveControl, pilotAttachment, drawScene, script)
+            : RunFixedStepMode(window, renderer, physicsWorld, player, gravity, dynamicBodies,
+                                flyingPrimitiveControl, pilotAttachment, drawScene, script);
 
     window.SetTestInputMode(false);
     return exitCode;
