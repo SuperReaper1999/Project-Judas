@@ -213,6 +213,18 @@ void PhysicsWorld::ApplyLinearAcceleration(BodyHandle handle, const glm::vec3& a
     body->rigidBody.linearVelocity += acceleration * fixedDeltaTime;
 }
 
+void PhysicsWorld::ApplyForce(BodyHandle handle, const glm::vec3& force) {
+    Impl::Body* body = m_impl->Get(handle);
+    if (!body || body->rigidBody.IsStatic()) return;
+    body->rigidBody.ApplyForce(force);
+}
+
+void PhysicsWorld::ApplyTorque(BodyHandle handle, const glm::vec3& torque) {
+    Impl::Body* body = m_impl->Get(handle);
+    if (!body || body->rigidBody.IsStatic()) return;
+    body->rigidBody.ApplyTorque(torque);
+}
+
 bool PhysicsWorld::IsDynamicBody(BodyHandle handle) const {
     const Impl::Body* body = m_impl->Get(handle);
     return body && body->isDynamic;
@@ -239,23 +251,36 @@ void PhysicsWorld::SetAngularVelocity(BodyHandle handle, const glm::vec3& angula
 }
 
 void PhysicsWorld::Step(float fixedDeltaTime) {
-    // 1) Integrate every dynamic body's position/orientation from its
-    // CURRENT velocity. Gravity has already been folded into that velocity
-    // by the caller's own ApplyLinearAcceleration call this step (the same
+    // 1) Integrate every dynamic body's velocity/angular velocity from its
+    // accumulated force/torque (Milestone 12 — see ApplyForce/ApplyTorque
+    // above), then its position/orientation from the resulting velocity.
+    // Gravity has already been folded directly into velocity by the
+    // caller's own ApplyLinearAcceleration call this step (the same
     // "Judas samples gravity, hands it to physics" ordering every consumer
-    // already uses) -- this step only advances position/orientation, it
-    // does not sample or apply gravity itself.
+    // already uses) -- IntegrateRigidBody's own force-driven acceleration
+    // composes with that additively, not instead of it: both are already
+    // sitting in linearVelocity/forceAccumulator respectively by the time
+    // this runs.
+    //
+    // This is the SAME free function (src/RigidBody.h/.cpp) the standalone
+    // physics/collision test suites have exercised directly against a bare
+    // RigidBody since Milestone 7-Final; through Milestone 11 the live
+    // simulation never actually called it, reimplementing just the
+    // position/orientation half of it inline instead, because nothing yet
+    // used the force/torque accumulator on a live body (every consumer
+    // either called ApplyLinearAcceleration directly, or, for the M8-M11
+    // flying primitive specifically, overwrote velocity/angular velocity
+    // outright via Set*Velocity). With a real force/torque-driven control
+    // path now existing, calling the real integrator here closes that gap
+    // instead of adding a second, competing one — see docs/ARCHITECTURE.md,
+    // "Milestone 12." Behaviorally unchanged for every body that never has
+    // ApplyForce/ApplyTorque called on it (accumulator stays exactly
+    // zero, contributing zero to velocity, identical to before this
+    // milestone) — the position/orientation math itself is byte-identical
+    // to what was inlined here previously.
     for (Impl::Body& body : m_impl->bodies) {
         if (!body.alive || !body.isDynamic) continue;
-        RigidBody& rigidBody = body.rigidBody;
-        rigidBody.position += rigidBody.linearVelocity * fixedDeltaTime;
-
-        const glm::quat angularVelocityQuat(0.0f, rigidBody.angularVelocity.x,
-                                             rigidBody.angularVelocity.y,
-                                             rigidBody.angularVelocity.z);
-        const glm::quat orientationDelta = angularVelocityQuat * rigidBody.orientation;
-        rigidBody.orientation =
-            glm::normalize(rigidBody.orientation + orientationDelta * (0.5f * fixedDeltaTime));
+        IntegrateRigidBody(body.rigidBody, fixedDeltaTime);
     }
 
     // 2) Broadphase (brute-force all pairs -- see the note above) +

@@ -8,7 +8,7 @@ This is **not** a general-purpose engine and is not trying to compete with
 Unity, Unreal, or Godot. It exists to serve one specific class of game, and
 its architecture is deliberately narrow.
 
-## Status: Milestone 11
+## Status: Milestone 12
 
 A controllable player walks, jumps, and falls under real physics — Judas's
 own physics engine, not a third-party library — across two independent
@@ -91,16 +91,35 @@ off-center point — no reset, no snap to a fixed seat, no freeze. It now
 renders as a real imported model (`assets/models/plane.obj`) instead of a
 plain box, through the same Milestone 9 model/texture/lighting path. See
 [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md), "Milestone 11," for the
-exact control mapping, the secured-pilot attachment mechanism, and what
-this deliberately isn't (no vehicle framework, no artificial gravity, no
-orbital mechanics, no multiple spacecraft). That's it — no mantling,
-climbing, terrain, real planets, more than one controllable vehicle,
-shadows, or further gameplay yet.
+secured-pilot attachment mechanism and what this deliberately isn't (no
+vehicle framework, no artificial gravity, no orbital mechanics, no
+multiple spacecraft).
+
+**New this milestone:** the spacecraft's controls are genuine force/
+torque-driven inertia, not a directly commanded speed. Holding a
+translation key applies real force (accelerating it gradually, per
+`F = ma`, using its actual mass); holding a rotation key applies real
+torque (spinning it up gradually, per its actual inverse inertia tensor —
+pitch, yaw, and roll genuinely accelerate at different rates, since the
+spacecraft isn't shaped the same along all three axes). **Releasing every
+key does not stop it** — with no force acting, it keeps moving at exactly
+the velocity it had; with no torque acting, it keeps rotating at exactly
+the angular velocity it had. Turning the nose does not turn existing
+momentum: build up speed, let go, spin the ship around, and it keeps
+travelling the original way — now effectively flying backwards — until
+thrust is applied against that motion to actually slow it down, stop it,
+and reverse it. See [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md),
+"Milestone 12," for the exact force/torque magnitudes, the real numeric
+evidence for all of this, and a couple of honestly-documented rough edges
+(rotating while still resting on the ground is realistically stiff;
+a very hard, fast collision can shed more speed than gentle friction alone
+would suggest). That's it — no mantling, climbing, terrain, real planets,
+more than one controllable vehicle, shadows, or further gameplay yet.
 
 This is intentional — see `docs/ARCHITECTURE.md` for why, what's
 deliberately not built yet, and how this small foundation avoids blocking
 the much larger long-term design. Earlier milestones are preserved as git
-tags (`milestone-1` through `milestone-11`, once this one is tagged) rather
+tags (`milestone-1` through `milestone-12`, once this one is tagged) rather
 than kept running alongside the current demo.
 
 ## Building
@@ -209,13 +228,30 @@ whatever direction that now points in world space. Mouse look still moves
 the camera freely (a free look independent of the spacecraft's own
 attitude, driven purely by mouse motion) and is never also applied to the
 spacecraft's own orientation — attitude control is keyboard-only,
-specifically so the two never double up on the same input. Pressing `F`
-again hands input authority straight back to the player, releases the
-attachment, preserves exactly where the player was, and gives it the
-spacecraft's own real velocity at that instant (including a rotating
-spacecraft's own angular contribution) — see `docs/ARCHITECTURE.md`,
-"Milestone 11," for the exact formula and what happens if nothing is
-supporting the player at that point (it falls, same as anyone else).
+specifically so the two never double up on the same input.
+
+**As of Milestone 12, every key above applies FORCE or TORQUE, not a
+speed.** Holding forward accelerates gradually rather than snapping to a
+fixed speed; letting go doesn't stop the spacecraft — it keeps coasting
+at whatever velocity it had, indefinitely, until something (more thrust,
+gravity, or a collision) changes it. The same is true of rotation: torque
+builds angular velocity, and releasing the key leaves it spinning. To
+actually slow down or stop turning, apply force or torque in the opposite
+sense — there is no braking, damping, or auto-level anywhere in this
+engine. See `docs/ARCHITECTURE.md`, "Milestone 12," for the exact force/
+torque magnitudes and the numeric evidence behind all of this. One
+practical note: while still resting on the plank, ordinary ground friction
+can make rotation feel stiff or entirely unresponsive (a real, physically
+correct effect of this demo's friction coefficient, not a bug) — ascend a
+little first if turning in place doesn't seem to do anything.
+
+Pressing `F` again hands input authority straight back to the player,
+releases the attachment, preserves exactly where the player was, and
+gives it the spacecraft's own real velocity at that instant (including a
+rotating spacecraft's own angular contribution) — see
+`docs/ARCHITECTURE.md`, "Milestone 11," for the exact formula and what
+happens if nothing is supporting the player at that point (it falls, same
+as anyone else).
 
 ## Automated testing (developer tooling)
 
@@ -243,10 +279,15 @@ check the physics suites use); `judas_pilot_attachment_tests` (Milestone
 translation and rotation including a 180-degree roll, zero-drift under
 many repeated rotations, and the release-velocity formula's angular
 contribution, plus the same rotate-the-whole-scenario check); and
-`judas_spacecraft_control_tests` (Milestone 11 — the spacecraft's 6DOF
-control: all six translation directions and all three rotation axes map
-to the correct spacecraft-local direction, a no-op while not controlled,
-and the same rotate-the-whole-scenario check):
+`judas_spacecraft_control_tests` (Milestone 11's control-mapping suite,
+rewritten for Milestone 12's force/torque-driven inertia — see
+`docs/ARCHITECTURE.md`, "Milestone 12" — rather than extended: it now
+calls `PhysicsWorld::Step` after every control call and measures the real
+integrated result, covering sustained-thrust acceleration, coasting after
+release, orientation/velocity independence, counter-thrust, perpendicular
+thrust, F/m mass response, angular coasting, counter-torque, the real
+inverse-inertia-tensor's per-axis response, gravity+thrust composition, a
+no-op while uncontrolled, and the same rotate-the-whole-scenario check):
 
 ```bash
 cmake --build build --target judas_physics_tests judas_collision_tests judas_asset_tests judas_step_climb_tests judas_pilot_attachment_tests judas_spacecraft_control_tests

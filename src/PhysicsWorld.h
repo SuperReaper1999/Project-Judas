@@ -114,8 +114,38 @@ public:
     void ApplyLinearAcceleration(BodyHandle handle, const glm::vec3& acceleration,
                                   float fixedDeltaTime);
 
+    // Milestone 12: adds `force`/`torque` (world-space) to the body's
+    // RigidBody force/torque accumulator (RigidBody::ApplyForce/
+    // ApplyTorque) — genuine F=ma physics, turned into an actual velocity/
+    // angular-velocity change by the NEXT Step() call (via
+    // IntegrateRigidBody, which also clears both accumulators
+    // afterward — see Step()'s own comment). Unlike
+    // ApplyLinearAcceleration (which mutates velocity immediately and
+    // unconditionally, mass-independent, exactly right for gravity) or
+    // SetLinearVelocity/SetAngularVelocity (which overwrite velocity
+    // outright), these two respect the body's actual mass/inertia and
+    // compose additively with whatever else affected the accumulator or
+    // velocity that same step — nothing here overwrites anything. Must be
+    // called fresh every fixed step a force/torque should act; nothing
+    // persists it across steps (a no-op call this step means no
+    // contribution this step — see law #22/#32 in Project_Persistent_Memory.md).
+    // A no-op on a static or unknown handle.
+    void ApplyForce(BodyHandle handle, const glm::vec3& force);
+    void ApplyTorque(BodyHandle handle, const glm::vec3& torque);
+
     // Advances the simulation by exactly one fixed step. The caller owns
     // the accumulator that decides how many times to call this per frame.
+    // Milestone 12: each dynamic body's own accumulated force/torque
+    // (ApplyForce/ApplyTorque above) is integrated into its velocity/
+    // angular velocity here (via RigidBody.h's IntegrateRigidBody — the
+    // same free function the standalone physics/collision test suites
+    // already exercise directly against a bare RigidBody, now genuinely
+    // used by the live simulation for the first time), then cleared,
+    // before position/orientation integrate from the resulting velocity —
+    // so gravity (already folded into velocity directly via
+    // ApplyLinearAcceleration, called before Step()) and any force/torque
+    // applied this step compose into the same integration pass, in the
+    // order they were applied, with no double-counting.
     void Step(float fixedDeltaTime);
 
     BodyTransform GetTransform(BodyHandle handle) const;

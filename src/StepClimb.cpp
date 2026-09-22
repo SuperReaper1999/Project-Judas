@@ -64,10 +64,27 @@ bool TryStepMove(const PhysicsWorld& physics, const glm::vec3& position,
 
     // 3) Sweep forward from the raised position. If this makes no more
     // progress than the flat attempt already did, stepping didn't help.
+    //
+    // Milestone 12 bugfix: a raised sweep that reaches the FULL requested
+    // displacement completely unobstructed (`!forwardHit.hit`) is always a
+    // genuine, complete success, regardless of how close the flat sweep
+    // happened to get on its own — the `kMinStepImprovement` margin below
+    // exists to reject floating-point noise between two BLOCKED sweeps
+    // (flat vs. raised-then-forward both stopped by something), not to
+    // second-guess a sweep that cleared entirely. Skipping the margin
+    // check in the fully-clear case matters most for a SMALL per-step
+    // displacement (an ordinary walking step, a few centimeters) against
+    // an obstruction the flat sweep already happened to reach 90%+ of the
+    // way into. Verified this changes nothing observable for a STATIC
+    // obstruction (its distance only ever shrinks step over step as the
+    // player keeps closing in — see tests/StepClimbTests.cpp, still
+    // passing); it matters for a PUSHABLE dynamic body specifically (see
+    // docs/ARCHITECTURE.md, "Milestone 12," for the walking-into-the-
+    // spacecraft scenario this was found in).
     const ShapeSweepHit forwardHit =
         physics.SweepPlayerShape(raisedPosition, orientation, horizontalDisplacement);
+    if (forwardHit.hit && forwardHit.distance <= flatDistance + kMinStepImprovement) return false;
     const float forwardDistance = forwardHit.hit ? forwardHit.distance : horizontalLength;
-    if (forwardDistance <= flatDistance + kMinStepImprovement) return false;
 
     // Stop just short of anything the forward sweep hit, same skin-margin
     // convention the ordinary move-and-slide loop already uses.

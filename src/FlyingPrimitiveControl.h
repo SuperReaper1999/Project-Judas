@@ -7,23 +7,29 @@
 class Window;
 
 // Milestone 8's control-ownership mechanism, upgraded in Milestone 11 to
-// full 6-degree-of-freedom spacecraft control (translation along all three
-// local axes, plus independent pitch/yaw/roll) — the underlying object is
-// repurposed, not replaced: still one ordinary DynamicBody (src/DynamicBody.h)
-// in Application.cpp's dynamicBodies list, still ordinary gravity via
-// PrepareDynamicBodiesForStep, ordinary collision via PhysicsWorld::Step,
-// ordinary presentation interpolation, ordinary ResetToSpawn. This
-// struct/function pair still adds exactly one thing on top of that: while
-// `controlled` is true, input is turned into directly-commanded linear and
-// angular velocity for its body, overriding whatever
-// PrepareDynamicBodiesForStep's ordinary gravity application contributed
-// that step — the same "Judas commands the velocity outright, physics
-// obeys" idiom PlayerController's own grounded locomotion uses. Still
-// deliberately not a vehicle-physics framework: no thrust/fuel/engine
-// model, no generalized possession mechanism for multiple objects — one
-// handle, one bool. See docs/ARCHITECTURE.md, "Milestone 11," and
-// src/PilotAttachment.h for the new secured-pilot relationship this
-// milestone adds alongside it.
+// full 6-degree-of-freedom spacecraft control, and in Milestone 12 to
+// genuine force/torque-driven inertia — the underlying object is
+// repurposed, not replaced, each time: still one ordinary DynamicBody
+// (src/DynamicBody.h) in Application.cpp's dynamicBodies list, still
+// ordinary gravity via PrepareDynamicBodiesForStep, ordinary collision via
+// PhysicsWorld::Step, ordinary presentation interpolation, ordinary
+// ResetToSpawn. This struct/function pair still adds exactly one thing on
+// top of that: while `controlled` is true, input is turned into a
+// spacecraft-local force and torque applied to its body's accumulator
+// (PhysicsWorld::ApplyForce/ApplyTorque) — added on top of whatever
+// PrepareDynamicBodiesForStep's ordinary gravity application already
+// contributed that step, never overwriting it. Through Milestone 11, this
+// instead commanded linear/angular velocity directly (SetLinearVelocity/
+// SetAngularVelocity), the same "Judas commands the velocity outright,
+// physics obeys" idiom PlayerController's own grounded locomotion still
+// uses; Milestone 12 deliberately replaces that with real F=ma physics for
+// the spacecraft specifically — see docs/ARCHITECTURE.md, "Milestone 12,"
+// for why (releasing input must coast, not stop). Still deliberately not a
+// vehicle-physics framework: no thrust/fuel/engine model, no generalized
+// possession mechanism for multiple objects — one handle, one bool. See
+// src/PilotAttachment.h for the secured-pilot relationship this struct
+// pairs with, unaffected by this milestone's change (it reads whatever
+// velocity the spacecraft actually has, however that velocity got there).
 struct FlyingPrimitiveControl {
     BodyHandle handle;
     bool controlled = false;
@@ -31,24 +37,29 @@ struct FlyingPrimitiveControl {
 
 // Called once per fixed step, AFTER PrepareDynamicBodiesForStep (so this
 // body has already received ordinary gravity exactly like every other
-// dynamic body) and BEFORE PhysicsWorld::Step (so the commanded velocity
-// below is what actually gets integrated and checked for collisions this
-// step). A no-op unless `control.controlled` is true. Takes no
-// fixedDeltaTime — velocity is commanded directly (kinematic-style, the
-// same idiom as PlayerController's grounded WASD control), never
-// integrated from an acceleration here.
+// dynamic body) and BEFORE PhysicsWorld::Step (so the force/torque applied
+// below is integrated, along with gravity's own contribution, by that same
+// Step() call). A no-op unless `control.controlled` is true.
 //
-// Milestone 11: every control axis (translation AND rotation) is derived
-// from the spacecraft's OWN current orientation — never gravity, never a
-// fixed world axis (see docs/ARCHITECTURE.md, "Milestone 11," for the full
-// mapping). Through Milestone 8/10, vertical control ("up") was gravity-
-// relative; that coupling is deliberately removed here — this function no
-// longer takes a GravityField at all, satisfying the brief's "spacecraft
-// controls must not know which concrete gravity field is active" even more
-// directly than by staying implementation-agnostic. Gravity remains a
-// completely independent input to this same body via
-// PrepareDynamicBodiesForStep, called separately by the caller; this
-// function only ever OVERRIDES what that contributed this step, the same
-// relationship as before — it never changes what gravity IS.
+// Milestone 12: applies a constant-magnitude force along the combined held
+// translation directions, and a constant-magnitude torque about each held
+// rotation axis, via PhysicsWorld::ApplyForce/ApplyTorque — NOT a directly
+// commanded velocity/angular velocity. Must be called fresh every fixed
+// step held input should still be contributing force/torque: nothing here
+// persists a force or torque across steps on its own (PhysicsWorld::Step
+// clears both accumulators every step after integrating them — see
+// PhysicsWorld::Step's own comment). Releasing every key simply means this
+// function contributes nothing that step; it does NOT zero the
+// spacecraft's existing velocity/angular velocity — see "no automatic
+// braking" in docs/ARCHITECTURE.md, "Milestone 12."
+//
+// Every control axis (translation AND rotation) is still derived from the
+// spacecraft's OWN current orientation — never gravity, never a fixed
+// world axis (unchanged from Milestone 11; this function still takes no
+// GravityField). Gravity remains a completely independent input to this
+// same body via PrepareDynamicBodiesForStep/ApplyLinearAcceleration,
+// called separately by the caller; the force/torque applied here compose
+// with gravity's own contribution inside the same Step() integration, they
+// never override it.
 void ApplyFlyingPrimitiveControl(FlyingPrimitiveControl& control, const Window& window,
                                   PhysicsWorld& physics);

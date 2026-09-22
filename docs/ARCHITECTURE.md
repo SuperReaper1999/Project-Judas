@@ -6,7 +6,7 @@ someone with no prior context on this project. It is updated in place as
 milestones land, rather than kept as a per-milestone snapshot — see
 "Milestone history" below for how to recover an earlier milestone exactly.
 
-## What exists right now (Milestone 11)
+## What exists right now (Milestone 12)
 
 Open a window. Two independent static spheres ("planets," radius `20m`
 each, centers `55m` apart — see "Physics test world") exist in 3D space,
@@ -109,8 +109,27 @@ the extra motion its own rotation imparts at an off-center point, then
 ordinary gravity/support/locomotion resumes exactly as if the player had
 always been an ordinary (if suddenly airborne) participant. See
 "Milestone 11" below for the full design, the attachment math, and the
-two dedicated headless test suites it added. See the root `README.md` for
-build/run instructions and controls.
+two dedicated headless test suites it added.
+
+**As of Milestone 12, the spacecraft's controls are genuine force/torque-
+driven inertia, not directly commanded velocity.** Holding a translation
+key applies a real spacecraft-local force to the spacecraft's own
+`RigidBody`; holding a rotation key applies a real spacecraft-local
+torque. Releasing every key applies neither — it does NOT stop the
+spacecraft, because nothing in Newtonian mechanics stops a moving body
+with zero net force acting on it. The spacecraft now coasts indefinitely
+after thrust ends, keeps rotating indefinitely after torque ends, and its
+orientation and its direction of travel are genuinely independent facts:
+rotating the nose does not rotate existing momentum. Stopping or reversing
+either requires actual counter-force/counter-torque, which the same
+physics produces naturally — no special "braking" code exists anywhere in
+this milestone. This isn't a new physics engine: it's the FIRST time the
+live simulation actually uses the force/torque accumulator and full 3x3
+inverse inertia tensor `RigidBody`/`PhysicsWorld` already owned since
+Milestone 7-Final but never exercised outside the standalone test suites
+— see "Milestone 12" below for the full design, what this uncovered about
+`PhysicsWorld::Step`'s own history, and the real numeric evidence.
+See the root `README.md` for build/run instructions and controls.
 
 ## Milestone history
 
@@ -203,6 +222,31 @@ preserved as parallel runtime code:
   (`judas_pilot_attachment_tests`, `judas_spacecraft_control_tests`), and
   why the acquisition/release logic had to be factored into shared
   functions (`src/PilotControl.*`) rather than copy-pasted a third time.
+- `milestone-12` — the spacecraft's controls replaced with genuine
+  force/torque-driven inertia: `ApplyFlyingPrimitiveControl` now calls two
+  new generic `PhysicsWorld` methods, `ApplyForce`/`ApplyTorque` (adding to
+  `RigidBody`'s existing force/torque accumulator), instead of overwriting
+  linear/angular velocity outright. Uncovered a real architectural gap
+  while implementing this: `PhysicsWorld::Step` had never actually called
+  `RigidBody.h`'s own `IntegrateRigidBody` — every consumer through
+  Milestone 11 either wrote velocity directly or used
+  `ApplyLinearAcceleration` (gravity only), so the force/torque
+  accumulator, `ApplyForce`/`ApplyTorque`, and the real 3x3 inverse
+  inertia tensor had been exercised only by the standalone physics/
+  collision test suites since Milestone 7-Final, never by the live
+  simulation. `Step` now calls the real integrator, closing that gap
+  instead of adding a second one. Also found and fixed, mid-milestone: the
+  spacecraft's initial control-force magnitude (a "comfortable-looking"
+  320N) turned out to be physically incapable of lifting the spacecraft
+  off the plank at all — less than the ~785N needed just to counter this
+  demo's own gravity — a real bug caught by interactive validation, not
+  the unit tests (which never touch a resting contact); fixed by raising
+  it to 1200N with the actual arithmetic documented, not re-guessed. See
+  "Milestone 12" for the full design, the measured evidence for every
+  required inertial behavior (coasting, orientation/velocity independence,
+  counter-thrust, perpendicular thrust, mass response, rotational inertia
+  via the real tensor, gravity composition), and the two rewritten/
+  extended standalone test suites.
 
 Each milestone's demo content has been replaced (not extended) by the next;
 check out a tag to see or run an earlier milestone as it was.
@@ -1779,6 +1823,375 @@ together (roughly constant ~1m separation) for hundreds of further steps
 as the player keeps walking, confirming sustained contact rather than a
 single nudge — see "Automated testing."
 
+## Milestone 12
+
+Replaces the spacecraft's Milestone 8-11 directly-commanded velocity/
+angular-velocity control with genuine force/torque-driven Newtonian
+inertia: input changes motion by applying force or torque; releasing
+input does not remove motion; where the spacecraft points and where it
+travels are independent physical facts. This is ordinary rigid-body
+mechanics expressed through the physics system Judas already owned — not
+a new integrator, not a new gravity model, not a new attachment
+mechanism.
+
+### What this uncovered: `PhysicsWorld::Step` never called `IntegrateRigidBody`
+
+Before touching any control code, this milestone required inspecting
+`RigidBody`'s force/torque accumulator carefully (per the brief's own
+explicit requirement) — and the inspection turned up something worth
+recording plainly. `src/RigidBody.h/.cpp` has owned a complete, tested
+force/torque-driven integrator (`IntegrateRigidBody`: force → linear
+acceleration via `F * inverseMass` → velocity → position; torque → angular
+acceleration via the REAL 3x3 world-space inverse inertia tensor →
+angular velocity → orientation; then clears both accumulators) since
+Milestone 7-Final. The standalone `judas_physics_tests`/
+`judas_collision_tests` suites have exercised it directly against bare
+`RigidBody` structs ever since. But `PhysicsWorld::Step` — the function
+the LIVE simulation actually calls every fixed step — never called it.
+Instead, `Step` reimplemented just the position/orientation half of that
+same integration inline, trusting that velocity/angular velocity had
+already been fully decided by the caller before `Step` ran: gravity via
+`ApplyLinearAcceleration` (direct `velocity += acceleration * dt`, mass-
+independent, exactly right for gravity, and unaffected by this milestone),
+or, for the Milestone 8-11 flying primitive specifically, `SetLinearVelocity`/
+`SetAngularVelocity` overwriting velocity outright. Nothing on any LIVE
+body ever called `ApplyForce`/`ApplyTorque` (`RigidBody`'s own accumulator-
+writing methods) before this milestone, so the accumulator sat permanently
+at zero, contributing nothing, on every real body in the running game —
+correct by omission, but genuinely dead code on the live path.
+
+This was not a hidden bug to "fix" so much as an unused capability to
+finally connect: `PhysicsWorld::Step`'s inline integration loop is
+replaced with a direct call to `IntegrateRigidBody` (one line, see
+`src/PhysicsWorld.cpp`). This is behaviorally IDENTICAL for every body
+that never has `ApplyForce`/`ApplyTorque` called on it — the accumulator
+stays exactly zero, contributing zero to velocity, and the position/
+orientation math is the same formula that was inlined before — so every
+existing dynamic body (planets' cubes/spheres, anything not the
+spacecraft) is unaffected. It is the smallest change that lets a new
+force/torque-driven consumer exist at all, reusing the exact integrator
+the test suites have verified for four milestones, rather than building a
+second, spacecraft-specific one (which the brief explicitly forbids — see
+"Physics ownership" below).
+
+Two new generic `PhysicsWorld` methods make force/torque available to any
+future caller, not just the spacecraft:
+
+```
+void PhysicsWorld::ApplyForce(BodyHandle handle, const glm::vec3& force);
+void PhysicsWorld::ApplyTorque(BodyHandle handle, const glm::vec3& torque);
+```
+
+Both are thin wrappers over `RigidBody::ApplyForce`/`ApplyTorque` (a no-op
+on a static or unknown handle) — the same "generic rigid-body operation,
+not a spacecraft-only mechanism" shape `GetLinearVelocity`/
+`SetLinearVelocity` already established. Nothing here is spacecraft-
+specific; the spacecraft is simply the first LIVE caller.
+
+### Fixed-step force application order
+
+Within one `PhysicsWorld::Step` call, the order is: (1) any force/torque
+already sitting in the accumulator (gravity's own contribution already
+sits directly in `linearVelocity`, having been applied via
+`ApplyLinearAcceleration` by the caller BEFORE `Step` — see
+`Application.cpp`'s fixed-step loop) integrates into velocity/angular
+velocity via `IntegrateRigidBody`, and the accumulator clears; (2)
+position/orientation integrate from that resulting velocity; (3) contact
+resolution runs. `ApplyFlyingPrimitiveControl` is called once per fixed
+step, between `PrepareDynamicBodiesForStep` (gravity) and `PhysicsWorld::Step`
+— the same position it occupied in Milestone 8-11 — so held input
+contributes force/torque for every fixed step it remains held, and
+nothing here is sensitive to render-frame delivery: a control held for N
+fixed steps always contributes force N times, regardless of how those N
+steps were distributed across render frames (unchanged fixed-step/
+render-frame separation — see "Simulation timing"). Releasing a key
+simply means the NEXT call contributes nothing for that axis; it does not
+need to "undo" anything, since nothing persisted past the step that
+consumed it.
+
+### Local-space force and torque
+
+Unchanged from Milestone 11's own axis derivation — translation and
+rotation axes still come entirely from the spacecraft's own current
+orientation, never gravity, never a fixed world axis:
+
+```
+worldForce  = (localForceDirection derived from held W/S/A/D/Q/E) * kControlForceMagnitude
+worldTorque = right * pitchTorque + up * yawTorque + forward * rollTorque
+```
+
+where `right`/`up`/`forward` are `shipOrientation * (1,0,0)`/`(0,1,0)`/
+`(0,0,-1)`, read fresh from `PhysicsWorld::GetTransform` every step. The
+semantic change is entirely in what happens to these vectors next:
+Milestone 11 handed a velocity/angular-velocity vector straight to
+`SetLinearVelocity`/`SetAngularVelocity` (overwriting whatever was there);
+Milestone 12 hands a force/torque vector to `PhysicsWorld::ApplyForce`/
+`ApplyTorque` (adding to whatever the accumulator already holds that
+step, then let `IntegrateRigidBody` turn it into a velocity CHANGE). A
+zero direction (nothing held) is now a harmless no-op — it does NOT zero
+existing velocity, unlike Milestone 11's unconditional `SetLinearVelocity`
+call.
+
+### Why orientation and velocity are independent
+
+This is a direct, structural consequence of the change above, not a
+separate mechanism to build: `RigidBody.position` and `RigidBody.linearVelocity`
+are integrated purely from `linearVelocity` and `forceAccumulator`, with
+no reference anywhere to `RigidBody.orientation`. Rotating the spacecraft
+changes `orientation`, which changes what `right`/`up`/`forward` evaluate
+to on the NEXT call to `ApplyFlyingPrimitiveControl` — i.e., which
+direction FUTURE force/torque will point — but it cannot retroactively
+touch `linearVelocity`, because nothing in the integration path reads
+orientation to decide velocity. This is exactly why there is no
+`velocity = shipForward * speed` anywhere in this milestone's code: that
+line is precisely the bug the brief warns against, and the architecture
+makes it structurally awkward to write by accident, not just prohibited
+by convention.
+
+### Composing with gravity, contact, and no automatic braking
+
+Gravity remains completely unchanged — `PrepareDynamicBodiesForStep`
+still samples `GravityContextMap` and calls `ApplyLinearAcceleration` on
+the spacecraft exactly like every other dynamic body, before `ApplyFlyingPrimitiveControl`
+runs. Because gravity writes directly into `linearVelocity` and control
+force writes into the accumulator (consumed by the SAME `Step` call), the
+two compose additively within one integration pass — gravity is never
+overridden, and control never needs to "fight" gravity by first reading
+and canceling it. Contact resolution (unmodified — see "Physics
+ownership") runs after integration, so a spacecraft that collides with
+the plank, a planet, or a dynamic object gets exactly the same contact
+response any other dynamic body gets; nothing in the control path
+special-cases collision, and nothing resets velocity after a contact to
+restore what the operator was commanding. There is no braking code, no
+linear/angular damping, no speed cap, and no attitude-hold/auto-level
+ANYWHERE in this milestone's new code — slowing down or stopping rotation
+is entirely an emergent consequence of applying counter-force/counter-
+torque, verified directly (see "Automated testing" below).
+
+### A real force-magnitude bug, caught by interactive validation
+
+The unit test suites (below) all pass with ANY positive force magnitude —
+they measure `F/m` and its consequences symbolically relative to whatever
+constant is chosen, so they cannot by themselves catch a magnitude that's
+simply too small for THIS demo's actual gravity/friction. Interactive
+validation did catch it: an initial choice of 320N (deliberately picked to
+land in the same order of magnitude as Milestone 11's old 8 m/s flight
+speed) turned out to be physically incapable of lifting the spacecraft off
+the plank at all. This demo's gravity is `9.81 m/s^2`; the spacecraft's
+real mass is `80kg` (unchanged since Milestone 8); countering gravity
+alone while hovering needs `mass * g = 784.8N` of upward force — MORE than
+320N could ever provide, meaning `F/m - g` was permanently negative and
+the spacecraft could never leave the ground under its own thrust, in any
+amount of held time. A second, related effect compounded it: while
+resting on the plank, the plank's own friction (`0.8` coefficient against
+a normal force of ~`785N`, giving up to `~628N` of available grip) was
+enough to fully cancel 320N of horizontal thrust too, via the existing
+`ContactSolver`'s ordinary Coulomb friction clamp (see "Physics
+ownership," unmodified by this milestone) — so even sideways motion while
+resting was blocked. Neither of these is a bug in the physics; both are
+the CORRECT consequence of choosing a force too small relative to this
+demo's real gravity and friction. The fix was arithmetic, not code:
+`kControlForceMagnitude` raised to `1200N`, giving a nominal `15 m/s^2` in
+free space, a net `~5.2 m/s^2` climb straight up against gravity with real
+margin, and enough margin over the plank's `~628N` friction ceiling to
+still slide horizontally while resting if needed (measured directly:
+`~572N` of net forward force once resting friction is subtracted, giving
+`~7.15 m/s^2` — reduced from the free-space `15 m/s^2` by friction, as
+expected, not eliminated). See "Remaining limitations" for a related,
+NOT-fixed finding about torque and resting friction.
+
+### Rotational inertia and the real inverse inertia tensor
+
+`ApplyTorque` feeds `RigidBody.torqueAccumulator`; `IntegrateRigidBody`
+turns it into angular velocity via `InverseInertiaWorld() * torqueAccumulator`
+— the SAME per-body 3x3 tensor `SolidBoxInverseInertia` already computes
+from the spacecraft's real mass and box half-extents (`src/RigidBody.cpp`,
+unchanged since Milestone 7-Final), rotated into world space from whatever
+the spacecraft's CURRENT orientation is. `ApplyFlyingPrimitiveControl`
+applies one shared torque magnitude (`kControlTorqueMagnitude = 450 N*m`)
+about whichever local axis (pitch/yaw/roll) is held; the differing
+response per axis is NOT chosen by this milestone's code at all — it falls
+directly out of the box's own real, physically unequal moments of inertia
+about its three axes (halfExtents `2.0 x 0.25 x 3.0` — a wide, flat shape,
+so its three axes resist rotation very differently). Measured directly
+(`judas_spacecraft_control_tests`, "Section I"): identical 450 N*m torque
+held for 0.5s produces measurably different angular speeds about each of
+the three axes, matching `torque * inverseInertiaComponent * t` to within
+2% for each axis independently — this is the real tensor operating, not a
+scalar approximation or a per-axis constant chosen by hand.
+
+### Automated evidence
+
+Two standalone suites carry the numeric proof (`tests/SpacecraftControlTests.cpp`,
+`tests/PilotAttachmentTests.cpp` — the first substantially rewritten for
+this milestone, per the brief's own instruction not to preserve assertions
+encoding the OLD direct-velocity semantics; the second unchanged, since
+`PilotAttachment` is agnostic to how the spacecraft's velocity was
+produced). `SpacecraftControlTests.cpp` now calls `PhysicsWorld::Step`
+after every `ApplyFlyingPrimitiveControl` call and reads back the
+resulting velocity/angular velocity/position — exercising the real
+control → force/torque → accumulator → integration → velocity pipeline
+end to end, not just the control layer's own intent. Twelve sections
+cover: sustained thrust matching `F/m*t` (not an instant speed); coasting
+after release (velocity unchanged within 1% after 2 full seconds with no
+input); a 180-degree orientation change NOT rotating existing linear
+velocity; counter-thrust monotonically decelerating, crossing zero, and
+reversing; perpendicular thrust preserving the original velocity
+component while adding a new one (vector sum, not replacement); F/m mass
+response (a 20kg and an 80kg body under identical force reach a 4:1 speed
+ratio); angular coasting after releasing torque; counter-torque reversing
+angular velocity; the real inverse-inertia-tensor axis dependence
+described above; gravity and thrust composing additively (measured
+separately and combined, combined equals the sum within 2%); a complete
+no-op while `controlled` is false; and a rotate-the-whole-scenario
+equivalence check (position, linear velocity, angular velocity, AND
+orientation all compared after rotating the entire scenario by an
+arbitrary quaternion and rotating the result back) — the same technique
+this suite already applied to Milestone 11's direct-velocity control,
+now re-verified against force/torque-driven control instead.
+
+### Pilot attachment and release under inertial motion
+
+`src/PilotAttachment.h/.cpp` (Milestone 11) needed ZERO code changes for
+this milestone — it is a pure function of the spacecraft's CURRENT
+transform/velocity, regardless of how that state was produced (directly
+commanded, as before, or force/torque-integrated, as now). Verified
+directly via `JUDAS_TEST_SCRIPT` interactive validation rather than
+re-deriving it symbolically a second time: boarding, ascending under real
+thrust, coasting, yawing under real torque, and applying a second burst of
+thrust at the new orientation all left the player's distance from the
+spacecraft's own position EXACTLY constant (`1.5557` to four decimal
+places, unchanged across hundreds of fixed steps of genuine acceleration
+and rotation) — the attachment does not care that the spacecraft is now
+accelerating and tumbling under real force/torque instead of holding a
+commanded rate. Release still uses `ComputePilotReleaseVelocity`'s
+unmodified `v + omega x r` formula, now handing the player REAL,
+unbounded inertial velocity (previously capped at Milestone 8-11's fixed
+`kFlightSpeed`) — observed directly reaching several tens of m/s during
+validation, inherited coherently with no clamping, no double-counting,
+and ordinary M10 gravity/collision resuming immediately afterward
+(confirmed by a subsequent free-fall and landing in the same validation
+run).
+
+### Zero gravity, confirmed via the real gravity context, not a special mode
+
+No boolean "zero-gravity flight mode" exists anywhere in this milestone.
+Flying the spacecraft far enough from either planet or the plank (past
+`GravityContextMap`'s registered regions — see "Gravity context
+ownership") naturally left `GravityField::Sample` returning zero, exactly
+the way any other consumer's "unclaimed space" already worked before this
+milestone. Observed directly: once past the plank's gravity region, the
+spacecraft's vertical velocity component (built up by earlier thrust)
+stayed EXACTLY constant for the remainder of a multi-second validation
+run with no further vertical thrust applied — the real `GravityContextMap`
+returning zero is doing 100% of the work; nothing about this milestone's
+control code even knows it happened.
+
+### What was deliberately not built
+
+No orbital mechanics, inverse-square gravity, or any change to
+`RadicalGravity`/`GravityContextMap` — gravity is exactly what it was
+before this milestone, used through the same `ApplyLinearAcceleration`
+seam. No aerodynamic drag, lift, fuel, individual thrusters, reaction
+wheels, or engine model — one net local-space force and one net
+local-space torque per fixed step is the entire control surface, exactly
+as the brief specified. No new reference-frame system, spacecraft
+interior, or generalized attachment framework — `PilotAttachment` is
+unchanged and still models exactly one relationship. No parallel
+spacecraft-specific integrator — `IntegrateRigidBody` (already owned,
+already tested) is the only integration path force/torque ever passes
+through. No automatic braking, damping, speed cap, or stabilization of any
+kind.
+
+### Post-validation bugfix: a grounded player never fully settling ("vibrating")
+
+Human validation caught a real regression right at the "jump -> land ->
+release input -> settle" check: a player standing on ordinary stationary
+ground (no spacecraft involved at all) never came fully to rest — instead
+it entered a small, continuous, visibly periodic vertical oscillation.
+Diagnosed, root-caused, and fixed as part of this same milestone before
+requesting validation again; recorded here in full because the diagnosis
+process itself is worth knowing before touching this code again.
+
+**First finding: it was not actually new to this milestone.** Direct A/B
+comparison against the `milestone-11` tag (stashing every M12 change,
+rebuilding, running the identical scripted repro) reproduced the exact
+same oscillation, byte-for-byte, with zero M12 code involved — the
+`PlayerController` is not a `RigidBody` and never touches
+`IntegrateRigidBody`/`ApplyForce`/`ApplyTorque` at all, so M12's own
+integration change could not have been the direct cause. The bug is a
+latent flaw in the move-and-slide loop's own skin-margin restoration,
+present since Milestone 7-A: that restoration only fires when
+`SweepPlayerShape` actually reports a hit for THAT step's `remaining`
+displacement, and while merely standing still, `remaining` is nothing but
+the tiny per-step gravity "glue" nudge (a few millimeters) — too small to
+reach the surface at all for several consecutive steps. Clearance erodes
+silently and unchecked until it finally reaches exactly zero, at which
+point the reactive restoration fires and snaps the FULL `kSkinMargin`
+(`0.02m`) back in one visible jump — repeating indefinitely. Walking
+mostly hid this (a real WASD displacement usually reaches the surface and
+gets corrected almost every step), but it was always there for a
+motionless grounded player.
+
+**The fix**: `PlayerController::FixedUpdate` now, immediately after
+establishing this step's `groundHit` (the same probe already used for the
+grounded/support decision — no new geometry query), nudges `m_position`
+along `localUp` so clearance reads back exactly `kSkinMargin` every
+grounded step — expressed entirely in terms of `localUp` and the
+support's own real geometry, so it holds under arbitrary orientation and
+local gravity (verified directly against a genuinely tilted local up,
+~10-25 degrees off world +Y, mid-slope on the sphere, not just the flat
+plank). It never touches `m_velocity` — tangential (WASD) momentum and the
+vertical glue speed are both left completely alone; only the resulting
+POSITION is corrected, the same category of fix the move-and-slide loop's
+own existing skin-margin restoration already is, just applied reliably
+instead of only when incidentally triggered.
+
+**A genuine second-order regression this exposed, and its own fix.** An
+early version of this correction applied unconditionally on every grounded
+step and broke walking onto the flying primitive/spacecraft: making
+clearance perfectly deterministic removed small step-to-step position
+variance the OLD, buggy code had incidentally relied on. That variance
+turned out to be load-bearing for one specific existing interaction —
+walking directly at the pushable spacecraft at exactly a shallow closing
+distance, where `TryStepMove`'s own `kMinStepImprovement` margin
+(`src/StepClimb.cpp`) could reject a genuinely-clear step by a hair, fall
+back to ordinary sliding, nudge the spacecraft a little further away via
+the existing Milestone 7-A player-push mechanic, and recreate the
+identical "just barely blocked" distance on the very next step — with zero
+jitter left to ever break out of it, this repeated forever (observed
+directly: the spacecraft drifting away under sustained contact, boarding
+never completing, sometimes cascading into visible tumbling from
+off-center contact impulses). Two changes resolved it, at two different
+levels:
+- `TryStepMove` now treats a raised-and-forward sweep that reaches the
+  FULL requested displacement completely unobstructed as an unconditional
+  success, regardless of how close the flat sweep happened to get on its
+  own — `kMinStepImprovement` still guards the case where the forward
+  sweep is ALSO blocked (protecting against floating-point noise, its
+  original purpose), just not the case where it's genuinely, completely
+  clear. Verified harmless to every existing static-step scenario
+  (`judas_step_climb_tests` unchanged and still passing): a static
+  obstruction's distance only ever shrinks step over step as the player
+  keeps closing in, so it was never stuck in the exact equilibrium a
+  pushable object can create.
+- The clearance-settle fix itself is gated on **no horizontal input held
+  that step** (`hasHorizontalInput`, computed the same way the grounded
+  branch's own tangential-velocity code already does), matching the
+  reported bug's own exact circumstances — release input, then settle —
+  rather than firing unconditionally on every grounded step. Ordinary
+  walking/approach continues to rely on the existing reactive skin-margin
+  restoration, completely unchanged from Milestone 7-A through 11.
+
+All four required regression checks pass cleanly with both fixes in
+place: flat ground, a real jump-and-land, a genuinely tilted local-gravity
+slope (all settle to a fixed position with zero measurable drift across
+hundreds of logged fixed steps), and boarding the spacecraft by walking
+into it (again reaches the same `19.3979` height Milestone 10/11 always
+did, spacecraft remaining stationary throughout the approach). All six
+standalone suites and the full staircase/plank/ramp/Planet-B traversal
+were re-verified after both fixes, unaffected.
+
 ## Milestone 8
 
 The milestone's own scope statement, verbatim in spirit: "walk onto it →
@@ -3260,18 +3673,22 @@ because `Window::IsActionActive`/etc. check `m_testInputMode` and return
 before ever touching real SDL state, so `SetTestInputMode(true)` plus
 `SetTestActionState` alone is enough to drive `ApplyFlyingPrimitiveControl`
 deterministically with no window, no GL context, and no real keyboard.
-Because that function commands velocity directly (no integration), these
-tests read `PhysicsWorld::GetLinearVelocity`/`GetAngularVelocity` straight
-back after one call, with no need to ever `Step()` the world. Covers: all
-six translation directions map to the correct spacecraft-local axis
-(verified both at an arbitrary orientation, confirming it's body-relative
-and not world-fixed, and at identity, confirming each individual axis);
-releasing all input commands exactly zero velocity, not leftover momentum;
-each of pitch/yaw/roll produces angular velocity about the correct single
-axis with the documented sign, and contributes nothing to the other two; a
-complete no-op (both linear and angular velocity provably untouched) when
-`controlled` is false, even with every key held; and the rotate-the-whole-
-scenario equivalence check for translation control.
+As originally written for Milestone 11, this suite read
+`PhysicsWorld::GetLinearVelocity`/`GetAngularVelocity` straight back after
+a single `ApplyFlyingPrimitiveControl` call, since that function commanded
+velocity directly with no integration needed. **Milestone 12 rewrote this
+suite substantially** — per the brief's own explicit instruction not to
+preserve assertions encoding the OLD direct-velocity/angular-velocity
+semantics — since Milestone 12 deliberately replaced that control model
+with force/torque; see "Milestone 12, Automated evidence" for the current
+twelve sections this file covers (sustained-thrust acceleration, coasting,
+orientation/velocity independence, counter-thrust, perpendicular thrust,
+F/m mass response, angular coasting, counter-torque, real-inertia-tensor
+axis dependence, gravity/thrust composition, the no-op case, and rotate-
+the-scenario equivalence for force/torque). Every test in this file now
+calls `PhysicsWorld::Step` after `ApplyFlyingPrimitiveControl` and reads
+back the resulting state, exercising the real integration pipeline rather
+than the control layer's intent in isolation.
 
 Full 6DOF flight, the secured-pilot attachment through translation and
 rotation (including a deliberate upside-down roll while attached), release
@@ -3475,11 +3892,16 @@ deferred, not oversights:
   player, one spacecraft) with no smoothing or interpolation of the
   attachment itself** — `ApplyPilotAttachment` is an exact, rigid
   transform, by design (see "Milestone 11"). A spacecraft whose own
-  per-step rotation is extremely large (well beyond anything this demo's
-  `kAttitudeRateRadiansPerSecond` produces at 1/60s) would carry the
-  attached player through that same large rotation in one step, exactly as
-  a rigidly bolted object should — not evaluated at rotation rates far
-  beyond what this milestone's own controls can ever command.
+  per-step rotation is extremely large would carry the attached player
+  through that same large rotation in one step, exactly as a rigidly
+  bolted object should. **Milestone 12 update:** since angular velocity is
+  no longer capped at a fixed commanded rate (torque accelerates it
+  without bound, the same "no speed cap" law that applies to translation —
+  see "Milestone 12"), sustained one-directional torque over a long enough
+  held duration COULD eventually reach a per-step rotation large enough
+  for this to matter in principle; not observed or specifically stress-
+  tested at extreme angular velocities during this milestone's own
+  validation (ordinary piloting never approached that regime).
 - **Reboarding after release requires the same ordinary support-gated
   walk/step onto the spacecraft as the first boarding** — there is no
   quick-reboard, auto-magnetize, or reduced gating the second time; every
@@ -3487,6 +3909,59 @@ deferred, not oversights:
   Deliberate, not an oversight: a separate "already familiar with this
   spacecraft" fast path would be exactly the kind of special-casing the
   brief's "no generic possession framework" constraint rules out.
+- **Milestone 12: rotating in place while still resting flat on the plank
+  is realistically stiff, well beyond what free-flight torque alone
+  overcomes.** Measured directly: `kControlTorqueMagnitude` (450 N*m,
+  tuned for good free-flight responsiveness — see "Milestone 12") produces
+  no measurable net rotation at all while the spacecraft is still resting
+  on the plank under this demo's gravity/friction (`0.8` coefficient); the
+  static-friction torque threshold empirically sits somewhere between
+  ~2500 and ~3000 N*m for this geometry, well past what free-flight
+  responsiveness calls for. Deliberately NOT fixed by inflating the torque
+  constant — doing so would make rotation feel unrealistically twitchy
+  once genuinely airborne, where the real inverse inertia tensor (not
+  friction) is the only thing governing response, exactly as verified in
+  "Automated evidence" above. The practical consequence is simply that a
+  pilot wanting to turn in place should ascend (which DOES work at this
+  force magnitude, with real margin — see "Milestone 12, A real force-
+  magnitude bug") before attempting to rotate; once clear of any contact,
+  full torque responsiveness is immediate. This is real, physically
+  correct emergent behavior from the existing, unmodified `ContactSolver`
+  (see "Physics ownership") — not a defect this milestone introduced or
+  is responsible for correcting.
+- **Milestone 12: a hard, fast landing impact can remove noticeably more
+  horizontal velocity than a single-iteration Coulomb friction clamp alone
+  would predict.** Measured directly while validating this milestone (and
+  reproduced independently with a plain falling box under only
+  `ApplyLinearAcceleration` gravity — no spacecraft, no control code
+  involved at all): a body striking a static surface with both a large
+  closing (normal) speed and a large tangential (horizontal) speed can
+  lose the large majority of its horizontal velocity in that single
+  contact step — e.g. a measured `15 m/s` horizontal component dropping to
+  `~6 m/s` in one step of a hard vertical impact. This is a genuine,
+  PRE-EXISTING characteristic of `ContactSolver.cpp`'s sequential-impulse
+  solver running `kSolverIterations = 4` passes per step (each iteration's
+  friction clamp is computed against that iteration's own normal impulse,
+  so a hard impact's friction budget compounds across iterations rather
+  than being computed once) — present since Milestone 7-Final, entirely
+  unrelated to and unmodified by this milestone's own changes (confirmed
+  by reproducing it with zero spacecraft/control code in the call path at
+  all). It was never visible before this milestone because Milestone
+  8-11's directly-commanded spacecraft velocity was always small and never
+  produced a genuinely hard, fast impact; Milestone 12's real, unbounded
+  inertial velocities are the first thing in this project capable of
+  reaching speeds where it's observable. Per the brief's own instruction
+  ("choose sensible test-force magnitudes... document the tested range
+  honestly... make the smallest justified correction" only for "an actual
+  collision/tunnelling problem"): this is not tunnelling, a crash, or a
+  NaN — the solver still produces a stable, physically-plausible (if
+  imperfectly damped) result — so it is recorded here as measured, honest
+  evidence rather than "fixed" by redesigning the existing, out-of-scope
+  contact solver (see "Preserve the current architecture" / "Physics
+  ownership" — redesigning the solver is explicitly not this milestone's
+  mandate). A pilot flying at high speed near solid geometry should expect
+  a hard collision to cost more speed than gentle Coulomb friction alone
+  would suggest.
 
 ## FUTURE CONSTRAINTS PRESERVED
 
@@ -3736,12 +4211,38 @@ Explicitly deferred, not forgotten:
   aerodynamics model, realistic flight dynamics, or orbital mechanics —
   translation and rotation remain direct velocity/angular-velocity
   commands, explicitly "boring controls," the same category Milestone 8
-  already established; mesh collision or automatic collider generation
-  from `plane.obj` — the spacecraft's collision remains the same simple
-  box it always was; gamepad support or rebindable controls — six new
-  fixed keyboard bindings (I/K/J/L/U/O), same fixed-binding approach every
-  previous milestone's input additions used; a cockpit camera, cinematic
-  camera, or any new camera system — Milestone 8's existing anchor-pose
-  `GetViewMatrix` overload is reused completely unchanged; renderer/API
-  migration or any expansion of the asset system beyond one more OBJ mesh
-  loaded through the exact same Milestone 9 path.
+  already established (**historical note: this specific claim — direct
+  velocity/angular-velocity commands — is deliberately SUPERSEDED by
+  Milestone 12, which replaces them with genuine force/torque-driven
+  inertia; the rest of this bullet, no thruster/fuel/reaction-wheel model
+  and no realistic aerodynamics/orbital mechanics, remains true of
+  Milestone 12 as well — see "Milestone 12 additions" below**); mesh
+  collision or automatic collider generation from `plane.obj` — the
+  spacecraft's collision remains the same simple box it always was;
+  gamepad support or rebindable controls — six new fixed keyboard bindings
+  (I/K/J/L/U/O), same fixed-binding approach every previous milestone's
+  input additions used; a cockpit camera, cinematic camera, or any new
+  camera system — Milestone 8's existing anchor-pose `GetViewMatrix`
+  overload is reused completely unchanged; renderer/API migration or any
+  expansion of the asset system beyond one more OBJ mesh loaded through
+  the exact same Milestone 9 path.
+- **Milestone 12 additions:** orbital mechanics, inverse-square gravity,
+  realistic celestial simulation, or any change to `RadicalGravity`/
+  `GravityContextMap` — gravity is exactly what it was before this
+  milestone; generalized moving reference frames, spacecraft interiors,
+  artificial gravity, multiple spacecraft, docking, or any expansion of
+  `PilotAttachment`'s scope — it needed zero code changes this milestone;
+  autopilot, flight assistance, velocity matching, attitude hold, auto-
+  level, automatic braking, drag, or aerodynamics of any kind — no
+  stabilization exists anywhere in the new control path, verified directly
+  (see "Milestone 12, Automated evidence"); fuel, individual thrusters,
+  RCS, reaction wheels, engine systems, heat, or structural simulation —
+  one net local-space force and one net local-space torque per fixed step
+  is the entire control surface; relativistic mechanics; a generic
+  vehicle framework or generic force-component framework — `ApplyForce`/
+  `ApplyTorque` are two plain `PhysicsWorld` methods, not a component
+  system; a new physics integrator — `IntegrateRigidBody` (already owned
+  since Milestone 7-Final) is the only integration path force/torque ever
+  passes through; mesh collision or any renderer change beyond what
+  Milestone 9/11 already established; terrain, atmosphere, UI, audio, or
+  networking.
