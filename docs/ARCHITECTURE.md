@@ -6,7 +6,7 @@ someone with no prior context on this project. It is updated in place as
 milestones land, rather than kept as a per-milestone snapshot — see
 "Milestone history" below for how to recover an earlier milestone exactly.
 
-## What exists right now (Milestone 7-Final)
+## What exists right now (Milestone 8)
 
 Open a window. Two independent static spheres ("planets," radius `20m`
 each, centers `55m` apart — see "Physics test world") exist in 3D space,
@@ -52,8 +52,17 @@ position — is resolved by pure ownership routing (`GravityContextMap`):
 each planet and the plank has its own coherent gravity, and a position
 belongs to exactly one of them, never a blend of two. See "Gravity context
 ownership" for the two earlier designs this replaced and why both failed
-human validation despite passing every automated check. Nothing else. See
-the root `README.md` for build/run instructions and controls.
+human validation despite passing every automated check.
+
+**As of Milestone 8, a controllable flying primitive rests on the
+plank** — a flat box, physically simulated by Judas's own physics engine
+exactly like every other dynamic body here. Walk (or hop) onto it and
+press `F` to take control: WASD/Q/E fly it in full 3D, A/D turn it, and
+`F` again hands input authority straight back to the player, who remains
+physically present and carried by the primitive the entire time, not
+detached or teleported. See "Milestone 8" below for the full design,
+including a real moving-support physics bug this milestone found and
+fixed. See the root `README.md` for build/run instructions and controls.
 
 ## Milestone history
 
@@ -104,6 +113,12 @@ preserved as parallel runtime code:
   ownership." Both prior attempts' commits remain in git history
   (untagged, since neither passed human validation) for anyone who wants
   to see exactly what was tried and rejected.
+- `milestone-8` — a controllable flying primitive (an ordinary dynamic
+  box resting on the plank) that the player can take input authority over
+  with `F` and fly around in 3D, then hand back. Found and fixed a real
+  bug in how a grounded player inherits a moving support's velocity — see
+  "Milestone 8" for the full story, including why the straightforward
+  velocity-carry approach wasn't enough on its own.
 
 Each milestone's demo content has been replaced (not extended) by the next;
 check out a tag to see or run an earlier milestone as it was.
@@ -1053,6 +1068,218 @@ together (roughly constant ~1m separation) for hundreds of further steps
 as the player keeps walking, confirming sustained contact rather than a
 single nudge — see "Automated testing."
 
+## Milestone 8
+
+The milestone's own scope statement, verbatim in spirit: "walk onto it →
+press `F` → take control → fly it around → press `F` again → return
+control to the player. That is the milestone." Deliberately small — no
+vehicle framework, no reference frames, no possession system for multiple
+objects, one box that flies.
+
+### The flying primitive
+
+One more ordinary `DynamicBody` (`src/Application.cpp`'s
+`kFlyingPrimitive*` constants), appended to the same `dynamicBodies` list
+every other test object lives in — it gets identical gravity sampling
+(`PrepareDynamicBodiesForStep`), identical collision resolution
+(`PhysicsWorld::Step`), identical presentation interpolation, and identical
+`R`-triggered reset for free, with zero new code for any of that. What
+makes it "the flying primitive" is entirely external to `DynamicBody`
+itself: a separate `FlyingPrimitiveControl` (`src/FlyingPrimitiveControl.h`)
+holding just its `BodyHandle` and a `controlled` bool.
+
+**Placement was evidence-driven, not aesthetic.** The primitive rests on
+the plank, near its midpoint, rather than on either planet's own curved
+surface, for two reasons found while building this milestone:
+
+1. Box-vs-sphere contact (`src/Contacts.cpp`'s `SphereVsBox`) only ever
+   produces a single contact point — the same "a box needs more than one
+   contact point to rest flat without rocking" limitation already
+   documented for box-vs-box before `BoxVsBoxManifold` existed (see law
+   #15's bug note). A flat box this size resting on a curved sphere via
+   one contact point would be genuinely unstable. The plank is a static
+   box, so resting on it gets the real multi-point `BoxVsBoxManifold` and
+   settles flat, the same mechanism every dynamic cube in
+   `kDynamicObjectSpawns` already relies on.
+2. Placing it too close to either planet's own end of the plank let the
+   primitive's far corner geometrically overlap that planet's own
+   collision sphere as well as the plank underneath it, producing an
+   extra, unwanted contact that pushed the primitive noticeably higher
+   than the plank's own surface — reproduced directly and confirmed by
+   isolating the plank contact alone (settles at exactly plank-top +
+   half-height) versus the full scene (settled almost 0.35m higher). The
+   plank's own midpoint is far enough from both planets' spheres that
+   neither ever engages.
+
+### Control ownership
+
+`Window::ConsumeControlToggleRequest()` (`F`, edge-triggered, same shape as
+`ConsumeResetRequest`/`ConsumeJumpRequest`) is checked once per fixed step
+in both `Application::Run` and `TestHarness.cpp`, using the identical
+gating rule in both places:
+
+```cpp
+if (flyingPrimitiveControl.controlled) {
+    flyingPrimitiveControl.controlled = false;          // always allowed
+} else if (player.IsGrounded() &&
+           player.GetSupportBodyHandle().id == flyingPrimitiveControl.handle.id) {
+    flyingPrimitiveControl.controlled = true;            // only from standing on it
+}
+```
+
+`PlayerController::GetSupportBodyHandle()` (new this milestone) exposes
+the ground probe's `hitBody` — the same value `SweepPlayerShape` has
+always returned, just now readable by a caller outside `PlayerController`,
+following the identical "meaningful only when grounded" convention
+`ShapeSweepHit::hitBody` already uses. `PlayerController` still has no
+idea what a "flying primitive" is; it only ever answers "what body, if
+any, am I standing on."
+
+**While controlled**, `ApplyFlyingPrimitiveControl`
+(`src/FlyingPrimitiveControl.cpp`) runs once per fixed step, positioned
+deliberately AFTER `PrepareDynamicBodiesForStep` (so the primitive has
+already received ordinary gravity, exactly like every other dynamic body)
+and BEFORE `PhysicsWorld::Step` (so the commanded velocity below is what
+actually gets integrated and checked for collisions that step):
+
+```cpp
+physics.SetLinearVelocity(control.handle, desiredDirection * kFlightSpeed);
+physics.SetAngularVelocity(control.handle, up * yawRate);
+```
+
+Direct velocity commands, not force/thrust accumulation — the same
+"Judas commands the value outright, physics obeys" idiom
+`PlayerController`'s own grounded WASD control has always used (see
+"Locomotion"). `PhysicsWorld::GetAngularVelocity`/`SetAngularVelocity`
+(new this milestone, mirroring the existing linear-velocity pair) are the
+only additions to the physics engine's own public surface — ordinary
+rigid-body angular velocity access, not a vehicle-specific mechanism.
+
+**Controls** (see root `README.md` for the player-facing table): W/S
+translate along the primitive's own current forward axis; Q/E translate
+along local "up" — computed the same way every other consumer in this
+engine computes its own local up, `-normalize(gravity.Sample(position))`
+at the primitive's own position (see "Orientation"), with the same
+degenerate-safe fallback to the primitive's own body-space `+Y` in
+unclaimed (zero-gravity) space that `PlayerController::ComputeLocalUp`
+already uses — never a hard-coded world axis, consistent with every other
+"up" in this engine. A/D yaw the primitive about that same local-up axis
+(reusing the `StrafeLeft`/`StrafeRight` actions' physical keys for a
+different meaning while the primitive, not the player, has control).
+Mouse look is unaffected by any of this — see "Camera" below.
+
+When control is released, nothing extra happens: `ApplyFlyingPrimitiveControl`
+simply stops running, so the primitive keeps whatever velocity it last had
+and ordinary gravity (`PrepareDynamicBodiesForStep`) and collision resolve
+it exactly like any other dynamic body from that point on — no special
+"letting go" logic exists because none was needed.
+
+### The moving-support bug, and why velocity-carry alone wasn't enough
+
+This is the "most important technical test" the milestone brief called
+out, and it genuinely found a real, non-obvious bug in existing code, not
+just new code written for this milestone.
+
+**First attempt**: while grounded, add the supporting body's own
+point-velocity (`v + ω × r`, ordinary rigid-body kinematics — a
+translating support contributes `v`, a rotating one adds the rotational
+component at the player's own position) into `m_velocity`, exactly the
+same way gravity or WASD contribute to it, and let the existing
+move-and-slide loop's displacement (`remaining = m_velocity * fixedDeltaTime`)
+carry the player along with it.
+
+This broke in two distinct ways, found by scripting the primitive's own
+ascent and watching the player's logged position instead of assuming the
+math was right:
+
+1. **The player fell off partway through the very first ascent.** Traced
+   to `wasAscending` — the check that stops a jump's own probe from
+   immediately re-grounding the player (`docs/ARCHITECTURE.md`'s existing
+   "Locomotion" section) — which compares `m_velocity` against `localUp`
+   in absolute world terms. Once a moving support's velocity is folded
+   into `m_velocity`, standing on a support that's accelerating upward
+   makes the player look exactly like it just jumped, permanently failing
+   `wasAscending` and disqualifying grounding the instant the support
+   moved — even though the player never launched itself anywhere. Fixed
+   by tracking `m_lastGroundVelocity` (the carried support velocity as of
+   the *previous* grounded step) and comparing `m_velocity -
+   m_lastGroundVelocity` instead — ascension is now judged relative to
+   whatever the player was standing on, not in absolute world terms. A
+   real jump still behaves exactly as it always has (support velocity is
+   zero for static ground, so the subtraction is a no-op).
+2. **Even with that fixed, the player visibly lagged the primitive and
+   eventually lost contact anyway.** The move-and-slide loop's
+   skin-margin clamping (`kSkinMargin`, 0.02m per step — see "Locomotion")
+   is tuned for gravity's own small per-step glue nudge on static ground,
+   not a support translating several centimeters a step under direct
+   velocity control. Relying on repeated small margin corrections to
+   reconstruct a fast support's actual per-step displacement is exactly
+   the kind of discretization mismatch that produces drift, and it did.
+
+**The fix that actually held up**: carry the player by the support's own
+per-step displacement directly, as an exact position offset, rather than
+relying on the sweep to reconstruct it from velocity:
+
+```cpp
+m_position += groundVelocity * fixedDeltaTime;                    // exact carry, once
+...
+glm::vec3 remaining = (m_velocity - groundVelocity) * fixedDeltaTime;  // player's OWN motion only
+```
+
+`groundVelocity` is added into `m_velocity` for state/continuity purposes
+(so `GetVelocity()` and next step's airborne integration correctly reflect
+momentum imparted by the support — "preserve physically appropriate
+inherited motion" when the player leaves it), but it is explicitly
+subtracted back out of what the move-and-slide sweep resolves, so the
+support's own translation is never double-counted. On ordinary static
+ground or while airborne, `groundVelocity` is exactly zero, so this is a
+no-op — every milestone before this one is unaffected, verified by
+rerunning a full spawn-to-Planet-B-and-back traversal script afterward
+(see "Automated testing").
+
+**What this actually demonstrates, verified directly** (see "Automated
+testing" for the exact harness scripts): the player rides the primitive
+coherently through a full ascent, a hover, a yaw turn (correctly swinging
+the player around at its own offset from the primitive's center — the `ω
+× r` term earning its keep, not just the translational `v` term), and a
+release-mid-descent, landing back on the plank exactly where the
+primitive itself settles — never snapped, never left behind, never
+teleported. `wasAscending`'s fix means an ordinary jump off a *stationary*
+primitive still works exactly as it always has (verified with a plain
+jump-and-land test independent of any control-toggle activity).
+
+### Camera
+
+`PlayerController::GetViewMatrix` gained a second overload,
+`GetViewMatrix(const glm::vec3& anchorPosition, const glm::quat&
+anchorOrientation)`, built from the exact same shared helper
+(`BuildViewMatrix`) the original `GetViewMatrix(float presentationAlpha)`
+now also calls — same fixed offset/eye-height/look composition, same
+player-controlled `m_yaw`/`m_pitch` free look, just anchored to an
+external pose instead of the player's own presented one. While
+`flyingPrimitiveControl.controlled` is true, `Application::Run` passes the
+primitive's own presented position/orientation as that anchor instead of
+the player's; mouse look keeps working identically either way, since it
+was never anchor-specific to begin with. No second camera system, no
+cinematic smoothing — "keep the existing camera architecture intact as
+practical," satisfied by extracting one shared helper rather than writing
+a new one.
+
+### What was deliberately not built
+
+No thrust/fuel/engine simulation (`SetLinearVelocity`/`SetAngularVelocity`
+are commanded directly, kinematic-style); no possession framework for
+multiple controllable objects (`FlyingPrimitiveControl` is one handle and
+one bool, not a registry); no vehicle-physics abstraction; no new gravity
+semantics (the primitive samples the exact same `GravityContextMap` every
+other body does); no stair-climbing or auto-step mechanism (boarding the
+primitive from the plank needs a short hop, the same as any other
+milestone's low platform — verified working directly, not a limitation
+requiring a fix); no artificial gravity or gravity cancellation (the
+primitive's own vertical control is a direct velocity command, not a
+change to what gravity is or does). See "Deliberately Not Implemented" for
+the complete list.
+
 ## Physics test world
 
 Milestone 7-Final replaces the single sphere with TWO independent static
@@ -1444,9 +1671,11 @@ Construct RadicalGravity for each planet, FaithfulGravity for the plank, bound v
 Create the two static planet spheres and the static plank box
 Create PlayerController, Spawn() it (creates its capsule shape via PhysicsWorld — no body)
 dynamicBodies = SpawnDynamicObjects(physicsWorld)   // 6 bodies across Planet A/plank/Planet B
+dynamicBodies.push_back(the flying primitive)        // Milestone 8: one more ordinary DynamicBody
+flyingPrimitiveControl = {handle, controlled=false}  // Milestone 8: see "Milestone 8"
 
 while (!window.ShouldClose()):
-    window.PollEvents()              // close request, Escape toggle, R/Space one-shot flags
+    window.PollEvents()              // close request, Escape toggle, R/Space/F one-shot flags
     frameDeltaTime = measured elapsed time since last frame, clamped
 
     player.UpdateFrameInput(window)  // mouse look + latch jump request; every frame
@@ -1454,17 +1683,28 @@ while (!window.ShouldClose()):
     if window.ConsumeResetRequest():
         player.Reset()
         for body in dynamicBodies: body.ResetToSpawn(physicsWorld)
+        flyingPrimitiveControl.controlled = false
+
+    if window.ConsumeControlToggleRequest():         // Milestone 8: see "Milestone 8"
+        if flyingPrimitiveControl.controlled:
+            flyingPrimitiveControl.controlled = false
+        elif player.IsGrounded() and player.GetSupportBodyHandle() == flyingPrimitiveControl.handle:
+            flyingPrimitiveControl.controlled = true
 
     accumulator += frameDeltaTime
     while accumulator >= fixedTimestep and steps < cap:
         PrepareDynamicBodiesForStep(dynamicBodies, gravity, physicsWorld, fixedTimestep)
             // snapshot presentation history, sample gravity per body,
             // ApplyLinearAcceleration — see "Multiple gravity consumers"
+        ApplyFlyingPrimitiveControl(flyingPrimitiveControl, window, physicsWorld, gravity)
+            // Milestone 8: no-op unless controlled; overrides the primitive's
+            // velocity from input if it is — see "Milestone 8"
         physicsWorld.Step(fixedTimestep)   // Judas's own engine: broadphase, narrowphase,
                                             // contact resolution, dynamic-body integration
-        player.FixedUpdate(window, physicsWorld, gravity, fixedTimestep)  // see "Locomotion";
-                                            // may also push a dynamic body it swept into — see
-                                            // "Player-to-object interaction"
+        player.FixedUpdate(window, physicsWorld, gravity, fixedTimestep, !flyingPrimitiveControl.controlled)
+                                            // see "Locomotion" and "Milestone 8"; may also push
+                                            // a dynamic body it swept into — see "Player-to-object
+                                            // interaction" — or be carried by one it's standing on
         SyncDynamicBodiesFromPhysics(dynamicBodies, physicsWorld)
         accumulator -= fixedTimestep
 
@@ -1472,13 +1712,20 @@ while (!window.ShouldClose()):
                                            // "Simulation/presentation boundary"
 
     renderer.BeginFrame(...)
-    renderer.SetCamera(player.GetViewMatrix(alpha), player.GetProjectionMatrix(aspectRatio))
+    // Milestone 8: camera anchors to the flying primitive's own presented pose while
+    // controlled, the player's own otherwise — same GetViewMatrix math either way, see
+    // "Milestone 8," "Camera"
+    view = flyingPrimitiveControl.controlled
+        ? player.GetViewMatrix(flyingPrimitiveBody.GetPresentedPosition(alpha),
+                                flyingPrimitiveBody.GetPresentedOrientation(alpha))
+        : player.GetViewMatrix(alpha)
+    renderer.SetCamera(view, player.GetProjectionMatrix(aspectRatio))
     renderer.DrawSphere(planetACenter, planetARadius, planetAColor)
     renderer.DrawSphere(planetBCenter, planetBRadius, planetBColor)
     renderer.DrawBox(plankCenter, identity, plankHalfExtents, plankColor)
     renderer.DrawBox(player.GetPresentedPosition(alpha), player.GetPresentedOrientation(alpha),
                       player.GetRenderHalfExtents(), playerColor)
-    for body in dynamicBodies:
+    for body in dynamicBodies:   // includes the flying primitive — drawn the same as any other box
         renderer.DrawBox/DrawSphere(body.GetPresentedPosition(alpha),
                                      body.GetPresentedOrientation(alpha), ..., body visual)
     renderer.EndFrame()
@@ -1886,6 +2133,22 @@ hidden axis assumption exists somewhere in the code under test. All of
 these currently pass; a future regression in any of them is exactly the
 signal that a change quietly reintroduced a world-axis assumption.
 
+**Milestone 8: `Q`/`E` added to `HOLD`, `F` added to `TAP`, a `controlled`
+CSV column.** `ParseHoldKey` now accepts `Q`/`E` (the flying primitive's
+vertical control — the player itself never consults these two actions);
+`TapEvent` gained a `TapKind` enum (`Jump`/`Reset`/`ControlToggle`) in
+place of its old jump-or-reset bool, so `TAP F <step>` can script the same
+`F` gating `Application::Run` uses. Both harness runners now take a
+`FlyingPrimitiveControl&` alongside `dynamicBodies` (the primitive's own
+physics state is already covered generically by its entry in that list —
+see "Milestone 8"), call `ApplyFlyingPrimitiveControl` in the identical
+position the real loop does, and pass `player.FixedUpdate` the same
+`!controlled` `inputEnabled` flag. This is exactly what made diagnosing
+and fixing the moving-support bug above possible without ever touching the
+real window — every scripted scenario in "Milestone 8" (board it, take
+control, ascend, yaw, release mid-descent, land) was built and verified
+this way before being shown to the operator.
+
 ## Remaining limitations
 
 Recorded honestly rather than left implicit — these are known, deliberately
@@ -1988,6 +2251,22 @@ deferred, not oversights:
   past a few dozen bodies without becoming the actual bottleneck. Left
   alone until a future milestone's body count gives real evidence it's
   needed.
+- **Boarding the flying primitive from the plank needs a short hop, not a
+  flush walk-on.** (Milestone 8.) The primitive's own thickness (a
+  `0.25m` half-height box) sits enough above the plank's surface that the
+  player's move-and-slide loop treats its front face as an ordinary wall
+  when approached at plank height — there is no auto-step mechanism (see
+  "Deliberately Not Implemented," unchanged since Milestone 4). Verified
+  working as an ordinary jump-onto-a-low-platform interaction, not a
+  defect; not evaluated further without evidence a flush approach is
+  actually needed.
+- **Moving-support carry approximates a rotating support's contact point
+  using the player's own capsule center**, not the capsule's actual
+  contact point on the support (which `ShapeSweepHit` doesn't currently
+  carry). Accurate enough at this demo's capsule size and rotation rates
+  (verified directly — see "Milestone 8"), but a much larger capsule or a
+  much faster-spinning support would need a real contact-point field
+  threaded through `ShapeSweepHit` to stay accurate.
 
 ## FUTURE CONSTRAINTS PRESERVED
 
@@ -2157,3 +2436,22 @@ Explicitly deferred, not forgotten:
   CONSTRAINTS PRESERVED"); any third gravity-field implementation or
   change to `FaithfulGravity`/`RadicalGravity` themselves — the plank's
   entire solution was reusing `FaithfulGravity` completely unmodified
+- **Milestone 8 additions:** spacecraft architecture, moving reference
+  frames as a generalized engine system, orbital mechanics, aerodynamics —
+  none of this milestone's flying-primitive work touches reference frames
+  or orbital anything at all, it is a directly-commanded rigid body;
+  a vehicle framework or vehicle components (seats, engines/thrusters as a
+  simulation system, fuel, docking) — `FlyingPrimitiveControl` is a
+  `BodyHandle` and a bool, not a component system; multiple controllable
+  vehicles or a general possession framework — one primitive, one control
+  struct, gated by one comparison; model loading, textures, materials, or
+  any visual improvement to the primitive beyond an ordinary box (the same
+  `DynamicBody`/`Renderer::DrawBox` path every other test object already
+  uses); a generalized "moving platform" or "attached rider" framework —
+  the moving-support fix (see "Milestone 8") lives entirely inside
+  `PlayerController::FixedUpdate`'s existing grounded branch, not a new
+  subsystem; artificial gravity, gravity generators, or any change to
+  gravity semantics — the primitive samples the same `GravityContextMap`
+  every other body does, unmodified; realistic flight dynamics (lift,
+  drag, engines) — translation and rotation are direct velocity commands,
+  explicitly documented as "boring controls," not a flight model

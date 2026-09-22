@@ -87,6 +87,16 @@ public:
     glm::vec3 GetLinearVelocity(BodyHandle handle) const;
     void SetLinearVelocity(BodyHandle handle, const glm::vec3& velocity);
 
+    // Same shape, for angular velocity. Added in Milestone 8 for the flying
+    // primitive's rotation control (see src/FlyingPrimitiveControl.h) and
+    // for PlayerController's moving-support velocity carry (a rotating
+    // support's own angular velocity contributes to the point-velocity a
+    // standing player must inherit) — not vehicle-specific, ordinary
+    // rigid-body angular velocity access of the same kind
+    // GetLinearVelocity/SetLinearVelocity already provide.
+    glm::vec3 GetAngularVelocity(BodyHandle handle) const;
+    void SetAngularVelocity(BodyHandle handle, const glm::vec3& angularVelocity);
+
     // Integrates `acceleration` into the body's linear velocity over
     // `fixedDeltaTime` (velocity += acceleration * dt). This is how Judas
     // hands a sampled GravityField value to a physics body — the

@@ -5,6 +5,7 @@
 #include <vector>
 
 #include "DynamicBody.h"
+#include "FlyingPrimitiveControl.h"
 
 class Window;
 class Renderer;
@@ -60,8 +61,18 @@ class GravityField;
 // PlayerController::Reset is invoked. Logged to CSV alongside the player so
 // automated checks can verify gravity/collision/reset for every body, not
 // just the player. See docs/ARCHITECTURE.md, "Automated testing."
+//
+// `flyingPrimitiveControl` (Milestone 8): the same control-ownership state
+// Application::Run drives — TAP F toggles it (gated on the player's own
+// support state, same rule as the interactive game), ApplyFlyingPrimitiveControl
+// runs each fixed step in the same position the real loop uses, and
+// player.FixedUpdate is called with the same `!controlled` inputEnabled
+// flag. The primitive's own physics state is already covered by its entry
+// in `dynamicBodies`; the CSV additionally logs a `controlled` flag so a
+// script can verify exactly when control was held.
 int RunTestHarness(Window& window, Renderer& renderer, PhysicsWorld& physicsWorld,
                     PlayerController& player, const GravityField& gravity,
                     std::vector<DynamicBody>& dynamicBodies,
+                    FlyingPrimitiveControl& flyingPrimitiveControl,
                     const std::function<void(Renderer&, float)>& drawScene,
                     const std::string& scriptPath);

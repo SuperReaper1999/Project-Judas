@@ -8,22 +8,21 @@ This is **not** a general-purpose engine and is not trying to compete with
 Unity, Unreal, or Godot. It exists to serve one specific class of game, and
 its architecture is deliberately narrow.
 
-## Status: Milestone 7-Final
+## Status: Milestone 8
 
-A controllable player walks, jumps, and falls under real physics — **as of
-this milestone, Judas's own physics engine, not a third-party library** —
-across two independent spherical worlds ("planets," radius `20m` each,
-`55m` apart) connected by a flat plank. Each planet has its own **radial**
-gravity pulling toward its own center; the plank has its own **uniform**
-gravity matching its own flat surface. There is no universal "up": the
-player's own sense of up continuously reorients to match whichever gravity
-context currently governs it, and which context governs a given position
-is decided by simple ownership — a position belongs to exactly one world,
-never a blend of two. See
-[`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) for the two earlier
-gravity-context designs that each passed automated checks and still failed
-interactive validation before this one, why, and why Jolt Physics was
-removed entirely along the way.
+A controllable player walks, jumps, and falls under real physics — Judas's
+own physics engine, not a third-party library — across two independent
+spherical worlds ("planets," radius `20m` each, `55m` apart) connected by a
+flat plank. Each planet has its own **radial** gravity pulling toward its
+own center; the plank has its own **uniform** gravity matching its own flat
+surface. There is no universal "up": the player's own sense of up
+continuously reorients to match whichever gravity context currently
+governs it, and which context governs a given position is decided by
+simple ownership — a position belongs to exactly one world, never a blend
+of two. See [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) for the two
+earlier gravity-context designs that each passed automated checks and
+still failed interactive validation before this one, why, and why Jolt
+Physics was removed entirely along the way.
 
 Both planets and the plank host ordinary dynamic bodies (cubes and
 spheres) that sample the same Judas-owned gravity the player does, purely
@@ -37,14 +36,26 @@ support is always collision-derived (never a gravity-region event), and
 the plank reads as ordinary flat ground everywhere on its surface,
 including its edges — no sideways pull toward either planet, anywhere on
 it. See [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) for the full,
-honest retrospective on how two earlier attempts got that wrong. That's
-it — no lighting, terrain, real planets, or gameplay yet.
+honest retrospective on how two earlier attempts got that wrong.
+
+**New this milestone:** a controllable flying primitive rests on the
+plank. Walk (or hop) onto it and press `F` to take control — WASD/Q/E fly
+it around in full 3D, A/D turn it — then press `F` again to hand control
+back to the player. The player stays a real, physically simulated
+participant throughout: standing on the primitive while it translates,
+climbs, or turns carries the player along coherently, and jumping off (or
+letting go of control while it's moving) preserves whatever motion it was
+imparting, rather than snapping the player back to a fixed offset. See
+`docs/ARCHITECTURE.md`, "Milestone 8," for how input authority moves
+between the player and the primitive and the moving-support physics fix
+that made carrying the player during flight work correctly. That's it —
+no lighting, terrain, real planets, vehicles, or further gameplay yet.
 
 This is intentional — see `docs/ARCHITECTURE.md` for why, what's
 deliberately not built yet, and how this small foundation avoids blocking
 the much larger long-term design. Earlier milestones are preserved as git
-tags (`milestone-1` through `milestone-7final`) rather than kept running
-alongside the current demo.
+tags (`milestone-1` through `milestone-8`, once this one is tagged) rather
+than kept running alongside the current demo.
 
 ## Building
 
@@ -94,9 +105,34 @@ walks the player relative to that look direction and the current surface
 | Jump (only while grounded) | `Space`             |
 | Look around             | Mouse movement        |
 | Release/recapture mouse | `Escape`               |
-| Reset the player        | `R`                    |
+| Take/release control of the flying primitive (only while standing on it) | `F` |
+| Reset the player and world | `R`               |
+
+While controlling the flying primitive (after pressing `F` while standing
+on it), WASD/turn keys mean something different — see "The flying
+primitive" below.
 
 Close the window normally (window controls / `Alt+F4` / etc.) to exit.
+
+### The flying primitive
+
+A flat, boardable box rests on the plank. Walk up to it (a short hop may
+be needed to clear its edge, the same as boarding any low platform) and
+press `F` to take control:
+
+| Action                    | Keys        |
+|----------------------------|-------------|
+| Move forward / backward    | `W` / `S`   |
+| Turn (yaw) left / right    | `A` / `D`   |
+| Ascend / descend           | `E` / `Q`   |
+| Release control            | `F`         |
+
+"Ascend/descend" is relative to whichever gravity currently governs the
+primitive's own position (see `docs/ARCHITECTURE.md`), not a fixed world
+axis — consistent with how nothing else in this engine assumes a
+universal up either. Mouse look still moves the camera freely while
+flying. Pressing `F` again hands input authority straight back to the
+player, who can walk and jump normally immediately afterward.
 
 ## Automated testing (developer tooling)
 

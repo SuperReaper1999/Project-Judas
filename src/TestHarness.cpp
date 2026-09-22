@@ -44,7 +44,7 @@
 //   LOG_EVERY <n>                    print state every n steps (default 1)
 //   HOLD <W|A|S|D> <fromStep> <toStepExclusive>
 //   LOOK <dx> <dy> <atStep>          one queued mouse delta
-//   TAP <SPACE|R> <atStep>           one-shot jump/reset request
+//   TAP <SPACE|R|F> <atStep>         one-shot jump/reset/control-toggle request
 //   SCREENSHOT <atStep> <filename>   render + write a PNG at that step
 //   REALTIME <renderFrameCount>      switch to real-time diagnostic mode
 //                                    (see "Real-time mode" below); HOLD/
@@ -63,6 +63,11 @@ Action ParseHoldKey(const std::string& key, bool& outOk) {
     if (key == "S") return Action::MoveBackward;
     if (key == "A") return Action::StrafeLeft;
     if (key == "D") return Action::StrafeRight;
+    // Milestone 8: Q/E, only meaningful while the flying primitive is
+    // controlled (see src/FlyingPrimitiveControl.h) — the player itself
+    // never consults these two.
+    if (key == "Q") return Action::MoveDown;
+    if (key == "E") return Action::MoveUp;
     outOk = false;
     return Action::MoveForward;
 }
@@ -77,9 +82,10 @@ struct LookEvent {
     int dx;
     int dy;
 };
+enum class TapKind { Jump, Reset, ControlToggle };
 struct TapEvent {
     int step;
-    bool isJump;  // false means reset
+    TapKind kind;
 };
 struct ScreenshotEvent {
     int step;
@@ -138,8 +144,12 @@ bool LoadScript(const std::string& path, Script& outScript) {
             std::string key;
             int step = 0;
             iss >> key >> step;
-            if (key == "SPACE" || key == "R") {
-                outScript.taps.push_back({step, key == "SPACE"});
+            if (key == "SPACE") {
+                outScript.taps.push_back({step, TapKind::Jump});
+            } else if (key == "R") {
+                outScript.taps.push_back({step, TapKind::Reset});
+            } else if (key == "F") {
+                outScript.taps.push_back({step, TapKind::ControlToggle});
             } else {
                 std::fprintf(stderr, "[TestHarness] Unknown TAP key: %s\n", key.c_str());
             }
@@ -234,9 +244,12 @@ void TakeScreenshotIfRequested(int index, const std::vector<ScreenshotEvent>& sc
 int RunFixedStepMode(Window& window, Renderer& renderer, PhysicsWorld& physicsWorld,
                       PlayerController& player, const GravityField& gravity,
                       std::vector<DynamicBody>& dynamicBodies,
+                      FlyingPrimitiveControl& flyingPrimitiveControl,
                       const std::function<void(Renderer&, float)>& drawScene,
                       const Script& script) {
-    std::printf("step,time,posX,posY,posZ,upX,upY,upZ,grounded,velX,velY,velZ,gravX,gravY,gravZ");
+    std::printf(
+        "step,time,posX,posY,posZ,upX,upY,upZ,grounded,velX,velY,velZ,gravX,gravY,gravZ,"
+        "controlled");
     PrintDynamicBodyHeaderColumns(dynamicBodies.size());
     std::printf("\n");
 
@@ -249,12 +262,11 @@ int RunFixedStepMode(Window& window, Renderer& renderer, PhysicsWorld& physicsWo
             if (look.step == step) window.QueueTestMouseDelta(look.dx, look.dy);
         }
         for (const TapEvent& tap : script.taps) {
-            if (tap.step == step) {
-                if (tap.isJump) {
-                    window.RequestTestJump();
-                } else {
-                    window.RequestTestReset();
-                }
+            if (tap.step != step) continue;
+            switch (tap.kind) {
+                case TapKind::Jump: window.RequestTestJump(); break;
+                case TapKind::Reset: window.RequestTestReset(); break;
+                case TapKind::ControlToggle: window.RequestTestControlToggle(); break;
             }
         }
 
@@ -264,12 +276,25 @@ int RunFixedStepMode(Window& window, Renderer& renderer, PhysicsWorld& physicsWo
             for (DynamicBody& body : dynamicBodies) {
                 body.ResetToSpawn(physicsWorld);
             }
+            flyingPrimitiveControl.controlled = false;
+        }
+        // Milestone 8: identical gating rule as the interactive loop — see
+        // Application::Run.
+        if (window.ConsumeControlToggleRequest()) {
+            if (flyingPrimitiveControl.controlled) {
+                flyingPrimitiveControl.controlled = false;
+            } else if (player.IsGrounded() &&
+                       player.GetSupportBodyHandle().id == flyingPrimitiveControl.handle.id) {
+                flyingPrimitiveControl.controlled = true;
+            }
         }
 
         PrepareDynamicBodiesForStep(dynamicBodies, gravity, physicsWorld,
                                      SimulationTiming::kFixedTimestep);
+        ApplyFlyingPrimitiveControl(flyingPrimitiveControl, window, physicsWorld, gravity);
         physicsWorld.Step(SimulationTiming::kFixedTimestep);
-        player.FixedUpdate(window, physicsWorld, gravity, SimulationTiming::kFixedTimestep);
+        player.FixedUpdate(window, physicsWorld, gravity, SimulationTiming::kFixedTimestep,
+                            !flyingPrimitiveControl.controlled);
         SyncDynamicBodiesFromPhysics(dynamicBodies, physicsWorld);
 
         if (script.logEvery > 0 && step % script.logEvery == 0) {
@@ -277,10 +302,10 @@ int RunFixedStepMode(Window& window, Renderer& renderer, PhysicsWorld& physicsWo
             const glm::vec3 vel = player.GetVelocity();
             const glm::vec3 up = player.GetOrientation() * glm::vec3(0.0f, 1.0f, 0.0f);
             const glm::vec3 grav = gravity.Sample(pos);
-            std::printf("%d,%.4f,%.4f,%.4f,%.4f,%.4f,%.4f,%.4f,%d,%.4f,%.4f,%.4f,%.6f,%.6f,%.6f",
+            std::printf("%d,%.4f,%.4f,%.4f,%.4f,%.4f,%.4f,%.4f,%d,%.4f,%.4f,%.4f,%.6f,%.6f,%.6f,%d",
                         step, step * SimulationTiming::kFixedTimestep, pos.x, pos.y, pos.z, up.x,
                         up.y, up.z, player.IsGrounded() ? 1 : 0, vel.x, vel.y, vel.z, grav.x,
-                        grav.y, grav.z);
+                        grav.y, grav.z, flyingPrimitiveControl.controlled ? 1 : 0);
             PrintDynamicBodyRowColumns(dynamicBodies, physicsWorld);
             std::printf("\n");
         }
@@ -305,6 +330,7 @@ int RunFixedStepMode(Window& window, Renderer& renderer, PhysicsWorld& physicsWo
 int RunRealtimeMode(Window& window, Renderer& renderer, PhysicsWorld& physicsWorld,
                      PlayerController& player, const GravityField& gravity,
                      std::vector<DynamicBody>& dynamicBodies,
+                     FlyingPrimitiveControl& flyingPrimitiveControl,
                      const std::function<void(Renderer&, float)>& drawScene,
                      const Script& script) {
     // "pres*" columns are what's actually presented that frame (see
@@ -316,7 +342,7 @@ int RunRealtimeMode(Window& window, Renderer& renderer, PhysicsWorld& physicsWor
     // on a zero-step frame.
     std::printf(
         "frame,wallDeltaMs,stepsThisFrame,alpha,posX,posY,posZ,upX,upY,upZ,presX,presY,presZ,"
-        "presUpX,presUpY,presUpZ,grounded,gravX,gravY,gravZ");
+        "presUpX,presUpY,presUpZ,grounded,gravX,gravY,gravZ,controlled");
     PrintDynamicBodyHeaderColumns(dynamicBodies.size());
     std::printf("\n");
 
@@ -333,12 +359,11 @@ int RunRealtimeMode(Window& window, Renderer& renderer, PhysicsWorld& physicsWor
             if (look.step == frame) window.QueueTestMouseDelta(look.dx, look.dy);
         }
         for (const TapEvent& tap : script.taps) {
-            if (tap.step == frame) {
-                if (tap.isJump) {
-                    window.RequestTestJump();
-                } else {
-                    window.RequestTestReset();
-                }
+            if (tap.step != frame) continue;
+            switch (tap.kind) {
+                case TapKind::Jump: window.RequestTestJump(); break;
+                case TapKind::Reset: window.RequestTestReset(); break;
+                case TapKind::ControlToggle: window.RequestTestControlToggle(); break;
             }
         }
 
@@ -356,7 +381,16 @@ int RunRealtimeMode(Window& window, Renderer& renderer, PhysicsWorld& physicsWor
             for (DynamicBody& body : dynamicBodies) {
                 body.ResetToSpawn(physicsWorld);
             }
+            flyingPrimitiveControl.controlled = false;
             physicsAccumulator = 0.0f;
+        }
+        if (window.ConsumeControlToggleRequest()) {
+            if (flyingPrimitiveControl.controlled) {
+                flyingPrimitiveControl.controlled = false;
+            } else if (player.IsGrounded() &&
+                       player.GetSupportBodyHandle().id == flyingPrimitiveControl.handle.id) {
+                flyingPrimitiveControl.controlled = true;
+            }
         }
 
         physicsAccumulator += frameDeltaTime;
@@ -365,8 +399,10 @@ int RunRealtimeMode(Window& window, Renderer& renderer, PhysicsWorld& physicsWor
                stepsThisFrame < SimulationTiming::kMaxPhysicsStepsPerFrame) {
             PrepareDynamicBodiesForStep(dynamicBodies, gravity, physicsWorld,
                                          SimulationTiming::kFixedTimestep);
+            ApplyFlyingPrimitiveControl(flyingPrimitiveControl, window, physicsWorld, gravity);
             physicsWorld.Step(SimulationTiming::kFixedTimestep);
-            player.FixedUpdate(window, physicsWorld, gravity, SimulationTiming::kFixedTimestep);
+            player.FixedUpdate(window, physicsWorld, gravity, SimulationTiming::kFixedTimestep,
+                                !flyingPrimitiveControl.controlled);
             SyncDynamicBodiesFromPhysics(dynamicBodies, physicsWorld);
             physicsAccumulator -= SimulationTiming::kFixedTimestep;
             ++stepsThisFrame;
@@ -394,10 +430,11 @@ int RunRealtimeMode(Window& window, Renderer& renderer, PhysicsWorld& physicsWor
             player.GetPresentedOrientation(presentationAlpha) * glm::vec3(0.0f, 1.0f, 0.0f);
         const glm::vec3 grav = gravity.Sample(pos);
         std::printf("%d,%.4f,%d,%.4f,%.4f,%.4f,%.4f,%.4f,%.4f,%.4f,%.4f,%.4f,%.4f,%.4f,%.4f,%.4f,"
-                    "%d,%.6f,%.6f,%.6f",
+                    "%d,%.6f,%.6f,%.6f,%d",
                     frame, frameDeltaTime * 1000.0f, stepsThisFrame, presentationAlpha, pos.x,
                     pos.y, pos.z, up.x, up.y, up.z, presPos.x, presPos.y, presPos.z, presUp.x,
-                    presUp.y, presUp.z, player.IsGrounded() ? 1 : 0, grav.x, grav.y, grav.z);
+                    presUp.y, presUp.z, player.IsGrounded() ? 1 : 0, grav.x, grav.y, grav.z,
+                    flyingPrimitiveControl.controlled ? 1 : 0);
         PrintDynamicBodyRowColumns(dynamicBodies, physicsWorld);
         std::printf("\n");
 
@@ -412,6 +449,7 @@ int RunRealtimeMode(Window& window, Renderer& renderer, PhysicsWorld& physicsWor
 int RunTestHarness(Window& window, Renderer& renderer, PhysicsWorld& physicsWorld,
                     PlayerController& player, const GravityField& gravity,
                     std::vector<DynamicBody>& dynamicBodies,
+                    FlyingPrimitiveControl& flyingPrimitiveControl,
                     const std::function<void(Renderer&, float)>& drawScene,
                     const std::string& scriptPath) {
     Script script;
@@ -425,9 +463,9 @@ int RunTestHarness(Window& window, Renderer& renderer, PhysicsWorld& physicsWorl
 
     const int exitCode =
         script.realtime ? RunRealtimeMode(window, renderer, physicsWorld, player, gravity,
-                                           dynamicBodies, drawScene, script)
+                                           dynamicBodies, flyingPrimitiveControl, drawScene, script)
                          : RunFixedStepMode(window, renderer, physicsWorld, player, gravity,
-                                            dynamicBodies, drawScene, script);
+                                            dynamicBodies, flyingPrimitiveControl, drawScene, script);
 
     window.SetTestInputMode(false);
     return exitCode;

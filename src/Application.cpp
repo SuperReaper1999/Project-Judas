@@ -14,6 +14,7 @@
 #include "BoxVolume.h"
 #include "DynamicBody.h"
 #include "FaithfulGravity.h"
+#include "FlyingPrimitiveControl.h"
 #include "GravityContextMap.h"
 #include "GravityField.h"
 #include "PhysicsWorld.h"
@@ -236,6 +237,46 @@ const glm::vec3 kPlankGravityRegionHalfExtents(8.0f, 7.0f, 22.0f);
 // overlapping would have no principled winner, so this composition root
 // keeps that from happening at all).
 constexpr float kPlanetGravityRegionRadius = 26.0f;
+
+// --- Milestone 8: the flying primitive ---
+//
+// One more ordinary DynamicBody (see docs/ARCHITECTURE.md, "Milestone 8")
+// — created here exactly like kDynamicObjectSpawns' six objects above, then
+// appended to the same dynamicBodies list so it gets identical gravity,
+// collision, presentation interpolation, and R-triggered reset for free.
+// What makes it "the flying primitive" is entirely external to DynamicBody
+// itself: a separate FlyingPrimitiveControl (src/FlyingPrimitiveControl.h)
+// holding just its handle and a `controlled` bool, toggled by F.
+//
+// Spawned resting on the PLANK, roughly at its midpoint, rather than
+// directly on either planet's own curved surface. Deliberate, evidence-
+// based placement, not aesthetic, for two reasons found while testing this
+// milestone: (1) box-vs-sphere contact (src/Contacts.cpp's SphereVsBox)
+// only ever produces a single contact point — the same "a box needs more
+// than one contact point to rest flat without rocking" limitation already
+// documented for box-vs-box before BoxVsBoxManifold existed
+// (docs/ARCHITECTURE.md, law #15's bug note) — so a flat box this size
+// resting on a curved sphere via one contact point would be genuinely
+// unstable; (2) placing it too close to either planet's own end of the
+// plank let the primitive's far corner geometrically overlap that planet's
+// collision SPHERE as well as the plank underneath it, producing an extra,
+// unwanted contact that pushed it noticeably higher than the plank's own
+// surface — reproduced directly and confirmed by isolating the plank
+// contact alone (settles at exactly plank-top + half-height, ~18.25) versus
+// the full scene (settled almost 0.35m higher). The plank's own midpoint is
+// far enough from both planets' spheres that neither ever engages. The
+// plank is itself a static box, so resting on it gets the real multi-point
+// BoxVsBoxManifold and settles flat, the same mechanism every dynamic cube
+// in kDynamicObjectSpawns already relies on when it lands on the plank.
+// Still an easy walk from the player's own spawn point, continuing straight
+// down the same traversal path M7-Final's own validation already walks
+// (spawn -> down the sphere -> onto the plank -> along it).
+constexpr float kFlyingPrimitiveMass = 80.0f;
+constexpr float kFlyingPrimitiveFriction = 0.8f;
+constexpr float kFlyingPrimitiveRestitution = 0.1f;
+const glm::vec3 kFlyingPrimitiveHalfExtents(2.0f, 0.25f, 3.0f);
+const glm::vec3 kFlyingPrimitiveColor(0.75f, 0.75f, 0.8f);
+const glm::vec3 kFlyingPrimitiveSpawnPosition(0.0f, 19.0f, 24.0f);
 }  // namespace
 
 int Application::Run() {
@@ -248,7 +289,7 @@ int Application::Run() {
     const bool isTestRun = testScriptPath != nullptr;
 
     Window window;
-    if (!window.Init("Project Judas - Milestone 7-Final", kWindowWidth, kWindowHeight,
+    if (!window.Init("Project Judas - Milestone 8", kWindowWidth, kWindowHeight,
                       !isTestRun)) {
         std::fprintf(stderr, "Window initialization failed.\n");
         return 1;
@@ -318,6 +359,27 @@ int Application::Run() {
     // planets above.
     std::vector<DynamicBody> dynamicBodies = SpawnDynamicObjects(physicsWorld);
 
+    // Milestone 8: the flying primitive, appended as one more DynamicBody
+    // (see the kFlyingPrimitive* constants above) so it shares every
+    // existing per-body mechanism (gravity, collision, presentation,
+    // reset). `flyingPrimitiveBodyIndex` recovers its entry for the
+    // control-anchored camera below; `flyingPrimitiveControl` is the entire
+    // separate control-ownership mechanism (see src/FlyingPrimitiveControl.h).
+    {
+        DynamicBody::Visual visual;
+        visual.shape = DynamicBody::Shape::Box;
+        visual.halfExtents = kFlyingPrimitiveHalfExtents;
+        visual.color = kFlyingPrimitiveColor;
+        const BodyHandle handle = physicsWorld.CreateDynamicBox(
+            kFlyingPrimitiveSpawnPosition, kFlyingPrimitiveHalfExtents, kFlyingPrimitiveMass,
+            kFlyingPrimitiveFriction, kFlyingPrimitiveRestitution);
+        dynamicBodies.emplace_back(handle, visual, kFlyingPrimitiveSpawnPosition,
+                                    glm::quat(1.0f, 0.0f, 0.0f, 0.0f));
+    }
+    const std::size_t flyingPrimitiveBodyIndex = dynamicBodies.size() - 1;
+    FlyingPrimitiveControl flyingPrimitiveControl;
+    flyingPrimitiveControl.handle = dynamicBodies[flyingPrimitiveBodyIndex].Handle();
+
     // Shared between the normal interactive loop and the test harness, so
     // a screenshot taken by the harness shows exactly what the real game
     // would have rendered that frame. `presentationAlpha` blends the
@@ -352,7 +414,7 @@ int Application::Run() {
     int exitCode = 0;
     if (isTestRun) {
         exitCode = RunTestHarness(window, renderer, physicsWorld, player, gravity, dynamicBodies,
-                                   drawScene, testScriptPath);
+                                   flyingPrimitiveControl, drawScene, testScriptPath);
     } else {
         float physicsAccumulator = 0.0f;
 
@@ -396,7 +458,22 @@ int Application::Run() {
                 for (DynamicBody& body : dynamicBodies) {
                     body.ResetToSpawn(physicsWorld);
                 }
+                flyingPrimitiveControl.controlled = false;
                 physicsAccumulator = 0.0f;
+            }
+
+            // Milestone 8: F toggles input authority between the player and
+            // the flying primitive. Taking control is gated on the player's
+            // OWN current support state (never a global teleport-to-it) —
+            // releasing control is always allowed. See
+            // docs/ARCHITECTURE.md, "Milestone 8."
+            if (window.ConsumeControlToggleRequest()) {
+                if (flyingPrimitiveControl.controlled) {
+                    flyingPrimitiveControl.controlled = false;
+                } else if (player.IsGrounded() &&
+                           player.GetSupportBodyHandle().id == flyingPrimitiveControl.handle.id) {
+                    flyingPrimitiveControl.controlled = true;
+                }
             }
 
             // Fixed-timestep physics: render-frame delta time only decides
@@ -406,15 +483,23 @@ int Application::Run() {
             int stepsThisFrame = 0;
             while (physicsAccumulator >= SimulationTiming::kFixedTimestep &&
                    stepsThisFrame < SimulationTiming::kMaxPhysicsStepsPerFrame) {
-                // Dynamic bodies sample gravity and hand it to the physics
-                // engine BEFORE Step() integrates it into their position — the same
-                // "Judas samples, physics obeys" ordering the player uses,
-                // just applied to a list. See docs/ARCHITECTURE.md,
-                // "Multiple gravity consumers."
+                // Dynamic bodies (the flying primitive included) sample
+                // gravity and hand it to the physics engine BEFORE Step()
+                // integrates it into their position — the same "Judas
+                // samples, physics obeys" ordering the player uses, just
+                // applied to a list. See docs/ARCHITECTURE.md, "Multiple
+                // gravity consumers." ApplyFlyingPrimitiveControl runs
+                // immediately after: if controlled, it overrides the
+                // primitive's velocity from input, exactly overwriting what
+                // gravity just contributed that step (see
+                // src/FlyingPrimitiveControl.h) — otherwise it's a no-op
+                // and the primitive falls/rests like any other body.
                 PrepareDynamicBodiesForStep(dynamicBodies, gravity, physicsWorld,
                                              SimulationTiming::kFixedTimestep);
+                ApplyFlyingPrimitiveControl(flyingPrimitiveControl, window, physicsWorld, gravity);
                 physicsWorld.Step(SimulationTiming::kFixedTimestep);
-                player.FixedUpdate(window, physicsWorld, gravity, SimulationTiming::kFixedTimestep);
+                player.FixedUpdate(window, physicsWorld, gravity, SimulationTiming::kFixedTimestep,
+                                    !flyingPrimitiveControl.controlled);
                 SyncDynamicBodiesFromPhysics(dynamicBodies, physicsWorld);
 
                 physicsAccumulator -= SimulationTiming::kFixedTimestep;
@@ -457,8 +542,19 @@ int Application::Run() {
                 static_cast<float>(window.Width()) / static_cast<float>(windowHeight);
 
             renderer.BeginFrame(window.Width(), window.Height());
-            renderer.SetCamera(player.GetViewMatrix(presentationAlpha),
-                                player.GetProjectionMatrix(aspectRatio));
+            // Milestone 8: while controlling the flying primitive, anchor
+            // the SAME camera (identical offset/look math — see
+            // PlayerController::GetViewMatrix's two overloads) to its own
+            // presented pose instead of the player's, so flying it has a
+            // working viewpoint. Mouse look still comes from the player's
+            // own m_yaw/m_pitch either way.
+            const glm::mat4 view =
+                flyingPrimitiveControl.controlled
+                    ? player.GetViewMatrix(
+                          dynamicBodies[flyingPrimitiveBodyIndex].GetPresentedPosition(presentationAlpha),
+                          dynamicBodies[flyingPrimitiveBodyIndex].GetPresentedOrientation(presentationAlpha))
+                    : player.GetViewMatrix(presentationAlpha);
+            renderer.SetCamera(view, player.GetProjectionMatrix(aspectRatio));
             drawScene(renderer, presentationAlpha);
             renderer.EndFrame();
 

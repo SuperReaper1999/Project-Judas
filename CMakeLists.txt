@@ -34,6 +34,7 @@ add_executable(judas
     src/Renderer.cpp
     src/PlayerController.cpp
     src/DynamicBody.cpp
+    src/FlyingPrimitiveControl.cpp
     src/FaithfulGravity.cpp
     src/RadicalGravity.cpp
     src/SphericalVolume.cpp

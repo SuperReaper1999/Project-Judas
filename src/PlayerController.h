@@ -3,8 +3,9 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/quaternion.hpp>
 
+#include "PhysicsWorld.h"
+
 class Window;
-class PhysicsWorld;
 class GravityField;
 
 // Judas-owned player. Unlike Milestone 4 (which delegated locomotion to
@@ -56,8 +57,17 @@ public:
     // displacement against collision via a minimal move-and-slide loop.
     // Also records the pre-step position/orientation as the interpolation
     // baseline for presentation — see GetPresentedPosition/Orientation.
+    // `inputEnabled` (Milestone 8, default true): when false, WASD/jump are
+    // ignored — the player still runs gravity, support detection,
+    // moving-support velocity carry (see below), and collision-aware
+    // movement exactly as normal, it simply isn't given fresh locomotion
+    // intent that step. Used while the player is controlling the flying
+    // primitive instead of themselves (see src/FlyingPrimitiveControl.h) —
+    // the player remains a real, physically simulated participant the
+    // entire time, per docs/ARCHITECTURE.md's Milestone 8 section, rather
+    // than being frozen or detached.
     void FixedUpdate(const Window& window, PhysicsWorld& physics, const GravityField& gravity,
-                      float fixedDeltaTime);
+                      float fixedDeltaTime, bool inputEnabled = true);
 
     // All player state lives in this class (position, velocity,
     // orientation, pending jump) — there is no physics-side state to reset
@@ -76,6 +86,17 @@ public:
     // it already updates every render frame in UpdateFrameInput, so it's
     // already as responsive as rendering itself.
     glm::mat4 GetViewMatrix(float presentationAlpha) const;
+
+    // Milestone 8: builds the identical camera (same fixed offset/eye
+    // height/look composition, same player-controlled m_yaw/m_pitch free
+    // look) anchored to an EXTERNAL position/orientation instead of the
+    // player's own presented pose. Used only while controlling the flying
+    // primitive (see src/FlyingPrimitiveControl.h, Application::Run) so
+    // flying it has a working viewpoint without a second camera system —
+    // "keep the existing camera architecture intact as practical." Mouse
+    // look still comes from this class; only the anchor changes.
+    glm::mat4 GetViewMatrix(const glm::vec3& anchorPosition, const glm::quat& anchorOrientation) const;
+
     glm::mat4 GetProjectionMatrix(float aspectRatio) const;
 
     // Presentation-only interpolated transform — see docs/ARCHITECTURE.md,
@@ -112,16 +133,31 @@ public:
     float GetPitch() const { return m_pitch; }
     glm::vec3 GetLookDirection() const;
 
+    // Milestone 8: the physics body the player is currently standing on,
+    // meaningful only when IsGrounded() is true (same "meaningful only
+    // when hit is true" convention as ShapeSweepHit::hitBody, which this
+    // is taken directly from). Lets a caller (Application, gating F's
+    // take-control request) check "is the player on THIS specific object"
+    // without PlayerController needing to know what a flying primitive is.
+    BodyHandle GetSupportBodyHandle() const { return m_lastGroundHitBody; }
+
 private:
     glm::vec3 ComputeLocalUp(const glm::vec3& gravityAcceleration) const;
     void UpdateFrameOrientation(const glm::vec3& localUp, float fixedDeltaTime);
     glm::vec3 ComputeTangentVelocity(const Window& window, const glm::vec3& localUp) const;
+    glm::mat4 BuildViewMatrix(const glm::vec3& position, const glm::quat& orientation) const;
 
     // Judas-owned player state. None of this is a physics-engine body.
     glm::vec3 m_position;          // capsule center, world space
     glm::vec3 m_velocity{0.0f};
     glm::quat m_frameOrientation;  // local frame: (m_frameOrientation * +Y) is the current local up
     bool m_lastGrounded = false;   // support state as of the most recent FixedUpdate
+    BodyHandle m_lastGroundHitBody;  // see GetSupportBodyHandle(); meaningful only if m_lastGrounded
+    // Milestone 8: the moving-support velocity carried into m_velocity as
+    // of the most recent grounded step (zero on static ground or while
+    // airborne) — see FixedUpdate's wasAscending computation for why this
+    // has to be tracked separately from m_velocity itself.
+    glm::vec3 m_lastGroundVelocity{0.0f};
 
     // Presentation-only: position/orientation as of the end of the
     // PREVIOUS fixed step, i.e. the interpolation start point for whatever

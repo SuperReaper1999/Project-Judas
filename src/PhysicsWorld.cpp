@@ -221,6 +221,16 @@ void PhysicsWorld::SetLinearVelocity(BodyHandle handle, const glm::vec3& velocit
     if (body) body->rigidBody.linearVelocity = velocity;
 }
 
+glm::vec3 PhysicsWorld::GetAngularVelocity(BodyHandle handle) const {
+    const Impl::Body* body = m_impl->Get(handle);
+    return body ? body->rigidBody.angularVelocity : glm::vec3(0.0f);
+}
+
+void PhysicsWorld::SetAngularVelocity(BodyHandle handle, const glm::vec3& angularVelocity) {
+    Impl::Body* body = m_impl->Get(handle);
+    if (body) body->rigidBody.angularVelocity = angularVelocity;
+}
+
 void PhysicsWorld::Step(float fixedDeltaTime) {
     // 1) Integrate every dynamic body's position/orientation from its
     // CURRENT velocity. Gravity has already been folded into that velocity

@@ -9,13 +9,21 @@
 // As of Milestone 4 these drive the player's grounded horizontal
 // locomotion (see PlayerController): "forward"/"strafe" are relative to
 // wherever the player is currently looking, not to any fixed world
-// direction. Vertical movement is not one of these — jumping is a discrete
-// event (see ConsumeJumpRequest below), not a held direction.
+// direction. Vertical movement was not one of these through Milestone
+// 7-Final — jumping was a discrete event (see ConsumeJumpRequest below),
+// not a held direction.
+//
+// Milestone 8 adds MoveUp/MoveDown (Q/E), continuously polled the same way
+// as the rest — needed for the flying primitive's vertical control (see
+// src/FlyingPrimitiveControl.h), which has no "jump" concept. The player
+// itself still never consults these two.
 enum class Action {
     MoveForward,
     MoveBackward,
     StrafeLeft,
     StrafeRight,
+    MoveUp,
+    MoveDown,
 };
 
 // Owns the OS window, the GL context, and OS event pumping. Combines the
@@ -62,6 +70,13 @@ public:
     // docs/ARCHITECTURE.md, "Simulation timing."
     bool ConsumeJumpRequest();
 
+    // Milestone 8: returns true exactly once per `F` key press
+    // (edge-triggered, same shape as ConsumeResetRequest/ConsumeJumpRequest).
+    // Application interprets this as "toggle control of the flying
+    // primitive" — this class knows nothing about what F does, only that a
+    // press happened.
+    bool ConsumeControlToggleRequest();
+
     int Width() const { return m_width; }
     int Height() const { return m_height; }
 
@@ -79,6 +94,9 @@ public:
     void RequestTestJump();
     void RequestTestReset();
 
+    // Milestone 8: scripted equivalent of an `F` press.
+    void RequestTestControlToggle();
+
 private:
     SDL_Window* m_window = nullptr;
     SDL_GLContext m_glContext = nullptr;
@@ -87,11 +105,12 @@ private:
     bool m_mouseCaptured = false;
     bool m_resetRequested = false;
     bool m_jumpRequested = false;
+    bool m_controlToggleRequested = false;
     int m_width = 0;
     int m_height = 0;
 
     bool m_testInputMode = false;
-    bool m_testActionState[4] = {false, false, false, false};
+    bool m_testActionState[6] = {false, false, false, false, false, false};
     // mutable: GetMouseDelta is const (it only ever mutates external SDL
     // state in the non-test path), but test mode needs "read once, then
     // drain to zero" semantics on its own queued delta, matching real
@@ -100,4 +119,5 @@ private:
     mutable int m_testMouseDeltaY = 0;
     bool m_testJumpRequested = false;
     bool m_testResetRequested = false;
+    bool m_testControlToggleRequested = false;
 };

@@ -187,7 +187,8 @@ glm::vec3 PlayerController::ComputeTangentVelocity(const Window& window,
 }
 
 void PlayerController::FixedUpdate(const Window& window, PhysicsWorld& physics,
-                                    const GravityField& gravity, float fixedDeltaTime) {
+                                    const GravityField& gravity, float fixedDeltaTime,
+                                    bool inputEnabled) {
     // Presentation history: snapshot the state as of the END of the
     // PREVIOUS step, before this step changes it. This is bookkeeping for
     // rendering only — see GetPresentedPosition/Orientation — and reads
@@ -214,17 +215,69 @@ void PlayerController::FixedUpdate(const Window& window, PhysicsWorld& physics,
     // step's velocity — once ascending, the probe is ignored until that
     // stops being true, i.e. until gravity has actually turned the jump
     // around.
-    const bool wasAscending = glm::dot(m_velocity, localUp) > 0.0f;
+    //
+    // Milestone 8: measured relative to whatever the player was STANDING
+    // ON last step (m_lastGroundVelocity), not in absolute world terms.
+    // A real jump's own velocity now does exactly what it always has, but
+    // a moving support's carried velocity (see groundVelocity below) no
+    // longer does — without this, a support accelerating upward (the
+    // flying primitive ascending) made the player look "ascending" purely
+    // because it was being carried, permanently disqualifying grounding
+    // via this exact check the instant the support moved, even though the
+    // player never launched itself anywhere. Reproduced directly: without
+    // this fix, the player visibly fell off partway through the
+    // primitive's very first ascent. See docs/ARCHITECTURE.md,
+    // "Milestone 8" — this is the moving-support interaction the brief
+    // called out as the most important technical test here.
+    const bool wasAscending = glm::dot(m_velocity - m_lastGroundVelocity, localUp) > 0.0f;
     const ShapeSweepHit groundHit =
         physics.SweepPlayerShape(m_position, m_frameOrientation, -localUp * kGroundProbeDistance);
     const bool isGrounded =
         !wasAscending && groundHit.hit && glm::dot(groundHit.normal, localUp) > kMinGroundDot;
     m_lastGrounded = isGrounded;
+    m_lastGroundHitBody = groundHit.hitBody;
+
+    // Milestone 8: velocity of the supporting body's own material point
+    // nearest the player — ordinary rigid-body point-velocity (v + omega x
+    // r), so a TRANSLATING support carries the player and a ROTATING one
+    // does too, not just a moving-in-a-straight-line one. Zero for static
+    // geometry (every previous milestone's case) and for an ungrounded
+    // step. The player's own capsule offset from this approximate point is
+    // small relative to this demo's geometry, so m_position itself stands
+    // in for "the contact point" rather than adding a dedicated field to
+    // ShapeSweepHit for this one caller. See docs/ARCHITECTURE.md,
+    // "Milestone 8" — this is deliberately a separate quantity from the
+    // player's own input-driven velocity, added on top of it, never
+    // conflated with it (supporting body motion != player input velocity).
+    glm::vec3 groundVelocity(0.0f);
+    if (isGrounded && physics.IsDynamicBody(groundHit.hitBody)) {
+        const glm::vec3 supportLinearVelocity = physics.GetLinearVelocity(groundHit.hitBody);
+        const glm::vec3 supportAngularVelocity = physics.GetAngularVelocity(groundHit.hitBody);
+        const BodyTransform supportTransform = physics.GetTransform(groundHit.hitBody);
+        groundVelocity = supportLinearVelocity +
+                          glm::cross(supportAngularVelocity, m_position - supportTransform.position);
+    }
+    m_lastGroundVelocity = groundVelocity;
+
+    // Milestone 8: carry the player by the support's own displacement THIS
+    // step directly, rather than relying on the move-and-slide sweep below
+    // to reconstruct it from velocity alone. The sweep's skin-margin
+    // clamping (kSkinMargin, 0.02m per step) is tuned for gravity's own
+    // small per-step glue nudge, not a support translating several
+    // centimeters a step under direct control — reproduced directly: with
+    // ONLY the velocity-based approach, the player measurably lagged a
+    // fast-ascending primitive and eventually lost contact partway up. A
+    // direct position carry has no such tolerance to exceed. `groundVelocity`
+    // is excluded from `remaining` below so this translation is never
+    // double-counted by the sweep that resolves the player's OWN relative
+    // motion (WASD/jump/gravity-glue) against the support.
+    m_position += groundVelocity * fixedDeltaTime;
 
     // A jump only ever begins while actually supported, per this step's own
     // geometry query — never a height comparison. Once consumed, the
     // request is cleared unconditionally below: a jump attempt made while
-    // airborne is discarded, not buffered until landing.
+    // airborne is discarded, not buffered until landing (and so is one made
+    // while `inputEnabled` is false — see FixedUpdate's own doc comment).
     if (isGrounded) {
         // Grounded: instant, WASD-driven horizontal control — unchanged
         // since Milestone 4, so direction changes feel immediate, never a
@@ -232,13 +285,17 @@ void PlayerController::FixedUpdate(const Window& window, PhysicsWorld& physics,
         // the same small per-step gravity nudge that's always been here
         // (what keeps the player glued to a curved surface between
         // steps — see "Locomotion," "Contact normal correctness"); a
-        // jump overrides it outright.
-        const glm::vec3 horizontalVelocity = ComputeTangentVelocity(window, localUp);
+        // jump overrides it outright. `groundVelocity` (zero on ordinary
+        // static ground) is added on top either way, so standing still on
+        // a moving support still means moving with it, and jumping from
+        // one launches relative to it rather than replacing its motion.
+        const glm::vec3 horizontalVelocity =
+            inputEnabled ? ComputeTangentVelocity(window, localUp) : glm::vec3(0.0f);
         float verticalSpeed = glm::dot(acceleration, localUp) * fixedDeltaTime;
-        if (m_jumpRequested) {
+        if (inputEnabled && m_jumpRequested) {
             verticalSpeed = kJumpSpeed;
         }
-        m_velocity = horizontalVelocity + localUp * verticalSpeed;
+        m_velocity = horizontalVelocity + localUp * verticalSpeed + groundVelocity;
     } else {
         // Airborne: ordinary integration of the FULL velocity vector —
         // not just its component along localUp, and WASD input is not
@@ -260,8 +317,14 @@ void PlayerController::FixedUpdate(const Window& window, PhysicsWorld& physics,
 
     // Judas's own minimal move-and-slide: never trust a raw transform
     // write, always resolve displacement against the physics engine's
-    // collision query.
-    glm::vec3 remaining = m_velocity * fixedDeltaTime;
+    // collision query. `groundVelocity` is subtracted back out here — its
+    // positional effect was already applied directly above, once, as an
+    // exact carry; only the player's OWN relative motion (WASD, jump,
+    // gravity's small glue nudge, or ordinary airborne integration) is
+    // resolved through the sweep. On ordinary static ground or while
+    // airborne, groundVelocity is exactly zero, so this is unchanged from
+    // every milestone before this one.
+    glm::vec3 remaining = (m_velocity - groundVelocity) * fixedDeltaTime;
     for (int i = 0; i < kMaxSlideIterations; ++i) {
         const float remainingLength = glm::length(remaining);
         if (remainingLength < 1.0e-6f) break;
@@ -362,25 +425,34 @@ glm::vec3 PlayerController::GetLookDirection() const {
     return glm::normalize(lookOrientation * glm::vec3(0.0f, 0.0f, -1.0f));
 }
 
-glm::mat4 PlayerController::GetViewMatrix(float presentationAlpha) const {
-    const glm::vec3 presentedPosition = GetPresentedPosition(presentationAlpha);
-    const glm::quat presentedOrientation = GetPresentedOrientation(presentationAlpha);
-    const glm::vec3 localUp = presentedOrientation * glm::vec3(0.0f, 1.0f, 0.0f);
+glm::mat4 PlayerController::BuildViewMatrix(const glm::vec3& position,
+                                             const glm::quat& orientation) const {
+    const glm::vec3 localUp = orientation * glm::vec3(0.0f, 1.0f, 0.0f);
 
-    // Mouse look (yaw/pitch) is applied on top of the presented orientation
+    // Mouse look (yaw/pitch) is applied on top of the given orientation
     // unmodified — it already updates every render frame in
     // UpdateFrameInput, so it's already as responsive as rendering itself
     // and needs no interpolation of its own. See docs/ARCHITECTURE.md,
     // "Input responsiveness."
     const glm::quat lookOrientation =
-        presentedOrientation * glm::angleAxis(glm::radians(m_yaw), glm::vec3(0.0f, 1.0f, 0.0f)) *
+        orientation * glm::angleAxis(glm::radians(m_yaw), glm::vec3(0.0f, 1.0f, 0.0f)) *
         glm::angleAxis(glm::radians(m_pitch), glm::vec3(1.0f, 0.0f, 0.0f));
     const glm::vec3 front = glm::normalize(lookOrientation * glm::vec3(0.0f, 0.0f, -1.0f));
 
-    const glm::vec3 eyePosition = presentedPosition + localUp * kEyeHeightAboveCenter;
+    const glm::vec3 eyePosition = position + localUp * kEyeHeightAboveCenter;
     const glm::vec3 cameraPosition =
         eyePosition - front * kCameraFollowDistance + localUp * kCameraHeightOffset;
     return glm::lookAt(cameraPosition, cameraPosition + front, localUp);
+}
+
+glm::mat4 PlayerController::GetViewMatrix(float presentationAlpha) const {
+    return BuildViewMatrix(GetPresentedPosition(presentationAlpha),
+                            GetPresentedOrientation(presentationAlpha));
+}
+
+glm::mat4 PlayerController::GetViewMatrix(const glm::vec3& anchorPosition,
+                                           const glm::quat& anchorOrientation) const {
+    return BuildViewMatrix(anchorPosition, anchorOrientation);
 }
 
 glm::mat4 PlayerController::GetProjectionMatrix(float aspectRatio) const {

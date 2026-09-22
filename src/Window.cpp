@@ -89,6 +89,8 @@ void Window::PollEvents() {
                 m_resetRequested = true;
             } else if (event.key.keysym.scancode == SDL_SCANCODE_SPACE) {
                 m_jumpRequested = true;
+            } else if (event.key.keysym.scancode == SDL_SCANCODE_F) {
+                m_controlToggleRequested = true;
             }
         }
     }
@@ -113,6 +115,10 @@ bool Window::IsActionActive(Action action) const {
             return keys[SDL_SCANCODE_A] || keys[SDL_SCANCODE_LEFT];
         case Action::StrafeRight:
             return keys[SDL_SCANCODE_D] || keys[SDL_SCANCODE_RIGHT];
+        case Action::MoveUp:
+            return keys[SDL_SCANCODE_E];
+        case Action::MoveDown:
+            return keys[SDL_SCANCODE_Q];
     }
     return false;
 }
@@ -164,6 +170,17 @@ bool Window::ConsumeJumpRequest() {
     return requested;
 }
 
+bool Window::ConsumeControlToggleRequest() {
+    if (m_testInputMode) {
+        const bool requested = m_testControlToggleRequested;
+        m_testControlToggleRequested = false;
+        return requested;
+    }
+    const bool requested = m_controlToggleRequested;
+    m_controlToggleRequested = false;
+    return requested;
+}
+
 void Window::SetTestInputMode(bool enabled) {
     m_testInputMode = enabled;
 }
@@ -183,4 +200,8 @@ void Window::RequestTestJump() {
 
 void Window::RequestTestReset() {
     m_testResetRequested = true;
+}
+
+void Window::RequestTestControlToggle() {
+    m_testControlToggleRequested = true;
 }
