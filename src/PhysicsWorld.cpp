@@ -16,7 +16,7 @@
 // here, built from RigidBody (state/integration), Contacts (narrowphase),
 // and ContactSolver (impulse resolution). See docs/ARCHITECTURE.md,
 // "Physics ownership" for the migration this replaces (Jolt Physics,
-// through Milestone 7-Final) and why: no subsystem here — broadphase,
+// used through the first Milestone 7-Final attempt) and why: no subsystem here — broadphase,
 // narrowphase, contact resolution, the player's sweep query — assumes a
 // world-space up axis; every one of them is expressed purely in terms of
 // the shapes' and bodies' own positions/orientations. Judas already owned

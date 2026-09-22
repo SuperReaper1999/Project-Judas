@@ -6,47 +6,54 @@ someone with no prior context on this project. It is updated in place as
 milestones land, rather than kept as a per-milestone snapshot — see
 "Milestone history" below for how to recover an earlier milestone exactly.
 
-## What exists right now (Milestone 7-B)
+## What exists right now (Milestone 7-Final)
 
-Open a window. A large static sphere (radius `20m` — see "Physics test
-world") exists in 3D space with **radial** gravity pulling toward its
-center. A Judas-owned player (not a Jolt character controller of any kind
-— see "Player/controller ownership") falls onto the sphere, stands on its
-curved surface, and can walk all the way around it — including onto what
-would have been "the side" or "the underside" from the spawn point's
-perspective — because the player's own sense of "up" continuously
-reorients to match whichever way gravity is currently pulling. `Space`
-jumps away from the local surface; gravity brings the player back and
-Jolt's own collision queries detect the landing. `R` resets the player.
-Ordinary locomotion is visually smooth: the fixed-step simulation is
-unchanged, but what gets *rendered* each frame is a presentation-only
-interpolation between two authoritative simulation states rather than the
-latest one presented directly — see "Diagnosis" and "Simulation/
-presentation boundary" below.
+Open a window. Two independent static spheres ("planets," radius `20m`
+each, centers `55m` apart — see "Physics test world") exist in 3D space,
+each with its own **radial** gravity pulling toward its own center. A flat
+static plank connects them near their facing surfaces. A Judas-owned
+player (not a physics-middleware character controller of any kind — see
+"Player/controller ownership") falls onto Planet A, stands on its curved
+surface, and can walk all the way around it — because the player's own
+sense of "up" continuously reorients to match whichever way gravity is
+currently pulling — then walks onto the plank, across it, and onto Planet
+B, and back, with gravity handing off coherently at each boundary. `Space`
+jumps; `R` resets the player. Ordinary locomotion is visually smooth: the
+fixed-step simulation is unchanged, but what gets *rendered* each frame is
+a presentation-only interpolation between two authoritative simulation
+states rather than the latest one presented directly — see "Diagnosis" and
+"Simulation/presentation boundary" below.
 
-The sphere also carries four ordinary Jolt dynamic bodies (two cubes, two
-spheres) scattered around it — see "Physics test world" and "Dynamic
-bodies." Each one samples the same effective gravity the player does,
-purely from its own current position, with no knowledge of the sphere, the
-player, or which `GravityField` implementation(s) are active. They fall,
-land, roll, and collide with the sphere and with each other under ordinary
-Jolt rigid-body dynamics — Judas supplies acceleration only, never
-orientation or resting position. The player can walk into one and push it
-— see "Player-to-object interaction."
+Both planets and the plank also carry ordinary dynamic bodies (cubes and
+spheres) — see "Physics test world" and "Dynamic bodies." Each one samples
+the same effective gravity the player does, purely from its own current
+position, with no knowledge of which planet or the plank it's on, or which
+`GravityField` implementation(s) are active. They fall, land, roll, and
+collide with the world and with each other under ordinary rigid-body
+dynamics — Judas supplies acceleration only, never orientation or resting
+position. The player can walk into one and push it — see "Player-to-object
+interaction."
 
-As of this milestone, a second, completely different physical environment
-also exists at the same time: a flat platform under **uniform**
-(`FaithfulGravity`) gravity, positioned near the sphere's equator. A player
-who strafes to the right longitude and jumps off the sphere's surface
-travels through a genuine gravity transition — the radial pull that governs
-the sphere smoothly hands off to the platform's fixed "down" as the player
-crosses a spatial boundary neither gravity implementation nor the player
-itself has any concept of — and physically lands on the platform, under
-Jolt collision the whole way. The reverse works too: walking off the
-platform's edge lets radial gravity pick the player back up and carry them
-back onto the sphere. See "Gravity resolution" and "Transition semantics."
-Nothing else. See the root `README.md` for build/run instructions and
-controls.
+**As of this milestone, Project Judas owns its physics engine entirely —
+no third-party physics middleware is used at all.** Every prior milestone
+through the first attempt at this one used Jolt Physics for collision
+detection, contact resolution, and rigid-body integration; that dependency
+is now fully removed (see "Physics ownership" for why, and the full
+retrospective on the two gravity-model designs that failed human
+validation before the operator made this call). Rigid-body state,
+integration, collision detection, contact generation, and contact
+resolution are all Judas's own code (`src/RigidBody.*`, `src/Contacts.*`,
+`src/ContactSolver.*`, `src/PhysicsWorld.cpp`), built and verified to
+contain no world-space axis assumption anywhere in that stack — see
+"Physics ownership" and "Automated testing."
+
+Gravity context — which `GravityField` governs a consumer at a given
+position — is resolved by pure ownership routing (`GravityContextMap`):
+each planet and the plank has its own coherent gravity, and a position
+belongs to exactly one of them, never a blend of two. See "Gravity context
+ownership" for the two earlier designs this replaced and why both failed
+human validation despite passing every automated check. Nothing else. See
+the root `README.md` for build/run instructions and controls.
 
 ## Milestone history
 
@@ -77,6 +84,26 @@ preserved as parallel runtime code:
   the 'already touching' case" — found during this milestone's own human
   validation; bugfixes between milestones aren't tagged the way milestones
   are.
+- `milestone-7b` — a second, simultaneous `FaithfulGravity` platform
+  alongside the sphere, with `GravityResolver` (falloff-weighted vector
+  blending) resolving which field governed a consumer at a given position.
+  Passed its own human validation at the time; later shown by Milestone
+  7-Final's own validation to be built on an assumption (continuous field
+  blending as the model for "gravity context") that doesn't generalize —
+  see "Gravity context ownership."
+- `milestone-7final` — two independent planets, a connecting plank, full
+  round-trip traversal. Reached only after TWO complete gravity-model
+  redesigns failed the operator's own interactive validation (not just
+  automated checks) — see "Gravity context ownership" for the full,
+  honest retrospective on why `GravityResolver` and the first
+  `GravityContextMap` design both passed every harness check while still
+  feeling physically wrong to a human standing on the plank. The second
+  failure prompted a further decision unrelated to gravity semantics
+  themselves: Jolt Physics was removed entirely and replaced with a
+  Judas-owned rigid-body/collision/contact stack — see "Physics
+  ownership." Both prior attempts' commits remain in git history
+  (untagged, since neither passed human validation) for anyone who wants
+  to see exactly what was tried and rejected.
 
 Each milestone's demo content has been replaced (not extended) by the next;
 check out a tag to see or run an earlier milestone as it was.
@@ -195,10 +222,6 @@ anything unnecessary.
 matching GLSL's own conventions. MIT-licensed. Installed via the system
 package manager (`libglm-dev`).
 
-**Jolt Physics** (added in Milestone 3) — see "Physics middleware" below.
-Milestone 5's player work is a narrower use of Jolt (low-level shape
-queries instead of its character controller), not a new dependency.
-
 **stb_image_write** (added in Milestone 5, `third_party/stb_image_write.h`)
 — a single-header, dependency-free PNG/BMP/TGA/JPG/HDR writer, public
 domain/MIT dual-licensed. Used only by the opt-in test harness (see
@@ -208,25 +231,73 @@ rather than fetched via CMake — writing an image file from raw pixels is
 as commodity a problem as they come, and a package manager or
 `FetchContent` step would add process for a single self-contained header.
 
-## Physics middleware
+## Physics ownership
 
-**Selected: [Jolt Physics](https://github.com/jrouwe/JoltPhysics), pinned
-to tag `v5.6.0`, MIT license.** Chosen in Milestone 3 over PhysX 5 mainly
-for first-class large-world/double-precision support and much lower CMake
-integration cost; see the `milestone-3`-era history in this file's git log
-for the full comparison, unchanged by this milestone.
+**Milestone 3 through the first attempt at Milestone 7-Final used [Jolt
+Physics](https://github.com/jrouwe/JoltPhysics) (pinned `v5.6.0`, MIT
+license, fetched via CMake `FetchContent`)** for rigid-body dynamics,
+collision detection, contact resolution, and constraint solving — a
+solved, extremely hard problem that every shipped physics-using game
+either licenses or spends years building, and Project Judas had no
+evidence it needed to re-derive any of that.
 
-Rigid-body dynamics, collision detection, contact resolution, and
-constraint solving are a solved, extremely hard problem that every shipped
-physics-using game either licenses or spends years building. Project Judas
-has no reason to re-derive any of that — see "Ownership boundary" below for
-exactly what Judas keeps for itself, which is now a larger share of player
-behavior than it was in Milestone 4, but still none of the underlying
-collision math.
+**Milestone 7-Final removes Jolt entirely.** Not because middleware is
+expensive or immature — the operator's own words: "I do not care" about
+implementation cost, this "is not a question of whether doing so is more
+expensive, more difficult, less mature, or duplicates middleware
+functionality. The decision is made." The evidence that triggered it:
+Milestone 7-Final's two-planet-plus-plank demonstration failed the
+operator's interactive validation *twice* under two different gravity-
+context designs (see "Gravity context ownership"), and while diagnosing
+the second failure, the operator concluded the deeper problem was
+architectural — every previous gravity design had been built as "Judas
+logic wrapped around a conventional Y-up-shaped physics engine," which
+made it too easy for a subsystem (support detection, contact response,
+character movement) to quietly assume a fixed axis existed somewhere
+underneath, even while `PlayerController` itself stayed scrupulously
+axis-agnostic. The fix wasn't another gravity-resolution redesign; it was
+making "no global up or down" a property of the physics layer itself, not
+just of Judas's logic sitting on top of it.
 
-Jolt is fetched at CMake configure time via `FetchContent`, pinned to the
-`v5.6.0` tag (see `CMakeLists.txt`) — not packaged by apt, not vendored
-into this repository. Unchanged since Milestone 3.
+**What Judas now owns, in full** (`src/RigidBody.*`, `src/Contacts.*`,
+`src/ContactSolver.*`, `src/PhysicsWorld.cpp`): rigid-body state (position,
+free-quaternion orientation, linear/angular velocity, inverse mass, full
+3x3 inverse inertia tensor), force/gravity accumulation, semi-implicit
+Euler integration, collision detection (sphere/box narrowphase, a proper
+multi-point manifold for box-vs-box — see "Locomotion" for why a single
+point wasn't enough), contact resolution (sequential impulses for the
+normal and Coulomb-friction constraints, plus penetration-proportional
+positional correction), and the player's own capsule sweep query (a
+substep-sampled march with bisection refinement — see "Player/controller
+ownership"). None of it assumes a world-space up axis: every operation is
+expressed in terms of the shapes' and bodies' own positions/orientations,
+verified by dedicated tests that rigidly rotate an entire scenario
+(bodies, gravity, and all) and confirm the result rotates identically —
+see "Automated testing."
+
+**Why this is still "ownership," not "reinventing everything":** the
+brute-force nature of this stack is deliberate, not a placeholder for
+missing ambition. Broadphase is all-pairs (this demo's body count is in
+the low teens — a spatial structure would be unused machinery, not a
+correctness requirement); box-vs-box uses a vertex-inside-the-other-box
+manifold rather than full Sutherland-Hodgman clipping; the player's sweep
+is substep-sampled rather than closed-form continuous collision detection.
+Each simplification is documented at its own definition, not hidden — see
+"Remaining limitations." The goal was the smallest COMPLETE stack Project
+Judas's own bodies need, built and verified bottom-up (state → integration
+→ collision → contacts → resolution → the player's query surface), not a
+feature-complete general physics engine.
+
+`PhysicsWorld.h`'s public API — `BodyHandle`, `BodyTransform`,
+`ShapeSweepHit`, `CreateStaticBox`/`CreateStaticSphere`/`CreateDynamicBox`/
+`CreateDynamicSphere`, `ApplyLinearAcceleration`, `Step`, `GetTransform`,
+`CreatePlayerShape`/`DestroyPlayerShape`/`SweepPlayerShape` — is completely
+unchanged by this migration. Every consumer (`PlayerController`,
+`DynamicBody`, `Application`, `TestHarness`) needed zero changes beyond the
+demo content itself; the interface was already physics-middleware-agnostic
+by construction (law: `PhysicsWorld.h` never exposes a concrete engine
+type), so replacing what's behind it was exactly as contained as the
+interface always promised.
 
 ## Player/controller ownership
 
@@ -254,19 +325,23 @@ brief specifically asked for.
 - how movement intent is resolved against collision (a small move-and-slide
   loop it runs itself — see "Locomotion").
 
-**Jolt (via `PhysicsWorld`) now owns only:** the underlying shape-query
-math — "if this capsule moved this far in this direction, what would it
-hit, and what's the surface normal there?" That's it. `PhysicsWorld`
-exposes exactly this as `SweepPlayerShape` (see `PhysicsWorld.h`), plus
-`CreatePlayerShape`/`DestroyPlayerShape` to manage the capsule `Shape`
-itself. The player capsule is **never added to `PhysicsSystem` as a body**
-— it has no `BodyID`, no layer membership, no activation state, and never
-appears in a broadphase pass. It exists purely as a `JPH::Shape` that
-`NarrowPhaseQuery::CastShape` is asked to sweep, on demand, whenever
+**The physics engine (via `PhysicsWorld`) now owns only:** the underlying
+shape-query math — "if this capsule moved this far in this direction, what
+would it hit, and what's the surface normal there?" That's it.
+`PhysicsWorld` exposes exactly this as `SweepPlayerShape` (see
+`PhysicsWorld.h`), plus `CreatePlayerShape`/`DestroyPlayerShape` to manage
+the capsule shape itself. The player capsule is **never added to the world
+as a body** — it has no handle, no mass, no activation state, and never
+appears in the contact-resolution pass. It exists purely as a shape
+(radius + half-height) that `SweepPlayerShape` samples at several points
+along a displacement (see "Physics ownership") on demand, whenever
 `PlayerController` wants an answer.
 
-As before, no Jolt type appears in `PhysicsWorld.h` — `ShapeSweepHit`
-(the query result) is plain `glm` data.
+As before, no concrete physics-engine type appears in `PhysicsWorld.h` —
+`ShapeSweepHit` (the query result) is plain `glm` data. This held true
+across the Milestone 7-Final physics migration specifically because it was
+already true: the interface never named Jolt, so replacing what
+implements it required no change here.
 
 ### Why `CharacterVirtual` was right for Milestone 4 but isn't the player architecture now
 
@@ -293,31 +368,34 @@ milestone needed it.
 
 ## Ownership boundary
 
-The foundational rule from Milestone 3, unchanged and now demonstrated more
-completely by the player:
+The foundational rule from Milestone 3, conceptually unchanged even though
+Milestone 7-Final moved *who* sits on the physics side of it:
 
 ```
 Judas owns gravity, reference frames, and world/large-world coordinates.
 
-The physics middleware (Jolt) owns collision detection, contact
-generation, rigid-body integration, and constraint solving — nothing more.
+The physics engine owns collision detection, contact generation,
+rigid-body integration, and constraint solving — nothing more.
 ```
 
-**This boundary did not move for Milestone 7-B.** `GravityResolver` (see
-"Gravity resolution") is a pure addition entirely inside Judas's own
-existing half of this split — a new `GravityField` implementation and some
-composition-root wiring, nothing that touches collision, contact, or
-rigid-body integration. Jolt gained exactly one new *use* of an API it
-already had (`PhysicsWorld::CreateStaticBox`, present unused since
-Milestone 3, now backing the platform) and otherwise does precisely what
-it always did: solve shape queries and static-body collision, informed by
-whatever acceleration Judas hands it, never computing gravity of its own.
-There was no evidence anywhere in this milestone that Jolt's existing
-boundary couldn't support the gravity-transition requirement cleanly, so
-no physics responsibility moved into Judas — see "Gravity resolution" and
-"Player-to-object interaction" (unchanged this milestone) for everything
-Judas already owned. `PhysicsSystem::SetGravity(Vec3::sZero())` remains in
-`PhysicsWorld::Init`, unmodified.
+**Milestone 7-B kept this boundary exactly where it was** — `GravityResolver`
+was a pure addition entirely inside Judas's own existing half of the split,
+nothing that touched collision, contact, or rigid-body integration; Jolt
+did precisely what it always had.
+
+**Milestone 7-Final moved who implements the physics side, not the split
+itself.** The physics engine still owns exactly the same things (collision
+detection, contact generation, rigid-body integration, constraint solving)
+— it's now Judas's own code instead of Jolt's, but the boundary between
+"gravity/reference-frame logic" and "collision/contact solving" is
+unchanged; see "Physics ownership" for why the *implementer* changed and
+"Gravity context ownership" for why gravity semantics were re-derived at
+the same time (a related but logically separate decision — the operator
+was explicit that middleware replacement and gravity-context redesign are
+two different questions, addressed together only because evidence for both
+surfaced in the same investigation). No physics middleware computes
+gravity of its own; Judas still samples a `GravityField` and hands the
+result to the physics layer as an applied acceleration, exactly as before.
 
 ### Gravity: one interface, interchangeable implementations
 
@@ -371,18 +449,18 @@ root selects for this milestone's active demo.
 
 Concretely:
 
-- Jolt's own built-in global gravity remains explicitly disabled:
-  `PhysicsSystem::SetGravity(Vec3::sZero())` in `PhysicsWorld::Init`. The
-  player, not being a Jolt body at all anymore, was never at risk of
-  receiving Jolt gravity in the first place — but the same rule still
-  governs any future dynamic body (`CreateDynamicBox` remains available and
-  unchanged).
+- Judas's own physics engine has no built-in gravity of its own to
+  disable — unlike Jolt (which defaulted to a global `(0,-9.81,0)` and had
+  to be explicitly zeroed in `PhysicsWorld::Init` through the first
+  Milestone 7-Final attempt), `RigidBody`/`PhysicsWorld` never apply any
+  acceleration a caller didn't hand them. There is nothing to turn off
+  because nothing was ever built in.
 - Every fixed step, `PlayerController::FixedUpdate` samples the active
   `GravityField` at the player's own current position and integrates the
   result into its own vertical velocity — the same
   `velocity += acceleration * dt` pattern `PhysicsWorld::ApplyLinearAcceleration`
   uses for ordinary bodies, just computed inside `PlayerController` since
-  there's no Jolt body for `PhysicsWorld` to apply it to.
+  the player has no physics-engine body for `PhysicsWorld` to apply it to.
 
 ## Multiple gravity consumers
 
@@ -431,184 +509,166 @@ direction) — see "Automated testing."
 the active demo since Milestone 5) and needed no changes — it was already
 exactly the right shape for this.
 
-## Gravity resolution
+## Gravity context ownership
 
 Through Milestone 7-A, gravity selection happened once, at composition
 time: `Application::Run` constructed exactly one concrete `GravityField`
 and bound it to the `GravityField&` every consumer holds. Milestone 7-B
-removes that assumption — the demo now has two genuinely, simultaneously
-active environments (the sphere under `RadicalGravity`, a flat platform
-under `FaithfulGravity`) and a consumer can move between them at runtime.
+needed something more — two genuinely, simultaneously active environments,
+and a consumer that could move between them at runtime — and Milestone
+7-Final needed the same thing again, twice as hard (two planets instead of
+one planet plus a directionless platform). Its own human validation
+rejected TWO different designs before landing on the one this repository
+now ships. Both failures are recorded in full below, not summarized away —
+the reasoning behind *why* they failed is the actual content of this
+section, and the project's own standing rule ("a numerically smooth wrong
+physical model is still wrong; the harness is not authoritative over human
+validation") only means something if the record shows exactly how that
+happened twice.
 
-**What decides effective gravity:** a new class, `GravityResolver`
-(`src/GravityResolver.h/.cpp`). It is itself a `GravityField` — the whole
-point. `Application::Run` constructs one, registers each concrete
-implementation with it as a *zone* (a `GravityField&` paired with a
-position-based region of influence), and binds `GravityField& gravity` to
-the resolver instead of to either concrete implementation directly:
+### Design 1 (Milestone 7-B): `GravityResolver` — falloff-weighted vector blending
 
-```
-RadicalGravity   FaithfulGravity
-       \               /
-        \             /
-         GravityResolver   (itself a GravityField)
-                |
-                v
-      PlayerController / DynamicBody
-      (unchanged: still just `const GravityField&`)
-```
+`GravityResolver` treated "which gravity governs a consumer" as a
+continuous force-summation problem: every registered zone within its own
+falloff radius of a position contributed, weighted by distance
+(smoothstep, full weight at an inner radius to zero at an outer one), with
+direction combined via spherical interpolation and magnitude via a
+weighted-average-times-combined-weight formula. This passed Milestone
+7-B's own human validation, and worked correctly for a sphere-plus-
+directionless-platform pair specifically because `FaithfulGravity`'s raw
+direction never varies with position — blending it with a radial source
+could only ever rotate the result toward straight down, never introduce
+genuine sideways contamination. One of the two "sources" being blended
+contributed zero extra directional complexity, so the failure mode below
+had no way to manifest.
 
-**How consumers stay implementation-agnostic:** they don't change at all.
-`PlayerController::FixedUpdate` and `PrepareDynamicBodiesForStep` still
-call exactly `gravity.Sample(position)` on a `const GravityField&`, exactly
-as they did when that reference pointed at a lone `RadicalGravity`. Neither
-knows a resolver, a second environment, or a spatial transition exists.
-Verified directly by inspection, not just by design: grep confirms neither
-`PlayerController.cpp/.h` nor `DynamicBody.cpp/.h` mentions
-`RadicalGravity`, `FaithfulGravity`, or `GravityResolver` by name anywhere.
+Milestone 7-Final's two-radial-source case exposed the real defect
+immediately: a position beside the connecting plank — nowhere near either
+planet's actual domain — got an artificial pull toward the line connecting
+the two planet centers, purely because it happened to sit within both
+planets' (necessarily generous) falloff radii. `GravityResolver` was
+answering "how do nearby sources sum" when the actual question was "which
+source, if any, has any relationship to this position at all" — a
+field-summation model standing in for an ownership model. This failed the
+operator's own interactive validation ("the gravity switching
+implementation is fundamentally flawed... the player appears to be able to
+walk radially around the plank") despite passing every harness check M7-B's
+own validation had run, because that validation only ever sampled along the
+intended travel corridor, never the width around it. Neither the vector
+math nor the harness sampling was wrong on its own terms; the MODEL the
+math implemented was wrong, and the validation never looked at the
+dimension that would have shown it.
 
-**How spatial/contextual selection works — `GravityResolver::Sample`:**
+### Design 2 (Milestone 7-Final, first attempt): `GravityContextMap` with explicit blended transitions
+
+The replacement fixed the off-path contamination specifically:
+`GravityRegion`s gave each planet an explicit, BOUNDED domain (a
+`GravityVolume`, e.g. a sphere around its own center), and a
+`GravityTransition` gave the plank's crossing an explicit, bounded extent
+inside which exactly two named fields blended by a locally-defined
+progress fraction — never sampling or blending anything outside that
+bounded pair. A position beside the plank, outside the transition's own
+extent, now correctly got exactly one planet's own unmodified field, or
+zero in genuinely unclaimed space — verified directly with a full-volume
+`SAMPLE_GRAVITY` sweep (not just the centerline) before this design was
+shown to the operator at all.
+
+It failed anyway, on retest: standing on the plank's OWN surface, near its
+edges, still tilted noticeably (~18-20 degrees) toward the planets' shared
+axis. The off-path bug was gone; the on-path one wasn't, because the
+transition still computed the plank's gravity by blending the two
+planets' raw radial math together — exactly what `GravityResolver` had
+always done, just correctly SCOPED to a bounded region instead of an
+unbounded falloff. Both designs shared the same deeper mistake, stated
+precisely: neither ever represented "the plank's own intended local
+physics" as a first-class thing. Both derived gravity on the plank from
+the two planets' math, never by asking what a body resting on a flat
+surface should coherently experience. A numerically smooth, provably
+continuous, harness-clean interpolation is still the wrong physical claim
+if the claim itself — "gravity here is some blend of two unrelated
+sources" — doesn't correspond to what "being on a flat plank" should mean.
+
+### Design 3 (the current one): pure ownership routing, no blending anywhere
+
+The insight that broke the cycle: `PlayerController` already has machinery
+(architectural law #14 — rate-capped `UpdateFrameOrientation`, continuous
+airborne velocity integration) specifically built to turn a SUDDEN change
+in sampled gravity into a smooth, gradual takeover. That machinery doesn't
+care whether the raw `GravityField::Sample` sequence is continuous or has
+a single instantaneous jump between two fixed steps — a rate cap bounds
+how fast the player's own frame can rotate regardless of *why* the target
+moved, and velocity integration is inherently continuous even when the
+acceleration driving it isn't. Blending was never necessary to keep a
+takeover smooth; it was solving a problem the consumer side already
+solved, while failing to solve the real one.
+
+So: `GravityContextMap` (`src/GravityContextMap.h/.cpp`, rewritten a
+second time — the transition/blending machinery from Design 2 is deleted
+outright, not kept alongside this) does pure containment-based ROUTING,
+nothing else. It holds an ordered list of regions, each `{GravityField&,
+GravityVolume&}`; `Sample(position)` returns the FIRST region's field's
+own raw, completely unblended value whose volume contains that position,
+or exactly the zero vector if none does:
 
 ```cpp
-for each registered zone:
-    weight = smoothstep-falloff(distance(position, zone.falloffCenter),
-                                 zone.innerRadius, zone.outerRadius)   // 1.0 at/inside inner, 0.0 at/beyond outer
-    if weight > 0:
-        sample zone.field->Sample(position); accumulate (weight, direction, magnitude)
-
-if no zone contributed: return (0,0,0)   // no defined gravity here
-direction  = weighted spherical (great-circle) interpolation across contributing zones
-magnitude  = weighted average across contributing zones, scaled by
-             min(sum of weights, 1.0)    // see "Transition semantics" for why
-return direction * magnitude
+for (region : regions)
+    if (region.volume->Contains(position))
+        return region.field->Sample(position);   // raw, unblended
+return glm::vec3(0.0f);                            // unclaimed space
 ```
 
-A zone is nothing more than `{GravityField&, falloffCenter, innerRadius,
-outerRadius}` — not a generalized gravity-volume/priority/scripting system
-(see "Deliberately Not Implemented"). It says nothing about what the zone
-"is"; `GravityResolver` has no idea one of its two zones corresponds to a
-sphere and the other to a platform, only points and distances.
-**Crucially, a zone's `falloffCenter` is independent of whatever the
-underlying `GravityField` implementation itself uses for its own
-direction/magnitude computation** — `RadicalGravity`'s actual pull always
-comes from its own configured center (the sphere's true center); the
-zone's `falloffCenter` only controls *how much weight* that zone's sample
-carries at a given position. This separation is what makes the escape
-mechanism in "Transition semantics" possible without a new zone shape.
+No transitions, no progress fractions, no weighted blending of any kind —
+the mechanism `GravityResolver` and Design 2's `GravityContextMap` both
+had is gone entirely, not merely unused.
 
-**Multiple simultaneous, position-dependent results, not a global mode
-switch:** the sphere does not stop being governed by `RadicalGravity`
-because the player reached the platform, and the platform does not stop
-being governed by `FaithfulGravity` because a dynamic body happens to be
-resting near the sphere on the opposite side of the world. There is no
-mutable `currentGravity`-style variable anywhere — every `Sample` call
-independently re-evaluates every zone's weight at the position it was
-asked about. Verified directly: `SAMPLE_GRAVITY` harness queries at the
-player's spawn point and at the platform's own surface, taken in the same
-run, return exactly `RadicalGravity`'s and exactly `FaithfulGravity`'s own
-unmodified results respectively — see "Automated testing."
+**Every named context is now coherent on its own terms:**
 
-## Transition semantics
+- Planet A and Planet B: `RadicalGravity` centered on themselves, each
+  owning a `SphericalVolume` around its own center, generous enough to
+  cover its own surface plus a jump's worth of margin, but well short of
+  reaching the other planet's own region (regions of the SAME kind must
+  never overlap each other — see below).
+- The plank: the existing, UNMODIFIED `FaithfulGravity` — its hardcoded
+  `(0,-9.81,0)` already matches the plank's own flat, axis-aligned surface
+  exactly, with no new gravity implementation needed. Its own `BoxVolume`
+  region is padded a little beyond the plank's actual collision box, so a
+  jump arc a little above or beside the plank's own surface is still
+  claimed by it rather than falling into unclaimed space.
 
-**The chosen mechanism, and why not the obvious one first:** the brief
-explicitly warned against assuming linear blending of the raw acceleration
-*vectors* is correct. It isn't, for a concrete reason: `RadicalGravity` and
-`FaithfulGravity` can point in very different directions in the transition
-region, and a naive `lerp(accelA, accelB, t)` can partially or fully cancel
-two dissimilar vectors down to a near-zero, *directionless* result exactly
-where a stable "down" matters most. `GravityResolver` instead blends
-**direction and magnitude separately**: directions are combined via
-spherical (great-circle) interpolation between unit vectors — the same
-mathematically correct tool `PlayerController` already used for orientation
-smoothing (`glm::slerp` on quaternions in Milestone 6), applied directly to
-a direction vector here instead, with a self-contained `SlerpUnitVectors`
-helper guarding the same two degenerate cases
-`PlayerController::RotationBetweenUnitVectors` already guards for the same
-reason (near-identical directions; exactly opposite directions, where an
-arbitrary perpendicular axis is picked). Slerping two unit vectors can
-never cancel to a near-zero result the way a linear blend of dissimilar
-vectors can — magnitude is controlled entirely separately, described next.
+**Overlap is resolved by registration order, deliberately, not
+accidentally.** The plank's own region is registered BEFORE either
+planet's, so it wins wherever its (padded) box geometrically overlaps a
+planet's sphere — which it does, near the plank's own ends, since the
+plank sits close enough to each planet's surface to be walkable without a
+large jump. This is the ONE place overlap is allowed and intentional: a
+more specific region (the plank) taking priority over a more general one
+(an entire planet) it happens to reach into. Two regions of the SAME
+specificity (planet vs. planet) must never overlap each other — there is
+no principled tie-break for that case, so the composition root
+(`Application.cpp`) is responsible for keeping their radii apart, the same
+category of care falloff-tuning used to require, just a different shape
+of it.
 
-**Degenerate gravity handling — magnitude, not just direction:** magnitude
-is a weighted average *among contributing zones*, then scaled by their
-*combined* weight, clamped to `1.0`. This two-step shape matters and was
-not the first thing tried: an earlier version scaled by the weighted
-average alone, which meant a single zone fading from weight `1.0` toward
-`0.0` still reported that zone's full, undiminished magnitude right up
-until the instant its weight reached exactly zero — a hard cliff, not a
-fade, discovered directly via a `SAMPLE_GRAVITY` grid sweep showing
-magnitude pinned at `9.81` out to a zone's exact outer radius, then an
-instant drop to `0.0` just beyond it. Scaling by the *combined* weight
-(clamped to `1.0` so two simultaneously full-strength zones average rather
-than sum) fixes it: the result now genuinely tends toward zero as every
-contributing zone's own influence does, and `GravityResolver::Sample`
-returns exactly the zero vector once no zone has any weight at all — the
-same "no defined direction" signal `RadicalGravity` already returns at its
-own center, which `PlayerController::ComputeLocalUp` already handles
-safely (holds the existing frame's up rather than producing a NaN — see
-"Orientation"). No zero-gravity gameplay was built; this is purely about
-not crashing or glitching if a position happens to have none.
+**Verified by sweeping the full volume — not just the corridor, and not
+just the centerline within it, the mistake BOTH prior validation passes
+made:** along the plank, across its full width (the specific dimension
+that exposed both prior failures), above and below it, around both
+planets, and at both region boundaries. The plank now reads EXACTLY
+`(0,-9.81,0)` everywhere inside its region — not merely "close to
+vertical," not "less tilted than before" — because it is no longer
+computed from anything BUT `FaithfulGravity`'s own constant. Beside the
+plank, outside its region: exactly the nearer planet's own field, or
+exactly zero. See "Automated testing" for the dedicated tests that check
+this as a standing regression, not just a one-time sweep.
 
-**Why the escape needed more than tuning two overlapping zones — and the
-dead end that preceded the working design:** placing a `RadicalGravity`
-zone (falloff center = the sphere's own true center) and a `FaithfulGravity`
-zone (falloff center = the platform) with normal, generous radii produces
-a genuine, robust bug: `RadicalGravity`'s magnitude is a realistic
-`9.81 m/s^2`, constant regardless of distance (Milestone 5's deliberate
-choice — no inverse-square falloff), and the player's jump speed is a
-realistic `5 m/s`. Against *undiminished* `9.81 m/s^2`, a straight-up jump
-only ever reaches `v^2 / (2a) = 1.27m` before falling back — nowhere near
-enough to cross to a platform placed any meaningful distance away, and no
-amount of walking speed helps, because tangential (walking) velocity is
-perpendicular to the escape direction by definition and contributes
-nothing to it. So *some* weakening of the sphere's own gravity within
-about a meter of standing height is mathematically unavoidable for a jump
-to escape at all — no platform placement changes this, since
-`FaithfulGravity`'s direction is always exactly `(0,-1,0)` and can never
-have a component that assists outward motion.
-
-The first attempt shrank `RadicalGravity`'s zone around the sphere's own
-true center to make that weakening possible — and broke ordinary jumping
-**everywhere on the sphere**, not just near the platform: distance from the
-sphere's true center is the same (~player standing height) at every point
-on its surface, so a falloff measured that way weakens uniformly around
-the *entire* sphere. Reproduced directly and severely: an ordinary standing
-jump taken at the player's own spawn point, nowhere near the platform,
-broke through into the near-zero-gravity region and never came back down at
-all — a "confirm existing spherical locomotion remains correct" failure of
-exactly the kind the brief anticipated.
-
-**The working design:** the sphere zone's `falloffCenter` is *not*
-`kSphereCenter` — it's a point 50m away, on the sphere's far side from the
-platform (opposite the departure direction). `RadicalGravity`'s own
-direction and magnitude still always come from the sphere's true center,
-completely unchanged; only this zone's *weight* is measured from the
-offset point. Because that point is far away, the *change* in distance
-from it, per meter actually traveled near the departure region, is close
-enough to 1:1 to reproduce the same escape-enabling fade profile as before
-— while everywhere else on the sphere (including the antipodal point, the
-spawn point, and all four Milestone 7-A dynamic-body spawns) sits so much
-closer to the offset point, relative to the fade band's width, that it
-measures at exactly full (`1.0`) weight, completely unaffected. Verified
-directly, both via `SAMPLE_GRAVITY` (spawn, all four dynamic-body spawn
-positions, and the departure region's own antipode all measured at exactly
-`1.0` weight) and via harness gameplay (a standing jump at spawn now
-returns to the sphere at `~1.02s`, matching the pre-Milestone-7-B
-theoretical round-trip time for a `5 m/s` jump under undiminished
-`9.81 m/s^2` almost exactly — see "Automated testing" for the numbers).
-This reuses the *existing* zone mechanism (a point and two radii) with a
-cleverer placement of the point — no new zone shape, no directional/cone
-concept, no second kind of falloff was built merely to localize this.
-
-**Boundary oscillation:** the falloff itself (smoothstep, `C1`-continuous,
-zero slope at both the inner and outer radius) has no discontinuity to
-oscillate around, and the two zones' radii are sized so a consumer only
-ever needs to cross each boundary once during an ordinary traversal — nothing
-in the geometry invites rapid back-and-forth crossing. Repeated back-and-forth
-movement across the transition region was exercised directly (walking the
-platform's edge, jumping at awkward angles — see "Automated testing" and
-the human validation checklist) without producing any oscillation or
-visible thrashing.
+**No per-consumer state, and why that's not assumed to be permanently
+true:** position-only resolution is sufficient for M7-Final's own static
+environments — there is no evidence here that a consumer's gravity context
+needs memory of where it was a moment ago. This is NOT documented as a
+permanent law: a future requirement (moving reference frames, for one)
+may produce evidence that contextual membership can't always be derived
+from world position alone, and per-consumer context state is not
+inherently wrong when that evidence exists — it just isn't justified yet.
 
 ## Support
 
@@ -622,8 +682,9 @@ collapsed into one:
   capsule a short distance (`kGroundProbeDistance`, `0.15m`) opposite the
   *current* local up via `PhysicsWorld::SweepPlayerShape`, and treats the
   player as grounded only if that sweep hits something whose normal is
-  within Jolt's conventional walkable-slope threshold
-  (`dot(normal, localUp) > 0.643`, ≈50°, matching Milestone 4's limit).
+  within a walkable-slope threshold
+  (`dot(normal, localUp) > 0.643`, ≈50°, matching Milestone 4's original
+  choice, unchanged by the Milestone 7-Final physics migration).
   Nothing anywhere in `PlayerController` compares the player's position or
   distance to the sphere's known center or radius — `Application.cpp` knows
   there's a sphere; `PlayerController` only ever knows "a shape query says
@@ -640,16 +701,16 @@ collapsed into one:
   (an overhang, a wall, uneven terrain under radial gravity) is handled
   correctly by construction rather than by coincidence.
 
-**Milestone 7-B's flat platform needed zero changes here.** Landing on it
-is exactly the same mechanism as landing on the sphere — a real
-`PhysicsWorld::SweepPlayerShape` hit against a real static Jolt body,
+**Neither the plank nor the second planet needed any changes here.**
+Landing on either is exactly the same mechanism as landing on Planet A — a
+real `PhysicsWorld::SweepPlayerShape` hit against a real static body,
 gated by the same slope threshold — not a gravity-region event of any
-kind. `PlayerController` never asks "am I inside the platform's
-`GravityResolver` zone"; grounding and gravity context remain governed by
-entirely independent code paths even while a transition is actively in
-progress. There is no code anywhere that snaps the player onto the
-platform once a transition "completes" — landing happens if and only if
-the move-and-slide loop's own collision query says it does.
+kind. `PlayerController` never asks "which `GravityContextMap` region am I
+in"; grounding and gravity context remain governed by entirely independent
+code paths at every point during a crossing. There is no code anywhere
+that snaps the player onto the plank or a planet once a gravity-context
+boundary is crossed — landing happens if and only if the move-and-slide
+loop's own collision query says it does.
 
 ## Orientation
 
@@ -683,10 +744,15 @@ Milestone 7-A this was always imperceptibly smooth, because a single
 `GravityField`'s direction only ever changes as a continuous function of
 position — a normal jump's brief arc barely moves `localUp` at all. That
 assumption silently breaks once a *resolved* gravity direction can change
-quickly over a small change in position, which is exactly what happens
-near the edge of a `GravityResolver` zone's influence, where the
-contributing weight (and therefore the blended direction) is most
-sensitive to position. Reproduced directly and severely before this fix:
+quickly — originally reproduced near the edge of Milestone 7-B's
+`GravityResolver` zone falloff, where the blended direction was most
+sensitive to position; the current `GravityContextMap` (see "Gravity
+context ownership") makes the point sharper still, since crossing a region
+boundary is now a genuine, instantaneous jump in the raw sampled value
+between two fixed steps, not even a fast continuous sweep. This law is
+exactly what makes that acceptable rather than jarring. Reproduced directly
+and severely before this fix existed (under the original `GravityResolver`
+design):
 a scripted transition run showed `m_frameOrientation`'s up jump by **85
 degrees in a single `1/60s` fixed step** — a hard snap, not the "smooth
 takeover" the brief requires, and the specific failure "do not hard-snap
@@ -711,7 +777,7 @@ target moved, which needs no assumption about any concrete `GravityField`'s
 typical magnitude — a threshold on the sampled gravity's own magnitude was
 considered and rejected specifically because it would embed knowledge of a
 concrete implementation's scale into code that must stay
-implementation-agnostic (see "Gravity resolution"). `120`/s is generous
+implementation-agnostic (see "Gravity context ownership"). `120`/s is generous
 against ordinary gameplay (walking the sphere at full speed turns `localUp`
 at roughly `11`/s, so the cap is never felt there) while still meaningfully
 bounding a transition-region swing. Verified directly: the same scripted
@@ -826,7 +892,7 @@ query → allowable movement → contact information → Judas's interpretation
 iterations to handle "hit one surface, then slide into a second" without
 visibly sticking.
 
-### Contact normal correctness and the "already touching" case
+### Contact normal correctness and the "already touching" case (historical: Jolt-backed implementation, Milestones 5 through the first Milestone 7-Final attempt)
 
 Fixed in Milestone 7-A, after human validation surfaced a visible ground
 vibration while walking that traced back to here. `SweepPlayerShape`
@@ -867,6 +933,33 @@ distance-from-center — logged at full precision specifically to check for
 this — settles into a stable, bounded ~`1.2mm` oscillation band rather
 than eroding unboundedly toward (and getting stuck at) zero clearance.
 
+### Contact normal correctness under Judas's own physics (Milestone 7-Final)
+
+`SweepPlayerShape`'s current implementation (see "Physics ownership")
+never derives a contact normal from travel direction at all.
+`CapsuleDistanceToSphere`/`CapsuleDistanceToBox` (`src/Contacts.cpp`)
+compute the normal directly from closest-point geometry — the vector from
+the other shape's own surface point to the capsule's own closest
+segment point — unconditionally, identically for an already-touching hit
+and an in-flight one. There was never a travel-direction heuristic to get
+right or wrong in the first place; the substep-sampled sweep this
+implementation uses never needed one. The margin-restoration fix from
+Milestone 7-A (moving back out along the normal when `hit.distance <
+kSkinMargin`) carried over completely unchanged, since it lives in
+`PlayerController`'s own move-and-slide loop, not in `SweepPlayerShape`.
+
+Milestone 7-Final's own traversal testing under the new engine showed
+markedly fewer grounded-flag transitions than the equivalent Jolt-backed
+run (6 total across a full round-trip walk, versus over 150 previously,
+all clustered in a brief window right at the flat-plank-to-curved-sphere
+geometric seam) — recorded here as an observation, not a claim that the
+~1.2mm residual oscillation documented above is now solved: no dedicated
+investigation was done into why, and the current implementation's own
+approximations (substep-sampled sweep resolution, single/multi-point
+contact manifolds — see "Physics ownership") are new enough that this may
+simply reflect different numerical behavior rather than a genuine
+improvement. See "Remaining limitations."
+
 **Reset** (`R`) restores the player entirely from data `PlayerController`
 already holds (`Reset()`): spawn position, zero velocity, identity frame
 orientation (which the very next fixed step immediately realigns to
@@ -903,9 +996,10 @@ tuned for feel.
 
 ## Player-to-object interaction
 
-Added in Milestone 7-A. The player is still not a Jolt body (see
-"Player/controller ownership") — `SweepPlayerShape` is a read-only query,
-never something Jolt's own contact solver resolves — so contact with a
+Added in Milestone 7-A, unchanged in mechanism through the Milestone
+7-Final physics migration. The player is still not a physics-engine body
+(see "Player/controller ownership") — `SweepPlayerShape` is a read-only
+query, never something the contact solver resolves — so contact with a
 dynamic test object would otherwise never move it: the object would simply
 act as one more static-feeling obstacle the player slides along. This is
 the genuine limitation the brief anticipated ("if player-to-dynamic-body
@@ -932,9 +1026,10 @@ transferred, and only when it exceeds the object's own velocity along that
 same axis — so the player can shove an object but never slow one down or
 overwrite its motion along other axes (falling, rolling from an earlier
 hit). This is deliberately not a general impulse/momentum system: it seeds
-one velocity value and hands control straight back to Jolt, which owns
-everything that happens to the object from that point on (further
-integration, friction, contact with the sphere or another object). Static
+one velocity value and hands control straight back to the physics engine,
+which owns everything that happens to the object from that point on
+(further integration, friction, contact with the world or another
+object). Static
 world geometry (`physics.IsDynamicBody` is false for it) is unaffected —
 `hit.hitBody` and `PhysicsWorld::IsDynamicBody`/`GetLinearVelocity`/
 `SetLinearVelocity` were the only additions `PhysicsWorld` needed (see
@@ -960,94 +1055,59 @@ single nudge — see "Automated testing."
 
 ## Physics test world
 
-The demo sphere's radius grew from Milestone 5/6's `8m` to `20m`
-(`kSphereRadius`, `src/Application.cpp`) — still a small, hand-authored
-test environment, not a planet (see "Deliberately Not Implemented"), but
-large enough to hold the player and four separated dynamic objects without
-crowding the same few square meters, and to give a `4 m/s` walking player
-room to actually traverse distance between them. `20m` was chosen, not
-derived: large enough for the arrangement below to read as spatially
-separate locations with visibly different local gravity directions, small
-enough that a full "lap" (~125m circumference) stays a short, purposeful
-walk rather than a trek.
+Milestone 7-Final replaces the single sphere with TWO independent static
+spheres ("Planet A" and "Planet B," `kPlanetARadius`/`kPlanetBRadius = 20m`
+each, centers `55m` apart — a genuine `15m` surface-to-surface gap, so the
+two worlds read as visibly, physically distinct bodies, not one world
+wearing two names) plus one flat static plank connecting them
+(`kPlankCenter`/`kPlankHalfExtents`). All three are still small,
+hand-authored test geometry, not planets as an engine subsystem (see
+"Deliberately Not Implemented").
 
-This radius, like the sphere's existence at all, is **demo/composition-root
-knowledge only** — `Application.cpp`'s anonymous namespace is the only
-place it's named. `PlayerController`, `DynamicBody`, `GravityField`, and
-`PhysicsWorld` remain exactly as ignorant of it as they were in Milestone
-5/6; nothing about this milestone required loosening that boundary.
+This geometry, like the single sphere's before it, is **demo/composition-
+root knowledge only** — `Application.cpp`'s anonymous namespace is the only
+place any of it is named. `PlayerController`, `DynamicBody`, `GravityField`,
+and `PhysicsWorld` remain exactly as ignorant of it as they always were;
+nothing about this milestone required loosening that boundary, even though
+it's now backed by Judas's own physics engine rather than Jolt's.
 
-**Object arrangement** (`kDynamicObjectSpawns`, `Application.cpp`): four
-bodies, placed via a small demo-only helper, `PointAboveSphere(center,
-radius, direction, heightAboveSurface)`, that normalizes `direction` and
-places a point that far beyond the sphere's own radius — a placement
-convenience, not something any engine type provides or needs.
+**The plank's placement is a real physics-and-geometry problem, not an
+aesthetic choice, and its exact numbers were derived, not guessed.**
+Positioned near "pole height" (`y=18`, vs. each planet's own radius of
+`20`) rather than directly between the two planet centers at their own
+height — the latter was considered and rejected without needing to build
+it: gravity toward Planet A and gravity toward Planet B would point in
+roughly OPPOSITE horizontal directions on the direct line between the
+centers (back toward whichever planet is nearer), which no placement could
+turn into a direction pointing down through the plank rather than sideways
+along it. Near pole height, both planets' pulls stay predominantly
+vertical across the plank's own footprint. (As of Design 3 in "Gravity
+context ownership," the plank's own gravity is `FaithfulGravity`'s
+constant regardless of position, so this placement no longer controls the
+plank's own tilt at all — it still matters for keeping the plank within
+an easy walk/jump of each planet's actual surface.) The plank's ends sit
+close enough to each planet's own surface (a real but modest ~1m gap/step,
+well inside normal walk/jump range) that no deliberate gravity-weakening
+trick (unlike Milestone 7-B's platform — see "Gravity context ownership")
+is needed anywhere to make the crossing possible.
 
-- **Cube A** and **Sphere A** spawn close together (~1.3m apart at rest),
-  near the player's own spawn point — Cube A begins `2m` above the surface
-  and visibly falls onto it (falling onto the surface); Sphere A begins
-  already resting on it (`0.05m` clearance, effectively touching at
-  spawn — resting on the surface). Both are within an easy walk of the
-  player's spawn, for the push test above, and close enough that Cube A's
-  own fall visibly disturbs Sphere A on landing (see "Automated testing"
-  for the logged evidence) — an object-to-object (cube↔sphere) collision
-  that needs no player involvement to demonstrate.
-- **Cube B** and **Sphere B** spawn at deliberately different locations
-  around the sphere (roughly the "equator" and the far "pole" relative to
-  the player's spawn point), each falling or resting independently, so
-  their own local gravity direction is visibly different from the
-  player's and from Cube A/Sphere A's — see "Multiple gravity consumers"
-  for the numerical confirmation.
+**Dynamic bodies, spread across all three regions** (`kDynamicObjectSpawns`,
+`Application.cpp`): six bodies, two per region (Planet A, the plank, Planet
+B) — the minimum arrangement that exercises all three gravity contexts
+simultaneously and proves the architecture isn't secretly player-specific
+or region-specific. Planet-relative spawns use the same demo-only helper
+Milestone 7-A introduced, `PointAboveSphere(center, radius, direction,
+heightAboveSurface)`; plank spawns are literal positions above its surface.
+None of their resting positions are scripted or hand-aligned to gravity —
+they fall and settle exactly like every other body here, verified directly
+(see "Automated testing").
 
 Exact coordinates are demo-authoring detail, not architecture — see
 `Application.cpp` if the literal numbers matter. Nothing about this
-arrangement is procedural, spawned at runtime, or editable; all four
-bodies are created once in `Application::Run` (via `SpawnDynamicObjects`)
-and destroyed once at shutdown, exactly like the static sphere already
-was.
-
-## Demonstration environment (Milestone 7-B)
-
-A second physical environment, coexisting with the sphere for the entire
-run (never torn down, never swapped in — see "Deliberately Not
-Implemented" for why this isn't scene loading/streaming): a flat static
-box, `kPlatformCenter`/`kPlatformHalfExtents` (`Application.cpp`), created
-via `PhysicsWorld::CreateStaticBox` — the same, already-existing (unused
-since Milestone 3) API the sphere uses `CreateStaticSphere` for. It is
-governed by `FaithfulGravity`, registered with `GravityResolver` as its own
-zone (see "Gravity resolution").
-
-**Placement, and why +Z specifically:** near the sphere's equator, along
-the `+Z` axis — not `+X` or `+Y`, which are where the four Milestone 7-A
-dynamic-object spawns already sit (see "Physics test world"); `+Z` was
-otherwise unused, so the platform's own gravity zone (see "Transition
-semantics") could be sized generously without touching any of them. Not
-near a pole, so the reorientation a departing player experiences is a
-large, legible change — the brief's own framing: leaving a world where
-"down" points toward a center for one where it means something completely
-different. At the player's default spawn facing, reaching it needs no
-turn: `right = cross(forward, up)` at spawn already points along `+Z`, so
-a plain strafe (`D`) walks there in a fairly short great-circle arc.
-
-**Traversal is real physical travel, not a scripted cutscene or a
-teleport:** the player walks (or, on the way back, walks off an edge),
-becomes genuinely airborne, and crosses open space under whatever
-`GravityResolver` returns at each position along the way — every step of
-which is ordinary `PlayerController::FixedUpdate`, ordinary
-`PhysicsWorld::SweepPlayerShape` queries, and ordinary Jolt collision
-against the platform's real static box once close enough. Landing is a
-physical event (see "Support"), not something the transition logic
-triggers directly.
-
-**Which parts are demo composition, not engine architecture:** the
-platform's existence, position, size, color, friction/restitution, and
-both `GravityResolver` zones' falloff centers/radii are all
-`Application.cpp` anonymous-namespace data, exactly like the sphere and
-its four dynamic objects. `GravityResolver`, `PhysicsWorld`,
-`PlayerController`, and `DynamicBody` have no idea a "platform" or a
-"departure point" exists — only `GravityField` implementations, zones
-defined by points and distances, and a static collision box like any
-other.
+arrangement is procedural, spawned at runtime, or editable; all six bodies
+are created once in `Application::Run` (via `SpawnDynamicObjects`) and
+destroyed once at shutdown, exactly like the two static spheres and the
+plank already are.
 
 ## Dynamic bodies
 
@@ -1067,15 +1127,16 @@ body's own position and calls the existing (Milestone 3)
 `PhysicsWorld::ApplyLinearAcceleration`, exactly as `PlayerController`
 does for itself.
 
-**How Jolt owns the rest**: once gravity is handed over, `DynamicBody` (and
-everything above it) steps back completely. `PhysicsWorld::Step` — ordinary
-Jolt rigid-body integration, friction, restitution, and contact resolution
-— decides the body's resulting position **and orientation**. Nothing in
-this engine ever writes a dynamic body's orientation directly or aligns it
-to local gravity/up; a cube settles however contact with the sphere leaves
-it, and a sphere is free to roll. This mirrors "Support" above (gravity
-direction and contact response stay separately computed) applied to a body
-Judas doesn't move itself at all.
+**How the physics engine owns the rest**: once gravity is handed over,
+`DynamicBody` (and everything above it) steps back completely.
+`PhysicsWorld::Step` — Judas's own rigid-body integration, friction,
+restitution, and contact resolution (see "Physics ownership") — decides the
+body's resulting position **and orientation**. Nothing in this engine ever
+writes a dynamic body's orientation directly or aligns it to local
+gravity/up; a cube settles however contact with the world leaves it, and a
+sphere is free to roll. This mirrors "Support" above (gravity direction and
+contact response stay separately computed) applied to a body Judas doesn't
+move itself at all.
 
 **Transforms reaching rendering**: after `PhysicsWorld::Step`,
 `SyncDynamicBodiesFromPhysics` (a second small free function alongside
@@ -1100,7 +1161,7 @@ same accumulator as before:
 ```
 accumulator += (clamped) render-frame delta time
 while accumulator >= fixedTimestep and steps-this-frame < cap:
-    physicsWorld.Step(fixedTimestep)          // advances any ordinary Jolt bodies
+    physicsWorld.Step(fixedTimestep)          // advances any ordinary dynamic bodies
     player.FixedUpdate(..., fixedTimestep)    // gravity, support, movement, jump
     accumulator -= fixedTimestep
 ```
@@ -1234,8 +1295,10 @@ passes to the player's).
 the player, snapshot-and-integrate both happen inside one Judas-owned
 method (`PlayerController::FixedUpdate`), so the snapshot naturally comes
 first in that same function. A dynamic body's actual motion happens inside
-`PhysicsWorld::Step` — Jolt's own integration, not Judas's — so
-`DynamicBody::SnapshotPrevious()` has to be called from the *outside*,
+`PhysicsWorld::Step` — the physics engine's own integration and contact
+resolution, called from `Application`/`TestHarness`, not from inside some
+Judas-owned per-body update — so `DynamicBody::SnapshotPrevious()` has to
+be called from the *outside*,
 immediately before `PhysicsWorld::Step`, rather than at the top of some
 Judas-owned per-body update. `PrepareDynamicBodiesForStep` does exactly
 that (snapshot, then sample gravity, then hand it to
@@ -1274,17 +1337,20 @@ so drawing it needs no GL surface beyond what `DrawBox` already uses (no
 scale(radius)` — no rotation parameter, since a sphere looks identical
 under any rotation.
 
-The demo sphere is drawn with the exact position and radius its Jolt
-`SphereShape` was created with (`Application.cpp`'s `kSphereCenter`/
-`kSphereRadius`) — there is no physics-driven transform to read back for a
-static body a game never queries, so this is the one place in the renderer
-that isn't reading a `PhysicsWorld::GetTransform` result, simply because
-nothing in this milestone ever needs the sphere's transform to change.
+Each demo planet is drawn with the exact position and radius its static
+sphere shape was created with (`Application.cpp`'s `kPlanetACenter`/
+`kPlanetARadius`, `kPlanetBCenter`/`kPlanetBRadius`) — there is no
+physics-driven transform to read back for a static body a game never
+queries, so this is one place in the renderer that isn't reading a
+`PhysicsWorld::GetTransform` result, simply because nothing in this
+milestone ever needs a planet's transform to change. Same reasoning for
+the plank.
 
 ### Coordinate conventions (current, local to this renderer/physics setup)
 
 - World space is a conventional right-handed 3D space in engine-defined
-  "world units," used directly as Jolt's own simulation space.
+  "world units," used directly as Judas's own physics engine's simulation
+  space.
 - `+Y` is used as a **local body-space** axis convention by
   `PlayerController` (see "Orientation") and as `FaithfulGravity`'s
   constant test direction — **neither is an engine-wide law**. Nothing in
@@ -1373,11 +1439,11 @@ milestone so far calls for).
 
 ```
 Init Window, load GL functions, Init Renderer
-Init PhysicsWorld (registers Jolt types, zeroes Jolt's own gravity)
-Construct a RadicalGravity centered on the demo sphere, bound to a GravityField&
-Create the static sphere body
-Create PlayerController, Spawn() it (creates its capsule Shape via PhysicsWorld — no body)
-dynamicBodies = SpawnDynamicObjects(physicsWorld)   // Milestone 7-A: 4 ordinary Jolt bodies
+Init PhysicsWorld (Judas's own physics engine -- nothing to zero, no built-in gravity exists)
+Construct RadicalGravity for each planet, FaithfulGravity for the plank, bound via GravityContextMap
+Create the two static planet spheres and the static plank box
+Create PlayerController, Spawn() it (creates its capsule shape via PhysicsWorld — no body)
+dynamicBodies = SpawnDynamicObjects(physicsWorld)   // 6 bodies across Planet A/plank/Planet B
 
 while (!window.ShouldClose()):
     window.PollEvents()              // close request, Escape toggle, R/Space one-shot flags
@@ -1387,19 +1453,19 @@ while (!window.ShouldClose()):
 
     if window.ConsumeResetRequest():
         player.Reset()
-        for body in dynamicBodies: body.ResetToSpawn(physicsWorld)   // Milestone 7-A
+        for body in dynamicBodies: body.ResetToSpawn(physicsWorld)
 
     accumulator += frameDeltaTime
     while accumulator >= fixedTimestep and steps < cap:
         PrepareDynamicBodiesForStep(dynamicBodies, gravity, physicsWorld, fixedTimestep)
-            // Milestone 7-A: snapshot presentation history, sample gravity per body,
+            // snapshot presentation history, sample gravity per body,
             // ApplyLinearAcceleration — see "Multiple gravity consumers"
-        physicsWorld.Step(fixedTimestep)   // advances every Jolt body: sphere contact,
-                                            // dynamic-body integration, object<->object contact
+        physicsWorld.Step(fixedTimestep)   // Judas's own engine: broadphase, narrowphase,
+                                            // contact resolution, dynamic-body integration
         player.FixedUpdate(window, physicsWorld, gravity, fixedTimestep)  // see "Locomotion";
                                             // may also push a dynamic body it swept into — see
                                             // "Player-to-object interaction"
-        SyncDynamicBodiesFromPhysics(dynamicBodies, physicsWorld)   // Milestone 7-A
+        SyncDynamicBodiesFromPhysics(dynamicBodies, physicsWorld)
         accumulator -= fixedTimestep
 
     alpha = accumulator / fixedTimestep   // presentation interpolation factor; see
@@ -1407,58 +1473,51 @@ while (!window.ShouldClose()):
 
     renderer.BeginFrame(...)
     renderer.SetCamera(player.GetViewMatrix(alpha), player.GetProjectionMatrix(aspectRatio))
-    renderer.DrawSphere(sphereCenter, sphereRadius, sphereColor)
+    renderer.DrawSphere(planetACenter, planetARadius, planetAColor)
+    renderer.DrawSphere(planetBCenter, planetBRadius, planetBColor)
+    renderer.DrawBox(plankCenter, identity, plankHalfExtents, plankColor)
     renderer.DrawBox(player.GetPresentedPosition(alpha), player.GetPresentedOrientation(alpha),
                       player.GetRenderHalfExtents(), playerColor)
-    for body in dynamicBodies:            // Milestone 7-A
+    for body in dynamicBodies:
         renderer.DrawBox/DrawSphere(body.GetPresentedPosition(alpha),
                                      body.GetPresentedOrientation(alpha), ..., body visual)
     renderer.EndFrame()
     window.SwapBuffers()
 
 player.Destroy(physicsWorld)
-for body in dynamicBodies: physicsWorld.DestroyBody(body.Handle())   // Milestone 7-A
-physicsWorld.DestroyBody(sphere); physicsWorld.Shutdown()
+for body in dynamicBodies: physicsWorld.DestroyBody(body.Handle())
+physicsWorld.DestroyBody(planetABody); physicsWorld.DestroyBody(planetBBody)
+physicsWorld.DestroyBody(plankBody); physicsWorld.Shutdown()
 renderer.Shutdown()
 // Window's destructor tears down the GL context, the window, and SDL itself.
 ```
-
-The Milestone 3/4 flat floor is not part of this milestone's active demo
-(recoverable via the `milestone-4` tag) — a flat floor under
-`FaithfulGravity` and a sphere under `RadicalGravity` active in the same
-scene would need two different simultaneous gravity fields, which
-contradicts "the composition root selects one implementation," so keeping
-it would have meant either an incoherent scene or building multi-source/
-composite gravity that this milestone explicitly excludes. Milestone 3's
-original dynamic cube, specifically, is effectively superseded by
-Milestone 7-A's own dynamic test objects (see "Physics test world") —
-`PhysicsWorld::CreateDynamicBox`/`CreateDynamicSphere` are now genuinely
-exercised by the active demo rather than sitting unused.
 
 The engine-level split, updated for this milestone:
 
 - `Window` — window/input.
 - `Renderer` — graphics: sphere and box geometry, drawn once per player/
   dynamic body per frame.
-- `PhysicsWorld` — physics: ordinary Jolt bodies (the static sphere and
-  Milestone 7-A's dynamic test objects) plus the player's collision-query
-  surface (`CreatePlayerShape`/`SweepPlayerShape`/`DestroyPlayerShape` —
-  replacing Milestone 4's `CharacterVirtual`-backed methods) plus a few
-  generic per-body queries added this milestone (`IsDynamicBody`,
-  `GetLinearVelocity`/`SetLinearVelocity` — see "Player-to-object
-  interaction").
+- `PhysicsWorld` — Judas's own physics engine (see "Physics ownership"):
+  rigid-body state/integration, collision/contact resolution for the two
+  static planets, the static plank, and the dynamic test objects, plus the
+  player's collision-query surface (`CreatePlayerShape`/`SweepPlayerShape`/
+  `DestroyPlayerShape`) and a few generic per-body queries
+  (`IsDynamicBody`, `GetLinearVelocity`/`SetLinearVelocity` — see
+  "Player-to-object interaction").
 - `GravityField` / `FaithfulGravity` / `RadicalGravity` — Judas's gravity
-  interface and its two implementations, now consumed by more than one
-  kind of caller — see "Multiple gravity consumers."
+  interface and its two canonical implementations, unchanged since
+  Milestones 3/5 despite everything built on top of them since — see
+  "Multiple gravity consumers."
+- `GravityContextMap` — routes a position to exactly one of the above by
+  ownership, never blending — see "Gravity context ownership."
 - `PlayerController` — owns the player's entire state and behavior
   (position, velocity, orientation, locomotion, support, jumping, camera)
   — see "Player/controller ownership."
-- `DynamicBody` (Milestone 7-A) — the minimum shared representation for a
-  gravity-affected, presentation-interpolated test object; see "Dynamic
-  bodies."
+- `DynamicBody` — the minimum shared representation for a gravity-affected,
+  presentation-interpolated test object; see "Dynamic bodies."
 - `Application` — wires the above together, owns the loop, and is the only
-  place that knows the sphere's radius/center or the test objects' spawn
-  arrangement.
+  place that knows either planet's radius/center, the plank's geometry, or
+  the test objects' spawn arrangement.
 
 ## Input handling
 
@@ -1491,19 +1550,25 @@ what velocity the player should have each step (gravity integration,
 WASD-driven tangent movement, jump); the interpretation of "grounded" from
 a raw geometry query; and the move-and-slide iteration itself.
 
-The low-level Jolt facility that replaced `CharacterVirtual`:
-`JPH::NarrowPhaseQuery::CastShape`, wrapped as `PhysicsWorld::SweepPlayerShape`
-— a single function answering "how far can this shape move, and what does
-it touch?" `PlayerController` calls it twice per fixed step (once for the
-ground probe, up to four times for move-and-slide) and makes every
-interpretive decision about the results itself.
+The low-level facility that replaced `CharacterVirtual`:
+`PhysicsWorld::SweepPlayerShape` — a single function answering "how far can
+this shape move, and what does it touch?" `PlayerController` calls it
+twice per fixed step (once for the ground probe, up to four times for
+move-and-slide) and makes every interpretive decision about the results
+itself. Through Milestone 7-Final's first attempt, this wrapped Jolt's own
+`JPH::NarrowPhaseQuery::CastShape`; as of the physics-ownership migration
+(see "Physics ownership") it's Judas's own substep-sampled march instead —
+the *answer* `SweepPlayerShape` gives `PlayerController` is unchanged in
+shape (a hit flag, a distance, a normal, a body handle), so nothing above
+this one function needed to know the underlying mechanism changed.
 
-**Remaining `CharacterVirtual` dependency: none.** `grep -rn CharacterVirtual
-src/` (checked as part of this milestone's own validation) finds exactly
-one hit, a comment in `PlayerController.h` contrasting this milestone's
-architecture with Milestone 4's for a reader's benefit — no include, no
-type, no call. No Jolt character-controller header is included anywhere in
-this repository as of this milestone.
+**Remaining `CharacterVirtual` (or any third-party character-controller)
+dependency: none, and has been none since Milestone 5.** `grep -rn
+CharacterVirtual src/` finds exactly one hit, a comment in
+`PlayerController.h` contrasting this milestone's architecture with
+Milestone 4's for a reader's benefit — no include, no type, no call. As of
+Milestone 7-Final, this is stronger still: no third-party physics
+middleware of any kind is linked into this repository at all.
 
 ## Universal-up audit
 
@@ -1535,9 +1600,9 @@ files, reported honestly rather than selectively:
   demo-specific geometry anywhere in `PlayerController.h/.cpp` or
   `PhysicsWorld.h` (confirmed by `grep`); no capsule axis permanently fixed
   to world `+Y` (the capsule shape itself is created once and never
-  rotated in Jolt's own frame — `PlayerController` supplies its *current*
-  `m_frameOrientation` to every `SweepPlayerShape` call, so the query
-  itself always uses the up-to-date orientation).
+  rotated in the physics engine's own frame — `PlayerController` supplies
+  its *current* `m_frameOrientation` to every `SweepPlayerShape` call, so
+  the query itself always uses the up-to-date orientation).
 - **`Renderer`'s model-space `+Y`** (cube/sphere mesh vertices, `DrawBox`'s
   scale/rotate/translate order): ordinary modeling-space convention,
   transformed by whatever rotation the caller supplies — not a world-up
@@ -1645,8 +1710,9 @@ now.
 
 **Milestone 7-A: per-body columns, no new directives.** Both CSV modes now
 append six columns per dynamic body, in spawn order (`obj0PosX..Z,
-obj0VelX..Z`, `obj1...`, …), reading authoritative position and Jolt
-linear velocity — no presented/interpolated columns for bodies, unlike the
+obj0VelX..Z`, `obj1...`, …), reading authoritative position and linear
+velocity straight from the physics engine — no presented/interpolated
+columns for bodies, unlike the
 player's real-time row, since the automated checks below only ever need
 ground truth. `RunTestHarness`, `RunFixedStepMode`, and `RunRealtimeMode`
 all take the same `std::vector<DynamicBody>&` `Application` already built,
@@ -1728,7 +1794,7 @@ or a scripted transition run before it reached the interactive build:
   a closer look showed *magnitude* pinned at exactly `9.81` for the entire
   sphere zone's radius, then an instant drop to exactly `0.0` just past
   it. That's what led to the weighted-average-times-combined-weight fix in
-  `GravityResolver::Sample` — see "Transition semantics."
+  `GravityResolver::Sample` — see "Gravity context ownership."
 - **The uniform-fade regression.** A scripted plain standing jump at the
   player's spawn point (nowhere near the platform) — a "does existing
   behavior still work" sanity check, not a transition test — showed the
@@ -1736,7 +1802,8 @@ or a scripted transition run before it reached the interactive build:
   is what proved a `RadicalGravity` zone centered on the sphere's own true
   center weakens gravity identically everywhere on the sphere, not just
   near the departure point, and led to the offset-falloff-center design —
-  see "Transition semantics."
+  see "Gravity context ownership" (this whole design was later replaced;
+  see that section for why).
 - **The orientation snap.** A full scripted transition run (walk to the
   departure point, stop, jump, coast) logged a `85`-degree change in the
   player's local-up between two *consecutive* fixed steps — found by
@@ -1764,6 +1831,60 @@ back on the sphere) was verified the same way, ending with the player at
 exactly the sphere's normal standing distance and continuing ordinary
 locomotion. See "Validation report" (delivered separately to the operator)
 for the specific numbers.
+
+**Milestone 7-Final: repeating the centerline-only mistake, then not
+repeating it.** The first attempt at this milestone's own gravity design
+was validated the same way M7-B's had been — a `SAMPLE_GRAVITY` sweep
+along the intended travel path — and passed, then failed human validation
+anyway, because the actual defect (sideways contamination off the plank's
+own centerline) lived in a dimension that sweep never sampled. The second,
+corrected validation practice swept the FULL spatial volume before ever
+showing a build to the operator again: along the plank, across its full
+width (not just the center), above and below its surface, around both
+planets, and at both region boundaries. This is what caught the second
+design's own on-surface tilt before it needed a third human-validation
+cycle to find it, and it's what confirmed the final design reads exactly
+`(0,-9.81,0)` everywhere on the plank, not merely "closer to vertical than
+before."
+
+**Two new standalone unit-test executables, `judas_physics_tests` and
+`judas_collision_tests` (`tests/*.cpp`), added alongside the gameplay
+harness — not a replacement for it.** These test the physics PRIMITIVES in
+isolation (rigid-body integration, gravity application, narrowphase
+contact generation, contact resolution, gravity-context routing) with no
+window, no GL context, and no `Application`/`TestHarness` machinery at
+all — a different layer than `JUDAS_TEST_SCRIPT` gameplay scripts, which
+still exist and still matter (see "Automated testing" above), but can't
+exercise "does rotating an entire scenario rigidly produce a rigidly
+rotated result" as a single fast, deterministic, headless check. Both
+build as their own CMake targets and run in well under a second:
+
+- `judas_physics_tests` — uniform gravity in 7 directions (`±X, ±Y, ±Z`,
+  one arbitrary), each checked against a common reference by rotating the
+  whole scenario and rotating the result back; a full two-body scenario
+  (different masses, non-origin starting positions) rotated the same way;
+  static bodies verified immovable under force from any of 7 directions;
+  radial gravity verified to produce identical fall distance from 6
+  starting directions around a sphere.
+- `judas_collision_tests` — a box settles to the same resting gap on an
+  axis-aligned vs. an arbitrarily-rotated plane; friction decelerates
+  identically under rotation; bounce restitution matches under rotation; a
+  two-box stack under non-`-Y` gravity settles bounded and finite; three
+  bodies simultaneously on Planet A / the plank / Planet B each fall
+  toward only their own target (zero contamination); unclaimed space
+  returns exactly zero gravity and a body there coasts unchanged (no
+  invented axis); a full sweep from deep in Planet A's region through the
+  plank's into Planet B's matches exactly one field's raw output at every
+  point, with no magnitude cliff anywhere.
+
+The rotate-the-scenario technique used throughout both suites (build a
+reference result, then rebuild the identical scenario rotated by an
+arbitrary quaternion, run identical logic, rotate the result back, compare)
+is the single most direct test of "no global up or down" this project has
+written: if rotating the entire universe changes the physics outcome, a
+hidden axis assumption exists somewhere in the code under test. All of
+these currently pass; a future regression in any of them is exactly the
+signal that a change quietly reintroduced a world-axis assumption.
 
 ## Remaining limitations
 
@@ -1824,45 +1945,49 @@ deferred, not oversights:
   would. Discovered while devising an object-to-object collision test
   scenario, recorded rather than fixed, since a fuller push/carry system
   is explicitly out of this milestone's scope.
-- **Dynamic-body rolling decays slowly.** (Milestone 7-A.) A sphere set
-  rolling by a collision (see "Automated testing") keeps rolling for
-  several real seconds, decaying only via Jolt's own default angular
-  damping rather than any rolling-resistance model — physically
-  unsurprising for a smooth sphere on a smooth-ish surface, not a
-  stability bug (verified finite/stable over a much longer window than it
-  takes to visibly slow down), and not something this milestone tunes
-  further.
-- **Jumps taken very close to the departure point are noticeably
-  floatier than jumps taken elsewhere on the sphere.** (Milestone 7-B.)
-  The sphere's own gravity genuinely has to weaken within about a meter of
-  standing height right at the departure region for a `5 m/s` jump to
-  escape at all — see "Transition semantics" for why this is
-  mathematically unavoidable given `RadicalGravity`'s constant (not
-  inverse-square) magnitude and the established jump speed. The
-  offset-falloff-center design confines this to the departure region
-  specifically (verified: spawn and all four Milestone 7-A dynamic-body
-  spawns measure exactly full-strength gravity — see "Automated testing"),
-  but a jump taken *at* that specific spot will still feel different from
-  one taken anywhere else. Not chased further without evidence the
-  operator finds it objectionable — it is the direct, necessary cost of
-  making the escape possible via an ordinary jump at all.
-- **Dynamic bodies (M7-A's cubes/spheres) do not participate in the
-  gravity transition** — none were relocated near the platform. Not
-  required by the brief ("not mandatory unless required to validate the
-  architecture") and `GravityResolver`'s own position-only API already
-  demonstrates it works for any consumer/position, verified directly via
-  `SAMPLE_GRAVITY` at arbitrary points rather than by moving an object
-  there. Left as a natural, cheap extension for a future milestone if
-  ever needed — not attempted here to avoid disturbing Milestone 7-A's
-  already-validated object arrangement.
+- **Dynamic-body rolling decay is now untested territory.** (Was:
+  Milestone 7-A, under Jolt's own default angular damping — a sphere set
+  rolling kept rolling for several real seconds, decaying gradually.)
+  Judas's own `RigidBody`/`IntegrateRigidBody` (Milestone 7-Final) applies
+  no angular damping at all — nothing was added, because no evidence yet
+  shows this demo's dynamic bodies need it. A sphere set rolling by this
+  engine may keep rolling considerably longer than the old Jolt-backed
+  build did, or indefinitely on a level enough surface. Not evaluated
+  further without evidence it's visually objectionable; if it becomes one,
+  a small velocity-proportional damping term in `IntegrateRigidBody` is
+  the obvious, contained fix.
 - **The rotation-rate cap (`kMaxReorientationDegreesPerSecond`, `120°/s`)
   is a fixed constant, not derived from anything about the active gravity
-  configuration.** It was sized against this specific demonstration (fast
-  enough to be imperceptible during ordinary sphere walking, slow enough
-  to visibly smooth the transition's own ~90-degree reorientation over
-  roughly a second) rather than computed from first principles. A future
-  scenario needing a much faster legitimate reorientation would need this
-  revisited — not a concern for this milestone's two environments.
+  configuration.** It was sized against Milestone 7-B's demonstration
+  (fast enough to be imperceptible during ordinary sphere walking, slow
+  enough to visibly smooth a ~90-degree reorientation over roughly a
+  second) and never revisited for Milestone 7-Final's own crossings, which
+  turned out to need the same order of magnitude of correction (max
+  observed: `2.0°`/step, matching the cap almost exactly) without further
+  tuning. A future scenario needing a much faster legitimate reorientation
+  would need this revisited.
+- **Box-vs-box contact uses a vertex-inside-the-other-box manifold, not
+  full Sutherland-Hodgman face clipping.** (Milestone 7-Final — see
+  "Physics ownership.") Correctly finds all four corners of a box resting
+  flat on a larger surface (verified: settles without rocking, see
+  `tests/CollisionTests.cpp`), but an edge-on-edge contact between two
+  similarly-sized boxes falls back to a single approximated point rather
+  than a true 1-2 point edge manifold. Not evaluated further without
+  evidence this demo's boxes ever rest edge-to-edge in practice.
+- **The player's sweep query is substep-sampled (24 steps + bisection
+  refinement), not closed-form continuous collision detection.**
+  (Milestone 7-Final.) Correct and precise at this engine's actual
+  per-step displacement scale (centimeters, not meters), but a
+  hypothetical much faster-moving shape could tunnel between substeps in
+  principle. Not a concern for this demo's walking-speed player and
+  slow-moving dynamic bodies; would need revisiting for anything moving
+  meaningfully faster.
+- **Broadphase is brute-force all-pairs.** (Milestone 7-Final.) Exactly
+  right at this demo's body count (low teens) — a spatial structure would
+  be unused machinery, not a correctness requirement — but doesn't scale
+  past a few dozen bodies without becoming the actual bottleneck. Left
+  alone until a future milestone's body count gives real evidence it's
+  needed.
 
 ## FUTURE CONSTRAINTS PRESERVED
 
@@ -1885,15 +2010,25 @@ blocking known future requirements. None of these are implemented yet.
   shared world space; a future frame concept can sit between "an object's
   position" and "the position Judas hands to physics" without requiring
   today's code to be undone.
-- **Large-world rebasing** — unchanged: Jolt's optional double-precision
-  build mode remains available if/when coordinates grow past what
-  single-precision floats represent well.
+- **Large-world rebasing** — through Milestone 7-B this relied on Jolt's
+  optional double-precision build mode. As of Milestone 7-Final's own
+  physics engine (`src/RigidBody.h` and friends, all plain `glm::vec3`
+  single-precision), that option no longer exists — this is now an open
+  question, not a preserved one, and would need real design work (either a
+  precision upgrade to Judas's own math or a floating-origin/rebasing
+  scheme) if/when coordinates grow past what single-precision floats
+  represent well. Recorded honestly as a genuine gap this migration
+  introduced, not glossed over.
 - **Terrain, many collision objects, raycasts/shape queries, constraints**
-  — Milestone 5 is itself evidence this is practical: the player's entire
-  support/movement system is built from exactly one Jolt query primitive
-  (`CastShape`) used twice differently. Terrain collision or more query
-  types are a matter of calling more of what Jolt already provides through
-  the same `PhysicsWorld` boundary, not new architecture.
+  — Milestone 5 was evidence this was practical under Jolt (the player's
+  entire support/movement system built from exactly one query primitive,
+  `CastShape`, used twice differently); Milestone 7-Final's own
+  `PhysicsWorld::SweepPlayerShape` preserves the same one-primitive shape,
+  now backed by Judas's own substep-sampled sweep instead. Terrain
+  collision or more query types are a matter of adding narrowphase pair
+  functions to `src/Contacts.*` (sphere/box exist; a heightfield or mesh
+  type would be new work, not new architecture) through the same
+  `PhysicsWorld` boundary.
 - **Interpolated presentation for future dynamic/simulated objects** —
   **fulfilled in Milestone 7-A**, not merely still-preserved: the
   Milestone 6 presentation boundary (previous/current pose kept per
@@ -1906,22 +2041,29 @@ blocking known future requirements. None of these are implemented yet.
   thrown item) is expected to reuse `DynamicBody` or the same pattern
   directly, not a new abstraction layer.
 - **Many simultaneous dynamic objects, object-to-object interaction** —
-  Milestone 7-A is itself the evidence this is practical: four ordinary
-  Jolt dynamic bodies, sharing one `GravityField` and colliding with the
-  world and each other, needed no new physics architecture — `kMaxBodies`/
-  `kMaxBodyPairs`/`kMaxContactConstraints` (`PhysicsWorld.cpp`, currently
-  `128`, sized for this milestone's handful of bodies) are the only limits
-  that would need raising for more.
+  Milestone 7-A was evidence this was practical under Jolt; Milestone
+  7-Final's own engine repeats the proof with six bodies across three
+  regions, sharing one `GravityContextMap` and colliding with the world
+  and each other, needing no new physics architecture. The limit now
+  worth naming honestly: `PhysicsWorld::Step`'s broadphase is brute-force
+  all-pairs (see "Physics ownership," "Remaining limitations") — correct
+  and fast enough at this demo's body count, but the thing that would need
+  raising (a spatial structure, not a constant) for meaningfully more
+  bodies than this milestone actually uses.
 
 ## DELIBERATELY NOT IMPLEMENTED
 
 Explicitly deferred, not forgotten:
 
-- A custom general collision engine or replacement rigid-body solver —
-  `PhysicsWorld::SweepPlayerShape` is a thin wrapper around one Jolt query
-  function; Jolt still does 100% of the actual collision math
-- Multiple gravity sources, composite gravity, gravity blending,
-  gravity-source registration, sphere-of-influence systems
+- Gravity-source registration, sphere-of-influence systems, or any
+  generalized multi-source gravity FRAMEWORK — Milestone 7-Final's two
+  planets are two hand-wired `RadicalGravity` instances in
+  `Application.cpp`, not a registration system. **Gravity blending
+  specifically was tried, twice (`GravityResolver`, then a first
+  `GravityContextMap` design) and REMOVED, not merely never attempted** —
+  see "Gravity context ownership" for why continuous field-blending turned
+  out to be the wrong model for "which gravity governs a consumer," not
+  just an unbuilt nice-to-have.
 - Inverse-square/realistic gravity, gravitational mass, orbital mechanics,
   celestial simulation — `RadicalGravity` is constant-magnitude by design
 - Planets as an engine subsystem, planetary rotation, spherical terrain,
@@ -1943,7 +2085,7 @@ Explicitly deferred, not forgotten:
   fixed-step input latch, variable jump height, air dashing, wall jumping
 - Cinematic cameras, camera collision, camera shake/smoothing frameworks,
   multiple gameplay camera modes, or a free-fly debug camera
-- Jolt's debug renderer / any physics-debug-drawing
+- Any physics-debug-drawing (of any kind, from any engine)
 - Lighting, shadows, textures, materials, model loading
 - Audio, networking, NPCs, AI, inventory, weapons, health, interaction
   systems
@@ -1970,29 +2112,48 @@ Explicitly deferred, not forgotten:
   destructibility, or pooling/lifecycle management beyond create-once/
   destroy-once
 - A physics material/property system beyond per-body friction/restitution —
-  the sphere gets explicit, sensible values; the player, having no Jolt
-  body, has none to configure
-- **Milestone 7-B additions:** a general arbitrary gravity-volume editor,
-  gravity scripting, or a "priority"/layering system for gravity sources —
-  `GravityResolver` is exactly two zones, each a point and two radii, sized
-  by hand for this milestone's two environments (see "Gravity resolution");
-  a third gravity implementation, or any mode-switching added to
-  `FaithfulGravity`/`RadicalGravity` themselves — both remain exactly what
-  they were, and neither has ever heard of the other or of
+  each planet/plank/dynamic body gets explicit, sensible values; the
+  player, having no physics-engine body, has none to configure
+- **Milestone 7-B additions (historical — this design was later replaced;
+  see "Gravity context ownership"):** a general arbitrary gravity-volume
+  editor, gravity scripting, or a "priority"/layering system for gravity
+  sources — `GravityResolver` was exactly two zones, each a point and two
+  radii, sized by hand for that milestone's two environments; a third
+  gravity implementation, or any mode-switching added to
+  `FaithfulGravity`/`RadicalGravity` themselves — both remained exactly
+  what they were, and neither ever heard of the other or of
   `GravityResolver`; a directional/cone-shaped or otherwise new zone
-  *shape* — the offset-falloff-center technique (see "Transition
-  semantics") reuses the existing point-and-radius zone unchanged, just
-  placed cleverly, specifically so a new shape wasn't needed; a mutable
-  global "current gravity" variable or mode switch of any kind — every
-  `GravityResolver::Sample` call re-evaluates every zone independently for
-  the position it's asked about; scene loading, world streaming, or
+  *shape* — the offset-falloff-center technique reused the existing
+  point-and-radius zone unchanged, just placed cleverly; a mutable global
+  "current gravity" variable or mode switch of any kind — every
+  `GravityResolver::Sample` call re-evaluated every zone independently for
+  the position it was asked about; scene loading, world streaming, or
   swapping one environment out for another — both the sphere and the
-  platform exist simultaneously for the entire run; moving Milestone 7-A's
-  dynamic bodies into the transition (see "Remaining limitations" — not
-  required, not attempted); a generalized "air control" system — the
-  velocity-continuity fix specifically does *not* let WASD affect
+  platform existed simultaneously for the entire run; moving Milestone
+  7-A's dynamic bodies into the transition (not required, not attempted);
+  a generalized "air control" system — the velocity-continuity fix
+  specifically does *not* let WASD affect
   airborne velocity, only prevents existing momentum from being erased;
   any animation/rotation-smoothing system independent of authoritative
   orientation — the reorientation rate cap lives in `FixedUpdate`, is
   itself authoritative state, and the Milestone 6 presentation boundary
   remains strictly downstream of it, never a substitute for it
+- **Milestone 7-Final additions:** a feature-complete general physics
+  engine imitating Jolt — broadphase is brute-force all-pairs, box-vs-box
+  uses a vertex-inside manifold rather than full clipping, the player's
+  sweep is substep-sampled rather than closed-form continuous collision
+  detection, and none of that was treated as a gap to fill beyond this
+  demo's own needs (see "Physics ownership," "Remaining limitations");
+  sleeping/waking (no evidence any body in this demo needs to stop being
+  simulated when at rest — the body count is small enough that always
+  stepping every body has no measured cost); a general constraint solver
+  beyond contact resolution (no joints, hinges, or springs anywhere in
+  this milestone); per-consumer gravity-context state or hysteresis — see
+  "Gravity context ownership" for why position-only resolution is
+  sufficient for THIS milestone's static environments, explicitly NOT
+  documented as a permanent law; large-world/double-precision coordinates
+  — Judas's own physics math is single-precision `glm`, a genuine
+  capability this migration removed rather than preserved (see "FUTURE
+  CONSTRAINTS PRESERVED"); any third gravity-field implementation or
+  change to `FaithfulGravity`/`RadicalGravity` themselves — the plank's
+  entire solution was reusing `FaithfulGravity` completely unmodified

@@ -8,12 +8,14 @@ class PhysicsWorld;
 class GravityField;
 
 // Judas-owned player. Unlike Milestone 4 (which delegated locomotion to
-// Jolt's CharacterVirtual), this class itself decides desired locomotion,
-// gravity response, local up/down, jump behavior, support interpretation,
-// and orientation — every piece of state here (position, velocity,
-// orientation) is plain data owned by Judas, not a Jolt body or character
-// controller of any kind. Jolt is consulted only for the raw geometric
-// question "how far can this shape move, and what does it touch?" via
+// Jolt's CharacterVirtual, back when Jolt was still this project's physics
+// middleware — see docs/ARCHITECTURE.md, "Physics ownership"), this class
+// itself decides desired locomotion, gravity response, local up/down, jump
+// behavior, support interpretation, and orientation — every piece of state
+// here (position, velocity, orientation) is plain data owned by Judas, not
+// a physics-engine body or character controller of any kind. The physics
+// engine is consulted only for the raw geometric question "how far can
+// this shape move, and what does it touch?" via
 // PhysicsWorld::SweepPlayerShape. See docs/ARCHITECTURE.md,
 // "Player/controller ownership."
 //
@@ -115,7 +117,7 @@ private:
     void UpdateFrameOrientation(const glm::vec3& localUp, float fixedDeltaTime);
     glm::vec3 ComputeTangentVelocity(const Window& window, const glm::vec3& localUp) const;
 
-    // Judas-owned player state. None of this is a Jolt body.
+    // Judas-owned player state. None of this is a physics-engine body.
     glm::vec3 m_position;          // capsule center, world space
     glm::vec3 m_velocity{0.0f};
     glm::quat m_frameOrientation;  // local frame: (m_frameOrientation * +Y) is the current local up

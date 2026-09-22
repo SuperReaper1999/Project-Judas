@@ -311,7 +311,7 @@ int Application::Run() {
         return 1;
     }
 
-    // Milestone 7-A/7-Final: several ordinary Jolt dynamic bodies sharing
+    // Milestone 7-A/7-Final: several ordinary dynamic bodies sharing
     // the same GravityField the player uses — see docs/ARCHITECTURE.md,
     // "Multiple gravity consumers." Created here (composition root), not
     // inside PlayerController or DynamicBody, exactly like the static
@@ -406,8 +406,8 @@ int Application::Run() {
             int stepsThisFrame = 0;
             while (physicsAccumulator >= SimulationTiming::kFixedTimestep &&
                    stepsThisFrame < SimulationTiming::kMaxPhysicsStepsPerFrame) {
-                // Dynamic bodies sample gravity and hand it to Jolt BEFORE
-                // Step() integrates it into their position — the same
+                // Dynamic bodies sample gravity and hand it to the physics
+                // engine BEFORE Step() integrates it into their position — the same
                 // "Judas samples, physics obeys" ordering the player uses,
                 // just applied to a list. See docs/ARCHITECTURE.md,
                 // "Multiple gravity consumers."

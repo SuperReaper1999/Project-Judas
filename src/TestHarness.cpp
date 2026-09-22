@@ -17,8 +17,7 @@
 // even call (BMP/TGA/HDR/JPG writers) — a lint characteristic of a
 // third-party header we don't control, not of this project's code, so it's
 // suppressed only for this one include rather than loosening -Wall/-Wextra
-// project-wide (same reasoning as Jolt's own ENABLE_ALL_WARNINGS override
-// in CMakeLists.txt).
+// project-wide.
 #if defined(__GNUC__) || defined(__clang__)
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wmissing-field-initializers"

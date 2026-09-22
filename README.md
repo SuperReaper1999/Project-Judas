@@ -8,47 +8,42 @@ This is **not** a general-purpose engine and is not trying to compete with
 Unity, Unreal, or Godot. It exists to serve one specific class of game, and
 its architecture is deliberately narrow.
 
-## Status: Milestone 7-B
+## Status: Milestone 7-Final
 
-A controllable player walks, jumps, and falls under real physics
-([Jolt Physics](https://github.com/jrouwe/JoltPhysics)) on the surface of a
-large sphere (radius `20m`), with **radial** gravity pulling toward its
-center. There is no universal "up": the player's own sense of up
-continuously reorients to match wherever gravity currently points, so you
-can walk all the way around the sphere onto what was originally "the other
-side." Judas owns the player's movement, orientation, and support logic
-directly, using Jolt only for low-level collision queries. Ordinary
-locomotion is visually smooth: the underlying fixed-timestep simulation is
-unchanged (still authoritative, still deterministic), but what actually
-gets rendered each frame is a presentation-only interpolation between two
-simulation states rather than the latest one shown directly — see
-[`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) for the measurements that
-showed this was needed and why.
+A controllable player walks, jumps, and falls under real physics — **as of
+this milestone, Judas's own physics engine, not a third-party library** —
+across two independent spherical worlds ("planets," radius `20m` each,
+`55m` apart) connected by a flat plank. Each planet has its own **radial**
+gravity pulling toward its own center; the plank has its own **uniform**
+gravity matching its own flat surface. There is no universal "up": the
+player's own sense of up continuously reorients to match whichever gravity
+context currently governs it, and which context governs a given position
+is decided by simple ownership — a position belongs to exactly one world,
+never a blend of two. See
+[`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) for the two earlier
+gravity-context designs that each passed automated checks and still failed
+interactive validation before this one, why, and why Jolt Physics was
+removed entirely along the way.
 
-The sphere also hosts four ordinary Jolt dynamic bodies (two cubes, two
-spheres) scattered around it. Each one samples the same Judas-owned gravity
-the player does, purely from its own position — proof that gravity was
-never player-specific. They fall, land, roll, and collide with the sphere
-and each other under real physics; walk into one and you can push it.
+Both planets and the plank host ordinary dynamic bodies (cubes and
+spheres) that sample the same Judas-owned gravity the player does, purely
+from their own position — proof that gravity was never player-specific or
+region-specific. They fall, land, roll, and collide with the world and
+each other under real physics; walk into one and you can push it.
 
-A second, completely different physical environment now coexists with the
-sphere: a flat platform under **uniform** gravity, positioned near the
-sphere's equator. Strafe toward it and jump off the sphere's surface, and
-gravity smoothly hands off from radial to uniform as you cross — no code
-anywhere decides which implementation is "active" globally, and the
-player has no idea which one is currently governing it. You physically
-land on the platform under ordinary collision, walk and jump normally
-under its uniform gravity, and can walk back off the edge to fall back
-onto the sphere the same way. See
-[`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) for how gravity is resolved
-spatially, why a naive approach broke ordinary jumping everywhere on the
-sphere before the real design was found, and how the transition stays
-smooth. That's it — no lighting, terrain, real planets, or gameplay yet.
+The player can walk from Planet A, onto the plank, across it, onto
+Planet B, and back. Gravity hands off coherently at every boundary,
+support is always collision-derived (never a gravity-region event), and
+the plank reads as ordinary flat ground everywhere on its surface,
+including its edges — no sideways pull toward either planet, anywhere on
+it. See [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) for the full,
+honest retrospective on how two earlier attempts got that wrong. That's
+it — no lighting, terrain, real planets, or gameplay yet.
 
 This is intentional — see `docs/ARCHITECTURE.md` for why, what's
 deliberately not built yet, and how this small foundation avoids blocking
 the much larger long-term design. Earlier milestones are preserved as git
-tags (`milestone-1` through `milestone-7a`) rather than kept running
+tags (`milestone-1` through `milestone-7final`) rather than kept running
 alongside the current demo.
 
 ## Building
@@ -56,15 +51,14 @@ alongside the current demo.
 ### Requirements
 
 - Linux (developed and tested on Ubuntu)
-- CMake 3.20+ (Jolt Physics' own build requires 3.20)
+- CMake 3.20+
 - A C++17 compiler (GCC or Clang)
 - SDL2 development headers
 - GLM development headers
-- Network access on first configure — [Jolt Physics](https://github.com/jrouwe/JoltPhysics)
-  is fetched automatically by CMake (`FetchContent`, pinned to `v5.6.0`);
-  it is not vendored in this repository or installed via a package
-  manager. Later configures use CMake's local cache and don't need network
-  access again.
+
+No physics-engine dependency to fetch — Judas owns its own physics (see
+[`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md), "Physics ownership"), so
+configuring needs no network access at all.
 
 On Ubuntu/Debian:
 
@@ -88,7 +82,7 @@ cmake --build build -j"$(nproc)"
 ## Controls
 
 The mouse is captured on launch and controls where the player looks. WASD
-walks the player relative to that look direction and the sphere's surface
+walks the player relative to that look direction and the current surface
 (not a free-flying camera).
 
 | Action                  | Keys                  |

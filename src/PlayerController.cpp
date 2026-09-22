@@ -259,7 +259,8 @@ void PlayerController::FixedUpdate(const Window& window, PhysicsWorld& physics,
     m_jumpRequested = false;
 
     // Judas's own minimal move-and-slide: never trust a raw transform
-    // write, always resolve displacement against Jolt's collision query.
+    // write, always resolve displacement against the physics engine's
+    // collision query.
     glm::vec3 remaining = m_velocity * fixedDeltaTime;
     for (int i = 0; i < kMaxSlideIterations; ++i) {
         const float remainingLength = glm::length(remaining);
@@ -272,16 +273,16 @@ void PlayerController::FixedUpdate(const Window& window, PhysicsWorld& physics,
             break;
         }
 
-        // Milestone 7-A: the player itself is not a Jolt body (see the
-        // class comment), so contact with a dynamic test object would
-        // otherwise never push it — SweepPlayerShape is a read-only query,
-        // not something Jolt's own contact solver resolves. This is the
+        // Milestone 7-A: the player itself is not a physics-engine body
+        // (see the class comment), so contact with a dynamic test object
+        // would otherwise never push it — SweepPlayerShape is a read-only
+        // query, not something the contact solver resolves. This is the
         // smallest correction that closes that gap: when a move sweep
         // meets a dynamic body, seed its velocity with the player's own
         // speed into it (only ever increasing that component, never
         // slowing the object down or overwriting motion along other axes)
-        // and let Jolt take over from there via the next physics step.
-        // Static world geometry (the sphere) is unaffected.
+        // and let the physics engine take over from there via the next
+        // fixed step. Static world geometry is unaffected.
         if (physics.IsDynamicBody(hit.hitBody)) {
             const glm::vec3 pushDirection = -hit.normal;
             const float playerSpeedIntoObject = glm::dot(m_velocity, pushDirection);

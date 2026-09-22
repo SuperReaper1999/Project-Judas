@@ -17,8 +17,9 @@ class GravityField;
 // instead of copy-pasted per-object code.
 //
 // Unlike PlayerController, this class does not own movement resolution
-// itself — Jolt fully owns this body's rigid-body dynamics and collision
-// (see PhysicsWorld::CreateDynamicBox/CreateDynamicSphere). All this class
+// itself — the physics engine (Judas's own, see docs/ARCHITECTURE.md,
+// "Physics ownership") fully owns this body's rigid-body dynamics and
+// collision (see PhysicsWorld::CreateDynamicBox/CreateDynamicSphere). All this class
 // adds on top is exactly the same presentation boundary Milestone 6 gave
 // the player: a previous/current pose pair so rendering can interpolate
 // between fixed steps without touching authoritative state. See
@@ -58,13 +59,13 @@ public:
     // pose as of the end of the previous step as this step's interpolation
     // baseline. Unlike PlayerController::FixedUpdate (which owns its own
     // integration and can snapshot internally), a dynamic body's actual
-    // motion happens inside Jolt's Step() call, so snapshotting has to
+    // motion happens inside PhysicsWorld::Step(), so snapshotting has to
     // happen from the outside, before that call — see
     // PrepareDynamicBodiesForStep below.
     void SnapshotPrevious();
 
     // Call once per fixed step, AFTER PhysicsWorld::Step: reads back the
-    // fresh authoritative transform Jolt just produced.
+    // fresh authoritative transform the physics engine just produced.
     void SyncFromPhysics(const PhysicsWorld& physics);
 
     // Restores the body to its spawn pose with zero velocity and

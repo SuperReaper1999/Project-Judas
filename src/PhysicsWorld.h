@@ -3,9 +3,9 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/quaternion.hpp>
 
-// Opaque handle to a body inside PhysicsWorld. Deliberately not the
-// middleware's own body-ID type — no file outside PhysicsWorld.cpp needs
-// to know that Jolt exists.
+// Opaque handle to a body inside PhysicsWorld. Deliberately not tied to
+// any concrete physics-engine body-ID representation — no file outside
+// PhysicsWorld.cpp needs to know what implements this class.
 struct BodyHandle {
     static constexpr unsigned int kInvalidId = 0xFFFFFFFFu;
     unsigned int id = kInvalidId;
@@ -19,7 +19,7 @@ struct BodyTransform {
 };
 
 // The result of sweeping a shape through the world: the only question
-// Judas's player controller ever asks the physics middleware ("how far can
+// Judas's player controller ever asks the physics engine ("how far can
 // this shape move, and what does it touch?"). What the answer MEANS —
 // sliding, support, grounded state — is entirely PlayerController's
 // decision; this struct carries no interpretation of its own.
@@ -36,22 +36,22 @@ struct ShapeSweepHit {
                                  // `normal`; interpretation stays the caller's job)
 };
 
-// Wraps the physics middleware (currently Jolt Physics — see
-// docs/ARCHITECTURE.md, "Physics middleware"). Owns collision detection,
+// Wraps Judas's own physics engine (see docs/ARCHITECTURE.md, "Physics
+// ownership" — Jolt Physics served this role through the first Milestone
+// 7-Final attempt and is no longer used at all). Owns collision detection,
 // contact resolution, and rigid-body integration.
 //
 // Ownership boundary (see docs/ARCHITECTURE.md for the full rationale):
 // Judas owns gravity, reference frames, and world coordinates. This class
-// and the middleware behind it own collision/contact/rigid-body solving
-// ONLY. The middleware's own built-in global gravity is explicitly disabled
-// in Init() — gravity always arrives from the outside via
-// ApplyLinearAcceleration, sourced from Judas's own GravityField. Nothing
-// in this header or its implementation assumes gravity points in any
-// particular direction.
+// and the engine behind it own collision/contact/rigid-body solving ONLY.
+// Nothing in this class ever computes or applies gravity of its own —
+// gravity always arrives from the outside via ApplyLinearAcceleration,
+// sourced from Judas's own GravityField. Nothing in this header or its
+// implementation assumes gravity points in any particular direction.
 //
-// No Jolt type appears in this header, so no other engine file needs to
-// include a Jolt header just to hold a body, ask for its transform, or
-// sweep the player's collision shape.
+// No concrete physics-engine type appears in this header, so no other
+// engine file needs to include one just to hold a body, ask for its
+// transform, or sweep the player's collision shape.
 class PhysicsWorld {
 public:
     PhysicsWorld() = default;
@@ -105,21 +105,22 @@ public:
 
     // --- Player collision shape & queries ---
     //
-    // As of Milestone 5, the player is NOT a Jolt body or character
-    // controller of any kind — see docs/ARCHITECTURE.md, "Player/controller
-    // ownership." Judas (PlayerController) owns the player's position,
-    // velocity, orientation, and support interpretation entirely as plain
-    // data. The only thing this class provides is a capsule Shape used
-    // purely for on-demand geometry queries; it is never added to the
-    // PhysicsSystem as a body, so it never appears in the broadphase and
-    // never needs a layer, activation state, or mass of its own.
+    // As of Milestone 5, the player is NOT a physics-engine body or
+    // character controller of any kind — see docs/ARCHITECTURE.md,
+    // "Player/controller ownership." Judas (PlayerController) owns the
+    // player's position, velocity, orientation, and support interpretation
+    // entirely as plain data. The only thing this class provides is a
+    // capsule shape used purely for on-demand geometry queries; it is
+    // never added to the world as a body, so it never appears in the
+    // broadphase/contact-resolution pass and never needs a layer,
+    // activation state, or mass of its own.
     bool CreatePlayerShape(float radius, float halfHeight);
     void DestroyPlayerShape();
 
     // Sweeps the player's capsule shape (at `fromCenter`/`rotation`) along
     // `displacement` (direction and length together) and reports the
     // closest thing it would hit, if any. This is Judas's ONLY question to
-    // Jolt about player movement or support — everything the answer is
+    // the physics engine about player movement or support — everything the answer is
     // used for (sliding along a surface, deciding "grounded," permitting a
     // jump) is PlayerController's decision, not this class's.
     ShapeSweepHit SweepPlayerShape(const glm::vec3& fromCenter, const glm::quat& rotation,
