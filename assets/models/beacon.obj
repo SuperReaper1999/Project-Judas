@@ -1,0 +1,69 @@
+# beacon.obj — Project Judas Milestone 9 test asset.
+#
+# Original content authored for this project (not derived from any external
+# asset) — public domain / CC0 equivalent, redistributable without
+# restriction in this MIT-licensed repository. See docs/ARCHITECTURE.md,
+# "Milestone 9," for the full asset-provenance note.
+#
+# A deliberately simple square pyramid: a 2x2 base (y=0) rising to a single
+# apex at (0,2,0). Four flat-shaded side faces plus a flat-shaded base — five
+# faces total, each with its own distinct per-face normal (no shared/averaged
+# vertex normals), and each side face's UVs land in its own distinct quadrant
+# of assets/textures/beacon.png (front=red, right=green, back=blue,
+# left=yellow — see that file's own generation notes) specifically so
+# per-face UV orientation and per-face lighting response are both visually
+# and programmatically checkable, unlike Judas's existing primitive cube/
+# sphere geometry.
+
+# --- Front face (+Z), maps to the texture's RED quadrant ---
+v -1.0 0.0  1.0
+v  1.0 0.0  1.0
+v  0.0 2.0  0.0
+vt 0.0 0.5
+vt 0.5 0.5
+vt 0.25 1.0
+vn 0.0 0.4472136 0.8944272
+f 1/1/1 2/2/1 3/3/1
+
+# --- Right face (+X), maps to the texture's GREEN quadrant ---
+v  1.0 0.0  1.0
+v  1.0 0.0 -1.0
+v  0.0 2.0  0.0
+vt 0.5 0.5
+vt 1.0 0.5
+vt 0.75 1.0
+vn 0.8944272 0.4472136 0.0
+f 4/4/2 5/5/2 6/6/2
+
+# --- Back face (-Z), maps to the texture's BLUE quadrant ---
+v  1.0 0.0 -1.0
+v -1.0 0.0 -1.0
+v  0.0 2.0  0.0
+vt 0.0 0.0
+vt 0.5 0.0
+vt 0.25 0.5
+vn 0.0 0.4472136 -0.8944272
+f 7/7/3 8/8/3 9/9/3
+
+# --- Left face (-X), maps to the texture's YELLOW quadrant ---
+v -1.0 0.0 -1.0
+v -1.0 0.0  1.0
+v  0.0 2.0  0.0
+vt 0.5 0.0
+vt 1.0 0.0
+vt 0.75 0.5
+vn -0.8944272 0.4472136 0.0
+f 10/10/4 11/11/4 12/12/4
+
+# --- Base (-Y), rarely visible; UVs are not the point of this face ---
+v -1.0 0.0 -1.0
+v  1.0 0.0 -1.0
+v  1.0 0.0  1.0
+v -1.0 0.0  1.0
+vt 0.0 0.0
+vt 1.0 0.0
+vt 1.0 1.0
+vt 0.0 1.0
+vn 0.0 -1.0 0.0
+f 13/13/5 14/14/5 15/15/5
+f 13/13/5 15/15/5 16/16/5

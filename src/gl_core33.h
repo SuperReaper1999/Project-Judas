@@ -2,15 +2,21 @@
 
 // Minimal hand-written OpenGL 3.3 core function loader.
 //
-// We declare only the ~35 GL entry points the engine actually calls, and
+// We declare only the GL entry points the engine actually calls, and
 // resolve them at runtime via SDL_GL_GetProcAddress (see gl_core33.cpp).
 // This avoids pulling in a full loader-generator (glad/GLEW) and its build
 // or network-fetch step for a surface this small. This decision is
 // re-evaluated each time new GL surface is needed (see docs/ARCHITECTURE.md)
 // and kept deliberately each time so far; when a future milestone needs a
-// much larger GL surface (textures, framebuffers, compute, etc.), replace
-// this file with a generated glad loader instead of growing it by hand
-// indefinitely.
+// much larger GL surface (framebuffers, compute, etc.), replace this file
+// with a generated glad loader instead of growing it by hand indefinitely.
+//
+// Milestone 9 added 10 functions (textures, element-buffer drawing, a
+// couple more uniform setters) on top of the ~31 already here — reconsidered
+// against the same "still small and clear?" question, and kept: it's still
+// a flat, readable list of entry points this engine actually calls, not
+// meaningfully harder to maintain than before. See docs/ARCHITECTURE.md,
+// "Milestone 9," for the explicit re-evaluation.
 
 #include <cstddef>
 
@@ -42,6 +48,19 @@ constexpr GLenum GL_LINK_STATUS = 0x8B82;
 constexpr GLenum GL_INFO_LOG_LENGTH = 0x8B84;
 constexpr GLenum GL_RGB = 0x1907;
 constexpr GLenum GL_UNSIGNED_BYTE = 0x1401;
+
+// Milestone 9: textures + element-buffer (indexed) drawing.
+constexpr GLenum GL_ELEMENT_ARRAY_BUFFER = 0x8893;
+constexpr GLenum GL_UNSIGNED_INT = 0x1405;
+constexpr GLenum GL_TEXTURE_2D = 0x0DE1;
+constexpr GLenum GL_TEXTURE_MIN_FILTER = 0x2801;
+constexpr GLenum GL_TEXTURE_MAG_FILTER = 0x2800;
+constexpr GLenum GL_TEXTURE_WRAP_S = 0x2802;
+constexpr GLenum GL_TEXTURE_WRAP_T = 0x2803;
+constexpr GLenum GL_REPEAT = 0x2901;
+constexpr GLenum GL_LINEAR = 0x2601;
+constexpr GLenum GL_LINEAR_MIPMAP_LINEAR = 0x2703;
+constexpr GLenum GL_RGBA = 0x1908;
 
 using PFNGLVIEWPORT = void (*)(GLint, GLint, GLsizei, GLsizei);
 using PFNGLCLEARCOLOR = void (*)(GLfloat, GLfloat, GLfloat, GLfloat);
@@ -77,6 +96,19 @@ using PFNGLDELETEBUFFERS = void (*)(GLsizei, const GLuint*);
 using PFNGLDELETEVERTEXARRAYS = void (*)(GLsizei, const GLuint*);
 using PFNGLREADPIXELS = void (*)(GLint, GLint, GLsizei, GLsizei, GLenum, GLenum, void*);
 
+// Milestone 9 additions.
+using PFNGLDRAWELEMENTS = void (*)(GLenum, GLsizei, GLenum, const void*);
+using PFNGLGENTEXTURES = void (*)(GLsizei, GLuint*);
+using PFNGLBINDTEXTURE = void (*)(GLenum, GLuint);
+using PFNGLTEXIMAGE2D = void (*)(GLenum, GLint, GLint, GLsizei, GLsizei, GLint, GLenum, GLenum,
+                                  const void*);
+using PFNGLTEXPARAMETERI = void (*)(GLenum, GLenum, GLint);
+using PFNGLGENERATEMIPMAP = void (*)(GLenum);
+using PFNGLDELETETEXTURES = void (*)(GLsizei, const GLuint*);
+using PFNGLUNIFORM1I = void (*)(GLint, GLint);
+using PFNGLUNIFORM3F = void (*)(GLint, GLfloat, GLfloat, GLfloat);
+using PFNGLUNIFORMMATRIX3FV = void (*)(GLint, GLsizei, GLboolean, const GLfloat*);
+
 extern PFNGLVIEWPORT glViewport;
 extern PFNGLCLEARCOLOR glClearColor;
 extern PFNGLCLEAR glClear;
@@ -110,6 +142,18 @@ extern PFNGLDELETEPROGRAM glDeleteProgram;
 extern PFNGLDELETEBUFFERS glDeleteBuffers;
 extern PFNGLDELETEVERTEXARRAYS glDeleteVertexArrays;
 extern PFNGLREADPIXELS glReadPixels;
+
+// Milestone 9 additions.
+extern PFNGLDRAWELEMENTS glDrawElements;
+extern PFNGLGENTEXTURES glGenTextures;
+extern PFNGLBINDTEXTURE glBindTexture;
+extern PFNGLTEXIMAGE2D glTexImage2D;
+extern PFNGLTEXPARAMETERI glTexParameteri;
+extern PFNGLGENERATEMIPMAP glGenerateMipmap;
+extern PFNGLDELETETEXTURES glDeleteTextures;
+extern PFNGLUNIFORM1I glUniform1i;
+extern PFNGLUNIFORM3F glUniform3f;
+extern PFNGLUNIFORMMATRIX3FV glUniformMatrix3fv;
 
 // Resolves every function pointer above via SDL_GL_GetProcAddress.
 // Must be called after an OpenGL context is current. Returns false (and

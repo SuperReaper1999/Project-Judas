@@ -5,14 +5,33 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/quaternion.hpp>
 
+#include "MeshData.h"
+#include "TextureData.h"
 #include "gl_core33.h"
+
+// Opaque handles into Renderer's own GPU resource tables — the same
+// convention PhysicsWorld::BodyHandle already established (a small integer
+// id, kInvalid sentinel, no concrete type exposed to callers). Deliberately
+// not tied to a raw GLuint in any caller-visible way, so no file outside
+// Renderer.cpp needs to know what a VAO/VBO/texture object even is.
+struct MeshHandle {
+    static constexpr unsigned int kInvalidId = 0xFFFFFFFFu;
+    unsigned int id = kInvalidId;
+    bool IsValid() const { return id != kInvalidId; }
+};
+struct TextureHandle {
+    static constexpr unsigned int kInvalidId = 0xFFFFFFFFu;
+    unsigned int id = kInvalidId;
+    bool IsValid() const { return id != kInvalidId; }
+};
 
 // Owns the GL objects and draw calls. Low-level calls (glClear, glDrawArrays,
 // ...) come from an external API, but the *concept* of "begin a frame / set
-// the active camera / draw a box / end a frame" is this engine's own
+// the active camera / draw a mesh / end a frame" is this engine's own
 // boundary, and is what has to survive a future move to a different graphics
-// API. Callers (Application, Camera, demo scene code) never touch OpenGL
-// directly.
+// API. Callers (Application, gameplay code, model/texture loaders) never
+// touch OpenGL directly — see docs/ARCHITECTURE.md, "Milestone 9," for why
+// this boundary held even once textures/lighting/indexed meshes arrived.
 class Renderer {
 public:
     bool Init();
@@ -22,24 +41,70 @@ public:
     // window size.
     void BeginFrame(int windowWidth, int windowHeight);
 
-    // Sets the view/projection matrices used by all DrawBox calls until
-    // the next SetCamera call. Recomputing this every frame (rather than
+    // Sets the view/projection matrices used by all Draw* calls until the
+    // next SetCamera call. Recomputing this every frame (rather than
     // reacting to a resize event) is what keeps the projection's aspect
     // ratio correct across window resizes.
     void SetCamera(const glm::mat4& view, const glm::mat4& projection);
+
+    // Milestone 9: the demo's one directional light, plus a small constant
+    // ambient term. `direction` points FROM a lit surface TOWARD the light
+    // (i.e. already negated from "the direction the light travels") — see
+    // docs/ARCHITECTURE.md, "Milestone 9, Lighting," for the exact
+    // convention and why it is a plain world-space vector with no relation
+    // to gravity, local up, or any other Judas concept. Called once per
+    // frame alongside SetCamera; this demo's light never changes, but nothing
+    // stops a future caller from varying it frame to frame the same way the
+    // camera already does.
+    void SetLighting(const glm::vec3& direction, const glm::vec3& lightColor,
+                      const glm::vec3& ambientColor);
+
+    // --- Judas-owned mesh/texture resources (Milestone 9) ---
+    //
+    // Uploads `data` to the GPU (VAO/VBO, plus an EBO if `data.indices` is
+    // non-empty) and returns a handle Application/gameplay code can hold and
+    // pass to DrawMesh — the CPU-side MeshData itself is not retained after
+    // this call returns; Renderer owns only the GPU-side copy from this
+    // point on. See docs/ARCHITECTURE.md for the full CPU/GPU ownership
+    // split (ModelLoader produces MeshData; Renderer uploads and owns the
+    // GPU resource; the caller owns only the opaque handle).
+    MeshHandle CreateMesh(const MeshData& data);
+    void DestroyMesh(MeshHandle handle);
+
+    // Uploads `data` as a 2D RGBA texture (linear filtering, mipmapped,
+    // repeat wrapping — see docs/ARCHITECTURE.md for why these were judged
+    // sufficient for one demo texture) and returns a handle. Same ownership
+    // split as CreateMesh.
+    TextureHandle CreateTexture(const TextureData& data);
+    void DestroyTexture(TextureHandle handle);
+
+    // Draws any mesh created via CreateMesh with an arbitrary
+    // position/rotation/scale, modulated by `tintColor` and by `texture`'s
+    // sampled color — an invalid `texture` handle draws with a solid 1x1
+    // white fallback texture instead (see Init), so a caller with no real
+    // texture (every existing primitive) still goes through the exact same
+    // shader/lighting path as a textured model, just with texColor
+    // effectively 1. This is the single generalized draw path DrawBox/
+    // DrawSphere are now thin wrappers over.
+    void DrawMesh(MeshHandle mesh, const glm::vec3& position, const glm::quat& rotation,
+                  const glm::vec3& scale, TextureHandle texture, const glm::vec3& tintColor);
 
     // Draws a box mesh: `halfExtents` sets its size along each axis (the
     // local unit cube is scaled by 2*halfExtents), `rotation` its
     // orientation. Callers pass whatever position/rotation they have —
     // Milestone 3's physics-driven cube passes values read straight from
     // PhysicsWorld::GetTransform, with no separate rendering-side motion
-    // logic.
+    // logic. Unchanged signature since Milestone 3; internally a thin
+    // DrawMesh wrapper as of Milestone 9 (see above) — every existing call
+    // site needed zero changes for this migration.
     void DrawBox(const glm::vec3& position, const glm::quat& rotation,
                  const glm::vec3& halfExtents, const glm::vec3& colorRgb);
 
     // Draws a sphere mesh of the given world-space radius. Added in
     // Milestone 5 for the spherical test world; a sphere looks identical
-    // under any rotation, so unlike DrawBox there is no rotation parameter.
+    // under any (single-axis) rotation, so unlike DrawBox there is no
+    // rotation parameter. Unchanged signature; DrawMesh wrapper as of
+    // Milestone 9.
     void DrawSphere(const glm::vec3& position, float radius, const glm::vec3& colorRgb);
 
     void EndFrame();
@@ -47,23 +112,49 @@ public:
     // Reads back the current color buffer as tightly-packed 8-bit RGB rows,
     // top row first (`glReadPixels` itself returns bottom row first — this
     // flips it, since that's what every common image format/library
-    // expects). Developer tooling only (see src/TestHarness.h) — nothing
+    // expects). Developer tooling only (see src/TestHarness.h); nothing
     // in the normal game loop calls this; it exists so the engine's actual
     // rendered output can be inspected without a way to see the window.
     void CaptureFrame(int width, int height, std::vector<unsigned char>& outRgbPixels) const;
 
 private:
+    // One GPU-resident mesh: a VAO/VBO pair, an optional EBO (0 if the mesh
+    // is drawn non-indexed — see MeshData's own convention), and enough
+    // count/type information to issue the right draw call.
+    struct GpuMesh {
+        GLuint vao = 0;
+        GLuint vbo = 0;
+        GLuint ebo = 0;          // 0 if non-indexed
+        GLsizei vertexCount = 0;  // used when ebo == 0 (glDrawArrays)
+        GLsizei indexCount = 0;   // used when ebo != 0 (glDrawElements)
+        bool alive = false;
+    };
+    struct GpuTexture {
+        GLuint textureId = 0;
+        bool alive = false;
+    };
+
+    GpuMesh* GetMesh(MeshHandle handle);
+    GLuint ResolveTexture(TextureHandle handle) const;
+
+    std::vector<GpuMesh> m_meshes;
+    std::vector<GpuTexture> m_textures;
+
     GLuint m_shaderProgram = 0;
-    GLuint m_cubeVao = 0;
-    GLuint m_cubeVbo = 0;
-    GLuint m_sphereVao = 0;
-    GLuint m_sphereVbo = 0;
-    GLsizei m_sphereVertexCount = 0;
+
+    MeshHandle m_cubeMesh;
+    MeshHandle m_sphereMesh;
+    TextureHandle m_whiteTexture;  // 1x1 white pixel — the "no real texture" fallback, see DrawMesh
 
     GLint m_uModel = -1;
+    GLint m_uNormalMatrix = -1;
     GLint m_uView = -1;
     GLint m_uProjection = -1;
     GLint m_uColor = -1;
+    GLint m_uTexture = -1;
+    GLint m_uLightDirection = -1;
+    GLint m_uLightColor = -1;
+    GLint m_uAmbientColor = -1;
 
     glm::mat4 m_view{1.0f};
     glm::mat4 m_projection{1.0f};

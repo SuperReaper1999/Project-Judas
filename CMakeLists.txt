@@ -35,6 +35,8 @@ add_executable(judas
     src/PlayerController.cpp
     src/DynamicBody.cpp
     src/FlyingPrimitiveControl.cpp
+    src/ModelLoader.cpp
+    src/TextureLoader.cpp
     src/FaithfulGravity.cpp
     src/RadicalGravity.cpp
     src/SphericalVolume.cpp
@@ -80,9 +82,36 @@ target_include_directories(judas_collision_tests PRIVATE src)
 target_link_libraries(judas_collision_tests PRIVATE glm::glm-header-only)
 target_compile_options(judas_collision_tests PRIVATE -Wall -Wextra)
 
+# Milestone 9: headless tests for the CPU-side model/texture loaders (see
+# src/ModelLoader.*, src/TextureLoader.*) — no window, no GL context, same
+# reasoning as the two test targets above. Reads the real committed demo
+# assets (assets/models/beacon.obj, assets/textures/beacon.png) directly,
+# so it must be run with the repository root as the working directory,
+# exactly like judas itself (see docs/ARCHITECTURE.md, "Milestone 9,
+# Assets").
+add_executable(judas_asset_tests
+    tests/AssetTests.cpp
+    src/ModelLoader.cpp
+    src/TextureLoader.cpp
+)
+target_include_directories(judas_asset_tests PRIVATE src)
+target_link_libraries(judas_asset_tests PRIVATE glm::glm-header-only)
+target_compile_options(judas_asset_tests PRIVATE -Wall -Wextra)
+
 # stb_image_write (public domain / MIT, see third_party/stb_image_write.h) —
 # used only by the opt-in test harness (src/TestHarness.cpp) to write
 # screenshots to PNG. A single vendored header, not fetched via CMake:
 # writing images is a solved commodity problem and the file has no
 # dependencies of its own, so there is nothing for a package manager or
 # FetchContent to add value over just committing the one file.
+#
+# stb_image (Milestone 9, public domain / MIT, see third_party/stb_image.h)
+# — the engine's own runtime texture loader (src/TextureLoader.cpp). Same
+# vendoring reasoning as stb_image_write: image decoding is a solved
+# commodity problem, and this is the read-side sibling of a header already
+# vendored the same way.
+#
+# tiny_obj_loader (Milestone 9, MIT, see third_party/tiny_obj_loader.h) —
+# the engine's own runtime OBJ model importer (src/ModelLoader.cpp). See
+# docs/ARCHITECTURE.md, "Milestone 9, Model loading," for why OBJ/
+# tinyobjloader was chosen over a more complex format/importer.

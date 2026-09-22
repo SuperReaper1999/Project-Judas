@@ -6,6 +6,7 @@
 #include <cstdio>
 #include <cstdlib>
 #include <iterator>
+#include <string>
 #include <vector>
 
 #include <glm/glm.hpp>
@@ -17,6 +18,7 @@
 #include "FlyingPrimitiveControl.h"
 #include "GravityContextMap.h"
 #include "GravityField.h"
+#include "ModelLoader.h"
 #include "PhysicsWorld.h"
 #include "PlayerController.h"
 #include "RadicalGravity.h"
@@ -24,6 +26,7 @@
 #include "SimulationTiming.h"
 #include "SphericalVolume.h"
 #include "TestHarness.h"
+#include "TextureLoader.h"
 #include "Window.h"
 #include "gl_core33.h"
 
@@ -277,6 +280,32 @@ constexpr float kFlyingPrimitiveRestitution = 0.1f;
 const glm::vec3 kFlyingPrimitiveHalfExtents(2.0f, 0.25f, 3.0f);
 const glm::vec3 kFlyingPrimitiveColor(0.75f, 0.75f, 0.8f);
 const glm::vec3 kFlyingPrimitiveSpawnPosition(0.0f, 19.0f, 24.0f);
+
+// --- Milestone 9: the beacon (model/texture/lighting demonstration) ---
+//
+// A single imported static model (assets/models/beacon.obj, a hand-authored
+// low-poly pyramid — see that file's own header comment for full
+// provenance) with a real texture (assets/textures/beacon.png). Purely
+// decorative: NOT a physics body, not attached to anything gameplay-wise —
+// see docs/ARCHITECTURE.md, "Milestone 9," for why entangling it with an
+// existing physics object was deliberately avoided ("models are visual, not
+// automatically physical"). Placed a short walk from the player's own
+// spawn point on Planet A, at the same pole direction so it rests visibly
+// upright without needing its own orientation logic, purely for immediate
+// visibility — this is demonstration placement, not physics.
+const glm::vec3 kBeaconPosition = kPlanetACenter + glm::vec3(-4.0f, kPlanetARadius, 3.0f);
+const char* const kBeaconModelPath = "assets/models/beacon.obj";
+const char* const kBeaconTexturePath = "assets/textures/beacon.png";
+
+// One directional light plus a small constant ambient term — see
+// docs/ARCHITECTURE.md, "Milestone 9, Lighting." A plain, fixed world-space
+// direction chosen only to rake visibly across both the beacon and the
+// planets/plank from a reasonable angle; it has NO relationship to gravity,
+// local up, or any other Judas concept (law: no global up anywhere in this
+// engine, lighting included).
+const glm::vec3 kLightDirection = glm::normalize(glm::vec3(0.4f, 0.7f, 0.35f));
+const glm::vec3 kLightColor(1.0f, 0.98f, 0.92f);
+const glm::vec3 kAmbientColor(0.16f, 0.17f, 0.19f);
 }  // namespace
 
 int Application::Run() {
@@ -289,7 +318,7 @@ int Application::Run() {
     const bool isTestRun = testScriptPath != nullptr;
 
     Window window;
-    if (!window.Init("Project Judas - Milestone 8", kWindowWidth, kWindowHeight,
+    if (!window.Init("Project Judas - Milestone 9", kWindowWidth, kWindowHeight,
                       !isTestRun)) {
         std::fprintf(stderr, "Window initialization failed.\n");
         return 1;
@@ -305,6 +334,29 @@ int Application::Run() {
         std::fprintf(stderr, "Renderer initialization failed.\n");
         return 1;
     }
+
+    // Milestone 9: load the demo's one imported model/texture pair before
+    // anything else that might fail, so a bad asset path is reported and
+    // exits cleanly rather than leaving partially-constructed physics/
+    // gameplay state behind. Paths are relative to the process's current
+    // working directory — see docs/ARCHITECTURE.md, "Milestone 9, Assets,"
+    // for why (this engine has no asset-root/working-directory abstraction
+    // to resolve them through instead): run `judas` from the repository
+    // root, exactly as the existing build/run instructions already show.
+    MeshData beaconMeshData;
+    std::string assetError;
+    if (!LoadObjMesh(kBeaconModelPath, beaconMeshData, assetError)) {
+        std::fprintf(stderr, "%s\n", assetError.c_str());
+        return 1;
+    }
+    TextureData beaconTextureData;
+    if (!LoadTextureFromFile(kBeaconTexturePath, beaconTextureData, assetError)) {
+        std::fprintf(stderr, "%s\n", assetError.c_str());
+        return 1;
+    }
+    const MeshHandle beaconMesh = renderer.CreateMesh(beaconMeshData);
+    const TextureHandle beaconTexture = renderer.CreateTexture(beaconTextureData);
+    renderer.SetLighting(kLightDirection, kLightColor, kAmbientColor);
 
     PhysicsWorld physicsWorld;
     if (!physicsWorld.Init()) {
@@ -395,6 +447,13 @@ int Application::Run() {
         r.DrawSphere(kPlanetACenter, kPlanetARadius, kPlanetAColor);
         r.DrawSphere(kPlanetBCenter, kPlanetBRadius, kPlanetBColor);
         r.DrawBox(kPlankCenter, glm::quat(1.0f, 0.0f, 0.0f, 0.0f), kPlankHalfExtents, kPlankColor);
+        // Milestone 9: the one imported, textured, lit model in this demo —
+        // static, undressed by any physics transform (see kBeaconPosition's
+        // own comment). A white tint so the texture's own colors show
+        // unmodified; scale 1 (the model's own authored units are already a
+        // sensible size — see assets/models/beacon.obj).
+        r.DrawMesh(beaconMesh, kBeaconPosition, glm::quat(1.0f, 0.0f, 0.0f, 0.0f), glm::vec3(1.0f),
+                   beaconTexture, glm::vec3(1.0f));
         r.DrawBox(player.GetPresentedPosition(presentationAlpha),
                   player.GetPresentedOrientation(presentationAlpha), player.GetRenderHalfExtents(),
                   kPlayerColor);
@@ -570,6 +629,8 @@ int Application::Run() {
     physicsWorld.DestroyBody(planetBBody);
     physicsWorld.DestroyBody(plankBody);
     physicsWorld.Shutdown();
+    renderer.DestroyMesh(beaconMesh);
+    renderer.DestroyTexture(beaconTexture);
     renderer.Shutdown();
     return exitCode;
 }

@@ -37,6 +37,18 @@ PFNGLDELETEBUFFERS glDeleteBuffers = nullptr;
 PFNGLDELETEVERTEXARRAYS glDeleteVertexArrays = nullptr;
 PFNGLREADPIXELS glReadPixels = nullptr;
 
+// Milestone 9 additions.
+PFNGLDRAWELEMENTS glDrawElements = nullptr;
+PFNGLGENTEXTURES glGenTextures = nullptr;
+PFNGLBINDTEXTURE glBindTexture = nullptr;
+PFNGLTEXIMAGE2D glTexImage2D = nullptr;
+PFNGLTEXPARAMETERI glTexParameteri = nullptr;
+PFNGLGENERATEMIPMAP glGenerateMipmap = nullptr;
+PFNGLDELETETEXTURES glDeleteTextures = nullptr;
+PFNGLUNIFORM1I glUniform1i = nullptr;
+PFNGLUNIFORM3F glUniform3f = nullptr;
+PFNGLUNIFORMMATRIX3FV glUniformMatrix3fv = nullptr;
+
 namespace {
 
 template <typename FnPtr>
@@ -86,5 +98,15 @@ bool LoadGLFunctions() {
     ok &= LoadOne(glDeleteBuffers, "glDeleteBuffers");
     ok &= LoadOne(glDeleteVertexArrays, "glDeleteVertexArrays");
     ok &= LoadOne(glReadPixels, "glReadPixels");
+    ok &= LoadOne(glDrawElements, "glDrawElements");
+    ok &= LoadOne(glGenTextures, "glGenTextures");
+    ok &= LoadOne(glBindTexture, "glBindTexture");
+    ok &= LoadOne(glTexImage2D, "glTexImage2D");
+    ok &= LoadOne(glTexParameteri, "glTexParameteri");
+    ok &= LoadOne(glGenerateMipmap, "glGenerateMipmap");
+    ok &= LoadOne(glDeleteTextures, "glDeleteTextures");
+    ok &= LoadOne(glUniform1i, "glUniform1i");
+    ok &= LoadOne(glUniform3f, "glUniform3f");
+    ok &= LoadOne(glUniformMatrix3fv, "glUniformMatrix3fv");
     return ok;
 }

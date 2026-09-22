@@ -8,7 +8,7 @@ This is **not** a general-purpose engine and is not trying to compete with
 Unity, Unreal, or Godot. It exists to serve one specific class of game, and
 its architecture is deliberately narrow.
 
-## Status: Milestone 8
+## Status: Milestone 9
 
 A controllable player walks, jumps, and falls under real physics — Judas's
 own physics engine, not a third-party library — across two independent
@@ -48,13 +48,25 @@ letting go of control while it's moving) preserves whatever motion it was
 imparting, rather than snapping the player back to a fixed offset. See
 `docs/ARCHITECTURE.md`, "Milestone 8," for how input authority moves
 between the player and the primitive and the moving-support physics fix
-that made carrying the player during flight work correctly. That's it —
-no lighting, terrain, real planets, vehicles, or further gameplay yet.
+that made carrying the player during flight work correctly.
+
+**New this milestone:** the renderer can load a real static model from
+disk, texture it, and light it. A small hand-authored beacon (a low-poly
+pyramid, `assets/models/beacon.obj`) stands near the player's spawn point
+on Planet A, wearing a real texture (`assets/textures/beacon.png`) and
+shaded by one small ambient term plus one directional light — every
+existing box and sphere in the scene (planets, plank, player, dynamic
+bodies, the flying primitive) now carries real surface normals and is lit
+the same way, through the same shader. See
+[`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md), "Milestone 9," for the
+model/texture format choices, the mesh/texture ownership boundary, and the
+exact lighting model. That's it — no terrain, real planets, vehicles,
+shadows, or further gameplay yet.
 
 This is intentional — see `docs/ARCHITECTURE.md` for why, what's
 deliberately not built yet, and how this small foundation avoids blocking
 the much larger long-term design. Earlier milestones are preserved as git
-tags (`milestone-1` through `milestone-8`, once this one is tagged) rather
+tags (`milestone-1` through `milestone-9`, once this one is tagged) rather
 than kept running alongside the current demo.
 
 ## Building
@@ -69,7 +81,11 @@ than kept running alongside the current demo.
 
 No physics-engine dependency to fetch — Judas owns its own physics (see
 [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md), "Physics ownership"), so
-configuring needs no network access at all.
+configuring needs no network access at all. Model/texture loading
+(Milestone 9) needs no extra system packages either — `tinyobjloader` and
+`stb_image` are single-header, vendored dependencies (`third_party/`,
+committed to the repository, same as the pre-existing `stb_image_write.h`)
+rather than fetched or installed separately.
 
 On Ubuntu/Debian:
 
@@ -89,6 +105,12 @@ cmake --build build -j"$(nproc)"
 ```bash
 ./build/judas
 ```
+
+Run from the repository root (as shown above) — Milestone 9's demo model/
+texture (`assets/models/beacon.obj`, `assets/textures/beacon.png`) are
+loaded via paths relative to the current working directory, and `judas`
+reports an error and exits if it's run from somewhere else and can't find
+them.
 
 ## Controls
 
@@ -146,6 +168,26 @@ full script format:
 ```bash
 JUDAS_TEST_SCRIPT=path/to/script.txt ./build/judas
 ```
+
+Three standalone, headless test executables also exist (no window, no GL
+context): `judas_physics_tests` and `judas_collision_tests` (rigid-body/
+collision/gravity-context primitives) and, as of Milestone 9,
+`judas_asset_tests` (model/texture loading — parses the real committed
+demo assets and checks vertex/index/UV/normal data and texture dimensions;
+run from the repository root, same reason as `judas` itself):
+
+```bash
+cmake --build build --target judas_physics_tests judas_collision_tests judas_asset_tests
+./build/judas_physics_tests && ./build/judas_collision_tests && ./build/judas_asset_tests
+```
+
+## Assets
+
+`assets/models/beacon.obj` and `assets/textures/beacon.png` are original
+content authored for this project (not derived from any external asset) —
+public domain / CC0-equivalent, redistributable without restriction. See
+[`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md), "Milestone 9, Assets," for
+the full provenance note.
 
 ## License
 

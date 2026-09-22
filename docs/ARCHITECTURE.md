@@ -6,7 +6,7 @@ someone with no prior context on this project. It is updated in place as
 milestones land, rather than kept as a per-milestone snapshot — see
 "Milestone history" below for how to recover an earlier milestone exactly.
 
-## What exists right now (Milestone 8)
+## What exists right now (Milestone 9)
 
 Open a window. Two independent static spheres ("planets," radius `20m`
 each, centers `55m` apart — see "Physics test world") exist in 3D space,
@@ -62,7 +62,20 @@ press `F` to take control: WASD/Q/E fly it in full 3D, A/D turn it, and
 physically present and carried by the primitive the entire time, not
 detached or teleported. See "Milestone 8" below for the full design,
 including a real moving-support physics bug this milestone found and
-fixed. See the root `README.md` for build/run instructions and controls.
+fixed.
+
+**As of Milestone 9, the renderer can load and display an ordinary static
+textured 3D model, lit by a real (if minimal) lighting model.** A single
+imported asset — `assets/models/beacon.obj`, a small hand-authored
+low-poly pyramid with a real texture (`assets/textures/beacon.png`) —
+stands near the player's spawn point on Planet A, purely as a rendering
+demonstration (it has no physics body). Every mesh in the scene, including
+the existing primitive boxes/spheres, now carries real surface normals and
+is shaded by one small ambient term plus one directional light — nothing
+about lighting derives from gravity, local up, or any other Judas concept
+(the light is a plain world-space direction, same as any other; see
+"Milestone 9" below). See the root `README.md` for build/run instructions
+and controls.
 
 ## Milestone history
 
@@ -119,6 +132,14 @@ preserved as parallel runtime code:
   bug in how a grounded player inherits a moving support's velocity — see
   "Milestone 8" for the full story, including why the straightforward
   velocity-carry approach wasn't enough on its own.
+- `milestone-9` — static model loading (OBJ via tinyobjloader), texture
+  loading (PNG via stb_image) and mapping, and basic ambient + one
+  directional light, added to the existing OpenGL 3.3 renderer without a
+  graphics-API change, a render-graph, or PBR. One imported model
+  (`assets/models/beacon.obj`) with a real texture demonstrates the new
+  capability; the existing box/sphere primitives were migrated onto the
+  same generalized mesh/lighting path rather than kept on a separate
+  flat-color-only shader — see "Milestone 9" for the full design and why.
 
 Each milestone's demo content has been replaced (not extended) by the next;
 check out a tag to see or run an earlier milestone as it was.
@@ -1546,10 +1567,14 @@ just takes the fixed `kSphereCenter`/`kSphereRadius` it always has.
 
 ## 3D rendering pipeline
 
-`Renderer::DrawBox`/`Renderer::DrawSphere` implement the conventional model
-→ world → view → clip-space pipeline via matrices, computed with GLM and
-uploaded as uniforms to one simple shader (`src/Renderer.cpp`) — unchanged
-since Milestone 3:
+`Renderer::DrawBox`/`Renderer::DrawSphere`/`Renderer::DrawMesh` implement
+the conventional model → world → view → clip-space pipeline via matrices,
+computed with GLM and uploaded as uniforms to one shader (`src/Renderer.cpp`)
+— the model/view/projection composition itself is unchanged since Milestone
+3; as of Milestone 9 the shader also computes per-fragment lighting and
+samples a texture (see "Milestone 9" below for the full shader and why
+DrawBox/DrawSphere now funnel through the same `DrawMesh` a textured model
+uses):
 
 ```glsl
 gl_Position = uProjection * uView * uModel * vec4(aLocalPos, 1.0);
@@ -1557,12 +1582,13 @@ gl_Position = uProjection * uView * uModel * vec4(aLocalPos, 1.0);
 
 **`DrawSphere`** (new in Milestone 5) draws a second, separate mesh: a
 conventional UV sphere (16 latitude × 24 longitude segments), generated
-once at `Renderer::Init` time as a flat, non-indexed, position-only vertex
-list — like the existing cube mesh, deliberately not using an index buffer,
-so drawing it needs no GL surface beyond what `DrawBox` already uses (no
-`glDrawElements`, no element buffer). Its model matrix is `translate *
-scale(radius)` — no rotation parameter, since a sphere looks identical
-under any rotation.
+once at `Renderer::Init` time via `Renderer::CreateMesh` — like the
+existing cube mesh, non-indexed (`glDrawArrays`), since neither built-in
+primitive needs vertex-sharing compaction at this vertex count (see
+"Milestone 9, Mesh representation," for the indexed/non-indexed
+distinction an imported model actually uses). Its model matrix is
+`translate * scale(radius)` — no rotation parameter, since a sphere looks
+identical under any (single-axis) rotation.
 
 Each demo planet is drawn with the exact position and radius its static
 sphere shape was created with (`Application.cpp`'s `kPlanetACenter`/
@@ -1601,6 +1627,302 @@ directly, as of this milestone — so the box visibly reorients smoothly as
 the player walks around the sphere, matching the physical capsule's own
 up-alignment (interpolated for display; the capsule shape itself is
 radially symmetric and wouldn't visually change in physics regardless).
+
+## Milestone 9
+
+Three deliberately conventional rendering capabilities: static model
+loading, textures, and basic lighting. The milestone's own framing,
+verbatim in spirit: "I launch Judas. There is a real model. It has a real
+texture. A light shines on the bastard. It looks correct. Everything else
+still works."
+
+### Model loading
+
+**Format/importer: OBJ, via [tinyobjloader](https://github.com/tinyobjloader/tinyobjloader)
+(single-header, MIT license, vendored as `third_party/tiny_obj_loader.h`).**
+Chosen over glTF/FBX/a custom parser for a simple reason: OBJ is the
+smallest format that still cleanly carries exactly what this milestone
+needs (vertex positions, normals, UVs, triangle topology) and *structurally
+cannot* carry what this milestone explicitly excludes — it has no bones,
+skinning, animation clips, cameras, lights, or scene-hierarchy concept to
+accidentally import. A glTF/FBX importer would pull in a real JSON/binary
+parser and (for glTF) an additional PBR-material vocabulary Judas has no
+use for yet — solving a bigger problem than M9 actually has. tinyobjloader
+specifically (over hand-writing an OBJ parser): OBJ's text grammar looks
+trivial until edge cases (relative vs. absolute vertex indices, n-gon
+faces, multiple `usemtl` groups, comments, tabs vs. spaces) — a solved,
+widely-used, single-header MIT dependency here is the same "prefer a
+commodity library over reinventing decoding" call this project already
+made for image I/O (`stb_image_write.h`, now joined by `stb_image.h` — see
+below).
+
+**Ownership boundary**: `src/ModelLoader.h/.cpp` is the *only* file that
+knows tinyobjloader exists. `LoadObjMesh(path, outMesh, outError)` takes a
+file path and returns a Judas-owned `MeshData` (`src/MeshData.h`) — plain
+`std::vector<MeshVertex>` plus an index list, no tinyobjloader type
+anywhere in the returned data or in the function's own signature. Nothing
+above this call (`Application`, `Renderer`) ever needs to know an OBJ file
+or tinyobjloader was involved. This is pure CPU-side work — no OpenGL
+context is touched or required, which is why `tests/AssetTests.cpp` can
+call it directly, headlessly, with no window (see "Automated testing").
+
+**Deliberately unsupported** (by choice, not by tinyobjloader's own
+limitation): multiple objects/groups in one file are flattened into a
+single `MeshData` (Judas has no scene-hierarchy concept to import into);
+`.mtl` material references are read by tinyobjloader internally but
+entirely ignored by `LoadObjMesh` — texture binding is Judas's own
+explicit, separate step (see "Textures" below), never driven by a file's
+own material assignment; no bones/skinning/animation/morph
+targets/cameras/lights, because OBJ itself has none of these to import in
+the first place.
+
+### Mesh representation
+
+`src/MeshData.h`: `MeshVertex { position, normal, uv }` (three `glm`
+vectors, nothing else — no tangent/bitangent, since no normal mapping
+exists to need them; no per-vertex color or bone weight) plus
+`MeshData { vertices, indices }`. An empty `indices` means "draw
+non-indexed" (`glDrawArrays`) — both built-in primitives (cube, sphere)
+use this; a non-empty `indices` means "draw indexed" (`glDrawElements`) —
+every imported model uses this (see `ModelLoader.cpp`; the index buffer
+isn't deduplication-compacted, since `beacon.obj` is small enough that
+vertex-sharing bookkeeping isn't worth it yet — documented there as a
+known, deliberate simplification).
+
+**CPU/GPU ownership, made explicit**: `MeshData` is a CPU-only,
+transient value — a model importer produces one, hands it to
+`Renderer::CreateMesh(const MeshData&)`, and the `MeshData` itself is not
+retained past that call. `Renderer::CreateMesh` uploads a VAO/VBO (and an
+EBO if indexed) and returns an opaque `MeshHandle` — the same
+`{id, kInvalidId, IsValid()}` shape `PhysicsWorld::BodyHandle` already
+established, not a raw `GLuint` a caller could touch directly. From that
+point on, **Renderer owns the GPU resource**; the caller (`Application`)
+owns only the handle, and is responsible for calling
+`Renderer::DestroyMesh(handle)` when done with it (mirroring
+`PhysicsWorld::DestroyBody`'s own explicit-destroy convention) —
+`Renderer::Shutdown()` is also a safety net that frees anything still
+alive, so a missed explicit destroy call leaks nothing, it just isn't the
+primary/documented cleanup path.
+
+**How meshes reach the renderer**: `Renderer::DrawMesh(mesh, position,
+rotation, scale, texture, tintColor)` is the one generalized draw call —
+`DrawBox`/`DrawSphere` (unchanged signatures since Milestone 3/5) are now
+thin wrappers over it using two mesh handles created once in
+`Renderer::Init` (`m_cubeMesh`, `m_sphereMesh`). This was a deliberate
+choice, not a forced one — the milestone brief explicitly allowed keeping
+primitives on a separate path, but unifying was simpler in practice: one
+shader, one vertex layout, one draw function, and it's what let "existing
+primitive geometry that participates in lighting must also have suitable
+normals" (a hard M9 requirement) fall out for free rather than needing a
+second lighting path maintained in parallel. See "Renderer evolution"
+below for the GPU-resource-table mechanics.
+
+### Textures
+
+**Loader: [stb_image](https://github.com/nothings/stb) (`third_party/stb_image.h`,
+public domain / MIT dual license — the read-side sibling of the already-
+vendored `stb_image_write.h`, same reasoning: image decoding is a solved
+commodity problem).** `src/TextureLoader.h/.cpp` is the only file that
+knows stb_image exists; `LoadTextureFromFile(path, outTexture, outError)`
+returns a Judas-owned `TextureData` (`src/TextureData.h`: width, height,
+and a `std::vector<std::uint8_t>` of pixels) — always decoded to 4
+channels (RGBA) regardless of the source file's own channel count
+(`stbi_load`'s `desired_channels` parameter), so there is exactly one GPU
+upload format to support, not a matrix of them.
+
+**GPU representation / lifetime**: the same ownership split as meshes.
+`Renderer::CreateTexture(const TextureData&)` uploads a `GL_TEXTURE_2D`
+(linear filtering both ways, mipmapped minification via
+`glGenerateMipmap`, `GL_REPEAT` wrapping — ordinary, sufficient defaults
+for one UV-mapped demo texture, not yet exercised enough to need
+per-texture control) and returns a `TextureHandle`; Renderer owns the GPU
+texture object from that point on, the caller owns only the handle, and
+`Renderer::DestroyTexture(handle)` is the explicit release (with
+`Shutdown()` as the same safety net described above).
+
+**A texture with no real content**: `Renderer::Init` also creates a 1x1
+opaque white `TextureData` and keeps its handle (`m_whiteTexture`) as the
+fallback `DrawMesh` substitutes whenever a caller passes an invalid
+`TextureHandle` — every pre-Milestone-9 solid-color `DrawBox`/`DrawSphere`
+call does exactly this. Since the fragment shader always samples a
+texture and multiplies it into the result (see "Lighting" below), a 1x1
+white pixel makes `texColor * tintColor` reduce to exactly `tintColor`,
+reproducing every existing primitive's appearance unchanged rather than
+needing an `if (hasTexture)` branch in the shader.
+
+**UV convention and the vertical-flip handling**: OpenGL's texture `v=0`
+is the *bottom* of the texture, while an ordinary image file's row 0 is
+its *top* — the classic source of an upside-down or otherwise wrong-
+looking texture. `TextureLoader.cpp` calls
+`stbi_set_flip_vertically_on_load(true)` before decoding, so the pixel
+data `TextureData` hands to the GPU already has row 0 = the bottom of the
+image as authored — UV `(0,0)` then samples the bottom-left of the image
+exactly as a human looking at the file would expect, and `beacon.obj`'s
+own UVs were authored against that same convention (see the model file's
+own header comment, and `assets/textures/beacon.png`'s generation notes,
+for the worked example: a 2x2 colored-quadrant test texture specifically
+designed to make a quadrant-swap or an axis flip immediately, visibly
+obvious).
+
+### Lighting
+
+**Model**: ambient + Lambertian (N·L) diffuse, computed per-fragment.
+Nothing more — no specular term (the brief allowed one "if it naturally
+fits"; it didn't add anything this milestone's flat-shaded, mostly-diffuse
+demo geometry needed, so it was left out rather than added to look more
+complete), no multiple lights, no attenuation (a directional light has no
+distance to attenuate over by definition).
+
+```glsl
+vec3 normal = normalize(vWorldNormal);
+float diffuseFactor = max(dot(normal, uLightDirection), 0.0);
+vec3 lighting = uAmbientColor + uLightColor * diffuseFactor;
+FragColor = vec4(lighting, 1.0) * texture(uTexture, vUV) * uColor;
+```
+
+**Coordinate space**: world space, throughout. `uLightDirection` is a
+plain world-space unit vector, set once via `Renderer::SetLighting`
+(`Application.cpp`'s `kLightDirection`, a fixed, arbitrary direction
+picked only to rake visibly across the demo scene) and read by the
+fragment shader unmodified — **the shader never reads gravity, local up, a
+support normal, or world `+Y`; `uLightDirection` is not derived from
+anything Judas-specific, it is exactly the vector `SetLighting` was
+called with.** This is verifiable by inspection, not just by claim: grep
+`src/Renderer.cpp`'s `SetLighting`/`DrawMesh` and the shader source itself
+— neither references `GravityField`, `PlayerController`, or any other
+gravity/orientation concept at all. `uLightDirection`'s own documented
+convention: it points FROM a lit surface TOWARD the light (i.e., already
+negated from "the direction the light travels"), so the shader's `dot`
+call needs no sign flip.
+
+**Normal handling**: `vWorldNormal = uNormalMatrix * aLocalNormal`, where
+`uNormalMatrix = transpose(inverse(mat3(uModel)))` is computed on the CPU
+once per `DrawMesh` call (`glm::inverseTranspose`, the standard correction
+so normals stay perpendicular to their surface under non-uniform scale —
+`DrawBox`'s `halfExtents` are rarely a uniform scale — not just rotation;
+a plain `mat3(uModel)` would be wrong the moment a box's local axes scale
+unevenly). Every mesh supplies real per-vertex normals: the built-in cube
+is flat-shaded (one constant normal per face, matching its genuinely sharp
+edges — see `BuildCubeMeshData`); the built-in sphere's normal at any
+point is simply that point itself (a unit sphere's own outward normal,
+requiring no separate computation); `beacon.obj` is flat-shaded per face
+by construction (each face's three vertices are authored as distinct `v`/
+`vn` combinations — see the model file itself), matching a low-poly
+pyramid's genuinely flat faces.
+
+**Light representation**: `Renderer::SetLighting(direction, lightColor,
+ambientColor)` — three plain `glm::vec3` values, called once per frame
+alongside `SetCamera` (this demo's light is fixed and never actually
+changes frame to frame, but nothing about the API assumes that, the same
+way `SetCamera` doesn't assume the camera is static). No `Light` class, no
+light-list/management structure — one directional light is one function
+call with three vectors, and building anything more general than that had
+no requirement behind it yet.
+
+**"No global up" verification actually performed**: every side face of
+`beacon.obj` has a known, hand-computed world-space normal (see the model
+file's own header comment); with the demo's fixed `kLightDirection`, the
+expected diffuse response for each face was computed independently
+(`dot(faceNormal, lightDirection)`) and cross-checked against an actual
+rendered screenshot taken via the test harness's `SCREENSHOT` directive —
+the two brightly-lit faces (front/`+Z` and right/`+X`, dot ≈ 0.71/0.76)
+and the visibly dark ones (back/`-Z`, dot ≈ 0.0; the base/`-Y`, dot ≈
+−0.80, never visible in practice) matched exactly. Since the shader
+formula is symmetric in `N` and `L` with no axis singled out anywhere,
+this is a general property of the implementation, not a coincidence of
+this one example — the same reasoning this project has used for its
+physics rotate-the-scenario tests, applied here by direct computation
+rather than a compiled test (see "Automated testing" for why this stayed
+a one-off verification rather than a new permanent test executable: the
+formula is two lines of symmetric vector math with nothing left to
+regress).
+
+**Limitations, recorded honestly**: no shadows (a face on the wrong side
+of an object with respect to the light is unlit but never occluded by
+another object — not needed for shape readability at this milestone's
+scale); no per-texture filtering/wrapping control (every texture gets the
+same linear/mipmapped/repeat defaults — fine for one demo texture, would
+need real per-texture parameters for anything requiring, say, clamped
+edges); the built-in cube's UV mapping is a fixed placeholder pattern, not
+a considered box unwrap (see "Mesh representation" — untextured today, so
+uncorrected).
+
+### Renderer evolution
+
+**What changed from the old `DrawBox`/`DrawSphere` path**: the vertex
+format grew from position-only (12 bytes/vertex) to position+normal+uv (32
+bytes/vertex, interleaved in one VBO); the shader grew from
+"transform + flat uniform color" to "transform + normal-matrix lighting +
+texture sample + tint," (see "Lighting" above for the exact shader); a
+generalized `CreateMesh`/`DestroyMesh`/`CreateTexture`/`DestroyTexture`/
+`DrawMesh` resource-table API was added (`std::vector<GpuMesh>`/
+`std::vector<GpuTexture>` inside `Renderer`, addressed by opaque handles —
+the same handle-into-a-vector convention `PhysicsWorld` already
+established for bodies); indexed drawing (`glDrawElements`) exists for the
+first time, alongside the original non-indexed (`glDrawArrays`) path,
+selected per-mesh by whether it has an index buffer.
+
+**What remained deliberately unchanged**: the renderer boundary itself —
+`Renderer` is still the *only* file that calls raw `gl*` functions;
+`ModelLoader`/`TextureLoader` are pure CPU-side and never touch OpenGL;
+`Application`/gameplay code still never sees a `GLuint`, only opaque
+`MeshHandle`/`TextureHandle` values. `BeginFrame`/`SetCamera`/`EndFrame`/
+`CaptureFrame` are untouched. `DrawBox`/`DrawSphere`'s public signatures
+are byte-identical to Milestone 3/5 — every existing call site in
+`Application.cpp`/`TestHarness.cpp` needed zero changes. The
+model→world→view→clip-space matrix composition itself is unchanged.
+
+**The hand-written GL loader (`src/gl_core33.h/.cpp`) was extended, not
+replaced** — the explicit re-evaluation this file's own comment calls for
+whenever new GL surface is needed. Ten functions were added (texture
+creation/binding/upload/parameters/mipmap/deletion, indexed drawing, and
+three more uniform setters) on top of the ~31 already there. The evidence
+this milestone actually produced: the added surface is a flat, easily
+enumerable list of ordinary entry points (no framebuffers, no compute, no
+extension-querying machinery, nothing requiring the loader itself to grow
+new *kinds* of logic beyond "resolve one more function pointer by name")
+— genuinely still "small and clear" by the loader's own stated bar, not
+merely declared so. Replacing it with a generated glad loader was
+considered and rejected for the same reason it always has been: the
+actual GL surface this engine calls is still small enough to read in one
+sitting, and a generated loader would trade that readability for
+generality nothing here uses.
+
+### Assets
+
+`assets/models/beacon.obj` and `assets/textures/beacon.png` — both
+**original content authored for this project**, not derived from any
+external asset: the model is a hand-authored low-poly square pyramid (five
+flat-shaded faces: four sides plus a base — see the file's own header
+comment for exact vertex/normal/UV authoring, including why each side
+face's UVs land in a distinct quadrant of the texture), and the texture is
+a programmatically generated 256x256 four-quadrant color grid (red/green/
+blue/yellow, each with a thin border and one asymmetric white marker
+square) built specifically to make UV-mapping/quadrant/orientation errors
+immediately, visibly obvious — generated with the same already-vendored
+`stb_image_write.h` this project's screenshot tooling uses, via a
+throwaway generator program (not itself part of the build). **License:
+public domain / CC0-equivalent** — original, trivial content with no
+provenance concerns for this MIT-licensed public repository; no Asset
+Store, commercial, or restrictively-licensed content was used or
+considered.
+
+**Location and reproducibility**: `assets/models/`, `assets/textures/`,
+loaded via paths relative to the process's current working directory
+(`Application.cpp`'s `kBeaconModelPath`/`kBeaconTexturePath` —
+`"assets/models/beacon.obj"`, `"assets/textures/beacon.png"`, no absolute
+or machine-specific path anywhere). This engine has no asset-root/working-
+directory abstraction to resolve paths through instead (see "Deliberately
+Not Implemented" — no virtual filesystem, no asset database), so `judas`
+(and `judas_asset_tests`) must be run with the repository root as the
+current working directory — exactly how the existing `./build/judas`
+instructions in `README.md` already show running it, so a fresh clone
+following the documented build/run steps works with no additional setup.
+A missing or unreadable asset fails `Application::Run` cleanly with a
+`std::fprintf(stderr, ...)` message naming the exact path (see
+`LoadObjMesh`/`LoadTextureFromFile`'s own `outError` contract) and a
+non-zero exit code — never a silent black/garbage render, never a crash
+from unchecked missing data.
 
 ## Depth handling
 
@@ -2149,6 +2471,33 @@ real window — every scripted scenario in "Milestone 8" (board it, take
 control, ascend, yaw, release mid-descent, land) was built and verified
 this way before being shown to the operator.
 
+**Milestone 9: a third standalone test executable, `judas_asset_tests`
+(`tests/AssetTests.cpp`), plus a direct rendered-output check via the
+existing `SCREENSHOT` directive — no changes to the gameplay harness
+itself.** `judas_asset_tests` follows the exact pattern
+`judas_physics_tests`/`judas_collision_tests` already established: no
+window, no GL context, a plain `main()` with `Check(condition,
+description)` calls, exit code 0/1. It calls `LoadObjMesh`/
+`LoadTextureFromFile` directly against the real committed demo assets and
+checks exactly what the brief asked for: non-zero vertex/index counts, a
+whole number of triangles, every normal unit-length, real (non-zero) UV
+data present, decoded texture dimensions/channel count sensible, decoded
+pixel data actually varies (not a blank buffer), and — for both loaders —
+that a missing file fails with `false` plus a message naming the
+offending path rather than a crash or partial/garbage output. Model/
+texture loading needs no GL context (see "Milestone 9, Model loading" and
+"Textures"), which is exactly what makes this possible headlessly, the
+same reason the physics/collision suites don't need a window either.
+
+Separately, rendered *shading* (not loading) was verified using the
+existing `SCREENSHOT` directive plus a hand-computed cross-check (see
+"Milestone 9, Lighting," for the exact dot-product table and how it
+matched the captured image) rather than a new permanent pixel-comparison
+test — the brief's own framing ("automated tests cannot establish final
+correctness... if practical, include...") was read as calling for real
+verification, not necessarily a new maintained test suite for a two-line,
+symmetric shading formula with nothing axis-dependent left to regress.
+
 ## Remaining limitations
 
 Recorded honestly rather than left implicit — these are known, deliberately
@@ -2267,6 +2616,30 @@ deferred, not oversights:
   (verified directly — see "Milestone 8"), but a much larger capsule or a
   much faster-spinning support would need a real contact-point field
   threaded through `ShapeSweepHit` to stay accurate.
+- **No shadows.** (Milestone 9.) A face on the far side of an object from
+  the light shades dark via its own normal, but nothing occludes light
+  reaching a DIFFERENT object behind it — two objects can be lit as if
+  nothing were between them. Not needed for this milestone's "make shape
+  readable via one directional light" purpose; explicitly out of scope
+  (see "Deliberately Not Implemented").
+- **The built-in cube's UV mapping is a fixed placeholder pattern, not a
+  considered box unwrap.** (Milestone 9.) Every existing box (planets'
+  plank, dynamic cubes, the flying primitive, the player) draws with the
+  1x1 white fallback texture, so its UVs are currently unobserved by
+  anything. Would need real per-face unwrapping before a box could be
+  textured for real.
+- **One texture unit, one set of filter/wrap parameters for every
+  texture.** (Milestone 9.) `Renderer::CreateTexture` always uses linear
+  filtering, mipmapped minification, and repeat wrapping — sufficient for
+  this milestone's one texture, but there is no per-texture override yet
+  (e.g. clamped edges for a UI-style texture, nearest-neighbor for a
+  pixel-art one) if a future need arises.
+- **`ModelLoader`'s index buffer is not deduplication-compacted** —
+  `beacon.obj`'s 18 vertex-instances are emitted with sequential,
+  1-to-1 indices rather than merging vertices that share an identical
+  position/normal/UV combination. Correct and adequate at this asset's
+  size; would be real wasted GPU memory/bandwidth for a much larger
+  imported model.
 
 ## FUTURE CONSTRAINTS PRESERVED
 
@@ -2455,3 +2828,26 @@ Explicitly deferred, not forgotten:
   every other body does, unmodified; realistic flight dynamics (lift,
   drag, engines) — translation and rotation are direct velocity commands,
   explicitly documented as "boring controls," not a flight model
+- **Milestone 9 additions:** Vulkan or any second graphics backend — the
+  existing OpenGL 3.3 path was extended, not replaced (see "Milestone 9,
+  Renderer evolution"); PBR, a metallic/roughness workflow, normal/
+  parallax mapping, emission maps — the material concept here is exactly
+  "a mesh, an optional texture, a tint color," nothing closer to a real
+  material system than that; shadows of any kind (shadow maps, cascaded,
+  or otherwise), point/spot/area lights, multiple-light management, HDR,
+  tone mapping, bloom, SSAO, SSR, global illumination, deferred/forward+/
+  clustered rendering, compute or GPU-driven rendering, a render graph —
+  one directional light plus ambient, computed directly in one forward
+  shader, is the entire lighting system this milestone builds; an
+  instancing framework or occlusion culling — this demo's object count
+  gives no evidence either is needed; skeletal animation, an animation
+  system, or model scene-hierarchy importing — OBJ has none of this to
+  import and `LoadObjMesh` doesn't invent any; mesh collision or automatic
+  collider generation from a render mesh — the beacon has no physics body
+  at all (see "Milestone 9, Assets" / law: render mesh != collision mesh);
+  an asset database, GUID system, content-addressable store, or virtual
+  filesystem — two files, two relative paths, nothing to look up by
+  anything other than a literal path; hot reload — assets are loaded once
+  at startup, exactly like every other piece of this demo's fixed
+  geometry; an editor, a material graph, or a shader graph — one hand-
+  written GLSL shader pair, not authored or edited at runtime by anything

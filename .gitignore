@@ -1,6 +1,11 @@
 build/
 *.o
 *.obj
+# Milestone 9: *.obj above is meant for stray compiler object files (an
+# MSVC-style artifact this Linux/GCC toolchain doesn't actually produce),
+# not this project's own imported 3D models — un-ignore the one place
+# real .obj model assets live.
+!assets/**/*.obj
 compile_commands.json
 .cache/
 
