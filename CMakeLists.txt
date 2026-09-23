@@ -47,6 +47,10 @@ add_executable(judas
     src/LightTransforms.cpp
     src/LightAttenuation.cpp
     src/ShadowTransforms.cpp
+    src/HingeTransform.cpp
+    src/InteractionSystem.cpp
+    src/Door.cpp
+    src/LightSwitch.cpp
     src/FaithfulGravity.cpp
     src/RadicalGravity.cpp
     src/SphericalVolume.cpp
@@ -213,6 +217,36 @@ add_executable(judas_shadow_tests
 target_include_directories(judas_shadow_tests PRIVATE src)
 target_link_libraries(judas_shadow_tests PRIVATE glm::glm-header-only)
 target_compile_options(judas_shadow_tests PRIVATE -Wall -Wextra)
+
+# Milestone 16: headless tests for the interaction system (src/
+# HingeTransform.*, src/InteractionSystem.*, src/Door.*, src/LightSwitch.*)
+# and the interact key's input-ownership gating (src/PauseMenu.*,
+# mirroring judas_lighting_tests' own Section F pattern). Door needs a
+# real PhysicsWorld (no window/GL — PhysicsWorld has never needed either,
+# see tests/StepClimbTests.cpp); Renderer.cpp/FontLoader.cpp/gl_core33.cpp
+# are linked only because Door::Draw/LightSwitch::Draw/PauseMenu::Draw
+# reference Renderer's drawing methods at compile time — this suite never
+# calls any of them (same reasoning judas_lighting_tests/judas_shadow_tests
+# already document for their own Renderer-touching dependencies).
+add_executable(judas_interactable_tests
+    tests/InteractableTests.cpp
+    src/HingeTransform.cpp
+    src/InteractionSystem.cpp
+    src/Door.cpp
+    src/LightSwitch.cpp
+    src/PauseMenu.cpp
+    src/UIWidgets.cpp
+    src/HUD.cpp
+    src/Renderer.cpp
+    src/FontLoader.cpp
+    src/gl_core33.cpp
+    ${JUDAS_PHYSICS_SOURCES}
+    src/PhysicsWorld.cpp
+)
+target_include_directories(judas_interactable_tests PRIVATE src)
+target_include_directories(judas_interactable_tests PRIVATE ${SDL2_INCLUDE_DIRS})
+target_link_libraries(judas_interactable_tests PRIVATE SDL2::SDL2 glm::glm-header-only)
+target_compile_options(judas_interactable_tests PRIVATE -Wall -Wextra)
 
 # stb_image_write (public domain / MIT, see third_party/stb_image_write.h) —
 # used only by the opt-in test harness (src/TestHarness.cpp) to write

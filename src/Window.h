@@ -102,6 +102,17 @@ public:
     // request here.
     bool ConsumeTorchToggleRequest();
 
+    // Milestone 16: returns true exactly once per `G` key press
+    // (edge-triggered, same shape as ConsumeTorchToggleRequest). NOT the
+    // more conventional `E` — `E` is already `Action::MoveUp` (the
+    // spacecraft's own "ascend" control, see IsActionActive below), a
+    // real conflict caught only after first trying `E` here — see
+    // docs/ARCHITECTURE.md, "Milestone 16, Interaction," for the full
+    // story. Like every Consume* request here, this class knows nothing
+    // about doors, switches, or what "interact" even means — Application
+    // interprets the press.
+    bool ConsumeInteractRequest();
+
     // --- Milestone 13: UI input ---
     //
     // Five more edge-triggered one-shot requests, same shape as
@@ -162,6 +173,9 @@ public:
     // Milestone 14: scripted equivalent of a `T` press.
     void RequestTestTorchToggle();
 
+    // Milestone 16: scripted equivalent of an `E` press.
+    void RequestTestInteract();
+
 private:
     SDL_Window* m_window = nullptr;
     SDL_GLContext m_glContext = nullptr;
@@ -172,6 +186,7 @@ private:
     bool m_jumpRequested = false;
     bool m_controlToggleRequested = false;
     bool m_torchToggleRequested = false;
+    bool m_interactRequested = false;
     // Milestone 13: UI input edge flags — see PollEvents.
     bool m_uiBackRequested = false;
     bool m_uiUpRequested = false;
@@ -196,4 +211,5 @@ private:
     bool m_testResetRequested = false;
     bool m_testControlToggleRequested = false;
     bool m_testTorchToggleRequested = false;
+    bool m_testInteractRequested = false;
 };

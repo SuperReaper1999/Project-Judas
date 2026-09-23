@@ -18,6 +18,18 @@ constexpr float kPanelPaddingY = 10.0f;
 const glm::vec4 kPanelColor(0.05f, 0.06f, 0.08f, 0.55f);
 const glm::vec4 kTextColor(0.92f, 0.95f, 0.98f, 1.0f);
 
+// Milestone 16: the interaction prompt's own layout constants — a small
+// panel centered horizontally, anchored a fixed margin above the bottom
+// of the window (the conventional "prompt near the crosshair" placement),
+// deliberately separate from the top-left telemetry panel's own layout
+// above so neither one's sizing logic has to account for the other.
+constexpr float kPromptTextScale = 0.5f;
+constexpr float kPromptBottomMargin = 60.0f;
+constexpr float kPromptPaddingX = 16.0f;
+constexpr float kPromptPaddingY = 10.0f;
+const glm::vec4 kPromptPanelColor(0.05f, 0.06f, 0.08f, 0.7f);
+const glm::vec4 kPromptTextColor(0.98f, 0.96f, 0.85f, 1.0f);
+
 // Formats one line of the HUD from live data — a free function (not a
 // method) so it's trivially unit-testable without a Renderer/GL context;
 // see tests/UITests.cpp.
@@ -49,7 +61,6 @@ constexpr int kLineCount = 5;
 }  // namespace
 
 void HUD::Draw(Renderer& renderer, int windowWidth, int windowHeight, const HUDViewData& data) const {
-    (void)windowHeight;
     const float lineHeight = renderer.GetUITextLineHeight(kTextScale) + kLineSpacing;
 
     float maxWidth = 0.0f;
@@ -67,5 +78,22 @@ void HUD::Draw(Renderer& renderer, int windowWidth, int windowHeight, const HUDV
                                       kMargin + kPanelPaddingY + static_cast<float>(i) * lineHeight);
         renderer.DrawUIText(FormatLine(i, data), textPosition, kTextScale, kTextColor);
     }
-    (void)windowWidth;
+
+    // Milestone 16: the interaction prompt — drawn only when something is
+    // currently selectable (see src/InteractionSystem.h); this is the
+    // entire mechanism by which a prompt "disappears" when a target goes
+    // out of range/facing — Application.cpp simply passes an empty
+    // string that frame, and HUD draws nothing extra.
+    if (!data.interactPrompt.empty()) {
+        const glm::vec2 promptTextSize = renderer.MeasureUIText(data.interactPrompt, kPromptTextScale);
+        const glm::vec2 promptPanelSize(promptTextSize.x + kPromptPaddingX * 2.0f,
+                                         promptTextSize.y + kPromptPaddingY * 2.0f);
+        const glm::vec2 promptPanelPosition(static_cast<float>(windowWidth) * 0.5f - promptPanelSize.x * 0.5f,
+                                             static_cast<float>(windowHeight) - kPromptBottomMargin -
+                                                 promptPanelSize.y);
+        renderer.DrawUIRect(promptPanelPosition, promptPanelSize, kPromptPanelColor);
+        renderer.DrawUIText(data.interactPrompt,
+                             promptPanelPosition + glm::vec2(kPromptPaddingX, kPromptPaddingY),
+                             kPromptTextScale, kPromptTextColor);
+    }
 }

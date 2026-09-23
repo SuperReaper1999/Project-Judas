@@ -6,7 +6,7 @@ someone with no prior context on this project. It is updated in place as
 milestones land, rather than kept as a per-milestone snapshot — see
 "Milestone history" below for how to recover an earlier milestone exactly.
 
-## What exists right now (Milestone 15)
+## What exists right now (Milestone 16)
 
 Open a window. Two independent static spheres ("planets," radius `20m`
 each, centers `55m` apart — see "Physics test world") exist in 3D space,
@@ -200,6 +200,25 @@ shadows this milestone. See "Milestone 15" below for the full design, the
 exact bias/filtering strategy, and an honest account of this technique's
 limitations (no cascades, no point-light shadows, occluders outside a
 light's own bounded frustum are simply not accounted for).
+
+**As of Milestone 16, Judas has its first reusable environmental-
+interaction system: approach an object, get a HUD prompt, press `G`, it
+does its own thing.** A single `Interactable` interface (see
+"Milestone 16" below) is the entire concept `PlayerController`/
+`Application.cpp` understand — never `Door`, never `LightSwitch` by name.
+A hinged, physically-collidable door swings open and closed (a real
+static `PhysicsWorld` body whose pose is driven directly every fixed
+step, colliding in both states, never teleporting between them); a
+second, deliberately simple non-door interactable — a small wall lever —
+toggles a nearby lamp (an ordinary Milestone 14 point light) on and off,
+proving the abstraction isn't secretly `DoorManager`. Target selection
+(closest in-range, roughly-faced candidate) is a pure, testable free
+function; the HUD (Milestone 13) receives only plain prompt text, never a
+concrete interactable reference. Interaction obeys the same input-
+ownership rules Milestone 14/15 already established (drained every frame,
+only acted on while a menu doesn't own input). See "Milestone 16" below
+for the full design, the hinge-rotation math, and the door's collision/
+shadow coherence.
 See the root `README.md` for build/run instructions and controls.
 
 ## Milestone history
@@ -350,23 +369,47 @@ preserved as parallel runtime code:
   smoothstep spotlight-cone formulas for the same reason. See "Milestone
   14" for the full design, the attenuation/cone derivations, and the new
   standalone `judas_lighting_tests` suite.
-- `milestone-15` (pending human validation as of this writing) — real-time
-  shadows for the directional "sun," the player torch, and the spacecraft
-  headlight, via standard shadow mapping added to the SAME Milestone 9/14
-  lit-mesh shader (a `vLightSpaceMatrix[3]`/three light-space varyings, a
-  3x3 PCF shadow-sampling function, applied to the directional term and to
-  any dynamic light with `DynamicLight::shadowMapIndex` set — see
-  src/Light.h). `Renderer::BeginShadowPass`/`EndShadowPass` render the
-  SAME scene-drawing calls the color pass uses, depth-only, into one of
-  three dedicated FBO/depth-texture pairs (`kShadowMapCount = 3`, created
-  once in `Init`, reused every frame — never a render graph or a
-  generalized shadow scheduler). `src/ShadowTransforms.*` builds each
-  light's view/projection matrix (a directional frustum recentered on the
-  player every frame; a perspective frustum per spotlight, sized from its
-  own cone/range) as pure, directly-testable free functions. Point/
-  navigation lights do not cast shadows. See "Milestone 15" for the full
-  design, the bias/PCF strategy, and the new standalone
-  `judas_shadow_tests` suite.
+- `milestone-15` — real-time shadows for the directional "sun," the
+  player torch, and the spacecraft headlight, via standard shadow mapping
+  added to the SAME Milestone 9/14 lit-mesh shader (a
+  `vLightSpaceMatrix[3]`/three light-space varyings, a 3x3 PCF shadow-
+  sampling function, applied to the directional term and to any dynamic
+  light with `DynamicLight::shadowMapIndex` set — see src/Light.h).
+  `Renderer::BeginShadowPass`/`EndShadowPass` render the SAME scene-
+  drawing calls the color pass uses, depth-only, into one of three
+  dedicated FBO/depth-texture pairs (`kShadowMapCount = 3`, created once
+  in `Init`, reused every frame — never a render graph or a generalized
+  shadow scheduler). `src/ShadowTransforms.*` builds each light's view/
+  projection matrix (a directional frustum recentered on the player every
+  frame; a perspective frustum per spotlight, sized from its own cone/
+  range) as pure, directly-testable free functions. Point/navigation
+  lights do not cast shadows. Post-validation bugfix: the torch's own
+  shadow pass rendered the player's own body, which sits essentially at
+  the torch's own light position, making it fully self-shadow the torch's
+  entire cone — fixed by excluding the player model from only the torch's
+  own shadow pass. See "Milestone 15" for the full design, the bias/PCF
+  strategy, and the new standalone `judas_shadow_tests` suite.
+- `milestone-16` (pending human validation as of this writing) — the
+  first reusable environmental-interaction system: a single
+  `Interactable` interface (`src/Interactable.h`) `PlayerController`/
+  `Application.cpp` understand, never a concrete `Door`/`LightSwitch` by
+  name. `src/InteractionSystem.*`'s `SelectInteractable` is a pure,
+  testable free function picking the closest in-range, roughly-faced
+  candidate. `src/Door.*`: a real, physically-collidable hinged door — a
+  STATIC `PhysicsWorld` body whose pose is driven directly every fixed
+  step via `PhysicsWorld::ResetBody` (no joint/constraint system needed),
+  swinging about its own authored hinge edge via
+  `src/HingeTransform.*`'s pure rotate-about-a-pivot math — never
+  assuming world +Y is the hinge axis. `src/LightSwitch.*`: the second,
+  deliberately simple non-door interactable — a small lever (no physics
+  body at all) toggling one Milestone 14 point light on/off, proving the
+  abstraction isn't secretly `DoorManager`. `G` triggers the currently-
+  selected interactable (not `E` — `E` is already the spacecraft's own
+  "ascend" control, a real conflict caught during implementation, see
+  "Milestone 16" below), obeying the same drain-always/act-when-allowed
+  input-ownership boundary `T` (Milestone 14) already established. See
+  "Milestone 16" for the full design and the new standalone
+  `judas_interactable_tests` suite.
 
 Each milestone's demo content has been replaced (not extended) by the next;
 check out a tag to see or run an earlier milestone as it was.
@@ -3545,6 +3588,257 @@ rendering spot-check and human visual validation, the same evidence
 split Milestone 13/14 already established for GL-dependent correctness
 claims.
 
+## Milestone 16
+
+The first reusable environmental-interaction system: a door and one
+non-door interactable, sharing a single generic interface and selection
+path — not a `DoorManager`, not a gameplay-ability framework.
+
+### The `Interactable` interface
+
+```cpp
+class Interactable {
+public:
+    virtual glm::vec3 GetInteractionPoint() const = 0;
+    virtual float GetInteractionRadius() const = 0;
+    virtual std::string GetPromptText() const = 0;
+    virtual bool CanInteract() const = 0;
+    virtual void Interact() = 0;
+};
+```
+
+The ENTIRE Judas-owned interaction concept (`src/Interactable.h`).
+`PlayerController` never appears in this milestone's diff at all — per
+the brief's own "do not hard-code door logic into PlayerController"
+requirement, player/controller code doesn't need to change because it
+never needed to know about interaction in the first place; `Application.cpp`
+(the composition root) is the only place that owns a list of concrete
+`Interactable*`s (`{&door, &lightSwitch}`) and the only place that knows
+what a `Door` or `LightSwitch` actually is. No event bus, no reflection,
+no scripting language, no entity-component system, no prefab system — an
+`Interactable` is just an ordinary virtual interface, the smallest thing
+that could satisfy "player discovers X -> HUD gets a prompt -> input ->
+X acts."
+
+### Selection: a pure, testable free function
+
+```cpp
+Interactable* SelectInteractable(const glm::vec3& playerPosition, const glm::vec3& lookDirection,
+                                  const std::vector<Interactable*>& candidates);
+```
+
+(`src/InteractionSystem.h/.cpp`.) For each candidate: reject if farther
+than that candidate's OWN `GetInteractionRadius()`; reject if the
+direction toward it is more than ~60 degrees off the player's look
+direction (`kFacingCosineThreshold = 0.5`, i.e. `cos(60°)`) — a simple,
+"physically/spatially meaningful" detection (per the brief's own
+instruction) without needing a real raycast/line-of-sight query, which
+this engine has never needed for anything else either. Among everything
+that qualifies, the CLOSEST wins. Returns `nullptr` when nothing
+qualifies — this IS the entire "stop offering interaction when it is no
+longer valid" mechanism: there is no separate "currently targeting X"
+state to explicitly clear, `Application::Run` just gets `nullptr` back
+the next time selection runs and the HUD prompt goes away on its own.
+Called once per RENDER FRAME (not once per fixed step) from the player's
+current AUTHORITATIVE position/look direction — a gameplay decision, not
+a rendering one, computed unconditionally (harmless, read-only) even
+while the pause menu is open, so the HUD's last valid prompt stays
+visible (though inert) behind a dimmed, paused world rather than
+flickering away and back.
+
+### The door: a kinematically-driven static body, not a new joint system
+
+`src/Door.h/.cpp`. Real collision in both states, real visible motion
+between them — achieved with ZERO new physics capability. The door is an
+ordinary STATIC `PhysicsWorld` body (`CreateStaticBox`); every fixed step,
+`Door::FixedUpdate` computes its current swing angle and calls
+`PhysicsWorld::ResetBody(handle, position, orientation)` to write that
+pose directly. This works cleanly because of a fact already true about
+this engine's physics broadphase (see `docs/ARCHITECTURE.md`, "Physics
+ownership"): `PhysicsWorld`'s collision queries are brute-force and read
+every body's `position`/`orientation` LIVE, with no cached/baked
+broadphase structure to go stale when a "static" body's transform
+changes — so `ResetBody` (which already existed, added for `R`-triggered
+resets) is a complete, correct, zero-new-code kinematic pose driver. No
+joint/constraint system was built, because the door provided no evidence
+one was actually required — the brief's own explicit instruction.
+
+Hinge rotation (`src/HingeTransform.h/.cpp`, shared by both the door and
+the light switch's own lever):
+
+```cpp
+void ComputeHingeTransform(baseCenter, baseOrientation, pivotWorld, hingeAxisWorld, angleRadians,
+                            outPosition, outOrientation) {
+    swing = angleAxis(angleRadians, hingeAxisWorld);
+    outOrientation = swing * baseOrientation;
+    outPosition = pivotWorld + swing * (baseCenter - pivotWorld);
+}
+```
+
+The standard "rotate a point around an arbitrary pivot" formula. Every
+input here is WORLD-space, but derived from the door's own AUTHORED
+orientation, never a fixed world axis: `hingeAxisWorld =
+normalize(baseOrientation * localHingeAxis)`, computed once at
+construction from the door's own closed-pose orientation (itself built
+via the same `RotationAligningUpTo` convention Milestone 10's staircase/
+ramp already established, aligning the door's local "up" to whatever the
+local radial direction is at its own authored bearing on the curved
+planet). `localHingeAxis` defaults to the door's own local `(0,1,0)` —
+its own "up," not world +Y, satisfying the brief's "do not assume world Y
+is the hinge/up axis" literally: at the door's own bearing, local up is
+whatever the planet's own radial direction is there, which is NOT world
++Y except by coincidence at the exact pole. Verified directly, not just
+asserted: `tests/InteractableTests.cpp`'s Section A rotates an entire
+hinge scenario (base pose, pivot, axis) by an arbitrary quaternion and
+confirms the swung result rotates identically — the standard rotate-the-
+universe technique this project uses everywhere a "no world axis"
+claim needs checking.
+
+Presentation: the door interpolates its own swing ANGLE (a single float,
+`glm::mix`, no `slerp` needed) between the previous and current fixed
+step — the exact same `docs/ARCHITECTURE.md`, "Simulation/presentation
+boundary" law every other moving object in this engine already obeys,
+just with a scalar interpolation target instead of a full position/
+orientation pair, since the door's entire authoritative state beyond its
+fixed closed-pose IS that one angle. `Door::Draw` derives a full
+position/orientation from the interpolated angle and calls
+`Renderer::DrawBox` — called from the SAME shared `drawScene` lambda
+every shadow pass and the color pass already use (see "Milestone 15"),
+so the door renders, collides, and casts/receives shadows coherently at
+its current pose with zero special-case code for any of the three.
+
+### The second interactable: a lever, no physics body at all
+
+`src/LightSwitch.h/.cpp`. Deliberately as different from the door as
+possible while still using the exact same `Interactable` path: no
+`PhysicsWorld` body whatsoever (the same "models are visual, not
+automatically physical" precedent Milestone 9's beacon already
+established), and its action is "toggle a `DynamicLight`," not "block/
+unblock a doorway." Reuses `src/HingeTransform.h` for its own small
+visible lever animation (a decorative touch, not a requirement — the
+brief's own "simple movable/rotating environmental object" example),
+proving that shared code path is genuinely about hinge GEOMETRY, not
+door-specific logic.
+
+`Application.cpp`'s `BuildDynamicLights` (Milestone 14) reads
+`lightSwitch.IsLampOn()`/`GetLampPosition()`/`GetLampColor()`/
+`GetLampRange()` and adds one more ordinary `LightKind::Point` light to
+that frame's list only while the lamp is on — no shadow map (point
+lights never cast shadows, unchanged since Milestone 15), no new
+`Renderer` capability of any kind. `LightSwitch` itself never touches
+`Light.h`/`Renderer` GPU state — it only exposes plain data, the exact
+ownership split every M14 light source already uses.
+
+### HUD prompt (Milestone 13 integration)
+
+`HUDViewData` gained one field: `std::string interactPrompt` (empty =
+nothing to show). `HUD.cpp` never includes `Interactable.h`, `Door.h`, or
+`LightSwitch.h` — `Application.cpp` calls
+`interactTarget ? interactTarget->GetPromptText() : std::string()` and
+hands the HUD a plain string, exactly the same "gameplay hands Judas's
+rendering layer plain data, never a live reference to itself" shape
+every other `HUDViewData` field already uses. Drawn as a small panel
+centered near the bottom of the screen (the conventional "prompt near
+the crosshair" placement) — a separate layout block from the existing
+top-left telemetry panel, deliberately not sharing sizing logic with it.
+
+### Input ownership
+
+`G` is the interaction key. `E` was the first choice — the conventional
+"interact" binding in most games — but a check against every existing
+key binding (not just a mental list) found it already bound to
+`Action::MoveUp`, the spacecraft's own "ascend" control (Milestone 8);
+`G` was used instead specifically to avoid a real, if narrow, conflict
+(a player piloting the spacecraft near an interactable while pressing
+`E` to ascend would also fire an interact request) rather than special-
+casing interaction to ignore input while piloting. Follows the EXACT
+`T` (Milestone 14)/torch pattern, including the lesson learned there:
+`Window::ConsumeInteractRequest()` is drained EVERY render frame,
+unconditionally — even while the pause menu owns input — so a press
+during pause can never sit as a stale SDL-level flag and fire the instant
+the menu closes. Whether the drained request is actually ACTED ON
+(`interactTarget->Interact()`) is gated behind `!pauseMenu.IsOpen()`, like
+every other piece of gameplay input. This means menus cannot trigger
+world interactions, per the brief's own explicit requirement, using the
+SAME boundary Milestone 13/14/15 already established rather than a new
+mechanism.
+
+### Physics/presentation coherence
+
+The door's collision, its rendered pose, and its shadow-casting pose are
+ALWAYS the same pose — there is exactly one source of truth
+(`Door::FixedUpdate`'s authoritative angle, written to `PhysicsWorld` via
+`ResetBody` and read back — presentation-interpolated — by `Door::Draw`),
+never three separately-maintained values that could drift apart. Gravity,
+support, spacecraft behavior, UI/input ownership, lighting, and shadows
+are all unmodified by this milestone — the door and switch are ordinary
+consumers of each, not special cases requiring changes to any of them.
+
+### Automated evidence
+
+`judas_interactable_tests` (new standalone executable,
+`tests/InteractableTests.cpp`) — a real `PhysicsWorld` (no window/GL
+needed, unchanged since Milestone 5) for the door's own physics
+coherence checks; pure CPU math for everything else. Verifies:
+`ComputeHingeTransform` at zero angle (reproduces the closed pose
+exactly) and at a hand-computed 90-degree swing, plus rotate-the-universe
+invariance (Section A); `SelectInteractable`'s range/facing logic, that
+the CLOSEST of multiple qualifying candidates wins regardless of list
+order, and that an empty or all-out-of-range candidate list safely
+selects nothing (Section B); the door's full open/close animation
+reaching EXACTLY its authored open angle after the expected number of
+fixed steps (not overshooting), its prompt text changing with state, and
+— critically — that its live `PhysicsWorld` collision body's transform
+matches exactly what `Door` itself computes as its current pose at a
+given angle, the actual mechanism that keeps a moving door's collision
+correct (Section D/E); that the door's own interaction point moves as it
+swings rather than staying fixed to its closed pose (Section D); the
+light switch toggling its lamp and its own lever angle through the exact
+same generic `Interactable`/`SelectInteractable` path the door test
+above uses, not a parallel mechanism (Section F); and the interact key's
+input-ownership gating, mirroring `judas_lighting_tests`' own Section F
+pattern exactly (Section G).
+
+Beyond the new suite: all 9 prior standalone suites remain green on a
+clean rebuild with zero compiler warnings; the full M1-15
+`JUDAS_TEST_SCRIPT` regression walk produces byte-identical fixed-step
+telemetry to pre-Milestone-16 runs (the door/switch are constructed
+before the test-harness/interactive branch point and are drawn by the
+shared `drawScene` lambda either way, but `TestHarness.cpp`'s own render
+path never calls `Door::FixedUpdate`/`LightSwitch::FixedUpdate` or reads
+any interaction input, so they simply sit in their closed/off pose as
+inert, correctly-collidable geometry during a harness run — a visual
+addition to harness screenshots, not a behavioral or numeric regression).
+Actual on-screen appearance and interaction (does the prompt read
+clearly, does the door visibly swing, does walking into a closed door
+actually block movement, does the second interactable's effect read as
+obviously connected to it) was additionally spot-checked via the same
+offscreen-rendering harness pattern Milestone 13/14/15 already
+established — confirmed the door renders and casts a correctly-shaped
+shadow at a mid-swing angle, the lever visibly rotates to its toggled
+position, and the lamp's point light renders and illuminates the ground
+around it exactly like any other Milestone 14 point light. Human
+interactive validation remains authoritative for the full approach ->
+prompt -> interact -> door-blocks-when-closed sequence, per this
+milestone's own brief.
+
+### What was deliberately not built
+
+Per this milestone's brief: keys/locks, inventory requirements, automatic
+doors, quests, dialogue, scripted sequences, an animation system, a
+generic joint/constraint framework (the door needed none — see "The
+door" above), save/load persistence, interaction trees, networking, or
+editor tooling. Also not built, judged genuinely out of scope: a generic
+event bus, reflection, a scripting language, an entity-component system,
+or a prefab system (per the brief's own explicit exclusion list) — the
+`Interactable` interface plus two ordinary C++ classes owned by
+`Application.cpp` was judged sufficient for "one door, one non-door
+interactable," and nothing here evidences a need for more; and a "which
+interactable is highlighted" visual outline/highlight effect — the HUD
+prompt alone (per the brief's own required validation checklist) is what
+signals a valid target, no additional render-pass or outline shader was
+added for this milestone.
+
 ## Milestone 8
 
 The milestone's own scope statement, verbatim in spirit: "walk onto it →
@@ -5085,6 +5379,15 @@ invariance for both the directional and spotlight shadow matrices — see
 actual GLSL shadow-sampling correctness was verified by a one-time
 offscreen-rendering spot-check plus human visual validation instead.
 
+**Milestone 16** added `judas_interactable_tests`
+(`tests/InteractableTests.cpp`) — hinge-rotation math (including rotate-
+the-universe invariance), `SelectInteractable`'s range/facing/closest-
+wins logic, the door's full open/close animation AND its live
+`PhysicsWorld` collision-transform coherence (a real `PhysicsWorld`, no
+window/GL needed), the light switch using the exact same interaction path
+as the door, and the interact key's input-ownership gating — see
+"Milestone 16, Automated evidence" for the full section breakdown.
+
 ## Remaining limitations
 
 Recorded honestly rather than left implicit — these are known, deliberately
@@ -5390,19 +5693,35 @@ deferred, not oversights:
   (cone-sized-plus-small-margin) shadow frustum could in principle fail
   to shadow something right at that frustum's own edge. Accepted, not
   fixed, for this milestone's own demo scale.
-- **Milestone 14: a fixed maximum of 5 simultaneous dynamic lights**
-  (`kMaxDynamicLights`, `src/Light.h`), enforced by silent truncation in
-  `Renderer::SetDynamicLights` — a scene needing meaningfully more than
-  that (this demo never does: 1 torch + 3 spacecraft lights = 4, with one
-  slot of headroom) would need either a larger fixed array or a real
-  light-culling scheme (see "Milestone 14, Light limits" for why neither
-  was built speculatively).
+- **Milestone 14 (headroom now fully used as of Milestone 16): a fixed
+  maximum of 5 simultaneous dynamic lights** (`kMaxDynamicLights`,
+  `src/Light.h`), enforced by silent truncation in
+  `Renderer::SetDynamicLights` — this demo can now reach exactly that
+  cap (1 torch + 3 spacecraft lights + 1 light-switch lamp = 5, with zero
+  slots of headroom left); a scene needing meaningfully more would need
+  either a larger fixed array or a real light-culling scheme (see
+  "Milestone 14, Light limits" for why neither was built speculatively).
 - **Milestone 14: no photometric accuracy.** Light "color" values are
   tuned, demo-specific numbers with intensity folded directly in (e.g.
   `kTorchColor`'s components exceed 1.0) — not lumens, not any calibrated
   real-world unit. A future milestone wanting physically-based light units
   would need a genuinely different (HDR-aware, exposure-aware) pipeline,
   not a reinterpretation of these same numbers.
+- **Milestone 16: the facing-cone/range interaction detection is not a
+  real line-of-sight check.** `SelectInteractable` (`src/
+  InteractionSystem.cpp`) only tests distance and angle, never occlusion
+  — an interactable technically "behind" a wall from the player's
+  position but within range/facing-cone would still be selectable. Not
+  an issue for this demo's own geometry (nothing occludes the door/switch
+  from their own approach angles), but an honest, documented limitation,
+  not a guarantee.
+- **Milestone 16: the door is driven kinematically (via `PhysicsWorld::
+  ResetBody`), not simulated as a real constrained rigid body.** It
+  cannot be pushed, jammed, or physically resisted by anything in the
+  world — its open/closed angle is purely a function of its own
+  interaction state, immune to collision response. Sufficient for "a
+  door that opens and closes and blocks the player when shut," not a
+  physically-simulated hinge joint.
 
 ## FUTURE CONSTRAINTS PRESERVED
 
@@ -5734,3 +6053,17 @@ Explicitly deferred, not forgotten:
   pixel correctness — covered instead by the mirrored/pure-math
   `judas_shadow_tests` suite plus a one-time offscreen-rendering spot-
   check and human visual validation.
+- **Milestone 16 additions:** keys/locks, inventory requirements,
+  automatic doors, quests, dialogue, scripted sequences, an animation
+  system, a generic joint/constraint framework (the door needed none),
+  save/load persistence, interaction trees, networking, editor tooling,
+  a generic event bus, reflection, a scripting language, an entity-
+  component system, or a prefab system; a real line-of-sight/occlusion
+  check for interaction detection (range + facing cone only — see
+  "Remaining limitations"); a visual highlight/outline effect for the
+  currently-selected interactable (the HUD prompt alone signals a valid
+  target); more than two interactables' worth of demonstrated variety
+  (one door, one non-door — proving the abstraction generalizes, not
+  building out a catalog of interactable kinds); and cubemap/point-light
+  shadows for the light switch's own lamp (unchanged since Milestone 15
+  — point lights still cast none).

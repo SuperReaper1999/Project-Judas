@@ -8,7 +8,7 @@ This is **not** a general-purpose engine and is not trying to compete with
 Unity, Unreal, or Godot. It exists to serve one specific class of game, and
 its architecture is deliberately narrow.
 
-## Status: Milestone 15
+## Status: Milestone 16
 
 A controllable player walks, jumps, and falls under real physics — Judas's
 own physics engine, not a third-party library — across two independent
@@ -177,10 +177,23 @@ covers a bounded area around the player (not the whole world at once,
 and not cascaded); and a surface just outside a light's own shadow
 frustum is treated as unshadowed rather than checked at all.
 
+**New this milestone:** Judas has its first environmental interaction
+system. Walk up to the door on Planet A (a short walk from spawn) and a
+prompt appears; press `G` and it swings open, blocking your path when
+closed and letting you walk through once open — press `G` again to close
+it. (`E` was the first choice, but it's already the spacecraft's own
+"ascend" control — see the spacecraft's own key table below — so `G` was
+used instead to avoid a real conflict.) A small lever beside the door
+uses the exact same prompt-and-`G` interaction, but does something
+completely different: it toggles a nearby lamp on and off, proving the
+interaction system isn't secretly built just for doors. See
+[`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md),
+"Milestone 16," for the full design.
+
 This is intentional — see `docs/ARCHITECTURE.md` for why, what's
 deliberately not built yet, and how this small foundation avoids blocking
 the much larger long-term design. Earlier milestones are preserved as git
-tags (`milestone-1` through `milestone-15`, once this one is tagged) rather
+tags (`milestone-1` through `milestone-16`, once this one is tagged) rather
 than kept running alongside the current demo.
 
 ## Building
@@ -243,6 +256,7 @@ walks the player relative to that look direction and the current surface
 | Pause / back / resume   | `Escape`               |
 | Take/release piloting control of the spacecraft (only while standing on it) | `F` |
 | Toggle the player torch on/off | `T`             |
+| Interact (door, switch, or whatever's prompted) | `G` |
 | Reset the player and world | `R`               |
 
 While piloting the spacecraft (after pressing `F` while standing on it),
@@ -285,6 +299,28 @@ around the player, not the entire world at once (walk far enough from
 where you last were and shadows there simply aren't being computed that
 frame); and a surface just outside a light's own shadow frustum is
 treated as unshadowed rather than actually checked.
+
+## Interaction
+
+Walk up to an interactable object (the door or the light switch, both a
+short walk from spawn on Planet A) and look roughly at it — a prompt
+appears near the bottom of the screen. Press `G` to trigger it:
+
+- **The door** swings open on its hinge (visibly, over about two-thirds
+  of a second, never teleporting between states) and physically stops
+  blocking your path; press `G` again while near it to swing it closed,
+  and it blocks the way again exactly as before.
+- **The light switch**, a small lever beside the door, toggles a nearby
+  lamp on and off — a completely different action, going through the
+  exact same prompt-and-`G` interaction as the door, to prove the system
+  isn't secretly built just for doors.
+
+Walk away, or look somewhere else, and the prompt disappears on its own —
+nothing needs to be selected/deselected explicitly. Opening the pause
+menu suppresses interaction the same way it suppresses every other
+gameplay input (see "HUD and pause menu" below): `G` does nothing while a
+menu owns input. See [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md),
+"Milestone 16," for the full design.
 
 ## HUD and pause menu
 

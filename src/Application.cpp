@@ -20,8 +20,12 @@
 #include "FlyingPrimitiveControl.h"
 #include "GravityContextMap.h"
 #include "GravityField.h"
+#include "Door.h"
 #include "HUD.h"
+#include "Interactable.h"
+#include "InteractionSystem.h"
 #include "Light.h"
+#include "LightSwitch.h"
 #include "LightTransforms.h"
 #include "ModelLoader.h"
 #include "PauseMenu.h"
@@ -477,6 +481,47 @@ constexpr float kRampTiltDegrees = 25.0f;
 constexpr float kRampFriction = 0.8f;
 constexpr float kRampRestitution = 0.0f;
 
+// --- Milestone 16: the door ---
+//
+// Placed at its own bearing on Planet A, distinct from the staircase/ramp
+// bearings above — a short walk from spawn, easy to find deliberately
+// (not stumbled into by accident the way the staircase is), since this
+// milestone's own validation checklist specifically wants an approach ->
+// prompt -> interact sequence a human can walk through cleanly. Authored
+// via the SAME `RotationAligningUpTo`/`PointAboveSphere` convention every
+// other piece of curved-surface geometry here already uses, so the door's
+// own local "up" (and therefore its hinge axis, see kDoorLocalHingeAxis
+// below) is whatever the local radial direction is AT that bearing — not
+// world +Y — satisfying this milestone's own "do not assume world Y is
+// the hinge/up axis" requirement structurally, the same way the
+// staircase/ramp already satisfy "no global up" for step-climbing.
+const glm::vec3 kDoorBearing = glm::normalize(glm::vec3(0.55f, 0.9f, 0.05f));
+const glm::vec3 kDoorHalfExtents(1.1f, 1.0f, 0.1f);
+const glm::vec3 kDoorColor(0.55f, 0.38f, 0.22f);
+// The door's own LOCAL up (see Door.h's own "local -X face is always the
+// hinge edge" convention for why this is the SWING axis, not a "which
+// face is the hinge" choice) — expressed relative to the door's own
+// authored orientation, never world space.
+const glm::vec3 kDoorLocalHingeAxis(0.0f, 1.0f, 0.0f);
+constexpr float kDoorOpenAngleDegrees = 100.0f;
+constexpr float kDoorAngularSpeedDegreesPerSecond = 150.0f;
+
+// --- Milestone 16: the light switch (second interactable) ---
+//
+// Placed just beside the door — a small lever, no physics body (see
+// src/LightSwitch.h) — controlling one lamp a short distance away, so
+// toggling it produces an obvious, easy-to-see effect (the lamp itself,
+// see kLampPosition below) without needing to invent any gameplay purpose
+// beyond "a light turns on."
+const glm::vec3 kSwitchBearing = glm::normalize(glm::vec3(0.75f, 0.85f, 0.05f));
+const glm::vec3 kSwitchHalfExtents(0.06f, 0.18f, 0.04f);
+const glm::vec3 kSwitchColor(0.75f, 0.72f, 0.65f);
+const glm::vec3 kSwitchLocalHingeAxis(0.0f, 0.0f, 1.0f);  // swings forward/back, not side to side
+constexpr float kSwitchToggleAngleDegrees = 40.0f;
+constexpr float kSwitchAngularSpeedDegreesPerSecond = 220.0f;
+const glm::vec3 kLampColor(3.2f, 2.6f, 1.6f);
+constexpr float kLampRange = 10.0f;
+
 // A static body whose position/rotation/half-extents/color are already
 // fully known at spawn time (nothing about it ever moves) — the same
 // reasoning the planets/plank already rely on to draw themselves from
@@ -540,9 +585,10 @@ std::vector<StaticTestBody> SpawnStepTestGeometry(PhysicsWorld& physics) {
 // GL itself (see docs/ARCHITECTURE.md, "Milestone 14, Light ownership and
 // lifetime").
 std::vector<DynamicLight> BuildDynamicLights(const PlayerController& player, bool torchOn,
-                                              const DynamicBody& spacecraft, float presentationAlpha) {
+                                              const DynamicBody& spacecraft, const LightSwitch& lightSwitch,
+                                              float presentationAlpha) {
     std::vector<DynamicLight> lights;
-    lights.reserve(4);
+    lights.reserve(5);
 
     if (torchOn) {
         DynamicLight torch;
@@ -592,6 +638,22 @@ std::vector<DynamicLight> BuildDynamicLights(const PlayerController& player, boo
     starboardLight.color = kShipStarboardLightColor;
     starboardLight.range = kShipNavLightRange;
     lights.push_back(starboardLight);
+
+    // Milestone 16: the light switch's own lamp — an ordinary point light,
+    // present in this frame's list only while `lightSwitch.IsLampOn()`,
+    // exactly like the torch above is present only while `torchOn`. No
+    // shadow map of its own (point lights never cast shadows this
+    // milestone — see src/Light.h). 1 (torch) + 3 (ship) + 1 (lamp) = 5,
+    // exactly `kMaxDynamicLights` — see src/Light.h for why that headroom
+    // was sized with this in mind.
+    if (lightSwitch.IsLampOn()) {
+        DynamicLight lamp;
+        lamp.kind = LightKind::Point;
+        lamp.position = lightSwitch.GetLampPosition();
+        lamp.color = lightSwitch.GetLampColor();
+        lamp.range = lightSwitch.GetLampRange();
+        lights.push_back(lamp);
+    }
 
     return lights;
 }
@@ -710,6 +772,34 @@ int Application::Run() {
     // "Milestone 10."
     const std::vector<StaticTestBody> stepTestBodies = SpawnStepTestGeometry(physicsWorld);
 
+    // Milestone 16: the door and light switch — see their own kDoor*/
+    // kSwitch* constants above for the full placement/authoring
+    // reasoning. Both hinge edges are authored via the same
+    // RotationAligningUpTo/PointAboveSphere convention the staircase/ramp
+    // already use, so each one's own local "up" (and hinge axis) matches
+    // the local radial direction at its own bearing, never world +Y.
+    const glm::quat doorOrientation = RotationAligningUpTo(kDoorBearing);
+    const glm::vec3 doorHingePosition = PointAboveSphere(kPlanetACenter, kPlanetARadius, kDoorBearing, 0.0f);
+    Door door(physicsWorld, doorHingePosition, doorOrientation, kDoorHalfExtents, kDoorLocalHingeAxis,
+              glm::radians(kDoorOpenAngleDegrees), glm::radians(kDoorAngularSpeedDegreesPerSecond),
+              kDoorColor);
+
+    const glm::quat switchOrientation = RotationAligningUpTo(kSwitchBearing);
+    const glm::vec3 switchHingePosition =
+        PointAboveSphere(kPlanetACenter, kPlanetARadius, kSwitchBearing, 1.1f);
+    const glm::vec3 lampPosition = PointAboveSphere(kPlanetACenter, kPlanetARadius, kSwitchBearing, 2.5f);
+    LightSwitch lightSwitch(switchHingePosition, switchOrientation, kSwitchHalfExtents,
+                             kSwitchLocalHingeAxis, glm::radians(kSwitchToggleAngleDegrees),
+                             glm::radians(kSwitchAngularSpeedDegreesPerSecond), kSwitchColor, lampPosition,
+                             kLampColor, kLampRange);
+
+    // Player/Application code understands only `Interactable` from here on
+    // — see src/Interactable.h — never `Door`/`LightSwitch` by name. This
+    // vector (and SelectInteractable, called every render frame below) is
+    // the entire "player discovers an interactable" mechanism this
+    // milestone needed.
+    const std::vector<Interactable*> interactables = {&door, &lightSwitch};
+
     PlayerController player(kPlayerSpawnPosition, kPlayerSpawnYawDegrees);
     if (!player.Spawn(physicsWorld)) {
         std::fprintf(stderr, "Player spawn failed.\n");
@@ -796,6 +886,15 @@ int Application::Run() {
         // sensible size — see assets/models/beacon.obj).
         r.DrawMesh(beaconMesh, kBeaconPosition, glm::quat(1.0f, 0.0f, 0.0f, 0.0f), glm::vec3(1.0f),
                    beaconTexture, glm::vec3(1.0f));
+
+        // Milestone 16: the door and light switch — drawn from their own
+        // interpolated swing angle (see Door::Draw/LightSwitch::Draw),
+        // exactly like every other moving object here, so both render,
+        // collide (the door), and cast/receive shadows at their CURRENT
+        // pose through this same shared drawScene call — no separate
+        // shadow-pass handling needed for either.
+        door.Draw(r, presentationAlpha);
+        lightSwitch.Draw(r, presentationAlpha);
 
         // Milestone 11: while attached, render the pilot coherently with
         // the SAME presented spacecraft pose used for the camera and the
@@ -960,6 +1059,23 @@ int Application::Run() {
             // decided below, inside the `!pauseMenu.IsOpen()` gate, same
             // as every other piece of gameplay input.
             const bool torchToggleRequested = window.ConsumeTorchToggleRequest();
+            // Milestone 16: same drain-always shape as torchToggleRequested
+            // above, for the exact same reason — see
+            // docs/ARCHITECTURE.md, "Milestone 16, Input ownership."
+            const bool interactRequested = window.ConsumeInteractRequest();
+
+            // Milestone 16: recomputed every render frame from the
+            // player's own CURRENT authoritative position/look direction
+            // (frozen, like everything else, while paused) — this is the
+            // entire "stop offering interaction when it is no longer
+            // valid" mechanism: SelectInteractable simply returns nullptr
+            // the moment nothing qualifies, with no separate state to
+            // clear. Computed unconditionally (harmless/read-only) so the
+            // HUD prompt below stays accurate even while paused; only
+            // ACTING on `interactRequested` is gated on pause state, in
+            // the block below.
+            Interactable* interactTarget =
+                SelectInteractable(player.GetPosition(), player.GetLookDirection(), interactables);
 
             const Uint64 currentCounter = SDL_GetPerformanceCounter();
             float frameDeltaTime = static_cast<float>(currentCounter - previousCounter) /
@@ -1025,6 +1141,18 @@ int Application::Run() {
                     torchOn = !torchOn;
                 }
 
+                // Milestone 16: E triggers the currently-selected
+                // interactable, if any — gated behind `!pauseMenu.IsOpen()`
+                // exactly like every other piece of gameplay input here,
+                // so a menu can never accidentally trigger a world
+                // interaction (see docs/ARCHITECTURE.md, "Milestone 16,
+                // Input ownership"). `PlayerController`/this call site
+                // only ever know `interactTarget` as an `Interactable*`
+                // — never a `Door`/`LightSwitch` by name.
+                if (interactRequested && interactTarget && interactTarget->CanInteract()) {
+                    interactTarget->Interact();
+                }
+
                 // Fixed-timestep physics: render-frame delta time only decides
                 // how many fixed steps run this frame, never the size of a
                 // step itself.
@@ -1046,6 +1174,16 @@ int Application::Run() {
                     PrepareDynamicBodiesForStep(dynamicBodies, gravity, physicsWorld,
                                                  SimulationTiming::kFixedTimestep);
                     ApplyFlyingPrimitiveControl(flyingPrimitiveControl, window, physicsWorld);
+                    // Milestone 16: advances the door's own open/close
+                    // animation and writes its new pose directly to
+                    // PhysicsWorld (see Door::FixedUpdate) BEFORE the
+                    // player's own FixedUpdate below, so this step's
+                    // move-and-slide sees the door's up-to-date collision
+                    // pose rather than last step's. The light switch has
+                    // no physics body (see src/LightSwitch.h) — its own
+                    // FixedUpdate only advances its visible lever angle.
+                    door.FixedUpdate(physicsWorld, SimulationTiming::kFixedTimestep);
+                    lightSwitch.FixedUpdate(SimulationTiming::kFixedTimestep);
                     physicsWorld.Step(SimulationTiming::kFixedTimestep);
                     AdvancePlayerForPiloting(flyingPrimitiveControl, pilotAttachment, player, physicsWorld,
                                               window, gravity, SimulationTiming::kFixedTimestep);
@@ -1101,7 +1239,7 @@ int Application::Run() {
             // direction/cone straight out of it, rather than recomputing
             // the same transforms a second time.
             const std::vector<DynamicLight> lights = BuildDynamicLights(
-                player, torchOn, dynamicBodies[flyingPrimitiveBodyIndex], presentationAlpha);
+                player, torchOn, dynamicBodies[flyingPrimitiveBodyIndex], lightSwitch, presentationAlpha);
 
             // Milestone 15: shadow passes — one per shadow-casting light,
             // each rendering the SAME scene geometry (via the SAME
@@ -1175,6 +1313,7 @@ int Application::Run() {
                 hudData.pilotAttached = pilotAttachment.attached;
                 hudData.spacecraftLinearSpeed =
                     glm::length(physicsWorld.GetLinearVelocity(flyingPrimitiveControl.handle));
+                hudData.interactPrompt = interactTarget ? interactTarget->GetPromptText() : std::string();
                 hud.Draw(renderer, window.Width(), window.Height(), hudData);
             }
             pauseMenu.Draw(renderer, window.Width(), window.Height());
@@ -1185,6 +1324,7 @@ int Application::Run() {
     }
 
     player.Destroy(physicsWorld);
+    door.Destroy(physicsWorld);
     for (const DynamicBody& body : dynamicBodies) {
         physicsWorld.DestroyBody(body.Handle());
     }

@@ -1,5 +1,7 @@
 #pragma once
 
+#include <string>
+
 class Renderer;
 
 // Milestone 13: the persistent gameplay HUD. Plain view data only — see
@@ -16,6 +18,13 @@ struct HUDViewData {
     bool controllingSpacecraft = false;
     bool pilotAttached = false;
     float spacecraftLinearSpeed = 0.0f;
+
+    // Milestone 16: the currently-selected interactable's own prompt text
+    // (see src/Interactable.h's GetPromptText), or empty when nothing is
+    // currently selectable — HUD draws this verbatim, never interpreting
+    // it or knowing what a "door" or "switch" is (see
+    // docs/ARCHITECTURE.md, "Milestone 16, Architecture").
+    std::string interactPrompt;
 };
 
 class HUD {
