@@ -8,7 +8,7 @@ This is **not** a general-purpose engine and is not trying to compete with
 Unity, Unreal, or Godot. It exists to serve one specific class of game, and
 its architecture is deliberately narrow.
 
-## Status: Milestone 18 (implementation pending human validation)
+## Status: Milestone 19 (human-validated)
 
 A controllable player walks, jumps, and falls under real physics — Judas's
 own physics engine, not a third-party library — across two independent
@@ -39,6 +39,14 @@ the plank reads as ordinary flat ground everywhere on its surface,
 including its edges — no sideways pull toward either planet, anywhere on
 it. See [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) for the full,
 honest retrospective on how two earlier attempts got that wrong.
+
+**New in M19:** grounded support clearance is settled from the player's
+current collision probe on every fixed step, and small gravity-driven frame
+rotations are no longer discarded. The latter prevents the view frame from
+holding for several ticks and snapping as the player walks around a sphere.
+Automated checks cover long curved walks, direction changes, frame tracking,
+flat and rotated controls, and landing. Interactive visual validation is
+complete.
 
 **New this milestone:** a controllable flying primitive rests on the
 plank. Walk (or hop) onto it and press `F` to take control — WASD/Q/E fly
@@ -486,11 +494,15 @@ offset preservation, view-mode changes, and paused-input gating — pure CPU
 math, no window/GL); and `judas_object_manipulation_tests` (Milestone 18 —
 eligible-body filtering, shared range/facing targeting, arbitrary-orientation
 carry target, rotate-the-universe equivalence, physics-backed carry, drop
-velocity preservation, and mass-scaled throw direction):
+velocity preservation, and mass-scaled throw direction); and
+`judas_player_curved_locomotion_tests` (Milestone 19 — flat and spherical
+fixed-step walking, long curved traversal with direction changes, stable
+support clearance, local-frame continuity, landing, both player camera modes,
+torch pose, stillness after traversal, and rotated-universe equivalence):
 
 ```bash
-cmake --build build --target judas_physics_tests judas_collision_tests judas_asset_tests judas_step_climb_tests judas_pilot_attachment_tests judas_spacecraft_control_tests judas_ui_tests judas_lighting_tests judas_shadow_tests judas_interactable_tests judas_player_view_tests judas_object_manipulation_tests
-./build/judas_physics_tests && ./build/judas_collision_tests && ./build/judas_asset_tests && ./build/judas_step_climb_tests && ./build/judas_pilot_attachment_tests && ./build/judas_spacecraft_control_tests && ./build/judas_ui_tests && ./build/judas_lighting_tests && ./build/judas_shadow_tests && ./build/judas_interactable_tests && ./build/judas_player_view_tests && ./build/judas_object_manipulation_tests
+cmake --build build --target judas_physics_tests judas_collision_tests judas_asset_tests judas_step_climb_tests judas_pilot_attachment_tests judas_spacecraft_control_tests judas_ui_tests judas_lighting_tests judas_shadow_tests judas_interactable_tests judas_player_view_tests judas_object_manipulation_tests judas_player_curved_locomotion_tests
+./build/judas_physics_tests && ./build/judas_collision_tests && ./build/judas_asset_tests && ./build/judas_step_climb_tests && ./build/judas_pilot_attachment_tests && ./build/judas_spacecraft_control_tests && ./build/judas_ui_tests && ./build/judas_lighting_tests && ./build/judas_shadow_tests && ./build/judas_interactable_tests && ./build/judas_player_view_tests && ./build/judas_object_manipulation_tests && ./build/judas_player_curved_locomotion_tests
 ```
 
 ## Assets

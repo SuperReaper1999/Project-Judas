@@ -6,7 +6,7 @@ someone with no prior context on this project. It is updated in place as
 milestones land, rather than kept as a per-milestone snapshot — see
 "Milestone history" below for how to recover an earlier milestone exactly.
 
-## What exists right now (Milestone 18 implementation; human validation pending)
+## What exists right now (Milestone 19; human-validated)
 
 Open a window. Two independent static spheres ("planets," radius `20m`
 each, centers `55m` apart — see "Physics test world") exist in 3D space,
@@ -3912,9 +3912,46 @@ while menus own input and only acted on during gameplay.
 `judas_object_manipulation_tests` checks the eligibility whitelist, dynamic
 body requirement, shared range/facing target selection, orientation-aware
 carry target and rotate-the-universe equivalence, force-driven body motion,
-drop velocity preservation, and mass-scaled throw impulse direction. Human
-validation remains required for carry feel, collisions during carry/throw,
-planetary traversal, and spacecraft transitions.
+drop velocity preservation, and mass-scaled throw impulse direction. M18 was
+human-validated before acceptance; M19's interaction checks include carried
+object traversal and spacecraft transitions.
+
+## Milestone 19 — stable curved-surface locomotion
+
+The first measured issue was authoritative support-clearance variation. On an
+isolated radius-20 sphere it cycled from near zero to about 20 mm while
+walking; grounded state did not chatter. A flat control also varied, over a
+smaller measured range (0.8–14.6 mm). The grounded support-probe correction
+was gated off while horizontal input was held, leaving the move-and-slide
+path to restore the margin only after contact. `PlayerController::FixedUpdate`
+now applies the existing probe-based correction each grounded step along
+sampled local up. The step-down result reports the margin it already applied,
+so the settle does not add it twice. This stabilized the measured clearance,
+but operator validation showed that it did not fix the visible camera/world
+wobble.
+
+The actual view-frame defect was in `RotationBetweenUnitVectors`: its
+`dot > 0.9999` shortcut treated changes under about 0.81 degrees as zero.
+At normal walking speed on the demo sphere, gravity changes local up by
+roughly 0.19 degrees per fixed step. The frame therefore ignored several
+successive changes, then rotated by roughly 0.9 degrees at once. Since the
+view up and orientation come from that frame, the entire camera/world image
+jerked together. The helper now derives the small rotation from cross-product
+magnitude and dot product, retaining a float-precision zero guard and the
+existing opposite-vector case. The isolated walk's maximum frame rotation is
+now about 0.183 degrees per step rather than 0.918 degrees, and clearance
+stays within 17.275–17.387 mm. Automated tests passed and the operator
+validated the visible curved-surface smoothness and required gameplay cases.
+
+`judas_player_curved_locomotion_tests` exercises long sphere traversal with
+two direction changes, a flat control, a fully rotated sphere scenario with
+matching initial look basis, stable clearance, grounded continuity, local-up
+tracking, per-step frame changes, post-traversal stillness, jump/landing,
+first- and third-person camera-position continuity, and presented torch
+placement. The old angular cutoff would fail its frame-rotation and repeated-
+zero-step checks. Sphere/plank transitions, M10 steps/slopes, carried-object
+traversal, spacecraft behavior, and actual visual smoothness were included in
+the operator's acceptance validation.
 
 ## Milestone 8
 

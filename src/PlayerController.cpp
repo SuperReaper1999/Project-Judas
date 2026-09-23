@@ -88,9 +88,6 @@ constexpr float kMaxReorientationDegreesPerSecond = 120.0f;
 // needs.
 glm::quat RotationBetweenUnitVectors(const glm::vec3& from, const glm::vec3& to) {
     const float d = std::clamp(glm::dot(from, to), -1.0f, 1.0f);
-    if (d > 0.9999f) {
-        return glm::quat(1.0f, 0.0f, 0.0f, 0.0f);  // already aligned
-    }
     if (d < -0.9999f) {
         // Exactly opposite: any axis perpendicular to `from` works.
         const glm::vec3 axis = std::abs(from.x) < 0.9f
@@ -98,8 +95,15 @@ glm::quat RotationBetweenUnitVectors(const glm::vec3& from, const glm::vec3& to)
                                     : glm::cross(from, glm::vec3(0.0f, 1.0f, 0.0f));
         return glm::angleAxis(glm::pi<float>(), glm::normalize(axis));
     }
-    const glm::vec3 axis = glm::normalize(glm::cross(from, to));
-    return glm::angleAxis(std::acos(d), axis);
+    const glm::vec3 cross = glm::cross(from, to);
+    const float sine = glm::length(cross);
+    if (sine < 1.0e-7f) {
+        return glm::quat(1.0f, 0.0f, 0.0f, 0.0f);  // indistinguishable at float precision
+    }
+    // atan2(cross magnitude, dot) preserves small rotations. An earlier
+    // dot > 0.9999 shortcut suppressed changes below ~0.81 degrees, so on
+    // a sphere the view frame held for several fixed steps then snapped.
+    return glm::angleAxis(std::atan2(sine, d), cross / sine);
 }
 
 }  // namespace
@@ -303,7 +307,11 @@ void PlayerController::FixedUpdate(const Window& window, PhysicsWorld& physics,
             m_position = steppedDownPosition;
             groundHit.hit = true;
             groundHit.normal = steppedDownNormal;
-            groundHit.distance = 0.0f;
+            // TryStepDown already places the capsule at the skin margin.
+            // Keep the probe-distance bookkeeping consistent with that
+            // pose so the grounded clearance settle below does not apply
+            // the same margin a second time.
+            groundHit.distance = kSkinMargin;
             groundHit.hitBody = steppedDownBody;
             isGrounded = true;
         }
@@ -311,81 +319,17 @@ void PlayerController::FixedUpdate(const Window& window, PhysicsWorld& physics,
     m_lastGrounded = isGrounded;
     m_lastGroundHitBody = groundHit.hitBody;
 
-    // Milestone 12 bugfix: settle grounded clearance to exactly
-    // kSkinMargin every step, using THIS step's own already-computed
-    // `groundHit` — rather than leaving it to the move-and-slide loop
-    // below to notice and correct only reactively. That loop's own
-    // skin-margin restoration (see its own comment further down) fires
-    // only when SweepPlayerShape reports a hit for THIS step's `remaining`
-    // displacement — and while merely standing still and grounded,
-    // `remaining` is nothing but the tiny per-step gravity glue nudge (a
-    // few mm), which for several consecutive steps isn't large enough to
-    // reach the surface at all (clearance still positive, no correction
-    // applied whatsoever that step). Clearance then erodes silently,
-    // unchecked, until it finally reaches exactly zero — at which point
-    // the reactive skin-margin restoration fires and snaps the FULL
-    // kSkinMargin back in one jump. Repeated every few steps, that reads
-    // as a small but very visible periodic bounce (reported directly by
-    // the operator as a standing player vibrating in place after M12
-    // started routing dynamic-body integration through the real
-    // force/torque-aware `IntegrateRigidBody` — though direct A/B
-    // comparison against the milestone-11 tag showed this exact
-    // oscillation already existed there too, byte-for-byte; M12 didn't
-    // introduce it, it just got reported while M12 was the milestone under
-    // test). Walking mostly hid this, since a real WASD displacement is
-    // usually large enough to reach the surface and get corrected almost
-    // every step, but a stationary grounded player's own tiny glue
-    // displacement mostly isn't.
-    //
-    // The fix is a direct geometric clearance correction, not a velocity
-    // change: nudge `m_position` along `localUp` so clearance reads back
-    // exactly `kSkinMargin`, using the SAME `groundHit` already computed
-    // above for this step's support/grounded decision — no new geometry
-    // query, so no new closest-point-on-OBB corner-blending exposure (law
-    // #19) beyond what this function already trusted for the SAME step's
-    // grounded decision. Expressed entirely in terms of `localUp` (this
-    // step's own sampled-gravity-derived up, not world +Y) and the
-    // support's own real geometry, so it stays correct under arbitrary
-    // orientation/local gravity exactly like every other part of this
-    // function — verified directly against a genuinely tilted local up
-    // (mid-slope on the sphere, `up` around 10-25 degrees off world +Y),
-    // not just the flat plank. Never touches `m_velocity` — tangential
-    // (WASD) momentum and the vertical glue speed itself are both left
-    // completely alone; only the resulting POSITION is corrected. Not a
-    // velocity-epsilon "if slow then stop" patch — a body still genuinely
-    // approaching or departing the surface is `isGrounded == false` for
-    // exactly one more step (see `wasAscending` above) and never reaches
-    // this correction until support is already resolved.
-    //
-    // Deliberately gated on "no horizontal input held this step"
-    // (`hasHorizontalInput` below), matching the reported bug's own exact
-    // circumstances (jump -> land -> RELEASE INPUT -> settle) rather than
-    // firing unconditionally on every grounded step. This was found to
-    // matter for a real, separate reason, not just caution: making
-    // clearance perfectly deterministic on EVERY grounded step (including
-    // while actively walking) removed the small step-to-step position
-    // variance the old, buggy code incidentally had — and that variance
-    // turned out to be load-bearing for one specific existing interaction:
-    // walking directly at the pushable flying-primitive/spacecraft
-    // (src/FlyingPrimitiveControl.h) at exactly a shallow closing distance,
-    // where `TryStepMove`'s own `kMinStepImprovement` margin (see
-    // src/StepClimb.cpp) can reject a genuinely-clear step by a hair,
-    // fall back to ordinary sliding, nudge the pushable spacecraft a
-    // little further away via the existing player-push mechanic
-    // (Milestone 7-A), and recreate the identical "just barely blocked"
-    // distance on the very next step — with zero jitter to ever break out
-    // of it, that repeats indefinitely (observed directly: the spacecraft
-    // drifting away under sustained contact instead of being boarded).
-    // Restricting this correction to the truly-stationary case fixes the
-    // reported vibration (which is, definitionally, a stationary-player
-    // symptom) without touching the walking/approach case at all — that
-    // case continues to rely on the existing reactive skin-margin
-    // restoration in the move-and-slide loop below, unchanged and exactly
-    // as validated in Milestones 7-A through 11.
-    const glm::vec3 settleInputDirection =
-        inputEnabled ? ComputeInputDirection(window, localUp) : glm::vec3(0.0f);
-    const bool hasHorizontalInput = glm::length(settleInputDirection) > 1.0e-6f;
-    if (isGrounded && !hasHorizontalInput) {
+    // Keep the capsule's measured support clearance at the skin margin on
+    // every grounded step, including while walking. The move-and-slide
+    // fallback below restores the margin along the contact normal only
+    // after a sweep has reached contact; on curved supports that creates a
+    // repeating 0-to-skin-margin radial correction as each straight
+    // tangential step cuts slightly through the surface. The support probe
+    // already measures travel along localUp, so correct along that same
+    // physical direction using its result. This changes position only and
+    // applies equally to arbitrary smooth support geometry and gravity
+    // contexts; it does not assume gravity and contact normal are equal.
+    if (isGrounded) {
         m_position += localUp * (kSkinMargin - groundHit.distance);
     }
 

@@ -276,6 +276,24 @@ target_include_directories(judas_object_manipulation_tests PRIVATE src)
 target_link_libraries(judas_object_manipulation_tests PRIVATE glm::glm-header-only)
 target_compile_options(judas_object_manipulation_tests PRIVATE -Wall -Wextra)
 
+# Milestone 19: end-to-end fixed-step player locomotion against sphere and
+# flat supports, including long curved walks and rotate-the-universe checks.
+add_executable(judas_player_curved_locomotion_tests
+    tests/PlayerCurvedLocomotionTests.cpp
+    src/PlayerController.cpp
+    src/PlayerView.cpp
+    src/LightTransforms.cpp
+    src/Window.cpp
+    src/StepClimb.cpp
+    src/PhysicsWorld.cpp
+    ${JUDAS_PHYSICS_SOURCES}
+    src/RadicalGravity.cpp
+)
+target_include_directories(judas_player_curved_locomotion_tests PRIVATE src)
+target_include_directories(judas_player_curved_locomotion_tests PRIVATE ${SDL2_INCLUDE_DIRS})
+target_link_libraries(judas_player_curved_locomotion_tests PRIVATE SDL2::SDL2 glm::glm-header-only)
+target_compile_options(judas_player_curved_locomotion_tests PRIVATE -Wall -Wextra)
+
 # stb_image_write (public domain / MIT, see third_party/stb_image_write.h) —
 # used only by the opt-in test harness (src/TestHarness.cpp) to write
 # screenshots to PNG. A single vendored header, not fetched via CMake:
