@@ -109,6 +109,17 @@ using PFNGLUNIFORM1I = void (*)(GLint, GLint);
 using PFNGLUNIFORM3F = void (*)(GLint, GLfloat, GLfloat, GLfloat);
 using PFNGLUNIFORMMATRIX3FV = void (*)(GLint, GLsizei, GLboolean, const GLfloat*);
 
+// Milestone 13: alpha-blended, depth-test-disabled UI overlay rendering
+// (see Renderer::BeginUIFrame/EndUIFrame) — the first thing in this engine
+// that needs to turn a GL capability OFF at runtime (glDisable) or blend
+// translucent fragments (glBlendFunc) rather than just turning depth
+// testing on once at Init and leaving it there.
+constexpr GLenum GL_BLEND = 0x0BE2;
+constexpr GLenum GL_SRC_ALPHA = 0x0302;
+constexpr GLenum GL_ONE_MINUS_SRC_ALPHA = 0x0303;
+using PFNGLDISABLE = void (*)(GLenum);
+using PFNGLBLENDFUNC = void (*)(GLenum, GLenum);
+
 extern PFNGLVIEWPORT glViewport;
 extern PFNGLCLEARCOLOR glClearColor;
 extern PFNGLCLEAR glClear;
@@ -154,6 +165,10 @@ extern PFNGLDELETETEXTURES glDeleteTextures;
 extern PFNGLUNIFORM1I glUniform1i;
 extern PFNGLUNIFORM3F glUniform3f;
 extern PFNGLUNIFORMMATRIX3FV glUniformMatrix3fv;
+
+// Milestone 13 additions.
+extern PFNGLDISABLE glDisable;
+extern PFNGLBLENDFUNC glBlendFunc;
 
 // Resolves every function pointer above via SDL_GL_GetProcAddress.
 // Must be called after an OpenGL context is current. Returns false (and

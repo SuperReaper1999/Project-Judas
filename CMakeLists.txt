@@ -40,6 +40,10 @@ add_executable(judas
     src/PilotControl.cpp
     src/ModelLoader.cpp
     src/TextureLoader.cpp
+    src/FontLoader.cpp
+    src/UIWidgets.cpp
+    src/PauseMenu.cpp
+    src/HUD.cpp
     src/FaithfulGravity.cpp
     src/RadicalGravity.cpp
     src/SphericalVolume.cpp
@@ -144,6 +148,29 @@ target_include_directories(judas_spacecraft_control_tests PRIVATE ${SDL2_INCLUDE
 target_link_libraries(judas_spacecraft_control_tests PRIVATE SDL2::SDL2 glm::glm-header-only)
 target_compile_options(judas_spacecraft_control_tests PRIVATE -Wall -Wextra)
 
+# Milestone 13: headless tests for the UI navigation/input-ownership logic
+# (src/UIWidgets.*, src/UIStack.h, src/PauseMenu.*, src/HUD.*) — pure CPU
+# state (screen stack, focus, button hit-testing, pause menu flow, HUD
+# view-data formatting), never a GL context or window. Links Renderer.cpp/
+# gl_core33.cpp/FontLoader.cpp only because UIMenuScreen::Draw/HUD::Draw
+# reference Renderer's UI drawing methods at compile time (same reasoning
+# judas_spacecraft_control_tests already applies to Window.cpp: the code
+# must link, but this suite never actually calls Draw or touches a real GL
+# context — see tests/UITests.cpp's own header comment).
+add_executable(judas_ui_tests
+    tests/UITests.cpp
+    src/UIWidgets.cpp
+    src/PauseMenu.cpp
+    src/HUD.cpp
+    src/Renderer.cpp
+    src/FontLoader.cpp
+    src/gl_core33.cpp
+)
+target_include_directories(judas_ui_tests PRIVATE src)
+target_include_directories(judas_ui_tests PRIVATE ${SDL2_INCLUDE_DIRS})
+target_link_libraries(judas_ui_tests PRIVATE SDL2::SDL2 glm::glm-header-only)
+target_compile_options(judas_ui_tests PRIVATE -Wall -Wextra)
+
 # stb_image_write (public domain / MIT, see third_party/stb_image_write.h) —
 # used only by the opt-in test harness (src/TestHarness.cpp) to write
 # screenshots to PNG. A single vendored header, not fetched via CMake:
@@ -161,3 +188,13 @@ target_compile_options(judas_spacecraft_control_tests PRIVATE -Wall -Wextra)
 # the engine's own runtime OBJ model importer (src/ModelLoader.cpp). See
 # docs/ARCHITECTURE.md, "Milestone 9, Model loading," for why OBJ/
 # tinyobjloader was chosen over a more complex format/importer.
+#
+# stb_truetype (Milestone 13, public domain, see third_party/stb_truetype.h)
+# — the engine's own runtime font rasterizer (src/FontLoader.cpp), same
+# vendoring reasoning as stb_image/stb_image_write/tiny_obj_loader: text
+# rasterization is a solved commodity problem, not something Judas needs to
+# own. The one font baked with it, assets/fonts/DejaVuSans.ttf, is
+# DejaVu Sans under the Bitstream Vera License (a permissive,
+# redistribution-friendly license — see assets/fonts/DejaVuSans-LICENSE.txt
+# for the full text) — see docs/ARCHITECTURE.md, "Milestone 13, Text
+# rendering," for why it was chosen.

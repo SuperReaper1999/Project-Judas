@@ -49,6 +49,10 @@ PFNGLUNIFORM1I glUniform1i = nullptr;
 PFNGLUNIFORM3F glUniform3f = nullptr;
 PFNGLUNIFORMMATRIX3FV glUniformMatrix3fv = nullptr;
 
+// Milestone 13 additions.
+PFNGLDISABLE glDisable = nullptr;
+PFNGLBLENDFUNC glBlendFunc = nullptr;
+
 namespace {
 
 template <typename FnPtr>
@@ -108,5 +112,7 @@ bool LoadGLFunctions() {
     ok &= LoadOne(glUniform1i, "glUniform1i");
     ok &= LoadOne(glUniform3f, "glUniform3f");
     ok &= LoadOne(glUniformMatrix3fv, "glUniformMatrix3fv");
+    ok &= LoadOne(glDisable, "glDisable");
+    ok &= LoadOne(glBlendFunc, "glBlendFunc");
     return ok;
 }

@@ -6,7 +6,7 @@ someone with no prior context on this project. It is updated in place as
 milestones land, rather than kept as a per-milestone snapshot — see
 "Milestone history" below for how to recover an earlier milestone exactly.
 
-## What exists right now (Milestone 12)
+## What exists right now (Milestone 13)
 
 Open a window. Two independent static spheres ("planets," radius `20m`
 each, centers `55m` apart — see "Physics test world") exist in 3D space,
@@ -129,6 +129,27 @@ inverse inertia tensor `RigidBody`/`PhysicsWorld` already owned since
 Milestone 7-Final but never exercised outside the standalone test suites
 — see "Milestone 12" below for the full design, what this uncovered about
 `PhysicsWorld::Step`'s own history, and the real numeric evidence.
+
+**As of Milestone 13, Judas has its own UI system: a persistent gameplay
+HUD and a working pause menu, both rendered through a new, dedicated
+screen-space overlay path behind `Renderer`'s existing raw-GL boundary.**
+A small always-on panel in the top-left corner shows five genuinely live
+values (grounded/airborne, current local gravity magnitude, player-vs-
+spacecraft input control, pilot attachment state, spacecraft speed) —
+`Application.cpp` reads them from the exact same systems the rest of the
+engine already exposes (`PlayerController`, `GravityField`,
+`FlyingPrimitiveControl`, `PilotAttachment`, `PhysicsWorld`) and hands
+`HUD::Draw` a plain `HUDViewData` struct, never a live reference to any of
+those. `Escape` opens a pause menu (Resume/Options/Quit) that dims and
+completely freezes the world — see "Milestone 13, Pause policy" — with one
+nested Options screen (a real "Show HUD" toggle, not an invented setting)
+reachable and back-navigable with keyboard (arrow keys + Enter/Escape) or
+mouse (hover + click), exactly matching this milestone's required
+gameplay -> pause -> nested -> back -> resume -> gameplay flow. Text is
+drawn with a newly vendored `stb_truetype`-based font loader
+(`src/FontLoader.h/.cpp`) baking DejaVu Sans into a single GPU atlas — see
+"Milestone 13" below for the full design, the input-ownership boundary,
+and the pause/simulation policy.
 See the root `README.md` for build/run instructions and controls.
 
 ## Milestone history
@@ -247,6 +268,23 @@ preserved as parallel runtime code:
   counter-thrust, perpendicular thrust, mass response, rotational inertia
   via the real tensor, gravity composition), and the two rewritten/
   extended standalone test suites.
+- `milestone-13` (pending human validation as of this writing) — a
+  Judas-owned UI system: a persistent top-left HUD panel showing five live
+  telemetry values, and a pause menu (root screen + one nested Options
+  screen) reachable with `Escape`, navigable by keyboard or mouse. New
+  screen-space UI rendering primitives (`Renderer::BeginUIFrame`/
+  `DrawUIRect`/`DrawUIText`/`EndUIFrame`) sit behind the same raw-GL
+  boundary every other draw call already respects; a new CPU-side font
+  loader (`src/FontLoader.*`, `stb_truetype`) bakes DejaVu Sans into one
+  GPU atlas. `src/UIWidgets.*`/`src/UIStack.h` are the generic
+  screen/button/navigation-stack primitives; `src/PauseMenu.*` is the one
+  concrete menu built from them; `src/HUD.*` is the HUD, fed a plain
+  `HUDViewData` struct so it never depends on a concrete gameplay type.
+  Pausing freezes the fixed-step simulation completely (see "Milestone 13,
+  Pause policy") and gameplay input is suppressed via one boundary in
+  `Application::Run`, not scattered `if (menuOpen)` checks. See "Milestone
+  13" for the full design, the input-ownership boundary, and the new
+  standalone `judas_ui_tests` suite.
 
 Each milestone's demo content has been replaced (not extended) by the next;
 check out a tag to see or run an earlier milestone as it was.
@@ -2192,6 +2230,375 @@ did, spacecraft remaining stationary throughout the approach). All six
 standalone suites and the full staircase/plank/ramp/Planet-B traversal
 were re-verified after both fixes, unaffected.
 
+## Milestone 13
+
+Judas's first UI system: a persistent gameplay HUD and interactive pause
+menus, built as a genuinely new rendering/input capability rather than a
+third-party UI library dropped into the engine. This milestone touches
+`Renderer` (a new screen-space overlay draw path), adds a small family of
+new files (`src/FontLoader.*`, `src/UIWidgets.*`, `src/UIStack.h`,
+`src/PauseMenu.*`, `src/HUD.*`), and adds a narrow amount of new `Window`
+input surface — nothing about the 3D renderer, physics, gravity, player
+controller, spacecraft, or asset system changed.
+
+### Text rendering: a second, dedicated draw path, not a repurposed one
+
+`Renderer`'s existing `DrawMesh`/`DrawBox`/`DrawSphere` path (Milestone 9)
+was deliberately NOT reused for UI, even though it already supports
+textured, tinted quads. That path is built for the 3D scene: a
+view/projection matrix, per-fragment lighting against a world-space light
+direction, and (until this milestone) depth testing always on. Every one
+of those is actively wrong for a screen-space HUD panel or menu button —
+lighting a flat UI rectangle makes no sense, and depth-testing it against
+the 3D scene would make it disappear behind whatever's in front of the
+camera. Rather than adding uniform toggles to bypass lighting/projection
+for "UI mode," a second, much smaller shader
+(`kUIVertexShaderSource`/`kUIFragmentShaderSource` in `Renderer.cpp`) was
+written from scratch: it takes a position and size already in **pixels**
+and converts straight to clip space using only the window's own pixel
+dimensions (`uScreenSize`) — no separate orthographic projection matrix
+needed, no lighting terms at all, one `uColor` for tint/alpha and one
+`uUVOffset`/`uUVScale` pair so the same shader draws both a solid panel
+(sampling the existing 1x1 white fallback texture — see Milestone 9) and
+a font-atlas glyph (sampling a sub-rectangle of the atlas) without a
+shader variant for each.
+
+A single shared unit quad (`m_uiQuadVao`/`m_uiQuadVbo`, six non-indexed
+vertices in `[0,1]x[0,1]`) is reused for every `DrawUIRect` call and every
+glyph `DrawUIText` draws — the same "one shared mesh, transform entirely
+via uniforms" shape `DrawBox`/`DrawSphere` already use with
+`m_cubeMesh`/`m_sphereMesh`, just with pixel-space position/size uniforms
+instead of a full model matrix. No batching: a HUD/menu frame issues on
+the order of a few dozen draw calls (one per glyph, one per panel/button
+background), the same brute-force-is-fine-at-this-scale reasoning already
+documented for the physics broadphase — a text-heavy UI with hundreds of
+glyphs per frame would need real batching, this one doesn't.
+
+`BeginUIFrame`/`EndUIFrame` bracket every UI draw call each frame:
+`BeginUIFrame` disables depth testing (UI always draws on top, in call
+order — there is no 3D occlusion concept for it) and enables standard
+alpha blending (`GL_SRC_ALPHA`/`GL_ONE_MINUS_SRC_ALPHA`, see the two new
+`gl_core33.h` entries, `glDisable`/`glBlendFunc` — the first GL state this
+engine has ever needed to turn OFF at runtime rather than set once at
+`Init` and leave alone); `EndUIFrame` restores both, so the next frame's
+3D draws behave exactly as they did before Milestone 13 existed. Verified
+directly: the M1-12 regression script (jump/land/settle, full traversal)
+produces byte-identical fixed-step telemetry with these changes present,
+and the 3D scene screenshot from `judas_asset_tests`'s own regression run
+is unaffected in shape/lighting.
+
+### Font loading: `stb_truetype` + DejaVu Sans, baked once
+
+`src/FontLoader.h/.cpp` is the text-rendering sibling of
+`src/ModelLoader.*`/`src/TextureLoader.*` — same split: it produces plain
+CPU data (`FontAtlasData`: an RGBA `TextureData` atlas bitmap plus a
+95-entry `FontGlyph` table for printable ASCII 32-126, plus font-wide
+ascent/line-height metrics), and `Renderer::LoadFont` is the only place
+that uploads it (through the SAME `Renderer::CreateTexture` every other
+texture already goes through — the atlas is just another RGBA texture to
+that call, so no new GPU-upload code was needed for it).
+
+Uses `stb_truetype.h` (public domain, vendored at
+`third_party/stb_truetype.h`), the same vendoring reasoning already
+applied to `stb_image`/`stb_image_write`/`tiny_obj_loader`: text
+rasterization is a solved commodity problem, not something Judas needs to
+own. `stbtt_BakeFontBitmap` (the simple, single-call baking API, not the
+more configurable packing API) bakes all 95 glyphs into one 512x512
+single-channel coverage bitmap at a fixed pixel height (48px); `LoadFont`
+converts that to RGBA (`r=g=b=255`, `a=coverage`) so it can go through the
+ordinary texture upload path, and copies each `stbtt_bakedchar`'s fields
+into a plain `FontGlyph` (atlas UV rect, pixel size, baseline offset,
+advance) — nothing outside `FontLoader.cpp` needs to know `stb_truetype`'s
+own types exist, matching `MeshData`/`TextureData`'s "plain CPU data only"
+convention. `LoadFontAtlas`'s own return-value check (`stbtt_BakeFontBitmap`
+returns a non-positive value if the glyphs didn't fit) means a future
+change that doesn't fit the fixed 512x512 atlas fails loudly at startup
+rather than silently truncating glyphs.
+
+The demo font is DejaVu Sans (`assets/fonts/DejaVuSans.ttf`), chosen
+because it was already installed on the development machine under a
+permissive, redistribution-friendly license (the Bitstream Vera License —
+full text vendored alongside it at `assets/fonts/DejaVuSans-LICENSE.txt`)
+and needed no separate download/attribution search. One font, one bake, at
+one pixel height (48px) — both the HUD's small telemetry text and the
+menu's larger title/button text are drawn from the SAME atlas at different
+`scale` values passed to `DrawUIText` (0.4 and 0.5/0.75 respectively, see
+`src/HUD.cpp`/`src/UIWidgets.cpp`), not separate font assets. No Unicode,
+no bold/italic styles, no fallback glyph for out-of-range characters
+(silently advances by a space-width instead of drawing nothing) — none of
+that is needed for this milestone's plain-ASCII HUD/menu text.
+
+`DrawUIText` is deliberately single-line only — a caller that needs
+multiple lines (both `HUD::Draw` and `UIMenuScreen`'s title/button layout)
+calls it once per line at its own computed Y offset, using
+`Renderer::GetUITextLineHeight` to space them. This keeps the one
+low-level text primitive simple, per this milestone's own "minimum
+reusable capability" instruction, rather than teaching it about
+line-wrapping or multi-line alignment nothing here currently needs.
+
+### UI capability: screens, buttons, a navigation stack — not a framework
+
+`src/UIWidgets.h/.cpp` defines exactly two things: `UIButton` (a label, an
+activation callback taking a `UIStack&`, and a computed screen-space rect)
+and `UIMenuScreen` (a title plus a vertical column of buttons, with
+`Layout`/`Draw`/`MoveFocus`/`Activate`/`HandleMouseMove`/`HandleMouseClick`).
+There is no generic widget tree, no scrolling, no text input field, no
+theming system, no anchor-enum layout engine — a `UIMenuScreen` always
+lays its buttons out as a single centered column under a title, recomputed
+every call from the CURRENT window size (the same "recompute from current
+size every frame rather than react to a resize event" approach
+`Renderer::SetCamera`'s aspect-ratio recomputation already established —
+see "3D rendering pipeline" — reused here for the exact same reason: it's
+cheap for a handful of buttons and needs no separate resize-event
+plumbing, which is what makes the menu "resize-safe" without extra
+machinery). One button's own text can be rewritten in place
+(`SetButtonLabel`) — the mechanism the HUD-visibility toggle button uses
+to show its own current state ("Show HUD: On"/"Off") without either
+`UIMenuScreen` or `UIButton` knowing what "HUD visibility" is.
+
+`src/UIStack.h` is the entire "screen open/close/back stack" concept this
+milestone's required navigation flow needs — `Push`/`Pop`/`Clear`/
+`IsOpen`/`Top`. Deliberately non-owning: it holds raw pointers into
+`UIMenuScreen`s that already exist as long-lived members of whoever
+composes a menu (here, `PauseMenu` owns exactly two: the pause root screen
+and the options screen, constructed once), the same "handle, not
+ownership" shape `PhysicsWorld::BodyHandle`/`Renderer::MeshHandle` already
+establish elsewhere in this engine.
+
+`src/PauseMenu.h/.cpp` is the ONE place that knows what a "pause menu"
+actually is — the generic primitives above stay completely agnostic to it.
+It owns: the navigation stack itself; whether the HUD should currently
+draw (`m_hudVisible` — the options screen's one real, non-invented
+setting, chosen specifically because "toggle the HUD this milestone just
+built" is genuine, present functionality, unlike a fabricated settings
+menu with nothing real to configure); and a `m_quitRequested` flag, read
+by `Application::Run` exactly like `Window::ShouldClose()` already is
+(`while (!window.ShouldClose() && !pauseMenu.QuitRequested())`), rather
+than `PauseMenu` reaching into `Window`/SDL itself to close anything.
+`HandleBackRequest` is the single contextual action bound to `Escape`:
+closed -> open (push the pause root); on the nested Options screen -> pop
+back to the root; on the root itself -> close entirely (resume) — one
+action serving the whole required
+`gameplay -> pause -> nested -> back -> resume -> gameplay` flow, rather
+than the caller having to choose between separate open/close/back calls.
+
+### The HUD: plain view data in, five live lines out
+
+`src/HUD.h` defines `HUDViewData` — five plain fields
+(`grounded`, `gravityMagnitude`, `controllingSpacecraft`, `pilotAttached`,
+`spacecraftLinearSpeed`) — and `HUD::Draw(renderer, windowWidth,
+windowHeight, data)`. `HUD.cpp`/`HUD.h` never include
+`PlayerController.h`, `GravityContextMap.h`, `PilotAttachment.h`,
+`FlyingPrimitiveControl.h`, or `PhysicsWorld.h` — `Application.cpp` (the
+composition root) is the only place that reads those each frame and fills
+in the struct:
+
+```cpp
+hudData.grounded = player.IsGrounded();
+hudData.gravityMagnitude = glm::length(gravity.Sample(player.GetPosition()));
+hudData.controllingSpacecraft = flyingPrimitiveControl.controlled;
+hudData.pilotAttached = pilotAttachment.attached;
+hudData.spacecraftLinearSpeed =
+    glm::length(physicsWorld.GetLinearVelocity(flyingPrimitiveControl.handle));
+```
+
+This is the same "gameplay hands Judas's rendering layer plain data, never
+a live reference to itself" shape `DrawBox`/`DrawMesh`'s
+position/rotation/color parameters already use for the 3D world — the HUD
+is presentation/control infrastructure reading gameplay state, never
+authoritative gameplay state itself, exactly as this milestone's brief
+requires. No health, inventory, quests, or ammunition were invented to
+give the HUD more to show — the five candidates listed in the brief
+(grounded/airborne, gravity magnitude, player-vs-spacecraft control, pilot
+attachment, spacecraft speed) are exactly the five drawn, and every one of
+them is something Judas already computes for other reasons.
+
+The panel itself: a small translucent dark rectangle, sized to fit its own
+longest line (measured via `Renderer::MeasureUIText` before drawing the
+background, so the panel never clips or over-pads its text), anchored to
+a fixed pixel margin from the window's top-left corner — the one anchor
+this milestone's single HUD panel needed; a general anchor-enum layout
+system was judged unnecessary scope for one panel in one corner.
+
+### Input ownership: one boundary, not scattered checks
+
+Every UI-related input decision lives in ONE place: a block at the very
+top of `Application::Run`'s interactive loop body, executed before any
+gameplay system sees that frame's input at all. It:
+
+1. Consumes `Window::ConsumeUIBackRequest()` (Escape) and calls
+   `pauseMenu.HandleBackRequest()` unconditionally — the menu itself
+   decides what "back" means given its own current state.
+2. Consumes the four other new edge-triggered UI requests (navigate
+   up/down, activate, click) and — ONLY if `pauseMenu.IsOpen()` — routes
+   them into `PauseMenu::NavigateUp`/`NavigateDown`/`Activate`/
+   `HandleMouseMove`/`HandleMouseClick`. `Window::GetMousePosition`
+   (real cursor position in window-client pixels, unlike
+   `GetMouseDelta`, which reads zero while the mouse isn't captured — see
+   below) drives continuous hover tracking every frame the menu is open.
+3. On an open/closed TRANSITION (tracked via a local `wasPauseMenuOpen`,
+   not re-asserted every frame — re-calling `SDL_SetRelativeMouseMode`
+   with an unchanged value every frame would fight SDL's own internal
+   motion accumulator for no benefit), calls
+   `window.SetMouseCaptured(!pauseMenu.IsOpen())`: opening the menu
+   releases the cursor to an absolute, clickable position; closing it
+   recaptures for mouse-look, exactly restoring Milestone 1-12 gameplay
+   feel the instant the menu closes.
+4. Gates an entire block — `player.UpdateFrameInput` (mouse look, jump
+   latching), `Window::ConsumeResetRequest`/`ConsumeControlToggleRequest`
+   handling, and the whole fixed-step physics accumulator loop — behind
+   `if (!pauseMenu.IsOpen())`.
+
+That fourth point is what satisfies this milestone's explicit "don't
+scatter `if (menuOpen)` checks throughout gameplay systems" instruction:
+`PlayerController`, `FlyingPrimitiveControl`, `PilotControl`, and
+`PhysicsWorld` were not modified at all for Milestone 13, and none of them
+know a menu exists. The boundary is entirely in `Application::Run` — the
+composition root simply doesn't call those systems this frame, rather
+than calling them with an added "is the menu open" parameter threaded
+through every one of them.
+
+**`Window`'s Milestone 13 additions**, all in the same edge-triggered
+"consume once, then clear" shape `ConsumeJumpRequest`/`ConsumeResetRequest`
+already established: `ConsumeUIBackRequest` (Escape — see below for why
+this superseded Escape's old meaning), `ConsumeUINavigateUpRequest`/
+`ConsumeUINavigateDownRequest` (Up/Down arrow keys — safe to reuse the
+existing `MoveForward`/`MoveBackward` arrow-key aliases from
+`Window::IsActionActive`, since gameplay's own continuous Action polling
+is never consulted while the menu owns input, per point 4 above),
+`ConsumeUIActivateRequest` (Enter/Return), and `ConsumeUIClickRequest`
+(left mouse button, reporting the click's own cursor position). Plus two
+plain accessors with no edge-triggering: `GetMousePosition` (absolute
+cursor position, any time) and `SetMouseCaptured` (explicit relative-
+mouse-mode control, called only from `Application::Run`'s transition
+logic above — not bound to any key of `Window`'s own).
+
+**Escape's meaning changed.** Through Milestone 12, Escape toggled mouse
+capture directly (a standalone debug feature: "release the cursor without
+closing the application"). As of Milestone 13, Escape drives
+`ConsumeUIBackRequest` instead, and mouse capture is driven entirely by
+whether the pause menu is open (see point 3 above) — the old standalone
+toggle would now fight that: releasing the cursor with the old behavior
+while gameplay still owned input had no menu to interact with anyway, and
+the pause menu now provides a strictly more useful way to get an
+interactable cursor. Superseded, not preserved alongside the new
+behavior — see architectural-law-style precedent for this in Milestone
+11/12's own "superseded, not kept as a parallel path" notes.
+
+No `JUDAS_TEST_SCRIPT` scripting was added for UI interaction (no
+`PAUSE`/`UI_CLICK`/etc. directive) — `Window`'s new Consume* methods all
+return `false` in test-input mode (see their own doc comments), a
+deliberate, documented gap: this milestone's own brief states human
+validation is authoritative for UI appearance and interaction, and the
+navigation/input-ownership LOGIC (as opposed to real keyboard/mouse
+plumbing) is covered instead by the standalone `judas_ui_tests` executable
+— see "Automated testing" below.
+
+### Pause policy: the world freezes completely, not just "ignores input"
+
+The brief required this milestone to "deliberately define what happens to
+fixed-step simulation" while paused and document the choice. Chosen
+policy: **while the pause menu is open, the fixed-step simulation does not
+advance at all** — no `PhysicsWorld::Step`, no gravity sampling, no
+`PlayerController::FixedUpdate`, and critically, the leftover
+`physicsAccumulator` (render-frame time not yet consumed by a fixed step —
+see "Simulation/presentation boundary") is never even accumulated toward
+while paused, so resuming picks up exactly where it left off: no
+catch-up burst of steps, no backlog silently dropped by the existing
+`kMaxPhysicsStepsPerFrame` cap firing on resume. The world is frozen, not
+merely deaf to input.
+
+The alternative — keep simulating behind the menu, just don't accept
+input — was rejected for two reasons. First, it doesn't match the brief's
+own literal requirement ("gameplay input suppressed while menus own
+input") as directly: a player standing still would keep drifting under
+gravity/friction while unable to react, which reads as suppressed
+CONTROL, not suppressed GAMEPLAY. Second, and more concretely: the
+spacecraft's own Milestone 12 inertia means an unpiloted-by-input-but-
+still-simulating spacecraft would keep coasting (or, if freshly released
+mid-rotation, keep tumbling) toward whatever it was already headed for
+while its pilot is stuck in a menu with no way to react — a stranger,
+harder-to-reason-about state than simply freezing everything. A full
+freeze also composes trivially with every existing system: presentation
+interpolation (`presentationAlpha`) simply stops changing while paused (no
+new fixed-step state to interpolate toward), so the render frame drawn
+behind the dimmed menu overlay is whatever the world looked like the
+instant it paused, held steady — exactly the visual a player expects from
+"paused."
+
+### Automated evidence
+
+`judas_ui_tests` (new standalone executable, `tests/UITests.cpp`) —
+pure CPU logic, no window, no GL context, no font loaded — verifies:
+`UIStack` push/pop/clear/`IsOpen`/`Top` semantics (Section A);
+`UIMenuScreen` focus navigation (wrapping both directions), layout at
+multiple window sizes without degenerating, and mouse hit-testing
+including a deliberate miss (Section B); the exact required
+`PauseMenu` flow, `gameplay -> pause -> nested -> back -> resume ->
+gameplay` (Section C); that the Resume button closes the menu entirely
+even when reached from the nested screen, not just via repeated `Escape`
+(Section D); that Quit sets a flag rather than acting itself (Section E);
+that the HUD-visibility toggle flips correctly, on repeated activation,
+AND persists across navigating away from and back to the options screen
+(Section F — this is real state, not per-screen UI scratch state); and
+the exact `!pauseMenu.IsOpen()` boolean `Application::Run`'s real loop
+gates gameplay input on, transitioning correctly across open/close
+(Section G, "the input-ownership boundary, expressed as a tiny simulated
+tick" — the actual condition the real loop branches on, verified
+independent of any window/input plumbing); plus that `HUDViewData` is
+exactly the plain, independently-constructible struct it claims to be
+(Section H). This suite links `Renderer.cpp`/`gl_core33.cpp`/
+`FontLoader.cpp` (since `UIMenuScreen::Draw`/`HUD::Draw` reference
+`Renderer`'s UI methods at compile time — the same reasoning
+`judas_spacecraft_control_tests` already applies to linking `Window.cpp`
+without ever calling `Init`) but never calls `Draw` itself, since
+`Renderer`'s GL function pointers are unresolved (`nullptr`) without a
+real GL context — calling them would crash, not merely produce wrong
+output.
+
+Beyond the new suite: the full M1-12 regression walk (spawn, staircase,
+plank crossing, spacecraft boarding, jump-land-settle under both flat and
+tilted local gravity) was re-run via `JUDAS_TEST_SCRIPT` after every
+Milestone 13 change and produces byte-identical fixed-step telemetry to
+pre-Milestone-13 runs — expected, since no gameplay/physics file was
+touched, but verified rather than assumed. All five prior standalone
+suites (`judas_physics_tests`, `judas_collision_tests`, `judas_asset_tests`,
+`judas_step_climb_tests`, `judas_pilot_attachment_tests`) plus
+`judas_spacecraft_control_tests` remain green on a clean rebuild with zero
+compiler warnings (`-Wall -Wextra`).
+
+Appearance and real keyboard/mouse interaction (crispness of the font at
+its baked size, button hover/click feel, resize behavior with a real
+window, pause/resume while walking AND while piloting the spacecraft) were
+additionally verified via a small standalone offscreen-rendering harness
+(constructing a real hidden-but-genuine GL context via `Window::Init(...,
+visible=false)`, exactly like `TestHarness.h` already does, then calling
+the exact same `Renderer`/`PauseMenu`/`HUD` draw calls `Application::Run`
+does and capturing the result via the existing `Renderer::CaptureFrame`) —
+confirmed text renders crisply, the pause-root and nested options screens
+both render and composite correctly, and focus highlighting/button
+backgrounds/panel translucency all work as designed, before handing the
+build to the operator for the real interactive validation this milestone's
+brief requires for appearance/interaction specifically.
+
+### What was deliberately not built
+
+Per this milestone's brief: inventory, quests, dialogue, crafting,
+health/damage, save/load, key rebinding, controller support, a UI
+animation framework, an editor, HTML/browser UI, generic data
+binding/reflection, a localization framework, and gameplay systems
+invented solely to give the HUD/menu something to show. Also not built,
+judged genuinely out of this milestone's scope rather than merely
+deferred: a general anchor-enum/layout engine (the HUD needed exactly one
+anchor point; `UIMenuScreen` needed exactly one column layout); glyph
+batching (fine at this milestone's few-dozen-draws-per-frame UI, would
+matter for a much busier one); `JUDAS_TEST_SCRIPT` scripting for UI
+interaction (human validation covers it directly, per the brief); mouse-
+wheel/scroll support (nothing in this menu scrolls); a themeable/
+multi-style UI (one visual style, shared by both screens); Unicode or
+multi-font text; and any generalized "secure/attach a widget to X"
+concept beyond the one pause-menu/HUD pairing this milestone needed.
+
 ## Milestone 8
 
 The milestone's own scope statement, verbatim in spirit: "walk onto it →
@@ -3705,6 +4112,14 @@ the release step matched the spacecraft's own logged velocity to four
 decimal places), after which ordinary gravity integration, collision, and
 landing resumed with no snapping or double-counted motion.
 
+**Milestone 13** added `judas_ui_tests` (`tests/UITests.cpp`) — headless
+CPU-only coverage of `UIStack`/`UIMenuScreen`/`PauseMenu`/`HUDViewData`
+(navigation flow, focus wrapping, hit-testing, the HUD-toggle's persistent
+state, and the exact boolean `Application::Run`'s real loop gates gameplay
+input on) — see "Milestone 13, Automated evidence" for the full section
+breakdown. UI appearance/interaction itself is human-validated, per that
+milestone's own brief; no `JUDAS_TEST_SCRIPT` directive was added for UI.
+
 ## Remaining limitations
 
 Recorded honestly rather than left implicit — these are known, deliberately
@@ -3962,6 +4377,24 @@ deferred, not oversights:
   mandate). A pilot flying at high speed near solid geometry should expect
   a hard collision to cost more speed than gentle Coulomb friction alone
   would suggest.
+- **Milestone 13: the UI font atlas is a fixed 512x512 bake at one pixel
+  height (48px), covering only printable ASCII (32-126).** Sufficient for
+  this milestone's HUD telemetry and menu labels; a future UI needing
+  Unicode, multiple font weights/styles, or much larger on-screen text
+  would need either a bigger/multiple atlas or `stb_truetype`'s more
+  configurable packing API (`stbtt_PackBegin`/`PackFontRange`) instead of
+  the simple `stbtt_BakeFontBitmap` call used here.
+- **Milestone 13: `DrawUIText` draws exactly one line; there is no
+  wrapping, multi-line layout, or text alignment beyond what callers
+  compute themselves** (`HUD`/`UIMenuScreen` each call it once per line at
+  a manually computed Y offset). A future UI screen with paragraph-length
+  text would need line-wrapping added to a caller, or to `DrawUIText`
+  itself.
+- **Milestone 13: no glyph/quad batching — one GL draw call per character
+  and per panel.** Fine at this milestone's few-dozen-draws-per-frame HUD/
+  menu; a much busier UI (a scrolling log, a large inventory grid) would
+  need real batching (a single VBO upload per frame, indexed by glyph)
+  before this brute-force approach would show a real cost.
 
 ## FUTURE CONSTRAINTS PRESERVED
 
@@ -4246,3 +4679,18 @@ Explicitly deferred, not forgotten:
   passes through; mesh collision or any renderer change beyond what
   Milestone 9/11 already established; terrain, atmosphere, UI, audio, or
   networking.
+- **Milestone 13 additions:** inventory, quests, dialogue, crafting,
+  health/damage systems, save/load, key rebinding, controller support, a
+  UI animation framework, an in-game editor, HTML/browser-based UI,
+  generic data binding/reflection, a localization framework, or any
+  gameplay system invented solely to give the HUD/menu something to
+  display; a general anchor-enum/multi-point layout engine — the HUD
+  needed exactly one anchor, `UIMenuScreen` exactly one column layout;
+  glyph/quad batching — fine at this milestone's few-dozen-draws-per-frame
+  scale (see "Remaining limitations"); `JUDAS_TEST_SCRIPT` scripting for
+  UI interaction — human validation covers it directly, per this
+  milestone's own brief; Unicode, multiple font weights/styles, or
+  line-wrapping text layout; mouse-wheel/scroll support; a themeable or
+  multi-style UI — one visual style, shared by the HUD panel and both menu
+  screens; and any generalized "attach/secure a UI widget to X" concept
+  beyond the one HUD + pause-menu pairing this milestone needed.

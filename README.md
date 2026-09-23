@@ -8,7 +8,7 @@ This is **not** a general-purpose engine and is not trying to compete with
 Unity, Unreal, or Godot. It exists to serve one specific class of game, and
 its architecture is deliberately narrow.
 
-## Status: Milestone 12
+## Status: Milestone 13
 
 A controllable player walks, jumps, and falls under real physics — Judas's
 own physics engine, not a third-party library — across two independent
@@ -116,10 +116,36 @@ a very hard, fast collision can shed more speed than gentle friction alone
 would suggest). That's it — no mantling, climbing, terrain, real planets,
 more than one controllable vehicle, shadows, or further gameplay yet.
 
+**New this milestone:** Judas has its own UI system — a persistent HUD and
+a working pause menu, both rendered through a new screen-space overlay
+path behind the same raw-GL boundary every other draw call already
+respects. A small panel in the top-left corner always shows five genuinely
+live values: grounded/airborne, current local gravity magnitude, whether
+you're controlling the player or the spacecraft, pilot-attachment state,
+and the spacecraft's current speed. Press `Escape` to pause: the world
+freezes completely (see below), the screen dims, and a menu appears with
+`Resume`, `Options`, and `Quit` — `Options` is one nested screen with a
+real "Show HUD" toggle. Navigate with the arrow keys and `Enter`, or point
+and click with the mouse (the cursor is released automatically while a
+menu is open, and recaptured the instant it closes). `Escape` itself is
+context-sensitive: it opens the menu from gameplay, backs out of the
+nested screen to the root, and closes the menu entirely (resuming) from
+the root — matching the required flow of gameplay -> pause -> nested ->
+back -> resume -> gameplay. **Pausing freezes the simulation completely**,
+not just input: no physics stepping, no gravity, no player movement,
+while paused — chosen deliberately over "keep simulating behind the menu"
+so a coasting Milestone 12 spacecraft doesn't keep drifting while its
+pilot is stuck in a menu unable to react. Text is drawn with a newly
+vendored font loader (`stb_truetype`, baking DejaVu Sans into one GPU
+atlas — see `assets/fonts/DejaVuSans-LICENSE.txt` for its license). See
+[`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md), "Milestone 13," for the
+full design, the single input-ownership boundary that keeps gameplay code
+from needing to know a menu exists, and the pause/simulation policy.
+
 This is intentional — see `docs/ARCHITECTURE.md` for why, what's
 deliberately not built yet, and how this small foundation avoids blocking
 the much larger long-term design. Earlier milestones are preserved as git
-tags (`milestone-1` through `milestone-12`, once this one is tagged) rather
+tags (`milestone-1` through `milestone-13`, once this one is tagged) rather
 than kept running alongside the current demo.
 
 ## Building
@@ -179,7 +205,7 @@ walks the player relative to that look direction and the current surface
 | Strafe right            | `D` or `Right Arrow`  |
 | Jump (only while grounded) | `Space`             |
 | Look around             | Mouse movement        |
-| Release/recapture mouse | `Escape`               |
+| Pause / back / resume   | `Escape`               |
 | Take/release piloting control of the spacecraft (only while standing on it) | `F` |
 | Reset the player and world | `R`               |
 
@@ -188,6 +214,33 @@ WASD/Q/E and a separate IJKL+U/O cluster mean something different — see
 "The spacecraft" below.
 
 Close the window normally (window controls / `Alt+F4` / etc.) to exit.
+
+## HUD and pause menu
+
+A small panel in the top-left corner always shows five live values:
+grounded/airborne, the current local gravity magnitude, whether you're
+controlling the player or the spacecraft, pilot-attachment state, and the
+spacecraft's current speed.
+
+Press `Escape` to pause. The mouse is released automatically (no need to
+press anything else to get a usable cursor) and the world freezes
+completely — nothing moves, including the spacecraft, until you resume.
+
+| Menu action              | Keys                          |
+|---------------------------|-------------------------------|
+| Navigate up / down        | `Up Arrow` / `Down Arrow`     |
+| Activate the focused button | `Enter`                     |
+| Hover / click a button    | Mouse movement / left click   |
+| Back one level / resume   | `Escape`                      |
+
+From the pause screen, `Options` opens one nested screen with a single
+"Show HUD" toggle — `Escape` (or the `Back` button) returns to the pause
+screen; `Escape` again (or `Resume`) closes the menu and hands input back
+to gameplay, recapturing the mouse automatically. `Quit` closes the
+application from the menu, same as closing the window normally. See
+[`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md), "Milestone 13," for the
+full design and why pausing freezes the simulation rather than merely
+suppressing input.
 
 ### Steps and slopes
 
@@ -287,11 +340,18 @@ integrated result, covering sustained-thrust acceleration, coasting after
 release, orientation/velocity independence, counter-thrust, perpendicular
 thrust, F/m mass response, angular coasting, counter-torque, the real
 inverse-inertia-tensor's per-axis response, gravity+thrust composition, a
-no-op while uncontrolled, and the same rotate-the-whole-scenario check):
+no-op while uncontrolled, and the same rotate-the-whole-scenario check);
+and `judas_ui_tests` (Milestone 13 — the UI navigation/input-ownership
+logic: the screen stack, focus navigation and hit-testing, the pause
+menu's exact required open/nested/back/resume flow, the HUD-visibility
+toggle's persistent state, and the same boolean the real game loop gates
+gameplay input on — pure CPU logic, no window/GL/font; UI appearance and
+real interaction are human-validated instead, see `docs/ARCHITECTURE.md`,
+"Milestone 13, Automated evidence"):
 
 ```bash
-cmake --build build --target judas_physics_tests judas_collision_tests judas_asset_tests judas_step_climb_tests judas_pilot_attachment_tests judas_spacecraft_control_tests
-./build/judas_physics_tests && ./build/judas_collision_tests && ./build/judas_asset_tests && ./build/judas_step_climb_tests && ./build/judas_pilot_attachment_tests && ./build/judas_spacecraft_control_tests
+cmake --build build --target judas_physics_tests judas_collision_tests judas_asset_tests judas_step_climb_tests judas_pilot_attachment_tests judas_spacecraft_control_tests judas_ui_tests
+./build/judas_physics_tests && ./build/judas_collision_tests && ./build/judas_asset_tests && ./build/judas_step_climb_tests && ./build/judas_pilot_attachment_tests && ./build/judas_spacecraft_control_tests && ./build/judas_ui_tests
 ```
 
 ## Assets
@@ -302,6 +362,12 @@ authored for this project (not derived from any external asset) — public
 domain / CC0-equivalent, redistributable without restriction. See
 [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md), "Milestone 9, Assets," and
 "Milestone 11," for the full provenance notes.
+
+`assets/fonts/DejaVuSans.ttf` (Milestone 13) is the DejaVu Sans font,
+under the Bitstream Vera License (a permissive, redistribution-friendly
+license) — see [`assets/fonts/DejaVuSans-LICENSE.txt`](assets/fonts/DejaVuSans-LICENSE.txt)
+for the full text. Rasterized at runtime via `stb_truetype`
+(`third_party/stb_truetype.h`, public domain).
 
 ## License
 

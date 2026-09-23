@@ -5,6 +5,7 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/quaternion.hpp>
 
+#include "FontLoader.h"
 #include "MeshData.h"
 #include "TextureData.h"
 #include "gl_core33.h"
@@ -109,6 +110,70 @@ public:
 
     void EndFrame();
 
+    // --- Milestone 13: UI overlay rendering ---
+    //
+    // A second, deliberately separate draw path from DrawMesh/DrawBox/
+    // DrawSphere above: screen-space pixel coordinates (not world-space +
+    // a view/projection matrix), unlit, alpha-blended, depth-test-disabled
+    // — exactly what a 2D HUD/menu overlay needs and nothing the 3D path
+    // already provides. Still entirely behind this class's own raw-GL
+    // boundary (see docs/ARCHITECTURE.md, "Milestone 13, Text rendering")
+    // — gameplay/UI code never touches OpenGL, only these calls.
+    //
+    // Call BeginUIFrame once after EndFrame, issue any number of
+    // DrawUIRect/DrawUIText calls, then EndUIFrame before SwapBuffers.
+
+    // Loads and uploads the one font this engine's UI text needs (see
+    // src/FontLoader.h) — same load-CPU-data-then-upload split as
+    // CreateMesh/CreateTexture. Call once, near Init; DrawUIText silently
+    // draws nothing if no font has been loaded yet.
+    bool LoadFont(const char* path, float pixelHeight, std::string& outError);
+
+    // Sets the screen-space pixel dimensions used to convert every
+    // subsequent DrawUIRect/DrawUIText call's pixel coordinates into clip
+    // space, disables depth testing (UI always draws on top, in call
+    // order — no 3D occlusion concept applies here), and enables standard
+    // alpha blending (source-alpha, one-minus-source-alpha) so translucent
+    // panels and anti-aliased glyph edges composite correctly over
+    // whatever DrawMesh/DrawBox/DrawSphere already rendered this frame.
+    void BeginUIFrame(int windowWidth, int windowHeight);
+
+    // Draws a solid (or translucent, via colorRgba's alpha) axis-aligned
+    // rectangle, `position` = top-left corner in pixels, `size` in pixels.
+    // Used for menu panels/button backgrounds — no border, no rounding, no
+    // texture: the minimum a pause menu actually needs (see
+    // docs/ARCHITECTURE.md, "Milestone 13").
+    void DrawUIRect(const glm::vec2& position, const glm::vec2& size, const glm::vec4& colorRgba);
+
+    // Draws `text` with its top-left corner at `position` (pixels), scaled
+    // relative to the font's own baked pixel size (see FontAtlasData::
+    // pixelHeight — `scale = 1.0` draws at exactly that baked size).
+    // Single-line only: a caller that needs multiple lines (see src/HUD.cpp,
+    // src/UIWidgets.cpp) calls this once per line at its own computed Y
+    // offset, using GetUITextLineHeight below — kept this simple
+    // deliberately, per M13's "minimum reusable capability" instruction,
+    // rather than teaching this one call about line-wrapping/alignment.
+    // No-op (draws nothing) if LoadFont was never called or failed.
+    void DrawUIText(const std::string& text, const glm::vec2& position, float scale,
+                     const glm::vec4& colorRgba);
+
+    // The pixel width/height `text` would occupy if drawn via DrawUIText at
+    // the same `scale` — used by menu layout (centering button labels,
+    // sizing button backgrounds to fit their text) and HUD layout. Returns
+    // (0, 0) if no font is loaded.
+    glm::vec2 MeasureUIText(const std::string& text, float scale) const;
+
+    // The font's own recommended baseline-to-baseline distance at `scale`
+    // — what a caller drawing several DrawUIText lines should advance Y by
+    // between them. Returns 0 if no font is loaded.
+    float GetUITextLineHeight(float scale) const;
+
+    // Re-enables depth testing (so the next frame's 3D draws behave
+    // exactly as before UI rendering existed) and disables blending. Call
+    // once after the last DrawUIRect/DrawUIText this frame, before
+    // SwapBuffers.
+    void EndUIFrame();
+
     // Reads back the current color buffer as tightly-packed 8-bit RGB rows,
     // top row first (`glReadPixels` itself returns bottom row first — this
     // flips it, since that's what every common image format/library
@@ -158,4 +223,24 @@ private:
 
     glm::mat4 m_view{1.0f};
     glm::mat4 m_projection{1.0f};
+
+    // --- Milestone 13: UI overlay state ---
+    GLuint m_uiShaderProgram = 0;
+    GLuint m_uiQuadVao = 0;
+    GLuint m_uiQuadVbo = 0;
+    GLint m_uiUScreenSize = -1;
+    GLint m_uiUPosition = -1;
+    GLint m_uiUSize = -1;
+    GLint m_uiUColor = -1;
+    GLint m_uiUTexture = -1;
+    GLint m_uiUUVOffset = -1;
+    GLint m_uiUUVScale = -1;
+    glm::vec2 m_uiScreenSize{0.0f, 0.0f};
+
+    TextureHandle m_fontAtlasTexture;
+    FontGlyph m_fontGlyphs[kFontGlyphCount];
+    float m_fontPixelHeight = 0.0f;
+    float m_fontAscent = 0.0f;
+    float m_fontLineHeight = 0.0f;
+    bool m_fontLoaded = false;
 };

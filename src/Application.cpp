@@ -20,7 +20,9 @@
 #include "FlyingPrimitiveControl.h"
 #include "GravityContextMap.h"
 #include "GravityField.h"
+#include "HUD.h"
 #include "ModelLoader.h"
+#include "PauseMenu.h"
 #include "PhysicsWorld.h"
 #include "PilotAttachment.h"
 #include "PilotControl.h"
@@ -338,6 +340,19 @@ const char* const kBeaconTexturePath = "assets/textures/beacon.png";
 // separate model-to-body correction is needed — scale 1, identity offset.
 const char* const kSpacecraftModelPath = "assets/models/plane.obj";
 
+// --- Milestone 13: UI font ---
+//
+// DejaVu Sans (Bitstream Vera License — see assets/fonts/DejaVuSans-
+// LICENSE.txt), baked once at a fixed pixel size via Renderer::LoadFont
+// (src/FontLoader.h/.cpp, stb_truetype) — see docs/ARCHITECTURE.md,
+// "Milestone 13, Text rendering," for the full vendoring/licensing
+// rationale. 48px bakes crisp enough for both the HUD's small telemetry
+// text (drawn at a smaller UI scale, see src/HUD.cpp) and the pause menu's
+// larger title/button text (drawn at a larger scale) from the SAME atlas —
+// one font, one bake, no separate small/large font assets.
+const char* const kUIFontPath = "assets/fonts/DejaVuSans.ttf";
+constexpr float kUIFontPixelHeight = 48.0f;
+
 // One directional light plus a small constant ambient term — see
 // docs/ARCHITECTURE.md, "Milestone 9, Lighting." A plain, fixed world-space
 // direction chosen only to rake visibly across both the beacon and the
@@ -460,7 +475,7 @@ int Application::Run() {
     const bool isTestRun = testScriptPath != nullptr;
 
     Window window;
-    if (!window.Init("Project Judas - Milestone 11", kWindowWidth, kWindowHeight,
+    if (!window.Init("Project Judas - Milestone 13", kWindowWidth, kWindowHeight,
                       !isTestRun)) {
         std::fprintf(stderr, "Window initialization failed.\n");
         return 1;
@@ -510,6 +525,13 @@ int Application::Run() {
     const MeshHandle spacecraftMesh = renderer.CreateMesh(spacecraftMeshData);
 
     renderer.SetLighting(kLightDirection, kLightColor, kAmbientColor);
+
+    // Milestone 13: the UI font — same fail-cleanly-before-any-gameplay-
+    // state-exists pattern as the beacon/spacecraft assets above.
+    if (!renderer.LoadFont(kUIFontPath, kUIFontPixelHeight, assetError)) {
+        std::fprintf(stderr, "%s\n", assetError.c_str());
+        return 1;
+    }
 
     PhysicsWorld physicsWorld;
     if (!physicsWorld.Init()) {
@@ -674,6 +696,18 @@ int Application::Run() {
         }
     };
 
+    // Milestone 13: the pause menu and HUD — interactive-loop-only (see
+    // docs/ARCHITECTURE.md, "Milestone 13, Automated testing"): the
+    // JUDAS_TEST_SCRIPT harness verifies gameplay/physics behavior
+    // headlessly and was deliberately not taught to script UI interaction;
+    // src/PauseMenu.h/src/UIWidgets.h's own navigation/input-ownership
+    // logic is covered instead by the standalone judas_ui_tests
+    // executable (no window/GL needed — see tests/UITests.cpp), and
+    // on-screen appearance/interaction by human validation, exactly as
+    // this milestone's brief requires.
+    PauseMenu pauseMenu;
+    HUD hud;
+
     int exitCode = 0;
     if (isTestRun) {
         exitCode = RunTestHarness(window, renderer, physicsWorld, player, gravity, dynamicBodies,
@@ -701,8 +735,59 @@ int Application::Run() {
             std::fflush(stdout);
         }
 
-        while (!window.ShouldClose()) {
+        // Milestone 13: mouse capture tracks the menu's own open/closed
+        // state (see Window::SetMouseCaptured's doc comment) — only
+        // changed ON THE TRANSITION, not every frame, since re-asserting
+        // relative mouse mode every frame would fight SDL's own internal
+        // accumulator for no benefit (see docs/ARCHITECTURE.md, "Milestone
+        // 13, Input ownership").
+        bool wasPauseMenuOpen = false;
+
+        while (!window.ShouldClose() && !pauseMenu.QuitRequested()) {
             window.PollEvents();
+
+            // --- Milestone 13: the single input-routing boundary ---
+            //
+            // Everything UI-related is handled here, in one place, BEFORE
+            // any gameplay system sees this frame's input — see
+            // docs/ARCHITECTURE.md, "Milestone 13, Input ownership," for
+            // why this satisfies "don't scatter `if (menuOpen)` checks
+            // throughout gameplay systems": PlayerController,
+            // FlyingPrimitiveControl, and PilotControl are never told a
+            // menu exists. Instead, the block below either lets gameplay
+            // run this frame or doesn't — gameplay code itself stays
+            // exactly as it was through Milestone 12.
+            //
+            // Escape is context-sensitive (see PauseMenu::HandleBackRequest):
+            // closed -> open, nested screen -> back one level, root screen
+            // -> resume. Up/Down/Enter/click only affect an OPEN menu —
+            // consumed unconditionally either way so a stray press doesn't
+            // leak into next frame, but only acted on while there's a menu
+            // to act on.
+            if (window.ConsumeUIBackRequest()) {
+                pauseMenu.HandleBackRequest();
+            }
+            const bool uiUp = window.ConsumeUINavigateUpRequest();
+            const bool uiDown = window.ConsumeUINavigateDownRequest();
+            const bool uiActivate = window.ConsumeUIActivateRequest();
+            int uiClickX = 0, uiClickY = 0;
+            const bool uiClicked = window.ConsumeUIClickRequest(uiClickX, uiClickY);
+            if (pauseMenu.IsOpen()) {
+                pauseMenu.Layout(window.Width(), window.Height());
+                if (uiUp) pauseMenu.NavigateUp();
+                if (uiDown) pauseMenu.NavigateDown();
+                if (uiActivate) pauseMenu.Activate();
+                int mouseX = 0, mouseY = 0;
+                window.GetMousePosition(mouseX, mouseY);
+                pauseMenu.HandleMouseMove(glm::vec2(static_cast<float>(mouseX), static_cast<float>(mouseY)));
+                if (uiClicked) {
+                    pauseMenu.HandleMouseClick(glm::vec2(static_cast<float>(uiClickX), static_cast<float>(uiClickY)));
+                }
+            }
+            if (pauseMenu.IsOpen() != wasPauseMenuOpen) {
+                window.SetMouseCaptured(!pauseMenu.IsOpen());
+                wasPauseMenuOpen = pauseMenu.IsOpen();
+            }
 
             const Uint64 currentCounter = SDL_GetPerformanceCounter();
             float frameDeltaTime = static_cast<float>(currentCounter - previousCounter) /
@@ -712,64 +797,84 @@ int Application::Run() {
                 frameDeltaTime = SimulationTiming::kMaxFrameDeltaTime;
             }
 
-            // Mouse look and jump-key latching happen every render frame,
-            // independent of how many fixed physics steps run this frame.
-            player.UpdateFrameInput(window);
+            // Milestone 13 pause policy: while the menu is open, gameplay
+            // input is never read (no mouse look, no jump/reset/control-
+            // toggle latching) AND the fixed-step simulation does not
+            // advance at all — no physics integration, no gravity, no
+            // player FixedUpdate, not even accumulating the leftover
+            // `physicsAccumulator` time toward a future step. The world is
+            // completely frozen, not merely "ignoring input" — see
+            // docs/ARCHITECTURE.md, "Milestone 13, Pause policy," for why
+            // this was chosen over the alternative (keep simulating, e.g.
+            // so a player already falling keeps falling behind the menu):
+            // a frozen world matches this brief's own "gameplay input
+            // suppressed while menus own input" requirement literally, and
+            // avoids the stranger case of a spacecraft coasting into
+            // something while its own pilot is stuck in a menu unable to
+            // react. Resuming picks up exactly where it left off — no
+            // catch-up, no dropped/compounded backlog, since the
+            // accumulator itself never advanced while paused.
+            if (!pauseMenu.IsOpen()) {
+                // Mouse look and jump-key latching happen every render
+                // frame, independent of how many fixed physics steps run
+                // this frame.
+                player.UpdateFrameInput(window);
 
-            if (window.ConsumeResetRequest()) {
-                player.Reset();
-                for (DynamicBody& body : dynamicBodies) {
-                    body.ResetToSpawn(physicsWorld);
+                if (window.ConsumeResetRequest()) {
+                    player.Reset();
+                    for (DynamicBody& body : dynamicBodies) {
+                        body.ResetToSpawn(physicsWorld);
+                    }
+                    flyingPrimitiveControl.controlled = false;
+                    pilotAttachment.attached = false;
+                    physicsAccumulator = 0.0f;
                 }
-                flyingPrimitiveControl.controlled = false;
-                pilotAttachment.attached = false;
-                physicsAccumulator = 0.0f;
-            }
 
-            // Milestone 8/11: F toggles input authority (and, as of
-            // Milestone 11, the secured-pilot attachment — see
-            // src/PilotControl.h) between the player and the spacecraft.
-            // Taking control is gated on the player's OWN current support
-            // state (never a global teleport-to-it) — releasing control is
-            // always allowed, in any orientation. See
-            // docs/ARCHITECTURE.md, "Milestone 11."
-            if (window.ConsumeControlToggleRequest()) {
-                HandlePilotToggleRequest(flyingPrimitiveControl, pilotAttachment, player, physicsWorld);
-            }
+                // Milestone 8/11: F toggles input authority (and, as of
+                // Milestone 11, the secured-pilot attachment — see
+                // src/PilotControl.h) between the player and the spacecraft.
+                // Taking control is gated on the player's OWN current support
+                // state (never a global teleport-to-it) — releasing control is
+                // always allowed, in any orientation. See
+                // docs/ARCHITECTURE.md, "Milestone 11."
+                if (window.ConsumeControlToggleRequest()) {
+                    HandlePilotToggleRequest(flyingPrimitiveControl, pilotAttachment, player, physicsWorld);
+                }
 
-            // Fixed-timestep physics: render-frame delta time only decides
-            // how many fixed steps run this frame, never the size of a
-            // step itself.
-            physicsAccumulator += frameDeltaTime;
-            int stepsThisFrame = 0;
-            while (physicsAccumulator >= SimulationTiming::kFixedTimestep &&
-                   stepsThisFrame < SimulationTiming::kMaxPhysicsStepsPerFrame) {
-                // Dynamic bodies (the flying primitive included) sample
-                // gravity and hand it to the physics engine BEFORE Step()
-                // integrates it into their position — the same "Judas
-                // samples, physics obeys" ordering the player uses, just
-                // applied to a list. See docs/ARCHITECTURE.md, "Multiple
-                // gravity consumers." ApplyFlyingPrimitiveControl runs
-                // immediately after: if controlled, it overrides the
-                // primitive's velocity from input, exactly overwriting what
-                // gravity just contributed that step (see
-                // src/FlyingPrimitiveControl.h) — otherwise it's a no-op
-                // and the primitive falls/rests like any other body.
-                PrepareDynamicBodiesForStep(dynamicBodies, gravity, physicsWorld,
-                                             SimulationTiming::kFixedTimestep);
-                ApplyFlyingPrimitiveControl(flyingPrimitiveControl, window, physicsWorld);
-                physicsWorld.Step(SimulationTiming::kFixedTimestep);
-                AdvancePlayerForPiloting(flyingPrimitiveControl, pilotAttachment, player, physicsWorld,
-                                          window, gravity, SimulationTiming::kFixedTimestep);
-                SyncDynamicBodiesFromPhysics(dynamicBodies, physicsWorld);
+                // Fixed-timestep physics: render-frame delta time only decides
+                // how many fixed steps run this frame, never the size of a
+                // step itself.
+                physicsAccumulator += frameDeltaTime;
+                int stepsThisFrame = 0;
+                while (physicsAccumulator >= SimulationTiming::kFixedTimestep &&
+                       stepsThisFrame < SimulationTiming::kMaxPhysicsStepsPerFrame) {
+                    // Dynamic bodies (the flying primitive included) sample
+                    // gravity and hand it to the physics engine BEFORE Step()
+                    // integrates it into their position — the same "Judas
+                    // samples, physics obeys" ordering the player uses, just
+                    // applied to a list. See docs/ARCHITECTURE.md, "Multiple
+                    // gravity consumers." ApplyFlyingPrimitiveControl runs
+                    // immediately after: if controlled, it overrides the
+                    // primitive's velocity from input, exactly overwriting what
+                    // gravity just contributed that step (see
+                    // src/FlyingPrimitiveControl.h) — otherwise it's a no-op
+                    // and the primitive falls/rests like any other body.
+                    PrepareDynamicBodiesForStep(dynamicBodies, gravity, physicsWorld,
+                                                 SimulationTiming::kFixedTimestep);
+                    ApplyFlyingPrimitiveControl(flyingPrimitiveControl, window, physicsWorld);
+                    physicsWorld.Step(SimulationTiming::kFixedTimestep);
+                    AdvancePlayerForPiloting(flyingPrimitiveControl, pilotAttachment, player, physicsWorld,
+                                              window, gravity, SimulationTiming::kFixedTimestep);
+                    SyncDynamicBodiesFromPhysics(dynamicBodies, physicsWorld);
 
-                physicsAccumulator -= SimulationTiming::kFixedTimestep;
-                ++stepsThisFrame;
-            }
-            if (stepsThisFrame == SimulationTiming::kMaxPhysicsStepsPerFrame) {
-                // Hit the catch-up cap: drop the backlog instead of
-                // letting it compound into future frames.
-                physicsAccumulator = 0.0f;
+                    physicsAccumulator -= SimulationTiming::kFixedTimestep;
+                    ++stepsThisFrame;
+                }
+                if (stepsThisFrame == SimulationTiming::kMaxPhysicsStepsPerFrame) {
+                    // Hit the catch-up cap: drop the backlog instead of
+                    // letting it compound into future frames.
+                    physicsAccumulator = 0.0f;
+                }
             }
 
             if (liveTelemetryEnabled && (liveTelemetryFrameCounter++ % kLiveTelemetryFrameInterval) == 0) {
@@ -818,6 +923,25 @@ int Application::Run() {
             renderer.SetCamera(view, player.GetProjectionMatrix(aspectRatio));
             drawScene(renderer, presentationAlpha);
             renderer.EndFrame();
+
+            // Milestone 13: the HUD + pause menu overlay, drawn last so
+            // they composite on top of the 3D scene above — see
+            // Renderer::BeginUIFrame's own doc comment for why this is a
+            // separate screen-space/unlit/blended pass rather than more
+            // DrawMesh calls.
+            renderer.BeginUIFrame(window.Width(), window.Height());
+            if (pauseMenu.IsHudVisible()) {
+                HUDViewData hudData;
+                hudData.grounded = player.IsGrounded();
+                hudData.gravityMagnitude = glm::length(gravity.Sample(player.GetPosition()));
+                hudData.controllingSpacecraft = flyingPrimitiveControl.controlled;
+                hudData.pilotAttached = pilotAttachment.attached;
+                hudData.spacecraftLinearSpeed =
+                    glm::length(physicsWorld.GetLinearVelocity(flyingPrimitiveControl.handle));
+                hud.Draw(renderer, window.Width(), window.Height(), hudData);
+            }
+            pauseMenu.Draw(renderer, window.Width(), window.Height());
+            renderer.EndUIFrame();
 
             window.SwapBuffers();
         }

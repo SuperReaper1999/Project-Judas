@@ -79,18 +79,33 @@ void Window::PollEvents() {
             }
         } else if (event.type == SDL_KEYDOWN && event.key.repeat == 0) {
             if (event.key.keysym.scancode == SDL_SCANCODE_ESCAPE) {
-                // Toggle mouse capture so the cursor can be released
-                // without closing the application. This is the "sensible
-                // way to release/restore mouse control" called for by the
-                // brief, not a general input-remapping system.
-                m_mouseCaptured = !m_mouseCaptured;
-                SDL_SetRelativeMouseMode(m_mouseCaptured ? SDL_TRUE : SDL_FALSE);
+                // Milestone 13: Escape now drives menu back/pause
+                // navigation (see PauseMenu::HandleBackRequest) instead of
+                // the old standalone "toggle mouse capture" debug feature
+                // it had through Milestone 12 — capture is now driven
+                // explicitly by whether the menu is open (see
+                // SetMouseCaptured, called from Application::Run), so a
+                // separate manual toggle would just fight it.
+                m_uiBackRequested = true;
             } else if (event.key.keysym.scancode == SDL_SCANCODE_R) {
                 m_resetRequested = true;
             } else if (event.key.keysym.scancode == SDL_SCANCODE_SPACE) {
                 m_jumpRequested = true;
             } else if (event.key.keysym.scancode == SDL_SCANCODE_F) {
                 m_controlToggleRequested = true;
+            } else if (event.key.keysym.scancode == SDL_SCANCODE_UP) {
+                m_uiUpRequested = true;
+            } else if (event.key.keysym.scancode == SDL_SCANCODE_DOWN) {
+                m_uiDownRequested = true;
+            } else if (event.key.keysym.scancode == SDL_SCANCODE_RETURN ||
+                       event.key.keysym.scancode == SDL_SCANCODE_KP_ENTER) {
+                m_uiActivateRequested = true;
+            }
+        } else if (event.type == SDL_MOUSEBUTTONDOWN) {
+            if (event.button.button == SDL_BUTTON_LEFT) {
+                m_uiClickRequested = true;
+                m_uiClickX = event.button.x;
+                m_uiClickY = event.button.y;
             }
         }
     }
@@ -220,4 +235,55 @@ void Window::RequestTestReset() {
 
 void Window::RequestTestControlToggle() {
     m_testControlToggleRequested = true;
+}
+
+bool Window::ConsumeUIBackRequest() {
+    if (m_testInputMode) return false;  // no JUDAS_TEST_SCRIPT scripting for UI in M13 — see Window.h
+    const bool requested = m_uiBackRequested;
+    m_uiBackRequested = false;
+    return requested;
+}
+
+bool Window::ConsumeUINavigateUpRequest() {
+    if (m_testInputMode) return false;
+    const bool requested = m_uiUpRequested;
+    m_uiUpRequested = false;
+    return requested;
+}
+
+bool Window::ConsumeUINavigateDownRequest() {
+    if (m_testInputMode) return false;
+    const bool requested = m_uiDownRequested;
+    m_uiDownRequested = false;
+    return requested;
+}
+
+bool Window::ConsumeUIActivateRequest() {
+    if (m_testInputMode) return false;
+    const bool requested = m_uiActivateRequested;
+    m_uiActivateRequested = false;
+    return requested;
+}
+
+bool Window::ConsumeUIClickRequest(int& outX, int& outY) {
+    if (m_testInputMode) return false;
+    const bool requested = m_uiClickRequested;
+    outX = m_uiClickX;
+    outY = m_uiClickY;
+    m_uiClickRequested = false;
+    return requested;
+}
+
+void Window::GetMousePosition(int& outX, int& outY) const {
+    if (m_testInputMode) {
+        outX = 0;
+        outY = 0;
+        return;
+    }
+    SDL_GetMouseState(&outX, &outY);
+}
+
+void Window::SetMouseCaptured(bool captured) {
+    m_mouseCaptured = captured;
+    SDL_SetRelativeMouseMode(captured ? SDL_TRUE : SDL_FALSE);
 }

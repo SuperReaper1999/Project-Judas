@@ -218,6 +218,56 @@ MeshData GenerateUnitSphereMeshData(int latitudeSegments, int longitudeSegments)
 constexpr int kSphereLatitudeSegments = 16;
 constexpr int kSphereLongitudeSegments = 24;
 
+// Milestone 13: the UI overlay's own tiny shader — deliberately separate
+// from kVertexShaderSource/kFragmentShaderSource above rather than a
+// reused/branching variant of them. The 3D shader's whole shape (a
+// view/projection matrix, a world-space normal, per-fragment lighting) is
+// dead weight for a screen-space rectangle, and forcing UI draws through it
+// would mean disabling lighting with uniform tricks instead of just not
+// having it. `uPosition`/`uSize` are already in PIXELS — this shader
+// converts straight to clip space using `uScreenSize`, no separate
+// orthographic projection matrix needed. `uUVOffset`/`uUVScale` select a
+// sub-rectangle of whatever texture is bound (the whole [0,1] rect for a
+// solid-color panel via the white fallback texture, a font atlas glyph's
+// own rect for text) — see Renderer::DrawUIRect/DrawUIText.
+const char* kUIVertexShaderSource = R"(#version 330 core
+layout(location = 0) in vec2 aUnit;  // 0..1 unit quad, top-left origin
+
+uniform vec2 uScreenSize;
+uniform vec2 uPosition;  // pixels, top-left of this rect
+uniform vec2 uSize;      // pixels
+
+out vec2 vUnit;
+
+void main() {
+    vUnit = aUnit;
+    vec2 pixelPos = uPosition + aUnit * uSize;
+    // Pixel space is top-down (y grows downward, matching uPosition's own
+    // "top-left corner" convention); NDC y grows upward, so it's flipped
+    // here rather than by pre-flipping any texture data — see
+    // src/FontLoader.h's own header comment for why the glyph atlas needs
+    // no separate flip convention as a result.
+    vec2 ndc = vec2(pixelPos.x / uScreenSize.x * 2.0 - 1.0,
+                     1.0 - pixelPos.y / uScreenSize.y * 2.0);
+    gl_Position = vec4(ndc, 0.0, 1.0);
+}
+)";
+
+const char* kUIFragmentShaderSource = R"(#version 330 core
+in vec2 vUnit;
+out vec4 FragColor;
+
+uniform sampler2D uTexture;
+uniform vec4 uColor;
+uniform vec2 uUVOffset;
+uniform vec2 uUVScale;
+
+void main() {
+    vec2 uv = uUVOffset + vUnit * uUVScale;
+    FragColor = texture(uTexture, uv) * uColor;
+}
+)";
+
 }  // namespace
 
 bool Renderer::Init() {
@@ -276,6 +326,53 @@ bool Renderer::Init() {
     // least dimly visible rather than pitch black.
     SetLighting(glm::vec3(0.3f, 0.6f, 0.4f), glm::vec3(1.0f), glm::vec3(0.15f));
 
+    // --- Milestone 13: UI overlay shader + quad ---
+    GLuint uiVertexShader = 0;
+    if (!CompileShader(GL_VERTEX_SHADER, kUIVertexShaderSource, uiVertexShader)) {
+        return false;
+    }
+    GLuint uiFragmentShader = 0;
+    if (!CompileShader(GL_FRAGMENT_SHADER, kUIFragmentShaderSource, uiFragmentShader)) {
+        glDeleteShader(uiVertexShader);
+        return false;
+    }
+    const bool uiLinked = LinkProgram(uiVertexShader, uiFragmentShader, m_uiShaderProgram);
+    glDeleteShader(uiVertexShader);
+    glDeleteShader(uiFragmentShader);
+    if (!uiLinked) {
+        return false;
+    }
+
+    m_uiUScreenSize = glGetUniformLocation(m_uiShaderProgram, "uScreenSize");
+    m_uiUPosition = glGetUniformLocation(m_uiShaderProgram, "uPosition");
+    m_uiUSize = glGetUniformLocation(m_uiShaderProgram, "uSize");
+    m_uiUColor = glGetUniformLocation(m_uiShaderProgram, "uColor");
+    m_uiUTexture = glGetUniformLocation(m_uiShaderProgram, "uTexture");
+    m_uiUUVOffset = glGetUniformLocation(m_uiShaderProgram, "uUVOffset");
+    m_uiUUVScale = glGetUniformLocation(m_uiShaderProgram, "uUVScale");
+    glUseProgram(m_uiShaderProgram);
+    glUniform1i(m_uiUTexture, 0);
+
+    // A single non-indexed unit quad (two triangles, top-left origin,
+    // [0,1]x[0,1]) reused for every DrawUIRect/DrawUIText glyph call —
+    // per-draw placement/size/UV-rect come entirely from uniforms (see
+    // kUIVertexShaderSource), so no per-call vertex upload is needed, the
+    // same "one shared mesh, transform via uniforms" shape DrawBox/
+    // DrawSphere already use with m_cubeMesh/m_sphereMesh.
+    const float kUnitQuadVertices[12] = {
+        0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f, 0.0f, 1.0f,
+    };
+    glGenVertexArrays(1, &m_uiQuadVao);
+    glBindVertexArray(m_uiQuadVao);
+    glGenBuffers(1, &m_uiQuadVbo);
+    glBindBuffer(GL_ARRAY_BUFFER, m_uiQuadVbo);
+    glBufferData(GL_ARRAY_BUFFER, static_cast<GLsizeiptr>(sizeof(kUnitQuadVertices)),
+                 kUnitQuadVertices, GL_STATIC_DRAW);
+    glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), nullptr);
+    glEnableVertexAttribArray(0);
+    glBindVertexArray(0);
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+
     return true;
 }
 
@@ -300,6 +397,20 @@ void Renderer::Shutdown() {
         glDeleteProgram(m_shaderProgram);
         m_shaderProgram = 0;
     }
+
+    if (m_uiQuadVbo) {
+        glDeleteBuffers(1, &m_uiQuadVbo);
+        m_uiQuadVbo = 0;
+    }
+    if (m_uiQuadVao) {
+        glDeleteVertexArrays(1, &m_uiQuadVao);
+        m_uiQuadVao = 0;
+    }
+    if (m_uiShaderProgram) {
+        glDeleteProgram(m_uiShaderProgram);
+        m_uiShaderProgram = 0;
+    }
+    m_fontLoaded = false;
 }
 
 void Renderer::BeginFrame(int windowWidth, int windowHeight) {
@@ -500,4 +611,99 @@ void Renderer::EndFrame() {
     // Nothing to do yet; kept as an explicit boundary for future per-frame
     // work (batching, multiple draw calls, etc.) rather than for any
     // behavior this milestone needs.
+}
+
+bool Renderer::LoadFont(const char* path, float pixelHeight, std::string& outError) {
+    FontAtlasData atlasData;
+    if (!LoadFontAtlas(path, pixelHeight, atlasData, outError)) {
+        return false;
+    }
+    m_fontAtlasTexture = CreateTexture(atlasData.atlasTexture);
+    for (int i = 0; i < kFontGlyphCount; ++i) {
+        m_fontGlyphs[i] = atlasData.glyphs[i];
+    }
+    m_fontPixelHeight = atlasData.pixelHeight;
+    m_fontAscent = atlasData.ascent;
+    m_fontLineHeight = atlasData.lineHeight;
+    m_fontLoaded = true;
+    return true;
+}
+
+void Renderer::BeginUIFrame(int windowWidth, int windowHeight) {
+    m_uiScreenSize = glm::vec2(static_cast<float>(std::max(windowWidth, 1)),
+                                static_cast<float>(std::max(windowHeight, 1)));
+    glDisable(GL_DEPTH_TEST);
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    glUseProgram(m_uiShaderProgram);
+    glUniform2f(m_uiUScreenSize, m_uiScreenSize.x, m_uiScreenSize.y);
+    glBindVertexArray(m_uiQuadVao);
+}
+
+void Renderer::DrawUIRect(const glm::vec2& position, const glm::vec2& size,
+                           const glm::vec4& colorRgba) {
+    glUniform2f(m_uiUPosition, position.x, position.y);
+    glUniform2f(m_uiUSize, size.x, size.y);
+    glUniform4f(m_uiUColor, colorRgba.r, colorRgba.g, colorRgba.b, colorRgba.a);
+    glUniform2f(m_uiUUVOffset, 0.0f, 0.0f);
+    glUniform2f(m_uiUUVScale, 1.0f, 1.0f);
+    glBindTexture(GL_TEXTURE_2D, ResolveTexture(m_whiteTexture));
+    glDrawArrays(GL_TRIANGLES, 0, 6);
+}
+
+void Renderer::DrawUIText(const std::string& text, const glm::vec2& position, float scale,
+                           const glm::vec4& colorRgba) {
+    if (!m_fontLoaded) return;
+
+    glUniform4f(m_uiUColor, colorRgba.r, colorRgba.g, colorRgba.b, colorRgba.a);
+    glBindTexture(GL_TEXTURE_2D, ResolveTexture(m_fontAtlasTexture));
+
+    const float baselineY = position.y + m_fontAscent * scale;
+    float penX = position.x;
+    for (const char c : text) {
+        const int index = static_cast<int>(c) - kFontFirstChar;
+        if (index < 0 || index >= kFontGlyphCount) {
+            // Unsupported/control character: advance by a rough space width
+            // (this font's own space-glyph advance) rather than drawing
+            // nothing at zero width, so e.g. a stray tab doesn't overlap
+            // the next character. Sufficient for M13's plain ASCII HUD/menu
+            // text — no Unicode/fallback-glyph support is being built here.
+            penX += m_fontGlyphs[0].advanceX * scale;
+            continue;
+        }
+        const FontGlyph& glyph = m_fontGlyphs[index];
+        if (glyph.width > 0.0f && glyph.height > 0.0f) {
+            const glm::vec2 glyphPosition(penX + glyph.offsetX * scale,
+                                            baselineY + glyph.offsetY * scale);
+            const glm::vec2 glyphSize(glyph.width * scale, glyph.height * scale);
+            glUniform2f(m_uiUPosition, glyphPosition.x, glyphPosition.y);
+            glUniform2f(m_uiUSize, glyphSize.x, glyphSize.y);
+            glUniform2f(m_uiUUVOffset, glyph.u0, glyph.v0);
+            glUniform2f(m_uiUUVScale, glyph.u1 - glyph.u0, glyph.v1 - glyph.v0);
+            glDrawArrays(GL_TRIANGLES, 0, 6);
+        }
+        penX += glyph.advanceX * scale;
+    }
+}
+
+glm::vec2 Renderer::MeasureUIText(const std::string& text, float scale) const {
+    if (!m_fontLoaded) return glm::vec2(0.0f);
+    float width = 0.0f;
+    for (const char c : text) {
+        const int index = static_cast<int>(c) - kFontFirstChar;
+        width += (index >= 0 && index < kFontGlyphCount ? m_fontGlyphs[index].advanceX
+                                                          : m_fontGlyphs[0].advanceX) *
+                 scale;
+    }
+    return glm::vec2(width, m_fontLineHeight * scale);
+}
+
+float Renderer::GetUITextLineHeight(float scale) const {
+    return m_fontLoaded ? m_fontLineHeight * scale : 0.0f;
+}
+
+void Renderer::EndUIFrame() {
+    glBindVertexArray(0);
+    glDisable(GL_BLEND);
+    glEnable(GL_DEPTH_TEST);
 }

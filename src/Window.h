@@ -92,6 +92,43 @@ public:
     // press happened.
     bool ConsumeControlToggleRequest();
 
+    // --- Milestone 13: UI input ---
+    //
+    // Five more edge-triggered one-shot requests, same shape as
+    // ConsumeResetRequest/ConsumeJumpRequest/ConsumeControlToggleRequest
+    // above — this class still knows nothing about menus, screens, or
+    // navigation, only that a key was pressed. Escape now drives
+    // ConsumeUIBackRequest instead of the old "toggle mouse capture"
+    // behavior it had through Milestone 12 — see docs/ARCHITECTURE.md,
+    // "Milestone 13, Input ownership," for why that standalone debug
+    // toggle is superseded now that PauseMenu (src/PauseMenu.h) drives
+    // capture explicitly via SetMouseCaptured whenever it opens/closes.
+    bool ConsumeUIBackRequest();
+    bool ConsumeUINavigateUpRequest();
+    bool ConsumeUINavigateDownRequest();
+    bool ConsumeUIActivateRequest();
+
+    // Returns true exactly once per left-mouse-button press, and writes
+    // the cursor position (window-client pixels, top-left origin) at the
+    // moment of that press into `outX`/`outY`. Always drains the pending
+    // click, mirroring ConsumeJumpRequest's own "read once, then clear"
+    // shape.
+    bool ConsumeUIClickRequest(int& outX, int& outY);
+
+    // The cursor's current position (window-client pixels, top-left
+    // origin), regardless of capture state — used for continuous
+    // hover/focus tracking while a menu is open (see PauseMenu::
+    // HandleMouseMove), unlike GetMouseDelta which reads zero while
+    // uncaptured.
+    void GetMousePosition(int& outX, int& outY) const;
+
+    // Explicitly captures (relative mouse mode, for gameplay look) or
+    // releases (absolute cursor, for menu interaction) the mouse — called
+    // by Application whenever PauseMenu opens/closes (see
+    // docs/ARCHITECTURE.md, "Milestone 13, Input ownership"), not by any
+    // key binding of this class's own.
+    void SetMouseCaptured(bool captured);
+
     int Width() const { return m_width; }
     int Height() const { return m_height; }
 
@@ -121,6 +158,14 @@ private:
     bool m_resetRequested = false;
     bool m_jumpRequested = false;
     bool m_controlToggleRequested = false;
+    // Milestone 13: UI input edge flags — see PollEvents.
+    bool m_uiBackRequested = false;
+    bool m_uiUpRequested = false;
+    bool m_uiDownRequested = false;
+    bool m_uiActivateRequested = false;
+    bool m_uiClickRequested = false;
+    int m_uiClickX = 0;
+    int m_uiClickY = 0;
     int m_width = 0;
     int m_height = 0;
 
