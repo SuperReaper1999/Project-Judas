@@ -32,6 +32,7 @@ uniform mat4 uProjection;
 uniform mat3 uNormalMatrix;
 
 out vec3 vWorldNormal;
+out vec3 vWorldPos;
 out vec2 vUV;
 
 void main() {
@@ -40,6 +41,12 @@ void main() {
     // normals stay perpendicular to their surface under non-uniform scale
     // (DrawBox's halfExtents are rarely a uniform scale), not just rotation.
     vWorldNormal = uNormalMatrix * aLocalNormal;
+    // Milestone 14: the fragment's own world-space position, needed so the
+    // fragment shader can compute a per-fragment vector TO each dynamic
+    // point/spot light (distance-based attenuation, cone angle) — the
+    // Milestone 9 directional light never needed this, since a directional
+    // light's contribution doesn't depend on fragment position at all.
+    vWorldPos = vec3(uModel * vec4(aLocalPos, 1.0));
     vUV = aUV;
     gl_Position = uProjection * uView * uModel * vec4(aLocalPos, 1.0);
 }
@@ -47,6 +54,7 @@ void main() {
 
 const char* kFragmentShaderSource = R"(#version 330 core
 in vec3 vWorldNormal;
+in vec3 vWorldPos;
 in vec2 vUV;
 out vec4 FragColor;
 
@@ -56,10 +64,53 @@ uniform vec3 uLightDirection;  // world-space, normalized, points FROM the surfa
 uniform vec3 uLightColor;
 uniform vec3 uAmbientColor;
 
+// Milestone 14: dynamic point/spot lights — see src/Light.h and
+// docs/ARCHITECTURE.md, "Milestone 14," for the full model. A fixed-size
+// array (kMaxDynamicLights on the CPU side, mirrored here) is
+// deliberately small and explicit rather than unbounded — see "Milestone
+// 14, Light limits." `uLightCount` (<= the array size) bounds the loop so
+// unused slots are never touched, not merely zeroed.
+#define MAX_DYNAMIC_LIGHTS 5
+uniform int uLightCount;
+uniform vec3 uDynamicLightPosition[MAX_DYNAMIC_LIGHTS];
+uniform vec3 uDynamicLightDirection[MAX_DYNAMIC_LIGHTS];  // spot only; the direction the light FACES
+uniform vec3 uDynamicLightColor[MAX_DYNAMIC_LIGHTS];      // already intensity-scaled, see Renderer.cpp
+uniform float uDynamicLightRange[MAX_DYNAMIC_LIGHTS];
+uniform float uDynamicLightInnerCos[MAX_DYNAMIC_LIGHTS];  // spot only
+uniform float uDynamicLightOuterCos[MAX_DYNAMIC_LIGHTS];  // spot only
+uniform int uDynamicLightIsSpot[MAX_DYNAMIC_LIGHTS];      // 0 = point, 1 = spot
+
 void main() {
     vec3 normal = normalize(vWorldNormal);
+
     float diffuseFactor = max(dot(normal, uLightDirection), 0.0);
     vec3 lighting = uAmbientColor + uLightColor * diffuseFactor;
+
+    for (int i = 0; i < uLightCount; ++i) {
+        vec3 toLight = uDynamicLightPosition[i] - vWorldPos;
+        float distance = length(toLight);
+        vec3 lightDir = distance > 1.0e-5 ? toLight / distance : vec3(0.0, 1.0, 0.0);
+
+        // Smooth-windowed inverse-square attenuation (see Renderer.cpp,
+        // SetDynamicLights, for the full derivation/citation) — genuinely
+        // inverse-square close to the light, smoothly reaches exactly zero
+        // at uDynamicLightRange[i] instead of a hard cliff or a never-zero
+        // tail, and the "+1.0" keeps it finite as distance approaches 0.
+        float rangeFraction = clamp(distance / max(uDynamicLightRange[i], 1.0e-4), 0.0, 1.0);
+        float windowed = 1.0 - rangeFraction * rangeFraction * rangeFraction * rangeFraction;
+        windowed = clamp(windowed, 0.0, 1.0);
+        float attenuation = (windowed * windowed) / (distance * distance + 1.0);
+
+        float spotFactor = 1.0;
+        if (uDynamicLightIsSpot[i] != 0) {
+            float cosAngle = dot(-lightDir, uDynamicLightDirection[i]);
+            spotFactor = smoothstep(uDynamicLightOuterCos[i], uDynamicLightInnerCos[i], cosAngle);
+        }
+
+        float lightDiffuse = max(dot(normal, lightDir), 0.0);
+        lighting += uDynamicLightColor[i] * lightDiffuse * attenuation * spotFactor;
+    }
+
     vec4 texColor = texture(uTexture, vUV);
     FragColor = vec4(lighting, 1.0) * texColor * uColor;
 }
@@ -299,6 +350,29 @@ bool Renderer::Init() {
     m_uLightColor = glGetUniformLocation(m_shaderProgram, "uLightColor");
     m_uAmbientColor = glGetUniformLocation(m_shaderProgram, "uAmbientColor");
 
+    // Milestone 14: one uniform location per dynamic-light field, per
+    // array slot — see Renderer.h's own comment on why these can't be
+    // cached as a single location the way a plain uniform can.
+    m_uLightCount = glGetUniformLocation(m_shaderProgram, "uLightCount");
+    for (int i = 0; i < kMaxDynamicLights; ++i) {
+        const std::string prefix = "uDynamicLight";
+        const std::string index = "[" + std::to_string(i) + "]";
+        m_uDynamicLightPosition[i] =
+            glGetUniformLocation(m_shaderProgram, (prefix + "Position" + index).c_str());
+        m_uDynamicLightDirection[i] =
+            glGetUniformLocation(m_shaderProgram, (prefix + "Direction" + index).c_str());
+        m_uDynamicLightColor[i] =
+            glGetUniformLocation(m_shaderProgram, (prefix + "Color" + index).c_str());
+        m_uDynamicLightRange[i] =
+            glGetUniformLocation(m_shaderProgram, (prefix + "Range" + index).c_str());
+        m_uDynamicLightInnerCos[i] =
+            glGetUniformLocation(m_shaderProgram, (prefix + "InnerCos" + index).c_str());
+        m_uDynamicLightOuterCos[i] =
+            glGetUniformLocation(m_shaderProgram, (prefix + "OuterCos" + index).c_str());
+        m_uDynamicLightIsSpot[i] =
+            glGetUniformLocation(m_shaderProgram, (prefix + "IsSpot" + index).c_str());
+    }
+
     // Texture unit 0 is the only one this engine ever uses — bound once
     // here rather than every draw call, since it never changes.
     glUseProgram(m_shaderProgram);
@@ -325,6 +399,11 @@ bool Renderer::Init() {
     // call (shouldn't happen in practice, but costs nothing to guard) is at
     // least dimly visible rather than pitch black.
     SetLighting(glm::vec3(0.3f, 0.6f, 0.4f), glm::vec3(1.0f), glm::vec3(0.15f));
+    // Milestone 14: no dynamic lights until the caller's first
+    // SetDynamicLights call — explicit rather than relying on GLSL's own
+    // zero-initialized-uniform default, so this is true by construction,
+    // not by an implementation detail of the driver.
+    SetDynamicLights({});
 
     // --- Milestone 13: UI overlay shader + quad ---
     GLuint uiVertexShader = 0;
@@ -432,6 +511,33 @@ void Renderer::SetLighting(const glm::vec3& direction, const glm::vec3& lightCol
                 normalizedDirection.z);
     glUniform3f(m_uLightColor, lightColor.r, lightColor.g, lightColor.b);
     glUniform3f(m_uAmbientColor, ambientColor.r, ambientColor.g, ambientColor.b);
+}
+
+void Renderer::SetDynamicLights(const std::vector<DynamicLight>& lights) {
+    glUseProgram(m_shaderProgram);
+
+    const int count = std::min(static_cast<int>(lights.size()), kMaxDynamicLights);
+    glUniform1i(m_uLightCount, count);
+
+    for (int i = 0; i < count; ++i) {
+        const DynamicLight& light = lights[static_cast<size_t>(i)];
+        glUniform3f(m_uDynamicLightPosition[i], light.position.x, light.position.y, light.position.z);
+        const glm::vec3 direction =
+            glm::length(light.direction) > 1.0e-6f ? glm::normalize(light.direction) : glm::vec3(0.0f, 0.0f, -1.0f);
+        glUniform3f(m_uDynamicLightDirection[i], direction.x, direction.y, direction.z);
+        glUniform3f(m_uDynamicLightColor[i], light.color.r, light.color.g, light.color.b);
+        glUniform1f(m_uDynamicLightRange[i], std::max(light.range, 1.0e-3f));
+        // Cosines, not degrees: computed once here (CPU) rather than once
+        // per fragment (GPU) — see the fragment shader's own
+        // smoothstep(outerCos, innerCos, cosAngle) call. Clamped so a
+        // misconfigured inner > outer doesn't silently invert the falloff
+        // direction (smoothstep requires edge0 <= edge1).
+        const float innerCos = std::cos(glm::radians(std::min(light.innerConeDegrees, light.outerConeDegrees)));
+        const float outerCos = std::cos(glm::radians(light.outerConeDegrees));
+        glUniform1f(m_uDynamicLightInnerCos[i], innerCos);
+        glUniform1f(m_uDynamicLightOuterCos[i], outerCos);
+        glUniform1i(m_uDynamicLightIsSpot[i], light.kind == LightKind::Spot ? 1 : 0);
+    }
 }
 
 MeshHandle Renderer::CreateMesh(const MeshData& data) {

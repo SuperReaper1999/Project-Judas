@@ -21,6 +21,8 @@
 #include "GravityContextMap.h"
 #include "GravityField.h"
 #include "HUD.h"
+#include "Light.h"
+#include "LightTransforms.h"
 #include "ModelLoader.h"
 #include "PauseMenu.h"
 #include "PhysicsWorld.h"
@@ -363,6 +365,52 @@ const glm::vec3 kLightDirection = glm::normalize(glm::vec3(0.4f, 0.7f, 0.35f));
 const glm::vec3 kLightColor(1.0f, 0.98f, 0.92f);
 const glm::vec3 kAmbientColor(0.16f, 0.17f, 0.19f);
 
+// --- Milestone 14: player torch ---
+//
+// A spotlight carried at the player's own presented eye position, pointed
+// along the player's own presented look direction every frame (see
+// PlayerController::GetTorchTransform) — never baked, never gravity-
+// relative. `kTorchColor` already has intensity folded in (see
+// docs/ARCHITECTURE.md, "Milestone 14, Point-light attenuation," for why
+// this engine doesn't keep a separate "intensity" scalar); `kTorchRange`
+// and the two cone angles were picked by direct interactive tuning against
+// this demo's own geometry scale (planets ~20m radius, a person-sized
+// player) — comfortably lights a nearby wall/surface without reaching
+// across an entire planet. A soft-edged cone (10 degrees narrower "full
+// brightness" core inside a 28-degree outer falloff) reads as an ordinary
+// handheld flashlight rather than a laser or a floodlight.
+const glm::vec3 kTorchColor(3.0f, 2.9f, 2.6f);
+constexpr float kTorchRange = 35.0f;
+constexpr float kTorchInnerConeDegrees = 18.0f;
+constexpr float kTorchOuterConeDegrees = 28.0f;
+
+// --- Milestone 14: spacecraft lights ---
+//
+// A small, fixed rig of three lights defined entirely in the spacecraft's
+// OWN local space (relative to kFlyingPrimitiveHalfExtents(2.0, 0.25,
+// 3.0) — see the flying-primitive spawn constants above), transformed into
+// world space fresh every frame from the spacecraft's own PRESENTED pose
+// (see the drawScene lambda below) — never a world-space position baked
+// once at spawn. One forward-facing headlight spotlight at the nose
+// (local -Z, matching FlyingPrimitiveControl.cpp's own "forward = local
+// -Z" convention), plus two wingtip point "navigation" lights at the
+// wingtips (local +-X, at the box collider's own half-extent) using the
+// traditional aviation convention — red to port (local -X, left), green to
+// starboard (local +X, right) — purely a decorative nod, not a gameplay
+// signal of any kind.
+const glm::vec3 kShipHeadlightLocalOffset(0.0f, 0.0f, -3.0f);
+const glm::vec3 kShipHeadlightLocalDirection(0.0f, 0.0f, -1.0f);
+const glm::vec3 kShipHeadlightColor(4.0f, 4.0f, 3.8f);
+constexpr float kShipHeadlightRange = 45.0f;
+constexpr float kShipHeadlightInnerConeDegrees = 12.0f;
+constexpr float kShipHeadlightOuterConeDegrees = 22.0f;
+
+const glm::vec3 kShipPortLightLocalOffset(-2.0f, 0.0f, 0.0f);
+const glm::vec3 kShipPortLightColor(2.2f, 0.15f, 0.1f);   // red, port (left)
+const glm::vec3 kShipStarboardLightLocalOffset(2.0f, 0.0f, 0.0f);
+const glm::vec3 kShipStarboardLightColor(0.1f, 2.2f, 0.2f);  // green, starboard (right)
+constexpr float kShipNavLightRange = 12.0f;
+
 // --- Milestone 10: step/slope test geometry ---
 //
 // A small staircase and one ramp, both placed on Planet A a short walk
@@ -462,6 +510,65 @@ std::vector<StaticTestBody> SpawnStepTestGeometry(PhysicsWorld& physics) {
     bodies.push_back({rampHandle, rampCenter, rampRotation, kRampHalfExtents, kRampColor});
 
     return bodies;
+}
+
+// Milestone 14: builds this render frame's complete dynamic-light list —
+// the ONE place that knows a light is "the player's torch" or "the
+// spacecraft's headlight/nav lights"; by the time these reach
+// Renderer::SetDynamicLights, they are plain world-space DynamicLight
+// values (see src/Light.h). Called once per render frame, AFTER
+// presentation alpha is known, so every light this frame is built from the
+// SAME presented poses the frame's own DrawMesh calls use — never a
+// separately-timed snapshot that could visually lag behind its owner by a
+// frame. `torchOn` and the spacecraft's own presented pose are the only
+// gameplay state this function reads; it returns plain data and touches no
+// GL itself (see docs/ARCHITECTURE.md, "Milestone 14, Light ownership and
+// lifetime").
+std::vector<DynamicLight> BuildDynamicLights(const PlayerController& player, bool torchOn,
+                                              const DynamicBody& spacecraft, float presentationAlpha) {
+    std::vector<DynamicLight> lights;
+    lights.reserve(4);
+
+    if (torchOn) {
+        DynamicLight torch;
+        torch.kind = LightKind::Spot;
+        player.GetTorchTransform(presentationAlpha, torch.position, torch.direction);
+        torch.color = kTorchColor;
+        torch.range = kTorchRange;
+        torch.innerConeDegrees = kTorchInnerConeDegrees;
+        torch.outerConeDegrees = kTorchOuterConeDegrees;
+        lights.push_back(torch);
+    }
+
+    const glm::vec3 shipPosition = spacecraft.GetPresentedPosition(presentationAlpha);
+    const glm::quat shipOrientation = spacecraft.GetPresentedOrientation(presentationAlpha);
+
+    DynamicLight headlight;
+    headlight.kind = LightKind::Spot;
+    headlight.position = TransformLocalLightPosition(shipPosition, shipOrientation, kShipHeadlightLocalOffset);
+    headlight.direction = TransformLocalLightDirection(shipOrientation, kShipHeadlightLocalDirection);
+    headlight.color = kShipHeadlightColor;
+    headlight.range = kShipHeadlightRange;
+    headlight.innerConeDegrees = kShipHeadlightInnerConeDegrees;
+    headlight.outerConeDegrees = kShipHeadlightOuterConeDegrees;
+    lights.push_back(headlight);
+
+    DynamicLight portLight;
+    portLight.kind = LightKind::Point;
+    portLight.position = TransformLocalLightPosition(shipPosition, shipOrientation, kShipPortLightLocalOffset);
+    portLight.color = kShipPortLightColor;
+    portLight.range = kShipNavLightRange;
+    lights.push_back(portLight);
+
+    DynamicLight starboardLight;
+    starboardLight.kind = LightKind::Point;
+    starboardLight.position =
+        TransformLocalLightPosition(shipPosition, shipOrientation, kShipStarboardLightLocalOffset);
+    starboardLight.color = kShipStarboardLightColor;
+    starboardLight.range = kShipNavLightRange;
+    lights.push_back(starboardLight);
+
+    return lights;
 }
 }  // namespace
 
@@ -708,6 +815,16 @@ int Application::Run() {
     PauseMenu pauseMenu;
     HUD hud;
 
+    // Milestone 14: the player torch's on/off state — plain gameplay
+    // input state, same category as flyingPrimitiveControl.controlled,
+    // owned here (not inside PlayerController) since it's presentation
+    // state a light-building step reads, not something PlayerController's
+    // own simulation needs to know about. Toggled by `T`, gated behind
+    // the same `!pauseMenu.IsOpen()` boundary every other piece of
+    // gameplay input already is (see the interactive loop below) — see
+    // docs/ARCHITECTURE.md, "Milestone 14, Input ownership."
+    bool torchOn = false;
+
     int exitCode = 0;
     if (isTestRun) {
         exitCode = RunTestHarness(window, renderer, physicsWorld, player, gravity, dynamicBodies,
@@ -789,6 +906,16 @@ int Application::Run() {
                 wasPauseMenuOpen = pauseMenu.IsOpen();
             }
 
+            // Milestone 14: drained EVERY frame, regardless of pause
+            // state — same reasoning as the UI requests just above:
+            // pressing `T` while the menu owns input must not leave a
+            // stale toggle sitting in Window ready to fire the instant
+            // the menu closes (see docs/ARCHITECTURE.md, "Milestone 14,
+            // Input ownership"). Whether it's actually ACTED on is
+            // decided below, inside the `!pauseMenu.IsOpen()` gate, same
+            // as every other piece of gameplay input.
+            const bool torchToggleRequested = window.ConsumeTorchToggleRequest();
+
             const Uint64 currentCounter = SDL_GetPerformanceCounter();
             float frameDeltaTime = static_cast<float>(currentCounter - previousCounter) /
                                     static_cast<float>(frequency);
@@ -839,6 +966,18 @@ int Application::Run() {
                 // docs/ARCHITECTURE.md, "Milestone 11."
                 if (window.ConsumeControlToggleRequest()) {
                     HandlePilotToggleRequest(flyingPrimitiveControl, pilotAttachment, player, physicsWorld);
+                }
+
+                // Milestone 14: T toggles the player's torch. The
+                // request itself was already drained unconditionally
+                // above (see torchToggleRequested) so a press during
+                // pause can never fire late on resume; ACTING on it is
+                // still gated behind `!pauseMenu.IsOpen()` like every
+                // other piece of gameplay input, so a press that arrives
+                // in the render frame the menu happens to be closing on
+                // doesn't sneak through either.
+                if (torchToggleRequested) {
+                    torchOn = !torchOn;
                 }
 
                 // Fixed-timestep physics: render-frame delta time only decides
@@ -921,6 +1060,16 @@ int Application::Run() {
                           dynamicBodies[flyingPrimitiveBodyIndex].GetPresentedOrientation(presentationAlpha))
                     : player.GetViewMatrix(presentationAlpha);
             renderer.SetCamera(view, player.GetProjectionMatrix(aspectRatio));
+            // Milestone 14: rebuilt fresh every render frame from this
+            // frame's own presented poses (see BuildDynamicLights) — never
+            // cached across frames, so a moving/rotating light source
+            // (the torch, the spacecraft's own lights) never lags behind
+            // what's actually drawn this frame. Continues rendering
+            // normally while paused (see docs/ARCHITECTURE.md, "Milestone
+            // 14, Input ownership") — the world is frozen, but the frozen
+            // scene remains correctly (and readably) lit.
+            renderer.SetDynamicLights(
+                BuildDynamicLights(player, torchOn, dynamicBodies[flyingPrimitiveBodyIndex], presentationAlpha));
             drawScene(renderer, presentationAlpha);
             renderer.EndFrame();
 

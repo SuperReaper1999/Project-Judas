@@ -27,6 +27,7 @@ PFNGLGETPROGRAMIV glGetProgramiv = nullptr;
 PFNGLGETPROGRAMINFOLOG glGetProgramInfoLog = nullptr;
 PFNGLUSEPROGRAM glUseProgram = nullptr;
 PFNGLGETUNIFORMLOCATION glGetUniformLocation = nullptr;
+PFNGLUNIFORM1F glUniform1f = nullptr;
 PFNGLUNIFORM2F glUniform2f = nullptr;
 PFNGLUNIFORM4F glUniform4f = nullptr;
 PFNGLUNIFORMMATRIX4FV glUniformMatrix4fv = nullptr;
@@ -93,6 +94,7 @@ bool LoadGLFunctions() {
     ok &= LoadOne(glGetProgramInfoLog, "glGetProgramInfoLog");
     ok &= LoadOne(glUseProgram, "glUseProgram");
     ok &= LoadOne(glGetUniformLocation, "glGetUniformLocation");
+    ok &= LoadOne(glUniform1f, "glUniform1f");
     ok &= LoadOne(glUniform2f, "glUniform2f");
     ok &= LoadOne(glUniform4f, "glUniform4f");
     ok &= LoadOne(glUniformMatrix4fv, "glUniformMatrix4fv");

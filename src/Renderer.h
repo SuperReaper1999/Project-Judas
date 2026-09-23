@@ -6,6 +6,7 @@
 #include <glm/gtc/quaternion.hpp>
 
 #include "FontLoader.h"
+#include "Light.h"
 #include "MeshData.h"
 #include "TextureData.h"
 #include "gl_core33.h"
@@ -59,6 +60,20 @@ public:
     // camera already does.
     void SetLighting(const glm::vec3& direction, const glm::vec3& lightColor,
                       const glm::vec3& ambientColor);
+
+    // Milestone 14: the current frame's dynamic point/spot lights, already
+    // in WORLD space (see src/Light.h's own doc comment for who's
+    // responsible for getting them there). Called once per frame,
+    // alongside SetLighting/SetCamera, BEFORE the frame's DrawMesh/DrawBox/
+    // DrawSphere calls — every mesh drawn until the next SetDynamicLights
+    // call is lit by exactly this light set, on top of the existing
+    // ambient + directional terms SetLighting already provides (see
+    // docs/ARCHITECTURE.md, "Milestone 14, Combining lights" — dynamic
+    // lights are additive, never a replacement for the Milestone 9
+    // directional "sun"). `lights.size()` beyond kMaxDynamicLights (see
+    // src/Light.h) is silently truncated, not an error — M14 doesn't need
+    // more than that many at once, see "Milestone 14, Light limits."
+    void SetDynamicLights(const std::vector<DynamicLight>& lights);
 
     // --- Judas-owned mesh/texture resources (Milestone 9) ---
     //
@@ -220,6 +235,22 @@ private:
     GLint m_uLightDirection = -1;
     GLint m_uLightColor = -1;
     GLint m_uAmbientColor = -1;
+
+    // --- Milestone 14: dynamic point/spot lights ---
+    //
+    // One uniform location per FIELD, per ARRAY SLOT (kMaxDynamicLights of
+    // each) — GLSL struct-array uniforms are addressed by their own
+    // "uLights[i].field" name per element; there is no single "array"
+    // location to cache the way a plain vec3/float uniform has one. Fetched
+    // once in Init, reused every SetDynamicLights call.
+    GLint m_uLightCount = -1;
+    GLint m_uDynamicLightPosition[kMaxDynamicLights];
+    GLint m_uDynamicLightDirection[kMaxDynamicLights];
+    GLint m_uDynamicLightColor[kMaxDynamicLights];
+    GLint m_uDynamicLightRange[kMaxDynamicLights];
+    GLint m_uDynamicLightInnerCos[kMaxDynamicLights];
+    GLint m_uDynamicLightOuterCos[kMaxDynamicLights];
+    GLint m_uDynamicLightIsSpot[kMaxDynamicLights];
 
     glm::mat4 m_view{1.0f};
     glm::mat4 m_projection{1.0f};

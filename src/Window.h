@@ -92,6 +92,16 @@ public:
     // press happened.
     bool ConsumeControlToggleRequest();
 
+    // Milestone 14: returns true exactly once per `T` key press
+    // (edge-triggered, same shape as ConsumeControlToggleRequest). `T` was
+    // otherwise unused by every prior milestone's key bindings — see
+    // docs/ARCHITECTURE.md, "Milestone 14, Player torch," for the full
+    // list this was checked against. Application interprets this as
+    // "toggle the player's torch" — this class knows nothing about what a
+    // torch is, only that a press happened, same as every other Consume*
+    // request here.
+    bool ConsumeTorchToggleRequest();
+
     // --- Milestone 13: UI input ---
     //
     // Five more edge-triggered one-shot requests, same shape as
@@ -149,6 +159,9 @@ public:
     // Milestone 8: scripted equivalent of an `F` press.
     void RequestTestControlToggle();
 
+    // Milestone 14: scripted equivalent of a `T` press.
+    void RequestTestTorchToggle();
+
 private:
     SDL_Window* m_window = nullptr;
     SDL_GLContext m_glContext = nullptr;
@@ -158,6 +171,7 @@ private:
     bool m_resetRequested = false;
     bool m_jumpRequested = false;
     bool m_controlToggleRequested = false;
+    bool m_torchToggleRequested = false;
     // Milestone 13: UI input edge flags — see PollEvents.
     bool m_uiBackRequested = false;
     bool m_uiUpRequested = false;
@@ -181,4 +195,5 @@ private:
     bool m_testJumpRequested = false;
     bool m_testResetRequested = false;
     bool m_testControlToggleRequested = false;
+    bool m_testTorchToggleRequested = false;
 };

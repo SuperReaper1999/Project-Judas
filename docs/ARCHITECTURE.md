@@ -6,7 +6,7 @@ someone with no prior context on this project. It is updated in place as
 milestones land, rather than kept as a per-milestone snapshot — see
 "Milestone history" below for how to recover an earlier milestone exactly.
 
-## What exists right now (Milestone 13)
+## What exists right now (Milestone 14)
 
 Open a window. Two independent static spheres ("planets," radius `20m`
 each, centers `55m` apart — see "Physics test world") exist in 3D space,
@@ -150,6 +150,33 @@ drawn with a newly vendored `stb_truetype`-based font loader
 (`src/FontLoader.h/.cpp`) baking DejaVu Sans into a single GPU atlas — see
 "Milestone 13" below for the full design, the input-ownership boundary,
 and the pause/simulation policy.
+
+**As of Milestone 14, Judas has dynamic lighting: a toggleable player
+torch and spacecraft-mounted lights, both genuinely moving/rotating with
+their owners every frame, on top of the existing Milestone 9 ambient +
+directional "sun."** Press `T` to toggle a spotlight carried at the
+player's own eye position, aimed exactly where the player is looking —
+built fresh every render frame from the player's own PRESENTED transform
+(see "Milestone 13/14, presentation"), never baked or gravity-relative, so
+it stays correct through gravity-context traversal, arbitrary player
+orientation, and zero gravity alike. The spacecraft (Milestone 11/12)
+carries a small fixed rig of three lights defined entirely in its own
+local space — one forward headlight spotlight, two wingtip point
+"navigation" lights (red port, green starboard) — transformed into world
+space fresh every frame from the spacecraft's own presented pose
+(`worldPosition = shipPresentedPosition + shipPresentedOrientation *
+localOffset`), so they stay correctly attached through translation,
+pitch, yaw, roll, inertial coasting/tumbling, and any gravity context
+(including none) with zero special-casing. Both light kinds (point and
+spot) use the same small, explicit uniform-array mechanism in `Renderer`
+(`SetDynamicLights`, capped at `kMaxDynamicLights = 5`), combine
+additively with the existing ambient/directional terms, and use a smooth
+(never binary) falloff — a windowed inverse-square distance attenuation
+and a smoothstep spotlight cone. This is presentation only: lights carry
+no gameplay semantics, and the Milestone 13 screen-space UI shader remains
+completely unlit — see "Milestone 14" below for the full design, the
+attenuation/cone formulas, and what M14 explicitly does NOT add (shadows,
+chief among them).
 See the root `README.md` for build/run instructions and controls.
 
 ## Milestone history
@@ -268,23 +295,38 @@ preserved as parallel runtime code:
   counter-thrust, perpendicular thrust, mass response, rotational inertia
   via the real tensor, gravity composition), and the two rewritten/
   extended standalone test suites.
-- `milestone-13` (pending human validation as of this writing) — a
-  Judas-owned UI system: a persistent top-left HUD panel showing five live
-  telemetry values, and a pause menu (root screen + one nested Options
-  screen) reachable with `Escape`, navigable by keyboard or mouse. New
-  screen-space UI rendering primitives (`Renderer::BeginUIFrame`/
-  `DrawUIRect`/`DrawUIText`/`EndUIFrame`) sit behind the same raw-GL
-  boundary every other draw call already respects; a new CPU-side font
-  loader (`src/FontLoader.*`, `stb_truetype`) bakes DejaVu Sans into one
-  GPU atlas. `src/UIWidgets.*`/`src/UIStack.h` are the generic
-  screen/button/navigation-stack primitives; `src/PauseMenu.*` is the one
-  concrete menu built from them; `src/HUD.*` is the HUD, fed a plain
-  `HUDViewData` struct so it never depends on a concrete gameplay type.
-  Pausing freezes the fixed-step simulation completely (see "Milestone 13,
-  Pause policy") and gameplay input is suppressed via one boundary in
-  `Application::Run`, not scattered `if (menuOpen)` checks. See "Milestone
-  13" for the full design, the input-ownership boundary, and the new
-  standalone `judas_ui_tests` suite.
+- `milestone-13` — a Judas-owned UI system: a persistent top-left HUD
+  panel showing five live telemetry values, and a pause menu (root screen
+  + one nested Options screen) reachable with `Escape`, navigable by
+  keyboard or mouse. New screen-space UI rendering primitives
+  (`Renderer::BeginUIFrame`/`DrawUIRect`/`DrawUIText`/`EndUIFrame`) sit
+  behind the same raw-GL boundary every other draw call already respects;
+  a new CPU-side font loader (`src/FontLoader.*`, `stb_truetype`) bakes
+  DejaVu Sans into one GPU atlas. `src/UIWidgets.*`/`src/UIStack.h` are
+  the generic screen/button/navigation-stack primitives; `src/PauseMenu.*`
+  is the one concrete menu built from them; `src/HUD.*` is the HUD, fed a
+  plain `HUDViewData` struct so it never depends on a concrete gameplay
+  type. Pausing freezes the fixed-step simulation completely (see
+  "Milestone 13, Pause policy") and gameplay input is suppressed via one
+  boundary in `Application::Run`, not scattered `if (menuOpen)` checks.
+  See "Milestone 13" for the full design, the input-ownership boundary,
+  and the new standalone `judas_ui_tests` suite.
+- `milestone-14` (pending human validation as of this writing) — dynamic
+  lighting: a toggleable (`T`) player torch and a small fixed spacecraft
+  light rig (one headlight spotlight, two wingtip point nav lights), both
+  built fresh every render frame from their owner's own PRESENTED
+  transform, on top of the existing Milestone 9 ambient/directional "sun."
+  A new `src/Light.h` (`DynamicLight`, `LightKind::Point`/`Spot`) is the
+  entire Judas-owned light representation; `Renderer::SetDynamicLights`
+  uploads up to `kMaxDynamicLights` (5) of them to a small fixed-size
+  uniform array added to the existing Milestone 9 lit-mesh shader (not a
+  second rendering path). `src/LightTransforms.*` factors the "attach a
+  light to a moving/rotating owner" and "player torch follows free look"
+  math into pure, directly-testable functions; `src/LightAttenuation.*`
+  mirrors the fragment shader's own smooth-windowed-inverse-square
+  attenuation and smoothstep spotlight-cone formulas for the same reason.
+  See "Milestone 14" for the full design, the attenuation/cone
+  derivations, and the new standalone `judas_lighting_tests` suite.
 
 Each milestone's demo content has been replaced (not extended) by the next;
 check out a tag to see or run an earlier milestone as it was.
@@ -2599,6 +2641,479 @@ multi-style UI (one visual style, shared by both screens); Unicode or
 multi-font text; and any generalized "secure/attach a widget to X"
 concept beyond the one pause-menu/HUD pairing this milestone needed.
 
+## Milestone 14
+
+Dynamic lighting: a toggleable player torch and spacecraft-mounted
+lights, both genuinely moving and rotating with their owners, extending
+the existing Milestone 9 lit-mesh shader rather than replacing it or
+adding a second rendering path.
+
+### Judas-owned light representation (`src/Light.h`)
+
+```cpp
+enum class LightKind { Point, Spot };
+
+struct DynamicLight {
+    LightKind kind = LightKind::Point;
+    glm::vec3 position{0.0f};                  // world space
+    glm::vec3 direction{0.0f, 0.0f, -1.0f};     // world space, normalized; spot only
+    glm::vec3 color{1.0f};                      // already intensity-scaled
+    float range = 10.0f;                        // world units
+    float innerConeDegrees = 15.0f;              // spot only
+    float outerConeDegrees = 25.0f;              // spot only
+};
+constexpr int kMaxDynamicLights = 5;
+```
+
+Plain data only — no gameplay object, no GL resource, no owner reference.
+The existing Milestone 9 directional light (the "sun") is NOT represented
+here; it stays exactly what it was (`Renderer::SetLighting`'s
+`direction`/`lightColor`/`ambientColor`, completely unchanged) — a single
+always-on world-space direction with no position and no falloff.
+`DynamicLight` covers the two NEW kinds this milestone adds. `Renderer`
+never reaches into `PlayerController`, `FlyingPrimitiveControl`,
+`PilotAttachment`, or any physics body to build one — by the time a light
+reaches `Renderer::SetDynamicLights`, it is already plain world-space
+data for the current frame; `Application.cpp` (the composition root) is
+the only place that knows a light is "the torch" or "the headlight."
+
+### Renderer changes: extending M9's shader, not replacing it
+
+`Renderer`'s existing lit-mesh vertex/fragment shader
+(`kVertexShaderSource`/`kFragmentShaderSource` in `Renderer.cpp`) gained:
+
+- a `vWorldPos` varying (the fragment's own world-space position,
+  `vec3(uModel * vec4(aLocalPos, 1.0))`, computed once per vertex) — the
+  one genuinely new piece of data the M9 shader never needed, since a
+  directional light's contribution doesn't depend on fragment position at
+  all, but a point/spot light's distance and angle both do;
+- a fixed-size uniform array of dynamic lights (`uDynamicLightPosition[5]`,
+  `...Direction[5]`, `...Color[5]`, `...Range[5]`, `...InnerCos[5]`,
+  `...OuterCos[5]`, `...IsSpot[5]`, plus `uLightCount` bounding the loop)
+  — GLSL struct-array uniforms are addressed by one location PER FIELD
+  PER ARRAY SLOT (`glGetUniformLocation(program, "uDynamicLightPosition[2]")`,
+  etc.), fetched once in `Init`, reused every `SetDynamicLights` call;
+- a `for (int i = 0; i < uLightCount; ++i)` loop in the fragment shader,
+  computing each light's diffuse/attenuation/cone contribution and adding
+  it to the existing `ambient + directional*diffuse` sum — strictly
+  additive, never a replacement (see "Combining lights" below).
+
+No second shader program, no second draw call, no second vertex/index
+buffer format — every mesh already drawn through `DrawMesh`/`DrawBox`/
+`DrawSphere` automatically receives dynamic lighting the instant
+`SetDynamicLights` is called with a non-empty list; a mesh drawn with zero
+dynamic lights active (`uLightCount == 0`, the state at `Init` and
+whenever nothing is currently lit) behaves byte-identically to Milestone
+9-13, since the loop simply doesn't execute. Two new GL entry points were
+needed (`glDisable`/`glBlendFunc` already existed as of Milestone 13;
+this milestone added `glUniform1f`, since no prior milestone had a
+scalar-float uniform array to set) — `src/gl_core33.h/.cpp`'s own
+"re-evaluated and kept small each time" policy (see docs/ARCHITECTURE.md,
+"Milestone 9") still holds: one new function for one new genuine need.
+
+### Coordinate space
+
+All lighting math happens in WORLD space: `vWorldPos` and every dynamic
+light's `position`/`direction` are world-space values; `vWorldNormal` is
+already world-space as of Milestone 9 (`uNormalMatrix = transpose(
+inverse(mat3(uModel)))`, computed once per draw call on the CPU). No
+view-space or model-space vector is ever mixed into a lighting
+computation — the one coordinate-space bug class M14's own brief warned
+about (mixing model-space normals with world-space light positions, or
+view-space directions with either) structurally cannot occur here, since
+nothing in this shader ever computes a view-space vector at all; `uView`/
+`uProjection` are used exclusively for `gl_Position`, never for lighting.
+
+### Dynamic means dynamic: presented transforms, rebuilt every frame
+
+`Application.cpp`'s new `BuildDynamicLights` function (in its own
+anonymous namespace, alongside `SpawnStepTestGeometry` et al.) is called
+once per RENDER frame — not once per fixed step, and never cached across
+frames — immediately before `drawScene`, using that exact frame's own
+`presentationAlpha`:
+
+```cpp
+renderer.SetDynamicLights(
+    BuildDynamicLights(player, torchOn, dynamicBodies[flyingPrimitiveBodyIndex], presentationAlpha));
+```
+
+It reads the player's and spacecraft's PRESENTED position/orientation
+(`GetPresentedPosition`/`GetPresentedOrientation`, `alpha` interpolated
+exactly like every DrawMesh call already uses — see "Simulation/
+presentation boundary") — never the raw authoritative simulation
+transform — so a light visually tracks precisely what's actually drawn
+that frame, with zero lag or jitter relative to its owner, and (this
+milestone's own explicit constraint) never feeds anything back into
+authoritative state: `BuildDynamicLights` returns a plain
+`std::vector<DynamicLight>` and touches no physics/gameplay state at all.
+
+### Player torch (`src/LightTransforms.h`, `PlayerController::GetTorchTransform`)
+
+`T` toggles a boolean (`torchOn`, owned by `Application::Run`'s own local
+scope — see "Light ownership and lifetime" below). While on, one
+`LightKind::Spot` is built every frame from
+`PlayerController::GetTorchTransform(presentationAlpha, outPosition,
+outDirection)`:
+
+```cpp
+void ComputeTorchTransform(basePosition, baseOrientation, yawDegrees, pitchDegrees, eyeHeight,
+                            outPosition, outDirection) {
+    localUp = baseOrientation * (0,1,0);
+    lookOrientation = baseOrientation * angleAxis(yawDegrees, (0,1,0)) * angleAxis(pitchDegrees, (1,0,0));
+    outDirection = normalize(lookOrientation * (0,0,-1));
+    outPosition = basePosition + localUp * eyeHeight;
+}
+```
+
+This is the EXACT SAME yaw/pitch composition `BuildViewMatrix`/
+`GetLookDirection` already use for the camera's own `front` vector and
+`GetLookDirection`'s own return value (see "Camera" below) — the torch is
+carried at the player's own eye position (`kEyeHeightAboveCenter` above
+the presented capsule center) rather than the third-person camera
+position behind it, so it visually originates from the player, not from
+empty space. `basePosition`/`baseOrientation` are the player's PRESENTED
+transform; `yawDegrees`/`pitchDegrees` are the same free-look state that
+already updates every render frame in `UpdateFrameInput`, independent of
+presentation interpolation (mouse look is already as responsive as
+rendering itself — see "Input responsiveness"). Never derives from
+gravity, never assumes a world axis: `baseOrientation` may be any
+quaternion, verified directly by `tests/LightingTests.cpp`'s rotate-the-
+universe check (Section C) — the torch works identically on Planet A, on
+the plank, on Planet B, and under a rotated local-gravity test pose,
+because the formula never reads gravity or world position at all, only
+the player's own current frame.
+
+The actual geometry (`ComputeTorchTransform`) was factored out of
+`PlayerController.cpp` into `src/LightTransforms.h/.cpp` — a pure,
+stateless free function — specifically so it's directly unit-testable
+with hand-crafted (including rotated) poses without needing a live
+`PlayerController` driven through gravity/input to exercise it (see
+"Automated evidence" below). `PlayerController::GetTorchTransform` is now
+a thin wrapper calling it with the player's own presented state.
+
+### Torch spotlight cone
+
+`kTorchInnerConeDegrees = 18`, `kTorchOuterConeDegrees = 28` (see
+`Application.cpp`) — full brightness inside an 18-degree half-angle core,
+smoothly fading to zero by 28 degrees, chosen by direct interactive
+tuning against this demo's own geometry scale (a person-sized player,
+~20m-radius planets) to read as an ordinary handheld flashlight rather
+than a laser (too narrow) or a floodlight (too wide). `kTorchRange = 35`
+world units. See "Point-light attenuation" below for the exact
+attenuation/cone formulas these feed.
+
+### Spacecraft lights (`Application.cpp`'s `kShip*` constants)
+
+Three lights, defined entirely in the spacecraft's own LOCAL space
+(relative to its `kFlyingPrimitiveHalfExtents(2.0, 0.25, 3.0)` box
+collider), transformed into world space every frame via
+`src/LightTransforms.h`'s other two free functions:
+
+```cpp
+glm::vec3 TransformLocalLightPosition(ownerPosition, ownerOrientation, localOffset) {
+    return ownerPosition + ownerOrientation * localOffset;
+}
+glm::vec3 TransformLocalLightDirection(ownerOrientation, localDirection) {
+    return glm::normalize(ownerOrientation * localDirection);
+}
+```
+
+Exactly the formula this milestone's own brief specifies
+(`worldPosition = shipPresentedPosition + shipPresentedOrientation *
+localLightOffset`). One forward-facing headlight spotlight at the nose
+(local offset `(0, 0, -3)`, local direction `(0, 0, -1)` — matching
+`FlyingPrimitiveControl.cpp`'s own "forward = local -Z" convention
+exactly, so the headlight always points out of whichever direction
+`W` actually thrusts the ship); two wingtip point "navigation" lights at
+local `(-2, 0, 0)` and `(2, 0, 0)` (the box collider's own X half-extent)
+— red to port (left), green to starboard (right), the traditional
+aviation convention, purely decorative, not a gameplay signal.
+`shipPosition`/`shipOrientation` are read from
+`dynamicBodies[flyingPrimitiveBodyIndex].GetPresentedPosition/
+Orientation(presentationAlpha)` — the SAME presented pose that frame's
+`DrawMesh` call for the spacecraft's own model already uses, so the
+lights are guaranteed to visually agree with wherever the rendered ship
+model actually is, never a separately-timed snapshot.
+
+**This works identically whether the spacecraft is being piloted,
+coasting under Milestone 12 inertia with no input at all, or tumbling
+after a release mid-rotation** — `BuildDynamicLights` only ever reads the
+spacecraft's own current presented transform, never
+`flyingPrimitiveControl.controlled` or anything about who (if anyone) is
+driving it. Rolling the spacecraft 90 degrees, 180 degrees, or any
+combined pitch/yaw/roll simply changes what `shipOrientation` IS that
+frame — there is no special-case code anywhere for "what if the ship is
+upside down" or "what if nothing is controlling it right now." Verified
+directly: `tests/LightingTests.cpp` Section B/C construct hand-crafted
+ship poses (a 90-degree yaw, and `kArbitraryRotation` — an arbitrary
+combined-axis quaternion also used by `judas_physics_tests`/
+`judas_collision_tests`/`judas_pilot_attachment_tests`/
+`judas_step_climb_tests`/`judas_spacecraft_control_tests`) and confirm
+both the light position and direction transform exactly as the formula
+above predicts, with no privileged axis.
+
+### Spacecraft lighting is independent of gravity
+
+`BuildDynamicLights` never samples a `GravityField`, never reads
+`GravityContextMap`, and never reads the spacecraft's own gravity-derived
+acceleration — the ship's lights are a pure function of
+`(shipPosition, shipOrientation)`, full stop. Whichever of Planet A's
+radial gravity, Planet B's radial gravity, the plank's uniform gravity,
+or unclaimed (zero-gravity) space the spacecraft currently occupies has
+zero effect on where its lights point or how bright they are — exactly
+the same "gravity direction and [X] are separate concepts, never
+conflate them" pattern this project's architectural laws already
+establish for supporting-surface contact normals (law #5) and pilot
+attachment (law #21); M14 extends it to light attachment.
+
+### Point-light attenuation
+
+```glsl
+float rangeFraction = clamp(distance / range, 0.0, 1.0);
+float windowed = clamp(1.0 - rangeFraction^4, 0.0, 1.0);
+float attenuation = (windowed * windowed) / (distance * distance + 1.0);
+```
+
+A smooth-windowed inverse-square falloff — genuinely inverse-square close
+to the light (the `distance^2` denominator), smoothly reaches EXACTLY
+zero at `range` (the `windowed` term, not a hard cliff), and stays finite
+as `distance` approaches 0 (the `+ 1.0` in the denominator prevents a
+`1/0` singularity directly under a light). Based on the general shape
+popularized by Brian Karis, "Real Shading in Unreal Engine 4" (SIGGRAPH
+2013 course notes), "Punctual Lights" — M14 does not claim the same exact
+coefficients or any photometric correctness (no lumens, no physical
+units anywhere in this engine); it borrows the qualitative idea (smoothly
+windowed inverse-square, not a hard cutoff or an unbounded one) because
+it reads as physically sensible without requiring HDR/tone-mapping
+infrastructure this milestone explicitly does not add. `range` itself is
+a per-light, per-demo tuning value (35 for the torch, 45 for the
+headlight, 12 for the small wingtip nav lights — see the `k*Range`
+constants in `Application.cpp`), not a physical or engine-level constant.
+Color values already have "intensity" folded directly into them (e.g. the
+torch's `kTorchColor = (3.0, 2.9, 2.6)`, component values intentionally
+above 1.0) rather than keeping a separate intensity scalar multiplied in
+later — one fewer moving part for a system that isn't claiming physical
+units anyway; final `FragColor` is implicitly clamped by the existing
+non-HDR 8-bit-per-channel framebuffer, exactly as Milestone 9's
+directional light already was.
+
+### Spotlight cone
+
+```glsl
+float cosAngle = dot(-lightDir, light.direction);  // lightDir points fragment->light
+float spotFactor = smoothstep(outerCos, innerCos, cosAngle);
+```
+
+`innerCos`/`outerCos` are computed ONCE PER LIGHT PER FRAME on the CPU
+(`Renderer::SetDynamicLights`, `std::cos(glm::radians(...))`) rather than
+once per fragment on the GPU — trivial cost either way at this light
+count, but free to do the trig just once. `smoothstep` is GLSL's own
+built-in smooth Hermite interpolation (`3t^2 - 2t^3`): full strength
+(`1.0`) at/inside the inner cone, zero at/outside the outer cone, a
+smooth S-curve between — never the harsh binary edge a plain `if
+(angle < coneAngle)` would produce. `SetDynamicLights` clamps
+`innerConeDegrees` to never exceed `outerConeDegrees` before converting
+to cosines, so a misconfigured light (inner > outer) can't silently
+invert `smoothstep`'s required `edge0 <= edge1` ordering.
+
+### Combining lights
+
+Every mesh's final lighting is a single accumulating sum in the fragment
+shader: `ambient + directional*diffuse`, then `+= dynamicLight*diffuse*
+attenuation*spotFactor` for each of up to `uLightCount` active dynamic
+lights, in a plain loop — genuinely additive, never a mode switch. The
+torch does not disable or dim the directional "sun"; the spacecraft's
+lights do not globally change how anything else in the scene is lit;
+turning the torch off or leaving the spacecraft simply removes that
+light's own term from the sum, exactly as if it had never been in the
+list that frame. All light colors are non-negative by construction (no
+subtractive/negative-intensity light exists anywhere in this milestone),
+`attenuation`/`spotFactor` are both `clamp`ed into `[0, 1]` in their own
+formulas above, and the final `FragColor` is implicitly clamped to `[0,
+1]` by the 8-bit framebuffer — no NaN or negative-color path exists in
+this shader for any input this milestone produces (verified directly by
+the offscreen-rendering spot-check in "Automated evidence" below, which
+produced no visible artifacts across every light combination tried).
+
+### UI remains unlit
+
+Milestone 13's screen-space UI shader (`kUIVertexShaderSource`/
+`kUIFragmentShaderSource`, `Renderer::BeginUIFrame`/`DrawUIRect`/
+`DrawUIText`/`EndUIFrame`) is a COMPLETELY SEPARATE shader program from
+the 3D lit-mesh shader this milestone extended — see "Milestone 13, Text
+rendering," for why they were already split before M14 existed. `Renderer
+::SetDynamicLights` sets uniforms only on `m_shaderProgram` (the 3D
+shader); `m_uiShaderProgram` was not touched by this milestone at all, has
+no lighting uniforms, and samples its bound texture directly with no
+diffuse/ambient/attenuation term anywhere in its fragment shader. The
+pause menu and HUD read exactly as bright/readable while every dynamic
+light (including the torch, pointed directly at the camera) is active as
+they do with none active — verified via the same offscreen-rendering
+spot-check.
+
+### Light ownership and lifetime
+
+- **Static configuration** (colors, ranges, cone angles, local offsets)
+  lives as plain `constexpr`/`const` values in `Application.cpp`,
+  alongside every other demo-tuning constant (`kFlyingPrimitiveMass`,
+  `kLightDirection`, etc.) — composition-root data, not engine state.
+- **Runtime state**: `torchOn` (a single bool) is a local variable inside
+  `Application::Run`'s interactive-loop scope, the same category
+  `wasPauseMenuOpen`/`physicsAccumulator` already are — not a member of
+  `PlayerController` (the torch is presentation state a light-building
+  step reads, not something the player's own simulation needs to know
+  about) and not a GL resource of any kind.
+- **The per-frame light LIST** (`std::vector<DynamicLight>`) is built
+  fresh every render frame by `BuildDynamicLights`, handed to
+  `Renderer::SetDynamicLights`, and not retained past that call — `
+  Renderer` copies the values it needs into its own uniform state and
+  the CPU-side vector is discarded immediately after.
+- **GPU-facing light data** (the uniform array itself) is owned entirely
+  by `Renderer` — no gameplay object owns a GL resource of any kind, the
+  same rule Milestone 9's mesh/texture handles already established.
+
+No generalized "light resource manager," light registry, or light
+handle/lifetime system was built — lights are cheap, frame-rebuilt plain
+data, not a GPU resource with an allocate/free lifecycle the way a mesh
+or texture is (see "Light limits" below for why this stayed simple).
+
+### Light limits
+
+`kMaxDynamicLights = 5` (see `src/Light.h`) — enough for one player torch
+plus the three-light spacecraft rig, with one slot of headroom, sized for
+a fixed-length GLSL uniform array. No clustered/tiled/deferred lighting,
+no light culling, no bindless resources, no render graph — those solve a
+scale problem (hundreds to thousands of simultaneous lights) this
+milestone's tiny demo does not have; a fixed, small uniform array,
+looped over unconditionally up to `uLightCount`, is the entire mechanism.
+Raising this limit later (a future milestone with more simultaneous
+lights) means raising one constant and one shader array size, not a
+rendering-architecture change — see "Milestone 14, deliberately NOT
+implemented" below for the full list of scale-solving techniques this
+milestone explicitly did not need.
+
+### Input ownership
+
+`T` (torch toggle) is gameplay input, obeying the exact input-ownership
+boundary Milestone 13 established (`docs/ARCHITECTURE.md`, "Milestone 13,
+Input ownership") — `PlayerController`, `FlyingPrimitiveControl`,
+`PilotControl`, and `PhysicsWorld` needed zero changes for this milestone,
+same as M13's own boundary claim. One added subtlety this milestone's own
+brief specifically called out: `Window::ConsumeTorchToggleRequest()` is
+now drained EVERY render frame, unconditionally — including while the
+pause menu owns input — exactly like the existing UI Consume* requests
+already are (see `Application::Run`'s own comment), rather than only
+being consumed inside the `!pauseMenu.IsOpen()`-gated block the way
+`ConsumeResetRequest`/`ConsumeControlToggleRequest` are. If it were only
+drained inside that gated block, a `T` press while the menu was open
+would sit as a pending SDL-level flag and fire immediately the instant
+the menu closed — a real "stale input" bug, not a hypothetical one (the
+same latent shape exists for `R`/`F` as of Milestone 13, left alone since
+this milestone's brief scoped the fix to the torch specifically). The
+drained boolean is then only ACTED ON (`torchOn = !torchOn`) inside the
+`!pauseMenu.IsOpen()` gate, so the request is discarded, not deferred,
+while a menu is open. Verified directly:
+`tests/LightingTests.cpp`'s Section F mirrors `tests/UITests.cpp`'s own
+Section G pattern exactly, constructing a real `PauseMenu` and confirming
+a toggle request during `IsOpen()` changes nothing, and that gameplay
+control is "fully restored," not merely "no longer blocked," the instant
+the menu closes.
+
+### Reset behavior
+
+`R` (world reset) does not reset `torchOn` — the torch is treated as
+persistent player-tool state (matching Milestone 13's own precedent: the
+HUD-visibility toggle also survives `R` and pause/resume). Every light's
+actual WORLD position/direction still resets coherently regardless,
+because `BuildDynamicLights` derives them fresh every frame from the
+player's/spacecraft's own (now-reset) presented transforms — there is no
+separate "light state" to desynchronize from a reset pose in the first
+place.
+
+### Automated evidence
+
+`judas_lighting_tests` (new standalone executable, `tests/LightingTests.cpp`)
+— pure CPU geometry/arithmetic and pause-state logic, no window, no GL
+context, no font — verifies: the player torch's transform at identity
+orientation and under free-look yaw/pitch (Section A); spacecraft light
+attachment under both a simple 90-degree yaw and an arbitrary combined-
+axis rotation (Section B); rotate-the-whole-scenario invariance for BOTH
+the torch and the spacecraft lights (Section C, using the same
+`kArbitraryRotation` convention every other rotate-the-universe suite in
+this project already uses); that distance attenuation strictly decreases,
+stays finite at zero distance, and reaches exactly zero at (and beyond)
+the configured range (Section D); that the spotlight cone factor is 1.0
+at/inside the inner edge, exactly 0.0 at/outside the outer edge, strictly
+monotonic between them, and genuinely fractional partway through (a
+smooth transition, not a binary edge) (Section E); and the torch's exact
+input-ownership boundary, mirroring `tests/UITests.cpp`'s own Section G
+(Section F). `src/LightAttenuation.h/.cpp` deliberately MIRRORS (does not
+share code with — GLSL and C++ can't share a function body) the fragment
+shader's own attenuation/cone formulas, the same "kept as a separate copy
+on purpose so a future change that isn't mirrored makes tests fail
+visibly" pattern `tests/SpacecraftControlTests.cpp` already established
+for its own mirrored production constants — this suite verifies the
+INTENDED formula's mathematical properties, not the compiled GLSL
+directly (there is no headless way to execute a fragment shader and read
+back per-fragment values without a real GL context, which this project's
+test suites have deliberately avoided requiring since Milestone 5).
+
+Beyond the new suite: all 7 prior standalone suites (`judas_physics_tests`
+through `judas_ui_tests`) remain green on a clean rebuild with zero
+compiler warnings; the full M1-13 `JUDAS_TEST_SCRIPT` regression walk
+(spawn, staircase, plank crossing, jump-land-settle) was re-run and
+produces BYTE-IDENTICAL fixed-step telemetry AND identical screenshot
+output to pre-Milestone-14 runs — expected, since `TestHarness.cpp`'s own
+render path never calls `SetDynamicLights` at all (dynamic lighting is an
+interactive-loop-only concern, the same scoping decision Milestone 13
+made for its own UI overlay), but verified rather than assumed.
+
+Actual GLSL shader correctness — does the real, compiled fragment shader
+actually produce the attenuation/cone shape `LightAttenuation.cpp`
+documents as the intended formula — was additionally spot-checked via a
+standalone offscreen-rendering harness (a real, if hidden, GL context via
+`Window::Init(..., visible=false)`, exactly like `TestHarness.h` already
+uses, constructing a real `Renderer` and calling `SetDynamicLights`/
+`DrawBox`/`DrawSphere` directly, then reading the result back via the
+existing `Renderer::CaptureFrame`): confirmed a spotlight produces a
+soft-edged, non-binary illuminated pool on a lit surface with a visibly
+brighter core; confirmed a point light's brightness visibly falls off
+with distance and does not affect geometry outside its range; confirmed
+multiple simultaneous lights (ambient + directional + one spot + one
+point) combine with no visible artifacts, no black holes, no blown-out
+saturation beyond the framebuffer's own implicit clamp. This is
+evidence, not proof of "looks good" in this demo's real scene at its
+real scale — human interactive validation remains authoritative for
+that, per this milestone's own brief.
+
+### What was deliberately not built
+
+Per this milestone's brief: shadows, shadow maps, cascaded shadows, ray
+tracing, PBR, HDR, tone mapping, bloom, global illumination, ambient
+occlusion, reflection probes, image-based lighting, volumetric
+lighting/fog, lens flare, emissive materials (beyond ordinary tinted
+geometry — no separate emissive shader term exists), a day/night cycle,
+atmospheric scattering, light baking/lightmaps, clustered/Forward+/
+deferred lighting, a render graph, Vulkan, editor lighting tools,
+gameplay light queries, a battery/inventory-item torch, AI vision, or
+multiple rendering backends. **Shadows specifically: objects behind other
+objects may still receive torch/spacecraft light if they fall within the
+light's mathematical volume** — accepted and documented honestly per the
+brief's own instruction, not treated as a bug. Also not built, judged
+genuinely out of this milestone's scope: a light resource-manager/handle-
+lifetime system (lights are cheap frame-rebuilt data, not a GPU
+resource — see "Light ownership and lifetime"); more than
+`kMaxDynamicLights` (5) simultaneous lights (see "Light limits"); any
+`JUDAS_TEST_SCRIPT` scripting for the torch toggle (the input-ownership
+boundary is covered by `judas_lighting_tests`' pure-logic Section F,
+appearance/interaction by human validation, the same split Milestone 13
+established); battery drain, a torch pickup/inventory item, a hand/arm
+model, animation, or a volumetric/projected flashlight texture (M14's
+torch is a light source, not a gameplay system); and photometric
+accuracy of any kind — this engine's light "color" values are tuned,
+demo-specific numbers with intensity folded in, not calibrated real-world
+units.
+
 ## Milestone 8
 
 The milestone's own scope statement, verbatim in spirit: "walk onto it →
@@ -4120,6 +4635,16 @@ input on) — see "Milestone 13, Automated evidence" for the full section
 breakdown. UI appearance/interaction itself is human-validated, per that
 milestone's own brief; no `JUDAS_TEST_SCRIPT` directive was added for UI.
 
+**Milestone 14** added `judas_lighting_tests` (`tests/LightingTests.cpp`)
+— headless CPU-only coverage of the torch/spacecraft-light transform math
+(`src/LightTransforms.*`), the mirrored attenuation/spotlight-cone
+formulas (`src/LightAttenuation.*`), and the torch's input-ownership
+gating (mirroring `judas_ui_tests`' own Section G) — see "Milestone 14,
+Automated evidence" for the full section breakdown and why actual GLSL
+shader correctness was verified by a one-time offscreen-rendering
+spot-check plus human visual validation instead of a headless GPU-readback
+test.
+
 ## Remaining limitations
 
 Recorded honestly rather than left implicit — these are known, deliberately
@@ -4395,6 +4920,26 @@ deferred, not oversights:
   menu; a much busier UI (a scrolling log, a large inventory grid) would
   need real batching (a single VBO upload per frame, indexed by glyph)
   before this brute-force approach would show a real cost.
+- **Milestone 14: no shadows of any kind.** Objects behind other objects
+  may still receive torch/spacecraft light if they fall within the
+  light's mathematical volume — an accepted, explicitly documented
+  limitation, not an oversight (see "Milestone 14, What was deliberately
+  not built"). A future milestone needing shadows would need shadow
+  mapping (or another real occlusion technique) added on top of this
+  light representation, not a rework of it.
+- **Milestone 14: a fixed maximum of 5 simultaneous dynamic lights**
+  (`kMaxDynamicLights`, `src/Light.h`), enforced by silent truncation in
+  `Renderer::SetDynamicLights` — a scene needing meaningfully more than
+  that (this demo never does: 1 torch + 3 spacecraft lights = 4, with one
+  slot of headroom) would need either a larger fixed array or a real
+  light-culling scheme (see "Milestone 14, Light limits" for why neither
+  was built speculatively).
+- **Milestone 14: no photometric accuracy.** Light "color" values are
+  tuned, demo-specific numbers with intensity folded directly in (e.g.
+  `kTorchColor`'s components exceed 1.0) — not lumens, not any calibrated
+  real-world unit. A future milestone wanting physically-based light units
+  would need a genuinely different (HDR-aware, exposure-aware) pipeline,
+  not a reinterpretation of these same numbers.
 
 ## FUTURE CONSTRAINTS PRESERVED
 
@@ -4694,3 +5239,21 @@ Explicitly deferred, not forgotten:
   multi-style UI — one visual style, shared by the HUD panel and both menu
   screens; and any generalized "attach/secure a UI widget to X" concept
   beyond the one HUD + pause-menu pairing this milestone needed.
+- **Milestone 14 additions:** shadows, shadow maps, cascaded shadows, ray
+  tracing, PBR, HDR, tone mapping, bloom, global illumination, ambient
+  occlusion, reflection probes, image-based lighting, volumetric
+  lighting/fog, lens flare, emissive materials beyond ordinary tinted
+  geometry, a day/night cycle, atmospheric scattering, light baking/
+  lightmaps, clustered/Forward+/deferred lighting, a render graph,
+  Vulkan, editor lighting tools, gameplay light queries (no system
+  anywhere asks "is this point lit"), a battery or inventory torch item,
+  AI vision, or multiple rendering backends; a light resource-manager/
+  handle-lifetime system — lights are cheap, frame-rebuilt plain data,
+  never a GPU resource with an allocate/free lifecycle; more than
+  `kMaxDynamicLights` (5) simultaneous lights, or any light-culling
+  scheme to support more; any `JUDAS_TEST_SCRIPT` scripting for the torch
+  toggle — its input-ownership boundary is covered by
+  `judas_lighting_tests`' own pure-logic section, appearance/interaction
+  by human validation; and photometric accuracy of any kind — every
+  light "color" value in this milestone is a tuned, demo-specific number
+  with intensity folded in, not a calibrated real-world unit.

@@ -8,7 +8,7 @@ This is **not** a general-purpose engine and is not trying to compete with
 Unity, Unreal, or Godot. It exists to serve one specific class of game, and
 its architecture is deliberately narrow.
 
-## Status: Milestone 13
+## Status: Milestone 14
 
 A controllable player walks, jumps, and falls under real physics — Judas's
 own physics engine, not a third-party library — across two independent
@@ -142,10 +142,31 @@ atlas — see `assets/fonts/DejaVuSans-LICENSE.txt` for its license). See
 full design, the single input-ownership boundary that keeps gameplay code
 from needing to know a menu exists, and the pause/simulation policy.
 
+**New this milestone:** Judas has dynamic lighting. Press `T` to toggle a
+player torch — a spotlight that originates from the player's own eye
+position and points exactly where you're looking, built fresh every frame
+so it never lags behind your view, works identically on Planet A, on the
+plank, on Planet B, and under any local-gravity orientation. The
+spacecraft carries its own small light rig: one forward-facing headlight
+and two wingtip navigation lights (red to port, green to starboard) —
+defined entirely relative to the spacecraft's own frame, so they stay
+correctly attached through translation, pitch, yaw, roll, Milestone 12
+inertial coasting/tumbling, and any gravity context (including zero
+gravity) with no special-casing. Both light kinds use a smooth (never
+harsh/binary) falloff — a distance-based attenuation that fades to zero
+at a fixed range, and a spotlight cone that fades gently from full
+brightness at its center to nothing at its edge — and combine additively
+with the existing ambient/directional lighting from Milestone 9, never
+replacing it. See [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md),
+"Milestone 14," for the full design, the exact attenuation/cone formulas,
+and an honest note on what this deliberately doesn't do (no shadows —
+an object behind another object can still catch torch/ship light if it
+falls within the light's mathematical volume).
+
 This is intentional — see `docs/ARCHITECTURE.md` for why, what's
 deliberately not built yet, and how this small foundation avoids blocking
 the much larger long-term design. Earlier milestones are preserved as git
-tags (`milestone-1` through `milestone-13`, once this one is tagged) rather
+tags (`milestone-1` through `milestone-14`, once this one is tagged) rather
 than kept running alongside the current demo.
 
 ## Building
@@ -207,6 +228,7 @@ walks the player relative to that look direction and the current surface
 | Look around             | Mouse movement        |
 | Pause / back / resume   | `Escape`               |
 | Take/release piloting control of the spacecraft (only while standing on it) | `F` |
+| Toggle the player torch on/off | `T`             |
 | Reset the player and world | `R`               |
 
 While piloting the spacecraft (after pressing `F` while standing on it),
@@ -214,6 +236,33 @@ WASD/Q/E and a separate IJKL+U/O cluster mean something different — see
 "The spacecraft" below.
 
 Close the window normally (window controls / `Alt+F4` / etc.) to exit.
+
+## Lighting
+
+Press `T` to toggle a torch carried at the player's own eye position,
+pointed exactly where you're looking — it moves and turns with you every
+frame, works identically on either planet or the connecting plank, and
+never assumes any particular "up" direction. It lights nearby surfaces in
+a soft-edged cone (bright at the center, fading smoothly toward the edge,
+never a hard cutoff) with a finite range — it doesn't reach across an
+entire planet.
+
+The spacecraft always has its lights on: one forward-facing headlight and
+two wingtip navigation lights (red to port/left, green to starboard/
+right — the traditional aviation convention). They're defined relative to
+the spacecraft's own frame, so translating, pitching, yawing, or rolling
+it — including coasting or tumbling freely under Milestone 12's real
+inertia, with no input at all — carries the lights along exactly as if
+they were physically bolted on, in any gravity context or none.
+
+Dynamic lights combine additively with the existing ambient/directional
+lighting from Milestone 9 — the torch and the spacecraft's lights never
+replace or override it. See
+[`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md), "Milestone 14," for the
+full design and the exact attenuation/cone formulas. **Honest limitation:
+there are no shadows** — an object sitting behind another object can
+still catch torch or spacecraft light if it falls within the light's
+mathematical cone/range, since nothing occludes it.
 
 ## HUD and pause menu
 
@@ -341,17 +390,23 @@ release, orientation/velocity independence, counter-thrust, perpendicular
 thrust, F/m mass response, angular coasting, counter-torque, the real
 inverse-inertia-tensor's per-axis response, gravity+thrust composition, a
 no-op while uncontrolled, and the same rotate-the-whole-scenario check);
-and `judas_ui_tests` (Milestone 13 — the UI navigation/input-ownership
+`judas_ui_tests` (Milestone 13 — the UI navigation/input-ownership
 logic: the screen stack, focus navigation and hit-testing, the pause
 menu's exact required open/nested/back/resume flow, the HUD-visibility
 toggle's persistent state, and the same boolean the real game loop gates
 gameplay input on — pure CPU logic, no window/GL/font; UI appearance and
 real interaction are human-validated instead, see `docs/ARCHITECTURE.md`,
-"Milestone 13, Automated evidence"):
+"Milestone 13, Automated evidence"); and `judas_lighting_tests`
+(Milestone 14 — the torch/spacecraft-light transform math including
+rotate-the-whole-scenario invariance, the mirrored attenuation/spotlight-
+cone formulas, and the torch's own input-ownership gating — pure CPU
+logic, no window/GL/font; actual GLSL shader correctness was spot-checked
+via a one-time offscreen render and is otherwise human-validated, see
+`docs/ARCHITECTURE.md`, "Milestone 14, Automated evidence"):
 
 ```bash
-cmake --build build --target judas_physics_tests judas_collision_tests judas_asset_tests judas_step_climb_tests judas_pilot_attachment_tests judas_spacecraft_control_tests judas_ui_tests
-./build/judas_physics_tests && ./build/judas_collision_tests && ./build/judas_asset_tests && ./build/judas_step_climb_tests && ./build/judas_pilot_attachment_tests && ./build/judas_spacecraft_control_tests && ./build/judas_ui_tests
+cmake --build build --target judas_physics_tests judas_collision_tests judas_asset_tests judas_step_climb_tests judas_pilot_attachment_tests judas_spacecraft_control_tests judas_ui_tests judas_lighting_tests
+./build/judas_physics_tests && ./build/judas_collision_tests && ./build/judas_asset_tests && ./build/judas_step_climb_tests && ./build/judas_pilot_attachment_tests && ./build/judas_spacecraft_control_tests && ./build/judas_ui_tests && ./build/judas_lighting_tests
 ```
 
 ## Assets

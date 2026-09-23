@@ -7,6 +7,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 
 #include "GravityField.h"
+#include "LightTransforms.h"
 #include "PhysicsWorld.h"
 #include "StepClimb.h"
 #include "Window.h"
@@ -684,6 +685,17 @@ glm::vec3 PlayerController::GetLookDirection() const {
         m_frameOrientation * glm::angleAxis(glm::radians(m_yaw), glm::vec3(0.0f, 1.0f, 0.0f)) *
         glm::angleAxis(glm::radians(m_pitch), glm::vec3(1.0f, 0.0f, 0.0f));
     return glm::normalize(lookOrientation * glm::vec3(0.0f, 0.0f, -1.0f));
+}
+
+void PlayerController::GetTorchTransform(float presentationAlpha, glm::vec3& outPosition,
+                                          glm::vec3& outDirection) const {
+    // The actual geometry is a pure function of (presented pose, free-look
+    // yaw/pitch, eye height) — factored into src/LightTransforms.h so it's
+    // directly unit-testable with hand-crafted (including rotated) poses
+    // without needing a real PlayerController driven through gravity/input
+    // — see tests/LightingTests.cpp.
+    ComputeTorchTransform(GetPresentedPosition(presentationAlpha), GetPresentedOrientation(presentationAlpha),
+                          m_yaw, m_pitch, kEyeHeightAboveCenter, outPosition, outDirection);
 }
 
 glm::mat4 PlayerController::BuildViewMatrix(const glm::vec3& position,

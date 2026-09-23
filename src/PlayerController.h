@@ -168,6 +168,22 @@ public:
     float GetPitch() const { return m_pitch; }
     glm::vec3 GetLookDirection() const;
 
+    // Milestone 14: the player torch's world-space origin/direction for a
+    // given presentation alpha — same eye position and yaw/pitch-composed
+    // look direction BuildViewMatrix uses for the camera's own `front`
+    // vector (see PlayerController.cpp), but carried at the player's own
+    // eye position rather than the third-person camera position behind
+    // it, so the torch visually originates from the player, not from
+    // empty space behind them. Uses PRESENTED position/orientation (see
+    // GetPresentedPosition/Orientation above), matching every other
+    // Milestone 14 dynamic light's "follow the rendered pose, not a
+    // stale/baked one" requirement — see docs/ARCHITECTURE.md, "Milestone
+    // 14, Dynamic means dynamic." Never derives from gravity or assumes a
+    // world axis: entirely a function of this player's own frame
+    // orientation plus free-look yaw/pitch, exactly like GetLookDirection.
+    void GetTorchTransform(float presentationAlpha, glm::vec3& outPosition,
+                            glm::vec3& outDirection) const;
+
     // Milestone 8: the physics body the player is currently standing on,
     // meaningful only when IsGrounded() is true (same "meaningful only
     // when hit is true" convention as ShapeSweepHit::hitBody, which this

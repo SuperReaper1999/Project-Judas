@@ -44,6 +44,8 @@ add_executable(judas
     src/UIWidgets.cpp
     src/PauseMenu.cpp
     src/HUD.cpp
+    src/LightTransforms.cpp
+    src/LightAttenuation.cpp
     src/FaithfulGravity.cpp
     src/RadicalGravity.cpp
     src/SphericalVolume.cpp
@@ -170,6 +172,30 @@ target_include_directories(judas_ui_tests PRIVATE src)
 target_include_directories(judas_ui_tests PRIVATE ${SDL2_INCLUDE_DIRS})
 target_link_libraries(judas_ui_tests PRIVATE SDL2::SDL2 glm::glm-header-only)
 target_compile_options(judas_ui_tests PRIVATE -Wall -Wextra)
+
+# Milestone 14: headless tests for the dynamic-lighting math (src/
+# LightTransforms.*, src/LightAttenuation.*) and the torch's input-
+# ownership gating (src/PauseMenu.*, mirroring the same pattern
+# tests/UITests.cpp's own Section G already established) — pure CPU
+# geometry/arithmetic and pause-state logic, no window, no GL context, no
+# font. Actual GLSL shader correctness (Renderer.cpp's fragment shader) is
+# verified by human visual validation instead, per this milestone's own
+# brief — see docs/ARCHITECTURE.md, "Milestone 14, Automated evidence."
+add_executable(judas_lighting_tests
+    tests/LightingTests.cpp
+    src/LightTransforms.cpp
+    src/LightAttenuation.cpp
+    src/PauseMenu.cpp
+    src/UIWidgets.cpp
+    src/HUD.cpp
+    src/Renderer.cpp
+    src/FontLoader.cpp
+    src/gl_core33.cpp
+)
+target_include_directories(judas_lighting_tests PRIVATE src)
+target_include_directories(judas_lighting_tests PRIVATE ${SDL2_INCLUDE_DIRS})
+target_link_libraries(judas_lighting_tests PRIVATE SDL2::SDL2 glm::glm-header-only)
+target_compile_options(judas_lighting_tests PRIVATE -Wall -Wextra)
 
 # stb_image_write (public domain / MIT, see third_party/stb_image_write.h) —
 # used only by the opt-in test harness (src/TestHarness.cpp) to write
