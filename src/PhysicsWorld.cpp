@@ -230,6 +230,19 @@ bool PhysicsWorld::IsDynamicBody(BodyHandle handle) const {
     return body && body->isDynamic;
 }
 
+float PhysicsWorld::GetMass(BodyHandle handle) const {
+    const Impl::Body* body = m_impl->Get(handle);
+    return body && body->isDynamic && body->rigidBody.inverseMass > 0.0f
+               ? 1.0f / body->rigidBody.inverseMass
+               : 0.0f;
+}
+
+void PhysicsWorld::ApplyLinearImpulse(BodyHandle handle, const glm::vec3& impulse) {
+    Impl::Body* body = m_impl->Get(handle);
+    if (!body || !body->isDynamic) return;
+    body->rigidBody.ApplyLinearImpulse(impulse);
+}
+
 glm::vec3 PhysicsWorld::GetLinearVelocity(BodyHandle handle) const {
     const Impl::Body* body = m_impl->Get(handle);
     return body ? body->rigidBody.linearVelocity : glm::vec3(0.0f);

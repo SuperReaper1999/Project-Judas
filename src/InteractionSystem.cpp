@@ -23,7 +23,7 @@ Interactable* SelectInteractable(const glm::vec3& playerPosition, const glm::vec
     float bestDistance = 0.0f;
 
     for (Interactable* candidate : candidates) {
-        if (!candidate) continue;
+        if (!candidate || !candidate->CanInteract()) continue;
 
         const glm::vec3 toCandidate = candidate->GetInteractionPoint() - playerPosition;
         const float distance = glm::length(toCandidate);

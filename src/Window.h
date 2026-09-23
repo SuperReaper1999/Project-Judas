@@ -117,6 +117,10 @@ public:
     // Application applies it only while gameplay owns input.
     bool ConsumeViewToggleRequest();
 
+    // M18: H throws a currently held object; drained every render frame so
+    // a menu-owned key press cannot fire after resume.
+    bool ConsumeThrowRequest();
+
     // --- Milestone 13: UI input ---
     //
     // Five more edge-triggered one-shot requests, same shape as
@@ -192,6 +196,7 @@ private:
     bool m_torchToggleRequested = false;
     bool m_interactRequested = false;
     bool m_viewToggleRequested = false;
+    bool m_throwRequested = false;
     // Milestone 13: UI input edge flags — see PollEvents.
     bool m_uiBackRequested = false;
     bool m_uiUpRequested = false;

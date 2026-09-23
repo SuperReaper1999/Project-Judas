@@ -6,7 +6,7 @@ someone with no prior context on this project. It is updated in place as
 milestones land, rather than kept as a per-milestone snapshot — see
 "Milestone history" below for how to recover an earlier milestone exactly.
 
-## What exists right now (Milestone 17)
+## What exists right now (Milestone 18 implementation; human validation pending)
 
 Open a window. Two independent static spheres ("planets," radius `20m`
 each, centers `55m` apart — see "Physics test world") exist in 3D space,
@@ -3880,6 +3880,41 @@ resumes the selected player camera mode.
 rotate-the-universe equivalence, torch/camera agreement, preserved
 third-person offsets, view-mode transitions, and paused-input gating. Camera
 feel and traversal remain subject to interactive human validation.
+
+## Milestone 18 — object manipulation
+
+`ObjectManipulation` is a small Judas-owned boundary separate from both
+`PlayerController` and `PhysicsWorld`. The composition root supplies an
+explicit whitelist containing only the six ordinary dynamic demo objects;
+the spacecraft and every static body are excluded. `PickupInteractable`
+adapts an eligible body to the existing M16 targeting interface, so normal
+range/facing selection and `G` input are reused. Interaction selection also
+skips candidates whose `CanInteract()` is false.
+
+While held, the body remains in `PhysicsWorld` as a dynamic body. Each fixed
+step adds a capped spring-damper force toward a target computed from the
+player's local-up eye offset and current look direction. Gravity, collision,
+and presentation interpolation continue through their existing paths; no
+transform is teleported and no collision is disabled. `G` drops by clearing
+the held reference and preserving the body's current linear/angular motion.
+`H` throws by adding a mass-scaled linear impulse along the player's full
+current look vector. The prompt shows drop/throw controls while carrying.
+
+Reset clears held state before restoring spawn poses. Taking spacecraft
+control drops any held object, and M18 manipulation input is ignored while
+piloting. The spacecraft camera and controls are otherwise unchanged. The
+carry target uses the player's authoritative fixed-step pose; the carried
+body follows through forces and is rendered through its ordinary
+interpolated pose. This is intentionally a bounded carry spring, not a
+general constraint/attachment system. `G` and `H` requests are drained
+while menus own input and only acted on during gameplay.
+
+`judas_object_manipulation_tests` checks the eligibility whitelist, dynamic
+body requirement, shared range/facing target selection, orientation-aware
+carry target and rotate-the-universe equivalence, force-driven body motion,
+drop velocity preservation, and mass-scaled throw impulse direction. Human
+validation remains required for carry feel, collisions during carry/throw,
+planetary traversal, and spacecraft transitions.
 
 ## Milestone 8
 

@@ -50,6 +50,7 @@ add_executable(judas
     src/ShadowTransforms.cpp
     src/HingeTransform.cpp
     src/InteractionSystem.cpp
+    src/ObjectManipulation.cpp
     src/Door.cpp
     src/LightSwitch.cpp
     src/FaithfulGravity.cpp
@@ -259,6 +260,21 @@ add_executable(judas_player_view_tests
 target_include_directories(judas_player_view_tests PRIVATE src)
 target_link_libraries(judas_player_view_tests PRIVATE glm::glm-header-only)
 target_compile_options(judas_player_view_tests PRIVATE -Wall -Wextra)
+
+# Milestone 18: pickup/carry/drop/throw semantics against the real Judas
+# PhysicsWorld, plus interaction targeting and rotate-the-universe carry
+# transform checks. No renderer/window is initialized.
+add_executable(judas_object_manipulation_tests
+    tests/ObjectManipulationTests.cpp
+    src/ObjectManipulation.cpp
+    src/InteractionSystem.cpp
+    src/DynamicBody.cpp
+    ${JUDAS_TEST_SUPPORT_SOURCES}
+    src/PhysicsWorld.cpp
+)
+target_include_directories(judas_object_manipulation_tests PRIVATE src)
+target_link_libraries(judas_object_manipulation_tests PRIVATE glm::glm-header-only)
+target_compile_options(judas_object_manipulation_tests PRIVATE -Wall -Wextra)
 
 # stb_image_write (public domain / MIT, see third_party/stb_image_write.h) —
 # used only by the opt-in test harness (src/TestHarness.cpp) to write

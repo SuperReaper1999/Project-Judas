@@ -28,6 +28,7 @@
 #include "LightSwitch.h"
 #include "LightTransforms.h"
 #include "ModelLoader.h"
+#include "ObjectManipulation.h"
 #include "PauseMenu.h"
 #include "PhysicsWorld.h"
 #include "PilotAttachment.h"
@@ -793,13 +794,6 @@ int Application::Run() {
                              glm::radians(kSwitchAngularSpeedDegreesPerSecond), kSwitchColor, lampPosition,
                              kLampColor, kLampRange);
 
-    // Player/Application code understands only `Interactable` from here on
-    // — see src/Interactable.h — never `Door`/`LightSwitch` by name. This
-    // vector (and SelectInteractable, called every render frame below) is
-    // the entire "player discovers an interactable" mechanism this
-    // milestone needed.
-    const std::vector<Interactable*> interactables = {&door, &lightSwitch};
-
     PlayerController player(kPlayerSpawnPosition, kPlayerSpawnYawDegrees);
     if (!player.Spawn(physicsWorld)) {
         std::fprintf(stderr, "Player spawn failed.\n");
@@ -831,6 +825,26 @@ int Application::Run() {
                                     glm::quat(1.0f, 0.0f, 0.0f, 0.0f));
     }
     const std::size_t flyingPrimitiveBodyIndex = dynamicBodies.size() - 1;
+
+    // M18 deliberately whitelists only the six ordinary demo objects.
+    // The appended spacecraft, planets, plank, door, and all other static
+    // geometry are outside this manipulation boundary.
+    std::vector<BodyHandle> pickupHandles;
+    pickupHandles.reserve(flyingPrimitiveBodyIndex);
+    for (std::size_t i = 0; i < flyingPrimitiveBodyIndex; ++i) {
+        pickupHandles.push_back(dynamicBodies[i].Handle());
+    }
+    ObjectManipulation objectManipulation(std::move(pickupHandles));
+    std::vector<PickupInteractable> pickupTargets;
+    pickupTargets.reserve(flyingPrimitiveBodyIndex);
+    for (std::size_t i = 0; i < flyingPrimitiveBodyIndex; ++i) {
+        pickupTargets.emplace_back(dynamicBodies[i], objectManipulation, physicsWorld);
+    }
+    // Player/Application code still sees only the established M16
+    // Interactable interface, while manipulation remains a separate
+    // Judas-owned gameplay boundary.
+    std::vector<Interactable*> interactables{&door, &lightSwitch};
+    for (PickupInteractable& target : pickupTargets) interactables.push_back(&target);
     FlyingPrimitiveControl flyingPrimitiveControl;
     flyingPrimitiveControl.handle = dynamicBodies[flyingPrimitiveBodyIndex].Handle();
     // Milestone 11: the secured-pilot relationship (see src/PilotAttachment.h)
@@ -1073,6 +1087,7 @@ int Application::Run() {
             // Drain even while the menu owns input, so V cannot toggle late
             // when gameplay resumes.
             const bool viewToggleRequested = window.ConsumeViewToggleRequest();
+            const bool throwRequested = window.ConsumeThrowRequest();
 
             // Milestone 16: recomputed every render frame from the
             // player's own CURRENT authoritative position/look direction
@@ -1121,6 +1136,7 @@ int Application::Run() {
                 player.UpdateFrameInput(window);
 
                 if (window.ConsumeResetRequest()) {
+                    objectManipulation.Drop();
                     player.Reset();
                     for (DynamicBody& body : dynamicBodies) {
                         body.ResetToSpawn(physicsWorld);
@@ -1138,7 +1154,9 @@ int Application::Run() {
                 // always allowed, in any orientation. See
                 // docs/ARCHITECTURE.md, "Milestone 11."
                 if (window.ConsumeControlToggleRequest()) {
+                    const bool wasControlled = flyingPrimitiveControl.controlled;
                     HandlePilotToggleRequest(flyingPrimitiveControl, pilotAttachment, player, physicsWorld);
+                    if (!wasControlled && flyingPrimitiveControl.controlled) objectManipulation.Drop();
                 }
 
                 // Milestone 14: T toggles the player's torch. The
@@ -1153,7 +1171,8 @@ int Application::Run() {
                     torchOn = !torchOn;
                 }
 
-                // Milestone 16: E triggers the currently-selected
+                // Milestone 16: G triggers the selected interaction;
+                // M18 reuses that path for eligible dynamic-body pickup.
                 // interactable, if any — gated behind `!pauseMenu.IsOpen()`
                 // exactly like every other piece of gameplay input here,
                 // so a menu can never accidentally trigger a world
@@ -1163,6 +1182,12 @@ int Application::Run() {
                 // — never a `Door`/`LightSwitch` by name.
                 if (interactRequested && interactTarget && interactTarget->CanInteract()) {
                     interactTarget->Interact();
+                } else if (interactRequested && objectManipulation.IsHolding() &&
+                           !flyingPrimitiveControl.controlled) {
+                    objectManipulation.Drop();
+                }
+                if (throwRequested && !flyingPrimitiveControl.controlled) {
+                    objectManipulation.Throw(physicsWorld, player.GetLookDirection(), 8.0f);
                 }
 
                 // Fixed-timestep physics: render-frame delta time only decides
@@ -1185,6 +1210,12 @@ int Application::Run() {
                     // and the primitive falls/rests like any other body.
                     PrepareDynamicBodiesForStep(dynamicBodies, gravity, physicsWorld,
                                                  SimulationTiming::kFixedTimestep);
+                    if (objectManipulation.IsHolding() && !flyingPrimitiveControl.controlled) {
+                        const glm::vec3 carryTarget = ComputeCarryTarget(
+                            player.GetPosition(), player.GetOrientation(), player.GetLookDirection(),
+                            0.7f, 1.7f);
+                        objectManipulation.ApplyCarryForce(physicsWorld, carryTarget, player.GetVelocity());
+                    }
                     ApplyFlyingPrimitiveControl(flyingPrimitiveControl, window, physicsWorld);
                     // Milestone 16: advances the door's own open/close
                     // animation and writes its new pose directly to
@@ -1325,7 +1356,13 @@ int Application::Run() {
                 hudData.pilotAttached = pilotAttachment.attached;
                 hudData.spacecraftLinearSpeed =
                     glm::length(physicsWorld.GetLinearVelocity(flyingPrimitiveControl.handle));
-                hudData.interactPrompt = interactTarget ? interactTarget->GetPromptText() : std::string();
+                if (objectManipulation.IsHolding()) {
+                    hudData.interactPrompt = interactTarget
+                        ? interactTarget->GetPromptText() + " | H Throw"
+                        : "G Drop | H Throw";
+                } else {
+                    hudData.interactPrompt = interactTarget ? interactTarget->GetPromptText() : std::string();
+                }
                 hud.Draw(renderer, window.Width(), window.Height(), hudData);
             }
             pauseMenu.Draw(renderer, window.Width(), window.Height());

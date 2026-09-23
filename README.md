@@ -8,7 +8,7 @@ This is **not** a general-purpose engine and is not trying to compete with
 Unity, Unreal, or Godot. It exists to serve one specific class of game, and
 its architecture is deliberately narrow.
 
-## Status: Milestone 17
+## Status: Milestone 18 (implementation pending human validation)
 
 A controllable player walks, jumps, and falls under real physics — Judas's
 own physics engine, not a third-party library — across two independent
@@ -28,7 +28,9 @@ Both planets and the plank host ordinary dynamic bodies (cubes and
 spheres) that sample the same Judas-owned gravity the player does, purely
 from their own position — proof that gravity was never player-specific or
 region-specific. They fall, land, roll, and collide with the world and
-each other under real physics; walk into one and you can push it.
+each other under real physics. The player can target the six ordinary demo
+objects with `G` to pick one up, carry it with physics-backed forces, use
+`G` to drop it, or `H` to throw it along the current look direction.
 
 The player can walk from Planet A, onto the plank, across it, onto
 Planet B, and back. Gravity hands off coherently at every boundary,
@@ -437,7 +439,7 @@ full script format:
 JUDAS_TEST_SCRIPT=path/to/script.txt ./build/judas
 ```
 
-Eleven standalone, headless test executables also exist (no window, no GL
+Twelve standalone, headless test executables also exist (no window, no GL
 context): `judas_physics_tests` and `judas_collision_tests` (rigid-body/
 collision/gravity-context primitives); `judas_asset_tests` (Milestone 9 —
 model/texture loading, parses the real committed demo assets and checks
@@ -481,11 +483,14 @@ one-time offscreen render and is otherwise human-validated, see
 `judas_player_view_tests` (Milestone 17 — first-person eye and look transform,
 arbitrary orientation and rotate-the-universe equivalence, third-person
 offset preservation, view-mode changes, and paused-input gating — pure CPU
-math, no window/GL):
+math, no window/GL); and `judas_object_manipulation_tests` (Milestone 18 —
+eligible-body filtering, shared range/facing targeting, arbitrary-orientation
+carry target, rotate-the-universe equivalence, physics-backed carry, drop
+velocity preservation, and mass-scaled throw direction):
 
 ```bash
-cmake --build build --target judas_physics_tests judas_collision_tests judas_asset_tests judas_step_climb_tests judas_pilot_attachment_tests judas_spacecraft_control_tests judas_ui_tests judas_lighting_tests judas_shadow_tests judas_interactable_tests judas_player_view_tests
-./build/judas_physics_tests && ./build/judas_collision_tests && ./build/judas_asset_tests && ./build/judas_step_climb_tests && ./build/judas_pilot_attachment_tests && ./build/judas_spacecraft_control_tests && ./build/judas_ui_tests && ./build/judas_lighting_tests && ./build/judas_shadow_tests && ./build/judas_interactable_tests && ./build/judas_player_view_tests
+cmake --build build --target judas_physics_tests judas_collision_tests judas_asset_tests judas_step_climb_tests judas_pilot_attachment_tests judas_spacecraft_control_tests judas_ui_tests judas_lighting_tests judas_shadow_tests judas_interactable_tests judas_player_view_tests judas_object_manipulation_tests
+./build/judas_physics_tests && ./build/judas_collision_tests && ./build/judas_asset_tests && ./build/judas_step_climb_tests && ./build/judas_pilot_attachment_tests && ./build/judas_spacecraft_control_tests && ./build/judas_ui_tests && ./build/judas_lighting_tests && ./build/judas_shadow_tests && ./build/judas_interactable_tests && ./build/judas_player_view_tests && ./build/judas_object_manipulation_tests
 ```
 
 ## Assets

@@ -88,6 +88,8 @@ public:
     // object" apart from "static world geometry" without needing to
     // remember which handles it created dynamic vs. static itself.
     bool IsDynamicBody(BodyHandle handle) const;
+    float GetMass(BodyHandle handle) const;
+    void ApplyLinearImpulse(BodyHandle handle, const glm::vec3& impulse);
 
     // Generic rigid-body velocity access — the same category as
     // GetTransform/ResetBody below, just for velocity. Added in Milestone
