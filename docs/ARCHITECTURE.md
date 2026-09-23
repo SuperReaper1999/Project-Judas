@@ -6,7 +6,7 @@ someone with no prior context on this project. It is updated in place as
 milestones land, rather than kept as a per-milestone snapshot — see
 "Milestone history" below for how to recover an earlier milestone exactly.
 
-## What exists right now (M19 accepted; M20 implementation awaiting validation)
+## What exists right now (M20 accepted; M21 implementation awaiting validation)
 
 Open a window. Two independent static spheres ("planets," radius `20m`
 each, centers `55m` apart — see "Physics test world") exist in 3D space,
@@ -6181,7 +6181,7 @@ Explicitly deferred, not forgotten:
   shadows for the light switch's own lamp (unchanged since Milestone 15
   — point lights still cast none).
 
-## Milestone 20 — Newtonian two-body demonstration (awaiting human validation)
+## Milestone 20 — Newtonian two-body demonstration (accepted)
 
 The interactive composition root creates two additional dynamic sphere bodies
 in the gravity map's unclaimed space. They are not the M7 walkable planets:
@@ -6248,10 +6248,11 @@ has bounded but timestep-dependent orbital error, and exact point-mass
 coincidence is singular. There is no softening, adaptive timestep, orbital
 prediction, or N-body acceleration structure. Collision behavior uses the
 existing sphere contact path if the operator drives the bodies together.
-The spacecraft continues to use the same force-driven `PhysicsWorld` body
-semantics, but is not included in this isolated two-body demonstration's
-pair list; the live plank/spacecraft scenario therefore remains governed by
-its established local gravity setup.
+The isolated M20 two-body demonstration and its metrics use only the two
+massive bodies. At M20 the spacecraft was not in that pair list; Milestone
+21 extends the live list to include it as a low-mass participant (details
+below). The live spacecraft still receives the existing local gameplay
+gravity sample in registered regions as well as celestial attraction.
 
 `judas_celestial_gravity_tests` checks inverse-square force magnitude and
 direction, finite nonzero-separation evaluation, equal-and-opposite
@@ -6260,7 +6261,7 @@ period and radius bounds, momentum, angular momentum, energy and barycentre
 error over five revolutions, timestep convergence, impulse perturbation,
 escape, and rotate-the-universe equivalence. Automated validation passes;
 operator acceptance of the visible orbit and the three runtime thrust
-directions is still pending.
+directions completed; Milestone 20 was accepted.
 
 ### OpenGL loader (infrastructure maintenance)
 
@@ -6272,3 +6273,76 @@ GLAD 2.0.8 C loader generated for OpenGL 3.3 Core with no extensions. After
 renderer initialization. No newer OpenGL API is enabled or used. Generation
 provenance, exact upstream revision, generated files, and license notices are
 recorded in `third_party/glad/README.md` and `third_party/glad/LICENSE`.
+
+## Milestone 21 — celestial spacecraft flight and SAS (awaiting human validation)
+
+### Celestial gravity participation
+
+The interactive composition root's `CelestialGravity` participant list now
+contains the two M20 massive spheres and the existing 80 kg spacecraft body.
+The same pairwise Newtonian force calculation applies to all selected dynamic
+bodies, so the spacecraft receives attraction from both masses and applies
+equal-and-opposite reaction forces back to them. No orbit target, orbit radius,
+mode, or trajectory state was added. The M20 standalone two-body metrics remain
+based on the original isolated pair, while `judas_spacecraft_flight_tests`
+checks a low-mass spacecraft trajectory using the same force producer and
+`PhysicsWorld` integrator.
+
+The spacecraft continues to receive the normal `GravityField::Sample()`
+acceleration through `PrepareDynamicBodiesForStep`, as every dynamic body does;
+celestial force is accumulated separately before the same `PhysicsWorld::Step`.
+Thus local gameplay gravity and celestial gravitation are distinct sources
+that compose when both apply. The massive M20 pair occupies unclaimed space,
+where the local gameplay gravity map returns zero. The old walkable planets,
+plank, player, and M11/M12 controls remain otherwise unchanged. Existing
+collisions still apply to the spacecraft; collision/crash trajectories remain
+unprotected by orbital code.
+
+The ship's existing thrust controls remain body-local and force-driven. The
+pilot can build tangential speed, release thrust and let mutual gravitation bend
+the inertial trajectory; prograde, retrograde, radial, and off-axis forces
+change that trajectory through the ordinary force accumulator. Sufficient
+thrust can make specific orbital energy positive and the body continues to
+escape after thrust ends. Ship attitude and travel direction remain independent.
+
+### SAS attitude hold
+
+`X` toggles SAS only while the player controls the spacecraft. The edge request
+is drained every render frame before pause gating, so pressing it while a menu
+owns input cannot toggle on resume. SAS state belongs to
+`FlyingPrimitiveControl` and continues applying torque after pilot release;
+`R` resets the ship and disables SAS. The HUD reports SAS on its own dedicated
+line, separately from pilot attachment status.
+
+On activation, SAS captures the current authoritative orientation as target
+`q_t`. Each fixed step it computes the shortest world-space rotation vector
+`e` from the current orientation to `q_t`, reads world angular velocity `w`,
+and commands angular acceleration `alpha = 25 e - 10 w` (gains in `s^-2` and
+`s^-1`). It converts that command to world-space torque using the body's
+current world inertia tensor, `tau = I_world alpha`, then calls
+`PhysicsWorld::ApplyTorque`. This keeps response comparable across the ship's
+unequal principal inertia axes while retaining ordinary torque integration.
+Rotational pilot keys are suppressed while SAS is enabled so zero-rate hold
+is not continually opposed by M12 manual torque; translation controls remain
+available. Disable SAS to restore raw M12 rotation input and torque-free
+angular coast. The controller does not apply force or write any linear or
+angular velocity directly. It does not model gyroscopic terms or
+contact-aware control.
+
+`judas_spacecraft_flight_tests` checks source acceleration magnitude/direction,
+one-period unpowered curved flight, rotate-the-universe equivalence, prograde,
+retrograde and radial thrust energy changes, thrust-driven escape, SAS-off
+angular coast, counter-torque settling and attitude hold after a disturbance,
+SAS independence from an unpowered orbital trajectory, high-rate three-axis
+settling, rotation-key suppression, zero SAS contribution to linear velocity,
+and one-shot toggle-request draining. Automated tests and
+the existing gameplay harness pass. Human validation of orbit entry/feel,
+collision/escape scenarios, SAS usability, and pilot release/reboarding is
+still required before M21 can be accepted.
+
+In the one-source circular reference test (`M=1e14 kg`, spacecraft mass
+`80 kg`, center separation `30 m`, `dt=1/60 s`), the analytical period is
+`12.6374 s`; the sampled run lasts `12.6500 s` and center separation ranges
+from `29.8768 m` to `30.1254 m`. This measures the selected test setup only;
+the live binary field, thrust-driven transfers, collisions, and SAS feel are
+not general accuracy guarantees.

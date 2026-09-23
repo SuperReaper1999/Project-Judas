@@ -9,6 +9,7 @@
 #include <cstdlib>
 #include <iterator>
 #include <string>
+#include <utility>
 #include <vector>
 
 #include <glm/glm.hpp>
@@ -78,6 +79,7 @@ const glm::vec3 kPlanetBColor(0.35f, 0.3f, 0.45f);
 // M20's two bodies are ordinary dynamic spheres in unclaimed space. Their
 // state is initialized from the analytical two-body circular solution; after
 // creation only mutual forces and the ordinary integrator determine motion.
+// M21 adds the spacecraft as an ordinary low-mass participant in that field.
 const glm::vec3 kOrbitalBarycentre(0.0f, 23.0f, 115.0f);
 constexpr float kOrbitalSeparation = 30.0f;
 constexpr float kOrbitalMassA = 1.0e14f;
@@ -703,7 +705,7 @@ int Application::Run() {
     const bool isTestRun = testScriptPath != nullptr;
 
     Window window;
-    if (!window.Init("Project Judas - Milestone 20", kWindowWidth, kWindowHeight,
+    if (!window.Init("Project Judas - Milestone 21", kWindowWidth, kWindowHeight,
                       !isTestRun)) {
         std::fprintf(stderr, "Window initialization failed.\n");
         return 1;
@@ -883,8 +885,12 @@ int Application::Run() {
         physicsWorld.SetLinearVelocity(orbitalBodyA, kOrbitalVelocityA);
         physicsWorld.SetLinearVelocity(orbitalBodyB, kOrbitalVelocityB);
     }
-    CelestialGravity celestialGravity(orbitalBodyA.IsValid()
-        ? std::vector<BodyHandle>{orbitalBodyA, orbitalBodyB} : std::vector<BodyHandle>{});
+    std::vector<BodyHandle> celestialBodies;
+    if (orbitalBodyA.IsValid()) {
+        celestialBodies = {orbitalBodyA, orbitalBodyB,
+                           dynamicBodies[flyingPrimitiveBodyIndex].Handle()};
+    }
+    CelestialGravity celestialGravity(std::move(celestialBodies));
 
     // M18 deliberately whitelists only the six ordinary demo objects.
     // The appended spacecraft, planets, plank, door, and all other static
@@ -1148,6 +1154,7 @@ int Application::Run() {
             // when gameplay resumes.
             const bool viewToggleRequested = window.ConsumeViewToggleRequest();
             const bool throwRequested = window.ConsumeThrowRequest();
+            const bool sasToggleRequested = window.ConsumeSasToggleRequest();
 
             // Milestone 16: recomputed every render frame from the
             // player's own CURRENT authoritative position/look direction
@@ -1205,6 +1212,7 @@ int Application::Run() {
                     physicsWorld.SetLinearVelocity(orbitalBodyB, kOrbitalVelocityB);
                     flyingPrimitiveControl.controlled = false;
                     pilotAttachment.attached = false;
+                    SetSpacecraftSasEnabled(flyingPrimitiveControl, false, physicsWorld);
                     physicsAccumulator = 0.0f;
                 }
 
@@ -1219,6 +1227,14 @@ int Application::Run() {
                     const bool wasControlled = flyingPrimitiveControl.controlled;
                     HandlePilotToggleRequest(flyingPrimitiveControl, pilotAttachment, player, physicsWorld);
                     if (!wasControlled && flyingPrimitiveControl.controlled) objectManipulation.Drop();
+                }
+
+                // M21: X toggles the attitude controller only while the
+                // player owns spacecraft controls. The request is drained
+                // above even while the menu owns input.
+                if (sasToggleRequested && flyingPrimitiveControl.controlled) {
+                    SetSpacecraftSasEnabled(flyingPrimitiveControl,
+                                             !flyingPrimitiveControl.sasEnabled, physicsWorld);
                 }
 
                 // Milestone 14: T toggles the player's torch. The
@@ -1265,11 +1281,9 @@ int Application::Run() {
                     // samples, physics obeys" ordering the player uses, just
                     // applied to a list. See docs/ARCHITECTURE.md, "Multiple
                     // gravity consumers." ApplyFlyingPrimitiveControl runs
-                    // immediately after: if controlled, it overrides the
-                    // primitive's velocity from input, exactly overwriting what
-                    // gravity just contributed that step (see
-                    // src/FlyingPrimitiveControl.h) — otherwise it's a no-op
-                    // and the primitive falls/rests like any other body.
+                    // immediately after and adds pilot forces/torques to the
+                    // same body. Enabled SAS remains active even when the
+                    // pilot is not controlling the spacecraft.
                     PrepareDynamicBodiesForStep(dynamicBodies, gravity, physicsWorld,
                                                  SimulationTiming::kFixedTimestep);
                     celestialGravity.ApplyForces(physicsWorld);
@@ -1452,6 +1466,7 @@ int Application::Run() {
                 hudData.gravityMagnitude = glm::length(gravity.Sample(player.GetPosition()));
                 hudData.controllingSpacecraft = flyingPrimitiveControl.controlled;
                 hudData.pilotAttached = pilotAttachment.attached;
+                hudData.spacecraftSasEnabled = flyingPrimitiveControl.sasEnabled;
                 hudData.spacecraftLinearSpeed =
                     glm::length(physicsWorld.GetLinearVelocity(flyingPrimitiveControl.handle));
                 if (objectManipulation.IsHolding()) {

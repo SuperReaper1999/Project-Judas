@@ -7,9 +7,10 @@
 
 #include "PhysicsWorld.h"
 
-// Pairwise Newtonian gravitation between explicitly selected massive bodies.
+// Pairwise Newtonian gravitation between explicitly selected dynamic bodies.
 // This is separate from GravityField: local gameplay gravity remains an
-// acceleration sampled by consumers, while this applies mutual forces.
+// acceleration sampled by consumers, while this applies mutual forces. The
+// selected set may include low-mass test bodies such as the spacecraft.
 class CelestialGravity {
 public:
     static constexpr float kGravitationalConstant = 6.67430e-11f; // m^3 kg^-1 s^-2

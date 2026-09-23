@@ -108,6 +108,10 @@ public:
     // GetLinearVelocity/SetLinearVelocity already provide.
     glm::vec3 GetAngularVelocity(BodyHandle handle) const;
     void SetAngularVelocity(BodyHandle handle, const glm::vec3& angularVelocity);
+    // World-space inertia tensor of a dynamic body. Consumers that implement
+    // torque controllers can convert a desired angular acceleration into a
+    // physical torque without duplicating the body's shape/orientation math.
+    glm::mat3 GetInertiaWorld(BodyHandle handle) const;
 
     // Integrates `acceleration` into the body's linear velocity over
     // `fixedDeltaTime` (velocity += acceleration * dt). This is how Judas

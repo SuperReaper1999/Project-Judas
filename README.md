@@ -13,7 +13,7 @@ loaded with the vendored GLAD 2.0.8 OpenGL 3.3 Core loader through the
 SDL-created context; generation and license provenance are recorded in
 [`third_party/glad/README.md`](third_party/glad/README.md).
 
-## Status: Milestone 20 implementation (awaiting human validation)
+## Status: Milestone 21 implementation (awaiting human validation)
 
 **New in M20:** the interactive scene includes two massive dynamic spheres in
 unclaimed space. Their initial positions and velocities are the analytical
@@ -22,15 +22,24 @@ step integration produce their later motion. Both orbit their shared
 barycentre. Hold `P` for prograde, `M` for retrograde, or `N` for outward
 radial thrust on the cyan body; each applies a real force of `2e14 N` through
 `PhysicsWorld::ApplyForce`. `R` restores both bodies and their initial orbital
-velocities. The bodies are deliberately excluded from the permanent M1–M19
-gameplay harness; headless M20 tests exercise the same force and integrator.
+velocities. The bodies are deliberately excluded from the permanent gameplay
+harness; headless tests exercise the same force and integrator.
 Measured at 60 Hz over five revolutions: period `8.950 s` vs analytical
 `8.936 s`, separation range `29.826–30.178 m`, maximum relative energy error
 `0.0138%`, angular-momentum error `0.000599%`, and barycentre drift
 `0.061 mm`. See
 [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md), "Milestone 20," for the
-complete setup, limits, and measurements. Operator validation is still
-required; M20 has not been accepted yet.
+complete setup, limits, and measurements. M20 was accepted; this remains a
+separate orbital demonstration.
+
+**New in M21:** the 80 kg spacecraft now receives pairwise celestial gravity
+from both orbiting bodies while retaining its independent 6DOF controls. When
+piloting, press `X` to toggle SAS: it applies inertia-compensated
+counter-torque to stop rotation and hold the attitude captured at activation.
+The HUD shows a dedicated `Spacecraft SAS: ON/OFF` line. SAS never brakes
+translation; rotational pilot keys are ignored while attitude hold is active.
+See [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md), "Milestone 21," for the
+control law, tests, and limitations. Human validation is pending.
 
 A controllable player walks, jumps, and falls under real physics — Judas's
 own physics engine, not a third-party library — across two independent
@@ -123,9 +132,10 @@ off-center point — no reset, no snap to a fixed seat, no freeze. It now
 renders as a real imported model (`assets/models/plane.obj`) instead of a
 plain box, through the same Milestone 9 model/texture/lighting path. See
 [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md), "Milestone 11," for the
-secured-pilot attachment mechanism and what this deliberately isn't (no
-vehicle framework, no artificial gravity, no orbital mechanics, no
-multiple spacecraft).
+secured-pilot attachment mechanism. The project still has no general vehicle
+framework, artificial gravity, or multiple spacecraft. M21 adds Newtonian
+gravity from the M20 celestial bodies and one attitude-hold mode, but no
+scripted orbital behavior or navigation systems.
 
 **New this milestone:** the spacecraft's controls are genuine force/
 torque-driven inertia, not a directly commanded speed. Holding a
@@ -422,6 +432,7 @@ the pilot falling off:
 | Pitch up / down                     | `I` / `K`   |
 | Yaw left / right                    | `J` / `L`   |
 | Roll left / right                   | `U` / `O`   |
+| Toggle SAS attitude hold            | `X`         |
 | Release control                     | `F`         |
 
 Every one of these is relative to the spacecraft's OWN current
@@ -434,20 +445,25 @@ attitude, driven purely by mouse motion) and is never also applied to the
 spacecraft's own orientation — attitude control is keyboard-only,
 specifically so the two never double up on the same input.
 
-**As of Milestone 12, every key above applies FORCE or TORQUE, not a
-speed.** Holding forward accelerates gradually rather than snapping to a
+**The translation and attitude keys apply FORCE or TORQUE, not a speed.**
+Holding forward accelerates gradually rather than snapping to a
 fixed speed; letting go doesn't stop the spacecraft — it keeps coasting
 at whatever velocity it had, indefinitely, until something (more thrust,
 gravity, or a collision) changes it. The same is true of rotation: torque
 builds angular velocity, and releasing the key leaves it spinning. To
 actually slow down or stop turning, apply force or torque in the opposite
-sense — there is no braking, damping, or auto-level anywhere in this
-engine. See `docs/ARCHITECTURE.md`, "Milestone 12," for the exact force/
+sense. With SAS off there is no rotational damping or automatic attitude
+control; `X` enables the separate active SAS mode. See
+`docs/ARCHITECTURE.md`, "Milestone 12," for the exact force/
 torque magnitudes and the numeric evidence behind all of this. One
 practical note: while still resting on the plank, ordinary ground friction
 can make rotation feel stiff or entirely unresponsive (a real, physically
 correct effect of this demo's friction coefficient, not a bug) — ascend a
 little first if turning in place doesn't seem to do anything.
+
+When SAS is enabled, it captures the current attitude and actively applies
+counter-torque to stop rotation and hold that attitude; it remains active
+after pilot release until toggled off or reset. It never brakes translation.
 
 Pressing `F` again hands input authority straight back to the player,
 releases the attachment, preserves exactly where the player was, and
@@ -470,7 +486,7 @@ full script format:
 JUDAS_TEST_SCRIPT=path/to/script.txt ./build/judas
 ```
 
-Fourteen standalone, headless test executables also exist (no window, no GL
+Fifteen standalone, headless test executables also exist (no window or GL
 context): `judas_physics_tests` and `judas_collision_tests` (rigid-body/
 collision/gravity-context primitives); `judas_asset_tests` (Milestone 9 —
 model/texture loading, parses the real committed demo assets and checks
@@ -492,6 +508,11 @@ release, orientation/velocity independence, counter-thrust, perpendicular
 thrust, F/m mass response, angular coasting, counter-torque, the real
 inverse-inertia-tensor's per-axis response, gravity+thrust composition, a
 no-op while uncontrolled, and the same rotate-the-whole-scenario check);
+`judas_spacecraft_flight_tests` (Milestone 21 — test-body celestial
+acceleration, bounded unpowered orbit and rotated-world equivalence,
+prograde/retrograde/radial thrust energy changes, thrust-driven escape,
+SAS torque settling/attitude hold, translation independence, and toggle
+request draining);
 `judas_ui_tests` (Milestone 13 — the UI navigation/input-ownership
 logic: the screen stack, focus navigation and hit-testing, the pause
 menu's exact required open/nested/back/resume flow, the HUD-visibility
@@ -529,8 +550,8 @@ timestep convergence, perturbation, escape, and rotate-the-universe
 equivalence). Run them with:
 
 ```bash
-cmake --build build --target judas_physics_tests judas_collision_tests judas_asset_tests judas_step_climb_tests judas_pilot_attachment_tests judas_spacecraft_control_tests judas_ui_tests judas_lighting_tests judas_shadow_tests judas_interactable_tests judas_player_view_tests judas_object_manipulation_tests judas_player_curved_locomotion_tests judas_celestial_gravity_tests
-./build/judas_physics_tests && ./build/judas_collision_tests && ./build/judas_asset_tests && ./build/judas_step_climb_tests && ./build/judas_pilot_attachment_tests && ./build/judas_spacecraft_control_tests && ./build/judas_ui_tests && ./build/judas_lighting_tests && ./build/judas_shadow_tests && ./build/judas_interactable_tests && ./build/judas_player_view_tests && ./build/judas_object_manipulation_tests && ./build/judas_player_curved_locomotion_tests && ./build/judas_celestial_gravity_tests
+cmake --build build --target judas_physics_tests judas_collision_tests judas_asset_tests judas_step_climb_tests judas_pilot_attachment_tests judas_spacecraft_control_tests judas_spacecraft_flight_tests judas_ui_tests judas_lighting_tests judas_shadow_tests judas_interactable_tests judas_player_view_tests judas_object_manipulation_tests judas_player_curved_locomotion_tests judas_celestial_gravity_tests
+./build/judas_physics_tests && ./build/judas_collision_tests && ./build/judas_asset_tests && ./build/judas_step_climb_tests && ./build/judas_pilot_attachment_tests && ./build/judas_spacecraft_control_tests && ./build/judas_spacecraft_flight_tests && ./build/judas_ui_tests && ./build/judas_lighting_tests && ./build/judas_shadow_tests && ./build/judas_interactable_tests && ./build/judas_player_view_tests && ./build/judas_object_manipulation_tests && ./build/judas_player_curved_locomotion_tests && ./build/judas_celestial_gravity_tests
 ```
 
 ## Assets

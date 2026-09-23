@@ -258,6 +258,12 @@ glm::vec3 PhysicsWorld::GetAngularVelocity(BodyHandle handle) const {
     return body ? body->rigidBody.angularVelocity : glm::vec3(0.0f);
 }
 
+glm::mat3 PhysicsWorld::GetInertiaWorld(BodyHandle handle) const {
+    const Impl::Body* body = m_impl->Get(handle);
+    if (!body || !body->isDynamic) return glm::mat3(0.0f);
+    return glm::inverse(body->rigidBody.InverseInertiaWorld());
+}
+
 void PhysicsWorld::SetAngularVelocity(BodyHandle handle, const glm::vec3& angularVelocity) {
     Impl::Body* body = m_impl->Get(handle);
     if (body) body->rigidBody.angularVelocity = angularVelocity;

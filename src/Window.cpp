@@ -101,6 +101,8 @@ void Window::PollEvents() {
                 m_viewToggleRequested = true;
             } else if (event.key.keysym.scancode == SDL_SCANCODE_H) {
                 m_throwRequested = true;
+            } else if (event.key.keysym.scancode == SDL_SCANCODE_X) {
+                m_sasToggleRequested = true;
             } else if (event.key.keysym.scancode == SDL_SCANCODE_UP) {
                 m_uiUpRequested = true;
             } else if (event.key.keysym.scancode == SDL_SCANCODE_DOWN) {
@@ -263,6 +265,21 @@ bool Window::ConsumeThrowRequest() {
     const bool requested = m_throwRequested;
     m_throwRequested = false;
     return requested;
+}
+
+bool Window::ConsumeSasToggleRequest() {
+    if (m_testInputMode) {
+        const bool requested = m_testSasToggleRequested;
+        m_testSasToggleRequested = false;
+        return requested;
+    }
+    const bool requested = m_sasToggleRequested;
+    m_sasToggleRequested = false;
+    return requested;
+}
+
+void Window::RequestTestSasToggle() {
+    m_testSasToggleRequested = true;
 }
 
 void Window::RequestTestInteract() {

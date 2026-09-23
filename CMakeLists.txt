@@ -176,6 +176,20 @@ target_include_directories(judas_spacecraft_control_tests PRIVATE ${SDL2_INCLUDE
 target_link_libraries(judas_spacecraft_control_tests PRIVATE SDL2::SDL2 glm::glm-header-only)
 target_compile_options(judas_spacecraft_control_tests PRIVATE -Wall -Wextra)
 
+# M21: coupled spacecraft/celestial-gravity orbit and torque-based SAS tests.
+add_executable(judas_spacecraft_flight_tests
+    tests/SpacecraftFlightTests.cpp
+    src/FlyingPrimitiveControl.cpp
+    src/Window.cpp
+    ${JUDAS_PHYSICS_SOURCES}
+    src/PhysicsWorld.cpp
+    src/CelestialGravity.cpp
+)
+target_include_directories(judas_spacecraft_flight_tests PRIVATE src)
+target_include_directories(judas_spacecraft_flight_tests PRIVATE ${SDL2_INCLUDE_DIRS})
+target_link_libraries(judas_spacecraft_flight_tests PRIVATE SDL2::SDL2 glm::glm-header-only)
+target_compile_options(judas_spacecraft_flight_tests PRIVATE -Wall -Wextra)
+
 # Milestone 13: headless tests for the UI navigation/input-ownership logic
 # (src/UIWidgets.*, src/UIStack.h, src/PauseMenu.*, src/HUD.*) — pure CPU
 # state (screen stack, focus, button hit-testing, pause menu flow, HUD

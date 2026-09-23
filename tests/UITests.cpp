@@ -244,12 +244,14 @@ void TestHUDViewDataIsPlainData() {
     data.gravityMagnitude = 9.81f;
     data.controllingSpacecraft = false;
     data.pilotAttached = false;
+    data.spacecraftSasEnabled = true;
     data.spacecraftLinearSpeed = 3.5f;
 
     Check(data.grounded, "grounded round-trips");
     Check(data.gravityMagnitude == 9.81f, "gravityMagnitude round-trips");
     Check(!data.controllingSpacecraft, "controllingSpacecraft round-trips");
     Check(!data.pilotAttached, "pilotAttached round-trips");
+    Check(data.spacecraftSasEnabled, "spacecraftSasEnabled round-trips");
     Check(data.spacecraftLinearSpeed == 3.5f, "spacecraftLinearSpeed round-trips");
 }
 

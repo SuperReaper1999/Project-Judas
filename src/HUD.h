@@ -17,6 +17,7 @@ struct HUDViewData {
     float gravityMagnitude = 0.0f;
     bool controllingSpacecraft = false;
     bool pilotAttached = false;
+    bool spacecraftSasEnabled = false;
     float spacecraftLinearSpeed = 0.0f;
 
     // Milestone 16: the currently-selected interactable's own prompt text

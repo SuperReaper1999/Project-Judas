@@ -11,35 +11,40 @@ class Window;
 // genuine force/torque-driven inertia — the underlying object is
 // repurposed, not replaced, each time: still one ordinary DynamicBody
 // (src/DynamicBody.h) in Application.cpp's dynamicBodies list, still
-// ordinary gravity via PrepareDynamicBodiesForStep, ordinary collision via
-// PhysicsWorld::Step, ordinary presentation interpolation, ordinary
-// ResetToSpawn. This struct/function pair still adds exactly one thing on
-// top of that: while `controlled` is true, input is turned into a
+// local/celestial gravity through the composition root, ordinary collision
+// via PhysicsWorld::Step, ordinary presentation interpolation, ordinary
+// ResetToSpawn. While `controlled` is true, pilot input is turned into a
 // spacecraft-local force and torque applied to its body's accumulator
-// (PhysicsWorld::ApplyForce/ApplyTorque) — added on top of whatever
-// PrepareDynamicBodiesForStep's ordinary gravity application already
-// contributed that step, never overwriting it. Through Milestone 11, this
+// (PhysicsWorld::ApplyForce/ApplyTorque) — added on top of gravity and
+// celestial forces already accumulated that step. Its optional SAS mode
+// separately applies attitude-hold torque, including after pilot release.
+// Through Milestone 11, pilot input
 // instead commanded linear/angular velocity directly (SetLinearVelocity/
 // SetAngularVelocity), the same "Judas commands the velocity outright,
 // physics obeys" idiom PlayerController's own grounded locomotion still
 // uses; Milestone 12 deliberately replaces that with real F=ma physics for
 // the spacecraft specifically — see docs/ARCHITECTURE.md, "Milestone 12,"
 // for why (releasing input must coast, not stop). Still deliberately not a
-// vehicle-physics framework: no thrust/fuel/engine model, no generalized
-// possession mechanism for multiple objects — one handle, one bool. See
+// vehicle-physics framework: no thrust/fuel/engine model or generalized
+// possession mechanism for multiple objects. See
 // src/PilotAttachment.h for the secured-pilot relationship this struct
 // pairs with, unaffected by this milestone's change (it reads whatever
 // velocity the spacecraft actually has, however that velocity got there).
 struct FlyingPrimitiveControl {
     BodyHandle handle;
     bool controlled = false;
+    bool sasEnabled = false;
+    glm::quat sasTargetOrientation{1.0f, 0.0f, 0.0f, 0.0f};
 };
 
-// Called once per fixed step, AFTER PrepareDynamicBodiesForStep (so this
-// body has already received ordinary gravity exactly like every other
-// dynamic body) and BEFORE PhysicsWorld::Step (so the force/torque applied
-// below is integrated, along with gravity's own contribution, by that same
-// Step() call). A no-op unless `control.controlled` is true.
+// Enables/disables the spacecraft's rate-zero attitude hold. Enabling
+// captures the current authoritative orientation as the hold target.
+void SetSpacecraftSasEnabled(FlyingPrimitiveControl& control, bool enabled,
+                              const PhysicsWorld& physics);
+
+// Called once per fixed step, after gravity is accumulated and before
+// PhysicsWorld::Step. Pilot input contributes only while `controlled` is
+// true; enabled SAS torque remains active after pilot release.
 //
 // Milestone 12: applies a constant-magnitude force along the combined held
 // translation directions, and a constant-magnitude torque about each held

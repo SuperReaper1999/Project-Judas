@@ -50,14 +50,18 @@ std::string FormatLine(int index, const HUDViewData& data) {
             std::snprintf(buffer, sizeof(buffer), "Pilot attachment: %s",
                            data.pilotAttached ? "Secured" : "Unsecured");
             break;
-        default:
+        case 4:
             std::snprintf(buffer, sizeof(buffer), "Spacecraft speed: %.2f m/s", data.spacecraftLinearSpeed);
+            break;
+        default:
+            std::snprintf(buffer, sizeof(buffer), "Spacecraft SAS: %s",
+                          data.spacecraftSasEnabled ? "ON" : "OFF");
             break;
     }
     return std::string(buffer);
 }
 
-constexpr int kLineCount = 5;
+constexpr int kLineCount = 6;
 }  // namespace
 
 void HUD::Draw(Renderer& renderer, int windowWidth, int windowHeight, const HUDViewData& data) const {

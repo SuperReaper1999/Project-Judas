@@ -1,6 +1,10 @@
 #include "FlyingPrimitiveControl.h"
 
+#include <algorithm>
+#include <cmath>
+
 #include <glm/gtc/quaternion.hpp>
+#include <glm/gtc/matrix_inverse.hpp>
 
 #include "Window.h"
 
@@ -57,13 +61,54 @@ constexpr float kControlForceMagnitude = 1200.0f;  // N
 // clear of the ground — inertia does not fight friction once there is no
 // more contact to generate it) resolves it immediately.
 constexpr float kControlTorqueMagnitude = 450.0f;  // N*m
+
+// Critically damped attitude hold in angular-acceleration space. Converting
+// the commanded acceleration through the actual world inertia tensor keeps
+// SAS equally responsive about the ship's high- and low-inertia axes.
+constexpr float kSasProportionalGain = 25.0f;  // 1/s^2
+constexpr float kSasDerivativeGain = 10.0f;    // 1/s
+
+glm::vec3 ShortestRotationVector(const glm::quat& target, const glm::quat& current) {
+    glm::quat error = glm::normalize(target * glm::inverse(current));
+    if (error.w < 0.0f) error = -error;
+
+    const glm::vec3 imaginary(error.x, error.y, error.z);
+    const float sinHalfAngle = glm::length(imaginary);
+    if (sinHalfAngle < 1.0e-6f) return imaginary * 2.0f;
+
+    const float angle = 2.0f * std::atan2(sinHalfAngle,
+                                          std::clamp(error.w, -1.0f, 1.0f));
+    return imaginary * (angle / sinHalfAngle);
+}
 }  // namespace
+
+void SetSpacecraftSasEnabled(FlyingPrimitiveControl& control, bool enabled,
+                              const PhysicsWorld& physics) {
+    control.sasEnabled = enabled;
+    if (enabled && control.handle.IsValid()) {
+        control.sasTargetOrientation = physics.GetTransform(control.handle).rotation;
+    }
+}
 
 void ApplyFlyingPrimitiveControl(FlyingPrimitiveControl& control, const Window& window,
                                   PhysicsWorld& physics) {
-    if (!control.controlled) return;
+    if (!control.controlled && !control.sasEnabled) return;
 
     const BodyTransform transform = physics.GetTransform(control.handle);
+
+    // SAS is an active torque controller and remains active after pilot
+    // release once enabled. It never applies a force or writes velocity.
+    if (control.sasEnabled) {
+        const glm::vec3 attitudeError =
+            ShortestRotationVector(control.sasTargetOrientation, transform.rotation);
+        const glm::vec3 angularVelocity = physics.GetAngularVelocity(control.handle);
+        const glm::vec3 angularAcceleration = kSasProportionalGain * attitudeError -
+                                              kSasDerivativeGain * angularVelocity;
+        physics.ApplyTorque(control.handle,
+                            physics.GetInertiaWorld(control.handle) * angularAcceleration);
+    }
+
+    if (!control.controlled) return;
 
     // Milestone 11/12: ALL three body axes come from the spacecraft's own
     // current orientation — never gravity, never a fixed world axis. See
@@ -107,17 +152,19 @@ void ApplyFlyingPrimitiveControl(FlyingPrimitiveControl& control, const Window& 
     // PhysicsWorld::Step turns it into an angular velocity change via the
     // spacecraft's REAL inverse inertia tensor (not a scalar) — see
     // docs/ARCHITECTURE.md, "Milestone 12, Rotational inertia."
+    // SAS owns attitude while enabled. Pilot translation remains available;
+    // turn SAS off to apply the raw M12 rotational torque controls again.
     float pitchTorque = 0.0f;
-    if (window.IsActionActive(Action::PitchUp)) pitchTorque += kControlTorqueMagnitude;
-    if (window.IsActionActive(Action::PitchDown)) pitchTorque -= kControlTorqueMagnitude;
+    if (!control.sasEnabled && window.IsActionActive(Action::PitchUp)) pitchTorque += kControlTorqueMagnitude;
+    if (!control.sasEnabled && window.IsActionActive(Action::PitchDown)) pitchTorque -= kControlTorqueMagnitude;
 
     float yawTorque = 0.0f;
-    if (window.IsActionActive(Action::YawLeft)) yawTorque += kControlTorqueMagnitude;
-    if (window.IsActionActive(Action::YawRight)) yawTorque -= kControlTorqueMagnitude;
+    if (!control.sasEnabled && window.IsActionActive(Action::YawLeft)) yawTorque += kControlTorqueMagnitude;
+    if (!control.sasEnabled && window.IsActionActive(Action::YawRight)) yawTorque -= kControlTorqueMagnitude;
 
     float rollTorque = 0.0f;
-    if (window.IsActionActive(Action::RollRight)) rollTorque += kControlTorqueMagnitude;
-    if (window.IsActionActive(Action::RollLeft)) rollTorque -= kControlTorqueMagnitude;
+    if (!control.sasEnabled && window.IsActionActive(Action::RollRight)) rollTorque += kControlTorqueMagnitude;
+    if (!control.sasEnabled && window.IsActionActive(Action::RollLeft)) rollTorque -= kControlTorqueMagnitude;
 
     const glm::vec3 torque = right * pitchTorque + up * yawTorque + forward * rollTorque;
     physics.ApplyTorque(control.handle, torque);

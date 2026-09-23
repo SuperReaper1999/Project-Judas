@@ -124,6 +124,10 @@ public:
     // a menu-owned key press cannot fire after resume.
     bool ConsumeThrowRequest();
 
+    // M21: X toggles active spacecraft attitude stabilization. Drained
+    // every render frame so a menu-owned press cannot fire on resume.
+    bool ConsumeSasToggleRequest();
+
     // --- Milestone 13: UI input ---
     //
     // Five more edge-triggered one-shot requests, same shape as
@@ -187,6 +191,9 @@ public:
     // Milestone 16: scripted equivalent of an `E` press.
     void RequestTestInteract();
 
+    // Milestone 21: scripted equivalent of an `X` press.
+    void RequestTestSasToggle();
+
 private:
     SDL_Window* m_window = nullptr;
     SDL_GLContext m_glContext = nullptr;
@@ -200,6 +207,7 @@ private:
     bool m_interactRequested = false;
     bool m_viewToggleRequested = false;
     bool m_throwRequested = false;
+    bool m_sasToggleRequested = false;
     // Milestone 13: UI input edge flags — see PollEvents.
     bool m_uiBackRequested = false;
     bool m_uiUpRequested = false;
@@ -224,4 +232,5 @@ private:
     bool m_testControlToggleRequested = false;
     bool m_testTorchToggleRequested = false;
     bool m_testInteractRequested = false;
+    bool m_testSasToggleRequested = false;
 };
