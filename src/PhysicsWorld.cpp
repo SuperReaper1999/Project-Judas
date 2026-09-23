@@ -264,6 +264,23 @@ glm::mat3 PhysicsWorld::GetInertiaWorld(BodyHandle handle) const {
     return glm::inverse(body->rigidBody.InverseInertiaWorld());
 }
 
+float PhysicsWorld::GetBodySupportDistance(BodyHandle handle, const glm::vec3& worldDirection) const {
+    const Impl::Body* body = m_impl->Get(handle);
+    const float directionLength = glm::length(worldDirection);
+    if (!body || directionLength < 1.0e-6f) return 0.0f;
+
+    if (body->shape.type == ShapeType::Sphere) return body->shape.radius;
+
+    const glm::vec3 localDirection = glm::conjugate(glm::normalize(body->rigidBody.orientation)) *
+                                     (worldDirection / directionLength);
+    return glm::dot(glm::abs(localDirection), body->shape.halfExtents);
+}
+
+float PhysicsWorld::GetPlayerShapeMaxSupportDistance() const {
+    if (!m_impl->hasPlayerShape) return 0.0f;
+    return m_impl->playerShape.radius + m_impl->playerShape.halfHeight;
+}
+
 void PhysicsWorld::SetAngularVelocity(BodyHandle handle, const glm::vec3& angularVelocity) {
     Impl::Body* body = m_impl->Get(handle);
     if (body) body->rigidBody.angularVelocity = angularVelocity;

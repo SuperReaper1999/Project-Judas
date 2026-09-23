@@ -18,7 +18,12 @@ struct HUDViewData {
     bool controllingSpacecraft = false;
     bool pilotAttached = false;
     bool spacecraftSasEnabled = false;
-    float spacecraftLinearSpeed = 0.0f;
+    float spacecraftLinearSpeed = 0.0f;  // world-frame speed (m/s)
+    bool celestialReferenceAvailable = false;
+    float celestialBodyWorldSpeed = 0.0f;
+    float spacecraftRelativeCelestialSpeed = 0.0f;
+    float pilotWorldSpeed = 0.0f;
+    float pilotRelativeSpacecraftSpeed = 0.0f;
 
     // Milestone 16: the currently-selected interactable's own prompt text
     // (see src/Interactable.h's GetPromptText), or empty when nothing is

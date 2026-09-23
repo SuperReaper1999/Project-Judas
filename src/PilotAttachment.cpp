@@ -21,3 +21,21 @@ glm::vec3 ComputePilotReleaseVelocity(const BodyTransform& shipTransform,
     const glm::vec3 r = playerPosition - shipTransform.position;
     return shipLinearVelocity + glm::cross(shipAngularVelocity, r);
 }
+
+glm::vec3 ComputePilotDismountPosition(const BodyTransform& shipTransform,
+                                       const glm::vec3& playerPosition,
+                                       const glm::vec3& gravityAcceleration,
+                                       float shipSupportDistance,
+                                       float playerMaxSupportDistance,
+                                       float skinMargin) {
+    const float gravityMagnitude = glm::length(gravityAcceleration);
+    if (gravityMagnitude < 1.0e-5f) return playerPosition;
+
+    const glm::vec3 gravityUp = -gravityAcceleration / gravityMagnitude;
+    const float playerHeightAboveShipCenter =
+        glm::dot(playerPosition - shipTransform.position, gravityUp);
+    const float requiredHeight = shipSupportDistance + playerMaxSupportDistance + skinMargin;
+    if (playerHeightAboveShipCenter >= requiredHeight) return playerPosition;
+
+    return playerPosition + gravityUp * (requiredHeight - playerHeightAboveShipCenter);
+}

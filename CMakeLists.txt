@@ -46,6 +46,7 @@ add_executable(judas
     src/FlyingPrimitiveControl.cpp
     src/PilotAttachment.cpp
     src/PilotControl.cpp
+    src/ReferenceFrame.cpp
     src/ModelLoader.cpp
     src/TextureLoader.cpp
     src/FontLoader.cpp
@@ -160,6 +161,17 @@ target_include_directories(judas_pilot_attachment_tests PRIVATE src)
 target_link_libraries(judas_pilot_attachment_tests PRIVATE glm::glm-header-only)
 target_compile_options(judas_pilot_attachment_tests PRIVATE -Wall -Wextra)
 
+# Pilot release clearance across spacecraft rotations and gravity frames.
+add_executable(judas_pilot_dismount_tests
+    tests/PilotDismountTests.cpp
+    src/PilotAttachment.cpp
+    ${JUDAS_PHYSICS_SOURCES}
+    src/PhysicsWorld.cpp
+)
+target_include_directories(judas_pilot_dismount_tests PRIVATE src)
+target_link_libraries(judas_pilot_dismount_tests PRIVATE glm::glm-header-only)
+target_compile_options(judas_pilot_dismount_tests PRIVATE -Wall -Wextra)
+
 # Milestone 11: headless tests for the spacecraft's full 6DOF control (see
 # src/FlyingPrimitiveControl.*) — a real PhysicsWorld plus a real Window
 # constructed without Init (test-input mode only, no SDL/GL call ever
@@ -189,6 +201,18 @@ target_include_directories(judas_spacecraft_flight_tests PRIVATE src)
 target_include_directories(judas_spacecraft_flight_tests PRIVATE ${SDL2_INCLUDE_DIRS})
 target_link_libraries(judas_spacecraft_flight_tests PRIVATE SDL2::SDL2 glm::glm-header-only)
 target_compile_options(judas_spacecraft_flight_tests PRIVATE -Wall -Wextra)
+
+# M22: moving/rotating reference-frame transforms and live rigid-body data.
+add_executable(judas_reference_frame_tests
+    tests/ReferenceFrameTests.cpp
+    src/ReferenceFrame.cpp
+    src/PilotAttachment.cpp
+    ${JUDAS_PHYSICS_SOURCES}
+    src/PhysicsWorld.cpp
+)
+target_include_directories(judas_reference_frame_tests PRIVATE src)
+target_link_libraries(judas_reference_frame_tests PRIVATE glm::glm-header-only)
+target_compile_options(judas_reference_frame_tests PRIVATE -Wall -Wextra)
 
 # Milestone 13: headless tests for the UI navigation/input-ownership logic
 # (src/UIWidgets.*, src/UIStack.h, src/PauseMenu.*, src/HUD.*) — pure CPU

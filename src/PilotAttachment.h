@@ -68,9 +68,23 @@ void ApplyPilotAttachment(const PilotAttachment& attachment, const BodyTransform
 // v + omega x r, the exact same formula PlayerController's own
 // moving-support carry already uses for a rotating support (see
 // docs/ARCHITECTURE.md, "Milestone 8," "The moving-support bug"). Takes the
-// player's CURRENT world position (not the stored local offset) as `r`'s
-// basis, since that's the actual point being released.
+// player's current attached world position (not the stored local offset) as
+// `r`'s basis, since that is the point whose motion is inherited. If release
+// needs a gravity-side clearance correction, that positional correction does
+// not manufacture additional angular point velocity.
 glm::vec3 ComputePilotReleaseVelocity(const BodyTransform& shipTransform,
                                        const glm::vec3& shipLinearVelocity,
                                        const glm::vec3& shipAngularVelocity,
                                        const glm::vec3& playerPosition);
+
+// Keeps a released pilot on the gravity-facing exterior of the spacecraft.
+// When a secured attachment has carried the player through terrain as the
+// craft rolled, ordinary walking resumes at this point, so the player's
+// shape must start clear of the hull. Zero gravity has no preferred egress
+// side and preserves the current position exactly.
+glm::vec3 ComputePilotDismountPosition(const BodyTransform& shipTransform,
+                                       const glm::vec3& playerPosition,
+                                       const glm::vec3& gravityAcceleration,
+                                       float shipSupportDistance,
+                                       float playerMaxSupportDistance,
+                                       float skinMargin);

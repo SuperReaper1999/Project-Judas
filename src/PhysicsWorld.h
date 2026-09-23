@@ -113,6 +113,14 @@ public:
     // physical torque without duplicating the body's shape/orientation math.
     glm::mat3 GetInertiaWorld(BodyHandle handle) const;
 
+    // Shape support distances used for separation along an arbitrary world
+    // direction. Directions are normalized internally. The body result uses
+    // its current orientation; the player result is the capsule's maximum
+    // support distance so it remains safe if the player's frame is
+    // reoriented immediately after release.
+    float GetBodySupportDistance(BodyHandle handle, const glm::vec3& worldDirection) const;
+    float GetPlayerShapeMaxSupportDistance() const;
+
     // Integrates `acceleration` into the body's linear velocity over
     // `fixedDeltaTime` (velocity += acceleration * dt). This is how Judas
     // hands a sampled GravityField value to a physics body — the

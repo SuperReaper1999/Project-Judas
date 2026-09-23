@@ -6,7 +6,7 @@ someone with no prior context on this project. It is updated in place as
 milestones land, rather than kept as a per-milestone snapshot — see
 "Milestone history" below for how to recover an earlier milestone exactly.
 
-## What exists right now (M20 accepted; M21 implementation awaiting validation)
+## What exists right now (M22 accepted)
 
 Open a window. Two independent static spheres ("planets," radius `20m`
 each, centers `55m` apart — see "Physics test world") exist in 3D space,
@@ -33,6 +33,12 @@ collide with the world and with each other under ordinary rigid-body
 dynamics — Judas supplies acceleration only, never orientation or resting
 position. The player can walk into one and push it — see "Player-to-object
 interaction."
+
+Separate from the walkable pair, M20/M21 add two moving massive spheres and
+the spacecraft in an unclaimed part of the same world. M22's
+`ReferenceFrame` describes motion relative to those bodies without changing
+world-space physics. The HUD exposes world speed and relative speed to the
+moving celestial body, along with the pilot's speed relative to the ship.
 
 **As of this milestone, Project Judas owns its physics engine entirely —
 no third-party physics middleware is used at all.** Every prior milestone
@@ -1843,6 +1849,21 @@ would be exactly the kind of silent momentum loss this engine's own
 directly by `judas_pilot_attachment_tests` ("Sections F/G/H") with a
 non-zero offset and non-zero angular velocity, confirming the angular
 term is neither dropped nor double-counted.
+
+**Gravity-side dismount clearance:** rigid attachment intentionally carries
+the player through the world while the spacecraft rotates, including through
+terrain. That is correct while piloting, but it could leave a player released
+inside the plank or on the craft's gravity-opposed underside, where the
+ordinary player sweep cannot reliably depenetrate a starting overlap. On
+release, `HandlePilotToggleRequest` now samples local gameplay gravity and
+uses `PhysicsWorld::GetBodySupportDistance` plus the player's capsule support
+radius to place the player just beyond the spacecraft's gravity-facing hull
+plane when needed. A pilot already on that side is not moved. Release velocity
+still comes from the original attached point (`v + omega x r`), so this
+clearance correction does not add artificial angular speed. If gravity is
+zero, Judas does not invent an exit direction and preserves the current
+position. `judas_pilot_dismount_tests` checks upright no-op release, an
+inverted craft, zero-gravity behavior, and rotate-the-universe equivalence.
 
 Both `Application::Run`'s interactive loop and BOTH `JUDAS_TEST_SCRIPT`
 harness modes now call two small shared functions
@@ -5852,17 +5873,13 @@ blocking known future requirements. None of these are implemented yet.
   demonstrates it: `PlayerController` visibly reorients as `RadicalGravity`'s
   sampled direction changes continuously while walking around the sphere,
   using no hard-coded axis for that reorientation.
-- **Moving spacecraft reference frames** — unchanged reasoning from
-  Milestone 4: `PhysicsWorld` bodies are addressed by opaque handles in one
-  shared world space; a future frame concept can sit between "an object's
-  position" and "the position Judas hands to physics" without requiring
-  today's code to be undone. **Partially exercised, not fulfilled, by
-  Milestone 11:** `PilotAttachment` proves one object CAN be rigidly
-  expressed relative to another's moving/rotating frame without a general
-  reference-frame system existing yet — but it remains one hard-coded
-  relationship (player-to-spacecraft), not a reusable primitive; a real
-  moving-reference-frame system (e.g. "everything near a moving spacecraft
-  treats it as locally stationary") is still unbuilt.
+- **Reference-frame-aware physics integration** — M22 now provides reusable
+  position/direction/velocity conversions for translating and rotating
+  frames, and the live HUD demonstrates relative motion using the celestial
+  bodies and spacecraft. `PhysicsWorld` still integrates all bodies in one
+  authoritative world coordinate system; no body is simulated in local
+  coordinates and no force is changed by choosing a frame. Extending physics
+  itself to use local coordinates would require separate evidence and design.
 - **Large-world rebasing** — through Milestone 7-B this relied on Jolt's
   optional double-precision build mode. As of Milestone 7-Final's own
   physics engine (`src/RigidBody.h` and friends, all plain `glm::vec3`
@@ -5923,8 +5940,8 @@ Explicitly deferred, not forgotten:
   terrain chunks, LOD, procedural terrain, oceans, atmosphere, Terrain-ML —
   the Milestone 5 sphere exists to prove architecture, not as the start of
   a planet system
-- Moving reference frames, spacecraft, floating origin, astronomical
-  coordinates
+- Nested reference-frame hierarchies, local-coordinate physics integration,
+  floating origin, astronomical coordinates
 - A general gameplay/entity framework, ECS, or scene graph — one
   `PlayerController` for one player is enough
 - Character physics beyond the move-and-slide loop this milestone needed:
@@ -6274,7 +6291,7 @@ renderer initialization. No newer OpenGL API is enabled or used. Generation
 provenance, exact upstream revision, generated files, and license notices are
 recorded in `third_party/glad/README.md` and `third_party/glad/LICENSE`.
 
-## Milestone 21 — celestial spacecraft flight and SAS (awaiting human validation)
+## Milestone 21 — celestial spacecraft flight and SAS (accepted)
 
 ### Celestial gravity participation
 
@@ -6336,9 +6353,9 @@ angular coast, counter-torque settling and attitude hold after a disturbance,
 SAS independence from an unpowered orbital trajectory, high-rate three-axis
 settling, rotation-key suppression, zero SAS contribution to linear velocity,
 and one-shot toggle-request draining. Automated tests and
-the existing gameplay harness pass. Human validation of orbit entry/feel,
-collision/escape scenarios, SAS usability, and pilot release/reboarding is
-still required before M21 can be accepted.
+the existing gameplay harness pass. The operator validated orbit flight,
+thrust perturbations, SAS behavior, and pilot release/reboarding; M21 is
+accepted.
 
 In the one-source circular reference test (`M=1e14 kg`, spacecraft mass
 `80 kg`, center separation `30 m`, `dt=1/60 s`), the analytical period is
@@ -6346,3 +6363,65 @@ In the one-source circular reference test (`M=1e14 kg`, spacecraft mass
 from `29.8768 m` to `30.1254 m`. This measures the selected test setup only;
 the live binary field, thrust-driven transfers, collisions, and SAS feel are
 not general accuracy guarantees.
+
+## Milestone 22 — classical reference frames (accepted)
+
+`ReferenceFrame` (`src/ReferenceFrame.h/.cpp`) is the smallest explicit
+description of a moving coordinate frame: origin position and orientation,
+plus linear and angular velocity, all expressed in world coordinates. The
+frame owns no object or physics body, and creating one does not change the
+authoritative world-space integration in `PhysicsWorld`.
+
+The world coordinate system remains Judas's chosen computational frame, not
+a physically privileged state of rest. A displayed world speed describes
+motion in that coordinate system; relative speed describes motion against the
+selected moving frame.
+
+Positions include frame translation and rotation; directions are rotated
+without translation. A frame-relative velocity is the derivative of position
+coordinates in that moving frame. For a world point `P`, conversions first
+remove/add its actual frame-point velocity:
+
+```text
+r = P - frame.originPosition
+framePointVelocity = frame.linearVelocity + cross(frame.angularVelocity, r)
+velocityInFrame = inverse(frame.orientation) * (velocityInWorld - framePointVelocity)
+```
+
+The inverse conversion adds that point velocity and rotates the frame-relative
+velocity into world coordinates. `angularVelocity` is a world-space vector;
+the cross product is evaluated at the point's world-space offset from the
+frame origin, and `linearVelocity` is the velocity of the frame origin. Thus
+offsets in a rotating frame are not treated as if they had only the origin's
+translational velocity.
+
+The composition root constructs frames from current `PhysicsWorld` body state.
+The interactive HUD shows spacecraft world speed, orbiting body A world speed,
+spacecraft speed relative to body A at the spacecraft's position, pilot world
+speed, and pilot speed relative to the spacecraft. For an attached pilot, the
+pilot's world point velocity is reconstructed from the ship frame and zero
+local velocity; the relative readout is consequently zero even while the ship
+and pilot have substantial world velocity. When free, the player's actual
+velocity is used.
+The celestial frame uses body A's actual pose and velocities, including its
+angular velocity.
+
+The reference-frame conversions and live readouts do not change M20
+gravitation, M21 thrust or SAS, or the M11 attached-pilot motion. A separate
+release-safety correction samples local gravity when control ends and, if a
+rolled craft left the player below its hull, moves the player to its clear
+gravity-facing side. It uses the current collision shape and leaves the
+inherited velocity tied to the original attachment point. Gravity,
+support/contact, attachment, and reference frames remain separate concepts.
+There is no hierarchy, world rebasing, relative-force simulation, orbit
+alteration, or privileged physical notion of rest.
+
+`judas_reference_frame_tests` checks identity and translated frames, arbitrary
+rotation, position/direction/velocity round trips, matching and differing
+velocities, rotating-frame point speed and co-motion, live spacecraft data
+relative to a moving celestial body, attached-pilot co-motion and release
+point velocity, finite results for valid inputs, and rotate-the-universe
+equivalence. `judas_pilot_dismount_tests` checks release clearance for an
+upright and inverted craft, zero-gravity preservation, and rotated-world
+equivalence. All existing M1–M22 suites and the gameplay harness pass; M22 is
+accepted.

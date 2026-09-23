@@ -291,7 +291,8 @@ int RunFixedStepMode(Window& window, Renderer& renderer, PhysicsWorld& physicsWo
         // Milestone 8/11: identical gating/attachment rule as the
         // interactive loop — see Application::Run, src/PilotControl.h.
         if (window.ConsumeControlToggleRequest()) {
-            HandlePilotToggleRequest(flyingPrimitiveControl, pilotAttachment, player, physicsWorld);
+            HandlePilotToggleRequest(flyingPrimitiveControl, pilotAttachment, player, physicsWorld,
+                                     gravity);
         }
 
         PrepareDynamicBodiesForStep(dynamicBodies, gravity, physicsWorld,
@@ -391,7 +392,8 @@ int RunRealtimeMode(Window& window, Renderer& renderer, PhysicsWorld& physicsWor
             physicsAccumulator = 0.0f;
         }
         if (window.ConsumeControlToggleRequest()) {
-            HandlePilotToggleRequest(flyingPrimitiveControl, pilotAttachment, player, physicsWorld);
+            HandlePilotToggleRequest(flyingPrimitiveControl, pilotAttachment, player, physicsWorld,
+                                     gravity);
         }
 
         physicsAccumulator += frameDeltaTime;

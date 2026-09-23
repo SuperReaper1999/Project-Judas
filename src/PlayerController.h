@@ -99,6 +99,15 @@ public:
     // for any other airborne player.
     void SetVelocityAfterRelease(const glm::vec3& velocity) { m_velocity = velocity; }
 
+    // Corrects the pose when pilot release must move the player clear of
+    // the spacecraft/terrain. Presentation history is synchronized so a
+    // detached render never interpolates through the attached pose.
+    void SetPositionAfterRelease(const glm::vec3& position) {
+        m_position = position;
+        m_previousPosition = position;
+        m_previousOrientation = m_frameOrientation;
+    }
+
     // All player state lives in this class (position, velocity,
     // orientation, pending jump) — there is no physics-side state to reset
     // separately, unlike Milestone 4's Jolt-backed player. Also

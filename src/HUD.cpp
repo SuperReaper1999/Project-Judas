@@ -51,7 +51,32 @@ std::string FormatLine(int index, const HUDViewData& data) {
                            data.pilotAttached ? "Secured" : "Unsecured");
             break;
         case 4:
-            std::snprintf(buffer, sizeof(buffer), "Spacecraft speed: %.2f m/s", data.spacecraftLinearSpeed);
+            std::snprintf(buffer, sizeof(buffer), "Ship world speed: %.2f m/s",
+                          data.spacecraftLinearSpeed);
+            break;
+        case 5:
+            if (data.celestialReferenceAvailable) {
+                std::snprintf(buffer, sizeof(buffer), "Body A world speed: %.2f m/s",
+                              data.celestialBodyWorldSpeed);
+            } else {
+                std::snprintf(buffer, sizeof(buffer), "Body A world speed: N/A");
+            }
+            break;
+        case 6:
+            if (data.celestialReferenceAvailable) {
+                std::snprintf(buffer, sizeof(buffer), "Ship rel. speed to A: %.2f m/s",
+                              data.spacecraftRelativeCelestialSpeed);
+            } else {
+                std::snprintf(buffer, sizeof(buffer), "Ship rel. speed to A: N/A");
+            }
+            break;
+        case 7:
+            std::snprintf(buffer, sizeof(buffer), "Pilot world speed: %.2f m/s",
+                          data.pilotWorldSpeed);
+            break;
+        case 8:
+            std::snprintf(buffer, sizeof(buffer), "Pilot rel. speed to ship: %.2f m/s",
+                          data.pilotRelativeSpacecraftSpeed);
             break;
         default:
             std::snprintf(buffer, sizeof(buffer), "Spacecraft SAS: %s",
@@ -61,7 +86,7 @@ std::string FormatLine(int index, const HUDViewData& data) {
     return std::string(buffer);
 }
 
-constexpr int kLineCount = 6;
+constexpr int kLineCount = 10;
 }  // namespace
 
 void HUD::Draw(Renderer& renderer, int windowWidth, int windowHeight, const HUDViewData& data) const {

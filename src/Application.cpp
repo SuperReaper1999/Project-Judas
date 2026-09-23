@@ -39,6 +39,7 @@
 #include "PlayerController.h"
 #include "RadicalGravity.h"
 #include "Renderer.h"
+#include "ReferenceFrame.h"
 #include "ShadowTransforms.h"
 #include "SimulationTiming.h"
 #include "SphericalVolume.h"
@@ -49,6 +50,13 @@
 namespace {
 GLADapiproc LoadOpenGLProcAddress(const char* name) {
     return reinterpret_cast<GLADapiproc>(SDL_GL_GetProcAddress(name));
+}
+
+ReferenceFrame ReferenceFrameFromBody(const PhysicsWorld& physics, BodyHandle handle) {
+    const BodyTransform transform = physics.GetTransform(handle);
+    return ReferenceFrame{transform.position, transform.rotation,
+                          physics.GetLinearVelocity(handle),
+                          physics.GetAngularVelocity(handle)};
 }
 
 constexpr int kWindowWidth = 1024;
@@ -705,7 +713,7 @@ int Application::Run() {
     const bool isTestRun = testScriptPath != nullptr;
 
     Window window;
-    if (!window.Init("Project Judas - Milestone 21", kWindowWidth, kWindowHeight,
+    if (!window.Init("Project Judas - Milestone 22", kWindowWidth, kWindowHeight,
                       !isTestRun)) {
         std::fprintf(stderr, "Window initialization failed.\n");
         return 1;
@@ -1225,7 +1233,8 @@ int Application::Run() {
                 // docs/ARCHITECTURE.md, "Milestone 11."
                 if (window.ConsumeControlToggleRequest()) {
                     const bool wasControlled = flyingPrimitiveControl.controlled;
-                    HandlePilotToggleRequest(flyingPrimitiveControl, pilotAttachment, player, physicsWorld);
+                    HandlePilotToggleRequest(flyingPrimitiveControl, pilotAttachment, player,
+                                             physicsWorld, gravity);
                     if (!wasControlled && flyingPrimitiveControl.controlled) objectManipulation.Drop();
                 }
 
@@ -1467,8 +1476,27 @@ int Application::Run() {
                 hudData.controllingSpacecraft = flyingPrimitiveControl.controlled;
                 hudData.pilotAttached = pilotAttachment.attached;
                 hudData.spacecraftSasEnabled = flyingPrimitiveControl.sasEnabled;
-                hudData.spacecraftLinearSpeed =
-                    glm::length(physicsWorld.GetLinearVelocity(flyingPrimitiveControl.handle));
+                const BodyHandle shipHandle = flyingPrimitiveControl.handle;
+                const glm::vec3 shipWorldPosition = physicsWorld.GetTransform(shipHandle).position;
+                const glm::vec3 shipWorldVelocity = physicsWorld.GetLinearVelocity(shipHandle);
+                const ReferenceFrame shipFrame = ReferenceFrameFromBody(physicsWorld, shipHandle);
+                hudData.spacecraftLinearSpeed = glm::length(shipWorldVelocity);
+
+                const glm::vec3 pilotWorldVelocity = pilotAttachment.attached
+                    ? VelocityToWorld(shipFrame, pilotAttachment.localOffset, glm::vec3(0.0f))
+                    : player.GetVelocity();
+                hudData.pilotWorldSpeed = glm::length(pilotWorldVelocity);
+                hudData.pilotRelativeSpacecraftSpeed = glm::length(RelativeVelocityToFrame(
+                    shipFrame, player.GetPosition(), pilotWorldVelocity));
+
+                if (orbitalBodyA.IsValid()) {
+                    const ReferenceFrame celestialFrame =
+                        ReferenceFrameFromBody(physicsWorld, orbitalBodyA);
+                    hudData.celestialReferenceAvailable = true;
+                    hudData.celestialBodyWorldSpeed = glm::length(celestialFrame.linearVelocity);
+                    hudData.spacecraftRelativeCelestialSpeed = glm::length(RelativeVelocityToFrame(
+                        celestialFrame, shipWorldPosition, shipWorldVelocity));
+                }
                 if (objectManipulation.IsHolding()) {
                     hudData.interactPrompt = interactTarget
                         ? interactTarget->GetPromptText() + " | H Throw"

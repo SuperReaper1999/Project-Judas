@@ -13,7 +13,7 @@ loaded with the vendored GLAD 2.0.8 OpenGL 3.3 Core loader through the
 SDL-created context; generation and license provenance are recorded in
 [`third_party/glad/README.md`](third_party/glad/README.md).
 
-## Status: Milestone 21 implementation (awaiting human validation)
+## Status: Milestone 22 accepted
 
 **New in M20:** the interactive scene includes two massive dynamic spheres in
 unclaimed space. Their initial positions and velocities are the analytical
@@ -38,8 +38,21 @@ piloting, press `X` to toggle SAS: it applies inertia-compensated
 counter-torque to stop rotation and hold the attitude captured at activation.
 The HUD shows a dedicated `Spacecraft SAS: ON/OFF` line. SAS never brakes
 translation; rotational pilot keys are ignored while attitude hold is active.
+A follow-up release-safety correction moves the player just clear on the
+gravity-facing side if the craft rolled them below its hull. Ordinary movement
+then resumes; the player still inherits the velocity of the original
+attachment point. Zero gravity does not invent an exit side.
 See [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md), "Milestone 21," for the
-control law, tests, and limitations. Human validation is pending.
+control law, tests, and limitations. M21 is accepted.
+
+**New in M22:** `ReferenceFrame` converts positions, directions, and
+velocities between world coordinates and a translating/rotating frame. Frame
+velocity includes the actual point velocity from `omega x r`. The HUD shows
+world speeds for the spacecraft, orbiting body A, and pilot, plus the
+spacecraft's relative speed to body A and the pilot's relative speed to the
+spacecraft. These readouts do not alter physics, gravity, support, or
+attachment. See
+[`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md), "Milestone 22."
 
 A controllable player walks, jumps, and falls under real physics — Judas's
 own physics engine, not a third-party library — across two independent
@@ -486,7 +499,7 @@ full script format:
 JUDAS_TEST_SCRIPT=path/to/script.txt ./build/judas
 ```
 
-Fifteen standalone, headless test executables also exist (no window or GL
+Sixteen standalone, headless test executables also exist (no window or GL
 context): `judas_physics_tests` and `judas_collision_tests` (rigid-body/
 collision/gravity-context primitives); `judas_asset_tests` (Milestone 9 —
 model/texture loading, parses the real committed demo assets and checks
@@ -512,7 +525,10 @@ no-op while uncontrolled, and the same rotate-the-whole-scenario check);
 acceleration, bounded unpowered orbit and rotated-world equivalence,
 prograde/retrograde/radial thrust energy changes, thrust-driven escape,
 SAS torque settling/attitude hold, translation independence, and toggle
-request draining);
+request draining); `judas_reference_frame_tests` (Milestone 22 — position,
+direction, and velocity transforms, including rotating-frame point speed,
+live celestial/spacecraft/pilot data, round trips, and rotate-the-universe
+equivalence);
 `judas_ui_tests` (Milestone 13 — the UI navigation/input-ownership
 logic: the screen stack, focus navigation and hit-testing, the pause
 menu's exact required open/nested/back/resume flow, the HUD-visibility
@@ -535,7 +551,9 @@ one-time offscreen render and is otherwise human-validated, see
 `judas_player_view_tests` (Milestone 17 — first-person eye and look transform,
 arbitrary orientation and rotate-the-universe equivalence, third-person
 offset preservation, view-mode changes, and paused-input gating — pure CPU
-math, no window/GL); and `judas_object_manipulation_tests` (Milestone 18 —
+math, no window/GL); `judas_pilot_dismount_tests` (gravity-side release
+clearance, actual collider support distances, zero-gravity preservation, and
+rotated-world equivalence); and `judas_object_manipulation_tests` (Milestone 18 —
 eligible-body filtering, shared range/facing targeting, arbitrary-orientation
 carry target, rotate-the-universe equivalence, physics-backed carry, drop
 velocity preservation, and mass-scaled throw direction); and
@@ -550,8 +568,8 @@ timestep convergence, perturbation, escape, and rotate-the-universe
 equivalence). Run them with:
 
 ```bash
-cmake --build build --target judas_physics_tests judas_collision_tests judas_asset_tests judas_step_climb_tests judas_pilot_attachment_tests judas_spacecraft_control_tests judas_spacecraft_flight_tests judas_ui_tests judas_lighting_tests judas_shadow_tests judas_interactable_tests judas_player_view_tests judas_object_manipulation_tests judas_player_curved_locomotion_tests judas_celestial_gravity_tests
-./build/judas_physics_tests && ./build/judas_collision_tests && ./build/judas_asset_tests && ./build/judas_step_climb_tests && ./build/judas_pilot_attachment_tests && ./build/judas_spacecraft_control_tests && ./build/judas_spacecraft_flight_tests && ./build/judas_ui_tests && ./build/judas_lighting_tests && ./build/judas_shadow_tests && ./build/judas_interactable_tests && ./build/judas_player_view_tests && ./build/judas_object_manipulation_tests && ./build/judas_player_curved_locomotion_tests && ./build/judas_celestial_gravity_tests
+cmake --build build --target judas_physics_tests judas_collision_tests judas_asset_tests judas_step_climb_tests judas_pilot_attachment_tests judas_pilot_dismount_tests judas_spacecraft_control_tests judas_spacecraft_flight_tests judas_reference_frame_tests judas_ui_tests judas_lighting_tests judas_shadow_tests judas_interactable_tests judas_player_view_tests judas_object_manipulation_tests judas_player_curved_locomotion_tests judas_celestial_gravity_tests
+./build/judas_physics_tests && ./build/judas_collision_tests && ./build/judas_asset_tests && ./build/judas_step_climb_tests && ./build/judas_pilot_attachment_tests && ./build/judas_pilot_dismount_tests && ./build/judas_spacecraft_control_tests && ./build/judas_spacecraft_flight_tests && ./build/judas_reference_frame_tests && ./build/judas_ui_tests && ./build/judas_lighting_tests && ./build/judas_shadow_tests && ./build/judas_interactable_tests && ./build/judas_player_view_tests && ./build/judas_object_manipulation_tests && ./build/judas_player_curved_locomotion_tests && ./build/judas_celestial_gravity_tests
 ```
 
 ## Assets

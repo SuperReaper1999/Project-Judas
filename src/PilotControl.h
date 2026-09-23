@@ -26,12 +26,14 @@ class GravityField;
 // toggle check already used. Acquisition is gated on the player's own
 // CURRENT support state exactly as Milestone 8 required (F from anywhere
 // else is a no-op); release is always available regardless of orientation,
-// support, or gravity context. Reads the spacecraft's current authoritative
-// transform/velocities via `physics` to capture the attachment (see
-// BeginPilotAttachment) or compute the player's inherited release velocity
-// (see ComputePilotReleaseVelocity) — never a predicted or presented pose.
+// support, or gravity context. Reads authoritative physics state to capture
+// the attachment or compute release velocity. On release, gravity and the
+// actual collision-shape support distances move a pilot to the gravity-facing
+// side if a spacecraft roll left them below the hull; zero gravity preserves
+// the existing point. Neither path uses a presented transform.
 void HandlePilotToggleRequest(FlyingPrimitiveControl& control, PilotAttachment& attachment,
-                               PlayerController& player, PhysicsWorld& physics);
+                               PlayerController& player, PhysicsWorld& physics,
+                               const GravityField& gravity);
 
 // Call once per fixed step, AFTER PhysicsWorld::Step, in place of calling
 // PlayerController::FixedUpdate directly. While attached, drives the

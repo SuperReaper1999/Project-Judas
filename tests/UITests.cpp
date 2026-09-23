@@ -246,6 +246,11 @@ void TestHUDViewDataIsPlainData() {
     data.pilotAttached = false;
     data.spacecraftSasEnabled = true;
     data.spacecraftLinearSpeed = 3.5f;
+    data.celestialReferenceAvailable = true;
+    data.celestialBodyWorldSpeed = 10.5f;
+    data.spacecraftRelativeCelestialSpeed = 2.25f;
+    data.pilotWorldSpeed = 8.0f;
+    data.pilotRelativeSpacecraftSpeed = 0.0f;
 
     Check(data.grounded, "grounded round-trips");
     Check(data.gravityMagnitude == 9.81f, "gravityMagnitude round-trips");
@@ -253,6 +258,13 @@ void TestHUDViewDataIsPlainData() {
     Check(!data.pilotAttached, "pilotAttached round-trips");
     Check(data.spacecraftSasEnabled, "spacecraftSasEnabled round-trips");
     Check(data.spacecraftLinearSpeed == 3.5f, "spacecraftLinearSpeed round-trips");
+    Check(data.celestialReferenceAvailable, "celestialReferenceAvailable round-trips");
+    Check(data.celestialBodyWorldSpeed == 10.5f, "celestialBodyWorldSpeed round-trips");
+    Check(data.spacecraftRelativeCelestialSpeed == 2.25f,
+          "spacecraftRelativeCelestialSpeed round-trips");
+    Check(data.pilotWorldSpeed == 8.0f, "pilotWorldSpeed round-trips");
+    Check(data.pilotRelativeSpacecraftSpeed == 0.0f,
+          "pilotRelativeSpacecraftSpeed round-trips");
 }
 
 int main() {
