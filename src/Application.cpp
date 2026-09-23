@@ -1,6 +1,7 @@
 #include "Application.h"
 
 #include <SDL2/SDL.h>
+#include <glad/gl.h>
 
 #include <algorithm>
 #include <cmath>
@@ -43,9 +44,12 @@
 #include "TestHarness.h"
 #include "TextureLoader.h"
 #include "Window.h"
-#include "gl_core33.h"
 
 namespace {
+GLADapiproc LoadOpenGLProcAddress(const char* name) {
+    return reinterpret_cast<GLADapiproc>(SDL_GL_GetProcAddress(name));
+}
+
 constexpr int kWindowWidth = 1024;
 constexpr int kWindowHeight = 768;
 
@@ -705,8 +709,8 @@ int Application::Run() {
         return 1;
     }
 
-    if (!LoadGLFunctions()) {
-        std::fprintf(stderr, "Failed to load required OpenGL functions.\n");
+    if (gladLoadGL(&LoadOpenGLProcAddress) == 0 || !GLAD_GL_VERSION_3_3) {
+        std::fprintf(stderr, "Failed to load the required OpenGL 3.3 Core entry points.\n");
         return 1;
     }
 

@@ -8,6 +8,11 @@ This is **not** a general-purpose engine and is not trying to compete with
 Unity, Unreal, or Godot. It exists to serve one specific class of game, and
 its architecture is deliberately narrow.
 
+Rendering targets **OpenGL 3.3 Core / GLSL 330**. OpenGL entry points are
+loaded with the vendored GLAD 2.0.8 OpenGL 3.3 Core loader through the
+SDL-created context; generation and license provenance are recorded in
+[`third_party/glad/README.md`](third_party/glad/README.md).
+
 ## Status: Milestone 20 implementation (awaiting human validation)
 
 **New in M20:** the interactive scene includes two massive dynamic spheres in

@@ -1,6 +1,8 @@
 cmake_minimum_required(VERSION 3.20)
-project(ProjectJudas CXX)
+project(ProjectJudas C CXX)
 
+set(CMAKE_C_STANDARD 99)
+set(CMAKE_C_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
@@ -26,6 +28,11 @@ set(JUDAS_PHYSICS_SOURCES
     src/Contacts.cpp
     src/ContactSolver.cpp
 )
+
+# GLAD 2 loader generated for precisely OpenGL 3.3 Core, no extensions.
+add_library(judas_glad STATIC third_party/glad/src/gl.c)
+target_include_directories(judas_glad PUBLIC third_party/glad/include)
+target_compile_options(judas_glad PRIVATE -Wall -Wextra)
 
 add_executable(judas
     src/main.cpp
@@ -62,11 +69,10 @@ add_executable(judas
     ${JUDAS_PHYSICS_SOURCES}
     src/PhysicsWorld.cpp
     src/TestHarness.cpp
-    src/gl_core33.cpp
 )
 
 target_include_directories(judas PRIVATE ${SDL2_INCLUDE_DIRS})
-target_link_libraries(judas PRIVATE SDL2::SDL2 glm::glm-header-only)
+target_link_libraries(judas PRIVATE SDL2::SDL2 glm::glm-header-only judas_glad)
 target_compile_options(judas PRIVATE -Wall -Wextra)
 
 # Judas-owned physics primitive/collision tests: deterministic, headless,
@@ -174,7 +180,7 @@ target_compile_options(judas_spacecraft_control_tests PRIVATE -Wall -Wextra)
 # (src/UIWidgets.*, src/UIStack.h, src/PauseMenu.*, src/HUD.*) — pure CPU
 # state (screen stack, focus, button hit-testing, pause menu flow, HUD
 # view-data formatting), never a GL context or window. Links Renderer.cpp/
-# gl_core33.cpp/FontLoader.cpp only because UIMenuScreen::Draw/HUD::Draw
+# GLAD/FontLoader.cpp only because UIMenuScreen::Draw/HUD::Draw
 # reference Renderer's UI drawing methods at compile time (same reasoning
 # judas_spacecraft_control_tests already applies to Window.cpp: the code
 # must link, but this suite never actually calls Draw or touches a real GL
@@ -186,11 +192,10 @@ add_executable(judas_ui_tests
     src/HUD.cpp
     src/Renderer.cpp
     src/FontLoader.cpp
-    src/gl_core33.cpp
 )
 target_include_directories(judas_ui_tests PRIVATE src)
 target_include_directories(judas_ui_tests PRIVATE ${SDL2_INCLUDE_DIRS})
-target_link_libraries(judas_ui_tests PRIVATE SDL2::SDL2 glm::glm-header-only)
+target_link_libraries(judas_ui_tests PRIVATE SDL2::SDL2 glm::glm-header-only judas_glad)
 target_compile_options(judas_ui_tests PRIVATE -Wall -Wextra)
 
 # Milestone 14: headless tests for the dynamic-lighting math (src/
@@ -210,11 +215,10 @@ add_executable(judas_lighting_tests
     src/HUD.cpp
     src/Renderer.cpp
     src/FontLoader.cpp
-    src/gl_core33.cpp
 )
 target_include_directories(judas_lighting_tests PRIVATE src)
 target_include_directories(judas_lighting_tests PRIVATE ${SDL2_INCLUDE_DIRS})
-target_link_libraries(judas_lighting_tests PRIVATE SDL2::SDL2 glm::glm-header-only)
+target_link_libraries(judas_lighting_tests PRIVATE SDL2::SDL2 glm::glm-header-only judas_glad)
 target_compile_options(judas_lighting_tests PRIVATE -Wall -Wextra)
 
 # Milestone 15: headless tests for the shadow light-view/projection
@@ -238,7 +242,7 @@ target_compile_options(judas_shadow_tests PRIVATE -Wall -Wextra)
 # and the interact key's input-ownership gating (src/PauseMenu.*,
 # mirroring judas_lighting_tests' own Section F pattern). Door needs a
 # real PhysicsWorld (no window/GL — PhysicsWorld has never needed either,
-# see tests/StepClimbTests.cpp); Renderer.cpp/FontLoader.cpp/gl_core33.cpp
+# see tests/StepClimbTests.cpp); Renderer.cpp/FontLoader.cpp/GLAD
 # are linked only because Door::Draw/LightSwitch::Draw/PauseMenu::Draw
 # reference Renderer's drawing methods at compile time — this suite never
 # calls any of them (same reasoning judas_lighting_tests/judas_shadow_tests
@@ -254,13 +258,12 @@ add_executable(judas_interactable_tests
     src/HUD.cpp
     src/Renderer.cpp
     src/FontLoader.cpp
-    src/gl_core33.cpp
     ${JUDAS_PHYSICS_SOURCES}
     src/PhysicsWorld.cpp
 )
 target_include_directories(judas_interactable_tests PRIVATE src)
 target_include_directories(judas_interactable_tests PRIVATE ${SDL2_INCLUDE_DIRS})
-target_link_libraries(judas_interactable_tests PRIVATE SDL2::SDL2 glm::glm-header-only)
+target_link_libraries(judas_interactable_tests PRIVATE SDL2::SDL2 glm::glm-header-only judas_glad)
 target_compile_options(judas_interactable_tests PRIVATE -Wall -Wextra)
 
 # Milestone 17: player camera-pose math and view-input ownership. Pure CPU,

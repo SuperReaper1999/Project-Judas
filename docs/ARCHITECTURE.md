@@ -2684,7 +2684,7 @@ gates gameplay input on, transitioning correctly across open/close
 tick" — the actual condition the real loop branches on, verified
 independent of any window/input plumbing); plus that `HUDViewData` is
 exactly the plain, independently-constructible struct it claims to be
-(Section H). This suite links `Renderer.cpp`/`gl_core33.cpp`/
+(Section H). This suite links `Renderer.cpp`/the GLAD loader/
 `FontLoader.cpp` (since `UIMenuScreen::Draw`/`HUD::Draw` reference
 `Renderer`'s UI methods at compile time — the same reasoning
 `judas_spacecraft_control_tests` already applies to linking `Window.cpp`
@@ -4736,7 +4736,7 @@ are byte-identical to Milestone 3/5 — every existing call site in
 `Application.cpp`/`TestHarness.cpp` needed zero changes. The
 model→world→view→clip-space matrix composition itself is unchanged.
 
-**The hand-written GL loader (`src/gl_core33.h/.cpp`) was extended, not
+**Historical at M9: the hand-written GL loader (`src/gl_core33.h/.cpp`) was extended, not
 replaced** — the explicit re-evaluation this file's own comment calls for
 whenever new GL surface is needed. Ten functions were added (texture
 creation/binding/upload/parameters/mipmap/deletion, indexed drawing, and
@@ -4746,11 +4746,10 @@ enumerable list of ordinary entry points (no framebuffers, no compute, no
 extension-querying machinery, nothing requiring the loader itself to grow
 new *kinds* of logic beyond "resolve one more function pointer by name")
 — genuinely still "small and clear" by the loader's own stated bar, not
-merely declared so. Replacing it with a generated glad loader was
-considered and rejected for the same reason it always has been: the
-actual GL surface this engine calls is still small enough to read in one
-sitting, and a generated loader would trade that readability for
-generality nothing here uses.
+merely declared so. At the time, replacing it with a generated glad loader
+was considered and rejected because the actual GL surface was still small
+enough to read in one sitting. This records the M9 decision only; the
+infrastructure migration below supersedes it.
 
 ### Assets
 
@@ -6262,3 +6261,14 @@ error over five revolutions, timestep convergence, impulse perturbation,
 escape, and rotate-the-universe equivalence. Automated validation passes;
 operator acceptance of the visible orbit and the three runtime thrust
 directions is still pending.
+
+### OpenGL loader (infrastructure maintenance)
+
+The graphics baseline remains OpenGL 3.3 Core and GLSL 330. The former
+hand-written `gl_core33.*` entry-point table has been replaced by the vendored
+GLAD 2.0.8 C loader generated for OpenGL 3.3 Core with no extensions. After
+`Window::Init` creates the SDL OpenGL context, `Application` passes
+`SDL_GL_GetProcAddress` to `gladLoadGL` and requires the 3.3 capability before
+renderer initialization. No newer OpenGL API is enabled or used. Generation
+provenance, exact upstream revision, generated files, and license notices are
+recorded in `third_party/glad/README.md` and `third_party/glad/LICENSE`.

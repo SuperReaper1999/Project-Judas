@@ -9,7 +9,7 @@
 #include "Light.h"
 #include "MeshData.h"
 #include "TextureData.h"
-#include "gl_core33.h"
+#include <glad/gl.h>
 
 // Opaque handles into Renderer's own GPU resource tables — the same
 // convention PhysicsWorld::BodyHandle already established (a small integer

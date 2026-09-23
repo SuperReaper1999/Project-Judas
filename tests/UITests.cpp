@@ -4,9 +4,9 @@
 // suite deliberately NEVER calls UIMenuScreen::Draw/PauseMenu::Draw/
 // HUD::Draw: those issue real Renderer UI draw calls (glUniform2f,
 // glDrawArrays, ...) through function pointers that are only resolved by
-// Window::Init + LoadGLFunctions against a real GL context — calling them
-// here would dereference null function pointers. Renderer.cpp/
-// gl_core33.cpp are still linked into this executable (see CMakeLists.txt)
+// Window::Init plus GLAD loading against a real GL context — calling them
+// here would dereference null function pointers. Renderer.cpp and GLAD are
+// linked into this executable (see CMakeLists.txt)
 // because UIMenuScreen::Draw/HUD::Draw reference those symbols at compile
 // time, but nothing in this file ever invokes them — appearance is human-
 // validated instead, per this milestone's own brief.
