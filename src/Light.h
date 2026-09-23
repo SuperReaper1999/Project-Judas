@@ -59,7 +59,28 @@ struct DynamicLight {
     // `innerConeDegrees` must be <= `outerConeDegrees`.
     float innerConeDegrees = 15.0f;
     float outerConeDegrees = 25.0f;
+
+    // Milestone 15: -1 (the default) means this light casts no shadow;
+    // otherwise the index (1 or 2 — see kDirectionalShadowSlot/
+    // kMaxShadowSlots below, slot 0 is reserved for the directional "sun")
+    // of the dedicated shadow map this light uses. Only the player torch
+    // and the spacecraft headlight ever set this (see Application.cpp's
+    // BuildDynamicLights) — point/navigation lights never cast shadows
+    // this milestone, per its own brief. See docs/ARCHITECTURE.md,
+    // "Milestone 15, Spotlight shadows."
+    int shadowMapIndex = -1;
 };
+
+// Milestone 15: shadow-map slot indices — a small, fixed, explicit set
+// (never a dynamically-sized shadow-caster list), matching this
+// milestone's own required scope exactly: one directional caster, one
+// player-torch spotlight caster, one spacecraft-headlight spotlight
+// caster. `Renderer` owns one depth-texture/framebuffer pair per slot
+// (see Renderer::Init), created once and reused every frame.
+constexpr int kDirectionalShadowSlot = 0;
+constexpr int kTorchShadowSlot = 1;
+constexpr int kShipHeadlightShadowSlot = 2;
+constexpr int kShadowMapCount = 3;
 
 // A small, explicit, documented cap — not a scale limit this milestone
 // needed to solve. One player torch plus a small fixed spacecraft light

@@ -46,6 +46,7 @@ add_executable(judas
     src/HUD.cpp
     src/LightTransforms.cpp
     src/LightAttenuation.cpp
+    src/ShadowTransforms.cpp
     src/FaithfulGravity.cpp
     src/RadicalGravity.cpp
     src/SphericalVolume.cpp
@@ -196,6 +197,22 @@ target_include_directories(judas_lighting_tests PRIVATE src)
 target_include_directories(judas_lighting_tests PRIVATE ${SDL2_INCLUDE_DIRS})
 target_link_libraries(judas_lighting_tests PRIVATE SDL2::SDL2 glm::glm-header-only)
 target_compile_options(judas_lighting_tests PRIVATE -Wall -Wextra)
+
+# Milestone 15: headless tests for the shadow light-view/projection
+# transform math (src/ShadowTransforms.*) — pure CPU matrix construction,
+# rotate-the-universe invariance, and finite-matrix checks, no window, no
+# GL context. Actual GLSL shadow-mapping correctness (does the real
+# fragment shader's PCF/bias/shadow-map sampling produce a correct-looking
+# shadow) is verified by a one-time offscreen-rendering spot-check plus
+# human visual validation instead — see docs/ARCHITECTURE.md, "Milestone
+# 15, Automated evidence."
+add_executable(judas_shadow_tests
+    tests/ShadowTests.cpp
+    src/ShadowTransforms.cpp
+)
+target_include_directories(judas_shadow_tests PRIVATE src)
+target_link_libraries(judas_shadow_tests PRIVATE glm::glm-header-only)
+target_compile_options(judas_shadow_tests PRIVATE -Wall -Wextra)
 
 # stb_image_write (public domain / MIT, see third_party/stb_image_write.h) —
 # used only by the opt-in test harness (src/TestHarness.cpp) to write

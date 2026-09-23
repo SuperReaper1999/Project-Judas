@@ -8,7 +8,7 @@ This is **not** a general-purpose engine and is not trying to compete with
 Unity, Unreal, or Godot. It exists to serve one specific class of game, and
 its architecture is deliberately narrow.
 
-## Status: Milestone 14
+## Status: Milestone 15
 
 A controllable player walks, jumps, and falls under real physics — Judas's
 own physics engine, not a third-party library — across two independent
@@ -158,15 +158,29 @@ at a fixed range, and a spotlight cone that fades gently from full
 brightness at its center to nothing at its edge — and combine additively
 with the existing ambient/directional lighting from Milestone 9, never
 replacing it. See [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md),
-"Milestone 14," for the full design, the exact attenuation/cone formulas,
-and an honest note on what this deliberately doesn't do (no shadows —
-an object behind another object can still catch torch/ship light if it
-falls within the light's mathematical volume).
+"Milestone 14," for the full design and the exact attenuation/cone
+formulas.
+
+**New this milestone:** those lights now cast real shadows. The
+directional sun, the player torch, and the spacecraft headlight each
+render a shadow map every frame (standard shadow mapping, with a small
+soft-edged filter so shadow edges aren't harshly aliased) — walk around
+an object and its shadow stays spatially correct; turn the torch on and
+watch it block light on whatever's between it and a surface; board the
+spacecraft and its headlight casts a shadow that stays attached through
+pitch, yaw, roll, coasting, and tumbling, exactly like the light itself
+already did as of Milestone 14. See
+[`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md), "Milestone 15," for the
+full design. **Honest limitations, not oversights:** the two wingtip
+navigation lights still cast no shadows; the directional shadow only
+covers a bounded area around the player (not the whole world at once,
+and not cascaded); and a surface just outside a light's own shadow
+frustum is treated as unshadowed rather than checked at all.
 
 This is intentional — see `docs/ARCHITECTURE.md` for why, what's
 deliberately not built yet, and how this small foundation avoids blocking
 the much larger long-term design. Earlier milestones are preserved as git
-tags (`milestone-1` through `milestone-14`, once this one is tagged) rather
+tags (`milestone-1` through `milestone-15`, once this one is tagged) rather
 than kept running alongside the current demo.
 
 ## Building
@@ -259,10 +273,18 @@ Dynamic lights combine additively with the existing ambient/directional
 lighting from Milestone 9 — the torch and the spacecraft's lights never
 replace or override it. See
 [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md), "Milestone 14," for the
-full design and the exact attenuation/cone formulas. **Honest limitation:
-there are no shadows** — an object sitting behind another object can
-still catch torch or spacecraft light if it falls within the light's
-mathematical cone/range, since nothing occludes it.
+full design and the exact attenuation/cone formulas.
+
+**As of Milestone 15, all three (the sun, the torch, and the headlight)
+cast real shadows** — objects between a light and a surface actually
+block it, with a soft (not harshly aliased) shadow edge. See
+[`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md), "Milestone 15," for the
+full design. **Honest limitations:** the two wingtip navigation lights
+still cast no shadows; the directional shadow only covers a bounded area
+around the player, not the entire world at once (walk far enough from
+where you last were and shadows there simply aren't being computed that
+frame); and a surface just outside a light's own shadow frustum is
+treated as unshadowed rather than actually checked.
 
 ## HUD and pause menu
 
@@ -402,11 +424,17 @@ rotate-the-whole-scenario invariance, the mirrored attenuation/spotlight-
 cone formulas, and the torch's own input-ownership gating — pure CPU
 logic, no window/GL/font; actual GLSL shader correctness was spot-checked
 via a one-time offscreen render and is otherwise human-validated, see
-`docs/ARCHITECTURE.md`, "Milestone 14, Automated evidence"):
+`docs/ARCHITECTURE.md`, "Milestone 14, Automated evidence"); and
+`judas_shadow_tests` (Milestone 15 — the shadow light-view/projection
+transform math, including finite-matrix checks at extreme configurations
+and rotate-the-whole-scenario invariance — pure CPU matrix math, no
+window/GL; actual shadow-map sampling correctness was spot-checked via a
+one-time offscreen render and is otherwise human-validated, see
+`docs/ARCHITECTURE.md`, "Milestone 15, Automated evidence"):
 
 ```bash
-cmake --build build --target judas_physics_tests judas_collision_tests judas_asset_tests judas_step_climb_tests judas_pilot_attachment_tests judas_spacecraft_control_tests judas_ui_tests judas_lighting_tests
-./build/judas_physics_tests && ./build/judas_collision_tests && ./build/judas_asset_tests && ./build/judas_step_climb_tests && ./build/judas_pilot_attachment_tests && ./build/judas_spacecraft_control_tests && ./build/judas_ui_tests && ./build/judas_lighting_tests
+cmake --build build --target judas_physics_tests judas_collision_tests judas_asset_tests judas_step_climb_tests judas_pilot_attachment_tests judas_spacecraft_control_tests judas_ui_tests judas_lighting_tests judas_shadow_tests
+./build/judas_physics_tests && ./build/judas_collision_tests && ./build/judas_asset_tests && ./build/judas_step_climb_tests && ./build/judas_pilot_attachment_tests && ./build/judas_spacecraft_control_tests && ./build/judas_ui_tests && ./build/judas_lighting_tests && ./build/judas_shadow_tests
 ```
 
 ## Assets

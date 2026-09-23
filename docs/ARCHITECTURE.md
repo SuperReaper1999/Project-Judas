@@ -6,7 +6,7 @@ someone with no prior context on this project. It is updated in place as
 milestones land, rather than kept as a per-milestone snapshot — see
 "Milestone history" below for how to recover an earlier milestone exactly.
 
-## What exists right now (Milestone 14)
+## What exists right now (Milestone 15)
 
 Open a window. Two independent static spheres ("planets," radius `20m`
 each, centers `55m` apart — see "Physics test world") exist in 3D space,
@@ -177,6 +177,29 @@ no gameplay semantics, and the Milestone 13 screen-space UI shader remains
 completely unlit — see "Milestone 14" below for the full design, the
 attenuation/cone formulas, and what M14 explicitly does NOT add (shadows,
 chief among them).
+
+**As of Milestone 15, objects block light: the directional "sun," the
+player torch, and the spacecraft headlight all cast real-time shadows.**
+Standard shadow mapping, extending the existing Milestone 9/14 lit-mesh
+shader rather than adding a second rendering path — each shadow-casting
+light gets its own dedicated depth texture, rendered from that light's own
+point of view once per frame (using the SAME scene-drawing calls the
+color pass itself issues), then sampled back while shading every ordinary
+surface. The directional shadow frustum recenters on the player's own
+presented position every frame (a single bounded frustum, not cascaded,
+sized for this demo's own scale); the torch's and headlight's shadow
+frustums are ordinary perspective frustums built fresh every frame from
+each spotlight's own current position/direction/cone — so torch shadows
+follow exactly where the player looks, and headlight shadows stay
+correctly attached through the spacecraft's translation, pitch, yaw, roll,
+Milestone 12 inertial coasting/tumbling, and any gravity context
+(including none), with zero special-casing. A small 3x3 percentage-closer
+filter softens shadow edges; a slope-scaled depth bias limits acne without
+introducing excessive peter-panning. Point/navigation lights do not cast
+shadows this milestone. See "Milestone 15" below for the full design, the
+exact bias/filtering strategy, and an honest account of this technique's
+limitations (no cascades, no point-light shadows, occluders outside a
+light's own bounded frustum are simply not accounted for).
 See the root `README.md` for build/run instructions and controls.
 
 ## Milestone history
@@ -311,22 +334,39 @@ preserved as parallel runtime code:
   boundary in `Application::Run`, not scattered `if (menuOpen)` checks.
   See "Milestone 13" for the full design, the input-ownership boundary,
   and the new standalone `judas_ui_tests` suite.
-- `milestone-14` (pending human validation as of this writing) — dynamic
-  lighting: a toggleable (`T`) player torch and a small fixed spacecraft
-  light rig (one headlight spotlight, two wingtip point nav lights), both
-  built fresh every render frame from their owner's own PRESENTED
-  transform, on top of the existing Milestone 9 ambient/directional "sun."
-  A new `src/Light.h` (`DynamicLight`, `LightKind::Point`/`Spot`) is the
-  entire Judas-owned light representation; `Renderer::SetDynamicLights`
-  uploads up to `kMaxDynamicLights` (5) of them to a small fixed-size
-  uniform array added to the existing Milestone 9 lit-mesh shader (not a
-  second rendering path). `src/LightTransforms.*` factors the "attach a
-  light to a moving/rotating owner" and "player torch follows free look"
-  math into pure, directly-testable functions; `src/LightAttenuation.*`
-  mirrors the fragment shader's own smooth-windowed-inverse-square
-  attenuation and smoothstep spotlight-cone formulas for the same reason.
-  See "Milestone 14" for the full design, the attenuation/cone
-  derivations, and the new standalone `judas_lighting_tests` suite.
+- `milestone-14` — dynamic lighting: a toggleable (`T`) player torch and a
+  small fixed spacecraft light rig (one headlight spotlight, two wingtip
+  point nav lights), both built fresh every render frame from their
+  owner's own PRESENTED transform, on top of the existing Milestone 9
+  ambient/directional "sun." A new `src/Light.h` (`DynamicLight`,
+  `LightKind::Point`/`Spot`) is the entire Judas-owned light
+  representation; `Renderer::SetDynamicLights` uploads up to
+  `kMaxDynamicLights` (5) of them to a small fixed-size uniform array
+  added to the existing Milestone 9 lit-mesh shader (not a second
+  rendering path). `src/LightTransforms.*` factors the "attach a light to
+  a moving/rotating owner" and "player torch follows free look" math into
+  pure, directly-testable functions; `src/LightAttenuation.*` mirrors the
+  fragment shader's own smooth-windowed-inverse-square attenuation and
+  smoothstep spotlight-cone formulas for the same reason. See "Milestone
+  14" for the full design, the attenuation/cone derivations, and the new
+  standalone `judas_lighting_tests` suite.
+- `milestone-15` (pending human validation as of this writing) — real-time
+  shadows for the directional "sun," the player torch, and the spacecraft
+  headlight, via standard shadow mapping added to the SAME Milestone 9/14
+  lit-mesh shader (a `vLightSpaceMatrix[3]`/three light-space varyings, a
+  3x3 PCF shadow-sampling function, applied to the directional term and to
+  any dynamic light with `DynamicLight::shadowMapIndex` set — see
+  src/Light.h). `Renderer::BeginShadowPass`/`EndShadowPass` render the
+  SAME scene-drawing calls the color pass uses, depth-only, into one of
+  three dedicated FBO/depth-texture pairs (`kShadowMapCount = 3`, created
+  once in `Init`, reused every frame — never a render graph or a
+  generalized shadow scheduler). `src/ShadowTransforms.*` builds each
+  light's view/projection matrix (a directional frustum recentered on the
+  player every frame; a perspective frustum per spotlight, sized from its
+  own cone/range) as pure, directly-testable free functions. Point/
+  navigation lights do not cast shadows. See "Milestone 15" for the full
+  design, the bias/PCF strategy, and the new standalone
+  `judas_shadow_tests` suite.
 
 Each milestone's demo content has been replaced (not extended) by the next;
 check out a tag to see or run an earlier milestone as it was.
@@ -3114,6 +3154,397 @@ accuracy of any kind — this engine's light "color" values are tuned,
 demo-specific numbers with intensity folded in, not calibrated real-world
 units.
 
+## Milestone 15
+
+Real-time shadows for the three lights Milestone 15's brief actually
+requires: the existing directional "sun," the player torch, and the
+spacecraft headlight. Standard shadow mapping, extending the existing
+Milestone 9/14 lit-mesh shader — no second rendering path, no render
+graph, no deferred/clustered/Forward+ architecture.
+
+### Technique: one depth texture per shadow-casting light, sampled back in the main pass
+
+Three shadow slots (`src/Light.h`: `kDirectionalShadowSlot = 0`,
+`kTorchShadowSlot = 1`, `kShipHeadlightShadowSlot = 2`,
+`kShadowMapCount = 3`), each with its own dedicated 1024x1024 depth
+texture and framebuffer object, created ONCE in `Renderer::Init` and
+reused every frame (never allocated/freed per-light or per-draw — see
+"Resource ownership" below). Each frame, BEFORE the normal color pass:
+
+```cpp
+renderer.BeginShadowPass(kDirectionalShadowSlot, dirShadowMatrix);
+drawScene(renderer, presentationAlpha);   // the SAME lambda the color pass uses
+renderer.EndShadowPass();
+// ...same for the torch (if on) and the ship headlight (always)...
+
+renderer.BeginFrame(window.Width(), window.Height());
+renderer.SetCamera(view, projection);
+renderer.SetDynamicLights(lights);
+drawScene(renderer, presentationAlpha);   // now the REAL color pass
+renderer.EndFrame();
+```
+
+`BeginShadowPass` binds that slot's FBO, sets the viewport to the shadow
+map's own resolution, clears its depth buffer, and switches the active
+shader to a second, minimal depth-only program
+(`kShadowVertexShaderSource`/`kShadowFragmentShaderSource`) — position
+only, no normal/UV attributes read, no color output at all (the FBO has
+no color attachment: `glDrawBuffer(GL_NONE)`/`glReadBuffer(GL_NONE)` at
+creation time tell GL not to expect one). `DrawMesh` itself is
+UNCHANGED in its public signature — every existing `DrawBox`/`DrawSphere`/
+`DrawMesh` call site in `drawScene` needed zero edits — it simply checks
+`m_shadowPassActive` internally and routes to the depth-only path instead
+of the lit path while a shadow pass is active. This is why the SAME
+`drawScene` lambda `Application::Run` already had (built once, back in
+Milestone 3, extended incrementally every milestone since) can be reused
+verbatim for all four passes (three shadow passes plus the color pass) a
+frame now issues — nothing about "what geometry exists in the scene" is
+duplicated or re-expressed for shadow rendering.
+
+`BeginShadowPass` also CACHES its `lightViewProjection` argument
+(`m_shadowLightSpaceMatrix[slot]`). Every subsequent NORMAL-mode `DrawMesh`
+call this same frame (i.e. every draw in the color pass) uploads all
+three cached matrices as `uLightSpaceMatrix[3]` and binds all three depth
+textures to texture units 1/2/3 (unit 0 stays the ordinary diffuse/white-
+fallback texture — see "Coordinate space and multi-texture binding"
+below) — so the color pass needs no separate "apply this frame's shadow
+data" call; it automatically uses whatever this frame's own shadow passes
+most recently produced.
+
+### Directional-light shadows: a single recentered frustum, not cascades
+
+```cpp
+glm::mat4 ComputeDirectionalShadowMatrix(focusPosition, lightDirectionToLight, halfExtent, shadowDistance) {
+    eye = focusPosition + normalize(lightDirectionToLight) * shadowDistance;
+    view = lookAt(eye, focusPosition, ChooseShadowUpHint(lightDirectionToLight));
+    projection = ortho(-halfExtent, halfExtent, -halfExtent, halfExtent, 0.1, shadowDistance * 2);
+    return projection * view;
+}
+```
+
+`focusPosition` is the player's own PRESENTED position, recomputed fresh
+every render frame (`Application.cpp`: `ComputeDirectionalShadowMatrix(
+player.GetPresentedPosition(presentationAlpha), kLightDirection,
+kDirShadowHalfExtent, kDirShadowDistance)`, with `kDirShadowHalfExtent =
+25m` and `kDirShadowDistance = 40m`) — the shadow frustum follows the
+player around the world rather than trying to cover the entire two-planet-
+plus-plank demo at once. This is a deliberate, honestly-scoped choice:
+cascaded shadow maps (multiple frustums at different resolutions/
+distances, blended near their boundaries) are the conventional fix for
+"one frustum can't cover a whole large world at useful resolution," but
+this milestone's own brief explicitly excludes them (see "Deliberately
+NOT implemented") — a single 25m-half-extent frustum recentered on the
+player every frame is a hard practical limit (shadows near the player are
+correct; shadows far from the player, e.g. on the OTHER planet while
+standing on this one, simply aren't computed that frame, since nothing
+there is in the frustum) but is honest, simple, and entirely sufficient
+for what a player can actually see clearly at once in this demo's own
+scale. `ChooseShadowUpHint` (`src/ShadowTransforms.cpp`) picks an
+"up" reference for `glm::lookAt`'s own basis-construction requirement —
+see "Coordinate space" below for why this is NOT a world-up assumption of
+the kind this project's gravity-related laws forbid.
+
+### Spotlight shadows: one perspective frustum per light, sized from its own cone/range
+
+```cpp
+glm::mat4 ComputeSpotShadowMatrix(lightPosition, lightDirection, outerConeDegrees, range) {
+    view = lookAt(lightPosition, lightPosition + normalize(lightDirection), ChooseShadowUpHint(lightDirection));
+    fovy = clamp(outerConeDegrees * 2 + 4, 10, 170);  // degrees; +4 margin, see below
+    projection = perspective(radians(fovy), 1.0, 0.1, max(range, 1.0));
+    return projection * view;
+}
+```
+
+Built fresh every frame directly from whichever `DynamicLight` the torch/
+headlight's own `position`/`direction`/`outerConeDegrees`/`range` currently
+are (`Application::Run` finds the light(s) in this frame's own
+`BuildDynamicLights` result whose `shadowMapIndex` is set, and builds each
+one's shadow matrix from THAT light's own current values — never a
+separately-tracked "shadow-caster" concept with its own transform logic).
+This is exactly how the shadow correctly follows the player's look
+direction (the torch) or the spacecraft's translation/pitch/yaw/roll/
+inertial motion (the headlight) with zero special-casing: the shadow
+matrix has no memory of its own, it's rebuilt from the SAME presented
+transform Milestone 14 already computes for the light's ordinary lighting
+contribution. The `+4` degree FOV margin (`kSpotFovMarginDegrees`,
+`src/ShadowTransforms.cpp`) keeps the shadow frustum slightly WIDER than
+the light's own illuminated cone — a frustum exactly as wide as the cone
+would let points right at the cone's own edge fall just outside the
+shadow map's coverage, which `ComputeShadowFactor` (see below) treats as
+"no occluder data, fully lit," incorrectly un-shadowing the cone's own
+rim.
+
+### Coordinate space and multi-texture binding
+
+All shadow math happens in the SAME world space Milestone 14's lighting
+already uses (`vWorldPos`, see that milestone's own "Coordinate space"
+section) — `uLightSpaceMatrix[slot] * vec4(vWorldPos, 1.0)`, computed
+once per vertex for all three slots unconditionally (`vDirLightSpacePos`/
+`vTorchLightSpacePos`/`vShipLightSpacePos`, three FIXED varyings — see
+below for why not a dynamically-indexed one) and consumed in the fragment
+shader. No view-space vector is ever involved in a shadow computation.
+
+`ChooseShadowUpHint` (`src/ShadowTransforms.cpp`) picks world +Y as its
+default "up" reference for building a camera-style basis via
+`glm::lookAt`, falling back to world +X only when the light direction is
+itself nearly parallel to +Y (the one case where +Y would make a
+near-singular basis) — a PURE GRAPHICS UTILITY, the exact same problem
+`glm::lookAt`'s own `up` parameter always poses for ANY camera, shadow or
+otherwise. This is NOT the kind of "+Y" this project's architectural laws
+forbid: those laws are about GRAVITY/local-up semantics (a supporting
+surface's normal, a player's sense of "which way is up," a spacecraft's
+attitude) never assuming a fixed world direction. Choosing a reference
+vector to disambiguate a camera's roll around its own forward axis has no
+relationship to gravity at all — the same category of "+Y used only to
+build a perpendicular reference, not to encode a real direction" already
+established by `Application.cpp`'s own `RotationAligningUpTo` (used since
+Milestone 10 to orient static step/ramp geometry). Verified directly,
+not just asserted: `tests/ShadowTests.cpp`'s rotate-the-universe checks
+confirm that rotating an entire scenario (light position/direction plus
+the point being tested) by an arbitrary quaternion leaves the resulting
+shadow-space DEPTH and OFF-AXIS RADIUS unchanged — the two quantities
+shadow comparison and spotlight-cone coverage actually depend on (see
+that test file's own comment on why exact NDC x/y equality is NOT the
+right invariant here: `ChooseShadowUpHint`'s fixed-+Y reference means a
+rotated scenario's camera basis differs from "the original basis,
+rotated" by an extra ROLL around the light's own forward axis — a real,
+but harmless, degree of freedom shadow mapping never depends on, since it
+never produces an image a person views "the right way up").
+
+Texture units: unit 0 is the ordinary diffuse/white-fallback texture
+(unchanged since Milestone 9); units 1/2/3 are the directional/torch/ship
+shadow maps respectively, all bound simultaneously via `glActiveTexture`
+(this milestone's first use of multiple simultaneously-bound textures —
+every prior milestone only ever needed one bound texture at a time).
+`DrawMesh` restores the active unit to `GL_TEXTURE0` before returning, so
+every other texture-touching call in this engine (UI draws, texture
+creation/upload) keeps working exactly as it did before, under the same
+"unit 0 is the default" assumption they've always made.
+
+### Shadow sampling: 3x3 PCF plus a slope-scaled bias
+
+```glsl
+float ComputeShadowFactor(vec4 lightSpacePos, sampler2D shadowMap, float ndotl) {
+    vec3 projCoords = lightSpacePos.xyz / lightSpacePos.w;
+    projCoords = projCoords * 0.5 + 0.5;
+    if (outside [0,1] on x/y, or projCoords.z > 1.0) return 1.0;  // no data there -> fully lit
+    bias = max(0.006 * (1.0 - ndotl), 0.0015);
+    currentDepth = projCoords.z - bias;
+    // 3x3 tap loop, one texel apart, averaging (currentDepth <= sampledDepth ? 1 : 0)
+    return average of 9 taps;
+}
+```
+
+A 3x3 percentage-closer filter (9 texel taps, `GL_NEAREST` filtering on
+the depth texture itself — see "Resource ownership" for why NOT
+`GL_LINEAR`) — the minimal sensible soft-shadow technique this milestone's
+brief explicitly allows ("soft-shadow filtering beyond a minimal sensible
+technique" is what's excluded; a basic PCF kernel IS that minimal
+technique, not beyond it). Produces a visibly soft, non-aliased shadow
+edge rather than a single-tap hard-edged one — confirmed directly in the
+offscreen-rendering spot-check (see "Automated evidence").
+
+The bias is SLOPE-SCALED (`0.006 * (1 - ndotl)`, clamped to a `0.0015`
+floor): a surface facing nearly straight at the light (`ndotl` near 1)
+needs almost no bias to avoid self-shadowing acne, while a surface at a
+grazing angle (`ndotl` near 0) needs more, since the same depth-buffer
+quantization step covers a much larger surface-space distance at a
+shallow angle — the standard, well-understood reason a FIXED bias either
+acne's on grazing surfaces or peter-pans badly on head-on ones. This is a
+constant baked into the shader, not a per-light tunable — sufficient for
+this milestone's own demo geometry (flat/curved primitives at ordinary
+scale), not claimed to be universally correct for arbitrarily
+thin/detailed future geometry.
+
+A fragment whose projected shadow coordinate falls outside `[0, 1]` on
+X/Y, or beyond the shadow frustum's own far plane on Z, is treated as
+FULLY LIT (`return 1.0`) — there is no occluder DATA there (the point is
+simply outside whichever light's bounded frustum this milestone chose),
+which is different from "verified no occluder exists," but is the
+honest, documented limitation this choice implies (see "What was
+deliberately not built" below) rather than a guess in either direction.
+
+### Which lights cast shadows
+
+The directional "sun" (always) and the two spotlights — the player torch
+(only while `torchOn`) and the spacecraft headlight (always, matching
+Milestone 14's own "the spacecraft always has its lights on"). Point/
+navigation lights (the two wingtip lights) do NOT cast shadows — per this
+milestone's own explicit brief ("Point/navigation lights do NOT require
+shadows for this milestone... Do not implement cubemap point-light
+shadows"). `DynamicLight::shadowMapIndex` (`src/Light.h`, default `-1`)
+is how `Application.cpp`'s `BuildDynamicLights` marks exactly the torch
+and headlight entries with their own slot (`kTorchShadowSlot`/
+`kShipHeadlightShadowSlot`) while leaving the two nav lights at `-1` (no
+shadow) — the fragment shader's per-dynamic-light loop only applies
+`ComputeShadowFactor` when `uDynamicLightShadowIndex[i]` is `1` or `2`.
+
+### Resource ownership and lifetime
+
+- **GPU resources** (3 depth textures, 3 FBOs, 1 depth-only shader
+  program) are owned entirely by `Renderer`, created once in `Init`,
+  destroyed once in `Shutdown` — no gameplay object owns a GL resource of
+  any kind, the same rule Milestone 9's mesh/texture handles and
+  Milestone 13's font atlas already established. Reused every frame, at a
+  fixed resolution (`kShadowMapResolution = 1024`, all three slots alike)
+  — never reallocated per-light or per-draw. `GL_NEAREST` filtering (not
+  the `GL_LINEAR` every OTHER texture in this engine uses) is deliberate:
+  this engine does its own multi-tap PCF filtering on raw depth VALUES,
+  and linearly filtering depth before a comparison would blend
+  incomparable values together, producing wrong (not just softer) results
+  — unlike ordinary color filtering, where blending is exactly what's
+  wanted.
+- **Light-space matrices** (`m_shadowLightSpaceMatrix[3]`) are Renderer-
+  owned CPU-side state, cached by `BeginShadowPass` and consumed by every
+  subsequent normal-mode `DrawMesh` call that same frame — see "Technique"
+  above.
+- **Which lights cast shadows this frame** is decided entirely by
+  `Application.cpp`'s `BuildDynamicLights` (via `shadowMapIndex`) — the
+  SAME "composition root decides, Renderer just consumes plain data" split
+  Milestone 14 already established for dynamic lights generally; `Renderer`
+  never reaches into `PlayerController`/`FlyingPrimitiveControl` to decide
+  this for itself.
+- No shadow resource is ever created or destroyed outside `Renderer::Init`/
+  `Shutdown` — there is no per-frame allocation, no generalized "shadow
+  caster registry," and (per this milestone's own explicit scope) no
+  mechanism for MORE than these three fixed slots; a future milestone
+  needing a fourth shadow-casting light would add a fourth named slot
+  (`kMaxDynamicLights`/`kShadowMapCount`-style constant increase), not a
+  dynamically-sized shadow-caster list.
+
+### Automated evidence
+
+`judas_shadow_tests` (new standalone executable, `tests/ShadowTests.cpp`)
+— pure CPU matrix math, no window, no GL context — verifies: both
+`ComputeDirectionalShadowMatrix` and `ComputeSpotShadowMatrix` produce
+finite matrices for typical configurations, and that a point exactly at
+the frustum's own focus/axis projects to NDC (0, 0) as expected (Section
+A); finite matrices at deliberately extreme configurations — a light
+direction exactly parallel to world +Y or -Y (`ChooseShadowUpHint`'s own
+fallback branch), a 1-degree and an 89-degree spotlight cone, and a
+near-zero range/shadow-distance (Section D); rotate-the-whole-scenario
+invariance for both the directional and spotlight matrices, using the
+same `kArbitraryRotation` convention every other rotate-the-universe
+suite in this project already uses, checking the roll-independent
+depth/off-axis-radius invariant explained above rather than exact NDC
+equality (Section C — this is the automated evidence that spotlight
+shadows genuinely follow an arbitrarily pitched/yawed/rolled light, per
+this milestone's own explicit requirement); and that moving a spotlight
+toward a fixed world point changes that point's projected shadow-space
+depth while keeping it centered on-axis, confirming the transform
+genuinely tracks the light's CURRENT pose rather than a cached one
+(Section B).
+
+Beyond the new suite: all 8 prior standalone suites remain green on a
+clean rebuild with zero compiler warnings; the full M1-14
+`JUDAS_TEST_SCRIPT` regression walk produces byte-identical fixed-step
+telemetry to pre-Milestone-15 runs (shadows never touch physics/gameplay
+state) and a visually unchanged rendered scene — `TestHarness.cpp`'s own
+render path never calls `BeginShadowPass` at all (shadows remain an
+interactive-loop-only concern, the same scoping Milestone 13/14 already
+established for UI/dynamic lighting), and `Renderer::Init` seeds every
+shadow slot's light-space matrix with a deliberately degenerate "always
+out of shadow-map range" placeholder matrix specifically so this default
+(never-touched-by-a-real-BeginShadowPass) state can never accidentally
+shadow anything near the world origin before a real shadow pass has ever
+run.
+
+Actual GLSL shadow-mapping correctness — does the real, compiled shader
+produce a correctly-shaped, correctly-positioned, soft-edged shadow, not
+just a mathematically well-formed transform — was additionally spot-
+checked via the same standalone offscreen-rendering harness pattern
+Milestone 13/14 already established (a real, if hidden, GL context via
+`Window::Init(..., visible=false)`, a real `Renderer`, calling
+`BeginShadowPass`/`drawScene`/`EndShadowPass` for a directional and a
+spot light, then the ordinary color pass, then `CaptureFrame`): confirmed
+a box occluder casts a crisp, correctly-shaped, soft-edged shadow onto
+the ground plane beneath it; confirmed a sphere both casts and receives
+shadow correctly (a curved receiving surface, not just a flat one);
+confirmed the spotlight's own illuminated cone is visible as a soft pool
+of light with the shadow correctly darkening the occluded region within
+it; confirmed no visible acne on the unoccluded ground plane. This is
+evidence, not proof that this demo's REAL scene at its real scale reads
+correctly to a human — interactive validation remains authoritative for
+that, per this milestone's own brief.
+
+### Post-validation bugfix: the torch appeared to do nothing
+
+Human validation reported "the player's torch doesn't work" — turning it
+on produced no visible illumination at all. Root cause: the player torch
+is carried at the player's own presented EYE position
+(`kEyeHeightAboveCenter = 0.7m` above the capsule's center — see
+`PlayerController::GetTorchTransform`), which sits INSIDE the player's own
+rendered body box (`GetRenderHalfExtents`'s Y half-extent is `0.9m` —
+`kCapsuleHalfHeight + kCapsuleRadius` — so the eye point at `0.7m` is well
+within the box's own vertical extent, not above it). The `drawScene`
+lambda always draws the player's own box (so the third-person camera can
+see it), and — before this fix — every shadow pass, including the torch's
+OWN shadow pass, rendered the exact same scene via that same lambda. With
+an occluder (the player's own body) sitting essentially AT the light's
+own position, it self-shadowed almost the entire cone, so the torch's
+light contribution was computed correctly but its `ComputeShadowFactor`
+result was ~0 (fully shadowed) for nearly every fragment it should have
+lit — a real, reproducible bug, not a perception issue: confirmed directly
+with a minimal repro (a player-sized box at the light's own position, a
+wall 5m ahead) that rendered the wall completely dark with the player box
+included in the torch's shadow pass, and correctly lit (a soft-edged
+illuminated pool) with it excluded — see the two captured screenshots
+from that repro.
+
+**Fix**: `drawScene` gained a third parameter, `includePlayerModel` (a
+`bool`, defaulting to `true` so `RunTestHarness`'s own
+`std::function<void(Renderer&, float)>` — which never runs a shadow pass
+at all — keeps working with zero changes, invoking the lambda through its
+default exactly as it always has). Every call site was made explicit:
+`true` for the directional shadow pass, the color pass, and the
+spacecraft headlight's own shadow pass (a person genuinely CAN cast a
+shadow from the sun, or block their own spacecraft's headlight by
+standing in front of it — those self-relationships are correct and
+intentional); `false` — and ONLY `false` — for the torch's own shadow
+pass specifically, since the torch's light source sits essentially inside
+the very geometry that would otherwise self-shadow it. This is not a
+general "exclude the player from shadows" rule — the player still
+correctly casts a directional shadow and correctly blocks the
+spacecraft's headlight; it is a narrow, specifically-diagnosed exclusion
+for exactly the one light/geometry pair where self-occlusion at
+essentially zero distance was never physically meaningful in the first
+place (no real flashlight is meaningfully "shadowed" by the hand holding
+it, at the lens itself). Verified: the same offscreen repro now shows the
+wall correctly lit; the full standalone-suite regression (all 9 suites)
+and the `JUDAS_TEST_SCRIPT` M1-14 regression walk (byte-identical
+telemetry) both remain green after the fix, confirming it touches only
+which geometry is submitted to one specific shadow pass, nothing about
+physics, gameplay, or any other rendering path.
+
+### What was deliberately not built
+
+Per this milestone's brief: cascaded shadow maps, point-light/cubemap
+shadows, ray-traced shadows, soft-shadow filtering beyond the minimal 3x3
+PCF actually implemented, contact shadows, screen-space shadows, baked
+shadows/lightmaps, PBR, HDR, a render graph, deferred rendering,
+Forward+, Vulkan, or any atmosphere/day-night system. **Honest,
+documented limitations, not oversights**: the directional shadow frustum
+is a single frustum recentered on the player, not cascades — shadows far
+from the player (e.g. on the far planet while standing on the near one)
+are simply not computed that render frame; a fragment outside a light's
+own bounded shadow frustum is treated as fully lit, which is "no data,"
+not "verified unoccluded" — an occluder just outside a spotlight's own
+(cone-sized-plus-margin) frustum could in principle fail to shadow
+something at the very edge of that frustum; and the bias/PCF constants
+are tuned for this demo's own geometry scale, not derived to be
+universally correct for arbitrarily thin or highly detailed future
+geometry. Also not built, judged genuinely out of this milestone's
+scope: a generalized shadow-caster registry or scheduler supporting more
+than the three fixed named slots (`kShadowMapCount = 3`) this milestone's
+brief scoped exactly to; per-light configurable shadow-map resolution
+(all three slots share one fixed 1024x1024 size); and any
+`JUDAS_TEST_SCRIPT` scripting or GL-context-requiring headless test for
+actual shadow-map pixel correctness — covered instead by the mirrored/
+pure-math `judas_shadow_tests` suite plus the one-time offscreen-
+rendering spot-check and human visual validation, the same evidence
+split Milestone 13/14 already established for GL-dependent correctness
+claims.
+
 ## Milestone 8
 
 The milestone's own scope statement, verbatim in spirit: "walk onto it →
@@ -4645,6 +5076,15 @@ shader correctness was verified by a one-time offscreen-rendering
 spot-check plus human visual validation instead of a headless GPU-readback
 test.
 
+**Milestone 15** added `judas_shadow_tests` (`tests/ShadowTests.cpp`) —
+headless CPU-only coverage of the shadow light-view/projection transform
+math (`src/ShadowTransforms.*`): finite-matrix checks at typical and
+deliberately extreme configurations, and rotate-the-whole-scenario
+invariance for both the directional and spotlight shadow matrices — see
+"Milestone 15, Automated evidence" for the full section breakdown and why
+actual GLSL shadow-sampling correctness was verified by a one-time
+offscreen-rendering spot-check plus human visual validation instead.
+
 ## Remaining limitations
 
 Recorded honestly rather than left implicit — these are known, deliberately
@@ -4920,13 +5360,36 @@ deferred, not oversights:
   menu; a much busier UI (a scrolling log, a large inventory grid) would
   need real batching (a single VBO upload per frame, indexed by glyph)
   before this brute-force approach would show a real cost.
-- **Milestone 14: no shadows of any kind.** Objects behind other objects
-  may still receive torch/spacecraft light if they fall within the
-  light's mathematical volume — an accepted, explicitly documented
-  limitation, not an oversight (see "Milestone 14, What was deliberately
-  not built"). A future milestone needing shadows would need shadow
-  mapping (or another real occlusion technique) added on top of this
-  light representation, not a rework of it.
+- **Milestone 14 (superseded by Milestone 15): "no shadows of any kind"
+  was true through M14 only.** As of Milestone 15, the directional light,
+  the player torch, and the spacecraft headlight all cast real shadows —
+  see the M15-specific bullets immediately below for what's still
+  honestly unresolved even with shadows now present (point/nav lights
+  still cast none; the directional shadow frustum is bounded, not
+  world-covering; a fragment outside a light's own shadow frustum is
+  treated as unshadowed, not verified unoccluded).
+- **Milestone 15: point/navigation lights still cast no shadows.** Only
+  the directional "sun," the player torch, and the spacecraft headlight
+  do (see "Milestone 15, Which lights cast shadows") — an object lit
+  solely by a wingtip nav light still has no occluder check applied to
+  that light's own contribution. Cubemap point-light shadows were
+  explicitly excluded from this milestone's scope.
+- **Milestone 15: the directional shadow frustum is a single frustum
+  recentered on the player, not cascaded shadow maps.** Shadows far from
+  the player's own current position (e.g. on the far planet while
+  standing on the near one, or generally more than ~25m from the player)
+  are simply not computed that render frame — an accepted, explicitly
+  documented limitation (see "Milestone 15, Directional-light shadows"),
+  not an oversight. A future milestone needing world-scale directional
+  shadow coverage would need real cascaded shadow maps, not a bigger
+  single frustum (which would only trade near-player shadow resolution
+  for far coverage, at this engine's fixed 1024x1024 shadow-map size).
+- **Milestone 15: a fragment outside a shadow-casting light's own bounded
+  frustum is treated as fully lit ("no occluder data"), not "verified
+  unoccluded."** An occluder positioned just outside a spotlight's own
+  (cone-sized-plus-small-margin) shadow frustum could in principle fail
+  to shadow something right at that frustum's own edge. Accepted, not
+  fixed, for this milestone's own demo scale.
 - **Milestone 14: a fixed maximum of 5 simultaneous dynamic lights**
   (`kMaxDynamicLights`, `src/Light.h`), enforced by silent truncation in
   `Renderer::SetDynamicLights` — a scene needing meaningfully more than
@@ -5239,21 +5702,35 @@ Explicitly deferred, not forgotten:
   multi-style UI — one visual style, shared by the HUD panel and both menu
   screens; and any generalized "attach/secure a UI widget to X" concept
   beyond the one HUD + pause-menu pairing this milestone needed.
-- **Milestone 14 additions:** shadows, shadow maps, cascaded shadows, ray
-  tracing, PBR, HDR, tone mapping, bloom, global illumination, ambient
-  occlusion, reflection probes, image-based lighting, volumetric
-  lighting/fog, lens flare, emissive materials beyond ordinary tinted
-  geometry, a day/night cycle, atmospheric scattering, light baking/
-  lightmaps, clustered/Forward+/deferred lighting, a render graph,
-  Vulkan, editor lighting tools, gameplay light queries (no system
-  anywhere asks "is this point lit"), a battery or inventory torch item,
-  AI vision, or multiple rendering backends; a light resource-manager/
-  handle-lifetime system — lights are cheap, frame-rebuilt plain data,
-  never a GPU resource with an allocate/free lifecycle; more than
-  `kMaxDynamicLights` (5) simultaneous lights, or any light-culling
-  scheme to support more; any `JUDAS_TEST_SCRIPT` scripting for the torch
-  toggle — its input-ownership boundary is covered by
-  `judas_lighting_tests`' own pure-logic section, appearance/interaction
-  by human validation; and photometric accuracy of any kind — every
-  light "color" value in this milestone is a tuned, demo-specific number
-  with intensity folded in, not a calibrated real-world unit.
+- **Milestone 14 additions (basic shadows superseded by Milestone 15 —
+  see that milestone's own bullet below for what M15 actually added and
+  what's still excluded):** ray tracing, PBR, HDR, tone mapping, bloom,
+  global illumination, ambient occlusion, reflection probes, image-based
+  lighting, volumetric lighting/fog, lens flare, emissive materials
+  beyond ordinary tinted geometry, a day/night cycle, atmospheric
+  scattering, light baking/lightmaps, clustered/Forward+/deferred
+  lighting, a render graph, Vulkan, editor lighting tools, gameplay light
+  queries (no system anywhere asks "is this point lit"), a battery or
+  inventory torch item, AI vision, or multiple rendering backends; a
+  light resource-manager/handle-lifetime system — lights are cheap,
+  frame-rebuilt plain data, never a GPU resource with an allocate/free
+  lifecycle; more than `kMaxDynamicLights` (5) simultaneous lights, or
+  any light-culling scheme to support more; any `JUDAS_TEST_SCRIPT`
+  scripting for the torch toggle — its input-ownership boundary is
+  covered by `judas_lighting_tests`' own pure-logic section, appearance/
+  interaction by human validation; and photometric accuracy of any kind —
+  every light "color" value in this milestone is a tuned, demo-specific
+  number with intensity folded in, not a calibrated real-world unit.
+- **Milestone 15 additions:** cascaded shadow maps, point-light/cubemap
+  shadows, ray-traced shadows, soft-shadow filtering beyond the minimal
+  3x3 PCF actually implemented, contact shadows, screen-space shadows,
+  baked shadows/lightmaps, PBR, HDR, a render graph, deferred rendering,
+  Forward+, Vulkan, or any atmosphere/day-night system; a generalized
+  shadow-caster registry/scheduler supporting more than the three fixed
+  named slots (`kShadowMapCount = 3`) this milestone's brief scoped
+  exactly to; per-light configurable shadow-map resolution (all three
+  slots share one fixed 1024x1024 size); and any `JUDAS_TEST_SCRIPT`
+  scripting or GL-context-requiring headless test for actual shadow-map
+  pixel correctness — covered instead by the mirrored/pure-math
+  `judas_shadow_tests` suite plus a one-time offscreen-rendering spot-
+  check and human visual validation.

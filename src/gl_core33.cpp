@@ -54,6 +54,16 @@ PFNGLUNIFORMMATRIX3FV glUniformMatrix3fv = nullptr;
 PFNGLDISABLE glDisable = nullptr;
 PFNGLBLENDFUNC glBlendFunc = nullptr;
 
+// Milestone 15 additions.
+PFNGLGENFRAMEBUFFERS glGenFramebuffers = nullptr;
+PFNGLBINDFRAMEBUFFER glBindFramebuffer = nullptr;
+PFNGLFRAMEBUFFERTEXTURE2D glFramebufferTexture2D = nullptr;
+PFNGLCHECKFRAMEBUFFERSTATUS glCheckFramebufferStatus = nullptr;
+PFNGLDELETEFRAMEBUFFERS glDeleteFramebuffers = nullptr;
+PFNGLDRAWBUFFER glDrawBuffer = nullptr;
+PFNGLREADBUFFER glReadBuffer = nullptr;
+PFNGLACTIVETEXTURE glActiveTexture = nullptr;
+
 namespace {
 
 template <typename FnPtr>
@@ -116,5 +126,13 @@ bool LoadGLFunctions() {
     ok &= LoadOne(glUniformMatrix3fv, "glUniformMatrix3fv");
     ok &= LoadOne(glDisable, "glDisable");
     ok &= LoadOne(glBlendFunc, "glBlendFunc");
+    ok &= LoadOne(glGenFramebuffers, "glGenFramebuffers");
+    ok &= LoadOne(glBindFramebuffer, "glBindFramebuffer");
+    ok &= LoadOne(glFramebufferTexture2D, "glFramebufferTexture2D");
+    ok &= LoadOne(glCheckFramebufferStatus, "glCheckFramebufferStatus");
+    ok &= LoadOne(glDeleteFramebuffers, "glDeleteFramebuffers");
+    ok &= LoadOne(glDrawBuffer, "glDrawBuffer");
+    ok &= LoadOne(glReadBuffer, "glReadBuffer");
+    ok &= LoadOne(glActiveTexture, "glActiveTexture");
     return ok;
 }

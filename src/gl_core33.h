@@ -121,6 +121,29 @@ constexpr GLenum GL_ONE_MINUS_SRC_ALPHA = 0x0303;
 using PFNGLDISABLE = void (*)(GLenum);
 using PFNGLBLENDFUNC = void (*)(GLenum, GLenum);
 
+// Milestone 15: shadow mapping — depth-only framebuffer objects (one per
+// shadow-casting light) and multi-texture binding (the main lit shader now
+// samples up to 3 shadow-map textures in addition to the existing diffuse
+// texture, all bound simultaneously — see Renderer::DrawMesh). Every
+// constant/function here exists for exactly this purpose; nothing here is
+// speculative GL surface.
+constexpr GLenum GL_FRAMEBUFFER = 0x8D40;
+constexpr GLenum GL_DEPTH_ATTACHMENT = 0x8D00;
+constexpr GLenum GL_FRAMEBUFFER_COMPLETE = 0x8CD5;
+constexpr GLenum GL_DEPTH_COMPONENT = 0x1902;
+constexpr GLenum GL_NEAREST = 0x2600;
+constexpr GLenum GL_CLAMP_TO_EDGE = 0x812F;
+constexpr GLenum GL_NONE = 0;
+constexpr GLenum GL_TEXTURE0 = 0x84C0;  // GL_TEXTUREi = GL_TEXTURE0 + i, per the GL spec
+using PFNGLGENFRAMEBUFFERS = void (*)(GLsizei, GLuint*);
+using PFNGLBINDFRAMEBUFFER = void (*)(GLenum, GLuint);
+using PFNGLFRAMEBUFFERTEXTURE2D = void (*)(GLenum, GLenum, GLenum, GLuint, GLint);
+using PFNGLCHECKFRAMEBUFFERSTATUS = GLenum (*)(GLenum);
+using PFNGLDELETEFRAMEBUFFERS = void (*)(GLsizei, const GLuint*);
+using PFNGLDRAWBUFFER = void (*)(GLenum);
+using PFNGLREADBUFFER = void (*)(GLenum);
+using PFNGLACTIVETEXTURE = void (*)(GLenum);
+
 extern PFNGLVIEWPORT glViewport;
 extern PFNGLCLEARCOLOR glClearColor;
 extern PFNGLCLEAR glClear;
@@ -171,6 +194,16 @@ extern PFNGLUNIFORMMATRIX3FV glUniformMatrix3fv;
 // Milestone 13 additions.
 extern PFNGLDISABLE glDisable;
 extern PFNGLBLENDFUNC glBlendFunc;
+
+// Milestone 15 additions.
+extern PFNGLGENFRAMEBUFFERS glGenFramebuffers;
+extern PFNGLBINDFRAMEBUFFER glBindFramebuffer;
+extern PFNGLFRAMEBUFFERTEXTURE2D glFramebufferTexture2D;
+extern PFNGLCHECKFRAMEBUFFERSTATUS glCheckFramebufferStatus;
+extern PFNGLDELETEFRAMEBUFFERS glDeleteFramebuffers;
+extern PFNGLDRAWBUFFER glDrawBuffer;
+extern PFNGLREADBUFFER glReadBuffer;
+extern PFNGLACTIVETEXTURE glActiveTexture;
 
 // Resolves every function pointer above via SDL_GL_GetProcAddress.
 // Must be called after an OpenGL context is current. Returns false (and

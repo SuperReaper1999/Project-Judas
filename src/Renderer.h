@@ -125,6 +125,30 @@ public:
 
     void EndFrame();
 
+    // --- Milestone 15: shadow mapping ---
+    //
+    // Renders depth-only, from one shadow-casting light's own point of
+    // view, into that light's dedicated depth texture (see src/Light.h's
+    // kDirectionalShadowSlot/kTorchShadowSlot/kShipHeadlightShadowSlot).
+    // Call once per shadow-casting light, BEFORE the frame's normal
+    // BeginFrame/SetCamera/color-pass sequence: BeginShadowPass, then the
+    // SAME drawScene-style sequence of DrawMesh/DrawBox/DrawSphere calls
+    // the color pass itself will issue (every mesh drawn while a shadow
+    // pass is active writes depth only, through a separate minimal
+    // shader — see Renderer.cpp), then EndShadowPass. `lightViewProjection`
+    // is cached internally (see src/ShadowTransforms.h for how to build
+    // one) and reused automatically by every subsequent NORMAL (non-
+    // shadow-pass) DrawMesh call this same frame, so the color pass needs
+    // no separate call to "use" this slot's shadow map — it always samples
+    // whichever light-space matrix/depth texture this frame's own
+    // BeginShadowPass calls most recently produced for each slot.
+    void BeginShadowPass(int shadowSlot, const glm::mat4& lightViewProjection);
+
+    // Restores normal (default framebuffer) rendering. The next
+    // BeginFrame call resets the viewport back to the window's own size —
+    // this does not need to do so itself.
+    void EndShadowPass();
+
     // --- Milestone 13: UI overlay rendering ---
     //
     // A second, deliberately separate draw path from DrawMesh/DrawBox/
@@ -251,9 +275,40 @@ private:
     GLint m_uDynamicLightInnerCos[kMaxDynamicLights];
     GLint m_uDynamicLightOuterCos[kMaxDynamicLights];
     GLint m_uDynamicLightIsSpot[kMaxDynamicLights];
+    // Milestone 15: which shadow slot (see src/Light.h) each dynamic
+    // light uses, or -1 for none — the main shader uses this to select
+    // between the fixed vTorchLightSpacePos/vShipLightSpacePos varyings
+    // (see Renderer.cpp's fragment shader) when applying this light's own
+    // shadow factor.
+    GLint m_uDynamicLightShadowIndex[kMaxDynamicLights];
 
     glm::mat4 m_view{1.0f};
     glm::mat4 m_projection{1.0f};
+
+    // --- Milestone 15: shadow mapping state ---
+    //
+    // One depth-only shader (separate from the main lit-mesh shader and
+    // the UI shader — see Renderer.cpp) plus one FBO/depth-texture pair
+    // PER shadow slot (kShadowMapCount, src/Light.h) — created once in
+    // Init, reused every frame, never allocated/freed per-draw or per-
+    // light. `m_shadowLightSpaceMatrix` is cached by BeginShadowPass and
+    // read by every subsequent normal-mode DrawMesh call this same frame
+    // (see DrawMesh's own comment).
+    GLuint m_shadowShaderProgram = 0;
+    GLint m_uShadowModel = -1;
+    GLint m_uShadowLightViewProj = -1;
+    GLuint m_shadowFbo[kShadowMapCount] = {0, 0, 0};
+    GLuint m_shadowMapTexture[kShadowMapCount] = {0, 0, 0};
+    glm::mat4 m_shadowLightSpaceMatrix[kShadowMapCount] = {glm::mat4(1.0f), glm::mat4(1.0f),
+                                                            glm::mat4(1.0f)};
+    // Main shader's own shadow-sampling uniform locations — one mat4 +
+    // one sampler2D location PER SLOT, fetched once in Init (see the
+    // per-dynamic-light-field locations above for why these can't be a
+    // single cached array location).
+    GLint m_uLightSpaceMatrix[kShadowMapCount] = {-1, -1, -1};
+    GLint m_uShadowMapSampler[kShadowMapCount] = {-1, -1, -1};
+    bool m_shadowPassActive = false;
+    int m_currentShadowSlot = -1;
 
     // --- Milestone 13: UI overlay state ---
     GLuint m_uiShaderProgram = 0;

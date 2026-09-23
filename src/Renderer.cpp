@@ -31,9 +31,24 @@ uniform mat4 uView;
 uniform mat4 uProjection;
 uniform mat3 uNormalMatrix;
 
+// Milestone 15: one light-space transform PER SHADOW SLOT (see
+// src/Light.h's kDirectionalShadowSlot/kTorchShadowSlot/
+// kShipHeadlightShadowSlot) — always all three, computed unconditionally
+// every vertex regardless of whether this frame's active lights actually
+// use each one (e.g. the torch slot when the torch is off): cheap at this
+// engine's tiny vertex counts, and far simpler than a dynamically-indexed
+// varying (GLSL doesn't support indexing a varying array by a value that
+// differs per dynamic light in the fragment shader's own per-light loop —
+// see the fragment shader below for how the FIXED set of three is
+// selected between instead).
+uniform mat4 uLightSpaceMatrix[3];
+
 out vec3 vWorldNormal;
 out vec3 vWorldPos;
 out vec2 vUV;
+out vec4 vDirLightSpacePos;
+out vec4 vTorchLightSpacePos;
+out vec4 vShipLightSpacePos;
 
 void main() {
     // uNormalMatrix = transpose(inverse(mat3(uModel))), computed on the CPU
@@ -48,6 +63,9 @@ void main() {
     // light's contribution doesn't depend on fragment position at all.
     vWorldPos = vec3(uModel * vec4(aLocalPos, 1.0));
     vUV = aUV;
+    vDirLightSpacePos = uLightSpaceMatrix[0] * vec4(vWorldPos, 1.0);
+    vTorchLightSpacePos = uLightSpaceMatrix[1] * vec4(vWorldPos, 1.0);
+    vShipLightSpacePos = uLightSpaceMatrix[2] * vec4(vWorldPos, 1.0);
     gl_Position = uProjection * uView * uModel * vec4(aLocalPos, 1.0);
 }
 )";
@@ -56,6 +74,9 @@ const char* kFragmentShaderSource = R"(#version 330 core
 in vec3 vWorldNormal;
 in vec3 vWorldPos;
 in vec2 vUV;
+in vec4 vDirLightSpacePos;
+in vec4 vTorchLightSpacePos;
+in vec4 vShipLightSpacePos;
 out vec4 FragColor;
 
 uniform sampler2D uTexture;
@@ -63,6 +84,15 @@ uniform vec4 uColor;
 uniform vec3 uLightDirection;  // world-space, normalized, points FROM the surface TOWARD the light
 uniform vec3 uLightColor;
 uniform vec3 uAmbientColor;
+
+// Milestone 15: one depth texture per shadow slot (see src/Light.h) —
+// slot 0 is the directional "sun," slot 1 the player torch, slot 2 the
+// spacecraft headlight. Bound to fixed texture units 1/2/3 (uTexture stays
+// on unit 0 — see Renderer::Init) so all four textures this shader ever
+// samples are bound simultaneously, no rebinding between them mid-draw.
+uniform sampler2D uShadowMapDir;
+uniform sampler2D uShadowMapTorch;
+uniform sampler2D uShadowMapShip;
 
 // Milestone 14: dynamic point/spot lights — see src/Light.h and
 // docs/ARCHITECTURE.md, "Milestone 14," for the full model. A fixed-size
@@ -79,12 +109,56 @@ uniform float uDynamicLightRange[MAX_DYNAMIC_LIGHTS];
 uniform float uDynamicLightInnerCos[MAX_DYNAMIC_LIGHTS];  // spot only
 uniform float uDynamicLightOuterCos[MAX_DYNAMIC_LIGHTS];  // spot only
 uniform int uDynamicLightIsSpot[MAX_DYNAMIC_LIGHTS];      // 0 = point, 1 = spot
+// Milestone 15: -1 = this light casts no shadow; 1 = uses vTorchLightSpacePos
+// / uShadowMapTorch; 2 = uses vShipLightSpacePos / uShadowMapShip (slot 0,
+// the directional light, is applied separately below, not through this
+// per-dynamic-light array — see src/Light.h's kDirectionalShadowSlot/
+// kTorchShadowSlot/kShipHeadlightShadowSlot).
+uniform int uDynamicLightShadowIndex[MAX_DYNAMIC_LIGHTS];
+
+// Milestone 15: samples `shadowMap` at `lightSpacePos` (already multiplied
+// by that light's own view*projection in the vertex shader) and returns
+// how LIT this fragment is (1.0 = fully lit, 0.0 = fully shadowed) — a
+// simple 3x3 percentage-closer-filter (9 taps) for a soft, non-aliased
+// edge, the minimal sensible technique this milestone's brief allows (see
+// docs/ARCHITECTURE.md, "Milestone 15," for why nothing fancier was
+// built). A slope-scaled bias (steeper-facing surfaces need a larger
+// bias) avoids most shadow-acne self-shadowing while limiting peter-
+// panning; a fragment whose projected position falls outside the shadow
+// map's own [0,1] coverage (or beyond its far plane) is treated as fully
+// lit — there is no occluder DATA there, not evidence of no occluder, but
+// this is the same "no light reaches unclaimed space" honesty this
+// engine already applies elsewhere (see docs/ARCHITECTURE.md's gravity-
+// context law) rather than guessing.
+float ComputeShadowFactor(vec4 lightSpacePos, sampler2D shadowMap, float ndotl) {
+    vec3 projCoords = lightSpacePos.xyz / lightSpacePos.w;
+    projCoords = projCoords * 0.5 + 0.5;  // NDC [-1,1] -> texture/depth [0,1]
+
+    if (projCoords.x < 0.0 || projCoords.x > 1.0 || projCoords.y < 0.0 || projCoords.y > 1.0 ||
+        projCoords.z > 1.0) {
+        return 1.0;
+    }
+
+    float bias = max(0.006 * (1.0 - ndotl), 0.0015);
+    float currentDepth = projCoords.z - bias;
+
+    vec2 texelSize = 1.0 / vec2(textureSize(shadowMap, 0));
+    float litSum = 0.0;
+    for (int x = -1; x <= 1; ++x) {
+        for (int y = -1; y <= 1; ++y) {
+            float closestDepth = texture(shadowMap, projCoords.xy + vec2(x, y) * texelSize).r;
+            litSum += currentDepth <= closestDepth ? 1.0 : 0.0;
+        }
+    }
+    return litSum / 9.0;
+}
 
 void main() {
     vec3 normal = normalize(vWorldNormal);
 
     float diffuseFactor = max(dot(normal, uLightDirection), 0.0);
-    vec3 lighting = uAmbientColor + uLightColor * diffuseFactor;
+    float dirShadow = ComputeShadowFactor(vDirLightSpacePos, uShadowMapDir, diffuseFactor);
+    vec3 lighting = uAmbientColor + uLightColor * diffuseFactor * dirShadow;
 
     for (int i = 0; i < uLightCount; ++i) {
         vec3 toLight = uDynamicLightPosition[i] - vWorldPos;
@@ -108,11 +182,48 @@ void main() {
         }
 
         float lightDiffuse = max(dot(normal, lightDir), 0.0);
-        lighting += uDynamicLightColor[i] * lightDiffuse * attenuation * spotFactor;
+
+        float shadow = 1.0;
+        int shadowIndex = uDynamicLightShadowIndex[i];
+        if (shadowIndex == 1) {
+            shadow = ComputeShadowFactor(vTorchLightSpacePos, uShadowMapTorch, lightDiffuse);
+        } else if (shadowIndex == 2) {
+            shadow = ComputeShadowFactor(vShipLightSpacePos, uShadowMapShip, lightDiffuse);
+        }
+
+        lighting += uDynamicLightColor[i] * lightDiffuse * attenuation * spotFactor * shadow;
     }
 
     vec4 texColor = texture(uTexture, vUV);
     FragColor = vec4(lighting, 1.0) * texColor * uColor;
+}
+)";
+
+// Milestone 15: the shadow pass's own minimal shader — position only, no
+// normal/UV attributes read, no color output at all (the FBO it draws
+// into has no color attachment, see Renderer::Init — only depth is
+// written, by the fixed-function depth test/write GL already performs
+// for every draw call). Deliberately separate from kVertexShaderSource/
+// kFragmentShaderSource above, the same "a second, dedicated shader for a
+// genuinely different pass" reasoning kUIVertexShaderSource/
+// kUIFragmentShaderSource already established for the UI overlay.
+const char* kShadowVertexShaderSource = R"(#version 330 core
+layout(location = 0) in vec3 aLocalPos;
+
+uniform mat4 uModel;
+uniform mat4 uLightViewProj;
+
+void main() {
+    gl_Position = uLightViewProj * uModel * vec4(aLocalPos, 1.0);
+}
+)";
+
+const char* kShadowFragmentShaderSource = R"(#version 330 core
+void main() {
+    // Intentionally empty: this FBO has no color attachment (see
+    // Renderer::Init's glDrawBuffer(GL_NONE)) — only gl_FragDepth's
+    // implicit default (gl_FragCoord.z) is ever written, by the ordinary
+    // depth test every draw call already performs.
 }
 )";
 
@@ -269,6 +380,13 @@ MeshData GenerateUnitSphereMeshData(int latitudeSegments, int longitudeSegments)
 constexpr int kSphereLatitudeSegments = 16;
 constexpr int kSphereLongitudeSegments = 24;
 
+// Milestone 15: shadow-map resolution, shared by Init (texture creation)
+// and BeginShadowPass (viewport sizing) — see docs/ARCHITECTURE.md,
+// "Milestone 15," for why 1024x1024 was judged sufficient (and not
+// excessive) for this demo's world scale, for all three shadow slots
+// alike (no separate resolution per light).
+constexpr int kShadowMapResolution = 1024;
+
 // Milestone 13: the UI overlay's own tiny shader — deliberately separate
 // from kVertexShaderSource/kFragmentShaderSource above rather than a
 // reused/branching variant of them. The 3D shader's whole shape (a
@@ -371,12 +489,30 @@ bool Renderer::Init() {
             glGetUniformLocation(m_shaderProgram, (prefix + "OuterCos" + index).c_str());
         m_uDynamicLightIsSpot[i] =
             glGetUniformLocation(m_shaderProgram, (prefix + "IsSpot" + index).c_str());
+        m_uDynamicLightShadowIndex[i] =
+            glGetUniformLocation(m_shaderProgram, (prefix + "ShadowIndex" + index).c_str());
     }
 
-    // Texture unit 0 is the only one this engine ever uses — bound once
-    // here rather than every draw call, since it never changes.
+    // Milestone 15: one mat4 + one sampler2D location per shadow slot.
+    for (int slot = 0; slot < kShadowMapCount; ++slot) {
+        const std::string matrixName = "uLightSpaceMatrix[" + std::to_string(slot) + "]";
+        m_uLightSpaceMatrix[slot] = glGetUniformLocation(m_shaderProgram, matrixName.c_str());
+    }
+    m_uShadowMapSampler[0] = glGetUniformLocation(m_shaderProgram, "uShadowMapDir");
+    m_uShadowMapSampler[1] = glGetUniformLocation(m_shaderProgram, "uShadowMapTorch");
+    m_uShadowMapSampler[2] = glGetUniformLocation(m_shaderProgram, "uShadowMapShip");
+
+    // Texture unit 0 is the diffuse/white-fallback texture (unchanged
+    // since Milestone 9); units 1-3 are the three shadow maps (Milestone
+    // 15) — all four bound once here rather than every draw call, since
+    // which GL texture OBJECT each unit points at only ever changes when a
+    // shadow map is re-rendered (see BeginShadowPass), not which UNIT a
+    // given uniform samples from.
     glUseProgram(m_shaderProgram);
     glUniform1i(m_uTexture, 0);
+    glUniform1i(m_uShadowMapSampler[0], 1);
+    glUniform1i(m_uShadowMapSampler[1], 2);
+    glUniform1i(m_uShadowMapSampler[2], 3);
 
     glClearColor(0.08f, 0.09f, 0.11f, 1.0f);
     glEnable(GL_DEPTH_TEST);
@@ -404,6 +540,67 @@ bool Renderer::Init() {
     // zero-initialized-uniform default, so this is true by construction,
     // not by an implementation detail of the driver.
     SetDynamicLights({});
+
+    // --- Milestone 15: shadow-mapping resources ---
+    GLuint shadowVertexShader = 0;
+    if (!CompileShader(GL_VERTEX_SHADER, kShadowVertexShaderSource, shadowVertexShader)) {
+        return false;
+    }
+    GLuint shadowFragmentShader = 0;
+    if (!CompileShader(GL_FRAGMENT_SHADER, kShadowFragmentShaderSource, shadowFragmentShader)) {
+        glDeleteShader(shadowVertexShader);
+        return false;
+    }
+    const bool shadowLinked = LinkProgram(shadowVertexShader, shadowFragmentShader, m_shadowShaderProgram);
+    glDeleteShader(shadowVertexShader);
+    glDeleteShader(shadowFragmentShader);
+    if (!shadowLinked) {
+        return false;
+    }
+    m_uShadowModel = glGetUniformLocation(m_shadowShaderProgram, "uModel");
+    m_uShadowLightViewProj = glGetUniformLocation(m_shadowShaderProgram, "uLightViewProj");
+
+    // One depth-texture/FBO pair per shadow slot (src/Light.h), created
+    // once and reused every frame — never allocated/freed per-light or
+    // per-draw (see docs/ARCHITECTURE.md, "Milestone 15, Resource
+    // ownership"). GL_NEAREST filtering (not the usual GL_LINEAR) because
+    // this engine does its own multi-tap PCF filtering in the fragment
+    // shader (see kFragmentShaderSource's ComputeShadowFactor) — linearly
+    // filtering raw, unblended depth VALUES before comparison would
+    // average depths together in a way that's meaningless (and wrong) for
+    // a shadow test, unlike ordinary color filtering. GL_CLAMP_TO_EDGE
+    // wrapping plus an explicit in-shader bounds check (rather than
+    // GL_CLAMP_TO_BORDER with a border color) keeps this to GL surface
+    // this engine already has — see ComputeShadowFactor's own "outside
+    // the shadow map's coverage counts as fully lit" comment.
+    for (int slot = 0; slot < kShadowMapCount; ++slot) {
+        glGenTextures(1, &m_shadowMapTexture[slot]);
+        glBindTexture(GL_TEXTURE_2D, m_shadowMapTexture[slot]);
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT, kShadowMapResolution, kShadowMapResolution, 0,
+                     GL_DEPTH_COMPONENT, GL_FLOAT, nullptr);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+
+        glGenFramebuffers(1, &m_shadowFbo[slot]);
+        glBindFramebuffer(GL_FRAMEBUFFER, m_shadowFbo[slot]);
+        glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D,
+                                m_shadowMapTexture[slot], 0);
+        // No color attachment exists for this FBO at all — tell GL not to
+        // expect or provide one, or GL_FRAMEBUFFER_COMPLETE would
+        // (correctly) fail on some drivers.
+        glDrawBuffer(GL_NONE);
+        glReadBuffer(GL_NONE);
+        if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE) {
+            std::fprintf(stderr, "Shadow framebuffer %d is incomplete.\n", slot);
+            glBindFramebuffer(GL_FRAMEBUFFER, 0);
+            glBindTexture(GL_TEXTURE_2D, 0);
+            return false;
+        }
+    }
+    glBindFramebuffer(GL_FRAMEBUFFER, 0);
+    glBindTexture(GL_TEXTURE_2D, 0);
 
     // --- Milestone 13: UI overlay shader + quad ---
     GLuint uiVertexShader = 0;
@@ -452,6 +649,28 @@ bool Renderer::Init() {
     glBindVertexArray(0);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
 
+    // Milestone 15: until the first real BeginShadowPass call each frame
+    // (every interactive-loop frame calls it three times — see
+    // Application.cpp; TestHarness.cpp's own render path never does,
+    // since shadows remain an interactive-loop-only concern, the same
+    // scoping Milestone 13/14 already established for UI/dynamic
+    // lighting), each shadow slot's light-space matrix must still map any
+    // real-world point to an OUT-OF-RANGE shadow coordinate (z > 1), so
+    // ComputeShadowFactor's own bounds check falls back to "fully lit"
+    // rather than an identity matrix that could coincidentally land
+    // in-range for points near the origin. This matrix maps EVERY input
+    // point to the fixed point (0, 0, 2, 1) regardless of its own
+    // position (every column affecting x/y/z is zero except a constant
+    // z-translation of 2) — deliberately degenerate, only ever used as
+    // this "definitely out of range" placeholder, never a real shadow
+    // transform.
+    glm::mat4 alwaysOutOfRangeMatrix(0.0f);
+    alwaysOutOfRangeMatrix[3][2] = 2.0f;
+    alwaysOutOfRangeMatrix[3][3] = 1.0f;
+    for (int slot = 0; slot < kShadowMapCount; ++slot) {
+        m_shadowLightSpaceMatrix[slot] = alwaysOutOfRangeMatrix;
+    }
+
     return true;
 }
 
@@ -475,6 +694,21 @@ void Renderer::Shutdown() {
     if (m_shaderProgram) {
         glDeleteProgram(m_shaderProgram);
         m_shaderProgram = 0;
+    }
+
+    for (int slot = 0; slot < kShadowMapCount; ++slot) {
+        if (m_shadowFbo[slot]) {
+            glDeleteFramebuffers(1, &m_shadowFbo[slot]);
+            m_shadowFbo[slot] = 0;
+        }
+        if (m_shadowMapTexture[slot]) {
+            glDeleteTextures(1, &m_shadowMapTexture[slot]);
+            m_shadowMapTexture[slot] = 0;
+        }
+    }
+    if (m_shadowShaderProgram) {
+        glDeleteProgram(m_shadowShaderProgram);
+        m_shadowShaderProgram = 0;
     }
 
     if (m_uiQuadVbo) {
@@ -537,7 +771,26 @@ void Renderer::SetDynamicLights(const std::vector<DynamicLight>& lights) {
         glUniform1f(m_uDynamicLightInnerCos[i], innerCos);
         glUniform1f(m_uDynamicLightOuterCos[i], outerCos);
         glUniform1i(m_uDynamicLightIsSpot[i], light.kind == LightKind::Spot ? 1 : 0);
+        glUniform1i(m_uDynamicLightShadowIndex[i], light.shadowMapIndex);
     }
+}
+
+void Renderer::BeginShadowPass(int shadowSlot, const glm::mat4& lightViewProjection) {
+    m_shadowLightSpaceMatrix[shadowSlot] = lightViewProjection;
+    m_shadowPassActive = true;
+    m_currentShadowSlot = shadowSlot;
+
+    glBindFramebuffer(GL_FRAMEBUFFER, m_shadowFbo[shadowSlot]);
+    glViewport(0, 0, kShadowMapResolution, kShadowMapResolution);
+    glClear(GL_DEPTH_BUFFER_BIT);
+    glUseProgram(m_shadowShaderProgram);
+    glUniformMatrix4fv(m_uShadowLightViewProj, 1, GL_FALSE, glm::value_ptr(lightViewProjection));
+}
+
+void Renderer::EndShadowPass() {
+    m_shadowPassActive = false;
+    m_currentShadowSlot = -1;
+    glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }
 
 MeshHandle Renderer::CreateMesh(const MeshData& data) {
@@ -659,6 +912,24 @@ void Renderer::DrawMesh(MeshHandle mesh, const glm::vec3& position, const glm::q
 
     const glm::mat4 model = glm::translate(glm::mat4(1.0f), position) * glm::mat4_cast(rotation) *
                              glm::scale(glm::mat4(1.0f), scale);
+
+    // Milestone 15: while a shadow pass is active (see BeginShadowPass),
+    // every DrawMesh call writes depth only, from that light's own view/
+    // projection, through the separate minimal shadow shader — normals,
+    // UVs, textures, and every lighting uniform are irrelevant to a depth-
+    // only pass, so none of them are touched here.
+    if (m_shadowPassActive) {
+        glUseProgram(m_shadowShaderProgram);
+        glUniformMatrix4fv(m_uShadowModel, 1, GL_FALSE, glm::value_ptr(model));
+        glBindVertexArray(gpuMesh->vao);
+        if (gpuMesh->ebo) {
+            glDrawElements(GL_TRIANGLES, gpuMesh->indexCount, GL_UNSIGNED_INT, nullptr);
+        } else {
+            glDrawArrays(GL_TRIANGLES, 0, gpuMesh->vertexCount);
+        }
+        return;
+    }
+
     // Standard correction for non-uniform scale — see the vertex shader's
     // own comment. glm::inverseTranspose is glm's dedicated helper for
     // exactly this (normal-matrix) computation.
@@ -670,8 +941,23 @@ void Renderer::DrawMesh(MeshHandle mesh, const glm::vec3& position, const glm::q
     glUniformMatrix4fv(m_uView, 1, GL_FALSE, glm::value_ptr(m_view));
     glUniformMatrix4fv(m_uProjection, 1, GL_FALSE, glm::value_ptr(m_projection));
     glUniform4f(m_uColor, tintColor.r, tintColor.g, tintColor.b, 1.0f);
+    // Milestone 15: this frame's three shadow light-space matrices — see
+    // BeginShadowPass's own comment for why every normal-mode draw simply
+    // reuses whatever this frame's shadow passes most recently cached,
+    // with no separate "apply shadow data" call needed from the caller.
+    for (int slot = 0; slot < kShadowMapCount; ++slot) {
+        glUniformMatrix4fv(m_uLightSpaceMatrix[slot], 1, GL_FALSE,
+                            glm::value_ptr(m_shadowLightSpaceMatrix[slot]));
+    }
 
+    glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, ResolveTexture(texture));
+    for (int slot = 0; slot < kShadowMapCount; ++slot) {
+        glActiveTexture(GL_TEXTURE0 + 1 + slot);
+        glBindTexture(GL_TEXTURE_2D, m_shadowMapTexture[slot]);
+    }
+    glActiveTexture(GL_TEXTURE0);  // restore the default active unit other calls (UI, texture creation) assume
+
     glBindVertexArray(gpuMesh->vao);
     if (gpuMesh->ebo) {
         glDrawElements(GL_TRIANGLES, gpuMesh->indexCount, GL_UNSIGNED_INT, nullptr);

@@ -31,6 +31,7 @@
 #include "PlayerController.h"
 #include "RadicalGravity.h"
 #include "Renderer.h"
+#include "ShadowTransforms.h"
 #include "SimulationTiming.h"
 #include "SphericalVolume.h"
 #include "TestHarness.h"
@@ -365,6 +366,20 @@ const glm::vec3 kLightDirection = glm::normalize(glm::vec3(0.4f, 0.7f, 0.35f));
 const glm::vec3 kLightColor(1.0f, 0.98f, 0.92f);
 const glm::vec3 kAmbientColor(0.16f, 0.17f, 0.19f);
 
+// --- Milestone 15: directional shadow frustum ---
+//
+// Recentered on the player's own presented position every frame (see
+// docs/ARCHITECTURE.md, "Milestone 15, Directional-light shadows," for why
+// a single recentered frustum — not cascaded, not whole-world-covering —
+// was judged sufficient for this small, bounded demo). `kDirShadowHalf
+// Extent` (25m) comfortably covers the player's immediate surroundings —
+// enough to see nearby dynamic bodies, staircase steps, and a meaningful
+// stretch of curved planet surface all casting/receiving shadows at once;
+// `kDirShadowDistance` (40m) both places the shadow camera far enough back
+// to never clip nearby geometry and sets the far plane generously past it.
+constexpr float kDirShadowHalfExtent = 25.0f;
+constexpr float kDirShadowDistance = 40.0f;
+
 // --- Milestone 14: player torch ---
 //
 // A spotlight carried at the player's own presented eye position, pointed
@@ -537,6 +552,11 @@ std::vector<DynamicLight> BuildDynamicLights(const PlayerController& player, boo
         torch.range = kTorchRange;
         torch.innerConeDegrees = kTorchInnerConeDegrees;
         torch.outerConeDegrees = kTorchOuterConeDegrees;
+        // Milestone 15: the torch casts shadows through its own dedicated
+        // shadow map (kTorchShadowSlot, src/Light.h) — see
+        // Application::Run for where that slot's depth pass is rendered
+        // each frame.
+        torch.shadowMapIndex = kTorchShadowSlot;
         lights.push_back(torch);
     }
 
@@ -551,6 +571,11 @@ std::vector<DynamicLight> BuildDynamicLights(const PlayerController& player, boo
     headlight.range = kShipHeadlightRange;
     headlight.innerConeDegrees = kShipHeadlightInnerConeDegrees;
     headlight.outerConeDegrees = kShipHeadlightOuterConeDegrees;
+    // Milestone 15: the headlight casts shadows through its own dedicated
+    // shadow map (kShipHeadlightShadowSlot) — the wingtip nav point
+    // lights below deliberately do NOT (see src/Light.h, "point/
+    // navigation lights never cast shadows this milestone").
+    headlight.shadowMapIndex = kShipHeadlightShadowSlot;
     lights.push_back(headlight);
 
     DynamicLight portLight;
@@ -737,7 +762,25 @@ int Application::Run() {
     // pose to blend from. The plank is likewise static. Dynamic bodies use
     // the exact same alpha via DynamicBody's own GetPresentedPosition/
     // Orientation.
-    const auto drawScene = [&](Renderer& r, float presentationAlpha) {
+    // `includePlayerModel` (Milestone 15): the torch is carried at the
+    // player's own eye position, which sits INSIDE the player's own
+    // rendered body box (kEyeHeightAboveCenter=0.7m is within the box's
+    // own 0.9m half-height) — rendering that box into the torch's OWN
+    // shadow pass makes the player's own body self-shadow almost the
+    // entire cone, since the "occluder" sits essentially at the light
+    // itself. Every other pass (the directional sun's shadow pass, the
+    // spacecraft headlight's shadow pass, and the ordinary color pass)
+    // legitimately wants the player's body included — a person can
+    // correctly cast a shadow from the sun, or block their own
+    // spacecraft's headlight by standing in front of it. Only the
+    // torch's own shadow pass excludes it — see docs/ARCHITECTURE.md,
+    // "Milestone 15, Post-validation bugfix," for the full diagnosis.
+    // `includePlayerModel` defaults to true so this lambda still satisfies
+    // RunTestHarness's own `std::function<void(Renderer&, float)>`
+    // parameter unchanged (TestHarness never runs a shadow pass at all —
+    // see docs/ARCHITECTURE.md, "Milestone 15" — so it always wants the
+    // player included, exactly as every milestone before this one).
+    const auto drawScene = [&](Renderer& r, float presentationAlpha, bool includePlayerModel = true) {
         r.DrawSphere(kPlanetACenter, kPlanetARadius, kPlanetAColor);
         r.DrawSphere(kPlanetBCenter, kPlanetBRadius, kPlanetBColor);
         r.DrawBox(kPlankCenter, glm::quat(1.0f, 0.0f, 0.0f, 0.0f), kPlankHalfExtents, kPlankColor);
@@ -776,8 +819,10 @@ int Application::Run() {
             playerRenderPosition = player.GetPresentedPosition(presentationAlpha);
             playerRenderOrientation = player.GetPresentedOrientation(presentationAlpha);
         }
-        r.DrawBox(playerRenderPosition, playerRenderOrientation, player.GetRenderHalfExtents(),
-                  kPlayerColor);
+        if (includePlayerModel) {
+            r.DrawBox(playerRenderPosition, playerRenderOrientation, player.GetRenderHalfExtents(),
+                      kPlayerColor);
+        }
 
         for (std::size_t i = 0; i < dynamicBodies.size(); ++i) {
             const DynamicBody& body = dynamicBodies[i];
@@ -1046,6 +1091,54 @@ int Application::Run() {
             const float aspectRatio =
                 static_cast<float>(window.Width()) / static_cast<float>(windowHeight);
 
+            // Milestone 14: rebuilt fresh every render frame from this
+            // frame's own presented poses — never cached across frames,
+            // so a moving/rotating light source (the torch, the
+            // spacecraft's own lights) never lags behind what's actually
+            // drawn this frame. Computed once here (not inline at the
+            // SetDynamicLights call site below) so Milestone 15's shadow
+            // passes can read each shadow-casting light's own position/
+            // direction/cone straight out of it, rather than recomputing
+            // the same transforms a second time.
+            const std::vector<DynamicLight> lights = BuildDynamicLights(
+                player, torchOn, dynamicBodies[flyingPrimitiveBodyIndex], presentationAlpha);
+
+            // Milestone 15: shadow passes — one per shadow-casting light,
+            // each rendering the SAME scene geometry (via the SAME
+            // drawScene lambda the color pass below uses) depth-only into
+            // its own dedicated shadow map, BEFORE the normal color pass
+            // that will go on to sample those depth textures. See
+            // docs/ARCHITECTURE.md, "Milestone 15," for the full design.
+            // The directional "sun" and the spacecraft headlight are
+            // always active, so their passes always run; the torch's own
+            // slot simply isn't touched this frame when the torch is off
+            // (see Renderer.h's BeginShadowPass comment for why a stale
+            // previous-frame depth texture there is harmless — nothing
+            // this frame's light list references it).
+            const glm::mat4 dirShadowMatrix =
+                ComputeDirectionalShadowMatrix(player.GetPresentedPosition(presentationAlpha),
+                                                kLightDirection, kDirShadowHalfExtent, kDirShadowDistance);
+            renderer.BeginShadowPass(kDirectionalShadowSlot, dirShadowMatrix);
+            drawScene(renderer, presentationAlpha, /*includePlayerModel=*/true);
+            renderer.EndShadowPass();
+
+            for (const DynamicLight& light : lights) {
+                if (light.shadowMapIndex != kTorchShadowSlot &&
+                    light.shadowMapIndex != kShipHeadlightShadowSlot) {
+                    continue;
+                }
+                const glm::mat4 spotShadowMatrix = ComputeSpotShadowMatrix(
+                    light.position, light.direction, light.outerConeDegrees, light.range);
+                renderer.BeginShadowPass(light.shadowMapIndex, spotShadowMatrix);
+                // The torch is attached essentially INSIDE the player's own
+                // rendered body (see the drawScene lambda's own comment
+                // above) — exclude it from only the torch's own shadow
+                // pass; the spacecraft headlight has no such conflict.
+                drawScene(renderer, presentationAlpha,
+                          /*includePlayerModel=*/light.shadowMapIndex != kTorchShadowSlot);
+                renderer.EndShadowPass();
+            }
+
             renderer.BeginFrame(window.Width(), window.Height());
             // Milestone 8: while controlling the flying primitive, anchor
             // the SAME camera (identical offset/look math — see
@@ -1060,17 +1153,12 @@ int Application::Run() {
                           dynamicBodies[flyingPrimitiveBodyIndex].GetPresentedOrientation(presentationAlpha))
                     : player.GetViewMatrix(presentationAlpha);
             renderer.SetCamera(view, player.GetProjectionMatrix(aspectRatio));
-            // Milestone 14: rebuilt fresh every render frame from this
-            // frame's own presented poses (see BuildDynamicLights) — never
-            // cached across frames, so a moving/rotating light source
-            // (the torch, the spacecraft's own lights) never lags behind
-            // what's actually drawn this frame. Continues rendering
-            // normally while paused (see docs/ARCHITECTURE.md, "Milestone
-            // 14, Input ownership") — the world is frozen, but the frozen
-            // scene remains correctly (and readably) lit.
-            renderer.SetDynamicLights(
-                BuildDynamicLights(player, torchOn, dynamicBodies[flyingPrimitiveBodyIndex], presentationAlpha));
-            drawScene(renderer, presentationAlpha);
+            // Continues rendering normally while paused (see
+            // docs/ARCHITECTURE.md, "Milestone 14, Input ownership") — the
+            // world is frozen, but the frozen scene remains correctly
+            // (and readably, and with correct shadows) lit.
+            renderer.SetDynamicLights(lights);
+            drawScene(renderer, presentationAlpha, /*includePlayerModel=*/true);
             renderer.EndFrame();
 
             // Milestone 13: the HUD + pause menu overlay, drawn last so
