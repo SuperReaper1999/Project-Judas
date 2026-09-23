@@ -15,6 +15,7 @@
 #include <glm/gtc/quaternion.hpp>
 
 #include "BoxVolume.h"
+#include "CelestialGravity.h"
 #include "DynamicBody.h"
 #include "FaithfulGravity.h"
 #include "FlyingPrimitiveControl.h"
@@ -69,6 +70,34 @@ const glm::vec3 kPlanetAColor(0.3f, 0.45f, 0.35f);
 const glm::vec3 kPlanetBCenter(0.0f, 0.0f, 55.0f);
 constexpr float kPlanetBRadius = 20.0f;
 const glm::vec3 kPlanetBColor(0.35f, 0.3f, 0.45f);
+
+// M20's two bodies are ordinary dynamic spheres in unclaimed space. Their
+// state is initialized from the analytical two-body circular solution; after
+// creation only mutual forces and the ordinary integrator determine motion.
+const glm::vec3 kOrbitalBarycentre(0.0f, 23.0f, 115.0f);
+constexpr float kOrbitalSeparation = 30.0f;
+constexpr float kOrbitalMassA = 1.0e14f;
+constexpr float kOrbitalMassB = 1.0e14f;
+constexpr float kOrbitalRadius = 3.0f;
+constexpr float kPlanetThrustForce = 2.0e14f;
+const glm::quat kOrbitalFrame = glm::angleAxis(
+    0.73f, glm::normalize(glm::vec3(1.0f, 2.0f, 3.0f)));
+const glm::vec3 kOrbitalAxis = glm::normalize(kOrbitalFrame * glm::vec3(0.0f, 0.0f, 1.0f));
+const glm::vec3 kOrbitalNormal = glm::normalize(kOrbitalFrame * glm::vec3(0.0f, 1.0f, 0.0f));
+const glm::vec3 kOrbitalTangent = glm::normalize(glm::cross(kOrbitalNormal, kOrbitalAxis));
+const float kOrbitalRelativeSpeed = std::sqrt(
+    CelestialGravity::kGravitationalConstant * (kOrbitalMassA + kOrbitalMassB) /
+    kOrbitalSeparation);
+const glm::vec3 kOrbitalPositionA = kOrbitalBarycentre -
+    kOrbitalAxis * (kOrbitalSeparation * kOrbitalMassB /
+                    (kOrbitalMassA + kOrbitalMassB));
+const glm::vec3 kOrbitalPositionB = kOrbitalBarycentre +
+    kOrbitalAxis * (kOrbitalSeparation * kOrbitalMassA /
+                    (kOrbitalMassA + kOrbitalMassB));
+const glm::vec3 kOrbitalVelocityA = -kOrbitalTangent *
+    (kOrbitalRelativeSpeed * kOrbitalMassB / (kOrbitalMassA + kOrbitalMassB));
+const glm::vec3 kOrbitalVelocityB = kOrbitalTangent *
+    (kOrbitalRelativeSpeed * kOrbitalMassA / (kOrbitalMassA + kOrbitalMassB));
 
 constexpr float kPlanetFriction = 0.8f;
 constexpr float kPlanetRestitution = 0.1f;
@@ -670,7 +699,7 @@ int Application::Run() {
     const bool isTestRun = testScriptPath != nullptr;
 
     Window window;
-    if (!window.Init("Project Judas - Milestone 13", kWindowWidth, kWindowHeight,
+    if (!window.Init("Project Judas - Milestone 20", kWindowWidth, kWindowHeight,
                       !isTestRun)) {
         std::fprintf(stderr, "Window initialization failed.\n");
         return 1;
@@ -825,6 +854,33 @@ int Application::Run() {
                                     glm::quat(1.0f, 0.0f, 0.0f, 0.0f));
     }
     const std::size_t flyingPrimitiveBodyIndex = dynamicBodies.size() - 1;
+
+    // M20: two genuine massive bodies. The rotated initial frame makes the
+    // demonstration plane arbitrary; it is not a physics preference.
+    const auto addOrbitalBody = [&](const glm::vec3& position, float mass,
+                                    const glm::vec3& color) {
+        DynamicBody::Visual visual;
+        visual.shape = DynamicBody::Shape::Sphere;
+        visual.radius = kOrbitalRadius;
+        visual.color = color;
+        const BodyHandle handle = physicsWorld.CreateDynamicSphere(
+            position, kOrbitalRadius, mass, kDynamicObjectFriction, kDynamicObjectRestitution);
+        dynamicBodies.emplace_back(handle, visual, position,
+                                    glm::quat(1.0f, 0.0f, 0.0f, 0.0f));
+        return handle;
+    };
+    BodyHandle orbitalBodyA;
+    BodyHandle orbitalBodyB;
+    if (!isTestRun) {
+        orbitalBodyA = addOrbitalBody(kOrbitalPositionA, kOrbitalMassA,
+                                      glm::vec3(0.25f, 0.7f, 0.95f));
+        orbitalBodyB = addOrbitalBody(kOrbitalPositionB, kOrbitalMassB,
+                                      glm::vec3(0.95f, 0.55f, 0.2f));
+        physicsWorld.SetLinearVelocity(orbitalBodyA, kOrbitalVelocityA);
+        physicsWorld.SetLinearVelocity(orbitalBodyB, kOrbitalVelocityB);
+    }
+    CelestialGravity celestialGravity(orbitalBodyA.IsValid()
+        ? std::vector<BodyHandle>{orbitalBodyA, orbitalBodyB} : std::vector<BodyHandle>{});
 
     // M18 deliberately whitelists only the six ordinary demo objects.
     // The appended spacecraft, planets, plank, door, and all other static
@@ -1141,6 +1197,8 @@ int Application::Run() {
                     for (DynamicBody& body : dynamicBodies) {
                         body.ResetToSpawn(physicsWorld);
                     }
+                    physicsWorld.SetLinearVelocity(orbitalBodyA, kOrbitalVelocityA);
+                    physicsWorld.SetLinearVelocity(orbitalBodyB, kOrbitalVelocityB);
                     flyingPrimitiveControl.controlled = false;
                     pilotAttachment.attached = false;
                     physicsAccumulator = 0.0f;
@@ -1210,6 +1268,42 @@ int Application::Run() {
                     // and the primitive falls/rests like any other body.
                     PrepareDynamicBodiesForStep(dynamicBodies, gravity, physicsWorld,
                                                  SimulationTiming::kFixedTimestep);
+                    celestialGravity.ApplyForces(physicsWorld);
+                    // M20 operator thrusters are real constant forces. Their
+                    // directions are reconstructed from current barycentric
+                    // position/velocity, never from a world axis or orbit path.
+                    if (orbitalBodyA.IsValid()) {
+                        const glm::vec3 positionA = physicsWorld.GetTransform(orbitalBodyA).position;
+                        const glm::vec3 positionB = physicsWorld.GetTransform(orbitalBodyB).position;
+                        const glm::vec3 velocityA = physicsWorld.GetLinearVelocity(orbitalBodyA);
+                        const glm::vec3 velocityB = physicsWorld.GetLinearVelocity(orbitalBodyB);
+                        const float massA = physicsWorld.GetMass(orbitalBodyA);
+                        const float massB = physicsWorld.GetMass(orbitalBodyB);
+                        const float totalMass = massA + massB;
+                        const glm::vec3 barycentre = (positionA * massA + positionB * massB) /
+                                                     totalMass;
+                        const glm::vec3 baryVelocity = (velocityA * massA + velocityB * massB) /
+                                                       totalMass;
+                        const glm::vec3 radial = glm::normalize(positionA - barycentre);
+                        const glm::vec3 relativeVelocity = velocityA - baryVelocity;
+                        const glm::vec3 tangentVelocity = relativeVelocity -
+                            radial * glm::dot(relativeVelocity, radial);
+                        glm::vec3 thrustDirection(0.0f);
+                        if (window.IsActionActive(Action::PlanetRadialThrust)) {
+                            thrustDirection = radial;
+                        } else if (glm::length(tangentVelocity) > 1.0e-5f) {
+                            const glm::vec3 tangent = glm::normalize(tangentVelocity);
+                            if (window.IsActionActive(Action::PlanetProgradeThrust)) {
+                                thrustDirection = tangent;
+                            } else if (window.IsActionActive(Action::PlanetRetrogradeThrust)) {
+                                thrustDirection = -tangent;
+                            }
+                        }
+                        if (glm::length(thrustDirection) > 0.0f) {
+                            physicsWorld.ApplyForce(orbitalBodyA,
+                                                    thrustDirection * kPlanetThrustForce);
+                        }
+                    }
                     if (objectManipulation.IsHolding() && !flyingPrimitiveControl.controlled) {
                         const glm::vec3 carryTarget = ComputeCarryTarget(
                             player.GetPosition(), player.GetOrientation(), player.GetLookDirection(),

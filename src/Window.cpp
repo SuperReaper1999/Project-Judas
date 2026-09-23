@@ -158,6 +158,12 @@ bool Window::IsActionActive(Action action) const {
             return keys[SDL_SCANCODE_U];
         case Action::RollRight:
             return keys[SDL_SCANCODE_O];
+        case Action::PlanetProgradeThrust:
+            return keys[SDL_SCANCODE_P];
+        case Action::PlanetRetrogradeThrust:
+            return keys[SDL_SCANCODE_M];
+        case Action::PlanetRadialThrust:
+            return keys[SDL_SCANCODE_N];
     }
     return false;
 }

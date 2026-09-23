@@ -6,7 +6,7 @@ someone with no prior context on this project. It is updated in place as
 milestones land, rather than kept as a per-milestone snapshot — see
 "Milestone history" below for how to recover an earlier milestone exactly.
 
-## What exists right now (Milestone 19; human-validated)
+## What exists right now (M19 accepted; M20 implementation awaiting validation)
 
 Open a window. Two independent static spheres ("planets," radius `20m`
 each, centers `55m` apart — see "Physics test world") exist in 3D space,
@@ -6181,3 +6181,84 @@ Explicitly deferred, not forgotten:
   building out a catalog of interactable kinds); and cubemap/point-light
   shadows for the light switch's own lamp (unchanged since Milestone 15
   — point lights still cast none).
+
+## Milestone 20 — Newtonian two-body demonstration (awaiting human validation)
+
+The interactive composition root creates two additional dynamic sphere bodies
+in the gravity map's unclaimed space. They are not the M7 walkable planets:
+those remain static, continue to use their existing `RadicalGravity` fields,
+and the plank remains governed by `FaithfulGravity`. `CelestialGravity`
+(`src/CelestialGravity.*`) is a distinct, Judas-owned force producer. Given a
+selected list of massive dynamic `BodyHandle`s, it visits each pair once and
+accumulates equal-and-opposite forces into the ordinary `PhysicsWorld` force
+accumulators. It does not know about orbit states, trajectories, or gravity
+contexts. At exact coincident centers its point-mass force is undefined, so
+the helper returns zero; ordinary shape collision handling remains
+responsible for finite-size contact.
+
+The gravitational constant is `G = 6.67430e-11 m^3 kg^-1 s^-2`. The demo
+uses two `1e14 kg` spheres of radius `3 m`, with center separation `30 m`.
+Their center of mass begins at `(0, 23, 115) m`. Initial relative position
+and tangential velocity are the analytical circular two-body solution;
+both vectors are authored through one non-axis-aligned quaternion frame. The
+relative circular speed is `sqrt(G * (mA + mB) / separation)`; each equal
+mass receives half that speed in opposite directions. These masses and
+radii are an intentionally compact, abstract demonstration scale, not a
+claim about plausible planetary density. The project uses its existing
+metre/second/kilogram conventions and SI `G`.
+
+After initialization, every fixed step performs the existing 60 Hz sequence:
+sample local gameplay gravity for ordinary consumers (the orbital pair is
+outside every registered region and receives zero), accumulate celestial
+pair forces and any held operator thrust, then call `PhysicsWorld::Step`.
+That is the existing semi-implicit Euler integration path in
+`IntegrateRigidBody`; no orbital-specific integrator was introduced. The
+interactive pair is excluded from the M1–M19 gameplay harness so those
+established scripts retain their exact scene and CSV expectations. The
+standalone headless M20 suite exercises the same `CelestialGravity`,
+`PhysicsWorld`, and integrator used by the interactive demo.
+
+The cyan body accepts continuous forces of `2e14 N`: `P` applies its current
+barycentric prograde direction, `M` retrograde, and `N` radially outward.
+Position, velocity, and mass of both bodies are queried each fixed step to
+recompute the barycentre and thrust direction. These keys apply force only;
+they do not set velocity, move a body, or select a new trajectory. The force
+is applied to one body, so total system momentum changes as expected under an
+external thrust. `R` restores both spawn positions and analytical initial
+velocities. Menu pause freezes the world and the thruster is only sampled by
+the gameplay-owned simulation loop.
+
+**Measured five-revolution accuracy at the demo parameters and `dt=1/60 s`:**
+the analytical period is `8.93602 s`; the first measured return is `8.95000
+s` (`0.157%` error). Relative center separation ranged from `29.82599 m` to
+`30.17795 m` (within `0.59%` of the initial separation). Maximum relative
+energy error was `1.38e-4` (`0.0138%`), angular-momentum error `5.99e-6`
+(`0.000599%`), total momentum error `0` at the reported float resolution,
+and barycentre drift `0.000061 m` for the actual demo offset. A second run at
+`dt=1/120 s` reduced maximum energy error to `4.98e-5`. For an unequal-mass
+`1:2` run at `80 m` separation, barycentric orbital radii follow the inverse
+mass ratio within the test tolerance. Rotate-the-universe comparison after
+five periods measured maximum final position discrepancy `0.00550 m` and
+velocity discrepancy `0.00389 m/s` after rotating results back.
+
+These are measurements of the selected bounded demonstration, not general
+accuracy guarantees for arbitrary masses, separations, near-collisions, or
+long integrations. The state and force calculations remain single precision;
+large offsets can reduce relative position precision. Semi-implicit Euler
+has bounded but timestep-dependent orbital error, and exact point-mass
+coincidence is singular. There is no softening, adaptive timestep, orbital
+prediction, or N-body acceleration structure. Collision behavior uses the
+existing sphere contact path if the operator drives the bodies together.
+The spacecraft continues to use the same force-driven `PhysicsWorld` body
+semantics, but is not included in this isolated two-body demonstration's
+pair list; the live plank/spacecraft scenario therefore remains governed by
+its established local gravity setup.
+
+`judas_celestial_gravity_tests` checks inverse-square force magnitude and
+direction, finite nonzero-separation evaluation, equal-and-opposite
+acceleration via momentum, equal/unequal barycentric motion, analytical
+period and radius bounds, momentum, angular momentum, energy and barycentre
+error over five revolutions, timestep convergence, impulse perturbation,
+escape, and rotate-the-universe equivalence. Automated validation passes;
+operator acceptance of the visible orbit and the three runtime thrust
+directions is still pending.

@@ -39,6 +39,9 @@ enum class Action {
     YawRight,
     RollLeft,
     RollRight,
+    PlanetProgradeThrust,
+    PlanetRetrogradeThrust,
+    PlanetRadialThrust,
 };
 
 // Owns the OS window, the GL context, and OS event pumping. Combines the
@@ -209,8 +212,7 @@ private:
     int m_height = 0;
 
     bool m_testInputMode = false;
-    bool m_testActionState[12] = {false, false, false, false, false, false,
-                                   false, false, false, false, false, false};
+    bool m_testActionState[15] = {};
     // mutable: GetMouseDelta is const (it only ever mutates external SDL
     // state in the non-test path), but test mode needs "read once, then
     // drain to zero" semantics on its own queued delta, matching real

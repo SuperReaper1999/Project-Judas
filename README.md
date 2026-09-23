@@ -8,7 +8,24 @@ This is **not** a general-purpose engine and is not trying to compete with
 Unity, Unreal, or Godot. It exists to serve one specific class of game, and
 its architecture is deliberately narrow.
 
-## Status: Milestone 19 (human-validated)
+## Status: Milestone 20 implementation (awaiting human validation)
+
+**New in M20:** the interactive scene includes two massive dynamic spheres in
+unclaimed space. Their initial positions and velocities are the analytical
+circular two-body values; mutual Newtonian forces and Judas's ordinary fixed
+step integration produce their later motion. Both orbit their shared
+barycentre. Hold `P` for prograde, `M` for retrograde, or `N` for outward
+radial thrust on the cyan body; each applies a real force of `2e14 N` through
+`PhysicsWorld::ApplyForce`. `R` restores both bodies and their initial orbital
+velocities. The bodies are deliberately excluded from the permanent M1–M19
+gameplay harness; headless M20 tests exercise the same force and integrator.
+Measured at 60 Hz over five revolutions: period `8.950 s` vs analytical
+`8.936 s`, separation range `29.826–30.178 m`, maximum relative energy error
+`0.0138%`, angular-momentum error `0.000599%`, and barycentre drift
+`0.061 mm`. See
+[`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md), "Milestone 20," for the
+complete setup, limits, and measurements. Operator validation is still
+required; M20 has not been accepted yet.
 
 A controllable player walks, jumps, and falls under real physics — Judas's
 own physics engine, not a third-party library — across two independent
@@ -279,6 +296,7 @@ walks the player relative to that look direction and the current surface
 | Interact (door, switch, or whatever's prompted) | `G` |
 | Toggle first/third-person player view | `V` |
 | Reset the player and world | `R`               |
+| Planet thrust: prograde / retrograde / radial outward | `P` / `M` / `N` |
 
 While piloting the spacecraft (after pressing `F` while standing on it),
 WASD/Q/E and a separate IJKL+U/O cluster mean something different — see
@@ -447,7 +465,7 @@ full script format:
 JUDAS_TEST_SCRIPT=path/to/script.txt ./build/judas
 ```
 
-Twelve standalone, headless test executables also exist (no window, no GL
+Fourteen standalone, headless test executables also exist (no window, no GL
 context): `judas_physics_tests` and `judas_collision_tests` (rigid-body/
 collision/gravity-context primitives); `judas_asset_tests` (Milestone 9 —
 model/texture loading, parses the real committed demo assets and checks
@@ -498,11 +516,16 @@ velocity preservation, and mass-scaled throw direction); and
 `judas_player_curved_locomotion_tests` (Milestone 19 — flat and spherical
 fixed-step walking, long curved traversal with direction changes, stable
 support clearance, local-frame continuity, landing, both player camera modes,
-torch pose, stillness after traversal, and rotated-universe equivalence):
+torch pose, stillness after traversal, and rotated-universe equivalence); and
+`judas_celestial_gravity_tests` (Milestone 20 — inverse-square force,
+force direction, barycentric motion for equal and unequal masses, analytical
+period/radius comparison, momentum/angular-momentum/energy/barycentre drift,
+timestep convergence, perturbation, escape, and rotate-the-universe
+equivalence). Run them with:
 
 ```bash
-cmake --build build --target judas_physics_tests judas_collision_tests judas_asset_tests judas_step_climb_tests judas_pilot_attachment_tests judas_spacecraft_control_tests judas_ui_tests judas_lighting_tests judas_shadow_tests judas_interactable_tests judas_player_view_tests judas_object_manipulation_tests judas_player_curved_locomotion_tests
-./build/judas_physics_tests && ./build/judas_collision_tests && ./build/judas_asset_tests && ./build/judas_step_climb_tests && ./build/judas_pilot_attachment_tests && ./build/judas_spacecraft_control_tests && ./build/judas_ui_tests && ./build/judas_lighting_tests && ./build/judas_shadow_tests && ./build/judas_interactable_tests && ./build/judas_player_view_tests && ./build/judas_object_manipulation_tests && ./build/judas_player_curved_locomotion_tests
+cmake --build build --target judas_physics_tests judas_collision_tests judas_asset_tests judas_step_climb_tests judas_pilot_attachment_tests judas_spacecraft_control_tests judas_ui_tests judas_lighting_tests judas_shadow_tests judas_interactable_tests judas_player_view_tests judas_object_manipulation_tests judas_player_curved_locomotion_tests judas_celestial_gravity_tests
+./build/judas_physics_tests && ./build/judas_collision_tests && ./build/judas_asset_tests && ./build/judas_step_climb_tests && ./build/judas_pilot_attachment_tests && ./build/judas_spacecraft_control_tests && ./build/judas_ui_tests && ./build/judas_lighting_tests && ./build/judas_shadow_tests && ./build/judas_interactable_tests && ./build/judas_player_view_tests && ./build/judas_object_manipulation_tests && ./build/judas_player_curved_locomotion_tests && ./build/judas_celestial_gravity_tests
 ```
 
 ## Assets

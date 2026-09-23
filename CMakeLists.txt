@@ -58,6 +58,7 @@ add_executable(judas
     src/SphericalVolume.cpp
     src/BoxVolume.cpp
     src/GravityContextMap.cpp
+    src/CelestialGravity.cpp
     ${JUDAS_PHYSICS_SOURCES}
     src/PhysicsWorld.cpp
     src/TestHarness.cpp
@@ -97,6 +98,18 @@ add_executable(judas_collision_tests
 target_include_directories(judas_collision_tests PRIVATE src)
 target_link_libraries(judas_collision_tests PRIVATE glm::glm-header-only)
 target_compile_options(judas_collision_tests PRIVATE -Wall -Wextra)
+
+# M20: headless Newtonian two-body force and integration checks against the
+# same PhysicsWorld and rigid-body integrator used by the live demonstration.
+add_executable(judas_celestial_gravity_tests
+    tests/CelestialGravityTests.cpp
+    ${JUDAS_PHYSICS_SOURCES}
+    src/PhysicsWorld.cpp
+    src/CelestialGravity.cpp
+)
+target_include_directories(judas_celestial_gravity_tests PRIVATE src)
+target_link_libraries(judas_celestial_gravity_tests PRIVATE glm::glm-header-only)
+target_compile_options(judas_celestial_gravity_tests PRIVATE -Wall -Wextra)
 
 # Milestone 9: headless tests for the CPU-side model/texture loaders (see
 # src/ModelLoader.*, src/TextureLoader.*) — no window, no GL context, same
