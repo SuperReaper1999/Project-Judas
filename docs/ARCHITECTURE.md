@@ -6,7 +6,7 @@ someone with no prior context on this project. It is updated in place as
 milestones land, rather than kept as a per-milestone snapshot — see
 "Milestone history" below for how to recover an earlier milestone exactly.
 
-## What exists right now (Milestone 16)
+## What exists right now (Milestone 17)
 
 Open a window. Two independent static spheres ("planets," radius `20m`
 each, centers `55m` apart — see "Physics test world") exist in 3D space,
@@ -219,6 +219,18 @@ ownership rules Milestone 14/15 already established (drained every frame,
 only acted on while a menu doesn't own input). See "Milestone 16" below
 for the full design, the hinge-rotation math, and the door's collision/
 shadow coherence.
+
+**As of Milestone 17, the player can switch between third-person and
+first-person view with `V`.** The first-person eye position is computed from
+the presented player position and orientation using the existing local +Y
+eye offset; its direction uses the same presented frame and existing
+yaw/pitch look composition. View mode is application-owned presentation
+state. The player's box is omitted from color and shadow passes in first
+person, while its physical simulation remains unchanged. Piloting preserves
+the existing spacecraft-anchored camera and visible attached player; the
+selected player view resumes on release. The player torch uses the same eye
+and presented look transform. Interaction targeting continues to use the
+existing player look direction, independent of view mode.
 See the root `README.md` for build/run instructions and controls.
 
 ## Milestone history
@@ -3838,6 +3850,36 @@ interactable is highlighted" visual outline/highlight effect — the HUD
 prompt alone (per the brief's own required validation checklist) is what
 signals a valid target, no additional render-pass or outline shader was
 added for this milestone.
+
+## Milestone 17
+
+### Player camera modes
+
+`V` toggles an application-owned `PlayerViewMode` between third person and
+first person. `Window` drains the edge-triggered request every frame; the
+application applies it only when the pause menu does not own input. A press
+during pause therefore cannot toggle the view on resume.
+
+Both player camera modes use the same presented player position and
+orientation, yaw, pitch, and player-local +Y basis. First person places the
+camera at `presentedPosition + presentedOrientation * (0, eyeHeight, 0)`.
+Third person preserves the existing eye-relative follow distance and local-up
+height offset. Mouse look remains render-frame responsive. The camera does
+not add another orientation or alter player simulation state. The camera eye
+and look direction share the transform used by the player torch. Interaction
+selection continues to use `PlayerController`'s look direction and is
+independent of view mode.
+
+The player's box is suppressed in first person in both color and shadow
+passes. Its collision shape, dimensions, and simulation remain active. While
+piloting, the existing spacecraft-anchored camera and visible attached player
+are preserved regardless of the selected player view; releasing control
+resumes the selected player camera mode.
+
+`judas_player_view_tests` covers the eye transform, arbitrary orientation,
+rotate-the-universe equivalence, torch/camera agreement, preserved
+third-person offsets, view-mode transitions, and paused-input gating. Camera
+feel and traversal remain subject to interactive human validation.
 
 ## Milestone 8
 

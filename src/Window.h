@@ -113,6 +113,10 @@ public:
     // interprets the press.
     bool ConsumeInteractRequest();
 
+    // Milestone 17: edge-triggered request from V. Window reports the key;
+    // Application applies it only while gameplay owns input.
+    bool ConsumeViewToggleRequest();
+
     // --- Milestone 13: UI input ---
     //
     // Five more edge-triggered one-shot requests, same shape as
@@ -187,6 +191,7 @@ private:
     bool m_controlToggleRequested = false;
     bool m_torchToggleRequested = false;
     bool m_interactRequested = false;
+    bool m_viewToggleRequested = false;
     // Milestone 13: UI input edge flags — see PollEvents.
     bool m_uiBackRequested = false;
     bool m_uiUpRequested = false;

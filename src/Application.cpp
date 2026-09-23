@@ -841,6 +841,11 @@ int Application::Run() {
     // state (the player's own authoritative pose derives from it).
     PilotAttachment pilotAttachment;
 
+    // Milestone 17: this is presentation selection only. The spacecraft
+    // camera below deliberately continues using its existing anchored,
+    // third-person path while piloting.
+    PlayerViewMode playerViewMode = PlayerViewMode::ThirdPerson;
+
     // Shared between the normal interactive loop and the test harness, so
     // a screenshot taken by the harness shows exactly what the real game
     // would have rendered that frame. `presentationAlpha` blends the
@@ -918,7 +923,9 @@ int Application::Run() {
             playerRenderPosition = player.GetPresentedPosition(presentationAlpha);
             playerRenderOrientation = player.GetPresentedOrientation(presentationAlpha);
         }
-        if (includePlayerModel) {
+        const bool playerModelVisible = playerViewMode == PlayerViewMode::ThirdPerson ||
+                                        flyingPrimitiveControl.controlled;
+        if (includePlayerModel && playerModelVisible) {
             r.DrawBox(playerRenderPosition, playerRenderOrientation, player.GetRenderHalfExtents(),
                       kPlayerColor);
         }
@@ -1063,6 +1070,9 @@ int Application::Run() {
             // above, for the exact same reason — see
             // docs/ARCHITECTURE.md, "Milestone 16, Input ownership."
             const bool interactRequested = window.ConsumeInteractRequest();
+            // Drain even while the menu owns input, so V cannot toggle late
+            // when gameplay resumes.
+            const bool viewToggleRequested = window.ConsumeViewToggleRequest();
 
             // Milestone 16: recomputed every render frame from the
             // player's own CURRENT authoritative position/look direction
@@ -1103,6 +1113,8 @@ int Application::Run() {
             // catch-up, no dropped/compounded backlog, since the
             // accumulator itself never advanced while paused.
             if (!pauseMenu.IsOpen()) {
+                ApplyPlayerViewToggle(playerViewMode, viewToggleRequested,
+                                      /*gameplayOwnsInput=*/true);
                 // Mouse look and jump-key latching happen every render
                 // frame, independent of how many fixed physics steps run
                 // this frame.
@@ -1289,7 +1301,7 @@ int Application::Run() {
                     ? player.GetViewMatrix(
                           dynamicBodies[flyingPrimitiveBodyIndex].GetPresentedPosition(presentationAlpha),
                           dynamicBodies[flyingPrimitiveBodyIndex].GetPresentedOrientation(presentationAlpha))
-                    : player.GetViewMatrix(presentationAlpha);
+                    : player.GetViewMatrix(presentationAlpha, playerViewMode);
             renderer.SetCamera(view, player.GetProjectionMatrix(aspectRatio));
             // Continues rendering normally while paused (see
             // docs/ARCHITECTURE.md, "Milestone 14, Input ownership") — the

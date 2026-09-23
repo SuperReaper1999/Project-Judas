@@ -8,7 +8,7 @@ This is **not** a general-purpose engine and is not trying to compete with
 Unity, Unreal, or Godot. It exists to serve one specific class of game, and
 its architecture is deliberately narrow.
 
-## Status: Milestone 16
+## Status: Milestone 17
 
 A controllable player walks, jumps, and falls under real physics — Judas's
 own physics engine, not a third-party library — across two independent
@@ -193,8 +193,18 @@ interaction system isn't secretly built just for doors. See
 This is intentional — see `docs/ARCHITECTURE.md` for why, what's
 deliberately not built yet, and how this small foundation avoids blocking
 the much larger long-term design. Earlier milestones are preserved as git
-tags (`milestone-1` through `milestone-16`, once this one is tagged) rather
-than kept running alongside the current demo.
+tags (`milestone-1` through `milestone-16`) rather than kept running
+alongside the current demo. Milestone 17 remains subject to operator
+validation before it is accepted or tagged.
+
+**New this milestone:** press `V` to switch between the existing third-person
+follow camera and a first-person camera at the player's eye. Both use the
+player's presented position/orientation and existing mouse-look angles; the
+eye offset follows the player's local frame around either planet, the plank,
+slopes, and steps. The player's box is hidden in first-person view but remains
+fully simulated and collidable. The spacecraft keeps its existing camera while
+piloted, and the selected player view returns on release. See
+[`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md), "Milestone 17."
 
 ## Building
 
@@ -257,6 +267,7 @@ walks the player relative to that look direction and the current surface
 | Take/release piloting control of the spacecraft (only while standing on it) | `F` |
 | Toggle the player torch on/off | `T`             |
 | Interact (door, switch, or whatever's prompted) | `G` |
+| Toggle first/third-person player view | `V` |
 | Reset the player and world | `R`               |
 
 While piloting the spacecraft (after pressing `F` while standing on it),
@@ -426,7 +437,7 @@ full script format:
 JUDAS_TEST_SCRIPT=path/to/script.txt ./build/judas
 ```
 
-Six standalone, headless test executables also exist (no window, no GL
+Eleven standalone, headless test executables also exist (no window, no GL
 context): `judas_physics_tests` and `judas_collision_tests` (rigid-body/
 collision/gravity-context primitives); `judas_asset_tests` (Milestone 9 —
 model/texture loading, parses the real committed demo assets and checks
@@ -466,11 +477,15 @@ transform math, including finite-matrix checks at extreme configurations
 and rotate-the-whole-scenario invariance — pure CPU matrix math, no
 window/GL; actual shadow-map sampling correctness was spot-checked via a
 one-time offscreen render and is otherwise human-validated, see
-`docs/ARCHITECTURE.md`, "Milestone 15, Automated evidence"):
+`docs/ARCHITECTURE.md`, "Milestone 15, Automated evidence"); and
+`judas_player_view_tests` (Milestone 17 — first-person eye and look transform,
+arbitrary orientation and rotate-the-universe equivalence, third-person
+offset preservation, view-mode changes, and paused-input gating — pure CPU
+math, no window/GL):
 
 ```bash
-cmake --build build --target judas_physics_tests judas_collision_tests judas_asset_tests judas_step_climb_tests judas_pilot_attachment_tests judas_spacecraft_control_tests judas_ui_tests judas_lighting_tests judas_shadow_tests
-./build/judas_physics_tests && ./build/judas_collision_tests && ./build/judas_asset_tests && ./build/judas_step_climb_tests && ./build/judas_pilot_attachment_tests && ./build/judas_spacecraft_control_tests && ./build/judas_ui_tests && ./build/judas_lighting_tests && ./build/judas_shadow_tests
+cmake --build build --target judas_physics_tests judas_collision_tests judas_asset_tests judas_step_climb_tests judas_pilot_attachment_tests judas_spacecraft_control_tests judas_ui_tests judas_lighting_tests judas_shadow_tests judas_interactable_tests judas_player_view_tests
+./build/judas_physics_tests && ./build/judas_collision_tests && ./build/judas_asset_tests && ./build/judas_step_climb_tests && ./build/judas_pilot_attachment_tests && ./build/judas_spacecraft_control_tests && ./build/judas_ui_tests && ./build/judas_lighting_tests && ./build/judas_shadow_tests && ./build/judas_interactable_tests && ./build/judas_player_view_tests
 ```
 
 ## Assets

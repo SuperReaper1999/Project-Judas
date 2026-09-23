@@ -699,28 +699,19 @@ void PlayerController::GetTorchTransform(float presentationAlpha, glm::vec3& out
 }
 
 glm::mat4 PlayerController::BuildViewMatrix(const glm::vec3& position,
-                                             const glm::quat& orientation) const {
-    const glm::vec3 localUp = orientation * glm::vec3(0.0f, 1.0f, 0.0f);
-
-    // Mouse look (yaw/pitch) is applied on top of the given orientation
-    // unmodified — it already updates every render frame in
-    // UpdateFrameInput, so it's already as responsive as rendering itself
-    // and needs no interpolation of its own. See docs/ARCHITECTURE.md,
-    // "Input responsiveness."
-    const glm::quat lookOrientation =
-        orientation * glm::angleAxis(glm::radians(m_yaw), glm::vec3(0.0f, 1.0f, 0.0f)) *
-        glm::angleAxis(glm::radians(m_pitch), glm::vec3(1.0f, 0.0f, 0.0f));
-    const glm::vec3 front = glm::normalize(lookOrientation * glm::vec3(0.0f, 0.0f, -1.0f));
-
-    const glm::vec3 eyePosition = position + localUp * kEyeHeightAboveCenter;
-    const glm::vec3 cameraPosition =
-        eyePosition - front * kCameraFollowDistance + localUp * kCameraHeightOffset;
-    return glm::lookAt(cameraPosition, cameraPosition + front, localUp);
+                                             const glm::quat& orientation,
+                                             PlayerViewMode mode) const {
+    // Mouse look remains on top of the interpolated player frame and updates
+    // every render frame. Only the camera offset changes between modes.
+    const PlayerCameraPose pose = ComputePlayerCameraPose(
+        position, orientation, m_yaw, m_pitch, mode, kEyeHeightAboveCenter,
+        kCameraFollowDistance, kCameraHeightOffset);
+    return glm::lookAt(pose.position, pose.position + pose.front, pose.up);
 }
 
-glm::mat4 PlayerController::GetViewMatrix(float presentationAlpha) const {
+glm::mat4 PlayerController::GetViewMatrix(float presentationAlpha, PlayerViewMode mode) const {
     return BuildViewMatrix(GetPresentedPosition(presentationAlpha),
-                            GetPresentedOrientation(presentationAlpha));
+                            GetPresentedOrientation(presentationAlpha), mode);
 }
 
 glm::mat4 PlayerController::GetViewMatrix(const glm::vec3& anchorPosition,

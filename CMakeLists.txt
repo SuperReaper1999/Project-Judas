@@ -33,6 +33,7 @@ add_executable(judas
     src/Window.cpp
     src/Renderer.cpp
     src/PlayerController.cpp
+    src/PlayerView.cpp
     src/StepClimb.cpp
     src/DynamicBody.cpp
     src/FlyingPrimitiveControl.cpp
@@ -247,6 +248,17 @@ target_include_directories(judas_interactable_tests PRIVATE src)
 target_include_directories(judas_interactable_tests PRIVATE ${SDL2_INCLUDE_DIRS})
 target_link_libraries(judas_interactable_tests PRIVATE SDL2::SDL2 glm::glm-header-only)
 target_compile_options(judas_interactable_tests PRIVATE -Wall -Wextra)
+
+# Milestone 17: player camera-pose math and view-input ownership. Pure CPU,
+# including arbitrary-orientation and rotate-the-universe checks.
+add_executable(judas_player_view_tests
+    tests/PlayerViewTests.cpp
+    src/PlayerView.cpp
+    src/LightTransforms.cpp
+)
+target_include_directories(judas_player_view_tests PRIVATE src)
+target_link_libraries(judas_player_view_tests PRIVATE glm::glm-header-only)
+target_compile_options(judas_player_view_tests PRIVATE -Wall -Wextra)
 
 # stb_image_write (public domain / MIT, see third_party/stb_image_write.h) —
 # used only by the opt-in test harness (src/TestHarness.cpp) to write

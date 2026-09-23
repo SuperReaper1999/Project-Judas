@@ -97,6 +97,8 @@ void Window::PollEvents() {
                 m_torchToggleRequested = true;
             } else if (event.key.keysym.scancode == SDL_SCANCODE_G) {
                 m_interactRequested = true;
+            } else if (event.key.keysym.scancode == SDL_SCANCODE_V) {
+                m_viewToggleRequested = true;
             } else if (event.key.keysym.scancode == SDL_SCANCODE_UP) {
                 m_uiUpRequested = true;
             } else if (event.key.keysym.scancode == SDL_SCANCODE_DOWN) {
@@ -239,6 +241,13 @@ bool Window::ConsumeInteractRequest() {
     }
     const bool requested = m_interactRequested;
     m_interactRequested = false;
+    return requested;
+}
+
+bool Window::ConsumeViewToggleRequest() {
+    if (m_testInputMode) return false;
+    const bool requested = m_viewToggleRequested;
+    m_viewToggleRequested = false;
     return requested;
 }
 

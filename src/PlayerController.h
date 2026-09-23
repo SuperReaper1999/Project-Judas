@@ -4,6 +4,7 @@
 #include <glm/gtc/quaternion.hpp>
 
 #include "PhysicsWorld.h"
+#include "PlayerView.h"
 
 class Window;
 class GravityField;
@@ -114,7 +115,8 @@ public:
     // "Camera."  Mouse look (yaw/pitch) is unaffected by this parameter:
     // it already updates every render frame in UpdateFrameInput, so it's
     // already as responsive as rendering itself.
-    glm::mat4 GetViewMatrix(float presentationAlpha) const;
+    glm::mat4 GetViewMatrix(float presentationAlpha,
+                            PlayerViewMode mode = PlayerViewMode::ThirdPerson) const;
 
     // Milestone 8: builds the identical camera (same fixed offset/eye
     // height/look composition, same player-controlled m_yaw/m_pitch free
@@ -201,7 +203,8 @@ private:
     // addition can each apply their own speed/acceleration constant to the
     // same underlying input direction. See FixedUpdate.
     glm::vec3 ComputeInputDirection(const Window& window, const glm::vec3& localUp) const;
-    glm::mat4 BuildViewMatrix(const glm::vec3& position, const glm::quat& orientation) const;
+    glm::mat4 BuildViewMatrix(const glm::vec3& position, const glm::quat& orientation,
+                              PlayerViewMode mode = PlayerViewMode::ThirdPerson) const;
 
     // Judas-owned player state. None of this is a physics-engine body.
     glm::vec3 m_position;          // capsule center, world space
