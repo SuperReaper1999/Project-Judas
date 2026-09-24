@@ -163,6 +163,9 @@ public:
     void Step(float fixedDeltaTime);
 
     BodyTransform GetTransform(BodyHandle handle) const;
+    // Pose at the start of the most recent fixed step for dynamic bodies;
+    // static bodies return their current pose.
+    BodyTransform GetPreviousTransform(BodyHandle handle) const;
 
     // Restores a body to a pose with zero linear and angular velocity.
     void ResetBody(BodyHandle handle, const glm::vec3& position, const glm::quat& rotation);
@@ -187,8 +190,17 @@ public:
     // the physics engine about player movement or support — everything the answer is
     // used for (sliding along a surface, deciding "grounded," permitting a
     // jump) is PlayerController's decision, not this class's.
+    // Queries can interpolate dynamic bodies between the previous and
+    // current PhysicsWorld::Step transforms. Airborne movement uses this to
+    // compare both trajectories over one fixed-step interval; support probes
+    // pin both endpoints to the previous pose so they query the player's
+    // start-of-step state. `bodyMotionStart`/`bodyMotionEnd` preserve timing
+    // when a move-and-slide sweep continues after contact.
     ShapeSweepHit SweepPlayerShape(const glm::vec3& fromCenter, const glm::quat& rotation,
-                                    const glm::vec3& displacement) const;
+                                    const glm::vec3& displacement,
+                                    bool interpolateDynamicBodyMotion = false,
+                                    float bodyMotionStart = 0.0f,
+                                    float bodyMotionEnd = 1.0f) const;
 
 private:
     struct Impl;

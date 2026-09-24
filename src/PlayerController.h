@@ -94,10 +94,13 @@ public:
     // src/PilotAttachment.h's ComputePilotReleaseVelocity and
     // src/PilotControl.h's HandlePilotToggleRequest) — the ONLY place
     // outside FixedUpdate/FixedUpdateAttached that ever writes m_velocity
-    // directly. The very next ordinary FixedUpdate call integrates gravity
-    // and collision on top of this starting velocity exactly as it would
-    // for any other airborne player.
-    void SetVelocityAfterRelease(const glm::vec3& velocity) { m_velocity = velocity; }
+    // directly. The inherited velocity is also the last carrier velocity
+    // for the next grounding check, so upward ship motion is not mistaken
+    // for a player jump before support can be reacquired.
+    void SetVelocityAfterRelease(const glm::vec3& velocity) {
+        m_velocity = velocity;
+        m_lastGroundVelocity = velocity;
+    }
 
     // Corrects the pose when pilot release must move the player clear of
     // the spacecraft/terrain. Presentation history is synchronized so a

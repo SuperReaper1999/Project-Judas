@@ -72,6 +72,7 @@ constexpr int kMaxSlideIterations = 4;
 constexpr float kSkinMargin = 0.02f;           // stay this far from a surface after moving
 constexpr float kGroundProbeDistance = 0.15f;  // how far past the capsule to look for support
 constexpr float kMinGroundDot = 0.643f;        // cos(~50 degrees): matches Milestone 4's slope limit
+constexpr float kAscendingVelocityEpsilon = 1.0e-4f;  // suppress rotated-frame roundoff
 
 // Milestone 7-B: caps how fast the player's local frame can reorient in
 // response to a changing effective gravity direction — see
@@ -274,9 +275,12 @@ void PlayerController::FixedUpdate(const Window& window, PhysicsWorld& physics,
     // primitive's very first ascent. See docs/ARCHITECTURE.md,
     // "Milestone 8" — this is the moving-support interaction the brief
     // called out as the most important technical test here.
-    const bool wasAscending = glm::dot(m_velocity - m_lastGroundVelocity, localUp) > 0.0f;
-    ShapeSweepHit groundHit =
-        physics.SweepPlayerShape(m_position, m_frameOrientation, -localUp * kGroundProbeDistance);
+    const bool wasAscending =
+        glm::dot(m_velocity - m_lastGroundVelocity, localUp) > kAscendingVelocityEpsilon;
+    ShapeSweepHit groundHit = physics.SweepPlayerShape(
+        m_position, m_frameOrientation, -localUp * kGroundProbeDistance,
+        /*interpolateDynamicBodyMotion=*/true,
+        /*bodyMotionStart=*/0.0f, /*bodyMotionEnd=*/0.0f);
     bool isGrounded =
         !wasAscending && groundHit.hit && glm::dot(groundHit.normal, localUp) > kMinGroundDot;
 
@@ -347,27 +351,30 @@ void PlayerController::FixedUpdate(const Window& window, PhysicsWorld& physics,
     // conflated with it (supporting body motion != player input velocity).
     glm::vec3 groundVelocity(0.0f);
     if (isGrounded && physics.IsDynamicBody(groundHit.hitBody)) {
+        // PlayerController runs after PhysicsWorld::Step. Its position is
+        // still at the start of that interval, so carry the supported point
+        // through the body's actual previous-to-current transform once. A
+        // velocity * dt carry on top of a current-pose overlap correction
+        // would count the same platform motion twice.
+        const BodyTransform previousSupportTransform =
+            physics.GetPreviousTransform(groundHit.hitBody);
+        const BodyTransform supportTransform = physics.GetTransform(groundHit.hitBody);
+        const glm::vec3 supportLocalPosition =
+            glm::inverse(glm::normalize(previousSupportTransform.rotation)) *
+            (m_position - previousSupportTransform.position);
+        m_position = supportTransform.position + supportTransform.rotation * supportLocalPosition;
+
         const glm::vec3 supportLinearVelocity = physics.GetLinearVelocity(groundHit.hitBody);
         const glm::vec3 supportAngularVelocity = physics.GetAngularVelocity(groundHit.hitBody);
-        const BodyTransform supportTransform = physics.GetTransform(groundHit.hitBody);
         groundVelocity = supportLinearVelocity +
                           glm::cross(supportAngularVelocity, m_position - supportTransform.position);
     }
     m_lastGroundVelocity = groundVelocity;
 
-    // Milestone 8: carry the player by the support's own displacement THIS
-    // step directly, rather than relying on the move-and-slide sweep below
-    // to reconstruct it from velocity alone. The sweep's skin-margin
-    // clamping (kSkinMargin, 0.02m per step) is tuned for gravity's own
-    // small per-step glue nudge, not a support translating several
-    // centimeters a step under direct control — reproduced directly: with
-    // ONLY the velocity-based approach, the player measurably lagged a
-    // fast-ascending primitive and eventually lost contact partway up. A
-    // direct position carry has no such tolerance to exceed. `groundVelocity`
-    // is excluded from `remaining` below so this translation is never
-    // double-counted by the sweep that resolves the player's OWN relative
-    // motion (WASD/jump/gravity-glue) against the support.
-    m_position += groundVelocity * fixedDeltaTime;
+    // Dynamic support motion has already been applied through its transform
+    // above. `groundVelocity` remains the moving-frame component of the
+    // player's velocity and is subtracted from the later sweep, leaving only
+    // player-relative movement to resolve against the current body pose.
 
     // A jump only ever begins while actually supported, per this step's own
     // geometry query — never a height comparison. Once consumed, the
@@ -472,14 +479,16 @@ void PlayerController::FixedUpdate(const Window& window, PhysicsWorld& physics,
 
     // Judas's own minimal move-and-slide: never trust a raw transform
     // write, always resolve displacement against the physics engine's
-    // collision query. `groundVelocity` is subtracted back out here — its
-    // positional effect was already applied directly above, once, as an
-    // exact carry; only the player's OWN relative motion (WASD, jump,
+    // collision query. `groundVelocity` is subtracted back out here — the
+    // support's positional motion was already applied directly above,
+    // once, through its previous-to-current transform; only the player's OWN
+    // relative motion (WASD, jump,
     // gravity's small glue nudge, or ordinary airborne integration) is
     // resolved through the sweep. On ordinary static ground or while
     // airborne, groundVelocity is exactly zero, so this is unchanged from
     // every milestone before this one.
     glm::vec3 remaining = (m_velocity - groundVelocity) * fixedDeltaTime;
+    float bodyMotionTime = 0.0f;
 
     // Milestone 10: step-up, tried once with the FULL remaining
     // displacement before ordinary move-and-slide runs at all. Only
@@ -507,7 +516,8 @@ void PlayerController::FixedUpdate(const Window& window, PhysicsWorld& physics,
         if (remainingLength < 1.0e-6f) break;
 
         const ShapeSweepHit hit =
-            physics.SweepPlayerShape(m_position, m_frameOrientation, remaining);
+            physics.SweepPlayerShape(m_position, m_frameOrientation, remaining, !isGrounded,
+                                     bodyMotionTime, 1.0f);
         if (!hit.hit) {
             m_position += remaining;
             break;
@@ -560,6 +570,7 @@ void PlayerController::FixedUpdate(const Window& window, PhysicsWorld& physics,
             travelFraction = travelDistance / remainingLength;
             m_position += remaining * travelFraction;
         }
+        bodyMotionTime += (1.0f - bodyMotionTime) * travelFraction;
 
         glm::vec3 leftover = remaining * (1.0f - travelFraction);
         const float intoSurface = glm::dot(leftover, hit.normal);
@@ -603,6 +614,9 @@ void PlayerController::Reset() {
     m_position = m_spawnPosition;
     m_velocity = glm::vec3(0.0f);
     m_frameOrientation = glm::quat(1.0f, 0.0f, 0.0f, 0.0f);
+    m_lastGrounded = false;
+    m_lastGroundHitBody = BodyHandle();
+    m_lastGroundVelocity = glm::vec3(0.0f);
     // Synchronize presentation history to the same pose: with both
     // endpoints identical, GetPresentedPosition/Orientation return exactly
     // the reset pose regardless of `alpha`, so the very next render

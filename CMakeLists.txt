@@ -330,13 +330,16 @@ target_include_directories(judas_object_manipulation_tests PRIVATE src)
 target_link_libraries(judas_object_manipulation_tests PRIVATE glm::glm-header-only)
 target_compile_options(judas_object_manipulation_tests PRIVATE -Wall -Wextra)
 
-# Milestone 19: end-to-end fixed-step player locomotion against sphere and
-# flat supports, including long curved walks and rotate-the-universe checks.
+# Long fixed-step player locomotion against sphere and flat supports,
+# including rotated worlds and the ascending spacecraft-release regression.
 add_executable(judas_player_curved_locomotion_tests
     tests/PlayerCurvedLocomotionTests.cpp
     src/PlayerController.cpp
     src/PlayerView.cpp
     src/LightTransforms.cpp
+    src/PilotControl.cpp
+    src/PilotAttachment.cpp
+    src/FlyingPrimitiveControl.cpp
     src/Window.cpp
     src/StepClimb.cpp
     src/PhysicsWorld.cpp

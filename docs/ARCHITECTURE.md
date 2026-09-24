@@ -6416,6 +6416,20 @@ support/contact, attachment, and reference frames remain separate concepts.
 There is no hierarchy, world rebasing, relative-force simulation, orbit
 alteration, or privileged physical notion of rest.
 
+An ascending release has one extra sequencing case: `PhysicsWorld::Step`
+advances dynamic bodies before `PlayerController::FixedUpdate`, while the
+newly detached player still starts at the previous attached pose. Release
+seeds the previous-support velocity with the inherited point velocity, so
+the craft's upward motion is not mistaken for a player jump before the
+ground probe can reacquire the hull. Support probes compare against dynamic
+bodies at the start-of-step pose; when grounded on a dynamic body, the
+player's supported point is then carried through that body's previous-to-
+current transform exactly once. Relative movement sweeps run at the
+current pose when grounded and compare both trajectories over the fixed-step
+interval when airborne. The ascent check also has a small velocity epsilon
+so rotated-frame floating-point noise does not make a supported player
+falsely airborne.
+
 `judas_reference_frame_tests` checks identity and translated frames, arbitrary
 rotation, position/direction/velocity round trips, matching and differing
 velocities, rotating-frame point speed and co-motion, live spacecraft data
@@ -6423,5 +6437,8 @@ relative to a moving celestial body, attached-pilot co-motion and release
 point velocity, finite results for valid inputs, and rotate-the-universe
 equivalence. `judas_pilot_dismount_tests` checks release clearance for an
 upright and inverted craft, zero-gravity preservation, and rotated-world
-equivalence. All existing M1–M22 suites and the gameplay harness pass; M22 is
-accepted.
+equivalence. `judas_player_curved_locomotion_tests` also releases a player
+from a rising spacecraft, checks inherited motion and grounded support,
+walks on the hull while it coasts, and repeats the case under a rigid
+universe rotation. All existing M1–M22 suites and the gameplay harness pass;
+M22 remains accepted.

@@ -78,6 +78,11 @@ struct ClosestBodyResult {
 struct PhysicsWorld::Impl {
     struct Body {
         RigidBody rigidBody;
+        // Previous fixed-step pose for player movement sweeps against
+        // dynamic targets; initialized together with the current pose and
+        // refreshed immediately before every physics integration.
+        glm::vec3 previousPosition{0.0f};
+        glm::quat previousOrientation{1.0f, 0.0f, 0.0f, 0.0f};
         Shape shape;
         float friction = 0.5f;
         float restitution = 0.0f;
@@ -94,20 +99,30 @@ struct PhysicsWorld::Impl {
     // specifically so it can name `Body` without exposing this private
     // nested type outside PhysicsWorld.cpp.
     ClosestBodyResult ClosestBodyToCapsule(const glm::vec3& segA, const glm::vec3& segB,
-                                            float capsuleRadius) const {
+                                            float capsuleRadius,
+                                            float bodyMotionAlpha,
+                                            bool interpolateDynamicBodyMotion) const {
         ClosestBodyResult result;
         for (std::size_t i = 0; i < bodies.size(); ++i) {
             const Body& body = bodies[i];
             if (!body.alive) continue;
+            const bool interpolateBody = interpolateDynamicBodyMotion && body.isDynamic;
+            const glm::vec3 bodyPosition = interpolateBody
+                ? glm::mix(body.previousPosition, body.rigidBody.position, bodyMotionAlpha)
+                : body.rigidBody.position;
+            const glm::quat bodyOrientation = interpolateBody
+                ? glm::normalize(glm::slerp(body.previousOrientation, body.rigidBody.orientation,
+                                            bodyMotionAlpha))
+                : body.rigidBody.orientation;
             CapsuleDistance capsuleDistance;
             if (body.shape.type == ShapeType::Sphere) {
                 capsuleDistance = CapsuleDistanceToSphere(segA, segB, capsuleRadius,
-                                                            body.rigidBody.position,
+                                                            bodyPosition,
                                                             body.shape.radius);
             } else if (body.shape.type == ShapeType::Box) {
                 capsuleDistance =
-                    CapsuleDistanceToBox(segA, segB, capsuleRadius, body.rigidBody.position,
-                                          body.rigidBody.orientation, body.shape.halfExtents);
+                    CapsuleDistanceToBox(segA, segB, capsuleRadius, bodyPosition,
+                                          bodyOrientation, body.shape.halfExtents);
             } else {
                 continue;
             }
@@ -143,6 +158,8 @@ struct PhysicsWorld::Impl {
         body.alive = true;
         body.rigidBody.position = position;
         body.rigidBody.orientation = rotation;
+        body.previousPosition = position;
+        body.previousOrientation = rotation;
         if (isDynamic) {
             body.rigidBody.inverseMass = mass > 0.0f ? 1.0f / mass : 0.0f;
             body.rigidBody.inverseInertiaLocal =
@@ -316,6 +333,11 @@ void PhysicsWorld::Step(float fixedDeltaTime) {
     // to what was inlined here previously.
     for (Impl::Body& body : m_impl->bodies) {
         if (!body.alive || !body.isDynamic) continue;
+        // PlayerController runs after Step. Keep the starting pose so an
+        // airborne player sweep can compare both trajectories at matching
+        // fractions through this same fixed interval.
+        body.previousPosition = body.rigidBody.position;
+        body.previousOrientation = body.rigidBody.orientation;
         IntegrateRigidBody(body.rigidBody, fixedDeltaTime);
     }
 
@@ -359,12 +381,28 @@ BodyTransform PhysicsWorld::GetTransform(BodyHandle handle) const {
     return result;
 }
 
+BodyTransform PhysicsWorld::GetPreviousTransform(BodyHandle handle) const {
+    BodyTransform result;
+    const Impl::Body* body = m_impl->Get(handle);
+    if (!body) return result;
+    if (body->isDynamic) {
+        result.position = body->previousPosition;
+        result.rotation = body->previousOrientation;
+    } else {
+        result.position = body->rigidBody.position;
+        result.rotation = body->rigidBody.orientation;
+    }
+    return result;
+}
+
 void PhysicsWorld::ResetBody(BodyHandle handle, const glm::vec3& position,
                               const glm::quat& rotation) {
     Impl::Body* body = m_impl->Get(handle);
     if (!body) return;
     body->rigidBody.position = position;
     body->rigidBody.orientation = rotation;
+    body->previousPosition = position;
+    body->previousOrientation = rotation;
     body->rigidBody.linearVelocity = glm::vec3(0.0f);
     body->rigidBody.angularVelocity = glm::vec3(0.0f);
     body->rigidBody.ClearAccumulators();
@@ -379,7 +417,10 @@ bool PhysicsWorld::CreatePlayerShape(float radius, float halfHeight) {
 void PhysicsWorld::DestroyPlayerShape() { m_impl->hasPlayerShape = false; }
 
 ShapeSweepHit PhysicsWorld::SweepPlayerShape(const glm::vec3& fromCenter, const glm::quat& rotation,
-                                              const glm::vec3& displacement) const {
+                                              const glm::vec3& displacement,
+                                              bool interpolateDynamicBodyMotion,
+                                              float bodyMotionStart,
+                                              float bodyMotionEnd) const {
     ShapeSweepHit result;
     if (!m_impl->hasPlayerShape) return result;
 
@@ -396,7 +437,9 @@ ShapeSweepHit PhysicsWorld::SweepPlayerShape(const glm::vec3& fromCenter, const 
     auto evaluateAt = [&](float t) {
         const glm::vec3 center = fromCenter + displacement * t;
         const auto [segA, segB] = worldSegmentAt(center);
-        return m_impl->ClosestBodyToCapsule(segA, segB, capsuleRadius);
+        const float bodyMotionAlpha = glm::mix(bodyMotionStart, bodyMotionEnd, t);
+        return m_impl->ClosestBodyToCapsule(segA, segB, capsuleRadius, bodyMotionAlpha,
+                                            interpolateDynamicBodyMotion);
     };
 
     // Already touching/overlapping at the very start of the sweep — report

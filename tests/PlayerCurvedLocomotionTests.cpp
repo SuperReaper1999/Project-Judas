@@ -7,6 +7,7 @@
 #include <glm/gtx/quaternion.hpp>
 
 #include "PlayerController.h"
+#include "PilotControl.h"
 #include "RadicalGravity.h"
 #include "Window.h"
 
@@ -23,6 +24,15 @@ public:
     glm::vec3 Sample(const glm::vec3&) const override { return m_down * 9.81f; }
 private:
     glm::vec3 m_down;
+};
+
+class ConstantGravity final : public GravityField {
+public:
+    explicit ConstantGravity(glm::vec3 acceleration) : m_acceleration(acceleration) {}
+    glm::vec3 Sample(const glm::vec3&) const override { return m_acceleration; }
+
+private:
+    glm::vec3 m_acceleration;
 };
 
 float SphereClearance(glm::vec3 center, glm::vec3 position, glm::quat orientation) {
@@ -236,11 +246,97 @@ void TestFlatControl() {
     player.Destroy(physics);
     physics.Shutdown();
 }
+
+void TestAscendingPilotRelease(const glm::quat& universeRotation,
+                               const glm::vec3& gravityAcceleration, const char* scenario) {
+    std::printf("Ascending spacecraft release (%s)\n", scenario);
+    constexpr float dt = 1.0f / 60.0f;
+    constexpr float shipSpeed = 11.7f;
+    const glm::vec3 localUp(0.0f, 1.0f, 0.0f);
+    const glm::vec3 up = universeRotation * localUp;
+    const glm::quat shipOrientation = universeRotation;
+    const glm::vec3 shipPosition(0.0f);
+    const glm::vec3 playerPosition = shipPosition + up * 1.17f;
+
+    PhysicsWorld physics;
+    Check(physics.Init(), "pilot-release physics world initializes");
+    const BodyHandle ship = physics.CreateDynamicBox(
+        shipPosition, glm::vec3(2.0f, 0.25f, 3.0f), 80.0f, 0.8f, 0.1f);
+    physics.ResetBody(ship, shipPosition, shipOrientation);
+    physics.SetLinearVelocity(ship, up * shipSpeed);
+
+    PlayerController player(playerPosition, 0.0f);
+    Check(player.Spawn(physics), "pilot-release player shape initializes");
+    player.FixedUpdateAttached(playerPosition, shipOrientation);
+
+    Window input;
+    input.SetTestInputMode(true);
+    ConstantGravity gravity(gravityAcceleration);
+    FlyingPrimitiveControl control;
+    control.handle = ship;
+    control.controlled = true;
+    PilotAttachment attachment;
+    attachment.attached = true;
+
+    HandlePilotToggleRequest(control, attachment, player, physics, gravity);
+    Check(!control.controlled && !attachment.attached,
+          "release returns control to ordinary player movement");
+
+    // The live loop advances PhysicsWorld before PlayerController. This
+    // reproduces an ascending craft moving into the player's old attached
+    // pose before the player consumes its inherited point velocity.
+    physics.ApplyLinearAcceleration(ship, gravity.Sample(shipPosition), dt);
+    physics.Step(dt);
+    AdvancePlayerForPiloting(control, attachment, player, physics, input, gravity, dt);
+    const float firstStepGap = glm::dot(
+        player.GetPosition() - physics.GetTransform(ship).position, up);
+    Check(std::abs(firstStepGap - 1.17f) < 0.004f,
+          "first detached step preserves clearance while the ascending hull advances first");
+    Check(glm::dot(player.GetVelocity(), up) > shipSpeed - 0.5f,
+          "inherited upward point velocity survives release and gravity");
+    Check(player.IsGrounded(), "release reacquires the ascending spacecraft as physical support");
+    Check(player.GetSupportBodyHandle().id == ship.id,
+          "release support is the spacecraft the pilot left");
+
+    input.SetTestActionState(Action::MoveForward, true);
+    float minimumGap = firstStepGap;
+    float maximumGap = firstStepGap;
+    for (int step = 0; step < 120; ++step) {
+        if (step == 12) input.SetTestActionState(Action::MoveForward, false);
+        physics.ApplyLinearAcceleration(ship, gravity.Sample(physics.GetTransform(ship).position), dt);
+        physics.Step(dt);
+        AdvancePlayerForPiloting(control, attachment, player, physics, input, gravity, dt);
+        const float gap = glm::dot(
+            player.GetPosition() - physics.GetTransform(ship).position, up);
+        minimumGap = std::min(minimumGap, gap);
+        maximumGap = std::max(maximumGap, gap);
+    }
+    Check(maximumGap - minimumGap < 0.002f,
+          "support transform carry preserves clearance during sustained coasting");
+    std::printf("  release clearance %.6f..%.6f m, final grounded=%d, final gap=%.6f m\n",
+                minimumGap, maximumGap, player.IsGrounded() ? 1 : 0,
+                glm::dot(player.GetPosition() - physics.GetTransform(ship).position, up));
+    Check(player.IsGrounded(), "player remains grounded while walking on the rising spacecraft");
+    const glm::vec3 straightUpCoast = playerPosition + up * shipSpeed * dt * 121.0f;
+    const glm::vec3 tangentialMotion = player.GetPosition() - straightUpCoast;
+    Check(glm::length(tangentialMotion - up * glm::dot(tangentialMotion, up)) > 0.5f,
+          "player movement remains available while coasting with the ascending spacecraft");
+
+    player.Destroy(physics);
+    physics.Shutdown();
+}
 }  // namespace
 
 int main() {
     TestFlatControl();
     TestRotatedUniverse();
+    const glm::quat universeRotation(1.0f, 0.0f, 0.0f, 0.0f);
+    const glm::vec3 gravityAcceleration(0.0f, -9.81f, 0.0f);
+    TestAscendingPilotRelease(universeRotation, gravityAcceleration, "world frame");
+    const glm::quat rotatedUniverse = glm::angleAxis(glm::radians(67.0f),
+        glm::normalize(glm::vec3(1.0f, 2.0f, -3.0f)));
+    TestAscendingPilotRelease(rotatedUniverse, rotatedUniverse * gravityAcceleration,
+                              "rotated world frame");
     if (failures) std::printf("\n%d test(s) failed\n", failures);
     else std::puts("\nALL TESTS PASSED");
     return failures == 0 ? 0 : 1;
