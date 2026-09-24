@@ -32,6 +32,65 @@ namespace {
 // correctness requirement.
 constexpr int kSolverIterations = 4;
 
+// Compound geometry is a set of ordinary boxes attached to one rigid body.
+// Each narrowphase call still sees exactly the primitive shape it already
+// understands; contact impulses are always applied to the shared parent.
+int PrimitiveCount(const Shape& shape) {
+    return shape.type == ShapeType::CompoundBoxes ? static_cast<int>(shape.boxes.size()) : 1;
+}
+
+struct PrimitivePose {
+    Shape shape;
+    RigidBody body;
+};
+
+PrimitivePose PrimitiveAt(const Shape& shape, const RigidBody& parent, int index) {
+    if (shape.type != ShapeType::CompoundBoxes) return {shape, parent};
+    const CompoundBox& child = shape.boxes[static_cast<std::size_t>(index)];
+    RigidBody childPose = parent;
+    childPose.position += parent.orientation * child.localCenter;
+    return {Shape::Box(child.halfExtents), childPose};
+}
+
+std::vector<BodyBox> BoxesAt(const Shape& shape, const glm::vec3& position,
+                              const glm::quat& orientation) {
+    std::vector<BodyBox> boxes;
+    if (shape.type == ShapeType::Box) {
+        boxes.push_back({position, orientation, shape.halfExtents});
+    } else if (shape.type == ShapeType::CompoundBoxes) {
+        boxes.reserve(shape.boxes.size());
+        for (const CompoundBox& child : shape.boxes) {
+            boxes.push_back({position + orientation * child.localCenter,
+                             orientation, child.halfExtents});
+        }
+    }
+    return boxes;
+}
+
+glm::mat3 CompoundInverseInertia(float mass, const std::vector<CompoundBox>& boxes) {
+    float totalVolume = 0.0f;
+    for (const CompoundBox& box : boxes) {
+        totalVolume += 8.0f * box.halfExtents.x * box.halfExtents.y * box.halfExtents.z;
+    }
+    if (mass <= 0.0f || totalVolume <= 0.0f) return glm::mat3(0.0f);
+
+    // Uniform density, with the parallel-axis theorem for each child. The
+    // resulting full tensor includes products of inertia when the geometry
+    // is asymmetric; RigidBody rotates it to world space as usual.
+    glm::mat3 inertia(0.0f);
+    for (const CompoundBox& box : boxes) {
+        const float childMass = mass *
+            (8.0f * box.halfExtents.x * box.halfExtents.y * box.halfExtents.z / totalVolume);
+        const glm::vec3 h = box.halfExtents;
+        inertia[0][0] += childMass * (h.y * h.y + h.z * h.z) / 3.0f;
+        inertia[1][1] += childMass * (h.x * h.x + h.z * h.z) / 3.0f;
+        inertia[2][2] += childMass * (h.x * h.x + h.y * h.y) / 3.0f;
+        const glm::vec3& r = box.localCenter;
+        inertia += childMass * (glm::dot(r, r) * glm::mat3(1.0f) - glm::outerProduct(r, r));
+    }
+    return glm::determinant(inertia) > 1.0e-12f ? glm::inverse(inertia) : glm::mat3(0.0f);
+}
+
 // Uniform manifold dispatcher: sphere-involving pairs always produce at
 // most one contact point (wrapped in a 1-point manifold); box-vs-box uses
 // the real multi-point manifold (see Contacts.h for why that one
@@ -114,22 +173,29 @@ struct PhysicsWorld::Impl {
                 ? glm::normalize(glm::slerp(body.previousOrientation, body.rigidBody.orientation,
                                             bodyMotionAlpha))
                 : body.rigidBody.orientation;
-            CapsuleDistance capsuleDistance;
-            if (body.shape.type == ShapeType::Sphere) {
-                capsuleDistance = CapsuleDistanceToSphere(segA, segB, capsuleRadius,
-                                                            bodyPosition,
-                                                            body.shape.radius);
-            } else if (body.shape.type == ShapeType::Box) {
-                capsuleDistance =
-                    CapsuleDistanceToBox(segA, segB, capsuleRadius, bodyPosition,
-                                          bodyOrientation, body.shape.halfExtents);
-            } else {
-                continue;
-            }
-            if (capsuleDistance.distance < result.distance) {
-                result.distance = capsuleDistance.distance;
-                result.normal = capsuleDistance.normal;
-                result.bodyIndex = static_cast<int>(i);
+            RigidBody sampledBody = body.rigidBody;
+            sampledBody.position = bodyPosition;
+            sampledBody.orientation = bodyOrientation;
+            for (int part = 0; part < PrimitiveCount(body.shape); ++part) {
+                const PrimitivePose primitive = PrimitiveAt(body.shape, sampledBody, part);
+                CapsuleDistance capsuleDistance;
+                if (primitive.shape.type == ShapeType::Sphere) {
+                    capsuleDistance = CapsuleDistanceToSphere(segA, segB, capsuleRadius,
+                                                               primitive.body.position,
+                                                               primitive.shape.radius);
+                } else if (primitive.shape.type == ShapeType::Box) {
+                    capsuleDistance = CapsuleDistanceToBox(segA, segB, capsuleRadius,
+                                                            primitive.body.position,
+                                                            primitive.body.orientation,
+                                                            primitive.shape.halfExtents);
+                } else {
+                    continue;
+                }
+                if (capsuleDistance.distance < result.distance) {
+                    result.distance = capsuleDistance.distance;
+                    result.normal = capsuleDistance.normal;
+                    result.bodyIndex = static_cast<int>(i);
+                }
             }
         }
         return result;
@@ -162,9 +228,13 @@ struct PhysicsWorld::Impl {
         body.previousOrientation = rotation;
         if (isDynamic) {
             body.rigidBody.inverseMass = mass > 0.0f ? 1.0f / mass : 0.0f;
-            body.rigidBody.inverseInertiaLocal =
-                shape.type == ShapeType::Sphere ? SolidSphereInverseInertia(mass, shape.radius)
-                                                 : SolidBoxInverseInertia(mass, shape.halfExtents);
+            if (shape.type == ShapeType::Sphere) {
+                body.rigidBody.inverseInertiaLocal = SolidSphereInverseInertia(mass, shape.radius);
+            } else if (shape.type == ShapeType::Box) {
+                body.rigidBody.inverseInertiaLocal = SolidBoxInverseInertia(mass, shape.halfExtents);
+            } else if (shape.type == ShapeType::CompoundBoxes) {
+                body.rigidBody.inverseInertiaLocal = CompoundInverseInertia(mass, shape.boxes);
+            }
         }
         // Static bodies keep inverseMass=0 / zero inverse inertia (RigidBody's own defaults),
         // which is exactly what "never moved by force or impulse" means throughout this engine.
@@ -218,6 +288,20 @@ BodyHandle PhysicsWorld::CreateDynamicSphere(const glm::vec3& position, float ra
                             mass, friction, restitution);
 }
 
+BodyHandle PhysicsWorld::CreateDynamicCompoundBoxes(const glm::vec3& position,
+                                                     const std::vector<CompoundBox>& boxes,
+                                                     float mass, float friction, float restitution) {
+    if (boxes.empty() || mass <= 0.0f) return BodyHandle{};
+    for (const CompoundBox& box : boxes) {
+        if (box.halfExtents.x <= 0.0f || box.halfExtents.y <= 0.0f || box.halfExtents.z <= 0.0f) {
+            return BodyHandle{};
+        }
+    }
+    return m_impl->AddBody(Shape::Compound(boxes), position,
+                            glm::quat(1.0f, 0.0f, 0.0f, 0.0f), true,
+                            mass, friction, restitution);
+}
+
 void PhysicsWorld::DestroyBody(BodyHandle handle) {
     Impl::Body* body = m_impl->Get(handle);
     if (body) body->alive = false;
@@ -260,6 +344,13 @@ void PhysicsWorld::ApplyLinearImpulse(BodyHandle handle, const glm::vec3& impuls
     body->rigidBody.ApplyLinearImpulse(impulse);
 }
 
+void PhysicsWorld::ApplyImpulseAtPoint(BodyHandle handle, const glm::vec3& impulse,
+                                       const glm::vec3& worldPoint) {
+    Impl::Body* body = m_impl->Get(handle);
+    if (!body || !body->isDynamic) return;
+    body->rigidBody.ApplyImpulseAtPoint(impulse, worldPoint);
+}
+
 glm::vec3 PhysicsWorld::GetLinearVelocity(BodyHandle handle) const {
     const Impl::Body* body = m_impl->Get(handle);
     return body ? body->rigidBody.linearVelocity : glm::vec3(0.0f);
@@ -286,11 +377,23 @@ float PhysicsWorld::GetBodySupportDistance(BodyHandle handle, const glm::vec3& w
     const float directionLength = glm::length(worldDirection);
     if (!body || directionLength < 1.0e-6f) return 0.0f;
 
-    if (body->shape.type == ShapeType::Sphere) return body->shape.radius;
-
-    const glm::vec3 localDirection = glm::conjugate(glm::normalize(body->rigidBody.orientation)) *
-                                     (worldDirection / directionLength);
-    return glm::dot(glm::abs(localDirection), body->shape.halfExtents);
+    const glm::vec3 direction = worldDirection / directionLength;
+    float maximum = 0.0f;
+    for (int part = 0; part < PrimitiveCount(body->shape); ++part) {
+        const PrimitivePose primitive = PrimitiveAt(body->shape, body->rigidBody, part);
+        float extent = 0.0f;
+        if (primitive.shape.type == ShapeType::Sphere) {
+            extent = primitive.shape.radius;
+        } else if (primitive.shape.type == ShapeType::Box) {
+            const glm::vec3 localDirection =
+                glm::conjugate(glm::normalize(primitive.body.orientation)) * direction;
+            extent = glm::dot(glm::abs(localDirection), primitive.shape.halfExtents);
+        }
+        maximum = std::max(maximum,
+                            glm::dot(primitive.body.position - body->rigidBody.position,
+                                     direction) + extent);
+    }
+    return maximum;
 }
 
 float PhysicsWorld::GetPlayerShapeMaxSupportDistance() const {
@@ -357,15 +460,22 @@ void PhysicsWorld::Step(float fixedDeltaTime) {
                 if (!b.alive) continue;
                 if (a.rigidBody.IsStatic() && b.rigidBody.IsStatic()) continue;
 
-                const ContactManifold manifold =
-                    ComputeContacts(a.shape, a.rigidBody, b.shape, b.rigidBody);
-                if (manifold.count == 0) continue;
-
                 const float friction = std::sqrt(std::max(a.friction, 0.0f) * std::max(b.friction, 0.0f));
                 const float restitution = std::max(a.restitution, b.restitution);
-                for (int p = 0; p < manifold.count; ++p) {
-                    if (!manifold.points[p].hit) continue;
-                    ResolveContact(a.rigidBody, b.rigidBody, manifold.points[p], friction, restitution);
+                for (int partA = 0; partA < PrimitiveCount(a.shape); ++partA) {
+                    for (int partB = 0; partB < PrimitiveCount(b.shape); ++partB) {
+                        // Contact correction may move a parent, so recalculate
+                        // each child's world pose before testing the next pair.
+                        const PrimitivePose childA = PrimitiveAt(a.shape, a.rigidBody, partA);
+                        const PrimitivePose childB = PrimitiveAt(b.shape, b.rigidBody, partB);
+                        const ContactManifold manifold = ComputeContacts(
+                            childA.shape, childA.body, childB.shape, childB.body);
+                        for (int p = 0; p < manifold.count; ++p) {
+                            if (!manifold.points[p].hit) continue;
+                            ResolveContact(a.rigidBody, b.rigidBody, manifold.points[p],
+                                           friction, restitution);
+                        }
+                    }
                 }
             }
         }
@@ -393,6 +503,20 @@ BodyTransform PhysicsWorld::GetPreviousTransform(BodyHandle handle) const {
         result.rotation = body->rigidBody.orientation;
     }
     return result;
+}
+
+std::vector<BodyBox> PhysicsWorld::GetBodyBoxes(BodyHandle handle) const {
+    const Impl::Body* body = m_impl->Get(handle);
+    if (!body) return {};
+    return BoxesAt(body->shape, body->rigidBody.position, body->rigidBody.orientation);
+}
+
+std::vector<BodyBox> PhysicsWorld::GetPreviousBodyBoxes(BodyHandle handle) const {
+    const Impl::Body* body = m_impl->Get(handle);
+    if (!body) return {};
+    return BoxesAt(body->shape,
+                   body->isDynamic ? body->previousPosition : body->rigidBody.position,
+                   body->isDynamic ? body->previousOrientation : body->rigidBody.orientation);
 }
 
 void PhysicsWorld::ResetBody(BodyHandle handle, const glm::vec3& position,

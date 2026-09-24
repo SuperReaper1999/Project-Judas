@@ -85,6 +85,10 @@ public:
     // split (ModelLoader produces MeshData; Renderer uploads and owns the
     // GPU resource; the caller owns only the opaque handle).
     MeshHandle CreateMesh(const MeshData& data);
+    // Replaces a non-indexed mesh's vertices without changing its handle.
+    // Used for a surface derived each presentation frame from simulated
+    // fluid positions. Returns false for indexed or invalid handles.
+    bool UpdateMeshVertices(MeshHandle handle, const std::vector<MeshVertex>& vertices);
     void DestroyMesh(MeshHandle handle);
 
     // Uploads `data` as a 2D RGBA texture (linear filtering, mipmapped,
@@ -103,7 +107,8 @@ public:
     // effectively 1. This is the single generalized draw path DrawBox/
     // DrawSphere are now thin wrappers over.
     void DrawMesh(MeshHandle mesh, const glm::vec3& position, const glm::quat& rotation,
-                  const glm::vec3& scale, TextureHandle texture, const glm::vec3& tintColor);
+                  const glm::vec3& scale, TextureHandle texture, const glm::vec3& tintColor,
+                  float alpha = 1.0f);
 
     // Draws a box mesh: `halfExtents` sets its size along each axis (the
     // local unit cube is scaled by 2*halfExtents), `rotation` its
@@ -114,7 +119,14 @@ public:
     // DrawMesh wrapper as of Milestone 9 (see above) — every existing call
     // site needed zero changes for this migration.
     void DrawBox(const glm::vec3& position, const glm::quat& rotation,
-                 const glm::vec3& halfExtents, const glm::vec3& colorRgb);
+                 const glm::vec3& halfExtents, const glm::vec3& colorRgb, float alpha = 1.0f);
+
+    // A small world-space transparent pass for viewing fluid through a
+    // cup's ordinary solid walls. Depth is tested but not written; calls
+    // must follow opaque geometry and be followed by EndTransparentPass.
+    void BeginTransparentPass();
+    void EndTransparentPass();
+    bool IsShadowPass() const { return m_shadowPassActive; }
 
     // Draws a sphere mesh of the given world-space radius. Added in
     // Milestone 5 for the spherical test world; a sphere looks identical

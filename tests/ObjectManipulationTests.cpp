@@ -32,6 +32,14 @@ void TestCarryTransform() {
     const glm::quat universe = glm::angleAxis(0.73f, glm::normalize(glm::vec3(-0.6f, 0.1f, 0.7f)));
     const glm::vec3 rotated = ComputeCarryTarget(universe * p, universe * q, universe * look, 0.7f, 1.8f);
     Check(Near(rotated, universe * target), "carry target rotates rigidly with the universe");
+
+    const glm::quat carriedOrientation = ComputeCarryOrientation(q, look);
+    const glm::quat rotatedOrientation = ComputeCarryOrientation(universe * q, universe * look);
+    Check(glm::length(carriedOrientation * glm::vec3(0, 1, 0) - glm::vec3(0, 1, 0)) > 0.1f,
+          "carry orientation is a real orientation, not a fixed world axis");
+    Check(Near(rotatedOrientation * glm::vec3(0, 1, 0),
+               universe * (carriedOrientation * glm::vec3(0, 1, 0)), 1.0e-5f),
+          "look-relative carried orientation rotates with the universe");
 }
 
 void TestPhysicsManipulation() {
@@ -56,6 +64,15 @@ void TestPhysicsManipulation() {
     }
     Check(glm::length(physics.GetTransform(ball).position - glm::vec3(0.0f, 2.0f, 0.0f)) < 0.08f,
           "carry is achieved by forces moving the authoritative physics body");
+
+    const glm::quat targetTilt = glm::angleAxis(0.8f, glm::vec3(1, 0, 0));
+    for (int i = 0; i < 120; ++i) {
+        manipulation.ApplyCarryOrientationTorque(physics, targetTilt);
+        physics.Step(1.0f / 120.0f);
+    }
+    Check(glm::dot(physics.GetTransform(ball).rotation * glm::vec3(0, 1, 0),
+                   targetTilt * glm::vec3(0, 1, 0)) > 0.99f,
+          "held orientation follows a target through ordinary torque/inertia");
 
     physics.SetLinearVelocity(ball, glm::vec3(1.0f, 2.0f, 3.0f));
     physics.SetAngularVelocity(ball, glm::vec3(-0.5f, 0.25f, 1.0f));

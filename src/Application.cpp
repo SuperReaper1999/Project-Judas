@@ -4,6 +4,8 @@
 #include <glad/gl.h>
 
 #include <algorithm>
+#include <array>
+#include <chrono>
 #include <cmath>
 #include <cstdio>
 #include <cstdlib>
@@ -21,6 +23,8 @@
 #include "DynamicBody.h"
 #include "FaithfulGravity.h"
 #include "FlyingPrimitiveControl.h"
+#include "FluidSurface.h"
+#include "FluidWorld.h"
 #include "GravityContextMap.h"
 #include "GravityField.h"
 #include "Door.h"
@@ -52,6 +56,18 @@ namespace {
 GLADapiproc LoadOpenGLProcAddress(const char* name) {
     return reinterpret_cast<GLADapiproc>(SDL_GL_GetProcAddress(name));
 }
+
+// Composition-root-only constant field for M24's reproducible local
+// rotated/zero-gravity demonstration modes. The fluid and every other
+// consumer still receive only the same GravityContextMap interface.
+class DemoUniformGravity final : public GravityField {
+public:
+    explicit DemoUniformGravity(const glm::vec3& acceleration) : m_acceleration(acceleration) {}
+    glm::vec3 Sample(const glm::vec3&) const override { return m_acceleration; }
+
+private:
+    glm::vec3 m_acceleration;
+};
 
 ReferenceFrame ReferenceFrameFromBody(const PhysicsWorld& physics, BodyHandle handle) {
     const BodyTransform transform = physics.GetTransform(handle);
@@ -153,6 +169,33 @@ const glm::vec3 kPlayerSpawnPosition =
     kPlanetACenter + glm::vec3(0.0f, kPlanetARadius + 3.0f, 0.0f);
 constexpr float kPlayerSpawnYawDegrees = 180.0f;
 const glm::vec3 kPlayerColor(0.2f, 0.6f, 0.9f);
+
+// M24 demonstration geometry. These are five ordinary rigid boxes sharing a
+// single body; neither physics nor fluid knows the assembled shape is a cup.
+// The authored station follows Planet A's local radial frame only to make a
+// convenient level starting arrangement. Gravity still comes from the map.
+const glm::vec3 kFluidStationBearing = glm::normalize(glm::vec3(0.11f, 1.0f, 0.11f));
+const glm::vec3 kFluidTableHalfExtents(0.85f, 0.12f, 0.42f);
+const glm::vec3 kFluidTableColor(0.37f, 0.30f, 0.24f);
+const glm::vec3 kCupBottomColor(0.55f, 0.67f, 0.73f);
+const glm::vec3 kCupWallColor(0.50f, 0.76f, 0.82f);
+const glm::vec3 kFluidColor(0.12f, 0.48f, 0.82f);
+constexpr float kCupMass = 120.0f;
+constexpr float kFluidParticleSpacing = 0.05f;
+
+std::vector<CompoundBox> MakeOpenCupBoxes() {
+    // The shift puts the compound body's origin at the approximate
+    // volume-weighted centre of mass. The spawn pose is lowered by the
+    // same amount below, leaving every wall at its authored world pose.
+    constexpr float centreOfMassShift = 0.153f;
+    return {
+        {{0.0f, -centreOfMassShift, 0.0f}, {0.18f, 0.015f, 0.18f}},
+        {{-0.165f, 0.195f - centreOfMassShift, 0.0f}, {0.015f, 0.18f, 0.18f}},
+        {{ 0.165f, 0.195f - centreOfMassShift, 0.0f}, {0.015f, 0.18f, 0.18f}},
+        {{0.0f, 0.195f - centreOfMassShift, -0.165f}, {0.15f, 0.18f, 0.015f}},
+        {{0.0f, 0.195f - centreOfMassShift,  0.165f}, {0.15f, 0.18f, 0.015f}},
+    };
+}
 
 // --- Milestone 7-A/7-Final: dynamic test objects ---
 //
@@ -740,9 +783,13 @@ int Application::Run() {
     // hidden — it's a real GL context either way, just not shown on screen.
     const char* testScriptPath = std::getenv("JUDAS_TEST_SCRIPT");
     const bool isTestRun = testScriptPath != nullptr;
+    // An opt-in visual snapshot of the M24 starting arrangement can be
+    // captured by the existing screenshot harness without changing its
+    // accepted M1–M23 scripted simulation path.
+    const bool fluidDemoEnabled = !isTestRun || std::getenv("JUDAS_FLUID_PREVIEW") != nullptr;
 
     Window window;
-    if (!window.Init("Project Judas - Milestone 23", kWindowWidth, kWindowHeight,
+    if (!window.Init("Project Judas - Milestone 24", kWindowWidth, kWindowHeight,
                       !isTestRun)) {
         std::fprintf(stderr, "Window initialization failed.\n");
         return 1;
@@ -793,6 +840,9 @@ int Application::Run() {
         return 1;
     }
     const MeshHandle spacecraftMesh = renderer.CreateMesh(spacecraftMeshData);
+    // A reusable non-indexed GPU buffer receives the surface extracted from
+    // interpolated fluid positions each presentation frame.
+    const MeshHandle fluidMesh = renderer.CreateMesh(MeshData{});
 
     renderer.SetLighting(kLightDirection, kLightColor, kAmbientColor);
 
@@ -827,10 +877,33 @@ int Application::Run() {
     RadicalGravity planetAGravity(kPlanetACenter, kRadicalGravityMagnitude);
     RadicalGravity planetBGravity(kPlanetBCenter, kRadicalGravityMagnitude);
     FaithfulGravity plankGravity;
+    const glm::quat fluidStationRotation = RotationAligningUpTo(kFluidStationBearing);
+    const glm::vec3 fluidSurfacePoint = PointAboveSphere(
+        kPlanetACenter, kPlanetARadius, kFluidStationBearing, 0.0f);
+    const glm::vec3 fluidTablePosition =
+        fluidSurfacePoint + kFluidStationBearing * kFluidTableHalfExtents.y;
+    const char* fluidGravityMode = std::getenv("JUDAS_FLUID_GRAVITY");
+    const std::string selectedFluidGravity = fluidGravityMode ? fluidGravityMode : "normal";
+    if (selectedFluidGravity != "normal" && selectedFluidGravity != "rotated" &&
+        selectedFluidGravity != "zero") {
+        std::fprintf(stderr, "JUDAS_FLUID_GRAVITY must be normal, rotated, or zero.\n");
+        return 1;
+    }
+    const glm::vec3 demoGravity = selectedFluidGravity == "zero" ? glm::vec3(0.0f) :
+        glm::angleAxis(glm::radians(50.0f),
+                       fluidStationRotation * glm::vec3(0.0f, 0.0f, 1.0f)) *
+            (-kFluidStationBearing * kRadicalGravityMagnitude);
+    DemoUniformGravity fluidDemoGravity(demoGravity);
+    const BoxVolume fluidGravityRegion(fluidTablePosition, glm::vec3(2.2f, 2.5f, 1.8f));
     const BoxVolume plankGravityRegion(kPlankCenter, kPlankGravityRegionHalfExtents);
     const SphericalVolume planetAGravityRegion(kPlanetACenter, kPlanetGravityRegionRadius);
     const SphericalVolume planetBGravityRegion(kPlanetBCenter, kPlanetGravityRegionRadius);
     GravityContextMap gravityContext;
+    if (fluidDemoEnabled && selectedFluidGravity != "normal") {
+        gravityContext.AddRegion(fluidDemoGravity, fluidGravityRegion);
+        std::fprintf(stderr, "Fluid station gravity: %s (%.2f, %.2f, %.2f) m/s^2\n",
+                     selectedFluidGravity.c_str(), demoGravity.x, demoGravity.y, demoGravity.z);
+    }
     gravityContext.AddRegion(plankGravity, plankGravityRegion);
     gravityContext.AddRegion(planetAGravity, planetAGravityRegion);
     gravityContext.AddRegion(planetBGravity, planetBGravityRegion);
@@ -842,6 +915,12 @@ int Application::Run() {
         kPlanetBCenter, kPlanetBRadius, kPlanetFriction, kPlanetRestitution);
     const BodyHandle plankBody = physicsWorld.CreateStaticBox(
         kPlankCenter, kPlankHalfExtents, kPlankFriction, kPlankRestitution);
+
+    BodyHandle fluidTableBody;
+    if (fluidDemoEnabled) {
+        fluidTableBody = physicsWorld.CreateStaticBox(
+            fluidTablePosition, fluidStationRotation, kFluidTableHalfExtents, 0.8f, 0.0f);
+    }
 
     // Milestone 10: the staircase + ramp step/slope test geometry — see
     // SpawnStepTestGeometry's own comment and docs/ARCHITECTURE.md,
@@ -932,18 +1011,78 @@ int Application::Run() {
     }
     CelestialGravity celestialGravity(std::move(celestialBodies));
 
-    // M18 deliberately whitelists only the six ordinary demo objects.
-    // The appended spacecraft, planets, plank, door, and all other static
-    // geometry are outside this manipulation boundary.
+    // Two physically identical, pickable open vessels. The bodies' child
+    // boxes are ordinary collision geometry; the fluid never stores a cup
+    // identity or a per-container quantity. Keep the authored initial poses
+    // alongside the same DynamicBody presentation/reset snapshots used by
+    // every M7–M23 dynamic object.
+    const std::vector<CompoundBox> cupBoxes = MakeOpenCupBoxes();
+    const std::size_t firstCupBodyIndex = dynamicBodies.size();
+    std::array<BodyHandle, 2> cupHandles{};
+    std::array<glm::vec3, 2> cupSpawnPositions{};
+    if (fluidDemoEnabled) {
+        for (std::size_t i = 0; i < cupHandles.size(); ++i) {
+            const float side = i == 0 ? -0.34f : 0.34f;
+            const glm::vec3 localCenter(side,
+                kFluidTableHalfExtents.y + 0.168f, 0.0f);
+            const glm::vec3 position = fluidTablePosition + fluidStationRotation * localCenter;
+            const BodyHandle handle = physicsWorld.CreateDynamicCompoundBoxes(
+                position, cupBoxes, kCupMass, 0.8f, 0.0f);
+            physicsWorld.ResetBody(handle, position, fluidStationRotation);
+            DynamicBody::Visual visual;
+            visual.shape = DynamicBody::Shape::Box;
+            visual.halfExtents = glm::vec3(0.18f, 0.195f, 0.18f);
+            visual.color = kCupWallColor;
+            dynamicBodies.emplace_back(handle, visual, position, fluidStationRotation);
+            cupHandles[i] = handle;
+            cupSpawnPositions[i] = position;
+        }
+    }
+
+    FluidWorld fluidWorld;
+    const auto resetFluid = [&]() {
+        fluidWorld.Clear();
+        if (!cupHandles[0].IsValid()) return;
+        const float mass = fluidWorld.Settings().restDensity *
+            kFluidParticleSpacing * kFluidParticleSpacing * kFluidParticleSpacing;
+        for (int y = 0; y < 5; ++y) {
+            for (int z = -2; z <= 2; ++z) {
+                for (int x = -2; x <= 2; ++x) {
+                    const glm::vec3 local(static_cast<float>(x) * kFluidParticleSpacing,
+                                          0.05f - 0.153f +
+                                              static_cast<float>(y) * kFluidParticleSpacing,
+                                          static_cast<float>(z) * kFluidParticleSpacing);
+                    fluidWorld.AddParticle(cupSpawnPositions[0] + fluidStationRotation * local,
+                                           glm::vec3(0.0f), mass);
+                }
+            }
+        }
+    };
+    resetFluid();
+    if (!fluidWorld.Particles().empty()) {
+        std::vector<glm::vec3> initialPositions;
+        initialPositions.reserve(fluidWorld.Particles().size());
+        for (const FluidParticle& particle : fluidWorld.Particles())
+            initialPositions.push_back(particle.position);
+        renderer.UpdateMeshVertices(fluidMesh,
+            BuildFluidSurface(initialPositions, 0.105f, 0.05f, 0.45f));
+    }
+
+    // M18's explicit whitelist now includes the two ordinary dynamic cups;
+    // spacecraft, celestial bodies, planets, plank, door and table stay out.
+    std::vector<std::size_t> pickupBodyIndices;
+    for (std::size_t i = 0; i < flyingPrimitiveBodyIndex; ++i) pickupBodyIndices.push_back(i);
+    for (std::size_t i = firstCupBodyIndex; i < dynamicBodies.size(); ++i)
+        pickupBodyIndices.push_back(i);
     std::vector<BodyHandle> pickupHandles;
-    pickupHandles.reserve(flyingPrimitiveBodyIndex);
-    for (std::size_t i = 0; i < flyingPrimitiveBodyIndex; ++i) {
+    pickupHandles.reserve(pickupBodyIndices.size());
+    for (std::size_t i : pickupBodyIndices) {
         pickupHandles.push_back(dynamicBodies[i].Handle());
     }
     ObjectManipulation objectManipulation(std::move(pickupHandles));
     std::vector<PickupInteractable> pickupTargets;
-    pickupTargets.reserve(flyingPrimitiveBodyIndex);
-    for (std::size_t i = 0; i < flyingPrimitiveBodyIndex; ++i) {
+    pickupTargets.reserve(pickupBodyIndices.size());
+    for (std::size_t i : pickupBodyIndices) {
         pickupTargets.emplace_back(dynamicBodies[i], objectManipulation, physicsWorld);
     }
     // Player/Application code still sees only the established M16
@@ -999,6 +1138,10 @@ int Application::Run() {
         r.DrawSphere(kPlanetACenter, kPlanetARadius, kPlanetAColor);
         r.DrawSphere(kPlanetBCenter, kPlanetBRadius, kPlanetBColor);
         r.DrawBox(kPlankCenter, glm::quat(1.0f, 0.0f, 0.0f, 0.0f), kPlankHalfExtents, kPlankColor);
+        if (fluidTableBody.IsValid()) {
+            r.DrawBox(fluidTablePosition, fluidStationRotation, kFluidTableHalfExtents,
+                      kFluidTableColor);
+        }
         // Milestone 10: the staircase + ramp — static, drawn from their own
         // authored transforms exactly like the plank above.
         for (const StaticTestBody& body : stepTestBodies) {
@@ -1062,6 +1205,18 @@ int Application::Run() {
                            TextureHandle{}, kFlyingPrimitiveColor);
                 continue;
             }
+            if (i >= firstCupBodyIndex && i < firstCupBodyIndex + cupHandles.size()) {
+                const glm::vec3 parentPosition = body.GetPresentedPosition(presentationAlpha);
+                const glm::quat parentRotation = body.GetPresentedOrientation(presentationAlpha);
+                for (std::size_t part = 0; part < cupBoxes.size(); ++part) {
+                    if (part != 0 && !r.IsShadowPass()) continue;
+                    const CompoundBox& box = cupBoxes[part];
+                    r.DrawBox(parentPosition + parentRotation * box.localCenter,
+                              parentRotation, box.halfExtents,
+                              part == 0 ? kCupBottomColor : kCupWallColor);
+                }
+                continue;
+            }
             const DynamicBody::Visual& visual = body.GetVisual();
             if (visual.shape == DynamicBody::Shape::Box) {
                 r.DrawBox(body.GetPresentedPosition(presentationAlpha),
@@ -1072,6 +1227,29 @@ int Application::Run() {
                              visual.color);
             }
         }
+        // The fluid receives ordinary lighting/shadows in the color pass;
+        // its tiny, constantly rebuilt surface does not need to occupy
+        // three separate depth maps each frame.
+        if (!fluidWorld.Particles().empty() && !r.IsShadowPass()) {
+            r.DrawMesh(fluidMesh, glm::vec3(0.0f), glm::quat(1, 0, 0, 0),
+                       glm::vec3(1.0f), TextureHandle{}, kFluidColor);
+        }
+    };
+
+    const auto drawTransparentCupWalls = [&](float presentationAlpha) {
+        if (!cupHandles[0].IsValid()) return;
+        renderer.BeginTransparentPass();
+        for (std::size_t i = 0; i < cupHandles.size(); ++i) {
+            const DynamicBody& body = dynamicBodies[firstCupBodyIndex + i];
+            const glm::vec3 position = body.GetPresentedPosition(presentationAlpha);
+            const glm::quat rotation = body.GetPresentedOrientation(presentationAlpha);
+            for (std::size_t part = 1; part < cupBoxes.size(); ++part) {
+                const CompoundBox& box = cupBoxes[part];
+                renderer.DrawBox(position + rotation * box.localCenter, rotation,
+                                 box.halfExtents, kCupWallColor, 0.35f);
+            }
+        }
+        renderer.EndTransparentPass();
     };
 
     // Milestone 13: the pause menu and HUD — interactive-loop-only (see
@@ -1098,8 +1276,12 @@ int Application::Run() {
 
     int exitCode = 0;
     if (isTestRun) {
+        const auto drawHarnessScene = [&](Renderer& r, float alpha) {
+            drawScene(r, alpha);
+            drawTransparentCupWalls(alpha);
+        };
         exitCode = RunTestHarness(window, renderer, physicsWorld, player, gravity, dynamicBodies,
-                                   flyingPrimitiveControl, pilotAttachment, drawScene, testScriptPath);
+                                   flyingPrimitiveControl, pilotAttachment, drawHarnessScene, testScriptPath);
     } else {
         float physicsAccumulator = 0.0f;
 
@@ -1114,6 +1296,13 @@ int Application::Run() {
         // when unset. Throttled (not every frame) since 60Hz would flood
         // whatever's reading it.
         const bool liveTelemetryEnabled = std::getenv("JUDAS_LIVE_TELEMETRY") != nullptr;
+        const bool fluidDiagnosticsEnabled = std::getenv("JUDAS_FLUID_DIAGNOSTICS") != nullptr;
+        int fluidDiagnosticFrames = 0;
+        int fluidDiagnosticSteps = 0;
+        double accumulatedFluidMilliseconds = 0.0;
+        double accumulatedSurfaceMilliseconds = 0.0;
+        double accumulatedSceneMilliseconds = 0.0;
+        double accumulatedFrameMilliseconds = 0.0;
         constexpr int kLiveTelemetryFrameInterval = 10;
         int liveTelemetryFrameCounter = 0;
         if (liveTelemetryEnabled) {
@@ -1248,6 +1437,7 @@ int Application::Run() {
                     for (DynamicBody& body : dynamicBodies) {
                         body.ResetToSpawn(physicsWorld);
                     }
+                    resetFluid();
                     physicsWorld.SetLinearVelocity(orbitalBodyA, kOrbitalVelocityA);
                     physicsWorld.SetLinearVelocity(orbitalBodyB, kOrbitalVelocityB);
                     flyingPrimitiveControl.controlled = false;
@@ -1368,6 +1558,14 @@ int Application::Run() {
                             player.GetPosition(), player.GetOrientation(), player.GetLookDirection(),
                             0.7f, 1.7f);
                         objectManipulation.ApplyCarryForce(physicsWorld, carryTarget, player.GetVelocity());
+                        // A compound held body may need an attitude as well as
+                        // a position. Mouse look tips it by applying torque;
+                        // single-shape M18 objects retain their old carry law.
+                        if (physicsWorld.GetBodyBoxes(objectManipulation.HeldBody()).size() > 1) {
+                            objectManipulation.ApplyCarryOrientationTorque(
+                                physicsWorld, ComputeCarryOrientation(
+                                    player.GetOrientation(), player.GetLookDirection()));
+                        }
                     }
                     ApplyFlyingPrimitiveControl(flyingPrimitiveControl, window, physicsWorld);
                     // Milestone 16: advances the door's own open/close
@@ -1381,6 +1579,57 @@ int Application::Run() {
                     door.FixedUpdate(physicsWorld, SimulationTiming::kFixedTimestep);
                     lightSwitch.FixedUpdate(SimulationTiming::kFixedTimestep);
                     physicsWorld.Step(SimulationTiming::kFixedTimestep);
+                    if (!fluidWorld.Particles().empty()) {
+                        const auto fluidStart = std::chrono::steady_clock::now();
+                        std::vector<FluidBoxCollider> fluidBoxes;
+                        const auto appendBodyBoxes = [&](BodyHandle handle) {
+                            const std::vector<BodyBox> previous =
+                                physicsWorld.GetPreviousBodyBoxes(handle);
+                            const std::vector<BodyBox> current = physicsWorld.GetBodyBoxes(handle);
+                            for (std::size_t part = 0; part < current.size(); ++part) {
+                                fluidBoxes.push_back(FluidBoxCollider{
+                                    handle,
+                                    BodyTransform{previous[part].center, previous[part].rotation},
+                                    BodyTransform{current[part].center, current[part].rotation},
+                                    current[part].halfExtents});
+                            }
+                        };
+                        appendBodyBoxes(fluidTableBody);
+                        appendBodyBoxes(plankBody);
+                        for (const StaticTestBody& body : stepTestBodies)
+                            appendBodyBoxes(body.handle);
+                        std::vector<FluidSphereCollider> fluidSpheres;
+                        for (const BodyHandle planet : {planetABody, planetBBody}) {
+                            const BodyTransform previous = physicsWorld.GetPreviousTransform(planet);
+                            const BodyTransform current = physicsWorld.GetTransform(planet);
+                            const float radius = planet.id == planetABody.id
+                                ? kPlanetARadius : kPlanetBRadius;
+                            fluidSpheres.push_back({planet, previous, current, radius});
+                        }
+                        for (const DynamicBody& body : dynamicBodies) {
+                            if (body.GetVisual().shape == DynamicBody::Shape::Sphere) {
+                                fluidSpheres.push_back({body.Handle(),
+                                    physicsWorld.GetPreviousTransform(body.Handle()),
+                                    physicsWorld.GetTransform(body.Handle()),
+                                    body.GetVisual().radius});
+                            } else {
+                                appendBodyBoxes(body.Handle());
+                            }
+                        }
+                        std::vector<FluidContactImpulse> fluidImpulses;
+                        fluidWorld.Step(SimulationTiming::kFixedTimestep, gravity,
+                                        fluidBoxes, fluidSpheres, &fluidImpulses);
+                        for (const FluidContactImpulse& contact : fluidImpulses) {
+                            physicsWorld.ApplyImpulseAtPoint(contact.owner,
+                                                              contact.impulse, contact.point);
+                        }
+                        if (fluidDiagnosticsEnabled) {
+                            accumulatedFluidMilliseconds +=
+                                std::chrono::duration<double, std::milli>(
+                                    std::chrono::steady_clock::now() - fluidStart).count();
+                            ++fluidDiagnosticSteps;
+                        }
+                    }
                     AdvancePlayerForPiloting(flyingPrimitiveControl, pilotAttachment, player, physicsWorld,
                                               window, gravity, SimulationTiming::kFixedTimestep);
                     SyncDynamicBodiesFromPhysics(dynamicBodies, physicsWorld);
@@ -1421,6 +1670,21 @@ int Application::Run() {
             // underlying simulation itself is smooth.
             const float presentationAlpha = physicsAccumulator / SimulationTiming::kFixedTimestep;
 
+            if (!fluidWorld.Particles().empty()) {
+                const auto surfaceStart = std::chrono::steady_clock::now();
+                std::vector<glm::vec3> waterPositions;
+                waterPositions.reserve(fluidWorld.Particles().size());
+                for (std::size_t i = 0; i < fluidWorld.Particles().size(); ++i)
+                    waterPositions.push_back(fluidWorld.PresentedPosition(i, presentationAlpha));
+                renderer.UpdateMeshVertices(fluidMesh,
+                    BuildFluidSurface(waterPositions, 0.105f, 0.05f, 0.45f));
+                if (fluidDiagnosticsEnabled) {
+                    accumulatedSurfaceMilliseconds +=
+                        std::chrono::duration<double, std::milli>(
+                            std::chrono::steady_clock::now() - surfaceStart).count();
+                }
+            }
+
             const int windowHeight = std::max(window.Height(), 1);
             const float aspectRatio =
                 static_cast<float>(window.Width()) / static_cast<float>(windowHeight);
@@ -1452,6 +1716,7 @@ int Application::Run() {
             const glm::mat4 dirShadowMatrix =
                 ComputeDirectionalShadowMatrix(player.GetPresentedPosition(presentationAlpha),
                                                 kLightDirection, kDirShadowHalfExtent, kDirShadowDistance);
+            const auto sceneStart = std::chrono::steady_clock::now();
             renderer.BeginShadowPass(kDirectionalShadowSlot, dirShadowMatrix);
             drawScene(renderer, presentationAlpha, /*includePlayerModel=*/true);
             renderer.EndShadowPass();
@@ -1493,7 +1758,13 @@ int Application::Run() {
             // (and readably, and with correct shadows) lit.
             renderer.SetDynamicLights(lights);
             drawScene(renderer, presentationAlpha, /*includePlayerModel=*/true);
+            drawTransparentCupWalls(presentationAlpha);
             renderer.EndFrame();
+            if (fluidDiagnosticsEnabled) {
+                accumulatedSceneMilliseconds +=
+                    std::chrono::duration<double, std::milli>(
+                        std::chrono::steady_clock::now() - sceneStart).count();
+            }
 
             // Milestone 13: the HUD + pause menu overlay, drawn last so
             // they composite on top of the 3D scene above — see
@@ -1535,6 +1806,8 @@ int Application::Run() {
                     hudData.interactPrompt = interactTarget
                         ? interactTarget->GetPromptText() + " | H Throw"
                         : "G Drop | H Throw";
+                    if (physicsWorld.GetBodyBoxes(objectManipulation.HeldBody()).size() > 1)
+                        hudData.interactPrompt += " | Look to tip";
                 } else {
                     hudData.interactPrompt = interactTarget ? interactTarget->GetPromptText() : std::string();
                 }
@@ -1544,6 +1817,34 @@ int Application::Run() {
             renderer.EndUIFrame();
 
             window.SwapBuffers();
+            if (fluidDiagnosticsEnabled) {
+                ++fluidDiagnosticFrames;
+                accumulatedFrameMilliseconds += frameDeltaTime * 1000.0;
+                if (fluidDiagnosticFrames % 120 == 0) {
+                    const FluidDiagnostics state = fluidWorld.GetDiagnostics();
+                    const BodyTransform cupPose = physicsWorld.GetTransform(cupHandles[0]);
+                    std::fprintf(stderr,
+                        "M24 timing: %zu particles; %.3f ms/fluid step (%d steps); "
+                        "%.3f ms/surface+upload; %.3f ms/scene CPU submit; %.3f ms/frame wall; "
+                        "mass %.3f kg; mean/max over-density %.2f/%.2f%%; "
+                        "COM (%.3f, %.3f, %.3f) m; kinetic %.3f J; "
+                        "cup (%.3f, %.3f, %.3f) m, speed %.3f m/s, spin %.3f rad/s\n",
+                        fluidWorld.Particles().size(),
+                        accumulatedFluidMilliseconds / std::max(fluidDiagnosticSteps, 1),
+                        fluidDiagnosticSteps,
+                        accumulatedSurfaceMilliseconds / fluidDiagnosticFrames,
+                        accumulatedSceneMilliseconds / fluidDiagnosticFrames,
+                        accumulatedFrameMilliseconds / fluidDiagnosticFrames,
+                        state.totalMass, state.meanPositiveDensityError * 100.0f,
+                        state.maxPositiveDensityError * 100.0f,
+                        state.centerOfMass.x, state.centerOfMass.y, state.centerOfMass.z,
+                        state.kineticEnergy,
+                        cupPose.position.x, cupPose.position.y, cupPose.position.z,
+                        glm::length(physicsWorld.GetLinearVelocity(cupHandles[0])),
+                        glm::length(physicsWorld.GetAngularVelocity(cupHandles[0])));
+                    std::fflush(stderr);
+                }
+            }
         }
     }
 
@@ -1558,10 +1859,12 @@ int Application::Run() {
     physicsWorld.DestroyBody(planetABody);
     physicsWorld.DestroyBody(planetBBody);
     physicsWorld.DestroyBody(plankBody);
+    if (fluidTableBody.IsValid()) physicsWorld.DestroyBody(fluidTableBody);
     physicsWorld.Shutdown();
     renderer.DestroyMesh(beaconMesh);
     renderer.DestroyTexture(beaconTexture);
     renderer.DestroyMesh(spacecraftMesh);
+    renderer.DestroyMesh(fluidMesh);
     renderer.Shutdown();
     return exitCode;
 }

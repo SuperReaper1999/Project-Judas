@@ -24,6 +24,9 @@ public:
     bool Throw(PhysicsWorld& physics, const glm::vec3& lookDirection, float throwSpeed);
     void ApplyCarryForce(PhysicsWorld& physics, const glm::vec3& target,
                          const glm::vec3& targetVelocity) const;
+    // Optional attitude hold for a held rigid body. The target is supplied
+    // by player/look presentation semantics; only torque enters physics.
+    void ApplyCarryOrientationTorque(PhysicsWorld& physics, const glm::quat& target) const;
 
 private:
     std::vector<BodyHandle> m_eligibleBodies;
@@ -32,6 +35,10 @@ private:
 
 glm::vec3 ComputeCarryTarget(const glm::vec3& playerPosition, const glm::quat& playerOrientation,
                              const glm::vec3& lookDirection, float eyeHeight, float carryDistance);
+// Local +Y follows the view's up, so looking downward physically tips an
+// ordinary held body. No world-axis or cup-specific state is involved.
+glm::quat ComputeCarryOrientation(const glm::quat& playerOrientation,
+                                   const glm::vec3& lookDirection);
 
 class PickupInteractable final : public Interactable {
 public:

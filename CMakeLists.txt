@@ -59,6 +59,8 @@ add_executable(judas
     src/HingeTransform.cpp
     src/InteractionSystem.cpp
     src/ObjectManipulation.cpp
+    src/FluidWorld.cpp
+    src/FluidSurface.cpp
     src/Door.cpp
     src/LightSwitch.cpp
     src/FaithfulGravity.cpp
@@ -374,6 +376,47 @@ target_include_directories(judas_world_coordinates_tests PRIVATE src)
 target_include_directories(judas_world_coordinates_tests PRIVATE ${SDL2_INCLUDE_DIRS})
 target_link_libraries(judas_world_coordinates_tests PRIVATE SDL2::SDL2 glm::glm-header-only)
 target_compile_options(judas_world_coordinates_tests PRIVATE -Wall -Wextra)
+
+# M24: the bounded CPU fluid, generic compound rigid-body geometry, and
+# presentation-only water surface are exercised without a GL context.
+add_executable(judas_compound_body_tests
+    tests/CompoundBodyTests.cpp
+    ${JUDAS_PHYSICS_SOURCES}
+    src/PhysicsWorld.cpp
+)
+target_include_directories(judas_compound_body_tests PRIVATE src)
+target_link_libraries(judas_compound_body_tests PRIVATE glm::glm-header-only)
+target_compile_options(judas_compound_body_tests PRIVATE -Wall -Wextra)
+
+add_executable(judas_fluid_world_tests
+    tests/FluidWorldTests.cpp
+    src/FluidWorld.cpp
+    ${JUDAS_TEST_SUPPORT_SOURCES}
+    src/PhysicsWorld.cpp
+)
+target_include_directories(judas_fluid_world_tests PRIVATE src)
+target_link_libraries(judas_fluid_world_tests PRIVATE glm::glm-header-only)
+target_compile_options(judas_fluid_world_tests PRIVATE -Wall -Wextra)
+
+add_executable(judas_fluid_rigid_coupling_tests
+    tests/FluidRigidCouplingTests.cpp
+    src/FluidWorld.cpp
+    src/ObjectManipulation.cpp
+    src/DynamicBody.cpp
+    ${JUDAS_PHYSICS_SOURCES}
+    src/PhysicsWorld.cpp
+)
+target_include_directories(judas_fluid_rigid_coupling_tests PRIVATE src)
+target_link_libraries(judas_fluid_rigid_coupling_tests PRIVATE glm::glm-header-only)
+target_compile_options(judas_fluid_rigid_coupling_tests PRIVATE -Wall -Wextra)
+
+add_executable(judas_fluid_surface_tests
+    tests/FluidSurfaceTests.cpp
+    src/FluidSurface.cpp
+)
+target_include_directories(judas_fluid_surface_tests PRIVATE src)
+target_link_libraries(judas_fluid_surface_tests PRIVATE glm::glm-header-only)
+target_compile_options(judas_fluid_surface_tests PRIVATE -Wall -Wextra)
 
 # stb_image_write (public domain / MIT, see third_party/stb_image_write.h) —
 # used only by the opt-in test harness (src/TestHarness.cpp) to write

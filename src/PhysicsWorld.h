@@ -2,6 +2,9 @@
 
 #include <glm/glm.hpp>
 #include <glm/gtc/quaternion.hpp>
+#include <vector>
+
+#include "CollisionShapes.h"
 
 // Opaque handle to a body inside PhysicsWorld. Deliberately not tied to
 // any concrete physics-engine body-ID representation — no file outside
@@ -16,6 +19,16 @@ struct BodyHandle {
 struct BodyTransform {
     glm::vec3 position{0.0f, 0.0f, 0.0f};
     glm::quat rotation{1.0f, 0.0f, 0.0f, 0.0f};  // identity
+};
+
+// One box of a rigid body's collision geometry after transforming it into
+// simulation/world space. Ordinary boxes return one entry; compound bodies
+// return their children in stable order; spheres return none. Consumers such
+// as the fluid solver can collide with the same geometry as rigid bodies.
+struct BodyBox {
+    glm::vec3 center{0.0f};
+    glm::quat rotation{1.0f, 0.0f, 0.0f, 0.0f};
+    glm::vec3 halfExtents{0.0f};
 };
 
 // The result of sweeping a shape through the world: the only question
@@ -81,6 +94,13 @@ public:
                                  float mass, float friction, float restitution);
     BodyHandle CreateDynamicSphere(const glm::vec3& position, float radius, float mass,
                                     float friction, float restitution);
+    // A set of local boxes sharing one dynamic body's centre of mass, pose,
+    // momentum, and inertia. `position` is the centre of mass; child centres
+    // are relative to it. No semantic knowledge of the assembled object is
+    // needed by physics or by callers querying its box geometry.
+    BodyHandle CreateDynamicCompoundBoxes(const glm::vec3& position,
+                                           const std::vector<CompoundBox>& boxes,
+                                           float mass, float friction, float restitution);
     void DestroyBody(BodyHandle handle);
 
     // True only for a body created via CreateDynamic*. Added in Milestone
@@ -90,6 +110,8 @@ public:
     bool IsDynamicBody(BodyHandle handle) const;
     float GetMass(BodyHandle handle) const;
     void ApplyLinearImpulse(BodyHandle handle, const glm::vec3& impulse);
+    void ApplyImpulseAtPoint(BodyHandle handle, const glm::vec3& impulse,
+                             const glm::vec3& worldPoint);
 
     // Generic rigid-body velocity access — the same category as
     // GetTransform/ResetBody below, just for velocity. Added in Milestone
@@ -166,6 +188,8 @@ public:
     // Pose at the start of the most recent fixed step for dynamic bodies;
     // static bodies return their current pose.
     BodyTransform GetPreviousTransform(BodyHandle handle) const;
+    std::vector<BodyBox> GetBodyBoxes(BodyHandle handle) const;
+    std::vector<BodyBox> GetPreviousBodyBoxes(BodyHandle handle) const;
 
     // Restores a body to a pose with zero linear and angular velocity.
     void ResetBody(BodyHandle handle, const glm::vec3& position, const glm::quat& rotation);

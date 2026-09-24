@@ -13,7 +13,30 @@ loaded with the vendored GLAD 2.0.8 OpenGL 3.3 Core loader through the
 SDL-created context; generation and license provenance are recorded in
 [`third_party/glad/README.md`](third_party/glad/README.md).
 
-## Status: Milestone 23 accepted
+## Status: Milestone 24 accepted
+
+**New in M24:** a small water volume now has its own authoritative particle
+positions, velocities, masses, and pressure response. Two open cups on a table
+near the Planet A spawn are ordinary dynamic compound-box bodies: each has a
+bottom and four walls, with no invisible lid or stored `waterAmount`. Cup A
+starts with the water; Cup B starts empty. Pick up a cup through the existing
+`G` interaction, move it with the player, and look up or down to tip it. `G`
+drops the held cup and `H` throws it. The fluid particles can cross a rim,
+travel through space, contact the other cup, and leave it again; there is no
+container-to-container transfer command. The automated M24 checks pass, and
+the operator accepted the live first-person fluid view.
+
+The bounded CPU solver uses position-based density constraints at the fixed
+simulation step. It samples each particle's gravity from Judas's existing
+local gravity contexts, including zero acceleration where no context applies.
+Ordinary rigid boxes and spheres block the fluid; their previous and current
+poses provide moving-wall motion, and fluid contact impulses are returned to
+dynamic rigid bodies. A lit surface mesh is rebuilt from presented particle
+positions for display only. It never determines fluid motion. The current
+demonstration starts with 125 particles; this is a small interactive pour,
+not an ocean or a general-purpose fluid framework. See
+[`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md), "Milestone 24," for the method,
+numerical limits, and measured results.
 
 **New in M23:** Judas now represents the active scene as small float
 simulation/render coordinates plus a double-precision absolute coordinate
@@ -96,8 +119,11 @@ spheres) that sample the same Judas-owned gravity the player does, purely
 from their own position — proof that gravity was never player-specific or
 region-specific. They fall, land, roll, and collide with the world and
 each other under real physics. The player can target the six ordinary demo
-objects with `G` to pick one up, carry it with physics-backed forces, use
-`G` to drop it, or `H` to throw it along the current look direction.
+objects and the two M24 cups with `G` to pick one up, carry it with
+physics-backed forces, use `G` to drop it, or `H` to throw it along the current
+look direction. A held cup also receives torque to follow the player's
+look-relative orientation; the six older single-shape objects retain their
+M18 carry behavior.
 
 The player can walk from Planet A, onto the plank, across it, onto
 Planet B, and back. Gravity hands off coherently at every boundary,
@@ -271,9 +297,8 @@ interaction system isn't secretly built just for doors. See
 This is intentional — see `docs/ARCHITECTURE.md` for why, what's
 deliberately not built yet, and how this small foundation avoids blocking
 the much larger long-term design. Earlier milestones are preserved as git
-tags (`milestone-1` through `milestone-16`) rather than kept running
-alongside the current demo. Milestone 17 remains subject to operator
-validation before it is accepted or tagged.
+tags (`milestone-1` through `milestone-24`) rather than kept running
+alongside the current demo.
 
 **New this milestone:** press `V` to switch between the existing third-person
 follow camera and a first-person camera at the player's eye. Both use the
@@ -311,7 +336,7 @@ sudo apt install cmake libsdl2-dev libglm-dev build-essential
 ### Build
 
 ```bash
-cmake -S . -B build -DCMAKE_BUILD_TYPE=Debug
+cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
 cmake --build build -j"$(nproc)"
 ```
 
@@ -345,6 +370,8 @@ walks the player relative to that look direction and the current surface
 | Take/release piloting control of the spacecraft (only while standing on it) | `F` |
 | Toggle the player torch on/off | `T`             |
 | Interact (door, switch, or whatever's prompted) | `G` |
+| Pick up / drop an eligible physics object or cup | `G` |
+| Throw a held object or cup | `H` |
 | Toggle first/third-person player view | `V` |
 | Reset the player and world | `R`               |
 | Planet thrust: prograde / retrograde / radial outward | `P` / `M` / `N` |
@@ -411,6 +438,36 @@ menu suppresses interaction the same way it suppresses every other
 gameplay input (see "HUD and pause menu" below): `G` does nothing while a
 menu owns input. See [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md),
 "Milestone 16," for the full design.
+
+### Two-cup fluid demonstration (M24)
+
+The fluid table is near the player spawn on Planet A. Cup A starts with water
+and Cup B is empty. Look at a cup from within interaction range until the
+pickup prompt appears, then press `G`. The held cup follows the player's
+movement with physical force and follows mouse look with physical torque:
+raising or lowering the view tips it without a separate pour key. Move Cup A
+over Cup B and tip its open rim. The water can leave through the opening,
+travel between the cups, contact Cup B, and subsequently leave Cup B as the
+same simulated matter. Press `G` while holding to drop, or `H` to throw. If
+another interactable is under the crosshair, `G` activates that prompt first;
+look away from it to drop the cup. `R` resets both cup poses and the original
+fluid particles.
+
+Both cups use the same rigid-body collision and M18 pickup rules as other
+eligible dynamic objects. Static world geometry, planets, and the spacecraft
+are not pickable. The water uses each particle's actual local gravity; a
+rotated context rotates its acceleration, and a zero-gravity region does not
+create a world-down direction. Cup walls are translucent so the
+simulation-derived water mesh remains visible. The surface and transparency
+are visual approximations; fluid state and solid contact are CPU simulation.
+
+Run `JUDAS_FLUID_GRAVITY=rotated ./build/judas` to give the station a gravity
+direction tilted 50 degrees from local down, or
+`JUDAS_FLUID_GRAVITY=zero ./build/judas` for exactly zero gravity there. The
+same bounded context applies to the player, cups, and water. Outside it,
+Planet A's normal gravity resumes. Either variant can be combined with
+`JUDAS_WORLD_OFFSET=far`. Use an optimized build for the interactive fluid
+demo; Debug is substantially slower on the measured machine.
 
 ## HUD and pause menu
 
@@ -522,7 +579,7 @@ full script format:
 JUDAS_TEST_SCRIPT=path/to/script.txt ./build/judas
 ```
 
-Eighteen standalone, headless test executables also exist (no window or GL
+Twenty-two standalone, headless test executables also exist (no window or GL
 context): `judas_physics_tests` and `judas_collision_tests` (rigid-body/
 collision/gravity-context primitives); `judas_asset_tests` (Milestone 9 —
 model/texture loading, parses the real committed demo assets and checks
@@ -588,10 +645,16 @@ torch pose, stillness after traversal, and rotated-universe equivalence); and
 force direction, barycentric motion for equal and unequal masses, analytical
 period/radius comparison, momentum/angular-momentum/energy/barycentre drift,
 timestep convergence, perturbation, escape, and rotate-the-universe
-equivalence); and `judas_world_coordinates_tests` (Milestone 23 — precise
+equivalence); `judas_world_coordinates_tests` (Milestone 23 — precise
 large-offset placement, slow motion, contacts, gravity, orbit/spacecraft/SAS,
 curved walking/jumping, both cameras, torch, pickup/throw, moving frames,
-shadows, and combined rotation/translation). Run them with:
+shadows, and combined rotation/translation); and the M24
+`judas_compound_body_tests`, `judas_fluid_world_tests`,
+`judas_fluid_rigid_coupling_tests`, and `judas_fluid_surface_tests` (open
+compound geometry and contact, fluid gravity, zero gravity, moving walls,
+geometric and real rigid-body pour/pour-back, mass accounting,
+rotated/far-origin equivalence, and simulation-derived surface generation).
+Run them with:
 
 ```bash
 cmake --build build

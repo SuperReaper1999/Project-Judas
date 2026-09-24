@@ -6536,3 +6536,169 @@ scene that moves far from its selected local origin will need a measured,
 atomic coordinate shift across its simulation and presentation state.
 There is no such shift in the current M23 demo, so no mid-run rebase
 continuity is claimed.
+
+## Milestone 24 — bounded dynamic liquid (operator accepted)
+
+### Method and ownership
+
+The requirement is a small liquid volume that can leave one *moving* open
+rigid container, travel through space, and enter another under arbitrary or
+zero gravity. A stiff force-based SPH pressure law would require careful
+small-timestep tuning for this 60 Hz interactive case; a 3D Eulerian grid or
+FLIP/PIC would require moving-wall cut cells and a larger bounded domain just
+to represent two hand-carried cups. Judas instead uses a bounded CPU particle
+solver with position-based density constraints. Its particles carry position,
+previous position, velocity, and fixed mass; a spatial hash supplies nearby
+particles for a Poly6 density estimate, and iterative pressure corrections
+oppose *over-density*. This is an approximate incompressible-liquid method,
+not an exact Navier–Stokes solution. The fixed step is split into three fluid
+substeps with two density iterations each; the default collision radius is
+`0.018 m`, density smoothing radius `0.105 m`, rest density `1000 kg/m³`, and
+XSPH-style numerical velocity smoothing coefficient `0.15`. No particle is
+created or destroyed during stepping.
+
+`FluidWorld` owns the fluid distribution and samples the same
+`GravityField::Sample(position)` abstraction as the player and dynamic bodies.
+There is no gravity constant or world-down direction inside the solver. With
+zero supplied acceleration and no moving solid contact, one particle retains
+its original velocity. A rigid rotation of the entire gravity/solid/fluid
+scenario produces the rotated result; `WorldCoordinates` keeps the active
+simulation local even when the absolute M23 scene origin is billions of metres
+away. The solver does not use camera or presentation state.
+
+### Ordinary solid geometry and moving-wall coupling
+
+`PhysicsWorld::CreateDynamicCompoundBoxes` creates one rigid body from child
+box primitives, with one pose, mass, inertia, velocity, collision response,
+and reset history. The two demo cups each supply a bottom and four walls, no
+lid. The new compound path participates in existing rigid contacts and player
+sweeps; it is not a fluid/container class. `GetBodyBoxes` and
+`GetPreviousBodyBoxes` expose the same child collision geometry to the fluid
+solver, preserving rigid-body ownership of shapes. Cup bodies are explicitly
+eligible in the existing M18 pickup/interaction whitelist; other static or
+celestial bodies remain ineligible. A held cup follows M18's physical carry
+force and an optional look-relative attitude target applied as *torque* through
+its world inertia tensor. That optional torque is used for compound held
+bodies; earlier single-shape carried objects retain their established motion.
+
+Each fluid substep interpolates a solid child's *actual* previous/current
+transform, including rotation, and sweeps the particle relative to the box
+or sphere. Projection keeps particles out of solid volume; wall point
+velocity contributes to contact response. The fluid step returns
+equal-and-opposite point impulses, applied through
+`PhysicsWorld::ApplyImpulseAtPoint` to dynamic rigid bodies. Rigid bodies
+advance before the fluid step, so the reaction changes their velocity for the
+next fixed step; that one-step splitting is a numerical approximation, not an
+unmodelled `cup.waterAmount`. A water particle can cross a rim because there
+is no lid collider, and only actual acceleration/contact changes its path.
+Static objects ignore returned impulses. The water has mass and its reaction
+on a moving cup is measurable; M24 does not add buoyancy or hydrodynamic
+gameplay for other rigid bodies.
+
+### Demonstration and presentation
+
+The live scene has a static table near Planet A's player spawn and two
+identical open cups, each a `120 kg` dynamic compound body. Cup A starts with
+`5×5×5 = 125` water particles at `0.05 m` spacing. Each particle has
+`0.125 kg` mass, so total simulated water mass is `15.625 kg`; Cup B starts
+empty. The cups' positions and local frame are authored from a bearing on
+Planet A for a convenient starting arrangement, but neither solver nor
+collision code knows that bearing. `R` restores both bodies and the initial
+particle distribution. The M18 `G` interaction picks up/drops a targeted cup,
+`H` throws it, and mouse look physically tips a held cup. There is no pour
+key or transfer operation.
+
+For operator gravity checks, `JUDAS_FLUID_GRAVITY=rotated` inserts a bounded
+station region with a constant acceleration rotated 50 degrees from the
+station's local down. `JUDAS_FLUID_GRAVITY=zero` gives that same region exactly
+zero acceleration; `normal` (or unset) uses the existing radial Planet A
+context. This is composition-root demo configuration through
+`GravityContextMap`, registered before the broader planet region. The player,
+cups, and water all sample the same selected field where they occupy that
+region. Crossing its boundary follows the map's existing explicit context
+semantics; outside the region the usual Planet A gravity applies. The field
+does not pretend that a cup's bottom defines gravity.
+
+`BuildFluidSurface` constructs a lit marching-tetrahedra isosurface from
+**presented** particle positions on a `0.05 m` sampling grid. A reusable GPU
+mesh receives new vertices each frame; the surface never feeds back into
+fluid dynamics. Cup walls are drawn as translucent ordinary boxes after the
+opaque scene, while their bottom remains opaque. The wall geometry still
+casts its ordinary shadows. The fluid receives scene lighting/shadows but is
+omitted from shadow-map depth passes to keep this small changing mesh cheap.
+The surface smoothing and translucency are visual approximations; only
+particle mass/momentum, pressure correction, and geometric contact are
+authoritative. GLAD/OpenGL 3.3 and GLSL 330 are unchanged.
+
+### Measurements, validation, and limits
+
+Focused headless suites cover gravity/zero gravity, rotated and billion-metre
+translated worlds, density response, exact mass retention, interpolation,
+stationary/moving/rotating wall and sphere contact, equal-and-opposite point
+impulses, compound rigid collisions, and the presentation surface. The
+eight-particle pressure-cluster rotation check measured at most `0.000004 m`
+position and `0.000008 m/s` velocity difference after 30 fixed steps,
+against `0.001 m` and `0.002 m/s` test tolerances. The
+geometry-only two-cup test requires at least 80 particles to enter Cup B and
+at least 70 of those *same* particles to leave after B is tipped. Coupled
+rigid/fluid checks keep water in a grounded moving cup, measure reaction
+impulse/velocity, and verify that force/torque-driven cup motion moves water
+even in zero gravity. A separate end-to-end rigid-coupling test carries and
+tips two dynamic compound cups through M18's force and torque law: all 125
+tracked particles crossed A's geometric open rim, 98 were later inside B,
+and those same 98 left after B was acquired, lifted and tipped with the
+current smoothing setting. Neither cup pose was teleported or driven by a
+prescribed pour animation. The operator accepted the live first-person view;
+the automated pour checks establish the force-driven transfer path.
+
+On this host in an optimized build, short unattended runs of the normal,
+rotated, and zero-gravity 125-particle scenes measured approximately
+`3.1–3.9 ms` per fluid fixed step (including gathering world colliders and
+applying reaction impulses), `2.7–3.9 ms` per presentation surface
+build/upload, and `16.8–22.5 ms` for scene shadow/color CPU submission at
+1024×768. The observed full-frame wall interval was `26.3–34.2 ms` in these
+runs; it includes the existing renderer and this display environment, so it
+is not a portable GPU benchmark. At the normal-gravity diagnostic
+sample, fluid mass remained `15.625 kg`; mean/max *positive* density error
+was about `0.15–0.39/1.65–4.46%` across measured samples. A separate optimized
+245-particle, 11-box coupling
+fixture took about `4.45 ms/step`; the same fixture in an unoptimized Debug
+build took about `36 ms/step`, so interactive validation should use the
+documented optimized build. The mesh extractor alone took about `4 ms` at
+245 particles on a `0.055 m` grid; its cost rises with particle count and
+grid resolution. There is no particle deletion, so numerical fluid mass
+error is zero by construction, but momentum/energy are not exactly conserved:
+pressure projection, collision correction and numerical velocity smoothing
+exchange or dissipate them. Free-flight zero-gravity momentum is tested;
+no claim of exact multi-particle or coupled rigid/fluid conservation is made.
+
+The initial `0.015` smoothing setting left an untouched cup's water in
+persistent numerical motion: the matching real-cup fixture measured around
+`0.5–1.1 J` at 3–10 s, and freezing cup geometry did not remove it. Raising
+the solver's resolution-specific smoothing to `0.15` reduced the grounded
+cup to millijoule-scale energy in the same fixture while the strict real-body
+two-cup test still poured 98/125 particles into B and poured those same 98
+out. The live station measured roughly `0.002–0.006 J` after 3–9 s with
+the same setting. This is numerical damping, not a measured real-world
+water viscosity or a guarantee that an arbitrary larger volume will settle
+at the same rate. On the curved Planet A station, a cup can creep a few
+centimetres over ten seconds while resting on the tangent table; an *empty*
+cup creeps similarly under radial gravity. Changing cup mass or contact
+friction did not remove that existing rigid-contact effect, so it is not
+attributed to fluid pressure.
+
+Thin solids and extreme wall speeds can exceed the current swept-collision
+and substep resolution; a cup crushed into other geometry can also make
+projection ambiguous. The bounded particle count yields coarse small-scale
+spray and a smooth visual isosurface rather than physically resolved droplets
+or surface tension. The live fluid collider list covers rigid boxes and
+spheres in the demonstration, including the cups, table, planets, and
+dynamic objects; it does not include the separately simulated player capsule
+or the remote M16 door. Translucent cup walls are not depth sorted, so
+overlapping walls can look different from different viewpoints. Fluid
+outside the cups remains simulated; it is not deleted, but this milestone
+does not implement drainage, cleanup, oceans, or arbitrary fluid quantities.
+`JUDAS_FLUID_PREVIEW=1` with the existing
+`JUDAS_TEST_SCRIPT` harness captures the M24 starting arrangement without
+changing the default M1–M23 harness scene; the fluid solver's dynamic pour
+is validated by the dedicated suites and interactive operator run.

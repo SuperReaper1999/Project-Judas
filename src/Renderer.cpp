@@ -838,6 +838,17 @@ MeshHandle Renderer::CreateMesh(const MeshData& data) {
     return handle;
 }
 
+bool Renderer::UpdateMeshVertices(MeshHandle handle, const std::vector<MeshVertex>& vertices) {
+    GpuMesh* mesh = GetMesh(handle);
+    if (!mesh || mesh->ebo != 0) return false;
+    glBindBuffer(GL_ARRAY_BUFFER, mesh->vbo);
+    glBufferData(GL_ARRAY_BUFFER, static_cast<GLsizeiptr>(vertices.size() * sizeof(MeshVertex)),
+                 vertices.empty() ? nullptr : vertices.data(), GL_DYNAMIC_DRAW);
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    mesh->vertexCount = static_cast<GLsizei>(vertices.size());
+    return true;
+}
+
 Renderer::GpuMesh* Renderer::GetMesh(MeshHandle handle) {
     if (!handle.IsValid() || handle.id >= m_meshes.size() || !m_meshes[handle.id].alive) {
         return nullptr;
@@ -906,7 +917,7 @@ GLuint Renderer::ResolveTexture(TextureHandle handle) const {
 
 void Renderer::DrawMesh(MeshHandle mesh, const glm::vec3& position, const glm::quat& rotation,
                          const glm::vec3& scale, TextureHandle texture,
-                         const glm::vec3& tintColor) {
+                         const glm::vec3& tintColor, float alpha) {
     GpuMesh* gpuMesh = GetMesh(mesh);
     if (!gpuMesh) return;
 
@@ -940,7 +951,7 @@ void Renderer::DrawMesh(MeshHandle mesh, const glm::vec3& position, const glm::q
     glUniformMatrix3fv(m_uNormalMatrix, 1, GL_FALSE, glm::value_ptr(normalMatrix));
     glUniformMatrix4fv(m_uView, 1, GL_FALSE, glm::value_ptr(m_view));
     glUniformMatrix4fv(m_uProjection, 1, GL_FALSE, glm::value_ptr(m_projection));
-    glUniform4f(m_uColor, tintColor.r, tintColor.g, tintColor.b, 1.0f);
+    glUniform4f(m_uColor, tintColor.r, tintColor.g, tintColor.b, alpha);
     // Milestone 15: this frame's three shadow light-space matrices — see
     // BeginShadowPass's own comment for why every normal-mode draw simply
     // reuses whatever this frame's shadow passes most recently cached,
@@ -967,8 +978,19 @@ void Renderer::DrawMesh(MeshHandle mesh, const glm::vec3& position, const glm::q
 }
 
 void Renderer::DrawBox(const glm::vec3& position, const glm::quat& rotation,
-                        const glm::vec3& halfExtents, const glm::vec3& colorRgb) {
-    DrawMesh(m_cubeMesh, position, rotation, halfExtents * 2.0f, TextureHandle{}, colorRgb);
+                        const glm::vec3& halfExtents, const glm::vec3& colorRgb, float alpha) {
+    DrawMesh(m_cubeMesh, position, rotation, halfExtents * 2.0f, TextureHandle{}, colorRgb, alpha);
+}
+
+void Renderer::BeginTransparentPass() {
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    glDepthMask(GL_FALSE);
+}
+
+void Renderer::EndTransparentPass() {
+    glDepthMask(GL_TRUE);
+    glDisable(GL_BLEND);
 }
 
 void Renderer::DrawSphere(const glm::vec3& position, float radius, const glm::vec3& colorRgb) {

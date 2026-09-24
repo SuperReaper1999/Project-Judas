@@ -3,12 +3,16 @@
 #include <algorithm>
 #include <cmath>
 
+#include <glm/gtc/quaternion.hpp>
+
 #include "DynamicBody.h"
 
 namespace {
 constexpr float kCarrySpring = 70.0f;
 constexpr float kCarryDamping = 17.0f;
 constexpr float kMaxCarryAcceleration = 70.0f;
+constexpr float kCarryAngularFrequency = 9.0f;
+constexpr float kMaxCarryAngularAcceleration = 100.0f;
 
 glm::vec3 ClampMagnitude(const glm::vec3& value, float maximum) {
     const float length = glm::length(value);
@@ -56,6 +60,25 @@ void ObjectManipulation::ApplyCarryForce(PhysicsWorld& physics, const glm::vec3&
     physics.ApplyForce(m_held, acceleration * physics.GetMass(m_held));
 }
 
+void ObjectManipulation::ApplyCarryOrientationTorque(PhysicsWorld& physics,
+                                                       const glm::quat& target) const {
+    if (!IsHolding() || !physics.IsDynamicBody(m_held)) return;
+    const glm::quat current = glm::normalize(physics.GetTransform(m_held).rotation);
+    glm::quat difference = glm::normalize(target * glm::conjugate(current));
+    if (difference.w < 0.0f) difference = -difference;  // shortest rotation
+    const glm::vec3 vector(difference.x, difference.y, difference.z);
+    const float vectorLength = glm::length(vector);
+    const float angle = 2.0f * std::atan2(vectorLength, difference.w);
+    const glm::vec3 angularError = vectorLength > 1.0e-6f
+                                        ? vector * (angle / vectorLength)
+                                        : glm::vec3(0.0f);
+    const glm::vec3 acceleration = ClampMagnitude(
+        angularError * (kCarryAngularFrequency * kCarryAngularFrequency) -
+            physics.GetAngularVelocity(m_held) * (2.0f * kCarryAngularFrequency),
+        kMaxCarryAngularAcceleration);
+    physics.ApplyTorque(m_held, physics.GetInertiaWorld(m_held) * acceleration);
+}
+
 glm::vec3 ComputeCarryTarget(const glm::vec3& playerPosition, const glm::quat& playerOrientation,
                              const glm::vec3& lookDirection, float eyeHeight, float carryDistance) {
     const glm::vec3 localUp = playerOrientation * glm::vec3(0.0f, 1.0f, 0.0f);
@@ -63,6 +86,22 @@ glm::vec3 ComputeCarryTarget(const glm::vec3& playerPosition, const glm::quat& p
     const glm::vec3 look = lookLength > 1.0e-6f ? lookDirection / lookLength
                                                 : playerOrientation * glm::vec3(0.0f, 0.0f, -1.0f);
     return playerPosition + localUp * eyeHeight + look * carryDistance;
+}
+
+glm::quat ComputeCarryOrientation(const glm::quat& playerOrientation,
+                                   const glm::vec3& lookDirection) {
+    const glm::vec3 baseUp = playerOrientation * glm::vec3(0.0f, 1.0f, 0.0f);
+    const glm::vec3 front = glm::length(lookDirection) > 1.0e-6f
+                                ? glm::normalize(lookDirection)
+                                : playerOrientation * glm::vec3(0.0f, 0.0f, -1.0f);
+    glm::vec3 right = glm::cross(front, baseUp);
+    if (glm::length(right) < 1.0e-5f) {
+        const glm::vec3 baseRight = playerOrientation * glm::vec3(1.0f, 0.0f, 0.0f);
+        right = baseRight - front * glm::dot(baseRight, front);
+    }
+    right = glm::normalize(right);
+    const glm::vec3 viewUp = glm::normalize(glm::cross(right, front));
+    return glm::normalize(glm::quat_cast(glm::mat3(right, viewUp, -front)));
 }
 
 PickupInteractable::PickupInteractable(DynamicBody& body, ObjectManipulation& manipulation,
