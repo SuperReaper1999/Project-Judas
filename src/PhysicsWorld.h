@@ -2,6 +2,7 @@
 
 #include <glm/glm.hpp>
 #include <glm/gtc/quaternion.hpp>
+#include <memory>
 #include <vector>
 
 #include "CollisionShapes.h"
@@ -90,6 +91,12 @@ public:
                                 const glm::vec3& halfExtents, float friction, float restitution);
     BodyHandle CreateStaticSphere(const glm::vec3& position, float radius, float friction,
                                    float restitution);
+    // One static surface defined in its own local frame. Neither the
+    // planet's centre nor orientation is baked into RadialTerrain itself;
+    // ordinary body transforms place it like any other collision shape.
+    BodyHandle CreateStaticTerrain(const glm::vec3& position, const glm::quat& rotation,
+                                   std::shared_ptr<const RadialTerrain> terrain,
+                                   float friction, float restitution);
     BodyHandle CreateDynamicBox(const glm::vec3& position, const glm::vec3& halfExtents,
                                  float mass, float friction, float restitution);
     BodyHandle CreateDynamicSphere(const glm::vec3& position, float radius, float mass,
@@ -136,8 +143,9 @@ public:
     glm::mat3 GetInertiaWorld(BodyHandle handle) const;
 
     // Shape support distances used for separation along an arbitrary world
-    // direction. Directions are normalized internally. The body result uses
-    // its current orientation; the player result is the capsule's maximum
+    // direction. Directions are normalized internally. Finite primitives
+    // use their current orientation; a terrain shape returns its conservative
+    // radial bound. The player result is the capsule's maximum
     // support distance so it remains safe if the player's frame is
     // reoriented immediately after release.
     float GetBodySupportDistance(BodyHandle handle, const glm::vec3& worldDirection) const;

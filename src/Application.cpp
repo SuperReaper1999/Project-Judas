@@ -10,6 +10,8 @@
 #include <cstdio>
 #include <cstdlib>
 #include <iterator>
+#include <limits>
+#include <memory>
 #include <string>
 #include <utility>
 #include <vector>
@@ -42,15 +44,18 @@
 #include "PilotControl.h"
 #include "PlayerController.h"
 #include "RadicalGravity.h"
+#include "RadialTerrain.h"
 #include "Renderer.h"
 #include "ReferenceFrame.h"
 #include "ShadowTransforms.h"
 #include "SimulationTiming.h"
 #include "SphericalVolume.h"
 #include "TestHarness.h"
+#include "TerrainDemo.h"
 #include "TextureLoader.h"
 #include "Window.h"
 #include "WorldCoordinates.h"
+#include "../third_party/stb_image_write.h"
 
 namespace {
 GLADapiproc LoadOpenGLProcAddress(const char* name) {
@@ -182,6 +187,20 @@ const glm::vec3 kCupWallColor(0.50f, 0.76f, 0.82f);
 const glm::vec3 kFluidColor(0.12f, 0.48f, 0.82f);
 constexpr float kCupMass = 120.0f;
 constexpr float kFluidParticleSpacing = 0.05f;
+
+// The M25 scene is another authored local physical context, sufficiently
+// separated from the earlier demonstration bodies that neither collision
+// nor gravity regions overlap. The surface itself is body-local geometry.
+const glm::vec3 kTerrainPlanetCenter(300.0f, 0.0f, 0.0f);
+const glm::vec3 kTerrainPlanetColor(0.39f, 0.50f, 0.30f);
+const glm::vec3 kTerrainPickupColor(0.95f, 0.58f, 0.20f);
+const glm::vec3 kTerrainPickupHalfExtents(0.45f);
+// At this coarse 125 kg/particle lake resolution, a dense 0.9 m block is
+// within the demonstrated stable fluid/rigid mass ratio. The M18 carry law
+// scales force with mass, so it remains an ordinary pickable dynamic body.
+constexpr float kTerrainPickupMass = 2000.0f;
+constexpr float kTerrainGravityRegionRadius = 103.0f;
+constexpr std::size_t kTerrainMaxWaterParticles = 200;
 
 std::vector<CompoundBox> MakeOpenCupBoxes() {
     // The shift puts the compound body's origin at the approximate
@@ -783,13 +802,21 @@ int Application::Run() {
     // hidden — it's a real GL context either way, just not shown on screen.
     const char* testScriptPath = std::getenv("JUDAS_TEST_SCRIPT");
     const bool isTestRun = testScriptPath != nullptr;
+    // Interactive launches now begin at the terrain lake. The accepted
+    // M1-M24 scene remains selectable, and existing scripted harness runs
+    // retain their established starting state unless explicitly previewing
+    // M25. Both scenes use the same engine systems, not separate engines.
+    const bool terrainDemoEnabled = isTestRun
+        ? std::getenv("JUDAS_TERRAIN_PREVIEW") != nullptr
+        : std::getenv("JUDAS_CLASSIC_DEMO") == nullptr;
     // An opt-in visual snapshot of the M24 starting arrangement can be
     // captured by the existing screenshot harness without changing its
     // accepted M1–M23 scripted simulation path.
-    const bool fluidDemoEnabled = !isTestRun || std::getenv("JUDAS_FLUID_PREVIEW") != nullptr;
+    const bool fluidDemoEnabled = !terrainDemoEnabled &&
+        (!isTestRun || std::getenv("JUDAS_FLUID_PREVIEW") != nullptr);
 
     Window window;
-    if (!window.Init("Project Judas - Milestone 24", kWindowWidth, kWindowHeight,
+    if (!window.Init("Project Judas - Milestone 25", kWindowWidth, kWindowHeight,
                       !isTestRun)) {
         std::fprintf(stderr, "Window initialization failed.\n");
         return 1;
@@ -797,6 +824,13 @@ int Application::Run() {
     std::fprintf(stderr, "World origin (m): %.3f, %.3f, %.3f\n",
                  worldCoordinates.Origin().x, worldCoordinates.Origin().y,
                  worldCoordinates.Origin().z);
+    if (terrainDemoEnabled) {
+        std::fprintf(stderr,
+                     "M25 terrain: radius %.1f m, 125 initial fluid particles; "
+                     "hold B to add real fluid, R to reset, "
+                     "JUDAS_CLASSIC_DEMO=1 for the earlier scene.\n",
+                     TerrainDemo::kBaseRadius);
+    }
 
     if (gladLoadGL(&LoadOpenGLProcAddress) == 0 || !GLAD_GL_VERSION_3_3) {
         std::fprintf(stderr, "Failed to load the required OpenGL 3.3 Core entry points.\n");
@@ -843,6 +877,13 @@ int Application::Run() {
     // A reusable non-indexed GPU buffer receives the surface extracted from
     // interpolated fluid positions each presentation frame.
     const MeshHandle fluidMesh = renderer.CreateMesh(MeshData{});
+    const std::shared_ptr<const RadialTerrain> terrainSurface = terrainDemoEnabled
+        ? TerrainDemo::CreateSurface() : nullptr;
+    const glm::quat terrainRotation = std::getenv("JUDAS_TERRAIN_ROTATED")
+        ? glm::angleAxis(glm::radians(47.0f), glm::normalize(glm::vec3(1.0f, 0.3f, 2.0f)))
+        : glm::quat(1.0f, 0.0f, 0.0f, 0.0f);
+    const MeshHandle terrainMesh = terrainSurface
+        ? renderer.CreateMesh(terrainSurface->BuildMesh(96, 128)) : MeshHandle{};
 
     renderer.SetLighting(kLightDirection, kLightColor, kAmbientColor);
 
@@ -876,6 +917,7 @@ int Application::Run() {
     // (see the comment on kPlankGravityRegionHalfExtents above).
     RadicalGravity planetAGravity(kPlanetACenter, kRadicalGravityMagnitude);
     RadicalGravity planetBGravity(kPlanetBCenter, kRadicalGravityMagnitude);
+    RadicalGravity terrainGravity(kTerrainPlanetCenter, kRadicalGravityMagnitude);
     FaithfulGravity plankGravity;
     const glm::quat fluidStationRotation = RotationAligningUpTo(kFluidStationBearing);
     const glm::vec3 fluidSurfacePoint = PointAboveSphere(
@@ -898,6 +940,7 @@ int Application::Run() {
     const BoxVolume plankGravityRegion(kPlankCenter, kPlankGravityRegionHalfExtents);
     const SphericalVolume planetAGravityRegion(kPlanetACenter, kPlanetGravityRegionRadius);
     const SphericalVolume planetBGravityRegion(kPlanetBCenter, kPlanetGravityRegionRadius);
+    const SphericalVolume terrainGravityRegion(kTerrainPlanetCenter, kTerrainGravityRegionRadius);
     GravityContextMap gravityContext;
     if (fluidDemoEnabled && selectedFluidGravity != "normal") {
         gravityContext.AddRegion(fluidDemoGravity, fluidGravityRegion);
@@ -907,12 +950,17 @@ int Application::Run() {
     gravityContext.AddRegion(plankGravity, plankGravityRegion);
     gravityContext.AddRegion(planetAGravity, planetAGravityRegion);
     gravityContext.AddRegion(planetBGravity, planetBGravityRegion);
+    if (terrainDemoEnabled) gravityContext.AddRegion(terrainGravity, terrainGravityRegion);
     GravityField& gravity = gravityContext;
 
     const BodyHandle planetABody = physicsWorld.CreateStaticSphere(
         kPlanetACenter, kPlanetARadius, kPlanetFriction, kPlanetRestitution);
     const BodyHandle planetBBody = physicsWorld.CreateStaticSphere(
         kPlanetBCenter, kPlanetBRadius, kPlanetFriction, kPlanetRestitution);
+    const BodyHandle terrainBody = terrainSurface
+        ? physicsWorld.CreateStaticTerrain(kTerrainPlanetCenter, terrainRotation, terrainSurface,
+                                           kPlanetFriction, kPlanetRestitution)
+        : BodyHandle{};
     const BodyHandle plankBody = physicsWorld.CreateStaticBox(
         kPlankCenter, kPlankHalfExtents, kPlankFriction, kPlankRestitution);
 
@@ -948,7 +996,11 @@ int Application::Run() {
                              glm::radians(kSwitchAngularSpeedDegreesPerSecond), kSwitchColor, lampPosition,
                              kLampColor, kLampRange);
 
-    PlayerController player(kPlayerSpawnPosition, kPlayerSpawnYawDegrees);
+    const glm::vec3 terrainPlayerSpawn = terrainSurface
+        ? kTerrainPlanetCenter + terrainRotation * TerrainDemo::LocalPointAbove(
+              *terrainSurface, TerrainDemo::kBasinAX, -7.0f, 3.0f)
+        : kPlayerSpawnPosition;
+    PlayerController player(terrainPlayerSpawn, kPlayerSpawnYawDegrees);
     if (!player.Spawn(physicsWorld)) {
         std::fprintf(stderr, "Player spawn failed.\n");
         return 1;
@@ -960,6 +1012,22 @@ int Application::Run() {
     // inside PlayerController or DynamicBody, exactly like the static
     // planets above.
     std::vector<DynamicBody> dynamicBodies = SpawnDynamicObjects(physicsWorld);
+    const std::size_t terrainPickupBodyIndex = terrainSurface
+        ? dynamicBodies.size() : std::numeric_limits<std::size_t>::max();
+    if (terrainSurface) {
+        const glm::vec3 propPosition = kTerrainPlanetCenter + terrainRotation *
+            TerrainDemo::LocalPointAbove(*terrainSurface, TerrainDemo::kBasinAX - 2.0f,
+                                         -5.5f, 1.4f);
+        DynamicBody::Visual visual;
+        visual.shape = DynamicBody::Shape::Box;
+        visual.halfExtents = kTerrainPickupHalfExtents;
+        visual.color = kTerrainPickupColor;
+        const BodyHandle handle = physicsWorld.CreateDynamicBox(
+            propPosition, visual.halfExtents, kTerrainPickupMass, 0.9f,
+            kDynamicObjectRestitution);
+        dynamicBodies.emplace_back(handle, visual, propPosition,
+                                    glm::quat(1.0f, 0.0f, 0.0f, 0.0f));
+    }
 
     // Milestone 8: the flying primitive, appended as one more DynamicBody
     // (see the kFlyingPrimitive* constants above) so it shares every
@@ -1039,9 +1107,37 @@ int Application::Run() {
         }
     }
 
-    FluidWorld fluidWorld;
+    FluidSettings fluidSettings;
+    if (terrainSurface) {
+        // Same M24 solver at a coarser, metre-scale resolution. Lengths
+        // scale with the 10x particle spacing and mass with its cube;
+        // density and gravity remain physical, not tuned to a visual lake.
+        fluidSettings.particleRadius *= 10.0f;
+        fluidSettings.smoothingRadius *= 10.0f;
+        fluidSettings.maxDensityCorrection *= 10.0f;
+    }
+    FluidWorld fluidWorld(fluidSettings);
     const auto resetFluid = [&]() {
         fluidWorld.Clear();
+        if (terrainSurface) {
+            const float spacing = TerrainDemo::kWaterSpacing;
+            const float mass = fluidWorld.Settings().restDensity * spacing * spacing * spacing;
+            const glm::vec3 localCenter = TerrainDemo::LocalPointAbove(
+                *terrainSurface, TerrainDemo::kBasinAX, TerrainDemo::kBasinZ, 0.65f);
+            for (int y = 0; y < 5; ++y) {
+                for (int z = -2; z <= 2; ++z) {
+                    for (int x = -2; x <= 2; ++x) {
+                        const glm::vec3 local = localCenter +
+                            glm::vec3(static_cast<float>(x) * spacing,
+                                      static_cast<float>(y) * spacing,
+                                      static_cast<float>(z) * spacing);
+                        fluidWorld.AddParticle(kTerrainPlanetCenter + terrainRotation * local,
+                                               glm::vec3(0.0f), mass);
+                    }
+                }
+            }
+            return;
+        }
         if (!cupHandles[0].IsValid()) return;
         const float mass = fluidWorld.Settings().restDensity *
             kFluidParticleSpacing * kFluidParticleSpacing * kFluidParticleSpacing;
@@ -1065,7 +1161,9 @@ int Application::Run() {
         for (const FluidParticle& particle : fluidWorld.Particles())
             initialPositions.push_back(particle.position);
         renderer.UpdateMeshVertices(fluidMesh,
-            BuildFluidSurface(initialPositions, 0.105f, 0.05f, 0.45f));
+            BuildFluidSurface(initialPositions,
+                              terrainSurface ? fluidSettings.smoothingRadius : 0.105f,
+                              terrainSurface ? 0.40f : 0.05f, 0.45f));
     }
 
     // M18's explicit whitelist now includes the two ordinary dynamic cups;
@@ -1103,7 +1201,8 @@ int Application::Run() {
     // Milestone 17: this is presentation selection only. The spacecraft
     // camera below deliberately continues using its existing anchored,
     // third-person path while piloting.
-    PlayerViewMode playerViewMode = PlayerViewMode::ThirdPerson;
+    PlayerViewMode playerViewMode = terrainSurface
+        ? PlayerViewMode::FirstPerson : PlayerViewMode::ThirdPerson;
 
     // Shared between the normal interactive loop and the test harness, so
     // a screenshot taken by the harness shows exactly what the real game
@@ -1134,35 +1233,32 @@ int Application::Run() {
     // parameter unchanged (TestHarness never runs a shadow pass at all —
     // see docs/ARCHITECTURE.md, "Milestone 15" — so it always wants the
     // player included, exactly as every milestone before this one).
-    const auto drawScene = [&](Renderer& r, float presentationAlpha, bool includePlayerModel = true) {
-        r.DrawSphere(kPlanetACenter, kPlanetARadius, kPlanetAColor);
-        r.DrawSphere(kPlanetBCenter, kPlanetBRadius, kPlanetBColor);
-        r.DrawBox(kPlankCenter, glm::quat(1.0f, 0.0f, 0.0f, 0.0f), kPlankHalfExtents, kPlankColor);
-        if (fluidTableBody.IsValid()) {
-            r.DrawBox(fluidTablePosition, fluidStationRotation, kFluidTableHalfExtents,
-                      kFluidTableColor);
+    const auto drawScene = [&](Renderer& r, float presentationAlpha,
+                               bool includePlayerModel = true, bool includeTerrain = true) {
+        // The older objects continue simulating in their distant context;
+        // this authored terrain view submits its own nearby scene. The
+        // accepted classic scene remains selectable at launch.
+        if (!terrainSurface) {
+            r.DrawSphere(kPlanetACenter, kPlanetARadius, kPlanetAColor);
+            r.DrawSphere(kPlanetBCenter, kPlanetBRadius, kPlanetBColor);
+            r.DrawBox(kPlankCenter, glm::quat(1.0f, 0.0f, 0.0f, 0.0f),
+                      kPlankHalfExtents, kPlankColor);
+            if (fluidTableBody.IsValid()) {
+                r.DrawBox(fluidTablePosition, fluidStationRotation, kFluidTableHalfExtents,
+                          kFluidTableColor);
+            }
+            for (const StaticTestBody& body : stepTestBodies) {
+                r.DrawBox(body.position, body.rotation, body.halfExtents, body.color);
+            }
+            r.DrawMesh(beaconMesh, kBeaconPosition, glm::quat(1.0f, 0.0f, 0.0f, 0.0f),
+                       glm::vec3(1.0f), beaconTexture, glm::vec3(1.0f));
+            door.Draw(r, presentationAlpha);
+            lightSwitch.Draw(r, presentationAlpha);
         }
-        // Milestone 10: the staircase + ramp — static, drawn from their own
-        // authored transforms exactly like the plank above.
-        for (const StaticTestBody& body : stepTestBodies) {
-            r.DrawBox(body.position, body.rotation, body.halfExtents, body.color);
+        if (terrainMesh.IsValid() && includeTerrain) {
+            r.DrawMesh(terrainMesh, kTerrainPlanetCenter, terrainRotation, glm::vec3(1.0f),
+                       TextureHandle{}, kTerrainPlanetColor);
         }
-        // Milestone 9: the one imported, textured, lit model in this demo —
-        // static, undressed by any physics transform (see kBeaconPosition's
-        // own comment). A white tint so the texture's own colors show
-        // unmodified; scale 1 (the model's own authored units are already a
-        // sensible size — see assets/models/beacon.obj).
-        r.DrawMesh(beaconMesh, kBeaconPosition, glm::quat(1.0f, 0.0f, 0.0f, 0.0f), glm::vec3(1.0f),
-                   beaconTexture, glm::vec3(1.0f));
-
-        // Milestone 16: the door and light switch — drawn from their own
-        // interpolated swing angle (see Door::Draw/LightSwitch::Draw),
-        // exactly like every other moving object here, so both render,
-        // collide (the door), and cast/receive shadows at their CURRENT
-        // pose through this same shared drawScene call — no separate
-        // shadow-pass handling needed for either.
-        door.Draw(r, presentationAlpha);
-        lightSwitch.Draw(r, presentationAlpha);
 
         // Milestone 11: while attached, render the pilot coherently with
         // the SAME presented spacecraft pose used for the camera and the
@@ -1194,6 +1290,7 @@ int Application::Run() {
         }
 
         for (std::size_t i = 0; i < dynamicBodies.size(); ++i) {
+            if (terrainSurface && i != terrainPickupBodyIndex) continue;
             const DynamicBody& body = dynamicBodies[i];
             if (i == flyingPrimitiveBodyIndex) {
                 // Milestone 11: the spacecraft draws through the imported
@@ -1205,7 +1302,8 @@ int Application::Run() {
                            TextureHandle{}, kFlyingPrimitiveColor);
                 continue;
             }
-            if (i >= firstCupBodyIndex && i < firstCupBodyIndex + cupHandles.size()) {
+            if (cupHandles[0].IsValid() &&
+                i >= firstCupBodyIndex && i < firstCupBodyIndex + cupHandles.size()) {
                 const glm::vec3 parentPosition = body.GetPresentedPosition(presentationAlpha);
                 const glm::quat parentRotation = body.GetPresentedOrientation(presentationAlpha);
                 for (std::size_t part = 0; part < cupBoxes.size(); ++part) {
@@ -1284,6 +1382,10 @@ int Application::Run() {
                                    flyingPrimitiveControl, pilotAttachment, drawHarnessScene, testScriptPath);
     } else {
         float physicsAccumulator = 0.0f;
+        std::size_t emittedTerrainParticles = 0;
+        std::size_t terrainFixedSteps = 0;
+        const char* terrainScreenshotPath = std::getenv("JUDAS_TERRAIN_SCREENSHOT");
+        bool terrainScreenshotWritten = false;
 
         const Uint64 frequency = SDL_GetPerformanceFrequency();
         Uint64 previousCounter = SDL_GetPerformanceCounter();
@@ -1438,6 +1540,9 @@ int Application::Run() {
                         body.ResetToSpawn(physicsWorld);
                     }
                     resetFluid();
+                    emittedTerrainParticles = 0;
+                    terrainFixedSteps = 0;
+                    terrainScreenshotWritten = false;
                     physicsWorld.SetLinearVelocity(orbitalBodyA, kOrbitalVelocityA);
                     physicsWorld.SetLinearVelocity(orbitalBodyB, kOrbitalVelocityB);
                     flyingPrimitiveControl.controlled = false;
@@ -1579,6 +1684,20 @@ int Application::Run() {
                     door.FixedUpdate(physicsWorld, SimulationTiming::kFixedTimestep);
                     lightSwitch.FixedUpdate(SimulationTiming::kFixedTimestep);
                     physicsWorld.Step(SimulationTiming::kFixedTimestep);
+                    if (terrainSurface && window.IsActionActive(Action::AddTerrainWater) &&
+                        fluidWorld.Particles().size() < kTerrainMaxWaterParticles) {
+                        const float spacing = TerrainDemo::kWaterSpacing;
+                        const glm::vec3 source = TerrainDemo::LocalPointAbove(
+                            *terrainSurface, TerrainDemo::kBasinAX, TerrainDemo::kBasinZ, 2.8f);
+                        const int column = static_cast<int>(emittedTerrainParticles % 9);
+                        const glm::vec3 spread(
+                            static_cast<float>(column % 3 - 1) * 0.3f, 0.0f,
+                            static_cast<float>(column / 3 - 1) * 0.3f);
+                        fluidWorld.AddParticle(
+                            kTerrainPlanetCenter + terrainRotation * (source + spread),
+                            glm::vec3(0.0f), fluidSettings.restDensity * spacing * spacing * spacing);
+                        ++emittedTerrainParticles;
+                    }
                     if (!fluidWorld.Particles().empty()) {
                         const auto fluidStart = std::chrono::steady_clock::now();
                         std::vector<FluidBoxCollider> fluidBoxes;
@@ -1616,9 +1735,15 @@ int Application::Run() {
                                 appendBodyBoxes(body.Handle());
                             }
                         }
+                        std::vector<FluidTerrainCollider> fluidTerrains;
+                        if (terrainSurface) {
+                            fluidTerrains.push_back({terrainBody,
+                                physicsWorld.GetPreviousTransform(terrainBody),
+                                physicsWorld.GetTransform(terrainBody), terrainSurface.get()});
+                        }
                         std::vector<FluidContactImpulse> fluidImpulses;
                         fluidWorld.Step(SimulationTiming::kFixedTimestep, gravity,
-                                        fluidBoxes, fluidSpheres, &fluidImpulses);
+                                        fluidBoxes, fluidSpheres, fluidTerrains, &fluidImpulses);
                         for (const FluidContactImpulse& contact : fluidImpulses) {
                             physicsWorld.ApplyImpulseAtPoint(contact.owner,
                                                               contact.impulse, contact.point);
@@ -1636,6 +1761,7 @@ int Application::Run() {
 
                     physicsAccumulator -= SimulationTiming::kFixedTimestep;
                     ++stepsThisFrame;
+                    if (terrainSurface) ++terrainFixedSteps;
                 }
                 if (stepsThisFrame == SimulationTiming::kMaxPhysicsStepsPerFrame) {
                     // Hit the catch-up cap: drop the backlog instead of
@@ -1677,7 +1803,9 @@ int Application::Run() {
                 for (std::size_t i = 0; i < fluidWorld.Particles().size(); ++i)
                     waterPositions.push_back(fluidWorld.PresentedPosition(i, presentationAlpha));
                 renderer.UpdateMeshVertices(fluidMesh,
-                    BuildFluidSurface(waterPositions, 0.105f, 0.05f, 0.45f));
+                    BuildFluidSurface(waterPositions,
+                                      terrainSurface ? fluidSettings.smoothingRadius : 0.105f,
+                                      terrainSurface ? 0.40f : 0.05f, 0.45f));
                 if (fluidDiagnosticsEnabled) {
                     accumulatedSurfaceMilliseconds +=
                         std::chrono::duration<double, std::milli>(
@@ -1733,8 +1861,12 @@ int Application::Run() {
                 // rendered body (see the drawScene lambda's own comment
                 // above) — exclude it from only the torch's own shadow
                 // pass; the spacecraft headlight has no such conflict.
+                const bool terrainWithinLight = !terrainSurface ||
+                    glm::distance(light.position, kTerrainPlanetCenter) <=
+                    light.range + terrainSurface->BoundRadius();
                 drawScene(renderer, presentationAlpha,
-                          /*includePlayerModel=*/light.shadowMapIndex != kTorchShadowSlot);
+                          /*includePlayerModel=*/light.shadowMapIndex != kTorchShadowSlot,
+                          /*includeTerrain=*/terrainWithinLight);
                 renderer.EndShadowPass();
             }
 
@@ -1811,10 +1943,29 @@ int Application::Run() {
                 } else {
                     hudData.interactPrompt = interactTarget ? interactTarget->GetPromptText() : std::string();
                 }
+                if (terrainSurface) {
+                    if (!hudData.interactPrompt.empty()) hudData.interactPrompt += " | ";
+                    hudData.interactPrompt += "Hold B: add water";
+                }
                 hud.Draw(renderer, window.Width(), window.Height(), hudData);
             }
             pauseMenu.Draw(renderer, window.Width(), window.Height());
             renderer.EndUIFrame();
+
+            // Opt-in visual validation of the fully simulated basin after
+            // ten seconds of fixed-step settling, using the existing
+            // renderer readback path. Never feeds presentation back into
+            // fluid or terrain simulation.
+            if (terrainSurface && terrainScreenshotPath && !terrainScreenshotWritten &&
+                terrainFixedSteps >= 600) {
+                std::vector<unsigned char> pixels;
+                renderer.CaptureFrame(window.Width(), window.Height(), pixels);
+                const int written = stbi_write_png(terrainScreenshotPath,
+                    window.Width(), window.Height(), 3, pixels.data(), window.Width() * 3);
+                std::fprintf(stderr, "M25 screenshot %s: %s\n",
+                             written ? "written" : "failed", terrainScreenshotPath);
+                terrainScreenshotWritten = true;
+            }
 
             window.SwapBuffers();
             if (fluidDiagnosticsEnabled) {
@@ -1822,8 +1973,37 @@ int Application::Run() {
                 accumulatedFrameMilliseconds += frameDeltaTime * 1000.0;
                 if (fluidDiagnosticFrames % 120 == 0) {
                     const FluidDiagnostics state = fluidWorld.GetDiagnostics();
-                    const BodyTransform cupPose = physicsWorld.GetTransform(cupHandles[0]);
-                    std::fprintf(stderr,
+                    if (terrainSurface) {
+                        std::size_t inSecondBasin = 0;
+                        float minimumClearance = std::numeric_limits<float>::max();
+                        for (const FluidParticle& particle : fluidWorld.Particles()) {
+                            const glm::vec3 local = glm::conjugate(terrainRotation) *
+                                (particle.position - kTerrainPlanetCenter);
+                            const float clearance = terrainSurface->Sample(local).signedDistance;
+                            if (local.x > 3.0f && local.x < 7.0f &&
+                                std::abs(local.z - TerrainDemo::kBasinZ) < 3.0f &&
+                                clearance < 1.1f) ++inSecondBasin;
+                            minimumClearance = std::min(minimumClearance, clearance);
+                        }
+                        std::fprintf(stderr,
+                            "M25 timing: %zu particles, %zu across into second basin; "
+                            "%.3f ms/fluid step (%d steps); %.3f ms/surface+upload; "
+                            "%.3f ms/scene CPU submit; %.3f ms/frame wall; "
+                            "mass %.1f kg; min terrain clearance %.3f m; "
+                            "mean/max over-density %.2f/%.2f%%; kinetic %.1f J\n",
+                            state.particleCount, inSecondBasin,
+                            accumulatedFluidMilliseconds / std::max(fluidDiagnosticSteps, 1),
+                            fluidDiagnosticSteps,
+                            accumulatedSurfaceMilliseconds / fluidDiagnosticFrames,
+                            accumulatedSceneMilliseconds / fluidDiagnosticFrames,
+                            accumulatedFrameMilliseconds / fluidDiagnosticFrames,
+                            state.totalMass, minimumClearance,
+                            state.meanPositiveDensityError * 100.0f,
+                            state.maxPositiveDensityError * 100.0f,
+                            state.kineticEnergy);
+                    } else {
+                        const BodyTransform cupPose = physicsWorld.GetTransform(cupHandles[0]);
+                        std::fprintf(stderr,
                         "M24 timing: %zu particles; %.3f ms/fluid step (%d steps); "
                         "%.3f ms/surface+upload; %.3f ms/scene CPU submit; %.3f ms/frame wall; "
                         "mass %.3f kg; mean/max over-density %.2f/%.2f%%; "
@@ -1842,6 +2022,7 @@ int Application::Run() {
                         cupPose.position.x, cupPose.position.y, cupPose.position.z,
                         glm::length(physicsWorld.GetLinearVelocity(cupHandles[0])),
                         glm::length(physicsWorld.GetAngularVelocity(cupHandles[0])));
+                    }
                     std::fflush(stderr);
                 }
             }
@@ -1860,11 +2041,13 @@ int Application::Run() {
     physicsWorld.DestroyBody(planetBBody);
     physicsWorld.DestroyBody(plankBody);
     if (fluidTableBody.IsValid()) physicsWorld.DestroyBody(fluidTableBody);
+    if (terrainBody.IsValid()) physicsWorld.DestroyBody(terrainBody);
     physicsWorld.Shutdown();
     renderer.DestroyMesh(beaconMesh);
     renderer.DestroyTexture(beaconTexture);
     renderer.DestroyMesh(spacecraftMesh);
     renderer.DestroyMesh(fluidMesh);
+    if (terrainMesh.IsValid()) renderer.DestroyMesh(terrainMesh);
     renderer.Shutdown();
     return exitCode;
 }

@@ -9,6 +9,7 @@
 #include <glm/gtc/quaternion.hpp>
 
 #include "GravityField.h"
+#include "RadialTerrain.h"
 
 namespace {
 
@@ -119,6 +120,15 @@ BodyTransform InterpolatePose(const FluidSphereCollider& sphere, float alpha) {
     return pose;
 }
 
+BodyTransform InterpolatePose(const FluidTerrainCollider& terrain, float alpha) {
+    BodyTransform pose;
+    pose.position = glm::mix(terrain.previousPose.position,
+                             terrain.currentPose.position, alpha);
+    pose.rotation = glm::normalize(glm::slerp(terrain.previousPose.rotation,
+                                               terrain.currentPose.rotation, alpha));
+    return pose;
+}
+
 struct BoxContact {
     bool hit = false;
     BodyHandle owner;
@@ -148,6 +158,17 @@ struct PreparedSphere {
     float sweptRadius = 0.0f;
 };
 
+struct PreparedTerrain {
+    BodyHandle owner;
+    BodyTransform start;
+    BodyTransform end;
+    glm::quat inverseStart{1.0f, 0.0f, 0.0f, 0.0f};
+    glm::quat inverseEnd{1.0f, 0.0f, 0.0f, 0.0f};
+    const RadialTerrain* surface = nullptr;
+    glm::vec3 sweptCenter{0.0f};
+    float sweptRadius = 0.0f;
+};
+
 PreparedBox Prepare(const FluidBoxCollider& box, float alpha0, float alpha1) {
     PreparedBox prepared;
     prepared.owner = box.owner;
@@ -171,6 +192,21 @@ PreparedSphere Prepare(const FluidSphereCollider& sphere, float alpha0, float al
     prepared.sweptCenter = 0.5f * (prepared.start.position + prepared.end.position);
     prepared.sweptRadius = sphere.radius +
                            0.5f * glm::distance(prepared.start.position, prepared.end.position);
+    return prepared;
+}
+
+PreparedTerrain Prepare(const FluidTerrainCollider& terrain, float alpha0, float alpha1) {
+    PreparedTerrain prepared;
+    prepared.owner = terrain.owner;
+    prepared.start = InterpolatePose(terrain, alpha0);
+    prepared.end = InterpolatePose(terrain, alpha1);
+    prepared.inverseStart = glm::inverse(prepared.start.rotation);
+    prepared.inverseEnd = glm::inverse(prepared.end.rotation);
+    prepared.surface = terrain.surface;
+    prepared.sweptCenter = 0.5f * (prepared.start.position + prepared.end.position);
+    prepared.sweptRadius = terrain.surface->BoundRadius() +
+                           0.5f * glm::distance(prepared.start.position,
+                                                prepared.end.position);
     return prepared;
 }
 
@@ -329,10 +365,103 @@ BoxContact CollideSphere(const glm::vec3& from, const glm::vec3& to,
     return result;
 }
 
+BoxContact CollideTerrain(const glm::vec3& from, const glm::vec3& to,
+                          const PreparedTerrain& terrain, float particleRadius,
+                          float substepTime) {
+    BoxContact result;
+    if (FarFromSweptSolid(from, to, terrain.sweptCenter,
+                          terrain.sweptRadius, particleRadius)) return result;
+
+    const glm::vec3 startLocal = terrain.inverseStart * (from - terrain.start.position);
+    const glm::vec3 endLocal = terrain.inverseEnd * (to - terrain.end.position);
+    // At the exact centre of a radial solid there is no geometric outward
+    // normal. Such a state cannot be resolved without inventing a direction.
+    if (glm::dot(endLocal, endLocal) <= kEpsilon * kEpsilon) return result;
+    const TerrainSample endSample = terrain.surface->Sample(endLocal);
+    const bool endInside = endSample.signedDistance < particleRadius;
+
+    glm::vec3 projectedLocal = endLocal;
+    TerrainSample contactSample = endSample;
+    if (endInside) {
+        // Normal projection is iterated because a terrain signed-distance
+        // estimate is local: slopes can change over the displacement.
+        for (int i = 0; i < 4; ++i) {
+            const float penetration = particleRadius - contactSample.signedDistance;
+            if (penetration <= 1.0e-5f) break;
+            projectedLocal += contactSample.outwardNormal * penetration;
+            contactSample = terrain.surface->Sample(projectedLocal);
+        }
+    } else {
+        const TerrainSample startSample = terrain.surface->Sample(startLocal);
+        if (startSample.signedDistance < particleRadius) {
+            // It was pushed out of the solid during this substep. Its final
+            // position is already clear, but contact still supplies the
+            // moving wall's point velocity to the momentum update below.
+            result.hit = true;
+            result.projectedPosition = to;
+            result.normal = glm::normalize(terrain.end.rotation * endSample.outwardNormal);
+            result.point = terrain.end.position +
+                           terrain.end.rotation * endSample.surfacePoint;
+            const glm::vec3 previousPoint = terrain.start.position +
+                                            terrain.start.rotation * endSample.surfacePoint;
+            result.wallVelocity = (result.point - previousPoint) / substepTime;
+            return result;
+        }
+        // Endpoints can both be outside after a fast particle crosses a
+        // curved solid. Sample the relative path only when its displacement
+        // is substantial at this element's resolution; ordinary resting
+        // contacts are handled by the endpoint projection above.
+        const glm::vec3 relativeMotion = endLocal - startLocal;
+        if (glm::length(relativeMotion) <= 0.5f * particleRadius) return result;
+        float previousTime = 0.0f;
+        bool crossed = false;
+        float hitTime = 0.0f;
+        for (int slice = 1; slice <= 8; ++slice) {
+            const float time = static_cast<float>(slice) / 8.0f;
+            const glm::vec3 point = glm::mix(startLocal, endLocal, time);
+            if (glm::dot(point, point) <= kEpsilon * kEpsilon) continue;
+            const TerrainSample sample = terrain.surface->Sample(point);
+            if (sample.signedDistance < particleRadius) {
+                float outsideTime = previousTime;
+                float insideTime = time;
+                for (int iteration = 0; iteration < 8; ++iteration) {
+                    const float middle = 0.5f * (outsideTime + insideTime);
+                    const glm::vec3 middlePoint =
+                        glm::mix(startLocal, endLocal, middle);
+                    if (terrain.surface->Sample(middlePoint).signedDistance < particleRadius)
+                        insideTime = middle;
+                    else
+                        outsideTime = middle;
+                }
+                hitTime = outsideTime;
+                crossed = true;
+                break;
+            }
+            previousTime = time;
+        }
+        if (!crossed) return result;
+        contactSample = terrain.surface->Sample(
+            glm::mix(startLocal, endLocal, hitTime));
+        projectedLocal = contactSample.surfacePoint +
+                         contactSample.outwardNormal * particleRadius;
+    }
+
+    result.hit = true;
+    result.projectedPosition = terrain.end.position + terrain.end.rotation * projectedLocal;
+    result.normal = glm::normalize(terrain.end.rotation * contactSample.outwardNormal);
+    result.point = terrain.end.position +
+                   terrain.end.rotation * contactSample.surfacePoint;
+    const glm::vec3 previousPoint = terrain.start.position +
+                                    terrain.start.rotation * contactSample.surfacePoint;
+    result.wallVelocity = (result.point - previousPoint) / substepTime;
+    return result;
+}
+
 void ApplySolidCollisions(std::size_t particleIndex, const glm::vec3& from,
                           std::vector<glm::vec3>& positions,
                           const std::vector<PreparedBox>& boxes,
                           const std::vector<PreparedSphere>& spheres,
+                          const std::vector<PreparedTerrain>& terrains,
                           float radius, float substepTime,
                           const std::vector<FluidParticle>& particles,
                           std::vector<FluidContactImpulse>* impulses,
@@ -373,6 +502,21 @@ void ApplySolidCollisions(std::size_t particleIndex, const glm::vec3& from,
                     -(particles[particleIndex].mass / substepTime) * correction});
             }
         }
+        for (const PreparedTerrain& terrain : terrains) {
+            BoxContact contact = CollideTerrain(from, positions[particleIndex], terrain,
+                                                radius, substepTime);
+            if (!contact.hit) continue;
+            contact.owner = terrain.owner;
+            const glm::vec3 correction = contact.projectedPosition - positions[particleIndex];
+            positions[particleIndex] = contact.projectedPosition;
+            lastContacts[particleIndex] = contact;
+            if (impulses && terrain.owner.IsValid() &&
+                glm::dot(correction, correction) > 1.0e-12f) {
+                impulses->push_back(FluidContactImpulse{
+                    terrain.owner, contact.point,
+                    -(particles[particleIndex].mass / substepTime) * correction});
+            }
+        }
     }
 }
 
@@ -404,12 +548,20 @@ glm::vec3 FluidWorld::PresentedPosition(std::size_t index, float alpha) const {
 void FluidWorld::Step(float fixedDeltaTime, const GravityField& gravity,
                       const std::vector<FluidBoxCollider>& boxes,
                       std::vector<FluidContactImpulse>* contactImpulses) {
-    Step(fixedDeltaTime, gravity, boxes, {}, contactImpulses);
+    Step(fixedDeltaTime, gravity, boxes, {}, {}, contactImpulses);
 }
 
 void FluidWorld::Step(float fixedDeltaTime, const GravityField& gravity,
                       const std::vector<FluidBoxCollider>& boxes,
                       const std::vector<FluidSphereCollider>& spheres,
+                      std::vector<FluidContactImpulse>* contactImpulses) {
+    Step(fixedDeltaTime, gravity, boxes, spheres, {}, contactImpulses);
+}
+
+void FluidWorld::Step(float fixedDeltaTime, const GravityField& gravity,
+                      const std::vector<FluidBoxCollider>& boxes,
+                      const std::vector<FluidSphereCollider>& spheres,
+                      const std::vector<FluidTerrainCollider>& terrains,
                       std::vector<FluidContactImpulse>* contactImpulses) {
     if (contactImpulses) contactImpulses->clear();
     if (fixedDeltaTime <= 0.0f || m_particles.empty()) return;
@@ -432,19 +584,25 @@ void FluidWorld::Step(float fixedDeltaTime, const GravityField& gravity,
     std::vector<BoxContact> lastContacts(count);
     std::vector<PreparedBox> preparedBoxes;
     std::vector<PreparedSphere> preparedSpheres;
+    std::vector<PreparedTerrain> preparedTerrains;
     preparedBoxes.reserve(boxes.size());
     preparedSpheres.reserve(spheres.size());
+    preparedTerrains.reserve(terrains.size());
 
     for (int substep = 0; substep < substeps; ++substep) {
         const float alpha0 = static_cast<float>(substep) / static_cast<float>(substeps);
         const float alpha1 = static_cast<float>(substep + 1) / static_cast<float>(substeps);
         preparedBoxes.clear();
         preparedSpheres.clear();
+        preparedTerrains.clear();
         for (const FluidBoxCollider& box : boxes) {
             preparedBoxes.push_back(Prepare(box, alpha0, alpha1));
         }
         for (const FluidSphereCollider& sphere : spheres) {
             preparedSpheres.push_back(Prepare(sphere, alpha0, alpha1));
+        }
+        for (const FluidTerrainCollider& terrain : terrains) {
+            if (terrain.surface) preparedTerrains.push_back(Prepare(terrain, alpha0, alpha1));
         }
         std::fill(lastContacts.begin(), lastContacts.end(), BoxContact{});
         for (std::size_t i = 0; i < count; ++i) {
@@ -454,6 +612,7 @@ void FluidWorld::Step(float fixedDeltaTime, const GravityField& gravity,
             positions[i] = starts[i] + particle.velocity * substepTime;
             unconstrainedPositions[i] = positions[i];
             ApplySolidCollisions(i, starts[i], positions, preparedBoxes, preparedSpheres,
+                                 preparedTerrains,
                                  m_settings.particleRadius, substepTime, m_particles,
                                  contactImpulses, lastContacts);
         }
@@ -494,6 +653,7 @@ void FluidWorld::Step(float fixedDeltaTime, const GravityField& gravity,
             for (std::size_t i = 0; i < count; ++i) positions[i] += corrections[i];
             for (std::size_t i = 0; i < count; ++i) {
                 ApplySolidCollisions(i, starts[i], positions, preparedBoxes, preparedSpheres,
+                                     preparedTerrains,
                                      m_settings.particleRadius, substepTime, m_particles,
                                      contactImpulses, lastContacts);
             }

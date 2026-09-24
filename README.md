@@ -1,7 +1,7 @@
 # Project Judas
 
 A purpose-built game engine for a future game involving large spherical
-planets, spacecraft, arbitrary gravity, procedural terrain, and seamless
+planets, spacecraft, arbitrary gravity, terrain, and seamless
 transitions between planets, ships, and open space.
 
 This is **not** a general-purpose engine and is not trying to compete with
@@ -13,7 +13,50 @@ loaded with the vendored GLAD 2.0.8 OpenGL 3.3 Core loader through the
 SDL-created context; generation and license provenance are recorded in
 [`third_party/glad/README.md`](third_party/glad/README.md).
 
-## Status: Milestone 24 accepted
+## Status: Milestone 25 accepted
+
+**New in M25:** the default interactive launch now starts on an authored
+`80 m`-base-radius terrain planet, at a basin containing the same authoritative
+M24 fluid solver. Hills, slopes, two depressions, and a low connecting channel
+come from one continuous planet-local radial-height function. The visible
+mesh, player support, rigid-body contact, and fluid collision query that same
+surface; gravity remains a separate radial field. The initial lake experiment
+uses 125 coarse particles at `0.5 m` spacing, `125 kg` each (`15,625 kg`
+total). Hold `B` to add real particles above the first basin, up to 200
+particles (`25,000 kg` total), so water can cross the low route under its own
+motion. Each added particle contributes `125 kg`; this is deliberate external
+matter input, not water created by the solver. `R` restores the original
+particle set. The terrain view starts in first person (`V` toggles view).
+An ordinary dense orange `2,000 kg` dynamic box near spawn can be picked up and thrown
+with the existing `G`/`H` controls to disturb the water.
+
+Run `JUDAS_CLASSIC_DEMO=1 ./build/judas` for the accepted M24 cups and
+earlier player demonstration. The scripted gameplay harness keeps that
+classic scene by default; `JUDAS_TERRAIN_PREVIEW=1` opts it into the M25
+starting arrangement. `JUDAS_TERRAIN_ROTATED=1` rotates the terrain body
+and its authored spawn/fluid setup; `JUDAS_WORLD_OFFSET=far` places either
+scene at the M23 far absolute origin without enlarging local float
+coordinates. One focused test starting with 200 particles counted 49 in
+the second basin after six seconds. A separate test reproduces the live
+`B` schedule: after two seconds of settling and 75 emitted particles,
+44 occupied the second basin at eight seconds versus five without `B`;
+all 44 were tracked through the low saddle. All 24 standalone suites and
+near/far gameplay harness runs pass; the operator accepted the live M25 demo. See
+[`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md),
+"Milestone 25," for the surface and numerical limits.
+
+A coupled lake-scale regression throws the actual `2,000 kg`, `0.9 m` box
+through settled water at `8 m/s`; fluid contact impulses act back on the
+real Judas rigid body, which slows to `2.913 m/s` in the measured fixture.
+The coarse solver is not validated for light bodies at this lake particle
+mass; a measured `80 kg` case became numerically unstable. The limit and
+control-adjusted energy measurement are documented in
+[`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md).
+
+For a settled first-person review image, run
+`JUDAS_TERRAIN_SCREENSHOT=/tmp/judas-terrain.png ./build/judas` from the
+repository root. The optional capture occurs after 600 fixed simulation
+steps and leaves simulation unchanged.
 
 **New in M24:** a small water volume now has its own authoritative particle
 positions, velocities, masses, and pressure response. Two open cups on a table
@@ -101,7 +144,8 @@ attachment. See
 [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md), "Milestone 22."
 
 A controllable player walks, jumps, and falls under real physics — Judas's
-own physics engine, not a third-party library — across two independent
+own physics engine, not a third-party library. The retained classic scene
+has two independent
 spherical worlds ("planets," radius `20m` each, `55m` apart) connected by a
 flat plank. Each planet has its own **radial** gravity pulling toward its
 own center; the plank has its own **uniform** gravity matching its own flat
@@ -441,7 +485,8 @@ menu owns input. See [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md),
 
 ### Two-cup fluid demonstration (M24)
 
-The fluid table is near the player spawn on Planet A. Cup A starts with water
+Select the classic scene with `JUDAS_CLASSIC_DEMO=1`. Its fluid table is near
+the player spawn on Planet A. Cup A starts with water
 and Cup B is empty. Look at a cup from within interaction range until the
 pickup prompt appears, then press `G`. The held cup follows the player's
 movement with physical force and follows mouse look with physical torque:
@@ -461,9 +506,9 @@ create a world-down direction. Cup walls are translucent so the
 simulation-derived water mesh remains visible. The surface and transparency
 are visual approximations; fluid state and solid contact are CPU simulation.
 
-Run `JUDAS_FLUID_GRAVITY=rotated ./build/judas` to give the station a gravity
+Run `JUDAS_CLASSIC_DEMO=1 JUDAS_FLUID_GRAVITY=rotated ./build/judas` to give the station a gravity
 direction tilted 50 degrees from local down, or
-`JUDAS_FLUID_GRAVITY=zero ./build/judas` for exactly zero gravity there. The
+`JUDAS_CLASSIC_DEMO=1 JUDAS_FLUID_GRAVITY=zero ./build/judas` for exactly zero gravity there. The
 same bounded context applies to the player, cups, and water. Outside it,
 Planet A's normal gravity resumes. Either variant can be combined with
 `JUDAS_WORLD_OFFSET=far`. Use an optimized build for the interactive fluid
@@ -579,7 +624,7 @@ full script format:
 JUDAS_TEST_SCRIPT=path/to/script.txt ./build/judas
 ```
 
-Twenty-two standalone, headless test executables also exist (no window or GL
+Twenty-four standalone, headless test executables also exist (no window or GL
 context): `judas_physics_tests` and `judas_collision_tests` (rigid-body/
 collision/gravity-context primitives); `judas_asset_tests` (Milestone 9 —
 model/texture loading, parses the real committed demo assets and checks
@@ -654,6 +699,9 @@ shadows, and combined rotation/translation); and the M24
 compound geometry and contact, fluid gravity, zero gravity, moving walls,
 geometric and real rigid-body pour/pour-back, mass accounting,
 rotated/far-origin equivalence, and simulation-derived surface generation).
+The M25 `judas_terrain_physics_tests` and `judas_terrain_fluid_tests` add
+surface geometry/support, fluid-terrain contact, and the live water-emission
+schedule. These focused checks and operator validation pass.
 Run them with:
 
 ```bash

@@ -27,6 +27,7 @@ set(JUDAS_PHYSICS_SOURCES
     src/RigidBodyGravity.cpp
     src/Contacts.cpp
     src/ContactSolver.cpp
+    src/RadialTerrain.cpp
 )
 
 # GLAD 2 loader generated for precisely OpenGL 3.3 Core, no extensions.
@@ -61,6 +62,7 @@ add_executable(judas
     src/ObjectManipulation.cpp
     src/FluidWorld.cpp
     src/FluidSurface.cpp
+    src/TerrainDemo.cpp
     src/Door.cpp
     src/LightSwitch.cpp
     src/FaithfulGravity.cpp
@@ -417,6 +419,36 @@ add_executable(judas_fluid_surface_tests
 target_include_directories(judas_fluid_surface_tests PRIVATE src)
 target_link_libraries(judas_fluid_surface_tests PRIVATE glm::glm-header-only)
 target_compile_options(judas_fluid_surface_tests PRIVATE -Wall -Wextra)
+
+# M25: the same continuous terrain surface feeds real player/rigid queries
+# and fluid contact. Both suites are headless; the interactive composition
+# root and GL presentation remain covered by the gameplay harness/operator.
+add_executable(judas_terrain_physics_tests
+    tests/TerrainPhysicsTests.cpp
+    src/TerrainDemo.cpp
+    src/PlayerController.cpp
+    src/PlayerView.cpp
+    src/LightTransforms.cpp
+    src/StepClimb.cpp
+    src/Window.cpp
+    ${JUDAS_PHYSICS_SOURCES}
+    src/PhysicsWorld.cpp
+    src/RadicalGravity.cpp
+)
+target_include_directories(judas_terrain_physics_tests PRIVATE src ${SDL2_INCLUDE_DIRS})
+target_link_libraries(judas_terrain_physics_tests PRIVATE SDL2::SDL2 glm::glm-header-only)
+target_compile_options(judas_terrain_physics_tests PRIVATE -Wall -Wextra)
+
+add_executable(judas_terrain_fluid_tests
+    tests/TerrainFluidTests.cpp
+    src/TerrainDemo.cpp
+    src/FluidWorld.cpp
+    ${JUDAS_TEST_SUPPORT_SOURCES}
+    src/PhysicsWorld.cpp
+)
+target_include_directories(judas_terrain_fluid_tests PRIVATE src)
+target_link_libraries(judas_terrain_fluid_tests PRIVATE glm::glm-header-only)
+target_compile_options(judas_terrain_fluid_tests PRIVATE -Wall -Wextra)
 
 # stb_image_write (public domain / MIT, see third_party/stb_image_write.h) —
 # used only by the opt-in test harness (src/TestHarness.cpp) to write

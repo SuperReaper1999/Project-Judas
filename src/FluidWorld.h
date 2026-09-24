@@ -8,6 +8,7 @@
 #include "PhysicsWorld.h"
 
 class GravityField;
+class RadialTerrain;
 
 // Bounded, CPU-side particle liquid. Every particle is authoritative matter;
 // the renderer may interpolate its poses but never drives this state.
@@ -48,6 +49,17 @@ struct FluidSphereCollider {
     float radius = 0.0f;
 };
 
+// A generic solid with a locally defined radial terrain surface. The
+// previous/current rigid poses describe actual solid motion over this fixed
+// step; fluid samples the same geometric terrain used by other collision
+// consumers. There is no knowledge of planets, basins, or lakes here.
+struct FluidTerrainCollider {
+    BodyHandle owner;
+    BodyTransform previousPose;
+    BodyTransform currentPose;
+    const RadialTerrain* surface = nullptr;
+};
+
 // Equal-and-opposite impulse due to a particle/solid contact. The caller may
 // hand this to its rigid-body world after the fluid step. Static owners ignore
 // it; FluidWorld itself has no dependency on a physics-world instance.
@@ -84,6 +96,11 @@ public:
     void Step(float fixedDeltaTime, const GravityField& gravity,
               const std::vector<FluidBoxCollider>& boxes,
               const std::vector<FluidSphereCollider>& spheres,
+              std::vector<FluidContactImpulse>* contactImpulses = nullptr);
+    void Step(float fixedDeltaTime, const GravityField& gravity,
+              const std::vector<FluidBoxCollider>& boxes,
+              const std::vector<FluidSphereCollider>& spheres,
+              const std::vector<FluidTerrainCollider>& terrains,
               std::vector<FluidContactImpulse>* contactImpulses = nullptr);
 
     const std::vector<FluidParticle>& Particles() const { return m_particles; }

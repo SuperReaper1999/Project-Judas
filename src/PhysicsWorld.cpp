@@ -1,6 +1,7 @@
 #include "PhysicsWorld.h"
 
 #include <algorithm>
+#include <array>
 #include <cmath>
 #include <limits>
 #include <tuple>
@@ -9,6 +10,7 @@
 #include "CollisionShapes.h"
 #include "ContactSolver.h"
 #include "Contacts.h"
+#include "RadialTerrain.h"
 #include "RigidBody.h"
 
 // Judas's own rigid-body physics — no middleware. Collision detection,
@@ -91,6 +93,75 @@ glm::mat3 CompoundInverseInertia(float mass, const std::vector<CompoundBox>& box
     return glm::determinant(inertia) > 1.0e-12f ? glm::inverse(inertia) : glm::mat3(0.0f);
 }
 
+TerrainSample SampleTerrainAtWorld(const RadialTerrain& terrain, const RigidBody& body,
+                                   const glm::vec3& worldPoint) {
+    const glm::quat inverseRotation = glm::conjugate(glm::normalize(body.orientation));
+    TerrainSample sample = terrain.Sample(inverseRotation * (worldPoint - body.position));
+    sample.surfacePoint = body.position + body.orientation * sample.surfacePoint;
+    sample.outwardNormal = glm::normalize(body.orientation * sample.outwardNormal);
+    return sample;
+}
+
+// Normals follow Contact's shape-A convention. For terrain A the normal
+// points *into* the terrain, so resolving dynamic B pushes it outward.
+// Each box contributes its corners and face centres: a hill can contact the
+// middle of a broad face even while all four corners clear the surface.
+ContactManifold TerrainVsPrimitive(const Shape& terrainShape, const RigidBody& terrainBody,
+                                   const Shape& otherShape, const RigidBody& otherBody) {
+    ContactManifold manifold;
+    if (!terrainShape.terrain) return manifold;
+    const RadialTerrain& terrain = *terrainShape.terrain;
+    float boundingRadius = 0.0f;
+    if (otherShape.type == ShapeType::Sphere) boundingRadius = otherShape.radius;
+    else if (otherShape.type == ShapeType::Box) boundingRadius = glm::length(otherShape.halfExtents);
+    else return manifold;
+    if (glm::length(otherBody.position - terrainBody.position) >
+        terrain.BoundRadius() + boundingRadius) return manifold;
+
+    if (otherShape.type == ShapeType::Sphere) {
+        const TerrainSample sample = SampleTerrainAtWorld(terrain, terrainBody, otherBody.position);
+        if (sample.signedDistance < otherShape.radius) {
+            Contact contact;
+            contact.hit = true;
+            contact.point = sample.surfacePoint;
+            contact.normal = -sample.outwardNormal;
+            contact.penetration = otherShape.radius - sample.signedDistance;
+            manifold.Add(contact);
+        }
+        return manifold;
+    }
+
+    std::array<Contact, 14> candidates{};
+    int count = 0;
+    const glm::vec3 h = otherShape.halfExtents;
+    const auto tryPoint = [&](const glm::vec3& localPoint) {
+        const glm::vec3 worldPoint = otherBody.position + otherBody.orientation * localPoint;
+        const TerrainSample sample = SampleTerrainAtWorld(terrain, terrainBody, worldPoint);
+        if (sample.signedDistance >= 0.0f) return;
+        Contact contact;
+        contact.hit = true;
+        contact.point = sample.surfacePoint;
+        contact.normal = -sample.outwardNormal;
+        contact.penetration = -sample.signedDistance;
+        candidates[static_cast<std::size_t>(count++)] = contact;
+    };
+    for (int x : {-1, 1})
+        for (int y : {-1, 1})
+            for (int z : {-1, 1})
+                tryPoint(glm::vec3(x * h.x, y * h.y, z * h.z));
+    for (int axis = 0; axis < 3; ++axis) {
+        for (int sign : {-1, 1}) {
+            glm::vec3 point(0.0f);
+            point[axis] = sign * h[axis];
+            tryPoint(point);
+        }
+    }
+    std::sort(candidates.begin(), candidates.begin() + count,
+              [](const Contact& a, const Contact& b) { return a.penetration > b.penetration; });
+    for (int i = 0; i < std::min(count, 4); ++i) manifold.Add(candidates[static_cast<std::size_t>(i)]);
+    return manifold;
+}
+
 // Uniform manifold dispatcher: sphere-involving pairs always produce at
 // most one contact point (wrapped in a 1-point manifold); box-vs-box uses
 // the real multi-point manifold (see Contacts.h for why that one
@@ -98,6 +169,14 @@ glm::mat3 CompoundInverseInertia(float mass, const std::vector<CompoundBox>& box
 ContactManifold ComputeContacts(const Shape& shapeA, const RigidBody& bodyA, const Shape& shapeB,
                                  const RigidBody& bodyB) {
     ContactManifold manifold;
+    if (shapeA.type == ShapeType::Terrain) {
+        return TerrainVsPrimitive(shapeA, bodyA, shapeB, bodyB);
+    }
+    if (shapeB.type == ShapeType::Terrain) {
+        manifold = TerrainVsPrimitive(shapeB, bodyB, shapeA, bodyA);
+        for (int i = 0; i < manifold.count; ++i) manifold.points[i].normal = -manifold.points[i].normal;
+        return manifold;
+    }
     if (shapeA.type == ShapeType::Sphere && shapeB.type == ShapeType::Sphere) {
         manifold.Add(SphereVsSphere(bodyA.position, shapeA.radius, bodyB.position, shapeB.radius));
         return manifold;
@@ -176,6 +255,31 @@ struct PhysicsWorld::Impl {
             RigidBody sampledBody = body.rigidBody;
             sampledBody.position = bodyPosition;
             sampledBody.orientation = bodyOrientation;
+            if (body.shape.type == ShapeType::Terrain) {
+                if (!body.shape.terrain) continue;
+                const float segmentLength = glm::length(segB - segA);
+                const float minimumEndRadius = std::min(glm::length(segA - bodyPosition),
+                                                        glm::length(segB - bodyPosition));
+                if (minimumEndRadius - segmentLength >
+                    body.shape.terrain->BoundRadius() + capsuleRadius) continue;
+                // Sampling the whole capsule core, rather than just its
+                // lower endpoint, also handles arbitrary capsule attitude
+                // and terrain slopes without a universal up axis.
+                constexpr int kSegmentSamples = 9;
+                for (int sampleIndex = 0; sampleIndex < kSegmentSamples; ++sampleIndex) {
+                    const float t = static_cast<float>(sampleIndex) /
+                                    static_cast<float>(kSegmentSamples - 1);
+                    const TerrainSample sample = SampleTerrainAtWorld(
+                        *body.shape.terrain, sampledBody, glm::mix(segA, segB, t));
+                    const float distance = sample.signedDistance - capsuleRadius;
+                    if (distance < result.distance) {
+                        result.distance = distance;
+                        result.normal = sample.outwardNormal;
+                        result.bodyIndex = static_cast<int>(i);
+                    }
+                }
+                continue;
+            }
             for (int part = 0; part < PrimitiveCount(body.shape); ++part) {
                 const PrimitivePose primitive = PrimitiveAt(body.shape, sampledBody, part);
                 CapsuleDistance capsuleDistance;
@@ -274,6 +378,15 @@ BodyHandle PhysicsWorld::CreateStaticSphere(const glm::vec3& position, float rad
                                              float friction, float restitution) {
     return m_impl->AddBody(Shape::Sphere(radius), position, glm::quat(1.0f, 0.0f, 0.0f, 0.0f),
                             false, 0.0f, friction, restitution);
+}
+
+BodyHandle PhysicsWorld::CreateStaticTerrain(const glm::vec3& position,
+                                              const glm::quat& rotation,
+                                              std::shared_ptr<const RadialTerrain> terrain,
+                                              float friction, float restitution) {
+    if (!terrain) return BodyHandle{};
+    return m_impl->AddBody(Shape::Terrain(std::move(terrain)), position, rotation,
+                           false, 0.0f, friction, restitution);
 }
 
 BodyHandle PhysicsWorld::CreateDynamicBox(const glm::vec3& position, const glm::vec3& halfExtents,
@@ -388,6 +501,11 @@ float PhysicsWorld::GetBodySupportDistance(BodyHandle handle, const glm::vec3& w
             const glm::vec3 localDirection =
                 glm::conjugate(glm::normalize(primitive.body.orientation)) * direction;
             extent = glm::dot(glm::abs(localDirection), primitive.shape.halfExtents);
+        } else if (primitive.shape.type == ShapeType::Terrain && primitive.shape.terrain) {
+            // Exact directional support of an arbitrary radial height
+            // function would require global optimization. Its immutable
+            // radius bound is conservative for this separation query.
+            extent = primitive.shape.terrain->BoundRadius();
         }
         maximum = std::max(maximum,
                             glm::dot(primitive.body.position - body->rigidBody.position,

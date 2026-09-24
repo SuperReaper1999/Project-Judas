@@ -166,6 +166,10 @@ bool Window::IsActionActive(Action action) const {
             return keys[SDL_SCANCODE_M];
         case Action::PlanetRadialThrust:
             return keys[SDL_SCANCODE_N];
+        case Action::AddTerrainWater:
+            return keys[SDL_SCANCODE_B];
+        case Action::Count:
+            return false;
     }
     return false;
 }

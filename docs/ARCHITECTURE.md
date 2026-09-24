@@ -6,9 +6,14 @@ someone with no prior context on this project. It is updated in place as
 milestones land, rather than kept as a per-milestone snapshot — see
 "Milestone history" below for how to recover an earlier milestone exactly.
 
-## What exists right now (M23 accepted)
+## What exists right now (M25 accepted)
 
-Open a window. Two independent static spheres ("planets," radius `20m`
+The default interactive launch starts on the M25 terrain planet: a large
+radial-height surface with real collision and an M24 fluid lake in a basin.
+The earlier two-planet demonstration described below remains available with
+`JUDAS_CLASSIC_DEMO=1`.
+
+In that classic scene, two independent static spheres ("planets," radius `20m`
 each, centers `55m` apart — see "Physics test world") exist in 3D space,
 each with its own **radial** gravity pulling toward its own center. A flat
 static plank connects them near their facing surfaces. A Judas-owned
@@ -6702,3 +6707,192 @@ does not implement drainage, cleanup, oceans, or arbitrary fluid quantities.
 `JUDAS_TEST_SCRIPT` harness captures the M24 starting arrangement without
 changing the default M1–M23 harness scene; the fluid solver's dynamic pour
 is validated by the dedicated suites and interactive operator run.
+
+## Milestone 25 — radial terrain and environmental fluid (accepted)
+
+### Scope and scene selection
+
+The default interactive launch begins at a new static terrain planet with an
+`80 m` base radius, centred at local simulation position `(300,0,0) m`.
+This is four times the radius of the accepted `20 m` walkable demo spheres,
+large enough for a local patch to read as hills and basins while remaining
+inside Judas's current float local-scene and fixed-mesh budget. The existing
+two-planet, plank, spacecraft, interaction and M24 cup demonstration remain
+available with `JUDAS_CLASSIC_DEMO=1`. The permanent scripted gameplay
+harness keeps the accepted classic scene unless `JUDAS_TERRAIN_PREVIEW=1` is
+set. No prior milestone's demo physics is replaced by a different engine.
+The terrain view starts in first person and renders the new nearby terrain,
+player, water and an orange `2,000 kg` dynamic box near spawn. That box uses
+ordinary rigid collision and M18 pickup/throw, providing a solid object to
+disturb the water. Distant classic bodies keep their established simulation
+when terrain is selected but are not submitted in its rendering path; the
+classic launch exposes their accepted visual scene and controls.
+
+`JUDAS_TERRAIN_ROTATED=1` applies a rigid 47-degree authored-body rotation
+to the terrain, initial water and nearby player/object placements. The
+terrain's gravity remains an independent `RadicalGravity` field centred at
+that planet: body orientation changes the hills' positions and their support
+normals, but does not change what gravity *means*. `JUDAS_WORLD_OFFSET=far`
+changes only M23's double-precision absolute origin. The terrain body,
+gravity centre, fluid particles, player and camera continue using the same
+small local float coordinates, so the far scene is a translation rather
+than a new physical law. Numerical M25 rotate/translate comparisons and
+far-origin render comparisons pass; the operator accepted the live scene.
+
+### One surface for appearance and physical contact
+
+`src/TerrainDemo.cpp` authors deterministic elevation as a smooth function
+of a **planet-local unit radial direction**, with broad hills, two Gaussian
+depressions and a shallower connecting low channel near the model's +Y
+pole. That +Y is a mesh-authoring convention and rotates with the entire
+planet; it is not a world-space down direction or a gravity rule.
+`RadialTerrain` forms each surface point as `direction * (80 m + elevation)`
+in the body-local frame. The body's ordinary position/orientation transform
+places it in simulation space. Its `Sample` operation returns a positive-
+outside, locally Euclidean signed-clearance estimate, a projected surface
+point and a continuous *geometric* outward normal from the radial-height
+gradient. On slopes that normal differs from the radial gravity direction.
+The special case at the mathematically undefined exact centre uses a finite
+model-local fallback; ordinary contact occurs near the surface.
+
+`PhysicsWorld::CreateStaticTerrain` stores the shared immutable surface as
+an ordinary static collision shape. The same surface supplies player capsule
+sweep clearance/normal (nine samples along its segment), dynamic-sphere
+contact, and box contacts sampled at corners and face centres. Existing
+`ContactSolver` impulses and positional correction resolve those contacts;
+`PlayerController` and `StepClimb` have no terrain-name branch. Their support
+test still compares the **contact** normal to gravity-derived local up, so
+steep terrain can be unwalkable while gravity continues pointing radially.
+M19's skin-clearance and continuously updated local-frame rules remain the
+player's movement policy. A fast or very small obstacle can exceed this
+bounded contact sampling; M25 is not a general triangle-mesh collision or
+planetary terrain engine.
+
+`RadialTerrain::BuildMesh(96,128)` samples the same elevation/normal
+function into an indexed full-sphere mesh, with static ring density
+concentrated in the traversable polar patch. It contains 12,257 vertices
+and 24,320 triangles. `Renderer::DrawMesh` draws the mesh through the
+existing OpenGL 3.3 lighting and shadow paths. Finite triangles approximate
+the continuous collision surface; the mesh is not a second authoritative
+height function. At a `0.25 m` sample grid, actual ray/triangle intersections
+versus analytic collision heights differed by at most `0.01196 m` (RMS
+`0.00268 m`) in the basin patch, and `0.03793 m` (RMS `0.00712 m`) across
+the wider tested traversal. This is measured agreement at this mesh
+resolution, not mathematical identity. Local tessellation is densest where
+player and fluid interact; the distant hemisphere is coarser.
+The permanent terrain suite also checks repeatable elevation, neighboring
+height/normal continuity, finite vertices, valid indices and outward winding
+across more than 1,000 nondegenerate production-mesh triangles.
+There is no streaming, runtime LOD, terrain editor or arbitrary planet size.
+
+### Fluid on the terrain
+
+The terrain scene uses the existing `FluidWorld` particle solver, not a
+`LakeVolume` or water-height equation. At its coarser environmental
+resolution, particle spacing is `0.5 m`, rest density remains
+`1000 kg/m³`, and each particle has mass `125 kg` (represented volume
+`0.125 m³`). Collision radius, density-kernel radius and per-iteration
+density-correction cap are scaled tenfold from the accepted cup settings
+to `0.18 m`, `1.05 m` and `0.25 m`; fixed-step frequency, three fluid
+substeps, two density iterations and numerical velocity smoothing remain
+the M24 method. Initial state is 125 particles, `15,625 kg` or
+`15.625 m³`, positioned above the first authored depression. Every fixed
+step they sample the same local gravity map as the player and rigid bodies.
+The terrain is passed to `FluidWorld` as static collision geometry, queried
+from its real pose and `RadialTerrain::Sample`; particle projections and
+swept-path checks keep matter outside the solid. The water surface displayed
+by `FluidSurface` is rebuilt from interpolated particle positions with a
+`0.40 m` presentation grid. It never drives the particles.
+
+Holding `B` adds one new `125 kg` particle per 60 Hz fixed step from an
+authored source above the first depression until the scene reaches 200
+particles (`25,000 kg` total). This is an explicit external mass source
+used to disturb/fill the basin; each emitted element thereafter obeys the
+same solver and terrain collision. It is not a basin-fill command or a
+transfer between containers. `R` restores the 125 original particles.
+Fluid stepping itself neither creates nor deletes elements, so total mass
+for a given particle count remains `125 kg × count`. The intended overflow
+route is the geometric low channel toward the second, deeper depression;
+the amount and timing of actual flow are measured from particle state,
+not inferred from the authored terrain names or mesh appearance. In a
+focused 200-particle headless run with all water seeded at the start,
+49 particles occupied the second basin after six seconds. No container or
+basin transfer command moved them. A separate end-to-end fluid test mirrors
+the live reset and `B` input schedule: 125 particles settle for two seconds,
+then one particle is emitted per fixed step for 75 steps from the same
+`2.8 m`-clearance source. At eight seconds, 44 particles occupied Basin B
+versus five in an otherwise identical no-`B` control. All 44 were tracked
+through the geometric low saddle. The emitted run ended with exactly 200
+particles (`25,000 kg`), minimum particle-centre terrain clearance
+`0.180 m`, and finite state; reset reconstructed the original 125 positions
+and `15,625 kg` exactly. This establishes the live emission law at the
+solver boundary without claiming what any particular interactive camera
+frame will look like.
+
+A coupled fixture settles the actual 125-particle lake for two seconds,
+clones an identical no-box water control, then throws a `0.9 m`-sided,
+`2,000 kg` Judas rigid box through the water at M18's `8 m/s` throw speed.
+Fluid contact uses the box's actual previous/current poses, and returned
+impulses enter `PhysicsWorld::ApplyImpulseAtPoint` as in the interactive
+loop. Across 325 box-water contacts the box received
+`-10,983 kg·m/s` along travel and ended at `2.913 m/s`; its fastest measured
+speed was `8.124 m/s`. The measured body momentum change differed from
+summed applied impulses by at most `0.0027 kg·m/s`. Relative to the
+identical no-box fluid control, combined box/fluid mechanical energy
+(including box rotation) fell by about `55.82 kJ` rather than growing;
+water remained finite and at
+least `0.180 m` clear of terrain. This checks two-way coupling at the
+authored mass, shape and speed; it does not imply exact conservation in the
+presence of terrain contact and solver damping.
+
+On this host, the focused headless terrain/fluid fixture measured about
+`4.86 ms` per fixed fluid step at 125 particles and `8.10 ms` at 200.
+Separately, a 480-step optimized headless terrain walk measured
+`0.441 ms` per `PlayerController::FixedUpdate`, including terrain sweep
+queries but excluding diagnostic sampling and rendering.
+Fluid particle mass stayed exactly `125 kg × count`, including deliberate
+`B` emission. The measured
+rotated/translated scenario's largest position discrepancy after rotating
+back was `0.0123 m`. These are measured bounds for the test case, not
+proof of exact fluid invariance at every resolution.
+
+An unattended interactive 125-particle run on this host, after limiting the
+terrain view's rendering submission to its nearby scene, averaged
+`4.865 ms` for solver/collider work per fixed step, `5.517 ms` for the
+presentation surface build/upload per frame, `20.330 ms` for scene CPU
+submission, and `39.879 ms` full wall time per frame. The latter includes
+this host's software/display path and is not a portable GPU benchmark.
+The particle cap and coarse presentation grid bound this demonstration's
+cost; they do not make the solver scalable to oceans.
+
+The authored box is deliberately dense: `2,000 kg / 0.9³ m³ ≈
+2,743 kg/m³`. The same settled 125-particle experiment with an `80 kg`
+box exposed a mass-ratio limit in this coarse fluid/rigid coupling: it
+reached about `115 m/s` and gained about `543 kJ` of mechanical energy over
+its no-box fluid control. In `FluidWorld`, the solid's motion is supplied
+for the whole fixed step before the water's reaction impulses update the
+body, so a light body can receive an excessive delayed response. M25's
+heavy ordinary box demonstrates physically coherent disturbance at the
+tested resolution; the current solver is not validated for throwing light
+bodies into this environmental volume. This limit is documented rather
+than hidden by a force cap or a presentation-only effect.
+
+M25 currently demonstrates a bounded local patch, not ocean-scale fluid.
+The finite particle spacing cannot resolve spray, a thin shoreline or a
+perfect equipotential free surface. The signed-clearance estimate and
+finite player/rigid/fluid collision samples are local approximations;
+extreme speeds and shapes narrower than the sampling interval can exceed
+them. The player capsule is not passed to the fluid solver as a moving solid;
+the ordinary dynamic box supplies the demonstrated solid-water disturbance.
+Fluid mass retention during stepping is exact by particle identity,
+while pressure projection, wall contact and numerical smoothing do not
+promise exact energy or momentum conservation. Terrain traversal,
+basin occupancy, overflow, timing and rotated/far equivalence have focused
+automated measurements as above. A clean Release build has no compiler
+warnings; all 24 standalone suites pass. Both the classic and terrain
+420-step gameplay harness scenarios produce byte-identical local telemetry
+at the origin and the M23 far offset. The terrain harness's two rendered
+screenshots are byte-identical as well. An optional interactive
+`JUDAS_TERRAIN_SCREENSHOT=/path/image.png` captures the presented terrain
+view after 600 fixed simulation steps (reset restarts that count); it is
+readback only. Operator visual acceptance was granted after these checks.

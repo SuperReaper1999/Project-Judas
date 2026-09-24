@@ -2,6 +2,7 @@
 
 #include <vector>
 #include <utility>
+#include <memory>
 
 #include <glm/glm.hpp>
 
@@ -11,7 +12,9 @@
 // general shape system. A shape carries no position/orientation of its
 // own; those live on the RigidBody (or, for the player, the caller-
 // supplied pose passed to a sweep query) that references it.
-enum class ShapeType { Sphere, Box, Capsule, CompoundBoxes };
+class RadialTerrain;
+
+enum class ShapeType { Sphere, Box, Capsule, CompoundBoxes, Terrain };
 
 // A box fixed in a rigid body's own frame. Several of these can make one
 // non-convex solid (for example, an open container) while retaining one
@@ -31,6 +34,10 @@ struct Shape {
                                    // existing player-capsule convention.
     glm::vec3 halfExtents{0.0f};  // Box only
     std::vector<CompoundBox> boxes;  // CompoundBoxes only
+    // Static radial terrain is geometry in the body's own frame. Shared
+    // immutable ownership lets the same surface serve rendering, rigid
+    // contacts, player queries, and fluid contacts without copied state.
+    std::shared_ptr<const RadialTerrain> terrain;
 
     static Shape Sphere(float r) {
         Shape s;
@@ -55,6 +62,12 @@ struct Shape {
         Shape s;
         s.type = ShapeType::CompoundBoxes;
         s.boxes = std::move(children);
+        return s;
+    }
+    static Shape Terrain(std::shared_ptr<const RadialTerrain> surface) {
+        Shape s;
+        s.type = ShapeType::Terrain;
+        s.terrain = std::move(surface);
         return s;
     }
 };

@@ -42,6 +42,10 @@ enum class Action {
     PlanetProgradeThrust,
     PlanetRetrogradeThrust,
     PlanetRadialThrust,
+    // M25 authored water source: held B adds real particles on fixed steps
+    // only while gameplay owns input. No fluid system sees a keyboard key.
+    AddTerrainWater,
+    Count,
 };
 
 // Owns the OS window, the GL context, and OS event pumping. Combines the
@@ -220,7 +224,7 @@ private:
     int m_height = 0;
 
     bool m_testInputMode = false;
-    bool m_testActionState[15] = {};
+    bool m_testActionState[static_cast<int>(Action::Count)] = {};
     // mutable: GetMouseDelta is const (it only ever mutates external SDL
     // state in the non-test path), but test mode needs "read once, then
     // drain to zero" semantics on its own queued delta, matching real
