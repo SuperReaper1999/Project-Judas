@@ -34,7 +34,7 @@ const glm::vec4 kPromptTextColor(0.98f, 0.96f, 0.85f, 1.0f);
 // method) so it's trivially unit-testable without a Renderer/GL context;
 // see tests/UITests.cpp.
 std::string FormatLine(int index, const HUDViewData& data) {
-    char buffer[96];
+    char buffer[128];
     switch (index) {
         case 0:
             std::snprintf(buffer, sizeof(buffer), "Support: %s", data.grounded ? "Grounded" : "Airborne");
@@ -78,15 +78,24 @@ std::string FormatLine(int index, const HUDViewData& data) {
             std::snprintf(buffer, sizeof(buffer), "Pilot rel. speed to ship: %.2f m/s",
                           data.pilotRelativeSpacecraftSpeed);
             break;
-        default:
+        case 9:
             std::snprintf(buffer, sizeof(buffer), "Spacecraft SAS: %s",
                           data.spacecraftSasEnabled ? "ON" : "OFF");
+            break;
+        case 10:
+            std::snprintf(buffer, sizeof(buffer), "World origin: (%.2e, %.2e, %.2e) m",
+                          data.worldOrigin.x, data.worldOrigin.y, data.worldOrigin.z);
+            break;
+        default:
+            std::snprintf(buffer, sizeof(buffer), "Player absolute: (%.1f, %.1f, %.1f) m",
+                          data.absolutePlayerPosition.x, data.absolutePlayerPosition.y,
+                          data.absolutePlayerPosition.z);
             break;
     }
     return std::string(buffer);
 }
 
-constexpr int kLineCount = 10;
+constexpr int kLineCount = 12;
 }  // namespace
 
 void HUD::Draw(Renderer& renderer, int windowWidth, int windowHeight, const HUDViewData& data) const {

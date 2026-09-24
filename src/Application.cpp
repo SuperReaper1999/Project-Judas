@@ -46,6 +46,7 @@
 #include "TestHarness.h"
 #include "TextureLoader.h"
 #include "Window.h"
+#include "WorldCoordinates.h"
 
 namespace {
 GLADapiproc LoadOpenGLProcAddress(const char* name) {
@@ -61,6 +62,31 @@ ReferenceFrame ReferenceFrameFromBody(const PhysicsWorld& physics, BodyHandle ha
 
 constexpr int kWindowWidth = 1024;
 constexpr int kWindowHeight = 768;
+
+// M23 demonstration placement. Authored positions throughout this file are
+// local to one active scene. JUDAS_WORLD_OFFSET translates that whole scene
+// in absolute space without asking float physics or OpenGL to subtract huge
+// nearly-equal positions. "far" is a convenient operator acceptance preset.
+bool ReadWorldOffset(glm::dvec3& offset) {
+    const char* value = std::getenv("JUDAS_WORLD_OFFSET");
+    if (value == nullptr || *value == '\0') {
+        offset = glm::dvec3(0.0);
+        return true;
+    }
+    if (std::string(value) == "far") {
+        offset = glm::dvec3(1.0e9, -2.0e9, 3.0e9);
+        return true;
+    }
+    double x = 0.0, y = 0.0, z = 0.0;
+    char trailing = '\0';
+    if (std::sscanf(value, "%lf,%lf,%lf%c", &x, &y, &z, &trailing) != 3 ||
+        !std::isfinite(x) || !std::isfinite(y) || !std::isfinite(z)) {
+        std::fprintf(stderr, "JUDAS_WORLD_OFFSET must be far or x,y,z in metres.\n");
+        return false;
+    }
+    offset = glm::dvec3(x, y, z);
+    return true;
+}
 
 // Milestone 7-Final's demo: two independent spherical worlds, each with its
 // own RadicalGravity source, connected by one flat static plank — replacing
@@ -704,6 +730,9 @@ std::vector<DynamicLight> BuildDynamicLights(const PlayerController& player, boo
 }  // namespace
 
 int Application::Run() {
+    glm::dvec3 worldOffset;
+    if (!ReadWorldOffset(worldOffset)) return 1;
+    const WorldCoordinates worldCoordinates(worldOffset);
     // Opt-in developer/automation tooling (see docs/ARCHITECTURE.md,
     // "Automated testing," and src/TestHarness.h): when set, this run is a
     // scripted, headless verification pass rather than the interactive
@@ -713,11 +742,14 @@ int Application::Run() {
     const bool isTestRun = testScriptPath != nullptr;
 
     Window window;
-    if (!window.Init("Project Judas - Milestone 22", kWindowWidth, kWindowHeight,
+    if (!window.Init("Project Judas - Milestone 23", kWindowWidth, kWindowHeight,
                       !isTestRun)) {
         std::fprintf(stderr, "Window initialization failed.\n");
         return 1;
     }
+    std::fprintf(stderr, "World origin (m): %.3f, %.3f, %.3f\n",
+                 worldCoordinates.Origin().x, worldCoordinates.Origin().y,
+                 worldCoordinates.Origin().z);
 
     if (gladLoadGL(&LoadOpenGLProcAddress) == 0 || !GLAD_GL_VERSION_3_3) {
         std::fprintf(stderr, "Failed to load the required OpenGL 3.3 Core entry points.\n");
@@ -1476,6 +1508,8 @@ int Application::Run() {
                 hudData.controllingSpacecraft = flyingPrimitiveControl.controlled;
                 hudData.pilotAttached = pilotAttachment.attached;
                 hudData.spacecraftSasEnabled = flyingPrimitiveControl.sasEnabled;
+                hudData.worldOrigin = worldCoordinates.Origin();
+                hudData.absolutePlayerPosition = worldCoordinates.ToGlobal(player.GetPosition());
                 const BodyHandle shipHandle = flyingPrimitiveControl.handle;
                 const glm::vec3 shipWorldPosition = physicsWorld.GetTransform(shipHandle).position;
                 const glm::vec3 shipWorldVelocity = physicsWorld.GetLinearVelocity(shipHandle);

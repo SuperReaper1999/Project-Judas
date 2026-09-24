@@ -6,7 +6,7 @@ someone with no prior context on this project. It is updated in place as
 milestones land, rather than kept as a per-milestone snapshot — see
 "Milestone history" below for how to recover an earlier milestone exactly.
 
-## What exists right now (M22 accepted)
+## What exists right now (M23 accepted)
 
 Open a window. Two independent static spheres ("planets," radius `20m`
 each, centers `55m` apart — see "Physics test world") exist in 3D space,
@@ -39,6 +39,9 @@ the spacecraft in an unclaimed part of the same world. M22's
 `ReferenceFrame` describes motion relative to those bodies without changing
 world-space physics. The HUD exposes world speed and relative speed to the
 moving celestial body, along with the pilot's speed relative to the ship.
+M23 adds a double-precision absolute coordinate origin for the whole active
+scene; all of these nearby physical relationships still use the same precise
+local simulation coordinates. See "Milestone 23" for the measured range.
 
 **As of this milestone, Project Judas owns its physics engine entirely —
 no third-party physics middleware is used at all.** Every prior milestone
@@ -6442,3 +6445,94 @@ from a rising spacecraft, checks inherited motion and grounded support,
 walks on the hull while it coasts, and repeats the case under a rigid
 universe rotation. All existing M1–M22 suites and the gameplay harness pass;
 M22 remains accepted.
+
+## Milestone 23 — no privileged physical origin (accepted)
+
+### Diagnosis and coordinate boundary
+
+The pre-M23 simulation used `glm::vec3` for every world position. This is
+adequate for the small authored demo but cannot represent local motion after
+a large *direct* translation. A probe using the real `PhysicsWorld::Step`
+gave a free body's measured displacement after 60 steps at `1/60 s`, with
+constant `0.04 m/s` velocity:
+
+| Starting X coordinate | Measured displacement | Error against 0.04 m |
+|---:|---:|---:|
+| `0 m` | `0.040000003 m` | `0.000000004 m` |
+| `1,000 m` | `0.040283203 m` | `0.000283204 m` |
+| `3,000 m` | `0.043945313 m` | `0.003945313 m` |
+| `10,000 m` | `0.058593750 m` | `0.018593751 m` |
+| `100,000 m` and above | `0 m` | `-0.04 m` |
+
+This is float position quantization, not a force, gravity, or collision law
+that attracts things toward `(0,0,0)`. `float` spacing at one million metres
+is `0.0625 m`, enough to erase a centimetre movement altogether. Merely
+subtracting large float positions inside individual consumers would be too
+late: both operands would already have lost the nearby detail.
+
+`WorldCoordinates` (`src/WorldCoordinates.h`) is the narrow M23 boundary:
+
+```text
+absolute position (double) = scene origin (double) + local position (float)
+local position (float) = float(absolute position - scene origin)  // subtract in double
+```
+
+The whole active demo is authored in local coordinates. Its chosen absolute
+origin is immutable during a run; `JUDAS_WORLD_OFFSET=far` selects
+`(1e9, -2e9, 3e9) m`, and `JUDAS_WORLD_OFFSET=x,y,z` accepts a custom
+absolute translation. The default is zero. The HUD reports the chosen
+origin and the player's current absolute position; the terminal reports
+the origin at startup. Thus the complete scene has a real large-scale location as
+the pair `(origin, local coordinate)`, while its *relative* positions stay
+small. Changing the origin between launches translates every object,
+gravity volume, camera, reference frame, and light by the same amount in
+absolute space; it never injects a velocity, force, or collision correction.
+`R` restores the same local initial state at the selected absolute origin.
+
+All existing engine `glm::vec3` parameters called "world-space" mean
+coordinates in this active local simulation frame. `ReferenceFrame` still
+expresses motion relative to that frame, not against an absolute zero.
+`PhysicsWorld`, `GravityField`, `PlayerController`, `CelestialGravity`,
+spacecraft control, interactions, and object manipulation need only relative
+local geometry and their existing laws; they have not been taught about the
+large absolute origin. Renderer model/view/light/shadow matrices likewise
+consume only local positions, keeping the GPU float path precise and OpenGL
+3.3 unchanged. No rendering coordinate is fed back into physics.
+
+### Validation and limits
+
+The new `judas_world_coordinates_tests` directly shifts representative
+float physics, orbit and player scenarios by `(32,-48,16) m`, to catch a
+hidden physical use of zero at a scale where float still has sufficient
+resolution. It then creates the same scenarios from double absolute
+positions at the billion-metre origin and checks local results: rigid-body
+integration/contact, radial gravity, two-body orbit, thrusting ship and
+SAS, curved player walking/jumping/landing, both cameras and torch,
+pickup/carry/throw, moving reference-frame transforms, and a directional
+shadow matrix. A combined arbitrary rotation and large translation gives
+final orbit-body differences of `0.000054/0.000066 m` and ship position
+difference `0.000321 m` after rotation back in the focused 900-step run.
+The same `0.04 m/s` body moved `0.039997101 m` over one second in both
+near and far represented scenes. At the far origin, a centimetre-scale
+global/local round trip had `2.12e-7 m` error; directly narrowing the
+absolute position to float erased that centimetre entirely.
+
+The clean M23 build emitted no compiler warnings; all 18 standalone suites
+passed. The gameplay harness completed the same 420-step walk/jump/reset script
+near and far. Its state rows were byte-identical; the sole text difference
+was the requested screenshot filename. The two rendered PNG files were
+byte-identical. These checks establish equivalence for the tested scene.
+The operator also validated visible smoothness and normal gameplay at the
+far placement.
+
+The local active scene presently spans roughly 150 m. The probe above
+shows why local float coordinates must stay near their chosen origin:
+at 1 km, this particular 4 cm traversal already accrued about 0.28 mm
+error, and by 3 km about 3.95 mm. M23 does **not** implement automatic
+rebasing, streaming, or travel across arbitrarily many kilometres in one
+local frame. The tested absolute placement reaches coordinates of
+`3e9 m`; no claim is made for arbitrary absolute magnitudes. A future
+scene that moves far from its selected local origin will need a measured,
+atomic coordinate shift across its simulation and presentation state.
+There is no such shift in the current M23 demo, so no mid-run rebase
+continuity is claimed.

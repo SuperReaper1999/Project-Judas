@@ -351,6 +351,30 @@ target_include_directories(judas_player_curved_locomotion_tests PRIVATE ${SDL2_I
 target_link_libraries(judas_player_curved_locomotion_tests PRIVATE SDL2::SDL2 glm::glm-header-only)
 target_compile_options(judas_player_curved_locomotion_tests PRIVATE -Wall -Wextra)
 
+# M23: exercise global double placement and precise local simulation across
+# physics, gravity, orbital flight, player presentation, frames and pickup.
+add_executable(judas_world_coordinates_tests
+    tests/WorldCoordinatesTests.cpp
+    src/CelestialGravity.cpp
+    src/DynamicBody.cpp
+    src/FlyingPrimitiveControl.cpp
+    src/InteractionSystem.cpp
+    src/ObjectManipulation.cpp
+    src/PlayerController.cpp
+    src/PlayerView.cpp
+    src/LightTransforms.cpp
+    src/ReferenceFrame.cpp
+    src/ShadowTransforms.cpp
+    src/Window.cpp
+    src/StepClimb.cpp
+    src/PhysicsWorld.cpp
+    ${JUDAS_TEST_SUPPORT_SOURCES}
+)
+target_include_directories(judas_world_coordinates_tests PRIVATE src)
+target_include_directories(judas_world_coordinates_tests PRIVATE ${SDL2_INCLUDE_DIRS})
+target_link_libraries(judas_world_coordinates_tests PRIVATE SDL2::SDL2 glm::glm-header-only)
+target_compile_options(judas_world_coordinates_tests PRIVATE -Wall -Wextra)
+
 # stb_image_write (public domain / MIT, see third_party/stb_image_write.h) —
 # used only by the opt-in test harness (src/TestHarness.cpp) to write
 # screenshots to PNG. A single vendored header, not fetched via CMake:

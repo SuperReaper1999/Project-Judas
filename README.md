@@ -13,7 +13,30 @@ loaded with the vendored GLAD 2.0.8 OpenGL 3.3 Core loader through the
 SDL-created context; generation and license provenance are recorded in
 [`third_party/glad/README.md`](third_party/glad/README.md).
 
-## Status: Milestone 22 accepted
+## Status: Milestone 23 accepted
+
+**New in M23:** Judas now represents the active scene as small float
+simulation/render coordinates plus a double-precision absolute coordinate
+origin. Physics, gravity, reference frames, camera, lights, interaction, and
+shadows continue to operate on the same precise local positions. The absolute
+position of any object is `world origin + local position`; translating the
+entire scene changes only the origin. This keeps the existing OpenGL 3.3
+renderer and physics laws intact. The HUD shows the coordinate origin and
+player's absolute position.
+
+Run the ordinary scene at the tested billion-metre translation with:
+
+```bash
+JUDAS_WORLD_OFFSET=far ./build/judas
+```
+
+Unset the variable to run near zero. A custom `x,y,z` metre offset is also
+accepted, for example `JUDAS_WORLD_OFFSET=1000000000,-2000000000,3000000000`.
+`R` resets the same local scenario at the chosen absolute location. There is
+no runtime rebasing or streaming yet; the active local scene must stay small
+enough for float simulation. M23's measured range and limitations are in
+[`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md), "Milestone 23." Human visual
+validation has passed.
 
 **New in M20:** the interactive scene includes two massive dynamic spheres in
 unclaimed space. Their initial positions and velocities are the analytical
@@ -499,7 +522,7 @@ full script format:
 JUDAS_TEST_SCRIPT=path/to/script.txt ./build/judas
 ```
 
-Sixteen standalone, headless test executables also exist (no window or GL
+Eighteen standalone, headless test executables also exist (no window or GL
 context): `judas_physics_tests` and `judas_collision_tests` (rigid-body/
 collision/gravity-context primitives); `judas_asset_tests` (Milestone 9 —
 model/texture loading, parses the real committed demo assets and checks
@@ -565,11 +588,14 @@ torch pose, stillness after traversal, and rotated-universe equivalence); and
 force direction, barycentric motion for equal and unequal masses, analytical
 period/radius comparison, momentum/angular-momentum/energy/barycentre drift,
 timestep convergence, perturbation, escape, and rotate-the-universe
-equivalence). Run them with:
+equivalence); and `judas_world_coordinates_tests` (Milestone 23 — precise
+large-offset placement, slow motion, contacts, gravity, orbit/spacecraft/SAS,
+curved walking/jumping, both cameras, torch, pickup/throw, moving frames,
+shadows, and combined rotation/translation). Run them with:
 
 ```bash
-cmake --build build --target judas_physics_tests judas_collision_tests judas_asset_tests judas_step_climb_tests judas_pilot_attachment_tests judas_pilot_dismount_tests judas_spacecraft_control_tests judas_spacecraft_flight_tests judas_reference_frame_tests judas_ui_tests judas_lighting_tests judas_shadow_tests judas_interactable_tests judas_player_view_tests judas_object_manipulation_tests judas_player_curved_locomotion_tests judas_celestial_gravity_tests
-./build/judas_physics_tests && ./build/judas_collision_tests && ./build/judas_asset_tests && ./build/judas_step_climb_tests && ./build/judas_pilot_attachment_tests && ./build/judas_pilot_dismount_tests && ./build/judas_spacecraft_control_tests && ./build/judas_spacecraft_flight_tests && ./build/judas_reference_frame_tests && ./build/judas_ui_tests && ./build/judas_lighting_tests && ./build/judas_shadow_tests && ./build/judas_interactable_tests && ./build/judas_player_view_tests && ./build/judas_object_manipulation_tests && ./build/judas_player_curved_locomotion_tests && ./build/judas_celestial_gravity_tests
+cmake --build build
+for test in build/judas_*_tests; do "$test" || break; done
 ```
 
 ## Assets

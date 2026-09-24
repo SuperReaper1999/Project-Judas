@@ -1,6 +1,7 @@
 #pragma once
 
 #include <string>
+#include <glm/glm.hpp>
 
 class Renderer;
 
@@ -18,6 +19,8 @@ struct HUDViewData {
     bool controllingSpacecraft = false;
     bool pilotAttached = false;
     bool spacecraftSasEnabled = false;
+    glm::dvec3 worldOrigin{0.0};  // M23 absolute placement; local physics stays unchanged
+    glm::dvec3 absolutePlayerPosition{0.0};
     float spacecraftLinearSpeed = 0.0f;  // world-frame speed (m/s)
     bool celestialReferenceAvailable = false;
     float celestialBodyWorldSpeed = 0.0f;
