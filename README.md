@@ -13,7 +13,70 @@ loaded with the vendored GLAD 2.0.8 OpenGL 3.3 Core loader through the
 SDL-created context; generation and license provenance are recorded in
 [`third_party/glad/README.md`](third_party/glad/README.md).
 
-## Status: Milestone 26 in operator validation
+## Status: Milestone 27 accepted
+
+**New in M27:** three ordinary pickable rigid blocks on the terrain
+spacecraft carry finite combustible coatings. Their temperatures, remaining
+fuel, burn rates, heat output, and local oxidizer supply are fixed-step
+thermal state. Hold `C` to power an `18 kW` point heater carried by the
+player's local look frame. Its radiated energy reaches each block by
+geometric interception; there is no `Ignite` command. Once a block is hot
+enough, atmospheric oxidizer permits a fuel-limited reaction that releases
+heat. Remaining fuel uses double precision so tiny thin-air burns still
+consume the mass that accounts for their released heat. Pairwise radiation
+can heat a nearby second block; the farther third
+block tests that proximity alone does not spread fire. These remain physical
+bodies that can be picked up with `G` and thrown with `H`. The ship can carry
+them into thin atmosphere or vacuum using ordinary contact and thrust.
+
+Fire requires the M26 gas's sampled oxidizer density. The atmosphere now
+also reports a temperature consistent with its existing polytropic pressure
+and density. Gas composition and profile remain prescribed: combustion does
+not deplete local oxygen or simulate evolving hot-product parcels. Small
+flame/smoke spheres follow measured burn rate, temperature, local gravity,
+and gas-relative flow for presentation only. They do not cause heat or
+spread. In zero gravity with no relative flow, they form a symmetric halo.
+The HUD exposes heater state, player-local oxidizer, and all three blocks'
+temperature/fuel/burn rate. `R` resets their physical and thermal initial
+state. `JUDAS_FIRE_DIAGNOSTICS=1` prints thermal measurements. M27 has
+passed operator validation.
+
+For the ignition exercise, approach the close pair of brown blocks on one
+side of the ship deck. Hold `C` to show the small glowing heater tip; aim
+it at the first block and keep heating until **Fuel A** is around `700 K`.
+The reaction begins above `550 K`, but just crossing that threshold may
+not sustain it after the heater is removed. Release `C` and watch **Fuel B**
+heat from A's radiated energy. The separate block
+on the other side of the deck is the distant comparison. These are
+ordinary pickup targets under the existing `G` prompt and can be thrown
+with `H`. The readouts let you distinguish heating, active combustion and
+fuel exhaustion even before or after visible flame.
+
+For the live cargo ascent, board with `F`, enable the existing SAS with
+`X`, then hold `E` to ascend. The blocks ride by ordinary contact; an
+off-centre load can tumble the ship and fall away with SAS off. SAS
+provides corrective torque, never a cargo attachment.
+If you picked a block up first, drop it back onto the deck with `G`
+before boarding; taking pilot control releases held objects.
+
+In a stationary fixed-step calibration at the *authored terrain positions*,
+heating A to `700 K` took `4.50 s`; after heater release its neighbour B
+ignited at `12.95 s`, while a block about `4.22 m` away remained unlit
+through `60 s`. The isolated thermal
+step averaged about `0.58 µs` on this host. A separate real-physics cargo
+fixture carried a burning block past the `110 m` gas top; reaction stopped
+in vacuum. With the actual three-block offsets and SAS enabled, all three
+crossed the gas top together at fixed step `224`. Without SAS, the
+off-centre A block fell away in the tested high-thrust ascent. These are
+focused measurements, not a substitute for hands-on validation. `R`
+restores thermal state and body poses; if `C` remains held,
+the heater resumes on subsequent gameplay steps.
+An unattended live terrain run with no heater engaged reported
+`0.00521`, `0.00458` and `0.00430 ms` per thermal step at steps
+`600/1200/1800` (including physics pose and gas samples); all blocks
+remained unburned at step `600`.
+
+## Milestone 26 accepted baseline
 
 **New in M26:** the M25 terrain planet has a bounded gas atmosphere with
 spatial mass density, pressure, and planet-frame velocity. A finite
@@ -55,8 +118,8 @@ An unattended Release run measured about `0.0014 ms` for planetary force plus
 gas/drag evaluation and `5.13 ms` per full fixed step with M25 water and
 terrain active on this host; it is a scene-specific CPU result, not a GPU
 benchmark.
-All 26 standalone suites pass in the current working tree. Operator visual
-and flight acceptance is still pending; no M26 completion tag exists. See
+All 26 standalone M26 suites passed. The operator accepted M26 and it was
+committed as `b225be7`, tagged `milestone-26`, and pushed. See
 [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md), "Milestone 26," for the model,
 measurements, and limits.
 
@@ -464,6 +527,7 @@ walks the player relative to that look direction and the current surface
 | Pick up / drop an eligible physics object or cup | `G` |
 | Throw a held object or cup | `H` |
 | Toggle first/third-person player view | `V` |
+| Power the M27 radiant heater while held | `C` |
 | Reset the player and world | `R`               |
 | Planet thrust: prograde / retrograde / radial outward | `P` / `M` / `N` |
 
@@ -563,10 +627,10 @@ demo; Debug is substantially slower on the measured machine.
 
 ## HUD and pause menu
 
-A small panel in the top-left corner always shows five live values:
-grounded/airborne, the current local gravity magnitude, whether you're
-controlling the player or the spacecraft, pilot-attachment state, and the
-spacecraft's current speed.
+The top-left panel shows player and ship state and, in the terrain scene,
+atmospheric measurements. M27 adds the heater, local oxidizer, and each
+fuel block's temperature, remaining coating mass, and burn rate. These
+values come from simulation; flame shapes are presentation.
 
 Press `Escape` to pause. The mouse is released automatically (no need to
 press anything else to get a usable cursor) and the world freezes
@@ -671,7 +735,7 @@ full script format:
 JUDAS_TEST_SCRIPT=path/to/script.txt ./build/judas
 ```
 
-Twenty-four standalone, headless test executables also exist (no window or GL
+Twenty-seven standalone, headless test executables also exist (no window or GL
 context): `judas_physics_tests` and `judas_collision_tests` (rigid-body/
 collision/gravity-context primitives); `judas_asset_tests` (Milestone 9 —
 model/texture loading, parses the real committed demo assets and checks
@@ -751,8 +815,13 @@ surface geometry/support, fluid-terrain contact, and the live water-emission
 schedule. The M26 `judas_atmosphere_tests` and
 `judas_atmospheric_flight_tests` cover the gas profile, hydrostatic gradient,
 vacuum, moving-frame velocity, real rigid-body drag, orientation, orbital
-energy loss, and rotated/translated equivalence. The M1–M25 focused checks
-and operator validation pass; M26 operator acceptance is pending.
+energy loss, and rotated/translated equivalence. M26 operator acceptance
+passed. The M27 `judas_combustion_tests` exercises fixed-step ignition,
+finite fuel, heat transfer and spread, vacuum extinguishing, relative
+motion, and rotated/translated cases. There are now 27 standalone suite
+targets. The older gameplay harness is an M1–M26 regression but does not
+advance the live M27 thermal loop; M27's focused suite and interactive run
+cover that behavior. M27 operator acceptance passed.
 Run them with:
 
 ```bash

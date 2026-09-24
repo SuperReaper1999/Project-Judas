@@ -24,9 +24,11 @@
 #include "AerodynamicDrag.h"
 #include "AtmosphereField.h"
 #include "CelestialGravity.h"
+#include "CombustionWorld.h"
 #include "DynamicBody.h"
 #include "FaithfulGravity.h"
 #include "FlyingPrimitiveControl.h"
+#include "FirePresentation.h"
 #include "FluidSurface.h"
 #include "FluidWorld.h"
 #include "GravityContextMap.h"
@@ -212,6 +214,16 @@ constexpr float kAtmosphereTopRadius = 110.0f;
 constexpr float kAtmosphereReferenceDensity = 0.05f;
 constexpr float kAtmospherePolytropicExponent = 1.4f;
 constexpr float kSpacecraftDragCoefficient = 1.0f;
+// M27's exposed combustible coating sits on three ordinary 5 kg rigid
+// blocks. The ship hull is a convenient physical platform: lifting a block
+// into thin gas/vacuum uses contact and thrust, never a fire-specific move.
+const glm::vec3 kFireBlockHalfExtents(0.25f);
+constexpr float kFireBlockMass = 5.0f;
+constexpr float kIgniterPowerWatts = 18000.0f;
+const std::array<glm::vec3, 3> kFireBlockShipLocalPositions{{
+    {-1.1f, 0.53f, -1.2f}, {-1.1f, 0.53f, -0.65f}, {1.4f, 0.53f, 2.2f}}};
+const std::array<glm::vec3, 3> kFireBlockColors{{
+    {0.65f, 0.33f, 0.19f}, {0.75f, 0.43f, 0.22f}, {0.58f, 0.42f, 0.24f}}};
 
 std::vector<CompoundBox> MakeOpenCupBoxes() {
     // The shift puts the compound body's origin at the approximate
@@ -832,7 +844,7 @@ int Application::Run() {
         (!isTestRun || std::getenv("JUDAS_FLUID_PREVIEW") != nullptr);
 
     Window window;
-    if (!window.Init("Project Judas - Milestone 26", kWindowWidth, kWindowHeight,
+    if (!window.Init("Project Judas - Milestone 27", kWindowWidth, kWindowHeight,
                       !isTestRun)) {
         std::fprintf(stderr, "Window initialization failed.\n");
         return 1;
@@ -842,8 +854,8 @@ int Application::Run() {
                  worldCoordinates.Origin().z);
     if (terrainDemoEnabled) {
         std::fprintf(stderr,
-                     "M26 terrain atmosphere: radius %.1f m, gas top %.1f m; "
-                     "hold B to add real fluid, R to reset; "
+                     "M27 terrain atmosphere: radius %.1f m, gas top %.1f m; "
+                     "hold C to heat nearby fuel, B to add real fluid, R to reset; "
                      "JUDAS_ATMOSPHERIC_PASS=1 for a physical orbital entry, "
                      "JUDAS_CLASSIC_DEMO=1 for the earlier scene.\n",
                      TerrainDemo::kBaseRadius, kAtmosphereTopRadius);
@@ -1077,6 +1089,39 @@ int Application::Run() {
             kDynamicObjectRestitution);
         dynamicBodies.emplace_back(handle, visual, propPosition,
                                     glm::quat(1.0f, 0.0f, 0.0f, 0.0f));
+    }
+
+    CombustionWorld combustionWorld;
+    const std::size_t firstFireBodyIndex = dynamicBodies.size();
+    std::array<BodyHandle, 3> fireBlockHandles{};
+    // Only the ordinary interactive terrain start needs these authored
+    // examples. The accepted atmospheric-pass preset and scripted harness
+    // retain their original initial states.
+    if (terrainSurface && !isTestRun && !atmosphericPassDemo) {
+        CombustibleMaterial fuel;
+        fuel.heatCapacityJPerK = 150.0f;
+        fuel.initialFuelMassKg = 0.12f;
+        fuel.ignitionTemperatureK = 550.0f;
+        fuel.maximumFuelRateKgPerSecond = 0.003f;
+        fuel.radiativeAreaSquareMeters = 1.5f;
+        fuel.retainedCombustionHeatFraction = 0.75f;
+        for (std::size_t i = 0; i < fireBlockHandles.size(); ++i) {
+            const glm::vec3 position = shipSpawnPosition +
+                shipSpawnRotation * kFireBlockShipLocalPositions[i];
+            const BodyHandle handle = physicsWorld.CreateDynamicBox(
+                position, kFireBlockHalfExtents, kFireBlockMass,
+                kDynamicObjectFriction, kDynamicObjectRestitution);
+            physicsWorld.ResetBody(handle, position, shipSpawnRotation);
+            DynamicBody::Visual visual;
+            visual.shape = DynamicBody::Shape::Box;
+            visual.halfExtents = kFireBlockHalfExtents;
+            visual.color = kFireBlockColors[i];
+            dynamicBodies.emplace_back(handle, visual, position, shipSpawnRotation);
+            fireBlockHandles[i] = handle;
+            const AtmosphereSample initialGas = atmosphere.Sample(position, terrainFrame);
+            combustionWorld.AddBody(handle, fuel,
+                initialGas.temperatureKelvin > 0.0f ? initialGas.temperatureKelvin : 300.0f);
+        }
     }
 
     // Milestone 8: the flying primitive, appended as one more DynamicBody
@@ -1354,8 +1399,10 @@ int Application::Run() {
         }
 
         for (std::size_t i = 0; i < dynamicBodies.size(); ++i) {
+            const bool fireBlock = i >= firstFireBodyIndex &&
+                i < firstFireBodyIndex + (fireBlockHandles[0].IsValid() ? fireBlockHandles.size() : 0);
             if (terrainSurface && i != terrainPickupBodyIndex &&
-                i != flyingPrimitiveBodyIndex) continue;
+                i != flyingPrimitiveBodyIndex && !fireBlock) continue;
             const DynamicBody& body = dynamicBodies[i];
             if (i == flyingPrimitiveBodyIndex) {
                 // Milestone 11: the spacecraft draws through the imported
@@ -1429,6 +1476,37 @@ int Application::Run() {
                             glm::vec3(0.35f, 0.62f, 0.88f), 0.045f);
         renderer.EndTransparentPass();
     };
+    const auto drawFire = [&](float presentationAlpha) {
+        if (!fireBlockHandles[0].IsValid()) return;
+        renderer.BeginTransparentPass();
+        for (std::size_t i = 0; i < fireBlockHandles.size(); ++i) {
+            const BodyHandle handle = fireBlockHandles[i];
+            const ThermalBodyState* state = combustionWorld.State(handle);
+            if (!state || state->burnRateKgPerSecond <= 0.0f) continue;
+            const DynamicBody& body = dynamicBodies[firstFireBodyIndex + i];
+            const glm::vec3 position = body.GetPresentedPosition(presentationAlpha);
+            const AtmosphereSample gas = atmosphere.Sample(position, terrainFrame);
+            FirePresentationInput presentation;
+            presentation.position = position;
+            presentation.orientation = body.GetPresentedOrientation(presentationAlpha);
+            presentation.burnRateKgPerSecond = state->burnRateKgPerSecond;
+            presentation.temperatureKelvin = combustionWorld.PresentedTemperature(
+                handle, presentationAlpha);
+            presentation.bodyVelocity = physicsWorld.GetLinearVelocity(handle);
+            presentation.gasVelocity = gas.velocity;
+            presentation.gasDensity = gas.density;
+            presentation.gravityAcceleration = CelestialGravity::AccelerationFromPointMass(
+                terrainFrame.originPosition, kTerrainGravitationalParameter, position);
+            // Visual lobes follow the box's body axes, so their starting
+            // distance is the face distance rather than its corner radius.
+            presentation.sourceRadius = kFireBlockHalfExtents.x;
+            for (const FireVisualPrimitive& primitive : BuildFirePresentation(presentation)) {
+                renderer.DrawSphere(primitive.position, primitive.radius,
+                                    primitive.color, primitive.alpha);
+            }
+        }
+        renderer.EndTransparentPass();
+    };
 
     // Milestone 13: the pause menu and HUD — interactive-loop-only (see
     // docs/ARCHITECTURE.md, "Milestone 13, Automated testing"): the
@@ -1467,6 +1545,9 @@ int Application::Run() {
         std::size_t terrainFixedSteps = 0;
         const char* terrainScreenshotPath = std::getenv("JUDAS_TERRAIN_SCREENSHOT");
         bool terrainScreenshotWritten = false;
+        const bool fireDiagnosticsEnabled = std::getenv("JUDAS_FIRE_DIAGNOSTICS") != nullptr;
+        double accumulatedFireMilliseconds = 0.0;
+        std::size_t fireDiagnosticSteps = 0;
 
         const Uint64 frequency = SDL_GetPerformanceFrequency();
         Uint64 previousCounter = SDL_GetPerformanceCounter();
@@ -1511,6 +1592,7 @@ int Application::Run() {
 
         while (!window.ShouldClose() && !pauseMenu.QuitRequested()) {
             window.PollEvents();
+            bool igniterPowered = false;
 
             // --- Milestone 13: the single input-routing boundary ---
             //
@@ -1626,6 +1708,7 @@ int Application::Run() {
                     for (DynamicBody& body : dynamicBodies) {
                         body.ResetToSpawn(physicsWorld);
                     }
+                    combustionWorld.Reset();
                     resetFluid();
                     emittedTerrainParticles = 0;
                     terrainFixedSteps = 0;
@@ -1668,6 +1751,12 @@ int Application::Run() {
                     SetSpacecraftSasEnabled(flyingPrimitiveControl,
                                              !flyingPrimitiveControl.sasEnabled, physicsWorld);
                 }
+                // Held C is polled only after this frame's pilot-control
+                // decision and only while gameplay owns input. There is no
+                // edge request that can survive a pause menu.
+                igniterPowered = fireBlockHandles[0].IsValid() &&
+                    !flyingPrimitiveControl.controlled &&
+                    window.IsActionActive(Action::UseIgniter);
 
                 // Milestone 14: T toggles the player's torch. The
                 // request itself was already drained unconditionally
@@ -1810,6 +1899,45 @@ int Application::Run() {
                     door.FixedUpdate(physicsWorld, SimulationTiming::kFixedTimestep);
                     lightSwitch.FixedUpdate(SimulationTiming::kFixedTimestep);
                     physicsWorld.Step(SimulationTiming::kFixedTimestep);
+                    if (fireBlockHandles[0].IsValid()) {
+                        const auto fireStart = fireDiagnosticsEnabled
+                            ? std::chrono::steady_clock::now()
+                            : std::chrono::steady_clock::time_point{};
+                        RadiantHeater heater;
+                        if (igniterPowered) {
+                            heater.worldPosition = ComputeCarryTarget(
+                                player.GetPosition(), player.GetOrientation(),
+                                player.GetLookDirection(), 0.7f, 1.5f);
+                            heater.powerWatts = kIgniterPowerWatts;
+                        }
+                        combustionWorld.Step(SimulationTiming::kFixedTimestep, physicsWorld,
+                                             atmosphere, terrainFrame,
+                                             igniterPowered ? &heater : nullptr);
+                        if (fireDiagnosticsEnabled) {
+                            accumulatedFireMilliseconds +=
+                                std::chrono::duration<double, std::milli>(
+                                    std::chrono::steady_clock::now() - fireStart).count();
+                            ++fireDiagnosticSteps;
+                            if (fireDiagnosticSteps % 600 == 0) {
+                                const ThermalBodyState* a = combustionWorld.State(fireBlockHandles[0]);
+                                const ThermalBodyState* b = combustionWorld.State(fireBlockHandles[1]);
+                                const ThermalBodyState* far = combustionWorld.State(fireBlockHandles[2]);
+                                const float neighbourDistance = glm::distance(
+                                    physicsWorld.GetTransform(fireBlockHandles[0]).position,
+                                    physicsWorld.GetTransform(fireBlockHandles[1]).position);
+                                std::fprintf(stderr,
+                                    "M27: thermal %.5f ms/step, A %.1f K fuel %.4f kg "
+                                    "burn %.5f kg/s heat %.1f W; B %.1f K burn %.5f kg/s; "
+                                    "far %.1f K burn %.5f kg/s; A/B %.3f m O2 %.5f kg/m^3\n",
+                                    accumulatedFireMilliseconds / fireDiagnosticSteps,
+                                    a->temperatureKelvin, a->remainingFuelMassKg,
+                                    a->burnRateKgPerSecond, a->heatOutputWatts,
+                                    b->temperatureKelvin, b->burnRateKgPerSecond,
+                                    far->temperatureKelvin, far->burnRateKgPerSecond,
+                                    neighbourDistance, a->localOxidizerMassDensity);
+                            }
+                        }
+                    }
                     if (terrainSurface && !flyingPrimitiveControl.controlled &&
                         window.IsActionActive(Action::AddTerrainWater) &&
                         fluidWorld.Particles().size() < kTerrainMaxWaterParticles) {
@@ -1880,8 +2008,18 @@ int Application::Run() {
                             // as a fluid boundary (it displaces water), but do not
                             // feed those unsupported reactions back to this light
                             // body. The accepted heavy prop/cup coupling is intact.
+                            // A 125 kg coarse lake particle cannot return
+                            // its delayed reaction stably to a much lighter
+                            // rigid body. It still collides with that body's
+                            // real shape; only the unsupported impulse back
+                            // onto the 5 kg exposed-material blocks is
+                            // omitted, as with the 80 kg spacecraft.
                             if (terrainSurface &&
-                                contact.owner.id == flyingPrimitiveControl.handle.id) continue;
+                                (contact.owner.id == flyingPrimitiveControl.handle.id ||
+                                 (fireBlockHandles[0].IsValid() &&
+                                  (contact.owner.id == fireBlockHandles[0].id ||
+                                   contact.owner.id == fireBlockHandles[1].id ||
+                                   contact.owner.id == fireBlockHandles[2].id)))) continue;
                             physicsWorld.ApplyImpulseAtPoint(contact.owner,
                                                               contact.impulse, contact.point);
                         }
@@ -2056,6 +2194,16 @@ int Application::Run() {
             drawScene(renderer, presentationAlpha, /*includePlayerModel=*/true);
             drawTransparentCupWalls(presentationAlpha);
             drawAtmosphereHaze();
+            drawFire(presentationAlpha);
+            if (igniterPowered) {
+                glm::vec3 presentedEye;
+                glm::vec3 presentedLook;
+                player.GetTorchTransform(presentationAlpha, presentedEye, presentedLook);
+                renderer.BeginTransparentPass();
+                renderer.DrawSphere(presentedEye + presentedLook * 1.5f, 0.08f,
+                                    glm::vec3(1.0f, 0.46f, 0.10f), 0.8f);
+                renderer.EndTransparentPass();
+            }
             renderer.EndFrame();
             if (fluidDiagnosticsEnabled) {
                 accumulatedSceneMilliseconds +=
@@ -2123,6 +2271,18 @@ int Application::Run() {
                         hudData.spacecraftRelativeAirspeed;
                     hudData.spacecraftAerodynamicForce = glm::length(lastAerodynamicDrag.force);
                 }
+                if (fireBlockHandles[0].IsValid()) {
+                    hudData.thermalAvailable = true;
+                    hudData.igniterPowered = igniterPowered;
+                    hudData.oxidizerMassDensity = atmosphere.Sample(
+                        player.GetPosition(), terrainFrame).oxidizerMassDensity;
+                    constexpr std::array<const char*, 3> labels{{"Fuel A", "Fuel B", "Far fuel"}};
+                    for (std::size_t i = 0; i < fireBlockHandles.size(); ++i) {
+                        const ThermalBodyState* state = combustionWorld.State(fireBlockHandles[i]);
+                        hudData.thermalBodies.push_back({labels[i], state->temperatureKelvin,
+                            state->remainingFuelMassKg, state->burnRateKgPerSecond});
+                    }
+                }
                 if (objectManipulation.IsHolding()) {
                     hudData.interactPrompt = interactTarget
                         ? interactTarget->GetPromptText() + " | H Throw"
@@ -2135,6 +2295,8 @@ int Application::Run() {
                 if (terrainSurface && !flyingPrimitiveControl.controlled) {
                     if (!hudData.interactPrompt.empty()) hudData.interactPrompt += " | ";
                     hudData.interactPrompt += "Hold B: add water";
+                    if (fireBlockHandles[0].IsValid())
+                        hudData.interactPrompt += " | Hold C: radiant heater";
                 }
                 hud.Draw(renderer, window.Width(), window.Height(), hudData);
             }

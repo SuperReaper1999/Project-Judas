@@ -168,6 +168,8 @@ bool Window::IsActionActive(Action action) const {
             return keys[SDL_SCANCODE_N];
         case Action::AddTerrainWater:
             return keys[SDL_SCANCODE_B];
+        case Action::UseIgniter:
+            return keys[SDL_SCANCODE_C];
         case Action::Count:
             return false;
     }

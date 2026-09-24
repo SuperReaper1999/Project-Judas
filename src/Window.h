@@ -45,6 +45,9 @@ enum class Action {
     // M25 authored water source: held B adds real particles on fixed steps
     // only while gameplay owns input. No fluid system sees a keyboard key.
     AddTerrainWater,
+    // M27: C powers a radiant heater at the player's current local-frame
+    // look pose. Application alone maps the held action to thermal energy.
+    UseIgniter,
     Count,
 };
 

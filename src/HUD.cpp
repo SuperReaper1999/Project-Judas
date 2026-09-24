@@ -103,7 +103,20 @@ std::string FormatLine(int index, const HUDViewData& data) {
             std::snprintf(buffer, sizeof(buffer), "Aerodynamic drag: %.2f N",
                           data.spacecraftAerodynamicForce);
             break;
-        default: return std::string();
+        default:
+            if (data.thermalAvailable && index == 15) {
+                std::snprintf(buffer, sizeof(buffer), "Heater C: %s | Player O2: %.5f kg/m^3",
+                              data.igniterPowered ? "ON" : "OFF", data.oxidizerMassDensity);
+            } else if (data.thermalAvailable && index >= 16 &&
+                       static_cast<std::size_t>(index - 16) < data.thermalBodies.size()) {
+                const HUDThermalBody& body = data.thermalBodies[index - 16];
+                std::snprintf(buffer, sizeof(buffer), "%s: %.0f K | fuel %.3f kg | %.4f kg/s",
+                              body.label.c_str(), body.temperatureKelvin,
+                              body.remainingFuelKg, body.burnRateKgPerSecond);
+            } else {
+                return std::string();
+            }
+            break;
     }
     return std::string(buffer);
 }
@@ -111,7 +124,8 @@ std::string FormatLine(int index, const HUDViewData& data) {
 }  // namespace
 
 void HUD::Draw(Renderer& renderer, int windowWidth, int windowHeight, const HUDViewData& data) const {
-    const int lineCount = data.atmosphereAvailable ? 15 : 12;
+    const int lineCount = (data.atmosphereAvailable ? 15 : 12) +
+        (data.thermalAvailable ? 1 + static_cast<int>(data.thermalBodies.size()) : 0);
     const float lineHeight = renderer.GetUITextLineHeight(kTextScale) + kLineSpacing;
 
     float maxWidth = 0.0f;

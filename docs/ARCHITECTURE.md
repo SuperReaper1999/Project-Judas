@@ -6,15 +6,18 @@ someone with no prior context on this project. It is updated in place as
 milestones land, rather than kept as a per-milestone snapshot — see
 "Milestone history" below for how to recover an earlier milestone exactly.
 
-## What exists right now (M26 implementation; operator validation pending)
+## What exists right now (M27 accepted)
 
 The default interactive launch starts on the M25 terrain planet: a large
 radial-height surface with real collision and an M24 fluid lake in a basin.
 M26 adds a bounded hydrostatic gas atmosphere around that same terrain and
 applies density-dependent aerodynamic force to the existing spacecraft.
-The M25 terrain and lake remain accepted; M26's interactive flight and
-visual feel have not yet received operator validation. See "Milestone 26"
-below for the gas model's scope and measured automated behaviour.
+M27 adds finite combustible coatings to three ordinary ship-carried rigid
+blocks. A radiant heater, sampled atmospheric oxidizer, thermal exchange,
+fuel consumption, and reaction heat determine whether they burn; small
+flame/smoke shapes are presentation only. M26 and M27 are accepted. See
+"Milestone 26" and "Milestone 27" below for the
+models and numerical limits.
 The earlier two-planet demonstration described below remains available with
 `JUDAS_CLASSIC_DEMO=1`.
 
@@ -420,7 +423,7 @@ preserved as parallel runtime code:
   entire cone — fixed by excluding the player model from only the torch's
   own shadow pass. See "Milestone 15" for the full design, the bias/PCF
   strategy, and the new standalone `judas_shadow_tests` suite.
-- `milestone-16` (pending human validation as of this writing) — the
+- `milestone-16` (accepted) — the
   first reusable environmental-interaction system: a single
   `Interactable` interface (`src/Interactable.h`) `PlayerController`/
   `Application.cpp` understand, never a concrete `Door`/`LightSwitch` by
@@ -6902,7 +6905,7 @@ screenshots are byte-identical as well. An optional interactive
 view after 600 fixed simulation steps (reset restarts that count); it is
 readback only. Operator visual acceptance was granted after these checks.
 
-## Milestone 26 — a finite planetary atmosphere (operator validation pending)
+## Milestone 26 — a finite planetary atmosphere (accepted)
 
 ### Why this gas model
 
@@ -7045,10 +7048,10 @@ Two faint transparent spheres inside the profile's extent are a visual
 haze cue only; they do not define gas density, collision or a drag trigger.
 OpenGL 3.3 and the existing GLAD loader remain unchanged.
 
-There are 26 passing standalone suites at this implementation stage,
-including focused gas-profile and atmospheric-flight tests; the accepted
-classic and terrain regressions remain part of the full run. Operator
-validation of atmospheric flight and visual continuity is still pending.
+There were 26 passing standalone suites at M26 acceptance, including focused
+gas-profile and atmospheric-flight tests and the classic/terrain regressions.
+The operator accepted the interactive atmosphere; commit `b225be7` is tagged
+`milestone-26`.
 The atmospheric-flight suite also runs manual torque, SAS and drag together:
 SAS removes angular velocity while the measured drag alone accounts for
 the linear velocity change; matched attitudes yield the same gravity/drag
@@ -7088,3 +7091,172 @@ adjustment or a dynamic gas solver. The aerodynamic box coefficient is a
 deliberately simple engineering approximation, not validated transonic
 or hypersonic aircraft physics. These limits are explicit rather than
 hidden behind a trigger or a direct velocity edit.
+
+## Milestone 27 — finite thermal combustion (accepted)
+
+### Authoritative state and atmospheric oxidizer
+
+`CombustionWorld` attaches a `CombustibleMaterial` and `ThermalBodyState` to
+an ordinary `PhysicsWorld` body handle. The carrier remains a colliding,
+pickable rigid body. Thermal state includes temperature, previous-step
+temperature for presentation, remaining fuel mass, actual burn rate, heat
+output and local oxygen supply. There is no authoritative `isOnFire` bit:
+reaction requires sufficient temperature, sampled oxidizer and fuel.
+
+The prescribed M26 polytrope now samples an oxidizer mass fraction of
+`0.21` and an effective temperature with `300 K` at its `80 m` reference
+radius. With M26's profile fraction `q(r)`, `T(r) = 300q(r) K` and
+`R_specific = P_ref/(rho_ref × 300 K)`, so `P = rho R_specific T` holds
+alongside the unchanged `P = K rho^1.4`. At the authored A block's terrain
+position (`r ≈ 81.34 m`), gas sampling gives density
+`0.04278886 kg/m³`, oxidizer `0.00898566 kg/m³`, pressure `2.45864 Pa`
+and temperature `281.88 K`. Vacuum or terrain solid has no gas or
+oxidizer sample. This is a prescribed, nonreactive reservoir: combustion
+does not deplete local oxygen, heat gas cells or launch simulated product
+parcels. Its effective gas constant is about `0.203844 J/(kg K)`, not an
+Earth-air molecular calibration.
+
+The demonstration uses three ordinary `5 kg` cubes, each `0.5 m` wide,
+resting on the M25 spacecraft hull. Each has a finite `0.12 kg`
+combustible coating, `150 J/K` exposed-layer heat capacity, `550 K`
+ignition threshold, `80 K` activation interval, at most `0.003 kg/s`
+fuel rate, `16 MJ/kg` chemical heat release, and `1.5 m²` effective
+exchange area. With `0.75` retained heat fraction, three quarters of
+released power enter that coating's thermal energy. The remaining quarter
+is reported as heat to the prescribed gas reservoir but does not evolve
+it. The fixed `5 kg` rigid mass/inertia neglects up to `0.12 kg` of lost
+coating (`2.4%` of carrier mass), a bounded approximation rather than
+conserved rigid mass after burning. Remaining fuel is stored in double
+precision so oxygen-limited burn steps in very thin gas cannot release
+chemical heat while rounding away the corresponding mass loss.
+
+### Fixed-step heat and reaction law
+
+Every thermal step reads current physical body pose/velocity and M26 gas
+before changing thermal state. Holding `C` while gameplay owns input
+powers an `18 kW` isotropic point radiator at the player's local
+eye/look-relative point. A body's intercepted fraction is
+`min(1, A/(4πd²))`; fractions are normalized if several bodies would
+intercept more than the source emits. This is external power integrated
+as `ΔT = P_net Δt/C`, with no target handle or `Ignite` command. Releasing
+`C`, opening a menu or piloting removes heater input; `R` restores thermal
+and body state, while a still-held `C` can power the heater again on later
+gameplay steps.
+
+Body pairs exchange reciprocal Stefan–Boltzmann power using the effective
+view area `min(A_i, A_j, A_i A_j/(4πd²))`, further bounded by each body's
+total exposed area when several receivers compete. The pair contribution
+is `epsilon σ A_view (T_i⁴ − T_j⁴)`, applied with opposite signs from the
+same pre-step temperatures. Surfaces also radiate and convect toward the
+local gas temperature. Convection scales with gas density and
+`|v_body − v_gas|`, not raw world speed; a shared frame velocity is not
+wind. The demo emissivity is `0.8`, with reference convection coefficient
+`8 W/(m² K)` at reference gas density. Vacuum removes convective cooling
+but leaves radiation to the modeled cold surroundings.
+
+For each demo body, with `a = clamp((T_previous − 550 K)/80 K, 0, 1)`, the
+nonnegative fuel rate is the minimum of:
+
+```text
+0.003 a kg/s                                 (thermal activation)
+[rho_oxidizer A (0.5 + 0.2 |v_body-v_gas|)]/3 (oxygen supply)
+remainingFuel / fixedDeltaTime               (finite material)
+```
+
+The oxygen requirement is `3 kg oxidizer/kg fuel`. The `0.5 m/s` term
+represents effective mixing at rest; the relative-flow term is an oxygen
+transport approximation, not resolved reactive CFD. The isolated focused
+ignition test uses its own `400 K` test material to check the generic law;
+`550 K` is the authored demo coating, not a universal engine threshold.
+Reaction heat joins
+heater, pairwise radiation and environmental cooling in the same thermal
+energy balance. In vacuum the oxygen term is zero. Returning a formerly
+burning body to air permits only the rate justified by its *current*
+temperature and remaining fuel.
+At `109.1 m` radius, a hot `0.12 kg` coating consumed just
+`3.14 × 10⁻⁹ kg` on its first thin-air step, below half a float unit in
+the last place at that mass. Over `10,000` steps it lost `3.14 × 10⁻⁵ kg`;
+integrated chemical heat and the energy implied by actual fuel loss both
+measured `502.417 J` within `0.01 J`.
+
+### Demo, presentation and measured evidence
+
+The first two blocks begin `0.55 m` centre-to-centre (`0.05 m` gap), with
+a third several metres away. They use ordinary M18 pickup and ship
+contact. A focused real-physics cargo fixture lifted an off-centre
+burning block on the `80 kg` ship under `1200 N` thrust with the existing
+M21 SAS enabled. It crossed the `110 m` gas top at step `188`; after 20
+vacuum steps the ship/cargo radii were `116.290/116.789 m`, the largest
+support gap was `0.0257 m`, and fuel reaction had stopped. A second run
+with all three *actual authored offsets* crossed the gas top together at
+step `224`. No thermal teleport or fire-specific motion was used. In the
+control with SAS off, the off-centre first block fell away and remained
+near `86.8 m` radius after 600 steps while the ship escaped. SAS applies
+real corrective torque, not a hidden cargo attachment: live ascent calls
+for board `F`, SAS `X`, then local-up thrust `E`. This headless fixture
+uses the live `0.12 kg` coating and `550 K` ignition threshold; its first
+block starts at `650 K` to isolate physical transport and vacuum extinction
+from the separate heater-aiming test. Operator handling of the live
+arrangement remains to be judged.
+
+`FirePresentation` turns each burning body's presented pose, measured burn
+rate/temperature, local gravity and gas-relative flow into at most 13
+translucent spheres. Approximate visual buoyancy tends opposite supplied
+gravity; at zero gravity and no relative airflow, paired body-local
+lobes form a symmetric halo. These are visual flame/smoke shapes, not
+authoritative hot gas. They transfer no heat, consume no fuel, cast no
+new shadows and contain no independent looping animation. The existing
+OpenGL 3.3 transparent pass draws them after solid geometry. The HUD
+receives plain heater/player-local oxidizer and per-block temperature/fuel/rate data;
+`R` restores body and thermal state. `JUDAS_FIRE_DIAGNOSTICS=1` prints
+thermal timing and body values every 600 fixed steps. The older scripted
+gameplay harness remains an M1–M26 regression, not a live M27 thermal
+loop; the focused thermal suite and interactive run cover M27.
+
+In a **stationary-body thermal calibration probe at the exact authored
+terrain positions**, the `18 kW` heater `0.35 m` behind A raised A to
+`700 K` by `4.50 s`; then it was removed. B, `0.55 m` from A, ignited
+at `12.95 s`. At `10 s`, A was `769.4 K` with `0.10601 kg` fuel and B
+was `521.5 K`. At `30 s`, A was `849.6 K` with `0.06108 kg`, and B
+was `850.7 K` with `0.08331 kg`. At `60 s`, A had used all fuel and
+cooled to `649.4 K`, while B was `804.4 K` with `0.01512 kg`.
+A third block roughly `4.22 m` away remained around `315 K` and unlit.
+With the same `4.50 s` heater exposure but A's emissivity set to zero,
+B peaked at `340 K` and did not ignite. This causal control shows that
+A's radiative heat, rather than the heater alone, ignites B.
+Near the burn plateau, `0.002246 kg/s` fuel produced about `35.94 kW`
+chemical power: `26.96 kW` entered the exposed solid layer and
+`8.99 kW` was reported to the unevolved gas reservoir. The thermal core
+averaged about `0.58 µs/fixed step` on this host, excluding live physics,
+fluid and rendering. The earlier `580 K` authored threshold, checked at
+these same terrain positions, left B unignited after `60 s` (it peaked
+around `569 K`); changing the *demo material* to `550 K` is supported by
+this measured environment. These are calibrated fixture results, not a
+promise that a moving arrangement ignites on the same schedule. An unattended
+live terrain run with no heater engaged reported `0.00521`, `0.00458`
+and `0.00430 ms/thermal step` at steps `600`, `1200`, and `1800`,
+including physical pose and gas samples. At step `600`, A/B/far were
+`284.7/286.2/295.1 K`, each retaining its initial `0.12 kg` fuel with
+zero reaction. Real rigid contact settled A/B centre distance from the
+authored `0.55 m` to `0.510/0.505/0.501 m` at steps
+`600/1200/1800`; A's sampled oxidizer density was
+`0.00937/0.00962/0.00987 kg/m³` at those points. The moving bodies
+remained near each other but did not ignite without heat. These numbers
+exclude the rest of the fixed step and rendering. The focused
+`judas_combustion_tests` covers fuel/heat/spread, vacuum, relative motion,
+real body transport, and rotate/translate/zero-g visual equivalence.
+The operator accepted the live visual and handling behaviour after these
+automated checks.
+
+The model does not claim local oxygen depletion, gas heating, product
+momentum feedback, true smoke dynamics, water extinguishing, or a closed
+material/gas energy budget. Radiation uses distance and effective area
+without visibility/occlusion queries, so intervening solids do not block
+thermal exchange in this bounded open-block demonstration. Heat-transfer
+areas, oxygen transport and coating properties are effective demo
+parameters, not laboratory wood
+chemistry. The M25 lake's `125 kg` particle resolution also exceeds the
+stable two-way contact mass ratio for these `5 kg` blocks: their actual box
+geometry still blocks/displaces fluid, but delayed lake reaction impulses
+are not returned to them, as with the M26 `80 kg` ship. This is an explicit
+one-way coarse-fluid limitation, not a buoyancy or extinguishing model.

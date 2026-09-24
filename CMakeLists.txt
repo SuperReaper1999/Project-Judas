@@ -62,6 +62,8 @@ add_executable(judas
     src/ObjectManipulation.cpp
     src/FluidWorld.cpp
     src/FluidSurface.cpp
+    src/CombustionWorld.cpp
+    src/FirePresentation.cpp
     src/TerrainDemo.cpp
     src/Door.cpp
     src/LightSwitch.cpp
@@ -480,6 +482,26 @@ add_executable(judas_atmospheric_flight_tests
 target_include_directories(judas_atmospheric_flight_tests PRIVATE src ${SDL2_INCLUDE_DIRS})
 target_link_libraries(judas_atmospheric_flight_tests PRIVATE SDL2::SDL2 glm::glm-header-only)
 target_compile_options(judas_atmospheric_flight_tests PRIVATE -Wall -Wextra)
+
+# M27: finite thermal fuel state and atmosphere-coupled combustion, plus
+# presentation transforms tested without a window or GL context.
+add_executable(judas_combustion_tests
+    tests/CombustionTests.cpp
+    src/CombustionWorld.cpp
+    src/FirePresentation.cpp
+    src/AtmosphereField.cpp
+    src/TerrainDemo.cpp
+    src/ReferenceFrame.cpp
+    src/CelestialGravity.cpp
+    src/RadicalGravity.cpp
+    src/FlyingPrimitiveControl.cpp
+    src/Window.cpp
+    ${JUDAS_PHYSICS_SOURCES}
+    src/PhysicsWorld.cpp
+)
+target_include_directories(judas_combustion_tests PRIVATE src ${SDL2_INCLUDE_DIRS})
+target_link_libraries(judas_combustion_tests PRIVATE SDL2::SDL2 glm::glm-header-only)
+target_compile_options(judas_combustion_tests PRIVATE -Wall -Wextra)
 
 # stb_image_write (public domain / MIT, see third_party/stb_image_write.h) —
 # used only by the opt-in test harness (src/TestHarness.cpp) to write

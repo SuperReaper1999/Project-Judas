@@ -15,12 +15,18 @@ struct AtmosphereParameters {
     float gravitationalParameter = 62784.0f; // m^3/s^2 (9.81 m/s^2 at 80 m)
     float polytropicExponent = 1.4f;        // 1 < gamma < 2 in P = K rho^gamma
     float referenceDensity = 0.05f;         // kg/m^3 at referenceRadius
+    // Prescribed mixture composition and thermal reference state. Trailing
+    // defaults preserve the original five-parameter M26 aggregate setup.
+    float oxidizerMassFraction = 0.21f;      // kg oxidizer / kg gas
+    float referenceTemperatureKelvin = 300.0f;
 };
 
 struct AtmosphereSample {
     float density = 0.0f;  // kg/m^3
     float pressure = 0.0f; // Pa
     glm::vec3 velocity{0.0f}; // world-space gas velocity, m/s
+    float oxidizerMassDensity = 0.0f; // kg oxidizer / m^3
+    float temperatureKelvin = 0.0f;
 };
 
 // This is an analytic equilibrium reservoir, not a particle/grid CFD solver:
@@ -47,6 +53,8 @@ public:
     // gas inside solid terrain geometry before returning these quantities.
     float DensityAtRadius(float radius) const;
     float PressureAtRadius(float radius) const;
+    float TemperatureAtRadius(float radius) const;
+    float SpecificGasConstant() const { return m_specificGasConstant; }
 
     // Potential used to construct the hydrostatic gas profile. The actual
     // planetary force belongs to CelestialGravity, separate from gas.
@@ -59,4 +67,5 @@ private:
     const RadialTerrain* m_solidTerrain = nullptr; // non-owning; must outlive field
     float m_referencePressure = 0.0f;
     float m_inversePotentialSpan = 0.0f;
+    float m_specificGasConstant = 0.0f;
 };
