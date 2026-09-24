@@ -6,10 +6,15 @@ someone with no prior context on this project. It is updated in place as
 milestones land, rather than kept as a per-milestone snapshot — see
 "Milestone history" below for how to recover an earlier milestone exactly.
 
-## What exists right now (M25 accepted)
+## What exists right now (M26 implementation; operator validation pending)
 
 The default interactive launch starts on the M25 terrain planet: a large
 radial-height surface with real collision and an M24 fluid lake in a basin.
+M26 adds a bounded hydrostatic gas atmosphere around that same terrain and
+applies density-dependent aerodynamic force to the existing spacecraft.
+The M25 terrain and lake remain accepted; M26's interactive flight and
+visual feel have not yet received operator validation. See "Milestone 26"
+below for the gas model's scope and measured automated behaviour.
 The earlier two-planet demonstration described below remains available with
 `JUDAS_CLASSIC_DEMO=1`.
 
@@ -6896,3 +6901,190 @@ screenshots are byte-identical as well. An optional interactive
 `JUDAS_TERRAIN_SCREENSHOT=/path/image.png` captures the presented terrain
 view after 600 fixed simulation steps (reset restarts that count); it is
 readback only. Operator visual acceptance was granted after these checks.
+
+## Milestone 26 — a finite planetary atmosphere (operator validation pending)
+
+### Why this gas model
+
+The M25 planet is an `80 m`-reference-radius terrain body, not a smooth
+collision sphere. M26 needs gas properties at arbitrary points from terrain
+level through vacuum, including when the whole scene is rotated or placed at
+the M23 far absolute origin. Reusing M24's bounded position-based particle
+liquid was rejected for this domain: its density projection deliberately
+resists compression, its 125–200 particles only resolve a local cup/lake,
+and sparse particles in a thin upper atmosphere would make sampled drag
+noisy. A compressible particle gas or three-dimensional grid could evolve
+wakes and wind, but either would introduce a planet-scale transport solver,
+new boundary conditions and substantially more state/cost than the current
+spacecraft/atmosphere interaction demonstrates. No shared `FluidFramework`
+abstraction is justified by the two distinct numerical problems.
+
+`AtmosphereField` is therefore a prescribed **hydrostatic polytropic gas
+continuum**. It owns no particles or grid cells. Gas mass is spatial mass
+density `ρ` in `kg/m³`; pressure `P` is in pascals; the gas velocity at a
+world point is the planet frame's point velocity. A finite integral of `ρ`
+defines the atmosphere's mass, but the field does not evolve local gas
+momentum or temperature. This is an equilibrium-reservoir approximation,
+not a claim that the air is dynamically simulated like M24 water.
+
+### Pressure, gravity, terrain and frames
+
+The authored demonstration uses reference radius `R = 80 m`, top radius
+`Rₜ = 110 m`, gravitational parameter `μ = 62,784 m³/s²` (giving
+`9.81 m/s²` at `R`), polytropic exponent `γ = 1.4`, and reference density
+`ρ₀ = 0.05 kg/m³`. For radial distance `r` from the terrain body's actual
+centre, define
+
+```text
+q(r) = (1/r − 1/Rₜ) / (1/R − 1/Rₜ)
+ρ(r) = ρ₀ q(r)^[1/(γ − 1)]
+P(r) = P₀ q(r)^[γ/(γ − 1)]
+P₀ = [(γ − 1)/γ] ρ₀ μ (1/R − 1/Rₜ) = 3.057662 Pa
+```
+
+These relations apply to exposed gas below `Rₜ`; at or above `Rₜ`, density
+and pressure are zero. With this `γ`, both approach zero smoothly at the
+top. They obey the equation of state `P = Kρ^γ` and hydrostatic balance
+`dP/dr = −ρμ/r²` under the same inverse-square source used for the
+spacecraft's terrain-planet attraction. At `r = 90 m`, the model gives
+`ρ = 0.013516 kg/m³`, `P = 0.489820 Pa`; at `r = 100 m`,
+`ρ = 0.001836 kg/m³`, `P = 0.029942 Pa`. These are deliberately scaled
+toy-planet values, not Earth sea-level conditions. A focused finite-
+difference test measured maximum relative hydrostatic-gradient error
+`0.015%` at its sampled radii. The analytic profile is time-independent,
+so it begins in equilibrium instead of numerically settling.
+At `r = 105 m`, `ρ = 0.000287 kg/m³` and `P = 0.002231 Pa`; by `109 m`
+they are about `0.00000468 kg/m³` and `0.000007 Pa`. Numerical radial
+integration above a *smooth* `80 m` reference sphere gives about
+`33,160 kg` of gas. The actual terrain mask changes that integral slightly;
+this is a reference mass estimate, not an evolved gas-mass measurement.
+
+Altitude here means radial **potential**, not world `Y` or the distance
+above an individual hill. Using each hill's local clearance as the
+pressure coordinate would produce tangential pressure gradients despite
+the gravity force being radial. The `RadialTerrain` query excludes gas from
+solid hill/valley interiors; exposed valleys can therefore hold denser
+gas than exposed peaks, while the planet need not become a smooth sphere.
+`ReferenceFrame` supplies the centre and rotation for terrain-local
+samples and the world gas velocity `Vplanet + ω × (point − centre)`.
+Moving the planet and spacecraft together at the same world velocity
+therefore creates no artificial airspeed. M23 far placement changes the
+double-precision absolute origin, leaving these local physical samples
+unchanged.
+
+The terrain planet remains static as M25 requires. In the terrain scene,
+the low-mass spacecraft is a Newtonian test body: its force accumulator
+receives `m(−μ r⃗ / |r⃗|³)` from
+`CelestialGravity::AccelerationFromPointMass` before the ordinary Judas
+fixed-step integration. The gas model stores the matching `μ` for its
+pressure profile but does not supply the ship's gravitational force.
+The ship is excluded from the local `RadicalGravity` application there,
+so gravity is not counted twice. The player, props and water retain their
+accepted local gameplay-gravity behaviour. The earlier M20 two-body
+mutual-gravity demonstration remains distinct. Holding the terrain
+planet fixed omits its physically tiny recoil from the `80 kg` ship; M26
+does not turn the walkable terrain into a moving reference-frame world.
+
+### Aerodynamics, presentation and measured flight
+
+`AerodynamicDrag` samples density and gas velocity at the existing
+spacecraft box's centre. It subtracts gas point velocity from the body's
+point velocity and computes the box's actual projected area in that
+relative-flow direction. Its three principal face areas are `2`, `3` and
+`24 m²` for the current `4 × 0.5 × 6 m` collision box. With `Cᴅ = 1`,
+the applied force is
+
+```text
+Fdrag = −½ ρ Cᴅ A |vrelative| vrelative
+```
+
+This force enters `PhysicsWorld::ApplyForce`; neither `AtmosphereField`
+nor the aerodynamic helper writes spacecraft velocity or an orbit state.
+It fades continuously with density and is zero in vacuum. The centred,
+symmetric box model applies drag through the centre of mass, so it does
+not manufacture an aerodynamic torque. M21 SAS still contributes its own
+ordinary corrective torque while linear drag acts. There is no lift,
+buoyancy, surface-pressure integration or per-face rotational airflow in
+this minimal model.
+
+A fixed-step comparison launched the actual Judas rigid-body spacecraft
+on a shallow Newtonian pass, with an otherwise identical gravity-only
+control. It crossed into gas and back into vacuum. Peak measured drag was
+`1.55 N`; the dragged run's specific orbital energy fell from
+`−272.843` to `−275.797 J/kg`, and its post-pass osculating apoapsis was
+`127.903 m` versus `130.269 m` in the gravity-only run. The path was never
+assigned a new orbit: gravity and aerodynamic force changed its integrated
+position and velocity. Rotating/translating the pass and converting the
+result back agreed within the focused test's documented tolerances.
+
+The interactive terrain scene uses the same physical field and offers
+`JUDAS_ATMOSPHERIC_PASS=1` as an initial `130 m` apoapsis / `100 m`
+periapsis spacecraft trajectory for watching entry and exit; it is
+initial state, not a path controller.
+`JUDAS_ATMOSPHERE_DIAGNOSTICS=1` prints atmosphere/drag evaluation time,
+full fixed-step time, local density/pressure, relative airspeed and force.
+An unattended Release run of the authored orbital-pass scene on this host
+averaged `0.0014 ms` for planetary force plus gas/drag evaluation and
+`5.13 ms` for a full fixed step by its 4,200th step; the latter includes
+the M25 water and terrain work, not rendering. An isolated optimized loop
+sampled the analytic gas field 100,000 times in `7.95–10.23 ms` across
+two runs (about `0.08–0.10 µs/sample`, without a terrain lookup). These are host- and
+scene-specific CPU timings, not GPU benchmarks. In that live pass the
+ship started outside gas with specific energy about `−272.974 J/kg`,
+re-entered atmosphere, and first exited to vacuum with a logged
+`−284.597 J/kg` at `121.20 m` radius. Later passes lost more energy,
+demonstrating orbit decay from the exposed broad-side geometry; the
+controlled headless comparison above isolates the drag contribution.
+The same launch with `JUDAS_TERRAIN_ROTATED=1` and
+`JUDAS_WORLD_OFFSET=far` also exited at `121.20 m`, logging
+`−284.595 J/kg` at the corresponding sample (a `0.002 J/kg`
+discrepancy from finite float integration after rotation); the HUD's
+absolute origin changed while local gas and flight remained equivalent.
+The HUD exposes atmosphere and spacecraft force values through view data.
+Two faint transparent spheres inside the profile's extent are a visual
+haze cue only; they do not define gas density, collision or a drag trigger.
+OpenGL 3.3 and the existing GLAD loader remain unchanged.
+
+There are 26 passing standalone suites at this implementation stage,
+including focused gas-profile and atmospheric-flight tests; the accepted
+classic and terrain regressions remain part of the full run. Operator
+validation of atmospheric flight and visual continuity is still pending.
+The atmospheric-flight suite also runs manual torque, SAS and drag together:
+SAS removes angular velocity while the measured drag alone accounts for
+the linear velocity change; matched attitudes yield the same gravity/drag
+trajectory whether SAS is enabled or disabled. A separate fixture checks
+that the ship receives only its celestial pull while a nearby ordinary
+body still receives local gameplay gravity.
+
+The terrain scene now places the M12 `80 kg` ship near the M25 lake. That
+exposes an existing fluid/rigid mass-ratio limit which the accepted M25
+`2,000 kg` prop did not: in a measured nose-down entry, returning the
+coarse `125 kg`-particle lake's delayed reaction impulses drove the ship
+to `205 m/s` and `151 rad/s` by step 60, versus `2.66 m/s` in a dry
+control, injecting roughly `5.6 MJ`. The M26 composition root therefore
+keeps the ship's real collision box in `FluidWorld` so it displaces water,
+but does **not** return lake reaction impulses to that one light body in
+the terrain scene. All other M24/M25 fluid/rigid reactions remain enabled.
+In the same 120-step encounter, the one-way ship trace matched the dry
+control, water remained finite and outside terrain, and its `15,625 kg`
+mass was unchanged. Water moved up to `2.198 m` relative to its no-ship
+control. The missing reaction means the ship–water pair does **not** conserve
+momentum or energy (water gained about `13.75 kJ` relative to the control),
+and the ship has no water buoyancy. This is an explicit bounded limitation,
+not a claim of physically complete hydrodynamics; a coupled light-body
+fluid solver is outside M26's atmosphere work. A focused
+`judas_terrain_fluid_tests` fixture exercises the one-way encounter with
+the real `80 kg`, `4 × 0.5 × 6 m` ship: water contact begins at step 30,
+the ship follows its dry control exactly, all `15,625 kg` of water remains
+finite/outside the terrain, and particles move up to `1.461 m` relative
+to a no-ship lake.
+
+The analytic atmosphere cannot develop wakes, weather, local wind from a
+passing craft or gas momentum back-reaction. Its hydrostatic radial profile
+is exact for a nonaccelerating, nonspinning planet; `ReferenceFrame` gives
+correct relative gas velocity under translation/rotation, but sustained
+planet spin or frame acceleration would need centrifugal/inertial pressure
+adjustment or a dynamic gas solver. The aerodynamic box coefficient is a
+deliberately simple engineering approximation, not validated transonic
+or hypersonic aircraft physics. These limits are explicit rather than
+hidden behind a trigger or a direct velocity edit.

@@ -617,6 +617,136 @@ void TestLiveResetAndEmission(const RadialTerrain& terrain) {
     Check(sameReset && emitted.GetDiagnostics().totalMass == 15625.0f,
           "reset reconstructs the exact original fluid distribution and mass");
 }
+
+void TestLightSpacecraftLakeContainment(const std::shared_ptr<const RadialTerrain>& terrain) {
+    std::printf("M26 light spacecraft remains a one-way lake collider\n");
+    const glm::vec3 planetCenter(300.0f, 0.0f, 0.0f);
+    constexpr float shipMass = 80.0f;
+    constexpr float gravitationalParameter = 9.81f * 80.0f * 80.0f;
+    const glm::vec3 shipHalfExtents(2.0f, 0.25f, 3.0f);
+    RadicalGravity waterGravity(planetCenter, 9.81f);
+
+    PhysicsWorld wetWorld, dryWorld;
+    Check(wetWorld.Init() && dryWorld.Init(),
+          "one-way lake fixture initializes both rigid worlds");
+    const BodyHandle terrainBody = wetWorld.CreateStaticTerrain(
+        planetCenter, glm::quat(1, 0, 0, 0), terrain, 0.8f, 0.1f);
+    dryWorld.CreateStaticTerrain(planetCenter, glm::quat(1, 0, 0, 0),
+                                 terrain, 0.8f, 0.1f);
+    FluidTerrainCollider terrainCollider = Collider(*terrain, planetCenter);
+    terrainCollider.owner = terrainBody;
+
+    FluidWorld lake(LakeSettings());
+    SeedLiveReset(lake, *terrain, planetCenter);
+    for (int step = 0; step < 120; ++step)
+        lake.Step(kDt, waterGravity, {}, {}, {terrainCollider});
+    FluidWorld noShipLake(LakeSettings());
+    for (const FluidParticle& particle : lake.Particles())
+        noShipLake.AddParticle(particle.position, particle.velocity, particle.mass);
+
+    // The 4 x 0.5 x 6 m M21 craft starts nose-down, clear of water. Gravity
+    // brings it into the settled basin after about 30 ordinary fixed steps.
+    // This is the light-solid case that made the M25 position-projection
+    // reaction impulse numerically explosive when returned to an 80 kg body.
+    const glm::vec3 localStart = TerrainDemo::LocalPointAbove(
+        *terrain, TerrainDemo::kBasinAX, TerrainDemo::kBasinZ, 7.0f);
+    const glm::vec3 start = planetCenter + localStart;
+    const glm::quat noseDown = glm::angleAxis(
+        glm::radians(90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+    const glm::vec3 initialVelocity = -3.0f * glm::normalize(localStart);
+    const BodyHandle wetShip = wetWorld.CreateDynamicBox(
+        start, shipHalfExtents, shipMass, 0.8f, 0.1f);
+    const BodyHandle dryShip = dryWorld.CreateDynamicBox(
+        start, shipHalfExtents, shipMass, 0.8f, 0.1f);
+    wetWorld.ResetBody(wetShip, start, noseDown);
+    dryWorld.ResetBody(dryShip, start, noseDown);
+    wetWorld.SetLinearVelocity(wetShip, initialVelocity);
+    dryWorld.SetLinearVelocity(dryShip, initialVelocity);
+
+    const auto applyPlanetaryForce = [&](PhysicsWorld& world, BodyHandle ship) {
+        const glm::vec3 displacement = planetCenter - world.GetTransform(ship).position;
+        const float distanceSquared = glm::dot(displacement, displacement);
+        world.ApplyForce(ship, shipMass * displacement *
+            (gravitationalParameter / (distanceSquared * std::sqrt(distanceSquared))));
+    };
+    int firstContactStep = -1;
+    std::size_t shipWaterContacts = 0;
+    float peakShipSpeed = 0.0f;
+    float peakAngularSpeed = 0.0f;
+    float maxTrajectoryError = 0.0f;
+    float minimumWaterClearance = 1.0e20f;
+    bool finite = true;
+    for (int step = 0; step < 120; ++step) {
+        applyPlanetaryForce(wetWorld, wetShip);
+        applyPlanetaryForce(dryWorld, dryShip);
+        wetWorld.Step(kDt);
+        dryWorld.Step(kDt);
+        const BodyBox previous = wetWorld.GetPreviousBodyBoxes(wetShip).front();
+        const BodyBox current = wetWorld.GetBodyBoxes(wetShip).front();
+        const FluidBoxCollider shipCollider{wetShip,
+            BodyTransform{previous.center, previous.rotation},
+            BodyTransform{current.center, current.rotation}, current.halfExtents};
+        std::vector<FluidContactImpulse> reactions;
+        lake.Step(kDt, waterGravity, {shipCollider}, {}, {terrainCollider}, &reactions);
+        noShipLake.Step(kDt, waterGravity, {}, {}, {terrainCollider});
+        for (const FluidContactImpulse& reaction : reactions) {
+            if (reaction.owner.id != wetShip.id) continue;
+            if (firstContactStep < 0) firstContactStep = step;
+            ++shipWaterContacts;
+            // M26's bounded one-way policy: the actual ship shape moves
+            // water, but coarse lake projection impulses do not kick this
+            // much lighter rigid body. Dense M25 props remain two-way.
+        }
+
+        const glm::vec3 wetPosition = wetWorld.GetTransform(wetShip).position;
+        const glm::vec3 dryPosition = dryWorld.GetTransform(dryShip).position;
+        const glm::vec3 wetVelocity = wetWorld.GetLinearVelocity(wetShip);
+        const glm::vec3 dryVelocity = dryWorld.GetLinearVelocity(dryShip);
+        const glm::vec3 wetAngular = wetWorld.GetAngularVelocity(wetShip);
+        peakShipSpeed = std::max(peakShipSpeed, glm::length(wetVelocity));
+        peakAngularSpeed = std::max(peakAngularSpeed, glm::length(wetAngular));
+        maxTrajectoryError = std::max(maxTrajectoryError,
+            glm::distance(wetPosition, dryPosition) +
+            glm::distance(wetVelocity, dryVelocity));
+        finite = finite && Finite(wetPosition) && Finite(wetVelocity) &&
+                 Finite(wetAngular);
+        for (const FluidParticle& particle : lake.Particles()) {
+            minimumWaterClearance = std::min(minimumWaterClearance,
+                terrain->Sample(particle.position - planetCenter).signedDistance);
+            finite = finite && Finite(particle.position) && Finite(particle.velocity);
+        }
+    }
+
+    float maxWaterDisplacement = 0.0f;
+    float meanWaterDisplacement = 0.0f;
+    for (std::size_t i = 0; i < lake.Particles().size(); ++i) {
+        const float separation = glm::distance(lake.Particles()[i].position,
+                                                noShipLake.Particles()[i].position);
+        maxWaterDisplacement = std::max(maxWaterDisplacement, separation);
+        meanWaterDisplacement += separation;
+    }
+    meanWaterDisplacement /= static_cast<float>(lake.Particles().size());
+    const FluidDiagnostics lakeState = lake.GetDiagnostics();
+    std::printf("    first contact step %d, %zu ship-water contacts; ship peak %.3f m/s, "
+                "peak angular %.3f rad/s, dry-trajectory error %.6f; "
+                "water displacement max/mean %.3f/%.3f m, clearance >=%.3f m, "
+                "mass %.1f kg\n",
+                firstContactStep, shipWaterContacts, peakShipSpeed, peakAngularSpeed,
+                maxTrajectoryError, maxWaterDisplacement, meanWaterDisplacement,
+                minimumWaterClearance, lakeState.totalMass);
+    Check(firstContactStep > 0 && shipWaterContacts > 0,
+          "nose-down craft enters the lake from a genuinely clear initial pose");
+    Check(finite && peakShipSpeed < 20.0f && peakAngularSpeed < 10.0f &&
+          maxTrajectoryError < 1.0e-3f,
+          "one-way lake contact cannot launch or deflect the light spacecraft");
+    Check(maxWaterDisplacement > 0.3f && meanWaterDisplacement > 0.05f,
+          "the same physical ship collider still displaces the lake water");
+    Check(StateFinite(lake) && StateFinite(noShipLake) &&
+          lakeState.particleCount == 125 &&
+          std::abs(lakeState.totalMass - 15625.0f) < 1.0e-3f &&
+          minimumWaterClearance >= LakeSettings().particleRadius - 0.02f,
+          "one-way encounter retains finite mass and keeps water outside terrain");
+}
 } // namespace
 
 int main() {
@@ -628,6 +758,7 @@ int main() {
     TestCoupledLakeBody(terrain);
     TestBasinAndOverflow(*terrain);
     TestLiveResetAndEmission(*terrain);
+    TestLightSpacecraftLakeContainment(terrain);
     std::printf("TerrainFluid: %s (%d failures)\n", failures == 0 ? "PASS" : "FAIL",
                 failures);
     return failures == 0 ? 0 : 1;

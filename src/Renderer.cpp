@@ -993,9 +993,10 @@ void Renderer::EndTransparentPass() {
     glDisable(GL_BLEND);
 }
 
-void Renderer::DrawSphere(const glm::vec3& position, float radius, const glm::vec3& colorRgb) {
+void Renderer::DrawSphere(const glm::vec3& position, float radius, const glm::vec3& colorRgb,
+                          float alpha) {
     DrawMesh(m_sphereMesh, position, glm::quat(1.0f, 0.0f, 0.0f, 0.0f), glm::vec3(radius),
-             TextureHandle{}, colorRgb);
+             TextureHandle{}, colorRgb, alpha);
 }
 
 void Renderer::CaptureFrame(int width, int height, std::vector<unsigned char>& outRgbPixels) const {

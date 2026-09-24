@@ -22,6 +22,14 @@ public:
     static glm::vec3 ForceOnB(const glm::vec3& positionA, float massA,
                               const glm::vec3& positionB, float massB);
 
+    // Newtonian acceleration from a massive source on a low-mass test body.
+    // The source need not be a dynamic PhysicsWorld body (the M25 terrain
+    // planet is static); mu = G * sourceMass, in m^3/s^2. A zero or invalid
+    // separation has no defined point-mass direction and returns zero.
+    static glm::vec3 AccelerationFromPointMass(const glm::vec3& sourcePosition,
+                                                float gravitationalParameter,
+                                                const glm::vec3& bodyPosition);
+
     // Accumulates equal-and-opposite forces for each valid dynamic pair.
     // Call once per authoritative fixed step before PhysicsWorld::Step.
     void ApplyForces(PhysicsWorld& physics) const;

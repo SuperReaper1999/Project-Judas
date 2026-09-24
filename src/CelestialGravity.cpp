@@ -4,13 +4,23 @@
 
 glm::vec3 CelestialGravity::ForceOnB(const glm::vec3& positionA, float massA,
                                       const glm::vec3& positionB, float massB) {
-    const glm::vec3 displacement = positionA - positionB;
+    if (!(massA > 0.0f) || !(massB > 0.0f) ||
+        !std::isfinite(massA) || !std::isfinite(massB)) return glm::vec3(0.0f);
+    return massB * AccelerationFromPointMass(
+        positionA, kGravitationalConstant * massA, positionB);
+}
+
+glm::vec3 CelestialGravity::AccelerationFromPointMass(
+    const glm::vec3& sourcePosition, float gravitationalParameter,
+    const glm::vec3& bodyPosition) {
+    if (!(gravitationalParameter > 0.0f) || !std::isfinite(gravitationalParameter))
+        return glm::vec3(0.0f);
+    const glm::vec3 displacement = sourcePosition - bodyPosition;
     const float distanceSquared = glm::dot(displacement, displacement);
-    if (!(distanceSquared > 0.0f) || !std::isfinite(distanceSquared) ||
-        !(massA > 0.0f) || !(massB > 0.0f)) {
+    if (!(distanceSquared > 0.0f) || !std::isfinite(distanceSquared)) {
         return glm::vec3(0.0f);
     }
-    const float magnitude = kGravitationalConstant * massA * massB / distanceSquared;
+    const float magnitude = gravitationalParameter / distanceSquared;
     return displacement * (magnitude / std::sqrt(distanceSquared));
 }
 

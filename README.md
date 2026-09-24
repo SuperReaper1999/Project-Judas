@@ -13,7 +13,54 @@ loaded with the vendored GLAD 2.0.8 OpenGL 3.3 Core loader through the
 SDL-created context; generation and license provenance are recorded in
 [`third_party/glad/README.md`](third_party/glad/README.md).
 
-## Status: Milestone 25 accepted
+## Status: Milestone 26 in operator validation
+
+**New in M26:** the M25 terrain planet has a bounded gas atmosphere with
+spatial mass density, pressure, and planet-frame velocity. A finite
+hydrostatic polytrope (`P = K rho^1.4`) balances an inverse-square source
+matched to `9.81 m/s^2` at the `80 m` reference radius. Density falls from
+`0.05 kg/m^3` and pressure from `3.058 Pa` there to smooth, exact vacuum at
+`110 m` radius. Actual terrain excludes gas from solid ground. The gas is a
+prescribed equilibrium continuum, not a second M24 liquid solver or a
+weather simulation; it does not evolve a wake or receive reaction momentum.
+
+The existing spacecraft now spawns on a measured clear patch near the terrain
+player, visible and boardable with `F`. It receives the terrain planet's
+inverse-square pull and box-orientation-dependent drag from its velocity
+*relative to the gas*, both applied through Judas's ordinary rigid-body
+forces. The player, water, and ordinary props retain their accepted local
+gravity context. The classic M20/M21 binary flight scene remains available
+with `JUDAS_CLASSIC_DEMO=1`. For a reproducible atmospheric pass, run
+`JUDAS_ATMOSPHERIC_PASS=1 ./build/judas`: the attached pilot and ship start at
+an analytical apoapsis position/velocity (`130 m`/`100 m` initial apoapsis/
+periapsis), then evolve only from forces and contacts. Look toward the planet
+below the ship to watch the pass. `R` restores that initial physical state.
+`JUDAS_TERRAIN_ROTATED=1` and `JUDAS_WORLD_OFFSET=far` still select the rotated
+and far-origin terrain demonstrations. `JUDAS_ATMOSPHERE_DIAGNOSTICS=1` prints
+gas/step cost, density, pressure, airspeed, drag and orbital specific energy
+while the interactive scene runs. Two faint rendered shells visualize the gas
+extent; they never determine force or pressure.
+
+The focused M26 tests verify hydrostatic balance, smooth vacuum, moving-frame
+relative velocity, orientation-dependent drag through `PhysicsWorld`, and an
+actual orbital energy loss. In the measured headless pass, the post-pass
+apoapsis was `127.903 m` versus `130.269 m` in its gravity-only control.
+The light `80 kg` spacecraft exposes the M25 coarse lake solver's known
+mass-ratio limit on a steep water entry. Its hull still displaces water,
+but lake reaction impulses are not returned to the ship in the terrain
+scene; ship–water exchange is one-way and does not conserve their combined
+momentum or energy. This keeps the accepted M24/M25 heavy-body coupling and
+ordinary ship/terrain collision intact; it is not a buoyancy model.
+An unattended Release run measured about `0.0014 ms` for planetary force plus
+gas/drag evaluation and `5.13 ms` per full fixed step with M25 water and
+terrain active on this host; it is a scene-specific CPU result, not a GPU
+benchmark.
+All 26 standalone suites pass in the current working tree. Operator visual
+and flight acceptance is still pending; no M26 completion tag exists. See
+[`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md), "Milestone 26," for the model,
+measurements, and limits.
+
+## Milestone 25 accepted baseline
 
 **New in M25:** the default interactive launch now starts on an authored
 `80 m`-base-radius terrain planet, at a basin containing the same authoritative
@@ -553,11 +600,11 @@ walkable).
 
 ### The spacecraft
 
-A small aircraft-shaped spacecraft (`assets/models/plane.obj`) rests on
-the plank — the Milestone 8 flying primitive, repurposed, not replaced.
-Walk straight into it — its edge is a normal step, not a wall, so it's
-boarded by ordinary walking, no jump needed — and press `F` to take
-control. The player is physically **secured** to it the instant control
+A small aircraft-shaped spacecraft (`assets/models/plane.obj`) rests near
+the player on the default terrain planet. In the classic demo selected by
+`JUDAS_CLASSIC_DEMO=1`, it rests on the plank as before. Get onto its hull
+(jump if the terrain-side approach is too high) and press `F` while grounded
+on it to take control. The player is physically **secured** to it the instant control
 is taken (see `docs/ARCHITECTURE.md`, "Milestone 11") — it can be flown
 upside down, sideways, or through any combination of rotations without
 the pilot falling off:
@@ -701,7 +748,11 @@ geometric and real rigid-body pour/pour-back, mass accounting,
 rotated/far-origin equivalence, and simulation-derived surface generation).
 The M25 `judas_terrain_physics_tests` and `judas_terrain_fluid_tests` add
 surface geometry/support, fluid-terrain contact, and the live water-emission
-schedule. These focused checks and operator validation pass.
+schedule. The M26 `judas_atmosphere_tests` and
+`judas_atmospheric_flight_tests` cover the gas profile, hydrostatic gradient,
+vacuum, moving-frame velocity, real rigid-body drag, orientation, orbital
+energy loss, and rotated/translated equivalence. The M1–M25 focused checks
+and operator validation pass; M26 operator acceptance is pending.
 Run them with:
 
 ```bash

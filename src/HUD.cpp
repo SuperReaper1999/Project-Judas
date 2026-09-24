@@ -56,16 +56,16 @@ std::string FormatLine(int index, const HUDViewData& data) {
             break;
         case 5:
             if (data.celestialReferenceAvailable) {
-                std::snprintf(buffer, sizeof(buffer), "Body A world speed: %.2f m/s",
-                              data.celestialBodyWorldSpeed);
+                std::snprintf(buffer, sizeof(buffer), "%s world speed: %.2f m/s",
+                              data.celestialReferenceLabel.c_str(), data.celestialBodyWorldSpeed);
             } else {
                 std::snprintf(buffer, sizeof(buffer), "Body A world speed: N/A");
             }
             break;
         case 6:
             if (data.celestialReferenceAvailable) {
-                std::snprintf(buffer, sizeof(buffer), "Ship rel. speed to A: %.2f m/s",
-                              data.spacecraftRelativeCelestialSpeed);
+                std::snprintf(buffer, sizeof(buffer), "Ship rel. speed to %s: %.2f m/s",
+                              data.celestialReferenceLabel.c_str(), data.spacecraftRelativeCelestialSpeed);
             } else {
                 std::snprintf(buffer, sizeof(buffer), "Ship rel. speed to A: N/A");
             }
@@ -86,32 +86,45 @@ std::string FormatLine(int index, const HUDViewData& data) {
             std::snprintf(buffer, sizeof(buffer), "World origin: (%.2e, %.2e, %.2e) m",
                           data.worldOrigin.x, data.worldOrigin.y, data.worldOrigin.z);
             break;
-        default:
+        case 11:
             std::snprintf(buffer, sizeof(buffer), "Player absolute: (%.1f, %.1f, %.1f) m",
                           data.absolutePlayerPosition.x, data.absolutePlayerPosition.y,
                           data.absolutePlayerPosition.z);
             break;
+        case 12:
+            std::snprintf(buffer, sizeof(buffer), "Gas: %.5f kg/m^3 | %.3f Pa",
+                          data.atmosphereDensity, data.atmospherePressure);
+            break;
+        case 13:
+            std::snprintf(buffer, sizeof(buffer), "Airspeed: %.2f m/s | q %.3f Pa",
+                          data.spacecraftRelativeAirspeed, data.spacecraftDynamicPressure);
+            break;
+        case 14:
+            std::snprintf(buffer, sizeof(buffer), "Aerodynamic drag: %.2f N",
+                          data.spacecraftAerodynamicForce);
+            break;
+        default: return std::string();
     }
     return std::string(buffer);
 }
 
-constexpr int kLineCount = 12;
 }  // namespace
 
 void HUD::Draw(Renderer& renderer, int windowWidth, int windowHeight, const HUDViewData& data) const {
+    const int lineCount = data.atmosphereAvailable ? 15 : 12;
     const float lineHeight = renderer.GetUITextLineHeight(kTextScale) + kLineSpacing;
 
     float maxWidth = 0.0f;
-    for (int i = 0; i < kLineCount; ++i) {
+    for (int i = 0; i < lineCount; ++i) {
         maxWidth = std::max(maxWidth, renderer.MeasureUIText(FormatLine(i, data), kTextScale).x);
     }
 
     const glm::vec2 panelPosition(kMargin, kMargin);
     const glm::vec2 panelSize(maxWidth + kPanelPaddingX * 2.0f,
-                               kPanelPaddingY * 2.0f + static_cast<float>(kLineCount) * lineHeight);
+                               kPanelPaddingY * 2.0f + static_cast<float>(lineCount) * lineHeight);
     renderer.DrawUIRect(panelPosition, panelSize, kPanelColor);
 
-    for (int i = 0; i < kLineCount; ++i) {
+    for (int i = 0; i < lineCount; ++i) {
         const glm::vec2 textPosition(kMargin + kPanelPaddingX,
                                       kMargin + kPanelPaddingY + static_cast<float>(i) * lineHeight);
         renderer.DrawUIText(FormatLine(i, data), textPosition, kTextScale, kTextColor);

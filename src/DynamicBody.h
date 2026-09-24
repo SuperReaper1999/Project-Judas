@@ -94,9 +94,12 @@ private:
 // instead of one player. A body never learns which GravityField
 // implementation is active or anything about world geometry; it only ever
 // sees the acceleration value itself. See docs/ARCHITECTURE.md, "Multiple
-// gravity consumers."
+// gravity consumers." An optional body can be excluded when the composition
+// root assigns it a different physical gravity source in the same space;
+// its presentation history is still captured normally.
 void PrepareDynamicBodiesForStep(std::vector<DynamicBody>& bodies, const GravityField& gravity,
-                                  PhysicsWorld& physics, float fixedDeltaTime);
+                                  PhysicsWorld& physics, float fixedDeltaTime,
+                                  BodyHandle excludedFromLocalGravity = BodyHandle{});
 
 // Called once per fixed step, after PhysicsWorld::Step: reads back each
 // body's fresh authoritative transform.

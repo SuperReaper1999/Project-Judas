@@ -23,10 +23,17 @@ struct HUDViewData {
     glm::dvec3 absolutePlayerPosition{0.0};
     float spacecraftLinearSpeed = 0.0f;  // world-frame speed (m/s)
     bool celestialReferenceAvailable = false;
+    std::string celestialReferenceLabel = "Body A";
     float celestialBodyWorldSpeed = 0.0f;
     float spacecraftRelativeCelestialSpeed = 0.0f;
     float pilotWorldSpeed = 0.0f;
     float pilotRelativeSpacecraftSpeed = 0.0f;
+    bool atmosphereAvailable = false;
+    float atmosphereDensity = 0.0f;
+    float atmospherePressure = 0.0f;
+    float spacecraftRelativeAirspeed = 0.0f;
+    float spacecraftDynamicPressure = 0.0f;
+    float spacecraftAerodynamicForce = 0.0f;
 
     // Milestone 16: the currently-selected interactable's own prompt text
     // (see src/Interactable.h's GetPromptText), or empty when nothing is

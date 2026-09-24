@@ -21,6 +21,8 @@
 #include <glm/gtc/quaternion.hpp>
 
 #include "BoxVolume.h"
+#include "AerodynamicDrag.h"
+#include "AtmosphereField.h"
 #include "CelestialGravity.h"
 #include "DynamicBody.h"
 #include "FaithfulGravity.h"
@@ -201,6 +203,15 @@ const glm::vec3 kTerrainPickupHalfExtents(0.45f);
 constexpr float kTerrainPickupMass = 2000.0f;
 constexpr float kTerrainGravityRegionRadius = 103.0f;
 constexpr std::size_t kTerrainMaxWaterParticles = 200;
+// The static M25 terrain is a massive source for the low-mass ship. This
+// parameter gives 9.81 m/s^2 at the 80 m reference radius; the atmosphere
+// uses the same potential, so its pressure gradient is hydrostatic.
+constexpr float kTerrainGravitationalParameter =
+    kRadicalGravityMagnitude * TerrainDemo::kBaseRadius * TerrainDemo::kBaseRadius;
+constexpr float kAtmosphereTopRadius = 110.0f;
+constexpr float kAtmosphereReferenceDensity = 0.05f;
+constexpr float kAtmospherePolytropicExponent = 1.4f;
+constexpr float kSpacecraftDragCoefficient = 1.0f;
 
 std::vector<CompoundBox> MakeOpenCupBoxes() {
     // The shift puts the compound body's origin at the approximate
@@ -809,6 +820,11 @@ int Application::Run() {
     const bool terrainDemoEnabled = isTestRun
         ? std::getenv("JUDAS_TERRAIN_PREVIEW") != nullptr
         : std::getenv("JUDAS_CLASSIC_DEMO") == nullptr;
+    // A launch-time physical initial state for observing an atmospheric
+    // orbital pass. Once running, no orbit state/path is evaluated: the
+    // ordinary spacecraft responds only to gravity, gas drag and input.
+    const bool atmosphericPassDemo = terrainDemoEnabled && !isTestRun &&
+        std::getenv("JUDAS_ATMOSPHERIC_PASS") != nullptr;
     // An opt-in visual snapshot of the M24 starting arrangement can be
     // captured by the existing screenshot harness without changing its
     // accepted M1–M23 scripted simulation path.
@@ -816,7 +832,7 @@ int Application::Run() {
         (!isTestRun || std::getenv("JUDAS_FLUID_PREVIEW") != nullptr);
 
     Window window;
-    if (!window.Init("Project Judas - Milestone 25", kWindowWidth, kWindowHeight,
+    if (!window.Init("Project Judas - Milestone 26", kWindowWidth, kWindowHeight,
                       !isTestRun)) {
         std::fprintf(stderr, "Window initialization failed.\n");
         return 1;
@@ -826,10 +842,11 @@ int Application::Run() {
                  worldCoordinates.Origin().z);
     if (terrainDemoEnabled) {
         std::fprintf(stderr,
-                     "M25 terrain: radius %.1f m, 125 initial fluid particles; "
-                     "hold B to add real fluid, R to reset, "
+                     "M26 terrain atmosphere: radius %.1f m, gas top %.1f m; "
+                     "hold B to add real fluid, R to reset; "
+                     "JUDAS_ATMOSPHERIC_PASS=1 for a physical orbital entry, "
                      "JUDAS_CLASSIC_DEMO=1 for the earlier scene.\n",
-                     TerrainDemo::kBaseRadius);
+                     TerrainDemo::kBaseRadius, kAtmosphereTopRadius);
     }
 
     if (gladLoadGL(&LoadOpenGLProcAddress) == 0 || !GLAD_GL_VERSION_3_3) {
@@ -882,6 +899,12 @@ int Application::Run() {
     const glm::quat terrainRotation = std::getenv("JUDAS_TERRAIN_ROTATED")
         ? glm::angleAxis(glm::radians(47.0f), glm::normalize(glm::vec3(1.0f, 0.3f, 2.0f)))
         : glm::quat(1.0f, 0.0f, 0.0f, 0.0f);
+    const ReferenceFrame terrainFrame{kTerrainPlanetCenter, terrainRotation,
+                                      glm::vec3(0.0f), glm::vec3(0.0f)};
+    const AtmosphereParameters atmosphereParameters{
+        TerrainDemo::kBaseRadius, kAtmosphereTopRadius, kTerrainGravitationalParameter,
+        kAtmospherePolytropicExponent, kAtmosphereReferenceDensity};
+    const AtmosphereField atmosphere(atmosphereParameters, terrainSurface.get());
     const MeshHandle terrainMesh = terrainSurface
         ? renderer.CreateMesh(terrainSurface->BuildMesh(96, 128)) : MeshHandle{};
 
@@ -996,11 +1019,38 @@ int Application::Run() {
                              glm::radians(kSwitchAngularSpeedDegreesPerSecond), kSwitchColor, lampPosition,
                              kLampColor, kLampRange);
 
-    const glm::vec3 terrainPlayerSpawn = terrainSurface
-        ? kTerrainPlanetCenter + terrainRotation * TerrainDemo::LocalPointAbove(
-              *terrainSurface, TerrainDemo::kBasinAX, -7.0f, 3.0f)
-        : kPlayerSpawnPosition;
-    PlayerController player(terrainPlayerSpawn, kPlayerSpawnYawDegrees);
+    const glm::vec3 terrainShipSurfacePoint = terrainSurface
+        ? TerrainDemo::LocalPointAbove(*terrainSurface, -3.0f, -3.0f, 0.5f)
+        : glm::vec3(0.0f);
+    const glm::vec3 shipOrbitRadial = terrainRotation * glm::vec3(0.0f, 1.0f, 0.0f);
+    const glm::vec3 shipOrbitTangent = terrainRotation * glm::vec3(1.0f, 0.0f, 0.0f);
+    constexpr float kAtmosphericPassApoapsis = 130.0f;
+    constexpr float kAtmosphericPassPeriapsis = 100.0f;
+    const float atmosphericPassSemimajorAxis =
+        0.5f * (kAtmosphericPassApoapsis + kAtmosphericPassPeriapsis);
+    const float atmosphericPassInitialSpeed = std::sqrt(kTerrainGravitationalParameter *
+        (2.0f / kAtmosphericPassApoapsis - 1.0f / atmosphericPassSemimajorAxis));
+    const glm::vec3 shipSpawnPosition = atmosphericPassDemo
+        ? kTerrainPlanetCenter + shipOrbitRadial * kAtmosphericPassApoapsis
+        : terrainSurface && !isTestRun
+            ? kTerrainPlanetCenter + terrainRotation * terrainShipSurfacePoint
+            : kFlyingPrimitiveSpawnPosition;
+    const glm::quat shipSpawnRotation = atmosphericPassDemo
+        ? glm::quatLookAt(shipOrbitTangent, shipOrbitRadial)
+        : terrainSurface && !isTestRun
+            ? terrainRotation * RotationAligningUpTo(
+                  terrainSurface->Sample(terrainShipSurfacePoint).outwardNormal)
+            : glm::quat(1.0f, 0.0f, 0.0f, 0.0f);
+    const glm::vec3 shipInitialVelocity = atmosphericPassDemo
+        ? shipOrbitTangent * atmosphericPassInitialSpeed : glm::vec3(0.0f);
+    const glm::vec3 terrainPlayerSpawn = atmosphericPassDemo
+        ? shipSpawnPosition + shipSpawnRotation * glm::vec3(0.0f, 1.25f, 0.0f)
+        : terrainSurface
+            ? kTerrainPlanetCenter + terrainRotation * TerrainDemo::LocalPointAbove(
+                  *terrainSurface, TerrainDemo::kBasinAX, -7.0f, 3.0f)
+            : kPlayerSpawnPosition;
+    PlayerController player(terrainPlayerSpawn,
+                            atmosphericPassDemo ? 0.0f : kPlayerSpawnYawDegrees);
     if (!player.Spawn(physicsWorld)) {
         std::fprintf(stderr, "Player spawn failed.\n");
         return 1;
@@ -1041,10 +1091,11 @@ int Application::Run() {
         visual.halfExtents = kFlyingPrimitiveHalfExtents;
         visual.color = kFlyingPrimitiveColor;
         const BodyHandle handle = physicsWorld.CreateDynamicBox(
-            kFlyingPrimitiveSpawnPosition, kFlyingPrimitiveHalfExtents, kFlyingPrimitiveMass,
+            shipSpawnPosition, kFlyingPrimitiveHalfExtents, kFlyingPrimitiveMass,
             kFlyingPrimitiveFriction, kFlyingPrimitiveRestitution);
-        dynamicBodies.emplace_back(handle, visual, kFlyingPrimitiveSpawnPosition,
-                                    glm::quat(1.0f, 0.0f, 0.0f, 0.0f));
+        physicsWorld.ResetBody(handle, shipSpawnPosition, shipSpawnRotation);
+        physicsWorld.SetLinearVelocity(handle, shipInitialVelocity);
+        dynamicBodies.emplace_back(handle, visual, shipSpawnPosition, shipSpawnRotation);
     }
     const std::size_t flyingPrimitiveBodyIndex = dynamicBodies.size() - 1;
 
@@ -1074,8 +1125,9 @@ int Application::Run() {
     }
     std::vector<BodyHandle> celestialBodies;
     if (orbitalBodyA.IsValid()) {
-        celestialBodies = {orbitalBodyA, orbitalBodyB,
-                           dynamicBodies[flyingPrimitiveBodyIndex].Handle()};
+        celestialBodies = {orbitalBodyA, orbitalBodyB};
+        if (!terrainSurface)
+            celestialBodies.push_back(dynamicBodies[flyingPrimitiveBodyIndex].Handle());
     }
     CelestialGravity celestialGravity(std::move(celestialBodies));
 
@@ -1197,6 +1249,18 @@ int Application::Run() {
     // is an input-routing flag, `pilotAttachment` is fixed-step simulation
     // state (the player's own authoritative pose derives from it).
     PilotAttachment pilotAttachment;
+    if (atmosphericPassDemo) {
+        BeginPilotAttachment(pilotAttachment,
+                             physicsWorld.GetTransform(flyingPrimitiveControl.handle),
+                             player.GetPosition(), player.GetOrientation());
+        flyingPrimitiveControl.controlled = true;
+        std::fprintf(stderr,
+                     "M26 orbital-pass initial state: apoapsis %.1f m, periapsis %.1f m, "
+                     "initial tangential speed %.3f m/s; ordinary gravity and drag take over. "
+                     "Look toward the planet below the ship to see the atmospheric crossing.\n",
+                     kAtmosphericPassApoapsis, kAtmosphericPassPeriapsis,
+                     atmosphericPassInitialSpeed);
+    }
 
     // Milestone 17: this is presentation selection only. The spacecraft
     // camera below deliberately continues using its existing anchored,
@@ -1290,7 +1354,8 @@ int Application::Run() {
         }
 
         for (std::size_t i = 0; i < dynamicBodies.size(); ++i) {
-            if (terrainSurface && i != terrainPickupBodyIndex) continue;
+            if (terrainSurface && i != terrainPickupBodyIndex &&
+                i != flyingPrimitiveBodyIndex) continue;
             const DynamicBody& body = dynamicBodies[i];
             if (i == flyingPrimitiveBodyIndex) {
                 // Milestone 11: the spacecraft draws through the imported
@@ -1349,6 +1414,21 @@ int Application::Run() {
         }
         renderer.EndTransparentPass();
     };
+    const auto drawAtmosphereHaze = [&]() {
+        if (!terrainSurface) return;
+        // Two faint presentation shells mark the extent of the same gas
+        // field sampled by physics. They are not density, pressure, or a
+        // collision boundary; the actual atmosphere is continuous between
+        // terrain and its zero-density equipotential at topRadius.
+        const float base = atmosphere.Parameters().referenceRadius;
+        const float thickness = atmosphere.Parameters().topRadius - base;
+        renderer.BeginTransparentPass();
+        renderer.DrawSphere(kTerrainPlanetCenter, base + 0.90f * thickness,
+                            glm::vec3(0.35f, 0.58f, 0.82f), 0.035f);
+        renderer.DrawSphere(kTerrainPlanetCenter, base + 0.40f * thickness,
+                            glm::vec3(0.35f, 0.62f, 0.88f), 0.045f);
+        renderer.EndTransparentPass();
+    };
 
     // Milestone 13: the pause menu and HUD — interactive-loop-only (see
     // docs/ARCHITECTURE.md, "Milestone 13, Automated testing"): the
@@ -1377,6 +1457,7 @@ int Application::Run() {
         const auto drawHarnessScene = [&](Renderer& r, float alpha) {
             drawScene(r, alpha);
             drawTransparentCupWalls(alpha);
+            drawAtmosphereHaze();
         };
         exitCode = RunTestHarness(window, renderer, physicsWorld, player, gravity, dynamicBodies,
                                    flyingPrimitiveControl, pilotAttachment, drawHarnessScene, testScriptPath);
@@ -1405,6 +1486,12 @@ int Application::Run() {
         double accumulatedSurfaceMilliseconds = 0.0;
         double accumulatedSceneMilliseconds = 0.0;
         double accumulatedFrameMilliseconds = 0.0;
+        const bool atmosphereDiagnosticsEnabled =
+            std::getenv("JUDAS_ATMOSPHERE_DIAGNOSTICS") != nullptr;
+        double accumulatedAtmosphereMilliseconds = 0.0;
+        double accumulatedFixedMilliseconds = 0.0;
+        std::size_t atmosphereDiagnosticSteps = 0;
+        AerodynamicDragResult lastAerodynamicDrag;
         constexpr int kLiveTelemetryFrameInterval = 10;
         int liveTelemetryFrameCounter = 0;
         if (liveTelemetryEnabled) {
@@ -1545,9 +1632,18 @@ int Application::Run() {
                     terrainScreenshotWritten = false;
                     physicsWorld.SetLinearVelocity(orbitalBodyA, kOrbitalVelocityA);
                     physicsWorld.SetLinearVelocity(orbitalBodyB, kOrbitalVelocityB);
+                    physicsWorld.SetLinearVelocity(flyingPrimitiveControl.handle,
+                                                   shipInitialVelocity);
                     flyingPrimitiveControl.controlled = false;
                     pilotAttachment.attached = false;
                     SetSpacecraftSasEnabled(flyingPrimitiveControl, false, physicsWorld);
+                    if (atmosphericPassDemo) {
+                        BeginPilotAttachment(pilotAttachment,
+                            physicsWorld.GetTransform(flyingPrimitiveControl.handle),
+                            player.GetPosition(), player.GetOrientation());
+                        flyingPrimitiveControl.controlled = true;
+                    }
+                    lastAerodynamicDrag = {};
                     physicsAccumulator = 0.0f;
                 }
 
@@ -1611,6 +1707,9 @@ int Application::Run() {
                 int stepsThisFrame = 0;
                 while (physicsAccumulator >= SimulationTiming::kFixedTimestep &&
                        stepsThisFrame < SimulationTiming::kMaxPhysicsStepsPerFrame) {
+                    const auto fixedStepStart = atmosphereDiagnosticsEnabled
+                        ? std::chrono::steady_clock::now()
+                        : std::chrono::steady_clock::time_point{};
                     // Dynamic bodies (the flying primitive included) sample
                     // gravity and hand it to the physics engine BEFORE Step()
                     // integrates it into their position — the same "Judas
@@ -1621,8 +1720,35 @@ int Application::Run() {
                     // same body. Enabled SAS remains active even when the
                     // pilot is not controlling the spacecraft.
                     PrepareDynamicBodiesForStep(dynamicBodies, gravity, physicsWorld,
-                                                 SimulationTiming::kFixedTimestep);
+                                                 SimulationTiming::kFixedTimestep,
+                                                 terrainSurface ? flyingPrimitiveControl.handle
+                                                                : BodyHandle{});
                     celestialGravity.ApplyForces(physicsWorld);
+                    if (terrainSurface) {
+                        const auto atmosphereStart = atmosphereDiagnosticsEnabled
+                            ? std::chrono::steady_clock::now()
+                            : std::chrono::steady_clock::time_point{};
+                        const BodyHandle ship = flyingPrimitiveControl.handle;
+                        const glm::vec3 shipPosition = physicsWorld.GetTransform(ship).position;
+                        // The terrain planet is static in M25; its Newtonian
+                        // field acts on the low-mass spacecraft as a test body.
+                        // Local RadicalGravity still serves the player and
+                        // other props. The ship receives this ONE source,
+                        // without double-counting local gameplay gravity.
+                        physicsWorld.ApplyForce(ship, physicsWorld.GetMass(ship) *
+                            CelestialGravity::AccelerationFromPointMass(
+                                terrainFrame.originPosition, kTerrainGravitationalParameter,
+                                shipPosition));
+                        lastAerodynamicDrag = ApplyAerodynamicDrag(
+                            physicsWorld, ship, atmosphere, terrainFrame,
+                            kSpacecraftDragCoefficient);
+                        if (atmosphereDiagnosticsEnabled) {
+                            accumulatedAtmosphereMilliseconds +=
+                                std::chrono::duration<double, std::milli>(
+                                    std::chrono::steady_clock::now() - atmosphereStart).count();
+                            ++atmosphereDiagnosticSteps;
+                        }
+                    }
                     // M20 operator thrusters are real constant forces. Their
                     // directions are reconstructed from current barycentric
                     // position/velocity, never from a world axis or orbit path.
@@ -1684,7 +1810,8 @@ int Application::Run() {
                     door.FixedUpdate(physicsWorld, SimulationTiming::kFixedTimestep);
                     lightSwitch.FixedUpdate(SimulationTiming::kFixedTimestep);
                     physicsWorld.Step(SimulationTiming::kFixedTimestep);
-                    if (terrainSurface && window.IsActionActive(Action::AddTerrainWater) &&
+                    if (terrainSurface && !flyingPrimitiveControl.controlled &&
+                        window.IsActionActive(Action::AddTerrainWater) &&
                         fluidWorld.Particles().size() < kTerrainMaxWaterParticles) {
                         const float spacing = TerrainDemo::kWaterSpacing;
                         const glm::vec3 source = TerrainDemo::LocalPointAbove(
@@ -1745,6 +1872,16 @@ int Application::Run() {
                         fluidWorld.Step(SimulationTiming::kFixedTimestep, gravity,
                                         fluidBoxes, fluidSpheres, fluidTerrains, &fluidImpulses);
                         for (const FluidContactImpulse& contact : fluidImpulses) {
+                            // The M25 lake resolves each 125 kg particle against a
+                            // prescribed rigid pose, then returns its reaction after
+                            // the rigid step. At the spacecraft's 80 kg mass this
+                            // delayed two-way coupling can inject enormous energy
+                            // during a steep water entry. Keep the ship's real hull
+                            // as a fluid boundary (it displaces water), but do not
+                            // feed those unsupported reactions back to this light
+                            // body. The accepted heavy prop/cup coupling is intact.
+                            if (terrainSurface &&
+                                contact.owner.id == flyingPrimitiveControl.handle.id) continue;
                             physicsWorld.ApplyImpulseAtPoint(contact.owner,
                                                               contact.impulse, contact.point);
                         }
@@ -1762,6 +1899,33 @@ int Application::Run() {
                     physicsAccumulator -= SimulationTiming::kFixedTimestep;
                     ++stepsThisFrame;
                     if (terrainSurface) ++terrainFixedSteps;
+                    if (atmosphereDiagnosticsEnabled) {
+                        accumulatedFixedMilliseconds +=
+                            std::chrono::duration<double, std::milli>(
+                                std::chrono::steady_clock::now() - fixedStepStart).count();
+                        if (atmosphereDiagnosticSteps > 0 &&
+                            atmosphereDiagnosticSteps % 600 == 0) {
+                            const glm::vec3 shipPosition = physicsWorld.GetTransform(
+                                flyingPrimitiveControl.handle).position;
+                            const float radius = glm::length(
+                                shipPosition - terrainFrame.originPosition);
+                            const glm::vec3 relativeVelocity = RelativeVelocityToFrame(
+                                terrainFrame, shipPosition,
+                                physicsWorld.GetLinearVelocity(flyingPrimitiveControl.handle));
+                            const float specificEnergy =
+                                0.5f * glm::dot(relativeVelocity, relativeVelocity) +
+                                atmosphere.SpecificPotentialAtRadius(radius);
+                            std::fprintf(stderr,
+                                "M26: atmosphere %.4f ms/sample, full fixed step %.4f ms; "
+                                "rho %.5f kg/m^3, P %.3f Pa, airspeed %.2f m/s, drag %.2f N; "
+                                "planet r %.2f m, specific E %.3f J/kg\n",
+                                accumulatedAtmosphereMilliseconds / atmosphereDiagnosticSteps,
+                                accumulatedFixedMilliseconds / atmosphereDiagnosticSteps,
+                                lastAerodynamicDrag.density, lastAerodynamicDrag.pressure,
+                                lastAerodynamicDrag.relativeAirspeed,
+                                glm::length(lastAerodynamicDrag.force), radius, specificEnergy);
+                        }
+                    }
                 }
                 if (stepsThisFrame == SimulationTiming::kMaxPhysicsStepsPerFrame) {
                     // Hit the catch-up cap: drop the backlog instead of
@@ -1891,6 +2055,7 @@ int Application::Run() {
             renderer.SetDynamicLights(lights);
             drawScene(renderer, presentationAlpha, /*includePlayerModel=*/true);
             drawTransparentCupWalls(presentationAlpha);
+            drawAtmosphereHaze();
             renderer.EndFrame();
             if (fluidDiagnosticsEnabled) {
                 accumulatedSceneMilliseconds +=
@@ -1918,6 +2083,12 @@ int Application::Run() {
                 const glm::vec3 shipWorldVelocity = physicsWorld.GetLinearVelocity(shipHandle);
                 const ReferenceFrame shipFrame = ReferenceFrameFromBody(physicsWorld, shipHandle);
                 hudData.spacecraftLinearSpeed = glm::length(shipWorldVelocity);
+                if (terrainSurface && flyingPrimitiveControl.controlled) {
+                    hudData.gravityMagnitude = glm::length(
+                        CelestialGravity::AccelerationFromPointMass(
+                            terrainFrame.originPosition, kTerrainGravitationalParameter,
+                            shipWorldPosition));
+                }
 
                 const glm::vec3 pilotWorldVelocity = pilotAttachment.attached
                     ? VelocityToWorld(shipFrame, pilotAttachment.localOffset, glm::vec3(0.0f))
@@ -1934,6 +2105,24 @@ int Application::Run() {
                     hudData.spacecraftRelativeCelestialSpeed = glm::length(RelativeVelocityToFrame(
                         celestialFrame, shipWorldPosition, shipWorldVelocity));
                 }
+                if (terrainSurface) {
+                    const AtmosphereSample gas = atmosphere.Sample(shipWorldPosition, terrainFrame);
+                    const glm::vec3 relativePlanetVelocity = RelativeVelocityToFrame(
+                        terrainFrame, shipWorldPosition, shipWorldVelocity);
+                    hudData.celestialReferenceAvailable = true;
+                    hudData.celestialReferenceLabel = "terrain planet";
+                    hudData.celestialBodyWorldSpeed = glm::length(terrainFrame.linearVelocity);
+                    hudData.spacecraftRelativeCelestialSpeed = glm::length(relativePlanetVelocity);
+                    hudData.atmosphereAvailable = true;
+                    hudData.atmosphereDensity = gas.density;
+                    hudData.atmospherePressure = gas.pressure;
+                    hudData.spacecraftRelativeAirspeed = gas.density > 0.0f
+                        ? glm::length(shipWorldVelocity - gas.velocity) : 0.0f;
+                    hudData.spacecraftDynamicPressure =
+                        0.5f * gas.density * hudData.spacecraftRelativeAirspeed *
+                        hudData.spacecraftRelativeAirspeed;
+                    hudData.spacecraftAerodynamicForce = glm::length(lastAerodynamicDrag.force);
+                }
                 if (objectManipulation.IsHolding()) {
                     hudData.interactPrompt = interactTarget
                         ? interactTarget->GetPromptText() + " | H Throw"
@@ -1943,7 +2132,7 @@ int Application::Run() {
                 } else {
                     hudData.interactPrompt = interactTarget ? interactTarget->GetPromptText() : std::string();
                 }
-                if (terrainSurface) {
+                if (terrainSurface && !flyingPrimitiveControl.controlled) {
                     if (!hudData.interactPrompt.empty()) hudData.interactPrompt += " | ";
                     hudData.interactPrompt += "Hold B: add water";
                 }
@@ -1962,7 +2151,7 @@ int Application::Run() {
                 renderer.CaptureFrame(window.Width(), window.Height(), pixels);
                 const int written = stbi_write_png(terrainScreenshotPath,
                     window.Width(), window.Height(), 3, pixels.data(), window.Width() * 3);
-                std::fprintf(stderr, "M25 screenshot %s: %s\n",
+                std::fprintf(stderr, "Terrain screenshot %s: %s\n",
                              written ? "written" : "failed", terrainScreenshotPath);
                 terrainScreenshotWritten = true;
             }

@@ -131,9 +131,10 @@ public:
     // Draws a sphere mesh of the given world-space radius. Added in
     // Milestone 5 for the spherical test world; a sphere looks identical
     // under any (single-axis) rotation, so unlike DrawBox there is no
-    // rotation parameter. Unchanged signature; DrawMesh wrapper as of
-    // Milestone 9.
-    void DrawSphere(const glm::vec3& position, float radius, const glm::vec3& colorRgb);
+    // rotation parameter. DrawMesh wrapper as of Milestone 9. As with any
+    // transparent mesh, alpha below 1 requires BeginTransparentPass first.
+    void DrawSphere(const glm::vec3& position, float radius, const glm::vec3& colorRgb,
+                    float alpha = 1.0f);
 
     void EndFrame();
 

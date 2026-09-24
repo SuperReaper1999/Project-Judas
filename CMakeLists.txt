@@ -71,6 +71,8 @@ add_executable(judas
     src/BoxVolume.cpp
     src/GravityContextMap.cpp
     src/CelestialGravity.cpp
+    src/AtmosphereField.cpp
+    src/AerodynamicDrag.cpp
     ${JUDAS_PHYSICS_SOURCES}
     src/PhysicsWorld.cpp
     src/TestHarness.cpp
@@ -449,6 +451,35 @@ add_executable(judas_terrain_fluid_tests
 target_include_directories(judas_terrain_fluid_tests PRIVATE src)
 target_link_libraries(judas_terrain_fluid_tests PRIVATE glm::glm-header-only)
 target_compile_options(judas_terrain_fluid_tests PRIVATE -Wall -Wextra)
+
+# M26: equilibrium gas profile and spacecraft/atmosphere forces, including
+# a real PhysicsWorld orbital pass. These suites need no window or GL context.
+add_executable(judas_atmosphere_tests
+    tests/AtmosphereTests.cpp
+    src/AtmosphereField.cpp
+    src/ReferenceFrame.cpp
+    src/TerrainDemo.cpp
+    src/RadialTerrain.cpp
+)
+target_include_directories(judas_atmosphere_tests PRIVATE src)
+target_link_libraries(judas_atmosphere_tests PRIVATE glm::glm-header-only)
+target_compile_options(judas_atmosphere_tests PRIVATE -Wall -Wextra)
+
+add_executable(judas_atmospheric_flight_tests
+    tests/AtmosphericFlightTests.cpp
+    src/AtmosphereField.cpp
+    src/AerodynamicDrag.cpp
+    src/ReferenceFrame.cpp
+    src/CelestialGravity.cpp
+    src/DynamicBody.cpp
+    src/FlyingPrimitiveControl.cpp
+    src/Window.cpp
+    ${JUDAS_PHYSICS_SOURCES}
+    src/PhysicsWorld.cpp
+)
+target_include_directories(judas_atmospheric_flight_tests PRIVATE src ${SDL2_INCLUDE_DIRS})
+target_link_libraries(judas_atmospheric_flight_tests PRIVATE SDL2::SDL2 glm::glm-header-only)
+target_compile_options(judas_atmospheric_flight_tests PRIVATE -Wall -Wextra)
 
 # stb_image_write (public domain / MIT, see third_party/stb_image_write.h) —
 # used only by the opt-in test harness (src/TestHarness.cpp) to write

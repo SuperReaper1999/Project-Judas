@@ -43,9 +43,11 @@ void DynamicBody::ResetToSpawn(PhysicsWorld& physics) {
 }
 
 void PrepareDynamicBodiesForStep(std::vector<DynamicBody>& bodies, const GravityField& gravity,
-                                  PhysicsWorld& physics, float fixedDeltaTime) {
+                                  PhysicsWorld& physics, float fixedDeltaTime,
+                                  BodyHandle excludedFromLocalGravity) {
     for (DynamicBody& body : bodies) {
         body.SnapshotPrevious();
+        if (body.Handle().id == excludedFromLocalGravity.id) continue;
         const glm::vec3 acceleration = gravity.Sample(body.GetPosition());
         physics.ApplyLinearAcceleration(body.Handle(), acceleration, fixedDeltaTime);
     }
