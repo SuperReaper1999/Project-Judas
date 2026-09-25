@@ -15,9 +15,54 @@ loaded with the vendored GLAD 2.0.8 OpenGL 3.3 Core loader through the
 SDL-created context; generation and license provenance are recorded in
 [`third_party/glad/README.md`](third_party/glad/README.md).
 
-## Status: Milestone 30 candidate (operator validation pending)
+## Status: Milestone 31 candidate (operator validation pending)
 
-**New in M30 — Judas learns to actually make games with itself.** The
+**New in M31 — Judas learns it doesn't have to wait.** Expensive
+independent work no longer stops the simulation/render thread:
+
+1. **Job system** (`src/JobSystem.h`). A bounded worker pool (count derived
+   from the hardware, capped at 16; never a thread per job, never detached)
+   runs submitted jobs at High/Normal/Low priority with a fairness rule
+   so low work is delayed but never starved. Jobs have handles and
+   Queued/Running/Completed/Failed/Cancelled state, report errors, can be
+   cancelled before they start (and cooperatively while running), and
+   shut down deterministically with work outstanding: queued work is
+   cancelled, running work is waited for, every worker is joined.
+2. **Asynchronous file IO** (`src/AsyncFile.h`). A read request completes
+   as Succeeded (bytes), Failed (message) or Cancelled; the worker owns its
+   own reference, so a caller may drop the request at any time.
+3. **Asynchronous resources.** The M30 `ResourceManager` now moves an asset
+   through Unloaded → Queued → Loading → CpuReady → Ready. Workers read
+   and decode (OBJ parse, image decode); **only** `Pump()` on the GL thread
+   creates or destroys GPU objects, at most a few uploads per frame.
+   Requests never block; presentation draws a grey placeholder until the
+   asset is Ready (magenta when it failed) and switches to the real mesh
+   the frame it arrives. Repeated requests join one in-flight load;
+   released or superseded loads are rejected by generation, never
+   resurrected; dropped demand (reference counts) cancels queued loads.
+4. **Budget and eviction.** Resident bytes are estimated per resource; over
+   a configurable budget, unreferenced Ready resources are evicted least-
+   recently-used first, referenced ones never; an evicted asset simply
+   loads again.
+5. **Diagnostics.** The Profiler shows workers, queued/running/completed/
+   failed/cancelled jobs, worker utilization, resources loading/ready/
+   failed, resident bytes versus budget, uploads, evictions, cancellations
+   and stale discards; the Asset Browser shows each asset as loading /
+   ready (with size) / FAILED (with the reason) / unloaded.
+
+Measured (`judas_resource_stress`, 40 synthetic real assets totalling 137 MB
+of OBJ/PNG, tiny-game scene playing, software GL under Xvfb, 3 workers):
+asynchronous loading finished in 0.57 s wall with a worst main-thread frame
+of 29.6 ms and no frame over 33 ms; the same 40 loads in the M30 blocking
+path took 1.75 s with 27 of 40 frames over 33 ms and a worst frame of
+67.8 ms. The work itself is not free (1.48 s of worker CPU); the main
+thread just no longer waits for all of it. All 31 suites pass (new:
+`judas_job_tests`); harness runs are byte-identical to the references.
+See [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md), "Milestone 31," for
+the ownership law, the contracts and the limitations.
+
+**Milestone 30 (accepted) — Judas learns to actually make games with
+itself.** — Judas learns to actually make games with itself.** The
 engine now has a real **project** concept, stable **asset identity**, one
 **resource manager** boundary, and an editor that can make a small game
 without touching engine source:
@@ -53,7 +98,7 @@ without touching engine source:
    step time, bodies, contacts, lifecycle counts, draw calls, triangles,
    shadow passes, lights, fluid particles, resource hits/misses).
 
-All 30 test suites pass (the new `judas_project_tests` covers the project
+All 30 M30 test suites pass (the new `judas_project_tests` covers the project
 format, asset identity through rename/move, the resource-manager
 contract, project → startup scene → runtime for both shipped projects,
 gizmo mathematics with undo/redo, the inspector data round trip and
@@ -64,7 +109,7 @@ origins. See [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md), "Milestone
 (no OS file dialog, sphere-approximate picking, no object parenting, no
 asynchronous loading).
 
-**Milestone 29 (operator validation) — Judas learns that existing does not mean being fully
+**Milestone 29 (accepted) — Judas learns that existing does not mean being fully
 simulated.** Three engine capabilities, built together because they are
 one problem:
 
@@ -168,6 +213,21 @@ Browser → Rename / move) changes no scene. A file without a sidecar is
 listed as *untracked* until imported or tracked; a sidecar without its
 file is reported as *missing*; duplicate ids and corrupt sidecars are
 listed as *problems*. Nothing is guessed from file names.
+
+## Asynchronous resources (M31)
+
+Assets load in the background: the runtime and editor request an asset,
+keep simulating and drawing (a grey placeholder box where a mesh is still
+loading, magenta where it failed), and switch to the real mesh the frame
+it is Ready. Workers read and decode; only the GL thread uploads, at most
+two resources per frame. `JUDAS_RESOURCE_MODE=blocking` restores the
+synchronous M30 path (the scripted harness always uses it). The Profiler
+(View → Profiler) shows job and resource state; the Asset Browser shows
+each asset as loading / ready / FAILED.
+
+```bash
+./build/judas_resource_stress [report.json]   # the M31 stress demonstration (needs a display; Xvfb is fine)
+```
 
 ## Scenes
 
@@ -811,7 +871,8 @@ cmake --build build -j"$(nproc)"
 ```
 
 This produces the `judas` runtime, the `judas_editor` editor, the
-`judas_scene_author` tool and the 30 headless test executables. The engine itself is the `judas_engine` static
+`judas_scene_author` and `judas_resource_stress` tools and the 31 headless
+test executables. The engine itself is the `judas_engine` static
 library both executables link; the editor additionally links the vendored
 Dear ImGui (`judas_imgui`). The engine never depends on the editor.
 
@@ -1068,10 +1129,12 @@ uses, so its per-body CSV columns follow the scene's dynamic bodies in
 scene order and include every body the interactive scene has (the
 orbital bodies and cups were previously omitted from harness runs).
 
-Thirty standalone, headless test executables also exist (no window or GL
-context) — the M30 `judas_project_tests` covers projects, asset identity,
-the resource manager, project launch, gizmo mathematics and Edit/Play
-separation; the rest are: `judas_physics_tests` and `judas_collision_tests` (rigid-body/
+Thirty-one standalone, headless test executables also exist (no window or GL
+context) — the M31 `judas_job_tests` covers the job system, asynchronous
+file reads and the asynchronous resource manager; the M30
+`judas_project_tests` covers projects, asset identity, the resource
+manager's synchronous contract, project launch, gizmo mathematics and
+Edit/Play separation; the rest are: `judas_physics_tests` and `judas_collision_tests` (rigid-body/
 collision/gravity-context primitives); `judas_asset_tests` (Milestone 9 —
 model/texture loading, parses the real committed demo assets and checks
 vertex/index/UV/normal data and texture dimensions; run from the

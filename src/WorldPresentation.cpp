@@ -40,9 +40,28 @@ constexpr float kShipNavLightRange = 12.0f;
 constexpr float kDirShadowHalfExtent = 25.0f;
 constexpr float kDirShadowDistance = 40.0f;
 
-void DrawRenderable(Renderer& r, const SceneRenderComponent& render, const glm::vec3& position,
-                    const glm::quat& rotation, const glm::vec3& scale, MeshHandle mesh,
-                    TextureHandle texture, float alpha) {
+// Milestone 31: a mesh render resolves its assets through the resource
+// manager every frame. Not Ready yet -> a neutral grey placeholder box of
+// the object's scale; Failed -> the same box in magenta, so a broken
+// asset is visible and never mistaken for a loaded one.
+const glm::vec3 kLoadingPlaceholderColor(0.55f, 0.55f, 0.58f);
+const glm::vec3 kFailedPlaceholderColor(0.95f, 0.15f, 0.85f);
+
+void DrawMeshOrPlaceholder(Renderer& r, ResourceManager* resources, const SceneRenderComponent& render,
+                           const glm::vec3& position, const glm::quat& rotation, const glm::vec3& scale, float alpha) {
+    const MeshHandle mesh = resources ? resources->TryGetMesh(render.meshAsset) : MeshHandle{};
+    if (mesh.IsValid()) {
+        const TextureHandle texture = resources ? resources->TryGetTexture(render.textureAsset) : TextureHandle{};
+        r.DrawMesh(mesh, position, rotation, scale, texture, render.color, alpha);
+        return;
+    }
+    if (!resources) return;  // headless: nothing to draw
+    const bool failed = resources->StateOf(render.meshAsset) == ResourceState::Failed;
+    r.DrawBox(position, rotation, scale * 0.5f, failed ? kFailedPlaceholderColor : kLoadingPlaceholderColor, alpha);
+}
+
+void DrawRenderable(Renderer& r, ResourceManager* resources, const SceneRenderComponent& render,
+                    const glm::vec3& position, const glm::quat& rotation, const glm::vec3& scale, float alpha) {
     switch (render.shape) {
         case SceneShape::Box:
             r.DrawBox(position, rotation, render.halfExtents, render.color, alpha);
@@ -51,7 +70,7 @@ void DrawRenderable(Renderer& r, const SceneRenderComponent& render, const glm::
             r.DrawSphere(position, render.radius, render.color, alpha);
             break;
         case SceneShape::Mesh:
-            if (mesh.IsValid()) r.DrawMesh(mesh, position, rotation, scale, texture, render.color, alpha);
+            DrawMeshOrPlaceholder(r, resources, render, position, rotation, scale, alpha);
             break;
         case SceneShape::Compound:
         case SceneShape::Terrain:
@@ -63,7 +82,7 @@ void DrawRenderable(Renderer& r, const SceneRenderComponent& render, const glm::
 void DrawWorldGeometry(Renderer& r, const RuntimeWorld& world, const GameSession* session,
                        float alpha, const WorldDrawOptions& options) {
     for (const RuntimeWorld::StaticRenderable& s : world.StaticRenderables()) {
-        DrawRenderable(r, s.render, s.position, s.rotation, s.scale, s.mesh, s.texture, 1.0f);
+        DrawRenderable(r, world.Resources(), s.render, s.position, s.rotation, s.scale, 1.0f);
     }
     if (options.includeTerrain) {
         for (const RuntimeWorld::Terrain& t : world.Terrains()) {
@@ -113,7 +132,7 @@ void DrawWorldGeometry(Renderer& r, const RuntimeWorld& world, const GameSession
             }
             continue;
         }
-        DrawRenderable(r, v.render, position, rotation, v.scale, v.mesh, v.texture, 1.0f);
+        DrawRenderable(r, world.Resources(), v.render, position, rotation, v.scale, 1.0f);
     }
 
     // The fluid receives ordinary lighting/shadows in the colour pass; its
@@ -334,12 +353,11 @@ void DrawAuthoredScene(Renderer& r, const Scene& scene, ResourceManager& assets)
         if (o.render) {
             const SceneRenderComponent& render = *o.render;
             if (render.shape == SceneShape::Mesh) {
-                std::string error;
-                const MeshHandle mesh = assets.GetMesh(render.meshAsset, error);
-                const TextureHandle texture = assets.GetTexture(render.textureAsset, error);
-                if (mesh.IsValid()) {
-                    r.DrawMesh(mesh, position, rotation, o.transform.scale, texture, render.color);
-                }
+                // Edit mode expresses demand by requesting each frame (a
+                // hit once loaded); the editor holds the references.
+                assets.RequestMesh(render.meshAsset);
+                if (!render.textureAsset.empty()) assets.RequestTexture(render.textureAsset);
+                DrawMeshOrPlaceholder(r, &assets, render, position, rotation, o.transform.scale, 1.0f);
             } else if (render.shape == SceneShape::Compound && o.body) {
                 for (std::size_t part = 0; part < o.body->compoundBoxes.size(); ++part) {
                     const CompoundBox& box = o.body->compoundBoxes[part];
@@ -362,7 +380,7 @@ void DrawAuthoredScene(Renderer& r, const Scene& scene, ResourceManager& assets)
                 r.DrawBox(position + rotation * glm::vec3(render.halfExtents.x, 0.0f, 0.0f), rotation,
                           render.halfExtents, render.color);
             } else {
-                DrawRenderable(r, render, position, rotation, o.transform.scale, MeshHandle{}, TextureHandle{}, 1.0f);
+                DrawRenderable(r, &assets, render, position, rotation, o.transform.scale, 1.0f);
             }
         }
         // Authored liquid is shown as its particle lattice bounds.

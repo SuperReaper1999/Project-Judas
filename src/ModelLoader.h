@@ -23,3 +23,10 @@
 // OBJ, or an OBJ with no triangle data — never partially fills `outMesh` or
 // invents placeholder geometry.
 bool LoadObjMesh(const std::string& path, MeshData& outMesh, std::string& outError);
+
+// Milestone 31: the same parse over bytes already in memory (an
+// asynchronous file read's result), so a worker thread never needs the
+// file system itself here. `nameForErrors` labels messages. Materials are
+// ignored exactly as in LoadObjMesh.
+bool ParseObjMesh(const char* data, std::size_t size, const std::string& nameForErrors, MeshData& outMesh,
+                  std::string& outError);

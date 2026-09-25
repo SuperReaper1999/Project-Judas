@@ -39,8 +39,13 @@ bool EngineHost::Init(const char* title, int width, int height, bool visible, st
         outError += " (engine font " + fontPath + "; set JUDAS_ENGINE_ROOT to the repository root)";
         return false;
     }
-    m_resources = std::make_unique<ResourceManager>(&m_renderer, &m_assetDatabase);
+    m_jobs = std::make_unique<JobSystem>();  // worker count derived from the hardware
+    m_resources = std::make_unique<ResourceManager>(&m_renderer, &m_assetDatabase, m_jobs.get());
     return true;
+}
+
+void EngineHost::PumpResources() {
+    if (m_resources) m_resources->Pump();
 }
 
 void EngineHost::OpenProjectAssets(const std::string& projectRoot, const std::string& assetsDir) {
@@ -49,7 +54,12 @@ void EngineHost::OpenProjectAssets(const std::string& projectRoot, const std::st
 }
 
 void EngineHost::Shutdown() {
+    // Reverse of Init: resources (GPU objects, on this thread, while the
+    // context exists) -> workers -> renderer -> window.
+    if (m_resources) m_resources->Shutdown();
     m_resources.reset();
+    if (m_jobs) m_jobs->Shutdown();
+    m_jobs.reset();
     if (m_rendererInitialized) {
         m_renderer.Shutdown();
         m_rendererInitialized = false;

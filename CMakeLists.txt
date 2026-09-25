@@ -96,6 +96,8 @@ add_library(judas_engine STATIC
     src/SceneSerialization.cpp
     src/Project.cpp
     src/AssetDatabase.cpp
+    src/JobSystem.cpp
+    src/AsyncFile.cpp
     src/ResourceManager.cpp
     src/EnginePaths.cpp
     src/DebugDraw.cpp
@@ -115,7 +117,8 @@ add_library(judas_engine STATIC
     src/PhysicsWorld.cpp
 )
 target_include_directories(judas_engine PUBLIC src ${SDL2_INCLUDE_DIRS})
-target_link_libraries(judas_engine PUBLIC SDL2::SDL2 ${JUDAS_GLM} judas_glad)
+find_package(Threads REQUIRED)
+target_link_libraries(judas_engine PUBLIC SDL2::SDL2 ${JUDAS_GLM} judas_glad Threads::Threads)
 target_compile_options(judas_engine PRIVATE -Wall -Wextra)
 
 add_executable(judas
@@ -162,6 +165,12 @@ add_executable(judas_scene_author tools/SceneAuthor.cpp)
 target_link_libraries(judas_scene_author PRIVATE judas_engine)
 target_compile_options(judas_scene_author PRIVATE -Wall -Wextra)
 
+# Milestone 31: the resource stress demonstration (real GL context, real
+# asset decode on workers, a scene playing meanwhile) — tools/ResourceStress.cpp.
+add_executable(judas_resource_stress tools/ResourceStress.cpp)
+target_link_libraries(judas_resource_stress PRIVATE judas_engine)
+target_compile_options(judas_resource_stress PRIVATE -Wall -Wextra)
+
 # Milestone 28: scene data, serialization and runtime instantiation —
 # headless (RuntimeWorld built with no ResourceManager creates no GPU state).
 add_executable(judas_scene_tests
@@ -189,6 +198,14 @@ add_executable(judas_project_tests
 )
 target_link_libraries(judas_project_tests PRIVATE judas_engine)
 target_compile_options(judas_project_tests PRIVATE -Wall -Wextra)
+
+# Milestone 31: the job system, asynchronous file IO and the asynchronous
+# ResourceManager (headless residency) — real assets decoded on workers.
+add_executable(judas_job_tests
+    tests/JobTests.cpp
+)
+target_link_libraries(judas_job_tests PRIVATE judas_engine)
+target_compile_options(judas_job_tests PRIVATE -Wall -Wextra)
 
 
 # Judas-owned physics primitive/collision tests: deterministic, headless,

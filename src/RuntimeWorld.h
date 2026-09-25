@@ -8,6 +8,7 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/quaternion.hpp>
 
+#include "AssetDatabase.h"
 #include "AtmosphereField.h"
 #include "CelestialGravity.h"
 #include "CombustionWorld.h"
@@ -71,14 +72,17 @@ public:
     };
     // One authored renderable (mesh, box or sphere) that has no dynamic
     // body — drawn at its authored pose every frame.
+    // Mesh/texture handles are NOT stored here (Milestone 31): presentation
+    // resolves the render component's asset ids through Resources() every
+    // frame, so an asset still loading draws as a placeholder and switches
+    // to the real resource the frame it becomes Ready, and an evicted one
+    // never leaves a stale handle behind.
     struct StaticRenderable {
         SceneObjectId id = kInvalidSceneObjectId;
         SceneRenderComponent render;
         glm::vec3 position{0.0f};
         glm::quat rotation{1.0f, 0.0f, 0.0f, 0.0f};
         glm::vec3 scale{1.0f};
-        MeshHandle mesh;
-        TextureHandle texture;
     };
     // Presentation data for a dynamic body, parallel to DynamicBodies().
     struct DynamicVisual {
@@ -86,8 +90,6 @@ public:
         std::string name;
         SceneRenderComponent render;
         bool hasRender = false;
-        MeshHandle mesh;
-        TextureHandle texture;
         std::vector<CompoundBox> compoundBoxes;  // Compound render only
         glm::vec3 scale{1.0f};
         glm::vec3 initialLinearVelocity{0.0f};
@@ -158,11 +160,15 @@ public:
     RuntimeWorld(const RuntimeWorld&) = delete;
     RuntimeWorld& operator=(const RuntimeWorld&) = delete;
 
-    // Instantiates `scene`. `assets` may be null for headless use (no GPU
-    // resources are created; every mesh handle stays invalid). On failure
-    // nothing is left allocated and `outError` says which object/component
-    // could not be realised.
+    // Instantiates `scene`. `resources` may be null for headless use (no GPU
+    // resources are created). Mesh/texture assets are REQUESTED (and
+    // reference-counted) here, not waited for: Build fails only when an id
+    // is unknown to the asset database or of the wrong type; a file that is
+    // missing or undecodable shows as a placeholder and reads Failed in the
+    // resource manager. On failure nothing is left allocated and `outError`
+    // says which object/component could not be realised.
     bool Build(const Scene& scene, ResourceManager* resources, std::string& outError);
+    ResourceManager* Resources() const { return m_assets; }
     void Destroy();
     bool IsBuilt() const { return m_built; }
 
@@ -292,7 +298,9 @@ private:
     void ReleaseEntityBody(EntityRecord& record);
     bool AppendEntitySlot(const SceneObject& definition, bool authored, const EntityPhysicalState& state,
                           SimulationFidelity fidelity, std::string* outError);
-    bool LoadVisualAssets(const SceneObject& o, DynamicVisual& visual, std::string* outError);
+    // Requests and references the render component's assets; false with a
+    // message when an id cannot be resolved by the asset database.
+    bool RequestVisualAssets(const SceneObject& o, std::string* outError);
     void RebuildCelestialParticipants();
 
     bool m_built = false;
@@ -332,6 +340,7 @@ private:
 
     std::optional<PlayerStart> m_playerStart;
     std::vector<BodyHandle> m_pickableBodies;
+    std::vector<AssetId> m_referencedAssets;  // released on Destroy
 
     std::vector<EntityRecord> m_entities;
     std::unique_ptr<FidelityPolicy> m_policy;

@@ -6,7 +6,7 @@ someone with no prior context on this project. It is updated in place as
 milestones land, rather than kept as a per-milestone snapshot — see
 "Milestone history" below for how to recover an earlier milestone exactly.
 
-## What exists right now (M30 candidate, operator validation pending)
+## What exists right now (M31 candidate, operator validation pending)
 
 **Judas is a game engine.** Everything a player meets in the default
 launch — the terrain planet, its lake and atmosphere, the spacecraft, the
@@ -15,6 +15,16 @@ technology demonstration: authored scene content, loaded from files under
 `assets/scenes/`, that exercises engine capabilities. The engine must stay
 able to serve a small conventional flat-terrain game as well as a
 planetary/universe-scale one; nothing below privileges the demonstration.
+
+As of Milestone 31 expensive independent work runs on a bounded **job
+system** (`src/JobSystem.h`) and the resource path is asynchronous: file
+reads and decodes happen on workers, GPU upload happens only in
+`ResourceManager::Pump` on the GL thread, requests never block (a
+placeholder draws until the asset is Ready), demand is reference-counted,
+stale completions are rejected by generation, and resident bytes are
+budgeted with least-recently-used eviction. PhysicsWorld, the session and
+the editor UI are NOT threaded. See "Milestone 31" at the end of this
+document.
 
 As of Milestone 30 a game is a **project** (`.judasproj`: a root
 directory, its Assets/Scenes/Saves folders, a startup scene), assets have
@@ -7409,7 +7419,7 @@ docking layouts, terrain/material/animation editors. Each is a future
 milestone if a brief asks for it, not an oversight.
 
 
-## Milestone 29 — Judas learns that existing does not mean being fully simulated (operator validation pending)
+## Milestone 29 — Judas learns that existing does not mean being fully simulated (accepted)
 
 ### The law
 
@@ -7674,7 +7684,7 @@ migration framework, cloud or database persistence. Each will consume the
 lifecycle, fidelity and delta boundaries established here when a brief
 asks for it.
 
-## Milestone 30 — Judas learns to actually make games with itself (operator validation pending)
+## Milestone 30 — Judas learns to actually make games with itself (accepted)
 
 ### The gate
 
@@ -7981,3 +7991,258 @@ packages a project, per-project engine settings, a project template
 library beyond the one starter scene. Each has a boundary here to attach
 to (`Project`, `AssetDatabase`, `ResourceManager`, the component registry,
 `DebugLineList`) when a brief asks for it.
+
+## Milestone 31 — Judas learns it doesn't have to wait (operator validation pending)
+
+### The purpose
+
+> Expensive independent work must no longer require the simulation/render
+> thread to stop and wait for it.
+
+Not "make everything multithreaded": M31 adds one general background job
+system and, on it, asynchronous file IO and resource streaming — the
+infrastructure future procedural worlds, terrain streaming and large
+asset sets will consume. Those systems are not built here.
+
+### Thread ownership law
+
+- The authoritative fixed step (`StepPlayedWorld`) stays on the thread
+  that owns the session. **PhysicsWorld is not thread-safe** and is not
+  made so; no worker ever touches it, a GameSession, a RuntimeWorld or a
+  Scene.
+- **Renderer is the sole owner of raw OpenGL** and GL work stays on the
+  thread owning the context. The only code that creates or destroys a GPU
+  mesh/texture from an asset is `ResourceManager::Pump`/`Release`/
+  `EvictToFit`/`Shutdown`, on the thread that constructed the manager
+  (`OwnerThread()`).
+- The editor UI stays on its thread.
+- **Background jobs produce data.** A resource load job owns a `LoadTask`
+  (path, decoded `MeshData`/`TextureData`, error, stage) and nothing
+  else; the result is installed into engine state only at the deliberate
+  handoff — `Pump`, once per frame, after `PollEvents` and before the
+  frame that draws it. There are no mutexes in PhysicsWorld, GameSession,
+  RuntimeWorld, Renderer or the editor; the one mutex in M31 is the job
+  queue's.
+
+### Job system (`src/JobSystem.h`)
+
+A bounded pool: `workerCount` 0 derives `hardware_concurrency - 1` (at
+least 1, at most 16), leaving a core for the simulation/render thread.
+Never one OS thread per job, never a detached thread; workers block on a
+condition variable, and the main thread never spins — it polls state or
+consumes results at its frame boundary (`Wait`/`WaitAll` exist for tests,
+tools and shutdown).
+
+Lifecycle: Queued → Running → Completed | Failed (the callable threw or
+called `SetError`) | Cancelled (`Cancel` before it started removes it from
+the queue; a running job sees `CancelRequested()` and may `ReportCancelled`).
+Records of finished jobs stay queryable until `Forget` or until 4,096
+finished records exist, when the oldest are dropped; a finished job
+releases its callable (and everything it captured) immediately.
+
+Priority: High/Normal/Low queues; a worker takes the highest non-empty
+queue, except that after four consecutive higher takes while a lower
+queue waits it takes one lower job — preferred, not starved. `Stats()`
+reports workers, queued, running, submitted/completed/failed/cancelled and
+worker busy time (utilization = busy / (workers × elapsed)).
+
+Shutdown (destructor or `Shutdown()`): submissions refused, every queued
+job Cancelled without running, running jobs flagged and waited for,
+workers joined. Deterministic; never returns with a worker alive. No
+dependencies, work stealing, fibers or task graphs — none proved
+necessary.
+
+### Asynchronous file IO (`src/AsyncFile.h`)
+
+`ReadFileAsync(jobs, path, priority)` returns a shared `FileReadRequest`
+whose status is Pending → Succeeded (`Bytes()`) | Failed (`Error()`:
+"file not found", "could not open", "read error") | Cancelled. The job
+captures its own shared reference: the caller may drop the request before
+completion and the worker never touches freed memory (the suite checks
+the request is freed once the read finishes and nobody holds it). Reads
+go in 1 MiB chunks with a cancellation check between chunks; a queued
+read cancelled by `Cancel` or by shutdown never starts and resolves to
+Cancelled. No virtual filesystem, archive or memory mapping.
+
+### ResourceManager state transitions (`src/ResourceManager.h`)
+
+```
+Unloaded --Request/Get--> Queued --worker starts--> Loading --decode done--> CpuReady --Pump (GL thread)--> Ready
+    ^                        |                          |                                                  |
+    |                        +-- resolve error ---------+--> Failed (remembered; Invalidate to retry)      |
+    |                        +-- last ReleaseRef / Release / shutdown --> Cancelled                        |
+    +---------------- Release / Invalidate / eviction (generation++) ------------------------------------+
+```
+
+- **Workers** read the file (`ReadWholeFile`) and decode it
+  (`ParseObjMesh`, `DecodeTextureFromMemory` — the M9 loaders over bytes in
+  memory; the file-path loaders are unchanged and used by blocking mode
+  and the AssetDatabase's import validation).
+- **The GL thread** (`Pump`) uploads at most two finished decodes per call
+  (a multi-megabyte mesh upload costs milliseconds, so a burst of
+  completions is spread over frames), moves the rest to CpuReady, discards
+  stale or cancelled completions, forgets their jobs, then enforces the
+  budget.
+- **Non-blocking requests:** `RequestMesh/RequestTexture` start (or join)
+  a load and return the state; `GetMesh/GetTexture` return a valid handle
+  only when Ready and `"loading"` otherwise; `TryGetMesh/TryGetTexture`
+  never start a load. `RuntimeWorld::Build` requests (and references) every
+  mesh render's assets and fails only for an id unknown to the
+  AssetDatabase or of the wrong type; a missing or undecodable file shows
+  as a placeholder and reads Failed. Presentation resolves handles from
+  the manager every frame — a grey placeholder box of the object's scale
+  while loading, magenta when failed — so the real mesh appears the frame
+  it becomes Ready with no scene reload, and no stale handle ever lives in
+  `RuntimeWorld` (its `StaticRenderable`/`DynamicVisual` no longer carry
+  handles).
+- **Coalescing:** a second request for an in-flight id is a hit that joins
+  it; the suite decodes one texture once for fifty requests.
+- **Stale protection:** every entry has a generation; `Release`,
+  `Invalidate`, `ReleaseAll` and eviction bump it. `Pump` compares the
+  task's generation with the entry's and discards a mismatch
+  (`staleDiscarded`), so a late worker cannot resurrect a released,
+  invalidated or superseded resource; a re-request after a release loads
+  the new generation exactly once.
+- **Demand:** `AddRef/ReleaseRef` count consumers. A built RuntimeWorld
+  references its assets for its lifetime (released in `Destroy`); the
+  editor references the open scene's assets (`RefreshAssetDemand`, following
+  every edit). The last `ReleaseRef` of a Queued/Loading entry cancels the
+  job (running reads stop at their next chunk) and the entry reads
+  Cancelled; the next request loads again.
+- **Blocking mode** (`SetBlockingMode`, or `JUDAS_RESOURCE_MODE=blocking`
+  for the runtime and editor; always on for the scripted harness so its
+  screenshots are deterministic) keeps the M30 synchronous contract: the
+  whole load on the caller, no job.
+- **Terrain meshes** (engine-constructed, `TerrainLibrary`) are still built
+  synchronously by identifier; they are not assets.
+
+### Memory accounting and eviction
+
+Resident bytes are estimated from decoded data at upload: a mesh is
+`vertices × sizeof(MeshVertex) + indices × 4`; a texture is `width × height ×
+4` plus a third for the mipmap chain. `SetBudgetBytes` (default 256 MB)
+sets the budget; when resident bytes exceed it, `Pump` evicts Ready
+resources with zero references, least recently used first (a use is a
+`Get*`/`TryGet*`/`Request*` hit), destroying the GPU object on the GL
+thread and bumping the generation. A referenced resource is never evicted
+even when the budget cannot be met — the manager stays over budget rather
+than destroy something in use. Eviction never touches the AssetDatabase;
+an evicted asset is Unloaded and loads again normally. This is a small,
+correct policy, not a residency optimizer.
+
+### Shutdown order
+
+`EngineHost::Init` brings up window/GL context → GLAD → Renderer (+font)
+→ JobSystem → ResourceManager; `Shutdown` runs `ResourceManager::Shutdown`
+(cancel in-flight loads, wait for their jobs, discard decoded data,
+destroy GPU objects — on this thread, while the context exists) →
+`JobSystem::Shutdown` (cancel queued, join workers) → `Renderer::Shutdown`
+→ window. Closing a project (`OpenProjectAssets`) is `ReleaseAll`: cancel,
+wait, discard, then rescan. A ResourceManager destroyed with loads
+outstanding leaves no job behind (the suite checks); a `LoadTask` is owned
+jointly by the entry and the job, so neither side ever dereferences the
+other after it is gone. No GL call happens after the context is torn down
+because the manager is gone before the renderer is.
+
+### Editor integration
+
+Profiler: workers, queued, running, completed/failed/cancelled of
+submitted, worker utilization since start; resources ready/loading/failed,
+resident versus budget (and peak), hits/loads/uploads/evictions/cancelled/
+stale. Asset Browser: per asset **loading** / **ready n KB** / **FAILED**
+(hover for the reason) / unloaded, from the live manager. Nothing else
+became a task manager.
+
+### M29/M30 boundaries preserved
+
+M29 (fidelity/lifecycle), M30 (project/AssetDatabase/ResourceManager) and
+M31 (scheduling, IO, residency) stay separate: a Dormant entity does not
+evict its mesh, an evicted mesh does not destroy its entity (the entity
+draws a placeholder until the asset returns), and no reference count is
+derived from fidelity. Future world streaming may connect them; M31 does
+not.
+
+### Measured evidence
+
+`judas_resource_stress` (`tools/ResourceStress.cpp`): a temporary project
+with 24 sphere OBJ meshes (160×160 segments, 51,200 triangles each) and 16
+1024×1024 PNG textures — 137.5 MB of real files, decoded by the real
+loaders — while the tiny-game scene plays through the ordinary
+`InteractivePlay` frame in a hidden real-GL window. This machine (software
+GL under Xvfb, 4 cores → 3 workers):
+
+| phase | frames | frame avg | p99 | worst | frames > 33 ms | fixed steps (expected) | queue max / avg | worker util | jobs |
+|---|---|---|---|---|---|---|---|---|---|
+| baseline, no loads | 120 | 3.99 ms | 6.35 | 15.6 | 0 | 28 (29) | 0 / 0 | 0% | 0 |
+| **async load, 40 assets** | 32 | 17.8 ms | 29.6 | 29.6 (pump 19.6) | **0** | 34 (34) | 37 / 20.1 | 86.8% | 40 |
+| cancel + release | 1 | 20.0 ms | | 20.0 | 0 | 1 (1) | 9 | | |
+| evict + reload | 9 | 13.6 ms | 18.9 | 18.9 | 0 | 8 (7) | 3 / 0.8 | ~100% | 7 |
+| **blocking load, 40 assets** | 40 | 43.8 ms | 67.8 | 67.8 | **27** | 105 (105) | 0 | 0% | 0 |
+
+Asynchronously all 40 assets were Ready 0.57 s after the requests
+(per-asset request→Ready latency 80 / 367 / 621 ms min/avg/max, 40 GPU
+uploads, 211.9 MB resident); the same 40 loads on the main thread took
+1.75 s with 27 of 40 frames over 33 ms. Dropped demand cancelled 20 loads
+and 8 late completions were discarded as stale; halving the budget
+evicted 4 unreferenced meshes (106.4 → 85.3 MB) while every referenced
+texture survived, and the evicted meshes were Ready again 0.11 s after
+re-request. Fixed-step continuity held in every phase (no catch-up-cap
+saturation). The claim demonstrated is exactly the milestone's: the work
+is not free (1.48 s of worker CPU during the async phase), but the
+simulation/render thread no longer waits for the entire operation. The
+remaining async frame cost is the GPU upload itself (pump max 19.6 ms for
+two multi-megabyte meshes under software GL), which is main-thread work by
+the ownership law.
+
+`judas_job_tests` (31st suite): job execution, failure (throw and
+`SetError`), cancellation (queued and running), shutdown under load (fifty
+queued never run, two running waited for, no worker survives), priority
+preference and non-starvation under a continuous High stream, 2,000 jobs
+across priorities on workers only; async reads valid/missing/cancelled/
+200 simultaneous/shutdown with 100 outstanding/dropped caller reference;
+resources: non-blocking request, decode on a worker (thread id recorded),
+Ready only after `Pump` on the owner thread, coalescing (50 → 1), unknown
+id, type mismatch, corrupt file Failed with the parser's message and not
+retried, recovery after repair + `Invalidate`, missing file, stale
+completion after `Release` discarded, release + re-request loading once,
+dropped demand cancelling, budget eviction of the LRU unreferenced entry,
+referenced entry surviving an unmeetable budget, database untouched,
+evicted entry reloading, blocking mode on the caller, destruction with
+loads outstanding. The residency/eviction cases run headlessly through
+`SetHeadlessResidency`, a test seam under which a successful decode counts
+its bytes without a GPU object; the GL path is exercised by the stress
+tool and the editor autotest (uploads counted, resident bytes reported).
+All 30 earlier suites pass unchanged; the classic (near/far) and terrain
+(near/far) harness runs are byte-identical to their references, and the
+editor autotests report the authored scene IDENTICAL after Play/Stop.
+
+### Known limitations
+
+- Asynchronous loading is per whole file; there is no streaming within a
+  file, no partial mesh, no mip streaming.
+- `Pump` uploads at most two resources per frame; a burst of very large
+  meshes takes several frames to appear, and the upload cost itself is on
+  the GL thread.
+- `stb_image`'s failure-reason string is a global; two workers failing at
+  once may report each other's reason (the failure itself is correct).
+- Closing a project or shutting down waits for running decodes to reach
+  their next cancellation check (the end of the current file chunk or the
+  decode in progress), typically tens of milliseconds.
+- The budget counts estimated bytes, not driver-reported GPU memory; the
+  terrain mesh and the fluid surface mesh are outside it.
+- Worker utilization is measured as busy time inside job callables; it
+  does not distinguish IO wait from CPU.
+- The stress tool needs a display (Xvfb suffices) because it exercises the
+  real GL upload path.
+
+### Deliberately not implemented
+
+Multithreaded PhysicsWorld stepping, parallel contact solving, a parallel
+PlayerController, procedural planets, Terrain-ML/WMP integration,
+planetary terrain LOD, world/chunk streaming, universe sectors, AI jobs,
+networking, render-command multithreading, Vulkan/DirectX, an asset
+compression/cooking pipeline, a package/archive filesystem, a shader
+compilation pipeline, a coroutine/fiber framework, job dependencies/work
+stealing/task graphs, and arbitrary cross-thread mutation of engine
+objects. Each may consume the job system, the async IO contract and the
+residency boundary when a brief asks for it.

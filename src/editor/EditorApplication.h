@@ -55,6 +55,9 @@ private:
     void UpdateGizmo(bool allowInteraction);
     void DrawEditOverlay(class Renderer& renderer, const Scene& scene);
     void CollectProfilerData(float frameDeltaSeconds);
+    // Milestone 31: the open scene's assets are referenced (never evicted,
+    // never cancelled) while it is open; the set follows every edit.
+    void RefreshAssetDemand();
 
     EngineHost* m_host = nullptr;
     Project m_project;
@@ -74,4 +77,5 @@ private:
     DebugLineList m_debugLines;
     DebugLineList m_gizmoLines;
     float m_frameAverageMilliseconds = 16.0f;
+    std::vector<std::string> m_heldAssets;
 };

@@ -395,8 +395,31 @@ void DrawAssetBrowserPanel(EditorDocument& doc, EditorPanelState& state, EditorR
             if (ImGui::IsItemHovered()) ImGui::SetTooltip("%s\nid %s\nsource %s", record.path.c_str(), id.c_str(), record.source.c_str());
             ImGui::PopID();
             ImGui::TableSetColumnIndex(2);
-            if (record.missing) ImGui::TextColored(ImVec4(1.0f, 0.5f, 0.2f, 1.0f), "MISSING");
-            else ImGui::TextDisabled("ok");
+            if (record.missing) {
+                ImGui::TextColored(ImVec4(1.0f, 0.5f, 0.2f, 1.0f), "MISSING");
+            } else if (state.resources) {
+                // Milestone 31: the live resource state behind the asset.
+                const ResourceState rs = state.resources->StateOf(id);
+                switch (rs) {
+                    case ResourceState::Queued:
+                    case ResourceState::Loading:
+                    case ResourceState::CpuReady:
+                        ImGui::TextColored(ImVec4(1.0f, 0.85f, 0.3f, 1.0f), "loading");
+                        break;
+                    case ResourceState::Ready:
+                        ImGui::TextColored(ImVec4(0.4f, 0.9f, 0.4f, 1.0f), "ready %.1f KB", static_cast<double>(state.resources->BytesOf(id)) / 1024.0);
+                        break;
+                    case ResourceState::Failed:
+                        ImGui::TextColored(ImVec4(1.0f, 0.4f, 0.3f, 1.0f), "FAILED");
+                        if (ImGui::IsItemHovered()) ImGui::SetTooltip("%s", state.resources->ErrorOf(id).c_str());
+                        break;
+                    default:
+                        ImGui::TextDisabled("unloaded");
+                        break;
+                }
+            } else {
+                ImGui::TextDisabled("ok");
+            }
             ImGui::TableSetColumnIndex(3);
             ImGui::TextDisabled("%.12s...", id.c_str());
         }
@@ -504,9 +527,22 @@ void DrawProfilerPanel(EditorPanelState& state) {
     if (p.fluidMilliseconds > 0.0f) { ImGui::SameLine(); ImGui::Text("%.3f ms", p.fluidMilliseconds); }
     ImGui::Text("Fluid surface rebuild: %.2f ms", p.surfaceMilliseconds);
     ImGui::Separator();
-    ImGui::Text("Resources: %zu meshes, %zu textures, %zu terrain meshes", p.resources.loadedMeshes,
-                p.resources.loadedTextures, p.resources.loadedTerrainMeshes);
-    ImGui::Text("  hits %llu / misses (loads) %llu / failed %zu", p.resources.hits, p.resources.misses, p.resources.failed);
+    ImGui::Text("Resources: %zu ready (%zu meshes, %zu textures), %zu loading, %zu failed, %zu terrain meshes",
+                p.resources.ready, p.resources.loadedMeshes, p.resources.loadedTextures, p.resources.loading,
+                p.resources.failed, p.resources.loadedTerrainMeshes);
+    ImGui::Text("  resident %.1f MB of %.0f MB budget (peak %.1f MB)", p.resources.bytesResident / 1048576.0,
+                p.resources.budgetBytes / 1048576.0, p.resources.peakBytesResident / 1048576.0);
+    ImGui::Text("  hits %llu / loads %llu / uploads %llu / evictions %llu / cancelled %llu / stale %llu",
+                p.resources.hits, p.resources.misses, p.resources.uploads, p.resources.evictions, p.resources.cancelled,
+                p.resources.staleDiscarded);
+    ImGui::Separator();
+    const double utilization = p.jobs.workers > 0 && p.jobs.elapsedSeconds > 0.0
+                                   ? 100.0 * p.jobs.workerBusySeconds / (p.jobs.workers * p.jobs.elapsedSeconds)
+                                   : 0.0;
+    ImGui::Text("Jobs: %u workers, %zu queued, %zu running", p.jobs.workers, p.jobs.queued, p.jobs.running);
+    ImGui::Text("  %llu completed / %llu failed / %llu cancelled of %llu submitted", p.jobs.completed, p.jobs.failed,
+                p.jobs.cancelled, p.jobs.submitted);
+    ImGui::Text("  worker utilization since start: %.1f%%", utilization);
     ImGui::TextDisabled("All times are wall-clock on the editor thread.");
     ImGui::End();
 }

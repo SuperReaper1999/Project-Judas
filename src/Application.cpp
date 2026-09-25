@@ -3,6 +3,7 @@
 #include <SDL2/SDL.h>
 
 #include <cstdio>
+#include <cstdlib>
 #include <string>
 #include <vector>
 
@@ -57,6 +58,16 @@ int Application::Run(int argc, char** argv) {
         for (const AssetProblem& problem : host.Assets().Problems()) {
             std::fprintf(stderr, "Asset problem: %s: %s\n", problem.path.c_str(), problem.message.c_str());
         }
+    }
+
+    // Milestone 31: assets load asynchronously and presentation shows a
+    // placeholder until they are Ready. The scripted harness and
+    // JUDAS_RESOURCE_MODE=blocking use the synchronous path instead (a
+    // deterministic screenshot, and the M31 synchronous-versus-asynchronous
+    // measurement).
+    const char* resourceMode = std::getenv("JUDAS_RESOURCE_MODE");
+    if (options.IsTestRun() || (resourceMode && std::string(resourceMode) == "blocking")) {
+        host.Resources().SetBlockingMode(true);
     }
 
     RuntimeWorld world;
@@ -114,6 +125,9 @@ int Application::Run(int argc, char** argv) {
     Uint64 previousCounter = SDL_GetPerformanceCounter();
     while (!window.ShouldClose() && !play.QuitRequested()) {
         window.PollEvents();
+        // Milestone 31: finished background loads are installed here, on
+        // the GL thread, before the frame that will draw them.
+        host.PumpResources();
         const Uint64 currentCounter = SDL_GetPerformanceCounter();
         const float frameDeltaTime = static_cast<float>(currentCounter - previousCounter) / static_cast<float>(frequency);
         previousCounter = currentCounter;

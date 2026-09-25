@@ -8,6 +8,7 @@
 #include "AssetDatabase.h"
 #include "EditorDocument.h"
 #include "GizmoMath.h"
+#include "JobSystem.h"
 #include "ResourceManager.h"
 #include "WorldDebugView.h"
 
@@ -78,6 +79,7 @@ struct ProfilerData {
     float surfaceMilliseconds = 0.0f;    // fluid surface rebuild (presentation)
     float sceneMilliseconds = 0.0f;      // RenderWorldFrame submission
     ResourceStats resources;
+    JobStats jobs;  // Milestone 31
     bool playing = false;
 };
 
@@ -98,6 +100,7 @@ struct EditorPanelState {
     // Milestone 30: project, assets, gizmo, debug view, profiler.
     Project* project = nullptr;              // the open project (may be !IsLoaded())
     const AssetDatabase* assets = nullptr;   // its asset database
+    ResourceManager* resources = nullptr;    // Milestone 31: live resource states for the browser
     std::vector<std::string> sceneFiles;     // project-relative .judas files
     GizmoMode gizmoMode = GizmoMode::Translate;
     GizmoSpace gizmoSpace = GizmoSpace::World;

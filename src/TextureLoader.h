@@ -19,3 +19,8 @@
 // (including the offending path) on any failure — missing file or
 // undecodable image — never returns a partially-filled or garbage texture.
 bool LoadTextureFromFile(const std::string& path, TextureData& outTexture, std::string& outError);
+
+// Milestone 31: decode from bytes already in memory (an asynchronous file
+// read's result). Same flip and RGBA conventions as LoadTextureFromFile.
+bool DecodeTextureFromMemory(const std::uint8_t* data, std::size_t size, const std::string& nameForErrors,
+                             TextureData& outTexture, std::string& outError);

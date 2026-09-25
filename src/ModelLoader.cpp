@@ -1,5 +1,7 @@
 #include "ModelLoader.h"
 
+#include <sstream>
+
 // tiny_obj_loader.h defines a couple of internal helper functions this
 // project's own call path never reaches (parseTriple and friends — used
 // only by API surface Judas doesn't call), which -Wunused-function then
@@ -17,6 +19,25 @@
 #if defined(__GNUC__) || defined(__clang__)
 #pragma GCC diagnostic pop
 #endif
+
+namespace {
+bool ConvertShapes(const tinyobj::attrib_t& attrib, const std::vector<tinyobj::shape_t>& shapes, const std::string& name,
+                   MeshData& outMesh, std::string& outError);
+}
+
+bool ParseObjMesh(const char* data, std::size_t size, const std::string& nameForErrors, MeshData& outMesh,
+                  std::string& outError) {
+    tinyobj::attrib_t attrib;
+    std::vector<tinyobj::shape_t> shapes;
+    std::vector<tinyobj::material_t> materials;
+    std::string warn, err;
+    std::istringstream stream(std::string(data, size));
+    if (!tinyobj::LoadObj(&attrib, &shapes, &materials, &warn, &err, &stream, nullptr)) {
+        outError = "Failed to parse OBJ model '" + nameForErrors + "': " + (err.empty() ? "unknown parse error" : err);
+        return false;
+    }
+    return ConvertShapes(attrib, shapes, nameForErrors, outMesh, outError);
+}
 
 bool LoadObjMesh(const std::string& path, MeshData& outMesh, std::string& outError) {
     tinyobj::attrib_t attrib;
@@ -37,7 +58,12 @@ bool LoadObjMesh(const std::string& path, MeshData& outMesh, std::string& outErr
                    (err.empty() ? "unknown parse error" : err);
         return false;
     }
+    return ConvertShapes(attrib, shapes, path, outMesh, outError);
+}
 
+namespace {
+bool ConvertShapes(const tinyobj::attrib_t& attrib, const std::vector<tinyobj::shape_t>& shapes, const std::string& path,
+                   MeshData& outMesh, std::string& outError) {
     outMesh.vertices.clear();
     outMesh.indices.clear();
 
@@ -88,3 +114,4 @@ bool LoadObjMesh(const std::string& path, MeshData& outMesh, std::string& outErr
 
     return true;
 }
+}  // namespace

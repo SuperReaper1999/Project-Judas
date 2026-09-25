@@ -47,21 +47,36 @@ bool RuntimeWorld::EntityRequiresFull(const SceneObject& o) {
     return false;
 }
 
-bool RuntimeWorld::LoadVisualAssets(const SceneObject& o, DynamicVisual& visual, std::string* outError) {
-    if (o.render && o.render->shape == SceneShape::Mesh && m_assets) {
-        std::string assetError;
-        visual.mesh = m_assets->GetMesh(o.render->meshAsset, assetError);
-        if (!visual.mesh.IsValid()) {
-            if (outError) *outError = assetError;
+bool RuntimeWorld::RequestVisualAssets(const SceneObject& o, std::string* outError) {
+    if (!o.render || o.render->shape != SceneShape::Mesh || !m_assets) return true;
+    const AssetDatabase* db = m_assets->Assets();
+    const auto check = [&](const AssetId& id, AssetType type) {
+        if (id.empty()) return true;
+        const AssetRecord* record = db ? db->Find(id) : nullptr;
+        if (!record) {
+            if (outError) *outError = "unknown asset id " + id;
             return false;
         }
-        if (!o.render->textureAsset.empty()) {
-            visual.texture = m_assets->GetTexture(o.render->textureAsset, assetError);
-            if (!visual.texture.IsValid()) {
-                if (outError) *outError = assetError;
-                return false;
-            }
+        if (record->type != type) {
+            if (outError) *outError = "asset " + record->relativePath + " is a " + AssetTypeName(record->type) + ", not a " + AssetTypeName(type);
+            return false;
         }
+        return true;
+    };
+    if (o.render->meshAsset.empty()) {
+        if (outError) *outError = "mesh render has no mesh asset";
+        return false;
+    }
+    if (!check(o.render->meshAsset, AssetType::Mesh) || !check(o.render->textureAsset, AssetType::Texture)) return false;
+    // Demand: referenced for the life of this world; the load runs in the
+    // background and presentation picks it up when Ready.
+    m_assets->AddRef(o.render->meshAsset);
+    m_referencedAssets.push_back(o.render->meshAsset);
+    m_assets->RequestMesh(o.render->meshAsset, JobPriority::High);
+    if (!o.render->textureAsset.empty()) {
+        m_assets->AddRef(o.render->textureAsset);
+        m_referencedAssets.push_back(o.render->textureAsset);
+        m_assets->RequestTexture(o.render->textureAsset, JobPriority::High);
     }
     return true;
 }
@@ -128,7 +143,7 @@ bool RuntimeWorld::AppendEntitySlot(const SceneObject& o, bool authored, const E
     dv.scale = o.transform.scale;
     dv.initialLinearVelocity = b.initialLinearVelocity;
     dv.pickable = b.pickable;
-    if (!LoadVisualAssets(o, dv, outError)) return false;
+    if (!RequestVisualAssets(o, outError)) return false;
 
     EntityRecord record;
     record.id = o.id;
@@ -286,15 +301,8 @@ bool RuntimeWorld::Build(const Scene& scene, ResourceManager* resources, std::st
             sr.position = position;
             sr.rotation = rotation;
             sr.scale = o.transform.scale;
-            if (o.render->shape == SceneShape::Mesh && m_assets) {
-                std::string assetError;
-                sr.mesh = m_assets->GetMesh(o.render->meshAsset, assetError);
-                if (!sr.mesh.IsValid()) return fail(o, assetError);
-                if (!o.render->textureAsset.empty()) {
-                    sr.texture = m_assets->GetTexture(o.render->textureAsset, assetError);
-                    if (!sr.texture.IsValid()) return fail(o, assetError);
-                }
-            }
+            std::string assetError;
+            if (!RequestVisualAssets(o, &assetError)) return fail(o, assetError);
             if (o.render->shape == SceneShape::Compound) return fail(o, "compound render needs a dynamic body");
             m_staticRenderables.push_back(sr);
         }
@@ -846,6 +854,10 @@ void RuntimeWorld::Destroy() {
     m_emittedParticles = 0;
     m_playerStart.reset();
     m_pickableBodies.clear();
+    if (m_assets) {
+        for (const AssetId& id : m_referencedAssets) m_assets->ReleaseRef(id);
+    }
+    m_referencedAssets.clear();
     m_assets = nullptr;
     m_built = false;
 }

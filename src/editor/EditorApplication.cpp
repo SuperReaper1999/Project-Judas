@@ -137,6 +137,7 @@ void EditorApplication::RefreshProjectLists() {
     m_panels.sceneFiles.clear();
     m_panels.project = &m_project;
     m_panels.assets = m_host ? &m_host->Assets() : nullptr;
+    m_panels.resources = m_host ? &m_host->Resources() : nullptr;
     if (!m_project.IsLoaded()) return;
     std::error_code ec;
     if (!fs::is_directory(m_project.ScenesDir(), ec)) return;
@@ -571,6 +572,7 @@ void EditorApplication::FrameEditMode(float deltaSeconds) {
     }
 
     const Scene& scene = m_document.GetScene();
+    RefreshAssetDemand();
     const int height = std::max(window.Height(), 1);
     const float aspect = static_cast<float>(window.Width()) / static_cast<float>(height);
     renderer.SetLighting(glm::normalize(scene.Settings().sunDirection), scene.Settings().sunColor,
@@ -581,6 +583,26 @@ void EditorApplication::FrameEditMode(float deltaSeconds) {
     DrawAuthoredScene(renderer, scene, m_host->Resources());
     DrawEditOverlay(renderer, scene);
     renderer.EndFrame();
+}
+
+void EditorApplication::RefreshAssetDemand() {
+    std::vector<std::string> wanted;
+    for (const SceneObject& o : m_document.GetScene().Objects()) {
+        if (!o.render || o.render->shape != SceneShape::Mesh) continue;
+        if (!o.render->meshAsset.empty()) wanted.push_back(o.render->meshAsset);
+        if (!o.render->textureAsset.empty()) wanted.push_back(o.render->textureAsset);
+    }
+    std::sort(wanted.begin(), wanted.end());
+    wanted.erase(std::unique(wanted.begin(), wanted.end()), wanted.end());
+    if (wanted == m_heldAssets) return;
+    ResourceManager& resources = m_host->Resources();
+    for (const std::string& id : wanted) {
+        if (!std::binary_search(m_heldAssets.begin(), m_heldAssets.end(), id)) resources.AddRef(id);
+    }
+    for (const std::string& id : m_heldAssets) {
+        if (!std::binary_search(wanted.begin(), wanted.end(), id)) resources.ReleaseRef(id);
+    }
+    m_heldAssets = wanted;
 }
 
 void EditorApplication::CollectProfilerData(float frameDeltaSeconds) {
@@ -595,6 +617,7 @@ void EditorApplication::CollectProfilerData(float frameDeltaSeconds) {
     p.dynamicLights = stats.dynamicLights;
     p.debugLines = stats.debugLines;
     p.resources = m_host->Resources().Stats();
+    p.jobs = m_host->Jobs().Stats();
     p.playing = m_panels.mode == EditorMode::Play && m_play && m_world;
     if (!p.playing) {
         p.fixedStepsThisFrame = 0;
@@ -658,6 +681,9 @@ int EditorApplication::Run(int argc, char** argv) {
     } else {
         projectFile = Project::FindProjectFileFor(".");
     }
+    if (const char* mode = std::getenv("JUDAS_RESOURCE_MODE")) {
+        if (std::string(mode) == "blocking") host.Resources().SetBlockingMode(true);
+    }
     RefreshProjectLists();
     if (!projectFile.empty()) {
         if (!OpenProject(projectFile, error)) {
@@ -706,6 +732,7 @@ int EditorApplication::Run(int argc, char** argv) {
         // player or fly the camera).
         window.SetInputClaimed(io.WantCaptureKeyboard, io.WantCaptureMouse && !window.IsMouseCaptured());
         window.PollEvents();
+        host.PumpResources();  // M31: GPU upload of finished loads, budget eviction
         const Uint64 currentCounter = SDL_GetPerformanceCounter();
         const float deltaSeconds = static_cast<float>(currentCounter - previousCounter) / static_cast<float>(frequency);
         previousCounter = currentCounter;
@@ -835,9 +862,12 @@ int EditorApplication::Run(int argc, char** argv) {
                 std::fprintf(stderr, "[editor autotest] play frame: %d steps, step %.3f ms, %zu bodies, %zu contacts, %u draw calls, %u triangles, %u shadow passes, %u lights, %u debug lines, %zu particles\n",
                              p.fixedStepsThisFrame, p.fixedStepMilliseconds, p.physicsBodies, p.contacts, p.drawCalls, p.triangles,
                              p.shadowPasses, p.dynamicLights, p.debugLines, p.fluidParticles);
-                std::fprintf(stderr, "[editor autotest] resources: %zu meshes, %zu textures, %zu terrain meshes, hits %llu, misses %llu, failed %zu\n",
+                std::fprintf(stderr, "[editor autotest] resources: %zu meshes, %zu textures, %zu terrain meshes, hits %llu, misses %llu, failed %zu, uploads %llu, resident %llu bytes\n",
                              p.resources.loadedMeshes, p.resources.loadedTextures, p.resources.loadedTerrainMeshes,
-                             p.resources.hits, p.resources.misses, p.resources.failed);
+                             p.resources.hits, p.resources.misses, p.resources.failed, p.resources.uploads,
+                             static_cast<unsigned long long>(p.resources.bytesResident));
+                std::fprintf(stderr, "[editor autotest] jobs: %u workers, %llu completed, %llu failed, %llu cancelled\n",
+                             p.jobs.workers, p.jobs.completed, p.jobs.failed, p.jobs.cancelled);
                 deferredRequests.stop = true;
             } else if (autotestFrame == 150) {
                 std::string after;
@@ -854,6 +884,8 @@ int EditorApplication::Run(int argc, char** argv) {
     }
 
     if (m_panels.mode == EditorMode::Play) StopPlay();
+    for (const std::string& id : m_heldAssets) host.Resources().ReleaseRef(id);
+    m_heldAssets.clear();
     window.SetEventHook(nullptr);
     ImGui_ImplOpenGL3_Shutdown();
     ImGui_ImplSDL2_Shutdown();
