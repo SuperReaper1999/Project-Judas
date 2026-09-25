@@ -2,17 +2,10 @@
 
 #include <functional>
 #include <string>
-#include <vector>
-
-#include "DynamicBody.h"
-#include "FlyingPrimitiveControl.h"
-#include "PilotAttachment.h"
 
 class Window;
 class Renderer;
-class PhysicsWorld;
-class PlayerController;
-class GravityField;
+class GameSession;
 
 // Opt-in developer/automation tooling — not part of the game itself, and
 // not something the normal interactive game loop ever touches. See
@@ -21,62 +14,32 @@ class GravityField;
 // environment, and there is no desktop-control tool available) and for
 // the script file format.
 //
-// Runs `Window`/`Renderer`/`PhysicsWorld`/`PlayerController` already
-// constructed by the caller (so setup stays identical to the normal
-// interactive path) through a scripted sequence, driving `window`'s input
-// instead of a real keyboard/mouse. Two modes, chosen by the script itself
-// (`REALTIME <n>` present or absent — see TestHarness.cpp for the full
-// directive list):
+// Runs an already-begun GameSession (the same RuntimeWorld/PlayerController
+// construction the interactive path uses, so setup stays identical)
+// through a scripted sequence, driving `window`'s input instead of a real
+// keyboard/mouse. Two modes, chosen by the script itself (`REALTIME <n>`
+// present or absent — see TestHarness.cpp for the full directive list):
 //
 //   - Fixed-step mode (default): runs a fixed number of physics steps as
-//     fast as possible — no real-time pacing, no vsync wait. What
-//     Milestone 5 used to verify gameplay/physics logic.
+//     fast as possible — no real-time pacing, no vsync wait.
 //   - Real-time mode (`REALTIME <renderFrameCount>`, added in Milestone 6):
 //     mirrors Application::Run's own interactive accumulator loop exactly,
 //     so it reproduces the true render-frame-to-fixed-step relationship
-//     headlessly — used to diagnose whether visible motion issues come
-//     from the simulation itself or from how fixed-step state gets
-//     presented across render frames. See docs/ARCHITECTURE.md, "Diagnosis."
+//     headlessly.
 //
 // Both modes print one CSV line to stdout per logged row, and, at any
-// step/frame the script requests, render the scene (via `drawScene`, since
-// this harness has no idea what a "sphere" or a "cube" is — that stays the
-// caller's business) and write it to a PNG file, so rendered output can be
-// inspected without a way to see the window.
+// step/frame the script requests, render the scene (via `drawScene`) and
+// write it to a PNG file, so rendered output can be inspected without a
+// way to see the window.
+//
+// Milestone 28: every fixed step goes through StepPlayedWorld (src/
+// Simulation.h) — the identical ordering the interactive loop runs — and
+// TAP R/F go through GameSession's own input handling, so the harness can
+// never drift from real play. The CSV's per-body columns follow the
+// scene's dynamic bodies in scene order.
 //
 // Returns a process exit code (0 on success, non-zero if the script
 // couldn't be read).
-// `drawScene`'s float parameter is the presentation interpolation factor
-// (see PlayerController::GetPresentedPosition/Orientation and
-// docs/ARCHITECTURE.md, "Simulation/presentation boundary") — fixed-step
-// mode always passes 1.0 (there is no "in between" a back-to-back fixed
-// step), real-time mode passes the same accumulator-derived value used for
-// that frame's own camera, so a requested screenshot shows exactly what
-// that render frame actually presented.
-//
-// `dynamicBodies` (added Milestone 7-A): the same objects Application
-// spawns for the interactive game, passed in non-const so both harness
-// modes can drive them through exactly the fixed-step order the real game
-// loop uses (PrepareDynamicBodiesForStep -> PhysicsWorld::Step ->
-// SyncDynamicBodiesFromPhysics) and reset them on a TAP R the same way
-// PlayerController::Reset is invoked. Logged to CSV alongside the player so
-// automated checks can verify gravity/collision/reset for every body, not
-// just the player. See docs/ARCHITECTURE.md, "Automated testing."
-//
-// `flyingPrimitiveControl` (Milestone 8) and `pilotAttachment` (Milestone
-// 11): the same control-ownership/attachment state Application::Run
-// drives — TAP F calls the exact same src/PilotControl.h functions the
-// interactive game uses (HandlePilotToggleRequest, AdvancePlayerForPiloting),
-// so acquisition gating, attachment capture, and per-step attached-vs-
-// ordinary handling are identical between this harness and real play, not
-// a separately-maintained approximation of it. The spacecraft's own
-// physics state is already covered by its entry in `dynamicBodies`; the
-// CSV additionally logs a `controlled` flag so a script can verify exactly
-// when control (and, in lockstep with it this milestone, attachment) was
-// held.
-int RunTestHarness(Window& window, Renderer& renderer, PhysicsWorld& physicsWorld,
-                    PlayerController& player, const GravityField& gravity,
-                    std::vector<DynamicBody>& dynamicBodies,
-                    FlyingPrimitiveControl& flyingPrimitiveControl, PilotAttachment& pilotAttachment,
-                    const std::function<void(Renderer&, float)>& drawScene,
-                    const std::string& scriptPath);
+int RunTestHarness(Window& window, Renderer& renderer, GameSession& session,
+                   const std::function<void(Renderer&, float)>& drawScene,
+                   const std::string& scriptPath);

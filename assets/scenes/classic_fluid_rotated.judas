@@ -1,0 +1,621 @@
+JudasScene 1
+settings
+  name "Classic abuse chamber (rotated fluid gravity)"
+  world-origin 0 0 0
+  sun-direction 0.4 0.7 0.35
+  sun-color 1 0.98 0.92
+  ambient 0.16 0.17 0.19
+  fluid-scale 1
+  next-id 27
+end
+
+object 1 "Fluid station gravity"
+  position 2.1868968 19.88088 2.1868968
+  rotation 0.9269336 0.04014229 -0 0.3730721
+  scale 1 1 1
+  gravity uniform 9.81
+  gravity.region box 2.2 2.5 1.8
+end
+
+object 2 "The plank"
+  position 0 17 27.5
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 6 1 20
+  render.radius 0.5
+  render.color 0.55 0.5 0.4
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh ""
+  render.texture ""
+  body static box
+  body.half-extents 6 1 20
+  body.radius 0.5
+  body.terrain ""
+  body.mass 1
+  body.friction 0.8
+  body.restitution 0.1
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.compound-count 0
+  gravity uniform 9.81
+  gravity.region box 8 7 22
+end
+
+object 3 "Planet A"
+  position 0 0 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sphere
+  render.half-extents 0.5 0.5 0.5
+  render.radius 20
+  render.color 0.3 0.45 0.35
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh ""
+  render.texture ""
+  body static sphere
+  body.half-extents 0.5 0.5 0.5
+  body.radius 20
+  body.terrain ""
+  body.mass 1
+  body.friction 0.8
+  body.restitution 0.1
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.compound-count 0
+  gravity radial 9.81
+  gravity.region sphere 26
+end
+
+object 4 "Planet B"
+  position 0 0 55
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sphere
+  render.half-extents 0.5 0.5 0.5
+  render.radius 20
+  render.color 0.35 0.3 0.45
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh ""
+  render.texture ""
+  body static sphere
+  body.half-extents 0.5 0.5 0.5
+  body.radius 20
+  body.terrain ""
+  body.mass 1
+  body.friction 0.8
+  body.restitution 0.1
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.compound-count 0
+  gravity radial 9.81
+  gravity.region sphere 26
+end
+
+object 5 "Fluid table"
+  position 2.1868968 19.88088 2.1868968
+  rotation 0.9970244 0.05450846 0 -0.05450846
+  scale 1 1 1
+  render box
+  render.half-extents 0.85 0.12 0.42
+  render.radius 0.5
+  render.color 0.37 0.3 0.24
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh ""
+  render.texture ""
+  body static box
+  body.half-extents 0.85 0.12 0.42
+  body.radius 0.5
+  body.terrain ""
+  body.mass 1
+  body.friction 0.8
+  body.restitution 0
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.compound-count 0
+end
+
+object 6 "Stair step 1"
+  position 0 19.109295 6.4015517
+  rotation 0.98832756 0.15234382 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 1 0.15 0.35
+  render.radius 0.5
+  render.color 0.5 0.45 0.55
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh ""
+  render.texture ""
+  body static box
+  body.half-extents 1 0.15 0.35
+  body.radius 0.5
+  body.terrain ""
+  body.mass 1
+  body.friction 0.8
+  body.restitution 0
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.compound-count 0
+end
+
+object 7 "Stair step 2"
+  position 0 19.041542 7.1142287
+  rotation 0.98832756 0.15234382 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 1 0.3 0.35
+  render.radius 0.5
+  render.color 0.5 0.45 0.55
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh ""
+  render.texture ""
+  body static box
+  body.half-extents 1 0.3 0.35
+  body.radius 0.5
+  body.terrain ""
+  body.mass 1
+  body.friction 0.8
+  body.restitution 0
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.compound-count 0
+end
+
+object 8 "Stair step 3"
+  position 0 18.973785 7.8269067
+  rotation 0.98832756 0.15234382 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 1 0.45000002 0.35
+  render.radius 0.5
+  render.color 0.5 0.45 0.55
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh ""
+  render.texture ""
+  body static box
+  body.half-extents 1 0.45000002 0.35
+  body.radius 0.5
+  body.terrain ""
+  body.mass 1
+  body.friction 0.8
+  body.restitution 0
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.compound-count 0
+end
+
+object 9 "Stair step 4"
+  position 0 18.90603 8.539584
+  rotation 0.98832756 0.15234382 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 1 0.6 0.35
+  render.radius 0.5
+  render.color 0.5 0.45 0.55
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh ""
+  render.texture ""
+  body static box
+  body.half-extents 1 0.6 0.35
+  body.radius 0.5
+  body.terrain ""
+  body.mass 1
+  body.friction 0.8
+  body.restitution 0
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.compound-count 0
+end
+
+object 10 "Ramp"
+  position -7.0701976 18.18051 5.0501413
+  rotation 0.9243301 0.33653155 0.038935293 0.17562574
+  scale 1 1 1
+  render box
+  render.half-extents 1.5 0.15 2.5
+  render.radius 0.5
+  render.color 0.45 0.5 0.55
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh ""
+  render.texture ""
+  body static box
+  body.half-extents 1.5 0.15 2.5
+  body.radius 0.5
+  body.terrain ""
+  body.mass 1
+  body.friction 0.8
+  body.restitution 0
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.compound-count 0
+end
+
+object 11 "Beacon"
+  position -4 20 3
+  rotation 1 0 0 0
+  scale 1 1 1
+  render mesh
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh "assets/models/beacon.obj"
+  render.texture "assets/textures/beacon.png"
+end
+
+object 12 "Door"
+  position 10.417303 17.046495 0.94702756
+  rotation 0.9623733 0.024601348 0 -0.2706148
+  scale 1 1 1
+  render box
+  render.half-extents 1.1 1 0.1
+  render.radius 0.5
+  render.color 0.55 0.38 0.22
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh ""
+  render.texture ""
+  door 
+  door.hinge-axis 0 1 0
+  door.open-angle 100
+  door.angular-speed 150
+end
+
+object 13 "Light switch"
+  position 13.946658 15.806212 0.92977715
+  rotation 0.9351763 0.023559865 0 -0.353398
+  scale 1 1 1
+  render box
+  render.half-extents 0.06 0.18 0.04
+  render.radius 0.5
+  render.color 0.75 0.72 0.65
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh ""
+  render.texture ""
+  light-switch 
+  light-switch.hinge-axis 0 0 1
+  light-switch.toggle-angle 40
+  light-switch.angular-speed 220
+  light-switch.lamp-offset 2.38418579e-07 1.3999994 1.86264515e-08
+  light-switch.lamp-color 3.2 2.6 1.6
+  light-switch.lamp-range 10
+end
+
+object 14 "Player start"
+  position 0 23 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  player-start third-person
+  player-start.yaw 180
+end
+
+object 15 "Cube (Planet A)"
+  position 14.666667 14.666667 -7.3333335
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.85 0.35 0.2
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh ""
+  render.texture ""
+  body dynamic box
+  body.half-extents 0.5 0.5 0.5
+  body.radius 0.5
+  body.terrain ""
+  body.mass 5
+  body.friction 0.6
+  body.restitution 0.15
+  body.initial-velocity 0 0 0
+  body.pickable true
+  body.compound-count 0
+end
+
+object 16 "Ball (Planet A)"
+  position 12.9254 4.8470254 -14.541075
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sphere
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.9 0.8 0.2
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh ""
+  render.texture ""
+  body dynamic sphere
+  body.half-extents 0.5 0.5 0.5
+  body.radius 0.5
+  body.terrain ""
+  body.mass 4
+  body.friction 0.6
+  body.restitution 0.15
+  body.initial-velocity 0 0 0
+  body.pickable true
+  body.compound-count 0
+end
+
+object 17 "Cube (plank)"
+  position -3 21 18
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.85 0.35 0.2
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh ""
+  render.texture ""
+  body dynamic box
+  body.half-extents 0.5 0.5 0.5
+  body.radius 0.5
+  body.terrain ""
+  body.mass 5
+  body.friction 0.6
+  body.restitution 0.15
+  body.initial-velocity 0 0 0
+  body.pickable true
+  body.compound-count 0
+end
+
+object 18 "Ball (plank)"
+  position 3 19 40
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sphere
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.9 0.8 0.2
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh ""
+  render.texture ""
+  body dynamic sphere
+  body.half-extents 0.5 0.5 0.5
+  body.radius 0.5
+  body.terrain ""
+  body.mass 4
+  body.friction 0.6
+  body.restitution 0.15
+  body.initial-velocity 0 0 0
+  body.pickable true
+  body.compound-count 0
+end
+
+object 19 "Cube (Planet B)"
+  position 14.666667 14.666667 62.333332
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.85 0.35 0.2
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh ""
+  render.texture ""
+  body dynamic box
+  body.half-extents 0.5 0.5 0.5
+  body.radius 0.5
+  body.terrain ""
+  body.mass 5
+  body.friction 0.6
+  body.restitution 0.15
+  body.initial-velocity 0 0 0
+  body.pickable true
+  body.compound-count 0
+end
+
+object 20 "Ball (Planet B)"
+  position 12.9254 4.8470254 69.54108
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sphere
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.9 0.8 0.2
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh ""
+  render.texture ""
+  body dynamic sphere
+  body.half-extents 0.5 0.5 0.5
+  body.radius 0.5
+  body.terrain ""
+  body.mass 4
+  body.friction 0.6
+  body.restitution 0.15
+  body.initial-velocity 0 0 0
+  body.pickable true
+  body.compound-count 0
+end
+
+object 21 "Spacecraft"
+  position 0 19 24
+  rotation 1 0 0 0
+  scale 1 1 1
+  render mesh
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.75 0.75 0.8
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh "assets/models/plane.obj"
+  render.texture ""
+  body dynamic box
+  body.half-extents 2 0.25 3
+  body.radius 0.5
+  body.terrain ""
+  body.mass 80
+  body.friction 0.8
+  body.restitution 0.1
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.compound-count 0
+  vehicle local
+  vehicle.headlight true
+  vehicle.navigation-lights true
+  vehicle.drag-coefficient 1
+  vehicle.initial-pilot-attached false
+end
+
+object 22 "Orbital body A"
+  position -6.1659346 24.035261 101.365135
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sphere
+  render.half-extents 0.5 0.5 0.5
+  render.radius 3
+  render.color 0.25 0.7 0.95
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh ""
+  render.texture ""
+  body dynamic sphere
+  body.half-extents 0.5 0.5 0.5
+  body.radius 3
+  body.terrain ""
+  body.mass 1e+14
+  body.friction 0.6
+  body.restitution 0.15
+  body.initial-velocity -8.051297 -6.02325 3.1836133
+  body.pickable false
+  body.compound-count 0
+  celestial 
+  celestial.gravitational-parameter 0
+  celestial.operator-thrust 2.00000001e+14
+end
+
+object 23 "Orbital body B"
+  position 6.1659346 21.964739 128.63486
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sphere
+  render.half-extents 0.5 0.5 0.5
+  render.radius 3
+  render.color 0.95 0.55 0.2
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh ""
+  render.texture ""
+  body dynamic sphere
+  body.half-extents 0.5 0.5 0.5
+  body.radius 3
+  body.terrain ""
+  body.mass 1e+14
+  body.friction 0.6
+  body.restitution 0.15
+  body.initial-velocity 8.051297 6.02325 -3.1836133
+  body.pickable false
+  body.compound-count 0
+  celestial 
+  celestial.gravitational-parameter 0
+  celestial.operator-thrust 0
+end
+
+object 24 "Cup A"
+  position 1.8802207 20.202414 2.2202206
+  rotation 0.9970244 0.05450846 0 -0.05450846
+  scale 1 1 1
+  render compound
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.55 0.67 0.73
+  render.alpha 1
+  render.secondary-color 0.5 0.76 0.82
+  render.secondary-alpha 0.35
+  render.mesh ""
+  render.texture ""
+  body dynamic compound
+  body.half-extents 0.5 0.5 0.5
+  body.radius 0.5
+  body.terrain ""
+  body.mass 120
+  body.friction 0.8
+  body.restitution 0
+  body.initial-velocity 0 0 0
+  body.pickable true
+  body.compound-count 5
+  body.compound-box 0 -0.153 0 0.18 0.015 0.18
+  body.compound-box -0.165 0.041999996 0 0.015 0.18 0.18
+  body.compound-box 0.165 0.041999996 0 0.015 0.18 0.18
+  body.compound-box 0 0.041999996 -0.165 0.15 0.18 0.015
+  body.compound-box 0 0.041999996 0.165 0.15 0.18 0.015
+end
+
+object 25 "Cup B"
+  position 2.5561798 20.128502 2.2161798
+  rotation 0.9970244 0.05450846 0 -0.05450846
+  scale 1 1 1
+  render compound
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.55 0.67 0.73
+  render.alpha 1
+  render.secondary-color 0.5 0.76 0.82
+  render.secondary-alpha 0.35
+  render.mesh ""
+  render.texture ""
+  body dynamic compound
+  body.half-extents 0.5 0.5 0.5
+  body.radius 0.5
+  body.terrain ""
+  body.mass 120
+  body.friction 0.8
+  body.restitution 0
+  body.initial-velocity 0 0 0
+  body.pickable true
+  body.compound-count 5
+  body.compound-box 0 -0.153 0 0.18 0.015 0.18
+  body.compound-box -0.165 0.041999996 0 0.015 0.18 0.18
+  body.compound-box 0.165 0.041999996 0 0.015 0.18 0.18
+  body.compound-box 0 0.041999996 -0.165 0.15 0.18 0.015
+  body.compound-box 0 0.041999996 0.165 0.15 0.18 0.015
+end
+
+object 26 "Cup A water"
+  position 1.8690253 20.100637 2.2090251
+  rotation 0.9970244 0.05450846 0 -0.05450846
+  scale 1 1 1
+  fluid-volume 
+  fluid-volume.spacing 0.05
+  fluid-volume.count 5 5 5
+  fluid-volume.emitter false
+  fluid-volume.emitter-offset 0 0 0
+  fluid-volume.max-particles 0
+end

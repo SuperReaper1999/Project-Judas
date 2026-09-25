@@ -6,254 +6,34 @@ someone with no prior context on this project. It is updated in place as
 milestones land, rather than kept as a per-milestone snapshot — see
 "Milestone history" below for how to recover an earlier milestone exactly.
 
-## What exists right now (M27 accepted)
+## What exists right now (M28 in operator validation)
 
-The default interactive launch starts on the M25 terrain planet: a large
-radial-height surface with real collision and an M24 fluid lake in a basin.
-M26 adds a bounded hydrostatic gas atmosphere around that same terrain and
-applies density-dependent aerodynamic force to the existing spacecraft.
-M27 adds finite combustible coatings to three ordinary ship-carried rigid
-blocks. A radiant heater, sampled atmospheric oxidizer, thermal exchange,
-fuel consumption, and reaction heat determine whether they burn; small
-flame/smoke shapes are presentation only. M26 and M27 are accepted. See
-"Milestone 26" and "Milestone 27" below for the
-models and numerical limits.
-The earlier two-planet demonstration described below remains available with
-`JUDAS_CLASSIC_DEMO=1`.
+**Judas is a game engine.** Everything a player meets in the default
+launch — the terrain planet, its lake and atmosphere, the spacecraft, the
+combustible blocks, the classic planets and plank — is the engine's
+technology demonstration: authored scene content, loaded from files under
+`assets/scenes/`, that exercises engine capabilities. The engine must stay
+able to serve a small conventional flat-terrain game as well as a
+planetary/universe-scale one; nothing below privileges the demonstration.
 
-In that classic scene, two independent static spheres ("planets," radius `20m`
-each, centers `55m` apart — see "Physics test world") exist in 3D space,
-each with its own **radial** gravity pulling toward its own center. A flat
-static plank connects them near their facing surfaces. A Judas-owned
-player (not a physics-middleware character controller of any kind — see
-"Player/controller ownership") falls onto Planet A, stands on its curved
-surface, and can walk all the way around it — because the player's own
-sense of "up" continuously reorients to match whichever way gravity is
-currently pulling — then walks onto the plank, across it, and onto Planet
-B, and back, with gravity handing off coherently at each boundary. `Space`
-jumps; `R` resets the player. Ordinary locomotion is visually smooth: the
-fixed-step simulation is unchanged, but what gets *rendered* each frame is
-a presentation-only interpolation between two authoritative simulation
-states rather than the latest one presented directly — see "Diagnosis" and
-"Simulation/presentation boundary" below.
+As of Milestone 28 the engine has a first-class **Scene** (authored data),
+a deterministic versioned **scene file format** (`.judas`), a **RuntimeWorld**
+that instantiates a scene into every engine system, and a separate
+**editor executable** (`judas_editor`) that creates, inspects, edits, saves
+and plays scenes with an explicit Edit/Play boundary. The `judas` runtime
+loads a scene file and plays it; `Application.cpp` is orchestration only.
+See "Milestone 28" at the end of this document for the boundaries, the
+format, the responsibility split and the limits.
 
-Both planets and the plank also carry ordinary dynamic bodies (cubes and
-spheres) — see "Physics test world" and "Dynamic bodies." Each one samples
-the same effective gravity the player does, purely from its own current
-position, with no knowledge of which planet or the plank it's on, or which
-`GravityField` implementation(s) are active. They fall, land, roll, and
-collide with the world and with each other under ordinary rigid-body
-dynamics — Judas supplies acceleration only, never orientation or resting
-position. The player can walk into one and push it — see "Player-to-object
-interaction."
-
-Separate from the walkable pair, M20/M21 add two moving massive spheres and
-the spacecraft in an unclaimed part of the same world. M22's
-`ReferenceFrame` describes motion relative to those bodies without changing
-world-space physics. The HUD exposes world speed and relative speed to the
-moving celestial body, along with the pilot's speed relative to the ship.
-M23 adds a double-precision absolute coordinate origin for the whole active
-scene; all of these nearby physical relationships still use the same precise
-local simulation coordinates. See "Milestone 23" for the measured range.
-
-**As of this milestone, Project Judas owns its physics engine entirely —
-no third-party physics middleware is used at all.** Every prior milestone
-through the first attempt at this one used Jolt Physics for collision
-detection, contact resolution, and rigid-body integration; that dependency
-is now fully removed (see "Physics ownership" for why, and the full
-retrospective on the two gravity-model designs that failed human
-validation before the operator made this call). Rigid-body state,
-integration, collision detection, contact generation, and contact
-resolution are all Judas's own code (`src/RigidBody.*`, `src/Contacts.*`,
-`src/ContactSolver.*`, `src/PhysicsWorld.cpp`), built and verified to
-contain no world-space axis assumption anywhere in that stack — see
-"Physics ownership" and "Automated testing."
-
-Gravity context — which `GravityField` governs a consumer at a given
-position — is resolved by pure ownership routing (`GravityContextMap`):
-each planet and the plank has its own coherent gravity, and a position
-belongs to exactly one of them, never a blend of two. See "Gravity context
-ownership" for the two earlier designs this replaced and why both failed
-human validation despite passing every automated check.
-
-**As of Milestone 8, a controllable flying primitive rests on the
-plank** — a flat box, physically simulated by Judas's own physics engine
-exactly like every other dynamic body here. Walk (or hop) onto it and
-press `F` to take control: WASD/Q/E fly it in full 3D, A/D turn it, and
-`F` again hands input authority straight back to the player, who remains
-physically present and carried by the primitive the entire time, not
-detached or teleported. See "Milestone 8" below for the full design,
-including a real moving-support physics bug this milestone found and
-fixed.
-
-**As of Milestone 9, the renderer can load and display an ordinary static
-textured 3D model, lit by a real (if minimal) lighting model.** A single
-imported asset — `assets/models/beacon.obj`, a small hand-authored
-low-poly pyramid with a real texture (`assets/textures/beacon.png`) —
-stands near the player's spawn point on Planet A, purely as a rendering
-demonstration (it has no physics body). Every mesh in the scene, including
-the existing primitive boxes/spheres, now carries real surface normals and
-is shaded by one small ambient term plus one directional light — nothing
-about lighting derives from gravity, local up, or any other Judas concept
-(the light is a plain world-space direction, same as any other; see
-"Milestone 9" below).
-
-**As of Milestone 10, ordinary locomotion is deliberately playable rather
-than merely functionally correct.** Ground movement accelerates and
-decelerates smoothly instead of snapping instantly to a desired velocity;
-a modest, momentum-preserving air control lets input nudge the player
-while airborne; a small staircase and one ramp were added to Planet A
-(a short walk from spawn) to prove the player can climb and descend
-ordinary steps by walking into them, no jump required — the same
-mechanism that also makes the flying primitive's own low edge naturally
-boardable now. All of it is expressed purely relative to the player's own
-local gravity/support frame; see "Milestone 10" below for the full design,
-including a real edge-case bug found and fixed while building the
-step-climb primitive.
-
-**As of Milestone 11, the Milestone 8 flying primitive is a proper
-spacecraft with full 6-degree-of-freedom control and a secured pilot.**
-It renders as a real imported model (`assets/models/plane.obj`) instead of
-a plain box, through the same Milestone 9 model/texture/lighting path.
-Boarding and pressing `F` now does two things at once: input authority
-moves to the spacecraft exactly as it did in Milestone 8, AND the player
-is explicitly, physically secured to it — a real fixed-step simulation
-relationship (`src/PilotAttachment.h`), not a render-only parent transform
-and not ordinary moving-platform support. Every control axis (three
-translation, three rotation) is relative to the spacecraft's own current
-orientation, never gravity or a fixed world direction, so it flies
-identically right-side up, upside down, or spinning in any combination.
-The secured pilot stays attached through all of that — roll the
-spacecraft upside down under real gravity and the player does not fall
-off. Releasing control (`F` again) preserves the player's exact pose and
-hands it the spacecraft's own real velocity at that instant, including
-the extra motion its own rotation imparts at an off-center point, then
-ordinary gravity/support/locomotion resumes exactly as if the player had
-always been an ordinary (if suddenly airborne) participant. See
-"Milestone 11" below for the full design, the attachment math, and the
-two dedicated headless test suites it added.
-
-**As of Milestone 12, the spacecraft's controls are genuine force/torque-
-driven inertia, not directly commanded velocity.** Holding a translation
-key applies a real spacecraft-local force to the spacecraft's own
-`RigidBody`; holding a rotation key applies a real spacecraft-local
-torque. Releasing every key applies neither — it does NOT stop the
-spacecraft, because nothing in Newtonian mechanics stops a moving body
-with zero net force acting on it. The spacecraft now coasts indefinitely
-after thrust ends, keeps rotating indefinitely after torque ends, and its
-orientation and its direction of travel are genuinely independent facts:
-rotating the nose does not rotate existing momentum. Stopping or reversing
-either requires actual counter-force/counter-torque, which the same
-physics produces naturally — no special "braking" code exists anywhere in
-this milestone. This isn't a new physics engine: it's the FIRST time the
-live simulation actually uses the force/torque accumulator and full 3x3
-inverse inertia tensor `RigidBody`/`PhysicsWorld` already owned since
-Milestone 7-Final but never exercised outside the standalone test suites
-— see "Milestone 12" below for the full design, what this uncovered about
-`PhysicsWorld::Step`'s own history, and the real numeric evidence.
-
-**As of Milestone 13, Judas has its own UI system: a persistent gameplay
-HUD and a working pause menu, both rendered through a new, dedicated
-screen-space overlay path behind `Renderer`'s existing raw-GL boundary.**
-A small always-on panel in the top-left corner shows five genuinely live
-values (grounded/airborne, current local gravity magnitude, player-vs-
-spacecraft input control, pilot attachment state, spacecraft speed) —
-`Application.cpp` reads them from the exact same systems the rest of the
-engine already exposes (`PlayerController`, `GravityField`,
-`FlyingPrimitiveControl`, `PilotAttachment`, `PhysicsWorld`) and hands
-`HUD::Draw` a plain `HUDViewData` struct, never a live reference to any of
-those. `Escape` opens a pause menu (Resume/Options/Quit) that dims and
-completely freezes the world — see "Milestone 13, Pause policy" — with one
-nested Options screen (a real "Show HUD" toggle, not an invented setting)
-reachable and back-navigable with keyboard (arrow keys + Enter/Escape) or
-mouse (hover + click), exactly matching this milestone's required
-gameplay -> pause -> nested -> back -> resume -> gameplay flow. Text is
-drawn with a newly vendored `stb_truetype`-based font loader
-(`src/FontLoader.h/.cpp`) baking DejaVu Sans into a single GPU atlas — see
-"Milestone 13" below for the full design, the input-ownership boundary,
-and the pause/simulation policy.
-
-**As of Milestone 14, Judas has dynamic lighting: a toggleable player
-torch and spacecraft-mounted lights, both genuinely moving/rotating with
-their owners every frame, on top of the existing Milestone 9 ambient +
-directional "sun."** Press `T` to toggle a spotlight carried at the
-player's own eye position, aimed exactly where the player is looking —
-built fresh every render frame from the player's own PRESENTED transform
-(see "Milestone 13/14, presentation"), never baked or gravity-relative, so
-it stays correct through gravity-context traversal, arbitrary player
-orientation, and zero gravity alike. The spacecraft (Milestone 11/12)
-carries a small fixed rig of three lights defined entirely in its own
-local space — one forward headlight spotlight, two wingtip point
-"navigation" lights (red port, green starboard) — transformed into world
-space fresh every frame from the spacecraft's own presented pose
-(`worldPosition = shipPresentedPosition + shipPresentedOrientation *
-localOffset`), so they stay correctly attached through translation,
-pitch, yaw, roll, inertial coasting/tumbling, and any gravity context
-(including none) with zero special-casing. Both light kinds (point and
-spot) use the same small, explicit uniform-array mechanism in `Renderer`
-(`SetDynamicLights`, capped at `kMaxDynamicLights = 5`), combine
-additively with the existing ambient/directional terms, and use a smooth
-(never binary) falloff — a windowed inverse-square distance attenuation
-and a smoothstep spotlight cone. This is presentation only: lights carry
-no gameplay semantics, and the Milestone 13 screen-space UI shader remains
-completely unlit — see "Milestone 14" below for the full design, the
-attenuation/cone formulas, and what M14 explicitly does NOT add (shadows,
-chief among them).
-
-**As of Milestone 15, objects block light: the directional "sun," the
-player torch, and the spacecraft headlight all cast real-time shadows.**
-Standard shadow mapping, extending the existing Milestone 9/14 lit-mesh
-shader rather than adding a second rendering path — each shadow-casting
-light gets its own dedicated depth texture, rendered from that light's own
-point of view once per frame (using the SAME scene-drawing calls the
-color pass itself issues), then sampled back while shading every ordinary
-surface. The directional shadow frustum recenters on the player's own
-presented position every frame (a single bounded frustum, not cascaded,
-sized for this demo's own scale); the torch's and headlight's shadow
-frustums are ordinary perspective frustums built fresh every frame from
-each spotlight's own current position/direction/cone — so torch shadows
-follow exactly where the player looks, and headlight shadows stay
-correctly attached through the spacecraft's translation, pitch, yaw, roll,
-Milestone 12 inertial coasting/tumbling, and any gravity context
-(including none), with zero special-casing. A small 3x3 percentage-closer
-filter softens shadow edges; a slope-scaled depth bias limits acne without
-introducing excessive peter-panning. Point/navigation lights do not cast
-shadows this milestone. See "Milestone 15" below for the full design, the
-exact bias/filtering strategy, and an honest account of this technique's
-limitations (no cascades, no point-light shadows, occluders outside a
-light's own bounded frustum are simply not accounted for).
-
-**As of Milestone 16, Judas has its first reusable environmental-
-interaction system: approach an object, get a HUD prompt, press `G`, it
-does its own thing.** A single `Interactable` interface (see
-"Milestone 16" below) is the entire concept `PlayerController`/
-`Application.cpp` understand — never `Door`, never `LightSwitch` by name.
-A hinged, physically-collidable door swings open and closed (a real
-static `PhysicsWorld` body whose pose is driven directly every fixed
-step, colliding in both states, never teleporting between them); a
-second, deliberately simple non-door interactable — a small wall lever —
-toggles a nearby lamp (an ordinary Milestone 14 point light) on and off,
-proving the abstraction isn't secretly `DoorManager`. Target selection
-(closest in-range, roughly-faced candidate) is a pure, testable free
-function; the HUD (Milestone 13) receives only plain prompt text, never a
-concrete interactable reference. Interaction obeys the same input-
-ownership rules Milestone 14/15 already established (drained every frame,
-only acted on while a menu doesn't own input). See "Milestone 16" below
-for the full design, the hinge-rotation math, and the door's collision/
-shadow coherence.
-
-**As of Milestone 17, the player can switch between third-person and
-first-person view with `V`.** The first-person eye position is computed from
-the presented player position and orientation using the existing local +Y
-eye offset; its direction uses the same presented frame and existing
-yaw/pitch look composition. View mode is application-owned presentation
-state. The player's box is omitted from color and shadow passes in first
-person, while its physical simulation remains unchanged. Piloting preserves
-the existing spacecraft-anchored camera and visible attached player; the
-selected player view resumes on release. The player torch uses the same eye
-and presented look transform. Interaction targeting continues to use the
-existing player look direction, independent of view mode.
-See the root `README.md` for build/run instructions and controls.
+The demonstration content itself is the accepted M25–M27 state: the
+terrain planet with real collision, an M24 fluid lake, an M26 bounded
+hydrostatic gas atmosphere with density-dependent aerodynamic force on the
+spacecraft, and M27's finite combustible coatings on three ship-carried
+rigid blocks (radiant heater, sampled oxidizer, thermal exchange, fuel
+consumption, reaction heat; flame/smoke shapes are presentation only). See
+"Milestone 26" and "Milestone 27" for the models and numerical limits.
+The earlier two-planet demonstration described below is
+`assets/scenes/classic.judas` (`JUDAS_CLASSIC_DEMO=1` still selects it).
 
 ## Milestone history
 
@@ -7260,3 +7040,354 @@ stable two-way contact mass ratio for these `5 kg` blocks: their actual box
 geometry still blocks/displaces fluid, but delayed lake reaction impulses
 are not returned to them, as with the M26 `80 kg` ship. This is an explicit
 one-way coarse-fluid limitation, not a buoyancy or extinguishing model.
+
+## Milestone 28 — Judas learns to be an editor (operator validation pending)
+
+### Identity, restated
+
+Judas is a game engine. The two demonstrations — the classic
+planets-and-plank abuse chamber and the terrain/lake/atmosphere/fire
+planet — are scene content used to validate engine capability. Before M28
+that content was compiled into `Application.cpp` as ~1,000 lines of
+constants and placement arithmetic; authoring a world meant editing C++.
+M28 is the milestone where that stops.
+
+### The engine / runtime / editor boundary
+
+```
+            judas_engine (static library, src/)
+                 ▲                     ▲
+                 │                     │
+        judas (src/main.cpp,      judas_editor (src/editor/,
+        src/Application.cpp,      third_party/imgui)
+        RuntimeOptions,
+        RuntimeDiagnostics,
+        TestHarness)
+```
+
+- `judas_engine` holds every engine capability plus the M28 scene layer
+  and the shared play loop. It includes nothing from `src/editor/` or
+  `third_party/imgui/`, and `judas` does not link ImGui. The dependency
+  direction is engine ← runtime and engine ← editor, never the reverse.
+- The runtime-only sources are exactly the things a shipped game would not
+  carry: option/environment parsing, the opt-in diagnostic printers, and
+  the scripted harness.
+- The editor is another consumer of engine capabilities. It never becomes
+  authoritative physics: in Play it drives the same `InteractivePlay`
+  frame the runtime drives, over a `RuntimeWorld` it built from the
+  authored scene.
+
+### Scene representation (`src/Scene.h`)
+
+A `Scene` is authored data only: `SceneSettings` (name, M23 world origin,
+sun direction/colour, ambient, fluid scale) and an ordered list of
+`SceneObject`s. Each object has a never-reused `SceneObjectId` (a 64-bit
+counter persisted in the file), a name, a `SceneTransform` (position,
+quaternion, scale — scale affects mesh rendering only, never a collider),
+and any of these optional components:
+
+| Component | Engine capability it selects |
+|-----------|------------------------------|
+| `render` | box / sphere / mesh (asset path + optional texture) / compound / terrain, colour, alpha, secondary colour/alpha for compound walls |
+| `body` | static or dynamic rigid body: box, sphere, compound boxes or terrain surface (by identifier); mass, friction, restitution, initial velocity, pickable flag |
+| `gravity` | a bounded gravity context at the object: radial (`RadicalGravity`) or uniform along the object's local −Y (`FaithfulGravity` when that is world −Y at 9.81 m/s², else the new `UniformGravity`), sphere or box region |
+| `light` | a standalone point or spot dynamic light (spot faces local −Z) |
+| `door` | the M16 hinged door (panel from the render box; hinge at the transform) |
+| `light-switch` | the M16 lever plus its lamp (offset in the object's frame) |
+| `vehicle` | the pilotable rigid body (M8/M11/M12/M21): local or celestial gravity source, headlight/navigation lights, drag coefficient, start-attached pilot |
+| `celestial` | Newtonian participant: a dynamic body joins the pairwise set by its mass; a static body is a point-mass source (µ) for celestial-gravity vehicles; optional M20 operator thrust |
+| `atmosphere` | the M26 hydrostatic gas around a static celestial object |
+| `combustible` | the M27 coating on a dynamic body |
+| `fluid-volume` | an authored particle lattice (spacing, counts) with an optional held-key emitter and cap |
+| `player-start` | spawn position, yaw and view mode (at most one per scene) |
+
+Order matters and is authored: gravity regions are registered with
+`GravityContextMap` in scene order, so an earlier object wins where two
+regions overlap (the plank precedes the planets exactly as the old
+composition root registered it). The hierarchy panel's Move up/down edits
+that order.
+
+This is not an ECS. The component set is the closed list of capabilities
+the engine has today; adding a new engine capability means adding a struct
+here, a block in the serializer, and a branch in `RuntimeWorld::Build`.
+No registry, no dynamic component types, no scripting.
+
+### Scene file format (`.judas`, version 1)
+
+Line-oriented UTF-8 text, `#` comments, quoted strings with `\\"` and `\\\\`
+escapes. Structure:
+
+```
+JudasScene 1
+settings
+  name "<string>"
+  world-origin <x> <y> <z>          (doubles, metres)
+  sun-direction <x> <y> <z>
+  sun-color <r> <g> <b>
+  ambient <r> <g> <b>
+  fluid-scale <f>
+  next-id <n>                        (the next object id to hand out)
+end
+
+object <id> "<name>"
+  position <x> <y> <z>
+  rotation <w> <x> <y> <z>
+  scale <x> <y> <z>
+  render <box|sphere|compound|mesh|terrain>
+  render.half-extents <x> <y> <z>
+  render.radius <r>
+  render.color <r> <g> <b>
+  render.alpha <a>
+  render.secondary-color <r> <g> <b>
+  render.secondary-alpha <a>
+  render.mesh "<path>"
+  render.texture "<path>"
+  body <static|dynamic> <box|sphere|compound|terrain>
+  body.half-extents / body.radius / body.terrain "<id>" / body.mass /
+  body.friction / body.restitution / body.initial-velocity <x> <y> <z> /
+  body.pickable <true|false> / body.compound-count <n> /
+  body.compound-box <cx> <cy> <cz> <hx> <hy> <hz>   (n lines)
+  gravity <radial|uniform> <magnitude>
+  gravity.region sphere <r>   |   gravity.region box <x> <y> <z>
+  light <point|spot> ; light.color ; light.range ; light.cone <inner> <outer>
+  door ; door.hinge-axis ; door.open-angle ; door.angular-speed
+  light-switch ; light-switch.hinge-axis ; .toggle-angle ; .angular-speed ;
+                 .lamp-offset ; .lamp-color ; .lamp-range
+  vehicle <local|celestial> ; vehicle.headlight ; .navigation-lights ;
+                 .drag-coefficient ; .initial-pilot-attached
+  celestial ; celestial.gravitational-parameter ; celestial.operator-thrust
+  atmosphere ; atmosphere.reference-radius ; .top-radius ; .reference-density ;
+                 .polytropic-exponent ; .oxidizer-fraction ; .reference-temperature
+  combustible ; combustible.heat-capacity ; .fuel-mass ; .ignition-temperature ;
+                 .max-fuel-rate ; .radiative-area ; .retained-heat
+  fluid-volume ; fluid-volume.spacing ; .count <x> <y> <z> ; .emitter ;
+                 .emitter-offset ; .max-particles
+  player-start <third-person|first-person> ; player-start.yaw
+end
+```
+
+Rules that keep the format honest:
+
+- **Explicit identity.** The first line is the format name and version; a
+  different version is refused rather than guessed at.
+- **Deterministic.** Objects are written in scene order and keys in a fixed
+  order; floats are printed as the shortest decimal that parses back to
+  the identical `float` (so `9.81`, not `9.81000042`, but bit-exact), and
+  doubles likewise. Saving the same scene twice is byte-identical, and
+  `judas_scene_tests` proves save → load → save is too.
+- **Strict loading.** A component's header key introduces it and every one
+  of its fields is then required; an unknown key, a misplaced
+  `component.field` without its header, a duplicate key or id, a
+  non-finite number, a missing transform field, a truncated block, a
+  second `player-start`, or a component whose prerequisites are absent (a
+  vehicle without a dynamic box body, an atmosphere without a static
+  celestial µ, a compound render without a compound body) fails with the
+  line number, and the caller's `Scene` is left untouched. Nothing is
+  defaulted silently: the writer emits every field precisely so the reader
+  can demand every field.
+- **Assets by path/identifier.** Meshes and textures are referenced by
+  working-directory-relative paths, terrain surfaces by identifier
+  (`src/TerrainLibrary.h`, currently `m25-radial`). No runtime pointer, GPU
+  handle or physics handle is ever serialized.
+
+A hand-rolled format was chosen over vendoring a JSON library: the data is
+flat and small, the strictness rules above are easier to state and test
+directly, and the repository's dependency policy has been "single-header
+vendored, or nothing" throughout. `SceneSerialization.cpp` is 790 lines
+including its parser and every validation message.
+
+### Authored vs runtime state
+
+| Authored (`Scene`, the file) | Runtime (`RuntimeWorld`, `GameSession`) |
+|------------------------------|-----------------------------------------|
+| object ids, names, transforms | `BodyHandle`s, `MeshHandle`s, indices into the dynamic-body list |
+| component parameters | current poses/velocities read back from `PhysicsWorld` |
+| initial velocity | integrated velocity |
+| fluid lattice description | particle positions, emitted count |
+| combustible material | temperatures, remaining fuel, burn rates |
+| door/switch hinge parameters | current angle, open/lamp state |
+| player start | `PlayerController`, pilot attachment, held object, torch, view mode |
+
+`RuntimeWorld::Build` reads a `Scene` exactly once and never writes it.
+`RestoreAuthoredState()` is the R-key reset: every dynamic body back to its
+authored pose and initial velocity, particles re-laid, thermal state reset,
+emitter count zeroed. Play → Stop in the editor is stronger still: the
+runtime world is destroyed and rebuilt from the untouched scene, which
+`judas_scene_tests` Section E verifies by serializing the scene before and
+after and comparing bytes.
+
+### Runtime instantiation (`src/RuntimeWorld.h`)
+
+`Build` walks the objects in order and, per component, creates the engine
+state and records only what stepping and drawing need to reach it again.
+Two rules that used to be name-based in `Application.cpp` are now
+mass/component rules the same objects satisfy:
+
+- **Fluid reaction coupling.** M25 documented that a 125 kg lake particle
+  cannot return its delayed reaction impulse stably to the 80 kg ship or
+  the 5 kg fuel blocks, while the 2,000 kg block and the 120 kg cups (with
+  0.125 kg cup water) are fine. The former code skipped the ship and the
+  three blocks by handle; `StepPlayedWorld` now skips any dynamic body
+  lighter than four particle masses. Every accepted case falls on the same
+  side of that line as before; the body still displaces water either way.
+- **Vehicle gravity.** The terrain scene's ship was excluded from local
+  gravity contexts and given the planet's point-mass field; the classic
+  ship sampled local contexts and joined pairwise Newtonian gravity. That
+  is the `vehicle` component's `local` / `celestial` choice, and the
+  static `celestial` component's µ is the source.
+
+Limits of M28 instantiation, all reported as errors rather than
+approximated: one vehicle and one atmosphere per scene; static compound
+bodies are not supported (no engine primitive exists); an unknown terrain
+identifier or missing mesh/texture fails the whole build with the object
+id and name.
+
+### Fixed-step ordering (`src/Simulation.h`)
+
+`StepPlayedWorld` is the M7-Final..M27 interactive step, verbatim in order:
+dynamic bodies sample local gravity → pairwise celestial forces → vehicle
+point-mass gravity and aerodynamic drag → M20 operator thrust → carried
+object forces/torque → vehicle pilot forces → door/switch animation →
+`PhysicsWorld::Step` → combustion → fluid emission and solve with the
+coupling rule above → player (attached or walking) → presentation sync.
+Both the interactive loop and both harness modes call this one function;
+nothing is approximated harness-side any more.
+
+### Presentation (`src/WorldPresentation.h`)
+
+`DrawWorldGeometry` (opaque, shadow-pass safe), `DrawWorldTransparents`
+(compound walls, atmosphere shells, fire, heater tip), `BuildWorldLights`
+(torch, vehicle rig scaled to the body's half-extents, switch lamps,
+standalone scene lights) and `RenderWorldFrame` (the M15 directional +
+spot shadow passes, then the colour pass) are the former `drawScene`,
+`drawTransparentCupWalls`, `drawAtmosphereHaze`, `drawFire`,
+`BuildDynamicLights` lambdas/functions, now over a `RuntimeWorld`. The
+editor's edit mode uses `DrawAuthoredScene`, which draws straight from the
+`Scene` (no physics, no runtime instance) through the same
+`RenderAssetCache`; an authored fluid volume shows as its lattice bounds.
+
+### `Application.cpp` responsibility split
+
+What it owned at M27 (2,404 lines) and where each responsibility went:
+
+| Responsibility | Now |
+|----------------|-----|
+| env-var demo mode selection, world offset parsing | `RuntimeOptions` (78 lines; maps the old switches to scene files) |
+| window, GLAD, renderer, font startup/shutdown | `EngineHost` (47) |
+| asset loading (beacon, plane, terrain mesh, fluid mesh) | `RenderAssetCache` (path/identifier → handle) |
+| ~1,000 lines of demo constants and placement math | `assets/scenes/*.judas` (authored once from those constants; no C++ copy remains) |
+| gravity region wiring | `RuntimeWorld::Build` from `gravity` components, in scene order |
+| body creation for planets, plank, stairs, ramp, door, switch, props, ship, orbital bodies, cups, fire blocks, terrain | `RuntimeWorld::Build` from `body`/`door`/`light-switch`/... components |
+| fluid lattice + emitter, atmosphere, combustion setup | `RuntimeWorld` (`fluid-volume`, `atmosphere`, `combustible`) |
+| player spawn, pilot control, SAS, pickup, interaction, torch, view mode | `GameSession` (152) |
+| the fixed-step ordering | `Simulation.cpp` (203) |
+| `drawScene` + transparent passes + lights + shadow passes | `WorldPresentation.cpp` (395) |
+| HUD data assembly | `GameplayHud.cpp` (118; labels from object names) |
+| pause-menu input boundary, accumulator, presentation alpha, per-frame render | `InteractivePlay` (154; shared with the editor) |
+| the three diagnostic printers and live telemetry | `RuntimeDiagnostics` (125, runtime-only) |
+| test-harness hookup | unchanged in shape, now over `GameSession` |
+| reset (`R`) | `GameSession::ResetToAuthoredState` → `RuntimeWorld::RestoreAuthoredState` |
+
+What remains in `Application.cpp` (116 lines) and why: parse options, load
+the scene file (before any engine system exists, so a bad file exits
+cleanly), build the world, begin play, and run the loop that pumps events,
+calls `InteractivePlay::Frame`, feeds the diagnostics, writes the optional
+settled screenshot and swaps buffers — or hands the session to the
+harness. That is orchestration; every line references a boundary, none
+implements one. No new file is a relocated god object: the largest new
+engine file is `SceneSerialization.cpp` (the format), then
+`RuntimeWorld.cpp` (467 lines, one `Build` walk plus reset/teardown).
+
+### The editor (`src/editor/`)
+
+- `EditorDocument` — the authored `Scene`, its path, dirty flag, selection,
+  and snapshot undo/redo (`BeginEdit`/`CommitEdit` around every panel
+  change; a whole-`Scene` copy per committed edit, capped at 200). Scenes
+  are tens of objects, so one mechanism covers property edits, creation,
+  deletion, reordering, component add/remove and settings, with nothing
+  to keep in sync per property.
+- `EditorCamera` — a free-flying camera with no gravity, collision or
+  privileged up; right-drag look, WASD/QE, Shift boost; pixel → world ray
+  for selection picking (bounding spheres: cheap, and enough to click a
+  light or an empty).
+- `EditorPanels` — the Dear ImGui menu bar, Hierarchy, Inspector (name,
+  transform with rotation shown as degrees, every component's fields, Add
+  component / Remove), Scene settings, Assets (models/textures found on
+  disk, terrain identifiers), status bar, and generic object creation.
+  The panels know engine components, not demonstrations.
+- `EditorApplication` — brings up `EngineHost`, adds the ImGui SDL2/GL3
+  backends through `Window::SetEventHook`, tells the engine when the UI
+  claims keyboard/mouse (`Window::SetInputClaimed`, so a text field never
+  walks a player or flies the camera), draws edit mode or runs
+  `InteractivePlay::Frame` in play mode, and handles requests.
+
+Edit → Play → Stop: Play builds a `RuntimeWorld` from the document's
+`Scene` and begins the same `InteractivePlay` the runtime uses; the mouse
+is captured and the normal Judas controls apply. `Escape` opens the M13
+pause menu, which frees the mouse so the editor panels are usable while
+the world is frozen; the inspector is read-only during play. Stop ends the
+session and destroys the world. Nothing ever writes runtime state into the
+`Scene`, so "restored" is structural, not a copy-back. Keys pressed while
+editing are drained on Play so an `F` (focus) cannot fire as a pilot
+toggle on the first played frame.
+
+Dear ImGui v1.91.9b (MIT) is vendored under `third_party/imgui/` (core plus
+the SDL2 and OpenGL 3 backends only; provenance in its README). It was
+chosen as the smallest UI dependency that fits an SDL/OpenGL immediate-mode
+loop; writing a widget toolkit to prove Judas has an editor was not the
+milestone.
+
+### Automated evidence
+
+- `judas_scene_tests` (Sections A–G): save/load equivalence and
+  byte-identical resave; ids surviving deletion and reload with the
+  counter persisted; create/delete/modify/reorder; nine malformed-input
+  cases each failing with a message and leaving the output untouched; edit
+  → play (180 + 30 fixed steps with a sideways velocity injected) → stop →
+  scene bytes identical, then a second play starting from authored state
+  and an in-run reset restoring it; a file saved by the editor
+  representation loading through the runtime path; every shipped scene
+  loading, instantiating headlessly and round-tripping; unknown terrain id
+  failing instantiation with the id in the message.
+- All 27 pre-existing suites pass unchanged.
+- Gameplay harness (420-step walk/look/jump/reset script, Xvfb): on the
+  classic scene, the player columns and the six original object columns
+  are byte-identical between the M27 build and the M28 scene-driven build;
+  the spacecraft column differs only because the harness now includes the
+  orbital bodies the interactive classic scene always had (the ship joins
+  their pairwise gravity exactly as in interactive M27 play). On the
+  terrain scene the player columns are identical for the first 60 steps,
+  then diverge because the M27 harness had placed the ship at the plank
+  position while the interactive scene (and now the harness) puts it on
+  the terrain where the walk path meets its deck. Both scenes are
+  byte-identical at the origin and at the M23 far offset.
+- Editor (`JUDAS_EDITOR_AUTOTEST=<prefix>`, developer hook): renders the
+  edit view with all panels, enters Play, runs 120 frames, screenshots
+  both, stops, and reports the authored scene IDENTICAL, on the classic
+  scene, the terrain scene and an empty scene, under Xvfb.
+- A clean configure against Ubuntu 24.04's stock `libglm-dev` 0.9.9.8
+  succeeds (the pre-M28 `glm::glm-header-only` reference failed there);
+  a Release build of every target has zero warnings under `-Wall -Wextra`.
+
+Human validation of the editor's usability is the operator's, per the
+brief.
+
+### Known content differences from M27
+
+- The terrain scene file contains only the terrain demonstration. At M27
+  the terrain launch also created the classic planets, plank, stairs,
+  door and props 300 m away (never drawn, still simulated). They are not
+  in `terrain.judas`; open `classic.judas` for them.
+- The harness steps the full played scene. Pre-M28 harness runs skipped
+  fluid, doors, combustion, celestial gravity, orbital bodies and cups.
+
+### Deliberately not implemented
+
+Object parenting/hierarchy transforms (the "hierarchy" panel is an ordered
+flat list); viewport gizmos (inspector numeric editing is the transform
+workflow); an OS file dialog (Open/Save As take a path); asset
+import/database/streaming (the asset panel lists files on disk); more than
+one vehicle or atmosphere per scene; static compound bodies; applying
+runtime state back to the scene after Play; prefabs, scripting, ECS,
+docking layouts, terrain/material/animation editors. Each is a future
+milestone if a brief asks for it, not an oversight.

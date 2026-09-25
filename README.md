@@ -1,19 +1,172 @@
 # Project Judas
 
-A purpose-built game engine for a future game involving large spherical
-planets, spacecraft, arbitrary gravity, terrain, and seamless
-transitions between planets, ships, and open space.
-
-This is **not** a general-purpose engine and is not trying to compete with
-Unity, Unreal, or Godot. It exists to serve one specific class of game, and
-its architecture is deliberately narrow.
+**Judas is a game engine.** It is purpose-built for one class of game —
+worlds that can range from a tiny flat-terrain level to planetary and
+universe scale, with spacecraft, arbitrary gravity, terrain, liquids, gas
+and seamless transitions between planets, ships and open space — and it is
+deliberately narrow: it is not trying to compete with Unity, Unreal or
+Godot. The planets, plank, spacecraft, terrain, lake, atmosphere, fire,
+doors and other objects you will meet below are the engine's **technology
+demonstration**: scene content that validates engine capabilities, not the
+engine itself and not "the Judas game."
 
 Rendering targets **OpenGL 3.3 Core / GLSL 330**. OpenGL entry points are
 loaded with the vendored GLAD 2.0.8 OpenGL 3.3 Core loader through the
 SDL-created context; generation and license provenance are recorded in
 [`third_party/glad/README.md`](third_party/glad/README.md).
 
-## Status: Milestone 27 accepted
+## Status: Milestone 28 in operator validation
+
+**New in M28 — Judas learns to be an editor.** Three things now exist:
+
+1. **Real scenes.** Authored world content lives in a `Scene` (`src/Scene.h`):
+   objects with stable ids, names, transforms and a small set of generic
+   engine components (render, body, gravity region, light, door, light
+   switch, vehicle, celestial, atmosphere, combustible, fluid volume,
+   player start). A scene knows no demo concepts — "Planet A" and "the
+   plank" are just names in a file.
+2. **Scene files.** `.judas` is a deterministic, human-readable, versioned
+   text format (`src/SceneSerialization.h`) with explicit ids and strict
+   loading: malformed, truncated, unknown-key or version-mismatched data
+   fails with a line number and leaves nothing half-built. The seven
+   demonstrations ship as files under `assets/scenes/`.
+3. **An editor.** `judas_editor` (`src/editor/`, built on the vendored
+   Dear ImGui) opens, creates, inspects, edits, saves and *plays* scenes:
+   a real 3D viewport with a free camera, a hierarchy, an inspector for
+   transforms and every component, generic object creation/deletion,
+   snapshot undo/redo, and an explicit **Edit / Play** split — Play
+   instantiates the authored scene into a runtime world driven by the
+   exact frame the `judas` runtime runs; Stop discards that world and the
+   authored scene is untouched.
+
+`Application.cpp` (2,404 lines at M27, holding every demo constant and the
+whole loop) is now 116 lines of orchestration; its responsibilities moved
+to `RuntimeWorld` (scene instantiation), `Simulation` (fixed-step order),
+`WorldPresentation` (drawing/lights/shadows), `GameSession` (player,
+vehicle, carrying, interaction), `InteractivePlay` (the per-frame loop
+shared by runtime and editor), `GameplayHud`, `RuntimeOptions`,
+`RuntimeDiagnostics` and `EngineHost`. Both demonstrations run through the
+scene path: the `judas` runtime loads a file and instantiates it; nothing
+is rebuilt from constants. See [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md),
+"Milestone 28," for the boundaries, the file format, what moved where, the
+measured regressions, and the limits (no gizmos, no parenting, one vehicle
+and one atmosphere per scene, no OS file dialog).
+
+The M28 portability fix: `CMakeLists.txt` no longer requires GLM's
+`glm::glm-header-only` target (GLM 1.0+ only) and configures against the
+`glm::glm` target that Ubuntu 24.04's `libglm-dev` 0.9.9.8 exports.
+
+All 28 standalone suites pass; the classic and terrain 420-step gameplay
+harness runs are byte-identical near and far origin; the classic run's
+player and first six body columns are byte-identical to the M27 build.
+Operator validation of the editor is pending; no `milestone-28` tag exists.
+
+## Quick start
+
+```bash
+sudo apt install cmake libsdl2-dev libglm-dev build-essential   # Ubuntu/Debian
+cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
+cmake --build build -j"$(nproc)"
+
+./build/judas                                   # runtime: the terrain demonstration
+./build/judas assets/scenes/classic.judas       # runtime: any scene file
+./build/judas_editor assets/scenes/classic.judas   # editor: open a scene
+./build/judas_editor                            # editor: start a new scene
+```
+
+Run everything from the repository root: scene files reference assets by
+paths relative to the working directory.
+
+## Scenes
+
+A scene is a plain text file. The header names the format and version;
+`settings` carries scene-wide values; each `object` block has an explicit,
+never-reused id, a name, a transform, and any components it uses:
+
+```
+JudasScene 1
+settings
+  name "Classic abuse chamber"
+  world-origin 0 0 0
+  sun-direction 0.4 0.7 0.35
+  sun-color 1 0.98 0.92
+  ambient 0.16 0.17 0.19
+  fluid-scale 1
+  next-id 26
+end
+
+object 2 "Planet A"
+  position 0 0 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sphere
+  render.radius 20
+  render.color 0.3 0.45 0.35
+  ...
+  body static sphere
+  body.radius 20
+  ...
+  gravity radial 9.81
+  gravity.region sphere 26
+end
+```
+
+Every field the writer emits, the reader requires — nothing is defaulted
+silently. Saving is deterministic (objects in scene order, fixed key order,
+shortest exact decimals), so scene files diff cleanly under version
+control. The full grammar and every component's fields are in
+[`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md), "Milestone 28, Scene file
+format."
+
+Shipped scenes (`assets/scenes/`):
+
+| File | Content |
+|------|---------|
+| `terrain.judas` | The M25–M27 terrain planet: lake, atmosphere, spacecraft, fuel blocks (default runtime scene) |
+| `terrain_rotated.judas` | The same, with the planet rotated 47° (the former `JUDAS_TERRAIN_ROTATED`) |
+| `terrain_atmospheric_pass.judas` | Pilot attached, ship at the M26 analytical apoapsis (the former `JUDAS_ATMOSPHERIC_PASS`) |
+| `terrain_atmospheric_pass_rotated.judas` | Both of the above |
+| `classic.judas` | The two-planets-and-a-plank abuse chamber with the M24 cups, orbital bodies, door, switch, stairs, ramp, beacon |
+| `classic_fluid_rotated.judas` | Classic with the M24 rotated fluid-station gravity region |
+| `classic_fluid_zero.judas` | Classic with a zero-gravity fluid-station region |
+
+The pre-M28 environment switches still work and now select these files:
+`JUDAS_CLASSIC_DEMO=1`, `JUDAS_FLUID_GRAVITY=rotated|zero`,
+`JUDAS_ATMOSPHERIC_PASS=1`, `JUDAS_TERRAIN_ROTATED=1`. An explicit
+`./build/judas <file>` argument wins over all of them. `JUDAS_WORLD_OFFSET`
+(`far` or `x,y,z`) still overrides the scene's authored world origin.
+
+## The editor
+
+`./build/judas_editor [scene.judas]` opens a scene (or starts an empty one).
+The window is the viewport; panels sit over it.
+
+| Editor action | How |
+|---------------|-----|
+| Look around | hold the **right mouse button** and move the mouse |
+| Fly | with the right button held: `W`/`A`/`S`/`D`, `E` up, `Q` down, `Shift` faster |
+| Select | **left-click** an object in the viewport, or click it in **Hierarchy** |
+| Focus the selection | `F`, or Hierarchy → Focus |
+| Create objects | **Create** menu: empty, static/dynamic box or sphere, mesh, point/spot light, player start (placed 8 m ahead of the camera) |
+| Delete | `Delete`, Hierarchy → Delete selected, or the right-click menu (which also reorders) |
+| Edit | **Inspector**: name, position, rotation (degrees), scale, every component's fields, Add component / Remove |
+| Scene-wide values | **Scene** panel: name, world origin, sun, ambient, fluid scale |
+| Undo / redo | `Ctrl+Z` / `Ctrl+Y` (Edit menu) |
+| Save / open | `Ctrl+S`, File → Save / Save As… / Open… (a path field; no OS dialog yet) |
+| **Play** | File-bar **Play** or `F5`: the authored scene is instantiated and played with the normal Judas controls below |
+| While playing | `Escape` opens the M13 pause menu and frees the mouse so the editor panels are usable again; the inspector is read-only |
+| **Stop** | **Stop** or `F5`: the runtime world is discarded and the authored scene is exactly what it was |
+
+Runtime changes made during Play (thrown crates, burnt fuel, moved water)
+are never written back to the scene. "Apply runtime state to the scene"
+is a possible future feature, not an M28 one.
+
+Viewport transform gizmos, object parenting, an asset import pipeline and
+an OS file dialog are deliberately not part of M28 — see
+[`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md), "Milestone 28, Deliberately
+not implemented."
+
+## Milestone 27 accepted baseline
 
 **New in M27:** three ordinary pickable rigid blocks on the terrain
 spacecraft carry finite combustible coatings. Their temperatures, remaining
@@ -94,7 +247,8 @@ inverse-square pull and box-orientation-dependent drag from its velocity
 forces. The player, water, and ordinary props retain their accepted local
 gravity context. The classic M20/M21 binary flight scene remains available
 with `JUDAS_CLASSIC_DEMO=1`. For a reproducible atmospheric pass, run
-`JUDAS_ATMOSPHERIC_PASS=1 ./build/judas`: the attached pilot and ship start at
+`JUDAS_ATMOSPHERIC_PASS=1 ./build/judas` (or open
+`assets/scenes/terrain_atmospheric_pass.judas`): the attached pilot and ship start at
 an analytical apoapsis position/velocity (`130 m`/`100 m` initial apoapsis/
 periapsis), then evolve only from forces and contacts. Look toward the planet
 below the ship to watch the pass. `R` restores that initial physical state.
@@ -471,15 +625,16 @@ piloted, and the selected player view returns on release. See
 - CMake 3.20+
 - A C++17 compiler (GCC or Clang)
 - SDL2 development headers
-- GLM development headers
+- GLM development headers — either GLM 1.0+ or the 0.9.9.8 that Ubuntu
+  24.04 packages; both configure (see the M28 note above)
 
 No physics-engine dependency to fetch — Judas owns its own physics (see
 [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md), "Physics ownership"), so
-configuring needs no network access at all. Model/texture loading
-(Milestone 9) needs no extra system packages either — `tinyobjloader` and
-`stb_image` are single-header, vendored dependencies (`third_party/`,
-committed to the repository, same as the pre-existing `stb_image_write.h`)
-rather than fetched or installed separately.
+configuring needs no network access at all. Model/texture loading,
+the font rasterizer and the editor UI are single-header or vendored
+dependencies committed under `third_party/` (`tinyobjloader`,
+`stb_image`, `stb_image_write`, `stb_truetype`, GLAD, Dear ImGui) rather
+than fetched or installed separately.
 
 On Ubuntu/Debian:
 
@@ -494,17 +649,23 @@ cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
 cmake --build build -j"$(nproc)"
 ```
 
+This produces the `judas` runtime, the `judas_editor` editor, and the 28
+headless test executables. The engine itself is the `judas_engine` static
+library both executables link; the editor additionally links the vendored
+Dear ImGui (`judas_imgui`). The engine never depends on the editor.
+
 ### Run
 
 ```bash
-./build/judas
+./build/judas                                  # terrain demonstration
+./build/judas assets/scenes/classic.judas      # any scene file
+./build/judas_editor assets/scenes/terrain.judas
 ```
 
-Run from the repository root (as shown above) — Milestone 9's demo model/
-texture (`assets/models/beacon.obj`, `assets/textures/beacon.png`) and
-Milestone 11's spacecraft model (`assets/models/plane.obj`) are loaded via
-paths relative to the current working directory, and `judas` reports an
-error and exits if it's run from somewhere else and can't find them.
+Run from the repository root (as shown above) — scene files, models,
+textures and the UI font are loaded via paths relative to the current
+working directory, and `judas` reports an error and exits if it's run from
+somewhere else and can't find them.
 
 ## Controls
 
@@ -735,7 +896,14 @@ full script format:
 JUDAS_TEST_SCRIPT=path/to/script.txt ./build/judas
 ```
 
-Twenty-seven standalone, headless test executables also exist (no window or GL
+As of M28 the harness runs whichever scene the runtime would load (the
+classic file by default, `JUDAS_TERRAIN_PREVIEW=1` for the terrain file)
+through the identical `StepPlayedWorld` fixed step the interactive loop
+uses, so its per-body CSV columns follow the scene's dynamic bodies in
+scene order and include every body the interactive scene has (the
+orbital bodies and cups were previously omitted from harness runs).
+
+Twenty-eight standalone, headless test executables also exist (no window or GL
 context): `judas_physics_tests` and `judas_collision_tests` (rigid-body/
 collision/gravity-context primitives); `judas_asset_tests` (Milestone 9 —
 model/texture loading, parses the real committed demo assets and checks
@@ -818,10 +986,16 @@ vacuum, moving-frame velocity, real rigid-body drag, orientation, orbital
 energy loss, and rotated/translated equivalence. M26 operator acceptance
 passed. The M27 `judas_combustion_tests` exercises fixed-step ignition,
 finite fuel, heat transfer and spread, vacuum extinguishing, relative
-motion, and rotated/translated cases. There are now 27 standalone suite
-targets. The older gameplay harness is an M1–M26 regression but does not
-advance the live M27 thermal loop; M27's focused suite and interactive run
-cover that behavior. M27 operator acceptance passed.
+motion, and rotated/translated cases. The M28 `judas_scene_tests` covers
+scene save/load equivalence and byte-identical resave, stable ids across
+deletion and reload, generic create/delete/modify/reorder, strict failure
+on malformed or version-incompatible data, edit → play → mutate → stop
+restoring authored state, every shipped scene loading and instantiating
+through the runtime path, and clear instantiation errors. There are now
+28 standalone suite targets. Because the harness now steps the full
+played scene (fluid, combustion, doors, celestial gravity included), it
+is an M1–M28 regression of the real loop rather than a reduced one.
+M27 operator acceptance passed; M28 operator acceptance is pending.
 Run them with:
 
 ```bash
@@ -837,6 +1011,14 @@ authored for this project (not derived from any external asset) — public
 domain / CC0-equivalent, redistributable without restriction. See
 [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md), "Milestone 9, Assets," and
 "Milestone 11," for the full provenance notes.
+
+`assets/scenes/*.judas` (Milestone 28) are the demonstration scenes,
+authored once from the M27 composition-root constants and now the only
+place those placements live; edit them in `judas_editor` or by hand.
+
+`third_party/imgui/` (Milestone 28) is Dear ImGui v1.91.9b (MIT) — see
+[`third_party/imgui/README.md`](third_party/imgui/README.md) for the exact
+upstream commit and which files are vendored. Only `judas_editor` links it.
 
 `assets/fonts/DejaVuSans.ttf` (Milestone 13) is the DejaVu Sans font,
 under the Bitstream Vera License (a permissive, redistribution-friendly

@@ -13,6 +13,21 @@ endif()
 find_package(SDL2 REQUIRED)
 find_package(glm REQUIRED)
 
+# GLM is header-only, but the imported target it exports depends on the
+# packaged version: GLM 1.0+ provides `${JUDAS_GLM}` (and
+# `glm::glm`), while the GLM 0.9.9.8 that Ubuntu 24.04 ships provides only
+# `glm::glm`. Resolve whichever exists once here so a stock
+# `apt install libglm-dev` configures cleanly (M28 portability fix).
+if(TARGET ${JUDAS_GLM})
+    set(JUDAS_GLM ${JUDAS_GLM})
+elseif(TARGET glm::glm)
+    set(JUDAS_GLM glm::glm)
+elseif(TARGET glm)
+    set(JUDAS_GLM glm)
+else()
+    message(FATAL_ERROR "GLM was found but exports no known imported target")
+endif()
+
 # No physics middleware. Judas owns rigid-body state, integration,
 # collision detection, contact generation, and contact resolution itself
 # (src/RigidBody.*, src/Contacts.*, src/ContactSolver.*, src/PhysicsWorld.cpp)
@@ -35,9 +50,10 @@ add_library(judas_glad STATIC third_party/glad/src/gl.c)
 target_include_directories(judas_glad PUBLIC third_party/glad/include)
 target_compile_options(judas_glad PRIVATE -Wall -Wextra)
 
-add_executable(judas
-    src/main.cpp
-    src/Application.cpp
+# Milestone 28: engine sources shared by the runtime, the editor and the
+# scene/runtime test suites. Neither executable reimplements engine
+# startup, scene loading, instantiation, stepping or presentation.
+add_library(judas_engine STATIC
     src/Window.cpp
     src/Renderer.cpp
     src/PlayerController.cpp
@@ -65,6 +81,7 @@ add_executable(judas
     src/CombustionWorld.cpp
     src/FirePresentation.cpp
     src/TerrainDemo.cpp
+    src/TerrainLibrary.cpp
     src/Door.cpp
     src/LightSwitch.cpp
     src/FaithfulGravity.cpp
@@ -75,14 +92,67 @@ add_executable(judas
     src/CelestialGravity.cpp
     src/AtmosphereField.cpp
     src/AerodynamicDrag.cpp
+    src/Scene.cpp
+    src/SceneSerialization.cpp
+    src/RenderAssetCache.cpp
+    src/RuntimeWorld.cpp
+    src/GameSession.cpp
+    src/Simulation.cpp
+    src/WorldPresentation.cpp
+    src/GameplayHud.cpp
+    src/EngineHost.cpp
+    src/InteractivePlay.cpp
+    src/ScreenshotWriter.cpp
     ${JUDAS_PHYSICS_SOURCES}
     src/PhysicsWorld.cpp
+)
+target_include_directories(judas_engine PUBLIC src ${SDL2_INCLUDE_DIRS})
+target_link_libraries(judas_engine PUBLIC SDL2::SDL2 ${JUDAS_GLM} judas_glad)
+target_compile_options(judas_engine PRIVATE -Wall -Wextra)
+
+add_executable(judas
+    src/main.cpp
+    src/Application.cpp
+    src/RuntimeOptions.cpp
+    src/RuntimeDiagnostics.cpp
     src/TestHarness.cpp
 )
-
-target_include_directories(judas PRIVATE ${SDL2_INCLUDE_DIRS})
-target_link_libraries(judas PRIVATE SDL2::SDL2 glm::glm-header-only judas_glad)
+target_link_libraries(judas PRIVATE judas_engine)
 target_compile_options(judas PRIVATE -Wall -Wextra)
+
+# Milestone 28: the editor. Dear ImGui (third_party/imgui, MIT — see its
+# README.md) is compiled into this target ONLY; judas_engine and judas
+# never include or link it, so the dependency direction stays
+# engine <- runtime, engine <- editor.
+add_library(judas_imgui STATIC
+    third_party/imgui/imgui.cpp
+    third_party/imgui/imgui_draw.cpp
+    third_party/imgui/imgui_tables.cpp
+    third_party/imgui/imgui_widgets.cpp
+    third_party/imgui/backends/imgui_impl_sdl2.cpp
+    third_party/imgui/backends/imgui_impl_opengl3.cpp
+)
+target_include_directories(judas_imgui PUBLIC third_party/imgui third_party/imgui/backends ${SDL2_INCLUDE_DIRS})
+target_link_libraries(judas_imgui PUBLIC SDL2::SDL2)
+
+add_executable(judas_editor
+    src/editor/EditorMain.cpp
+    src/editor/EditorApplication.cpp
+    src/editor/EditorCamera.cpp
+    src/editor/EditorHistory.cpp
+    src/editor/EditorPanels.cpp
+)
+target_link_libraries(judas_editor PRIVATE judas_engine judas_imgui)
+target_compile_options(judas_editor PRIVATE -Wall -Wextra)
+
+# Milestone 28: scene data, serialization and runtime instantiation —
+# headless (RuntimeWorld built with no asset cache creates no GPU state).
+add_executable(judas_scene_tests
+    tests/SceneTests.cpp
+)
+target_link_libraries(judas_scene_tests PRIVATE judas_engine)
+target_compile_options(judas_scene_tests PRIVATE -Wall -Wextra)
+
 
 # Judas-owned physics primitive/collision tests: deterministic, headless,
 # no window/GL at all. Two separate executables (each its own `main`)
@@ -103,7 +173,7 @@ add_executable(judas_physics_tests
     ${JUDAS_TEST_SUPPORT_SOURCES}
 )
 target_include_directories(judas_physics_tests PRIVATE src)
-target_link_libraries(judas_physics_tests PRIVATE glm::glm-header-only)
+target_link_libraries(judas_physics_tests PRIVATE ${JUDAS_GLM})
 target_compile_options(judas_physics_tests PRIVATE -Wall -Wextra)
 
 add_executable(judas_collision_tests
@@ -111,7 +181,7 @@ add_executable(judas_collision_tests
     ${JUDAS_TEST_SUPPORT_SOURCES}
 )
 target_include_directories(judas_collision_tests PRIVATE src)
-target_link_libraries(judas_collision_tests PRIVATE glm::glm-header-only)
+target_link_libraries(judas_collision_tests PRIVATE ${JUDAS_GLM})
 target_compile_options(judas_collision_tests PRIVATE -Wall -Wextra)
 
 # M20: headless Newtonian two-body force and integration checks against the
@@ -123,7 +193,7 @@ add_executable(judas_celestial_gravity_tests
     src/CelestialGravity.cpp
 )
 target_include_directories(judas_celestial_gravity_tests PRIVATE src)
-target_link_libraries(judas_celestial_gravity_tests PRIVATE glm::glm-header-only)
+target_link_libraries(judas_celestial_gravity_tests PRIVATE ${JUDAS_GLM})
 target_compile_options(judas_celestial_gravity_tests PRIVATE -Wall -Wextra)
 
 # Milestone 9: headless tests for the CPU-side model/texture loaders (see
@@ -139,7 +209,7 @@ add_executable(judas_asset_tests
     src/TextureLoader.cpp
 )
 target_include_directories(judas_asset_tests PRIVATE src)
-target_link_libraries(judas_asset_tests PRIVATE glm::glm-header-only)
+target_link_libraries(judas_asset_tests PRIVATE ${JUDAS_GLM})
 target_compile_options(judas_asset_tests PRIVATE -Wall -Wextra)
 
 # Milestone 10: headless tests for the step-up/step-down primitives (see
@@ -154,7 +224,7 @@ add_executable(judas_step_climb_tests
     src/PhysicsWorld.cpp
 )
 target_include_directories(judas_step_climb_tests PRIVATE src)
-target_link_libraries(judas_step_climb_tests PRIVATE glm::glm-header-only)
+target_link_libraries(judas_step_climb_tests PRIVATE ${JUDAS_GLM})
 target_compile_options(judas_step_climb_tests PRIVATE -Wall -Wextra)
 
 # Milestone 11: headless tests for the secured-pilot attachment primitives
@@ -166,7 +236,7 @@ add_executable(judas_pilot_attachment_tests
     src/PilotAttachment.cpp
 )
 target_include_directories(judas_pilot_attachment_tests PRIVATE src)
-target_link_libraries(judas_pilot_attachment_tests PRIVATE glm::glm-header-only)
+target_link_libraries(judas_pilot_attachment_tests PRIVATE ${JUDAS_GLM})
 target_compile_options(judas_pilot_attachment_tests PRIVATE -Wall -Wextra)
 
 # Pilot release clearance across spacecraft rotations and gravity frames.
@@ -177,7 +247,7 @@ add_executable(judas_pilot_dismount_tests
     src/PhysicsWorld.cpp
 )
 target_include_directories(judas_pilot_dismount_tests PRIVATE src)
-target_link_libraries(judas_pilot_dismount_tests PRIVATE glm::glm-header-only)
+target_link_libraries(judas_pilot_dismount_tests PRIVATE ${JUDAS_GLM})
 target_compile_options(judas_pilot_dismount_tests PRIVATE -Wall -Wextra)
 
 # Milestone 11: headless tests for the spacecraft's full 6DOF control (see
@@ -193,7 +263,7 @@ add_executable(judas_spacecraft_control_tests
 )
 target_include_directories(judas_spacecraft_control_tests PRIVATE src)
 target_include_directories(judas_spacecraft_control_tests PRIVATE ${SDL2_INCLUDE_DIRS})
-target_link_libraries(judas_spacecraft_control_tests PRIVATE SDL2::SDL2 glm::glm-header-only)
+target_link_libraries(judas_spacecraft_control_tests PRIVATE SDL2::SDL2 ${JUDAS_GLM})
 target_compile_options(judas_spacecraft_control_tests PRIVATE -Wall -Wextra)
 
 # M21: coupled spacecraft/celestial-gravity orbit and torque-based SAS tests.
@@ -207,7 +277,7 @@ add_executable(judas_spacecraft_flight_tests
 )
 target_include_directories(judas_spacecraft_flight_tests PRIVATE src)
 target_include_directories(judas_spacecraft_flight_tests PRIVATE ${SDL2_INCLUDE_DIRS})
-target_link_libraries(judas_spacecraft_flight_tests PRIVATE SDL2::SDL2 glm::glm-header-only)
+target_link_libraries(judas_spacecraft_flight_tests PRIVATE SDL2::SDL2 ${JUDAS_GLM})
 target_compile_options(judas_spacecraft_flight_tests PRIVATE -Wall -Wextra)
 
 # M22: moving/rotating reference-frame transforms and live rigid-body data.
@@ -219,7 +289,7 @@ add_executable(judas_reference_frame_tests
     src/PhysicsWorld.cpp
 )
 target_include_directories(judas_reference_frame_tests PRIVATE src)
-target_link_libraries(judas_reference_frame_tests PRIVATE glm::glm-header-only)
+target_link_libraries(judas_reference_frame_tests PRIVATE ${JUDAS_GLM})
 target_compile_options(judas_reference_frame_tests PRIVATE -Wall -Wextra)
 
 # Milestone 13: headless tests for the UI navigation/input-ownership logic
@@ -241,7 +311,7 @@ add_executable(judas_ui_tests
 )
 target_include_directories(judas_ui_tests PRIVATE src)
 target_include_directories(judas_ui_tests PRIVATE ${SDL2_INCLUDE_DIRS})
-target_link_libraries(judas_ui_tests PRIVATE SDL2::SDL2 glm::glm-header-only judas_glad)
+target_link_libraries(judas_ui_tests PRIVATE SDL2::SDL2 ${JUDAS_GLM} judas_glad)
 target_compile_options(judas_ui_tests PRIVATE -Wall -Wextra)
 
 # Milestone 14: headless tests for the dynamic-lighting math (src/
@@ -264,7 +334,7 @@ add_executable(judas_lighting_tests
 )
 target_include_directories(judas_lighting_tests PRIVATE src)
 target_include_directories(judas_lighting_tests PRIVATE ${SDL2_INCLUDE_DIRS})
-target_link_libraries(judas_lighting_tests PRIVATE SDL2::SDL2 glm::glm-header-only judas_glad)
+target_link_libraries(judas_lighting_tests PRIVATE SDL2::SDL2 ${JUDAS_GLM} judas_glad)
 target_compile_options(judas_lighting_tests PRIVATE -Wall -Wextra)
 
 # Milestone 15: headless tests for the shadow light-view/projection
@@ -280,7 +350,7 @@ add_executable(judas_shadow_tests
     src/ShadowTransforms.cpp
 )
 target_include_directories(judas_shadow_tests PRIVATE src)
-target_link_libraries(judas_shadow_tests PRIVATE glm::glm-header-only)
+target_link_libraries(judas_shadow_tests PRIVATE ${JUDAS_GLM})
 target_compile_options(judas_shadow_tests PRIVATE -Wall -Wextra)
 
 # Milestone 16: headless tests for the interaction system (src/
@@ -309,7 +379,7 @@ add_executable(judas_interactable_tests
 )
 target_include_directories(judas_interactable_tests PRIVATE src)
 target_include_directories(judas_interactable_tests PRIVATE ${SDL2_INCLUDE_DIRS})
-target_link_libraries(judas_interactable_tests PRIVATE SDL2::SDL2 glm::glm-header-only judas_glad)
+target_link_libraries(judas_interactable_tests PRIVATE SDL2::SDL2 ${JUDAS_GLM} judas_glad)
 target_compile_options(judas_interactable_tests PRIVATE -Wall -Wextra)
 
 # Milestone 17: player camera-pose math and view-input ownership. Pure CPU,
@@ -320,7 +390,7 @@ add_executable(judas_player_view_tests
     src/LightTransforms.cpp
 )
 target_include_directories(judas_player_view_tests PRIVATE src)
-target_link_libraries(judas_player_view_tests PRIVATE glm::glm-header-only)
+target_link_libraries(judas_player_view_tests PRIVATE ${JUDAS_GLM})
 target_compile_options(judas_player_view_tests PRIVATE -Wall -Wextra)
 
 # Milestone 18: pickup/carry/drop/throw semantics against the real Judas
@@ -335,7 +405,7 @@ add_executable(judas_object_manipulation_tests
     src/PhysicsWorld.cpp
 )
 target_include_directories(judas_object_manipulation_tests PRIVATE src)
-target_link_libraries(judas_object_manipulation_tests PRIVATE glm::glm-header-only)
+target_link_libraries(judas_object_manipulation_tests PRIVATE ${JUDAS_GLM})
 target_compile_options(judas_object_manipulation_tests PRIVATE -Wall -Wextra)
 
 # Long fixed-step player locomotion against sphere and flat supports,
@@ -356,7 +426,7 @@ add_executable(judas_player_curved_locomotion_tests
 )
 target_include_directories(judas_player_curved_locomotion_tests PRIVATE src)
 target_include_directories(judas_player_curved_locomotion_tests PRIVATE ${SDL2_INCLUDE_DIRS})
-target_link_libraries(judas_player_curved_locomotion_tests PRIVATE SDL2::SDL2 glm::glm-header-only)
+target_link_libraries(judas_player_curved_locomotion_tests PRIVATE SDL2::SDL2 ${JUDAS_GLM})
 target_compile_options(judas_player_curved_locomotion_tests PRIVATE -Wall -Wextra)
 
 # M23: exercise global double placement and precise local simulation across
@@ -380,7 +450,7 @@ add_executable(judas_world_coordinates_tests
 )
 target_include_directories(judas_world_coordinates_tests PRIVATE src)
 target_include_directories(judas_world_coordinates_tests PRIVATE ${SDL2_INCLUDE_DIRS})
-target_link_libraries(judas_world_coordinates_tests PRIVATE SDL2::SDL2 glm::glm-header-only)
+target_link_libraries(judas_world_coordinates_tests PRIVATE SDL2::SDL2 ${JUDAS_GLM})
 target_compile_options(judas_world_coordinates_tests PRIVATE -Wall -Wextra)
 
 # M24: the bounded CPU fluid, generic compound rigid-body geometry, and
@@ -391,7 +461,7 @@ add_executable(judas_compound_body_tests
     src/PhysicsWorld.cpp
 )
 target_include_directories(judas_compound_body_tests PRIVATE src)
-target_link_libraries(judas_compound_body_tests PRIVATE glm::glm-header-only)
+target_link_libraries(judas_compound_body_tests PRIVATE ${JUDAS_GLM})
 target_compile_options(judas_compound_body_tests PRIVATE -Wall -Wextra)
 
 add_executable(judas_fluid_world_tests
@@ -401,7 +471,7 @@ add_executable(judas_fluid_world_tests
     src/PhysicsWorld.cpp
 )
 target_include_directories(judas_fluid_world_tests PRIVATE src)
-target_link_libraries(judas_fluid_world_tests PRIVATE glm::glm-header-only)
+target_link_libraries(judas_fluid_world_tests PRIVATE ${JUDAS_GLM})
 target_compile_options(judas_fluid_world_tests PRIVATE -Wall -Wextra)
 
 add_executable(judas_fluid_rigid_coupling_tests
@@ -413,7 +483,7 @@ add_executable(judas_fluid_rigid_coupling_tests
     src/PhysicsWorld.cpp
 )
 target_include_directories(judas_fluid_rigid_coupling_tests PRIVATE src)
-target_link_libraries(judas_fluid_rigid_coupling_tests PRIVATE glm::glm-header-only)
+target_link_libraries(judas_fluid_rigid_coupling_tests PRIVATE ${JUDAS_GLM})
 target_compile_options(judas_fluid_rigid_coupling_tests PRIVATE -Wall -Wextra)
 
 add_executable(judas_fluid_surface_tests
@@ -421,7 +491,7 @@ add_executable(judas_fluid_surface_tests
     src/FluidSurface.cpp
 )
 target_include_directories(judas_fluid_surface_tests PRIVATE src)
-target_link_libraries(judas_fluid_surface_tests PRIVATE glm::glm-header-only)
+target_link_libraries(judas_fluid_surface_tests PRIVATE ${JUDAS_GLM})
 target_compile_options(judas_fluid_surface_tests PRIVATE -Wall -Wextra)
 
 # M25: the same continuous terrain surface feeds real player/rigid queries
@@ -440,7 +510,7 @@ add_executable(judas_terrain_physics_tests
     src/RadicalGravity.cpp
 )
 target_include_directories(judas_terrain_physics_tests PRIVATE src ${SDL2_INCLUDE_DIRS})
-target_link_libraries(judas_terrain_physics_tests PRIVATE SDL2::SDL2 glm::glm-header-only)
+target_link_libraries(judas_terrain_physics_tests PRIVATE SDL2::SDL2 ${JUDAS_GLM})
 target_compile_options(judas_terrain_physics_tests PRIVATE -Wall -Wextra)
 
 add_executable(judas_terrain_fluid_tests
@@ -451,7 +521,7 @@ add_executable(judas_terrain_fluid_tests
     src/PhysicsWorld.cpp
 )
 target_include_directories(judas_terrain_fluid_tests PRIVATE src)
-target_link_libraries(judas_terrain_fluid_tests PRIVATE glm::glm-header-only)
+target_link_libraries(judas_terrain_fluid_tests PRIVATE ${JUDAS_GLM})
 target_compile_options(judas_terrain_fluid_tests PRIVATE -Wall -Wextra)
 
 # M26: equilibrium gas profile and spacecraft/atmosphere forces, including
@@ -464,7 +534,7 @@ add_executable(judas_atmosphere_tests
     src/RadialTerrain.cpp
 )
 target_include_directories(judas_atmosphere_tests PRIVATE src)
-target_link_libraries(judas_atmosphere_tests PRIVATE glm::glm-header-only)
+target_link_libraries(judas_atmosphere_tests PRIVATE ${JUDAS_GLM})
 target_compile_options(judas_atmosphere_tests PRIVATE -Wall -Wextra)
 
 add_executable(judas_atmospheric_flight_tests
@@ -480,7 +550,7 @@ add_executable(judas_atmospheric_flight_tests
     src/PhysicsWorld.cpp
 )
 target_include_directories(judas_atmospheric_flight_tests PRIVATE src ${SDL2_INCLUDE_DIRS})
-target_link_libraries(judas_atmospheric_flight_tests PRIVATE SDL2::SDL2 glm::glm-header-only)
+target_link_libraries(judas_atmospheric_flight_tests PRIVATE SDL2::SDL2 ${JUDAS_GLM})
 target_compile_options(judas_atmospheric_flight_tests PRIVATE -Wall -Wextra)
 
 # M27: finite thermal fuel state and atmosphere-coupled combustion, plus
@@ -500,7 +570,7 @@ add_executable(judas_combustion_tests
     src/PhysicsWorld.cpp
 )
 target_include_directories(judas_combustion_tests PRIVATE src ${SDL2_INCLUDE_DIRS})
-target_link_libraries(judas_combustion_tests PRIVATE SDL2::SDL2 glm::glm-header-only)
+target_link_libraries(judas_combustion_tests PRIVATE SDL2::SDL2 ${JUDAS_GLM})
 target_compile_options(judas_combustion_tests PRIVATE -Wall -Wextra)
 
 # stb_image_write (public domain / MIT, see third_party/stb_image_write.h) —

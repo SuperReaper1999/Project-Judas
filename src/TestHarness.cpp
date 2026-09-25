@@ -12,29 +12,14 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/quaternion.hpp>
 
-// stb_image_write triggers -Wmissing-field-initializers under this
-// project's own warning flags in a few of its internal functions we don't
-// even call (BMP/TGA/HDR/JPG writers) — a lint characteristic of a
-// third-party header we don't control, not of this project's code, so it's
-// suppressed only for this one include rather than loosening -Wall/-Wextra
-// project-wide.
-#if defined(__GNUC__) || defined(__clang__)
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wmissing-field-initializers"
-#endif
-
-#define STB_IMAGE_WRITE_IMPLEMENTATION
-#include "../third_party/stb_image_write.h"
-
-#if defined(__GNUC__) || defined(__clang__)
-#pragma GCC diagnostic pop
-#endif
-
+#include "ScreenshotWriter.h"
+#include "GameSession.h"
 #include "GravityField.h"
 #include "PhysicsWorld.h"
-#include "PilotControl.h"
 #include "PlayerController.h"
 #include "Renderer.h"
+#include "RuntimeWorld.h"
+#include "Simulation.h"
 #include "SimulationTiming.h"
 #include "Window.h"
 
@@ -239,8 +224,7 @@ void TakeScreenshotIfRequested(int index, const std::vector<ScreenshotEvent>& sc
 
         std::vector<unsigned char> pixels;
         renderer.CaptureFrame(width, height, pixels);
-        const int written =
-            stbi_write_png(shot.filename.c_str(), width, height, 3, pixels.data(), width * 3);
+        const bool written = WriteRgbPng(shot.filename, width, height, pixels);
         std::printf("[TestHarness] %s screenshot: %s\n", written ? "Wrote" : "FAILED to write",
                     shot.filename.c_str());
     }
@@ -250,12 +234,14 @@ void TakeScreenshotIfRequested(int index, const std::vector<ScreenshotEvent>& sc
 // fast as possible — no real-time pacing, no vsync wait. One "step" here is
 // one fixed simulation step; this is what Milestone 5 used to verify
 // gameplay/physics logic in isolation from any rendering-timing question.
-int RunFixedStepMode(Window& window, Renderer& renderer, PhysicsWorld& physicsWorld,
-                      PlayerController& player, const GravityField& gravity,
-                      std::vector<DynamicBody>& dynamicBodies,
-                      FlyingPrimitiveControl& flyingPrimitiveControl, PilotAttachment& pilotAttachment,
+int RunFixedStepMode(Window& window, Renderer& renderer, GameSession& session,
                       const std::function<void(Renderer&, float)>& drawScene,
                       const Script& script) {
+    PhysicsWorld& physicsWorld = session.World().Physics();
+    PlayerController& player = session.Player();
+    const GravityField& gravity = session.World().Gravity();
+    std::vector<DynamicBody>& dynamicBodies = session.World().DynamicBodies();
+    FlyingPrimitiveControl& flyingPrimitiveControl = session.VehicleControl();
     std::printf(
         "step,time,posX,posY,posZ,upX,upY,upZ,grounded,velX,velY,velZ,gravX,gravY,gravZ,"
         "controlled");
@@ -279,29 +265,11 @@ int RunFixedStepMode(Window& window, Renderer& renderer, PhysicsWorld& physicsWo
             }
         }
 
-        player.UpdateFrameInput(window);
-        if (window.ConsumeResetRequest()) {
-            player.Reset();
-            for (DynamicBody& body : dynamicBodies) {
-                body.ResetToSpawn(physicsWorld);
-            }
-            flyingPrimitiveControl.controlled = false;
-            pilotAttachment.attached = false;
-        }
-        // Milestone 8/11: identical gating/attachment rule as the
-        // interactive loop — see Application::Run, src/PilotControl.h.
-        if (window.ConsumeControlToggleRequest()) {
-            HandlePilotToggleRequest(flyingPrimitiveControl, pilotAttachment, player, physicsWorld,
-                                     gravity);
-        }
-
-        PrepareDynamicBodiesForStep(dynamicBodies, gravity, physicsWorld,
-                                     SimulationTiming::kFixedTimestep);
-        ApplyFlyingPrimitiveControl(flyingPrimitiveControl, window, physicsWorld);
-        physicsWorld.Step(SimulationTiming::kFixedTimestep);
-        AdvancePlayerForPiloting(flyingPrimitiveControl, pilotAttachment, player, physicsWorld, window,
-                                  gravity, SimulationTiming::kFixedTimestep);
-        SyncDynamicBodiesFromPhysics(dynamicBodies, physicsWorld);
+        // Milestone 28: the SAME per-frame gameplay input handling and the
+        // SAME fixed-step ordering the interactive loop runs (GameSession
+        // and StepPlayedWorld), not a harness-local approximation.
+        session.HandleFrameInput(window, false, false, false, false, false);
+        StepPlayedWorld(session, window, SimulationTiming::kFixedTimestep);
 
         if (script.logEvery > 0 && step % script.logEvery == 0) {
             const glm::vec3 pos = player.GetPosition();
@@ -333,12 +301,14 @@ int RunFixedStepMode(Window& window, Renderer& renderer, PhysicsWorld& physicsWo
 // and the position/orientation actually handed to the renderer that frame
 // are exactly what this mode exists to expose. See docs/ARCHITECTURE.md,
 // "Diagnosis," for what this was used to find in Milestone 6.
-int RunRealtimeMode(Window& window, Renderer& renderer, PhysicsWorld& physicsWorld,
-                     PlayerController& player, const GravityField& gravity,
-                     std::vector<DynamicBody>& dynamicBodies,
-                     FlyingPrimitiveControl& flyingPrimitiveControl, PilotAttachment& pilotAttachment,
+int RunRealtimeMode(Window& window, Renderer& renderer, GameSession& session,
                      const std::function<void(Renderer&, float)>& drawScene,
                      const Script& script) {
+    PhysicsWorld& physicsWorld = session.World().Physics();
+    PlayerController& player = session.Player();
+    const GravityField& gravity = session.World().Gravity();
+    std::vector<DynamicBody>& dynamicBodies = session.World().DynamicBodies();
+    FlyingPrimitiveControl& flyingPrimitiveControl = session.VehicleControl();
     // "pres*" columns are what's actually presented that frame (see
     // PlayerController::GetPresentedPosition/Orientation) alongside the raw
     // authoritative "pos"/"up" columns, so interpolation can be checked
@@ -381,32 +351,21 @@ int RunRealtimeMode(Window& window, Renderer& renderer, PhysicsWorld& physicsWor
             frameDeltaTime = SimulationTiming::kMaxFrameDeltaTime;
         }
 
-        player.UpdateFrameInput(window);
-        if (window.ConsumeResetRequest()) {
-            player.Reset();
-            for (DynamicBody& body : dynamicBodies) {
-                body.ResetToSpawn(physicsWorld);
-            }
-            flyingPrimitiveControl.controlled = false;
-            pilotAttachment.attached = false;
+        // Milestone 28: see RunFixedStepMode — identical input handling and
+        // step ordering to the interactive loop. A reset also clears the
+        // accumulator, as Application::Run always did.
+        const bool resetThisFrame = window.ConsumeResetRequest();
+        if (resetThisFrame) {
+            window.RequestTestReset();
             physicsAccumulator = 0.0f;
         }
-        if (window.ConsumeControlToggleRequest()) {
-            HandlePilotToggleRequest(flyingPrimitiveControl, pilotAttachment, player, physicsWorld,
-                                     gravity);
-        }
+        session.HandleFrameInput(window, false, false, false, false, false);
 
         physicsAccumulator += frameDeltaTime;
         int stepsThisFrame = 0;
         while (physicsAccumulator >= SimulationTiming::kFixedTimestep &&
                stepsThisFrame < SimulationTiming::kMaxPhysicsStepsPerFrame) {
-            PrepareDynamicBodiesForStep(dynamicBodies, gravity, physicsWorld,
-                                         SimulationTiming::kFixedTimestep);
-            ApplyFlyingPrimitiveControl(flyingPrimitiveControl, window, physicsWorld);
-            physicsWorld.Step(SimulationTiming::kFixedTimestep);
-            AdvancePlayerForPiloting(flyingPrimitiveControl, pilotAttachment, player, physicsWorld,
-                                      window, gravity, SimulationTiming::kFixedTimestep);
-            SyncDynamicBodiesFromPhysics(dynamicBodies, physicsWorld);
+            StepPlayedWorld(session, window, SimulationTiming::kFixedTimestep);
             physicsAccumulator -= SimulationTiming::kFixedTimestep;
             ++stepsThisFrame;
         }
@@ -449,27 +408,20 @@ int RunRealtimeMode(Window& window, Renderer& renderer, PhysicsWorld& physicsWor
 
 }  // namespace
 
-int RunTestHarness(Window& window, Renderer& renderer, PhysicsWorld& physicsWorld,
-                    PlayerController& player, const GravityField& gravity,
-                    std::vector<DynamicBody>& dynamicBodies,
-                    FlyingPrimitiveControl& flyingPrimitiveControl, PilotAttachment& pilotAttachment,
-                    const std::function<void(Renderer&, float)>& drawScene,
-                    const std::string& scriptPath) {
+int RunTestHarness(Window& window, Renderer& renderer, GameSession& session,
+                   const std::function<void(Renderer&, float)>& drawScene,
+                   const std::string& scriptPath) {
     Script script;
     if (!LoadScript(scriptPath, script)) {
         return 1;
     }
 
-    PrintGravitySamples(gravity, script.gravitySamples);
+    PrintGravitySamples(session.World().Gravity(), script.gravitySamples);
 
     window.SetTestInputMode(true);
 
-    const int exitCode =
-        script.realtime
-            ? RunRealtimeMode(window, renderer, physicsWorld, player, gravity, dynamicBodies,
-                               flyingPrimitiveControl, pilotAttachment, drawScene, script)
-            : RunFixedStepMode(window, renderer, physicsWorld, player, gravity, dynamicBodies,
-                                flyingPrimitiveControl, pilotAttachment, drawScene, script);
+    const int exitCode = script.realtime ? RunRealtimeMode(window, renderer, session, drawScene, script)
+                                         : RunFixedStepMode(window, renderer, session, drawScene, script);
 
     window.SetTestInputMode(false);
     return exitCode;

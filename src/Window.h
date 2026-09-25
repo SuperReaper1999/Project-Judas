@@ -2,6 +2,8 @@
 
 #include <SDL2/SDL.h>
 
+#include <functional>
+
 // Input actions the engine exposes to game logic. This is deliberately an
 // action enum rather than raw key codes, so a later input source (mouse,
 // controller) can drive the same actions without callers changing.
@@ -175,6 +177,26 @@ public:
     int Width() const { return m_width; }
     int Height() const { return m_height; }
 
+    // Milestone 28: lets a host application observe every OS event this
+    // window pumps (the editor forwards them to its UI layer). Window
+    // still owns the pump and its own interpretation of keys; the hook
+    // is a plain callback with no knowledge of who listens. `wantsKeyboard`
+    // / `wantsMouse` let that listener claim input for a frame: while
+    // claimed, IsActionActive/the Consume* requests report nothing so a
+    // UI text field never also walks the player.
+    void SetEventHook(std::function<void(const SDL_Event&)> hook);
+    void SetInputClaimed(bool keyboard, bool mouse);
+    // Discards every pending edge-triggered request (reset, jump, control
+    // toggle, torch, interact, view, throw, SAS, UI) so presses made while
+    // a host was not routing gameplay input cannot fire later.
+    void ClearPendingRequests();
+    // Whether the OS mouse is currently in relative (captured) mode.
+    bool IsMouseCaptured() const { return m_mouseCaptured; }
+    // Native handles for a host that must initialise a UI layer against
+    // this window's own GL context (the editor). Never used by gameplay.
+    SDL_Window* NativeWindow() const { return m_window; }
+    SDL_GLContext NativeGLContext() const { return m_glContext; }
+
     // --- Test/automation input override ---
     //
     // Developer tooling only (see src/TestHarness.h) — not used by the
@@ -206,6 +228,9 @@ private:
     SDL_GLContext m_glContext = nullptr;
     bool m_sdlInitialized = false;
     bool m_shouldClose = false;
+    std::function<void(const SDL_Event&)> m_eventHook;
+    bool m_keyboardClaimed = false;
+    bool m_mouseClaimed = false;
     bool m_mouseCaptured = false;
     bool m_resetRequested = false;
     bool m_jumpRequested = false;

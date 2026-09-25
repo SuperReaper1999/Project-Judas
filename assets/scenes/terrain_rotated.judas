@@ -1,0 +1,218 @@
+JudasScene 1
+settings
+  name "Terrain planet (rotated)"
+  world-origin 0 0 0
+  sun-direction 0.4 0.7 0.35
+  sun-color 1 0.98 0.92
+  ambient 0.16 0.17 0.19
+  fluid-scale 10
+  next-id 9
+end
+
+object 1 "Terrain planet"
+  position 300 0 0
+  rotation 0.9170601 0.17674243 0.05302273 0.35348487
+  scale 1 1 1
+  render terrain
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.39 0.5 0.3
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh ""
+  render.texture ""
+  body static terrain
+  body.half-extents 0.5 0.5 0.5
+  body.radius 0.5
+  body.terrain "m25-radial"
+  body.mass 1
+  body.friction 0.8
+  body.restitution 0.1
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.compound-count 0
+  gravity radial 9.81
+  gravity.region sphere 103
+  celestial 
+  celestial.gravitational-parameter 62784.004
+  celestial.operator-thrust 0
+  atmosphere 
+  atmosphere.reference-radius 80
+  atmosphere.top-radius 110
+  atmosphere.reference-density 0.05
+  atmosphere.polytropic-exponent 1.4
+  atmosphere.oxidizer-fraction 0.21
+  atmosphere.reference-temperature 300
+end
+
+object 2 "Player start"
+  position 243.10751 56.320007 23.10709
+  rotation 1 0 0 0
+  scale 1 1 1
+  player-start first-person
+  player-start.yaw 180
+end
+
+object 3 "Dense block"
+  position 243.0079 53.461876 24.035204
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.45 0.45 0.45
+  render.radius 0.5
+  render.color 0.95 0.58 0.2
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh ""
+  render.texture ""
+  body dynamic box
+  body.half-extents 0.45 0.45 0.45
+  body.radius 0.5
+  body.terrain ""
+  body.mass 2000
+  body.friction 0.9
+  body.restitution 0.15
+  body.initial-velocity 0 0 0
+  body.pickable true
+  body.compound-count 0
+end
+
+object 4 "Fuel A"
+  position 244.91212 54.20372 25.366331
+  rotation 0.8929882 0.23948005 0.07181104 0.374252
+  scale 1 1 1
+  render box
+  render.half-extents 0.25 0.25 0.25
+  render.radius 0.5
+  render.color 0.65 0.33 0.19
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh ""
+  render.texture ""
+  body dynamic box
+  body.half-extents 0.25 0.25 0.25
+  body.radius 0.5
+  body.terrain ""
+  body.mass 5
+  body.friction 0.6
+  body.restitution 0.15
+  body.initial-velocity 0 0 0
+  body.pickable true
+  body.compound-count 0
+  combustible 
+  combustible.heat-capacity 150
+  combustible.fuel-mass 0.12
+  combustible.ignition-temperature 550
+  combustible.max-fuel-rate 0.003
+  combustible.radiative-area 1.5
+  combustible.retained-heat 0.75
+end
+
+object 5 "Fuel B"
+  position 245.08125 53.998043 25.847572
+  rotation 0.8929882 0.23948005 0.07181104 0.374252
+  scale 1 1 1
+  render box
+  render.half-extents 0.25 0.25 0.25
+  render.radius 0.5
+  render.color 0.75 0.43 0.22
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh ""
+  render.texture ""
+  body dynamic box
+  body.half-extents 0.25 0.25 0.25
+  body.radius 0.5
+  body.terrain ""
+  body.mass 5
+  body.friction 0.6
+  body.restitution 0.15
+  body.initial-velocity 0 0 0
+  body.pickable true
+  body.compound-count 0
+  combustible 
+  combustible.heat-capacity 150
+  combustible.fuel-mass 0.12
+  combustible.ignition-temperature 550
+  combustible.max-fuel-rate 0.003
+  combustible.radiative-area 1.5
+  combustible.retained-heat 0.75
+end
+
+object 6 "Far fuel"
+  position 247.73154 54.689274 28.468777
+  rotation 0.8929882 0.23948005 0.07181104 0.374252
+  scale 1 1 1
+  render box
+  render.half-extents 0.25 0.25 0.25
+  render.radius 0.5
+  render.color 0.58 0.42 0.24
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh ""
+  render.texture ""
+  body dynamic box
+  body.half-extents 0.25 0.25 0.25
+  body.radius 0.5
+  body.terrain ""
+  body.mass 5
+  body.friction 0.6
+  body.restitution 0.15
+  body.initial-velocity 0 0 0
+  body.pickable true
+  body.compound-count 0
+  combustible 
+  combustible.heat-capacity 150
+  combustible.fuel-mass 0.12
+  combustible.ignition-temperature 550
+  combustible.max-fuel-rate 0.003
+  combustible.radiative-area 1.5
+  combustible.retained-heat 0.75
+end
+
+object 7 "Spacecraft"
+  position 246.39767 54.207314 26.21724
+  rotation 0.8929882 0.23948005 0.07181104 0.374252
+  scale 1 1 1
+  render mesh
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.75 0.75 0.8
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh "assets/models/plane.obj"
+  render.texture ""
+  body dynamic box
+  body.half-extents 2 0.25 3
+  body.radius 0.5
+  body.terrain ""
+  body.mass 80
+  body.friction 0.8
+  body.restitution 0.1
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.compound-count 0
+  vehicle celestial
+  vehicle.headlight true
+  vehicle.navigation-lights true
+  vehicle.drag-coefficient 1
+  vehicle.initial-pilot-attached false
+end
+
+object 8 "Lake"
+  position 248.64037 50.192375 30.825474
+  rotation 0.9170601 0.17674243 0.05302273 0.35348487
+  scale 1 1 1
+  fluid-volume 
+  fluid-volume.spacing 0.5
+  fluid-volume.count 5 5 5
+  fluid-volume.emitter true
+  fluid-volume.emitter-offset -0.10729098 2.1458206 0.08046794
+  fluid-volume.max-particles 200
+end

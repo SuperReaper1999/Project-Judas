@@ -65,9 +65,25 @@ void Window::Shutdown() {
     }
 }
 
+void Window::SetEventHook(std::function<void(const SDL_Event&)> hook) {
+    m_eventHook = std::move(hook);
+}
+
+void Window::ClearPendingRequests() {
+    m_resetRequested = m_jumpRequested = m_controlToggleRequested = m_torchToggleRequested = false;
+    m_interactRequested = m_viewToggleRequested = m_throwRequested = m_sasToggleRequested = false;
+    m_uiBackRequested = m_uiUpRequested = m_uiDownRequested = m_uiActivateRequested = m_uiClickRequested = false;
+}
+
+void Window::SetInputClaimed(bool keyboard, bool mouse) {
+    m_keyboardClaimed = keyboard;
+    m_mouseClaimed = mouse;
+}
+
 void Window::PollEvents() {
     SDL_Event event;
     while (SDL_PollEvent(&event)) {
+        if (m_eventHook) m_eventHook(event);
         if (event.type == SDL_QUIT) {
             m_shouldClose = true;
         } else if (event.type == SDL_WINDOWEVENT) {
@@ -78,6 +94,7 @@ void Window::PollEvents() {
                 m_height = event.window.data2;
             }
         } else if (event.type == SDL_KEYDOWN && event.key.repeat == 0) {
+            if (m_keyboardClaimed) continue;
             if (event.key.keysym.scancode == SDL_SCANCODE_ESCAPE) {
                 // Milestone 13: Escape now drives menu back/pause
                 // navigation (see PauseMenu::HandleBackRequest) instead of
@@ -112,6 +129,7 @@ void Window::PollEvents() {
                 m_uiActivateRequested = true;
             }
         } else if (event.type == SDL_MOUSEBUTTONDOWN) {
+            if (m_mouseClaimed) continue;
             if (event.button.button == SDL_BUTTON_LEFT) {
                 m_uiClickRequested = true;
                 m_uiClickX = event.button.x;
@@ -130,6 +148,7 @@ bool Window::IsActionActive(Action action) const {
         return m_testActionState[static_cast<int>(action)];
     }
 
+    if (m_keyboardClaimed) return false;
     const Uint8* keys = SDL_GetKeyboardState(nullptr);
     switch (action) {
         case Action::MoveForward:
