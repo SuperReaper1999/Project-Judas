@@ -91,7 +91,7 @@ bool SceneObjectsEqual(const SceneObject& a, const SceneObject& b) {
             return x.shape == y.shape && Eq(x.halfExtents, y.halfExtents) && x.radius == y.radius &&
                    Eq(x.color, y.color) && x.alpha == y.alpha &&
                    Eq(x.secondaryColor, y.secondaryColor) && x.secondaryAlpha == y.secondaryAlpha &&
-                   x.meshPath == y.meshPath && x.texturePath == y.texturePath;
+                   x.meshAsset == y.meshAsset && x.textureAsset == y.textureAsset;
         })) {
         return false;
     }

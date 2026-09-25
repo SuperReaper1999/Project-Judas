@@ -10,7 +10,7 @@ class GameSession;
 class Renderer;
 class RuntimeWorld;
 class Scene;
-class RenderAssetCache;
+class ResourceManager;
 struct AerodynamicDragResult;
 
 // Milestone 28: everything that turns a RuntimeWorld (and, optionally, the
@@ -54,6 +54,6 @@ void UpdateFluidSurface(Renderer& renderer, const RuntimeWorld& world, float pre
 
 // Editor edit-mode view: draws AUTHORED objects straight from a Scene at
 // their authored transforms, with no physics and no runtime instance.
-// Meshes/terrains resolve through `assets`; unresolvable ones are skipped.
-void DrawAuthoredScene(Renderer& renderer, const Scene& scene, RenderAssetCache& assets);
+// Meshes/terrains resolve through `resources`; unresolvable ones are skipped.
+void DrawAuthoredScene(Renderer& renderer, const Scene& scene, ResourceManager& resources);
 std::vector<DynamicLight> BuildAuthoredLights(const Scene& scene);

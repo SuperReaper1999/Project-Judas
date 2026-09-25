@@ -1,4 +1,4 @@
-JudasScene 2
+JudasScene 3
 settings
   name "Fidelity demonstration"
   world-origin 0 0 0
@@ -21,8 +21,8 @@ object 1 "Ground"
   render.alpha 1
   render.secondary-color 0.8 0.8 0.8
   render.secondary-alpha 1
-  render.mesh ""
-  render.texture ""
+  render.mesh-asset ""
+  render.texture-asset ""
   body static box
   body.half-extents 60 1 160
   body.radius 0.5
@@ -57,8 +57,8 @@ object 3 "Managed crate 1"
   render.alpha 1
   render.secondary-color 0.8 0.8 0.8
   render.secondary-alpha 1
-  render.mesh ""
-  render.texture ""
+  render.mesh-asset ""
+  render.texture-asset ""
   body dynamic box
   body.half-extents 0.5 0.5 0.5
   body.radius 0.5
@@ -83,8 +83,8 @@ object 4 "Managed crate 2"
   render.alpha 1
   render.secondary-color 0.8 0.8 0.8
   render.secondary-alpha 1
-  render.mesh ""
-  render.texture ""
+  render.mesh-asset ""
+  render.texture-asset ""
   body dynamic box
   body.half-extents 0.5 0.5 0.5
   body.radius 0.5
@@ -109,8 +109,8 @@ object 5 "Managed crate 3"
   render.alpha 1
   render.secondary-color 0.8 0.8 0.8
   render.secondary-alpha 1
-  render.mesh ""
-  render.texture ""
+  render.mesh-asset ""
+  render.texture-asset ""
   body dynamic box
   body.half-extents 0.5 0.5 0.5
   body.radius 0.5
@@ -135,8 +135,8 @@ object 6 "Managed crate 4"
   render.alpha 1
   render.secondary-color 0.8 0.8 0.8
   render.secondary-alpha 1
-  render.mesh ""
-  render.texture ""
+  render.mesh-asset ""
+  render.texture-asset ""
   body dynamic box
   body.half-extents 0.5 0.5 0.5
   body.radius 0.5
@@ -161,8 +161,8 @@ object 7 "Managed crate 5"
   render.alpha 1
   render.secondary-color 0.8 0.8 0.8
   render.secondary-alpha 1
-  render.mesh ""
-  render.texture ""
+  render.mesh-asset ""
+  render.texture-asset ""
   body dynamic box
   body.half-extents 0.5 0.5 0.5
   body.radius 0.5
@@ -187,8 +187,8 @@ object 8 "Managed crate 6"
   render.alpha 1
   render.secondary-color 0.8 0.8 0.8
   render.secondary-alpha 1
-  render.mesh ""
-  render.texture ""
+  render.mesh-asset ""
+  render.texture-asset ""
   body dynamic box
   body.half-extents 0.5 0.5 0.5
   body.radius 0.5
@@ -213,8 +213,8 @@ object 9 "Managed crate 7"
   render.alpha 1
   render.secondary-color 0.8 0.8 0.8
   render.secondary-alpha 1
-  render.mesh ""
-  render.texture ""
+  render.mesh-asset ""
+  render.texture-asset ""
   body dynamic box
   body.half-extents 0.5 0.5 0.5
   body.radius 0.5
@@ -239,8 +239,8 @@ object 10 "Managed crate 8"
   render.alpha 1
   render.secondary-color 0.8 0.8 0.8
   render.secondary-alpha 1
-  render.mesh ""
-  render.texture ""
+  render.mesh-asset ""
+  render.texture-asset ""
   body dynamic box
   body.half-extents 0.5 0.5 0.5
   body.radius 0.5
@@ -265,8 +265,8 @@ object 11 "Managed crate 9"
   render.alpha 1
   render.secondary-color 0.8 0.8 0.8
   render.secondary-alpha 1
-  render.mesh ""
-  render.texture ""
+  render.mesh-asset ""
+  render.texture-asset ""
   body dynamic box
   body.half-extents 0.5 0.5 0.5
   body.radius 0.5
@@ -291,8 +291,8 @@ object 12 "Managed crate 10"
   render.alpha 1
   render.secondary-color 0.8 0.8 0.8
   render.secondary-alpha 1
-  render.mesh ""
-  render.texture ""
+  render.mesh-asset ""
+  render.texture-asset ""
   body dynamic box
   body.half-extents 0.5 0.5 0.5
   body.radius 0.5
@@ -317,8 +317,8 @@ object 13 "Managed crate 11"
   render.alpha 1
   render.secondary-color 0.8 0.8 0.8
   render.secondary-alpha 1
-  render.mesh ""
-  render.texture ""
+  render.mesh-asset ""
+  render.texture-asset ""
   body dynamic box
   body.half-extents 0.5 0.5 0.5
   body.radius 0.5
@@ -343,8 +343,8 @@ object 14 "Managed crate 12"
   render.alpha 1
   render.secondary-color 0.8 0.8 0.8
   render.secondary-alpha 1
-  render.mesh ""
-  render.texture ""
+  render.mesh-asset ""
+  render.texture-asset ""
   body dynamic box
   body.half-extents 0.5 0.5 0.5
   body.radius 0.5
@@ -369,8 +369,8 @@ object 15 "Managed crate 13"
   render.alpha 1
   render.secondary-color 0.8 0.8 0.8
   render.secondary-alpha 1
-  render.mesh ""
-  render.texture ""
+  render.mesh-asset ""
+  render.texture-asset ""
   body dynamic box
   body.half-extents 0.5 0.5 0.5
   body.radius 0.5
@@ -395,8 +395,8 @@ object 16 "Managed crate 14"
   render.alpha 1
   render.secondary-color 0.8 0.8 0.8
   render.secondary-alpha 1
-  render.mesh ""
-  render.texture ""
+  render.mesh-asset ""
+  render.texture-asset ""
   body dynamic box
   body.half-extents 0.5 0.5 0.5
   body.radius 0.5
@@ -421,8 +421,8 @@ object 17 "Managed crate 15"
   render.alpha 1
   render.secondary-color 0.8 0.8 0.8
   render.secondary-alpha 1
-  render.mesh ""
-  render.texture ""
+  render.mesh-asset ""
+  render.texture-asset ""
   body dynamic box
   body.half-extents 0.5 0.5 0.5
   body.radius 0.5
@@ -447,8 +447,8 @@ object 18 "Managed crate 16"
   render.alpha 1
   render.secondary-color 0.8 0.8 0.8
   render.secondary-alpha 1
-  render.mesh ""
-  render.texture ""
+  render.mesh-asset ""
+  render.texture-asset ""
   body dynamic box
   body.half-extents 0.5 0.5 0.5
   body.radius 0.5
@@ -473,8 +473,8 @@ object 19 "Managed crate 17"
   render.alpha 1
   render.secondary-color 0.8 0.8 0.8
   render.secondary-alpha 1
-  render.mesh ""
-  render.texture ""
+  render.mesh-asset ""
+  render.texture-asset ""
   body dynamic box
   body.half-extents 0.5 0.5 0.5
   body.radius 0.5
@@ -499,8 +499,8 @@ object 20 "Managed crate 18"
   render.alpha 1
   render.secondary-color 0.8 0.8 0.8
   render.secondary-alpha 1
-  render.mesh ""
-  render.texture ""
+  render.mesh-asset ""
+  render.texture-asset ""
   body dynamic box
   body.half-extents 0.5 0.5 0.5
   body.radius 0.5
@@ -525,8 +525,8 @@ object 21 "Managed crate 19"
   render.alpha 1
   render.secondary-color 0.8 0.8 0.8
   render.secondary-alpha 1
-  render.mesh ""
-  render.texture ""
+  render.mesh-asset ""
+  render.texture-asset ""
   body dynamic box
   body.half-extents 0.5 0.5 0.5
   body.radius 0.5
@@ -551,8 +551,8 @@ object 22 "Managed crate 20"
   render.alpha 1
   render.secondary-color 0.8 0.8 0.8
   render.secondary-alpha 1
-  render.mesh ""
-  render.texture ""
+  render.mesh-asset ""
+  render.texture-asset ""
   body dynamic box
   body.half-extents 0.5 0.5 0.5
   body.radius 0.5
@@ -577,8 +577,8 @@ object 23 "Managed crate 21"
   render.alpha 1
   render.secondary-color 0.8 0.8 0.8
   render.secondary-alpha 1
-  render.mesh ""
-  render.texture ""
+  render.mesh-asset ""
+  render.texture-asset ""
   body dynamic box
   body.half-extents 0.5 0.5 0.5
   body.radius 0.5
@@ -603,8 +603,8 @@ object 24 "Managed crate 22"
   render.alpha 1
   render.secondary-color 0.8 0.8 0.8
   render.secondary-alpha 1
-  render.mesh ""
-  render.texture ""
+  render.mesh-asset ""
+  render.texture-asset ""
   body dynamic box
   body.half-extents 0.5 0.5 0.5
   body.radius 0.5
@@ -629,8 +629,8 @@ object 25 "Managed crate 23"
   render.alpha 1
   render.secondary-color 0.8 0.8 0.8
   render.secondary-alpha 1
-  render.mesh ""
-  render.texture ""
+  render.mesh-asset ""
+  render.texture-asset ""
   body dynamic box
   body.half-extents 0.5 0.5 0.5
   body.radius 0.5
@@ -655,8 +655,8 @@ object 26 "Managed crate 24"
   render.alpha 1
   render.secondary-color 0.8 0.8 0.8
   render.secondary-alpha 1
-  render.mesh ""
-  render.texture ""
+  render.mesh-asset ""
+  render.texture-asset ""
   body dynamic box
   body.half-extents 0.5 0.5 0.5
   body.radius 0.5
@@ -681,8 +681,8 @@ object 27 "Managed crate 25"
   render.alpha 1
   render.secondary-color 0.8 0.8 0.8
   render.secondary-alpha 1
-  render.mesh ""
-  render.texture ""
+  render.mesh-asset ""
+  render.texture-asset ""
   body dynamic box
   body.half-extents 0.5 0.5 0.5
   body.radius 0.5
@@ -707,8 +707,8 @@ object 28 "Managed crate 26"
   render.alpha 1
   render.secondary-color 0.8 0.8 0.8
   render.secondary-alpha 1
-  render.mesh ""
-  render.texture ""
+  render.mesh-asset ""
+  render.texture-asset ""
   body dynamic box
   body.half-extents 0.5 0.5 0.5
   body.radius 0.5
@@ -733,8 +733,8 @@ object 29 "Managed crate 27"
   render.alpha 1
   render.secondary-color 0.8 0.8 0.8
   render.secondary-alpha 1
-  render.mesh ""
-  render.texture ""
+  render.mesh-asset ""
+  render.texture-asset ""
   body dynamic box
   body.half-extents 0.5 0.5 0.5
   body.radius 0.5
@@ -759,8 +759,8 @@ object 30 "Managed crate 28"
   render.alpha 1
   render.secondary-color 0.8 0.8 0.8
   render.secondary-alpha 1
-  render.mesh ""
-  render.texture ""
+  render.mesh-asset ""
+  render.texture-asset ""
   body dynamic box
   body.half-extents 0.5 0.5 0.5
   body.radius 0.5
@@ -785,8 +785,8 @@ object 31 "Managed crate 29"
   render.alpha 1
   render.secondary-color 0.8 0.8 0.8
   render.secondary-alpha 1
-  render.mesh ""
-  render.texture ""
+  render.mesh-asset ""
+  render.texture-asset ""
   body dynamic box
   body.half-extents 0.5 0.5 0.5
   body.radius 0.5
@@ -811,8 +811,8 @@ object 32 "Managed crate 30"
   render.alpha 1
   render.secondary-color 0.8 0.8 0.8
   render.secondary-alpha 1
-  render.mesh ""
-  render.texture ""
+  render.mesh-asset ""
+  render.texture-asset ""
   body dynamic box
   body.half-extents 0.5 0.5 0.5
   body.radius 0.5
@@ -837,8 +837,8 @@ object 33 "Managed crate 31"
   render.alpha 1
   render.secondary-color 0.8 0.8 0.8
   render.secondary-alpha 1
-  render.mesh ""
-  render.texture ""
+  render.mesh-asset ""
+  render.texture-asset ""
   body dynamic box
   body.half-extents 0.5 0.5 0.5
   body.radius 0.5
@@ -863,8 +863,8 @@ object 34 "Managed crate 32"
   render.alpha 1
   render.secondary-color 0.8 0.8 0.8
   render.secondary-alpha 1
-  render.mesh ""
-  render.texture ""
+  render.mesh-asset ""
+  render.texture-asset ""
   body dynamic box
   body.half-extents 0.5 0.5 0.5
   body.radius 0.5
@@ -889,8 +889,8 @@ object 35 "Managed crate 33"
   render.alpha 1
   render.secondary-color 0.8 0.8 0.8
   render.secondary-alpha 1
-  render.mesh ""
-  render.texture ""
+  render.mesh-asset ""
+  render.texture-asset ""
   body dynamic box
   body.half-extents 0.5 0.5 0.5
   body.radius 0.5
@@ -915,8 +915,8 @@ object 36 "Managed crate 34"
   render.alpha 1
   render.secondary-color 0.8 0.8 0.8
   render.secondary-alpha 1
-  render.mesh ""
-  render.texture ""
+  render.mesh-asset ""
+  render.texture-asset ""
   body dynamic box
   body.half-extents 0.5 0.5 0.5
   body.radius 0.5
@@ -941,8 +941,8 @@ object 37 "Managed crate 35"
   render.alpha 1
   render.secondary-color 0.8 0.8 0.8
   render.secondary-alpha 1
-  render.mesh ""
-  render.texture ""
+  render.mesh-asset ""
+  render.texture-asset ""
   body dynamic box
   body.half-extents 0.5 0.5 0.5
   body.radius 0.5
@@ -967,8 +967,8 @@ object 38 "Managed crate 36"
   render.alpha 1
   render.secondary-color 0.8 0.8 0.8
   render.secondary-alpha 1
-  render.mesh ""
-  render.texture ""
+  render.mesh-asset ""
+  render.texture-asset ""
   body dynamic box
   body.half-extents 0.5 0.5 0.5
   body.radius 0.5
@@ -993,8 +993,8 @@ object 39 "Managed crate 37"
   render.alpha 1
   render.secondary-color 0.8 0.8 0.8
   render.secondary-alpha 1
-  render.mesh ""
-  render.texture ""
+  render.mesh-asset ""
+  render.texture-asset ""
   body dynamic box
   body.half-extents 0.5 0.5 0.5
   body.radius 0.5
@@ -1019,8 +1019,8 @@ object 40 "Managed crate 38"
   render.alpha 1
   render.secondary-color 0.8 0.8 0.8
   render.secondary-alpha 1
-  render.mesh ""
-  render.texture ""
+  render.mesh-asset ""
+  render.texture-asset ""
   body dynamic box
   body.half-extents 0.5 0.5 0.5
   body.radius 0.5
@@ -1045,8 +1045,8 @@ object 41 "Managed crate 39"
   render.alpha 1
   render.secondary-color 0.8 0.8 0.8
   render.secondary-alpha 1
-  render.mesh ""
-  render.texture ""
+  render.mesh-asset ""
+  render.texture-asset ""
   body dynamic box
   body.half-extents 0.5 0.5 0.5
   body.radius 0.5
@@ -1071,8 +1071,8 @@ object 42 "Managed crate 40"
   render.alpha 1
   render.secondary-color 0.8 0.8 0.8
   render.secondary-alpha 1
-  render.mesh ""
-  render.texture ""
+  render.mesh-asset ""
+  render.texture-asset ""
   body dynamic box
   body.half-extents 0.5 0.5 0.5
   body.radius 0.5
@@ -1097,8 +1097,8 @@ object 43 "Managed crate 41"
   render.alpha 1
   render.secondary-color 0.8 0.8 0.8
   render.secondary-alpha 1
-  render.mesh ""
-  render.texture ""
+  render.mesh-asset ""
+  render.texture-asset ""
   body dynamic box
   body.half-extents 0.5 0.5 0.5
   body.radius 0.5
@@ -1123,8 +1123,8 @@ object 44 "Managed crate 42"
   render.alpha 1
   render.secondary-color 0.8 0.8 0.8
   render.secondary-alpha 1
-  render.mesh ""
-  render.texture ""
+  render.mesh-asset ""
+  render.texture-asset ""
   body dynamic box
   body.half-extents 0.5 0.5 0.5
   body.radius 0.5
@@ -1149,8 +1149,8 @@ object 45 "Managed crate 43"
   render.alpha 1
   render.secondary-color 0.8 0.8 0.8
   render.secondary-alpha 1
-  render.mesh ""
-  render.texture ""
+  render.mesh-asset ""
+  render.texture-asset ""
   body dynamic box
   body.half-extents 0.5 0.5 0.5
   body.radius 0.5
@@ -1175,8 +1175,8 @@ object 46 "Managed crate 44"
   render.alpha 1
   render.secondary-color 0.8 0.8 0.8
   render.secondary-alpha 1
-  render.mesh ""
-  render.texture ""
+  render.mesh-asset ""
+  render.texture-asset ""
   body dynamic box
   body.half-extents 0.5 0.5 0.5
   body.radius 0.5
@@ -1201,8 +1201,8 @@ object 47 "Managed crate 45"
   render.alpha 1
   render.secondary-color 0.8 0.8 0.8
   render.secondary-alpha 1
-  render.mesh ""
-  render.texture ""
+  render.mesh-asset ""
+  render.texture-asset ""
   body dynamic box
   body.half-extents 0.5 0.5 0.5
   body.radius 0.5
@@ -1227,8 +1227,8 @@ object 48 "Managed crate 46"
   render.alpha 1
   render.secondary-color 0.8 0.8 0.8
   render.secondary-alpha 1
-  render.mesh ""
-  render.texture ""
+  render.mesh-asset ""
+  render.texture-asset ""
   body dynamic box
   body.half-extents 0.5 0.5 0.5
   body.radius 0.5
@@ -1253,8 +1253,8 @@ object 49 "Managed crate 47"
   render.alpha 1
   render.secondary-color 0.8 0.8 0.8
   render.secondary-alpha 1
-  render.mesh ""
-  render.texture ""
+  render.mesh-asset ""
+  render.texture-asset ""
   body dynamic box
   body.half-extents 0.5 0.5 0.5
   body.radius 0.5
@@ -1279,8 +1279,8 @@ object 50 "Managed crate 48"
   render.alpha 1
   render.secondary-color 0.8 0.8 0.8
   render.secondary-alpha 1
-  render.mesh ""
-  render.texture ""
+  render.mesh-asset ""
+  render.texture-asset ""
   body dynamic box
   body.half-extents 0.5 0.5 0.5
   body.radius 0.5
@@ -1305,8 +1305,8 @@ object 51 "Managed crate 49"
   render.alpha 1
   render.secondary-color 0.8 0.8 0.8
   render.secondary-alpha 1
-  render.mesh ""
-  render.texture ""
+  render.mesh-asset ""
+  render.texture-asset ""
   body dynamic box
   body.half-extents 0.5 0.5 0.5
   body.radius 0.5
@@ -1331,8 +1331,8 @@ object 52 "Managed crate 50"
   render.alpha 1
   render.secondary-color 0.8 0.8 0.8
   render.secondary-alpha 1
-  render.mesh ""
-  render.texture ""
+  render.mesh-asset ""
+  render.texture-asset ""
   body dynamic box
   body.half-extents 0.5 0.5 0.5
   body.radius 0.5
@@ -1357,8 +1357,8 @@ object 53 "Managed crate 51"
   render.alpha 1
   render.secondary-color 0.8 0.8 0.8
   render.secondary-alpha 1
-  render.mesh ""
-  render.texture ""
+  render.mesh-asset ""
+  render.texture-asset ""
   body dynamic box
   body.half-extents 0.5 0.5 0.5
   body.radius 0.5
@@ -1383,8 +1383,8 @@ object 54 "Managed crate 52"
   render.alpha 1
   render.secondary-color 0.8 0.8 0.8
   render.secondary-alpha 1
-  render.mesh ""
-  render.texture ""
+  render.mesh-asset ""
+  render.texture-asset ""
   body dynamic box
   body.half-extents 0.5 0.5 0.5
   body.radius 0.5
@@ -1409,8 +1409,8 @@ object 55 "Managed crate 53"
   render.alpha 1
   render.secondary-color 0.8 0.8 0.8
   render.secondary-alpha 1
-  render.mesh ""
-  render.texture ""
+  render.mesh-asset ""
+  render.texture-asset ""
   body dynamic box
   body.half-extents 0.5 0.5 0.5
   body.radius 0.5
@@ -1435,8 +1435,8 @@ object 56 "Managed crate 54"
   render.alpha 1
   render.secondary-color 0.8 0.8 0.8
   render.secondary-alpha 1
-  render.mesh ""
-  render.texture ""
+  render.mesh-asset ""
+  render.texture-asset ""
   body dynamic box
   body.half-extents 0.5 0.5 0.5
   body.radius 0.5
@@ -1461,8 +1461,8 @@ object 57 "Managed crate 55"
   render.alpha 1
   render.secondary-color 0.8 0.8 0.8
   render.secondary-alpha 1
-  render.mesh ""
-  render.texture ""
+  render.mesh-asset ""
+  render.texture-asset ""
   body dynamic box
   body.half-extents 0.5 0.5 0.5
   body.radius 0.5
@@ -1487,8 +1487,8 @@ object 58 "Managed crate 56"
   render.alpha 1
   render.secondary-color 0.8 0.8 0.8
   render.secondary-alpha 1
-  render.mesh ""
-  render.texture ""
+  render.mesh-asset ""
+  render.texture-asset ""
   body dynamic box
   body.half-extents 0.5 0.5 0.5
   body.radius 0.5
@@ -1513,8 +1513,8 @@ object 59 "Managed crate 57"
   render.alpha 1
   render.secondary-color 0.8 0.8 0.8
   render.secondary-alpha 1
-  render.mesh ""
-  render.texture ""
+  render.mesh-asset ""
+  render.texture-asset ""
   body dynamic box
   body.half-extents 0.5 0.5 0.5
   body.radius 0.5
@@ -1539,8 +1539,8 @@ object 60 "Managed crate 58"
   render.alpha 1
   render.secondary-color 0.8 0.8 0.8
   render.secondary-alpha 1
-  render.mesh ""
-  render.texture ""
+  render.mesh-asset ""
+  render.texture-asset ""
   body dynamic box
   body.half-extents 0.5 0.5 0.5
   body.radius 0.5
@@ -1565,8 +1565,8 @@ object 61 "Managed crate 59"
   render.alpha 1
   render.secondary-color 0.8 0.8 0.8
   render.secondary-alpha 1
-  render.mesh ""
-  render.texture ""
+  render.mesh-asset ""
+  render.texture-asset ""
   body dynamic box
   body.half-extents 0.5 0.5 0.5
   body.radius 0.5
@@ -1591,8 +1591,8 @@ object 62 "Managed crate 60"
   render.alpha 1
   render.secondary-color 0.8 0.8 0.8
   render.secondary-alpha 1
-  render.mesh ""
-  render.texture ""
+  render.mesh-asset ""
+  render.texture-asset ""
   body dynamic box
   body.half-extents 0.5 0.5 0.5
   body.radius 0.5
@@ -1617,8 +1617,8 @@ object 63 "Local crate 1"
   render.alpha 1
   render.secondary-color 0.8 0.8 0.8
   render.secondary-alpha 1
-  render.mesh ""
-  render.texture ""
+  render.mesh-asset ""
+  render.texture-asset ""
   body dynamic box
   body.half-extents 0.45 0.45 0.45
   body.radius 0.5
@@ -1643,8 +1643,8 @@ object 64 "Local crate 2"
   render.alpha 1
   render.secondary-color 0.8 0.8 0.8
   render.secondary-alpha 1
-  render.mesh ""
-  render.texture ""
+  render.mesh-asset ""
+  render.texture-asset ""
   body dynamic box
   body.half-extents 0.45 0.45 0.45
   body.radius 0.5
@@ -1669,8 +1669,8 @@ object 65 "Local crate 3"
   render.alpha 1
   render.secondary-color 0.8 0.8 0.8
   render.secondary-alpha 1
-  render.mesh ""
-  render.texture ""
+  render.mesh-asset ""
+  render.texture-asset ""
   body dynamic box
   body.half-extents 0.45 0.45 0.45
   body.radius 0.5
@@ -1695,8 +1695,8 @@ object 66 "Local crate 4"
   render.alpha 1
   render.secondary-color 0.8 0.8 0.8
   render.secondary-alpha 1
-  render.mesh ""
-  render.texture ""
+  render.mesh-asset ""
+  render.texture-asset ""
   body dynamic box
   body.half-extents 0.45 0.45 0.45
   body.radius 0.5
@@ -1721,8 +1721,8 @@ object 67 "Satellite A"
   render.alpha 1
   render.secondary-color 0.8 0.8 0.8
   render.secondary-alpha 1
-  render.mesh ""
-  render.texture ""
+  render.mesh-asset ""
+  render.texture-asset ""
   body dynamic sphere
   body.half-extents 0.5 0.5 0.5
   body.radius 1.2
@@ -1747,8 +1747,8 @@ object 68 "Satellite B"
   render.alpha 1
   render.secondary-color 0.8 0.8 0.8
   render.secondary-alpha 1
-  render.mesh ""
-  render.texture ""
+  render.mesh-asset ""
+  render.texture-asset ""
   body dynamic sphere
   body.half-extents 0.5 0.5 0.5
   body.radius 1.2

@@ -26,7 +26,7 @@
 #include "Scene.h"
 
 class RadialTerrain;
-class RenderAssetCache;
+class ResourceManager;
 
 // Milestone 28: the RUNTIME instance of a Scene.
 //
@@ -34,7 +34,7 @@ class RenderAssetCache;
 // state each component asks for — rigid bodies in PhysicsWorld, gravity
 // fields and their regions in a GravityContextMap, fluid particles,
 // the atmosphere field, combustion state, doors and switches, GPU meshes
-// through a RenderAssetCache — and remembers, per object, only what the
+// through the ResourceManager (M30) — and remembers, per object, only what the
 // simulation and presentation need to reach that state again (handles,
 // indices, the authored pose a static body was placed at). Everything here
 // is transient: RestoreAuthoredState() puts every body back where the
@@ -143,6 +143,15 @@ public:
         float yawDegrees = 0.0f;
         ScenePlayerView view = ScenePlayerView::ThirdPerson;
     };
+    // Milestone 30: the authored gravity regions as instantiated, kept only
+    // so the debug view can draw them (GravityContextMap holds abstract
+    // volumes with no geometry accessors, by design).
+    struct GravityRegion {
+        SceneObjectId id = kInvalidSceneObjectId;
+        SceneGravityComponent component;
+        glm::vec3 position{0.0f};
+        glm::quat rotation{1.0f, 0.0f, 0.0f, 0.0f};
+    };
 
     RuntimeWorld();
     ~RuntimeWorld();
@@ -153,7 +162,7 @@ public:
     // resources are created; every mesh handle stays invalid). On failure
     // nothing is left allocated and `outError` says which object/component
     // could not be realised.
-    bool Build(const Scene& scene, RenderAssetCache* assets, std::string& outError);
+    bool Build(const Scene& scene, ResourceManager* resources, std::string& outError);
     void Destroy();
     bool IsBuilt() const { return m_built; }
 
@@ -173,6 +182,7 @@ public:
     const std::vector<StaticRenderable>& StaticRenderables() const { return m_staticRenderables; }
     const std::vector<Terrain>& Terrains() const { return m_terrains; }
     const std::vector<StaticLight>& StaticLights() const { return m_staticLights; }
+    const std::vector<GravityRegion>& GravityRegions() const { return m_gravityRegions; }
     std::vector<Door>& Doors() { return m_doors; }
     const std::vector<Door>& Doors() const { return m_doors; }
     std::vector<LightSwitch>& LightSwitches() { return m_lightSwitches; }
@@ -288,11 +298,12 @@ private:
     bool m_built = false;
     PhysicsWorld m_physics;
     SceneSettings m_settings;
-    RenderAssetCache* m_assets = nullptr;
+    ResourceManager* m_assets = nullptr;
 
     std::vector<std::unique_ptr<GravityField>> m_gravityFields;
     std::vector<std::unique_ptr<GravityVolume>> m_gravityVolumes;
     GravityContextMap m_gravityMap;
+    std::vector<GravityRegion> m_gravityRegions;
 
     std::vector<StaticBody> m_staticBodies;
     std::vector<Terrain> m_terrains;

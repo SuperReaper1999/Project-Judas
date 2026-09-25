@@ -50,9 +50,17 @@ int Application::Run(int argc, char** argv) {
     }
     Window& window = host.GetWindow();
     Renderer& renderer = host.GetRenderer();
+    // Milestone 30: the project's assets are the only ones a scene can
+    // reference; a scene outside any project resolves nothing.
+    if (options.project.IsLoaded()) {
+        host.OpenProjectAssets(options.project.RootDir(), options.project.AssetsDir());
+        for (const AssetProblem& problem : host.Assets().Problems()) {
+            std::fprintf(stderr, "Asset problem: %s: %s\n", problem.path.c_str(), problem.message.c_str());
+        }
+    }
 
     RuntimeWorld world;
-    if (!world.Build(scene, &host.Assets(), error)) {
+    if (!world.Build(scene, &host.Resources(), error)) {
         std::fprintf(stderr, "Scene '%s' could not be instantiated: %s\n", options.scenePath.c_str(),
                      error.c_str());
         return 1;
@@ -75,7 +83,9 @@ int Application::Run(int argc, char** argv) {
         std::fprintf(stderr, "World state: %s (%s)\n", options.worldStatePath.c_str(),
                      worldStateApplied ? "loaded" : "none saved; F6 saves, F7 deletes");
     }
-    std::fprintf(stderr, "Scene: %s (%s)\nWorld origin (m): %.3f, %.3f, %.3f\n",
+    std::fprintf(stderr, "Project: %s (%s)\nScene: %s (%s)\nWorld origin (m): %.3f, %.3f, %.3f\n",
+                 options.project.IsLoaded() ? options.project.Settings().name.c_str() : "(none)",
+                 options.project.IsLoaded() ? options.project.ProjectFile().c_str() : "scene outside a project",
                  scene.Settings().name.c_str(), options.scenePath.c_str(), worldCoordinates.Origin().x,
                  worldCoordinates.Origin().y, worldCoordinates.Origin().z);
 

@@ -1,4 +1,4 @@
-JudasScene 2
+JudasScene 3
 settings
   name "Classic abuse chamber (rotated fluid gravity)"
   world-origin 0 0 0
@@ -29,8 +29,8 @@ object 2 "The plank"
   render.alpha 1
   render.secondary-color 0.8 0.8 0.8
   render.secondary-alpha 1
-  render.mesh ""
-  render.texture ""
+  render.mesh-asset ""
+  render.texture-asset ""
   body static box
   body.half-extents 6 1 20
   body.radius 0.5
@@ -57,8 +57,8 @@ object 3 "Planet A"
   render.alpha 1
   render.secondary-color 0.8 0.8 0.8
   render.secondary-alpha 1
-  render.mesh ""
-  render.texture ""
+  render.mesh-asset ""
+  render.texture-asset ""
   body static sphere
   body.half-extents 0.5 0.5 0.5
   body.radius 20
@@ -85,8 +85,8 @@ object 4 "Planet B"
   render.alpha 1
   render.secondary-color 0.8 0.8 0.8
   render.secondary-alpha 1
-  render.mesh ""
-  render.texture ""
+  render.mesh-asset ""
+  render.texture-asset ""
   body static sphere
   body.half-extents 0.5 0.5 0.5
   body.radius 20
@@ -113,8 +113,8 @@ object 5 "Fluid table"
   render.alpha 1
   render.secondary-color 0.8 0.8 0.8
   render.secondary-alpha 1
-  render.mesh ""
-  render.texture ""
+  render.mesh-asset ""
+  render.texture-asset ""
   body static box
   body.half-extents 0.85 0.12 0.42
   body.radius 0.5
@@ -139,8 +139,8 @@ object 6 "Stair step 1"
   render.alpha 1
   render.secondary-color 0.8 0.8 0.8
   render.secondary-alpha 1
-  render.mesh ""
-  render.texture ""
+  render.mesh-asset ""
+  render.texture-asset ""
   body static box
   body.half-extents 1 0.15 0.35
   body.radius 0.5
@@ -165,8 +165,8 @@ object 7 "Stair step 2"
   render.alpha 1
   render.secondary-color 0.8 0.8 0.8
   render.secondary-alpha 1
-  render.mesh ""
-  render.texture ""
+  render.mesh-asset ""
+  render.texture-asset ""
   body static box
   body.half-extents 1 0.3 0.35
   body.radius 0.5
@@ -191,8 +191,8 @@ object 8 "Stair step 3"
   render.alpha 1
   render.secondary-color 0.8 0.8 0.8
   render.secondary-alpha 1
-  render.mesh ""
-  render.texture ""
+  render.mesh-asset ""
+  render.texture-asset ""
   body static box
   body.half-extents 1 0.45000002 0.35
   body.radius 0.5
@@ -217,8 +217,8 @@ object 9 "Stair step 4"
   render.alpha 1
   render.secondary-color 0.8 0.8 0.8
   render.secondary-alpha 1
-  render.mesh ""
-  render.texture ""
+  render.mesh-asset ""
+  render.texture-asset ""
   body static box
   body.half-extents 1 0.6 0.35
   body.radius 0.5
@@ -243,8 +243,8 @@ object 10 "Ramp"
   render.alpha 1
   render.secondary-color 0.8 0.8 0.8
   render.secondary-alpha 1
-  render.mesh ""
-  render.texture ""
+  render.mesh-asset ""
+  render.texture-asset ""
   body static box
   body.half-extents 1.5 0.15 2.5
   body.radius 0.5
@@ -269,8 +269,8 @@ object 11 "Beacon"
   render.alpha 1
   render.secondary-color 0.8 0.8 0.8
   render.secondary-alpha 1
-  render.mesh "assets/models/beacon.obj"
-  render.texture "assets/textures/beacon.png"
+  render.mesh-asset "0b3ac0e5c8b04d1e9f7a2c6d5e4f3a21"
+  render.texture-asset "5e4d3c2b1a0f4e6d9c8b7a6f5e4d3c2b"
 end
 
 object 12 "Door"
@@ -284,8 +284,8 @@ object 12 "Door"
   render.alpha 1
   render.secondary-color 0.8 0.8 0.8
   render.secondary-alpha 1
-  render.mesh ""
-  render.texture ""
+  render.mesh-asset ""
+  render.texture-asset ""
   door 
   door.hinge-axis 0 1 0
   door.open-angle 100
@@ -303,8 +303,8 @@ object 13 "Light switch"
   render.alpha 1
   render.secondary-color 0.8 0.8 0.8
   render.secondary-alpha 1
-  render.mesh ""
-  render.texture ""
+  render.mesh-asset ""
+  render.texture-asset ""
   light-switch 
   light-switch.hinge-axis 0 0 1
   light-switch.toggle-angle 40
@@ -333,8 +333,8 @@ object 15 "Cube (Planet A)"
   render.alpha 1
   render.secondary-color 0.8 0.8 0.8
   render.secondary-alpha 1
-  render.mesh ""
-  render.texture ""
+  render.mesh-asset ""
+  render.texture-asset ""
   body dynamic box
   body.half-extents 0.5 0.5 0.5
   body.radius 0.5
@@ -359,8 +359,8 @@ object 16 "Ball (Planet A)"
   render.alpha 1
   render.secondary-color 0.8 0.8 0.8
   render.secondary-alpha 1
-  render.mesh ""
-  render.texture ""
+  render.mesh-asset ""
+  render.texture-asset ""
   body dynamic sphere
   body.half-extents 0.5 0.5 0.5
   body.radius 0.5
@@ -385,8 +385,8 @@ object 17 "Cube (plank)"
   render.alpha 1
   render.secondary-color 0.8 0.8 0.8
   render.secondary-alpha 1
-  render.mesh ""
-  render.texture ""
+  render.mesh-asset ""
+  render.texture-asset ""
   body dynamic box
   body.half-extents 0.5 0.5 0.5
   body.radius 0.5
@@ -411,8 +411,8 @@ object 18 "Ball (plank)"
   render.alpha 1
   render.secondary-color 0.8 0.8 0.8
   render.secondary-alpha 1
-  render.mesh ""
-  render.texture ""
+  render.mesh-asset ""
+  render.texture-asset ""
   body dynamic sphere
   body.half-extents 0.5 0.5 0.5
   body.radius 0.5
@@ -437,8 +437,8 @@ object 19 "Cube (Planet B)"
   render.alpha 1
   render.secondary-color 0.8 0.8 0.8
   render.secondary-alpha 1
-  render.mesh ""
-  render.texture ""
+  render.mesh-asset ""
+  render.texture-asset ""
   body dynamic box
   body.half-extents 0.5 0.5 0.5
   body.radius 0.5
@@ -463,8 +463,8 @@ object 20 "Ball (Planet B)"
   render.alpha 1
   render.secondary-color 0.8 0.8 0.8
   render.secondary-alpha 1
-  render.mesh ""
-  render.texture ""
+  render.mesh-asset ""
+  render.texture-asset ""
   body dynamic sphere
   body.half-extents 0.5 0.5 0.5
   body.radius 0.5
@@ -489,8 +489,8 @@ object 21 "Spacecraft"
   render.alpha 1
   render.secondary-color 0.8 0.8 0.8
   render.secondary-alpha 1
-  render.mesh "assets/models/plane.obj"
-  render.texture ""
+  render.mesh-asset "9c1e7d2a4b5f4c6d8e9fa0b1c2d3e4f5"
+  render.texture-asset ""
   body dynamic box
   body.half-extents 2 0.25 3
   body.radius 0.5
@@ -520,8 +520,8 @@ object 22 "Orbital body A"
   render.alpha 1
   render.secondary-color 0.8 0.8 0.8
   render.secondary-alpha 1
-  render.mesh ""
-  render.texture ""
+  render.mesh-asset ""
+  render.texture-asset ""
   body dynamic sphere
   body.half-extents 0.5 0.5 0.5
   body.radius 3
@@ -549,8 +549,8 @@ object 23 "Orbital body B"
   render.alpha 1
   render.secondary-color 0.8 0.8 0.8
   render.secondary-alpha 1
-  render.mesh ""
-  render.texture ""
+  render.mesh-asset ""
+  render.texture-asset ""
   body dynamic sphere
   body.half-extents 0.5 0.5 0.5
   body.radius 3
@@ -578,8 +578,8 @@ object 24 "Cup A"
   render.alpha 1
   render.secondary-color 0.5 0.76 0.82
   render.secondary-alpha 0.35
-  render.mesh ""
-  render.texture ""
+  render.mesh-asset ""
+  render.texture-asset ""
   body dynamic compound
   body.half-extents 0.5 0.5 0.5
   body.radius 0.5
@@ -609,8 +609,8 @@ object 25 "Cup B"
   render.alpha 1
   render.secondary-color 0.5 0.76 0.82
   render.secondary-alpha 0.35
-  render.mesh ""
-  render.texture ""
+  render.mesh-asset ""
+  render.texture-asset ""
   body dynamic compound
   body.half-extents 0.5 0.5 0.5
   body.radius 0.5

@@ -242,6 +242,7 @@ struct PhysicsWorld::Impl {
     // slots they once occupied.
     std::vector<unsigned int> freeSlots;
     std::vector<unsigned int> aliveSlots;
+    std::vector<PhysicsWorld::DebugContact> lastStepContacts;
 
     BodyHandle MakeHandle(unsigned int slot) const {
         BodyHandle handle;
@@ -465,6 +466,10 @@ std::size_t PhysicsWorld::AliveBodyCount() const {
     return m_impl->aliveSlots.size();
 }
 
+const std::vector<PhysicsWorld::DebugContact>& PhysicsWorld::LastStepContacts() const {
+    return m_impl->lastStepContacts;
+}
+
 std::size_t PhysicsWorld::DynamicBodyCount() const {
     std::size_t count = 0;
     for (const unsigned int slot : m_impl->aliveSlots) {
@@ -624,7 +629,9 @@ void PhysicsWorld::Step(float fixedDeltaTime) {
     // there is nothing to resolve.
     const std::vector<unsigned int>& alive = m_impl->aliveSlots;
     const std::size_t bodyCount = alive.size();
+    m_impl->lastStepContacts.clear();
     for (int iteration = 0; iteration < kSolverIterations; ++iteration) {
+        const bool recordContacts = iteration == kSolverIterations - 1;
         for (std::size_t ai = 0; ai < bodyCount; ++ai) {
             Impl::Body& a = m_impl->bodies[alive[ai]];
             for (std::size_t bj = ai + 1; bj < bodyCount; ++bj) {
@@ -645,6 +652,11 @@ void PhysicsWorld::Step(float fixedDeltaTime) {
                             if (!manifold.points[p].hit) continue;
                             ResolveContact(a.rigidBody, b.rigidBody, manifold.points[p],
                                            friction, restitution);
+                            if (recordContacts) {
+                                m_impl->lastStepContacts.push_back({manifold.points[p].point,
+                                                                    manifold.points[p].normal,
+                                                                    manifold.points[p].penetration});
+                            }
                         }
                     }
                 }

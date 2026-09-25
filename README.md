@@ -15,9 +15,56 @@ loaded with the vendored GLAD 2.0.8 OpenGL 3.3 Core loader through the
 SDL-created context; generation and license provenance are recorded in
 [`third_party/glad/README.md`](third_party/glad/README.md).
 
-## Status: Milestone 29 in operator validation
+## Status: Milestone 30 candidate (operator validation pending)
 
-**New in M29 — Judas learns that existing does not mean being fully
+**New in M30 — Judas learns to actually make games with itself.** The
+engine now has a real **project** concept, stable **asset identity**, one
+**resource manager** boundary, and an editor that can make a small game
+without touching engine source:
+
+1. **Projects.** A game is a directory with a `.judasproj` file naming the
+   project, its startup scene and its Assets/Scenes/Saves folders. The
+   runtime launches a project (`./build/judas my_game.judasproj`); the
+   editor creates, opens and edits projects (File → New project / Open
+   project / Project settings) and can **Run project** as a separate
+   runtime process. The technology demonstration is an ordinary project
+   (`judas_tech_demo.judasproj`); a tiny flat game ships in
+   `projects/tiny_game/`. No engine code branches on which project it is.
+2. **Asset identity.** Every importable asset (`.obj`, `.png/.jpg/.bmp/
+   .tga`, `.ttf`) carries a 32-hex-digit id in a `.judasmeta` sidecar.
+   Scenes reference meshes and textures **by id** (scene format version
+   3), so renaming or moving an asset in the **Asset Browser** keeps every
+   scene reference valid — proven by an automated test, not by filename
+   guessing. Missing and broken assets are reported, never guessed around.
+3. **Resource manager.** `ResourceManager` is the only place a project
+   asset becomes a GPU resource: request → load → ready → cached → failed
+   → released → reloaded, synchronous, GL only inside `Renderer`, no GL
+   handle in authored data.
+4. **A usable editor.** Viewport **translate/rotate/scale gizmos** (world/
+   local space, `Ctrl` snaps, one undo step per drag), an **Asset Browser**
+   (import by path, rename/move, missing indicators, drag onto the
+   viewport or an inspector field), hierarchy **rename/duplicate/
+   indicators**, a **component editor registry** instead of an inspector
+   switch, **Project settings**, a **Debug** menu of engine
+   visualisations (collision shapes, player capsule and support, contacts,
+   gravity vectors and regions, frame axes, lights, interaction ranges,
+   lifecycle/fidelity, sampled terrain normals, fluid particles,
+   atmosphere radii) and a **Profiler** panel (frame time, fixed steps,
+   step time, bodies, contacts, lifecycle counts, draw calls, triangles,
+   shadow passes, lights, fluid particles, resource hits/misses).
+
+All 30 test suites pass (the new `judas_project_tests` covers the project
+format, asset identity through rename/move, the resource-manager
+contract, project → startup scene → runtime for both shipped projects,
+gizmo mathematics with undo/redo, the inspector data round trip and
+Edit/Play separation); the classic and terrain harness runs are
+byte-identical to the M27/M28 references at the near and far world
+origins. See [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md), "Milestone
+30," for the boundaries, the formats, the evidence and the limitations
+(no OS file dialog, sphere-approximate picking, no object parenting, no
+asynchronous loading).
+
+**Milestone 29 (operator validation) — Judas learns that existing does not mean being fully
 simulated.** Three engine capabilities, built together because they are
 one problem:
 
@@ -67,14 +114,60 @@ sudo apt install cmake libsdl2-dev libglm-dev build-essential   # Ubuntu/Debian
 cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
 cmake --build build -j"$(nproc)"
 
-./build/judas                                   # runtime: the terrain demonstration
-./build/judas assets/scenes/classic.judas       # runtime: any scene file
-./build/judas_editor assets/scenes/classic.judas   # editor: open a scene
-./build/judas_editor                            # editor: start a new scene
+./build/judas                                        # the project in the current directory (the tech demo), startup scene
+./build/judas judas_tech_demo.judasproj              # the same, explicitly
+./build/judas projects/tiny_game/tiny_game.judasproj # the tiny flat game
+./build/judas assets/scenes/classic.judas            # one scene of the enclosing project
+./build/judas_editor projects/tiny_game/tiny_game.judasproj   # editor: open a project
+./build/judas_editor assets/scenes/classic.judas             # editor: open a scene (and its project)
+./build/judas_editor                                 # editor: the project enclosing the working directory
 ```
 
-Run everything from the repository root: scene files reference assets by
-paths relative to the working directory.
+Paths in project and scene data are relative to the **project root** (the
+directory holding the `.judasproj`), never to the working directory. The
+one engine-owned file, the UI font `assets/fonts/DejaVuSans.ttf`, is found
+beside the executable's directory, its parent, `$JUDAS_ENGINE_ROOT`, or
+the working directory — so a build tree anywhere under the repository
+works from anywhere; set `JUDAS_ENGINE_ROOT=<repository>` for a build
+tree elsewhere.
+
+## Projects
+
+A project is a directory with one `.judasproj` file:
+
+```
+JudasProject 1
+name "Tiny Game"
+startup-scene "Scenes/main.judas"
+assets-dir "Assets"
+scenes-dir "Scenes"
+saves-dir "Saves"
+```
+
+`./build/judas <project>` plays the startup scene; F6/F7 world-state
+deltas live in the project's saves directory. The technology
+demonstration is `judas_tech_demo.judasproj` at the repository root
+(assets under `assets/`, scenes under `assets/scenes/`, startup scene
+`terrain.judas`); the tiny game is `projects/tiny_game/`. The editor's
+**File → New project** creates the directory tree plus a starter scene
+(ground, player start, lamp) and sets it as the startup scene; **Project
+settings** edits the name and startup scene and lists the project's
+scenes; **Run project** launches `./build/judas <project>` as a separate
+process — the game as a player would start it, not the editor's Play.
+
+Assets are referenced by **id**. Every asset file in the assets directory
+has a sidecar:
+
+```
+Assets/models/beacon.obj
+Assets/models/beacon.obj.judasmeta      JudasAssetMeta 1 / id "<32 hex>" / type mesh / source "..."
+```
+
+The sidecar travels with the file, so renaming or moving an asset (Asset
+Browser → Rename / move) changes no scene. A file without a sidecar is
+listed as *untracked* until imported or tracked; a sidecar without its
+file is reported as *missing*; duplicate ids and corrupt sidecars are
+listed as *problems*. Nothing is guessed from file names.
 
 ## Scenes
 
@@ -83,7 +176,7 @@ A scene is a plain text file. The header names the format and version;
 never-reused id, a name, a transform, and any components it uses:
 
 ```
-JudasScene 1
+JudasScene 3
 settings
   name "Classic abuse chamber"
   world-origin 0 0 0
@@ -101,7 +194,8 @@ object 2 "Planet A"
   render sphere
   render.radius 20
   render.color 0.3 0.45 0.35
-  ...
+  ...                            (a mesh render carries render.mesh-asset "<id>"
+                                  and render.texture-asset "<id>" — asset ids, never paths)
   body static sphere
   body.radius 20
   ...
@@ -131,41 +225,57 @@ Shipped scenes (`assets/scenes/`):
 | `fidelity_demo.judas` | **M29:** flat ground, 60 managed crates receding to 240 m, two free-flying satellites, distance policy (Full ≤ 25 m, Coarse ≤ 70 m, Dormant beyond) |
 | `flat_playground.judas` | **M29:** the tiny conventional case — fifty entities on a small map, no policy, nothing managed |
 
-The pre-M28 environment switches still work and now select these files:
-`JUDAS_CLASSIC_DEMO=1`, `JUDAS_FLUID_GRAVITY=rotated|zero`,
+The pre-M28 environment switches still work for the no-argument launch
+from the repository root and select these files from the project's
+scenes directory: `JUDAS_CLASSIC_DEMO=1`, `JUDAS_FLUID_GRAVITY=rotated|zero`,
 `JUDAS_ATMOSPHERIC_PASS=1`, `JUDAS_TERRAIN_ROTATED=1`. An explicit
-`./build/judas <file>` argument wins over all of them. `JUDAS_WORLD_OFFSET`
-(`far` or `x,y,z`) still overrides the scene's authored world origin.
+`./build/judas <project>` or `./build/judas <scene>` argument wins over
+all of them. `JUDAS_WORLD_OFFSET` (`far` or `x,y,z`) still overrides the
+scene's authored world origin.
+
+The shipped scenes are generated by `./build/judas_scene_author
+assets/scenes projects/tiny_game/Scenes` (`tools/SceneAuthor.cpp`);
+regeneration is byte-identical.
 
 ## The editor
 
-`./build/judas_editor [scene.judas]` opens a scene (or starts an empty one).
-The window is the viewport; panels sit over it.
+`./build/judas_editor [project.judasproj | scene.judas]` opens a project
+(and its startup scene) or a scene inside its enclosing project. The
+window is the viewport; panels sit over it.
 
 | Editor action | How |
 |---------------|-----|
 | Look around | hold the **right mouse button** and move the mouse |
 | Fly | with the right button held: `W`/`A`/`S`/`D`, `E` up, `Q` down, `Shift` faster |
-| Select | **left-click** an object in the viewport, or click it in **Hierarchy** |
+| Select | **left-click** an object in the viewport (a bounding-sphere pick — approximate for long thin objects), or click it in **Hierarchy** |
 | Focus the selection | `F`, or Hierarchy → Focus |
-| Create objects | **Create** menu: empty, static/dynamic box or sphere, mesh, point/spot light, player start (placed 8 m ahead of the camera) |
-| Delete | `Delete`, Hierarchy → Delete selected, or the right-click menu (which also reorders) |
-| Edit | **Inspector**: name, position, rotation (degrees), scale, every component's fields, Add component / Remove |
-| Scene-wide values | **Scene** panel: name, world origin, sun, ambient, fluid scale |
-| Undo / redo | `Ctrl+Z` / `Ctrl+Y` (Edit menu) |
-| Save / open | `Ctrl+S`, File → Save / Save As… / Open… (a path field; no OS dialog yet) |
-| **Play** | File-bar **Play** or `F5`: the authored scene is instantiated and played with the normal Judas controls below |
-| While playing | `Escape` opens the M13 pause menu and frees the mouse so the editor panels are usable again; the inspector is read-only |
+| **Move / rotate / scale** | `W` / `E` / `R` pick the gizmo; drag a red/green/blue handle (arrow, ring, box); `X` toggles local/world space; hold `Ctrl` (or Edit → Snap) to snap 0.5 m / 15° / 0.25; a drag is one undo step |
+| Create objects | **Create** menu: empty, static/dynamic box or sphere, mesh, point/spot light, door, gravity region, player start (placed 8 m ahead of the camera); or drag a mesh from the **Asset Browser** onto the viewport |
+| Rename / duplicate | double-click a Hierarchy row (or right-click → Rename); `Ctrl+D`, Hierarchy → Duplicate, or right-click → Duplicate (a new id, placed after the original) |
+| Delete / reorder | `Delete`, Hierarchy → Delete, or the right-click menu (Move up / Move down — order is authored data: earlier gravity regions win) |
+| Hierarchy indicators | `[RB]` letters name the components an object has (R render, B body, G gravity, L light, D door, S switch, V vehicle, C celestial, A atmosphere, F combustible, W fluid, P player start); `(!)` marks a mesh whose asset is missing or unknown; while playing, `[Full]`/`[Coarse]`/`[Dormant]`/`[destroyed]` show M29 state |
+| Edit | **Inspector**: name, transform, every component's fields (one editor per component type from a registry; Add component… / Remove), asset fields as combos or drop targets with an honest status line (unknown id, file missing) |
+| Scene-wide values | **Scene** panel: name, world origin, sun, ambient, fluid scale, fidelity policy |
+| Assets | **Asset Browser** (View menu): every tracked asset with type, path, state and id; **Import** a file by path into the assets directory (validated by the engine's own loader); select → **Rename / move**, **Remove**; **Track** untracked files; problems listed; drag rows onto the viewport or an inspector field |
+| Project | File → **New project…**, **Open project…**, **Project settings** (name, startup scene, scene list — double-click opens), **Run project** |
+| Debug view | **Debug** menu toggles: collision shapes, player capsule + support, contacts, gravity vectors + regions, frame axes, lights, interaction ranges, lifecycle/fidelity, sampled terrain normals, fluid particles, atmosphere radii — drawn in Edit (authored) and Play (live) |
+| Profiler | View → **Profiler**: frame ms / FPS (rolling), fixed steps per frame, last step ms, live/dynamic bodies, contacts, entity counts, draw calls, triangles, shadow passes, dynamic lights, debug lines, fluid particles and surface/solve times, resource counts and hit/miss/failed |
+| Undo / redo | `Ctrl+Z` / `Ctrl+Y` (Edit menu) — every panel edit, gizmo drag, create, duplicate, delete and reorder is one step |
+| Save / open | `Ctrl+S`, File → Save scene / Save scene as… / Open scene… (path fields relative to the project root; no OS dialog) |
+| **Play scene** | **Play scene** or `F5`: the authored scene is instantiated and played with the normal Judas controls below; edge-triggered keys pressed while editing are cleared first |
+| While playing | `Escape` opens the M13 pause menu and frees the mouse so the editor panels are usable again; the inspector is read-only and shows the M29 runtime entity |
 | **Stop** | **Stop** or `F5`: the runtime world is discarded and the authored scene is exactly what it was |
+| **Run project** | launches `./build/judas <project>` beside the editor binary as a separate process on the startup scene |
 
 Runtime changes made during Play (thrown crates, burnt fuel, moved water)
-are never written back to the scene. "Apply runtime state to the scene"
-is a possible future feature, not an M28 one.
+are never written back to the scene; M29 world-state deltas go to the
+project's saves directory. "Apply runtime state to the scene" is a
+possible future feature, not an M30 one.
 
-Viewport transform gizmos, object parenting, an asset import pipeline and
-an OS file dialog are deliberately not part of M28 — see
-[`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md), "Milestone 28, Deliberately
-not implemented."
+Object parenting, an OS file dialog, mesh-precise picking, asynchronous
+loading and an asset cooking pipeline are deliberately not part of M30 —
+see [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md), "Milestone 30,
+Deliberately not implemented."
 
 ## Lifecycle, fidelity and persistence (M29)
 
@@ -700,23 +810,25 @@ cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
 cmake --build build -j"$(nproc)"
 ```
 
-This produces the `judas` runtime, the `judas_editor` editor, and the 28
-headless test executables. The engine itself is the `judas_engine` static
+This produces the `judas` runtime, the `judas_editor` editor, the
+`judas_scene_author` tool and the 30 headless test executables. The engine itself is the `judas_engine` static
 library both executables link; the editor additionally links the vendored
 Dear ImGui (`judas_imgui`). The engine never depends on the editor.
 
 ### Run
 
 ```bash
-./build/judas                                  # terrain demonstration
-./build/judas assets/scenes/classic.judas      # any scene file
-./build/judas_editor assets/scenes/terrain.judas
+./build/judas                                        # the enclosing project's startup scene (terrain demonstration)
+./build/judas projects/tiny_game/tiny_game.judasproj # a project
+./build/judas assets/scenes/classic.judas            # a scene of the enclosing project
+./build/judas_editor projects/tiny_game/tiny_game.judasproj
 ```
 
-Run from the repository root (as shown above) — scene files, models,
-textures and the UI font are loaded via paths relative to the current
-working directory, and `judas` reports an error and exits if it's run from
-somewhere else and can't find them.
+With no argument, `judas` and `judas_editor` look for the project
+enclosing the working directory (the repository root holds
+`judas_tech_demo.judasproj`); with a project or scene argument the
+working directory does not matter. Only the engine's UI font is located
+relative to the executable / `$JUDAS_ENGINE_ROOT` (see "Quick start").
 
 ## Controls
 
@@ -956,8 +1068,10 @@ uses, so its per-body CSV columns follow the scene's dynamic bodies in
 scene order and include every body the interactive scene has (the
 orbital bodies and cups were previously omitted from harness runs).
 
-Twenty-nine standalone, headless test executables also exist (no window or GL
-context): `judas_physics_tests` and `judas_collision_tests` (rigid-body/
+Thirty standalone, headless test executables also exist (no window or GL
+context) — the M30 `judas_project_tests` covers projects, asset identity,
+the resource manager, project launch, gizmo mathematics and Edit/Play
+separation; the rest are: `judas_physics_tests` and `judas_collision_tests` (rigid-body/
 collision/gravity-context primitives); `judas_asset_tests` (Milestone 9 —
 model/texture loading, parses the real committed demo assets and checks
 vertex/index/UV/normal data and texture dimensions; run from the
@@ -1074,7 +1188,11 @@ domain / CC0-equivalent, redistributable without restriction. See
 
 `assets/scenes/*.judas` (Milestone 28) are the demonstration scenes,
 authored once from the M27 composition-root constants and now the only
-place those placements live; edit them in `judas_editor` or by hand.
+place those placements live; edit them in `judas_editor`, by hand, or
+regenerate them with `judas_scene_author` (`tools/SceneAuthor.cpp`).
+`assets/**/*.judasmeta` (Milestone 30) are the asset identity sidecars;
+`judas_tech_demo.judasproj` is the demonstration's project file and
+`projects/tiny_game/` the tiny flat game project.
 
 `third_party/imgui/` (Milestone 28) is Dear ImGui v1.91.9b (MIT) — see
 [`third_party/imgui/README.md`](third_party/imgui/README.md) for the exact

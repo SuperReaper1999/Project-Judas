@@ -28,6 +28,9 @@ class Window;
 class InteractivePlay {
 public:
     using FixedStepObserver = std::function<void(const FixedStepMeasurements&, double fixedStepMilliseconds)>;
+    // Milestone 30: drawn inside the 3D frame after the world and before the
+    // HUD — the editor's debug view. Receives the presentation alpha.
+    using WorldOverlay = std::function<void(Renderer&, float presentationAlpha)>;
 
     bool Begin(RuntimeWorld& world, const WorldCoordinates& worldCoordinates, std::string& outError);
     // Milestone 29: where F6 writes / F7 deletes the world-state delta for
@@ -41,6 +44,13 @@ public:
 
     void SetFixedStepMeasurementFlags(bool atmosphere, bool fire, bool fluid);
     void SetFixedStepObserver(FixedStepObserver observer) { m_observer = std::move(observer); }
+    void SetWorldOverlay(WorldOverlay overlay) { m_overlay = std::move(overlay); }
+    // Milestone 30 profiler inputs: how many fixed steps the last Frame ran,
+    // the wall time of the last StepPlayedWorld call (always measured), and
+    // the last step's opt-in subsystem measurements.
+    int LastFixedStepsThisFrame() const { return m_lastStepsThisFrame; }
+    double LastFixedStepMilliseconds() const { return m_lastStepMilliseconds; }
+    const FixedStepMeasurements& LastMeasurements() const { return m_measurements; }
 
     // Routes this frame's already-pumped input, advances the simulation
     // by however many fixed steps `frameDeltaTime` earns (none while the
@@ -70,6 +80,9 @@ private:
     WorldCoordinates m_worldCoordinates;
     FixedStepMeasurements m_measurements;
     FixedStepObserver m_observer;
+    WorldOverlay m_overlay;
+    int m_lastStepsThisFrame = 0;
+    double m_lastStepMilliseconds = 0.0;
     AerodynamicDragResult m_lastAerodynamicDrag;
     float m_physicsAccumulator = 0.0f;
     std::size_t m_fixedStepsSinceReset = 0;

@@ -8,6 +8,7 @@
 #include "FontLoader.h"
 #include "Light.h"
 #include "MeshData.h"
+#include "DebugDraw.h"
 #include "TextureData.h"
 #include <glad/gl.h>
 
@@ -25,6 +26,19 @@ struct TextureHandle {
     static constexpr unsigned int kInvalidId = 0xFFFFFFFFu;
     unsigned int id = kInvalidId;
     bool IsValid() const { return id != kInvalidId; }
+};
+
+// Milestone 30: what Renderer actually submitted since the last
+// ResetStats — counted at the draw call, not estimated. `drawCalls` and
+// `triangles` include shadow-pass submissions (each shadow pass re-draws
+// the scene); `shadowPasses` says how many such passes ran; `debugLines`
+// counts line segments, which are not triangles.
+struct RenderStats {
+    unsigned int drawCalls = 0;
+    unsigned int triangles = 0;
+    unsigned int shadowPasses = 0;
+    unsigned int dynamicLights = 0;  // as last set by SetDynamicLights (after truncation)
+    unsigned int debugLines = 0;
 };
 
 // Owns the GL objects and draw calls. Low-level calls (glClear, glDrawArrays,
@@ -137,6 +151,20 @@ public:
                     float alpha = 1.0f);
 
     void EndFrame();
+
+    // --- Milestone 30: debug line overlay + submission statistics ---
+    //
+    // Draws world-space line segments unlit, depth-tested against whatever
+    // the frame already drew (so a collision shape hidden behind a wall is
+    // hidden), through a third small shader/VBO pair kept out of the lit
+    // mesh path. Lines are uploaded per call (a debug view is rebuilt every
+    // frame it is enabled; nothing is retained). Call between SetCamera and
+    // EndFrame; a no-op during a shadow pass. `depthTest` false draws on
+    // top of everything (the editor's gizmo handles).
+    void DrawDebugLines(const std::vector<DebugLine>& lines, bool depthTest = true);
+
+    void ResetStats() { m_stats = RenderStats{}; }
+    const RenderStats& Stats() const { return m_stats; }
 
     // --- Milestone 15: shadow mapping ---
     //
@@ -335,6 +363,13 @@ private:
     GLint m_uiUUVOffset = -1;
     GLint m_uiUUVScale = -1;
     glm::vec2 m_uiScreenSize{0.0f, 0.0f};
+
+    // --- Milestone 30: debug lines + stats ---
+    GLuint m_debugShaderProgram = 0;
+    GLuint m_debugVao = 0;
+    GLuint m_debugVbo = 0;
+    GLint m_debugUViewProjection = -1;
+    RenderStats m_stats;
 
     TextureHandle m_fontAtlasTexture;
     FontGlyph m_fontGlyphs[kFontGlyphCount];

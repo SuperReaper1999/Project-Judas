@@ -437,6 +437,29 @@ void main() {
 }
 )";
 
+// Milestone 30: the debug-line shader — world-space position + colour per
+// vertex, one view-projection uniform, no lighting, no texture. Kept apart
+// from the lit mesh shader for the same reason the UI shader is: it is a
+// genuinely different pass (GL_LINES, per-vertex colour, streamed data).
+const char* kDebugVertexShaderSource = R"(#version 330 core
+layout(location = 0) in vec3 aPosition;
+layout(location = 1) in vec3 aColor;
+uniform mat4 uViewProjection;
+out vec3 vColor;
+void main() {
+    vColor = aColor;
+    gl_Position = uViewProjection * vec4(aPosition, 1.0);
+}
+)";
+
+const char* kDebugFragmentShaderSource = R"(#version 330 core
+in vec3 vColor;
+out vec4 FragColor;
+void main() {
+    FragColor = vec4(vColor, 1.0);
+}
+)";
+
 }  // namespace
 
 bool Renderer::Init() {
@@ -649,6 +672,31 @@ bool Renderer::Init() {
     glBindVertexArray(0);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
 
+    // --- Milestone 30: debug-line shader + streamed VBO ---
+    GLuint debugVertexShader = 0;
+    if (!CompileShader(GL_VERTEX_SHADER, kDebugVertexShaderSource, debugVertexShader)) return false;
+    GLuint debugFragmentShader = 0;
+    if (!CompileShader(GL_FRAGMENT_SHADER, kDebugFragmentShaderSource, debugFragmentShader)) {
+        glDeleteShader(debugVertexShader);
+        return false;
+    }
+    const bool debugLinked = LinkProgram(debugVertexShader, debugFragmentShader, m_debugShaderProgram);
+    glDeleteShader(debugVertexShader);
+    glDeleteShader(debugFragmentShader);
+    if (!debugLinked) return false;
+    m_debugUViewProjection = glGetUniformLocation(m_debugShaderProgram, "uViewProjection");
+    glGenVertexArrays(1, &m_debugVao);
+    glBindVertexArray(m_debugVao);
+    glGenBuffers(1, &m_debugVbo);
+    glBindBuffer(GL_ARRAY_BUFFER, m_debugVbo);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), nullptr);
+    glEnableVertexAttribArray(0);
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float),
+                          reinterpret_cast<const void*>(3 * sizeof(float)));
+    glEnableVertexAttribArray(1);
+    glBindVertexArray(0);
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+
     // Milestone 15: until the first real BeginShadowPass call each frame
     // (every interactive-loop frame calls it three times — see
     // Application.cpp; TestHarness.cpp's own render path never does,
@@ -723,7 +771,36 @@ void Renderer::Shutdown() {
         glDeleteProgram(m_uiShaderProgram);
         m_uiShaderProgram = 0;
     }
+    if (m_debugVbo) { glDeleteBuffers(1, &m_debugVbo); m_debugVbo = 0; }
+    if (m_debugVao) { glDeleteVertexArrays(1, &m_debugVao); m_debugVao = 0; }
+    if (m_debugShaderProgram) { glDeleteProgram(m_debugShaderProgram); m_debugShaderProgram = 0; }
     m_fontLoaded = false;
+}
+
+void Renderer::DrawDebugLines(const std::vector<DebugLine>& lines, bool depthTest) {
+    if (lines.empty() || m_shadowPassActive || !m_debugShaderProgram) return;
+    if (!depthTest) glDisable(GL_DEPTH_TEST);
+    std::vector<float> vertices;
+    vertices.reserve(lines.size() * 12);
+    for (const DebugLine& line : lines) {
+        for (const glm::vec3* p : {&line.a, &line.b}) {
+            vertices.push_back(p->x); vertices.push_back(p->y); vertices.push_back(p->z);
+            vertices.push_back(line.color.r); vertices.push_back(line.color.g); vertices.push_back(line.color.b);
+        }
+    }
+    glUseProgram(m_debugShaderProgram);
+    const glm::mat4 viewProjection = m_projection * m_view;
+    glUniformMatrix4fv(m_debugUViewProjection, 1, GL_FALSE, glm::value_ptr(viewProjection));
+    glBindVertexArray(m_debugVao);
+    glBindBuffer(GL_ARRAY_BUFFER, m_debugVbo);
+    glBufferData(GL_ARRAY_BUFFER, static_cast<GLsizeiptr>(vertices.size() * sizeof(float)), vertices.data(),
+                 GL_STREAM_DRAW);
+    glDrawArrays(GL_LINES, 0, static_cast<GLsizei>(lines.size() * 2));
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    glBindVertexArray(0);
+    if (!depthTest) glEnable(GL_DEPTH_TEST);
+    ++m_stats.drawCalls;
+    m_stats.debugLines += static_cast<unsigned int>(lines.size());
 }
 
 void Renderer::BeginFrame(int windowWidth, int windowHeight) {
@@ -752,6 +829,7 @@ void Renderer::SetDynamicLights(const std::vector<DynamicLight>& lights) {
 
     const int count = std::min(static_cast<int>(lights.size()), kMaxDynamicLights);
     glUniform1i(m_uLightCount, count);
+    m_stats.dynamicLights = static_cast<unsigned int>(count);
 
     for (int i = 0; i < count; ++i) {
         const DynamicLight& light = lights[static_cast<size_t>(i)];
@@ -779,6 +857,7 @@ void Renderer::BeginShadowPass(int shadowSlot, const glm::mat4& lightViewProject
     m_shadowLightSpaceMatrix[shadowSlot] = lightViewProjection;
     m_shadowPassActive = true;
     m_currentShadowSlot = shadowSlot;
+    ++m_stats.shadowPasses;
 
     glBindFramebuffer(GL_FRAMEBUFFER, m_shadowFbo[shadowSlot]);
     glViewport(0, 0, kShadowMapResolution, kShadowMapResolution);
@@ -929,6 +1008,11 @@ void Renderer::DrawMesh(MeshHandle mesh, const glm::vec3& position, const glm::q
     // projection, through the separate minimal shadow shader — normals,
     // UVs, textures, and every lighting uniform are irrelevant to a depth-
     // only pass, so none of them are touched here.
+    const unsigned int triangles =
+        static_cast<unsigned int>((gpuMesh->ebo ? gpuMesh->indexCount : gpuMesh->vertexCount) / 3);
+    ++m_stats.drawCalls;
+    m_stats.triangles += triangles;
+
     if (m_shadowPassActive) {
         glUseProgram(m_shadowShaderProgram);
         glUniformMatrix4fv(m_uShadowModel, 1, GL_FALSE, glm::value_ptr(model));

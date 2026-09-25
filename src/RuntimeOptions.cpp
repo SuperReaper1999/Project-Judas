@@ -33,37 +33,79 @@ bool ParseWorldOffset(const char* value, glm::dvec3& outOffset, std::string& out
     return true;
 }
 
+namespace {
+bool EndsWith(const std::string& s, const std::string& suffix) {
+    return s.size() >= suffix.size() && s.compare(s.size() - suffix.size(), suffix.size(), suffix) == 0;
+}
+}  // namespace
+
 bool ParseRuntimeOptions(int argc, char** argv, RuntimeOptions& out, std::string& outError) {
     out = RuntimeOptions{};
     if (argc > 2) {
-        outError = "usage: judas [scene.judas]";
+        outError = "usage: judas [project.judasproj | scene.judas]";
         return false;
     }
     if (const char* script = std::getenv("JUDAS_TEST_SCRIPT")) out.testScriptPath = script;
 
+    // --- Milestone 30: which project, which scene ---
+    std::string explicitScene;
+    std::string projectFile;
     if (argc == 2) {
-        out.scenePath = argv[1];
-    } else if (out.IsTestRun()) {
-        out.scenePath = EnvSet("JUDAS_TERRAIN_PREVIEW") ? "assets/scenes/terrain.judas"
-                                                        : "assets/scenes/classic.judas";
-        if (EnvSet("JUDAS_TERRAIN_PREVIEW") && EnvSet("JUDAS_TERRAIN_ROTATED")) {
-            out.scenePath = "assets/scenes/terrain_rotated.judas";
+        const std::string argument = argv[1];
+        if (EndsWith(argument, kProjectFileExtension)) {
+            projectFile = argument;
+        } else if (EndsWith(argument, ".judas")) {
+            explicitScene = argument;
+            projectFile = Project::FindProjectFileFor(argument);
+        } else {
+            outError = "judas expects a .judasproj project file or a .judas scene file, got '" + argument + "'";
+            return false;
         }
-    } else if (EnvSet("JUDAS_CLASSIC_DEMO")) {
+    } else {
+        projectFile = Project::FindProjectFileFor(".");
+    }
+    if (!projectFile.empty() && !out.project.Load(projectFile, outError)) return false;
+
+    // The scene: explicit, else a legacy environment selection from the
+    // project's scenes directory, else the project's startup scene.
+    const auto sceneInProject = [&](const std::string& file) {
+        return out.project.IsLoaded() ? out.project.ScenesDir() + "/" + file : "assets/scenes/" + file;
+    };
+    // The legacy environment switches select demonstration scenes only
+    // when no argument was given (the pre-M30 command line); an explicit
+    // project launch always starts the project's startup scene.
+    const bool legacySelection = argc == 1;
+    if (!explicitScene.empty()) {
+        out.scenePath = explicitScene;
+    } else if (legacySelection && out.IsTestRun()) {
+        out.scenePath = sceneInProject(EnvSet("JUDAS_TERRAIN_PREVIEW") ? "terrain.judas" : "classic.judas");
+        if (EnvSet("JUDAS_TERRAIN_PREVIEW") && EnvSet("JUDAS_TERRAIN_ROTATED")) {
+            out.scenePath = sceneInProject("terrain_rotated.judas");
+        }
+    } else if (legacySelection && EnvSet("JUDAS_CLASSIC_DEMO")) {
         const char* fluidGravity = std::getenv("JUDAS_FLUID_GRAVITY");
         const std::string mode = fluidGravity ? fluidGravity : "normal";
-        if (mode == "normal") out.scenePath = "assets/scenes/classic.judas";
-        else if (mode == "rotated") out.scenePath = "assets/scenes/classic_fluid_rotated.judas";
-        else if (mode == "zero") out.scenePath = "assets/scenes/classic_fluid_zero.judas";
+        if (mode == "normal") out.scenePath = sceneInProject("classic.judas");
+        else if (mode == "rotated") out.scenePath = sceneInProject("classic_fluid_rotated.judas");
+        else if (mode == "zero") out.scenePath = sceneInProject("classic_fluid_zero.judas");
         else {
             outError = "JUDAS_FLUID_GRAVITY must be normal, rotated, or zero.";
             return false;
         }
-    } else {
+    } else if (legacySelection && (EnvSet("JUDAS_ATMOSPHERIC_PASS") || EnvSet("JUDAS_TERRAIN_ROTATED"))) {
         const bool pass = EnvSet("JUDAS_ATMOSPHERIC_PASS");
         const bool rotated = EnvSet("JUDAS_TERRAIN_ROTATED");
-        out.scenePath = std::string("assets/scenes/terrain") + (pass ? "_atmospheric_pass" : "") +
-                        (rotated ? "_rotated" : "") + ".judas";
+        out.scenePath = sceneInProject(std::string("terrain") + (pass ? "_atmospheric_pass" : "") +
+                                       (rotated ? "_rotated" : "") + ".judas");
+    } else if (out.project.IsLoaded()) {
+        out.scenePath = out.project.StartupScenePath();
+        if (out.scenePath.empty()) {
+            outError = "project '" + out.project.Settings().name + "' has no startup scene (set it in Project Settings)";
+            return false;
+        }
+    } else {
+        outError = "no project: run `judas <project.judasproj>` or `judas <scene.judas>`, or start inside a project directory";
+        return false;
     }
 
     if (EnvSet("JUDAS_WORLD_OFFSET")) {
@@ -72,7 +114,8 @@ bool ParseRuntimeOptions(int argc, char** argv, RuntimeOptions& out, std::string
         out.worldOriginOverride = offset;
     }
     if (const char* path = std::getenv("JUDAS_TERRAIN_SCREENSHOT")) out.terrainScreenshotPath = path;
-    out.worldStatePath = DefaultWorldStatePath(out.scenePath);
+    out.worldStatePath = out.project.IsLoaded() ? out.project.WorldStatePathForScene(out.scenePath)
+                                                : DefaultWorldStatePath(out.scenePath);
     if (const char* state = std::getenv("JUDAS_WORLD_STATE")) {
         out.worldStatePath = std::string(state) == "none" ? std::string() : state;
     }

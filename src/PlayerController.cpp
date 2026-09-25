@@ -684,3 +684,6 @@ glm::mat4 PlayerController::GetProjectionMatrix(float aspectRatio) const {
 glm::vec3 PlayerController::GetRenderHalfExtents() const {
     return glm::vec3(kCapsuleRadius, kCapsuleHalfHeight + kCapsuleRadius, kCapsuleRadius);
 }
+
+float PlayerController::CapsuleRadius() { return kCapsuleRadius; }
+float PlayerController::CapsuleHalfHeight() { return kCapsuleHalfHeight; }

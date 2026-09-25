@@ -1,0 +1,6 @@
+JudasProject 1
+name "Judas Technology Demonstration"
+startup-scene "assets/scenes/terrain.judas"
+assets-dir "assets"
+scenes-dir "assets/scenes"
+saves-dir "saves"

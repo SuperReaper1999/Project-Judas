@@ -1,4 +1,4 @@
-JudasScene 2
+JudasScene 3
 settings
   name "Terrain planet — atmospheric pass (rotated)"
   world-origin 0 0 0
@@ -21,8 +21,8 @@ object 1 "Terrain planet"
   render.alpha 1
   render.secondary-color 0.8 0.8 0.8
   render.secondary-alpha 1
-  render.mesh ""
-  render.texture ""
+  render.mesh-asset ""
+  render.texture-asset ""
   body static terrain
   body.half-extents 0.5 0.5 0.5
   body.radius 0.5
@@ -67,8 +67,8 @@ object 3 "Dense block"
   render.alpha 1
   render.secondary-color 0.8 0.8 0.8
   render.secondary-alpha 1
-  render.mesh ""
-  render.texture ""
+  render.mesh-asset ""
+  render.texture-asset ""
   body dynamic box
   body.half-extents 0.45 0.45 0.45
   body.radius 0.5
@@ -93,8 +93,8 @@ object 4 "Spacecraft"
   render.alpha 1
   render.secondary-color 0.8 0.8 0.8
   render.secondary-alpha 1
-  render.mesh "assets/models/plane.obj"
-  render.texture ""
+  render.mesh-asset "9c1e7d2a4b5f4c6d8e9fa0b1c2d3e4f5"
+  render.texture-asset ""
   body dynamic box
   body.half-extents 2 0.25 3
   body.radius 0.5

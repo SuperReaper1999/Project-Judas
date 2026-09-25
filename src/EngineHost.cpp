@@ -3,6 +3,8 @@
 #include <SDL2/SDL.h>
 #include <glad/gl.h>
 
+#include "EnginePaths.h"
+
 namespace {
 GLADapiproc LoadOpenGLProcAddress(const char* name) {
     return reinterpret_cast<GLADapiproc>(SDL_GL_GetProcAddress(name));
@@ -32,13 +34,22 @@ bool EngineHost::Init(const char* title, int width, int height, bool visible, st
         return false;
     }
     m_rendererInitialized = true;
-    if (!m_renderer.LoadFont(kUIFontPath, kUIFontPixelHeight, outError)) return false;
-    m_assets = std::make_unique<RenderAssetCache>(&m_renderer);
+    const std::string fontPath = ResolveEngineDataPath(kUIFontPath);
+    if (!m_renderer.LoadFont(fontPath.c_str(), kUIFontPixelHeight, outError)) {
+        outError += " (engine font " + fontPath + "; set JUDAS_ENGINE_ROOT to the repository root)";
+        return false;
+    }
+    m_resources = std::make_unique<ResourceManager>(&m_renderer, &m_assetDatabase);
     return true;
 }
 
+void EngineHost::OpenProjectAssets(const std::string& projectRoot, const std::string& assetsDir) {
+    if (m_resources) m_resources->ReleaseAll();
+    m_assetDatabase.Scan(projectRoot, assetsDir);
+}
+
 void EngineHost::Shutdown() {
-    m_assets.reset();
+    m_resources.reset();
     if (m_rendererInitialized) {
         m_renderer.Shutdown();
         m_rendererInitialized = false;

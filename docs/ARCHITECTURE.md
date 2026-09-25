@@ -6,7 +6,7 @@ someone with no prior context on this project. It is updated in place as
 milestones land, rather than kept as a per-milestone snapshot — see
 "Milestone history" below for how to recover an earlier milestone exactly.
 
-## What exists right now (M29 in operator validation)
+## What exists right now (M30 candidate, operator validation pending)
 
 **Judas is a game engine.** Everything a player meets in the default
 launch — the terrain planet, its lake and atmosphere, the spacecraft, the
@@ -15,6 +15,16 @@ technology demonstration: authored scene content, loaded from files under
 `assets/scenes/`, that exercises engine capabilities. The engine must stay
 able to serve a small conventional flat-terrain game as well as a
 planetary/universe-scale one; nothing below privileges the demonstration.
+
+As of Milestone 30 a game is a **project** (`.judasproj`: a root
+directory, its Assets/Scenes/Saves folders, a startup scene), assets have
+**stable ids** carried in `.judasmeta` sidecars and are referenced by id
+from scenes (format version 3), a single **ResourceManager** turns project
+assets into GPU resources, and the editor can make a small game with
+projects, an asset browser, viewport gizmos, a component-editor registry,
+a debug visualisation layer and a profiler. The technology demonstration
+is an ordinary project (`judas_tech_demo.judasproj`); `projects/tiny_game`
+is a small flat game. See "Milestone 30" at the end of this document.
 
 As of Milestone 29 an entity may exist without being fully simulated:
 every dynamic body is a persistent entity at Full, Coarse or Dormant
@@ -7147,8 +7157,8 @@ object <id> "<name>"
   render.alpha <a>
   render.secondary-color <r> <g> <b>
   render.secondary-alpha <a>
-  render.mesh "<path>"
-  render.texture "<path>"
+  render.mesh "<path>"            (version 1–2; version 3 (M30) writes
+  render.texture "<path>"          render.mesh-asset "<id>" / render.texture-asset "<id>")
   body <static|dynamic> <box|sphere|compound|terrain>
   body.half-extents / body.radius / body.terrain "<id>" / body.mass /
   body.friction / body.restitution / body.initial-velocity <x> <y> <z> /
@@ -7663,3 +7673,311 @@ render LOD, dormant-time extrapolation on wake, a save-game UI or
 migration framework, cloud or database persistence. Each will consume the
 lifecycle, fidelity and delta boundaries established here when a brief
 asks for it.
+
+## Milestone 30 — Judas learns to actually make games with itself (operator validation pending)
+
+### The gate
+
+Through M29 the engine could load, play, edit and persist scenes, but
+everything it played still lived in one repository layout: scene files
+under `assets/scenes`, meshes by working-directory path, the runtime
+choosing a scene by environment variable, the editor able to edit but not
+to create a game. M30 asks one question and answers it with automated
+evidence: **can a small game be made and run using Judas without touching
+engine source?** The answer is `projects/tiny_game` — a project created the
+way the editor's New project creates one, with a scene the editor could
+have authored, launched by `judas projects/tiny_game/tiny_game.judasproj`
+and by the editor's Run project, and covered by `judas_project_tests`.
+
+### Projects (`src/Project.h`)
+
+A project is a directory holding one `.judasproj` file:
+
+```
+JudasProject 1
+name "Tiny Game"
+startup-scene "Scenes/main.judas"
+assets-dir "Assets"
+scenes-dir "Scenes"
+saves-dir "Saves"
+```
+
+The format is the scene format's sibling: line-oriented, quoted strings,
+strict (unknown version, unknown/missing/duplicate key, absolute or
+`..` directory, startup scene outside the project all fail with a
+message; nothing is defaulted silently), deterministic (serialize → parse
+→ serialize is byte-identical). Every path in project and scene data is
+relative to the **project root** — the directory the file is in — never
+to the process's working directory. `Project::FindProjectFileFor` walks
+up from a scene path (or the working directory) to the nearest directory
+holding exactly one `.judasproj`; two candidates in one directory is
+"none" rather than a guess.
+
+The runtime (`src/RuntimeOptions.cpp`) launches a project:
+`judas <game.judasproj>` plays its startup scene; `judas <scene.judas>`
+plays that scene inside its enclosing project; bare `judas` uses the
+project enclosing the working directory. The pre-M28 environment switches
+(`JUDAS_CLASSIC_DEMO`, `JUDAS_FLUID_GRAVITY`, `JUDAS_ATMOSPHERIC_PASS`,
+`JUDAS_TERRAIN_ROTATED`, the `JUDAS_TEST_SCRIPT` default) still select
+demonstration scenes — from the project's scenes directory, and only for
+the no-argument form, so an explicit project launch always starts the
+startup scene and a project without a `classic.judas` is never asked for
+one. World-state deltas (M29) go to `<saves-dir>/<scene stem>.judasstate`.
+
+**The technology demonstration is an ordinary project.**
+`judas_tech_demo.judasproj` at the repository root points its assets-dir
+at `assets`, its scenes-dir at `assets/scenes` and its startup scene at
+`terrain.judas`. No engine code knows it exists: `grep -ri techdemo src`
+finds nothing but the project's display name in a comment. The tiny game
+is the same kind of thing with the default `Assets/Scenes/Saves` layout.
+
+**Engine data versus project data.** The one file the engine itself needs
+— the UI font — is engine data, not project content, and is resolved by
+`src/EnginePaths.h` (`$JUDAS_ENGINE_ROOT`, the executable's directory and
+its parent, then the working directory). A project does not ship a font;
+a build tree anywhere under the repository finds it from any working
+directory.
+
+### Stable asset identity (`src/AssetDatabase.h`)
+
+Scenes referenced meshes and textures by path through M29; a rename broke
+every scene that used the file. M30 gives every asset a stable
+**AssetId** — 32 lowercase hex digits, minted at import — recorded in a
+sidecar beside the file:
+
+```
+Assets/models/beacon.obj.judasmeta
+    JudasAssetMeta 1
+    id "0b3ac0e5c8b04d1e9f7a2c6d5e4f3a21"
+    type mesh                      (mesh | texture | font)
+    source "assets/models/beacon.obj"   (provenance, informational)
+```
+
+Sidecar metadata was chosen over a central manifest because it is the
+form that survives what people actually do to asset folders: the sidecar
+moves with the file under any tool, a copied folder stays consistent, a
+deleted file leaves a sidecar that *says* the asset is missing. The scene
+format's mesh render fields became `render.mesh-asset "<id>"` and
+`render.texture-asset "<id>"` — **format version 3**; the nine shipped
+scenes were regenerated with fixed, hand-chosen ids for the three demo
+assets (and the font), so their diff is exactly the version line and the
+two renamed keys.
+
+`AssetDatabase::Scan` walks the assets directory and holds id → current
+path. It *reports* rather than guesses: a duplicate id (the first holder
+stays usable, the second is a problem), a corrupt sidecar, a sidecar whose
+file is gone (`missing`), and every loadable file without a sidecar
+(`untracked`, not referenceable until imported or tracked). `Import`
+validates the source with the engine's own loader for its type
+(`LoadObjMesh`, `LoadTextureFromFile`, a TrueType/OpenType header check),
+copies it into the assets directory, writes the sidecar and registers
+it; an unsupported extension, an undecodable file or an existing
+destination is refused with nothing half-written. `Move` renames or moves
+the file *and* its sidecar (same extension required; either rename
+failing undoes the other). `Track` adopts an untracked file in place,
+optionally with a fixed id (how the demo tree's ids were assigned).
+
+The automated evidence (`judas_project_tests`, section B): import a real
+mesh, write a scene that refers to its id, move the asset to a new
+directory under a new name, rescan from scratch, and the same id resolves
+at the new path while the saved scene text contains the id and no file
+name. No filename heuristics exist to fall back on.
+
+### The resource manager boundary (`src/ResourceManager.h`)
+
+`ResourceManager` replaces M28's `RenderAssetCache` (path → handle) and is
+the *only* path on which a project asset becomes a GPU resource:
+
+| state | meaning |
+|-------|---------|
+| Unloaded | never requested, or released |
+| request → load → **Ready** | first `GetMesh(id)`/`GetTexture(id)` resolves the id through the AssetDatabase, decodes with the engine loader, uploads through `Renderer`; a valid handle is returned |
+| cached | every further request is a hit: no disk, no GPU |
+| **Failed** | unknown id, missing file, type mismatch or undecodable data is remembered with its message; requests return an invalid handle and do not retry |
+| released | `Release(id)` destroys the GPU resource; the next request loads again (a new handle — the old one is invalid) |
+| reloaded | `Invalidate(id)` = release + forget the failure, so a re-imported or moved file is picked up on the next request; `ReleaseAll` on shutdown |
+
+Terrain surfaces (engine-constructed, `TerrainLibrary`) are keyed by
+identifier as before. Everything is synchronous; there is no background
+thread and no streaming. GL is touched only inside `Renderer`; `Scene`
+holds ids, `RuntimeWorld` holds handles it asked for, nothing authored
+ever holds a handle. A null `Renderer` (tests, the CLI) makes every
+request an honest Failed with "no renderer", which is what the headless
+suite checks along with hit/miss/failed counting and the release/
+invalidate transitions. `EngineHost` owns the `AssetDatabase` and the
+`ResourceManager`; `OpenProjectAssets` rescans for a project and releases
+every resource of the previous one.
+
+### The editor
+
+**Component editor registry** (`src/editor/ComponentEditors.h`). The
+inspector, the Add component… menu and the hierarchy's indicator letters
+all iterate one static table: name, indicator letter, has/add/remove on a
+`SceneObject`, and the draw function for the fields. Adding a component
+type to the editor is one table entry. This is a table over the fixed
+component set in `src/Scene.h`, not reflection and not a dynamic
+component model — the data model is unchanged.
+
+**Gizmos** (`src/editor/GizmoMath.h`, headless-testable). Translate,
+rotate and scale handles at the selection, in world or local space (scale
+always local, since `SceneTransform::scale` is per local axis), drawn
+through the renderer's debug-line path on top of the scene. Picking is
+ray-versus-segment for arrows and ray-versus-ring for rotation; a drag
+captures the press ray's axis parameter (or plane hit for rotation) and
+each frame applies the delta to the transform captured at the press, so
+snapping (`Ctrl`: 0.5 m, 15°, 0.25) rounds the delta and never the
+absolute value. One `BeginEdit` at the press and one `CommitEdit` at the
+release make the whole drag a single undo step; entering Play cancels a
+drag in progress. The suite checks axis directions in both spaces, pick
+hits and misses, exact translate/rotate/scale results from constructed
+rays, snapping, and undo/redo of a ten-frame drag.
+
+**Hierarchy**: inline rename (double-click), duplicate (`Ctrl+D`; a copy
+under a new id inserted right after the original, without the player
+start since a scene has at most one), reorder, delete, component
+indicator letters, `(!)` for a mesh whose asset does not resolve, M29
+fidelity tags while playing. **Asset Browser**: a table of every tracked
+asset (type, path, MISSING/ok, id), import by path, rename/move, remove,
+track, problems, and drag sources whose payload is the asset id — dropped
+on the viewport a mesh becomes a new object where the mouse ray crosses
+the plane through the camera focus; dropped on an inspector Mesh/Texture
+field it is assigned if the type matches. **Project settings**: name,
+startup scene (a combo of the project's scene files), the scene list
+(double-click opens), Save project, Run project. **Run project** spawns
+the `judas` binary beside the editor's own on the project file
+(`posix_spawn`, `JUDAS_ENGINE_ROOT` passed on, the editor's automation
+variable stripped) — the game as a player starts it, separate from the
+editor's Play, which instantiates the current scene in-process.
+
+**Input ownership** is unchanged from M28 and checked again: ImGui's
+capture flags gate the engine's own key/mouse reading, the camera flies
+only while the right button is held over the viewport, gizmo hotkeys
+(`W`/`E`/`R`/`X`) are ignored while flying so they cannot fight the fly
+keys, and `Window::ClearPendingRequests` drains edge-triggered keys before
+the first played frame.
+
+### Debug visualisation layer (`src/DebugDraw.h`, `src/WorldDebugView.h`)
+
+`DebugLineList` is plain world-space line geometry (boxes, spheres,
+circles, capsules, arrows, axes) with no GL in it; `Renderer::
+DrawDebugLines` is the one place it is drawn — a third small shader
+(per-vertex colour, no lighting) with a streamed VBO, depth-tested for
+the world overlay and depth-free for the gizmo. `WorldDebugView` builds a
+list from engine truth every frame a category is on and nothing is
+retained between frames. The categories, and what they honestly show:
+physics shapes as created (static bodies, live dynamic bodies, compound
+children, terrain as its bounding sphere); the player's sweep capsule with
+a green/red support ring and look arrow; the last fixed step's resolved
+contact points and normals (`PhysicsWorld::LastStepContacts`, the final
+solver iteration, so a resting box reports its four manifold points) plus
+the support-body tether; gravity sampled at every live body and the
+player, and the authored regions' volumes; frame axes; this frame's
+dynamic lights as range spheres and spot cones; interactables' ranges with
+the current target highlighted and a tether to the held object; a marker
+per persistent entity coloured by fidelity; terrain normals *sampled* on
+rings around the player (not every vertex); fluid particle markers capped
+at 6,000; atmosphere reference and top radii. The authored (Edit-mode)
+counterpart draws collision shapes, regions, lights, the player start
+capsule and fluid lattice bounds from the Scene.
+
+### Profiler (`DrawProfilerPanel`)
+
+Every number is produced by the code doing the work and labelled with what
+it counts: frame wall time (rolling average) and the FPS it implies; fixed
+steps this frame and the wall time of the last `StepPlayedWorld` (always
+measured now, one clock read per step); live and dynamic `PhysicsWorld`
+bodies; last-step contact points; M29 lifecycle counts; `RenderStats` —
+draw calls and triangles counted *at the draw call* (shadow passes
+included), shadow passes, dynamic lights after truncation, debug lines;
+fluid particles, the fluid solve time when the opt-in measurement is on
+("not measured" otherwise), the surface rebuild and scene submission
+times; resource counts and hit/miss/failed. Physics time *inside* the step
+is not separated from the step (there is no timer around
+`PhysicsWorld::Step` alone) and is not claimed.
+
+### M29 integration
+
+Nothing in M29 changed shape. `body.managed` is a checkbox with a
+one-line explanation when off; the fidelity policy stays in the Scene
+panel; the runtime-entity block, Force buttons and hierarchy tags are as
+in M29; deltas are never written into the authored scene (section H of
+the suite plays the tiny game, moves a body, and checks both the in-memory
+scene and the file are byte-identical). The tiny game sets no policy and
+manages nothing, and the suite checks every one of its entities stays
+Full: a simple project stays simple.
+
+### Scene format changes (version 3)
+
+`render.mesh "<path>"` → `render.mesh-asset "<id>"`, `render.texture
+"<path>"` → `render.texture-asset "<id>"`. Nothing else changed. Version
+1 and 2 files are refused with the usual message; the shipped scenes and
+`tools/SceneAuthor.cpp` (now the `judas_scene_author` target, run as
+`judas_scene_author assets/scenes projects/tiny_game/Scenes`; regeneration
+is byte-identical) carry the fixed ids.
+
+### Automated evidence
+
+`judas_project_tests` (30th suite, headless): A project format (round trip,
+seven strictness failures, CreateNew, second-project refusal, ancestor
+search, path helpers); B asset identity (id validity/minting, import of
+real mesh and texture, refusal of unsupported/undecodable/existing,
+scene-by-id, move + rescan resolving the same id, missing detection,
+untracked/track with a fixed id, duplicate-id and corrupt-sidecar
+problems); C resource manager (Unloaded → Failed with message, remembered
+failure as a hit, Invalidate, reload, type mismatch, unknown id, empty id
+no-op, ReleaseAll); D the tiny game (project → startup scene → runtime,
+no exotic systems, three boxes at rest, player grounded, all Full);
+E the technology-demonstration project (four tracked assets, the fixed
+ids, all ten mesh/texture references across nine scenes resolve, every
+scene instantiates, the startup scene is the terrain demonstration);
+F gizmo mathematics and undo/redo; G every component type through
+save/load; H Edit/Play separation on the tiny game. All 29 earlier suites
+pass unchanged (the scene suite expects version 3). The classic harness
+(`JUDAS_TEST_SCRIPT`, near and far origin) is byte-identical to the M29
+run, which was byte-identical to M27; the terrain harness is byte-identical
+to the M28 reference at both origins.
+
+The editor automation hook (`JUDAS_EDITOR_AUTOTEST=<prefix>`, optionally
+`JUDAS_EDITOR_AUTOTEST_RUN=1`) now also selects the first object, enables
+every debug category and the profiler, duplicates and undoes (printing
+whether the scene changed and whether undo restored it exactly), prints
+draw-call/triangle/debug-line counts for the edit frame and the step,
+body, contact, draw-call, shadow-pass, light and particle counts plus
+resource statistics for the play frame, optionally launches Run project,
+then stops and verifies the authored scene is IDENTICAL. Under Xvfb it
+ran on `classic.judas`, `terrain.judas` and the tiny game project, from
+the repository root and from an unrelated working directory with
+`JUDAS_ENGINE_ROOT` set, and with Run project the spawned runtime inherited
+`JUDAS_TEST_SCRIPT` and produced the tiny game's harness CSV on its startup
+scene before exiting.
+
+### Limitations (documented, not hidden)
+
+- **Picking is a bounding sphere per object.** A long thin plank picks as
+  a large ball; overlapping spheres pick the nearer centre. Precise
+  mesh/box picking is not implemented; the gizmo handles themselves are
+  picked exactly.
+- **No OS file dialog.** Open/Save/Import/New project take path fields.
+- **No object parenting.** `SceneObject` transforms are world-space and
+  the runtime's gravity-region priority, entity ids and deltas all key on
+  flat scene order; a transform hierarchy would change what "position"
+  means for every consumer and for M29's persisted state, so it is not
+  bolted onto the hierarchy panel as a display-only tree.
+- **Synchronous loading only.** Every request loads on the calling
+  thread; there is no streaming, cooking or dependency graph.
+- **Physics time inside a step is not isolated** in the profiler; the
+  whole `StepPlayedWorld` is.
+- **Run project** uses `posix_spawn` (Linux/macOS); on other platforms the
+  status line says what command to run instead.
+- The **resting-creep solver artefact** documented under M29 is unchanged.
+
+### Deliberately not implemented
+
+Object parenting / transform hierarchies, a reflection or dynamic
+component system, an asset cooking pipeline, asynchronous or streamed
+loading, an OS file dialog, mesh-precise picking, multi-select, prefab or
+scene-instancing systems, a scripting language, a build/export step that
+packages a project, per-project engine settings, a project template
+library beyond the one starter scene. Each has a boundary here to attach
+to (`Project`, `AssetDatabase`, `ResourceManager`, the component registry,
+`DebugLineList`) when a brief asks for it.

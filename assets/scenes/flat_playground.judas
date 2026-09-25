@@ -1,4 +1,4 @@
-JudasScene 2
+JudasScene 3
 settings
   name "Flat playground"
   world-origin 0 0 0
@@ -21,8 +21,8 @@ object 1 "Ground"
   render.alpha 1
   render.secondary-color 0.8 0.8 0.8
   render.secondary-alpha 1
-  render.mesh ""
-  render.texture ""
+  render.mesh-asset ""
+  render.texture-asset ""
   body static box
   body.half-extents 25 1 25
   body.radius 0.5
@@ -57,8 +57,8 @@ object 3 "Ball 1"
   render.alpha 1
   render.secondary-color 0.8 0.8 0.8
   render.secondary-alpha 1
-  render.mesh ""
-  render.texture ""
+  render.mesh-asset ""
+  render.texture-asset ""
   body dynamic sphere
   body.half-extents 0.5 0.5 0.5
   body.radius 0.4
@@ -83,8 +83,8 @@ object 4 "Crate 2"
   render.alpha 1
   render.secondary-color 0.8 0.8 0.8
   render.secondary-alpha 1
-  render.mesh ""
-  render.texture ""
+  render.mesh-asset ""
+  render.texture-asset ""
   body dynamic box
   body.half-extents 0.45 0.45 0.45
   body.radius 0.5
@@ -109,8 +109,8 @@ object 5 "Crate 3"
   render.alpha 1
   render.secondary-color 0.8 0.8 0.8
   render.secondary-alpha 1
-  render.mesh ""
-  render.texture ""
+  render.mesh-asset ""
+  render.texture-asset ""
   body dynamic box
   body.half-extents 0.45 0.45 0.45
   body.radius 0.5
@@ -135,8 +135,8 @@ object 6 "Ball 4"
   render.alpha 1
   render.secondary-color 0.8 0.8 0.8
   render.secondary-alpha 1
-  render.mesh ""
-  render.texture ""
+  render.mesh-asset ""
+  render.texture-asset ""
   body dynamic sphere
   body.half-extents 0.5 0.5 0.5
   body.radius 0.4
@@ -161,8 +161,8 @@ object 7 "Crate 5"
   render.alpha 1
   render.secondary-color 0.8 0.8 0.8
   render.secondary-alpha 1
-  render.mesh ""
-  render.texture ""
+  render.mesh-asset ""
+  render.texture-asset ""
   body dynamic box
   body.half-extents 0.45 0.45 0.45
   body.radius 0.5
@@ -187,8 +187,8 @@ object 8 "Crate 6"
   render.alpha 1
   render.secondary-color 0.8 0.8 0.8
   render.secondary-alpha 1
-  render.mesh ""
-  render.texture ""
+  render.mesh-asset ""
+  render.texture-asset ""
   body dynamic box
   body.half-extents 0.45 0.45 0.45
   body.radius 0.5
@@ -213,8 +213,8 @@ object 9 "Ball 7"
   render.alpha 1
   render.secondary-color 0.8 0.8 0.8
   render.secondary-alpha 1
-  render.mesh ""
-  render.texture ""
+  render.mesh-asset ""
+  render.texture-asset ""
   body dynamic sphere
   body.half-extents 0.5 0.5 0.5
   body.radius 0.4
@@ -239,8 +239,8 @@ object 10 "Crate 8"
   render.alpha 1
   render.secondary-color 0.8 0.8 0.8
   render.secondary-alpha 1
-  render.mesh ""
-  render.texture ""
+  render.mesh-asset ""
+  render.texture-asset ""
   body dynamic box
   body.half-extents 0.45 0.45 0.45
   body.radius 0.5
@@ -265,8 +265,8 @@ object 11 "Crate 9"
   render.alpha 1
   render.secondary-color 0.8 0.8 0.8
   render.secondary-alpha 1
-  render.mesh ""
-  render.texture ""
+  render.mesh-asset ""
+  render.texture-asset ""
   body dynamic box
   body.half-extents 0.45 0.45 0.45
   body.radius 0.5
@@ -291,8 +291,8 @@ object 12 "Ball 10"
   render.alpha 1
   render.secondary-color 0.8 0.8 0.8
   render.secondary-alpha 1
-  render.mesh ""
-  render.texture ""
+  render.mesh-asset ""
+  render.texture-asset ""
   body dynamic sphere
   body.half-extents 0.5 0.5 0.5
   body.radius 0.4
@@ -317,8 +317,8 @@ object 13 "Crate 11"
   render.alpha 1
   render.secondary-color 0.8 0.8 0.8
   render.secondary-alpha 1
-  render.mesh ""
-  render.texture ""
+  render.mesh-asset ""
+  render.texture-asset ""
   body dynamic box
   body.half-extents 0.45 0.45 0.45
   body.radius 0.5
@@ -343,8 +343,8 @@ object 14 "Crate 12"
   render.alpha 1
   render.secondary-color 0.8 0.8 0.8
   render.secondary-alpha 1
-  render.mesh ""
-  render.texture ""
+  render.mesh-asset ""
+  render.texture-asset ""
   body dynamic box
   body.half-extents 0.45 0.45 0.45
   body.radius 0.5
@@ -369,8 +369,8 @@ object 15 "Ball 13"
   render.alpha 1
   render.secondary-color 0.8 0.8 0.8
   render.secondary-alpha 1
-  render.mesh ""
-  render.texture ""
+  render.mesh-asset ""
+  render.texture-asset ""
   body dynamic sphere
   body.half-extents 0.5 0.5 0.5
   body.radius 0.4
@@ -395,8 +395,8 @@ object 16 "Crate 14"
   render.alpha 1
   render.secondary-color 0.8 0.8 0.8
   render.secondary-alpha 1
-  render.mesh ""
-  render.texture ""
+  render.mesh-asset ""
+  render.texture-asset ""
   body dynamic box
   body.half-extents 0.45 0.45 0.45
   body.radius 0.5
@@ -421,8 +421,8 @@ object 17 "Crate 15"
   render.alpha 1
   render.secondary-color 0.8 0.8 0.8
   render.secondary-alpha 1
-  render.mesh ""
-  render.texture ""
+  render.mesh-asset ""
+  render.texture-asset ""
   body dynamic box
   body.half-extents 0.45 0.45 0.45
   body.radius 0.5
@@ -447,8 +447,8 @@ object 18 "Ball 16"
   render.alpha 1
   render.secondary-color 0.8 0.8 0.8
   render.secondary-alpha 1
-  render.mesh ""
-  render.texture ""
+  render.mesh-asset ""
+  render.texture-asset ""
   body dynamic sphere
   body.half-extents 0.5 0.5 0.5
   body.radius 0.4
@@ -473,8 +473,8 @@ object 19 "Crate 17"
   render.alpha 1
   render.secondary-color 0.8 0.8 0.8
   render.secondary-alpha 1
-  render.mesh ""
-  render.texture ""
+  render.mesh-asset ""
+  render.texture-asset ""
   body dynamic box
   body.half-extents 0.45 0.45 0.45
   body.radius 0.5
@@ -499,8 +499,8 @@ object 20 "Crate 18"
   render.alpha 1
   render.secondary-color 0.8 0.8 0.8
   render.secondary-alpha 1
-  render.mesh ""
-  render.texture ""
+  render.mesh-asset ""
+  render.texture-asset ""
   body dynamic box
   body.half-extents 0.45 0.45 0.45
   body.radius 0.5
@@ -525,8 +525,8 @@ object 21 "Ball 19"
   render.alpha 1
   render.secondary-color 0.8 0.8 0.8
   render.secondary-alpha 1
-  render.mesh ""
-  render.texture ""
+  render.mesh-asset ""
+  render.texture-asset ""
   body dynamic sphere
   body.half-extents 0.5 0.5 0.5
   body.radius 0.4
@@ -551,8 +551,8 @@ object 22 "Crate 20"
   render.alpha 1
   render.secondary-color 0.8 0.8 0.8
   render.secondary-alpha 1
-  render.mesh ""
-  render.texture ""
+  render.mesh-asset ""
+  render.texture-asset ""
   body dynamic box
   body.half-extents 0.45 0.45 0.45
   body.radius 0.5
@@ -577,8 +577,8 @@ object 23 "Crate 21"
   render.alpha 1
   render.secondary-color 0.8 0.8 0.8
   render.secondary-alpha 1
-  render.mesh ""
-  render.texture ""
+  render.mesh-asset ""
+  render.texture-asset ""
   body dynamic box
   body.half-extents 0.45 0.45 0.45
   body.radius 0.5
@@ -603,8 +603,8 @@ object 24 "Ball 22"
   render.alpha 1
   render.secondary-color 0.8 0.8 0.8
   render.secondary-alpha 1
-  render.mesh ""
-  render.texture ""
+  render.mesh-asset ""
+  render.texture-asset ""
   body dynamic sphere
   body.half-extents 0.5 0.5 0.5
   body.radius 0.4
@@ -629,8 +629,8 @@ object 25 "Crate 23"
   render.alpha 1
   render.secondary-color 0.8 0.8 0.8
   render.secondary-alpha 1
-  render.mesh ""
-  render.texture ""
+  render.mesh-asset ""
+  render.texture-asset ""
   body dynamic box
   body.half-extents 0.45 0.45 0.45
   body.radius 0.5
@@ -655,8 +655,8 @@ object 26 "Crate 24"
   render.alpha 1
   render.secondary-color 0.8 0.8 0.8
   render.secondary-alpha 1
-  render.mesh ""
-  render.texture ""
+  render.mesh-asset ""
+  render.texture-asset ""
   body dynamic box
   body.half-extents 0.45 0.45 0.45
   body.radius 0.5
@@ -681,8 +681,8 @@ object 27 "Ball 25"
   render.alpha 1
   render.secondary-color 0.8 0.8 0.8
   render.secondary-alpha 1
-  render.mesh ""
-  render.texture ""
+  render.mesh-asset ""
+  render.texture-asset ""
   body dynamic sphere
   body.half-extents 0.5 0.5 0.5
   body.radius 0.4
@@ -707,8 +707,8 @@ object 28 "Crate 26"
   render.alpha 1
   render.secondary-color 0.8 0.8 0.8
   render.secondary-alpha 1
-  render.mesh ""
-  render.texture ""
+  render.mesh-asset ""
+  render.texture-asset ""
   body dynamic box
   body.half-extents 0.45 0.45 0.45
   body.radius 0.5
@@ -733,8 +733,8 @@ object 29 "Crate 27"
   render.alpha 1
   render.secondary-color 0.8 0.8 0.8
   render.secondary-alpha 1
-  render.mesh ""
-  render.texture ""
+  render.mesh-asset ""
+  render.texture-asset ""
   body dynamic box
   body.half-extents 0.45 0.45 0.45
   body.radius 0.5
@@ -759,8 +759,8 @@ object 30 "Ball 28"
   render.alpha 1
   render.secondary-color 0.8 0.8 0.8
   render.secondary-alpha 1
-  render.mesh ""
-  render.texture ""
+  render.mesh-asset ""
+  render.texture-asset ""
   body dynamic sphere
   body.half-extents 0.5 0.5 0.5
   body.radius 0.4
@@ -785,8 +785,8 @@ object 31 "Crate 29"
   render.alpha 1
   render.secondary-color 0.8 0.8 0.8
   render.secondary-alpha 1
-  render.mesh ""
-  render.texture ""
+  render.mesh-asset ""
+  render.texture-asset ""
   body dynamic box
   body.half-extents 0.45 0.45 0.45
   body.radius 0.5
@@ -811,8 +811,8 @@ object 32 "Crate 30"
   render.alpha 1
   render.secondary-color 0.8 0.8 0.8
   render.secondary-alpha 1
-  render.mesh ""
-  render.texture ""
+  render.mesh-asset ""
+  render.texture-asset ""
   body dynamic box
   body.half-extents 0.45 0.45 0.45
   body.radius 0.5
@@ -837,8 +837,8 @@ object 33 "Ball 31"
   render.alpha 1
   render.secondary-color 0.8 0.8 0.8
   render.secondary-alpha 1
-  render.mesh ""
-  render.texture ""
+  render.mesh-asset ""
+  render.texture-asset ""
   body dynamic sphere
   body.half-extents 0.5 0.5 0.5
   body.radius 0.4
@@ -863,8 +863,8 @@ object 34 "Crate 32"
   render.alpha 1
   render.secondary-color 0.8 0.8 0.8
   render.secondary-alpha 1
-  render.mesh ""
-  render.texture ""
+  render.mesh-asset ""
+  render.texture-asset ""
   body dynamic box
   body.half-extents 0.45 0.45 0.45
   body.radius 0.5
@@ -889,8 +889,8 @@ object 35 "Crate 33"
   render.alpha 1
   render.secondary-color 0.8 0.8 0.8
   render.secondary-alpha 1
-  render.mesh ""
-  render.texture ""
+  render.mesh-asset ""
+  render.texture-asset ""
   body dynamic box
   body.half-extents 0.45 0.45 0.45
   body.radius 0.5
@@ -915,8 +915,8 @@ object 36 "Ball 34"
   render.alpha 1
   render.secondary-color 0.8 0.8 0.8
   render.secondary-alpha 1
-  render.mesh ""
-  render.texture ""
+  render.mesh-asset ""
+  render.texture-asset ""
   body dynamic sphere
   body.half-extents 0.5 0.5 0.5
   body.radius 0.4
@@ -941,8 +941,8 @@ object 37 "Crate 35"
   render.alpha 1
   render.secondary-color 0.8 0.8 0.8
   render.secondary-alpha 1
-  render.mesh ""
-  render.texture ""
+  render.mesh-asset ""
+  render.texture-asset ""
   body dynamic box
   body.half-extents 0.45 0.45 0.45
   body.radius 0.5
@@ -967,8 +967,8 @@ object 38 "Crate 36"
   render.alpha 1
   render.secondary-color 0.8 0.8 0.8
   render.secondary-alpha 1
-  render.mesh ""
-  render.texture ""
+  render.mesh-asset ""
+  render.texture-asset ""
   body dynamic box
   body.half-extents 0.45 0.45 0.45
   body.radius 0.5
@@ -993,8 +993,8 @@ object 39 "Ball 37"
   render.alpha 1
   render.secondary-color 0.8 0.8 0.8
   render.secondary-alpha 1
-  render.mesh ""
-  render.texture ""
+  render.mesh-asset ""
+  render.texture-asset ""
   body dynamic sphere
   body.half-extents 0.5 0.5 0.5
   body.radius 0.4
@@ -1019,8 +1019,8 @@ object 40 "Crate 38"
   render.alpha 1
   render.secondary-color 0.8 0.8 0.8
   render.secondary-alpha 1
-  render.mesh ""
-  render.texture ""
+  render.mesh-asset ""
+  render.texture-asset ""
   body dynamic box
   body.half-extents 0.45 0.45 0.45
   body.radius 0.5
@@ -1045,8 +1045,8 @@ object 41 "Crate 39"
   render.alpha 1
   render.secondary-color 0.8 0.8 0.8
   render.secondary-alpha 1
-  render.mesh ""
-  render.texture ""
+  render.mesh-asset ""
+  render.texture-asset ""
   body dynamic box
   body.half-extents 0.45 0.45 0.45
   body.radius 0.5
@@ -1071,8 +1071,8 @@ object 42 "Ball 40"
   render.alpha 1
   render.secondary-color 0.8 0.8 0.8
   render.secondary-alpha 1
-  render.mesh ""
-  render.texture ""
+  render.mesh-asset ""
+  render.texture-asset ""
   body dynamic sphere
   body.half-extents 0.5 0.5 0.5
   body.radius 0.4
@@ -1097,8 +1097,8 @@ object 43 "Crate 41"
   render.alpha 1
   render.secondary-color 0.8 0.8 0.8
   render.secondary-alpha 1
-  render.mesh ""
-  render.texture ""
+  render.mesh-asset ""
+  render.texture-asset ""
   body dynamic box
   body.half-extents 0.45 0.45 0.45
   body.radius 0.5
@@ -1123,8 +1123,8 @@ object 44 "Crate 42"
   render.alpha 1
   render.secondary-color 0.8 0.8 0.8
   render.secondary-alpha 1
-  render.mesh ""
-  render.texture ""
+  render.mesh-asset ""
+  render.texture-asset ""
   body dynamic box
   body.half-extents 0.45 0.45 0.45
   body.radius 0.5
@@ -1149,8 +1149,8 @@ object 45 "Ball 43"
   render.alpha 1
   render.secondary-color 0.8 0.8 0.8
   render.secondary-alpha 1
-  render.mesh ""
-  render.texture ""
+  render.mesh-asset ""
+  render.texture-asset ""
   body dynamic sphere
   body.half-extents 0.5 0.5 0.5
   body.radius 0.4
@@ -1175,8 +1175,8 @@ object 46 "Crate 44"
   render.alpha 1
   render.secondary-color 0.8 0.8 0.8
   render.secondary-alpha 1
-  render.mesh ""
-  render.texture ""
+  render.mesh-asset ""
+  render.texture-asset ""
   body dynamic box
   body.half-extents 0.45 0.45 0.45
   body.radius 0.5
@@ -1201,8 +1201,8 @@ object 47 "Crate 45"
   render.alpha 1
   render.secondary-color 0.8 0.8 0.8
   render.secondary-alpha 1
-  render.mesh ""
-  render.texture ""
+  render.mesh-asset ""
+  render.texture-asset ""
   body dynamic box
   body.half-extents 0.45 0.45 0.45
   body.radius 0.5
@@ -1227,8 +1227,8 @@ object 48 "Ball 46"
   render.alpha 1
   render.secondary-color 0.8 0.8 0.8
   render.secondary-alpha 1
-  render.mesh ""
-  render.texture ""
+  render.mesh-asset ""
+  render.texture-asset ""
   body dynamic sphere
   body.half-extents 0.5 0.5 0.5
   body.radius 0.4
@@ -1253,8 +1253,8 @@ object 49 "Crate 47"
   render.alpha 1
   render.secondary-color 0.8 0.8 0.8
   render.secondary-alpha 1
-  render.mesh ""
-  render.texture ""
+  render.mesh-asset ""
+  render.texture-asset ""
   body dynamic box
   body.half-extents 0.45 0.45 0.45
   body.radius 0.5
@@ -1279,8 +1279,8 @@ object 50 "Crate 48"
   render.alpha 1
   render.secondary-color 0.8 0.8 0.8
   render.secondary-alpha 1
-  render.mesh ""
-  render.texture ""
+  render.mesh-asset ""
+  render.texture-asset ""
   body dynamic box
   body.half-extents 0.45 0.45 0.45
   body.radius 0.5
@@ -1305,8 +1305,8 @@ object 51 "Ball 49"
   render.alpha 1
   render.secondary-color 0.8 0.8 0.8
   render.secondary-alpha 1
-  render.mesh ""
-  render.texture ""
+  render.mesh-asset ""
+  render.texture-asset ""
   body dynamic sphere
   body.half-extents 0.5 0.5 0.5
   body.radius 0.4
@@ -1331,8 +1331,8 @@ object 52 "Crate 50"
   render.alpha 1
   render.secondary-color 0.8 0.8 0.8
   render.secondary-alpha 1
-  render.mesh ""
-  render.texture ""
+  render.mesh-asset ""
+  render.texture-asset ""
   body dynamic box
   body.half-extents 0.45 0.45 0.45
   body.radius 0.5

@@ -9,7 +9,7 @@
 #include "FaithfulGravity.h"
 #include "RadialTerrain.h"
 #include "RadicalGravity.h"
-#include "RenderAssetCache.h"
+#include "ResourceManager.h"
 #include "SphericalVolume.h"
 #include "TerrainLibrary.h"
 #include "UniformGravity.h"
@@ -50,13 +50,13 @@ bool RuntimeWorld::EntityRequiresFull(const SceneObject& o) {
 bool RuntimeWorld::LoadVisualAssets(const SceneObject& o, DynamicVisual& visual, std::string* outError) {
     if (o.render && o.render->shape == SceneShape::Mesh && m_assets) {
         std::string assetError;
-        visual.mesh = m_assets->GetMesh(o.render->meshPath, assetError);
+        visual.mesh = m_assets->GetMesh(o.render->meshAsset, assetError);
         if (!visual.mesh.IsValid()) {
             if (outError) *outError = assetError;
             return false;
         }
-        if (!o.render->texturePath.empty()) {
-            visual.texture = m_assets->GetTexture(o.render->texturePath, assetError);
+        if (!o.render->textureAsset.empty()) {
+            visual.texture = m_assets->GetTexture(o.render->textureAsset, assetError);
             if (!visual.texture.IsValid()) {
                 if (outError) *outError = assetError;
                 return false;
@@ -165,9 +165,9 @@ bool RuntimeWorld::AppendEntitySlot(const SceneObject& o, bool authored, const E
     return true;
 }
 
-bool RuntimeWorld::Build(const Scene& scene, RenderAssetCache* assets, std::string& outError) {
+bool RuntimeWorld::Build(const Scene& scene, ResourceManager* resources, std::string& outError) {
     Destroy();
-    m_assets = assets;
+    m_assets = resources;
     m_settings = scene.Settings();
     if (!m_physics.Init()) {
         outError = "physics initialization failed";
@@ -288,10 +288,10 @@ bool RuntimeWorld::Build(const Scene& scene, RenderAssetCache* assets, std::stri
             sr.scale = o.transform.scale;
             if (o.render->shape == SceneShape::Mesh && m_assets) {
                 std::string assetError;
-                sr.mesh = m_assets->GetMesh(o.render->meshPath, assetError);
+                sr.mesh = m_assets->GetMesh(o.render->meshAsset, assetError);
                 if (!sr.mesh.IsValid()) return fail(o, assetError);
-                if (!o.render->texturePath.empty()) {
-                    sr.texture = m_assets->GetTexture(o.render->texturePath, assetError);
+                if (!o.render->textureAsset.empty()) {
+                    sr.texture = m_assets->GetTexture(o.render->textureAsset, assetError);
                     if (!sr.texture.IsValid()) return fail(o, assetError);
                 }
             }
@@ -319,6 +319,7 @@ bool RuntimeWorld::Build(const Scene& scene, RenderAssetCache* assets, std::stri
             m_gravityMap.AddRegion(*field, *volume);
             m_gravityFields.push_back(std::move(field));
             m_gravityVolumes.push_back(std::move(volume));
+            m_gravityRegions.push_back(GravityRegion{o.id, g, position, rotation});
         }
 
         // --- Standalone light ---
@@ -829,6 +830,7 @@ void RuntimeWorld::Destroy() {
     m_gravityMap = GravityContextMap();
     m_gravityFields.clear();
     m_gravityVolumes.clear();
+    m_gravityRegions.clear();
     m_vehicle.reset();
     m_celestial.reset();
     m_celestialParticipants.clear();

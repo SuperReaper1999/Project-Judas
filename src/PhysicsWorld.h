@@ -116,6 +116,18 @@ public:
     std::size_t AliveBodyCount() const;
     std::size_t DynamicBodyCount() const;
 
+    // Milestone 30: the contacts the final solver iteration of the most
+    // recent Step resolved (one entry per manifold point, so a resting box
+    // on a floor reports 4). Read-only diagnostics for the profiler and the
+    // debug view; nothing in simulation reads this back.
+    struct DebugContact {
+        glm::vec3 point{0.0f};
+        glm::vec3 normal{0.0f};
+        float penetration = 0.0f;
+    };
+    const std::vector<DebugContact>& LastStepContacts() const;
+    std::size_t LastStepContactCount() const { return LastStepContacts().size(); }
+
     // True only for a body created via CreateDynamic*. Added in Milestone
     // 7-A so a caller holding a ShapeSweepHit::hitBody can tell "pushable
     // object" apart from "static world geometry" without needing to

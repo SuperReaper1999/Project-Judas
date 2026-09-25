@@ -94,7 +94,12 @@ add_library(judas_engine STATIC
     src/AerodynamicDrag.cpp
     src/Scene.cpp
     src/SceneSerialization.cpp
-    src/RenderAssetCache.cpp
+    src/Project.cpp
+    src/AssetDatabase.cpp
+    src/ResourceManager.cpp
+    src/EnginePaths.cpp
+    src/DebugDraw.cpp
+    src/WorldDebugView.cpp
     src/RuntimeWorld.cpp
     src/GameSession.cpp
     src/Simulation.cpp
@@ -144,12 +149,21 @@ add_executable(judas_editor
     src/editor/EditorCamera.cpp
     src/editor/EditorHistory.cpp
     src/editor/EditorPanels.cpp
+    src/editor/EditorWidgets.cpp
+    src/editor/ComponentEditors.cpp
+    src/editor/GizmoMath.cpp
 )
 target_link_libraries(judas_editor PRIVATE judas_engine judas_imgui)
 target_compile_options(judas_editor PRIVATE -Wall -Wextra)
 
+# Milestone 30: the scene authoring tool that writes the shipped demonstration
+# scenes and the tiny game scene (tools/SceneAuthor.cpp).
+add_executable(judas_scene_author tools/SceneAuthor.cpp)
+target_link_libraries(judas_scene_author PRIVATE judas_engine)
+target_compile_options(judas_scene_author PRIVATE -Wall -Wextra)
+
 # Milestone 28: scene data, serialization and runtime instantiation —
-# headless (RuntimeWorld built with no asset cache creates no GPU state).
+# headless (RuntimeWorld built with no ResourceManager creates no GPU state).
 add_executable(judas_scene_tests
     tests/SceneTests.cpp
 )
@@ -163,6 +177,18 @@ add_executable(judas_lifecycle_tests
 )
 target_link_libraries(judas_lifecycle_tests PRIVATE judas_engine)
 target_compile_options(judas_lifecycle_tests PRIVATE -Wall -Wextra)
+
+# Milestone 30: projects, asset identity, the resource manager boundary,
+# project -> startup scene -> runtime, gizmo mathematics with undo/redo,
+# inspector round trip and Edit/Play separation — headless. The gizmo
+# mathematics and the editor document are compiled in directly (no ImGui).
+add_executable(judas_project_tests
+    tests/ProjectTests.cpp
+    src/editor/GizmoMath.cpp
+    src/editor/EditorHistory.cpp
+)
+target_link_libraries(judas_project_tests PRIVATE judas_engine)
+target_compile_options(judas_project_tests PRIVATE -Wall -Wextra)
 
 
 # Judas-owned physics primitive/collision tests: deterministic, headless,

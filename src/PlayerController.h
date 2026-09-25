@@ -157,6 +157,10 @@ public:
     // see docs/ARCHITECTURE.md, "Player visual representation" (unchanged
     // reasoning from Milestone 4).
     glm::vec3 GetRenderHalfExtents() const;
+    // Milestone 30: the capsule the player is swept as (see Spawn), for the
+    // debug view. Radius and half-height of the cylindrical part; local +Y.
+    static float CapsuleRadius();
+    static float CapsuleHalfHeight();
 
     // Authoritative accessors — the real simulation state, with no
     // presentation interpolation applied. Used by the test harness to log

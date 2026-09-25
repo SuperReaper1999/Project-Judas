@@ -9,7 +9,7 @@
 #include "LightTransforms.h"
 #include "PilotAttachment.h"
 #include "RadialTerrain.h"
-#include "RenderAssetCache.h"
+#include "ResourceManager.h"
 #include "Renderer.h"
 #include "RuntimeWorld.h"
 #include "Scene.h"
@@ -327,7 +327,7 @@ void RenderWorldFrame(Renderer& renderer, int width, int height, const RuntimeWo
     renderer.EndFrame();
 }
 
-void DrawAuthoredScene(Renderer& r, const Scene& scene, RenderAssetCache& assets) {
+void DrawAuthoredScene(Renderer& r, const Scene& scene, ResourceManager& assets) {
     for (const SceneObject& o : scene.Objects()) {
         const glm::vec3 position = o.transform.position;
         const glm::quat rotation = glm::normalize(o.transform.rotation);
@@ -335,8 +335,8 @@ void DrawAuthoredScene(Renderer& r, const Scene& scene, RenderAssetCache& assets
             const SceneRenderComponent& render = *o.render;
             if (render.shape == SceneShape::Mesh) {
                 std::string error;
-                const MeshHandle mesh = assets.GetMesh(render.meshPath, error);
-                const TextureHandle texture = assets.GetTexture(render.texturePath, error);
+                const MeshHandle mesh = assets.GetMesh(render.meshAsset, error);
+                const TextureHandle texture = assets.GetTexture(render.textureAsset, error);
                 if (mesh.IsValid()) {
                     r.DrawMesh(mesh, position, rotation, o.transform.scale, texture, render.color);
                 }

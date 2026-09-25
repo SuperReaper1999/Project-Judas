@@ -155,17 +155,21 @@ float InteractivePlay::Frame(Window& window, Renderer& renderer, float frameDelt
                                m_measurements.measureFluid;
         while (m_physicsAccumulator >= SimulationTiming::kFixedTimestep &&
                stepsThisFrame < SimulationTiming::kMaxPhysicsStepsPerFrame) {
-            const auto stepStart = measuring ? Clock::now() : Clock::time_point{};
+            const auto stepStart = Clock::now();
             m_measurements.atmosphereMeasured = m_measurements.fireMeasured = m_measurements.fluidMeasured = false;
             StepPlayedWorld(m_session, window, SimulationTiming::kFixedTimestep, &m_measurements);
             m_lastAerodynamicDrag = m_measurements.lastAerodynamicDrag;
-            if (m_observer) m_observer(m_measurements, measuring ? MillisecondsSince(stepStart) : 0.0);
+            m_lastStepMilliseconds = MillisecondsSince(stepStart);
+            if (m_observer) m_observer(m_measurements, measuring ? m_lastStepMilliseconds : 0.0);
             m_physicsAccumulator -= SimulationTiming::kFixedTimestep;
             ++stepsThisFrame;
             ++m_fixedStepsSinceReset;
         }
         // Hit the catch-up cap: drop the backlog instead of compounding it.
         if (stepsThisFrame == SimulationTiming::kMaxPhysicsStepsPerFrame) m_physicsAccumulator = 0.0f;
+        m_lastStepsThisFrame = stepsThisFrame;
+    } else {
+        m_lastStepsThisFrame = 0;
     }
 
     // How far real time has progressed into an as-yet-unsimulated fixed
@@ -193,6 +197,7 @@ float InteractivePlay::Frame(Window& window, Renderer& renderer, float frameDelt
                      player.GetProjectionMatrix(aspectRatio), player.GetPresentedPosition(presentationAlpha),
                      presentationAlpha);
     m_lastSceneMilliseconds = MillisecondsSince(sceneStart);
+    if (m_overlay) m_overlay(renderer, presentationAlpha);
 
     // Milestone 13: HUD + pause menu overlay, drawn last, on top.
     renderer.BeginUIFrame(window.Width(), window.Height());

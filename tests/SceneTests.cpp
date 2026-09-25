@@ -1,6 +1,6 @@
 // Milestone 28: scene data, serialization, stable identity, mutation,
 // runtime instantiation and the authored/runtime boundary — headless (a
-// RuntimeWorld built without a RenderAssetCache creates no GPU state), no
+// RuntimeWorld built without a ResourceManager creates no GPU state), no
 // window, no GL, no font. Run from the repository root: the demo scene
 // files under assets/scenes are loaded through the same path the runtime
 // uses.
@@ -101,7 +101,7 @@ void SectionSerialization() {
     std::string again;
     SaveSceneToString(loaded, again);
     Check(again == text, "save -> load -> save is byte-identical (deterministic format)");
-    Check(text.rfind("JudasScene 2\n", 0) == 0, "file starts with the format identifier and version");
+    Check(text.rfind("JudasScene 3\n", 0) == 0, "file starts with the format identifier and version");
     Check(text.find("object 2 \"Crate\"") != std::string::npos, "object ids and names are written explicitly");
     Check(text.find("9.81") != std::string::npos && text.find("9.81000") == std::string::npos,
           "floats use the shortest exact decimal");

@@ -73,6 +73,9 @@ public:
     bool IgniterPowered() const { return m_igniterPowered; }
     void SetIgniterPowered(bool powered) { m_igniterPowered = powered; }
     const Interactable* InteractionTarget() const { return m_interactTarget; }
+    // Milestone 30: every interactable the session offers (doors, switches,
+    // pickables), read-only, for the debug view's interaction ranges.
+    const std::vector<Interactable*>& Interactables() const { return m_interactables; }
     // True once after each ResetToAuthoredState, so the loop driving this
     // session can clear its own per-run bookkeeping (accumulator, timers).
     bool ConsumeResetOccurred();

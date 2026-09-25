@@ -1,0 +1,6 @@
+JudasProject 1
+name "Tiny Game"
+startup-scene "Scenes/main.judas"
+assets-dir "Assets"
+scenes-dir "Scenes"
+saves-dir "Saves"

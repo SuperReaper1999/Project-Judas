@@ -1,328 +1,66 @@
 #include "EditorPanels.h"
 
+#include <algorithm>
 #include <cstring>
+
 #include <glm/gtc/quaternion.hpp>
 
 #include "imgui.h"
 
+#include "ComponentEditors.h"
+#include "EditorWidgets.h"
+#include "Project.h"
 #include "RuntimeWorld.h"
 
 namespace {
-
-// Snapshot-before / commit-after helpers around ImGui widgets. Drag and
-// input widgets are "active" while being edited, so the snapshot is taken
-// on activation and committed when the widget deactivates having changed
-// something; instant widgets (checkbox, combo, button) commit at once.
-void TrackEdit(EditorDocument& doc) {
-    if (ImGui::IsItemActivated()) doc.BeginEdit();
-    if (ImGui::IsItemDeactivatedAfterEdit()) doc.CommitEdit();
-    else if (ImGui::IsItemDeactivated()) doc.CancelEdit();
+void CopyToBuffer(const std::string& s, char* buffer, std::size_t size) {
+    std::strncpy(buffer, s.c_str(), size - 1);
+    buffer[size - 1] = '\0';
 }
 
-bool DragVec3(EditorDocument& doc, const char* label, glm::vec3& value, float speed = 0.05f) {
-    const bool changed = ImGui::DragFloat3(label, &value.x, speed, 0.0f, 0.0f, "%.4g");
-    TrackEdit(doc);
-    return changed;
-}
-bool DragScalar(EditorDocument& doc, const char* label, float& value, float speed = 0.01f, float min = 0.0f,
-                float max = 0.0f) {
-    const bool changed = ImGui::DragFloat(label, &value, speed, min, max, "%.4g");
-    TrackEdit(doc);
-    return changed;
-}
-bool DragInt(EditorDocument& doc, const char* label, int& value, int min = 0, int max = 100000) {
-    const bool changed = ImGui::DragInt(label, &value, 1.0f, min, max);
-    TrackEdit(doc);
-    return changed;
-}
-bool ColorEdit(EditorDocument& doc, const char* label, glm::vec3& value) {
-    const bool changed = ImGui::ColorEdit3(label, &value.x, ImGuiColorEditFlags_Float | ImGuiColorEditFlags_HDR);
-    TrackEdit(doc);
-    return changed;
-}
-bool Checkbox(EditorDocument& doc, const char* label, bool& value) {
-    bool v = value;
-    if (ImGui::Checkbox(label, &v)) {
-        doc.BeginEdit();
-        value = v;
-        doc.CommitEdit();
-        return true;
-    }
-    return false;
-}
-template <typename Enum>
-bool Combo(EditorDocument& doc, const char* label, Enum& value, const char* const* names, int count) {
-    int index = static_cast<int>(value);
-    if (ImGui::Combo(label, &index, names, count)) {
-        doc.BeginEdit();
-        value = static_cast<Enum>(index);
-        doc.CommitEdit();
-        return true;
-    }
-    return false;
-}
-bool TextField(EditorDocument& doc, const char* label, std::string& value) {
-    char buffer[512];
-    std::strncpy(buffer, value.c_str(), sizeof(buffer) - 1);
-    buffer[sizeof(buffer) - 1] = '\0';
-    const bool changed = ImGui::InputText(label, buffer, sizeof(buffer));
-    if (ImGui::IsItemActivated()) doc.BeginEdit();
-    if (changed) value = buffer;
-    if (ImGui::IsItemDeactivatedAfterEdit()) doc.CommitEdit();
-    else if (ImGui::IsItemDeactivated()) doc.CancelEdit();
-    return changed;
-}
-bool AssetCombo(EditorDocument& doc, const char* label, std::string& value, const std::vector<std::string>& assets,
-                bool allowNone) {
-    bool changed = false;
-    if (ImGui::BeginCombo(label, value.empty() ? "(none)" : value.c_str())) {
-        if (allowNone && ImGui::Selectable("(none)", value.empty())) {
-            doc.BeginEdit(); value.clear(); doc.CommitEdit(); changed = true;
-        }
-        for (const std::string& asset : assets) {
-            if (ImGui::Selectable(asset.c_str(), asset == value)) {
-                doc.BeginEdit(); value = asset; doc.CommitEdit(); changed = true;
-            }
-        }
-        ImGui::EndCombo();
-    }
-    return changed;
-}
-
-template <typename T>
-bool ComponentHeader(EditorDocument& doc, const char* name, std::optional<T>& component) {
-    ImGui::PushID(name);
-    bool open = ImGui::CollapsingHeader(name, ImGuiTreeNodeFlags_DefaultOpen);
+bool ComponentHeader(EditorDocument& doc, const ComponentEditor& editor, SceneObject& o) {
+    ImGui::PushID(editor.name);
+    bool open = ImGui::CollapsingHeader(editor.name, ImGuiTreeNodeFlags_DefaultOpen);
     ImGui::SameLine(ImGui::GetContentRegionAvail().x - 60.0f);
     if (ImGui::SmallButton("Remove")) {
         doc.BeginEdit();
-        component.reset();
+        editor.remove(o);
         doc.CommitEdit();
         open = false;
     }
     ImGui::PopID();
-    return open && component.has_value();
-}
-
-const char* const kShapeNames[] = {"box", "sphere", "compound", "mesh", "terrain"};
-const char* const kBodyShapeNames[] = {"box", "sphere", "compound", "(mesh: not a body shape)", "terrain"};
-const char* const kMotionNames[] = {"static", "dynamic"};
-const char* const kGravityKindNames[] = {"radial", "uniform"};
-const char* const kRegionNames[] = {"sphere", "box"};
-const char* const kLightKindNames[] = {"point", "spot"};
-const char* const kVehicleGravityNames[] = {"local", "celestial"};
-const char* const kViewNames[] = {"third-person", "first-person"};
-
-void DrawTransform(EditorDocument& doc, SceneObject& o) {
-    if (!ImGui::CollapsingHeader("Transform", ImGuiTreeNodeFlags_DefaultOpen)) return;
-    DragVec3(doc, "Position", o.transform.position);
-    // Rotation is edited as yaw/pitch/roll degrees for humans; the
-    // authored value stays a quaternion.
-    glm::vec3 euler = glm::degrees(glm::eulerAngles(glm::normalize(o.transform.rotation)));
-    if (ImGui::DragFloat3("Rotation (deg)", &euler.x, 0.5f, 0.0f, 0.0f, "%.3g")) {
-        o.transform.rotation = glm::normalize(glm::quat(glm::radians(euler)));
-    }
-    TrackEdit(doc);
-    DragVec3(doc, "Scale", o.transform.scale, 0.01f);
-    ImGui::TextDisabled("Scale applies to mesh rendering only.");
-}
-
-void DrawRender(EditorDocument& doc, SceneObject& o, EditorPanelState& state) {
-    if (!ComponentHeader(doc, "Render", o.render)) return;
-    SceneRenderComponent& r = *o.render;
-    Combo(doc, "Shape", r.shape, kShapeNames, 5);
-    if (r.shape == SceneShape::Box) DragVec3(doc, "Half extents", r.halfExtents, 0.01f);
-    if (r.shape == SceneShape::Sphere) DragScalar(doc, "Radius", r.radius, 0.01f, 0.001f, 100000.0f);
-    ColorEdit(doc, "Color", r.color);
-    DragScalar(doc, "Alpha", r.alpha, 0.01f, 0.0f, 1.0f);
-    if (r.shape == SceneShape::Mesh) {
-        AssetCombo(doc, "Mesh", r.meshPath, state.modelAssets, false);
-        AssetCombo(doc, "Texture", r.texturePath, state.textureAssets, true);
-    }
-    if (r.shape == SceneShape::Compound) {
-        ColorEdit(doc, "Wall color", r.secondaryColor);
-        DragScalar(doc, "Wall alpha", r.secondaryAlpha, 0.01f, 0.0f, 1.0f);
-        ImGui::TextDisabled("Geometry comes from the compound body.");
-    }
-    if (r.shape == SceneShape::Terrain) ImGui::TextDisabled("Geometry comes from the terrain body.");
-}
-
-void DrawBody(EditorDocument& doc, SceneObject& o, EditorPanelState& state) {
-    if (!ComponentHeader(doc, "Body", o.body)) return;
-    SceneBodyComponent& b = *o.body;
-    Combo(doc, "Motion", b.motion, kMotionNames, 2);
-    Combo(doc, "Collider", b.shape, kBodyShapeNames, 5);
-    if (b.shape == SceneShape::Box) DragVec3(doc, "Half extents##body", b.halfExtents, 0.01f);
-    if (b.shape == SceneShape::Sphere) DragScalar(doc, "Radius##body", b.radius, 0.01f, 0.001f, 100000.0f);
-    if (b.shape == SceneShape::Terrain) AssetCombo(doc, "Surface", b.terrainSurface, state.terrainSurfaces, false);
-    if (b.shape == SceneShape::Compound) {
-        ImGui::Text("%zu child boxes", b.compoundBoxes.size());
-        for (std::size_t i = 0; i < b.compoundBoxes.size(); ++i) {
-            ImGui::PushID(static_cast<int>(i));
-            DragVec3(doc, "Center", b.compoundBoxes[i].localCenter, 0.005f);
-            DragVec3(doc, "Half extents", b.compoundBoxes[i].halfExtents, 0.005f);
-            ImGui::PopID();
-        }
-        if (ImGui::SmallButton("Add child box")) {
-            doc.BeginEdit();
-            b.compoundBoxes.push_back(CompoundBox{glm::vec3(0.0f), glm::vec3(0.1f)});
-            doc.CommitEdit();
-        }
-    }
-    if (b.motion == SceneBodyMotion::Dynamic) {
-        DragScalar(doc, "Mass (kg)", b.mass, 0.1f, 0.001f, 1.0e30f);
-        DragVec3(doc, "Initial velocity", b.initialLinearVelocity, 0.05f);
-        Checkbox(doc, "Pickable (G/H)", b.pickable);
-        Checkbox(doc, "Managed by fidelity policy (M29)", b.managed);
-    }
-    DragScalar(doc, "Friction", b.friction, 0.01f, 0.0f, 5.0f);
-    DragScalar(doc, "Restitution", b.restitution, 0.01f, 0.0f, 1.0f);
-}
-
-void DrawGravity(EditorDocument& doc, SceneObject& o) {
-    if (!ComponentHeader(doc, "Gravity region", o.gravity)) return;
-    SceneGravityComponent& g = *o.gravity;
-    Combo(doc, "Kind", g.kind, kGravityKindNames, 2);
-    DragScalar(doc, "Magnitude (m/s^2)", g.magnitude, 0.01f, 0.0f, 1000.0f);
-    Combo(doc, "Region", g.regionShape, kRegionNames, 2);
-    if (g.regionShape == SceneRegionShape::Sphere) DragScalar(doc, "Region radius", g.regionRadius, 0.1f, 0.0f, 1.0e6f);
-    else DragVec3(doc, "Region half extents", g.regionHalfExtents, 0.1f);
-    ImGui::TextDisabled(g.kind == SceneGravityKind::Radial ? "Pulls toward this object's position."
-                                                            : "Pulls along this object's local -Y.");
-    ImGui::TextDisabled("Earlier objects win where regions overlap.");
-}
-
-void DrawLight(EditorDocument& doc, SceneObject& o) {
-    if (!ComponentHeader(doc, "Light", o.light)) return;
-    SceneLightComponent& l = *o.light;
-    Combo(doc, "Kind##light", l.kind, kLightKindNames, 2);
-    ColorEdit(doc, "Color##light", l.color);
-    DragScalar(doc, "Range", l.range, 0.1f, 0.0f, 10000.0f);
-    if (l.kind == SceneLightKind::Spot) {
-        DragScalar(doc, "Inner cone (deg)", l.innerConeDegrees, 0.5f, 0.0f, 89.0f);
-        DragScalar(doc, "Outer cone (deg)", l.outerConeDegrees, 0.5f, 0.0f, 89.0f);
-        ImGui::TextDisabled("A spot light faces this object's local -Z.");
-    }
-}
-
-void DrawDoor(EditorDocument& doc, SceneObject& o) {
-    if (!ComponentHeader(doc, "Door", o.door)) return;
-    DragVec3(doc, "Hinge axis (local)", o.door->localHingeAxis, 0.01f);
-    DragScalar(doc, "Open angle (deg)", o.door->openAngleDegrees, 0.5f, 0.0f, 180.0f);
-    DragScalar(doc, "Angular speed (deg/s)", o.door->angularSpeedDegreesPerSecond, 1.0f, 0.0f, 3600.0f);
-    ImGui::TextDisabled("Needs a box Render for the panel; hinge at the object's transform.");
-}
-
-void DrawLightSwitch(EditorDocument& doc, SceneObject& o) {
-    if (!ComponentHeader(doc, "Light switch", o.lightSwitch)) return;
-    SceneLightSwitchComponent& s = *o.lightSwitch;
-    DragVec3(doc, "Hinge axis (local)##sw", s.localHingeAxis, 0.01f);
-    DragScalar(doc, "Toggle angle (deg)", s.toggleAngleDegrees, 0.5f, 0.0f, 180.0f);
-    DragScalar(doc, "Angular speed (deg/s)##sw", s.angularSpeedDegreesPerSecond, 1.0f, 0.0f, 3600.0f);
-    DragVec3(doc, "Lamp offset (local)", s.lampLocalOffset, 0.05f);
-    ColorEdit(doc, "Lamp color", s.lampColor);
-    DragScalar(doc, "Lamp range", s.lampRange, 0.1f, 0.0f, 1000.0f);
-}
-
-void DrawVehicle(EditorDocument& doc, SceneObject& o) {
-    if (!ComponentHeader(doc, "Vehicle", o.vehicle)) return;
-    SceneVehicleComponent& v = *o.vehicle;
-    Combo(doc, "Gravity source", v.gravity, kVehicleGravityNames, 2);
-    Checkbox(doc, "Headlight", v.headlight);
-    Checkbox(doc, "Navigation lights", v.navigationLights);
-    DragScalar(doc, "Drag coefficient", v.dragCoefficient, 0.01f, 0.0f, 10.0f);
-    Checkbox(doc, "Start with pilot attached", v.initialPilotAttached);
-    ImGui::TextDisabled("Needs a dynamic box Body. One vehicle per scene.");
-}
-
-void DrawCelestial(EditorDocument& doc, SceneObject& o) {
-    if (!ComponentHeader(doc, "Celestial", o.celestial)) return;
-    DragScalar(doc, "Gravitational parameter (static, m^3/s^2)", o.celestial->gravitationalParameter, 10.0f, 0.0f, 1.0e30f);
-    DragScalar(doc, "Operator thrust (N)", o.celestial->operatorThrustForce, 1.0e9f, 0.0f, 1.0e30f);
-    ImGui::TextDisabled("Dynamic: joins pairwise Newtonian gravity by its mass.");
-}
-
-void DrawAtmosphere(EditorDocument& doc, SceneObject& o) {
-    if (!ComponentHeader(doc, "Atmosphere", o.atmosphere)) return;
-    SceneAtmosphereComponent& a = *o.atmosphere;
-    DragScalar(doc, "Reference radius (m)", a.referenceRadius, 0.1f, 0.001f, 1.0e9f);
-    DragScalar(doc, "Top radius (m)", a.topRadius, 0.1f, 0.001f, 1.0e9f);
-    DragScalar(doc, "Reference density (kg/m^3)", a.referenceDensity, 0.001f, 0.0f, 1000.0f);
-    DragScalar(doc, "Polytropic exponent", a.polytropicExponent, 0.001f, 1.001f, 1.999f);
-    DragScalar(doc, "Oxidizer mass fraction", a.oxidizerMassFraction, 0.001f, 0.0f, 1.0f);
-    DragScalar(doc, "Reference temperature (K)", a.referenceTemperatureKelvin, 1.0f, 1.0f, 10000.0f);
-    ImGui::TextDisabled("Needs a static Celestial gravitational parameter.");
-}
-
-void DrawCombustible(EditorDocument& doc, SceneObject& o) {
-    if (!ComponentHeader(doc, "Combustible", o.combustible)) return;
-    SceneCombustibleComponent& c = *o.combustible;
-    DragScalar(doc, "Heat capacity (J/K)", c.heatCapacityJPerK, 1.0f, 0.001f, 1.0e9f);
-    DragScalar(doc, "Fuel mass (kg)", c.initialFuelMassKg, 0.001f, 0.0f, 1.0e6f);
-    DragScalar(doc, "Ignition temperature (K)", c.ignitionTemperatureK, 1.0f, 0.0f, 10000.0f);
-    DragScalar(doc, "Max fuel rate (kg/s)", c.maximumFuelRateKgPerSecond, 0.0001f, 0.0f, 1000.0f);
-    DragScalar(doc, "Radiative area (m^2)", c.radiativeAreaSquareMeters, 0.01f, 0.0f, 1.0e6f);
-    DragScalar(doc, "Retained heat fraction", c.retainedCombustionHeatFraction, 0.01f, 0.0f, 1.0f);
-}
-
-void DrawFluidVolume(EditorDocument& doc, SceneObject& o) {
-    if (!ComponentHeader(doc, "Fluid volume", o.fluidVolume)) return;
-    SceneFluidVolumeComponent& f = *o.fluidVolume;
-    DragScalar(doc, "Particle spacing (m)", f.spacing, 0.001f, 0.001f, 100.0f);
-    int count[3] = {f.countX, f.countY, f.countZ};
-    if (ImGui::DragInt3("Lattice count", count, 1.0f, 0, 1000)) {
-        f.countX = count[0]; f.countY = count[1]; f.countZ = count[2];
-    }
-    TrackEdit(doc);
-    Checkbox(doc, "Emitter (hold B)", f.emitter);
-    if (f.emitter) {
-        DragVec3(doc, "Emitter offset (local)", f.emitterLocalOffset, 0.05f);
-        DragInt(doc, "Max particles", f.maxParticles, 0, 100000);
-    }
-    ImGui::TextDisabled("Lattice grows along local +Y from the object.");
-}
-
-void DrawPlayerStart(EditorDocument& doc, SceneObject& o) {
-    if (!ComponentHeader(doc, "Player start", o.playerStart)) return;
-    DragScalar(doc, "Yaw (deg)", o.playerStart->yawDegrees, 0.5f, -360.0f, 360.0f);
-    Combo(doc, "View", o.playerStart->view, kViewNames, 2);
+    return open && editor.has(o);
 }
 
 void DrawAddComponentMenu(EditorDocument& doc, SceneObject& o) {
     if (!ImGui::BeginCombo("##add", "Add component...")) return;
-    const auto option = [&](const char* label, auto& slot, auto make) {
-        if (slot.has_value()) return;
-        if (ImGui::Selectable(label)) {
+    for (const ComponentEditor& editor : ComponentEditorRegistry()) {
+        if (editor.has(o)) continue;
+        if (ImGui::Selectable(editor.name)) {
             doc.BeginEdit();
-            slot = make();
+            editor.add(o);
             doc.CommitEdit();
         }
-    };
-    option("Render", o.render, [] { return SceneRenderComponent{}; });
-    option("Body", o.body, [] { return SceneBodyComponent{}; });
-    option("Gravity region", o.gravity, [] { return SceneGravityComponent{}; });
-    option("Light", o.light, [] { return SceneLightComponent{}; });
-    option("Door", o.door, [] { return SceneDoorComponent{}; });
-    option("Light switch", o.lightSwitch, [] { return SceneLightSwitchComponent{}; });
-    option("Vehicle", o.vehicle, [] { return SceneVehicleComponent{}; });
-    option("Celestial", o.celestial, [] { return SceneCelestialComponent{}; });
-    option("Atmosphere", o.atmosphere, [] { return SceneAtmosphereComponent{}; });
-    option("Combustible", o.combustible, [] { return SceneCombustibleComponent{}; });
-    option("Fluid volume", o.fluidVolume, [] { return SceneFluidVolumeComponent{}; });
-    option("Player start", o.playerStart, [] { return ScenePlayerStartComponent{}; });
+    }
     ImGui::EndCombo();
 }
-
 }  // namespace
 
 void DrawEditorMainMenu(EditorDocument& doc, EditorPanelState& state, EditorRequests& requests) {
     if (!ImGui::BeginMainMenuBar()) return;
     const bool editing = state.mode == EditorMode::Edit;
+    const bool hasProject = state.project && state.project->IsLoaded();
     if (ImGui::BeginMenu("File")) {
+        if (ImGui::MenuItem("New project...", nullptr, false, editing)) requests.newProject = true;
+        if (ImGui::MenuItem("Open project...", nullptr, false, editing)) requests.openProject = true;
+        if (ImGui::MenuItem("Project settings", nullptr, state.showProjectSettings, hasProject)) {
+            state.showProjectSettings = !state.showProjectSettings;
+        }
+        ImGui::Separator();
         if (ImGui::MenuItem("New scene", nullptr, false, editing)) requests.newScene = true;
-        if (ImGui::MenuItem("Open...", nullptr, false, editing)) requests.open = true;
-        if (ImGui::MenuItem("Save", "Ctrl+S", false, editing)) requests.save = true;
-        if (ImGui::MenuItem("Save As...", nullptr, false, editing)) requests.saveAs = true;
+        if (ImGui::MenuItem("Open scene...", nullptr, false, editing)) requests.open = true;
+        if (ImGui::MenuItem("Save scene", "Ctrl+S", false, editing)) requests.save = true;
+        if (ImGui::MenuItem("Save scene as...", nullptr, false, editing)) requests.saveAs = true;
         ImGui::Separator();
         if (ImGui::MenuItem("Quit")) requests.quit = true;
         ImGui::EndMenu();
@@ -331,7 +69,17 @@ void DrawEditorMainMenu(EditorDocument& doc, EditorPanelState& state, EditorRequ
         if (ImGui::MenuItem("Undo", "Ctrl+Z", false, editing && doc.CanUndo())) requests.undo = true;
         if (ImGui::MenuItem("Redo", "Ctrl+Y", false, editing && doc.CanRedo())) requests.redo = true;
         ImGui::Separator();
-        if (ImGui::MenuItem("Focus selection", "F", false, doc.Selected() != kInvalidSceneObjectId)) requests.focusSelection = true;
+        const bool selected = doc.Selected() != kInvalidSceneObjectId;
+        if (ImGui::MenuItem("Duplicate", "Ctrl+D", false, editing && selected)) requests.duplicateId = doc.Selected();
+        if (ImGui::MenuItem("Focus selection", "F", false, selected)) requests.focusSelection = true;
+        ImGui::Separator();
+        if (ImGui::MenuItem("Translate gizmo", "W", state.gizmoMode == GizmoMode::Translate)) state.gizmoMode = GizmoMode::Translate;
+        if (ImGui::MenuItem("Rotate gizmo", "E", state.gizmoMode == GizmoMode::Rotate)) state.gizmoMode = GizmoMode::Rotate;
+        if (ImGui::MenuItem("Scale gizmo", "R", state.gizmoMode == GizmoMode::Scale)) state.gizmoMode = GizmoMode::Scale;
+        if (ImGui::MenuItem("Local space", "X", state.gizmoSpace == GizmoSpace::Local)) {
+            state.gizmoSpace = state.gizmoSpace == GizmoSpace::Local ? GizmoSpace::World : GizmoSpace::Local;
+        }
+        ImGui::MenuItem("Snap (hold Ctrl)", nullptr, &state.gizmoSnap);
         ImGui::EndMenu();
     }
     if (ImGui::BeginMenu("Create", editing)) {
@@ -346,7 +94,31 @@ void DrawEditorMainMenu(EditorDocument& doc, EditorPanelState& state, EditorRequ
         item("Mesh", "mesh");
         item("Point light", "point-light");
         item("Spot light", "spot-light");
+        item("Door", "door");
+        item("Gravity region", "gravity-region");
         item("Player start", "player-start");
+        ImGui::EndMenu();
+    }
+    if (ImGui::BeginMenu("View")) {
+        ImGui::MenuItem("Asset Browser", nullptr, &state.showAssetBrowser);
+        ImGui::MenuItem("Profiler", nullptr, &state.showProfiler);
+        ImGui::EndMenu();
+    }
+    if (ImGui::BeginMenu("Debug")) {
+        DebugViewOptions& d = state.debug;
+        ImGui::MenuItem("Collision shapes", nullptr, &d.collisionShapes);
+        ImGui::MenuItem("Player capsule + support", nullptr, &d.playerCapsule);
+        ImGui::MenuItem("Contacts", nullptr, &d.contacts);
+        ImGui::MenuItem("Gravity vectors + regions", nullptr, &d.gravity);
+        ImGui::MenuItem("Frame axes", nullptr, &d.frameAxes);
+        ImGui::MenuItem("Lights", nullptr, &d.lights);
+        ImGui::MenuItem("Interaction ranges", nullptr, &d.interactionRanges);
+        ImGui::MenuItem("Lifecycle / fidelity", nullptr, &d.lifecycle);
+        ImGui::MenuItem("Terrain normals (sampled)", nullptr, &d.terrainNormals);
+        ImGui::MenuItem("Fluid particles", nullptr, &d.fluidParticles);
+        ImGui::MenuItem("Atmosphere radii", nullptr, &d.atmosphere);
+        ImGui::Separator();
+        if (ImGui::MenuItem("All off")) d = DebugViewOptions{};
         ImGui::EndMenu();
     }
     if (ImGui::BeginMenu("World", !editing)) {
@@ -358,9 +130,10 @@ void DrawEditorMainMenu(EditorDocument& doc, EditorPanelState& state, EditorRequ
     }
     ImGui::Separator();
     if (editing) {
-        if (ImGui::MenuItem("Play")) requests.play = true;
+        if (ImGui::MenuItem("Play scene", "F5")) requests.play = true;
+        if (ImGui::MenuItem("Run project", nullptr, false, hasProject)) requests.runProject = true;
     } else {
-        if (ImGui::MenuItem("Stop")) requests.stop = true;
+        if (ImGui::MenuItem("Stop", "F5")) requests.stop = true;
         ImGui::TextDisabled(state.playPaused ? "PLAYING (paused - Escape resumes)" : "PLAYING - Escape pauses and frees the mouse");
     }
     ImGui::EndMainMenuBar();
@@ -368,11 +141,11 @@ void DrawEditorMainMenu(EditorDocument& doc, EditorPanelState& state, EditorRequ
 
 void DrawHierarchyPanel(EditorDocument& doc, EditorPanelState& state, EditorRequests& requests) {
     ImGui::SetNextWindowPos(ImVec2(0.0f, 24.0f), ImGuiCond_FirstUseEver);
-    ImGui::SetNextWindowSize(ImVec2(280.0f, 420.0f), ImGuiCond_FirstUseEver);
+    ImGui::SetNextWindowSize(ImVec2(300.0f, 356.0f), ImGuiCond_FirstUseEver);
     if (!ImGui::Begin("Hierarchy")) { ImGui::End(); return; }
     const bool editing = state.mode == EditorMode::Edit;
     Scene& scene = doc.GetScene();
-    ImGui::TextDisabled("%zu objects", scene.Objects().size());
+    ImGui::TextDisabled("%zu objects   (double-click renames)", scene.Objects().size());
     ImGui::Separator();
     SceneObjectId toDelete = kInvalidSceneObjectId;
     int move = 0;
@@ -381,18 +154,59 @@ void DrawHierarchyPanel(EditorDocument& doc, EditorPanelState& state, EditorRequ
     for (const SceneObject& o : scene.Objects()) {
         ImGui::PushID(static_cast<int>(o.id));
         const bool selected = o.id == doc.Selected();
+        if (editing && state.renamingId == o.id) {
+            char buffer[256];
+            CopyToBuffer(state.renameBuffer, buffer, sizeof(buffer));
+            ImGui::SetKeyboardFocusHere();
+            if (ImGui::InputText("##rename", buffer, sizeof(buffer), ImGuiInputTextFlags_EnterReturnsTrue | ImGuiInputTextFlags_AutoSelectAll)) {
+                if (SceneObject* target = scene.Find(o.id)) {
+                    doc.BeginEdit();
+                    target->name = buffer;
+                    doc.CommitEdit();
+                }
+                state.renamingId = kInvalidSceneObjectId;
+            } else {
+                state.renameBuffer = buffer;
+                if (ImGui::IsItemDeactivated() || ImGui::IsKeyPressed(ImGuiKey_Escape)) state.renamingId = kInvalidSceneObjectId;
+            }
+            ImGui::PopID();
+            continue;
+        }
         std::string label = o.name.empty() ? "(unnamed)" : o.name;
+        const std::string indicators = ComponentIndicators(o);
+        if (!indicators.empty()) label += "  [" + indicators + "]";
         if (state.runtime) {
             if (const EntityRecord* e = state.runtime->FindEntity(o.id)) {
                 label += e->lifecycle == EntityLifecycle::Destroyed ? "  [destroyed]"
                                                                      : std::string("  [") + FidelityName(e->fidelity) + "]";
             }
         }
+        // Problem indicator: a mesh render whose asset does not resolve.
+        bool broken = false;
+        if (o.render && o.render->shape == SceneShape::Mesh) {
+            const AssetRecord* record = state.assets && !o.render->meshAsset.empty() ? state.assets->Find(o.render->meshAsset) : nullptr;
+            broken = !record || record->missing;
+        }
+        if (broken) label += "  (!)";
         label += "##" + std::to_string(o.id);
-        if (ImGui::Selectable(label.c_str(), selected)) doc.Select(o.id);
-        if (ImGui::IsItemHovered()) ImGui::SetTooltip("id %llu", static_cast<unsigned long long>(o.id));
+        if (broken) ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(1.0f, 0.55f, 0.3f, 1.0f));
+        if (ImGui::Selectable(label.c_str(), selected, ImGuiSelectableFlags_AllowDoubleClick)) {
+            doc.Select(o.id);
+            if (editing && ImGui::IsMouseDoubleClicked(ImGuiMouseButton_Left)) {
+                state.renamingId = o.id;
+                state.renameBuffer = o.name;
+            }
+        }
+        if (broken) ImGui::PopStyleColor();
+        if (ImGui::IsItemHovered()) {
+            ImGui::SetTooltip("id %llu%s%s", static_cast<unsigned long long>(o.id),
+                              indicators.empty() ? "" : ("  components: " + indicators).c_str(),
+                              broken ? "\nmesh asset missing or unknown" : "");
+        }
         if (editing && ImGui::BeginPopupContextItem()) {
             doc.Select(o.id);
+            if (ImGui::MenuItem("Rename")) { state.renamingId = o.id; state.renameBuffer = o.name; }
+            if (ImGui::MenuItem("Duplicate")) requests.duplicateId = o.id;
             if (ImGui::MenuItem("Move up")) { move = -1; moveId = o.id; }
             if (ImGui::MenuItem("Move down")) { move = 1; moveId = o.id; }
             if (ImGui::MenuItem("Delete")) toDelete = o.id;
@@ -402,7 +216,9 @@ void DrawHierarchyPanel(EditorDocument& doc, EditorPanelState& state, EditorRequ
     }
     ImGui::EndChild();
     if (editing) {
-        if (ImGui::Button("Delete selected") && doc.Selected() != kInvalidSceneObjectId) toDelete = doc.Selected();
+        if (ImGui::Button("Delete") && doc.Selected() != kInvalidSceneObjectId) toDelete = doc.Selected();
+        ImGui::SameLine();
+        if (ImGui::Button("Duplicate") && doc.Selected() != kInvalidSceneObjectId) requests.duplicateId = doc.Selected();
         ImGui::SameLine();
         if (ImGui::Button("Focus")) requests.focusSelection = true;
     }
@@ -422,8 +238,8 @@ void DrawHierarchyPanel(EditorDocument& doc, EditorPanelState& state, EditorRequ
 }
 
 void DrawInspectorPanel(EditorDocument& doc, EditorPanelState& state) {
-    ImGui::SetNextWindowPos(ImVec2(ImGui::GetIO().DisplaySize.x - 380.0f, 24.0f), ImGuiCond_FirstUseEver);
-    ImGui::SetNextWindowSize(ImVec2(380.0f, ImGui::GetIO().DisplaySize.y - 24.0f - 28.0f), ImGuiCond_FirstUseEver);
+    ImGui::SetNextWindowPos(ImVec2(ImGui::GetIO().DisplaySize.x - 400.0f, 24.0f), ImGuiCond_FirstUseEver);
+    ImGui::SetNextWindowSize(ImVec2(400.0f, ImGui::GetIO().DisplaySize.y - 24.0f - 28.0f), ImGuiCond_FirstUseEver);
     if (!ImGui::Begin("Inspector")) { ImGui::End(); return; }
     SceneObject* o = doc.SelectedObject();
     if (!o) {
@@ -474,21 +290,13 @@ void DrawInspectorPanel(EditorDocument& doc, EditorPanelState& state) {
         ImGui::TextDisabled("Authored values are read-only while playing.");
         ImGui::BeginDisabled();
     }
-    ImGui::Text("id %llu", static_cast<unsigned long long>(o->id));
+    ImGui::Text("id %llu   components: %s", static_cast<unsigned long long>(o->id), ComponentIndicators(*o).c_str());
     TextField(doc, "Name", o->name);
-    DrawTransform(doc, *o);
-    DrawRender(doc, *o, state);
-    DrawBody(doc, *o, state);
-    DrawGravity(doc, *o);
-    DrawLight(doc, *o);
-    DrawDoor(doc, *o);
-    DrawLightSwitch(doc, *o);
-    DrawVehicle(doc, *o);
-    DrawCelestial(doc, *o);
-    DrawAtmosphere(doc, *o);
-    DrawCombustible(doc, *o);
-    DrawFluidVolume(doc, *o);
-    DrawPlayerStart(doc, *o);
+    DrawTransformEditor(doc, *o);
+    for (const ComponentEditor& editor : ComponentEditorRegistry()) {
+        if (!editor.has(*o)) continue;
+        if (ComponentHeader(doc, editor, *o)) editor.draw(doc, *o, state);
+    }
     ImGui::Separator();
     DrawAddComponentMenu(doc, *o);
     if (state.mode == EditorMode::Play) ImGui::EndDisabled();
@@ -496,8 +304,8 @@ void DrawInspectorPanel(EditorDocument& doc, EditorPanelState& state) {
 }
 
 void DrawSceneSettingsPanel(EditorDocument& doc, EditorPanelState& state) {
-    ImGui::SetNextWindowPos(ImVec2(0.0f, 448.0f), ImGuiCond_FirstUseEver);
-    ImGui::SetNextWindowSize(ImVec2(280.0f, 220.0f), ImGuiCond_FirstUseEver);
+    ImGui::SetNextWindowPos(ImVec2(0.0f, 380.0f), ImGuiCond_FirstUseEver);
+    ImGui::SetNextWindowSize(ImVec2(300.0f, 180.0f), ImGuiCond_FirstUseEver);
     if (!ImGui::Begin("Scene")) { ImGui::End(); return; }
     if (state.mode == EditorMode::Play) ImGui::BeginDisabled();
     SceneSettings& s = doc.GetScene().Settings();
@@ -522,20 +330,184 @@ void DrawSceneSettingsPanel(EditorDocument& doc, EditorPanelState& state) {
     ImGui::End();
 }
 
-void DrawAssetPanel(EditorDocument& doc, EditorPanelState& state) {
-    ImGui::SetNextWindowPos(ImVec2(0.0f, 672.0f), ImGuiCond_FirstUseEver);
-    ImGui::SetNextWindowSize(ImVec2(280.0f, 96.0f), ImGuiCond_FirstUseEver);
-    if (!ImGui::Begin("Assets")) { ImGui::End(); return; }
-    ImGui::TextDisabled("Models (%zu)", state.modelAssets.size());
-    for (const std::string& m : state.modelAssets) {
-        ImGui::BulletText("%s", m.c_str());
-        if (ImGui::IsItemHovered()) ImGui::SetTooltip("Select a Mesh render component to assign this model.");
-    }
-    ImGui::TextDisabled("Textures (%zu)", state.textureAssets.size());
-    for (const std::string& t : state.textureAssets) ImGui::BulletText("%s", t.c_str());
-    ImGui::TextDisabled("Terrain surfaces (%zu)", state.terrainSurfaces.size());
-    for (const std::string& t : state.terrainSurfaces) ImGui::BulletText("%s", t.c_str());
+void DrawAssetBrowserPanel(EditorDocument& doc, EditorPanelState& state, EditorRequests& requests) {
     (void)doc;
+    if (!state.showAssetBrowser) return;
+    ImGui::SetNextWindowPos(ImVec2(0.0f, 560.0f), ImGuiCond_FirstUseEver);
+    ImGui::SetNextWindowSize(ImVec2(560.0f, 212.0f), ImGuiCond_FirstUseEver);
+    if (!ImGui::Begin("Asset Browser", &state.showAssetBrowser)) { ImGui::End(); return; }
+    const bool hasProject = state.project && state.project->IsLoaded() && state.assets;
+    if (!hasProject) {
+        ImGui::TextDisabled("No project open. File > New project / Open project.");
+        ImGui::End();
+        return;
+    }
+    const AssetDatabase& db = *state.assets;
+    ImGui::TextDisabled("%s  (%zu assets, %zu untracked, %zu problems)", db.AssetsDir().c_str(), db.Records().size(),
+                        db.Untracked().size(), db.Problems().size());
+    ImGui::SameLine();
+    if (ImGui::SmallButton("Rescan")) requests.rescanAssets = true;
+
+    if (ImGui::CollapsingHeader("Import", ImGuiTreeNodeFlags_DefaultOpen)) {
+        char source[512], destination[256];
+        CopyToBuffer(state.importSourceInput, source, sizeof(source));
+        CopyToBuffer(state.importDestinationInput, destination, sizeof(destination));
+        if (ImGui::InputTextWithHint("Source file", "/path/to/model.obj | texture.png | font.ttf", source, sizeof(source))) state.importSourceInput = source;
+        if (ImGui::InputTextWithHint("Destination (in assets)", "models/model.obj (empty keeps the file name)", destination, sizeof(destination))) state.importDestinationInput = destination;
+        if (ImGui::Button("Import") && !state.importSourceInput.empty()) {
+            requests.importSource = state.importSourceInput;
+            requests.importDestination = state.importDestinationInput;
+        }
+        ImGui::SameLine();
+        ImGui::TextDisabled("(path field; the editor has no OS file dialog)");
+    }
+
+    ImGui::BeginChild("assets", ImVec2(0.0f, 0.0f), ImGuiChildFlags_None);
+    if (ImGui::BeginTable("assetTable", 4, ImGuiTableFlags_RowBg | ImGuiTableFlags_BordersInnerV | ImGuiTableFlags_SizingStretchProp)) {
+        ImGui::TableSetupColumn("Type", ImGuiTableColumnFlags_WidthFixed, 60.0f);
+        ImGui::TableSetupColumn("Path");
+        ImGui::TableSetupColumn("State", ImGuiTableColumnFlags_WidthFixed, 70.0f);
+        ImGui::TableSetupColumn("Id", ImGuiTableColumnFlags_WidthFixed, 130.0f);
+        ImGui::TableHeadersRow();
+        for (const auto& [id, record] : db.Records()) {
+            ImGui::TableNextRow();
+            ImGui::TableSetColumnIndex(0);
+            ImGui::TextUnformatted(AssetTypeName(record.type));
+            ImGui::TableSetColumnIndex(1);
+            ImGui::PushID(id.c_str());
+            const bool selected = state.browserSelection == id;
+            if (ImGui::Selectable(record.relativePath.c_str(), selected, ImGuiSelectableFlags_SpanAllColumns)) {
+                state.browserSelection = id;
+                state.moveAssetInput = record.relativePath;
+                const std::string assetsRelative = record.path.size() > db.AssetsDir().size() + 1 &&
+                                                           record.path.compare(0, db.AssetsDir().size(), db.AssetsDir()) == 0
+                                                       ? record.path.substr(db.AssetsDir().size() + 1)
+                                                       : record.relativePath;
+                state.moveAssetInput = assetsRelative;
+            }
+            if (!record.missing && ImGui::BeginDragDropSource()) {
+                ImGui::SetDragDropPayload(kAssetDragPayload, id.data(), id.size());
+                ImGui::Text("%s (%s)", record.relativePath.c_str(), AssetTypeName(record.type));
+                ImGui::TextDisabled(record.type == AssetType::Mesh ? "Drop on the viewport to place, or on a Mesh field."
+                                                                    : "Drop on a matching inspector field.");
+                ImGui::EndDragDropSource();
+            }
+            if (ImGui::IsItemHovered()) ImGui::SetTooltip("%s\nid %s\nsource %s", record.path.c_str(), id.c_str(), record.source.c_str());
+            ImGui::PopID();
+            ImGui::TableSetColumnIndex(2);
+            if (record.missing) ImGui::TextColored(ImVec4(1.0f, 0.5f, 0.2f, 1.0f), "MISSING");
+            else ImGui::TextDisabled("ok");
+            ImGui::TableSetColumnIndex(3);
+            ImGui::TextDisabled("%.12s...", id.c_str());
+        }
+        ImGui::EndTable();
+    }
+    if (!state.browserSelection.empty()) {
+        if (const AssetRecord* record = db.Find(state.browserSelection)) {
+            ImGui::Separator();
+            ImGui::Text("Selected: %s", record->relativePath.c_str());
+            char moveTo[256];
+            CopyToBuffer(state.moveAssetInput, moveTo, sizeof(moveTo));
+            if (ImGui::InputText("Rename / move to (in assets)", moveTo, sizeof(moveTo))) state.moveAssetInput = moveTo;
+            if (ImGui::Button("Apply move") && !state.moveAssetInput.empty()) {
+                requests.moveAssetId = state.browserSelection;
+                requests.moveAssetTo = state.moveAssetInput;
+            }
+            ImGui::SameLine();
+            if (ImGui::Button("Remove asset")) requests.removeAssetId = state.browserSelection;
+            ImGui::SameLine();
+            ImGui::TextDisabled("Scene references use the id, so a move keeps them valid.");
+        }
+    }
+    if (!db.Untracked().empty()) {
+        ImGui::Separator();
+        ImGui::TextDisabled("Untracked files (no .judasmeta; not referenceable until tracked):");
+        for (const std::string& path : db.Untracked()) {
+            ImGui::PushID(path.c_str());
+            ImGui::BulletText("%s", path.c_str());
+            ImGui::SameLine();
+            if (ImGui::SmallButton("Track")) requests.trackAssetPath = path;
+            ImGui::PopID();
+        }
+    }
+    if (!db.Problems().empty()) {
+        ImGui::Separator();
+        ImGui::TextColored(ImVec4(1.0f, 0.5f, 0.2f, 1.0f), "Problems:");
+        for (const AssetProblem& problem : db.Problems()) ImGui::BulletText("%s: %s", problem.path.c_str(), problem.message.c_str());
+    }
+    ImGui::EndChild();
+    ImGui::End();
+}
+
+void DrawProjectSettingsPanel(EditorDocument& doc, EditorPanelState& state, EditorRequests& requests) {
+    (void)doc;
+    if (!state.showProjectSettings || !state.project) return;
+    ImGui::SetNextWindowSize(ImVec2(460.0f, 260.0f), ImGuiCond_FirstUseEver);
+    if (!ImGui::Begin("Project settings", &state.showProjectSettings)) { ImGui::End(); return; }
+    Project& project = *state.project;
+    if (!project.IsLoaded()) {
+        ImGui::TextDisabled("No project open.");
+        ImGui::End();
+        return;
+    }
+    ProjectSettings& s = project.Settings();
+    ImGui::TextDisabled("%s", project.ProjectFile().c_str());
+    char name[256];
+    CopyToBuffer(s.name, name, sizeof(name));
+    if (ImGui::InputText("Name", name, sizeof(name))) s.name = name;
+    if (ImGui::BeginCombo("Startup scene", s.startupScene.empty() ? "(none)" : s.startupScene.c_str())) {
+        for (const std::string& scene : state.sceneFiles) {
+            if (ImGui::Selectable(scene.c_str(), scene == s.startupScene)) s.startupScene = scene;
+        }
+        ImGui::EndCombo();
+    }
+    ImGui::Text("Assets: %s   Scenes: %s   Saves: %s", s.assetsDir.c_str(), s.scenesDir.c_str(), s.savesDir.c_str());
+    if (ImGui::Button("Save project")) requests.saveProject = true;
+    ImGui::SameLine();
+    if (ImGui::Button("Run project")) requests.runProject = true;
+    ImGui::Separator();
+    ImGui::TextDisabled("Scenes in the project (double-click opens):");
+    for (const std::string& scene : state.sceneFiles) {
+        if (ImGui::Selectable(scene.c_str(), false, ImGuiSelectableFlags_AllowDoubleClick) &&
+            ImGui::IsMouseDoubleClicked(ImGuiMouseButton_Left)) {
+            requests.openSceneRelative = scene;
+        }
+    }
+    if (!state.runProjectInfo.empty()) { ImGui::Separator(); ImGui::TextWrapped("%s", state.runProjectInfo.c_str()); }
+    ImGui::End();
+}
+
+void DrawProfilerPanel(EditorPanelState& state) {
+    if (!state.showProfiler) return;
+    ImGui::SetNextWindowPos(ImVec2(ImGui::GetIO().DisplaySize.x - 400.0f - 330.0f, 24.0f), ImGuiCond_FirstUseEver);
+    ImGui::SetNextWindowSize(ImVec2(330.0f, 420.0f), ImGuiCond_FirstUseEver);
+    if (!ImGui::Begin("Profiler", &state.showProfiler)) { ImGui::End(); return; }
+    const ProfilerData& p = state.profiler;
+    ImGui::Text("Frame: %.2f ms  (%.0f FPS, rolling)", p.frameMilliseconds, p.framesPerSecond);
+    if (!p.playing) ImGui::TextDisabled("Edit mode: no simulation stepping.");
+    ImGui::Text("Fixed steps this frame: %d", p.fixedStepsThisFrame);
+    ImGui::Text("Last fixed step: %.3f ms (whole StepPlayedWorld)", p.fixedStepMilliseconds);
+    ImGui::Separator();
+    ImGui::Text("Physics bodies: %zu live (%zu dynamic)", p.physicsBodies, p.dynamicBodies);
+    ImGui::Text("Contacts (last step, final iteration): %zu", p.contacts);
+    ImGui::Text("Entities: %zu full / %zu coarse / %zu dormant / %zu destroyed", p.entitiesFull, p.entitiesCoarse,
+                p.entitiesDormant, p.entitiesDestroyed);
+    ImGui::Separator();
+    ImGui::Text("Draw calls: %u  (incl. shadow passes)", p.drawCalls);
+    ImGui::Text("Triangles submitted: %u", p.triangles);
+    ImGui::Text("Shadow passes: %u   Dynamic lights: %u", p.shadowPasses, p.dynamicLights);
+    ImGui::Text("Debug lines: %u", p.debugLines);
+    ImGui::Text("Scene submission: %.2f ms", p.sceneMilliseconds);
+    ImGui::Separator();
+    ImGui::Text("Fluid particles: %zu", p.fluidParticles);
+    ImGui::Text("Fluid solve (in step): %s", p.fluidMilliseconds > 0.0f ? "" : "not measured");
+    if (p.fluidMilliseconds > 0.0f) { ImGui::SameLine(); ImGui::Text("%.3f ms", p.fluidMilliseconds); }
+    ImGui::Text("Fluid surface rebuild: %.2f ms", p.surfaceMilliseconds);
+    ImGui::Separator();
+    ImGui::Text("Resources: %zu meshes, %zu textures, %zu terrain meshes", p.resources.loadedMeshes,
+                p.resources.loadedTextures, p.resources.loadedTerrainMeshes);
+    ImGui::Text("  hits %llu / misses (loads) %llu / failed %zu", p.resources.hits, p.resources.misses, p.resources.failed);
+    ImGui::TextDisabled("All times are wall-clock on the editor thread.");
     ImGui::End();
 }
 
@@ -546,21 +518,26 @@ void DrawStatusBar(EditorDocument& doc, EditorPanelState& state) {
     ImGui::Begin("##status", nullptr,
                  ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove |
                      ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoSavedSettings);
-    ImGui::Text("%s%s  |  %s  |  %s", doc.Path().empty() ? "(unsaved scene)" : doc.Path().c_str(),
-                doc.IsDirty() ? " *" : "", state.mode == EditorMode::Edit ? "Edit" : "Play",
+    const char* gizmo = state.gizmoMode == GizmoMode::Translate ? "Move" : state.gizmoMode == GizmoMode::Rotate ? "Rotate" : "Scale";
+    ImGui::Text("%s | %s%s | %s | %s/%s%s | %s",
+                state.project && state.project->IsLoaded() ? state.project->Settings().name.c_str() : "(no project)",
+                doc.Path().empty() ? "(unsaved scene)" : doc.Path().c_str(), doc.IsDirty() ? " *" : "",
+                state.mode == EditorMode::Edit ? "Edit" : "Play", gizmo,
+                state.gizmoSpace == GizmoSpace::World ? "world" : "local", state.gizmoSnap ? "/snap" : "",
                 state.status.c_str());
     if (!state.runtimeInfo.empty()) { ImGui::SameLine(); ImGui::TextDisabled("%s", state.runtimeInfo.c_str()); }
     ImGui::End();
 }
 
 SceneObjectId CreateObjectOfKind(EditorDocument& doc, const std::string& kind, const glm::vec3& position,
-                                 const std::string& defaultMeshPath) {
+                                 const std::string& meshAssetId) {
     doc.BeginEdit();
     Scene& scene = doc.GetScene();
     SceneObject& o = scene.CreateObject(kind == "empty" ? "Empty" : kind == "box" ? "Box"
                                         : kind == "sphere" ? "Sphere" : kind == "dynamic-box" ? "Dynamic box"
                                         : kind == "dynamic-sphere" ? "Dynamic sphere" : kind == "mesh" ? "Mesh"
                                         : kind == "point-light" ? "Point light" : kind == "spot-light" ? "Spot light"
+                                        : kind == "door" ? "Door" : kind == "gravity-region" ? "Gravity region"
                                         : kind == "player-start" ? "Player start" : "Object");
     o.transform.position = position;
     if (kind == "box" || kind == "dynamic-box") {
@@ -582,12 +559,23 @@ SceneObjectId CreateObjectOfKind(EditorDocument& doc, const std::string& kind, c
     } else if (kind == "mesh") {
         o.render = SceneRenderComponent{};
         o.render->shape = SceneShape::Mesh;
-        o.render->meshPath = defaultMeshPath;
+        o.render->meshAsset = meshAssetId;
         o.render->color = glm::vec3(1.0f);
     } else if (kind == "point-light" || kind == "spot-light") {
         o.light = SceneLightComponent{};
         o.light->kind = kind == "point-light" ? SceneLightKind::Point : SceneLightKind::Spot;
         o.light->color = glm::vec3(3.0f, 2.8f, 2.4f);
+    } else if (kind == "door") {
+        o.render = SceneRenderComponent{};
+        o.render->shape = SceneShape::Box;
+        o.render->halfExtents = glm::vec3(1.0f, 1.0f, 0.1f);
+        o.render->color = glm::vec3(0.55f, 0.38f, 0.22f);
+        o.door = SceneDoorComponent{};
+    } else if (kind == "gravity-region") {
+        o.gravity = SceneGravityComponent{};
+        o.gravity->kind = SceneGravityKind::Uniform;
+        o.gravity->regionShape = SceneRegionShape::Box;
+        o.gravity->regionHalfExtents = glm::vec3(20.0f);
     } else if (kind == "player-start") {
         o.playerStart = ScenePlayerStartComponent{};
     }
@@ -595,4 +583,31 @@ SceneObjectId CreateObjectOfKind(EditorDocument& doc, const std::string& kind, c
     doc.CommitEdit();
     doc.Select(id);
     return id;
+}
+
+SceneObjectId DuplicateObject(EditorDocument& doc, SceneObjectId id) {
+    Scene& scene = doc.GetScene();
+    const SceneObject* source = scene.Find(id);
+    if (!source) return kInvalidSceneObjectId;
+    doc.BeginEdit();
+    SceneObject copy = *source;  // by value: CreateObject may reallocate
+    SceneObject& created = scene.CreateObject(copy.name + " copy");
+    const SceneObjectId newId = created.id;
+    const std::string newName = created.name;
+    created = copy;
+    created.id = newId;
+    created.name = newName;
+    // A scene has at most one player start; the copy must not carry it.
+    created.playerStart.reset();
+    // Place the copy right after the original (order is authored data).
+    std::vector<SceneObject>& objects = scene.Objects();
+    std::size_t sourceIndex = 0, copyIndex = objects.size() - 1;
+    for (std::size_t i = 0; i < objects.size(); ++i) if (objects[i].id == id) sourceIndex = i;
+    while (copyIndex > sourceIndex + 1) {
+        std::swap(objects[copyIndex], objects[copyIndex - 1]);
+        --copyIndex;
+    }
+    doc.CommitEdit();
+    doc.Select(newId);
+    return newId;
 }

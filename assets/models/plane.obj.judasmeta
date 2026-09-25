@@ -1,0 +1,4 @@
+JudasAssetMeta 1
+id "9c1e7d2a4b5f4c6d8e9fa0b1c2d3e4f5"
+type mesh
+source "assets/models/plane.obj"

@@ -16,7 +16,7 @@ struct SceneObject;
 // tool. See docs/ARCHITECTURE.md, "Milestone 28, Scene file format," for
 // the full grammar. The essentials:
 //
-//   JudasScene 2                     format identifier + version, first line
+//   JudasScene 3                     format identifier + version, first line
 //   settings ... end                 scene-wide authored settings
 //   object <id> "<name>" ... end     one block per object, in scene order
 //
@@ -35,7 +35,10 @@ bool SaveSceneToFile(const Scene& scene, const std::string& path, std::string& o
 bool LoadSceneFromString(const std::string& text, Scene& outScene, std::string& outError);
 bool LoadSceneFromFile(const std::string& path, Scene& outScene, std::string& outError);
 
-constexpr int kSceneFormatVersion = 2;
+// Version history: 1 (M28), 2 (M29: body.managed, fidelity-policy),
+// 3 (M30: render.mesh-asset / render.texture-asset carry AssetIds instead
+// of the M28 render.mesh / render.texture working-directory paths).
+constexpr int kSceneFormatVersion = 3;
 
 // Milestone 29: the object-block writer/reader, shared with the world-state
 // delta format so a created entity's definition is written and validated

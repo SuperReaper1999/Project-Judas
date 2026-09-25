@@ -86,8 +86,8 @@ void WriteObject(Writer& w, const SceneObject& o) {
         w.Line("render.alpha", F(r.alpha));
         w.Line("render.secondary-color", V(r.secondaryColor));
         w.Line("render.secondary-alpha", F(r.secondaryAlpha));
-        w.Line("render.mesh", Quote(r.meshPath));
-        w.Line("render.texture", Quote(r.texturePath));
+        w.Line("render.mesh-asset", Quote(r.meshAsset));
+        w.Line("render.texture-asset", Quote(r.textureAsset));
     }
     if (o.body) {
         const SceneBodyComponent& b = *o.body;
@@ -482,8 +482,8 @@ bool ParseObject(Reader& reader, const std::vector<Token>& header, const Block& 
         if (!p.Float("render.alpha", r.alpha)) return false;
         if (!p.Vec3("render.secondary-color", r.secondaryColor)) return false;
         if (!p.Float("render.secondary-alpha", r.secondaryAlpha)) return false;
-        if (!p.String("render.mesh", r.meshPath)) return false;
-        if (!p.String("render.texture", r.texturePath)) return false;
+        if (!p.String("render.mesh-asset", r.meshAsset)) return false;
+        if (!p.String("render.texture-asset", r.textureAsset)) return false;
         o.render = r;
     }
     if (p.Has("body")) {

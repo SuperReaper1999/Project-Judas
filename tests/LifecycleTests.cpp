@@ -1,6 +1,6 @@
 // Milestone 29: entity lifecycle, simulation fidelity, coarse evolution,
 // world-state deltas, and the reduced-work measurement — headless: a
-// RuntimeWorld built without a RenderAssetCache creates no GPU state; a
+// RuntimeWorld built without a ResourceManager creates no GPU state; a
 // Window in test-input mode never touches SDL.
 #include <chrono>
 #include <cmath>

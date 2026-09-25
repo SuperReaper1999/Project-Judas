@@ -57,11 +57,12 @@ struct SceneRenderComponent {
     // (an open container drawn with an opaque base and translucent walls).
     glm::vec3 secondaryColor{0.8f};
     float secondaryAlpha = 1.0f;
-    // Mesh only: asset paths relative to the working directory, the same
-    // convention every existing asset load already uses. Empty texture
-    // path draws untextured.
-    std::string meshPath;
-    std::string texturePath;
+    // Mesh only (Milestone 30): stable AssetIds resolved through the
+    // project's AssetDatabase (src/AssetDatabase.h), never file paths — a
+    // renamed or moved asset keeps its id, so the scene keeps its mesh.
+    // Empty texture id draws untextured.
+    std::string meshAsset;
+    std::string textureAsset;
 };
 
 enum class SceneBodyMotion { Static, Dynamic };

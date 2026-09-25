@@ -15,3 +15,6 @@ Project_Persistent_Memory.md
 
 # Milestone 29: runtime world-state deltas written by F6 (saves/<scene>.judasstate)
 saves/
+
+# Milestone 30: per-project world-state deltas
+projects/*/Saves/*.judasstate
