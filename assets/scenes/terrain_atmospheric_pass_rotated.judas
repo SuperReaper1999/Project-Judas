@@ -1,4 +1,4 @@
-JudasScene 1
+JudasScene 2
 settings
   name "Terrain planet — atmospheric pass (rotated)"
   world-origin 0 0 0
@@ -6,6 +6,7 @@ settings
   sun-color 1 0.98 0.92
   ambient 0.16 0.17 0.19
   fluid-scale 10
+  fidelity-policy none
   next-id 6
 end
 
@@ -31,6 +32,7 @@ object 1 "Terrain planet"
   body.restitution 0.1
   body.initial-velocity 0 0 0
   body.pickable false
+  body.managed false
   body.compound-count 0
   gravity radial 9.81
   gravity.region sphere 103
@@ -76,6 +78,7 @@ object 3 "Dense block"
   body.restitution 0.15
   body.initial-velocity 0 0 0
   body.pickable true
+  body.managed false
   body.compound-count 0
 end
 
@@ -101,6 +104,7 @@ object 4 "Spacecraft"
   body.restitution 0.1
   body.initial-velocity 15.25645 13.670347 0.56768465
   body.pickable false
+  body.managed false
   body.compound-count 0
   vehicle celestial
   vehicle.headlight true

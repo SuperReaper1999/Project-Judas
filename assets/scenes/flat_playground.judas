@@ -1,0 +1,1357 @@
+JudasScene 2
+settings
+  name "Flat playground"
+  world-origin 0 0 0
+  sun-direction 0.4 0.7 0.35
+  sun-color 1 0.98 0.92
+  ambient 0.16 0.17 0.19
+  fluid-scale 1
+  fidelity-policy none
+  next-id 54
+end
+
+object 1 "Ground"
+  position 0 -1 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 25 1 25
+  render.radius 0.5
+  render.color 0.4 0.44 0.36
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh ""
+  render.texture ""
+  body static box
+  body.half-extents 25 1 25
+  body.radius 0.5
+  body.terrain ""
+  body.mass 1
+  body.friction 0.8
+  body.restitution 0.05
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  gravity uniform 9.81
+  gravity.region box 40 30 40
+end
+
+object 2 "Player start"
+  position 0 1 -8
+  rotation 1 0 0 0
+  scale 1 1 1
+  player-start third-person
+  player-start.yaw 180
+end
+
+object 3 "Ball 1"
+  position -9.9 0.4 -2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sphere
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.4
+  render.color 0.9 0.8 0.2
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh ""
+  render.texture ""
+  body dynamic sphere
+  body.half-extents 0.5 0.5 0.5
+  body.radius 0.4
+  body.terrain ""
+  body.mass 3
+  body.friction 0.6
+  body.restitution 0.2
+  body.initial-velocity 0 0 0
+  body.pickable true
+  body.managed false
+  body.compound-count 0
+end
+
+object 4 "Crate 2"
+  position -7.7 0.45 -2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.45 0.45 0.45
+  render.radius 0.5
+  render.color 0.85 0.35 0.2
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh ""
+  render.texture ""
+  body dynamic box
+  body.half-extents 0.45 0.45 0.45
+  body.radius 0.5
+  body.terrain ""
+  body.mass 5
+  body.friction 0.6
+  body.restitution 0.15
+  body.initial-velocity 0 0 0
+  body.pickable true
+  body.managed false
+  body.compound-count 0
+end
+
+object 5 "Crate 3"
+  position -5.4999995 0.45 -2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.45 0.45 0.45
+  render.radius 0.5
+  render.color 0.85 0.35 0.2
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh ""
+  render.texture ""
+  body dynamic box
+  body.half-extents 0.45 0.45 0.45
+  body.radius 0.5
+  body.terrain ""
+  body.mass 5
+  body.friction 0.6
+  body.restitution 0.15
+  body.initial-velocity 0 0 0
+  body.pickable true
+  body.managed false
+  body.compound-count 0
+end
+
+object 6 "Ball 4"
+  position -3.2999992 0.4 -2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sphere
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.4
+  render.color 0.9 0.8 0.2
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh ""
+  render.texture ""
+  body dynamic sphere
+  body.half-extents 0.5 0.5 0.5
+  body.radius 0.4
+  body.terrain ""
+  body.mass 3
+  body.friction 0.6
+  body.restitution 0.2
+  body.initial-velocity 0 0 0
+  body.pickable true
+  body.managed false
+  body.compound-count 0
+end
+
+object 7 "Crate 5"
+  position -1.0999994 0.45 -2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.45 0.45 0.45
+  render.radius 0.5
+  render.color 0.85 0.35 0.2
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh ""
+  render.texture ""
+  body dynamic box
+  body.half-extents 0.45 0.45 0.45
+  body.radius 0.5
+  body.terrain ""
+  body.mass 5
+  body.friction 0.6
+  body.restitution 0.15
+  body.initial-velocity 0 0 0
+  body.pickable true
+  body.managed false
+  body.compound-count 0
+end
+
+object 8 "Crate 6"
+  position 1.1000004 0.45 -2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.45 0.45 0.45
+  render.radius 0.5
+  render.color 0.85 0.35 0.2
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh ""
+  render.texture ""
+  body dynamic box
+  body.half-extents 0.45 0.45 0.45
+  body.radius 0.5
+  body.terrain ""
+  body.mass 5
+  body.friction 0.6
+  body.restitution 0.15
+  body.initial-velocity 0 0 0
+  body.pickable true
+  body.managed false
+  body.compound-count 0
+end
+
+object 9 "Ball 7"
+  position 3.3000011 0.4 -2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sphere
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.4
+  render.color 0.9 0.8 0.2
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh ""
+  render.texture ""
+  body dynamic sphere
+  body.half-extents 0.5 0.5 0.5
+  body.radius 0.4
+  body.terrain ""
+  body.mass 3
+  body.friction 0.6
+  body.restitution 0.2
+  body.initial-velocity 0 0 0
+  body.pickable true
+  body.managed false
+  body.compound-count 0
+end
+
+object 10 "Crate 8"
+  position 5.500001 0.45 -2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.45 0.45 0.45
+  render.radius 0.5
+  render.color 0.85 0.35 0.2
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh ""
+  render.texture ""
+  body dynamic box
+  body.half-extents 0.45 0.45 0.45
+  body.radius 0.5
+  body.terrain ""
+  body.mass 5
+  body.friction 0.6
+  body.restitution 0.15
+  body.initial-velocity 0 0 0
+  body.pickable true
+  body.managed false
+  body.compound-count 0
+end
+
+object 11 "Crate 9"
+  position 7.700001 0.45 -2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.45 0.45 0.45
+  render.radius 0.5
+  render.color 0.85 0.35 0.2
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh ""
+  render.texture ""
+  body dynamic box
+  body.half-extents 0.45 0.45 0.45
+  body.radius 0.5
+  body.terrain ""
+  body.mass 5
+  body.friction 0.6
+  body.restitution 0.15
+  body.initial-velocity 0 0 0
+  body.pickable true
+  body.managed false
+  body.compound-count 0
+end
+
+object 12 "Ball 10"
+  position 9.900002 0.4 -2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sphere
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.4
+  render.color 0.9 0.8 0.2
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh ""
+  render.texture ""
+  body dynamic sphere
+  body.half-extents 0.5 0.5 0.5
+  body.radius 0.4
+  body.terrain ""
+  body.mass 3
+  body.friction 0.6
+  body.restitution 0.2
+  body.initial-velocity 0 0 0
+  body.pickable true
+  body.managed false
+  body.compound-count 0
+end
+
+object 13 "Crate 11"
+  position -9.9 0.45 0.20000005
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.45 0.45 0.45
+  render.radius 0.5
+  render.color 0.85 0.35 0.2
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh ""
+  render.texture ""
+  body dynamic box
+  body.half-extents 0.45 0.45 0.45
+  body.radius 0.5
+  body.terrain ""
+  body.mass 5
+  body.friction 0.6
+  body.restitution 0.15
+  body.initial-velocity 0 0 0
+  body.pickable true
+  body.managed false
+  body.compound-count 0
+end
+
+object 14 "Crate 12"
+  position -7.7 0.45 0.20000005
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.45 0.45 0.45
+  render.radius 0.5
+  render.color 0.85 0.35 0.2
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh ""
+  render.texture ""
+  body dynamic box
+  body.half-extents 0.45 0.45 0.45
+  body.radius 0.5
+  body.terrain ""
+  body.mass 5
+  body.friction 0.6
+  body.restitution 0.15
+  body.initial-velocity 0 0 0
+  body.pickable true
+  body.managed false
+  body.compound-count 0
+end
+
+object 15 "Ball 13"
+  position -5.4999995 0.4 0.20000005
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sphere
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.4
+  render.color 0.9 0.8 0.2
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh ""
+  render.texture ""
+  body dynamic sphere
+  body.half-extents 0.5 0.5 0.5
+  body.radius 0.4
+  body.terrain ""
+  body.mass 3
+  body.friction 0.6
+  body.restitution 0.2
+  body.initial-velocity 0 0 0
+  body.pickable true
+  body.managed false
+  body.compound-count 0
+end
+
+object 16 "Crate 14"
+  position -3.2999992 0.45 0.20000005
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.45 0.45 0.45
+  render.radius 0.5
+  render.color 0.85 0.35 0.2
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh ""
+  render.texture ""
+  body dynamic box
+  body.half-extents 0.45 0.45 0.45
+  body.radius 0.5
+  body.terrain ""
+  body.mass 5
+  body.friction 0.6
+  body.restitution 0.15
+  body.initial-velocity 0 0 0
+  body.pickable true
+  body.managed false
+  body.compound-count 0
+end
+
+object 17 "Crate 15"
+  position -1.0999994 0.45 0.20000005
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.45 0.45 0.45
+  render.radius 0.5
+  render.color 0.85 0.35 0.2
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh ""
+  render.texture ""
+  body dynamic box
+  body.half-extents 0.45 0.45 0.45
+  body.radius 0.5
+  body.terrain ""
+  body.mass 5
+  body.friction 0.6
+  body.restitution 0.15
+  body.initial-velocity 0 0 0
+  body.pickable true
+  body.managed false
+  body.compound-count 0
+end
+
+object 18 "Ball 16"
+  position 1.1000004 0.4 0.20000005
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sphere
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.4
+  render.color 0.9 0.8 0.2
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh ""
+  render.texture ""
+  body dynamic sphere
+  body.half-extents 0.5 0.5 0.5
+  body.radius 0.4
+  body.terrain ""
+  body.mass 3
+  body.friction 0.6
+  body.restitution 0.2
+  body.initial-velocity 0 0 0
+  body.pickable true
+  body.managed false
+  body.compound-count 0
+end
+
+object 19 "Crate 17"
+  position 3.3000011 0.45 0.20000005
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.45 0.45 0.45
+  render.radius 0.5
+  render.color 0.85 0.35 0.2
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh ""
+  render.texture ""
+  body dynamic box
+  body.half-extents 0.45 0.45 0.45
+  body.radius 0.5
+  body.terrain ""
+  body.mass 5
+  body.friction 0.6
+  body.restitution 0.15
+  body.initial-velocity 0 0 0
+  body.pickable true
+  body.managed false
+  body.compound-count 0
+end
+
+object 20 "Crate 18"
+  position 5.500001 0.45 0.20000005
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.45 0.45 0.45
+  render.radius 0.5
+  render.color 0.85 0.35 0.2
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh ""
+  render.texture ""
+  body dynamic box
+  body.half-extents 0.45 0.45 0.45
+  body.radius 0.5
+  body.terrain ""
+  body.mass 5
+  body.friction 0.6
+  body.restitution 0.15
+  body.initial-velocity 0 0 0
+  body.pickable true
+  body.managed false
+  body.compound-count 0
+end
+
+object 21 "Ball 19"
+  position 7.700001 0.4 0.20000005
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sphere
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.4
+  render.color 0.9 0.8 0.2
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh ""
+  render.texture ""
+  body dynamic sphere
+  body.half-extents 0.5 0.5 0.5
+  body.radius 0.4
+  body.terrain ""
+  body.mass 3
+  body.friction 0.6
+  body.restitution 0.2
+  body.initial-velocity 0 0 0
+  body.pickable true
+  body.managed false
+  body.compound-count 0
+end
+
+object 22 "Crate 20"
+  position 9.900002 0.45 0.20000005
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.45 0.45 0.45
+  render.radius 0.5
+  render.color 0.85 0.35 0.2
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh ""
+  render.texture ""
+  body dynamic box
+  body.half-extents 0.45 0.45 0.45
+  body.radius 0.5
+  body.terrain ""
+  body.mass 5
+  body.friction 0.6
+  body.restitution 0.15
+  body.initial-velocity 0 0 0
+  body.pickable true
+  body.managed false
+  body.compound-count 0
+end
+
+object 23 "Crate 21"
+  position -9.9 0.45 2.4
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.45 0.45 0.45
+  render.radius 0.5
+  render.color 0.85 0.35 0.2
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh ""
+  render.texture ""
+  body dynamic box
+  body.half-extents 0.45 0.45 0.45
+  body.radius 0.5
+  body.terrain ""
+  body.mass 5
+  body.friction 0.6
+  body.restitution 0.15
+  body.initial-velocity 0 0 0
+  body.pickable true
+  body.managed false
+  body.compound-count 0
+end
+
+object 24 "Ball 22"
+  position -7.7 0.4 2.4
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sphere
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.4
+  render.color 0.9 0.8 0.2
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh ""
+  render.texture ""
+  body dynamic sphere
+  body.half-extents 0.5 0.5 0.5
+  body.radius 0.4
+  body.terrain ""
+  body.mass 3
+  body.friction 0.6
+  body.restitution 0.2
+  body.initial-velocity 0 0 0
+  body.pickable true
+  body.managed false
+  body.compound-count 0
+end
+
+object 25 "Crate 23"
+  position -5.4999995 0.45 2.4
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.45 0.45 0.45
+  render.radius 0.5
+  render.color 0.85 0.35 0.2
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh ""
+  render.texture ""
+  body dynamic box
+  body.half-extents 0.45 0.45 0.45
+  body.radius 0.5
+  body.terrain ""
+  body.mass 5
+  body.friction 0.6
+  body.restitution 0.15
+  body.initial-velocity 0 0 0
+  body.pickable true
+  body.managed false
+  body.compound-count 0
+end
+
+object 26 "Crate 24"
+  position -3.2999992 0.45 2.4
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.45 0.45 0.45
+  render.radius 0.5
+  render.color 0.85 0.35 0.2
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh ""
+  render.texture ""
+  body dynamic box
+  body.half-extents 0.45 0.45 0.45
+  body.radius 0.5
+  body.terrain ""
+  body.mass 5
+  body.friction 0.6
+  body.restitution 0.15
+  body.initial-velocity 0 0 0
+  body.pickable true
+  body.managed false
+  body.compound-count 0
+end
+
+object 27 "Ball 25"
+  position -1.0999994 0.4 2.4
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sphere
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.4
+  render.color 0.9 0.8 0.2
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh ""
+  render.texture ""
+  body dynamic sphere
+  body.half-extents 0.5 0.5 0.5
+  body.radius 0.4
+  body.terrain ""
+  body.mass 3
+  body.friction 0.6
+  body.restitution 0.2
+  body.initial-velocity 0 0 0
+  body.pickable true
+  body.managed false
+  body.compound-count 0
+end
+
+object 28 "Crate 26"
+  position 1.1000004 0.45 2.4
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.45 0.45 0.45
+  render.radius 0.5
+  render.color 0.85 0.35 0.2
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh ""
+  render.texture ""
+  body dynamic box
+  body.half-extents 0.45 0.45 0.45
+  body.radius 0.5
+  body.terrain ""
+  body.mass 5
+  body.friction 0.6
+  body.restitution 0.15
+  body.initial-velocity 0 0 0
+  body.pickable true
+  body.managed false
+  body.compound-count 0
+end
+
+object 29 "Crate 27"
+  position 3.3000011 0.45 2.4
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.45 0.45 0.45
+  render.radius 0.5
+  render.color 0.85 0.35 0.2
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh ""
+  render.texture ""
+  body dynamic box
+  body.half-extents 0.45 0.45 0.45
+  body.radius 0.5
+  body.terrain ""
+  body.mass 5
+  body.friction 0.6
+  body.restitution 0.15
+  body.initial-velocity 0 0 0
+  body.pickable true
+  body.managed false
+  body.compound-count 0
+end
+
+object 30 "Ball 28"
+  position 5.500001 0.4 2.4
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sphere
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.4
+  render.color 0.9 0.8 0.2
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh ""
+  render.texture ""
+  body dynamic sphere
+  body.half-extents 0.5 0.5 0.5
+  body.radius 0.4
+  body.terrain ""
+  body.mass 3
+  body.friction 0.6
+  body.restitution 0.2
+  body.initial-velocity 0 0 0
+  body.pickable true
+  body.managed false
+  body.compound-count 0
+end
+
+object 31 "Crate 29"
+  position 7.700001 0.45 2.4
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.45 0.45 0.45
+  render.radius 0.5
+  render.color 0.85 0.35 0.2
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh ""
+  render.texture ""
+  body dynamic box
+  body.half-extents 0.45 0.45 0.45
+  body.radius 0.5
+  body.terrain ""
+  body.mass 5
+  body.friction 0.6
+  body.restitution 0.15
+  body.initial-velocity 0 0 0
+  body.pickable true
+  body.managed false
+  body.compound-count 0
+end
+
+object 32 "Crate 30"
+  position 9.900002 0.45 2.4
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.45 0.45 0.45
+  render.radius 0.5
+  render.color 0.85 0.35 0.2
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh ""
+  render.texture ""
+  body dynamic box
+  body.half-extents 0.45 0.45 0.45
+  body.radius 0.5
+  body.terrain ""
+  body.mass 5
+  body.friction 0.6
+  body.restitution 0.15
+  body.initial-velocity 0 0 0
+  body.pickable true
+  body.managed false
+  body.compound-count 0
+end
+
+object 33 "Ball 31"
+  position -9.9 0.4 4.6000004
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sphere
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.4
+  render.color 0.9 0.8 0.2
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh ""
+  render.texture ""
+  body dynamic sphere
+  body.half-extents 0.5 0.5 0.5
+  body.radius 0.4
+  body.terrain ""
+  body.mass 3
+  body.friction 0.6
+  body.restitution 0.2
+  body.initial-velocity 0 0 0
+  body.pickable true
+  body.managed false
+  body.compound-count 0
+end
+
+object 34 "Crate 32"
+  position -7.7 0.45 4.6000004
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.45 0.45 0.45
+  render.radius 0.5
+  render.color 0.85 0.35 0.2
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh ""
+  render.texture ""
+  body dynamic box
+  body.half-extents 0.45 0.45 0.45
+  body.radius 0.5
+  body.terrain ""
+  body.mass 5
+  body.friction 0.6
+  body.restitution 0.15
+  body.initial-velocity 0 0 0
+  body.pickable true
+  body.managed false
+  body.compound-count 0
+end
+
+object 35 "Crate 33"
+  position -5.4999995 0.45 4.6000004
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.45 0.45 0.45
+  render.radius 0.5
+  render.color 0.85 0.35 0.2
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh ""
+  render.texture ""
+  body dynamic box
+  body.half-extents 0.45 0.45 0.45
+  body.radius 0.5
+  body.terrain ""
+  body.mass 5
+  body.friction 0.6
+  body.restitution 0.15
+  body.initial-velocity 0 0 0
+  body.pickable true
+  body.managed false
+  body.compound-count 0
+end
+
+object 36 "Ball 34"
+  position -3.2999992 0.4 4.6000004
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sphere
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.4
+  render.color 0.9 0.8 0.2
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh ""
+  render.texture ""
+  body dynamic sphere
+  body.half-extents 0.5 0.5 0.5
+  body.radius 0.4
+  body.terrain ""
+  body.mass 3
+  body.friction 0.6
+  body.restitution 0.2
+  body.initial-velocity 0 0 0
+  body.pickable true
+  body.managed false
+  body.compound-count 0
+end
+
+object 37 "Crate 35"
+  position -1.0999994 0.45 4.6000004
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.45 0.45 0.45
+  render.radius 0.5
+  render.color 0.85 0.35 0.2
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh ""
+  render.texture ""
+  body dynamic box
+  body.half-extents 0.45 0.45 0.45
+  body.radius 0.5
+  body.terrain ""
+  body.mass 5
+  body.friction 0.6
+  body.restitution 0.15
+  body.initial-velocity 0 0 0
+  body.pickable true
+  body.managed false
+  body.compound-count 0
+end
+
+object 38 "Crate 36"
+  position 1.1000004 0.45 4.6000004
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.45 0.45 0.45
+  render.radius 0.5
+  render.color 0.85 0.35 0.2
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh ""
+  render.texture ""
+  body dynamic box
+  body.half-extents 0.45 0.45 0.45
+  body.radius 0.5
+  body.terrain ""
+  body.mass 5
+  body.friction 0.6
+  body.restitution 0.15
+  body.initial-velocity 0 0 0
+  body.pickable true
+  body.managed false
+  body.compound-count 0
+end
+
+object 39 "Ball 37"
+  position 3.3000011 0.4 4.6000004
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sphere
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.4
+  render.color 0.9 0.8 0.2
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh ""
+  render.texture ""
+  body dynamic sphere
+  body.half-extents 0.5 0.5 0.5
+  body.radius 0.4
+  body.terrain ""
+  body.mass 3
+  body.friction 0.6
+  body.restitution 0.2
+  body.initial-velocity 0 0 0
+  body.pickable true
+  body.managed false
+  body.compound-count 0
+end
+
+object 40 "Crate 38"
+  position 5.500001 0.45 4.6000004
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.45 0.45 0.45
+  render.radius 0.5
+  render.color 0.85 0.35 0.2
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh ""
+  render.texture ""
+  body dynamic box
+  body.half-extents 0.45 0.45 0.45
+  body.radius 0.5
+  body.terrain ""
+  body.mass 5
+  body.friction 0.6
+  body.restitution 0.15
+  body.initial-velocity 0 0 0
+  body.pickable true
+  body.managed false
+  body.compound-count 0
+end
+
+object 41 "Crate 39"
+  position 7.700001 0.45 4.6000004
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.45 0.45 0.45
+  render.radius 0.5
+  render.color 0.85 0.35 0.2
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh ""
+  render.texture ""
+  body dynamic box
+  body.half-extents 0.45 0.45 0.45
+  body.radius 0.5
+  body.terrain ""
+  body.mass 5
+  body.friction 0.6
+  body.restitution 0.15
+  body.initial-velocity 0 0 0
+  body.pickable true
+  body.managed false
+  body.compound-count 0
+end
+
+object 42 "Ball 40"
+  position 9.900002 0.4 4.6000004
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sphere
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.4
+  render.color 0.9 0.8 0.2
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh ""
+  render.texture ""
+  body dynamic sphere
+  body.half-extents 0.5 0.5 0.5
+  body.radius 0.4
+  body.terrain ""
+  body.mass 3
+  body.friction 0.6
+  body.restitution 0.2
+  body.initial-velocity 0 0 0
+  body.pickable true
+  body.managed false
+  body.compound-count 0
+end
+
+object 43 "Crate 41"
+  position -9.9 0.45 6.8
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.45 0.45 0.45
+  render.radius 0.5
+  render.color 0.85 0.35 0.2
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh ""
+  render.texture ""
+  body dynamic box
+  body.half-extents 0.45 0.45 0.45
+  body.radius 0.5
+  body.terrain ""
+  body.mass 5
+  body.friction 0.6
+  body.restitution 0.15
+  body.initial-velocity 0 0 0
+  body.pickable true
+  body.managed false
+  body.compound-count 0
+end
+
+object 44 "Crate 42"
+  position -7.7 0.45 6.8
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.45 0.45 0.45
+  render.radius 0.5
+  render.color 0.85 0.35 0.2
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh ""
+  render.texture ""
+  body dynamic box
+  body.half-extents 0.45 0.45 0.45
+  body.radius 0.5
+  body.terrain ""
+  body.mass 5
+  body.friction 0.6
+  body.restitution 0.15
+  body.initial-velocity 0 0 0
+  body.pickable true
+  body.managed false
+  body.compound-count 0
+end
+
+object 45 "Ball 43"
+  position -5.4999995 0.4 6.8
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sphere
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.4
+  render.color 0.9 0.8 0.2
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh ""
+  render.texture ""
+  body dynamic sphere
+  body.half-extents 0.5 0.5 0.5
+  body.radius 0.4
+  body.terrain ""
+  body.mass 3
+  body.friction 0.6
+  body.restitution 0.2
+  body.initial-velocity 0 0 0
+  body.pickable true
+  body.managed false
+  body.compound-count 0
+end
+
+object 46 "Crate 44"
+  position -3.2999992 0.45 6.8
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.45 0.45 0.45
+  render.radius 0.5
+  render.color 0.85 0.35 0.2
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh ""
+  render.texture ""
+  body dynamic box
+  body.half-extents 0.45 0.45 0.45
+  body.radius 0.5
+  body.terrain ""
+  body.mass 5
+  body.friction 0.6
+  body.restitution 0.15
+  body.initial-velocity 0 0 0
+  body.pickable true
+  body.managed false
+  body.compound-count 0
+end
+
+object 47 "Crate 45"
+  position -1.0999994 0.45 6.8
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.45 0.45 0.45
+  render.radius 0.5
+  render.color 0.85 0.35 0.2
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh ""
+  render.texture ""
+  body dynamic box
+  body.half-extents 0.45 0.45 0.45
+  body.radius 0.5
+  body.terrain ""
+  body.mass 5
+  body.friction 0.6
+  body.restitution 0.15
+  body.initial-velocity 0 0 0
+  body.pickable true
+  body.managed false
+  body.compound-count 0
+end
+
+object 48 "Ball 46"
+  position 1.1000004 0.4 6.8
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sphere
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.4
+  render.color 0.9 0.8 0.2
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh ""
+  render.texture ""
+  body dynamic sphere
+  body.half-extents 0.5 0.5 0.5
+  body.radius 0.4
+  body.terrain ""
+  body.mass 3
+  body.friction 0.6
+  body.restitution 0.2
+  body.initial-velocity 0 0 0
+  body.pickable true
+  body.managed false
+  body.compound-count 0
+end
+
+object 49 "Crate 47"
+  position 3.3000011 0.45 6.8
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.45 0.45 0.45
+  render.radius 0.5
+  render.color 0.85 0.35 0.2
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh ""
+  render.texture ""
+  body dynamic box
+  body.half-extents 0.45 0.45 0.45
+  body.radius 0.5
+  body.terrain ""
+  body.mass 5
+  body.friction 0.6
+  body.restitution 0.15
+  body.initial-velocity 0 0 0
+  body.pickable true
+  body.managed false
+  body.compound-count 0
+end
+
+object 50 "Crate 48"
+  position 5.500001 0.45 6.8
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.45 0.45 0.45
+  render.radius 0.5
+  render.color 0.85 0.35 0.2
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh ""
+  render.texture ""
+  body dynamic box
+  body.half-extents 0.45 0.45 0.45
+  body.radius 0.5
+  body.terrain ""
+  body.mass 5
+  body.friction 0.6
+  body.restitution 0.15
+  body.initial-velocity 0 0 0
+  body.pickable true
+  body.managed false
+  body.compound-count 0
+end
+
+object 51 "Ball 49"
+  position 7.700001 0.4 6.8
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sphere
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.4
+  render.color 0.9 0.8 0.2
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh ""
+  render.texture ""
+  body dynamic sphere
+  body.half-extents 0.5 0.5 0.5
+  body.radius 0.4
+  body.terrain ""
+  body.mass 3
+  body.friction 0.6
+  body.restitution 0.2
+  body.initial-velocity 0 0 0
+  body.pickable true
+  body.managed false
+  body.compound-count 0
+end
+
+object 52 "Crate 50"
+  position 9.900002 0.45 6.8
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.45 0.45 0.45
+  render.radius 0.5
+  render.color 0.85 0.35 0.2
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh ""
+  render.texture ""
+  body dynamic box
+  body.half-extents 0.45 0.45 0.45
+  body.radius 0.5
+  body.terrain ""
+  body.mass 5
+  body.friction 0.6
+  body.restitution 0.15
+  body.initial-velocity 0 0 0
+  body.pickable true
+  body.managed false
+  body.compound-count 0
+end
+
+object 53 "Lamp"
+  position 0 5 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  light point
+  light.color 2.5 2.3 2
+  light.range 20
+  light.cone 15 25
+end

@@ -4,6 +4,7 @@
 #include "CelestialGravity.h"
 #include "GameSession.h"
 #include "Interactable.h"
+#include "ObjectManipulation.h"
 #include "ReferenceFrame.h"
 #include "RuntimeWorld.h"
 #include "WorldCoordinates.h"
@@ -95,6 +96,18 @@ HUDViewData BuildHudView(const GameSession& session, const WorldCoordinates& wor
         }
     }
 
+    // Milestone 29: lifecycle counts whenever a policy runs or anything has
+    // left the plain all-Full state.
+    const RuntimeWorld::LifecycleCounts counts = world.CountLifecycle();
+    if (world.GetFidelityPolicy() || counts.coarse + counts.dormant + counts.destroyed > 0) {
+        hud.lifecycleAvailable = true;
+    }
+    hud.entitiesFull = counts.full;
+    hud.entitiesCoarse = counts.coarse;
+    hud.entitiesDormant = counts.dormant;
+    hud.entitiesDestroyed = counts.destroyed;
+    hud.physicsBodies = counts.physicsBodies;
+
     const Interactable* target = session.InteractionTarget();
     if (session.Manipulation().IsHolding()) {
         hud.interactPrompt = target ? target->GetPromptText() + " | H Throw" : "G Drop | H Throw";
@@ -112,6 +125,9 @@ HUDViewData BuildHudView(const GameSession& session, const WorldCoordinates& wor
         if (!world.Combustibles().empty()) {
             if (!hud.interactPrompt.empty()) hud.interactPrompt += " | ";
             hud.interactPrompt += "Hold C: radiant heater";
+        }
+        if (target && dynamic_cast<const PickupInteractable*>(target)) {
+            hud.interactPrompt += " | Y Destroy permanently";
         }
     }
     return hud;

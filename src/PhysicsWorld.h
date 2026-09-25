@@ -109,6 +109,12 @@ public:
                                            const std::vector<CompoundBox>& boxes,
                                            float mass, float friction, float restitution);
     void DestroyBody(BodyHandle handle);
+    // Milestone 29: how many bodies currently exist (and how many of those
+    // are dynamic). A destroyed body's slot is reused by a later Create*;
+    // its old handle stays invalid (generation-checked), so no consumer can
+    // reach the new occupant through a stale handle.
+    std::size_t AliveBodyCount() const;
+    std::size_t DynamicBodyCount() const;
 
     // True only for a body created via CreateDynamic*. Added in Milestone
     // 7-A so a caller holding a ShapeSweepHit::hitBody can tell "pushable

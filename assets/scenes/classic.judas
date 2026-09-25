@@ -1,4 +1,4 @@
-JudasScene 1
+JudasScene 2
 settings
   name "Classic abuse chamber"
   world-origin 0 0 0
@@ -6,6 +6,7 @@ settings
   sun-color 1 0.98 0.92
   ambient 0.16 0.17 0.19
   fluid-scale 1
+  fidelity-policy none
   next-id 26
 end
 
@@ -31,6 +32,7 @@ object 1 "The plank"
   body.restitution 0.1
   body.initial-velocity 0 0 0
   body.pickable false
+  body.managed false
   body.compound-count 0
   gravity uniform 9.81
   gravity.region box 8 7 22
@@ -58,6 +60,7 @@ object 2 "Planet A"
   body.restitution 0.1
   body.initial-velocity 0 0 0
   body.pickable false
+  body.managed false
   body.compound-count 0
   gravity radial 9.81
   gravity.region sphere 26
@@ -85,6 +88,7 @@ object 3 "Planet B"
   body.restitution 0.1
   body.initial-velocity 0 0 0
   body.pickable false
+  body.managed false
   body.compound-count 0
   gravity radial 9.81
   gravity.region sphere 26
@@ -112,6 +116,7 @@ object 4 "Fluid table"
   body.restitution 0
   body.initial-velocity 0 0 0
   body.pickable false
+  body.managed false
   body.compound-count 0
 end
 
@@ -137,6 +142,7 @@ object 5 "Stair step 1"
   body.restitution 0
   body.initial-velocity 0 0 0
   body.pickable false
+  body.managed false
   body.compound-count 0
 end
 
@@ -162,6 +168,7 @@ object 6 "Stair step 2"
   body.restitution 0
   body.initial-velocity 0 0 0
   body.pickable false
+  body.managed false
   body.compound-count 0
 end
 
@@ -187,6 +194,7 @@ object 7 "Stair step 3"
   body.restitution 0
   body.initial-velocity 0 0 0
   body.pickable false
+  body.managed false
   body.compound-count 0
 end
 
@@ -212,6 +220,7 @@ object 8 "Stair step 4"
   body.restitution 0
   body.initial-velocity 0 0 0
   body.pickable false
+  body.managed false
   body.compound-count 0
 end
 
@@ -237,6 +246,7 @@ object 9 "Ramp"
   body.restitution 0
   body.initial-velocity 0 0 0
   body.pickable false
+  body.managed false
   body.compound-count 0
 end
 
@@ -326,6 +336,7 @@ object 14 "Cube (Planet A)"
   body.restitution 0.15
   body.initial-velocity 0 0 0
   body.pickable true
+  body.managed false
   body.compound-count 0
 end
 
@@ -351,6 +362,7 @@ object 15 "Ball (Planet A)"
   body.restitution 0.15
   body.initial-velocity 0 0 0
   body.pickable true
+  body.managed false
   body.compound-count 0
 end
 
@@ -376,6 +388,7 @@ object 16 "Cube (plank)"
   body.restitution 0.15
   body.initial-velocity 0 0 0
   body.pickable true
+  body.managed false
   body.compound-count 0
 end
 
@@ -401,6 +414,7 @@ object 17 "Ball (plank)"
   body.restitution 0.15
   body.initial-velocity 0 0 0
   body.pickable true
+  body.managed false
   body.compound-count 0
 end
 
@@ -426,6 +440,7 @@ object 18 "Cube (Planet B)"
   body.restitution 0.15
   body.initial-velocity 0 0 0
   body.pickable true
+  body.managed false
   body.compound-count 0
 end
 
@@ -451,6 +466,7 @@ object 19 "Ball (Planet B)"
   body.restitution 0.15
   body.initial-velocity 0 0 0
   body.pickable true
+  body.managed false
   body.compound-count 0
 end
 
@@ -476,6 +492,7 @@ object 20 "Spacecraft"
   body.restitution 0.1
   body.initial-velocity 0 0 0
   body.pickable false
+  body.managed false
   body.compound-count 0
   vehicle local
   vehicle.headlight true
@@ -506,6 +523,7 @@ object 21 "Orbital body A"
   body.restitution 0.15
   body.initial-velocity -8.051297 -6.02325 3.1836133
   body.pickable false
+  body.managed false
   body.compound-count 0
   celestial 
   celestial.gravitational-parameter 0
@@ -534,6 +552,7 @@ object 22 "Orbital body B"
   body.restitution 0.15
   body.initial-velocity 8.051297 6.02325 -3.1836133
   body.pickable false
+  body.managed false
   body.compound-count 0
   celestial 
   celestial.gravitational-parameter 0
@@ -562,6 +581,7 @@ object 23 "Cup A"
   body.restitution 0
   body.initial-velocity 0 0 0
   body.pickable true
+  body.managed false
   body.compound-count 5
   body.compound-box 0 -0.153 0 0.18 0.015 0.18
   body.compound-box -0.165 0.041999996 0 0.015 0.18 0.18
@@ -592,6 +612,7 @@ object 24 "Cup B"
   body.restitution 0
   body.initial-velocity 0 0 0
   body.pickable true
+  body.managed false
   body.compound-count 5
   body.compound-box 0 -0.153 0 0.18 0.015 0.18
   body.compound-box -0.165 0.041999996 0 0.015 0.18 0.18

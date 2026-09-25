@@ -70,6 +70,12 @@ public:
     // authoritative animation state without needing a real PhysicsWorld.
     float GetCurrentAngleRadians() const { return m_currentAngle; }
     bool IsOpen() const { return m_open; }
+    // Milestone 29: restores a persisted open/closed state instantly (the
+    // panel is already at that angle; nothing swings on load).
+    void SetOpen(bool open) {
+        m_open = open;
+        m_currentAngle = m_previousAngle = open ? m_openAngleRadians : 0.0f;
+    }
 
 private:
     BodyHandle m_bodyHandle;

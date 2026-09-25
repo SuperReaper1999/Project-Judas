@@ -226,9 +226,28 @@ struct PhysicsWorld::Impl {
         float restitution = 0.0f;
         bool isDynamic = false;
         bool alive = false;
+        // Milestone 29: a slot is reused after DestroyBody; the generation
+        // in the handle's upper bits makes a handle from a previous
+        // occupant of the same slot invalid instead of aliasing the new one.
+        unsigned int generation = 0;
     };
 
+    static constexpr unsigned int kSlotBits = 20;
+    static constexpr unsigned int kSlotMask = (1u << kSlotBits) - 1u;
+
     std::vector<Body> bodies;
+    // Slots of destroyed bodies awaiting reuse, and the sorted slots of
+    // every live body — the loops below iterate this so a world whose
+    // entities were unloaded pays for the bodies that exist, not for the
+    // slots they once occupied.
+    std::vector<unsigned int> freeSlots;
+    std::vector<unsigned int> aliveSlots;
+
+    BodyHandle MakeHandle(unsigned int slot) const {
+        BodyHandle handle;
+        handle.id = slot | (bodies[slot].generation << kSlotBits);
+        return handle;
+    }
 
     bool hasPlayerShape = false;
     Shape playerShape;
@@ -241,9 +260,8 @@ struct PhysicsWorld::Impl {
                                             float bodyMotionAlpha,
                                             bool interpolateDynamicBodyMotion) const {
         ClosestBodyResult result;
-        for (std::size_t i = 0; i < bodies.size(); ++i) {
+        for (const unsigned int i : aliveSlots) {
             const Body& body = bodies[i];
-            if (!body.alive) continue;
             const bool interpolateBody = interpolateDynamicBodyMotion && body.isDynamic;
             const glm::vec3 bodyPosition = interpolateBody
                 ? glm::mix(body.previousPosition, body.rigidBody.position, bodyMotionAlpha)
@@ -306,16 +324,22 @@ struct PhysicsWorld::Impl {
     }
 
     Body* Get(BodyHandle handle) {
-        if (!handle.IsValid() || handle.id >= bodies.size() || !bodies[handle.id].alive) {
+        if (!handle.IsValid()) return nullptr;
+        const unsigned int slot = handle.id & kSlotMask;
+        if (slot >= bodies.size() || !bodies[slot].alive ||
+            bodies[slot].generation != (handle.id >> kSlotBits)) {
             return nullptr;
         }
-        return &bodies[handle.id];
+        return &bodies[slot];
     }
     const Body* Get(BodyHandle handle) const {
-        if (!handle.IsValid() || handle.id >= bodies.size() || !bodies[handle.id].alive) {
+        if (!handle.IsValid()) return nullptr;
+        const unsigned int slot = handle.id & kSlotMask;
+        if (slot >= bodies.size() || !bodies[slot].alive ||
+            bodies[slot].generation != (handle.id >> kSlotBits)) {
             return nullptr;
         }
-        return &bodies[handle.id];
+        return &bodies[slot];
     }
 
     BodyHandle AddBody(const Shape& shape, const glm::vec3& position, const glm::quat& rotation,
@@ -342,10 +366,28 @@ struct PhysicsWorld::Impl {
         }
         // Static bodies keep inverseMass=0 / zero inverse inertia (RigidBody's own defaults),
         // which is exactly what "never moved by force or impulse" means throughout this engine.
-        bodies.push_back(body);
-        BodyHandle handle;
-        handle.id = static_cast<unsigned int>(bodies.size() - 1);
-        return handle;
+        unsigned int slot;
+        if (!freeSlots.empty()) {
+            slot = freeSlots.back();
+            freeSlots.pop_back();
+            body.generation = (bodies[slot].generation + 1u) & ((1u << (32u - kSlotBits)) - 1u);
+            bodies[slot] = body;
+        } else {
+            slot = static_cast<unsigned int>(bodies.size());
+            bodies.push_back(body);
+        }
+        aliveSlots.insert(std::lower_bound(aliveSlots.begin(), aliveSlots.end(), slot), slot);
+        return MakeHandle(slot);
+    }
+
+    void Remove(BodyHandle handle) {
+        Body* body = Get(handle);
+        if (!body) return;
+        const unsigned int slot = handle.id & kSlotMask;
+        body->alive = false;
+        freeSlots.push_back(slot);
+        const auto it = std::lower_bound(aliveSlots.begin(), aliveSlots.end(), slot);
+        if (it != aliveSlots.end() && *it == slot) aliveSlots.erase(it);
     }
 };
 
@@ -416,8 +458,19 @@ BodyHandle PhysicsWorld::CreateDynamicCompoundBoxes(const glm::vec3& position,
 }
 
 void PhysicsWorld::DestroyBody(BodyHandle handle) {
-    Impl::Body* body = m_impl->Get(handle);
-    if (body) body->alive = false;
+    m_impl->Remove(handle);
+}
+
+std::size_t PhysicsWorld::AliveBodyCount() const {
+    return m_impl->aliveSlots.size();
+}
+
+std::size_t PhysicsWorld::DynamicBodyCount() const {
+    std::size_t count = 0;
+    for (const unsigned int slot : m_impl->aliveSlots) {
+        if (m_impl->bodies[slot].isDynamic) ++count;
+    }
+    return count;
 }
 
 void PhysicsWorld::ApplyLinearAcceleration(BodyHandle handle, const glm::vec3& acceleration,
@@ -552,8 +605,9 @@ void PhysicsWorld::Step(float fixedDeltaTime) {
     // zero, contributing zero to velocity, identical to before this
     // milestone) — the position/orientation math itself is byte-identical
     // to what was inlined here previously.
-    for (Impl::Body& body : m_impl->bodies) {
-        if (!body.alive || !body.isDynamic) continue;
+    for (const unsigned int slot : m_impl->aliveSlots) {
+        Impl::Body& body = m_impl->bodies[slot];
+        if (!body.isDynamic) continue;
         // PlayerController runs after Step. Keep the starting pose so an
         // airborne player sweep can compare both trajectories at matching
         // fractions through this same fixed interval.
@@ -568,14 +622,13 @@ void PhysicsWorld::Step(float fixedDeltaTime) {
     // visibly settling over several. Static-static pairs (e.g. a planet
     // against the plank) are skipped outright: neither side can move, so
     // there is nothing to resolve.
-    const std::size_t bodyCount = m_impl->bodies.size();
+    const std::vector<unsigned int>& alive = m_impl->aliveSlots;
+    const std::size_t bodyCount = alive.size();
     for (int iteration = 0; iteration < kSolverIterations; ++iteration) {
-        for (std::size_t i = 0; i < bodyCount; ++i) {
-            Impl::Body& a = m_impl->bodies[i];
-            if (!a.alive) continue;
-            for (std::size_t j = i + 1; j < bodyCount; ++j) {
-                Impl::Body& b = m_impl->bodies[j];
-                if (!b.alive) continue;
+        for (std::size_t ai = 0; ai < bodyCount; ++ai) {
+            Impl::Body& a = m_impl->bodies[alive[ai]];
+            for (std::size_t bj = ai + 1; bj < bodyCount; ++bj) {
+                Impl::Body& b = m_impl->bodies[alive[bj]];
                 if (a.rigidBody.IsStatic() && b.rigidBody.IsStatic()) continue;
 
                 const float friction = std::sqrt(std::max(a.friction, 0.0f) * std::max(b.friction, 0.0f));
@@ -695,7 +748,7 @@ ShapeSweepHit PhysicsWorld::SweepPlayerShape(const glm::vec3& fromCenter, const 
         result.hit = true;
         result.distance = 0.0f;
         result.normal = startResult.normal;
-        result.hitBody.id = static_cast<unsigned int>(startResult.bodyIndex);
+        result.hitBody = m_impl->MakeHandle(static_cast<unsigned int>(startResult.bodyIndex));
         return result;
     }
 
@@ -729,7 +782,7 @@ ShapeSweepHit PhysicsWorld::SweepPlayerShape(const glm::vec3& fromCenter, const 
             result.hit = true;
             result.distance = lo * displacementLength;
             result.normal = refined.normal;
-            result.hitBody.id = static_cast<unsigned int>(refined.bodyIndex);
+            result.hitBody = m_impl->MakeHandle(static_cast<unsigned int>(refined.bodyIndex));
             return result;
         }
         previousT = t;

@@ -22,12 +22,17 @@
 //                                  JUDAS_TERRAIN_PREVIEW=1 (harness runs)
 //
 // JUDAS_WORLD_OFFSET (far | x,y,z) overrides the scene's authored origin.
+// JUDAS_WORLD_STATE (path | none) selects the world-state delta file.
 struct RuntimeOptions {
     std::string scenePath;
     std::optional<glm::dvec3> worldOriginOverride;
     std::string testScriptPath;  // empty: interactive
     bool IsTestRun() const { return !testScriptPath.empty(); }
     std::string terrainScreenshotPath;
+    // Milestone 29: where the runtime reads/writes the world-state delta
+    // for the selected scene. Default saves/<scene file stem>.judasstate;
+    // JUDAS_WORLD_STATE=<path> overrides, JUDAS_WORLD_STATE=none disables.
+    std::string worldStatePath;
     bool liveTelemetry = false;
     bool fluidDiagnostics = false;
     bool atmosphereDiagnostics = false;

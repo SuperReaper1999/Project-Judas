@@ -103,6 +103,9 @@ add_library(judas_engine STATIC
     src/EngineHost.cpp
     src/InteractivePlay.cpp
     src/ScreenshotWriter.cpp
+    src/FidelityPolicy.cpp
+    src/CoarseSimulation.cpp
+    src/WorldState.cpp
     ${JUDAS_PHYSICS_SOURCES}
     src/PhysicsWorld.cpp
 )
@@ -152,6 +155,14 @@ add_executable(judas_scene_tests
 )
 target_link_libraries(judas_scene_tests PRIVATE judas_engine)
 target_compile_options(judas_scene_tests PRIVATE -Wall -Wextra)
+
+# Milestone 29: entity lifecycle, simulation fidelity, coarse evolution,
+# world-state deltas and the reduced-work measurement — headless.
+add_executable(judas_lifecycle_tests
+    tests/LifecycleTests.cpp
+)
+target_link_libraries(judas_lifecycle_tests PRIVATE judas_engine)
+target_compile_options(judas_lifecycle_tests PRIVATE -Wall -Wextra)
 
 
 # Judas-owned physics primitive/collision tests: deterministic, headless,

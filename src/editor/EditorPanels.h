@@ -27,13 +27,22 @@ struct EditorRequests {
     bool redo = false;
     bool focusSelection = false;
     bool quit = false;
+    bool saveWorldState = false;
+    bool deleteWorldState = false;
     // Object creation: kind + where (the application fills the position).
     std::string createKind;
     glm::vec3 createPosition{0.0f};
 };
 
+class RuntimeWorld;
+
 struct EditorPanelState {
     EditorMode mode = EditorMode::Edit;
+    // Milestone 29: the live world while playing (null in edit mode) so the
+    // inspector can show persistent identity, lifecycle and fidelity and
+    // offer the debug override; and the world-state path for the World menu.
+    RuntimeWorld* runtime = nullptr;
+    std::string worldStatePath;
     bool playPaused = false;
     std::string status;
     std::string pathInput;  // Open / Save As text field

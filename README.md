@@ -15,51 +15,50 @@ loaded with the vendored GLAD 2.0.8 OpenGL 3.3 Core loader through the
 SDL-created context; generation and license provenance are recorded in
 [`third_party/glad/README.md`](third_party/glad/README.md).
 
-## Status: Milestone 28 in operator validation
+## Status: Milestone 29 in operator validation
 
-**New in M28 — Judas learns to be an editor.** Three things now exist:
+**New in M29 — Judas learns that existing does not mean being fully
+simulated.** Three engine capabilities, built together because they are
+one problem:
 
-1. **Real scenes.** Authored world content lives in a `Scene` (`src/Scene.h`):
-   objects with stable ids, names, transforms and a small set of generic
-   engine components (render, body, gravity region, light, door, light
-   switch, vehicle, celestial, atmosphere, combustible, fluid volume,
-   player start). A scene knows no demo concepts — "Planet A" and "the
-   plank" are just names in a file.
-2. **Scene files.** `.judas` is a deterministic, human-readable, versioned
-   text format (`src/SceneSerialization.h`) with explicit ids and strict
-   loading: malformed, truncated, unknown-key or version-mismatched data
-   fails with a line number and leaves nothing half-built. The seven
-   demonstrations ship as files under `assets/scenes/`.
-3. **An editor.** `judas_editor` (`src/editor/`, built on the vendored
-   Dear ImGui) opens, creates, inspects, edits, saves and *plays* scenes:
-   a real 3D viewport with a free camera, a hierarchy, an inspector for
-   transforms and every component, generic object creation/deletion,
-   snapshot undo/redo, and an explicit **Edit / Play** split — Play
-   instantiates the authored scene into a runtime world driven by the
-   exact frame the `judas` runtime runs; Stop discards that world and the
-   authored scene is untouched.
+1. **Variable simulation fidelity.** Every dynamic body is a persistent
+   entity that can be represented at **Full** fidelity (an ordinary live
+   physics body), **Coarse** fidelity (no physics body; its pose and
+   velocities are engine data advanced cheaply each step — settled
+   entities stay put, free-flying ones integrate under the same gravity
+   fields, no contacts), or **Dormant** (no body, no per-step work, state
+   retained exactly). Transitions preserve identity, pose, linear and
+   angular velocity; reconstruction back to Full rebuilds the live body
+   from that state with no impulse and no duplicate.
+2. **Entity/world lifecycle.** *Active* (Full/Coarse), *Unloaded*
+   (Dormant) and *Destroyed* are distinct: an unloaded entity comes back,
+   a destroyed one never does. Which fidelities an entity *can* take is a
+   capability (fluid/atmosphere/combustion/vehicle/compound content is
+   Full-only); *when* it changes is a **policy** the scene chooses. The
+   only policy shipped is distance-from-player; scenes that set no policy
+   keep every entity Full and never touch any of this.
+3. **Persistence as baseline + deltas.** Runtime changes — an entity moved,
+   destroyed or created, a door/switch toggled — save to a small
+   `.judasstate` file over the *unchanged* baseline scene, and load back
+   after a full restart. The scene file is never rewritten by gameplay;
+   delete the delta and the pristine baseline returns.
 
-`Application.cpp` (2,404 lines at M27, holding every demo constant and the
-whole loop) is now 116 lines of orchestration; its responsibilities moved
-to `RuntimeWorld` (scene instantiation), `Simulation` (fixed-step order),
-`WorldPresentation` (drawing/lights/shadows), `GameSession` (player,
-vehicle, carrying, interaction), `InteractivePlay` (the per-frame loop
-shared by runtime and editor), `GameplayHud`, `RuntimeOptions`,
-`RuntimeDiagnostics` and `EngineHost`. Both demonstrations run through the
-scene path: the `judas` runtime loads a file and instantiates it; nothing
-is rebuilt from constants. See [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md),
-"Milestone 28," for the boundaries, the file format, what moved where, the
-measured regressions, and the limits (no gizmos, no parenting, one vehicle
-and one atmosphere per scene, no OS file dialog).
+Measured on 1,500 managed crates: 343 ms per fixed step with everything
+Full (1,501 physics bodies) versus 1.0 ms with the distance policy (20
+bodies: 19 Full, 41 Coarse, 1,440 Dormant); promoting all 1,500 costs
+0.65 ms. New scenes: `assets/scenes/fidelity_demo.judas` (a row of managed
+crates receding into the distance, two free-flying satellites, distance
+policy 25 m / 70 m) and `assets/scenes/flat_playground.judas` (fifty
+entities, no policy — the small conventional game that ignores all of
+this). All 29 suites pass; the classic harness is byte-identical to M27.
+See [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md), "Milestone 29," for
+the model, the delta format, the measurements, and the limits (no reduced
+form for fluid/gas/fire/player/vehicles; coarse inertial motion has no
+contacts; a pre-existing resting-creep solver artefact M29 exposes).
 
-The M28 portability fix: `CMakeLists.txt` no longer requires GLM's
-`glm::glm-header-only` target (GLM 1.0+ only) and configures against the
-`glm::glm` target that Ubuntu 24.04's `libglm-dev` 0.9.9.8 exports.
-
-All 28 standalone suites pass; the classic and terrain 420-step gameplay
-harness runs are byte-identical near and far origin; the classic run's
-player and first six body columns are byte-identical to the M27 build.
-Operator validation of the editor is pending; no `milestone-28` tag exists.
+**Milestone 28 (accepted)** made Judas an engine with real scenes, a
+deterministic versioned scene format, a scene-driven runtime, and the
+`judas_editor` executable — see "Milestone 28 accepted baseline" below.
 
 ## Quick start
 
@@ -129,6 +128,8 @@ Shipped scenes (`assets/scenes/`):
 | `classic.judas` | The two-planets-and-a-plank abuse chamber with the M24 cups, orbital bodies, door, switch, stairs, ramp, beacon |
 | `classic_fluid_rotated.judas` | Classic with the M24 rotated fluid-station gravity region |
 | `classic_fluid_zero.judas` | Classic with a zero-gravity fluid-station region |
+| `fidelity_demo.judas` | **M29:** flat ground, 60 managed crates receding to 240 m, two free-flying satellites, distance policy (Full ≤ 25 m, Coarse ≤ 70 m, Dormant beyond) |
+| `flat_playground.judas` | **M29:** the tiny conventional case — fifty entities on a small map, no policy, nothing managed |
 
 The pre-M28 environment switches still work and now select these files:
 `JUDAS_CLASSIC_DEMO=1`, `JUDAS_FLUID_GRAVITY=rotated|zero`,
@@ -165,6 +166,56 @@ Viewport transform gizmos, object parenting, an asset import pipeline and
 an OS file dialog are deliberately not part of M28 — see
 [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md), "Milestone 28, Deliberately
 not implemented."
+
+## Lifecycle, fidelity and persistence (M29)
+
+Every dynamic body in a scene is a **persistent entity** with a stable id
+(its scene object id; runtime-created entities take ids from a separate
+high range). At any moment it is at one **fidelity**:
+
+| Fidelity | Physics body | Per-step work | State lives in |
+|----------|--------------|---------------|----------------|
+| Full | yes | ordinary simulation | `PhysicsWorld` |
+| Coarse | no | settled: none; inertial: one cheap integration under gravity, no contacts | the entity record |
+| Dormant | no | none — time is frozen for it | the entity record |
+
+and one **lifecycle** state: *Active* (Full or Coarse), *Unloaded*
+(Dormant) or *Destroyed* (permanent). A scene opts an entity into
+automatic management with the body's `Managed` flag and chooses a policy
+in the Scene panel (`Fidelity policy: distance`, with the Full and Coarse
+radii). Without a policy nothing is ever demoted. The editor's Inspector
+shows the selected entity's persistent id, lifecycle, fidelity, coarse
+motion kind and reconstruction count while playing, with **Force Full /
+Coarse / Dormant** debug buttons; the HUD shows the counts.
+
+**Persistence** is a delta over the unchanged baseline scene:
+
+| Key | Action |
+|-----|--------|
+| `Z` | create a persistent crate in front of the player |
+| `Y` | permanently destroy the targeted (or held) pickable entity |
+| `F6` | save the world-state delta (`saves/<scene>.judasstate`) |
+| `F7` | delete it — the next launch is the pristine baseline |
+
+The runtime (and the editor's Play) apply `saves/<scene>.judasstate`
+automatically if it exists (`JUDAS_WORLD_STATE=<path>` overrides,
+`JUDAS_WORLD_STATE=none` disables). The delta records only: entities
+moved (pose + velocities), destroyed, created (their full definition),
+and door/switch states. Nothing transient is stored, and a malformed or
+inconsistent delta fails before touching the world. The baseline `.judas`
+file is never written by gameplay.
+
+## Milestone 28 accepted baseline
+
+M28 established real scenes (`src/Scene.h`), the `.judas` scene file
+format (`src/SceneSerialization.h`; strict, deterministic, versioned — now
+version 2 after M29's two additions), a scene-driven runtime
+(`RuntimeWorld`, `Simulation`, `WorldPresentation`, `GameSession`,
+`InteractivePlay`) that reduced `Application.cpp` from 2,404 lines to ~120
+of orchestration, and the Dear ImGui `judas_editor` with an explicit
+Edit/Play split. The operator accepted M28; it is commit `57e69a0` on
+`main`. The M28 portability fix (`glm::glm` as well as
+`glm::glm-header-only`) stands.
 
 ## Milestone 27 accepted baseline
 
@@ -691,6 +742,8 @@ walks the player relative to that look direction and the current surface
 | Power the M27 radiant heater while held | `C` |
 | Reset the player and world | `R`               |
 | Planet thrust: prograde / retrograde / radial outward | `P` / `M` / `N` |
+| Create a persistent entity / destroy the targeted one (M29) | `Z` / `Y` |
+| Save / delete the world-state delta (M29) | `F6` / `F7` |
 
 While piloting the spacecraft (after pressing `F` while standing on it),
 WASD/Q/E and a separate IJKL+U/O cluster mean something different — see
@@ -903,7 +956,7 @@ uses, so its per-body CSV columns follow the scene's dynamic bodies in
 scene order and include every body the interactive scene has (the
 orbital bodies and cups were previously omitted from harness runs).
 
-Twenty-eight standalone, headless test executables also exist (no window or GL
+Twenty-nine standalone, headless test executables also exist (no window or GL
 context): `judas_physics_tests` and `judas_collision_tests` (rigid-body/
 collision/gravity-context primitives); `judas_asset_tests` (Milestone 9 —
 model/texture loading, parses the real committed demo assets and checks
@@ -991,11 +1044,18 @@ scene save/load equivalence and byte-identical resave, stable ids across
 deletion and reload, generic create/delete/modify/reorder, strict failure
 on malformed or version-incompatible data, edit → play → mutate → stop
 restoring authored state, every shipped scene loading and instantiating
-through the runtime path, and clear instantiation errors. There are now
-28 standalone suite targets. Because the harness now steps the full
+through the runtime path, and clear instantiation errors. The M29
+`judas_lifecycle_tests` covers identity across full → coarse → dormant →
+full with no duplicates, preserved pose/velocities and impulse-free
+reconstruction (measured against an untransitioned reference run), unload
+versus destroy, Full-only capability limits, coarse inertial evolution
+matching the live integrator, the distance policy and policy-free explicit
+commands, baseline + delta reproduction across a rebuilt world, delta
+validation before apply, far-origin and reference-frame equivalence, and
+the reduced-work measurement. There are now 29 standalone suite targets. Because the harness now steps the full
 played scene (fluid, combustion, doors, celestial gravity included), it
 is an M1–M28 regression of the real loop rather than a reduced one.
-M27 operator acceptance passed; M28 operator acceptance is pending.
+M27 and M28 operator acceptance passed; M29 operator acceptance is pending.
 Run them with:
 
 ```bash

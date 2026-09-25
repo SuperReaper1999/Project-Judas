@@ -101,7 +101,7 @@ void SectionSerialization() {
     std::string again;
     SaveSceneToString(loaded, again);
     Check(again == text, "save -> load -> save is byte-identical (deterministic format)");
-    Check(text.rfind("JudasScene 1\n", 0) == 0, "file starts with the format identifier and version");
+    Check(text.rfind("JudasScene 2\n", 0) == 0, "file starts with the format identifier and version");
     Check(text.find("object 2 \"Crate\"") != std::string::npos, "object ids and names are written explicitly");
     Check(text.find("9.81") != std::string::npos && text.find("9.81000") == std::string::npos,
           "floats use the shortest exact decimal");
@@ -167,7 +167,7 @@ void SectionInvalid() {
               "  ...and the output scene is left untouched");
     };
     fails("", "empty input fails");
-    fails("JudasScene 2\nsettings\nend\n", "an unsupported version fails");
+    fails("JudasScene 99\nsettings\nend\n", "an unsupported version fails");
     fails("NotAScene 1\n", "a wrong identifier fails");
     {
         std::string t = text;

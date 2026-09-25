@@ -3,6 +3,8 @@
 #include <string>
 #include <vector>
 
+#include "EntityLifecycle.h"
+
 #include "FlyingPrimitiveControl.h"
 #include "ObjectManipulation.h"
 #include "PilotAttachment.h"
@@ -75,6 +77,21 @@ public:
     // session can clear its own per-run bookkeeping (accumulator, timers).
     bool ConsumeResetOccurred();
 
+    // Milestone 29: entities gameplay needs at Full fidelity this step (the
+    // held object, whatever supports the player), handed to the policy.
+    std::vector<EntityId> PinnedEntities() const;
+    // Re-derives handle-keyed gameplay lists (pick-up eligibility,
+    // interaction targets) when the world's entity set changed.
+    void RefreshEntityBindings();
+    // Z: creates a persistent pickable crate ahead of the player. Returns
+    // the new entity id or the invalid id.
+    EntityId SpawnPersistentEntity();
+    // Y: permanently destroys the targeted pickable entity (or the held
+    // one). Returns false when nothing eligible is targeted.
+    bool DestroyTargetedEntity();
+    const std::string& LastLifecycleMessage() const { return m_lastLifecycleMessage; }
+    void SetLastLifecycleMessage(const std::string& message) { m_lastLifecycleMessage = message; }
+
 private:
     RuntimeWorld* m_world = nullptr;
     std::unique_ptr<PlayerController> m_player;
@@ -89,4 +106,6 @@ private:
     bool m_igniterPowered = false;
     bool m_initialPilotAttached = false;
     bool m_resetOccurred = false;
+    unsigned int m_boundEntityVersion = 0;
+    std::string m_lastLifecycleMessage;
 };

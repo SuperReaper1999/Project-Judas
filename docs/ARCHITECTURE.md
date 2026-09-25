@@ -6,7 +6,7 @@ someone with no prior context on this project. It is updated in place as
 milestones land, rather than kept as a per-milestone snapshot — see
 "Milestone history" below for how to recover an earlier milestone exactly.
 
-## What exists right now (M28 in operator validation)
+## What exists right now (M29 in operator validation)
 
 **Judas is a game engine.** Everything a player meets in the default
 launch — the terrain planet, its lake and atmosphere, the spacecraft, the
@@ -15,6 +15,13 @@ technology demonstration: authored scene content, loaded from files under
 `assets/scenes/`, that exercises engine capabilities. The engine must stay
 able to serve a small conventional flat-terrain game as well as a
 planetary/universe-scale one; nothing below privileges the demonstration.
+
+As of Milestone 29 an entity may exist without being fully simulated:
+every dynamic body is a persistent entity at Full, Coarse or Dormant
+fidelity with an explicit lifecycle (Active / Unloaded / Destroyed), a
+scene-chosen policy decides when managed entities change fidelity, and
+runtime changes persist as deltas over the unchanged baseline scene. See
+"Milestone 29" at the end of this document.
 
 As of Milestone 28 the engine has a first-class **Scene** (authored data),
 a deterministic versioned **scene file format** (`.judas`), a **RuntimeWorld**
@@ -7041,7 +7048,7 @@ geometry still blocks/displaces fluid, but delayed lake reaction impulses
 are not returned to them, as with the M26 `80 kg` ship. This is an explicit
 one-way coarse-fluid limitation, not a buoyancy or extinguishing model.
 
-## Milestone 28 — Judas learns to be an editor (operator validation pending)
+## Milestone 28 — Judas learns to be an editor (accepted)
 
 ### Identity, restated
 
@@ -7369,8 +7376,7 @@ milestone.
   succeeds (the pre-M28 `glm::glm-header-only` reference failed there);
   a Release build of every target has zero warnings under `-Wall -Wextra`.
 
-Human validation of the editor's usability is the operator's, per the
-brief.
+The operator validated the editor and accepted M28 (commit `57e69a0`).
 
 ### Known content differences from M27
 
@@ -7391,3 +7397,269 @@ one vehicle or atmosphere per scene; static compound bodies; applying
 runtime state back to the scene after Play; prefabs, scripting, ECS,
 docking layouts, terrain/material/animation editors. Each is a future
 milestone if a brief asks for it, not an oversight.
+
+
+## Milestone 29 — Judas learns that existing does not mean being fully simulated (operator validation pending)
+
+### The law
+
+> Existence is not the same thing as active simulation.
+
+Through M28 every dynamic body in a scene was a live `PhysicsWorld` body
+from load to shutdown. A universe-scale game cannot work that way, and a
+tiny flat game must not be made to care. M29 gives the engine one explicit
+representation of "how real is this entity right now", one lifecycle, one
+policy boundary, and one persistence model — and keeps all of it optional.
+
+### Persistent identity
+
+`EntityId` is the scene object id (`src/EntityLifecycle.h`). Authored
+entities keep the id their scene file gives them; entities created at
+runtime take ids from `kRuntimeEntityIdBase` (2^62) upward so they can
+never collide with any baseline id, whatever the baseline's own counter
+does when it is edited later. Four things that were easy to confuse are
+now four things:
+
+| Concept | Type | Lifetime |
+|---------|------|----------|
+| scene object id | `SceneObjectId` | authored; the file's identity |
+| persistent entity id | `EntityId` (same value for authored entities) | the whole life of the entity, across unload and restart |
+| physics body handle | `BodyHandle` | one incarnation at Full fidelity; generation-checked so a stale handle never reaches a reused slot |
+| render resource handle | `MeshHandle`/`TextureHandle` | the asset cache's; never world truth |
+
+`RuntimeWorld` keeps one `EntityRecord` per dynamic entity, in slot order
+parallel to its `DynamicBody` presentation slots. A slot outlives its
+body: unloading destroys the `PhysicsWorld` body and leaves the slot bound
+to nothing; reconstruction binds a new body to the same slot. Harness CSV
+columns, vehicle/combustible indices and pick-up targets therefore keep
+their positions; nothing is duplicated.
+
+### Fidelity
+
+```
+Full     live PhysicsWorld body: contacts, gravity, forces, interactions
+Coarse   no body; EntityPhysicalState advanced by CoarseSimulation
+Dormant  no body; no per-step work; state retained exactly
+```
+
+`SimulationFidelity` is the engine's own state, held on the record, and
+the ONLY place any system asks "how is this entity being simulated". No
+subsystem has an `if (farAway)`; presentation draws Full and Coarse
+entities from their slot poses and skips Dormant ones, the fluid solver
+collides with live bodies only, `CelestialGravity` pairs live celestial
+bodies while `CoarseSimulation` and `Simulation` exchange pulls between
+live and coarse celestial bodies so a pair split across fidelities keeps
+attracting.
+
+**Coarse semantics** (`src/CoarseSimulation.h`) are deliberately modest
+and honest:
+
+- *Settled* (captured when the entity left Full below 5 cm/s and 0.05
+  rad/s): frozen. It is assumed to remain supported by whatever static
+  geometry it rested on. Zero work.
+- *Inertial*: the same symplectic Euler update as `IntegrateRigidBody`,
+  driven by the same accelerations a live body gets — the scene's gravity
+  contexts, static point-mass sources, pairwise Newtonian gravity with the
+  other celestial participants — and **no contacts**. This is real
+  reduced physics over exactly the state reconstruction needs; the
+  measured coarse arc of a thrown crate matches the live integrator to
+  2 mm, and a zero-g sphere's full/coarse/full run matches an all-full run
+  to 1 mm after 240 steps. Its limit is stated, not hidden: an inertial
+  coarse entity passes through solid geometry. A policy that lets an
+  entity go coarse while heading into terrain has chosen that; the demo
+  keeps its inertial coarse entities in free space.
+
+**Dormant semantics:** time does not pass for a dormant entity. Its state
+is exactly what it was when it went dormant, and `dormantSinceSeconds`
+records when. M29 does not extrapolate on wake; a future subsystem that
+can advance a dormant entity over elapsed time (an orbit, for instance)
+would do so at promotion, explicitly, and that is documented as the next
+step rather than faked now.
+
+**Capability limits** are explicit (`RuntimeWorld::EntityRequiresFull`):
+an entity with a `vehicle` or `combustible` component, or a compound
+body, has no reduced representation and stays Full while active — asking
+it to reduce fails with a message. Fluid, atmosphere, the player and doors
+are not entities in this sense at all; they are Full-only systems. No fake
+coarse water or fire exists.
+
+### Lifecycle
+
+```
+instantiate ─► Active (Full) ─► reduce ─► Active (Coarse) ─► unload ─► Unloaded (Dormant)
+                    ▲                          │                             │
+                    └────── reconstruct ◄──────┴──────── reconstruct ◄───────┘
+   any of the above ─► destroy ─► Destroyed (permanent; survives world rebuild via the delta)
+```
+
+`RuntimeWorld::SetEntityFidelity`, `DestroyEntity` and `CreateEntity` are
+the operations; `RestoreAuthoredState` (the R key) returns every surviving
+entity to its definition at Full and leaves destroyed ones destroyed.
+Reconstruction hands the new body the retained pose and both velocities
+and snaps presentation history, so nothing interpolates across the
+transition and no impulse is applied. `Application.cpp` tracks none of
+this; `GameSession` refreshes its handle-keyed lists (pick-up eligibility,
+interaction targets, a held object that left Full) whenever
+`RuntimeWorld::EntityVersion()` changes.
+
+**Contact on reconstruction.** A settled entity reconstructed on the
+geometry it rested on re-establishes contact quietly: the lifecycle suite
+compares a crate that went Full → Coarse → Full against an identical crate
+that never transitioned and finds their next sixty steps identical to
+1e-4 m. Overlap on reconstruction elsewhere is resolved by the ordinary
+positional correction, the same behaviour any overlapping pair gets.
+
+### Policy versus capability
+
+`FidelityPolicy` (`src/FidelityPolicy.h`) is an interface: given an
+entity's id, current fidelity, position and velocity, and a context (a
+focus point, the simulation time), return the desired fidelity. The world
+evaluates it once per fixed step for entities that are managed, not
+pinned by gameplay (held, supporting the player, the vehicle), not forced
+by the debug override, and not Full-only, and applies the transitions.
+The engine never assumes distance is why fidelity changes;
+`DistanceFidelityPolicy` (Full within `r_full`, Coarse within `r_coarse`,
+Dormant beyond, 10% hysteresis) is the one shipped policy and the scene's
+`fidelity-policy distance <full> <coarse>` setting installs it. A game
+can install any `FidelityPolicy` through `RuntimeWorld::SetFidelityPolicy`
+(the tests install an "everything dormant" one). At load, managed
+entities the policy would not simulate fully are never given a body at
+all.
+
+### Persistence: baseline + deltas (`src/WorldState.h`)
+
+```
+baseline scene file (authored; never rewritten by gameplay)
+  + saves/<scene>.judasstate   (deltas)
+  = the world
+```
+
+The `.judasstate` format, version 1:
+
+```
+JudasWorldState 1
+baseline "<scene name>"
+next-runtime-id <n>
+
+entity <id> moved            entity <id> destroyed        entity <id> created
+  position x y z                                            position/rotation/velocities
+  rotation w x y z                                          object <id> "<name>" ... end   (scene grammar)
+  linear-velocity x y z                                   end
+  angular-velocity x y z
+end
+
+door <id> true|false
+light-switch <id> true|false
+```
+
+Only these changes exist: an authored entity whose physical state differs
+from its definition beyond the settling tolerances (1 cm, 2 cm/s, ~2.5°),
+a destroyed entity, a runtime-created entity with its full definition, and
+door/switch states. Fidelity is not stored — a delta says what the world
+*is*, and the policy decides again on load. Nothing transient is stored.
+Records are written sorted by id with the scene format's shortest-exact
+floats, so a delta round-trips byte-identically. Loading validates every
+record against the world (ids exist, created ids are runtime-range and
+unused, definitions parse through the scene grammar) before applying any,
+so a bad file never half-modifies the live world. `CaptureWorldState` /
+`ApplyWorldState` are the engine operations; `F6`/`F7` and the editor's
+World menu are the demo's controls; `JUDAS_WORLD_STATE` selects the path.
+
+Scene serialization (M28) and world-state persistence (M29) remain two
+formats with two jobs: the first is what was authored, the second is what
+happened to it.
+
+### Editor integration
+
+While playing, the Inspector's "Runtime entity (M29)" section shows the
+selected object's persistent id, whether it is authored or
+runtime-created, lifecycle, fidelity (and whether forced), managed/
+Full-only status, coarse motion kind and coarse step count,
+reconstructions, live pose and velocity, and Force Full / Coarse /
+Dormant / Clear buttons that set the debug override. The Hierarchy is
+shown while Play is paused (Escape) with each entity's fidelity tag. The
+Scene panel edits the policy and radii; the Body panel has the `Managed`
+flag. The World menu saves/deletes the delta. The editor's authored Scene
+is never written by any of this; `judas_scene_tests` and the editor
+autotest still report the scene byte-identical after Play/Stop.
+
+### Scene format changes (version 2)
+
+`settings` gained `fidelity-policy none | distance <full> <coarse>`;
+`body` gained `body.managed true|false`. Both are required fields like
+every other (the format's strictness rule), so the version is 2 and the
+shipped scenes were regenerated. Everything else is unchanged.
+
+### PhysicsWorld change
+
+`DestroyBody` now frees the body's slot for reuse and the world iterates a
+sorted list of live slots instead of every slot ever allocated, so a
+world whose entities were unloaded pays for the bodies that exist. Handles
+carry a generation in their upper 12 bits; `Get` rejects a handle whose
+generation does not match the slot's current occupant, so a consumer
+holding a handle to an unloaded entity can never reach the body that
+later reused its slot. Iteration order for a world that never destroys a
+body is the same as before, which is why the classic harness stays
+byte-identical to M27.
+
+### Measured evidence
+
+`judas_lifecycle_tests` Section J, 1,500 managed 5 kg crates on a flat
+ground (this container, Release):
+
+| | physics bodies | Full / Coarse / Dormant | ms per fixed step |
+|---|---|---|---|
+| everything Full | 1,501 | 1,500 / 0 / 0 | 341 |
+| distance policy 12 m / 20 m | 20 | 19 / 41 / 1,440 | 1.1 |
+
+Promoting all 1,500 to Full: 0.65 ms (0.4 µs each); the policy re-demoted
+1,478 in the following step. Capturing and serializing a delta with 300
+moved crates (56 KB): 4.0 ms; parsing and applying it to a rebuilt world:
+0.8 ms (the suite prints the exact numbers of each run). Load time is
+~2 ms either way at this size and is printed, not asserted. The
+1,501-body step is dominated by the solver's O(n²) pair loop; M29 removes
+the work rather than optimising it, which is the point.
+
+Other evidence in the suite: identity and handle invalidation across
+full → coarse → dormant → full (Section A); exact state preservation and
+impulse-free reconstruction against an untransitioned reference (B);
+unload versus destroy and permanent destruction across the R reset (C);
+Full-only capability errors (D); coarse inertial evolution matching the
+live integrator in zero g and under uniform gravity (E); the distance
+policy, pins, forced overrides, policy-free explicit commands and a
+game-supplied policy (F); baseline + delta reproduction across a
+destroyed-and-rebuilt world with the baseline bytes unchanged (G);
+validation-before-apply and malformed input (H); byte-identical deltas at
+the origin and the M23 far offset, and unchanged relative velocity to a
+rotating frame across demotion (I). All 28 earlier suites pass; the
+classic 420-step harness is byte-identical to the M27 build and both
+scenes are byte-identical near/far origin.
+
+### Known engine limitation exposed by M29 (pre-existing)
+
+A box resting on static geometry creeps at roughly 5 mm/s with a small
+persistent spin. This is not M29's: the M27 build's harness shows the
+classic plank cube drifting 4.5 cm over its first 240 steps, and the M29
+build reproduces M27 byte for byte. The cause is in `ContactSolver.cpp`:
+friction at a contact is capped by the normal impulse computed at that
+contact in that iteration, and once the first of a box's four contacts
+has cancelled the step's normal velocity the remaining three apply no
+friction, so friction acts at one vertex and produces torque. Fixing it
+properly means accumulated per-manifold impulses — a solver change that
+would alter every accepted milestone's numbers — so it is recorded here
+for a future physics milestone rather than patched inside M29. Its M29
+consequences are stated honestly: a Full entity left resting long enough
+eventually crosses the 1 cm "moved" threshold and earns a delta; a Settled
+coarse or a Dormant entity does not creep at all (it is frozen). The
+lifecycle suite therefore measures reconstruction against an
+untransitioned reference rather than against absolute stillness, and its
+bit-exact "untouched" check uses an entity nothing acts on.
+
+### Deliberately not implemented
+
+Planetary terrain LOD or streaming, procedural planets, universe sectors,
+asynchronous asset streaming, a job system, networking, AI/fluid/fire/
+render LOD, dormant-time extrapolation on wake, a save-game UI or
+migration framework, cloud or database persistence. Each will consume the
+lifecycle, fidelity and delta boundaries established here when a brief
+asks for it.

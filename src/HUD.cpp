@@ -1,6 +1,7 @@
 #include "HUD.h"
 
 #include <algorithm>
+#include <vector>
 #include <cstdio>
 #include <string>
 
@@ -92,14 +93,17 @@ std::string FormatLine(int index, const HUDViewData& data) {
                           data.absolutePlayerPosition.z);
             break;
         case 12:
+            if (!data.atmosphereAvailable) return std::string();
             std::snprintf(buffer, sizeof(buffer), "Gas: %.5f kg/m^3 | %.3f Pa",
                           data.atmosphereDensity, data.atmospherePressure);
             break;
         case 13:
+            if (!data.atmosphereAvailable) return std::string();
             std::snprintf(buffer, sizeof(buffer), "Airspeed: %.2f m/s | q %.3f Pa",
                           data.spacecraftRelativeAirspeed, data.spacecraftDynamicPressure);
             break;
         case 14:
+            if (!data.atmosphereAvailable) return std::string();
             std::snprintf(buffer, sizeof(buffer), "Aerodynamic drag: %.2f N",
                           data.spacecraftAerodynamicForce);
             break;
@@ -114,7 +118,24 @@ std::string FormatLine(int index, const HUDViewData& data) {
                               body.label.c_str(), body.temperatureKelvin,
                               body.remainingFuelKg, body.burnRateKgPerSecond);
             } else {
-                return std::string();
+                // Milestone 29: lifecycle lines follow whatever thermal lines
+                // exist (see Draw's lineCount).
+                const int lifecycleStart = 15 + (data.thermalAvailable ? 1 + static_cast<int>(data.thermalBodies.size()) : 0);
+                if (data.lifecycleAvailable && index == lifecycleStart) {
+                    std::snprintf(buffer, sizeof(buffer),
+                                  "Entities: %zu full | %zu coarse | %zu dormant | %zu destroyed | %zu bodies",
+                                  data.entitiesFull, data.entitiesCoarse, data.entitiesDormant,
+                                  data.entitiesDestroyed, data.physicsBodies);
+                } else if (data.lifecycleAvailable && index == lifecycleStart + 1) {
+                    std::snprintf(buffer, sizeof(buffer), "World state: %s",
+                                  data.worldStateInfo.empty() ? "(none)" : data.worldStateInfo.c_str());
+                } else if (data.lifecycleAvailable && index == lifecycleStart + 2) {
+                    std::snprintf(buffer, sizeof(buffer), "%s",
+                                  data.lifecycleMessage.empty() ? "Z spawn | Y destroy | F6 save | F7 delete state"
+                                                                : data.lifecycleMessage.c_str());
+                } else {
+                    return std::string();
+                }
             }
             break;
     }
@@ -124,24 +145,34 @@ std::string FormatLine(int index, const HUDViewData& data) {
 }  // namespace
 
 void HUD::Draw(Renderer& renderer, int windowWidth, int windowHeight, const HUDViewData& data) const {
-    const int lineCount = (data.atmosphereAvailable ? 15 : 12) +
-        (data.thermalAvailable ? 1 + static_cast<int>(data.thermalBodies.size()) : 0);
+    // Line indices are fixed per section (see FormatLine): the lifecycle
+    // section always sits after the full 15-line atmosphere layout, so a
+    // scene without an atmosphere but with lifecycle data draws the
+    // atmosphere lines' slots as empty strings and skips them below.
+    const int thermalLines = data.thermalAvailable ? 1 + static_cast<int>(data.thermalBodies.size()) : 0;
+    const int lineCount = data.lifecycleAvailable ? 15 + thermalLines + 3
+                                                  : (data.atmosphereAvailable ? 15 : 12) + thermalLines;
     const float lineHeight = renderer.GetUITextLineHeight(kTextScale) + kLineSpacing;
 
+    // Empty slots (sections this scene lacks) are dropped, not drawn blank.
+    std::vector<std::string> lines;
     float maxWidth = 0.0f;
     for (int i = 0; i < lineCount; ++i) {
-        maxWidth = std::max(maxWidth, renderer.MeasureUIText(FormatLine(i, data), kTextScale).x);
+        std::string line = FormatLine(i, data);
+        if (line.empty()) continue;
+        maxWidth = std::max(maxWidth, renderer.MeasureUIText(line, kTextScale).x);
+        lines.push_back(std::move(line));
     }
 
     const glm::vec2 panelPosition(kMargin, kMargin);
     const glm::vec2 panelSize(maxWidth + kPanelPaddingX * 2.0f,
-                               kPanelPaddingY * 2.0f + static_cast<float>(lineCount) * lineHeight);
+                               kPanelPaddingY * 2.0f + static_cast<float>(lines.size()) * lineHeight);
     renderer.DrawUIRect(panelPosition, panelSize, kPanelColor);
 
-    for (int i = 0; i < lineCount; ++i) {
+    for (std::size_t i = 0; i < lines.size(); ++i) {
         const glm::vec2 textPosition(kMargin + kPanelPaddingX,
                                       kMargin + kPanelPaddingY + static_cast<float>(i) * lineHeight);
-        renderer.DrawUIText(FormatLine(i, data), textPosition, kTextScale, kTextColor);
+        renderer.DrawUIText(lines[i], textPosition, kTextScale, kTextColor);
     }
 
     // Milestone 16: the interaction prompt — drawn only when something is

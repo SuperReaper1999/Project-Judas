@@ -52,6 +52,11 @@ public:
     void Interact() override { m_lampOn = !m_lampOn; }
 
     bool IsLampOn() const { return m_lampOn; }
+    // Milestone 29: restores a persisted lamp state instantly.
+    void SetLampOn(bool on) {
+        m_lampOn = on;
+        m_currentAngle = m_previousAngle = on ? m_toggleAngleRadians : 0.0f;
+    }
     glm::vec3 GetLampPosition() const { return m_lampPosition; }
     glm::vec3 GetLampColor() const { return m_lampColor; }
     float GetLampRange() const { return m_lampRange; }

@@ -5,6 +5,8 @@
 
 #include "imgui.h"
 
+#include "RuntimeWorld.h"
+
 namespace {
 
 // Snapshot-before / commit-after helpers around ImGui widgets. Drag and
@@ -171,6 +173,7 @@ void DrawBody(EditorDocument& doc, SceneObject& o, EditorPanelState& state) {
         DragScalar(doc, "Mass (kg)", b.mass, 0.1f, 0.001f, 1.0e30f);
         DragVec3(doc, "Initial velocity", b.initialLinearVelocity, 0.05f);
         Checkbox(doc, "Pickable (G/H)", b.pickable);
+        Checkbox(doc, "Managed by fidelity policy (M29)", b.managed);
     }
     DragScalar(doc, "Friction", b.friction, 0.01f, 0.0f, 5.0f);
     DragScalar(doc, "Restitution", b.restitution, 0.01f, 0.0f, 1.0f);
@@ -346,6 +349,13 @@ void DrawEditorMainMenu(EditorDocument& doc, EditorPanelState& state, EditorRequ
         item("Player start", "player-start");
         ImGui::EndMenu();
     }
+    if (ImGui::BeginMenu("World", !editing)) {
+        ImGui::TextDisabled("%s", state.worldStatePath.empty() ? "(no world-state path: save the scene first)"
+                                                                : state.worldStatePath.c_str());
+        if (ImGui::MenuItem("Save world state", "F6", false, !state.worldStatePath.empty())) requests.saveWorldState = true;
+        if (ImGui::MenuItem("Delete world state (pristine baseline next Play)", "F7", false, !state.worldStatePath.empty())) requests.deleteWorldState = true;
+        ImGui::EndMenu();
+    }
     ImGui::Separator();
     if (editing) {
         if (ImGui::MenuItem("Play")) requests.play = true;
@@ -372,6 +382,12 @@ void DrawHierarchyPanel(EditorDocument& doc, EditorPanelState& state, EditorRequ
         ImGui::PushID(static_cast<int>(o.id));
         const bool selected = o.id == doc.Selected();
         std::string label = o.name.empty() ? "(unnamed)" : o.name;
+        if (state.runtime) {
+            if (const EntityRecord* e = state.runtime->FindEntity(o.id)) {
+                label += e->lifecycle == EntityLifecycle::Destroyed ? "  [destroyed]"
+                                                                     : std::string("  [") + FidelityName(e->fidelity) + "]";
+            }
+        }
         label += "##" + std::to_string(o.id);
         if (ImGui::Selectable(label.c_str(), selected)) doc.Select(o.id);
         if (ImGui::IsItemHovered()) ImGui::SetTooltip("id %llu", static_cast<unsigned long long>(o.id));
@@ -415,6 +431,45 @@ void DrawInspectorPanel(EditorDocument& doc, EditorPanelState& state) {
         ImGui::End();
         return;
     }
+    if (state.mode == EditorMode::Play && state.runtime) {
+        // Milestone 29: the runtime entity behind the selected object.
+        if (ImGui::CollapsingHeader("Runtime entity (M29)", ImGuiTreeNodeFlags_DefaultOpen)) {
+            const EntityRecord* e = state.runtime->FindEntity(o->id);
+            if (!e) {
+                ImGui::TextDisabled("Not a persistent entity (static content or no body).");
+            } else {
+                ImGui::Text("Persistent id: %llu (%s)", static_cast<unsigned long long>(e->id), e->authored ? "authored" : "runtime-created");
+                ImGui::Text("Lifecycle: %s", LifecycleName(e->lifecycle));
+                ImGui::Text("Fidelity: %s%s", FidelityName(e->fidelity), e->forcedFidelity ? " (forced)" : "");
+                ImGui::Text("Managed by policy: %s | reduced form: %s", e->managed ? "yes" : "no",
+                            e->requiresFull ? "none (Full-only)" : "coarse/dormant");
+                if (e->fidelity == SimulationFidelity::Coarse) {
+                    ImGui::Text("Coarse motion: %s | coarse steps: %llu",
+                                e->coarseMotion == CoarseMotion::Settled ? "settled" : "inertial",
+                                static_cast<unsigned long long>(e->coarseStepsSimulated));
+                }
+                ImGui::Text("Reconstructions: %u", e->reconstructions);
+                EntityPhysicalState live;
+                if (state.runtime->GetEntityState(e->id, live)) {
+                    ImGui::Text("Position: %.3f %.3f %.3f", live.position.x, live.position.y, live.position.z);
+                    ImGui::Text("Velocity: %.3f %.3f %.3f", live.linearVelocity.x, live.linearVelocity.y, live.linearVelocity.z);
+                }
+                if (e->lifecycle != EntityLifecycle::Destroyed) {
+                    ImGui::TextDisabled("Debug override:");
+                    std::string error;
+                    if (ImGui::SmallButton("Force Full")) state.runtime->ForceEntityFidelity(e->id, SimulationFidelity::Full, &error);
+                    ImGui::SameLine();
+                    if (ImGui::SmallButton("Force Coarse")) state.runtime->ForceEntityFidelity(e->id, SimulationFidelity::Coarse, &error);
+                    ImGui::SameLine();
+                    if (ImGui::SmallButton("Force Dormant")) state.runtime->ForceEntityFidelity(e->id, SimulationFidelity::Dormant, &error);
+                    ImGui::SameLine();
+                    if (ImGui::SmallButton("Clear")) state.runtime->ForceEntityFidelity(e->id, std::nullopt, &error);
+                    if (!error.empty()) state.status = error;
+                }
+            }
+        }
+        ImGui::Separator();
+    }
     if (state.mode == EditorMode::Play) {
         ImGui::TextDisabled("Authored values are read-only while playing.");
         ImGui::BeginDisabled();
@@ -456,6 +511,13 @@ void DrawSceneSettingsPanel(EditorDocument& doc, EditorPanelState& state) {
     ColorEdit(doc, "Sun color", s.sunColor);
     ColorEdit(doc, "Ambient", s.ambientColor);
     DragScalar(doc, "Fluid scale", s.fluidScale, 0.1f, 0.01f, 1000.0f);
+    static const char* const kPolicyNames[] = {"none (everything Full)", "distance"};
+    Combo(doc, "Fidelity policy", s.fidelityPolicy, kPolicyNames, 2);
+    if (s.fidelityPolicy == SceneFidelityPolicy::Distance) {
+        DragScalar(doc, "Full radius (m)", s.fidelityFullRadius, 0.5f, 0.0f, 1.0e7f);
+        DragScalar(doc, "Coarse radius (m)", s.fidelityCoarseRadius, 0.5f, 0.0f, 1.0e7f);
+        ImGui::TextDisabled("Applies to bodies marked 'Managed'.");
+    }
     if (state.mode == EditorMode::Play) ImGui::EndDisabled();
     ImGui::End();
 }

@@ -30,6 +30,12 @@ public:
     using FixedStepObserver = std::function<void(const FixedStepMeasurements&, double fixedStepMilliseconds)>;
 
     bool Begin(RuntimeWorld& world, const WorldCoordinates& worldCoordinates, std::string& outError);
+    // Milestone 29: where F6 writes / F7 deletes the world-state delta for
+    // this run, and whether one was applied at load. Empty disables both.
+    void SetWorldStatePath(const std::string& path, bool loadedFromFile);
+    const std::string& WorldStatePath() const { return m_worldStatePath; }
+    bool SaveWorldStateNow(std::string& outMessage);
+    bool DeleteWorldStateNow(std::string& outMessage);
     void End();
     bool IsActive() const { return m_session.IsActive(); }
 
@@ -71,4 +77,6 @@ private:
     bool m_wasPauseMenuOpen = false;
     double m_lastSurfaceMilliseconds = 0.0;
     double m_lastSceneMilliseconds = 0.0;
+    std::string m_worldStatePath;
+    std::string m_worldStateStatus;
 };

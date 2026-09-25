@@ -81,6 +81,13 @@ struct SceneBodyComponent {
     glm::vec3 initialLinearVelocity{0.0f};  // Dynamic only
     // Gameplay eligibility for the existing M18 pick-up/throw interaction.
     bool pickable = false;
+    // Milestone 29: whether the scene's fidelity policy may move this
+    // entity between Full, Coarse and Dormant simulation. Default false: an
+    // unmanaged entity is Full forever and the lifecycle machinery never
+    // touches it, which is exactly what a small conventional game wants.
+    // Explicit commands (editor debug, tests) can still transition an
+    // unmanaged entity; `managed` only gates the automatic policy.
+    bool managed = false;
 };
 
 enum class SceneGravityKind { Radial, Uniform };
@@ -216,6 +223,8 @@ struct SceneObject {
     std::optional<ScenePlayerStartComponent> playerStart;
 };
 
+enum class SceneFidelityPolicy { None, Distance };
+
 // Scene-wide authored settings.
 struct SceneSettings {
     std::string name;
@@ -227,6 +236,14 @@ struct SceneSettings {
     // Multiplies the fluid solver's default length scales (M25 used 10x
     // for the lake). 1 is the M24 cup resolution.
     float fluidScale = 1.0f;
+    // Milestone 29: the fidelity policy this scene asks the runtime to run
+    // over its managed entities. None (the default) leaves everything at
+    // Full simulation. Distance is the demonstration policy: Full within
+    // `fidelityFullRadius` of the focus, Coarse within `fidelityCoarseRadius`,
+    // Dormant beyond (see src/FidelityPolicy.h).
+    SceneFidelityPolicy fidelityPolicy = SceneFidelityPolicy::None;
+    float fidelityFullRadius = 50.0f;
+    float fidelityCoarseRadius = 150.0f;
 };
 
 class Scene {

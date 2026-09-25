@@ -137,6 +137,15 @@ public:
     // every render frame so a menu-owned press cannot fire on resume.
     bool ConsumeSasToggleRequest();
 
+    // Milestone 29: edge-triggered persistence/lifecycle requests — Z spawns
+    // a persistent entity, Y permanently destroys the targeted one, F6
+    // saves the world-state delta, F7 deletes it. Window knows none of
+    // that; it reports presses.
+    bool ConsumeSpawnEntityRequest();
+    bool ConsumeDestroyEntityRequest();
+    bool ConsumeSaveWorldStateRequest();
+    bool ConsumeDeleteWorldStateRequest();
+
     // --- Milestone 13: UI input ---
     //
     // Five more edge-triggered one-shot requests, same shape as
@@ -240,6 +249,10 @@ private:
     bool m_viewToggleRequested = false;
     bool m_throwRequested = false;
     bool m_sasToggleRequested = false;
+    bool m_spawnEntityRequested = false;
+    bool m_destroyEntityRequested = false;
+    bool m_saveWorldStateRequested = false;
+    bool m_deleteWorldStateRequested = false;
     // Milestone 13: UI input edge flags — see PollEvents.
     bool m_uiBackRequested = false;
     bool m_uiUpRequested = false;

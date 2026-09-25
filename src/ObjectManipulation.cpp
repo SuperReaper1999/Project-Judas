@@ -119,3 +119,7 @@ bool PickupInteractable::CanInteract() const {
 void PickupInteractable::Interact() {
     m_manipulation.TryPickUp(m_body.Handle(), m_physics);
 }
+
+::BodyHandle PickupInteractable::TargetBody() const {
+    return m_body.Handle();
+}

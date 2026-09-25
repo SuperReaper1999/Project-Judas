@@ -107,7 +107,8 @@ bool SceneObjectsEqual(const SceneObject& a, const SceneObject& b) {
                    x.radius == y.radius && x.terrainSurface == y.terrainSurface &&
                    x.mass == y.mass && x.friction == y.friction &&
                    x.restitution == y.restitution &&
-                   Eq(x.initialLinearVelocity, y.initialLinearVelocity) && x.pickable == y.pickable;
+                   Eq(x.initialLinearVelocity, y.initialLinearVelocity) && x.pickable == y.pickable &&
+                   x.managed == y.managed;
         })) {
         return false;
     }
@@ -200,7 +201,9 @@ bool ScenesEqual(const Scene& a, const Scene& b) {
     const SceneSettings& sb = b.Settings();
     if (sa.name != sb.name || !Eq(sa.worldOrigin, sb.worldOrigin) ||
         !Eq(sa.sunDirection, sb.sunDirection) || !Eq(sa.sunColor, sb.sunColor) ||
-        !Eq(sa.ambientColor, sb.ambientColor) || sa.fluidScale != sb.fluidScale) {
+        !Eq(sa.ambientColor, sb.ambientColor) || sa.fluidScale != sb.fluidScale ||
+        sa.fidelityPolicy != sb.fidelityPolicy || sa.fidelityFullRadius != sb.fidelityFullRadius ||
+        sa.fidelityCoarseRadius != sb.fidelityCoarseRadius) {
         return false;
     }
     if (a.Objects().size() != b.Objects().size()) return false;

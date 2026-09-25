@@ -1,5 +1,6 @@
 #include "RuntimeWorld.h"
 
+#include <algorithm>
 #include <cmath>
 
 #include <glm/gtc/quaternion.hpp>
@@ -15,10 +16,22 @@
 
 namespace {
 constexpr float kFaithfulMagnitude = 9.81f;
+// Below these an entity leaving Full simulation is treated as resting on
+// whatever supported it (CoarseMotion::Settled) rather than in free flight.
+constexpr float kSettledLinearSpeed = 0.05f;
+constexpr float kSettledAngularSpeed = 0.05f;
 
 bool IsWorldDown(const glm::quat& rotation) {
     const glm::vec3 down = rotation * glm::vec3(0.0f, -1.0f, 0.0f);
     return std::abs(down.x) < 1.0e-6f && std::abs(down.z) < 1.0e-6f && down.y < 0.0f;
+}
+
+EntityPhysicalState StateFromDefinition(const SceneObject& o) {
+    EntityPhysicalState state;
+    state.position = o.transform.position;
+    state.rotation = glm::normalize(o.transform.rotation);
+    if (o.body) state.linearVelocity = o.body->initialLinearVelocity;
+    return state;
 }
 }  // namespace
 
@@ -26,6 +39,130 @@ RuntimeWorld::RuntimeWorld() = default;
 
 RuntimeWorld::~RuntimeWorld() {
     Destroy();
+}
+
+bool RuntimeWorld::EntityRequiresFull(const SceneObject& o) {
+    if (o.vehicle || o.combustible) return true;
+    if (o.body && o.body->shape == SceneShape::Compound) return true;
+    return false;
+}
+
+bool RuntimeWorld::LoadVisualAssets(const SceneObject& o, DynamicVisual& visual, std::string* outError) {
+    if (o.render && o.render->shape == SceneShape::Mesh && m_assets) {
+        std::string assetError;
+        visual.mesh = m_assets->GetMesh(o.render->meshPath, assetError);
+        if (!visual.mesh.IsValid()) {
+            if (outError) *outError = assetError;
+            return false;
+        }
+        if (!o.render->texturePath.empty()) {
+            visual.texture = m_assets->GetTexture(o.render->texturePath, assetError);
+            if (!visual.texture.IsValid()) {
+                if (outError) *outError = assetError;
+                return false;
+            }
+        }
+    }
+    return true;
+}
+
+bool RuntimeWorld::InstantiateEntityBody(EntityRecord& record, const EntityPhysicalState& state,
+                                         std::string* outError) {
+    const SceneObject& o = record.definition;
+    const SceneBodyComponent& b = *o.body;
+    BodyHandle handle;
+    switch (b.shape) {
+        case SceneShape::Box:
+            handle = m_physics.CreateDynamicBox(state.position, b.halfExtents, b.mass, b.friction, b.restitution);
+            break;
+        case SceneShape::Sphere:
+            handle = m_physics.CreateDynamicSphere(state.position, b.radius, b.mass, b.friction, b.restitution);
+            break;
+        case SceneShape::Compound:
+            handle = m_physics.CreateDynamicCompoundBoxes(state.position, b.compoundBoxes, b.mass, b.friction,
+                                                          b.restitution);
+            break;
+        case SceneShape::Terrain:
+        case SceneShape::Mesh:
+            break;
+    }
+    if (!handle.IsValid()) {
+        if (outError) *outError = "the body could not be created";
+        return false;
+    }
+    // Reconstruction hands the body its retained pose AND velocities: no
+    // reset to rest, no impulse.
+    m_physics.ResetBody(handle, state.position, state.rotation);
+    m_physics.SetLinearVelocity(handle, state.linearVelocity);
+    m_physics.SetAngularVelocity(handle, state.angularVelocity);
+    DynamicBody& slot = m_dynamicBodies[record.slot];
+    slot.Rebind(handle);
+    slot.SetPoseFromState(state.position, state.rotation);
+    slot.SnapPresentation();
+    return true;
+}
+
+void RuntimeWorld::ReleaseEntityBody(EntityRecord& record) {
+    DynamicBody& slot = m_dynamicBodies[record.slot];
+    if (slot.IsLive()) {
+        m_physics.DestroyBody(slot.Handle());
+        slot.Rebind(BodyHandle{});
+    }
+}
+
+bool RuntimeWorld::AppendEntitySlot(const SceneObject& o, bool authored, const EntityPhysicalState& state,
+                                    SimulationFidelity fidelity, std::string* outError) {
+    const SceneBodyComponent& b = *o.body;
+    DynamicBody::Visual visual;
+    visual.shape = b.shape == SceneShape::Sphere ? DynamicBody::Shape::Sphere : DynamicBody::Shape::Box;
+    visual.halfExtents = b.halfExtents;
+    visual.radius = b.radius;
+    if (o.render) visual.color = o.render->color;
+
+    DynamicVisual dv;
+    dv.id = o.id;
+    dv.name = o.name;
+    dv.hasRender = o.render.has_value();
+    if (o.render) dv.render = *o.render;
+    dv.compoundBoxes = b.compoundBoxes;
+    dv.scale = o.transform.scale;
+    dv.initialLinearVelocity = b.initialLinearVelocity;
+    dv.pickable = b.pickable;
+    if (!LoadVisualAssets(o, dv, outError)) return false;
+
+    EntityRecord record;
+    record.id = o.id;
+    record.name = o.name;
+    record.definition = o;
+    record.authored = authored;
+    record.managed = b.managed;
+    record.requiresFull = EntityRequiresFull(o);
+    record.state = state;
+    record.slot = m_dynamicBodies.size();
+    if (record.requiresFull) fidelity = SimulationFidelity::Full;
+    record.fidelity = fidelity;
+    record.lifecycle = fidelity == SimulationFidelity::Dormant ? EntityLifecycle::Unloaded : EntityLifecycle::Active;
+    if (fidelity == SimulationFidelity::Dormant) record.dormantSinceSeconds = m_simulationTime;
+    record.coarseMotion = glm::length(state.linearVelocity) < kSettledLinearSpeed &&
+                                  glm::length(state.angularVelocity) < kSettledAngularSpeed
+                              ? CoarseMotion::Settled
+                              : CoarseMotion::Inertial;
+
+    m_dynamicBodies.emplace_back(BodyHandle{}, visual, o.transform.position, glm::normalize(o.transform.rotation));
+    m_dynamicBodies.back().SetPoseFromState(state.position, state.rotation);
+    m_dynamicBodies.back().SnapPresentation();
+    m_dynamicVisuals.push_back(dv);
+    m_entities.push_back(record);
+    if (fidelity == SimulationFidelity::Full) {
+        if (!InstantiateEntityBody(m_entities.back(), state, outError)) {
+            m_dynamicBodies.pop_back();
+            m_dynamicVisuals.pop_back();
+            m_entities.pop_back();
+            return false;
+        }
+    }
+    ++m_entityVersion;
+    return true;
 }
 
 bool RuntimeWorld::Build(const Scene& scene, RenderAssetCache* assets, std::string& outError) {
@@ -38,8 +175,6 @@ bool RuntimeWorld::Build(const Scene& scene, RenderAssetCache* assets, std::stri
     }
     m_built = true;
 
-    // Fluid solver settings are scene-wide; length scales follow the
-    // authored fluidScale (M25's lake ran the M24 solver at 10x spacing).
     if (!(m_settings.fluidScale > 0.0f)) {
         outError = "settings: fluid-scale must be positive";
         Destroy();
@@ -50,7 +185,19 @@ bool RuntimeWorld::Build(const Scene& scene, RenderAssetCache* assets, std::stri
     m_fluidSettings.maxDensityCorrection *= m_settings.fluidScale;
     m_fluid = std::make_unique<FluidWorld>(m_fluidSettings);
 
-    std::vector<BodyHandle> dynamicCelestials;
+    if (m_settings.fidelityPolicy == SceneFidelityPolicy::Distance) {
+        m_policy = std::make_unique<DistanceFidelityPolicy>(m_settings.fidelityFullRadius,
+                                                            m_settings.fidelityCoarseRadius);
+    }
+    // The policy's focus at load: the player start. A managed entity that
+    // the policy would not simulate fully is never given a live body at
+    // all — a large world does not wake everything up just to put most of
+    // it back to sleep.
+    FidelityPolicyContext loadContext;
+    for (const SceneObject& o : scene.Objects()) {
+        if (o.playerStart) loadContext.focus = o.transform.position;
+    }
+
     const auto fail = [&](const SceneObject& o, const std::string& what) {
         outError = "object " + std::to_string(o.id) + " \"" + o.name + "\": " + what;
         Destroy();
@@ -70,18 +217,15 @@ bool RuntimeWorld::Build(const Scene& scene, RenderAssetCache* assets, std::stri
             if (b.motion == SceneBodyMotion::Static) {
                 switch (b.shape) {
                     case SceneShape::Box:
-                        bodyHandle = m_physics.CreateStaticBox(position, rotation, b.halfExtents,
-                                                               b.friction, b.restitution);
+                        bodyHandle = m_physics.CreateStaticBox(position, rotation, b.halfExtents, b.friction, b.restitution);
                         break;
                     case SceneShape::Sphere:
-                        bodyHandle = m_physics.CreateStaticSphere(position, b.radius, b.friction,
-                                                                  b.restitution);
+                        bodyHandle = m_physics.CreateStaticSphere(position, b.radius, b.friction, b.restitution);
                         break;
                     case SceneShape::Terrain: {
                         std::shared_ptr<const RadialTerrain> surface = CreateTerrainSurface(b.terrainSurface);
                         if (!surface) return fail(o, "unknown terrain surface '" + b.terrainSurface + "'");
-                        bodyHandle = m_physics.CreateStaticTerrain(position, rotation, surface,
-                                                                   b.friction, b.restitution);
+                        bodyHandle = m_physics.CreateStaticTerrain(position, rotation, surface, b.friction, b.restitution);
                         Terrain terrain;
                         terrain.id = o.id;
                         terrain.handle = bodyHandle;
@@ -113,66 +257,29 @@ bool RuntimeWorld::Build(const Scene& scene, RenderAssetCache* assets, std::stri
                     m_staticBodies.push_back(sb);
                 }
             } else {
+                if (b.shape == SceneShape::Terrain) return fail(o, "terrain bodies must be static");
+                if (b.shape == SceneShape::Mesh) return fail(o, "a body cannot use the mesh shape");
                 isDynamic = true;
-                switch (b.shape) {
-                    case SceneShape::Box:
-                        bodyHandle = m_physics.CreateDynamicBox(position, b.halfExtents, b.mass,
-                                                                b.friction, b.restitution);
-                        break;
-                    case SceneShape::Sphere:
-                        bodyHandle = m_physics.CreateDynamicSphere(position, b.radius, b.mass,
-                                                                   b.friction, b.restitution);
-                        break;
-                    case SceneShape::Compound:
-                        bodyHandle = m_physics.CreateDynamicCompoundBoxes(position, b.compoundBoxes,
-                                                                          b.mass, b.friction,
-                                                                          b.restitution);
-                        break;
-                    case SceneShape::Terrain:
-                        return fail(o, "terrain bodies must be static");
-                    case SceneShape::Mesh:
-                        return fail(o, "a body cannot use the mesh shape");
+                const EntityPhysicalState state = StateFromDefinition(o);
+                SimulationFidelity fidelity = SimulationFidelity::Full;
+                if (m_policy && b.managed && !EntityRequiresFull(o)) {
+                    FidelityPolicyEntity view;
+                    view.id = o.id;
+                    view.current = SimulationFidelity::Dormant;  // nothing exists yet
+                    view.position = state.position;
+                    view.linearVelocity = state.linearVelocity;
+                    fidelity = m_policy->Desired(view, loadContext);
                 }
-                m_physics.ResetBody(bodyHandle, position, rotation);
-                m_physics.SetLinearVelocity(bodyHandle, b.initialLinearVelocity);
-
-                DynamicBody::Visual visual;
-                visual.shape = b.shape == SceneShape::Sphere ? DynamicBody::Shape::Sphere
-                                                             : DynamicBody::Shape::Box;
-                visual.halfExtents = b.halfExtents;
-                visual.radius = b.radius;
-                if (o.render) visual.color = o.render->color;
-                m_dynamicBodies.emplace_back(bodyHandle, visual, position, rotation);
-
-                DynamicVisual dv;
-                dv.id = o.id;
-                dv.name = o.name;
-                dv.hasRender = o.render.has_value();
-                if (o.render) dv.render = *o.render;
-                dv.compoundBoxes = b.compoundBoxes;
-                dv.scale = o.transform.scale;
-                dv.initialLinearVelocity = b.initialLinearVelocity;
-                dv.pickable = b.pickable;
-                if (o.render && o.render->shape == SceneShape::Mesh && m_assets) {
-                    std::string assetError;
-                    dv.mesh = m_assets->GetMesh(o.render->meshPath, assetError);
-                    if (!dv.mesh.IsValid()) return fail(o, assetError);
-                    if (!o.render->texturePath.empty()) {
-                        dv.texture = m_assets->GetTexture(o.render->texturePath, assetError);
-                        if (!dv.texture.IsValid()) return fail(o, assetError);
-                    }
-                }
-                m_dynamicVisuals.push_back(dv);
-                if (b.pickable) m_pickableBodies.push_back(bodyHandle);
+                std::string entityError;
+                if (!AppendEntitySlot(o, /*authored=*/true, state, fidelity, &entityError)) return fail(o, entityError);
+                bodyHandle = m_dynamicBodies[dynamicIndex].Handle();
             }
-        } else if (o.render && (o.render->shape == SceneShape::Compound ||
-                                o.render->shape == SceneShape::Terrain)) {
+        } else if (o.render && (o.render->shape == SceneShape::Compound || o.render->shape == SceneShape::Terrain)) {
             return fail(o, "compound/terrain rendering needs a body");
         }
 
         // --- Renderable without a dynamic body ---
-        if (o.render && !isDynamic && o.render->shape != SceneShape::Terrain && !o.door &&
-            !o.lightSwitch) {
+        if (o.render && !isDynamic && o.render->shape != SceneShape::Terrain && !o.door && !o.lightSwitch) {
             StaticRenderable sr;
             sr.id = o.id;
             sr.render = *o.render;
@@ -201,8 +308,7 @@ bool RuntimeWorld::Build(const Scene& scene, RenderAssetCache* assets, std::stri
             } else if (IsWorldDown(rotation) && g.magnitude == kFaithfulMagnitude) {
                 field = std::make_unique<FaithfulGravity>();
             } else {
-                field = std::make_unique<UniformGravity>(
-                    rotation * glm::vec3(0.0f, -g.magnitude, 0.0f));
+                field = std::make_unique<UniformGravity>(rotation * glm::vec3(0.0f, -g.magnitude, 0.0f));
             }
             std::unique_ptr<GravityVolume> volume;
             if (g.regionShape == SceneRegionShape::Sphere) {
@@ -228,9 +334,10 @@ bool RuntimeWorld::Build(const Scene& scene, RenderAssetCache* assets, std::stri
         // --- Door / switch ---
         if (o.door) {
             if (!o.render) return fail(o, "door needs a render component");
-            m_doors.emplace_back(m_physics, position, rotation, o.render->halfExtents,
-                                 o.door->localHingeAxis, glm::radians(o.door->openAngleDegrees),
+            m_doors.emplace_back(m_physics, position, rotation, o.render->halfExtents, o.door->localHingeAxis,
+                                 glm::radians(o.door->openAngleDegrees),
                                  glm::radians(o.door->angularSpeedDegreesPerSecond), o.render->color);
+            m_doorIds.push_back(o.id);
         }
         if (o.lightSwitch) {
             if (!o.render) return fail(o, "light switch needs a render component");
@@ -238,8 +345,8 @@ bool RuntimeWorld::Build(const Scene& scene, RenderAssetCache* assets, std::stri
             m_lightSwitches.emplace_back(position, rotation, o.render->halfExtents, s.localHingeAxis,
                                          glm::radians(s.toggleAngleDegrees),
                                          glm::radians(s.angularSpeedDegreesPerSecond), o.render->color,
-                                         position + rotation * s.lampLocalOffset, s.lampColor,
-                                         s.lampRange);
+                                         position + rotation * s.lampLocalOffset, s.lampColor, s.lampRange);
+            m_lightSwitchIds.push_back(o.id);
         }
 
         // --- Vehicle ---
@@ -259,7 +366,6 @@ bool RuntimeWorld::Build(const Scene& scene, RenderAssetCache* assets, std::stri
         if (o.celestial) {
             if (!o.body) return fail(o, "celestial needs a body");
             if (isDynamic) {
-                dynamicCelestials.push_back(bodyHandle);
                 if (o.celestial->operatorThrustForce > 0.0f) {
                     m_operatorThrusts.push_back({bodyHandle, o.celestial->operatorThrustForce});
                 }
@@ -327,9 +433,6 @@ bool RuntimeWorld::Build(const Scene& scene, RenderAssetCache* assets, std::stri
         }
     }
 
-    // Combustion registration needs the atmosphere (initial temperature is
-    // the local gas temperature, else 300 K), so it runs after every
-    // object has been visited.
     for (const Combustible& c : m_combustibles) {
         const SceneObject* o = scene.Find(c.id);
         const SceneCombustibleComponent& sc = *o->combustible;
@@ -342,27 +445,46 @@ bool RuntimeWorld::Build(const Scene& scene, RenderAssetCache* assets, std::stri
         fuel.retainedCombustionHeatFraction = sc.retainedCombustionHeatFraction;
         float initialTemperature = 300.0f;
         if (m_atmosphere) {
-            const AtmosphereSample gas = m_atmosphere->field.Sample(
-                m_physics.GetTransform(c.handle).position, m_atmosphere->frame);
+            const AtmosphereSample gas = m_atmosphere->field.Sample(m_physics.GetTransform(c.handle).position,
+                                                                    m_atmosphere->frame);
             if (gas.temperatureKelvin > 0.0f) initialTemperature = gas.temperatureKelvin;
         }
         m_combustion.AddBody(c.handle, fuel, initialTemperature);
     }
 
-    // Pairwise Newtonian set: every dynamic celestial body, plus a vehicle
-    // that samples local gravity (the classic scene's spacecraft).
-    m_celestialParticipants = dynamicCelestials;
-    if (m_vehicle && m_vehicle->component.gravity == SceneVehicleGravity::Local &&
-        !dynamicCelestials.empty()) {
-        m_celestialParticipants.push_back(m_vehicle->handle);
-    }
-    m_celestial = std::make_unique<CelestialGravity>(m_celestialParticipants);
-
+    RebuildCelestialParticipants();
     if (m_assets && !m_fluidVolumes.empty() && m_assets->GetRenderer()) {
         m_fluidMesh = m_assets->GetRenderer()->CreateMesh(MeshData{});
     }
     PopulateFluid();
     return true;
+}
+
+void RuntimeWorld::RebuildCelestialParticipants() {
+    // Pairwise Newtonian set: every LIVE dynamic celestial body, plus a
+    // vehicle that samples local gravity (the classic scene's spacecraft).
+    // Coarse celestial entities contribute through CoarseSimulation and
+    // Simulation's coarse-to-live pass instead.
+    m_celestialParticipants.clear();
+    bool anyCelestial = false;
+    for (const EntityRecord& e : m_entities) {
+        if (e.lifecycle == EntityLifecycle::Destroyed || !e.definition.celestial) continue;
+        anyCelestial = true;
+        if (e.fidelity == SimulationFidelity::Full) m_celestialParticipants.push_back(m_dynamicBodies[e.slot].Handle());
+    }
+    if (m_vehicle && m_vehicle->component.gravity == SceneVehicleGravity::Local && anyCelestial) {
+        m_celestialParticipants.push_back(m_vehicle->handle);
+    }
+    m_celestial = std::make_unique<CelestialGravity>(m_celestialParticipants);
+}
+
+std::vector<BodyHandle> RuntimeWorld::PickableBodies() const {
+    std::vector<BodyHandle> handles;
+    for (const EntityRecord& e : m_entities) {
+        if (e.lifecycle == EntityLifecycle::Destroyed || e.fidelity != SimulationFidelity::Full) continue;
+        if (e.definition.body && e.definition.body->pickable) handles.push_back(m_dynamicBodies[e.slot].Handle());
+    }
+    return handles;
 }
 
 void RuntimeWorld::PopulateFluid() {
@@ -371,19 +493,14 @@ void RuntimeWorld::PopulateFluid() {
     for (const FluidVolume& fv : m_fluidVolumes) {
         const SceneFluidVolumeComponent& c = fv.component;
         const float s = c.spacing;
-        // Lattice centred in local X/Z, growing along local +Y from the
-        // object's position — the arrangement both the M24 cup and the M25
-        // lake authored.
         const float x0 = -0.5f * static_cast<float>(c.countX - 1);
         const float z0 = -0.5f * static_cast<float>(c.countZ - 1);
         for (int y = 0; y < c.countY; ++y) {
             for (int z = 0; z < c.countZ; ++z) {
                 for (int x = 0; x < c.countX; ++x) {
-                    const glm::vec3 local((x0 + static_cast<float>(x)) * s,
-                                          static_cast<float>(y) * s,
+                    const glm::vec3 local((x0 + static_cast<float>(x)) * s, static_cast<float>(y) * s,
                                           (z0 + static_cast<float>(z)) * s);
-                    m_fluid->AddParticle(fv.position + fv.rotation * local, glm::vec3(0.0f),
-                                         fv.particleMass);
+                    m_fluid->AddParticle(fv.position + fv.rotation * local, glm::vec3(0.0f), fv.particleMass);
                 }
             }
         }
@@ -395,12 +512,11 @@ bool RuntimeWorld::EmitFluidParticle() {
         const SceneFluidVolumeComponent& c = fv.component;
         if (!c.emitter) continue;
         if (static_cast<int>(m_fluid->Particles().size()) >= c.maxParticles) continue;
-        // The M25 nine-column drip pattern, in the volume's local frame.
         const int column = static_cast<int>(m_emittedParticles % 9);
         const glm::vec3 spread(static_cast<float>(column % 3 - 1) * 0.3f, 0.0f,
                                static_cast<float>(column / 3 - 1) * 0.3f);
-        m_fluid->AddParticle(fv.position + fv.rotation * (c.emitterLocalOffset + spread),
-                             glm::vec3(0.0f), fv.particleMass);
+        m_fluid->AddParticle(fv.position + fv.rotation * (c.emitterLocalOffset + spread), glm::vec3(0.0f),
+                             fv.particleMass);
         ++m_emittedParticles;
         return true;
     }
@@ -409,25 +525,283 @@ bool RuntimeWorld::EmitFluidParticle() {
 
 void RuntimeWorld::RestoreAuthoredState() {
     if (!m_built) return;
-    for (std::size_t i = 0; i < m_dynamicBodies.size(); ++i) {
-        m_dynamicBodies[i].ResetToSpawn(m_physics);
-        m_physics.SetLinearVelocity(m_dynamicBodies[i].Handle(), m_dynamicVisuals[i].initialLinearVelocity);
+    // Every surviving entity returns to its definition's state at Full
+    // fidelity (the policy re-decides on the next step). Destroyed entities
+    // stay destroyed: destruction is permanent within a run.
+    for (EntityRecord& e : m_entities) {
+        if (e.lifecycle == EntityLifecycle::Destroyed) continue;
+        const EntityPhysicalState authored = StateFromDefinition(e.definition);
+        e.state = authored;
+        e.coarseMotion = CoarseMotion::Settled;
+        e.forcedFidelity.reset();
+        if (e.fidelity == SimulationFidelity::Full) {
+            const BodyHandle handle = m_dynamicBodies[e.slot].Handle();
+            m_physics.ResetBody(handle, authored.position, authored.rotation);
+            m_physics.SetLinearVelocity(handle, authored.linearVelocity);
+            m_physics.SetAngularVelocity(handle, authored.angularVelocity);
+            m_dynamicBodies[e.slot].SetPoseFromState(authored.position, authored.rotation);
+            m_dynamicBodies[e.slot].SnapPresentation();
+        } else {
+            std::string error;
+            InstantiateEntityBody(e, authored, &error);
+            e.fidelity = SimulationFidelity::Full;
+            e.lifecycle = EntityLifecycle::Active;
+            e.dormantSinceSeconds = -1.0;
+            ++e.reconstructions;
+        }
     }
+    ++m_entityVersion;
+    RebuildCelestialParticipants();
     m_combustion.Reset();
     PopulateFluid();
 }
 
 std::string RuntimeWorld::NameOfBody(BodyHandle handle) const {
-    for (const DynamicVisual& v : m_dynamicVisuals) {
-        if (m_dynamicBodies[&v - m_dynamicVisuals.data()].Handle().id == handle.id) return v.name;
+    for (std::size_t i = 0; i < m_dynamicBodies.size(); ++i) {
+        if (m_dynamicBodies[i].IsLive() && m_dynamicBodies[i].Handle().id == handle.id) return m_dynamicVisuals[i].name;
     }
     return std::string();
+}
+
+// --- Milestone 29 -------------------------------------------------------
+
+const EntityRecord* RuntimeWorld::FindEntity(EntityId id) const {
+    for (const EntityRecord& e : m_entities) {
+        if (e.id == id) return &e;
+    }
+    return nullptr;
+}
+
+EntityRecord* RuntimeWorld::FindEntity(EntityId id) {
+    for (EntityRecord& e : m_entities) {
+        if (e.id == id) return &e;
+    }
+    return nullptr;
+}
+
+EntityId RuntimeWorld::EntityIdOfBody(BodyHandle handle) const {
+    if (!handle.IsValid()) return kInvalidSceneObjectId;
+    for (const EntityRecord& e : m_entities) {
+        if (e.lifecycle != EntityLifecycle::Destroyed && m_dynamicBodies[e.slot].IsLive() &&
+            m_dynamicBodies[e.slot].Handle().id == handle.id) {
+            return e.id;
+        }
+    }
+    return kInvalidSceneObjectId;
+}
+
+bool RuntimeWorld::GetEntityState(EntityId id, EntityPhysicalState& outState) const {
+    const EntityRecord* e = FindEntity(id);
+    if (!e || e->lifecycle == EntityLifecycle::Destroyed) return false;
+    if (e->fidelity == SimulationFidelity::Full) {
+        const BodyHandle handle = m_dynamicBodies[e->slot].Handle();
+        const BodyTransform transform = m_physics.GetTransform(handle);
+        outState.position = transform.position;
+        outState.rotation = transform.rotation;
+        outState.linearVelocity = m_physics.GetLinearVelocity(handle);
+        outState.angularVelocity = m_physics.GetAngularVelocity(handle);
+    } else {
+        outState = e->state;
+    }
+    return true;
+}
+
+bool RuntimeWorld::SetEntityState(EntityId id, const EntityPhysicalState& state) {
+    EntityRecord* e = FindEntity(id);
+    if (!e || e->lifecycle == EntityLifecycle::Destroyed) return false;
+    e->state = state;
+    e->coarseMotion = glm::length(state.linearVelocity) < kSettledLinearSpeed &&
+                              glm::length(state.angularVelocity) < kSettledAngularSpeed
+                          ? CoarseMotion::Settled
+                          : CoarseMotion::Inertial;
+    if (e->fidelity == SimulationFidelity::Full) {
+        const BodyHandle handle = m_dynamicBodies[e->slot].Handle();
+        m_physics.ResetBody(handle, state.position, state.rotation);
+        m_physics.SetLinearVelocity(handle, state.linearVelocity);
+        m_physics.SetAngularVelocity(handle, state.angularVelocity);
+    }
+    m_dynamicBodies[e->slot].SetPoseFromState(state.position, state.rotation);
+    m_dynamicBodies[e->slot].SnapPresentation();
+    return true;
+}
+
+bool RuntimeWorld::SetEntityFidelity(EntityId id, SimulationFidelity fidelity, std::string* outError) {
+    EntityRecord* e = FindEntity(id);
+    if (!e) {
+        if (outError) *outError = "unknown entity id " + std::to_string(id);
+        return false;
+    }
+    if (e->lifecycle == EntityLifecycle::Destroyed) {
+        if (outError) *outError = "entity " + std::to_string(id) + " is destroyed";
+        return false;
+    }
+    if (fidelity != SimulationFidelity::Full && e->requiresFull) {
+        if (outError) *outError = "entity " + std::to_string(id) + " (" + e->name + ") has no reduced representation";
+        return false;
+    }
+    if (fidelity == e->fidelity) return true;
+
+    if (e->fidelity == SimulationFidelity::Full) {
+        // Leaving Full: capture the live state, then release the body.
+        GetEntityState(id, e->state);
+        e->coarseMotion = glm::length(e->state.linearVelocity) < kSettledLinearSpeed &&
+                                  glm::length(e->state.angularVelocity) < kSettledAngularSpeed
+                              ? CoarseMotion::Settled
+                              : CoarseMotion::Inertial;
+        ReleaseEntityBody(*e);
+        m_dynamicBodies[e->slot].SetPoseFromState(e->state.position, e->state.rotation);
+        m_dynamicBodies[e->slot].SnapPresentation();
+    } else if (fidelity == SimulationFidelity::Full) {
+        // Reconstruction from the retained state.
+        if (!InstantiateEntityBody(*e, e->state, outError)) return false;
+        ++e->reconstructions;
+    }
+    e->fidelity = fidelity;
+    e->lifecycle = fidelity == SimulationFidelity::Dormant ? EntityLifecycle::Unloaded : EntityLifecycle::Active;
+    e->dormantSinceSeconds = fidelity == SimulationFidelity::Dormant ? m_simulationTime : -1.0;
+    ++m_transitionsThisStep;
+    ++m_entityVersion;
+    if (e->definition.celestial) RebuildCelestialParticipants();
+    return true;
+}
+
+bool RuntimeWorld::ForceEntityFidelity(EntityId id, std::optional<SimulationFidelity> fidelity, std::string* outError) {
+    EntityRecord* e = FindEntity(id);
+    if (!e) {
+        if (outError) *outError = "unknown entity id";
+        return false;
+    }
+    e->forcedFidelity = fidelity;
+    if (fidelity) return SetEntityFidelity(id, *fidelity, outError);
+    return true;
+}
+
+bool RuntimeWorld::DestroyEntity(EntityId id, std::string* outError) {
+    EntityRecord* e = FindEntity(id);
+    if (!e) {
+        if (outError) *outError = "unknown entity id " + std::to_string(id);
+        return false;
+    }
+    if (e->lifecycle == EntityLifecycle::Destroyed) return true;
+    if (e->definition.vehicle || e->definition.combustible) {
+        if (outError) *outError = "entity " + std::to_string(id) + " (" + e->name + ") cannot be destroyed at runtime";
+        return false;
+    }
+    ReleaseEntityBody(*e);
+    e->lifecycle = EntityLifecycle::Destroyed;
+    e->fidelity = SimulationFidelity::Dormant;
+    m_dynamicVisuals[e->slot].hasRender = false;
+    ++m_entityVersion;
+    if (e->definition.celestial) RebuildCelestialParticipants();
+    return true;
+}
+
+EntityId RuntimeWorld::AllocateRuntimeEntityId() {
+    return m_nextRuntimeId++;
+}
+
+void RuntimeWorld::SetNextRuntimeEntityId(EntityId next) {
+    m_nextRuntimeId = std::max(next, kRuntimeEntityIdBase);
+    for (const EntityRecord& e : m_entities) {
+        if (!e.authored && e.id >= m_nextRuntimeId) m_nextRuntimeId = e.id + 1;
+    }
+}
+
+EntityId RuntimeWorld::CreateEntity(const SceneObject& definitionIn, const EntityPhysicalState* state,
+                                    std::string* outError) {
+    if (!m_built) {
+        if (outError) *outError = "no world";
+        return kInvalidSceneObjectId;
+    }
+    SceneObject definition = definitionIn;
+    if (!definition.body || definition.body->motion != SceneBodyMotion::Dynamic ||
+        definition.body->shape == SceneShape::Terrain || definition.body->shape == SceneShape::Mesh) {
+        if (outError) *outError = "a runtime-created entity needs a dynamic box, sphere or compound body";
+        return kInvalidSceneObjectId;
+    }
+    if (definition.vehicle || definition.combustible || definition.atmosphere || definition.fluidVolume ||
+        definition.playerStart || definition.door || definition.lightSwitch || definition.gravity) {
+        if (outError) *outError = "runtime-created entities carry only body/render/celestial components";
+        return kInvalidSceneObjectId;
+    }
+    if (definition.id == kInvalidSceneObjectId) {
+        definition.id = AllocateRuntimeEntityId();
+    } else if (definition.id < kRuntimeEntityIdBase) {
+        if (outError) *outError = "runtime-created entity ids must be in the runtime range";
+        return kInvalidSceneObjectId;
+    } else if (FindEntity(definition.id)) {
+        if (outError) *outError = "entity id " + std::to_string(definition.id) + " already exists";
+        return kInvalidSceneObjectId;
+    } else if (definition.id >= m_nextRuntimeId) {
+        m_nextRuntimeId = definition.id + 1;
+    }
+    const EntityPhysicalState initial = state ? *state : StateFromDefinition(definition);
+    if (!AppendEntitySlot(definition, /*authored=*/false, initial, SimulationFidelity::Full, outError)) {
+        return kInvalidSceneObjectId;
+    }
+    if (definition.celestial) RebuildCelestialParticipants();
+    return definition.id;
+}
+
+void RuntimeWorld::SetFidelityPolicy(std::unique_ptr<FidelityPolicy> policy) {
+    m_policy = std::move(policy);
+}
+
+void RuntimeWorld::EvaluateFidelityPolicy(const FidelityPolicyContext& context, const std::vector<EntityId>& pinned) {
+    m_transitionsThisStep = 0;
+    if (!m_policy) return;
+    for (EntityRecord& e : m_entities) {
+        if (e.lifecycle == EntityLifecycle::Destroyed || !e.managed || e.requiresFull || e.forcedFidelity) continue;
+        if (std::find(pinned.begin(), pinned.end(), e.id) != pinned.end()) {
+            if (e.fidelity != SimulationFidelity::Full) SetEntityFidelity(e.id, SimulationFidelity::Full);
+            continue;
+        }
+        FidelityPolicyEntity view;
+        view.id = e.id;
+        view.current = e.fidelity;
+        EntityPhysicalState state;
+        GetEntityState(e.id, state);
+        view.position = state.position;
+        view.linearVelocity = state.linearVelocity;
+        const SimulationFidelity desired = m_policy->Desired(view, context);
+        if (desired != e.fidelity) SetEntityFidelity(e.id, desired);
+    }
+}
+
+RuntimeWorld::LifecycleCounts RuntimeWorld::CountLifecycle() const {
+    LifecycleCounts counts;
+    for (const EntityRecord& e : m_entities) {
+        if (e.lifecycle == EntityLifecycle::Destroyed) ++counts.destroyed;
+        else if (e.fidelity == SimulationFidelity::Full) ++counts.full;
+        else if (e.fidelity == SimulationFidelity::Coarse) ++counts.coarse;
+        else ++counts.dormant;
+    }
+    counts.physicsBodies = m_physics.AliveBodyCount();
+    counts.dynamicPhysicsBodies = m_physics.DynamicBodyCount();
+    counts.transitionsThisStep = m_transitionsThisStep;
+    return counts;
+}
+
+Door* RuntimeWorld::FindDoor(SceneObjectId id) {
+    for (std::size_t i = 0; i < m_doorIds.size(); ++i) {
+        if (m_doorIds[i] == id) return &m_doors[i];
+    }
+    return nullptr;
+}
+
+LightSwitch* RuntimeWorld::FindLightSwitch(SceneObjectId id) {
+    for (std::size_t i = 0; i < m_lightSwitchIds.size(); ++i) {
+        if (m_lightSwitchIds[i] == id) return &m_lightSwitches[i];
+    }
+    return nullptr;
 }
 
 void RuntimeWorld::Destroy() {
     if (!m_built) return;
     for (Door& door : m_doors) door.Destroy(m_physics);
-    for (const DynamicBody& body : m_dynamicBodies) m_physics.DestroyBody(body.Handle());
+    for (const DynamicBody& body : m_dynamicBodies) {
+        if (body.IsLive()) m_physics.DestroyBody(body.Handle());
+    }
     for (const StaticBody& body : m_staticBodies) m_physics.DestroyBody(body.handle);
     for (const Terrain& terrain : m_terrains) m_physics.DestroyBody(terrain.handle);
     if (m_assets && m_assets->GetRenderer() && m_fluidMesh.IsValid()) {
@@ -437,9 +811,17 @@ void RuntimeWorld::Destroy() {
     m_physics.Shutdown();
 
     m_doors.clear();
+    m_doorIds.clear();
     m_lightSwitches.clear();
+    m_lightSwitchIds.clear();
     m_dynamicBodies.clear();
     m_dynamicVisuals.clear();
+    m_entities.clear();
+    m_policy.reset();
+    m_nextRuntimeId = kRuntimeEntityIdBase;
+    m_entityVersion = 0;
+    m_transitionsThisStep = 0;
+    m_simulationTime = 0.0;
     m_staticBodies.clear();
     m_terrains.clear();
     m_staticRenderables.clear();

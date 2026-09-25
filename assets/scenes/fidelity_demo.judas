@@ -1,0 +1,1773 @@
+JudasScene 2
+settings
+  name "Fidelity demonstration"
+  world-origin 0 0 0
+  sun-direction 0.4 0.7 0.35
+  sun-color 1 0.98 0.92
+  ambient 0.16 0.17 0.19
+  fluid-scale 1
+  fidelity-policy distance 25 70
+  next-id 70
+end
+
+object 1 "Ground"
+  position 0 -1 100
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 60 1 160
+  render.radius 0.5
+  render.color 0.36 0.42 0.3
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh ""
+  render.texture ""
+  body static box
+  body.half-extents 60 1 160
+  body.radius 0.5
+  body.terrain ""
+  body.mass 1
+  body.friction 0.8
+  body.restitution 0.05
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  gravity uniform 9.81
+  gravity.region box 80 30 180
+end
+
+object 2 "Player start"
+  position 0 1 -3
+  rotation 1 0 0 0
+  scale 1 1 1
+  player-start third-person
+  player-start.yaw 180
+end
+
+object 3 "Managed crate 1"
+  position -4 0.5 6
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.85 0.35 0.2
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh ""
+  render.texture ""
+  body dynamic box
+  body.half-extents 0.5 0.5 0.5
+  body.radius 0.5
+  body.terrain ""
+  body.mass 5
+  body.friction 0.6
+  body.restitution 0.15
+  body.initial-velocity 0 0 0
+  body.pickable true
+  body.managed true
+  body.compound-count 0
+end
+
+object 4 "Managed crate 2"
+  position 0 0.5 10
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.84152544 0.35677966 0.2101695
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh ""
+  render.texture ""
+  body dynamic box
+  body.half-extents 0.5 0.5 0.5
+  body.radius 0.5
+  body.terrain ""
+  body.mass 5
+  body.friction 0.6
+  body.restitution 0.15
+  body.initial-velocity 0 0 0
+  body.pickable true
+  body.managed true
+  body.compound-count 0
+end
+
+object 5 "Managed crate 3"
+  position 4 0.5 14
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.83305085 0.3635593 0.22033899
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh ""
+  render.texture ""
+  body dynamic box
+  body.half-extents 0.5 0.5 0.5
+  body.radius 0.5
+  body.terrain ""
+  body.mass 5
+  body.friction 0.6
+  body.restitution 0.15
+  body.initial-velocity 0 0 0
+  body.pickable true
+  body.managed true
+  body.compound-count 0
+end
+
+object 6 "Managed crate 4"
+  position -4 0.5 18
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.8245763 0.37033898 0.23050848
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh ""
+  render.texture ""
+  body dynamic box
+  body.half-extents 0.5 0.5 0.5
+  body.radius 0.5
+  body.terrain ""
+  body.mass 5
+  body.friction 0.6
+  body.restitution 0.15
+  body.initial-velocity 0 0 0
+  body.pickable true
+  body.managed true
+  body.compound-count 0
+end
+
+object 7 "Managed crate 5"
+  position 0 0.5 22
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.81610173 0.37711865 0.24067797
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh ""
+  render.texture ""
+  body dynamic box
+  body.half-extents 0.5 0.5 0.5
+  body.radius 0.5
+  body.terrain ""
+  body.mass 5
+  body.friction 0.6
+  body.restitution 0.15
+  body.initial-velocity 0 0 0
+  body.pickable true
+  body.managed true
+  body.compound-count 0
+end
+
+object 8 "Managed crate 6"
+  position 4 0.5 26
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.80762714 0.3838983 0.25084746
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh ""
+  render.texture ""
+  body dynamic box
+  body.half-extents 0.5 0.5 0.5
+  body.radius 0.5
+  body.terrain ""
+  body.mass 5
+  body.friction 0.6
+  body.restitution 0.15
+  body.initial-velocity 0 0 0
+  body.pickable true
+  body.managed true
+  body.compound-count 0
+end
+
+object 9 "Managed crate 7"
+  position -4 0.5 30
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.79915255 0.39067796 0.26101696
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh ""
+  render.texture ""
+  body dynamic box
+  body.half-extents 0.5 0.5 0.5
+  body.radius 0.5
+  body.terrain ""
+  body.mass 5
+  body.friction 0.6
+  body.restitution 0.15
+  body.initial-velocity 0 0 0
+  body.pickable true
+  body.managed true
+  body.compound-count 0
+end
+
+object 10 "Managed crate 8"
+  position 0 0.5 34
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.79067796 0.39745763 0.27118644
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh ""
+  render.texture ""
+  body dynamic box
+  body.half-extents 0.5 0.5 0.5
+  body.radius 0.5
+  body.terrain ""
+  body.mass 5
+  body.friction 0.6
+  body.restitution 0.15
+  body.initial-velocity 0 0 0
+  body.pickable true
+  body.managed true
+  body.compound-count 0
+end
+
+object 11 "Managed crate 9"
+  position 4 0.5 38
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.78220344 0.40423727 0.28135595
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh ""
+  render.texture ""
+  body dynamic box
+  body.half-extents 0.5 0.5 0.5
+  body.radius 0.5
+  body.terrain ""
+  body.mass 5
+  body.friction 0.6
+  body.restitution 0.15
+  body.initial-velocity 0 0 0
+  body.pickable true
+  body.managed true
+  body.compound-count 0
+end
+
+object 12 "Managed crate 10"
+  position -4 0.5 42
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.77372885 0.41101694 0.29152542
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh ""
+  render.texture ""
+  body dynamic box
+  body.half-extents 0.5 0.5 0.5
+  body.radius 0.5
+  body.terrain ""
+  body.mass 5
+  body.friction 0.6
+  body.restitution 0.15
+  body.initial-velocity 0 0 0
+  body.pickable true
+  body.managed true
+  body.compound-count 0
+end
+
+object 13 "Managed crate 11"
+  position 0 0.5 46
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.76525426 0.4177966 0.30169493
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh ""
+  render.texture ""
+  body dynamic box
+  body.half-extents 0.5 0.5 0.5
+  body.radius 0.5
+  body.terrain ""
+  body.mass 5
+  body.friction 0.6
+  body.restitution 0.15
+  body.initial-velocity 0 0 0
+  body.pickable true
+  body.managed true
+  body.compound-count 0
+end
+
+object 14 "Managed crate 12"
+  position 4 0.5 50
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.7567797 0.42457628 0.3118644
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh ""
+  render.texture ""
+  body dynamic box
+  body.half-extents 0.5 0.5 0.5
+  body.radius 0.5
+  body.terrain ""
+  body.mass 5
+  body.friction 0.6
+  body.restitution 0.15
+  body.initial-velocity 0 0 0
+  body.pickable true
+  body.managed true
+  body.compound-count 0
+end
+
+object 15 "Managed crate 13"
+  position -4 0.5 54
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.7483051 0.43135592 0.3220339
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh ""
+  render.texture ""
+  body dynamic box
+  body.half-extents 0.5 0.5 0.5
+  body.radius 0.5
+  body.terrain ""
+  body.mass 5
+  body.friction 0.6
+  body.restitution 0.15
+  body.initial-velocity 0 0 0
+  body.pickable true
+  body.managed true
+  body.compound-count 0
+end
+
+object 16 "Managed crate 14"
+  position 0 0.5 58
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.73983055 0.4381356 0.3322034
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh ""
+  render.texture ""
+  body dynamic box
+  body.half-extents 0.5 0.5 0.5
+  body.radius 0.5
+  body.terrain ""
+  body.mass 5
+  body.friction 0.6
+  body.restitution 0.15
+  body.initial-velocity 0 0 0
+  body.pickable true
+  body.managed true
+  body.compound-count 0
+end
+
+object 17 "Managed crate 15"
+  position 4 0.5 62
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.73135597 0.44491524 0.3423729
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh ""
+  render.texture ""
+  body dynamic box
+  body.half-extents 0.5 0.5 0.5
+  body.radius 0.5
+  body.terrain ""
+  body.mass 5
+  body.friction 0.6
+  body.restitution 0.15
+  body.initial-velocity 0 0 0
+  body.pickable true
+  body.managed true
+  body.compound-count 0
+end
+
+object 18 "Managed crate 16"
+  position -4 0.5 66
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.7228814 0.4516949 0.3525424
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh ""
+  render.texture ""
+  body dynamic box
+  body.half-extents 0.5 0.5 0.5
+  body.radius 0.5
+  body.terrain ""
+  body.mass 5
+  body.friction 0.6
+  body.restitution 0.15
+  body.initial-velocity 0 0 0
+  body.pickable true
+  body.managed true
+  body.compound-count 0
+end
+
+object 19 "Managed crate 17"
+  position 0 0.5 70
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.7144068 0.45847458 0.36271188
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh ""
+  render.texture ""
+  body dynamic box
+  body.half-extents 0.5 0.5 0.5
+  body.radius 0.5
+  body.terrain ""
+  body.mass 5
+  body.friction 0.6
+  body.restitution 0.15
+  body.initial-velocity 0 0 0
+  body.pickable true
+  body.managed true
+  body.compound-count 0
+end
+
+object 20 "Managed crate 18"
+  position 4 0.5 74
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.70593226 0.46525425 0.37288135
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh ""
+  render.texture ""
+  body dynamic box
+  body.half-extents 0.5 0.5 0.5
+  body.radius 0.5
+  body.terrain ""
+  body.mass 5
+  body.friction 0.6
+  body.restitution 0.15
+  body.initial-velocity 0 0 0
+  body.pickable true
+  body.managed true
+  body.compound-count 0
+end
+
+object 21 "Managed crate 19"
+  position -4 0.5 78
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.6974577 0.4720339 0.38305086
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh ""
+  render.texture ""
+  body dynamic box
+  body.half-extents 0.5 0.5 0.5
+  body.radius 0.5
+  body.terrain ""
+  body.mass 5
+  body.friction 0.6
+  body.restitution 0.15
+  body.initial-velocity 0 0 0
+  body.pickable true
+  body.managed true
+  body.compound-count 0
+end
+
+object 22 "Managed crate 20"
+  position 0 0.5 82
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.6889831 0.47881356 0.39322037
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh ""
+  render.texture ""
+  body dynamic box
+  body.half-extents 0.5 0.5 0.5
+  body.radius 0.5
+  body.terrain ""
+  body.mass 5
+  body.friction 0.6
+  body.restitution 0.15
+  body.initial-velocity 0 0 0
+  body.pickable true
+  body.managed true
+  body.compound-count 0
+end
+
+object 23 "Managed crate 21"
+  position 4 0.5 86
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.6805085 0.4855932 0.40338984
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh ""
+  render.texture ""
+  body dynamic box
+  body.half-extents 0.5 0.5 0.5
+  body.radius 0.5
+  body.terrain ""
+  body.mass 5
+  body.friction 0.6
+  body.restitution 0.15
+  body.initial-velocity 0 0 0
+  body.pickable true
+  body.managed true
+  body.compound-count 0
+end
+
+object 24 "Managed crate 22"
+  position -4 0.5 90
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.6720339 0.49237287 0.41355932
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh ""
+  render.texture ""
+  body dynamic box
+  body.half-extents 0.5 0.5 0.5
+  body.radius 0.5
+  body.terrain ""
+  body.mass 5
+  body.friction 0.6
+  body.restitution 0.15
+  body.initial-velocity 0 0 0
+  body.pickable true
+  body.managed true
+  body.compound-count 0
+end
+
+object 25 "Managed crate 23"
+  position 0 0.5 94
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.6635593 0.49915254 0.42372882
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh ""
+  render.texture ""
+  body dynamic box
+  body.half-extents 0.5 0.5 0.5
+  body.radius 0.5
+  body.terrain ""
+  body.mass 5
+  body.friction 0.6
+  body.restitution 0.15
+  body.initial-velocity 0 0 0
+  body.pickable true
+  body.managed true
+  body.compound-count 0
+end
+
+object 26 "Managed crate 24"
+  position 4 0.5 98
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.6550848 0.5059322 0.43389833
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh ""
+  render.texture ""
+  body dynamic box
+  body.half-extents 0.5 0.5 0.5
+  body.radius 0.5
+  body.terrain ""
+  body.mass 5
+  body.friction 0.6
+  body.restitution 0.15
+  body.initial-velocity 0 0 0
+  body.pickable true
+  body.managed true
+  body.compound-count 0
+end
+
+object 27 "Managed crate 25"
+  position -4 0.5 102
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.6466102 0.5127119 0.4440678
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh ""
+  render.texture ""
+  body dynamic box
+  body.half-extents 0.5 0.5 0.5
+  body.radius 0.5
+  body.terrain ""
+  body.mass 5
+  body.friction 0.6
+  body.restitution 0.15
+  body.initial-velocity 0 0 0
+  body.pickable true
+  body.managed true
+  body.compound-count 0
+end
+
+object 28 "Managed crate 26"
+  position 0 0.5 106
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.6381356 0.51949155 0.45423728
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh ""
+  render.texture ""
+  body dynamic box
+  body.half-extents 0.5 0.5 0.5
+  body.radius 0.5
+  body.terrain ""
+  body.mass 5
+  body.friction 0.6
+  body.restitution 0.15
+  body.initial-velocity 0 0 0
+  body.pickable true
+  body.managed true
+  body.compound-count 0
+end
+
+object 29 "Managed crate 27"
+  position 4 0.5 110
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.629661 0.52627116 0.4644068
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh ""
+  render.texture ""
+  body dynamic box
+  body.half-extents 0.5 0.5 0.5
+  body.radius 0.5
+  body.terrain ""
+  body.mass 5
+  body.friction 0.6
+  body.restitution 0.15
+  body.initial-velocity 0 0 0
+  body.pickable true
+  body.managed true
+  body.compound-count 0
+end
+
+object 30 "Managed crate 28"
+  position -4 0.5 114
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.6211865 0.53305084 0.4745763
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh ""
+  render.texture ""
+  body dynamic box
+  body.half-extents 0.5 0.5 0.5
+  body.radius 0.5
+  body.terrain ""
+  body.mass 5
+  body.friction 0.6
+  body.restitution 0.15
+  body.initial-velocity 0 0 0
+  body.pickable true
+  body.managed true
+  body.compound-count 0
+end
+
+object 31 "Managed crate 29"
+  position 0 0.5 118
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.6127119 0.5398305 0.4847458
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh ""
+  render.texture ""
+  body dynamic box
+  body.half-extents 0.5 0.5 0.5
+  body.radius 0.5
+  body.terrain ""
+  body.mass 5
+  body.friction 0.6
+  body.restitution 0.15
+  body.initial-velocity 0 0 0
+  body.pickable true
+  body.managed true
+  body.compound-count 0
+end
+
+object 32 "Managed crate 30"
+  position 4 0.5 122
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.6042373 0.5466102 0.49491525
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh ""
+  render.texture ""
+  body dynamic box
+  body.half-extents 0.5 0.5 0.5
+  body.radius 0.5
+  body.terrain ""
+  body.mass 5
+  body.friction 0.6
+  body.restitution 0.15
+  body.initial-velocity 0 0 0
+  body.pickable true
+  body.managed true
+  body.compound-count 0
+end
+
+object 33 "Managed crate 31"
+  position -4 0.5 126
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.5957627 0.55338985 0.50508475
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh ""
+  render.texture ""
+  body dynamic box
+  body.half-extents 0.5 0.5 0.5
+  body.radius 0.5
+  body.terrain ""
+  body.mass 5
+  body.friction 0.6
+  body.restitution 0.15
+  body.initial-velocity 0 0 0
+  body.pickable true
+  body.managed true
+  body.compound-count 0
+end
+
+object 34 "Managed crate 32"
+  position 0 0.5 130
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.58728814 0.56016946 0.51525426
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh ""
+  render.texture ""
+  body dynamic box
+  body.half-extents 0.5 0.5 0.5
+  body.radius 0.5
+  body.terrain ""
+  body.mass 5
+  body.friction 0.6
+  body.restitution 0.15
+  body.initial-velocity 0 0 0
+  body.pickable true
+  body.managed true
+  body.compound-count 0
+end
+
+object 35 "Managed crate 33"
+  position 4 0.5 134
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.57881355 0.5669491 0.52542377
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh ""
+  render.texture ""
+  body dynamic box
+  body.half-extents 0.5 0.5 0.5
+  body.radius 0.5
+  body.terrain ""
+  body.mass 5
+  body.friction 0.6
+  body.restitution 0.15
+  body.initial-velocity 0 0 0
+  body.pickable true
+  body.managed true
+  body.compound-count 0
+end
+
+object 36 "Managed crate 34"
+  position -4 0.5 138
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.57033896 0.5737288 0.5355933
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh ""
+  render.texture ""
+  body dynamic box
+  body.half-extents 0.5 0.5 0.5
+  body.radius 0.5
+  body.terrain ""
+  body.mass 5
+  body.friction 0.6
+  body.restitution 0.15
+  body.initial-velocity 0 0 0
+  body.pickable true
+  body.managed true
+  body.compound-count 0
+end
+
+object 37 "Managed crate 35"
+  position 0 0.5 142
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.56186444 0.5805085 0.5457627
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh ""
+  render.texture ""
+  body dynamic box
+  body.half-extents 0.5 0.5 0.5
+  body.radius 0.5
+  body.terrain ""
+  body.mass 5
+  body.friction 0.6
+  body.restitution 0.15
+  body.initial-velocity 0 0 0
+  body.pickable true
+  body.managed true
+  body.compound-count 0
+end
+
+object 38 "Managed crate 36"
+  position 4 0.5 146
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.55338985 0.58728814 0.5559322
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh ""
+  render.texture ""
+  body dynamic box
+  body.half-extents 0.5 0.5 0.5
+  body.radius 0.5
+  body.terrain ""
+  body.mass 5
+  body.friction 0.6
+  body.restitution 0.15
+  body.initial-velocity 0 0 0
+  body.pickable true
+  body.managed true
+  body.compound-count 0
+end
+
+object 39 "Managed crate 37"
+  position -4 0.5 150
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.5449153 0.5940678 0.5661017
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh ""
+  render.texture ""
+  body dynamic box
+  body.half-extents 0.5 0.5 0.5
+  body.radius 0.5
+  body.terrain ""
+  body.mass 5
+  body.friction 0.6
+  body.restitution 0.15
+  body.initial-velocity 0 0 0
+  body.pickable true
+  body.managed true
+  body.compound-count 0
+end
+
+object 40 "Managed crate 38"
+  position 0 0.5 154
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.53644073 0.6008475 0.57627124
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh ""
+  render.texture ""
+  body dynamic box
+  body.half-extents 0.5 0.5 0.5
+  body.radius 0.5
+  body.terrain ""
+  body.mass 5
+  body.friction 0.6
+  body.restitution 0.15
+  body.initial-velocity 0 0 0
+  body.pickable true
+  body.managed true
+  body.compound-count 0
+end
+
+object 41 "Managed crate 39"
+  position 4 0.5 158
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.52796614 0.60762715 0.58644074
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh ""
+  render.texture ""
+  body dynamic box
+  body.half-extents 0.5 0.5 0.5
+  body.radius 0.5
+  body.terrain ""
+  body.mass 5
+  body.friction 0.6
+  body.restitution 0.15
+  body.initial-velocity 0 0 0
+  body.pickable true
+  body.managed true
+  body.compound-count 0
+end
+
+object 42 "Managed crate 40"
+  position -4 0.5 162
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.51949155 0.61440676 0.5966102
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh ""
+  render.texture ""
+  body dynamic box
+  body.half-extents 0.5 0.5 0.5
+  body.radius 0.5
+  body.terrain ""
+  body.mass 5
+  body.friction 0.6
+  body.restitution 0.15
+  body.initial-velocity 0 0 0
+  body.pickable true
+  body.managed true
+  body.compound-count 0
+end
+
+object 43 "Managed crate 41"
+  position 0 0.5 166
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.51101696 0.62118644 0.6067797
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh ""
+  render.texture ""
+  body dynamic box
+  body.half-extents 0.5 0.5 0.5
+  body.radius 0.5
+  body.terrain ""
+  body.mass 5
+  body.friction 0.6
+  body.restitution 0.15
+  body.initial-velocity 0 0 0
+  body.pickable true
+  body.managed true
+  body.compound-count 0
+end
+
+object 44 "Managed crate 42"
+  position 4 0.5 170
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.5025424 0.6279661 0.61694914
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh ""
+  render.texture ""
+  body dynamic box
+  body.half-extents 0.5 0.5 0.5
+  body.radius 0.5
+  body.terrain ""
+  body.mass 5
+  body.friction 0.6
+  body.restitution 0.15
+  body.initial-velocity 0 0 0
+  body.pickable true
+  body.managed true
+  body.compound-count 0
+end
+
+object 45 "Managed crate 43"
+  position -4 0.5 174
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.49406782 0.6347458 0.62711865
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh ""
+  render.texture ""
+  body dynamic box
+  body.half-extents 0.5 0.5 0.5
+  body.radius 0.5
+  body.terrain ""
+  body.mass 5
+  body.friction 0.6
+  body.restitution 0.15
+  body.initial-velocity 0 0 0
+  body.pickable true
+  body.managed true
+  body.compound-count 0
+end
+
+object 46 "Managed crate 44"
+  position 0 0.5 178
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.48559323 0.64152545 0.63728815
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh ""
+  render.texture ""
+  body dynamic box
+  body.half-extents 0.5 0.5 0.5
+  body.radius 0.5
+  body.terrain ""
+  body.mass 5
+  body.friction 0.6
+  body.restitution 0.15
+  body.initial-velocity 0 0 0
+  body.pickable true
+  body.managed true
+  body.compound-count 0
+end
+
+object 47 "Managed crate 45"
+  position 4 0.5 182
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.47711867 0.64830506 0.64745766
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh ""
+  render.texture ""
+  body dynamic box
+  body.half-extents 0.5 0.5 0.5
+  body.radius 0.5
+  body.terrain ""
+  body.mass 5
+  body.friction 0.6
+  body.restitution 0.15
+  body.initial-velocity 0 0 0
+  body.pickable true
+  body.managed true
+  body.compound-count 0
+end
+
+object 48 "Managed crate 46"
+  position -4 0.5 186
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.46864408 0.6550847 0.65762717
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh ""
+  render.texture ""
+  body dynamic box
+  body.half-extents 0.5 0.5 0.5
+  body.radius 0.5
+  body.terrain ""
+  body.mass 5
+  body.friction 0.6
+  body.restitution 0.15
+  body.initial-velocity 0 0 0
+  body.pickable true
+  body.managed true
+  body.compound-count 0
+end
+
+object 49 "Managed crate 47"
+  position 0 0.5 190
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.46016952 0.6618644 0.6677966
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh ""
+  render.texture ""
+  body dynamic box
+  body.half-extents 0.5 0.5 0.5
+  body.radius 0.5
+  body.terrain ""
+  body.mass 5
+  body.friction 0.6
+  body.restitution 0.15
+  body.initial-velocity 0 0 0
+  body.pickable true
+  body.managed true
+  body.compound-count 0
+end
+
+object 50 "Managed crate 48"
+  position 4 0.5 194
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.45169494 0.6686441 0.6779661
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh ""
+  render.texture ""
+  body dynamic box
+  body.half-extents 0.5 0.5 0.5
+  body.radius 0.5
+  body.terrain ""
+  body.mass 5
+  body.friction 0.6
+  body.restitution 0.15
+  body.initial-velocity 0 0 0
+  body.pickable true
+  body.managed true
+  body.compound-count 0
+end
+
+object 51 "Managed crate 49"
+  position -4 0.5 198
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.44322038 0.67542374 0.6881356
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh ""
+  render.texture ""
+  body dynamic box
+  body.half-extents 0.5 0.5 0.5
+  body.radius 0.5
+  body.terrain ""
+  body.mass 5
+  body.friction 0.6
+  body.restitution 0.15
+  body.initial-velocity 0 0 0
+  body.pickable true
+  body.managed true
+  body.compound-count 0
+end
+
+object 52 "Managed crate 50"
+  position 0 0.5 202
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.4347458 0.6822034 0.69830513
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh ""
+  render.texture ""
+  body dynamic box
+  body.half-extents 0.5 0.5 0.5
+  body.radius 0.5
+  body.terrain ""
+  body.mass 5
+  body.friction 0.6
+  body.restitution 0.15
+  body.initial-velocity 0 0 0
+  body.pickable true
+  body.managed true
+  body.compound-count 0
+end
+
+object 53 "Managed crate 51"
+  position 4 0.5 206
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.4262712 0.6889831 0.7084746
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh ""
+  render.texture ""
+  body dynamic box
+  body.half-extents 0.5 0.5 0.5
+  body.radius 0.5
+  body.terrain ""
+  body.mass 5
+  body.friction 0.6
+  body.restitution 0.15
+  body.initial-velocity 0 0 0
+  body.pickable true
+  body.managed true
+  body.compound-count 0
+end
+
+object 54 "Managed crate 52"
+  position -4 0.5 210
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.41779664 0.6957627 0.7186441
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh ""
+  render.texture ""
+  body dynamic box
+  body.half-extents 0.5 0.5 0.5
+  body.radius 0.5
+  body.terrain ""
+  body.mass 5
+  body.friction 0.6
+  body.restitution 0.15
+  body.initial-velocity 0 0 0
+  body.pickable true
+  body.managed true
+  body.compound-count 0
+end
+
+object 55 "Managed crate 53"
+  position 0 0.5 214
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.40932205 0.70254236 0.7288136
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh ""
+  render.texture ""
+  body dynamic box
+  body.half-extents 0.5 0.5 0.5
+  body.radius 0.5
+  body.terrain ""
+  body.mass 5
+  body.friction 0.6
+  body.restitution 0.15
+  body.initial-velocity 0 0 0
+  body.pickable true
+  body.managed true
+  body.compound-count 0
+end
+
+object 56 "Managed crate 54"
+  position 4 0.5 218
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.4008475 0.70932204 0.73898304
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh ""
+  render.texture ""
+  body dynamic box
+  body.half-extents 0.5 0.5 0.5
+  body.radius 0.5
+  body.terrain ""
+  body.mass 5
+  body.friction 0.6
+  body.restitution 0.15
+  body.initial-velocity 0 0 0
+  body.pickable true
+  body.managed true
+  body.compound-count 0
+end
+
+object 57 "Managed crate 55"
+  position -4 0.5 222
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.3923729 0.7161017 0.74915254
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh ""
+  render.texture ""
+  body dynamic box
+  body.half-extents 0.5 0.5 0.5
+  body.radius 0.5
+  body.terrain ""
+  body.mass 5
+  body.friction 0.6
+  body.restitution 0.15
+  body.initial-velocity 0 0 0
+  body.pickable true
+  body.managed true
+  body.compound-count 0
+end
+
+object 58 "Managed crate 56"
+  position 0 0.5 226
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.38389832 0.7228814 0.75932205
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh ""
+  render.texture ""
+  body dynamic box
+  body.half-extents 0.5 0.5 0.5
+  body.radius 0.5
+  body.terrain ""
+  body.mass 5
+  body.friction 0.6
+  body.restitution 0.15
+  body.initial-velocity 0 0 0
+  body.pickable true
+  body.managed true
+  body.compound-count 0
+end
+
+object 59 "Managed crate 57"
+  position 4 0.5 230
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.37542376 0.729661 0.76949155
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh ""
+  render.texture ""
+  body dynamic box
+  body.half-extents 0.5 0.5 0.5
+  body.radius 0.5
+  body.terrain ""
+  body.mass 5
+  body.friction 0.6
+  body.restitution 0.15
+  body.initial-velocity 0 0 0
+  body.pickable true
+  body.managed true
+  body.compound-count 0
+end
+
+object 60 "Managed crate 58"
+  position -4 0.5 234
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.36694917 0.73644066 0.77966106
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh ""
+  render.texture ""
+  body dynamic box
+  body.half-extents 0.5 0.5 0.5
+  body.radius 0.5
+  body.terrain ""
+  body.mass 5
+  body.friction 0.6
+  body.restitution 0.15
+  body.initial-velocity 0 0 0
+  body.pickable true
+  body.managed true
+  body.compound-count 0
+end
+
+object 61 "Managed crate 59"
+  position 0 0.5 238
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.3584746 0.7432203 0.7898305
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh ""
+  render.texture ""
+  body dynamic box
+  body.half-extents 0.5 0.5 0.5
+  body.radius 0.5
+  body.terrain ""
+  body.mass 5
+  body.friction 0.6
+  body.restitution 0.15
+  body.initial-velocity 0 0 0
+  body.pickable true
+  body.managed true
+  body.compound-count 0
+end
+
+object 62 "Managed crate 60"
+  position 4 0.5 242
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.35000002 0.75 0.8
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh ""
+  render.texture ""
+  body dynamic box
+  body.half-extents 0.5 0.5 0.5
+  body.radius 0.5
+  body.terrain ""
+  body.mass 5
+  body.friction 0.6
+  body.restitution 0.15
+  body.initial-velocity 0 0 0
+  body.pickable true
+  body.managed true
+  body.compound-count 0
+end
+
+object 63 "Local crate 1"
+  position -6 0.45 2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.45 0.45 0.45
+  render.radius 0.5
+  render.color 0.75 0.75 0.8
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh ""
+  render.texture ""
+  body dynamic box
+  body.half-extents 0.45 0.45 0.45
+  body.radius 0.5
+  body.terrain ""
+  body.mass 5
+  body.friction 0.6
+  body.restitution 0.15
+  body.initial-velocity 0 0 0
+  body.pickable true
+  body.managed false
+  body.compound-count 0
+end
+
+object 64 "Local crate 2"
+  position -4.5 0.45 2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.45 0.45 0.45
+  render.radius 0.5
+  render.color 0.75 0.75 0.8
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh ""
+  render.texture ""
+  body dynamic box
+  body.half-extents 0.45 0.45 0.45
+  body.radius 0.5
+  body.terrain ""
+  body.mass 5
+  body.friction 0.6
+  body.restitution 0.15
+  body.initial-velocity 0 0 0
+  body.pickable true
+  body.managed false
+  body.compound-count 0
+end
+
+object 65 "Local crate 3"
+  position -3 0.45 2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.45 0.45 0.45
+  render.radius 0.5
+  render.color 0.75 0.75 0.8
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh ""
+  render.texture ""
+  body dynamic box
+  body.half-extents 0.45 0.45 0.45
+  body.radius 0.5
+  body.terrain ""
+  body.mass 5
+  body.friction 0.6
+  body.restitution 0.15
+  body.initial-velocity 0 0 0
+  body.pickable true
+  body.managed false
+  body.compound-count 0
+end
+
+object 66 "Local crate 4"
+  position -1.5 0.45 2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.45 0.45 0.45
+  render.radius 0.5
+  render.color 0.75 0.75 0.8
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh ""
+  render.texture ""
+  body dynamic box
+  body.half-extents 0.45 0.45 0.45
+  body.radius 0.5
+  body.terrain ""
+  body.mass 5
+  body.friction 0.6
+  body.restitution 0.15
+  body.initial-velocity 0 0 0
+  body.pickable true
+  body.managed false
+  body.compound-count 0
+end
+
+object 67 "Satellite A"
+  position -20 45 20
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sphere
+  render.half-extents 0.5 0.5 0.5
+  render.radius 1.2
+  render.color 0.25 0.7 0.95
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh ""
+  render.texture ""
+  body dynamic sphere
+  body.half-extents 0.5 0.5 0.5
+  body.radius 1.2
+  body.terrain ""
+  body.mass 40
+  body.friction 0.5
+  body.restitution 0.1
+  body.initial-velocity 0.8 0 0.5
+  body.pickable false
+  body.managed true
+  body.compound-count 0
+end
+
+object 68 "Satellite B"
+  position 20 50 30
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sphere
+  render.half-extents 0.5 0.5 0.5
+  render.radius 1.2
+  render.color 0.95 0.55 0.2
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh ""
+  render.texture ""
+  body dynamic sphere
+  body.half-extents 0.5 0.5 0.5
+  body.radius 1.2
+  body.terrain ""
+  body.mass 40
+  body.friction 0.5
+  body.restitution 0.1
+  body.initial-velocity -0.6 0 0.9
+  body.pickable false
+  body.managed true
+  body.compound-count 0
+end
+
+object 69 "Lamp"
+  position 0 6 4
+  rotation 1 0 0 0
+  scale 1 1 1
+  light point
+  light.color 3 2.8 2.4
+  light.range 25
+  light.cone 15 25
+end

@@ -34,6 +34,16 @@ void DynamicBody::SyncFromPhysics(const PhysicsWorld& physics) {
     m_orientation = transform.rotation;
 }
 
+void DynamicBody::SetPoseFromState(const glm::vec3& position, const glm::quat& orientation) {
+    m_position = position;
+    m_orientation = orientation;
+}
+
+void DynamicBody::SnapPresentation() {
+    m_previousPosition = m_position;
+    m_previousOrientation = m_orientation;
+}
+
 void DynamicBody::ResetToSpawn(PhysicsWorld& physics) {
     physics.ResetBody(m_handle, m_spawnPosition, m_spawnRotation);
     m_position = m_spawnPosition;
@@ -47,7 +57,9 @@ void PrepareDynamicBodiesForStep(std::vector<DynamicBody>& bodies, const Gravity
                                   BodyHandle excludedFromLocalGravity) {
     for (DynamicBody& body : bodies) {
         body.SnapshotPrevious();
-        if (body.Handle().id == excludedFromLocalGravity.id) continue;
+        // A slot without a live body (Coarse/Dormant/destroyed entity) has
+        // nothing to hand gravity to; CoarseSimulation owns its motion.
+        if (!body.IsLive() || body.Handle().id == excludedFromLocalGravity.id) continue;
         const glm::vec3 acceleration = gravity.Sample(body.GetPosition());
         physics.ApplyLinearAcceleration(body.Handle(), acceleration, fixedDeltaTime);
     }
@@ -55,6 +67,6 @@ void PrepareDynamicBodiesForStep(std::vector<DynamicBody>& bodies, const Gravity
 
 void SyncDynamicBodiesFromPhysics(std::vector<DynamicBody>& bodies, const PhysicsWorld& physics) {
     for (DynamicBody& body : bodies) {
-        body.SyncFromPhysics(physics);
+        if (body.IsLive()) body.SyncFromPhysics(physics);
     }
 }

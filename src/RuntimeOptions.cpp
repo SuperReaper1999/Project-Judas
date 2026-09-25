@@ -4,6 +4,8 @@
 #include <cstdio>
 #include <cstdlib>
 
+#include "WorldState.h"
+
 namespace {
 bool EnvSet(const char* name) {
     const char* value = std::getenv(name);
@@ -70,6 +72,10 @@ bool ParseRuntimeOptions(int argc, char** argv, RuntimeOptions& out, std::string
         out.worldOriginOverride = offset;
     }
     if (const char* path = std::getenv("JUDAS_TERRAIN_SCREENSHOT")) out.terrainScreenshotPath = path;
+    out.worldStatePath = DefaultWorldStatePath(out.scenePath);
+    if (const char* state = std::getenv("JUDAS_WORLD_STATE")) {
+        out.worldStatePath = std::string(state) == "none" ? std::string() : state;
+    }
     out.liveTelemetry = EnvSet("JUDAS_LIVE_TELEMETRY");
     out.fluidDiagnostics = EnvSet("JUDAS_FLUID_DIAGNOSTICS");
     out.atmosphereDiagnostics = EnvSet("JUDAS_ATMOSPHERE_DIAGNOSTICS");

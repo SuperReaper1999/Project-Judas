@@ -69,7 +69,36 @@ void Window::SetEventHook(std::function<void(const SDL_Event&)> hook) {
     m_eventHook = std::move(hook);
 }
 
+bool Window::ConsumeSpawnEntityRequest() {
+    if (m_testInputMode) return false;
+    const bool requested = m_spawnEntityRequested;
+    m_spawnEntityRequested = false;
+    return requested;
+}
+
+bool Window::ConsumeDestroyEntityRequest() {
+    if (m_testInputMode) return false;
+    const bool requested = m_destroyEntityRequested;
+    m_destroyEntityRequested = false;
+    return requested;
+}
+
+bool Window::ConsumeSaveWorldStateRequest() {
+    if (m_testInputMode) return false;
+    const bool requested = m_saveWorldStateRequested;
+    m_saveWorldStateRequested = false;
+    return requested;
+}
+
+bool Window::ConsumeDeleteWorldStateRequest() {
+    if (m_testInputMode) return false;
+    const bool requested = m_deleteWorldStateRequested;
+    m_deleteWorldStateRequested = false;
+    return requested;
+}
+
 void Window::ClearPendingRequests() {
+    m_spawnEntityRequested = m_destroyEntityRequested = m_saveWorldStateRequested = m_deleteWorldStateRequested = false;
     m_resetRequested = m_jumpRequested = m_controlToggleRequested = m_torchToggleRequested = false;
     m_interactRequested = m_viewToggleRequested = m_throwRequested = m_sasToggleRequested = false;
     m_uiBackRequested = m_uiUpRequested = m_uiDownRequested = m_uiActivateRequested = m_uiClickRequested = false;
@@ -120,6 +149,14 @@ void Window::PollEvents() {
                 m_throwRequested = true;
             } else if (event.key.keysym.scancode == SDL_SCANCODE_X) {
                 m_sasToggleRequested = true;
+            } else if (event.key.keysym.scancode == SDL_SCANCODE_Z) {
+                m_spawnEntityRequested = true;
+            } else if (event.key.keysym.scancode == SDL_SCANCODE_Y) {
+                m_destroyEntityRequested = true;
+            } else if (event.key.keysym.scancode == SDL_SCANCODE_F6) {
+                m_saveWorldStateRequested = true;
+            } else if (event.key.keysym.scancode == SDL_SCANCODE_F7) {
+                m_deleteWorldStateRequested = true;
             } else if (event.key.keysym.scancode == SDL_SCANCODE_UP) {
                 m_uiUpRequested = true;
             } else if (event.key.keysym.scancode == SDL_SCANCODE_DOWN) {

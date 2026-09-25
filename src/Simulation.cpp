@@ -4,6 +4,7 @@
 #include <vector>
 
 #include "CelestialGravity.h"
+#include "CoarseSimulation.h"
 #include "GameSession.h"
 #include "PilotControl.h"
 #include "RuntimeWorld.h"
@@ -45,6 +46,19 @@ void StepPlayedWorld(GameSession& session, const Window& window, float fixedDelt
     PrepareDynamicBodiesForStep(world.DynamicBodies(), gravity, physics, fixedDeltaTime,
                                 excludedFromLocalGravity);
     world.Celestial().ApplyForces(physics);
+    // Milestone 29: a Coarse celestial entity still pulls on the live ones
+    // (CoarseSimulation applies the reciprocal pull to it), so a pair split
+    // across fidelities keeps attracting each other.
+    for (const EntityRecord& coarse : world.Entities()) {
+        if (coarse.lifecycle != EntityLifecycle::Active || coarse.fidelity != SimulationFidelity::Coarse ||
+            !coarse.definition.celestial || !coarse.definition.body) continue;
+        for (const BodyHandle live : world.CelestialParticipants()) {
+            if (!physics.IsDynamicBody(live)) continue;
+            physics.ApplyForce(live, CelestialGravity::ForceOnB(coarse.state.position, coarse.definition.body->mass,
+                                                                physics.GetTransform(live).position,
+                                                                physics.GetMass(live)));
+        }
+    }
 
     if (world.GetVehicle() && excludedFromLocalGravity.IsValid()) {
         const auto start = measurements && measurements->measureAtmosphere ? Clock::now()
@@ -168,6 +182,7 @@ void StepPlayedWorld(GameSession& session, const Window& window, float fixedDelt
                 }
             }
             for (const DynamicBody& body : world.DynamicBodies()) {
+                if (!body.IsLive()) continue;
                 if (body.GetVisual().shape == DynamicBody::Shape::Sphere) {
                     spheres.push_back({body.Handle(), physics.GetPreviousTransform(body.Handle()),
                                        physics.GetTransform(body.Handle()), body.GetVisual().radius});
@@ -197,7 +212,23 @@ void StepPlayedWorld(GameSession& session, const Window& window, float fixedDelt
         }
     }
 
+    // Milestone 29: reduced-fidelity entities advance from their records,
+    // never through PhysicsWorld.
+    StepCoarseEntities(world, fixedDeltaTime);
+
     AdvancePlayerForPiloting(vehicleControl, session.Attachment(), player, physics, window, gravity,
                              fixedDeltaTime);
     SyncDynamicBodiesFromPhysics(world.DynamicBodies(), physics);
+    world.AdvanceSimulationTime(fixedDeltaTime);
+
+    // Milestone 29: the scene's fidelity policy runs last, over the settled
+    // step, with gameplay's pins (a held object, the player's support) kept
+    // Full whatever the policy says.
+    if (world.GetFidelityPolicy()) {
+        FidelityPolicyContext context;
+        context.focus = player.GetPosition();
+        context.simulationTimeSeconds = world.SimulationTimeSeconds();
+        world.EvaluateFidelityPolicy(context, session.PinnedEntities());
+    }
+    session.RefreshEntityBindings();
 }

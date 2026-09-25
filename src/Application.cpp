@@ -15,6 +15,7 @@
 #include "SceneSerialization.h"
 #include "TestHarness.h"
 #include "WorldCoordinates.h"
+#include "WorldState.h"
 #include "WorldPresentation.h"
 #include "ScreenshotWriter.h"
 
@@ -56,10 +57,23 @@ int Application::Run(int argc, char** argv) {
                      error.c_str());
         return 1;
     }
+    // Milestone 29: the saved world-state delta (if any) layers over the
+    // freshly built baseline before the session begins.
+    bool worldStateApplied = false;
+    if (!ApplyWorldStateFileIfPresent(world, options.worldStatePath, worldStateApplied, error)) {
+        std::fprintf(stderr, "World state '%s' could not be applied: %s\n", options.worldStatePath.c_str(),
+                     error.c_str());
+        return 1;
+    }
     InteractivePlay play;
     if (!play.Begin(world, worldCoordinates, error)) {
         std::fprintf(stderr, "%s\n", error.c_str());
         return 1;
+    }
+    play.SetWorldStatePath(options.worldStatePath, worldStateApplied);
+    if (!options.worldStatePath.empty()) {
+        std::fprintf(stderr, "World state: %s (%s)\n", options.worldStatePath.c_str(),
+                     worldStateApplied ? "loaded" : "none saved; F6 saves, F7 deletes");
     }
     std::fprintf(stderr, "Scene: %s (%s)\nWorld origin (m): %.3f, %.3f, %.3f\n",
                  scene.Settings().name.c_str(), options.scenePath.c_str(), worldCoordinates.Origin().x,

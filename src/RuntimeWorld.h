@@ -13,6 +13,8 @@
 #include "CombustionWorld.h"
 #include "Door.h"
 #include "DynamicBody.h"
+#include "EntityLifecycle.h"
+#include "FidelityPolicy.h"
 #include "FluidWorld.h"
 #include "GravityContextMap.h"
 #include "GravityField.h"
@@ -198,15 +200,90 @@ public:
     std::size_t EmittedFluidParticles() const { return m_emittedParticles; }
 
     const std::optional<PlayerStart>& GetPlayerStart() const { return m_playerStart; }
-    const std::vector<BodyHandle>& PickableBodies() const { return m_pickableBodies; }
+    // Handles of the live, pickable entities (recomputed: handles change
+    // across reconstruction — refresh whenever EntityVersion() changes).
+    std::vector<BodyHandle> PickableBodies() const;
     const SceneSettings& Settings() const { return m_settings; }
 
     // Name of the scene object a body belongs to, or "" if unknown.
     std::string NameOfBody(BodyHandle handle) const;
 
+    // --- Milestone 29: entity lifecycle and fidelity -------------------
+    //
+    // Every dynamic body is a persistent entity with a record here, in
+    // slot order (parallel to DynamicBodies()). Static content is not an
+    // entity in this sense: it never changes and needs no lifecycle.
+    const std::vector<EntityRecord>& Entities() const { return m_entities; }
+    std::vector<EntityRecord>& MutableEntities() { return m_entities; }
+    const EntityRecord* FindEntity(EntityId id) const;
+    EntityRecord* FindEntity(EntityId id);
+    EntityId EntityIdOfBody(BodyHandle handle) const;
+    // Increments whenever the set of entities/slots changes (create,
+    // destroy, reconstruct) so gameplay lists keyed on handles can refresh.
+    unsigned int EntityVersion() const { return m_entityVersion; }
+
+    // Capability: a component set with no reduced representation (vehicle,
+    // combustible, compound body) must stay Full while active.
+    static bool EntityRequiresFull(const SceneObject& definition);
+
+    // The lifecycle operations. Each returns false with a message when the
+    // request is impossible (unknown id, destroyed entity, a Full-only
+    // entity asked to reduce). Transitions preserve identity, pose and
+    // both velocities; reconstruction applies no impulse and reuses the
+    // entity's slot, so nothing is duplicated.
+    bool SetEntityFidelity(EntityId id, SimulationFidelity fidelity, std::string* outError = nullptr);
+    bool DestroyEntity(EntityId id, std::string* outError = nullptr);
+    // Creates a persistent entity at runtime from a scene-object definition
+    // (its id may be preset from a delta, else one is allocated from the
+    // runtime range). `state` overrides the definition's transform/initial
+    // velocity when given. Returns the invalid id on failure.
+    EntityId CreateEntity(const SceneObject& definition, const EntityPhysicalState* state,
+                          std::string* outError = nullptr);
+    EntityId AllocateRuntimeEntityId();
+    void SetNextRuntimeEntityId(EntityId next);
+    EntityId NextRuntimeEntityId() const { return m_nextRuntimeId; }
+    // Current physical state of any non-destroyed entity, from the live
+    // body when Full, from the record otherwise.
+    bool GetEntityState(EntityId id, EntityPhysicalState& outState) const;
+    bool SetEntityState(EntityId id, const EntityPhysicalState& state);
+
+    // Policy: the scene's authored policy is installed by Build; a game can
+    // replace it (or install none). Evaluated by EvaluateFidelityPolicy for
+    // managed, unforced, unpinned entities. `pinned` are entities gameplay
+    // needs Full this step (held, supporting the player).
+    void SetFidelityPolicy(std::unique_ptr<FidelityPolicy> policy);
+    const FidelityPolicy* GetFidelityPolicy() const { return m_policy.get(); }
+    void EvaluateFidelityPolicy(const FidelityPolicyContext& context, const std::vector<EntityId>& pinned);
+    // Debug override (editor): forces one entity to a fidelity until cleared.
+    bool ForceEntityFidelity(EntityId id, std::optional<SimulationFidelity> fidelity, std::string* outError = nullptr);
+
+    struct LifecycleCounts {
+        std::size_t full = 0, coarse = 0, dormant = 0, destroyed = 0;
+        std::size_t physicsBodies = 0;       // every live PhysicsWorld body
+        std::size_t dynamicPhysicsBodies = 0;
+        unsigned int transitionsThisStep = 0;
+    };
+    LifecycleCounts CountLifecycle() const;
+    double SimulationTimeSeconds() const { return m_simulationTime; }
+    void AdvanceSimulationTime(double seconds) { m_simulationTime += seconds; }
+
+    // Doors/switches by scene object id, for persisted interactable state.
+    Door* FindDoor(SceneObjectId id);
+    LightSwitch* FindLightSwitch(SceneObjectId id);
+    const std::vector<SceneObjectId>& DoorIds() const { return m_doorIds; }
+    const std::vector<SceneObjectId>& LightSwitchIds() const { return m_lightSwitchIds; }
+
 private:
     struct FluidVolumeSetup;
     void PopulateFluid();
+    // Creates the PhysicsWorld body for a record's definition at `state`,
+    // binds it to the record's slot, and refreshes the slot's visual.
+    bool InstantiateEntityBody(EntityRecord& record, const EntityPhysicalState& state, std::string* outError);
+    void ReleaseEntityBody(EntityRecord& record);
+    bool AppendEntitySlot(const SceneObject& definition, bool authored, const EntityPhysicalState& state,
+                          SimulationFidelity fidelity, std::string* outError);
+    bool LoadVisualAssets(const SceneObject& o, DynamicVisual& visual, std::string* outError);
+    void RebuildCelestialParticipants();
 
     bool m_built = false;
     PhysicsWorld m_physics;
@@ -244,4 +321,13 @@ private:
 
     std::optional<PlayerStart> m_playerStart;
     std::vector<BodyHandle> m_pickableBodies;
+
+    std::vector<EntityRecord> m_entities;
+    std::unique_ptr<FidelityPolicy> m_policy;
+    EntityId m_nextRuntimeId = kRuntimeEntityIdBase;
+    unsigned int m_entityVersion = 0;
+    unsigned int m_transitionsThisStep = 0;
+    double m_simulationTime = 0.0;
+    std::vector<SceneObjectId> m_doorIds;
+    std::vector<SceneObjectId> m_lightSwitchIds;
 };

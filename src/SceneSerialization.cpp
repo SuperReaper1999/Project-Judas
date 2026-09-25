@@ -101,6 +101,7 @@ void WriteObject(Writer& w, const SceneObject& o) {
         w.Line("body.restitution", F(b.restitution));
         w.Line("body.initial-velocity", V(b.initialLinearVelocity));
         w.Line("body.pickable", b.pickable ? "true" : "false");
+        w.Line("body.managed", b.managed ? "true" : "false");
         w.Line("body.compound-count", std::to_string(b.compoundBoxes.size()));
         for (const CompoundBox& box : b.compoundBoxes) {
             w.Line("body.compound-box", V(box.localCenter) + " " + V(box.halfExtents));
@@ -435,6 +436,19 @@ bool ParseSettings(Reader& reader, const Block& block, Scene& scene) {
     if (!p.Vec3("sun-color", s.sunColor)) return false;
     if (!p.Vec3("ambient", s.ambientColor)) return false;
     if (!p.Float("fluid-scale", s.fluidScale)) return false;
+    const std::vector<Token>* policy = p.Header("fidelity-policy", 1, 3);
+    if (!policy) return false;
+    if ((*policy)[0].text == "none" && policy->size() == 1) {
+        s.fidelityPolicy = SceneFidelityPolicy::None;
+    } else if ((*policy)[0].text == "distance" && policy->size() == 3) {
+        s.fidelityPolicy = SceneFidelityPolicy::Distance;
+        if (!ParseFloat((*policy)[1], s.fidelityFullRadius) || !ParseFloat((*policy)[2], s.fidelityCoarseRadius) ||
+            s.fidelityFullRadius < 0.0f || s.fidelityCoarseRadius < s.fidelityFullRadius) {
+            return reader.Fail("fidelity-policy distance expects 0 <= full radius <= coarse radius");
+        }
+    } else {
+        return reader.Fail("fidelity-policy must be 'none' or 'distance <fullRadius> <coarseRadius>'");
+    }
     int nextId = 0;
     if (!p.Int("next-id", nextId)) return false;
     if (nextId < 1) return reader.Fail("next-id must be at least 1");
@@ -490,6 +504,7 @@ bool ParseObject(Reader& reader, const std::vector<Token>& header, const Block& 
         if (!p.Float("body.restitution", b.restitution)) return false;
         if (!p.Vec3("body.initial-velocity", b.initialLinearVelocity)) return false;
         if (!p.Bool("body.pickable", b.pickable)) return false;
+        if (!p.Bool("body.managed", b.managed)) return false;
         int compoundCount = 0;
         if (!p.Int("body.compound-count", compoundCount)) return false;
         if (compoundCount < 0 || static_cast<std::size_t>(compoundCount) != p.CompoundBoxes().size()) {
@@ -677,6 +692,45 @@ bool ParseObject(Reader& reader, const std::vector<Token>& header, const Block& 
 
 }  // namespace
 
+void WriteSceneObjectBlock(const SceneObject& object, std::string& outText) {
+    Writer w;
+    WriteObject(w, object);
+    outText += w.Take();
+}
+
+bool ParseSceneObjectBlock(const std::vector<std::string>& lines, std::size_t& index, SceneObject& outObject,
+                           std::string& outError) {
+    // Re-use the scene reader on just this block's lines.
+    std::string text;
+    std::size_t consumed = 0;
+    bool closed = false;
+    for (std::size_t i = index; i < lines.size(); ++i) {
+        text += lines[i] + "\n";
+        ++consumed;
+        std::vector<Token> tokens;
+        std::string tokenError;
+        if (!Tokenize(lines[i], tokens, tokenError)) { outError = tokenError; return false; }
+        if (!tokens.empty() && !tokens[0].quoted && tokens[0].text == "end") { closed = true; break; }
+    }
+    if (!closed) {
+        outError = "object block is missing its 'end'";
+        return false;
+    }
+    Reader reader(text, outError);
+    std::vector<Token> header;
+    if (!reader.Next(header) || header[0].text != "object") {
+        if (outError.empty()) outError = "expected an object block";
+        return false;
+    }
+    Block block;
+    if (!ReadBlock(reader, block)) return false;
+    SceneObject object;
+    if (!ParseObject(reader, header, block, object)) return false;
+    outObject = object;
+    index += consumed;
+    return true;
+}
+
 bool SaveSceneToString(const Scene& scene, std::string& outText) {
     Writer w;
     w.Raw("JudasScene " + std::to_string(kSceneFormatVersion) + "\n");
@@ -688,6 +742,9 @@ bool SaveSceneToString(const Scene& scene, std::string& outText) {
     w.Line("sun-color", V(s.sunColor));
     w.Line("ambient", V(s.ambientColor));
     w.Line("fluid-scale", F(s.fluidScale));
+    w.Line("fidelity-policy", s.fidelityPolicy == SceneFidelityPolicy::None
+                                  ? std::string("none")
+                                  : "distance " + F(s.fidelityFullRadius) + " " + F(s.fidelityCoarseRadius));
     w.Line("next-id", std::to_string(scene.NextId()));
     w.Raw("end\n");
     for (const SceneObject& o : scene.Objects()) {

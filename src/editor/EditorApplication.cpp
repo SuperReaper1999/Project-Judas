@@ -19,6 +19,7 @@
 #include "TerrainLibrary.h"
 #include "WorldCoordinates.h"
 #include "WorldPresentation.h"
+#include "WorldState.h"
 #include "ScreenshotWriter.h"
 
 #include "imgui.h"
@@ -90,12 +91,22 @@ bool EditorApplication::StartPlay(std::string& outError) {
         m_world.reset();
         return false;
     }
+    // Milestone 29: a saved world-state delta for this scene file layers
+    // over the freshly instantiated baseline, exactly as the runtime does.
+    m_panels.worldStatePath = DefaultWorldStatePath(m_document.Path());
+    bool stateApplied = false;
+    if (!ApplyWorldStateFileIfPresent(*m_world, m_panels.worldStatePath, stateApplied, outError)) {
+        m_world.reset();
+        return false;
+    }
     m_play = std::make_unique<InteractivePlay>();
     if (!m_play->Begin(*m_world, WorldCoordinates(m_document.GetScene().Settings().worldOrigin), outError)) {
         m_play.reset();
         m_world.reset();
         return false;
     }
+    m_play->SetWorldStatePath(m_panels.worldStatePath, stateApplied);
+    m_panels.runtime = m_world.get();
     m_panels.mode = EditorMode::Play;
     m_panels.status = "Playing: Escape pauses (menu) and frees the mouse; Stop restores the authored scene";
     // Keys pressed while editing (F to focus, R, Space, ...) must not fire
@@ -109,6 +120,7 @@ void EditorApplication::StopPlay() {
     if (m_play) m_play->End();
     m_play.reset();
     m_world.reset();  // the authored Scene was never written; nothing to revert
+    m_panels.runtime = nullptr;
     m_panels.mode = EditorMode::Edit;
     m_panels.runtimeInfo.clear();
     m_panels.status = "Stopped: authored scene restored";
@@ -122,6 +134,11 @@ void EditorApplication::HandleRequests(EditorRequests& r) {
         if (!StartPlay(error)) m_panels.status = "Play failed: " + error;
     }
     if (r.stop && m_panels.mode == EditorMode::Play) StopPlay();
+    if (m_panels.mode == EditorMode::Play && m_play) {
+        std::string message;
+        if (r.saveWorldState) { m_play->SaveWorldStateNow(message); m_panels.status = message; }
+        if (r.deleteWorldState) { m_play->DeleteWorldStateNow(message); m_panels.status = message; }
+    }
     if (m_panels.mode != EditorMode::Edit) return;
     if (r.newScene) {
         m_document.NewScene();
@@ -330,8 +347,10 @@ int EditorApplication::Run(int argc, char** argv) {
             m_panels.playPaused = m_play->IsPaused();
             if (m_play->QuitRequested()) requests.stop = true;
             const GameSession& session = m_play->Session();
-            char info[160];
-            std::snprintf(info, sizeof(info), "%zu bodies, %zu particles, %s", m_world->DynamicBodies().size(),
+            const RuntimeWorld::LifecycleCounts counts = m_world->CountLifecycle();
+            char info[200];
+            std::snprintf(info, sizeof(info), "entities %zu full / %zu coarse / %zu dormant / %zu destroyed | %zu physics bodies | %zu particles | %s",
+                          counts.full, counts.coarse, counts.dormant, counts.destroyed, counts.physicsBodies,
                           m_world->HasFluid() ? m_world->Fluid().Particles().size() : std::size_t{0},
                           session.IsPiloting() ? "piloting" : session.Player().IsGrounded() ? "grounded" : "airborne");
             m_panels.runtimeInfo = info;
@@ -343,8 +362,12 @@ int EditorApplication::Run(int argc, char** argv) {
         // While playing, the engine's own HUD occupies the top-left corner
         // and the authored panels are read-only anyway; only the menu bar
         // (Stop), the inspector and the status bar stay up.
-        if (m_panels.mode == EditorMode::Edit) {
+        // The hierarchy is also shown while Play is paused (Escape), with
+        // each entity's live fidelity, so the M29 state can be inspected.
+        if (m_panels.mode == EditorMode::Edit || m_panels.playPaused) {
             DrawHierarchyPanel(m_document, m_panels, requests);
+        }
+        if (m_panels.mode == EditorMode::Edit) {
             DrawSceneSettingsPanel(m_document, m_panels);
             DrawAssetPanel(m_document, m_panels);
         }

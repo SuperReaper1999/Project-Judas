@@ -3,8 +3,11 @@
 #include <algorithm>
 #include <chrono>
 
+#include <cstdio>
+
 #include "GameplayHud.h"
 #include "Renderer.h"
+#include "WorldState.h"
 #include "RuntimeWorld.h"
 #include "SimulationTiming.h"
 #include "Window.h"
@@ -32,6 +35,43 @@ bool InteractivePlay::Begin(RuntimeWorld& world, const WorldCoordinates& worldCo
 
 void InteractivePlay::End() {
     m_session.End();
+}
+
+void InteractivePlay::SetWorldStatePath(const std::string& path, bool loadedFromFile) {
+    m_worldStatePath = path;
+    m_worldStateStatus = path.empty() ? std::string() : path + (loadedFromFile ? " (loaded)" : " (none saved)");
+}
+
+bool InteractivePlay::SaveWorldStateNow(std::string& outMessage) {
+    if (m_worldStatePath.empty()) {
+        outMessage = "No world-state path for this scene (unsaved scene?)";
+        return false;
+    }
+    const WorldState state = CaptureWorldState(m_session.World());
+    std::string error;
+    if (!SaveWorldStateToFile(state, m_worldStatePath, error)) {
+        outMessage = "Save failed: " + error;
+        return false;
+    }
+    outMessage = "Saved world state (" + std::to_string(state.entities.size()) + " entity, " +
+                 std::to_string(state.interactables.size()) + " interactable changes) to " + m_worldStatePath;
+    m_worldStateStatus = m_worldStatePath + " (saved)";
+    return true;
+}
+
+bool InteractivePlay::DeleteWorldStateNow(std::string& outMessage) {
+    if (m_worldStatePath.empty()) {
+        outMessage = "No world-state path for this scene";
+        return false;
+    }
+    if (std::remove(m_worldStatePath.c_str()) != 0) {
+        outMessage = "No saved world state to delete at " + m_worldStatePath;
+        m_worldStateStatus = m_worldStatePath + " (none saved)";
+        return false;
+    }
+    outMessage = "Deleted " + m_worldStatePath + "; the next launch is the pristine baseline";
+    m_worldStateStatus = m_worldStatePath + " (deleted)";
+    return true;
 }
 
 void InteractivePlay::SetFixedStepMeasurementFlags(bool atmosphere, bool fire, bool fluid) {
@@ -82,6 +122,18 @@ float InteractivePlay::Frame(Window& window, Renderer& renderer, float frameDelt
     const bool viewToggleRequested = window.ConsumeViewToggleRequest();
     const bool throwRequested = window.ConsumeThrowRequest();
     const bool sasToggleRequested = window.ConsumeSasToggleRequest();
+    // Milestone 29: persistence keys work whether or not the menu is open —
+    // saving a frozen world is exactly when you want it.
+    if (window.ConsumeSaveWorldStateRequest()) {
+        std::string message;
+        SaveWorldStateNow(message);
+        m_session.SetLastLifecycleMessage(message);
+    }
+    if (window.ConsumeDeleteWorldStateRequest()) {
+        std::string message;
+        DeleteWorldStateNow(message);
+        m_session.SetLastLifecycleMessage(message);
+    }
     m_session.UpdateInteractionTarget();
 
     frameDeltaTime = std::min(frameDeltaTime, SimulationTiming::kMaxFrameDeltaTime);
@@ -145,8 +197,11 @@ float InteractivePlay::Frame(Window& window, Renderer& renderer, float frameDelt
     // Milestone 13: HUD + pause menu overlay, drawn last, on top.
     renderer.BeginUIFrame(window.Width(), window.Height());
     if (drawHud && m_pauseMenu.IsHudVisible()) {
-        m_hud.Draw(renderer, window.Width(), window.Height(),
-                   BuildHudView(m_session, m_worldCoordinates, m_lastAerodynamicDrag));
+        HUDViewData hud = BuildHudView(m_session, m_worldCoordinates, m_lastAerodynamicDrag);
+        hud.worldStateInfo = m_worldStateStatus;
+        hud.lifecycleMessage = m_session.LastLifecycleMessage();
+        if (!hud.worldStateInfo.empty() || !hud.lifecycleMessage.empty()) hud.lifecycleAvailable = true;
+        m_hud.Draw(renderer, window.Width(), window.Height(), hud);
     }
     m_pauseMenu.Draw(renderer, window.Width(), window.Height());
     renderer.EndUIFrame();

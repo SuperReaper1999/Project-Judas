@@ -74,6 +74,17 @@ public:
     // the discontinuity — same reasoning as PlayerController::Reset.
     void ResetToSpawn(PhysicsWorld& physics);
 
+    // Milestone 29: a presentation slot outlives its physics body. Rebind
+    // attaches a new (or no) body handle; SetPoseFromState lets a Coarse or
+    // Dormant entity present its retained state; IsLive says whether a
+    // PhysicsWorld body currently backs this slot.
+    void Rebind(BodyHandle handle) { m_handle = handle; }
+    void SetPoseFromState(const glm::vec3& position, const glm::quat& orientation);
+    // Snaps presentation history to the current pose so the next frame
+    // shows a reconstructed pose directly rather than interpolating to it.
+    void SnapPresentation();
+    bool IsLive() const { return m_handle.IsValid(); }
+
 private:
     BodyHandle m_handle;
     Visual m_visual;

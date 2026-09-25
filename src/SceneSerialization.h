@@ -1,8 +1,11 @@
 #pragma once
 
+#include <cstddef>
 #include <string>
+#include <vector>
 
 class Scene;
+struct SceneObject;
 
 // Milestone 28: the Judas scene file format (`.judas`).
 //
@@ -13,7 +16,7 @@ class Scene;
 // tool. See docs/ARCHITECTURE.md, "Milestone 28, Scene file format," for
 // the full grammar. The essentials:
 //
-//   JudasScene 1                     format identifier + version, first line
+//   JudasScene 2                     format identifier + version, first line
 //   settings ... end                 scene-wide authored settings
 //   object <id> "<name>" ... end     one block per object, in scene order
 //
@@ -32,4 +35,13 @@ bool SaveSceneToFile(const Scene& scene, const std::string& path, std::string& o
 bool LoadSceneFromString(const std::string& text, Scene& outScene, std::string& outError);
 bool LoadSceneFromFile(const std::string& path, Scene& outScene, std::string& outError);
 
-constexpr int kSceneFormatVersion = 1;
+constexpr int kSceneFormatVersion = 2;
+
+// Milestone 29: the object-block writer/reader, shared with the world-state
+// delta format so a created entity's definition is written and validated
+// by exactly the scene grammar. `WriteSceneObjectBlock` emits the
+// `object <id> "<name>" ... end` block; `ParseSceneObjectBlock` consumes one
+// from `lines` starting at `index` (the header line) and advances it.
+void WriteSceneObjectBlock(const SceneObject& object, std::string& outText);
+bool ParseSceneObjectBlock(const std::vector<std::string>& lines, std::size_t& index,
+                           SceneObject& outObject, std::string& outError);

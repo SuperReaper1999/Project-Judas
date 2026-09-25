@@ -47,6 +47,15 @@ struct HUDViewData {
     float oxidizerMassDensity = 0.0f;
     std::vector<HUDThermalBody> thermalBodies;
 
+    // Milestone 29: lifecycle/persistence readout. `lifecycleAvailable` is
+    // set only when the scene runs a fidelity policy or has persistent
+    // changes/state to show, so a simple scene's HUD stays as it was.
+    bool lifecycleAvailable = false;
+    std::size_t entitiesFull = 0, entitiesCoarse = 0, entitiesDormant = 0, entitiesDestroyed = 0;
+    std::size_t physicsBodies = 0;
+    std::string worldStateInfo;   // e.g. "saves/x.judasstate (loaded)"
+    std::string lifecycleMessage; // last spawn/destroy/save/delete result
+
     // Milestone 16: the currently-selected interactable's own prompt text
     // (see src/Interactable.h's GetPromptText), or empty when nothing is
     // currently selectable — HUD draws this verbatim, never interpreting

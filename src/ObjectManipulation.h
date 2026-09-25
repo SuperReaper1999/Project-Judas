@@ -16,6 +16,9 @@ class ObjectManipulation {
 public:
     explicit ObjectManipulation(std::vector<BodyHandle> eligibleBodies);
 
+    // Milestone 29: eligibility follows the live entity set, which changes
+    // as entities are reconstructed, created or destroyed.
+    void SetEligibleBodies(std::vector<BodyHandle> eligibleBodies) { m_eligibleBodies = std::move(eligibleBodies); }
     bool CanPickUp(BodyHandle handle, const PhysicsWorld& physics) const;
     bool TryPickUp(BodyHandle handle, const PhysicsWorld& physics);
     bool IsHolding() const { return m_held.IsValid(); }
@@ -48,6 +51,7 @@ public:
     std::string GetPromptText() const override;
     bool CanInteract() const override;
     void Interact() override;
+    ::BodyHandle TargetBody() const;
 
 private:
     DynamicBody& m_body;
