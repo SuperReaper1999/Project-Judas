@@ -46,12 +46,12 @@ void ClosestPointsSegmentToOBB(const glm::vec3& segA, const glm::vec3& segB,
 }
 
 Contact SphereVsSphere(const glm::vec3& centerA, float radiusA, const glm::vec3& centerB,
-                        float radiusB) {
+                        float radiusB, float margin) {
     Contact contact;
     const glm::vec3 delta = centerA - centerB;
     const float distance = glm::length(delta);
     const float combinedRadius = radiusA + radiusB;
-    if (distance >= combinedRadius) return contact;
+    if (distance >= combinedRadius + margin) return contact;
 
     contact.hit = true;
     contact.normal = distance > kEpsilon ? delta / distance : glm::vec3(0.0f, 1.0f, 0.0f);
@@ -61,13 +61,13 @@ Contact SphereVsSphere(const glm::vec3& centerA, float radiusA, const glm::vec3&
 }
 
 Contact SphereVsBox(const glm::vec3& sphereCenter, float sphereRadius, const glm::vec3& boxCenter,
-                     const glm::quat& boxOrientation, const glm::vec3& boxHalfExtents) {
+                     const glm::quat& boxOrientation, const glm::vec3& boxHalfExtents, float margin) {
     Contact contact;
     const glm::vec3 closest =
         ClosestPointOnOBB(sphereCenter, boxCenter, boxOrientation, boxHalfExtents);
     const glm::vec3 delta = sphereCenter - closest;
     const float distance = glm::length(delta);
-    if (distance >= sphereRadius) return contact;
+    if (distance >= sphereRadius + margin) return contact;
 
     contact.hit = true;
     contact.point = closest;
@@ -102,7 +102,8 @@ namespace {
 // infinite overlap, so it can never become the minimum and is harmless.
 bool TestSATAxis(const glm::vec3& axis, const glm::vec3& centerA, const glm::mat3& rotationA,
                   const glm::vec3& halfExtentsA, const glm::vec3& centerB,
-                  const glm::mat3& rotationB, const glm::vec3& halfExtentsB, float& outOverlap) {
+                  const glm::mat3& rotationB, const glm::vec3& halfExtentsB, float& outOverlap,
+                  float margin) {
     const float axisLength = glm::length(axis);
     if (axisLength < kEpsilon) {
         outOverlap = std::numeric_limits<float>::max();
@@ -117,7 +118,7 @@ bool TestSATAxis(const glm::vec3& axis, const glm::vec3& centerA, const glm::mat
                                std::abs(glm::dot(rotationB[1], a)) * halfExtentsB.y +
                                std::abs(glm::dot(rotationB[2], a)) * halfExtentsB.z;
     outOverlap = projectionA + projectionB - centerDistance;
-    return outOverlap > 0.0f;
+    return outOverlap > -margin;
 }
 
 // Shared separating-axis computation for both BoxVsBox and
@@ -127,7 +128,7 @@ bool TestSATAxis(const glm::vec3& axis, const glm::vec3& centerA, const glm::mat
 bool ComputeBoxBoxSAT(const glm::vec3& centerA, const glm::mat3& rotationA,
                        const glm::vec3& halfExtentsA, const glm::vec3& centerB,
                        const glm::mat3& rotationB, const glm::vec3& halfExtentsB,
-                       glm::vec3& outNormal, float& outPenetration) {
+                       glm::vec3& outNormal, float& outPenetration, float margin) {
     // 15 candidate axes: each box's own 3 face normals, plus all 9
     // pairwise cross products of their edge directions -- the complete
     // separating-axis set for two OBBs.
@@ -146,7 +147,7 @@ bool ComputeBoxBoxSAT(const glm::vec3& centerA, const glm::mat3& rotationA,
     for (int i = 0; i < axisCount; ++i) {
         float overlap = 0.0f;
         if (!TestSATAxis(axes[i], centerA, rotationA, halfExtentsA, centerB, rotationB,
-                          halfExtentsB, overlap)) {
+                          halfExtentsB, overlap, margin)) {
             return false;  // a separating axis exists -- no contact
         }
         if (overlap < minOverlap) {
@@ -168,7 +169,7 @@ bool ComputeBoxBoxSAT(const glm::vec3& centerA, const glm::mat3& rotationA,
 
 Contact BoxVsBox(const glm::vec3& centerA, const glm::quat& orientA, const glm::vec3& halfExtentsA,
                   const glm::vec3& centerB, const glm::quat& orientB,
-                  const glm::vec3& halfExtentsB) {
+                  const glm::vec3& halfExtentsB, float margin) {
     Contact contact;
     const glm::mat3 rotationA = glm::mat3_cast(orientA);
     const glm::mat3 rotationB = glm::mat3_cast(orientB);
@@ -176,7 +177,7 @@ Contact BoxVsBox(const glm::vec3& centerA, const glm::quat& orientA, const glm::
     glm::vec3 normal(0.0f);
     float penetration = 0.0f;
     if (!ComputeBoxBoxSAT(centerA, rotationA, halfExtentsA, centerB, rotationB, halfExtentsB,
-                           normal, penetration)) {
+                           normal, penetration, margin)) {
         return contact;
     }
     contact.hit = true;
@@ -216,67 +217,221 @@ Contact BoxVsBox(const glm::vec3& centerA, const glm::quat& orientA, const glm::
     return contact;
 }
 
+namespace {
+
+// Milestone 32: separating-axis selection that keeps face and edge axes
+// apart. Face axes are preferred unless an edge-edge axis is clearly
+// shallower (the usual relative/absolute tolerance), so a box resting flat
+// is never reported as an edge contact because of float noise.
+struct BoxSatResult {
+    bool overlapping = false;
+    bool faceOfA = false;
+    bool faceOfB = false;
+    int faceIndex = -1;
+    glm::vec3 normal{0.0f};  // from B toward A
+    float penetration = 0.0f;
+};
+
+BoxSatResult ClassifyBoxBox(const glm::vec3& centerA, const glm::mat3& rotationA,
+                            const glm::vec3& halfExtentsA, const glm::vec3& centerB,
+                            const glm::mat3& rotationB, const glm::vec3& halfExtentsB, float margin) {
+    BoxSatResult result;
+    float bestFace = std::numeric_limits<float>::max();
+    glm::vec3 faceAxis(0.0f);
+    int faceOwner = -1;
+    int faceIndex = -1;
+    for (int owner = 0; owner < 2; ++owner) {
+        const glm::mat3& rotation = owner == 0 ? rotationA : rotationB;
+        for (int i = 0; i < 3; ++i) {
+            float overlap = 0.0f;
+            if (!TestSATAxis(rotation[i], centerA, rotationA, halfExtentsA, centerB, rotationB,
+                             halfExtentsB, overlap, margin)) {
+                return result;
+            }
+            if (overlap < bestFace) {
+                bestFace = overlap;
+                faceAxis = rotation[i];
+                faceOwner = owner;
+                faceIndex = i;
+            }
+        }
+    }
+    float bestEdge = std::numeric_limits<float>::max();
+    glm::vec3 edgeAxis(0.0f);
+    for (int i = 0; i < 3; ++i) {
+        for (int j = 0; j < 3; ++j) {
+            const glm::vec3 axis = glm::cross(rotationA[i], rotationB[j]);
+            float overlap = 0.0f;
+            if (!TestSATAxis(axis, centerA, rotationA, halfExtentsA, centerB, rotationB, halfExtentsB,
+                             overlap, margin)) {
+                return result;
+            }
+            const float length = glm::length(axis);
+            if (length > 1.0e-3f && overlap < bestEdge) {
+                bestEdge = overlap;
+                edgeAxis = axis / length;
+            }
+        }
+    }
+    result.overlapping = true;
+    glm::vec3 axis;
+    if (bestEdge < 0.95f * bestFace - 1.0e-3f) {
+        axis = edgeAxis;
+        result.penetration = bestEdge;
+    } else {
+        axis = faceAxis;
+        result.penetration = bestFace;
+        result.faceOfA = faceOwner == 0;
+        result.faceOfB = faceOwner == 1;
+        result.faceIndex = faceIndex;
+    }
+    if (glm::dot(axis, centerA - centerB) < 0.0f) axis = -axis;
+    result.normal = axis;
+    return result;
+}
+
+}  // namespace
+
 ContactManifold BoxVsBoxManifold(const glm::vec3& centerA, const glm::quat& orientA,
                                   const glm::vec3& halfExtentsA, const glm::vec3& centerB,
-                                  const glm::quat& orientB, const glm::vec3& halfExtentsB) {
+                                  const glm::quat& orientB, const glm::vec3& halfExtentsB,
+                                  float margin) {
     ContactManifold manifold;
     const glm::mat3 rotationA = glm::mat3_cast(orientA);
     const glm::mat3 rotationB = glm::mat3_cast(orientB);
+    const BoxSatResult sat =
+        ClassifyBoxBox(centerA, rotationA, halfExtentsA, centerB, rotationB, halfExtentsB, margin);
+    if (!sat.overlapping) return manifold;
 
-    glm::vec3 normal(0.0f);
-    float penetration = 0.0f;
-    if (!ComputeBoxBoxSAT(centerA, rotationA, halfExtentsA, centerB, rotationB, halfExtentsB,
-                           normal, penetration)) {
+    if (!sat.faceOfA && !sat.faceOfB) {
+        // Edge-edge: one point is the correct contact for two crossing edges.
+        Contact contact = BoxVsBox(centerA, orientA, halfExtentsA, centerB, orientB, halfExtentsB, margin);
+        if (contact.hit) {
+            contact.normal = sat.normal;
+            contact.penetration = sat.penetration;
+            manifold.Add(contact);
+        }
         return manifold;
     }
 
-    // Vertex-based manifold: any vertex of A that lies INSIDE B, or any
-    // vertex of B that lies inside A, is a genuine penetrating contact
-    // point. For the common "box resting flat on a larger surface" case,
-    // this correctly finds all 4 of the resting box's bottom corners
-    // simultaneously, so the solver's impulses/positional correction act
-    // symmetrically and the box settles flat instead of rocking on
-    // whichever single corner an arbitrary tie-break happened to pick.
-    auto addVertexContactsInside = [&](const glm::vec3& ownerCenter, const glm::mat3& ownerRotation,
-                                        const glm::vec3& ownerHalfExtents,
-                                        const glm::vec3& otherCenter, const glm::quat& otherOrientation,
-                                        const glm::vec3& otherHalfExtents) {
-        for (int signX = -1; signX <= 1; signX += 2) {
-            for (int signY = -1; signY <= 1; signY += 2) {
-                for (int signZ = -1; signZ <= 1; signZ += 2) {
-                    const glm::vec3 localVertex(signX * ownerHalfExtents.x, signY * ownerHalfExtents.y,
-                                                 signZ * ownerHalfExtents.z);
-                    const glm::vec3 worldVertex = ownerCenter + ownerRotation * localVertex;
-                    const glm::vec3 localInOther =
-                        glm::conjugate(otherOrientation) * (worldVertex - otherCenter);
-                    if (std::abs(localInOther.x) <= otherHalfExtents.x &&
-                        std::abs(localInOther.y) <= otherHalfExtents.y &&
-                        std::abs(localInOther.z) <= otherHalfExtents.z) {
-                        Contact contact;
-                        contact.hit = true;
-                        contact.normal = normal;
-                        contact.penetration = penetration;
-                        contact.point = worldVertex;
-                        manifold.Add(contact);
-                    }
-                }
+    // Face contact (Milestone 32): clip the incident box's most
+    // anti-parallel face against the side planes of the reference face.
+    // Unlike the earlier "which corners lie inside the other box" manifold,
+    // this finds the corners of the actual overlap polygon — including the
+    // ones that are edge crossings rather than vertices — so a box resting
+    // offset on an identical box is supported at four points, not two
+    // diagonal ones it could rock about.
+    const bool referenceIsA = sat.faceOfA;
+    const glm::vec3& refCenter = referenceIsA ? centerA : centerB;
+    const glm::mat3& refRotation = referenceIsA ? rotationA : rotationB;
+    const glm::vec3& refHalf = referenceIsA ? halfExtentsA : halfExtentsB;
+    const glm::vec3& incCenter = referenceIsA ? centerB : centerA;
+    const glm::mat3& incRotation = referenceIsA ? rotationB : rotationA;
+    const glm::vec3& incHalf = referenceIsA ? halfExtentsB : halfExtentsA;
+    // Reference face normal points from the reference box toward the other.
+    const glm::vec3 referenceNormal = referenceIsA ? -sat.normal : sat.normal;
+    const int r = sat.faceIndex;
+    const int u = (r + 1) % 3;
+    const int v = (r + 2) % 3;
+    const glm::vec3 refFaceCenter = refCenter + referenceNormal * refHalf[r];
+    const glm::vec3 uAxis = refRotation[u];
+    const glm::vec3 vAxis = refRotation[v];
+
+    int incidentAxis = 0;
+    float mostAligned = -1.0f;
+    for (int i = 0; i < 3; ++i) {
+        const float alignment = std::abs(glm::dot(incRotation[i], referenceNormal));
+        if (alignment > mostAligned) {
+            mostAligned = alignment;
+            incidentAxis = i;
+        }
+    }
+    const float incidentSign = glm::dot(incRotation[incidentAxis], referenceNormal) > 0.0f ? -1.0f : 1.0f;
+    const glm::vec3 incFaceCenter = incCenter + incRotation[incidentAxis] * (incidentSign * incHalf[incidentAxis]);
+    const int iu = (incidentAxis + 1) % 3;
+    const int iv = (incidentAxis + 2) % 3;
+    const glm::vec3 eu = incRotation[iu] * incHalf[iu];
+    const glm::vec3 ev = incRotation[iv] * incHalf[iv];
+
+    std::array<glm::vec3, 16> polygon{};
+    std::array<glm::vec3, 16> clipped{};
+    int count = 4;
+    polygon[0] = incFaceCenter + eu + ev;
+    polygon[1] = incFaceCenter - eu + ev;
+    polygon[2] = incFaceCenter - eu - ev;
+    polygon[3] = incFaceCenter + eu - ev;
+    // Sutherland–Hodgman against the four side planes dot(p - c, axis) <= h.
+    const auto clip = [&](const glm::vec3& axis, float limit) {
+        int out = 0;
+        for (int i = 0; i < count; ++i) {
+            const glm::vec3& a = polygon[static_cast<std::size_t>(i)];
+            const glm::vec3& b = polygon[static_cast<std::size_t>((i + 1) % count)];
+            const float da = glm::dot(a - refFaceCenter, axis) - limit;
+            const float db = glm::dot(b - refFaceCenter, axis) - limit;
+            if (da <= 0.0f && out < 16) clipped[static_cast<std::size_t>(out++)] = a;
+            if ((da < 0.0f && db > 0.0f) || (da > 0.0f && db < 0.0f)) {
+                if (out < 16) clipped[static_cast<std::size_t>(out++)] = a + (b - a) * (da / (da - db));
             }
         }
+        count = out;
+        polygon = clipped;
     };
+    clip(uAxis, refHalf[u]);
+    clip(-uAxis, refHalf[u]);
+    clip(vAxis, refHalf[v]);
+    clip(-vAxis, refHalf[v]);
 
-    addVertexContactsInside(centerA, rotationA, halfExtentsA, centerB, orientB, halfExtentsB);
-    if (manifold.count < 4) {
-        addVertexContactsInside(centerB, rotationB, halfExtentsB, centerA, orientA, halfExtentsA);
+    std::array<Contact, 16> candidates{};
+    int candidateCount = 0;
+    for (int i = 0; i < count; ++i) {
+        const glm::vec3& p = polygon[static_cast<std::size_t>(i)];
+        const float depth = glm::dot(refFaceCenter - p, referenceNormal);
+        if (depth < -margin) continue;
+        Contact contact;
+        contact.hit = true;
+        contact.normal = sat.normal;
+        contact.penetration = depth;
+        contact.point = p + referenceNormal * (0.5f * depth);
+        candidates[static_cast<std::size_t>(candidateCount++)] = contact;
     }
-
-    if (manifold.count == 0) {
-        // No vertex of either box is strictly inside the other -- an
-        // edge-edge contact, or two faces that overlap without either
-        // box's corner poking through (can happen with very different
-        // sizes). Fall back to the single clamped-average point, which
-        // handles this case correctly even without a vertex to anchor on.
-        manifold.Add(BoxVsBox(centerA, orientA, halfExtentsA, centerB, orientB, halfExtentsB));
+    if (candidateCount == 0) {
+        Contact contact = BoxVsBox(centerA, orientA, halfExtentsA, centerB, orientB, halfExtentsB, margin);
+        if (contact.hit) manifold.Add(contact);
+        return manifold;
     }
+    if (candidateCount <= 4) {
+        for (int i = 0; i < candidateCount; ++i) manifold.Add(candidates[static_cast<std::size_t>(i)]);
+        return manifold;
+    }
+    // More than four: keep the deepest, the farthest from it, and the two
+    // spanning the largest area on either side of that diagonal.
+    int first = 0;
+    for (int i = 1; i < candidateCount; ++i) {
+        if (candidates[static_cast<std::size_t>(i)].penetration > candidates[static_cast<std::size_t>(first)].penetration) first = i;
+    }
+    const glm::vec3 p0 = candidates[static_cast<std::size_t>(first)].point;
+    int second = first == 0 ? 1 : 0;
+    for (int i = 0; i < candidateCount; ++i) {
+        if (i == first) continue;
+        if (glm::distance(candidates[static_cast<std::size_t>(i)].point, p0) >
+            glm::distance(candidates[static_cast<std::size_t>(second)].point, p0)) second = i;
+    }
+    const glm::vec3 diagonal = candidates[static_cast<std::size_t>(second)].point - p0;
+    int third = -1;
+    int fourth = -1;
+    float bestPositive = 0.0f;
+    float bestNegative = 0.0f;
+    for (int i = 0; i < candidateCount; ++i) {
+        if (i == first || i == second) continue;
+        const float area = glm::dot(glm::cross(diagonal, candidates[static_cast<std::size_t>(i)].point - p0),
+                                    referenceNormal);
+        if (area > bestPositive) { bestPositive = area; third = i; }
+        if (area < bestNegative) { bestNegative = area; fourth = i; }
+    }
+    manifold.Add(candidates[static_cast<std::size_t>(first)]);
+    manifold.Add(candidates[static_cast<std::size_t>(second)]);
+    if (third >= 0) manifold.Add(candidates[static_cast<std::size_t>(third)]);
+    if (fourth >= 0) manifold.Add(candidates[static_cast<std::size_t>(fourth)]);
     return manifold;
 }
 

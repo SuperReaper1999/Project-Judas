@@ -128,14 +128,55 @@ public:
     const std::vector<DebugContact>& LastStepContacts() const;
     std::size_t LastStepContactCount() const { return LastStepContacts().size(); }
 
+    // Milestone 32: what the most recent Step's broadphase, narrowphase and
+    // solver did. `possiblePairs` is the number of pairs an exhaustive
+    // all-pairs pass would have had to test (every pair with at least one
+    // movable body); `candidatePairs` is what the broadphase actually handed
+    // the narrowphase; `collidingPairs` is how many of those had a contact.
+    struct StepStats {
+        std::size_t bodies = 0;
+        std::size_t dynamicBodies = 0;
+        std::size_t possiblePairs = 0;
+        std::size_t candidatePairs = 0;
+        std::size_t collidingPairs = 0;
+        std::size_t contactPoints = 0;
+        std::size_t proxyReinsertions = 0;
+        int treeHeight = 0;
+        double broadphaseMilliseconds = 0.0;
+        double narrowphaseMilliseconds = 0.0;
+        double solverMilliseconds = 0.0;
+        double totalMilliseconds = 0.0;
+    };
+    const StepStats& LastStepStats() const;
+
+    // Milestone 32: the one spatial query the broadphase exposes — every
+    // body whose broadphase bound overlaps the box. Conservative (bounds are
+    // grown by a margin); callers still test real geometry. Results are in
+    // ascending handle-slot order, so iteration order is deterministic.
+    std::vector<BodyHandle> QueryBodiesInAabb(const glm::vec3& min, const glm::vec3& max) const;
+    // The (fat) broadphase bound of a body, for the debug view.
+    bool GetBodyBroadphaseBounds(BodyHandle handle, glm::vec3& outMin, glm::vec3& outMax) const;
+
+    // Milestone 32 oracle support (tests and the benchmark): every pair of
+    // bodies whose shapes currently touch, found through the broadphase and
+    // confirmed by the narrowphase, without stepping anything. A brute-force
+    // reference lives in the tests, not here — see tests/BroadphaseTests.cpp.
+    struct CollidingPair {
+        BodyHandle a;
+        BodyHandle b;
+        int contactPoints = 0;
+    };
+    std::vector<CollidingPair> FindCollidingPairs() const;
+    std::vector<BodyHandle> AliveBodies() const;
+    bool GetBodyShape(BodyHandle handle, Shape& outShape, BodyTransform& outPose) const;
+
     // True only for a body created via CreateDynamic*. Added in Milestone
     // 7-A so a caller holding a ShapeSweepHit::hitBody can tell "pushable
     // object" apart from "static world geometry" without needing to
     // remember which handles it created dynamic vs. static itself.
     bool IsDynamicBody(BodyHandle handle) const;
     float GetMass(BodyHandle handle) const;
-    void ApplyLinearImpulse(BodyHandle handle, const glm::vec3& impulse);
-    void ApplyImpulseAtPoint(BodyHandle handle, const glm::vec3& impulse,
+    void ApplyLinearImpulse(BodyHandle handle, const glm::vec3& impulse);    void ApplyImpulseAtPoint(BodyHandle handle, const glm::vec3& impulse,
                              const glm::vec3& worldPoint);
 
     // Generic rigid-body velocity access — the same category as
@@ -197,6 +238,15 @@ public:
 
     // Advances the simulation by exactly one fixed step. The caller owns
     // the accumulator that decides how many times to call this per frame.
+    //
+    // Milestone 32 order: (1) velocity from forces/torques; (2) broadphase
+    // candidate pairs from the dynamic AABB tree (src/Broadphase.h) — no
+    // all-pairs pass exists any more; (3) narrowphase at the current poses;
+    // (4) accumulated-impulse contact solve (src/ContactSolver.h), position
+    // integration from the solved velocities, direct penetration removal;
+    // (5) proxy refresh. Before M32 positions were integrated before contacts
+    // were detected; the reordering is what lets a resting body's gravity
+    // increment be cancelled before it becomes a penetration.
     // Milestone 12: each dynamic body's own accumulated force/torque
     // (ApplyForce/ApplyTorque above) is integrated into its velocity/
     // angular velocity here (via RigidBody.h's IntegrateRigidBody — the

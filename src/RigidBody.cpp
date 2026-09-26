@@ -23,24 +23,30 @@ glm::mat3 SolidBoxInverseInertia(float mass, const glm::vec3& halfExtents) {
 }
 
 void IntegrateRigidBody(RigidBody& body, float fixedDeltaTime) {
+    IntegrateRigidBodyVelocity(body, fixedDeltaTime);
+    IntegrateRigidBodyPosition(body, fixedDeltaTime);
+}
+
+void IntegrateRigidBodyVelocity(RigidBody& body, float fixedDeltaTime) {
     if (body.IsStatic()) {
         body.ClearAccumulators();
         return;
     }
-
     const glm::vec3 linearAcceleration = body.forceAccumulator * body.inverseMass;
     body.linearVelocity += linearAcceleration * fixedDeltaTime;
-    body.position += body.linearVelocity * fixedDeltaTime;
-
+    // The world inertia uses the start-of-step orientation, as it always has.
     const glm::mat3 inverseInertiaWorld = body.InverseInertiaWorld();
     const glm::vec3 angularAcceleration = inverseInertiaWorld * body.torqueAccumulator;
     body.angularVelocity += angularAcceleration * fixedDeltaTime;
+    body.ClearAccumulators();
+}
 
+void IntegrateRigidBodyPosition(RigidBody& body, float fixedDeltaTime) {
+    if (body.IsStatic()) return;
+    body.position += body.linearVelocity * fixedDeltaTime;
     const glm::quat angularVelocityQuat(0.0f, body.angularVelocity.x, body.angularVelocity.y,
                                          body.angularVelocity.z);
     const glm::quat orientationDelta = angularVelocityQuat * body.orientation;
     body.orientation =
         glm::normalize(body.orientation + orientationDelta * (0.5f * fixedDeltaTime));
-
-    body.ClearAccumulators();
 }

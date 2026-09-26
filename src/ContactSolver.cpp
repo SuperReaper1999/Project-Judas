@@ -8,103 +8,174 @@
 namespace {
 constexpr float kEpsilon = 1.0e-6f;
 
-// How much of the remaining penetration to correct per step (not all of
-// it at once, which would overshoot/jitter), and the small allowed
-// overlap ("slop") left uncorrected so resting contacts don't fight the
-// solver every single step trying to reach exactly zero penetration —
-// both ordinary, well-established constants for this class of simple
-// positional-correction scheme.
+// How much of the remaining penetration to correct per position iteration,
+// and the small allowed overlap ("slop") left uncorrected so resting
+// contacts do not fight the solver every step trying to reach exactly zero
+// — unchanged from the pre-M32 solver.
 constexpr float kPositionalCorrectionPercent = 0.2f;
 constexpr float kPenetrationSlop = 0.005f;
 
-// The effective mass along `direction` for an impulse applied at `point`
-// to both bodies — the standard rigid-body contact formula: linear inverse
-// mass plus the angular contribution each body's own inertia tensor
-// produces from that same impulse. No axis assumption: `direction` is
-// whatever the caller (normal or tangent) hands in.
-float EffectiveMass(const RigidBody& bodyA, const RigidBody& bodyB, const glm::vec3& point,
-                     const glm::vec3& direction) {
-    const glm::vec3 rA = point - bodyA.position;
-    const glm::vec3 rB = point - bodyB.position;
-    const glm::vec3 angularTermA =
-        glm::cross(bodyA.InverseInertiaWorld() * glm::cross(rA, direction), rA);
-    const glm::vec3 angularTermB =
-        glm::cross(bodyB.InverseInertiaWorld() * glm::cross(rB, direction), rB);
-    return bodyA.inverseMass + bodyB.inverseMass + glm::dot(direction, angularTermA + angularTermB);
+// Restitution only above a meaningful closing speed — otherwise a resting
+// contact's own per-step gravity nudge would "bounce" forever at
+// ever-smaller amplitude. Unchanged from the pre-M32 solver.
+constexpr float kRestitutionVelocityThreshold = 0.5f;
+
+glm::vec3 PointVelocity(const RigidBody& body, const glm::vec3& r) {
+    return body.linearVelocity + glm::cross(body.angularVelocity, r);
 }
 
-glm::vec3 PointVelocity(const RigidBody& body, const glm::vec3& point) {
-    return body.linearVelocity + glm::cross(body.angularVelocity, point - body.position);
+// Linear inverse masses plus the angular contribution each body's inertia
+// produces from an impulse along `direction` at offsets rA/rB. No axis
+// assumption: `direction` is the contact normal or the current slip.
+float InverseEffectiveMass(const ContactConstraint& c, const glm::vec3& rA, const glm::vec3& rB,
+                           const glm::vec3& direction) {
+    const glm::vec3 angularA = glm::cross(c.inverseInertiaA * glm::cross(rA, direction), rA);
+    const glm::vec3 angularB = glm::cross(c.inverseInertiaB * glm::cross(rB, direction), rB);
+    return c.bodyA->inverseMass + c.bodyB->inverseMass + glm::dot(direction, angularA + angularB);
 }
 
+void ApplyImpulse(ContactConstraint& c, const glm::vec3& rA, const glm::vec3& rB,
+                  const glm::vec3& impulse) {
+    RigidBody& a = *c.bodyA;
+    RigidBody& b = *c.bodyB;
+    if (!a.IsStatic()) {
+        a.linearVelocity += impulse * a.inverseMass;
+        a.angularVelocity += c.inverseInertiaA * glm::cross(rA, impulse);
+    }
+    if (!b.IsStatic()) {
+        b.linearVelocity -= impulse * b.inverseMass;
+        b.angularVelocity -= c.inverseInertiaB * glm::cross(rB, impulse);
+    }
+}
 }  // namespace
 
-void ResolveContact(RigidBody& bodyA, RigidBody& bodyB, const Contact& contact, float friction,
-                     float restitution) {
+void ContactSolver::AddContact(RigidBody& bodyA, RigidBody& bodyB, const Contact& contact,
+                               float friction, float restitution, float warmNormalImpulse,
+                               const glm::vec3& warmTangentImpulse) {
     if (!contact.hit) return;
     if (bodyA.IsStatic() && bodyB.IsStatic()) return;
+    ContactConstraint c;
+    c.bodyA = &bodyA;
+    c.bodyB = &bodyB;
+    c.point = contact.point;
+    c.normal = contact.normal;
+    c.penetration = contact.penetration;
+    c.friction = friction;
+    m_constraints.push_back(c);
+    m_pending.push_back(Pending{restitution, std::max(warmNormalImpulse, 0.0f), warmTangentImpulse});
+}
 
-    const glm::vec3& normal = contact.normal;
-    const glm::vec3& point = contact.point;
-
-    // --- Normal impulse (non-penetration + restitution) ---
-    const glm::vec3 relativeVelocity = PointVelocity(bodyA, point) - PointVelocity(bodyB, point);
-    const float velocityAlongNormal = glm::dot(relativeVelocity, normal);
-
-    const float normalEffectiveMass = EffectiveMass(bodyA, bodyB, point, normal);
-    float normalImpulseMagnitude = 0.0f;
-    if (velocityAlongNormal < 0.0f && normalEffectiveMass > kEpsilon) {
-        // Only apply restitution to a meaningfully fast closing speed —
-        // otherwise a resting contact's own tiny per-step gravity nudge
-        // would "bounce" forever at ever-smaller amplitude and never
-        // settle. A small fixed threshold (not zero) is the standard fix.
-        constexpr float kRestitutionVelocityThreshold = 0.5f;
-        const float effectiveRestitution =
-            (-velocityAlongNormal > kRestitutionVelocityThreshold) ? restitution : 0.0f;
-        normalImpulseMagnitude =
-            -(1.0f + effectiveRestitution) * velocityAlongNormal / normalEffectiveMass;
-        normalImpulseMagnitude = std::max(normalImpulseMagnitude, 0.0f);
-        const glm::vec3 normalImpulse = normal * normalImpulseMagnitude;
-        bodyA.ApplyImpulseAtPoint(normalImpulse, point);
-        bodyB.ApplyImpulseAtPoint(-normalImpulse, point);
-    }
-
-    // --- Friction impulse (Coulomb, clamped by the normal impulse just
-    // applied) --- recompute relative velocity, since the normal impulse
-    // above may have changed it.
-    const glm::vec3 relativeVelocityAfterNormal =
-        PointVelocity(bodyA, point) - PointVelocity(bodyB, point);
-    const glm::vec3 tangentVelocity =
-        relativeVelocityAfterNormal - normal * glm::dot(relativeVelocityAfterNormal, normal);
-    const float tangentSpeed = glm::length(tangentVelocity);
-    if (tangentSpeed > kEpsilon) {
-        const glm::vec3 tangent = tangentVelocity / tangentSpeed;
-        const float tangentEffectiveMass = EffectiveMass(bodyA, bodyB, point, tangent);
-        if (tangentEffectiveMass > kEpsilon) {
-            float frictionImpulseMagnitude = -tangentSpeed / tangentEffectiveMass;
-            const float maxFriction = friction * normalImpulseMagnitude;
-            frictionImpulseMagnitude =
-                std::clamp(frictionImpulseMagnitude, -maxFriction, maxFriction);
-            const glm::vec3 frictionImpulse = tangent * frictionImpulseMagnitude;
-            bodyA.ApplyImpulseAtPoint(frictionImpulse, point);
-            bodyB.ApplyImpulseAtPoint(-frictionImpulse, point);
+void ContactSolver::Prepare(float fixedDeltaTime) {
+    for (std::size_t i = 0; i < m_constraints.size(); ++i) {
+        ContactConstraint& c = m_constraints[i];
+        const RigidBody& a = *c.bodyA;
+        const RigidBody& b = *c.bodyB;
+        c.inverseInertiaA = a.IsStatic() ? glm::mat3(0.0f) : a.InverseInertiaWorld();
+        c.inverseInertiaB = b.IsStatic() ? glm::mat3(0.0f) : b.InverseInertiaWorld();
+        const glm::vec3 rA = c.point - a.position;
+        const glm::vec3 rB = c.point - b.position;
+        c.localAnchorA = glm::conjugate(a.orientation) * rA;
+        c.localAnchorB = glm::conjugate(b.orientation) * rB;
+        const float k = InverseEffectiveMass(c, rA, rB, c.normal);
+        c.normalMass = k > kEpsilon ? 1.0f / k : 0.0f;
+        c.normalImpulse = 0.0f;
+        c.tangentImpulse = glm::vec3(0.0f);
+        const float closingSpeed = glm::dot(PointVelocity(a, rA) - PointVelocity(b, rB), c.normal);
+        const float restitution = m_pending[i].restitution;
+        const bool bounces = -closingSpeed > kRestitutionVelocityThreshold;
+        const float gap = std::max(-c.penetration, 0.0f);
+        if (gap <= 0.0f) {
+            c.restitutionBias = bounces ? -restitution * closingSpeed : 0.0f;
+        } else {
+            // Speculative contact (Milestone 32): the pair is `gap` apart.
+            // It may close exactly that gap this step (v_n >= -gap/dt) but
+            // not penetrate. Restitution applies only if this step's
+            // approach actually reaches the surface.
+            const bool reaches = fixedDeltaTime > 0.0f && -closingSpeed * fixedDeltaTime > gap;
+            if (reaches && bounces) {
+                c.restitutionBias = -restitution * closingSpeed;
+            } else {
+                c.restitutionBias = fixedDeltaTime > 0.0f ? -gap / fixedDeltaTime : 0.0f;
+            }
         }
     }
+    // Warm start after every restitution target has been read from the
+    // untouched velocities. The friction part is re-projected onto this
+    // step's tangent plane and kept inside this step's Coulomb disc.
+    for (std::size_t i = 0; i < m_constraints.size(); ++i) {
+        ContactConstraint& c = m_constraints[i];
+        if (c.normalMass <= 0.0f) continue;
+        c.normalImpulse = m_pending[i].warmNormal;
+        glm::vec3 tangent = m_pending[i].warmTangent - c.normal * glm::dot(m_pending[i].warmTangent, c.normal);
+        const float limit = c.friction * c.normalImpulse;
+        const float magnitude = glm::length(tangent);
+        if (magnitude > limit) tangent = magnitude > kEpsilon ? tangent * (limit / magnitude) : glm::vec3(0.0f);
+        c.tangentImpulse = tangent;
+        const glm::vec3 impulse = c.normal * c.normalImpulse + c.tangentImpulse;
+        if (glm::dot(impulse, impulse) > 0.0f) {
+            ApplyImpulse(c, c.point - c.bodyA->position, c.point - c.bodyB->position, impulse);
+        }
+    }
+    m_pending.clear();
+}
 
-    // --- Positional correction --- directly separates overlapping bodies
-    // along the normal, proportional to how far they interpenetrate,
-    // distributed by inverse mass (a body with more inverse mass — less
-    // actual mass — yields more). Deliberately NOT run through velocity:
-    // a velocity-only (pure Baumgarte) correction couples into restitution
-    // and can add energy; nudging position directly avoids that while
-    // still preventing bodies from sinking into each other over many
-    // steps.
-    const float correctionMagnitude =
-        std::max(contact.penetration - kPenetrationSlop, 0.0f) * kPositionalCorrectionPercent;
-    const float inverseMassSum = bodyA.inverseMass + bodyB.inverseMass;
-    if (correctionMagnitude > 0.0f && inverseMassSum > kEpsilon) {
-        const glm::vec3 correction = normal * (correctionMagnitude / inverseMassSum);
-        if (!bodyA.IsStatic()) bodyA.position += correction * bodyA.inverseMass;
-        if (!bodyB.IsStatic()) bodyB.position -= correction * bodyB.inverseMass;
+void ContactSolver::SolveVelocities(int iterations) {
+    for (int iteration = 0; iteration < iterations; ++iteration) {
+        for (ContactConstraint& c : m_constraints) {
+            if (c.normalMass <= 0.0f) continue;
+            const glm::vec3 rA = c.point - c.bodyA->position;
+            const glm::vec3 rB = c.point - c.bodyB->position;
+
+            // --- Normal: accumulate, clamp the total at zero, apply delta.
+            const float vn = glm::dot(PointVelocity(*c.bodyA, rA) - PointVelocity(*c.bodyB, rB), c.normal);
+            const float lambda = c.normalMass * (c.restitutionBias - vn);
+            const float newNormal = std::max(c.normalImpulse + lambda, 0.0f);
+            const float appliedNormal = newNormal - c.normalImpulse;
+            c.normalImpulse = newNormal;
+            if (appliedNormal != 0.0f) ApplyImpulse(c, rA, rB, c.normal * appliedNormal);
+
+            // --- Friction: Coulomb disc against the ACCUMULATED normal
+            // impulse of this point.
+            const glm::vec3 relative = PointVelocity(*c.bodyA, rA) - PointVelocity(*c.bodyB, rB);
+            const glm::vec3 slip = relative - c.normal * glm::dot(relative, c.normal);
+            const float slipSpeed = glm::length(slip);
+            const float limit = c.friction * c.normalImpulse;
+            glm::vec3 newTangent = c.tangentImpulse;
+            if (slipSpeed > kEpsilon) {
+                const glm::vec3 direction = slip / slipSpeed;
+                const float k = InverseEffectiveMass(c, rA, rB, direction);
+                if (k > kEpsilon) newTangent -= direction * (slipSpeed / k);
+            }
+            const float magnitude = glm::length(newTangent);
+            if (magnitude > limit) {
+                newTangent = magnitude > kEpsilon ? newTangent * (limit / magnitude) : glm::vec3(0.0f);
+            }
+            const glm::vec3 appliedTangent = newTangent - c.tangentImpulse;
+            c.tangentImpulse = newTangent;
+            if (glm::dot(appliedTangent, appliedTangent) > 0.0f) ApplyImpulse(c, rA, rB, appliedTangent);
+        }
+    }
+}
+
+void ContactSolver::SolvePositions(int iterations) {
+    for (int iteration = 0; iteration < iterations; ++iteration) {
+        for (ContactConstraint& c : m_constraints) {
+            RigidBody& a = *c.bodyA;
+            RigidBody& b = *c.bodyB;
+            const float inverseMassSum = a.inverseMass + b.inverseMass;
+            if (inverseMassSum <= kEpsilon) continue;
+            // Both anchors coincided with the contact point at detection;
+            // their current separation along the normal is how much the
+            // bodies have moved apart (positive) or together since.
+            const glm::vec3 worldA = a.position + a.orientation * c.localAnchorA;
+            const glm::vec3 worldB = b.position + b.orientation * c.localAnchorB;
+            const float penetration = c.penetration - glm::dot(worldA - worldB, c.normal);
+            const float correctionMagnitude =
+                std::max(penetration - kPenetrationSlop, 0.0f) * kPositionalCorrectionPercent;
+            if (correctionMagnitude <= 0.0f) continue;
+            const glm::vec3 correction = c.normal * (correctionMagnitude / inverseMassSum);
+            if (!a.IsStatic()) a.position += correction * a.inverseMass;
+            if (!b.IsStatic()) b.position -= correction * b.inverseMass;
+        }
     }
 }

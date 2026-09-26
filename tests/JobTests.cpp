@@ -159,16 +159,22 @@ void SectionPriority() {
         JobSystem jobs(1);
         std::atomic<int> lowDone{0};
         std::atomic<int> highDone{0};
-        for (int i = 0; i < 20; ++i) jobs.Submit([&](JobContext&) { ++lowDone; }, JobPriority::Low);
         std::atomic<bool> keepFeeding{true};
+        std::atomic<bool> feeding{false};
         std::thread feeder([&] {
             while (keepFeeding) {
                 if (jobs.Stats().queued < 40) {
                     for (int i = 0; i < 20; ++i) jobs.Submit([&](JobContext&) { ++highDone; std::this_thread::sleep_for(std::chrono::microseconds(50)); }, JobPriority::High);
+                    feeding = true;
                 }
                 std::this_thread::yield();
             }
         });
+        // The Low work is queued only once the High stream exists; queued
+        // first, all 20 could finish before the feeder thread was scheduled
+        // and the test would measure nothing (observed as a rare failure).
+        while (!feeding) std::this_thread::yield();
+        for (int i = 0; i < 20; ++i) jobs.Submit([&](JobContext&) { ++lowDone; }, JobPriority::Low);
         const auto start = std::chrono::steady_clock::now();
         while (lowDone < 20 && std::chrono::steady_clock::now() - start < std::chrono::seconds(5)) {
             std::this_thread::sleep_for(std::chrono::milliseconds(1));

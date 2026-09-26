@@ -1,0 +1,707 @@
+JudasScene 3
+settings
+  name "Rigid stability (M32)"
+  world-origin 0 0 0
+  sun-direction 0.4 0.7 0.35
+  sun-color 1 0.98 0.92
+  ambient 0.16 0.17 0.19
+  fluid-scale 1
+  fidelity-policy none
+  next-id 29
+end
+
+object 1 "Ground"
+  position 0 -0.5 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 20 0.5 20
+  render.radius 0.5
+  render.color 0.4 0.44 0.36
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body static box
+  body.half-extents 20 0.5 20
+  body.radius 0.5
+  body.terrain ""
+  body.mass 1
+  body.friction 0.8
+  body.restitution 0.05
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  gravity uniform 9.81
+  gravity.region box 30 30 30
+end
+
+object 2 "Player start"
+  position 0 1 8
+  rotation 1 0 0 0
+  scale 1 1 1
+  player-start third-person
+  player-start.yaw 0
+end
+
+object 3 "Stack 1 box 1"
+  position -4 0.355 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.5 0.35 0.5
+  render.radius 0.5
+  render.color 0.85 0.35 0.2
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body dynamic box
+  body.half-extents 0.5 0.35 0.5
+  body.radius 0.5
+  body.terrain ""
+  body.mass 4
+  body.friction 0.7
+  body.restitution 0
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+end
+
+object 4 "Stack 1 box 2"
+  position -4 1.06 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.5 0.35 0.5
+  render.radius 0.5
+  render.color 0.75 0.425 0.325
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body dynamic box
+  body.half-extents 0.5 0.35 0.5
+  body.radius 0.5
+  body.terrain ""
+  body.mass 4
+  body.friction 0.7
+  body.restitution 0
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+end
+
+object 5 "Stack 1 box 3"
+  position -4 1.765 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.5 0.35 0.5
+  render.radius 0.5
+  render.color 0.65000004 0.5 0.45
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body dynamic box
+  body.half-extents 0.5 0.35 0.5
+  body.radius 0.5
+  body.terrain ""
+  body.mass 4
+  body.friction 0.7
+  body.restitution 0
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+end
+
+object 6 "Stack 1 box 4"
+  position -4 2.47 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.5 0.35 0.5
+  render.radius 0.5
+  render.color 0.55 0.575 0.575
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body dynamic box
+  body.half-extents 0.5 0.35 0.5
+  body.radius 0.5
+  body.terrain ""
+  body.mass 4
+  body.friction 0.7
+  body.restitution 0
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+end
+
+object 7 "Stack 1 box 5"
+  position -4 3.175 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.5 0.35 0.5
+  render.radius 0.5
+  render.color 0.45000002 0.65 0.7
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body dynamic box
+  body.half-extents 0.5 0.35 0.5
+  body.radius 0.5
+  body.terrain ""
+  body.mass 4
+  body.friction 0.7
+  body.restitution 0
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+end
+
+object 8 "Stack 2 box 1"
+  position 0 0.355 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.5 0.35 0.5
+  render.radius 0.5
+  render.color 0.85 0.35 0.2
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body dynamic box
+  body.half-extents 0.5 0.35 0.5
+  body.radius 0.5
+  body.terrain ""
+  body.mass 4
+  body.friction 0.7
+  body.restitution 0
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+end
+
+object 9 "Stack 2 box 2"
+  position 0 1.06 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.5 0.35 0.5
+  render.radius 0.5
+  render.color 0.75 0.425 0.325
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body dynamic box
+  body.half-extents 0.5 0.35 0.5
+  body.radius 0.5
+  body.terrain ""
+  body.mass 4
+  body.friction 0.7
+  body.restitution 0
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+end
+
+object 10 "Stack 2 box 3"
+  position 0 1.765 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.5 0.35 0.5
+  render.radius 0.5
+  render.color 0.65000004 0.5 0.45
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body dynamic box
+  body.half-extents 0.5 0.35 0.5
+  body.radius 0.5
+  body.terrain ""
+  body.mass 4
+  body.friction 0.7
+  body.restitution 0
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+end
+
+object 11 "Stack 2 box 4"
+  position 0 2.47 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.5 0.35 0.5
+  render.radius 0.5
+  render.color 0.55 0.575 0.575
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body dynamic box
+  body.half-extents 0.5 0.35 0.5
+  body.radius 0.5
+  body.terrain ""
+  body.mass 4
+  body.friction 0.7
+  body.restitution 0
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+end
+
+object 12 "Stack 2 box 5"
+  position 0 3.175 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.5 0.35 0.5
+  render.radius 0.5
+  render.color 0.45000002 0.65 0.7
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body dynamic box
+  body.half-extents 0.5 0.35 0.5
+  body.radius 0.5
+  body.terrain ""
+  body.mass 4
+  body.friction 0.7
+  body.restitution 0
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+end
+
+object 13 "Stack 3 box 1"
+  position 4 0.355 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.5 0.35 0.5
+  render.radius 0.5
+  render.color 0.85 0.35 0.2
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body dynamic box
+  body.half-extents 0.5 0.35 0.5
+  body.radius 0.5
+  body.terrain ""
+  body.mass 4
+  body.friction 0.7
+  body.restitution 0
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+end
+
+object 14 "Stack 3 box 2"
+  position 4 1.06 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.5 0.35 0.5
+  render.radius 0.5
+  render.color 0.75 0.425 0.325
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body dynamic box
+  body.half-extents 0.5 0.35 0.5
+  body.radius 0.5
+  body.terrain ""
+  body.mass 4
+  body.friction 0.7
+  body.restitution 0
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+end
+
+object 15 "Stack 3 box 3"
+  position 4 1.765 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.5 0.35 0.5
+  render.radius 0.5
+  render.color 0.65000004 0.5 0.45
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body dynamic box
+  body.half-extents 0.5 0.35 0.5
+  body.radius 0.5
+  body.terrain ""
+  body.mass 4
+  body.friction 0.7
+  body.restitution 0
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+end
+
+object 16 "Stack 3 box 4"
+  position 4 2.47 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.5 0.35 0.5
+  render.radius 0.5
+  render.color 0.55 0.575 0.575
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body dynamic box
+  body.half-extents 0.5 0.35 0.5
+  body.radius 0.5
+  body.terrain ""
+  body.mass 4
+  body.friction 0.7
+  body.restitution 0
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+end
+
+object 17 "Stack 3 box 5"
+  position 4 3.175 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.5 0.35 0.5
+  render.radius 0.5
+  render.color 0.45000002 0.65 0.7
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body dynamic box
+  body.half-extents 0.5 0.35 0.5
+  body.radius 0.5
+  body.terrain ""
+  body.mass 4
+  body.friction 0.7
+  body.restitution 0
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+end
+
+object 18 "Resting box 1"
+  position -5 0.2 4
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.25 0.2 0.3
+  render.radius 0.5
+  render.color 0.8 0.7 0.3
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body dynamic box
+  body.half-extents 0.25 0.2 0.3
+  body.radius 0.5
+  body.terrain ""
+  body.mass 3
+  body.friction 0.3
+  body.restitution 0
+  body.initial-velocity 0 0 0
+  body.pickable true
+  body.managed false
+  body.compound-count 0
+end
+
+object 19 "Resting box 2"
+  position -3 0.25 4
+  rotation 0.9887711 0 0.14943814 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.35 0.25 0.3
+  render.radius 0.5
+  render.color 0.8 0.7 0.3
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body dynamic box
+  body.half-extents 0.35 0.25 0.3
+  body.radius 0.5
+  body.terrain ""
+  body.mass 4
+  body.friction 0.4
+  body.restitution 0
+  body.initial-velocity 0 0 0
+  body.pickable true
+  body.managed false
+  body.compound-count 0
+end
+
+object 20 "Resting box 3"
+  position -1 0.3 4
+  rotation 0.9553365 0 0.29552022 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.45 0.3 0.3
+  render.radius 0.5
+  render.color 0.8 0.7 0.3
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body dynamic box
+  body.half-extents 0.45 0.3 0.3
+  body.radius 0.5
+  body.terrain ""
+  body.mass 5
+  body.friction 0.5
+  body.restitution 0
+  body.initial-velocity 0 0 0
+  body.pickable true
+  body.managed false
+  body.compound-count 0
+end
+
+object 21 "Resting box 4"
+  position 1 0.35000002 4
+  rotation 0.9004471 0 0.43496555 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.55 0.35000002 0.3
+  render.radius 0.5
+  render.color 0.8 0.7 0.3
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body dynamic box
+  body.half-extents 0.55 0.35000002 0.3
+  body.radius 0.5
+  body.terrain ""
+  body.mass 6
+  body.friction 0.6
+  body.restitution 0
+  body.initial-velocity 0 0 0
+  body.pickable true
+  body.managed false
+  body.compound-count 0
+end
+
+object 22 "Resting box 5"
+  position 3 0.4 4
+  rotation 0.8253356 0 0.5646425 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.65 0.4 0.3
+  render.radius 0.5
+  render.color 0.8 0.7 0.3
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body dynamic box
+  body.half-extents 0.65 0.4 0.3
+  body.radius 0.5
+  body.terrain ""
+  body.mass 7
+  body.friction 0.70000005
+  body.restitution 0
+  body.initial-velocity 0 0 0
+  body.pickable true
+  body.managed false
+  body.compound-count 0
+end
+
+object 23 "Resting box 6"
+  position 5 0.45 4
+  rotation 0.73168886 0 0.6816388 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.75 0.45 0.3
+  render.radius 0.5
+  render.color 0.8 0.7 0.3
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body dynamic box
+  body.half-extents 0.75 0.45 0.3
+  body.radius 0.5
+  body.terrain ""
+  body.mass 8
+  body.friction 0.8
+  body.restitution 0
+  body.initial-velocity 0 0 0
+  body.pickable true
+  body.managed false
+  body.compound-count 0
+end
+
+object 24 "Slope"
+  position 0 1.2 -6
+  rotation 0.9848077 0 0 0.17364818
+  scale 1 1 1
+  render box
+  render.half-extents 4 0.2 2.5
+  render.radius 0.5
+  render.color 0.5 0.5 0.58
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body static box
+  body.half-extents 4 0.2 2.5
+  body.radius 0.5
+  body.terrain ""
+  body.mass 1
+  body.friction 0.8
+  body.restitution 0
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+end
+
+object 25 "Slope box (mu 0.8, holds)"
+  position -0.20863228 1.7732126 -7
+  rotation 0.9848077 0 0 0.17364818
+  scale 1 1 1
+  render box
+  render.half-extents 0.4 0.4 0.4
+  render.radius 0.5
+  render.color 0.3 0.8 0.35
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body dynamic box
+  body.half-extents 0.4 0.4 0.4
+  body.radius 0.5
+  body.terrain ""
+  body.mass 6
+  body.friction 0.8
+  body.restitution 0
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+end
+
+object 26 "Slope box (mu 0.1, slides)"
+  position 1.2913678 1.7732126 -5
+  rotation 0.9848077 0 0 0.17364818
+  scale 1 1 1
+  render box
+  render.half-extents 0.4 0.4 0.4
+  render.radius 0.5
+  render.color 0.85 0.25 0.25
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body dynamic box
+  body.half-extents 0.4 0.4 0.4
+  body.radius 0.5
+  body.terrain ""
+  body.mass 6
+  body.friction 0.1
+  body.restitution 0
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+end
+
+object 27 "Ball"
+  position 5 0.4 4
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sphere
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.4
+  render.color 0.9 0.8 0.2
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body dynamic sphere
+  body.half-extents 0.5 0.5 0.5
+  body.radius 0.4
+  body.terrain ""
+  body.mass 3
+  body.friction 0.6
+  body.restitution 0.2
+  body.initial-velocity 0 0 0
+  body.pickable true
+  body.managed false
+  body.compound-count 0
+end
+
+object 28 "Lamp"
+  position 0 6 2
+  rotation 1 0 0 0
+  scale 1 1 1
+  light point
+  light.color 2.5 2.3 2
+  light.range 22
+  light.cone 15 25
+end

@@ -43,6 +43,8 @@ set(JUDAS_PHYSICS_SOURCES
     src/Contacts.cpp
     src/ContactSolver.cpp
     src/RadialTerrain.cpp
+    src/Broadphase.cpp
+    src/Narrowphase.cpp
 )
 
 # GLAD 2 loader generated for precisely OpenGL 3.3 Core, no extensions.
@@ -229,6 +231,29 @@ add_executable(judas_physics_tests
 target_include_directories(judas_physics_tests PRIVATE src)
 target_link_libraries(judas_physics_tests PRIVATE ${JUDAS_GLM})
 target_compile_options(judas_physics_tests PRIVATE -Wall -Wextra)
+
+# Milestone 32: the accumulated-impulse contact solver inside PhysicsWorld —
+# resting drift, stacks, friction, restitution, momentum/energy, rotated
+# universes. Headless.
+add_executable(judas_rigid_contact_tests
+    tests/RigidContactTests.cpp
+    ${JUDAS_PHYSICS_SOURCES}
+    src/PhysicsWorld.cpp
+)
+target_include_directories(judas_rigid_contact_tests PRIVATE src)
+target_link_libraries(judas_rigid_contact_tests PRIVATE ${JUDAS_GLM})
+target_compile_options(judas_rigid_contact_tests PRIVATE -Wall -Wextra)
+
+# Milestone 32: dynamic AABB tree and PhysicsWorld broadphase against a
+# brute-force all-pairs + narrowphase oracle. Headless.
+add_executable(judas_broadphase_tests
+    tests/BroadphaseTests.cpp
+    ${JUDAS_PHYSICS_SOURCES}
+    src/PhysicsWorld.cpp
+)
+target_include_directories(judas_broadphase_tests PRIVATE src)
+target_link_libraries(judas_broadphase_tests PRIVATE ${JUDAS_GLM})
+target_compile_options(judas_broadphase_tests PRIVATE -Wall -Wextra)
 
 add_executable(judas_collision_tests
     tests/CollisionTests.cpp

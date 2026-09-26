@@ -45,17 +45,24 @@ void ClosestPointsSegmentToOBB(const glm::vec3& segA, const glm::vec3& segB,
 
 // Discrete narrowphase pair tests. Each returns a Contact with `hit=false`
 // if the shapes are not currently overlapping.
+//
+// Milestone 32: `margin` (default 0 = overlap only, the pre-M32 answer)
+// also reports a pair whose separation is at most `margin` — a speculative
+// contact, with `penetration` = -separation (negative). PhysicsWorld passes
+// the distance the pair can close within the current fixed step, so a body
+// placed exactly touching (or about to touch) is constrained before it
+// penetrates instead of one step after.
 Contact SphereVsSphere(const glm::vec3& centerA, float radiusA, const glm::vec3& centerB,
-                        float radiusB);
+                        float radiusB, float margin = 0.0f);
 Contact SphereVsBox(const glm::vec3& sphereCenter, float sphereRadius, const glm::vec3& boxCenter,
-                     const glm::quat& boxOrientation, const glm::vec3& boxHalfExtents);
+                     const glm::quat& boxOrientation, const glm::vec3& boxHalfExtents, float margin = 0.0f);
 
 // Single-point box-vs-box (kept for simple callers/tests that only need a
 // yes/no + one representative point) — see BoxVsBoxManifold below for the
 // version PhysicsWorld's own solver actually uses.
 Contact BoxVsBox(const glm::vec3& centerA, const glm::quat& orientA, const glm::vec3& halfExtentsA,
                   const glm::vec3& centerB, const glm::quat& orientB,
-                  const glm::vec3& halfExtentsB);
+                  const glm::vec3& halfExtentsB, float margin = 0.0f);
 
 // Up to 4 simultaneous contact points between two boxes. Most shape pairs
 // in this engine need only one point (a sphere touches a box at exactly
@@ -74,7 +81,8 @@ struct ContactManifold {
 };
 ContactManifold BoxVsBoxManifold(const glm::vec3& centerA, const glm::quat& orientA,
                                   const glm::vec3& halfExtentsA, const glm::vec3& centerB,
-                                  const glm::quat& orientB, const glm::vec3& halfExtentsB);
+                                  const glm::quat& orientB, const glm::vec3& halfExtentsB,
+                                  float margin = 0.0f);
 
 // Distance from a capsule (defined by its own core segment endpoints and
 // radius) to a sphere or a box, along with the closest point ON THE OTHER

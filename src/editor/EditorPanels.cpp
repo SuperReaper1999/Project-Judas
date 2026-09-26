@@ -117,6 +117,7 @@ void DrawEditorMainMenu(EditorDocument& doc, EditorPanelState& state, EditorRequ
         ImGui::MenuItem("Terrain normals (sampled)", nullptr, &d.terrainNormals);
         ImGui::MenuItem("Fluid particles", nullptr, &d.fluidParticles);
         ImGui::MenuItem("Atmosphere radii", nullptr, &d.atmosphere);
+        ImGui::MenuItem("Broadphase bounds", nullptr, &d.broadphase);
         ImGui::Separator();
         if (ImGui::MenuItem("All off")) d = DebugViewOptions{};
         ImGui::EndMenu();
@@ -512,7 +513,15 @@ void DrawProfilerPanel(EditorPanelState& state) {
     ImGui::Text("Last fixed step: %.3f ms (whole StepPlayedWorld)", p.fixedStepMilliseconds);
     ImGui::Separator();
     ImGui::Text("Physics bodies: %zu live (%zu dynamic)", p.physicsBodies, p.dynamicBodies);
-    ImGui::Text("Contacts (last step, final iteration): %zu", p.contacts);
+    ImGui::Text("Contacts (last step's manifold points): %zu", p.contacts);
+    ImGui::Text("Broadphase: %zu candidate pairs of %zu possible (%.3f%%)", p.physics.candidatePairs,
+                p.physics.possiblePairs,
+                p.physics.possiblePairs > 0 ? 100.0 * p.physics.candidatePairs / p.physics.possiblePairs : 0.0);
+    ImGui::Text("  %zu colliding pairs, tree height %d, %zu proxy reinsertions", p.physics.collidingPairs,
+                p.physics.treeHeight, p.physics.proxyReinsertions);
+    ImGui::Text("  PhysicsWorld::Step %.3f ms (broadphase %.3f, narrowphase %.3f, solver %.3f)",
+                p.physics.totalMilliseconds, p.physics.broadphaseMilliseconds, p.physics.narrowphaseMilliseconds,
+                p.physics.solverMilliseconds);
     ImGui::Text("Entities: %zu full / %zu coarse / %zu dormant / %zu destroyed", p.entitiesFull, p.entitiesCoarse,
                 p.entitiesDormant, p.entitiesDestroyed);
     ImGui::Separator();

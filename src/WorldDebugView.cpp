@@ -30,6 +30,7 @@ const glm::vec3 kNormalColor(0.7f, 1.0f, 0.7f);
 const glm::vec3 kFluidColor(0.3f, 0.6f, 1.0f);
 const glm::vec3 kAtmosphereColor(0.6f, 0.75f, 1.0f);
 const glm::vec3 kPlayerStartColor(0.2f, 0.9f, 1.0f);
+const glm::vec3 kBroadphaseColor(0.55f, 0.55f, 0.95f);
 
 glm::vec3 FidelityColor(const EntityRecord& e) {
     if (e.lifecycle == EntityLifecycle::Destroyed) return glm::vec3(0.9f, 0.15f, 0.15f);
@@ -140,6 +141,16 @@ void BuildWorldDebugLines(const RuntimeWorld& world, const GameSession* session,
         out.Circle(foot, up, PlayerController::CapsuleRadius() * 1.2f,
                    player.IsGrounded() ? kGroundedColor : kAirborneColor, 16);
         out.Arrow(position, position + player.GetLookDirection() * 1.5f, kCapsuleColor, 0.2f);
+    }
+
+    if (options.broadphase) {
+        for (const BodyHandle handle : world.Physics().AliveBodies()) {
+            glm::vec3 low, high;
+            if (!world.Physics().GetBodyBroadphaseBounds(handle, low, high)) continue;
+            // Terrain bounds are planet-sized; draw them only when near.
+            if (glm::length(high - low) > 200.0f) continue;
+            out.Box(0.5f * (low + high), glm::quat(1, 0, 0, 0), 0.5f * (high - low), kBroadphaseColor);
+        }
     }
 
     if (options.contacts) {

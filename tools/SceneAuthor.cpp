@@ -7,9 +7,9 @@
 //
 //   judas_scene_author assets/scenes projects/tiny_game/Scenes
 //
-// Regenerates the nine demonstration scenes (deterministic: an unchanged
-// generator writes byte-identical files) and projects/tiny_game/Scenes/
-// main.judas. Mesh references are the fixed AssetIds recorded in the
+// Regenerates the eleven demonstration scenes (M32 added rigid_stability
+// and broadphase_stress; deterministic: an unchanged generator writes
+// byte-identical files) and projects/tiny_game/Scenes/main.judas. Mesh references are the fixed AssetIds recorded in the
 // assets' .judasmeta sidecars (assets/models/*.obj.judasmeta,
 // assets/textures/beacon.png.judasmeta).
 #include <array>
@@ -589,6 +589,118 @@ Scene MakeTinyGame() {
     return s;
 }
 
+// Milestone 32: dry rigid contacts for looking at resting behaviour — stacks
+// of equal boxes, loose boxes of several sizes, a 20-degree slope with a
+// high-friction box that must stay put and a low-friction one that slides,
+// and a sphere. Before M32 the loose boxes crept and the stacks walked.
+Scene MakeRigidStability() {
+    Scene s;
+    s.Settings().name = "Rigid stability (M32)";
+    {
+        SceneObject& g = Add(s, "Ground", glm::vec3(0.0f, -0.5f, 0.0f));
+        g.render = RBox(glm::vec3(20.0f, 0.5f, 20.0f), glm::vec3(0.40f, 0.44f, 0.36f));
+        g.body = BStaticBox(glm::vec3(20.0f, 0.5f, 20.0f), 0.8f, 0.05f);
+        SceneGravityComponent grav; grav.kind = SceneGravityKind::Uniform; grav.magnitude = 9.81f;
+        grav.regionShape = SceneRegionShape::Box; grav.regionHalfExtents = glm::vec3(30.0f, 30.0f, 30.0f);
+        g.gravity = grav;
+    }
+    {
+        SceneObject& o = Add(s, "Player start", glm::vec3(0.0f, 1.0f, 8.0f));
+        ScenePlayerStartComponent p; p.yawDegrees = 0.0f; p.view = ScenePlayerView::ThirdPerson;
+        o.playerStart = p;
+    }
+    for (int stack = 0; stack < 3; ++stack) {
+        const float x = -4.0f + 4.0f * stack;
+        for (int level = 0; level < 5; ++level) {
+            const glm::vec3 half(0.5f, 0.35f, 0.5f);
+            SceneObject& o = Add(s, "Stack " + std::to_string(stack + 1) + " box " + std::to_string(level + 1),
+                                 glm::vec3(x, 0.355f + 0.705f * level, 0.0f));
+            const float t = static_cast<float>(level) / 4.0f;
+            o.render = RBox(half, glm::vec3(0.85f - 0.4f * t, 0.35f + 0.3f * t, 0.2f + 0.5f * t));
+            o.body = BDynBox(half, 4.0f, 0.7f, 0.0f);
+        }
+    }
+    for (int i = 0; i < 6; ++i) {
+        const glm::vec3 half = glm::vec3(0.25f + 0.1f * i, 0.2f + 0.05f * i, 0.3f);
+        SceneObject& o = Add(s, "Resting box " + std::to_string(i + 1), glm::vec3(-5.0f + 2.0f * i, half.y, 4.0f),
+                             glm::angleAxis(0.3f * i, glm::vec3(0.0f, 1.0f, 0.0f)));
+        o.render = RBox(half, glm::vec3(0.8f, 0.7f, 0.3f));
+        o.body = BDynBox(half, 3.0f + i, 0.3f + 0.1f * i, 0.0f);
+        o.body->pickable = true;
+    }
+    {
+        const glm::quat tilt = glm::angleAxis(glm::radians(20.0f), glm::vec3(0.0f, 0.0f, 1.0f));
+        SceneObject& slope = Add(s, "Slope", glm::vec3(0.0f, 1.2f, -6.0f), tilt);
+        slope.render = RBox(glm::vec3(4.0f, 0.2f, 2.5f), glm::vec3(0.5f, 0.5f, 0.58f));
+        slope.body = BStaticBox(glm::vec3(4.0f, 0.2f, 2.5f), 0.8f, 0.0f);
+        const glm::vec3 up = tilt * glm::vec3(0.0f, 1.0f, 0.0f);
+        SceneObject& grippy = Add(s, "Slope box (mu 0.8, holds)", glm::vec3(0.0f, 1.2f, -7.0f) + up * 0.61f, tilt);
+        grippy.render = RBox(glm::vec3(0.4f), glm::vec3(0.3f, 0.8f, 0.35f));
+        grippy.body = BDynBox(glm::vec3(0.4f), 6.0f, 0.8f, 0.0f);
+        SceneObject& slick = Add(s, "Slope box (mu 0.1, slides)", glm::vec3(1.5f, 1.2f, -5.0f) + tilt * glm::vec3(0.0f, 0.61f, 0.0f), tilt);
+        slick.render = RBox(glm::vec3(0.4f), glm::vec3(0.85f, 0.25f, 0.25f));
+        slick.body = BDynBox(glm::vec3(0.4f), 6.0f, 0.1f, 0.0f);
+    }
+    {
+        SceneObject& b = Add(s, "Ball", glm::vec3(5.0f, 0.4f, 4.0f));
+        b.render = RSphere(0.4f, glm::vec3(0.9f, 0.8f, 0.2f));
+        b.body = BDynSphere(0.4f, 3.0f, 0.6f, 0.2f);
+        b.body->pickable = true;
+    }
+    {
+        SceneObject& l = Add(s, "Lamp", glm::vec3(0.0f, 6.0f, 2.0f));
+        SceneLightComponent light; light.kind = SceneLightKind::Point; light.color = glm::vec3(2.5f, 2.3f, 2.0f);
+        light.range = 22.0f;
+        l.light = light;
+    }
+    return s;
+}
+
+// Milestone 32: the broadphase at engine scale — 1,500 crates, every one a
+// Full rigid body (no fidelity policy), in a grid with a few stacks, so the
+// profiler's broadphase lines show candidate pairs against all pairs.
+Scene MakeBroadphaseStress() {
+    Scene s;
+    s.Settings().name = "Broadphase stress (M32)";
+    {
+        SceneObject& g = Add(s, "Ground", glm::vec3(0.0f, -1.0f, 0.0f));
+        g.render = RBox(glm::vec3(60.0f, 1.0f, 60.0f), glm::vec3(0.36f, 0.42f, 0.30f));
+        g.body = BStaticBox(glm::vec3(60.0f, 1.0f, 60.0f), 0.8f, 0.05f);
+        SceneGravityComponent grav; grav.kind = SceneGravityKind::Uniform; grav.magnitude = 9.81f;
+        grav.regionShape = SceneRegionShape::Box; grav.regionHalfExtents = glm::vec3(70.0f, 40.0f, 70.0f);
+        g.gravity = grav;
+    }
+    {
+        SceneObject& o = Add(s, "Player start", glm::vec3(0.0f, 1.0f, 30.0f));
+        ScenePlayerStartComponent p; p.yawDegrees = 0.0f; p.view = ScenePlayerView::ThirdPerson;
+        o.playerStart = p;
+    }
+    int made = 0;
+    for (int i = 0; i < 1200; ++i, ++made) {
+        const float x = static_cast<float>(i % 40) * 1.4f - 27.3f;
+        const float z = static_cast<float>(i / 40) * 1.4f - 27.3f;
+        SceneObject& c = Add(s, "Crate " + std::to_string(made + 1), glm::vec3(x, 0.5f, z));
+        c.render = RBox(glm::vec3(0.5f), glm::vec3(0.55f + 0.3f * ((i * 7) % 10) / 10.0f, 0.45f, 0.25f));
+        c.body = BDynBox(glm::vec3(0.5f), 5.0f, 0.6f, 0.1f);
+    }
+    for (int stack = 0; stack < 30; ++stack) {
+        for (int level = 0; level < 10; ++level, ++made) {
+            const float x = static_cast<float>(stack % 6) * 3.0f - 7.5f;
+            const float z = 34.0f + static_cast<float>(stack / 6) * 3.0f;
+            SceneObject& c = Add(s, "Crate " + std::to_string(made + 1), glm::vec3(x, 0.5f + 1.005f * level, z));
+            c.render = RBox(glm::vec3(0.5f), glm::vec3(0.35f, 0.55f, 0.85f - 0.04f * level));
+            c.body = BDynBox(glm::vec3(0.5f), 5.0f, 0.6f, 0.1f);
+        }
+    }
+    {
+        SceneObject& l = Add(s, "Lamp", glm::vec3(0.0f, 12.0f, 20.0f));
+        SceneLightComponent light; light.kind = SceneLightKind::Point; light.color = glm::vec3(3.0f, 2.9f, 2.6f);
+        light.range = 60.0f;
+        l.light = light;
+    }
+    return s;
+}
+
 bool Write(const Scene& s, const std::string& path) {
     std::string error;
     if (!SaveSceneToFile(s, path, error)) { std::fprintf(stderr, "%s\n", error.c_str()); return false; }
@@ -609,6 +721,8 @@ int main(int argc, char** argv) {
     ok &= Write(MakeTerrain(true, true), dir + "/terrain_atmospheric_pass_rotated.judas");
     ok &= Write(MakeFidelityDemo(), dir + "/fidelity_demo.judas");
     ok &= Write(MakeFlatPlayground(), dir + "/flat_playground.judas");
+    ok &= Write(MakeRigidStability(), dir + "/rigid_stability.judas");
+    ok &= Write(MakeBroadphaseStress(), dir + "/broadphase_stress.judas");
     if (argc > 2) ok &= Write(MakeTinyGame(), std::string(argv[2]) + "/main.judas");
     return ok ? 0 : 1;
 }

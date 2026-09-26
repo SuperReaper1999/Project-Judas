@@ -80,23 +80,26 @@ RigidBody MakeDynamicSphere(const glm::vec3& position, float radius, float mass)
     return body;
 }
 
-// One fixed step of "apply gravity, integrate, resolve contact(s)" for a
-// single dynamic box resting/sliding on a single static box — the minimum
-// loop needed to test resting/friction/restitution without pulling in all
-// of PhysicsWorld.
+// One fixed step of a single dynamic box on a single static box, in exactly
+// PhysicsWorld::Step's order (Milestone 32): forces -> velocity, contacts at
+// the current poses, accumulated-impulse velocity solve, positions, then
+// penetration removal — the production ContactSolver on bare bodies.
 void StepBoxOnGround(RigidBody& box, const glm::vec3& boxHalfExtents, RigidBody& ground,
                       const glm::vec3& groundHalfExtents, const glm::vec3& gravity, float friction,
                       float restitution, float dt) {
     box.ApplyForce(gravity / box.inverseMass);
-    IntegrateRigidBody(box, dt);
-    for (int i = 0; i < 4; ++i) {
-        const ContactManifold manifold =
-            BoxVsBoxManifold(box.position, box.orientation, boxHalfExtents, ground.position,
-                              ground.orientation, groundHalfExtents);
-        for (int p = 0; p < manifold.count; ++p) {
-            ResolveContact(box, ground, manifold.points[p], friction, restitution);
-        }
+    IntegrateRigidBodyVelocity(box, dt);
+    ContactSolver solver;
+    const ContactManifold manifold =
+        BoxVsBoxManifold(box.position, box.orientation, boxHalfExtents, ground.position,
+                          ground.orientation, groundHalfExtents);
+    for (int p = 0; p < manifold.count; ++p) {
+        solver.AddContact(box, ground, manifold.points[p], friction, restitution);
     }
+    solver.Prepare();
+    solver.SolveVelocities();
+    IntegrateRigidBodyPosition(box, dt);
+    solver.SolvePositions();
 }
 
 // --- Section C: resting box on an arbitrarily-oriented plane ---
@@ -197,12 +200,15 @@ void TestRestitutionArbitraryOrientation() {
         bool hasBounced = false;
         for (int i = 0; i < kSteps; ++i) {
             sphere.ApplyForce(gravity / sphere.inverseMass);
-            IntegrateRigidBody(sphere, kDt);
+            IntegrateRigidBodyVelocity(sphere, kDt);
             const Contact contact = SphereVsBox(sphere.position, sphereRadius, ground.position,
                                                  ground.orientation, groundHalfExtents);
-            if (contact.hit) {
-                ResolveContact(sphere, ground, contact, 0.1f, 0.6f);
-            }
+            ContactSolver solver;
+            if (contact.hit) solver.AddContact(sphere, ground, contact, 0.1f, 0.6f);
+            solver.Prepare();
+            solver.SolveVelocities();
+            IntegrateRigidBodyPosition(sphere, kDt);
+            solver.SolvePositions();
             const float localUpwardSpeed =
                 glm::dot(glm::conjugate(sceneRotation) * sphere.linearVelocity, glm::vec3(0, 1, 0));
             if (hasBounced && localUpwardSpeed > maxUpwardSpeedAfterBounce) {
@@ -249,22 +255,26 @@ void TestStackArbitraryGravity() {
     for (int i = 0; i < kSteps; ++i) {
         lower.ApplyForce(gravity / lower.inverseMass);
         upper.ApplyForce(gravity / upper.inverseMass);
-        IntegrateRigidBody(lower, kDt);
-        IntegrateRigidBody(upper, kDt);
-        for (int iter = 0; iter < 4; ++iter) {
-            const ContactManifold groundLower =
-                BoxVsBoxManifold(lower.position, lower.orientation, boxHalfExtents, ground.position,
-                                  ground.orientation, groundHalfExtents);
-            for (int p = 0; p < groundLower.count; ++p) {
-                ResolveContact(lower, ground, groundLower.points[p], 0.6f, 0.0f);
-            }
-            const ContactManifold lowerUpper =
-                BoxVsBoxManifold(upper.position, upper.orientation, boxHalfExtents, lower.position,
-                                  lower.orientation, boxHalfExtents);
-            for (int p = 0; p < lowerUpper.count; ++p) {
-                ResolveContact(upper, lower, lowerUpper.points[p], 0.6f, 0.0f);
-            }
+        IntegrateRigidBodyVelocity(lower, kDt);
+        IntegrateRigidBodyVelocity(upper, kDt);
+        ContactSolver solver;
+        const ContactManifold groundLower =
+            BoxVsBoxManifold(lower.position, lower.orientation, boxHalfExtents, ground.position,
+                              ground.orientation, groundHalfExtents);
+        for (int p = 0; p < groundLower.count; ++p) {
+            solver.AddContact(lower, ground, groundLower.points[p], 0.6f, 0.0f);
         }
+        const ContactManifold lowerUpper =
+            BoxVsBoxManifold(upper.position, upper.orientation, boxHalfExtents, lower.position,
+                              lower.orientation, boxHalfExtents);
+        for (int p = 0; p < lowerUpper.count; ++p) {
+            solver.AddContact(upper, lower, lowerUpper.points[p], 0.6f, 0.0f);
+        }
+        solver.Prepare();
+        solver.SolveVelocities();
+        IntegrateRigidBodyPosition(lower, kDt);
+        IntegrateRigidBodyPosition(upper, kDt);
+        solver.SolvePositions();
     }
 
     Check(IsFinite(lower.position) && IsFinite(upper.position), "stack produced non-finite positions");

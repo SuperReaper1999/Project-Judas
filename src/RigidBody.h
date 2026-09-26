@@ -100,3 +100,10 @@ glm::mat3 SolidBoxInverseInertia(float mass, const glm::vec3& halfExtents);
 // like GravityField::Sample being re-evaluated fresh every fixed step
 // rather than cached).
 void IntegrateRigidBody(RigidBody& body, float fixedDeltaTime);
+
+// Milestone 32: the same integration split at the point a contact solver
+// needs to act — velocity from this step's force/torque (accumulators
+// cleared), then pose from the (possibly contact-corrected) velocity.
+// Calling both in order is exactly IntegrateRigidBody.
+void IntegrateRigidBodyVelocity(RigidBody& body, float fixedDeltaTime);
+void IntegrateRigidBodyPosition(RigidBody& body, float fixedDeltaTime);

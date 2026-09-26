@@ -6,7 +6,7 @@ someone with no prior context on this project. It is updated in place as
 milestones land, rather than kept as a per-milestone snapshot — see
 "Milestone history" below for how to recover an earlier milestone exactly.
 
-## What exists right now (M31 candidate, operator validation pending)
+## What exists right now (M32 rigid-body checkpoint, operator review pending; M32 as scoped is NOT complete)
 
 **Judas is a game engine.** Everything a player meets in the default
 launch — the terrain planet, its lake and atmosphere, the spacecraft, the
@@ -15,6 +15,17 @@ technology demonstration: authored scene content, loaded from files under
 `assets/scenes/`, that exercises engine capabilities. The engine must stay
 able to serve a small conventional flat-terrain game as well as a
 planetary/universe-scale one; nothing below privileges the demonstration.
+
+As of the Milestone 32 rigid-body checkpoint `PhysicsWorld` finds contact
+candidates with a dynamic AABB tree (no all-pairs pass), solves contacts
+with accumulated, warm-started impulses and Coulomb-disc friction, clips
+box-box contacts to the real overlap polygon, and generates speculative
+contacts so a body placed touching is supported from its first step (one
+known limitation: a restitution-0 body struck fast can hover at its
+pre-contact gap for one step). **The liquid/solid half of Milestone 32 —
+buoyancy, two-way coupling, player density and swimming — is deferred and
+not in this checkpoint**; liquid and player behaviour are exactly
+Milestone 31's. See "Milestone 32" at the end of this document.
 
 As of Milestone 31 expensive independent work runs on a bounded **job
 system** (`src/JobSystem.h`) and the resource path is asynchronous: file
@@ -422,7 +433,10 @@ verified by dedicated tests that rigidly rotate an entire scenario
 (bodies, gravity, and all) and confirm the result rotates identically —
 see "Automated testing."
 
-**Why this is still "ownership," not "reinventing everything":** the
+**Why this is still "ownership," not "reinventing everything":** (Superseded
+in part by Milestone 32, which replaced the all-pairs broadphase with a
+dynamic AABB tree and the vertex-inside manifold with face clipping — see
+"Milestone 32." The reasoning below is kept as the M7-Final record.) The
 brute-force nature of this stack is deliberate, not a placeholder for
 missing ambition. Broadphase is all-pairs (this demo's body count is in
 the low teens — a spatial structure would be unused machinery, not a
@@ -5441,7 +5455,8 @@ deferred, not oversights:
   principle. Not a concern for this demo's walking-speed player and
   slow-moving dynamic bodies; would need revisiting for anything moving
   meaningfully faster.
-- **Broadphase is brute-force all-pairs.** (Milestone 7-Final.) Exactly
+- **Broadphase is brute-force all-pairs.** (Milestone 7-Final; resolved by
+  Milestone 32's dynamic AABB tree — see "Milestone 32.") Exactly
   right at this demo's body count (low teens) — a spatial structure would
   be unused machinery, not a correctness requirement — but doesn't scale
   past a few dozen bodies without becoming the actual bottleneck. Left
@@ -7992,7 +8007,7 @@ library beyond the one starter scene. Each has a boundary here to attach
 to (`Project`, `AssetDatabase`, `ResourceManager`, the component registry,
 `DebugLineList`) when a brief asks for it.
 
-## Milestone 31 — Judas learns it doesn't have to wait (operator validation pending)
+## Milestone 31 — Judas learns it doesn't have to wait (accepted)
 
 ### The purpose
 
@@ -8246,3 +8261,159 @@ compilation pipeline, a coroutine/fiber framework, job dependencies/work
 stealing/task graphs, and arbitrary cross-thread mutation of engine
 objects. Each may consume the job system, the async IO contract and the
 residency boundary when a brief asks for it.
+
+## Milestone 32 — rigid-body portion extracted (operator review pending; M32 as scoped is NOT complete)
+
+### Status, stated plainly
+
+The Milestone 32 brief ("Judas learns why shit floats") asked for two
+things: a real rigid-body broadphase and accumulated-impulse contact
+solver, and general liquid/solid interaction — displaced-volume buoyancy
+with float/sink/neutral behaviour, two-way liquid/body coupling without
+the M26 one-way exception, the player as a liquid obstacle with a
+configurable density, and swimming. **Only the rigid-body half is
+complete.** It has been extracted into this checkpoint on its own.
+**Liquid/solid coupling is deferred** to a later milestone: the particle
+liquid architecture did not satisfy the required physics (below), and
+none of that work is production behaviour. Milestone 32 as originally
+scoped is not complete and is not claimed to be.
+
+Everything liquid- and player-related is exactly Milestone 31 behaviour:
+`FluidWorld`, the M26 rule that withholds the liquid's reaction from
+bodies lighter than four particle masses, `PlayerController`, scene
+format version 3 and every shipped scene (regenerated byte-identical).
+
+### Broadphase (`src/Broadphase.h`)
+
+The M7-Final all-pairs loop is gone; no production path tests every pair.
+`PhysicsWorld` keeps every body in a `DynamicAabbTree` (see the header for
+why a tree rather than a grid or sweep-and-prune): fat bounds with a 0.1 m
+margin, surface-area-heuristic insertion, AVL-style rebalancing. A dynamic
+body's tight bound covers its previous and current fixed-step pose (the
+player's sweep interpolates between them; a turning body adds its bounding
+sphere at both), and a proxy is reinserted only when that bound escapes
+its fat box. Candidate pairs (at least one movable body) are sorted, so the
+narrowphase visits them in the same order the old loop did. The player's
+capsule sweep queries the tree for the bodies its swept box can reach.
+
+New queries: `LastStepStats()` (bodies, possible/candidate/colliding pairs,
+contact points, reinsertions, tree height, broadphase/narrowphase/solver
+milliseconds — shown in the editor profiler, with a "Broadphase bounds"
+debug view), `QueryBodiesInAabb`, `GetBodyBroadphaseBounds`, and, for
+tests, `FindCollidingPairs`, `AliveBodies`, `GetBodyShape`. The
+narrowphase (per-primitive contact generation) moved unchanged into
+`src/Narrowphase.h` so the step and the tests share it.
+
+### Contact solver (`src/ContactSolver.h`)
+
+A sequential-impulse solver with accumulated impulses: the normal impulse
+is accumulated per contact and clamped at zero as a total; friction is a
+vector accumulated in the tangent plane and clamped to the Coulomb disc of
+that contact's accumulated normal impulse (no tangent basis, so nothing
+depends on how the world is rotated); converged impulses warm-start the
+next step through a contact cache keyed by body slot and generation,
+primitive pair and the anchor in body A's frame (within 0.05 m, normals
+within dot 0.9). 10 velocity iterations, then positions from the solved
+velocities, then 4 iterations of direct penetration removal (20 % per
+iteration beyond 5 mm of slop). The step order changed to make that
+possible: velocity from forces → broadphase → narrowphase → velocity solve
+→ position integration → penetration removal → proxy refresh. Box-box
+contacts now clip the incident face against the reference face's side
+planes (Sutherland–Hodgman) and keep up to four points, so an offset box
+on a box is supported at the corners of the real overlap polygon.
+
+### Speculative contacts
+
+Detection runs on the poses at the start of the step, after velocity
+integration. Without a tolerance, a body placed exactly touching (a crate
+rebuilt from its saved record) had no contact on its first step, sank
+g·dt² ≈ 2.7 mm and ended the step at −g·dt. Contacts are therefore
+generated speculatively:
+
+- **Reach.** A pair produces contacts when its separation is at most
+  `(|v_A − v_B| + |ω_A|·R_A + |ω_B|·R_B) · dt` (R: bounding radius) — the
+  distance its surfaces can close within this step at their post-force
+  velocities; g·dt² for a body at rest on a support. Before candidate
+  generation each dynamic proxy's fat bound is made to cover the body
+  grown by its own reach, so every such pair is a candidate.
+- **Solver.** A separated contact with gap *s* enforces `v_n ≥ −s/dt`: the
+  pair may close exactly the gap this step but not penetrate. Restitution
+  applies only when this step's approach actually reaches the surface.
+  Overlapping contacts use the unchanged rule.
+- **Numerical gap bound.** A computed gap no larger than its own rounding
+  error is treated as zero, so a resting body cannot flicker between
+  "touching" and "separated" where float spacing is coarse. For
+  `s = n·(x_A − x_B) − radii` with surface points `x = p + R·l`, unit
+  roundoff u = 2⁻²⁴ and γ_k = k·u/(1 − k·u) (Higham, §3.1), the first-order
+  forward error bound is
+  `|fl(s) − s| ≤ γ₈ · (|p_A| + |c − p_A| + |p_B| + |c − p_B|)`
+  (c the contact point; γ₃ rotating l, γ₁ adding p, γ₁ subtracting, γ₃
+  projecting onto n). It is about 1e-6 m for a crate near the origin and
+  1.6e-4 m at 137 m. It collapses only gaps at or below that bound; the
+  reach is not changed by it.
+
+### Known limitation: one-step hover at restitution 0
+
+With a single target velocity per contact the solver cannot make both the
+end-of-step velocity and the end-of-step position exact for a separated
+contact that is struck fast. Restitution is kept exact (rebound ratio
+0.513 for e = 0.5); the cost is that **a restitution-0 body closing faster
+than the 0.5 m/s restitution threshold stops at its speculative pre-contact
+gap for one fixed step and closes to contact on the next** (measured: a
+1 mm gap approached at 0.66 m/s stays 1.0 mm above the surface for one
+step). It does not penetrate and gains no energy. A target of
+`−gap/dt + restitution term` was tried and rejected: it broke restitution
+(a 6.4 m/s drop rebounded at ratio 0.073). Fixing both needs a different
+mechanism (for example closing speculative gaps in the position pass) and
+is deferred. This is not solved.
+
+### Measured evidence
+
+- 33/33 suites pass. New: `judas_broadphase_tests` (A dynamic tree against
+  brute-force overlap; B–E broadphase + narrowphase against all-pairs +
+  narrowphase — randomised, moving, destroyed and reused slots, rotated and
+  translated scenes: 0 missed, 0 spurious; F the player sweep identical to
+  a sweep against every body, 300/300; G a 1,500-crate floor) and
+  `judas_rigid_contact_tests` (A resting box, B five-box stack, C resting
+  sphere, D incline friction, E moving platform, F restitution, G 40-body
+  pile energy, H momentum; each also in a universe rotated 53° and offset
+  137 m).
+- The same rigid-contact cases on the M31 physics: 14 failures — resting
+  boxes drift 1.8–38 mm/s, the stack's top drifts 1.06 m with a 2.8 m
+  height error, a box creeps 0.58 m down a slope it should hold, a box on
+  a moving platform slips 7.7 mm. This checkpoint: 0 failures — resting
+  drift 0, stack height error 10 mm, no creep, platform drift 14–25 µm.
+- 1,500 crates at Full: about 4 ms per `PhysicsWorld::Step` (3.9–4.8 ms
+  across runs; typically broadphase 0.4 ms, narrowphase 1.2 ms, solver
+  2.3 ms; 1,500 candidate pairs of 1,125,750 possible), against 455.6 ms
+  for M31 on the same machine. The
+  M29 lifecycle measurement keeps its original "under a quarter of the
+  all-Full time" threshold (ratio ≈ 0.2).
+- The M29 world-state delta after the promote-all/step/demote cycle is 300
+  records, as in M31 (1,500 before speculative contacts).
+- Harness: classic and terrain are identical at near and far origins; with
+  the dynamic bodies removed both scenes, lake included, are byte-identical
+  to M31 near and far. With them, trajectories differ only through the
+  dynamic bodies, which now rest and collide under the new solver.
+  Editor autotests report the authored scene IDENTICAL after Play/Stop.
+
+### Liquid/solid coupling: what was tried, and why it is deferred
+
+Displaced-volume buoyancy gave correct float/sink behaviour and
+density-ratio immersion, but the particle liquid (PBF) also supports a
+body through particle contacts, and that support is the same pressure the
+buoyancy force represents. Every way of assigning its reaction broke a
+core case: given to the body it double-counts buoyancy; routed through the
+liquid's momentum budget it made dense bodies float; left unaccounted it
+leaked momentum and neutral bodies drifted. Deriving buoyancy from the
+particle pressure instead behaved as a load-bearing cushion (floaters rode
+above the surface, dense bodies were held mid-water, at every resolution
+tried); impact-only coupling broke containers and swimming; explicit
+container cavities fixed containers but not neutral buoyancy; and finer
+particles did not fix neutral buoyancy while costing ~205 ms per fluid step
+at 0.2 m spacing for a 4.8 m pool. The research code, variants and logs
+are kept by the developer outside the repository; none of it is in this
+checkpoint. A later milestone should start from a different coupling
+architecture (for example analytic rigid-body hydrostatics against a
+resolved liquid surface, or a dedicated pressure solve), not from these
+variants.

@@ -15,9 +15,43 @@ loaded with the vendored GLAD 2.0.8 OpenGL 3.3 Core loader through the
 SDL-created context; generation and license provenance are recorded in
 [`third_party/glad/README.md`](third_party/glad/README.md).
 
-## Status: Milestone 31 candidate (operator validation pending)
+## Status: Milestone 32 rigid-body checkpoint (operator review pending; M32 as scoped is NOT complete)
 
-**New in M31 — Judas learns it doesn't have to wait.** Expensive
+**Milestone 32 was scoped as "Judas learns why shit floats": a real
+rigid-body broadphase and contact solver, plus general liquid/solid
+interaction (buoyancy, two-way coupling, player density, swimming). Only
+the rigid-body half is complete and is extracted here. Liquid/solid
+coupling is deferred** — the particle-liquid architecture did not produce
+correct floating, neutral buoyancy and container behaviour together (see
+[`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md), "Milestone 32"). Liquid and
+player behaviour in this checkpoint are exactly Milestone 31's.
+
+What is in it:
+
+1. **Broadphase** (`src/Broadphase.h`). A dynamic AABB tree replaces the
+   all-pairs loop; the player's sweep uses it too. 1,500 crates at Full
+   step in about 4 ms (M31: 455.6 ms on the same machine), with 1,500
+   candidate pairs of 1,125,750 possible.
+2. **Contact solver** (`src/ContactSolver.h`). Accumulated, warm-started
+   impulses with Coulomb-disc friction and box-box face clipping. Resting
+   boxes no longer creep (M31: 1.8–38 mm/s), a five-box stack stands, a
+   box holds on a slope within its friction angle and rides a moving
+   platform.
+3. **Speculative contacts.** A body placed touching is supported from its
+   first step (a derived floating-point bound treats rounding-level gaps
+   as touching). **Known limitation:** a restitution-0 body closing faster
+   than 0.5 m/s stops at its pre-contact gap for one step before landing;
+   it never penetrates or gains energy. Not solved; deferred.
+4. **Diagnostics.** Profiler broadphase/narrowphase/solver lines and a
+   "Broadphase bounds" debug view; two demonstration scenes,
+   `rigid_stability.judas` and `broadphase_stress.judas` (1,500 crates).
+
+All 33 suites pass (new: `judas_broadphase_tests`, checked against a
+brute-force oracle, and `judas_rigid_contact_tests`, each case also in a
+rotated, translated universe). Without dynamic bodies the harness is
+byte-identical to M31 at near and far origins.
+
+**Milestone 31 (accepted) — Judas learns it doesn't have to wait.** Expensive
 independent work no longer stops the simulation/render thread:
 
 1. **Job system** (`src/JobSystem.h`). A bounded worker pool (count derived
@@ -284,6 +318,8 @@ Shipped scenes (`assets/scenes/`):
 | `classic_fluid_zero.judas` | Classic with a zero-gravity fluid-station region |
 | `fidelity_demo.judas` | **M29:** flat ground, 60 managed crates receding to 240 m, two free-flying satellites, distance policy (Full ≤ 25 m, Coarse ≤ 70 m, Dormant beyond) |
 | `flat_playground.judas` | **M29:** the tiny conventional case — fifty entities on a small map, no policy, nothing managed |
+| `rigid_stability.judas` | **M32:** dry rigid contacts — stacks of equal boxes, loose boxes of several sizes, a 20° slope with a high-friction box that holds and a low-friction one that slides, a sphere |
+| `broadphase_stress.judas` | **M32:** 1,500 crates, all Full rigid bodies (no fidelity policy), in a grid with a few stacks — the profiler's broadphase lines under load |
 
 The pre-M28 environment switches still work for the no-argument launch
 from the repository root and select these files from the project's
@@ -1129,8 +1165,12 @@ uses, so its per-body CSV columns follow the scene's dynamic bodies in
 scene order and include every body the interactive scene has (the
 orbital bodies and cups were previously omitted from harness runs).
 
-Thirty-one standalone, headless test executables also exist (no window or GL
-context) — the M31 `judas_job_tests` covers the job system, asynchronous
+Thirty-three standalone, headless test executables also exist (no window or GL
+context) — the M32 `judas_broadphase_tests` checks the dynamic AABB tree
+and the broadphase + narrowphase against a brute-force all-pairs oracle
+(including the player's sweep and a 1,500-crate floor), and
+`judas_rigid_contact_tests` covers resting contact, stacking, friction,
+moving supports, restitution, energy and momentum; the M31 `judas_job_tests` covers the job system, asynchronous
 file reads and the asynchronous resource manager; the M30
 `judas_project_tests` covers projects, asset identity, the resource
 manager's synchronous contract, project launch, gizmo mathematics and

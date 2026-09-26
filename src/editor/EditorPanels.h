@@ -9,6 +9,7 @@
 #include "EditorDocument.h"
 #include "GizmoMath.h"
 #include "JobSystem.h"
+#include "PhysicsWorld.h"
 #include "ResourceManager.h"
 #include "WorldDebugView.h"
 
@@ -78,6 +79,7 @@ struct ProfilerData {
     float fluidMilliseconds = 0.0f;      // fluid solve inside the last step (0 when not measured)
     float surfaceMilliseconds = 0.0f;    // fluid surface rebuild (presentation)
     float sceneMilliseconds = 0.0f;      // RenderWorldFrame submission
+    PhysicsWorld::StepStats physics;     // Milestone 32: broadphase/solver of the last step
     ResourceStats resources;
     JobStats jobs;  // Milestone 31
     bool playing = false;

@@ -38,6 +38,8 @@ class Scene;
 //   fluidParticles   a small marker per presented particle, capped at
 //                    kMaxFluidParticleMarkers so a lake stays interactive
 //   atmosphere       the reference and top radii of each atmosphere
+//   broadphase       (M32) every body's broadphase bound (the fat AABB the
+//                    dynamic tree holds; the narrowphase decides contact)
 struct DebugViewOptions {
     bool collisionShapes = false;
     bool playerCapsule = false;
@@ -50,10 +52,11 @@ struct DebugViewOptions {
     bool terrainNormals = false;
     bool fluidParticles = false;
     bool atmosphere = false;
+    bool broadphase = false;
 
     bool AnyEnabled() const {
         return collisionShapes || playerCapsule || contacts || gravity || frameAxes || lights ||
-               interactionRanges || lifecycle || terrainNormals || fluidParticles || atmosphere;
+               interactionRanges || lifecycle || terrainNormals || fluidParticles || atmosphere || broadphase;
     }
 };
 

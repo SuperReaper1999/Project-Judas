@@ -625,6 +625,7 @@ void EditorApplication::CollectProfilerData(float frameDeltaSeconds) {
         p.physicsBodies = p.dynamicBodies = p.contacts = 0;
         p.entitiesFull = p.entitiesCoarse = p.entitiesDormant = p.entitiesDestroyed = 0;
         p.fluidParticles = 0;
+        p.physics = PhysicsWorld::StepStats{};
         return;
     }
     p.fixedStepsThisFrame = m_play->LastFixedStepsThisFrame();
@@ -642,6 +643,7 @@ void EditorApplication::CollectProfilerData(float frameDeltaSeconds) {
     p.fluidMilliseconds = m.fluidMeasured ? static_cast<float>(m.fluidMilliseconds) : 0.0f;
     p.surfaceMilliseconds = static_cast<float>(m_play->LastSurfaceMilliseconds());
     p.sceneMilliseconds = static_cast<float>(m_play->LastSceneMilliseconds());
+    p.physics = m_world->Physics().LastStepStats();
 }
 
 int EditorApplication::Run(int argc, char** argv) {
