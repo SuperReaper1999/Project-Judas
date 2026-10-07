@@ -27,7 +27,7 @@ void remap(SceneObject& o,const std::map<SceneObjectId,SceneObjectId>& ids){auto
 bool reference(SceneObject& o,const std::string& field,SceneObjectId id){if(field.rfind("script:",0)==0){auto split=field.find(':',7);if(split==std::string::npos)return false;uint64_t slot=0;try{slot=std::stoull(field.substr(7,split-7));}catch(...){return false;}for(auto& s:o.scripts)if(s.id==slot)return ScriptSystem::SetPropertyEntity(s.properties,field.substr(split+1),id);return false;}if(field.rfind("deformable:",0)==0&&o.deformable){for(auto& a:o.deformable->attachments)if(a.group==field.substr(11)){a.target=id;return true;}return false;}if(field=="socket"&&o.socket){o.socket->target=id;return true;}if(field=="parent"){o.parent=id;return true;}if(field=="textureCamera"&&o.render){o.render->textureCamera=id;return true;}if(field=="bodyA"&&o.joint){o.joint->bodyA=id;return true;}if(field=="bodyB"&&o.joint){o.joint->bodyB=id;return true;}if(field=="source"&&o.liquidConnection){o.liquidConnection->source=id;return true;}if(field=="destination"&&o.liquidConnection){o.liquidConnection->destination=id;return true;}return false;}
 }
 bool ParseWorldManifest(const std::string& text,WorldManifest& out,std::string& error){
-    if(IsNamedDocument(text)){std::string legacy;if(!NamedToLegacy(text,"world",legacy,error))return false;return ParseWorldManifest(legacy,out,error);}
+    if(IsNamedDocument(text)){std::string legacy;if(!NamedToLegacy(text,"world",legacy,error,false))return false;return ParseWorldManifest(legacy,out,error);}
     if(text.size()>1024*1024||text.find('\0')!=std::string::npos){error="world manifest exceeds 1MiB or contains NUL";return false;}
     std::istringstream input(text);std::string line;WorldManifest m;unsigned n=0;bool header=false,budget=false;
     while(std::getline(input,line)){++n;std::istringstream s(line);s.imbue(std::locale::classic());std::string key;if(!(s>>key)||key[0]=='#')continue;
@@ -137,11 +137,11 @@ struct WorldStreaming::Impl {
     struct ReferenceCache {std::string asset,properties;std::vector<EntityId> targets;};
     std::map<std::pair<EntityId,uint64_t>,ReferenceCache> referenceCache;
     std::map<std::string,bool> scriptReferencePins;bool referenceMetadataPending=false;
-    std::vector<SceneObject> pinObjects;unsigned pinVersion=~0u;
+    std::vector<EntityId> pinObjects;unsigned pinVersion=~0u;
     void refreshScriptReferences(){
-        pinObjects=world.ScriptObjects();pinVersion=world.EntityVersion();
+        if(pinVersion!=world.EntityVersion()){pinObjects=world.DefinitionIds();pinVersion=world.EntityVersion();}
         scriptReferencePins.clear();referenceMetadataPending=false;std::set<std::pair<EntityId,uint64_t>> live;
-        for(const auto& object:pinObjects)for(const auto& slot:object.scripts)if(slot.enabled){
+        for(const auto& object:world.ScriptSlots())for(const auto& slot:object.scripts)if(slot.enabled){
             auto key=std::make_pair(object.id,slot.id);live.insert(key);
             auto [it,inserted]=referenceCache.try_emplace(key);
             if(inserted||it->second.properties!=slot.properties||it->second.asset!=slot.asset){it->second.properties=slot.properties;it->second.asset=slot.asset;it->second.targets.clear();}
@@ -158,7 +158,8 @@ struct WorldStreaming::Impl {
         if(!r.suspensionError.empty())add(r.suspensionError);
         if(referenceMetadataPending)add("script reference metadata awaiting normal synchronization");
         if(manifest.regions.at(id).policy=="resident")add("authored resident policy");
-        for(auto& o:pinObjects){
+        for(auto owner:pinObjects){
+            const auto* definition=world.RuntimeDefinition(owner);if(!definition)continue;const auto& o=*definition;
             auto own=owners.find(o.id);bool here=own!=owners.end()&&own->second==id;
             if(o.deformable){std::string error;auto* deform=world.RuntimeDeformable(o.id,error);if(here&&deform&&deform->asset->fracture)add("live fracture family: physical pieces retained; remove/adopt family before suspension");if(!here&&deform&&deform->asset->fracture&&deform->asset->fracture->rigid)for(unsigned p=0;p<deform->asset->fracture->parts.size();++p){auto child=world.FracturePartEntity(o.id,p,true);if(child&&Owner(child)==id){add("material piece owned by an external fracture family");break;}}const auto& settings=deform?deform->settings:*o.deformable;for(size_t i=0;i<settings.attachments.size();++i){const auto& a=settings.attachments[i];if(a.enabled&&(!deform||!deform->released[i])&&a.target&&Owner(a.target)==id&&Owner(o.id)!=id)add("external deformable attachment");}}
             if(here&&(o.liquidBasin||o.liquidContainer||o.liquidConnection))add("conserved liquid group: no lossless suspension");

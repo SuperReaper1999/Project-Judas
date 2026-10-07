@@ -1,0 +1,56 @@
+[  5%] Built target judas_icu_build
+[ 15%] Built target judas_quickjs
+[ 15%] Built target judas_app_icon
+[ 30%] Built target freetype
+[ 30%] Built target judas_glad
+[ 30%] Built target judas_profiler
+[ 35%] Built target judas_navigation_backend
+[ 35%] Built target judas_audio_backend
+[ 35%] Built target judas_ufbx
+[ 35%] Built target judas_materials
+[ 35%] Built target harfbuzz
+[ 35%] Building CXX object CMakeFiles/judas_engine.dir/src/ProjectExporter.cpp.o
+[ 40%] Building CXX object CMakeFiles/judas_engine.dir/src/ScriptSystem.cpp.o
+[ 40%] Building CXX object CMakeFiles/judas_engine.dir/src/SceneSession.cpp.o
+[ 45%] Building CXX object CMakeFiles/judas_engine.dir/src/SaveService.cpp.o
+/home/conner/Documents/GitHub/Project-Judas/src/SaveService.cpp: In function ‘bool ComputeSaveContentFingerprint(const Project&, const AssetDatabase&, const std::vector<std::__cxx11::basic_string<char> >&, std::string&, std::string&, const JobContext*)’:
+/home/conner/Documents/GitHub/Project-Judas/src/SaveService.cpp:37:29: error: variable ‘std::ifstream file’ has initializer but incomplete type
+   37 |    std::ifstream file(report);auto data=nlohmann::json::parse(file,[](int depth,nlohmann::json::parse_event_t,const nlohmann::json&){if(depth>48)throw std::runtime_error("package dependency report nesting bound");return true;});
+      |                             ^
+/home/conner/Documents/GitHub/Project-Judas/src/SaveService.cpp:12:1: note: ‘std::ifstream’ is defined in header ‘<fstream>’; this is probably fixable by adding ‘#include <fstream>’
+   11 | #include "PerformanceProfiler.h"
+  +++ |+#include <fstream>
+   12 | #include <filesystem>
+/home/conner/Documents/GitHub/Project-Judas/src/SaveService.cpp:40:43: error: expected primary-expression before ‘>’ token
+   40 |     auto id=entry.at("id").get<std::string>(),type=entry.at("type").get<std::string>(),hash=entry.at("sha256").get<std::string>();bool known=false;
+      |                                           ^
+/home/conner/Documents/GitHub/Project-Judas/src/SaveService.cpp:40:45: error: expected primary-expression before ‘)’ token
+   40 |     auto id=entry.at("id").get<std::string>(),type=entry.at("type").get<std::string>(),hash=entry.at("sha256").get<std::string>();bool known=false;
+      |                                             ^
+/home/conner/Documents/GitHub/Project-Judas/src/SaveService.cpp:41:64: error: ‘type’ was not declared in this scope; did you mean ‘wctype’?
+   41 |     for(int i=0;i<=int(AssetType::PhysicalMaterial);++i)known|=type==AssetTypeName(AssetType(i));
+      |                                                                ^~~~
+      |                                                                wctype
+/home/conner/Documents/GitHub/Project-Judas/src/SaveService.cpp:42:37: error: ‘hash’ was not declared in this scope; did you mean ‘std::hash’?
+   42 |     if(!IsValidAssetId(id)||!known||hash.size()!=64||hash.find_first_not_of("0123456789abcdef")!=std::string::npos||!records.emplace(id,std::make_pair(type,hash)).second)throw std::runtime_error("invalid/duplicate package excluded asset identity");
+      |                                     ^~~~
+      |                                     std::hash
+In file included from /usr/include/c++/15/string_view:52,
+                 from /usr/include/c++/15/bits/basic_string.h:51,
+                 from /usr/include/c++/15/string:56,
+                 from /home/conner/Documents/GitHub/Project-Judas/src/SaveArchive.h:7,
+                 from /home/conner/Documents/GitHub/Project-Judas/src/SaveStorage.h:2,
+                 from /home/conner/Documents/GitHub/Project-Judas/src/SaveService.h:2,
+                 from /home/conner/Documents/GitHub/Project-Judas/src/SaveService.cpp:1:
+/usr/include/c++/15/bits/functional_hash.h:68:12: note: ‘std::hash’ declared here
+   68 |     struct hash;
+      |            ^~~~
+/home/conner/Documents/GitHub/Project-Judas/src/SaveService.cpp:42:152: error: ‘type’ was not declared in this scope; did you mean ‘wctype’?
+   42 |     if(!IsValidAssetId(id)||!known||hash.size()!=64||hash.find_first_not_of("0123456789abcdef")!=std::string::npos||!records.emplace(id,std::make_pair(type,hash)).second)throw std::runtime_error("invalid/duplicate package excluded asset identity");
+      |                                                                                                                                                        ^~~~
+      |                                                                                                                                                        wctype
+gmake[3]: *** [CMakeFiles/judas_engine.dir/build.make:1605: CMakeFiles/judas_engine.dir/src/SaveService.cpp.o] Error 1
+gmake[3]: *** Waiting for unfinished jobs....
+gmake[2]: *** [CMakeFiles/Makefile2:965: CMakeFiles/judas_engine.dir/all] Error 2
+gmake[1]: *** [CMakeFiles/Makefile2:8156: CMakeFiles/judas_scalability_pipeline_tests.dir/rule] Error 2
+gmake: *** [Makefile:2594: judas_scalability_pipeline_tests] Error 2

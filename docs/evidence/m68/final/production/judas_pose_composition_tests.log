@@ -1,0 +1,19 @@
+PASS shared M46 import reused
+PASS 50/50 translation and scale
+PASS normalized shortest path quaternion blend
+PASS equivalent quaternion signs
+PASS stable hierarchy key resolves mask
+PASS mask leaves other local joints unchanged
+PASS masked parent correctly carries child hierarchy
+PASS additive evaluated against explicit reference
+PASS additive rotation and relative scale
+PASS crossfade begins without pop
+PASS crossfade completes and retires outgoing contributors
+PASS interrupted fade preserves current weighted state
+PASS zero-duration replacement
+PASS independent instance mixer clocks
+PASS authored layers and mask round-trip
+PASS layer changes enter strict authored fingerprint
+PERFORMANCE three_layers_us=0.787191
+PERFORMANCE eight_instances_32_nodes_three_layers_us=23.918900 samples=1000
+SUMMARY 16 checks 0 failures

@@ -10,6 +10,11 @@ struct ModelCookTask {
  bool success=false,unchanged=false;std::string error,recipe,output,assetId,temporary;
  ModelImportReport report;
  std::shared_ptr<const MeshData> preview;
+ // CLI/build tools need no decoded unchanged preview; editor defaults to one.
+ bool previewRequired=true,receiptHit=false;unsigned decodedProducts=0;
+ std::string importRecord,outputHash,verifiedOutputStamp;
+ std::map<std::string,std::string> verifiedInputStamps;
+ ~ModelCookTask();
  std::function<bool()> workerCancelled;
 };
 std::shared_ptr<ModelCookTask> QueueModelImport(JobSystem&,const std::string& recipe);

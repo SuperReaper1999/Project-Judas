@@ -14,13 +14,25 @@ TextureHandle Renderer::ColourTexture(TextureHandle source){
 GLint Renderer::MaterialUniform(const char* name){auto it=m_materialUniforms.find(name);if(it!=m_materialUniforms.end())return it->second;auto location=glGetUniformLocation(m_shaderProgram,name);m_materialUniforms.emplace(name,location);return location;}
 MaterialHandle Renderer::CreateMaterial(const MaterialDefinition& definition){
  std::string error;if(!ValidateMaterial(definition,error))return {};
- GpuMaterial m;m.alive=true;m.definition=definition;
+ GpuMaterial m;m.alive=true;m.definition=MaterialSettings(definition);
  for(size_t i=0;i<5;++i){const auto& image=definition.maps[i];if(!image.embedded.pixels.empty()){m.textures[i]=CreateTexture(image.embedded,(i==0||i==4)&&definition.model!=MaterialModel::Legacy);glGenSamplers(1,&m.samplers[i]);auto& s=image.sampler;glSamplerParameteri(m.samplers[i],GL_TEXTURE_WRAP_S,s.wrapS);glSamplerParameteri(m.samplers[i],GL_TEXTURE_WRAP_T,s.wrapT);glSamplerParameteri(m.samplers[i],GL_TEXTURE_MIN_FILTER,s.minFilter);glSamplerParameteri(m.samplers[i],GL_TEXTURE_MAG_FILTER,s.magFilter);}m.definition.maps[i].embedded=TextureData{};}
  // Encoded source images belong to the immutable CPU resource/cooked archive.
  // Retaining them here would copy megabytes in ApplyMaterialOverride on every
  // draw. The GPU material only needs uploaded handles and lightweight settings.
  for(auto& map:m.definition.maps)std::vector<uint8_t>().swap(map.encodedImage);
  MaterialHandle handle{unsigned(m_materials.size())};m_materials.push_back(std::move(m));return handle;
+}
+bool Renderer::UploadMeshMap(MeshHandle mesh,const MeshData& data,size_t material,size_t map){
+ JUDAS_PROFILE_SCOPE("Mesh texture upload unit");
+ auto* gpu=GetMesh(mesh);if(!gpu||material>=gpu->materials.size()||map>=5)return false;
+ auto handle=gpu->materials[material];if(!handle.IsValid()||handle.id>=m_materials.size())return false;
+ const auto& definition=data.materials.at(material);const auto& image=definition.maps[map];
+ auto& m=m_materials[handle.id];if(image.embedded.pixels.empty())return true;
+ m.textures[map]=CreateTexture(image.embedded,(map==0||map==4)&&definition.model!=MaterialModel::Legacy);
+ if(!m.textures[map].IsValid())return false;
+ glGenSamplers(1,&m.samplers[map]);auto& s=image.sampler;
+ glSamplerParameteri(m.samplers[map],GL_TEXTURE_WRAP_S,s.wrapS);glSamplerParameteri(m.samplers[map],GL_TEXTURE_WRAP_T,s.wrapT);
+ glSamplerParameteri(m.samplers[map],GL_TEXTURE_MIN_FILTER,s.minFilter);glSamplerParameteri(m.samplers[map],GL_TEXTURE_MAG_FILTER,s.magFilter);return true;
 }
 void Renderer::DestroyMaterial(MaterialHandle handle){if(!handle.IsValid()||handle.id>=m_materials.size())return;auto& m=m_materials[handle.id];if(!m.alive)return;for(auto t:m.textures)DestroyTexture(t);for(auto s:m.samplers)if(s)glDeleteSamplers(1,&s);m={};}
 EnvironmentHandle Renderer::CreateEnvironment(const EnvironmentData& data){

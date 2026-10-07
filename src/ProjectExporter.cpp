@@ -7,6 +7,8 @@
 #include "Deformable.h"
 #include "AsyncFile.h"
 #include "ProjectExporter.h"
+#include "AssetDependencies.h"
+#include "../third_party/nlohmann/json.hpp"
 #include "CollisionAsset.h"
 #include "PhysicalMaterial.h"
 #include "AppIcon.h"
@@ -169,11 +171,22 @@ bool ExportProject(const Project& project, const ProjectExportOptions& options,
             Require(!relative.empty() && !relative.is_absolute() && Inside((root / relative).lexically_normal(), root), "Unsafe package content path: " + relative.string());
             const auto first = relative.begin()->string();
             Require(first != "engine" && first != "judas" && first != "game.judasproj" &&
-                    first != kGamePackageMarker && first != "RUNTIME_REQUIREMENTS.txt" && first != "game-icon.png",
+                    first != kGamePackageMarker && first != "RUNTIME_REQUIREMENTS.txt" && first != "game-icon.png" && first != "DEPENDENCIES.json",
                     "Project content collides with reserved package path: " + relative.string());
         };
         safeContentPath(project.Settings().assetsDir);
         safeContentPath(project.Settings().scenesDir);
+        std::map<AssetId,std::set<std::string>> included;
+        std::set<std::string> auxiliary;
+        auto include=[&](const AssetId& id,const std::string& reason){if(id.empty())return;auto* r=assets.Find(id);Require(r&&!r->missing,"Missing required asset "+id+" ("+reason+")");included[id].insert(reason);};
+        if(project.Settings().exportAssetPolicy=="all")for(const auto& [id,_]:assets.Records())include(id,"conservative registered asset policy");
+        for(const auto& id:project.Settings().runtimeAssets)include(id,"explicit runtime/save root");
+        include(project.Settings().iconAsset,"project icon");include(project.Settings().worldManifest,"composed world manifest");
+        for(const auto& id:project.Settings().localization.fonts)include(id,"project localization");
+        for(const auto& [_,locale]:project.Settings().localization.locales){include(locale.catalog,"project localization");for(const auto& id:locale.fonts)include(id,"project localization");}
+        // Existing save identity hashes these registered sets conservatively.
+        // Preserve the content contract; no schema/fingerprint change to prune them.
+        for(const auto& [id,r]:assets.Records())if(r.type==AssetType::Script||r.type==AssetType::UI||r.type==AssetType::Font||r.type==AssetType::Catalog)include(id,"dynamic script/UI or save fingerprint compatibility");
         for (const auto& path : scenes) {
             safeContentPath(path.lexically_relative(root));
             Require(Inside(path, root), "Scene escapes project root: " + path.string());
@@ -181,6 +194,7 @@ bool ExportProject(const Project& project, const ProjectExportOptions& options,
             const bool loaded = LoadSceneFromFile(path.string(), scene, detail);
             Require(loaded, "Invalid scene " + path.string() + ": " + detail);
             References(scene, assets, project.Settings().classification,project.Settings().navigation);
+            std::set<AssetId> references;CollectSceneAssetReferences(scene,references);for(const auto& id:references)include(id,"scene "+path.lexically_relative(root).generic_string());
         }
         if(!project.Settings().worldManifest.empty()){
             auto* record=assets.Find(project.Settings().worldManifest);WorldManifest manifest;std::string detail;
@@ -190,10 +204,18 @@ bool ExportProject(const Project& project, const ProjectExportOptions& options,
             for(auto& [id,region]:manifest.regions){Require(scenes.count((root/region.scene).lexically_normal()),"World manifest requires excluded scene: "+region.scene);Require(PrepareWorldRegion(region,project,assets,products[id],detail),"World region: "+detail);}
             Require(ValidateWorldQualifiedReferences(manifest,products,detail),detail);
         }
+        // Visit each identity once, handle cycles/shared roots, and retain all
+        // dependencies of dynamically requested prefabs just like scene content.
+        std::set<AssetId> visited;
+        for(;;){auto next=std::find_if(included.begin(),included.end(),[&](const auto& entry){return !visited.count(entry.first);});if(next==included.end())break;auto id=next->first;visited.insert(id);std::set<AssetId> deps;std::string detail;const bool collected=CollectAssetDependencies(*assets.Find(id),deps,auxiliary,detail);Require(collected,"Dependency "+id+": "+detail);for(const auto& dep:deps)include(dep,"dependency of "+id);}
+        for(const auto& path:auxiliary){Require(fs::is_regular_file(path)&&Inside(fs::canonical(path),root),"Missing/unsafe model dependency: "+path);safeContentPath(fs::path(path).lexically_relative(root));}
+        std::map<AssetId,std::string> hashes;
         for (const auto& [id, record] : assets.Records()) {
-            (void)id; std::string detail;
+            if(!included.count(id))continue;
+            std::string detail;
             safeContentPath(record.relativePath);
             Require(Inside(fs::canonical(record.path), root), "Asset escapes project root: " + record.relativePath);
+            Require(SceneFingerprintSha256File(record.path,hashes[id],detail),detail);
             const bool valid = AssetDatabase::ValidateAssetFile(record.path, record.type, detail);
             Require(valid, "Invalid asset " + record.relativePath + ": " + detail);
             if(record.type==AssetType::Mesh&&fs::path(record.path).extension()==".judasmodel") {
@@ -226,10 +248,20 @@ bool ExportProject(const Project& project, const ProjectExportOptions& options,
         fs::create_directories(staging / project.Settings().assetsDir);
         fs::create_directories(staging / project.Settings().scenesDir);
         for (const auto& path : scenes) Copy(path, staging / path.lexically_relative(root));
+        nlohmann::json report={{"version",1},{"policy",project.Settings().exportAssetPolicy},{"included",nlohmann::json::array()},{"excluded",nlohmann::json::array()},{"scenes",nlohmann::json::array()},{"auxiliary",auxiliary},{"assetBytes",0},{"deduplicatedBytes",0}};
+        std::map<std::string,fs::path> payloads;uintmax_t assetBytes=0,deduplicated=0,excluded=0;
+        for(const auto& path:scenes)report["scenes"].push_back(path.lexically_relative(root).generic_string());
+        report["auxiliary"]=nlohmann::json::array();for(const auto& path:auxiliary){Copy(path,staging/fs::path(path).lexically_relative(root));report["auxiliary"].push_back(fs::path(path).lexically_relative(root).generic_string());}
         for (const auto& [id, record] : assets.Records()) {
+            if(!included.count(id)){auto bytes=fs::file_size(record.path);std::string hash,detail;const bool hashed=SceneFingerprintSha256File(record.path,hash,detail);Require(hashed,detail);excluded+=bytes;report["excluded"].push_back({{"id",id},{"path",record.relativePath},{"type",AssetTypeName(record.type)},{"sha256",hash},{"bytes",bytes}});continue;}
             const auto relative = fs::path(record.relativePath);
             Require(!relative.is_absolute() && Inside((root / relative).lexically_normal(), root), "Unsafe asset path");
-            Copy(record.path, staging / relative);
+            auto bytes=fs::file_size(record.path);assetBytes+=bytes;
+            const auto key=std::string(AssetTypeName(record.type))+":"+hashes.at(id);auto old=payloads.find(key);bool shared=false;
+            if(old!=payloads.end()){fs::create_directories((staging/relative).parent_path());std::error_code ec;fs::create_hard_link(old->second,staging/relative,ec);shared=!ec;if(shared)deduplicated+=bytes;}
+            if(!shared)Copy(record.path,staging/relative);
+            payloads.emplace(key,staging/relative);
+            report["included"].push_back({{"id",id},{"path",record.relativePath},{"type",AssetTypeName(record.type)},{"bytes",bytes},{"sha256",hashes.at(id)},{"reasons",included.at(id)},{"sharedPayload",shared}});
             std::string detail;
             Require(AssetDatabase::WriteMeta((staging / relative).string() + kAssetMetaExtension,
                     id, record.type, relative.generic_string(), detail), detail);
@@ -242,7 +274,7 @@ bool ExportProject(const Project& project, const ProjectExportOptions& options,
         // arbitrary development files. Only ancestors of registered assets.
         std::set<fs::path> notices;
         for (const auto& [id, record] : assets.Records()) {
-            (void)id;
+            if(!included.count(id))continue;
             for (auto directory = fs::path(record.path).parent_path(); Inside(directory, root); directory = directory.parent_path())
                 for (const char* name : {"LICENSE", "LICENSE.txt", "LICENSE.md", "COPYING"})
                     if (fs::is_regular_file(directory / name)) notices.insert(directory / name);
@@ -251,6 +283,8 @@ bool ExportProject(const Project& project, const ProjectExportOptions& options,
             const auto relative = notice.lexically_relative(root); safeContentPath(relative);
             Copy(notice, staging / relative);
         }
+        report["assetBytes"]=assetBytes;report["deduplicatedBytes"]=deduplicated;report["excludedAssetBytes"]=excluded;report["physicalAssetBytes"]=assetBytes-deduplicated;
+        write("DEPENDENCIES.json",report.dump(2)+"\n");
         auto packagedSettings=project.Settings();
         packagedSettings.saveIdentity=project.Settings().saveIdentity.empty()?SceneFingerprintSha256(project.Settings().name+"\n"+fs::path(project.ProjectFile()).filename().string()):project.Settings().saveIdentity;
         write("game.judasproj", Project::SerializeToString(packagedSettings));
@@ -264,9 +298,9 @@ bool ExportProject(const Project& project, const ProjectExportOptions& options,
         Copy(engineRoot / "assets/fonts/DejaVuSans-LICENSE.txt", staging / "engine/licenses/DejaVuSans.txt");
         Copy(engineRoot / "third_party/RUNTIME_NOTICES.txt", staging / "engine/third_party/RUNTIME_NOTICES.txt");
         Copy(engineRoot / "LICENSE", staging / "engine/licenses/Judas.txt");
-        write("RUNTIME_REQUIREMENTS.txt", "Judas Linux desktop Release package. Run ./judas (no arguments).\nRequires compatible glibc/libstdc++, SDL2 and its system dependencies, OpenGL 3.3 drivers.\nNo editor or development tree is required. Platform libraries are system provided; not bundled.\nUnicode text libraries and ICU locale/boundary data are statically linked.\nProject fonts/catalogs are packaged assets; no desktop font or ICU_DATA lookup.\nAll registered project assets are included for dynamic ID loading. Scenes follow explicit project inclusion/exclusion policy.\nSaves: $XDG_DATA_HOME/judas/games/<save-id>/Saves, otherwise $HOME/.local/share/...\nThird-party notices: engine/third_party/RUNTIME_NOTICES.txt and engine/licenses.\n");
+        write("RUNTIME_REQUIREMENTS.txt", "Judas Linux desktop Release package. Run ./judas (no arguments).\nRequires compatible glibc/libstdc++, SDL2 and its system dependencies, OpenGL 3.3 drivers.\nNo editor or development tree is required. Platform libraries are system provided; not bundled.\nUnicode text libraries and ICU locale/boundary data are statically linked.\nProject fonts/catalogs are packaged assets; no desktop font or ICU_DATA lookup.\nAsset policy and inclusion reasons: DEPENDENCIES.json. All is conservative; closure requires explicit dynamic/runtime roots. Scenes follow project inclusion/exclusion policy.\nSaves: $XDG_DATA_HOME/judas/games/<save-id>/Saves, otherwise $HOME/.local/share/...\nThird-party notices: engine/third_party/RUNTIME_NOTICES.txt and engine/licenses.\n");
         ProjectExportResult completed; completed.packageDirectory = destination.string();
-        completed.assetCount = assets.Records().size(); completed.sceneCount = scenes.size();
+        completed.assetCount = included.size();completed.assetBytes=assetBytes;completed.deduplicatedBytes=deduplicated;completed.excludedAssetBytes=excluded; completed.sceneCount = scenes.size();
         for (const auto& entry : fs::recursive_directory_iterator(staging))
             if (entry.is_regular_file()) completed.bytes += entry.file_size();
         if (fs::exists(destination)) {

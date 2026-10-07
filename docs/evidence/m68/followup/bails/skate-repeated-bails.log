@@ -1,0 +1,29 @@
+step,time,posX,posY,posZ,upX,upY,upZ,grounded,velX,velY,velZ,gravX,gravY,gravZ,controlled,frame,steps,paused,obj0PosX,obj0PosY,obj0PosZ,obj0VelX,obj0VelY,obj0VelZ
+JS: SKATER start rails=8 autopilot=false
+JS: STREAM t=0.10 street-0 - -> unloaded entities=0 prepMs=0.00 integMs=0.00 largestUnitMs=0.00 skater=(0.00,3.27,23.50) v=0.1
+JS: STREAM t=0.10 street-1 - -> unloaded entities=0 prepMs=0.00 integMs=0.00 largestUnitMs=0.00 skater=(0.00,3.27,23.50) v=0.1
+JS: STREAM t=0.10 street-2 - -> unloaded entities=0 prepMs=0.00 integMs=0.00 largestUnitMs=0.00 skater=(0.00,3.27,23.50) v=0.1
+JS: STREAM t=0.10 street-3 - -> unloaded entities=0 prepMs=0.00 integMs=0.00 largestUnitMs=0.00 skater=(0.00,3.27,23.50) v=0.1
+JS: STREAM t=0.10 street-4 - -> unloaded entities=0 prepMs=0.00 integMs=0.00 largestUnitMs=0.00 skater=(0.00,3.27,23.50) v=0.1
+JS: STREAM t=0.20 street-0 unloaded -> prepared entities=11 prepMs=3.00 integMs=0.00 largestUnitMs=0.00 skater=(0.00,3.28,23.50) v=0.0
+JS: RAGDOLL entered; hips inherited v=(0.00,0.00,0.00) board v=(0.00,0.01,0.00)
+JS: BAIL forced at (0.00,3.28,23.50) v=0.01
+JS: M68_BAIL {"bails":1,"active":true,"bodies":13}
+JS: STREAM t=1.40 street-0 prepared -> active entities=11 prepMs=3.00 integMs=6.20 largestUnitMs=5.78 skater=(0.00,3.04,23.50) v=0.0
+JS: M68_BAIL {"bails":1,"active":true,"bodies":13}
+JS: M68_BAIL {"bails":1,"active":true,"bodies":13}
+JS: RESPAWN (0.00,3.26,23.50)
+JS: M68_BAIL {"bails":1,"active":false,"bodies":0}
+JS: RAGDOLL entered; hips inherited v=(0.00,0.00,0.00) board v=(0.00,-0.00,0.00)
+JS: BAIL forced at (0.00,3.28,23.50) v=0.00
+JS: M68_BAIL {"bails":2,"active":true,"bodies":13}
+JS: M68_BAIL {"bails":2,"active":true,"bodies":13}
+JS: M68_BAIL {"bails":2,"active":true,"bodies":13}
+JS: RESPAWN (0.00,3.28,23.50)
+JS: M68_BAIL {"bails":2,"active":false,"bodies":0}
+Renderer fragment texture units: 32 (material path uses 12)
+asset 97c3acdb99c5ffefb002c03ecec7a8ed: Optional extension ignored: KHR_materials_specular
+World state: legacy .judasstate (F6/F7) saves disabled for additive compositions; save slots remain available
+Project: Judas Three Games (/home/conner/Documents/GitHub/Project-Judas/.cache/m68-bail-followup/owned/bails/post_m65_consumers.judasproj)
+Scene: Judas Skate Park (/home/conner/Documents/GitHub/Project-Judas/.cache/m68-bail-followup/owned/bails/Scenes/skate/park.judas)
+World origin (m): 0.000, 0.000, 0.000

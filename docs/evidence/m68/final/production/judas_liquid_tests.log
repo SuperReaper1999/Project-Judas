@@ -1,0 +1,77 @@
+PASS generic uniform equilibrium capability
+PASS potential agrees with actual uniform acceleration
+PASS FaithfulGravity exposes same conservative contract
+PASS disjoint cavity tetrahedra validate
+PASS overlapping accounting geometry rejected
+PASS actual geometry capacity bake
+PASS rectangular tank analytic full capacity
+PASS rectangle clipping matches area times height
+PASS binary-search inverse matches analytic height
+PASS curve is monotonic
+PASS capacity endpoint matches total geometry
+PASS irregular wedge capacity adapts nonlinear region
+PASS irregular volume from independent floor integral
+PASS adaptive volume residual meets declared tolerance
+M54 geometry volume residual 1.19164318524e-07 m3, samples 1026
+PASS one water body cannot register particle and conserved ownership together
+PASS nonfinite initial quantity rejected before ledger mutation
+PASS empty ledger is zero
+PASS reservoirs have stable generation handles
+PASS exact 800 litre transaction
+PASS 1000 litre to 200 litre ledger proof
+PASS 200 litre surface against actual geometry
+PASS return 800 litres restores same equilibrium
+PASS transfer bounded by source
+PASS reverse transfer source limited
+PASS destination finite capacity respected
+PASS repeated paired transfers remain within FP ledger tolerance
+M54 ledger error 0 m3 tolerance 9.9999999999999998e-13
+PASS disabled owner retains liquid and rejects transactions
+PASS stale destination cannot partially debit source
+PASS self transfer no-op
+PASS container real cavity capacity
+PASS known internal volume exact plane
+PASS rotating cavity solves current gravity-relative plane
+PASS rotation changes geometry not quantity
+PASS explicit lip sets tilted stable capacity
+PASS pour debits contained amount
+PASS detached parcel owns full emitted amount
+PASS receiver coherently acquires parcel volume
+PASS merged parcel removed
+PASS entire detached pour conserves ledger
+PASS container removal invalidates generation handle
+PASS destruction retains volume in parked parcel
+PASS owner reuse cannot alias stale handle
+PASS world generation rejects previous-world handle
+PASS point inside implicit bulk
+PASS point above equilibrium is dry
+PASS point outside actual basin geometry is dry
+PASS equilibrium depth correct
+PASS actual submerged box volume
+PASS analytic Archimedes force
+PASS center of displaced volume
+PASS oblique uniform basin bake
+PASS submersion follows arbitrary up, not world Y
+PASS independent oriented reservoir handles
+PASS actual constant-magnitude radial model exposes radius equipotential
+PASS radial potential matches existing gravity magnitude law
+PASS curved radial capacity bake
+PASS known radial bowl volume produces sensible radius
+PASS radial capacity agrees with independent spherical cross-section within curved geometry bound
+PASS radial interpolation has declared curvature bound
+PASS query surface is curved equipotential not flat plane
+PASS radial geometry cannot alter authoritative quantity
+PASS unsupported gravity suspends stale query geometry while retaining liquid
+PASS return to supported gravity resolves retained container geometry
+PASS baked basin serialization
+PASS baked asset round-trip
+PASS malformed baked header rejected cleanly
+M54 1000 inversions 0.017850 ms, 1 ~0.000018 ms
+M54 depth 10 m: 2 curve samples, 10000 inversions 0.07073 ms
+M54 depth 100 m: 2 curve samples, 10000 inversions 0.07042 ms
+M54 1 rotating container solves 0.27127 ms
+M54 10 rotating container solves 2.68756 ms
+M54 100 rotating container solves 22.31905 ms
+M54 2000 paired transfers/resolves 27.5588 ms
+PASS performance query results retained
+M54 67 checks 0 failures

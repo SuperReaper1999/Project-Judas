@@ -7,14 +7,46 @@
 #include "InteractivePlay.h"
 #include "SceneFingerprint.h"
 #include "GamePackage.h"
+#include "../third_party/nlohmann/json.hpp"
 #include "PerformanceProfiler.h"
 #include <filesystem>
 #include <chrono>
 #include <atomic>
+#include <fstream>
+#include <stdexcept>
 namespace {
 using Clock=std::chrono::steady_clock;
 double ms(Clock::time_point t){return std::chrono::duration<double,std::milli>(Clock::now()-t).count();}
 std::atomic<uint64_t> nextRequest{1};
+}
+bool ComputeSaveContentFingerprint(const Project& project,const AssetDatabase& assets,
+ const std::vector<std::string>& scenes,std::string& result,std::string& error,const JobContext* cancel){
+ try{
+  auto settings=project.Settings();settings.saveIdentity.clear();settings.exportAssetPolicy="all";settings.runtimeAssets.clear();
+  std::string bytes="Judas.SaveContent.1:"+Project::SerializeToString(settings),digest;
+  for(const auto& scene:scenes){if(cancel&&cancel->CancelRequested())return false;if(!SceneFingerprintSha256File(project.Resolve(scene),digest,error))return false;bytes+=scene+":"+digest;}
+  std::map<AssetId,std::pair<std::string,std::string>> records;
+  for(const auto& [id,a]:assets.Records()){
+   if(cancel&&cancel->CancelRequested())return false;
+   if(a.missing||!SceneFingerprintSha256File(a.path,digest,error)){error="save content dependency "+id+": "+error;return false;}
+   records.emplace(id,std::make_pair(AssetTypeName(a.type),digest));
+  }
+  const auto report=std::filesystem::path(project.RootDir())/"DEPENDENCIES.json";
+  if(std::filesystem::exists(std::filesystem::path(project.RootDir())/kGamePackageMarker)&&std::filesystem::exists(report)){
+   GamePackage marker;if(!ReadGamePackage(project.RootDir(),marker,error))return false;
+   if(marker.projectFile!=std::filesystem::path(project.ProjectFile()).filename())throw std::runtime_error("package project differs from save identity source");
+   if(std::filesystem::file_size(report)>32*1024*1024)throw std::runtime_error("package dependency report exceeds 32 MiB");
+   std::ifstream file(report);auto data=nlohmann::json::parse(file,[](int depth,nlohmann::json::parse_event_t,const nlohmann::json&){if(depth>48)throw std::runtime_error("package dependency report nesting bound");return true;});
+   if(data.at("version")!=1||!data.at("excluded").is_array()||data.at("excluded").size()>65536)throw std::runtime_error("invalid package exclusion report");
+   for(const auto& entry:data.at("excluded")){
+    auto id=entry.at("id").get<std::string>(),type=entry.at("type").get<std::string>(),hash=entry.at("sha256").get<std::string>();bool known=false;
+    for(int i=0;i<=int(AssetType::PhysicalMaterial);++i)known|=type==AssetTypeName(AssetType(i));
+    if(!IsValidAssetId(id)||!known||hash.size()!=64||hash.find_first_not_of("0123456789abcdef")!=std::string::npos||!records.emplace(id,std::make_pair(type,hash)).second)throw std::runtime_error("invalid/duplicate package excluded asset identity");
+   }
+  }
+  for(const auto& [id,record]:records)bytes+=id+":"+record.first+":"+record.second;
+  result=SceneFingerprintSha256(bytes);error.clear();return true;
+ }catch(const std::exception& e){error=std::string("save content: ")+e.what();return false;}
 }
 struct SaveService::Product {GameSnapshot snapshot;std::vector<SaveSlotInfo> slots;std::string error,digest;bool recovered=false;double elapsed=0;size_t bytes=0;};
 SaveService::SaveService(SceneSession& session,ResourceManager& resources,bool editor):m_session(session),m_resources(resources){
@@ -25,13 +57,11 @@ SaveService::SaveService(SceneSession& session,ResourceManager& resources,bool e
 }
 void SaveService::RefreshContent(){
  m_content.clear();m_identityError.clear();
- auto project=m_session.m_project;auto settings=project.Settings();auto assets=*m_resources.Assets();auto scenes=m_session.Scenes();settings.saveIdentity.clear();
+ auto project=m_session.m_project;auto assets=*m_resources.Assets();auto scenes=m_session.Scenes();
  auto product=m_identityProduct=std::make_shared<Product>();
- m_identityJob=m_resources.Jobs()->Submit([product,project,settings,assets,scenes](JobContext& ctx){
-  std::string bytes="Judas.SaveContent.1:"+Project::SerializeToString(settings),error,digest;
-  for(auto& scene:scenes){if(ctx.CancelRequested()){ctx.ReportCancelled();return;}if(!SceneFingerprintSha256File(project.Resolve(scene),digest,error)){product->error=error;return;}bytes+=scene+":"+digest;}
-  for(auto& [id,a]:assets.Records()){if(ctx.CancelRequested()){ctx.ReportCancelled();return;}if(a.missing||!SceneFingerprintSha256File(a.path,digest,error)){product->error="save content dependency "+id+": "+error;return;}bytes+=id+":"+AssetTypeName(a.type)+":"+digest;}
-  product->digest=SceneFingerprintSha256(bytes);
+ m_identityJob=m_resources.Jobs()->Submit([product,project,assets,scenes](JobContext& ctx){
+  ComputeSaveContentFingerprint(project,assets,scenes,product->digest,product->error,&ctx);
+  if(ctx.CancelRequested())ctx.ReportCancelled();
  },JobPriority::Normal,"save project identity");
 }
 SaveService::~SaveService(){if(auto* jobs=m_resources.Jobs()){jobs->Cancel(m_job);jobs->Cancel(m_identityJob);jobs->Forget(m_job);jobs->Forget(m_identityJob);}}

@@ -1,0 +1,12 @@
+{
+  "checks": 8,
+  "privateFrames": 6,
+  "pumpMs": {
+    "maximum": 99.28756,
+    "median": 0.001177,
+    "p95": 0.00305
+  },
+  "readyIncludingCancellationMs": 6046.416151,
+  "residentBytes": 349352976,
+  "samples": 5257
+}

@@ -38,3 +38,6 @@ bool SaveMaterial(const std::string&,const MaterialDefinition&,std::string& erro
 MaterialDefinition ApplyMaterialOverride(const MaterialDefinition&,const MaterialOverride&);
 std::string EncodeMaterialSlots(const std::vector<MaterialSlot>&);
 bool DecodeMaterialSlots(const std::string&,std::vector<MaterialSlot>&,std::string& error);
+
+// Copies factors/samplers/asset IDs without transient decoded or encoded images.
+MaterialDefinition MaterialSettings(const MaterialDefinition&);

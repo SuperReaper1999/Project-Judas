@@ -1,0 +1,58 @@
+Renderer fragment texture units: 32 (material path uses 12)
+PASS camera configuration and stable texture reference round-trip
+PASS authored cadence enters save compatibility fingerprint
+PASS missing camera reference rejected without replacing scene
+PASS invalid programmatic projection rejected
+PASS normal EngineHost creates context, loads GL and initializes Renderer
+PASS ordinary textured box face preserves all four quadrants across both triangles
+PASS complete target at requested dimensions
+PASS generated colour texture uses ordinary texture readback
+PASS target pass binds successfully
+PASS target viewport uses target dimensions
+PASS target pass restores framebuffer and viewport
+PASS target resize succeeds
+PASS resize releases old colour and updates dimensions
+PASS GPU framebuffer, depth and colour are deleted
+PASS invalid target reports error
+PASS ordinary runtime constructs camera scene without disk asset manager
+PASS secondary/main views do not advance authoritative body state
+PASS actual world render writes target pixels at authored size
+PASS two authored camera views produce different pixels
+PASS target receives non-clear rendered pixel content
+PASS real draws detect and safely replace active-target feedback
+PASS actual main framebuffer screenshot recorded
+PASS main framebuffer renders after secondary passes
+PASS main pass restores its own viewport/default framebuffer
+PASS ordinary runtime body motion supplied
+PASS secondary texture observes the same authoritative body motion
+PASS moving runtime camera changes actual generated pixels
+PASS untextured comparison world builds
+PASS ordinary screen mesh consumes generated target texture
+PASS runtime target resolution recreation is integrated
+PASS world teardown releases borrowed textures and all targets
+PASS camera lifecycle worlds share authored baseline
+PASS body-attached camera allocates its runtime target
+PASS destroyed camera releases target and resolves fallback
+PASS runtime consumer may retain stable reference to destroyed authored camera
+PASS mixed destroy/create camera delta applies through shared persistence preflight
+PASS runtime consumer rejects nonexistent camera definition
+PASS camera editor undo restores authored configuration
+PASS Play world builds from editor document
+PASS same InteractivePlay runtime path starts
+PASS actual InteractivePlay frame renders secondary camera
+PASS Play/Stop leaves authored camera scene unchanged
+PASS cadence fixture builds through ordinary runtime
+PASS authored cadence/disabled state schedules exact render count
+PERFORMANCE cadence=0 frames=40 cpu_render_median_ms=0.139355 cpu_render_mean_ms=0.147066 first_frame_ms=0.167136 draw_calls=240 offscreen_passes=0
+PASS cadence fixture builds through ordinary runtime
+PASS authored cadence/disabled state schedules exact render count
+PERFORMANCE cadence=1 frames=40 cpu_render_median_ms=0.242129 cpu_render_mean_ms=0.319379 first_frame_ms=0.652381 draw_calls=360 offscreen_passes=40
+PASS cadence fixture builds through ordinary runtime
+PASS authored cadence/disabled state schedules exact render count
+PERFORMANCE cadence=2 frames=40 cpu_render_median_ms=0.227647 cpu_render_mean_ms=0.298476 first_frame_ms=0.668627 draw_calls=300 offscreen_passes=20
+PASS cadence fixture builds through ordinary runtime
+PASS authored cadence/disabled state schedules exact render count
+PERFORMANCE cadence=4 frames=40 cpu_render_median_ms=0.147132 cpu_render_mean_ms=0.196787 first_frame_ms=0.815280 draw_calls=270 offscreen_passes=10
+PASS all fixture resources deleted without GL object leaks
+PASS actual generated/asset texture creation and destruction operations balance
+SUMMARY checks=52 failures=0

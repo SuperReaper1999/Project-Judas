@@ -15,7 +15,7 @@ glm::quat IntegrateOrientation(const glm::quat& orientation, const glm::vec3& an
 }  // namespace
 
 void ApplyCoarseCelestialForces(RuntimeWorld& world, float dt) {
-    std::vector<EntityRecord>& entities = world.MutableEntities();
+    const auto& entities = world.Entities();
     const auto participates = [](const EntityRecord& e) {
         return e.lifecycle == EntityLifecycle::Active && e.fidelity == SimulationFidelity::Coarse &&
                e.definition.celestial && e.definition.body &&
@@ -43,8 +43,8 @@ void ApplyCoarseCelestialForces(RuntimeWorld& world, float dt) {
         if (physics.IsDynamicBody(handle))
             participants.push_back({physics.GetTransform(handle).position, physics.GetMass(handle), handle, nullptr});
     }
-    for (EntityRecord& e : entities) {
-        if (participates(e)) participants.push_back({e.state.position, e.definition.body->mass, {}, &e});
+    for (const EntityRecord& e : entities) {
+        if (participates(e)) participants.push_back({e.state.position, e.definition.body->mass, {}, world.FindEntity(e.id)});
     }
     // All geometry is sampled before either fidelity advances. Evaluate each
     // cross-fidelity/coarse pair once and distribute the very same vector.
@@ -73,8 +73,11 @@ void ApplyCoarseCelestialForces(RuntimeWorld& world, float dt) {
 
 void StepCoarseEntities(RuntimeWorld& world, float dt) {
     const GravityField& gravity = world.Gravity();
-    for (EntityRecord& e : world.MutableEntities()) {
-        if (e.lifecycle != EntityLifecycle::Active || e.fidelity != SimulationFidelity::Coarse) continue;
+    // Motion changes neither IDs nor vector membership. MutableEntities() is
+    // reserved for structural edits which really invalidate the identity index.
+    for (const EntityRecord& current : world.Entities()) {
+        if (current.lifecycle != EntityLifecycle::Active || current.fidelity != SimulationFidelity::Coarse) continue;
+        EntityRecord& e=*world.FindEntity(current.id);
         DynamicBody& presentation = world.DynamicBodies()[e.slot];
         if (e.coarseMotion == CoarseMotion::Settled) {
             presentation.SetPoseFromState(e.state.position, e.state.rotation);

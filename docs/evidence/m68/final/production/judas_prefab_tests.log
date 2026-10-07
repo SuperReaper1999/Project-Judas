@@ -1,0 +1,39 @@
+PASS source hierarchy valid
+PASS prefab scene-component roundtrip
+PASS save source
+PASS normal prefab asset metadata
+PASS first linked instance
+PASS second linked instance
+PASS independent stable hierarchy identity
+PASS generic serialized-property override captured
+PASS intentional source edit
+PASS resolve source edit and added child
+PASS override wins and unmodified source propagates
+PASS child identity survives source addition
+PASS revert property to current source
+PASS linked instance mapping and override roundtrip
+PASS parent-local transform resolution
+PASS ordinary world construction resolves prefab
+PASS effective authored fingerprint notices source edit
+PASS old save rejected against changed prefab baseline
+PASS refresh current authored baseline before spawning
+PASS runtime spawn actual body and child light
+PASS spawn root ordinary independent runtime identity
+PASS fresh current baseline
+PASS invalid created parent rejected before world mutation
+PASS created runtime hierarchy state reconstruction
+PASS destroy spawned hierarchy normally
+PASS other instance unaffected
+PASS editor authored prefab constructs Play world
+PASS Stop discards runtime without mutating authored prefab instances
+PASS missing prefab fails without half-instance
+PERFORMANCE one_spawn_us 919.873
+PASS ordinary editor property edit creates override
+PASS prefab edit undo restores authored state
+PASS generic component addition override
+PASS generic component removal override
+PASS revert removed component block
+PERFORMANCE instantiate_count 1 total_us 5.982
+PERFORMANCE instantiate_count 10 total_us 230.630
+PERFORMANCE instantiate_count 100 total_us 21176.283
+SUMMARY 34 checks 0 failures

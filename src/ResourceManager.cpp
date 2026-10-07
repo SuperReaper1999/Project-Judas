@@ -4,6 +4,8 @@
 #include "SceneFingerprint.h"
 
 #include <algorithm>
+#include <filesystem>
+#include <system_error>
 #include <limits>
 
 #include "AsyncFile.h"
@@ -158,6 +160,9 @@ ResourceManager::Entry& ResourceManager::Begin(const AssetId& id, AssetType expe
     task->type = expected;
     task->path = path;
     task->generation = entry.generation;
+    task->priority=priority;
+    std::error_code sizeError;auto size=std::filesystem::file_size(path,sizeError);
+    task->admissionBytes=sizeError?1:std::max<std::uint64_t>(1,size>std::numeric_limits<std::uint64_t>::max()/8?std::numeric_limits<std::uint64_t>::max():size*8);
     if(expected==AssetType::Collision&&m_assets)for(const auto& [key,record]:m_assets->Records())if(record.type==AssetType::Mesh&&!record.missing)task->texturePaths.emplace(key,record.path);
     if(expected==AssetType::Material&&m_assets)for(const auto& [key,record]:m_assets->Records())if(record.type==AssetType::Texture&&!record.missing)task->texturePaths.emplace(key,record.path);
     task->requested = std::chrono::steady_clock::now();
@@ -170,22 +175,30 @@ ResourceManager::Entry& ResourceManager::Begin(const AssetId& id, AssetType expe
         return entry;
     }
     entry.state = ResourceState::Queued;
-    // The job owns its own reference: this manager may release the entry,
-    // shut down or be destroyed while the worker is still decoding, and
-    // the worker only ever touches the task.
-    task->job = m_jobs->Submit([task](JobContext& context) {
-        // Cancelled while queued -> never runs; cancelled while running ->
-        // the read stops at its next chunk and the decode is skipped.
-        RunLoadTask(*task, &context);
-        if (task->cancelled) context.ReportCancelled();
-        else if (!task->succeeded) context.SetError(task->error);
-    }, priority, std::string("load ") + AssetTypeName(expected) + " " + path);
-    if (!task->job.IsValid()) {
-        Fail(entry, "job system is shut down");
-        return entry;
-    }
     m_inFlight.push_back(task);
+    AdmitPending();
     return entry;
+}
+
+// Bound CPU/decode and private GPU staging together. Completed jobs continue
+// occupying admission until publication/discard, providing owner-thread
+// backpressure. One oversized asset may run alone, so it cannot starve.
+void ResourceManager::AdmitPending(){
+    if(!m_jobs)return;
+    size_t active=0;std::uint64_t bytes=0;
+    for(const auto& task:m_inFlight)if(task->job.IsValid()){++active;bytes+=task->admissionBytes;}
+    for(const auto& task:m_inFlight){
+        if(task->job.IsValid())continue;
+        auto it=m_entries.find(task->id);
+        if(it==m_entries.end()||it->second.task!=task||task->generation!=it->second.generation)continue;
+        if(active>=3||(active&& (bytes>=m_budgetBytes||task->admissionBytes>m_budgetBytes-bytes)))break;
+        task->job=m_jobs->Submit([task](JobContext& context){
+            RunLoadTask(*task,&context);
+            if(task->cancelled)context.ReportCancelled();else if(!task->succeeded)context.SetError(task->error);
+        },task->priority,std::string("load ")+AssetTypeName(task->type)+" "+task->path);
+        if(!task->job.IsValid()){task->error="job system is shut down";task->stage.store(2,std::memory_order_release);}
+        else{++active;bytes+=task->admissionBytes;}
+    }
 }
 
 // GL thread only: installs a finished task into its entry — or discards
@@ -213,13 +226,13 @@ void ResourceManager::CompleteTask(Entry& entry, const std::shared_ptr<LoadTask>
     if(task->type==AssetType::Font){entry.font=task->font;entry.bytes=entry.font->bytes.size();
     } else if(task->type==AssetType::Catalog){entry.catalog=task->catalog;entry.bytes=0;for(auto& p:entry.catalog->messages)entry.bytes+=p.first.size()+p.second.size();
     } else if (task->type == AssetType::Mesh) {
-        if (m_renderer) entry.mesh = m_renderer->CreateMesh(task->mesh);
+        if (m_renderer) { entry.mesh=task->stagedMesh;task->stagedMesh={};if(!entry.mesh.IsValid())entry.mesh=m_renderer->CreateMesh(task->mesh); }
         entry.bytes = EstimateMeshBytes(task->mesh);
         for(auto& warning:task->mesh.importWarnings)std::fprintf(stderr,"asset %s: %s\n",task->id.c_str(),warning.c_str());
-        entry.skeletal=task->mesh.skeletal;entry.meshMaterials=task->mesh.materials;entry.meshPrimitives=task->mesh.primitives;for(auto& m:entry.meshMaterials)for(auto& map:m.maps)map.embedded=TextureData{};
+        entry.skeletal=task->mesh.skeletal;entry.meshMaterials=std::move(task->mesh.materials);entry.meshPrimitives=std::move(task->mesh.primitives);for(auto& m:entry.meshMaterials)for(auto& map:m.maps){map.embedded=TextureData{};std::vector<uint8_t>().swap(map.encodedImage);}
     } else if(task->type==AssetType::Material){
         if(m_renderer)entry.material=m_renderer->CreateMaterial(*task->material);
-        entry.bytes=sizeof(MaterialDefinition);for(auto& map:task->material->maps){entry.bytes+=EstimateTextureBytes(map.embedded)+map.encodedImage.size();map.embedded=TextureData{};}entry.materialDefinition=task->material;
+        entry.bytes=sizeof(MaterialDefinition);for(auto& map:task->material->maps){entry.bytes+=EstimateTextureBytes(map.embedded)+map.encodedImage.size();map.embedded=TextureData{};std::vector<uint8_t>().swap(map.encodedImage);}entry.materialDefinition=task->material;
     } else if(task->type==AssetType::Environment){if(m_renderer)entry.environment=m_renderer->CreateEnvironment(task->environment);entry.bytes=0;for(auto& level:task->environment.specular)entry.bytes+=level.pixels.size()*6;entry.bytes+=task->environment.diffuse.pixels.size()*6+task->environment.brdf.size()*4;
     } else if(task->type==AssetType::PhysicalMaterial){entry.physicalMaterial=task->physicalMaterial;entry.bytes=sizeof(PhysicalMaterial);
     } else if(task->type==AssetType::Collision){entry.collision=task->collision;const auto& a=*entry.collision;entry.bytes=a.vertices.size()*sizeof(glm::dvec3)+a.faces.size()*sizeof(CollisionFace)+a.nodes.size()*sizeof(CollisionNode)+a.order.size()*sizeof(uint32_t);
@@ -367,6 +380,7 @@ void ResourceManager::ReleaseRef(const AssetId& id) {
             m_jobs->Cancel(entry.task->job);
             TraceTask(*entry.task, ResourceTracePoint::CancelRequested);
         }
+        DropUpload(*entry.task);
         ++entry.generation;
         entry.task.reset();
         entry.state = ResourceState::Cancelled;
@@ -379,10 +393,35 @@ unsigned int ResourceManager::RefCount(const AssetId& id) const {
     return it == m_entries.end() ? 0u : it->second.refs;
 }
 
+void ResourceManager::DropUpload(LoadTask& task){
+    if(m_renderer&&task.stagedMesh.IsValid())m_renderer->DestroyMesh(task.stagedMesh);
+    task.stagedMesh={};
+}
+bool ResourceManager::AdvanceUpload(const std::shared_ptr<LoadTask>& task,double budgetMs){
+    if(!m_renderer||task->type!=AssetType::Mesh)return true;
+    auto start=std::chrono::steady_clock::now();
+    if(!task->stagedMesh.IsValid()){
+        task->stagedMesh=m_renderer->BeginMeshUpload(task->mesh);
+        if(!task->stagedMesh.IsValid()){task->succeeded=false;task->error="mesh geometry upload failed";return true;}
+    }
+    const size_t maps=task->mesh.materials.size()*5;
+    while(task->uploadCursor<maps){
+        if(std::chrono::duration<double,std::milli>(std::chrono::steady_clock::now()-start).count()>=budgetMs)return false;
+        auto cursor=task->uploadCursor++;
+        if(!m_renderer->UploadMeshMap(task->stagedMesh,task->mesh,cursor/5,cursor%5)){
+            DropUpload(*task);task->succeeded=false;task->error="mesh material upload failed";return true;
+        }
+    }
+    return true;
+}
+
 void ResourceManager::Pump(std::size_t maxUploads) {
     JUDAS_PROFILE_SCOPE("Resource completion and budget");
     if (m_shutDown) return;
+    const auto pumpStart=std::chrono::steady_clock::now();
+    AdmitPending();
     std::size_t uploads = 0;
+    const bool unlimited=maxUploads==std::numeric_limits<std::size_t>::max();
     for (std::size_t i = 0; i < m_inFlight.size();) {
         const std::shared_ptr<LoadTask>& task = m_inFlight[i];
         const int stage = task->stage.load(std::memory_order_acquire);
@@ -393,7 +432,10 @@ void ResourceManager::Pump(std::size_t maxUploads) {
             entry->state = ResourceState::Loading;
         }
         bool finished = false;
-        if (m_jobs) {
+        if(m_jobs&&!task->job.IsValid()){
+            if(entry&&entry->task==task&&stage!=2){++i;continue;}
+            finished=true;
+        }else if (m_jobs) {
             const JobState jobState = m_jobs->StateOf(task->job);
             finished = jobState == JobState::Completed || jobState == JobState::Failed ||
                        jobState == JobState::Cancelled || jobState == JobState::Unknown;
@@ -411,17 +453,29 @@ void ResourceManager::Pump(std::size_t maxUploads) {
             ++i;
             continue;
         }
+        const double elapsed=std::chrono::duration<double,std::milli>(std::chrono::steady_clock::now()-pumpStart).count();
+        if(entry&&entry->task==task&&task->succeeded&&!task->cancelled){
+            if(!unlimited&&elapsed>=2.0){entry->state=ResourceState::CpuReady;++i;continue;}
+            if(!AdvanceUpload(task,unlimited?std::numeric_limits<double>::max():2.0-elapsed)){
+                entry->state=ResourceState::CpuReady;++i;continue;
+            }
+        }
         if (entry && entry->task == task) {
             if (task->succeeded && !task->cancelled) ++uploads;
+            if(!task->succeeded||task->cancelled)DropUpload(*task);
             CompleteTask(*entry, task);
         } else {
+            DropUpload(*task);
             ++m_stats.staleDiscarded;  // released/invalidated meanwhile
             TraceTask(*task, ResourceTracePoint::StaleDiscarded);
         }
-        if (m_jobs) m_jobs->Forget(task->job);
+        if (m_jobs&&task->job.IsValid()) m_jobs->Forget(task->job);
         m_inFlight.erase(m_inFlight.begin() + static_cast<std::ptrdiff_t>(i));
     }
+    AdmitPending();
     if (m_stats.bytesResident > m_budgetBytes) EvictToFit(m_budgetBytes);
+    m_stats.lastPumpMs=std::chrono::duration<double,std::milli>(std::chrono::steady_clock::now()-pumpStart).count();
+    m_stats.peakPumpMs=std::max(m_stats.peakPumpMs,m_stats.lastPumpMs);
     JUDAS_PROFILE_COUNTER("Resource resident byte estimate",double(m_stats.bytesResident),ProfileCounterMode::Latest);
     JUDAS_PROFILE_COUNTER("Resource budget bytes",double(m_budgetBytes),ProfileCounterMode::Latest);
     JUDAS_PROFILE_COUNTER("Resource in flight",double(m_inFlight.size()),ProfileCounterMode::Latest);
@@ -431,6 +485,7 @@ void ResourceManager::Pump(std::size_t maxUploads) {
 void ResourceManager::WaitForAll() {
     JUDAS_PROFILE_SCOPE("Resource wait");
     while (!m_inFlight.empty()) {
+        AdmitPending();
         if (m_jobs) {
             for (const std::shared_ptr<LoadTask>& task : m_inFlight) m_jobs->Wait(task->job);
         }
@@ -508,6 +563,7 @@ void ResourceManager::Release(const AssetId& id) {
         m_jobs->Cancel(entry.task->job);
         TraceTask(*entry.task, ResourceTracePoint::CancelRequested);
     }
+    if(entry.task)DropUpload(*entry.task);
     DestroyGpu(entry);
     ++entry.generation;  // any completion for the old generation is stale
     entry.task.reset();
@@ -543,7 +599,7 @@ void ResourceManager::ReleaseAll() {
         for (const std::shared_ptr<LoadTask>& task : m_inFlight) m_jobs->Wait(task->job);
         for (const std::shared_ptr<LoadTask>& task : m_inFlight) m_jobs->Forget(task->job);
     }
-    for (const std::shared_ptr<LoadTask>& task : m_inFlight) TraceTask(*task, ResourceTracePoint::StaleDiscarded);
+    for (const std::shared_ptr<LoadTask>& task : m_inFlight){DropUpload(*task);TraceTask(*task, ResourceTracePoint::StaleDiscarded);}
     m_inFlight.clear();
     m_stats.loadedMeshes = m_stats.loadedTextures = m_stats.loadedAudio = m_stats.loadedTerrainMeshes = m_stats.failed = 0;
     m_stats.bytesResident = 0;
@@ -584,6 +640,10 @@ void ResourceManager::RefreshCounts() const {
     m_stats.loadedAudio = audio;
     m_stats.loadedNavigation=navigation;
     m_stats.budgetBytes = m_budgetBytes;
+    m_stats.admittedRequests=0;m_stats.admittedBytesEstimate=0;m_stats.preparedMeshBytes=0;
+    for(const auto& task:m_inFlight){if(task->job.IsValid()){++m_stats.admittedRequests;m_stats.admittedBytesEstimate+=task->admissionBytes;}
+        if(task->stage.load(std::memory_order_acquire)==2&&task->type==AssetType::Mesh)m_stats.preparedMeshBytes+=EstimateMeshBytes(task->mesh);}
+
 }
 
 const ResourceStats& ResourceManager::Stats() const {
@@ -638,14 +698,14 @@ ResourceState ResourceManager::RequestCollision(const AssetId& id,JobPriority pr
 std::shared_ptr<const CollisionAsset> ResourceManager::GetCollision(const AssetId& id,std::string& error){auto& e=Begin(id,AssetType::Collision,JobPriority::High);if(e.type!=AssetType::Collision){error="asset is not cooked collision";return nullptr;}error=e.state==ResourceState::Failed?e.error:e.state==ResourceState::Ready?"":"loading";return e.state==ResourceState::Ready?e.collision:nullptr;}
 std::shared_ptr<const CollisionAsset> ResourceManager::RequireCollision(const AssetId& id,std::string& error){
  auto& e=Begin(id,AssetType::Collision,JobPriority::High);if(e.type!=AssetType::Collision){error="asset is not cooked collision";return nullptr;}
- auto task=e.task;if(e.state!=ResourceState::Ready&&e.state!=ResourceState::Failed&&task){if(m_jobs&&task->job.IsValid())m_jobs->Wait(task->job);CompleteTask(e,task);if(m_jobs)m_jobs->Forget(task->job);m_inFlight.erase(std::remove(m_inFlight.begin(),m_inFlight.end(),task),m_inFlight.end());}
+ auto task=e.task;if(e.state!=ResourceState::Ready&&e.state!=ResourceState::Failed&&task){if(m_jobs&&task->job.IsValid())m_jobs->Wait(task->job);else if(task->stage.load()==0)RunLoadTask(*task,nullptr);CompleteTask(e,task);if(m_jobs)m_jobs->Forget(task->job);m_inFlight.erase(std::remove(m_inFlight.begin(),m_inFlight.end(),task),m_inFlight.end());}
  error=e.state==ResourceState::Ready?"":e.error;return e.state==ResourceState::Ready?e.collision:nullptr;
 }
 
 ResourceState ResourceManager::RequestPhysicalMaterial(const AssetId& id,JobPriority priority){auto& e=Begin(id,AssetType::PhysicalMaterial,priority);return TypeMismatch(e.state,e.type,AssetType::PhysicalMaterial)?ResourceState::Failed:e.state;}
 std::shared_ptr<const PhysicalMaterial> ResourceManager::RequirePhysicalMaterial(const AssetId& id,std::string& error){
  auto& e=Begin(id,AssetType::PhysicalMaterial,JobPriority::High);if(e.type!=AssetType::PhysicalMaterial){error="asset is not physical material";return nullptr;}
- auto task=e.task;if(e.state!=ResourceState::Ready&&e.state!=ResourceState::Failed&&task){if(m_jobs&&task->job.IsValid())m_jobs->Wait(task->job);CompleteTask(e,task);if(m_jobs)m_jobs->Forget(task->job);m_inFlight.erase(std::remove(m_inFlight.begin(),m_inFlight.end(),task),m_inFlight.end());}
+ auto task=e.task;if(e.state!=ResourceState::Ready&&e.state!=ResourceState::Failed&&task){if(m_jobs&&task->job.IsValid())m_jobs->Wait(task->job);else if(task->stage.load()==0)RunLoadTask(*task,nullptr);CompleteTask(e,task);if(m_jobs)m_jobs->Forget(task->job);m_inFlight.erase(std::remove(m_inFlight.begin(),m_inFlight.end(),task),m_inFlight.end());}
  error=e.state==ResourceState::Ready?"":e.error;return e.state==ResourceState::Ready?e.physicalMaterial:nullptr;
 }
 

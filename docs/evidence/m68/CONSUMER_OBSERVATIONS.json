@@ -1,0 +1,637 @@
+{
+  "skate-stream-revisit": {
+    "frames": 840,
+    "scene": "Scenes/skate/park.judas",
+    "audioPeak": 0.188982,
+    "finalBodies": 91,
+    "lastStates": [
+      {
+        "entity": "10",
+        "state": {
+          "checkpoint": null,
+          "spawn": {
+            "position": {
+              "x": 36.599998474121094,
+              "y": -18.43000030517578,
+              "z": -250
+            },
+            "rotation": {
+              "x": 0,
+              "y": 0,
+              "z": 0,
+              "w": 1
+            }
+          },
+          "game": {
+            "score": 0,
+            "best": 0,
+            "runSeconds": 180,
+            "timeLeft": 166.99999932199717,
+            "over": false,
+            "letters": {},
+            "goals": {},
+            "bails": 0,
+            "stats": {
+              "tricks": 0,
+              "landed": 0,
+              "maxCombo": 0,
+              "airTime": 3.2833335045725107,
+              "grindTime": 0
+            }
+          }
+        }
+      },
+      {
+        "entity": "40",
+        "state": {}
+      },
+      {
+        "entity": "109",
+        "state": {
+          "kind": "ledge",
+          "name": "Funbox Ledge"
+        }
+      },
+      {
+        "entity": "114",
+        "state": {}
+      },
+      {
+        "entity": "115",
+        "state": {}
+      },
+      {
+        "entity": "123",
+        "state": {
+          "kind": "rail",
+          "name": "Handrail"
+        }
+      },
+      {
+        "entity": "127",
+        "state": {
+          "kind": "ledge",
+          "name": "Platform Ledge Edge"
+        }
+      },
+      {
+        "entity": "130",
+        "state": {
+          "kind": "rail",
+          "name": "Flat Bar"
+        }
+      },
+      {
+        "entity": "132",
+        "state": {
+          "kind": "ledge",
+          "name": "Street Ledge Edge"
+        }
+      },
+      {
+        "entity": "135",
+        "state": {
+          "kind": "coping",
+          "name": "QP Coping"
+        }
+      },
+      {
+        "entity": "138",
+        "state": {
+          "kind": "coping",
+          "name": "Mini Coping E"
+        }
+      },
+      {
+        "entity": "141",
+        "state": {
+          "kind": "coping",
+          "name": "Mini Coping W"
+        }
+      },
+      {
+        "entity": "155",
+        "state": {
+          "taken": false
+        }
+      },
+      {
+        "entity": "156",
+        "state": {
+          "taken": false
+        }
+      },
+      {
+        "entity": "157",
+        "state": {
+          "taken": false
+        }
+      },
+      {
+        "entity": "158",
+        "state": {
+          "taken": false
+        }
+      },
+      {
+        "entity": "159",
+        "state": {
+          "taken": false
+        }
+      },
+      {
+        "entity": "1000000",
+        "state": {}
+      },
+      {
+        "entity": "1000000",
+        "state": {
+          "returning": true
+        }
+      },
+      {
+        "entity": "4611686018427387906",
+        "state": {
+          "kind": "ledge",
+          "name": "Kerb 0"
+        }
+      },
+      {
+        "entity": "4611686018427387908",
+        "state": {
+          "kind": "ledge",
+          "name": "Kerb 0"
+        }
+      },
+      {
+        "entity": "4611686018427387946",
+        "state": {
+          "kind": "ledge",
+          "name": "Kerb 1"
+        }
+      },
+      {
+        "entity": "4611686018427387948",
+        "state": {
+          "kind": "ledge",
+          "name": "Kerb 1"
+        }
+      },
+      {
+        "entity": "4611686018427387949",
+        "state": {
+          "kind": "rail",
+          "name": "Street Rail"
+        }
+      },
+      {
+        "entity": "4611686018427387957",
+        "state": {
+          "kind": "ledge",
+          "name": "Kerb 2"
+        }
+      },
+      {
+        "entity": "4611686018427387959",
+        "state": {
+          "kind": "ledge",
+          "name": "Kerb 2"
+        }
+      },
+      {
+        "entity": "4611686018427387964",
+        "state": {
+          "kind": "ledge",
+          "name": "Kerb 3"
+        }
+      },
+      {
+        "entity": "4611686018427387966",
+        "state": {
+          "kind": "ledge",
+          "name": "Kerb 3"
+        }
+      }
+    ],
+    "outBackOutCoherent": true,
+    "note": "Owned observer repositions at steps 240/480; this is residency/revisit proof, not complete human continuous skating."
+  },
+  "skate-save": {
+    "frames": 480,
+    "scene": "Scenes/skate/park.judas",
+    "audioPeak": 0.237658,
+    "finalBodies": 70,
+    "lastStates": [
+      {
+        "entity": "10",
+        "state": {
+          "checkpoint": null,
+          "spawn": {
+            "position": {
+              "x": 0,
+              "y": 3.259999990463257,
+              "z": 23.5
+            },
+            "rotation": {
+              "x": 0,
+              "y": 0,
+              "z": 0,
+              "w": 1
+            }
+          },
+          "game": {
+            "score": 0,
+            "best": 0,
+            "runSeconds": 180,
+            "timeLeft": 173.49999966099858,
+            "over": false,
+            "letters": {},
+            "goals": {},
+            "bails": 0,
+            "stats": {
+              "tricks": 0,
+              "landed": 0,
+              "maxCombo": 0,
+              "airTime": 0,
+              "grindTime": 0
+            }
+          }
+        }
+      },
+      {
+        "entity": "40",
+        "state": {}
+      },
+      {
+        "entity": "109",
+        "state": {
+          "kind": "ledge",
+          "name": "Funbox Ledge"
+        }
+      },
+      {
+        "entity": "114",
+        "state": {}
+      },
+      {
+        "entity": "115",
+        "state": {}
+      },
+      {
+        "entity": "123",
+        "state": {
+          "kind": "rail",
+          "name": "Handrail"
+        }
+      },
+      {
+        "entity": "127",
+        "state": {
+          "kind": "ledge",
+          "name": "Platform Ledge Edge"
+        }
+      },
+      {
+        "entity": "130",
+        "state": {
+          "kind": "rail",
+          "name": "Flat Bar"
+        }
+      },
+      {
+        "entity": "132",
+        "state": {
+          "kind": "ledge",
+          "name": "Street Ledge Edge"
+        }
+      },
+      {
+        "entity": "135",
+        "state": {
+          "kind": "coping",
+          "name": "QP Coping"
+        }
+      },
+      {
+        "entity": "138",
+        "state": {
+          "kind": "coping",
+          "name": "Mini Coping E"
+        }
+      },
+      {
+        "entity": "141",
+        "state": {
+          "kind": "coping",
+          "name": "Mini Coping W"
+        }
+      },
+      {
+        "entity": "155",
+        "state": {
+          "taken": false
+        }
+      },
+      {
+        "entity": "156",
+        "state": {
+          "taken": false
+        }
+      },
+      {
+        "entity": "157",
+        "state": {
+          "taken": false
+        }
+      },
+      {
+        "entity": "158",
+        "state": {
+          "taken": false
+        }
+      },
+      {
+        "entity": "159",
+        "state": {
+          "taken": false
+        }
+      },
+      {
+        "entity": "1000000",
+        "state": {}
+      },
+      {
+        "entity": "4611686018427387906",
+        "state": {
+          "kind": "ledge",
+          "name": "Kerb 0"
+        }
+      },
+      {
+        "entity": "4611686018427387908",
+        "state": {
+          "kind": "ledge",
+          "name": "Kerb 0"
+        }
+      }
+    ],
+    "saveCompletedAndRestoreCallback": true,
+    "locale": "es authored through normal project property"
+  },
+  "skate-street": {
+    "frames": 720,
+    "scene": "Scenes/skate/park.judas",
+    "audioPeak": 0.188696,
+    "finalBodies": 61,
+    "lastStates": [
+      {
+        "entity": "10",
+        "state": {
+          "checkpoint": null,
+          "spawn": {
+            "position": {
+              "x": 36.599998474121094,
+              "y": -18.43000030517578,
+              "z": -250
+            },
+            "rotation": {
+              "x": 0,
+              "y": 0,
+              "z": 0,
+              "w": 1
+            }
+          },
+          "game": {
+            "score": 0,
+            "best": 0,
+            "runSeconds": 180,
+            "timeLeft": 168.9999994263053,
+            "over": false,
+            "letters": {},
+            "goals": {},
+            "bails": 0,
+            "stats": {
+              "tricks": 0,
+              "landed": 0,
+              "maxCombo": 0,
+              "airTime": 11.016667241230607,
+              "grindTime": 0
+            }
+          }
+        }
+      },
+      {
+        "entity": "40",
+        "state": {}
+      },
+      {
+        "entity": "109",
+        "state": {
+          "kind": "ledge",
+          "name": "Funbox Ledge"
+        }
+      },
+      {
+        "entity": "114",
+        "state": {}
+      },
+      {
+        "entity": "115",
+        "state": {}
+      },
+      {
+        "entity": "123",
+        "state": {
+          "kind": "rail",
+          "name": "Handrail"
+        }
+      },
+      {
+        "entity": "127",
+        "state": {
+          "kind": "ledge",
+          "name": "Platform Ledge Edge"
+        }
+      },
+      {
+        "entity": "130",
+        "state": {
+          "kind": "rail",
+          "name": "Flat Bar"
+        }
+      },
+      {
+        "entity": "132",
+        "state": {
+          "kind": "ledge",
+          "name": "Street Ledge Edge"
+        }
+      },
+      {
+        "entity": "135",
+        "state": {
+          "kind": "coping",
+          "name": "QP Coping"
+        }
+      },
+      {
+        "entity": "138",
+        "state": {
+          "kind": "coping",
+          "name": "Mini Coping E"
+        }
+      },
+      {
+        "entity": "141",
+        "state": {
+          "kind": "coping",
+          "name": "Mini Coping W"
+        }
+      },
+      {
+        "entity": "155",
+        "state": {
+          "taken": false
+        }
+      },
+      {
+        "entity": "156",
+        "state": {
+          "taken": false
+        }
+      },
+      {
+        "entity": "157",
+        "state": {
+          "taken": false
+        }
+      },
+      {
+        "entity": "158",
+        "state": {
+          "taken": false
+        }
+      },
+      {
+        "entity": "159",
+        "state": {
+          "taken": false
+        }
+      },
+      {
+        "entity": "1000000",
+        "state": {}
+      }
+    ],
+    "note": "Original scenario uses T (checkpoint), not bail; bails are separately proven with authored X action."
+  },
+  "rooftop-checkpoint": {
+    "frames": 140,
+    "scene": "Scenes/rooftop/rooftops.judas",
+    "audioPeak": 0.617276,
+    "finalBodies": 67,
+    "lastStates": [
+      {
+        "entity": "10",
+        "state": {
+          "yaw": 0,
+          "pitch": 0
+        }
+      },
+      {
+        "entity": "10",
+        "state": {
+          "checkpoint": 1,
+          "elapsed": 1.0500000547617674,
+          "running": true,
+          "finished": false,
+          "falls": 0
+        }
+      },
+      {
+        "entity": "5001",
+        "state": {}
+      },
+      {
+        "entity": "5002",
+        "state": {}
+      },
+      {
+        "entity": "5003",
+        "state": {}
+      },
+      {
+        "entity": "5004",
+        "state": {}
+      },
+      {
+        "entity": "5005",
+        "state": {}
+      },
+      {
+        "entity": "1000000",
+        "state": {}
+      }
+    ],
+    "checkpointRunning": true
+  },
+  "void-input": {
+    "frames": 600,
+    "scene": "Scenes/void/system.judas",
+    "audioPeak": 0.839518,
+    "finalBodies": 176,
+    "lastStates": [
+      {
+        "entity": "10",
+        "state": {
+          "yaw": 0,
+          "pitch": 0,
+          "suit": 100
+        }
+      },
+      {
+        "entity": "11",
+        "state": {
+          "hull": 64,
+          "assist": true,
+          "cockpit": true
+        }
+      },
+      {
+        "entity": "30",
+        "state": {
+          "stage": 1,
+          "kills": 0,
+          "deaths": 0,
+          "elapsed": 10.000000521540642,
+          "waveTotal": 3,
+          "core": false
+        }
+      },
+      {
+        "entity": "1000000",
+        "state": {}
+      },
+      {
+        "entity": "4611686018427387904",
+        "state": {
+          "hp": 4
+        }
+      },
+      {
+        "entity": "4611686018427387911",
+        "state": {
+          "hp": 4
+        }
+      },
+      {
+        "entity": "4611686018427387918",
+        "state": {
+          "hp": 4
+        }
+      }
+    ],
+    "boardMissionAndRuntimeParticipants": true,
+    "note": "Physical fire/ascend/camera inputs queued. No enemy kill or full mission completion claimed."
+  }
+}

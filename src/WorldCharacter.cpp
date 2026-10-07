@@ -18,7 +18,7 @@ void RuntimeWorld::UpdateCharacters(float dt){
     JUDAS_PROFILE_SCOPE("Character motors");
  JUDAS_PROFILE_COUNTER("Character motor instances",double(m_characters.size()),ProfileCounterMode::Latest);
     // Stable entity ordering, independent state; no input/camera/clip ownership.
-    for(const auto& [id,d]:m_scriptDefinitions)if(d.characterMotor&&RuntimeDefinition(id))RuntimeCharacter(id);
+    for(auto id:m_characterOwners)RuntimeCharacter(id);
     for(auto it=m_characters.begin();it!=m_characters.end();){auto id=it->first;auto* d=RuntimeDefinition(id);
         if(!d||!d->characterMotor){m_physics.DestroyBody(it->second.motor.observationBody);it=m_characters.erase(it);continue;}
         auto& c=it->second;auto& motor=c.motor;c.previous=d->transform;

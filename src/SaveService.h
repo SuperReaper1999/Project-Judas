@@ -3,6 +3,12 @@
 #include "JobSystem.h"
 #include <memory>
 class SceneSession;class RuntimeWorld;class ResourceManager;class InteractivePlay;
+class Project;class AssetDatabase;
+// Existing content identity, normalized for packaging-only settings. A package's
+// exclusion report retains hashes, never loadable assets or simulation state.
+bool ComputeSaveContentFingerprint(const Project&,const AssetDatabase&,
+ const std::vector<std::string>& scenes,std::string& digest,std::string& error,
+ const JobContext* cancel=nullptr);
 struct SaveRequestStatus {uint64_t id=0;std::string operation,slot,state="queued",error;bool recovered=false;double captureMs=0,workerMs=0,restoreMs=0;size_t bytes=0;};
 // Project/session owner-thread service. Worker products contain immutable data;
 // they never retain world, VM, scene-session or native-resource pointers.

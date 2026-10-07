@@ -1,0 +1,10 @@
+1 key:W 1
+15 key:W 0
+60 key:F 1
+61 key:F 0
+180 key:Space 1
+260 key:Space 0
+300 mouse:Left 1
+430 mouse:Left 0
+450 key:V 1
+451 key:V 0

@@ -1,0 +1,245 @@
+{
+  "exit_code": 0,
+  "frames": 480,
+  "runtime_sha256": "04dc060d569d50d8f0bd8eb4829802daeeafbe108ca8c6e3d588491d21f9beae",
+  "observer_sha256": "ff7b1693efeface6a3ae0a4d660dd779b84eddc10110e3863a4cfddef0035d49",
+  "temporary_scene_sha256": "43c84963929dba809a28d4de02736b50900698b8c5b6abde1b8c19d532a6798a",
+  "last_observation": {
+    "frame": 480,
+    "scene": "Scenes/skate/park.judas",
+    "paused": false,
+    "bodies": 70,
+    "dynamic": 5,
+    "sleeping": 4,
+    "audioVoices": 7,
+    "mixedPeak": 0.237658,
+    "contacts": 0,
+    "states": [
+      {
+        "entity": "10",
+        "state": {
+          "checkpoint": null,
+          "spawn": {
+            "position": {
+              "x": 0,
+              "y": 3.259999990463257,
+              "z": 23.5
+            },
+            "rotation": {
+              "x": 0,
+              "y": 0,
+              "z": 0,
+              "w": 1
+            }
+          },
+          "game": {
+            "score": 0,
+            "best": 0,
+            "runSeconds": 180,
+            "timeLeft": 173.49999966099858,
+            "over": false,
+            "letters": {},
+            "goals": {},
+            "bails": 0,
+            "stats": {
+              "tricks": 0,
+              "landed": 0,
+              "maxCombo": 0,
+              "airTime": 0,
+              "grindTime": 0
+            }
+          }
+        }
+      },
+      {
+        "entity": "40",
+        "state": {}
+      },
+      {
+        "entity": "109",
+        "state": {
+          "kind": "ledge",
+          "name": "Funbox Ledge"
+        }
+      },
+      {
+        "entity": "114",
+        "state": {}
+      },
+      {
+        "entity": "115",
+        "state": {}
+      },
+      {
+        "entity": "123",
+        "state": {
+          "kind": "rail",
+          "name": "Handrail"
+        }
+      },
+      {
+        "entity": "127",
+        "state": {
+          "kind": "ledge",
+          "name": "Platform Ledge Edge"
+        }
+      },
+      {
+        "entity": "130",
+        "state": {
+          "kind": "rail",
+          "name": "Flat Bar"
+        }
+      },
+      {
+        "entity": "132",
+        "state": {
+          "kind": "ledge",
+          "name": "Street Ledge Edge"
+        }
+      },
+      {
+        "entity": "135",
+        "state": {
+          "kind": "coping",
+          "name": "QP Coping"
+        }
+      },
+      {
+        "entity": "138",
+        "state": {
+          "kind": "coping",
+          "name": "Mini Coping E"
+        }
+      },
+      {
+        "entity": "141",
+        "state": {
+          "kind": "coping",
+          "name": "Mini Coping W"
+        }
+      },
+      {
+        "entity": "155",
+        "state": {
+          "taken": false
+        }
+      },
+      {
+        "entity": "156",
+        "state": {
+          "taken": false
+        }
+      },
+      {
+        "entity": "157",
+        "state": {
+          "taken": false
+        }
+      },
+      {
+        "entity": "158",
+        "state": {
+          "taken": false
+        }
+      },
+      {
+        "entity": "159",
+        "state": {
+          "taken": false
+        }
+      },
+      {
+        "entity": "1000000",
+        "state": {}
+      },
+      {
+        "entity": "4611686018427387906",
+        "state": {
+          "kind": "ledge",
+          "name": "Kerb 0"
+        }
+      },
+      {
+        "entity": "4611686018427387908",
+        "state": {
+          "kind": "ledge",
+          "name": "Kerb 0"
+        }
+      }
+    ],
+    "regions": [
+      {
+        "id": "street-0",
+        "state": "active",
+        "entities": 11,
+        "integrationMs": 0,
+        "largestUnitMs": 0
+      },
+      {
+        "id": "street-1",
+        "state": "unloaded",
+        "entities": 0,
+        "integrationMs": 0,
+        "largestUnitMs": 0
+      },
+      {
+        "id": "street-2",
+        "state": "unloaded",
+        "entities": 0,
+        "integrationMs": 0,
+        "largestUnitMs": 0
+      },
+      {
+        "id": "street-3",
+        "state": "unloaded",
+        "entities": 0,
+        "integrationMs": 0,
+        "largestUnitMs": 0
+      },
+      {
+        "id": "street-4",
+        "state": "unloaded",
+        "entities": 0,
+        "integrationMs": 0,
+        "largestUnitMs": 0
+      }
+    ],
+    "objects": [
+      {
+        "id": "2",
+        "p": [
+          0,
+          -0.5,
+          -12
+        ]
+      },
+      {
+        "id": "10",
+        "p": [
+          0,
+          1.38413,
+          -5.19579
+        ]
+      },
+      {
+        "id": "12",
+        "p": [
+          0,
+          1.20745,
+          -5.12775
+        ],
+        "leftFoot": [
+          0.00280233,
+          0.231012,
+          0.149813
+        ],
+        "rightFoot": [
+          0.00118405,
+          0.271506,
+          -0.185478
+        ]
+      }
+    ]
+  }
+}

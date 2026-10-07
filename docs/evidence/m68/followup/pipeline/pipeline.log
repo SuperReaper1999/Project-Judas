@@ -1,0 +1,277 @@
+PASS fresh owned output required
+PASS 
+PASS initial validated recipe generation
+PASS 
+PASS unchanged content receipt requires zero product decodes
+PASS editor unchanged preview needs one decode
+PASS corrupt disposable receipt uses validated embedded provenance
+PASS 
+PASS same-mtime content edit invalidates generation
+PASS 
+PASS restored content preserves exact cooked representation
+PASS 
+PASS corrupt base cache reconstructs from author-owned sources
+PASS accepted unchanged generation stages
+PASS 
+PASS post-worker same-mtime edit cannot publish stale generation
+PASS first changed generation staged privately
+PASS newer import wins without older staging overwrite
+PASS 
+PASS compatible motion uses its own validated cache
+PASS 
+PASS 
+PASS corrupt motion cache safely reconstructs unchanged authored clips
+PASS GPU settings retain meaning without image payload copies
+PASS 
+PASS 
+PASS 
+PASS 
+PASS 
+PASS 
+PASS 
+PASS legacy default retains all dynamic registered assets: 
+PASS 
+PASS named/legacy export roots round trip
+PASS explicit dynamic/save root transitive closure: 
+PASS eligible unreferenced asset excluded, dynamic prefab retained
+PASS identical immutable bytes share physical storage with distinct asset IDs
+PASS dedup preserves logical identity
+PASS pruned closure and packaging settings preserve source save content identity: 
+PASS 
+PASS 
+PASS 
+PASS 
+PASS 
+PASS 
+PASS independent pre-M68 content formula remains byte-compatible
+PASS packaged file edits remain visible despite inclusion report hashes
+PASS malformed excluded identity cannot silently pass save compatibility
+PASS 
+PASS deduplicated package spawns independent mutable prefab instances
+PASS mutating one packaged instance does not couple shared resources
+PASS repeat export dependency report deterministic after deliberate corruption
+PASS missing transitive asset leaves previous valid package intact
+PASS Export failed: Asset database: /home/conner/Documents/GitHub/Project-Judas/.cache/m68-save-followup-2/pipeline/project/Assets/texture.png.judasmeta: asset file is missing: /home/conner/Documents/GitHub/Project-Judas/.cache/m68-save-followup-2/pipeline/project/Assets/texture.png
+PASS self-contained runtime glTF retained through closure: 
+PASS uncooked external source fails with detail and retains last-good package
+PASS Export failed: Dependency 66666666666666666666666666666666: glTF: external glTF buffers unsupported; embed buffers or use GLB
+PASS Export failed: Dependency 66666666666666666666666666666666: glTF: external glTF buffers unsupported; embed buffers or use GLB
+PASS Export failed: Dependency 66666666666666666666666666666666: glTF: external glTF buffers unsupported; embed buffers or use GLB
+PASS Export failed: Dependency 66666666666666666666666666666666: glTF: external glTF buffers unsupported; embed buffers or use GLB
+PASS Export failed: Dependency 66666666666666666666666666666666: glTF: external glTF buffers unsupported; embed buffers or use GLB
+PASS Export failed: Dependency 66666666666666666666666666666666: glTF: external glTF buffers unsupported; embed buffers or use GLB
+PASS Export failed: Dependency 66666666666666666666666666666666: glTF: external glTF buffers unsupported; embed buffers or use GLB
+PASS Export failed: Dependency 66666666666666666666666666666666: glTF: external glTF buffers unsupported; embed buffers or use GLB
+PASS Export failed: Dependency 66666666666666666666666666666666: glTF: external glTF buffers unsupported; embed buffers or use GLB
+PASS Export failed: Dependency 66666666666666666666666666666666: glTF: external glTF buffers unsupported; embed buffers or use GLB
+PASS Export failed: Dependency 66666666666666666666666666666666: glTF: external glTF buffers unsupported; embed buffers or use GLB
+PASS Export failed: Dependency 66666666666666666666666666666666: glTF: external glTF buffers unsupported; embed buffers or use GLB
+PASS bounded resource admission
+PASS cancel retires only own shared-payload request
+PASS burst is queued behind bounded decode admission
+PASS deferred cancellation and generation replacement make progress safely
+PASS resource shutdown clears admitted and deferred work
+PASS 
+PASS one action retains one undo
+PASS one action retains one undo
+PASS one action retains one undo
+PASS one action retains one undo
+PASS one action retains one undo
+PASS one action retains one undo
+PASS one action retains one undo
+PASS one action retains one undo
+PASS one action retains one undo
+PASS one action retains one undo
+PASS one action retains one undo
+PASS one action retains one undo
+PASS one action retains one undo
+PASS one action retains one undo
+PASS one action retains one undo
+PASS one action retains one undo
+PASS one action retains one undo
+PASS one action retains one undo
+PASS one action retains one undo
+PASS one action retains one undo
+PASS one action retains one undo
+PASS one action retains one undo
+PASS one action retains one undo
+PASS one action retains one undo
+PASS one action retains one undo
+PASS one action retains one undo
+PASS one action retains one undo
+PASS one action retains one undo
+PASS one action retains one undo
+PASS one action retains one undo
+PASS one action retains one undo
+PASS one action retains one undo
+PASS one action retains one undo
+PASS one action retains one undo
+PASS one action retains one undo
+PASS one action retains one undo
+PASS one action retains one undo
+PASS one action retains one undo
+PASS one action retains one undo
+PASS one action retains one undo
+PASS one action retains one undo
+PASS one action retains one undo
+PASS one action retains one undo
+PASS one action retains one undo
+PASS one action retains one undo
+PASS one action retains one undo
+PASS one action retains one undo
+PASS one action retains one undo
+PASS one action retains one undo
+PASS one action retains one undo
+PASS one action retains one undo
+PASS one action retains one undo
+PASS one action retains one undo
+PASS one action retains one undo
+PASS one action retains one undo
+PASS one action retains one undo
+PASS one action retains one undo
+PASS one action retains one undo
+PASS one action retains one undo
+PASS one action retains one undo
+PASS one action retains one undo
+PASS one action retains one undo
+PASS one action retains one undo
+PASS one action retains one undo
+PASS one action retains one undo
+PASS one action retains one undo
+PASS one action retains one undo
+PASS one action retains one undo
+PASS one action retains one undo
+PASS one action retains one undo
+PASS one action retains one undo
+PASS one action retains one undo
+PASS one action retains one undo
+PASS one action retains one undo
+PASS one action retains one undo
+PASS one action retains one undo
+PASS one action retains one undo
+PASS one action retains one undo
+PASS one action retains one undo
+PASS one action retains one undo
+PASS one action retains one undo
+PASS one action retains one undo
+PASS one action retains one undo
+PASS one action retains one undo
+PASS one action retains one undo
+PASS one action retains one undo
+PASS one action retains one undo
+PASS one action retains one undo
+PASS one action retains one undo
+PASS one action retains one undo
+PASS one action retains one undo
+PASS one action retains one undo
+PASS one action retains one undo
+PASS one action retains one undo
+PASS one action retains one undo
+PASS one action retains one undo
+PASS one action retains one undo
+PASS one action retains one undo
+PASS one action retains one undo
+PASS one action retains one undo
+PASS one action retains one undo
+PASS one action retains one undo
+PASS one action retains one undo
+PASS one action retains one undo
+PASS one action retains one undo
+PASS one action retains one undo
+PASS one action retains one undo
+PASS one action retains one undo
+PASS one action retains one undo
+PASS one action retains one undo
+PASS one action retains one undo
+PASS one action retains one undo
+PASS one action retains one undo
+PASS one action retains one undo
+PASS one action retains one undo
+PASS one action retains one undo
+PASS one action retains one undo
+PASS one action retains one undo
+PASS one action retains one undo
+PASS one action retains one undo
+PASS one action retains one undo
+PASS one action retains one undo
+PASS one action retains one undo
+PASS one action retains one undo
+PASS one action retains one undo
+PASS one action retains one undo
+PASS one action retains one undo
+PASS one action retains one undo
+PASS one action retains one undo
+PASS one action retains one undo
+PASS one action retains one undo
+PASS one action retains one undo
+PASS one action retains one undo
+PASS one action retains one undo
+PASS one action retains one undo
+PASS one action retains one undo
+PASS one action retains one undo
+PASS one action retains one undo
+PASS one action retains one undo
+PASS one action retains one undo
+PASS one action retains one undo
+PASS one action retains one undo
+PASS one action retains one undo
+PASS one action retains one undo
+PASS one action retains one undo
+PASS one action retains one undo
+PASS one action retains one undo
+PASS one action retains one undo
+PASS one action retains one undo
+PASS one action retains one undo
+PASS one action retains one undo
+PASS one action retains one undo
+PASS one action retains one undo
+PASS one action retains one undo
+PASS one action retains one undo
+PASS one action retains one undo
+PASS one action retains one undo
+PASS one action retains one undo
+PASS one action retains one undo
+PASS one action retains one undo
+PASS one action retains one undo
+PASS one action retains one undo
+PASS one action retains one undo
+PASS one action retains one undo
+PASS one action retains one undo
+PASS one action retains one undo
+PASS one action retains one undo
+PASS one action retains one undo
+PASS one action retains one undo
+PASS one action retains one undo
+PASS one action retains one undo
+PASS one action retains one undo
+PASS one action retains one undo
+PASS one action retains one undo
+PASS one action retains one undo
+PASS one action retains one undo
+PASS one action retains one undo
+PASS one action retains one undo
+PASS one action retains one undo
+PASS one action retains one undo
+PASS one action retains one undo
+PASS one action retains one undo
+PASS one action retains one undo
+PASS one action retains one undo
+PASS one action retains one undo
+PASS one action retains one undo
+PASS one action retains one undo
+PASS one action retains one undo
+PASS one action retains one undo
+PASS one action retains one undo
+PASS one action retains one undo
+PASS one action retains one undo
+PASS one action retains one undo
+PASS one action retains one undo
+PASS one action retains one undo
+PASS one action retains one undo
+PASS one action retains one undo
+PASS one action retains one undo
+PASS one action retains one undo
+PASS one action retains one undo
+PASS all 200 exact history revisions retained
+PASS all 200 revisions redo independently
+SUMMARY 276 checks

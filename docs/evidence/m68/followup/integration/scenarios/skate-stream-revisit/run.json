@@ -1,0 +1,300 @@
+{
+  "exit_code": 0,
+  "frames": 840,
+  "runtime_sha256": "04dc060d569d50d8f0bd8eb4829802daeeafbe108ca8c6e3d588491d21f9beae",
+  "observer_sha256": "ff7b1693efeface6a3ae0a4d660dd779b84eddc10110e3863a4cfddef0035d49",
+  "temporary_scene_sha256": "e5b7b6e775bf88666e3906b2ed7c42ec30aed1ce831edeba08d127cc3ec02145",
+  "last_observation": {
+    "frame": 840,
+    "scene": "Scenes/skate/park.judas",
+    "paused": false,
+    "bodies": 91,
+    "dynamic": 9,
+    "sleeping": 8,
+    "audioVoices": 7,
+    "mixedPeak": 0.188982,
+    "contacts": 0,
+    "states": [
+      {
+        "entity": "10",
+        "state": {
+          "checkpoint": null,
+          "spawn": {
+            "position": {
+              "x": 36.599998474121094,
+              "y": -18.43000030517578,
+              "z": -250
+            },
+            "rotation": {
+              "x": 0,
+              "y": 0,
+              "z": 0,
+              "w": 1
+            }
+          },
+          "game": {
+            "score": 0,
+            "best": 0,
+            "runSeconds": 180,
+            "timeLeft": 166.99999932199717,
+            "over": false,
+            "letters": {},
+            "goals": {},
+            "bails": 0,
+            "stats": {
+              "tricks": 0,
+              "landed": 0,
+              "maxCombo": 0,
+              "airTime": 3.2833335045725107,
+              "grindTime": 0
+            }
+          }
+        }
+      },
+      {
+        "entity": "40",
+        "state": {}
+      },
+      {
+        "entity": "109",
+        "state": {
+          "kind": "ledge",
+          "name": "Funbox Ledge"
+        }
+      },
+      {
+        "entity": "114",
+        "state": {}
+      },
+      {
+        "entity": "115",
+        "state": {}
+      },
+      {
+        "entity": "123",
+        "state": {
+          "kind": "rail",
+          "name": "Handrail"
+        }
+      },
+      {
+        "entity": "127",
+        "state": {
+          "kind": "ledge",
+          "name": "Platform Ledge Edge"
+        }
+      },
+      {
+        "entity": "130",
+        "state": {
+          "kind": "rail",
+          "name": "Flat Bar"
+        }
+      },
+      {
+        "entity": "132",
+        "state": {
+          "kind": "ledge",
+          "name": "Street Ledge Edge"
+        }
+      },
+      {
+        "entity": "135",
+        "state": {
+          "kind": "coping",
+          "name": "QP Coping"
+        }
+      },
+      {
+        "entity": "138",
+        "state": {
+          "kind": "coping",
+          "name": "Mini Coping E"
+        }
+      },
+      {
+        "entity": "141",
+        "state": {
+          "kind": "coping",
+          "name": "Mini Coping W"
+        }
+      },
+      {
+        "entity": "155",
+        "state": {
+          "taken": false
+        }
+      },
+      {
+        "entity": "156",
+        "state": {
+          "taken": false
+        }
+      },
+      {
+        "entity": "157",
+        "state": {
+          "taken": false
+        }
+      },
+      {
+        "entity": "158",
+        "state": {
+          "taken": false
+        }
+      },
+      {
+        "entity": "159",
+        "state": {
+          "taken": false
+        }
+      },
+      {
+        "entity": "1000000",
+        "state": {}
+      },
+      {
+        "entity": "1000000",
+        "state": {
+          "returning": true
+        }
+      },
+      {
+        "entity": "4611686018427387906",
+        "state": {
+          "kind": "ledge",
+          "name": "Kerb 0"
+        }
+      },
+      {
+        "entity": "4611686018427387908",
+        "state": {
+          "kind": "ledge",
+          "name": "Kerb 0"
+        }
+      },
+      {
+        "entity": "4611686018427387946",
+        "state": {
+          "kind": "ledge",
+          "name": "Kerb 1"
+        }
+      },
+      {
+        "entity": "4611686018427387948",
+        "state": {
+          "kind": "ledge",
+          "name": "Kerb 1"
+        }
+      },
+      {
+        "entity": "4611686018427387949",
+        "state": {
+          "kind": "rail",
+          "name": "Street Rail"
+        }
+      },
+      {
+        "entity": "4611686018427387957",
+        "state": {
+          "kind": "ledge",
+          "name": "Kerb 2"
+        }
+      },
+      {
+        "entity": "4611686018427387959",
+        "state": {
+          "kind": "ledge",
+          "name": "Kerb 2"
+        }
+      },
+      {
+        "entity": "4611686018427387964",
+        "state": {
+          "kind": "ledge",
+          "name": "Kerb 3"
+        }
+      },
+      {
+        "entity": "4611686018427387966",
+        "state": {
+          "kind": "ledge",
+          "name": "Kerb 3"
+        }
+      }
+    ],
+    "regions": [
+      {
+        "id": "street-0",
+        "state": "active",
+        "entities": 11,
+        "integrationMs": 0.363049,
+        "largestUnitMs": 0.047842
+      },
+      {
+        "id": "street-1",
+        "state": "active",
+        "entities": 9,
+        "integrationMs": 1.46473,
+        "largestUnitMs": 0.358754
+      },
+      {
+        "id": "street-2",
+        "state": "active",
+        "entities": 9,
+        "integrationMs": 1.16839,
+        "largestUnitMs": 0.349819
+      },
+      {
+        "id": "street-3",
+        "state": "active",
+        "entities": 11,
+        "integrationMs": 1.23621,
+        "largestUnitMs": 0.375523
+      },
+      {
+        "id": "street-4",
+        "state": "unloaded",
+        "entities": 0,
+        "integrationMs": 0,
+        "largestUnitMs": 0
+      }
+    ],
+    "objects": [
+      {
+        "id": "2",
+        "p": [
+          0,
+          -0.5,
+          -12
+        ]
+      },
+      {
+        "id": "10",
+        "p": [
+          36.6,
+          -20.1626,
+          -266.549
+        ]
+      },
+      {
+        "id": "12",
+        "p": [
+          36.6,
+          -20.2961,
+          -266.425
+        ],
+        "leftFoot": [
+          0.00764187,
+          0.225369,
+          0.166231
+        ],
+        "rightFoot": [
+          0.00347486,
+          0.262553,
+          -0.165164
+        ]
+      }
+    ]
+  }
+}

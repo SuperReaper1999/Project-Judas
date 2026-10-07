@@ -1,0 +1,62 @@
+Section A: box drag uses measured gas and orientation
+  OK   physics world initialized
+  OK   static massive planet supplies the inverse-square test-body pull
+  OK   planetary test-body pull has no preferred transverse axis
+  OK   aerodynamic coupling reads gas density
+  OK   pressure remains an independently sampled gas property
+  OK   broad-side projected area is the box's true 4 x 6 m face
+  OK   relative airspeed comes from body minus gas velocity
+  OK   drag magnitude follows one-half rho Cd A speed squared
+  OK   drag strictly opposes motion through the gas
+  OK   aerodynamics does not directly overwrite velocity
+  OK   ordinary PhysicsWorld integration turns drag force into acceleration
+  OK   the symmetric centred box receives no invented torque
+  OK   turning the craft exposes its 0.5 x 6 m side
+  OK   orientation changes drag through actual exposed area
+Section B: vacuum, moving gas frame, and continuous exit
+  OK   frame/vacuum physics world initialized
+  OK   body and translating atmosphere with equal world velocity have no airspeed
+  OK   co-motion applies no aerodynamic force
+  OK   co-motion includes the rotating planet frame's omega cross r velocity
+  OK   distant vacuum has no gas pressure, airspeed, or aerodynamic force
+  OK   vacuum preserves inertial linear motion
+  OK   aerodynamic force decreases as the craft approaches vacuum
+  OK   aerodynamic force decreases as the craft approaches vacuum
+  OK   aerodynamic force decreases as the craft approaches vacuum
+  OK   aerodynamic force decreases as the craft approaches vacuum
+  OK   aerodynamic force reaches zero at the smooth gas boundary
+  OK   the outward step starts with a real atmospheric load
+  OK   the body physically crosses the gas boundary
+  OK   no atmospheric force lingers on the next vacuum physics step
+Section C: gravity plus real drag changes an orbital trajectory
+  OK   orbital-pass physics world initialized
+  OK   orbital-pass physics world initialized
+  OK   the ship crosses from vacuum into gas and exits after periapsis
+  OK   the pass encounters measurable gas and aerodynamic load
+  OK   aerodynamic force performs negative work on the ship
+  OK   atmospheric pass loses orbital energy compared with gravity-only flight
+  OK   lower post-pass apoapsis emerges from the changed position and velocity
+  OK   the post-pass trajectory differs continuously from the unpowered orbit
+  Measured pass: 1266 steps (21.10 s), min r 99.954 m, peak rho 0.001859 kg/m^3, peak drag 1.550 N
+  Specific energy: initial -272.97388, vacuum -272.84296, drag -275.79654 m^2/s^2; drag work -2.94705 m^2/s^2; apoapsis vacuum 130.269, drag 127.903 m
+  OK   orbital-pass physics world initialized
+  OK   rotated and translated orbital position maps back to the same result
+  OK   rotated and translated orbital velocity maps back to the same result
+  OK   energy loss is invariant to local frame rotation and translation
+  OK   M23 far absolute origin preserves the local atmospheric-pass result
+Section D: SAS torque composes with gas drag and orbital translation
+  OK   atmospheric tumble world initialized
+  OK   manual torque builds a tumble that persists with SAS off in gas
+  OK   aerodynamic force acts while SAS counter-torque settles the tumble
+  OK   SAS counter-torque settles the atmospheric tumble
+  OK   SAS holds its captured attitude while atmosphere is present
+  OK   drag accounts for the full linear velocity change while SAS acts
+  OK   paired atmospheric worlds initialized
+  OK   matching attitudes receive matching aerodynamic force with SAS on/off
+  OK   paired flight experiences nonzero aerodynamic resistance
+  OK   SAS does not change gravity-plus-drag orbital translation
+Section E: the ship has one celestial source while props keep local gravity
+  OK   distinct-gravity physics world initialized
+  OK   spacecraft receives exactly one Newtonian source without local-gravity addition
+  OK   ordinary nearby body still receives its own local gameplay gravity
+Atmospheric flight tests: PASS (0 failures)

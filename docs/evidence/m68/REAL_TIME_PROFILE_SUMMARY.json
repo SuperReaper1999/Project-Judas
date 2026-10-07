@@ -1,0 +1,1739 @@
+{
+  "skate": {
+    "note": "1,000 real-clock normal application frames; retained final 120 plus 8 bounded spike records, not whole-run percentiles. Observer includes 1ms sleep and final screenshot/audio sampling. Startup separate; no comparable baseline consumer FPS claimed. Final frame includes synchronous observer screenshot/JSON export and is retained in raw max; not attributed to engine simulation.",
+    "warmOuterFrameMs": {
+      "samples": 120,
+      "median": 2.4078264999999996,
+      "p95": 3.586105,
+      "max": 124.916396
+    },
+    "warmIntervalMs": {
+      "samples": 120,
+      "median": 2.4331495,
+      "p95": 3.61418,
+      "max": 4.218713
+    },
+    "uniqueRetainedFrameCount": 126,
+    "startupMs": 328.409739,
+    "capReachedRetained": 0,
+    "discardedSecondsRetained": 0,
+    "scopesMs": {
+      "Input events": {
+        "samples": 125,
+        "median": 0.027459,
+        "p95": 0.052558,
+        "max": 0.063973
+      },
+      "Resource eviction": {
+        "samples": 124,
+        "median": 0.0009125,
+        "p95": 0.001882,
+        "max": 0.010283
+      },
+      "Resource completion and budget": {
+        "samples": 125,
+        "median": 0.001534,
+        "p95": 0.010815,
+        "max": 83.638796
+      },
+      "Audio control and retirement": {
+        "samples": 251,
+        "median": 0.002317,
+        "p95": 0.004303,
+        "max": 0.013143
+      },
+      "Resource pump": {
+        "samples": 125,
+        "median": 0.004562,
+        "p95": 0.015648,
+        "max": 83.643243
+      },
+      "Script synchronization": {
+        "samples": 322,
+        "median": 0.004238,
+        "p95": 0.009662,
+        "max": 6.502694
+      },
+      "Script asset: Assets/skate/scripts/skater.js": {
+        "samples": 412,
+        "median": 0.0146515,
+        "p95": 0.317941,
+        "max": 0.693451
+      },
+      "Script lifecycle callback": {
+        "samples": 8232,
+        "median": 0.000172,
+        "p95": 0.015202,
+        "max": 0.694914
+      },
+      "Localization format": {
+        "samples": 376,
+        "median": 0.0037505000000000004,
+        "p95": 0.012185,
+        "max": 0.019426
+      },
+      "Script asset: Assets/skate/scripts/hud.js": {
+        "samples": 412,
+        "median": 0.00024700000000000004,
+        "p95": 0.12134,
+        "max": 0.302496
+      },
+      "Script asset: Assets/skate/scripts/rail.js": {
+        "samples": 4112,
+        "median": 7.9e-05,
+        "p95": 0.000218,
+        "max": 0.010129
+      },
+      "Script asset: Assets/skate/scripts/gapzone.js": {
+        "samples": 824,
+        "median": 0.000119,
+        "p95": 0.000297,
+        "max": 0.00085
+      },
+      "Script asset: Assets/skate/scripts/pickup.js": {
+        "samples": 2060,
+        "median": 8e-05,
+        "p95": 0.01135,
+        "max": 0.044661
+      },
+      "Script asset: Assets/collection/collection.js": {
+        "samples": 412,
+        "median": 0.0001425,
+        "p95": 0.015867,
+        "max": 0.036363
+      },
+      "JavaScript UI update": {
+        "samples": 125,
+        "median": 0.105619,
+        "p95": 0.22122,
+        "max": 1.022762
+      },
+      "Runtime UI input": {
+        "samples": 125,
+        "median": 0.002871,
+        "p95": 0.006742,
+        "max": 0.021313
+      },
+      "JavaScript UI events": {
+        "samples": 125,
+        "median": 0.000141,
+        "p95": 0.000309,
+        "max": 0.000947
+      },
+      "JavaScript update": {
+        "samples": 125,
+        "median": 0.022051,
+        "p95": 0.044069,
+        "max": 0.068922
+      },
+      "Pose skin matrices": {
+        "samples": 282,
+        "median": 0.001792,
+        "p95": 0.003869,
+        "max": 0.012727
+      },
+      "Physics shape query": {
+        "samples": 269,
+        "median": 0.002523,
+        "p95": 0.011395,
+        "max": 0.027277
+      },
+      "Skate presentation": {
+        "samples": 125,
+        "median": 0.217873,
+        "p95": 0.399793,
+        "max": 0.555306
+      },
+      "JavaScript presentation": {
+        "samples": 125,
+        "median": 0.235152,
+        "p95": 0.415419,
+        "max": 0.582652
+      },
+      "Audio main update": {
+        "samples": 125,
+        "median": 0.010952,
+        "p95": 0.02335,
+        "max": 0.044051
+      },
+      "Legacy fluid surface update": {
+        "samples": 125,
+        "median": 5.7e-05,
+        "p95": 0.000175,
+        "max": 0.010407
+      },
+      "World culling and opaque submission": {
+        "samples": 250,
+        "median": 0.183943,
+        "p95": 0.377157,
+        "max": 0.552477
+      },
+      "Shadow pass submission": {
+        "samples": 125,
+        "median": 0.143344,
+        "p95": 0.293762,
+        "max": 2.143893
+      },
+      "Water optical paths": {
+        "samples": 125,
+        "median": 0.008368,
+        "p95": 0.013814,
+        "max": 0.026204
+      },
+      "Water boundary upload": {
+        "samples": 125,
+        "median": 0.008737,
+        "p95": 0.021302,
+        "max": 0.1396
+      },
+      "Material transparency": {
+        "samples": 120,
+        "median": 0.0225645,
+        "p95": 0.053188,
+        "max": 0.132701
+      },
+      "Particles and water presentation": {
+        "samples": 125,
+        "median": 0.023994,
+        "p95": 0.056208,
+        "max": 0.134276
+      },
+      "Display resolve": {
+        "samples": 125,
+        "median": 0.07399,
+        "p95": 0.147072,
+        "max": 0.735649
+      },
+      "Main camera": {
+        "samples": 125,
+        "median": 0.338732,
+        "p95": 0.644443,
+        "max": 1.389116
+      },
+      "World render submission": {
+        "samples": 125,
+        "median": 0.521785,
+        "p95": 1.049821,
+        "max": 4.134131
+      },
+      "Text layout": {
+        "samples": 750,
+        "median": 0.0006565,
+        "p95": 0.001375,
+        "max": 0.963596
+      },
+      "Shaped text submission": {
+        "samples": 750,
+        "median": 0.014246,
+        "p95": 0.064814,
+        "max": 16.694205
+      },
+      "Runtime UI drawing": {
+        "samples": 125,
+        "median": 0.119562,
+        "p95": 0.29895,
+        "max": 21.491485
+      },
+      "Play frame": {
+        "samples": 125,
+        "median": 1.113767,
+        "p95": 2.403772,
+        "max": 37.428811
+      },
+      "Swap present wait": {
+        "samples": 125,
+        "median": 0.08588,
+        "p95": 0.147301,
+        "max": 0.225741
+      },
+      "Streaming outer integration": {
+        "samples": 125,
+        "median": 0.071428,
+        "p95": 0.109995,
+        "max": 0.150294
+      },
+      "Skate fixed": {
+        "samples": 36,
+        "median": 0.2244525,
+        "p95": 0.410772,
+        "max": 0.495671
+      },
+      "JavaScript fixedUpdate": {
+        "samples": 36,
+        "median": 0.3123825,
+        "p95": 0.549746,
+        "max": 0.650458
+      },
+      "Physics broadphase": {
+        "samples": 36,
+        "median": 0.001954,
+        "p95": 0.002885,
+        "max": 0.003121
+      },
+      "Physics contacts": {
+        "samples": 36,
+        "median": 0.0198265,
+        "p95": 0.078754,
+        "max": 0.087303
+      },
+      "Physics contact and joint solver": {
+        "samples": 36,
+        "median": 0.015312,
+        "p95": 0.024669,
+        "max": 0.032996
+      },
+      "Physics proxy refresh": {
+        "samples": 36,
+        "median": 0.005355,
+        "p95": 0.01402,
+        "max": 0.014961
+      },
+      "Rigid physics": {
+        "samples": 36,
+        "median": 0.063374,
+        "p95": 0.110869,
+        "max": 0.131848
+      },
+      "Character motors": {
+        "samples": 36,
+        "median": 0.00028,
+        "p95": 0.000439,
+        "max": 0.000475
+      },
+      "Animation clip sampling": {
+        "samples": 18,
+        "median": 0.0028705,
+        "p95": 0.004927,
+        "max": 0.004927
+      },
+      "Pose clip mixing": {
+        "samples": 18,
+        "median": 0.003695,
+        "p95": 0.006197,
+        "max": 0.006197
+      },
+      "Final pose resolution": {
+        "samples": 18,
+        "median": 0.008283,
+        "p95": 0.019551,
+        "max": 0.019551
+      },
+      "Animation instances": {
+        "samples": 36,
+        "median": 0.006539,
+        "p95": 0.023065,
+        "max": 0.025431
+      },
+      "Ragdoll physics to pose": {
+        "samples": 36,
+        "median": 0.0003105,
+        "p95": 0.000525,
+        "max": 0.000726
+      },
+      "Visual particle simulation": {
+        "samples": 36,
+        "median": 0.0007355,
+        "p95": 0.001312,
+        "max": 0.001634
+      },
+      "JavaScript contact events": {
+        "samples": 288,
+        "median": 0.000127,
+        "p95": 0.000334,
+        "max": 0.009163
+      },
+      "Fixed simulation step": {
+        "samples": 36,
+        "median": 0.4101105,
+        "p95": 0.675306,
+        "max": 0.78912
+      },
+      "Simulation systems": {
+        "samples": 36,
+        "median": 0.4103525,
+        "p95": 0.675853,
+        "max": 0.789574
+      },
+      "Mesh geometry upload": {
+        "samples": 2,
+        "median": 0.0970155,
+        "p95": 0.153189,
+        "max": 0.153189
+      },
+      "Texture driver texel upload": {
+        "samples": 7,
+        "median": 14.844108,
+        "p95": 18.704976,
+        "max": 18.704976
+      },
+      "Texture driver mipmap generation": {
+        "samples": 7,
+        "median": 50.418054,
+        "p95": 64.896907,
+        "max": 64.896907
+      },
+      "Host startup": {
+        "samples": 1,
+        "median": 163.573211,
+        "p95": 163.573211,
+        "max": 163.573211
+      },
+      "Resource release": {
+        "samples": 1,
+        "median": 0.000153,
+        "p95": 0.000153,
+        "max": 0.000153
+      },
+      "Project resources": {
+        "samples": 1,
+        "median": 2.746415,
+        "p95": 2.746415,
+        "max": 2.746415
+      },
+      "World destroy": {
+        "samples": 1,
+        "median": 0.010453,
+        "p95": 0.010453,
+        "max": 0.010453
+      },
+      "Resource installation": {
+        "samples": 11,
+        "median": 0.000337,
+        "p95": 0.75433,
+        "max": 0.75433
+      },
+      "World build": {
+        "samples": 1,
+        "median": 158.11286,
+        "p95": 158.11286,
+        "max": 158.11286
+      },
+      "Runtime UI layout": {
+        "samples": 1,
+        "median": 0.016811,
+        "p95": 0.016811,
+        "max": 0.016811
+      },
+      "Text glyph raster": {
+        "samples": 74,
+        "median": 0.0381485,
+        "p95": 0.058419,
+        "max": 0.092821
+      },
+      "Mesh texture upload unit": {
+        "samples": 5,
+        "median": 68.619108,
+        "p95": 83.620463,
+        "max": 83.620463
+      }
+    },
+    "counters": {
+      "Resource resident byte estimate": {
+        "samples": 120,
+        "median": 446422367.0,
+        "p95": 446422367,
+        "max": 446422367
+      },
+      "Resource budget bytes": {
+        "samples": 120,
+        "median": 2097152.0,
+        "p95": 2097152,
+        "max": 2097152
+      },
+      "Resource in flight": {
+        "samples": 120,
+        "median": 0.0,
+        "p95": 0,
+        "max": 0
+      },
+      "Resource uploads": {
+        "samples": 120,
+        "median": 0.0,
+        "p95": 0,
+        "max": 0
+      },
+      "Audio voices": {
+        "samples": 120,
+        "median": 7.0,
+        "p95": 7,
+        "max": 7
+      },
+      "Audio stream PCM bytes": {
+        "samples": 120,
+        "median": 0.0,
+        "p95": 0,
+        "max": 0
+      },
+      "Audio pending retirements": {
+        "samples": 120,
+        "median": 0.0,
+        "p95": 0,
+        "max": 0
+      },
+      "Script instances": {
+        "samples": 120,
+        "median": 20.0,
+        "p95": 20,
+        "max": 20
+      },
+      "Script callback calls": {
+        "samples": 120,
+        "median": 4.0,
+        "p95": 10,
+        "max": 10
+      },
+      "Audio occlusion queries": {
+        "samples": 120,
+        "median": 0.0,
+        "p95": 0,
+        "max": 0
+      },
+      "Submitted draws all passes": {
+        "samples": 120,
+        "median": 29.0,
+        "p95": 29,
+        "max": 29
+      },
+      "Submitted triangles all passes": {
+        "samples": 120,
+        "median": 106706.0,
+        "p95": 106706,
+        "max": 106706
+      },
+      "Visible renderables all passes": {
+        "samples": 120,
+        "median": 29.0,
+        "p95": 29,
+        "max": 29
+      },
+      "Frustum rejected all passes": {
+        "samples": 120,
+        "median": 10.0,
+        "p95": 10,
+        "max": 10
+      },
+      "Layer rejected all passes": {
+        "samples": 120,
+        "median": 0.0,
+        "p95": 0,
+        "max": 0
+      },
+      "Particles submitted": {
+        "samples": 120,
+        "median": 0.0,
+        "p95": 0,
+        "max": 0
+      },
+      "Secondary passes": {
+        "samples": 120,
+        "median": 0.0,
+        "p95": 0,
+        "max": 0
+      },
+      "Text atlas bytes": {
+        "samples": 120,
+        "median": 4194304.0,
+        "p95": 4194304,
+        "max": 4194304
+      },
+      "Text layout bytes": {
+        "samples": 120,
+        "median": 20363.0,
+        "p95": 20363,
+        "max": 20363
+      },
+      "Text glyph raster total": {
+        "samples": 120,
+        "median": 123.0,
+        "p95": 123,
+        "max": 123
+      },
+      "Runtime UI draws": {
+        "samples": 120,
+        "median": 6.0,
+        "p95": 6,
+        "max": 6
+      },
+      "Streaming pending bytes": {
+        "samples": 120,
+        "median": 0.0,
+        "p95": 0,
+        "max": 0
+      },
+      "Streaming live estimated bytes": {
+        "samples": 120,
+        "median": 104459.0,
+        "p95": 104459,
+        "max": 104459
+      },
+      "Streaming retained bytes": {
+        "samples": 120,
+        "median": 0.0,
+        "p95": 0,
+        "max": 0
+      },
+      "Sleeping physics bodies": {
+        "samples": 18,
+        "median": 4.0,
+        "p95": 4,
+        "max": 4
+      },
+      "Awake physics bodies": {
+        "samples": 18,
+        "median": 1.0,
+        "p95": 1,
+        "max": 1
+      },
+      "Physics bodies last step": {
+        "samples": 18,
+        "median": 70.0,
+        "p95": 70,
+        "max": 70
+      },
+      "Physics candidate pairs last step": {
+        "samples": 18,
+        "median": 4.0,
+        "p95": 4,
+        "max": 4
+      },
+      "Physics contacts last step": {
+        "samples": 18,
+        "median": 0.0,
+        "p95": 0,
+        "max": 0
+      },
+      "Physics joints": {
+        "samples": 18,
+        "median": 0.0,
+        "p95": 0,
+        "max": 0
+      },
+      "Character motor instances": {
+        "samples": 18,
+        "median": 0.0,
+        "p95": 0,
+        "max": 0
+      }
+    },
+    "diagnostics": {
+      "dropped_events": 0,
+      "exhausted_labels": 0,
+      "exhausted_nodes": 0,
+      "exhausted_threads": 0,
+      "incomplete_scopes": 0,
+      "open_scopes": 7,
+      "truncated_records": 0,
+      "gpu_dropped": 0,
+      "nested_frames": 0
+    },
+    "worstRetainedInteractiveFrameMs": 124.916396,
+    "worstRetainedIncludingStartupMs": 328.409739,
+    "observerCaptureFrame": 1000
+  },
+  "rooftop": {
+    "note": "1,000 real-clock normal application frames; retained final 120 plus 8 bounded spike records, not whole-run percentiles. Observer includes 1ms sleep and final screenshot/audio sampling. Startup separate; no comparable baseline consumer FPS claimed. Final frame includes synchronous observer screenshot/JSON export and is retained in raw max; not attributed to engine simulation.",
+    "warmOuterFrameMs": {
+      "samples": 120,
+      "median": 2.4601835000000003,
+      "p95": 3.248426,
+      "max": 61.399456
+    },
+    "warmIntervalMs": {
+      "samples": 120,
+      "median": 2.4742569999999997,
+      "p95": 3.201648,
+      "max": 3.761158
+    },
+    "uniqueRetainedFrameCount": 121,
+    "startupMs": 336.185298,
+    "capReachedRetained": 0,
+    "discardedSecondsRetained": 0,
+    "scopesMs": {
+      "Input events": {
+        "samples": 120,
+        "median": 0.0276575,
+        "p95": 0.042977,
+        "max": 0.057193
+      },
+      "Resource completion and budget": {
+        "samples": 120,
+        "median": 0.0003485,
+        "p95": 0.000926,
+        "max": 0.012428
+      },
+      "Audio control and retirement": {
+        "samples": 241,
+        "median": 0.001522,
+        "p95": 0.002748,
+        "max": 0.012571
+      },
+      "Resource pump": {
+        "samples": 120,
+        "median": 0.002221,
+        "p95": 0.006019,
+        "max": 0.014603
+      },
+      "Script synchronization": {
+        "samples": 278,
+        "median": 0.001637,
+        "p95": 0.002831,
+        "max": 0.019165
+      },
+      "Script asset: Assets/rooftop/scripts/runner.js": {
+        "samples": 398,
+        "median": 0.008702999999999999,
+        "p95": 0.096672,
+        "max": 0.156464
+      },
+      "Script lifecycle callback": {
+        "samples": 3032,
+        "median": 0.000198,
+        "p95": 0.045411,
+        "max": 0.163903
+      },
+      "Script asset: Assets/rooftop/scripts/course.js": {
+        "samples": 398,
+        "median": 0.000245,
+        "p95": 0.085324,
+        "max": 0.163584
+      },
+      "Script asset: Assets/rooftop/scripts/checkpoint.js": {
+        "samples": 2256,
+        "median": 8.2e-05,
+        "p95": 0.000211,
+        "max": 0.009588
+      },
+      "Script asset: Assets/collection/collection.js": {
+        "samples": 379,
+        "median": 0.00011,
+        "p95": 0.013242,
+        "max": 0.028482
+      },
+      "JavaScript UI update": {
+        "samples": 120,
+        "median": 0.0662485,
+        "p95": 0.14412,
+        "max": 0.195457
+      },
+      "Runtime UI layout": {
+        "samples": 240,
+        "median": 0.004986,
+        "p95": 0.011512,
+        "max": 0.020169
+      },
+      "Runtime UI input": {
+        "samples": 120,
+        "median": 0.0064975,
+        "p95": 0.01486,
+        "max": 0.021813
+      },
+      "JavaScript UI events": {
+        "samples": 120,
+        "median": 0.000132,
+        "p95": 0.000201,
+        "max": 0.000384
+      },
+      "JavaScript update": {
+        "samples": 120,
+        "median": 0.012548,
+        "p95": 0.024029,
+        "max": 0.056098
+      },
+      "JavaScript presentation": {
+        "samples": 120,
+        "median": 0.0486085,
+        "p95": 0.09187,
+        "max": 0.11125
+      },
+      "Audio main update": {
+        "samples": 120,
+        "median": 0.0066835,
+        "p95": 0.01665,
+        "max": 0.025059
+      },
+      "Legacy fluid surface update": {
+        "samples": 120,
+        "median": 5.2e-05,
+        "p95": 0.000144,
+        "max": 0.000306
+      },
+      "World culling and opaque submission": {
+        "samples": 240,
+        "median": 0.412294,
+        "p95": 0.766213,
+        "max": 1.188309
+      },
+      "Shadow pass submission": {
+        "samples": 120,
+        "median": 0.15328350000000002,
+        "p95": 0.270254,
+        "max": 0.419621
+      },
+      "Water optical paths": {
+        "samples": 120,
+        "median": 0.008226500000000001,
+        "p95": 0.014411,
+        "max": 0.023317
+      },
+      "Water boundary upload": {
+        "samples": 120,
+        "median": 0.00739,
+        "p95": 0.02192,
+        "max": 0.039002
+      },
+      "Particles and water presentation": {
+        "samples": 120,
+        "median": 0.0001225,
+        "p95": 0.000332,
+        "max": 0.000506
+      },
+      "Display resolve": {
+        "samples": 120,
+        "median": 0.0682245,
+        "p95": 0.156768,
+        "max": 0.19573
+      },
+      "Main camera": {
+        "samples": 120,
+        "median": 0.6722539999999999,
+        "p95": 1.166958,
+        "max": 1.395773
+      },
+      "World render submission": {
+        "samples": 120,
+        "median": 0.8522815,
+        "p95": 1.396103,
+        "max": 1.884268
+      },
+      "Text layout": {
+        "samples": 663,
+        "median": 0.0005,
+        "p95": 0.00108,
+        "max": 0.010443
+      },
+      "Shaped text submission": {
+        "samples": 663,
+        "median": 0.012051,
+        "p95": 0.031824,
+        "max": 0.102669
+      },
+      "Runtime UI drawing": {
+        "samples": 120,
+        "median": 0.090893,
+        "p95": 0.176756,
+        "max": 0.249708
+      },
+      "Play frame": {
+        "samples": 120,
+        "median": 1.202534,
+        "p95": 1.846571,
+        "max": 2.409503
+      },
+      "Swap present wait": {
+        "samples": 120,
+        "median": 0.078913,
+        "p95": 0.126608,
+        "max": 0.393027
+      },
+      "Streaming outer integration": {
+        "samples": 120,
+        "median": 0.024198,
+        "p95": 0.034771,
+        "max": 0.052785
+      },
+      "Physics shape query": {
+        "samples": 19,
+        "median": 0.006946,
+        "p95": 0.014133,
+        "max": 0.014133
+      },
+      "JavaScript fixedUpdate": {
+        "samples": 19,
+        "median": 0.1227,
+        "p95": 0.181209,
+        "max": 0.181209
+      },
+      "Physics broadphase": {
+        "samples": 19,
+        "median": 0.001801,
+        "p95": 0.003399,
+        "max": 0.003399
+      },
+      "Physics contacts": {
+        "samples": 19,
+        "median": 0.000732,
+        "p95": 0.001196,
+        "max": 0.001196
+      },
+      "Physics contact and joint solver": {
+        "samples": 19,
+        "median": 0.003246,
+        "p95": 0.00539,
+        "max": 0.00539
+      },
+      "Physics proxy refresh": {
+        "samples": 19,
+        "median": 0.001511,
+        "p95": 0.00271,
+        "max": 0.00271
+      },
+      "Rigid physics": {
+        "samples": 19,
+        "median": 0.016188,
+        "p95": 0.030932,
+        "max": 0.030932
+      },
+      "Character motor": {
+        "samples": 19,
+        "median": 0.030927,
+        "p95": 0.058066,
+        "max": 0.058066
+      },
+      "Character motors": {
+        "samples": 19,
+        "median": 0.121465,
+        "p95": 0.15673,
+        "max": 0.15673
+      },
+      "Animation instances": {
+        "samples": 19,
+        "median": 0.000162,
+        "p95": 0.000233,
+        "max": 0.000233
+      },
+      "Ragdoll physics to pose": {
+        "samples": 19,
+        "median": 0.000233,
+        "p95": 0.000319,
+        "max": 0.000319
+      },
+      "Visual particle simulation": {
+        "samples": 19,
+        "median": 6.6e-05,
+        "p95": 0.000132,
+        "max": 0.000132
+      },
+      "JavaScript contact events": {
+        "samples": 722,
+        "median": 0.0003905,
+        "p95": 0.001198,
+        "max": 0.01391
+      },
+      "Fixed simulation step": {
+        "samples": 19,
+        "median": 0.307996,
+        "p95": 0.409252,
+        "max": 0.409252
+      },
+      "Simulation systems": {
+        "samples": 19,
+        "median": 0.308247,
+        "p95": 0.409537,
+        "max": 0.409537
+      },
+      "Mesh geometry upload": {
+        "samples": 2,
+        "median": 0.125214,
+        "p95": 0.18187,
+        "max": 0.18187
+      },
+      "Texture driver texel upload": {
+        "samples": 1,
+        "median": 0.183246,
+        "p95": 0.183246,
+        "max": 0.183246
+      },
+      "Texture driver mipmap generation": {
+        "samples": 1,
+        "median": 0.002706,
+        "p95": 0.002706,
+        "max": 0.002706
+      },
+      "Host startup": {
+        "samples": 1,
+        "median": 174.371105,
+        "p95": 174.371105,
+        "max": 174.371105
+      },
+      "Resource release": {
+        "samples": 1,
+        "median": 0.000234,
+        "p95": 0.000234,
+        "max": 0.000234
+      },
+      "Project resources": {
+        "samples": 1,
+        "median": 3.082609,
+        "p95": 3.082609,
+        "max": 3.082609
+      },
+      "World destroy": {
+        "samples": 1,
+        "median": 0.003485,
+        "p95": 0.003485,
+        "max": 0.003485
+      },
+      "World build": {
+        "samples": 1,
+        "median": 154.407201,
+        "p95": 154.407201,
+        "max": 154.407201
+      }
+    },
+    "counters": {
+      "Resource resident byte estimate": {
+        "samples": 120,
+        "median": 1667123.0,
+        "p95": 1667123,
+        "max": 1667123
+      },
+      "Resource budget bytes": {
+        "samples": 120,
+        "median": 2097152.0,
+        "p95": 2097152,
+        "max": 2097152
+      },
+      "Resource in flight": {
+        "samples": 120,
+        "median": 0.0,
+        "p95": 0,
+        "max": 0
+      },
+      "Resource uploads": {
+        "samples": 120,
+        "median": 0.0,
+        "p95": 0,
+        "max": 0
+      },
+      "Audio voices": {
+        "samples": 120,
+        "median": 4.0,
+        "p95": 4,
+        "max": 4
+      },
+      "Audio stream PCM bytes": {
+        "samples": 120,
+        "median": 0.0,
+        "p95": 0,
+        "max": 0
+      },
+      "Audio pending retirements": {
+        "samples": 120,
+        "median": 0.0,
+        "p95": 0,
+        "max": 0
+      },
+      "Script instances": {
+        "samples": 120,
+        "median": 8.0,
+        "p95": 8,
+        "max": 8
+      },
+      "Script callback calls": {
+        "samples": 120,
+        "median": 4.0,
+        "p95": 6,
+        "max": 6
+      },
+      "Audio occlusion queries": {
+        "samples": 120,
+        "median": 0.0,
+        "p95": 0,
+        "max": 0
+      },
+      "Submitted draws all passes": {
+        "samples": 120,
+        "median": 97.0,
+        "p95": 97,
+        "max": 97
+      },
+      "Submitted triangles all passes": {
+        "samples": 120,
+        "median": 1164.0,
+        "p95": 1164,
+        "max": 1164
+      },
+      "Visible renderables all passes": {
+        "samples": 120,
+        "median": 97.0,
+        "p95": 97,
+        "max": 97
+      },
+      "Frustum rejected all passes": {
+        "samples": 120,
+        "median": 81.0,
+        "p95": 81,
+        "max": 81
+      },
+      "Layer rejected all passes": {
+        "samples": 120,
+        "median": 0.0,
+        "p95": 0,
+        "max": 0
+      },
+      "Particles submitted": {
+        "samples": 120,
+        "median": 0.0,
+        "p95": 0,
+        "max": 0
+      },
+      "Secondary passes": {
+        "samples": 120,
+        "median": 0.0,
+        "p95": 0,
+        "max": 0
+      },
+      "Text atlas bytes": {
+        "samples": 120,
+        "median": 4194304.0,
+        "p95": 4194304,
+        "max": 4194304
+      },
+      "Text layout bytes": {
+        "samples": 120,
+        "median": 7233.0,
+        "p95": 7233,
+        "max": 7233
+      },
+      "Text glyph raster total": {
+        "samples": 120,
+        "median": 83.0,
+        "p95": 83,
+        "max": 83
+      },
+      "Runtime UI draws": {
+        "samples": 120,
+        "median": 10.0,
+        "p95": 10,
+        "max": 10
+      },
+      "Streaming pending bytes": {
+        "samples": 120,
+        "median": 0.0,
+        "p95": 0,
+        "max": 0
+      },
+      "Streaming live estimated bytes": {
+        "samples": 120,
+        "median": 0.0,
+        "p95": 0,
+        "max": 0
+      },
+      "Streaming retained bytes": {
+        "samples": 120,
+        "median": 0.0,
+        "p95": 0,
+        "max": 0
+      },
+      "Sleeping physics bodies": {
+        "samples": 19,
+        "median": 0,
+        "p95": 0,
+        "max": 0
+      },
+      "Awake physics bodies": {
+        "samples": 19,
+        "median": 0,
+        "p95": 0,
+        "max": 0
+      },
+      "Physics bodies last step": {
+        "samples": 19,
+        "median": 67,
+        "p95": 67,
+        "max": 67
+      },
+      "Physics candidate pairs last step": {
+        "samples": 19,
+        "median": 19,
+        "p95": 19,
+        "max": 19
+      },
+      "Physics contacts last step": {
+        "samples": 19,
+        "median": 0,
+        "p95": 0,
+        "max": 0
+      },
+      "Physics joints": {
+        "samples": 19,
+        "median": 0,
+        "p95": 0,
+        "max": 0
+      },
+      "Character motor instances": {
+        "samples": 19,
+        "median": 1,
+        "p95": 1,
+        "max": 1
+      }
+    },
+    "diagnostics": {
+      "dropped_events": 0,
+      "exhausted_labels": 0,
+      "exhausted_nodes": 0,
+      "exhausted_threads": 0,
+      "incomplete_scopes": 0,
+      "open_scopes": 7,
+      "truncated_records": 0,
+      "gpu_dropped": 0,
+      "nested_frames": 0
+    },
+    "worstRetainedInteractiveFrameMs": 61.399456,
+    "worstRetainedIncludingStartupMs": 336.185298,
+    "observerCaptureFrame": 1000
+  },
+  "void": {
+    "note": "1,000 real-clock normal application frames; retained final 120 plus 8 bounded spike records, not whole-run percentiles. Observer includes 1ms sleep and final screenshot/audio sampling. Startup separate; no comparable baseline consumer FPS claimed. Final frame includes synchronous observer screenshot/JSON export and is retained in raw max; not attributed to engine simulation.",
+    "warmOuterFrameMs": {
+      "samples": 120,
+      "median": 5.0861184999999995,
+      "p95": 7.690216,
+      "max": 70.972114
+    },
+    "warmIntervalMs": {
+      "samples": 120,
+      "median": 5.1277825,
+      "p95": 7.721257,
+      "max": 16.910234
+    },
+    "uniqueRetainedFrameCount": 121,
+    "startupMs": 362.614812,
+    "capReachedRetained": 0,
+    "discardedSecondsRetained": 0,
+    "scopesMs": {
+      "Input events": {
+        "samples": 120,
+        "median": 0.0462775,
+        "p95": 0.059747,
+        "max": 0.071162
+      },
+      "Resource completion and budget": {
+        "samples": 120,
+        "median": 0.0008975000000000001,
+        "p95": 0.001279,
+        "max": 0.001878
+      },
+      "Audio control and retirement": {
+        "samples": 241,
+        "median": 0.003487,
+        "p95": 0.006823,
+        "max": 0.014469
+      },
+      "Resource pump": {
+        "samples": 120,
+        "median": 0.0062745000000000006,
+        "p95": 0.010656,
+        "max": 0.016726
+      },
+      "Script synchronization": {
+        "samples": 318,
+        "median": 0.0014645,
+        "p95": 0.00284,
+        "max": 0.011627
+      },
+      "Script asset: Assets/void/scripts/foot.js": {
+        "samples": 438,
+        "median": 0.0025155,
+        "p95": 0.112099,
+        "max": 0.229357
+      },
+      "Script lifecycle callback": {
+        "samples": 1596,
+        "median": 0.0020325,
+        "p95": 0.195431,
+        "max": 0.390482
+      },
+      "Script asset: Assets/void/scripts/ship.js": {
+        "samples": 555,
+        "median": 0.00121,
+        "p95": 0.076943,
+        "max": 0.17765
+      },
+      "Script asset: Assets/void/scripts/game.js": {
+        "samples": 399,
+        "median": 0.129245,
+        "p95": 0.240646,
+        "max": 0.390219
+      },
+      "Script asset: Assets/collection/collection.js": {
+        "samples": 399,
+        "median": 0.000366,
+        "p95": 0.023779,
+        "max": 0.037642
+      },
+      "JavaScript UI update": {
+        "samples": 120,
+        "median": 0.175255,
+        "p95": 0.264328,
+        "max": 0.425556
+      },
+      "Runtime UI layout": {
+        "samples": 120,
+        "median": 0.007820500000000001,
+        "p95": 0.013065,
+        "max": 0.018818
+      },
+      "Runtime UI input": {
+        "samples": 120,
+        "median": 0.0102165,
+        "p95": 0.016725,
+        "max": 0.022252
+      },
+      "JavaScript UI events": {
+        "samples": 120,
+        "median": 0.000209,
+        "p95": 0.000439,
+        "max": 0.000703
+      },
+      "JavaScript update": {
+        "samples": 120,
+        "median": 0.018632,
+        "p95": 0.035563,
+        "max": 0.049225
+      },
+      "JavaScript presentation": {
+        "samples": 120,
+        "median": 0.1811105,
+        "p95": 0.26922,
+        "max": 0.344845
+      },
+      "Audio main update": {
+        "samples": 120,
+        "median": 0.018886,
+        "p95": 0.028639,
+        "max": 0.034709
+      },
+      "Legacy fluid surface update": {
+        "samples": 120,
+        "median": 0.000119,
+        "p95": 0.000178,
+        "max": 0.000393
+      },
+      "World culling and opaque submission": {
+        "samples": 240,
+        "median": 1.3339254999999999,
+        "p95": 2.443343,
+        "max": 12.319218
+      },
+      "Shadow pass submission": {
+        "samples": 120,
+        "median": 0.9245635,
+        "p95": 1.555666,
+        "max": 2.129927
+      },
+      "Water optical paths": {
+        "samples": 120,
+        "median": 0.010009,
+        "p95": 0.01568,
+        "max": 0.024536
+      },
+      "Water boundary upload": {
+        "samples": 120,
+        "median": 0.018425499999999997,
+        "p95": 0.031658,
+        "max": 0.037512
+      },
+      "Particles and water presentation": {
+        "samples": 120,
+        "median": 0.005614,
+        "p95": 0.009798,
+        "max": 0.016789
+      },
+      "Display resolve": {
+        "samples": 120,
+        "median": 0.1566775,
+        "p95": 0.233668,
+        "max": 0.285057
+      },
+      "Main camera": {
+        "samples": 120,
+        "median": 1.8777575,
+        "p95": 2.957378,
+        "max": 12.621237
+      },
+      "World render submission": {
+        "samples": 120,
+        "median": 2.8846705,
+        "p95": 4.565816,
+        "max": 14.481748
+      },
+      "Text layout": {
+        "samples": 480,
+        "median": 0.0008835,
+        "p95": 0.002686,
+        "max": 0.011935
+      },
+      "Shaped text submission": {
+        "samples": 480,
+        "median": 0.0214445,
+        "p95": 0.05256,
+        "max": 0.202897
+      },
+      "Runtime UI drawing": {
+        "samples": 120,
+        "median": 0.138494,
+        "p95": 0.238727,
+        "max": 0.380432
+      },
+      "Play frame": {
+        "samples": 120,
+        "median": 3.638916,
+        "p95": 5.815066,
+        "max": 15.406252
+      },
+      "Swap present wait": {
+        "samples": 120,
+        "median": 0.13752599999999998,
+        "p95": 0.239282,
+        "max": 2.60485
+      },
+      "Streaming outer integration": {
+        "samples": 120,
+        "median": 0.032453499999999996,
+        "p95": 0.04753,
+        "max": 0.058921
+      },
+      "Physics shape query": {
+        "samples": 39,
+        "median": 0.010059,
+        "p95": 0.016148,
+        "max": 0.028428
+      },
+      "JavaScript fixedUpdate": {
+        "samples": 39,
+        "median": 0.256395,
+        "p95": 0.382465,
+        "max": 0.43677
+      },
+      "Physics broadphase": {
+        "samples": 39,
+        "median": 0.00211,
+        "p95": 0.003481,
+        "max": 0.004018
+      },
+      "Physics contacts": {
+        "samples": 39,
+        "median": 0.002581,
+        "p95": 0.004191,
+        "max": 0.011804
+      },
+      "Physics contact and joint solver": {
+        "samples": 39,
+        "median": 0.009714,
+        "p95": 0.01967,
+        "max": 0.021488
+      },
+      "Physics proxy refresh": {
+        "samples": 39,
+        "median": 0.003894,
+        "p95": 0.00621,
+        "max": 0.012694
+      },
+      "Rigid physics": {
+        "samples": 39,
+        "median": 0.033835,
+        "p95": 0.050937,
+        "max": 0.055859
+      },
+      "Character motor": {
+        "samples": 39,
+        "median": 0.060833,
+        "p95": 0.095104,
+        "max": 0.099159
+      },
+      "Character motors": {
+        "samples": 39,
+        "median": 0.073689,
+        "p95": 0.119191,
+        "max": 0.122411
+      },
+      "Animation instances": {
+        "samples": 39,
+        "median": 0.000197,
+        "p95": 0.000424,
+        "max": 0.000459
+      },
+      "Ragdoll physics to pose": {
+        "samples": 39,
+        "median": 0.000259,
+        "p95": 0.000518,
+        "max": 0.000605
+      },
+      "Visual particle simulation": {
+        "samples": 39,
+        "median": 0.00715,
+        "p95": 0.013359,
+        "max": 0.022647
+      },
+      "JavaScript contact events": {
+        "samples": 390,
+        "median": 0.0004175,
+        "p95": 0.002542,
+        "max": 0.010986
+      },
+      "Fixed simulation step": {
+        "samples": 39,
+        "median": 0.431161,
+        "p95": 0.637845,
+        "max": 0.688263
+      },
+      "Simulation systems": {
+        "samples": 39,
+        "median": 0.431429,
+        "p95": 0.638325,
+        "max": 0.688649
+      },
+      "Mesh geometry upload": {
+        "samples": 2,
+        "median": 0.0633875,
+        "p95": 0.095966,
+        "max": 0.095966
+      },
+      "Texture driver texel upload": {
+        "samples": 1,
+        "median": 0.098137,
+        "p95": 0.098137,
+        "max": 0.098137
+      },
+      "Texture driver mipmap generation": {
+        "samples": 1,
+        "median": 0.001504,
+        "p95": 0.001504,
+        "max": 0.001504
+      },
+      "Host startup": {
+        "samples": 1,
+        "median": 160.500179,
+        "p95": 160.500179,
+        "max": 160.500179
+      },
+      "Resource release": {
+        "samples": 1,
+        "median": 0.000159,
+        "p95": 0.000159,
+        "max": 0.000159
+      },
+      "Project resources": {
+        "samples": 1,
+        "median": 2.585896,
+        "p95": 2.585896,
+        "max": 2.585896
+      },
+      "World destroy": {
+        "samples": 1,
+        "median": 0.005436,
+        "p95": 0.005436,
+        "max": 0.005436
+      },
+      "World build": {
+        "samples": 1,
+        "median": 187.727003,
+        "p95": 187.727003,
+        "max": 187.727003
+      }
+    },
+    "counters": {
+      "Resource resident byte estimate": {
+        "samples": 120,
+        "median": 1977256.0,
+        "p95": 1977256,
+        "max": 1977256
+      },
+      "Resource budget bytes": {
+        "samples": 120,
+        "median": 2097152.0,
+        "p95": 2097152,
+        "max": 2097152
+      },
+      "Resource in flight": {
+        "samples": 120,
+        "median": 0.0,
+        "p95": 0,
+        "max": 0
+      },
+      "Resource uploads": {
+        "samples": 120,
+        "median": 0.0,
+        "p95": 0,
+        "max": 0
+      },
+      "Audio voices": {
+        "samples": 120,
+        "median": 6.0,
+        "p95": 6,
+        "max": 6
+      },
+      "Audio stream PCM bytes": {
+        "samples": 120,
+        "median": 0.0,
+        "p95": 0,
+        "max": 0
+      },
+      "Audio pending retirements": {
+        "samples": 120,
+        "median": 0.0,
+        "p95": 0,
+        "max": 0
+      },
+      "Script instances": {
+        "samples": 120,
+        "median": 4.0,
+        "p95": 4,
+        "max": 4
+      },
+      "Script callback calls": {
+        "samples": 120,
+        "median": 6.0,
+        "p95": 9,
+        "max": 9
+      },
+      "Audio occlusion queries": {
+        "samples": 120,
+        "median": 0.0,
+        "p95": 0,
+        "max": 0
+      },
+      "Submitted draws all passes": {
+        "samples": 120,
+        "median": 182.0,
+        "p95": 182,
+        "max": 182
+      },
+      "Submitted triangles all passes": {
+        "samples": 120,
+        "median": 34692.0,
+        "p95": 34692,
+        "max": 34692
+      },
+      "Visible renderables all passes": {
+        "samples": 120,
+        "median": 182.0,
+        "p95": 182,
+        "max": 182
+      },
+      "Frustum rejected all passes": {
+        "samples": 120,
+        "median": 544.0,
+        "p95": 544,
+        "max": 544
+      },
+      "Layer rejected all passes": {
+        "samples": 120,
+        "median": 0.0,
+        "p95": 0,
+        "max": 0
+      },
+      "Particles submitted": {
+        "samples": 120,
+        "median": 0.0,
+        "p95": 0,
+        "max": 0
+      },
+      "Secondary passes": {
+        "samples": 120,
+        "median": 0.0,
+        "p95": 0,
+        "max": 0
+      },
+      "Text atlas bytes": {
+        "samples": 120,
+        "median": 4194304.0,
+        "p95": 4194304,
+        "max": 4194304
+      },
+      "Text layout bytes": {
+        "samples": 120,
+        "median": 7692.0,
+        "p95": 7692,
+        "max": 7692
+      },
+      "Text glyph raster total": {
+        "samples": 120,
+        "median": 97.0,
+        "p95": 97,
+        "max": 97
+      },
+      "Runtime UI draws": {
+        "samples": 120,
+        "median": 8.0,
+        "p95": 8,
+        "max": 8
+      },
+      "Streaming pending bytes": {
+        "samples": 120,
+        "median": 0.0,
+        "p95": 0,
+        "max": 0
+      },
+      "Streaming live estimated bytes": {
+        "samples": 120,
+        "median": 0.0,
+        "p95": 0,
+        "max": 0
+      },
+      "Streaming retained bytes": {
+        "samples": 120,
+        "median": 0.0,
+        "p95": 0,
+        "max": 0
+      },
+      "Sleeping physics bodies": {
+        "samples": 39,
+        "median": 1,
+        "p95": 1,
+        "max": 1
+      },
+      "Awake physics bodies": {
+        "samples": 39,
+        "median": 0,
+        "p95": 0,
+        "max": 0
+      },
+      "Physics bodies last step": {
+        "samples": 39,
+        "median": 173,
+        "p95": 173,
+        "max": 173
+      },
+      "Physics candidate pairs last step": {
+        "samples": 39,
+        "median": 17,
+        "p95": 17,
+        "max": 17
+      },
+      "Physics contacts last step": {
+        "samples": 39,
+        "median": 0,
+        "p95": 0,
+        "max": 0
+      },
+      "Physics joints": {
+        "samples": 39,
+        "median": 0,
+        "p95": 0,
+        "max": 0
+      },
+      "Character motor instances": {
+        "samples": 39,
+        "median": 1,
+        "p95": 1,
+        "max": 1
+      }
+    },
+    "diagnostics": {
+      "dropped_events": 0,
+      "exhausted_labels": 0,
+      "exhausted_nodes": 0,
+      "exhausted_threads": 0,
+      "incomplete_scopes": 0,
+      "open_scopes": 7,
+      "truncated_records": 0,
+      "gpu_dropped": 0,
+      "nested_frames": 0
+    },
+    "worstRetainedInteractiveFrameMs": 70.972114,
+    "worstRetainedIncludingStartupMs": 362.614812,
+    "observerCaptureFrame": 1000
+  }
+}

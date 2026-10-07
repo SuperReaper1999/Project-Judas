@@ -1,0 +1,7 @@
+Renderer fragment texture units: 32 (material path uses 12)
+World state: legacy .judasstate (F6/F7) saves disabled for additive compositions; save slots remain available
+Project: M66 Import Lab (/home/conner/Documents/GitHub/Project-Judas/projects/import_lab/import_lab.judasproj)
+Scene: M66 original rig — G clips, J mask, K additive, I IK, F ragdoll, B root intent (/home/conner/Documents/GitHub/Project-Judas/projects/import_lab/Scenes/main.judas)
+World origin (m): 0.000, 0.000, 0.000
+step,time,posX,posY,posZ,upX,upY,upZ,grounded,velX,velY,velZ,gravX,gravY,gravZ,controlled,frame,steps,paused
+[TestHarness] Wrote screenshot: /home/conner/Documents/GitHub/Project-Judas/.cache/m68-baseline/first-use/ready-x11.png

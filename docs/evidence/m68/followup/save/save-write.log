@@ -1,0 +1,21 @@
+PASS normal conserved pool and physical cup registered
+PASS actual paired transfer puts 3 litres in cup
+PASS tilted physical cup current world pose
+PASS disturb real dynamic surface
+PASS detached in-flight quantity uses actual owner ledger
+PASS physical articulation enters from current resolved pose
+PASS ordinary persistent music seek
+PASS public JudasJS save completed durable Unicode metadata
+PASS all required participants plus optional M65 sleep/session/streaming captured
+PASS saving leaves conserved quantity unchanged
+PASS saving does not deactivate articulation
+PASS public slot request from project UI lifecycle healthy
+SNAPSHOT bytes=92088 participants=12 bodies=45 owners=9 parcels=1 root=/home/conner/Documents/GitHub/Project-Judas/.cache/m68-save-application-followup/user-data/judas/games/9180aeaffcb0683b30c83c25fc81a61a7ad6bb77481dd47052ae34db399e6bb2/Saves/Slots
+REQUEST 1 completed capture_ms=0.00000 worker_ms=0.36255 restore_ms=0.00000 bytes=0 error=
+REQUEST 2 completed capture_ms=1.71709 worker_ms=6.46477 restore_ms=0.00000 bytes=92088 error=
+PASS ordinary standalone process startup/save or restore/shutdown
+SUMMARY mode=write checks=13 failures=0 frames=52
+Renderer fragment texture units: 32 (material path uses 12)
+Project: Judas Save / Load State Lab (/home/conner/Documents/GitHub/Project-Judas/projects/save_lab/save_lab.judasproj)
+Scene: Save Lab / waves, cup, poses and music (/home/conner/Documents/GitHub/Project-Judas/projects/save_lab/Scenes/lab.judas)
+World origin (m): 1000000000000.000, -2000000000000.000, 3000000000000.000

@@ -1,0 +1,31 @@
+PASS nested scopes recorded without GL/editor
+PASS inclusive/exclusive use deterministic thread durations
+PASS outer boundaries retain unattributed time
+PASS same child label under different parents does not merge
+PASS nested waits are separately accounted
+PASS multiple fixed steps and actual backlog/cap are retained
+PASS sum/latest/maximum counter semantics
+PASS paused frame has zero fixed steps
+PASS freeze does not publish incomplete cross-boundary scopes
+PASS clear preserves open-stack safety and marks capture boundary
+PASS frame history is bounded and wraps
+PASS startup is retained separately after ordinary history wraps
+PASS spike owns its data after ring wrapping
+PASS bounded statistical window is explicit
+PASS delayed GPU result updates its original frame only
+PASS GPU arrival cannot mutate frozen capture
+PASS cross-frame workers retain lane/time/source frame rather than main nesting
+PASS warmed hot native scopes allocate no heap memory
+PASS lane/history saturation is bounded and visible
+PASS disabled recording performs no registration or event write
+PASS world lifecycle markers contain owned names only
+PASS structured headless report exports
+PASS headless report states units and incomplete/unknown accounting
+PASS simultaneous producers retain independent bounded lanes
+PASS latest across workers follows observation time, not lane drain order
+M56 native trial 0 enabled 0: 0.001108 ms/frame including collection; 2.771 ns/scope including collection (400 scopes/frame)
+M56 native trial 1 enabled 1: 0.062764 ms/frame including collection; 156.909 ns/scope including collection (400 scopes/frame)
+M56 native trial 2 enabled 1: 0.049842 ms/frame including collection; 124.604 ns/scope including collection (400 scopes/frame)
+M56 native trial 3 enabled 0: 0.001052 ms/frame including collection; 2.630 ns/scope including collection (400 scopes/frame)
+PASS unique script-like labels cannot grow storage indefinitely
+M56 profiler 26 checks 0 failures; reserved 70526248 bytes

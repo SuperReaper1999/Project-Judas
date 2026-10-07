@@ -161,6 +161,10 @@ public:
     // split (ModelLoader produces MeshData; Renderer uploads and owns the
     // GPU resource; the caller owns only the opaque handle).
     MeshHandle CreateMesh(const MeshData& data);
+    // Owner-thread staged upload. The caller keeps the handle private until every
+    // material map is installed; cancellation destroys it normally.
+    MeshHandle BeginMeshUpload(const MeshData& data);
+    bool UploadMeshMap(MeshHandle, const MeshData&, size_t material, size_t map);
     // Replaces a non-indexed mesh's vertices without changing its handle.
     // Used for a surface derived each presentation frame from simulated
     // fluid positions. Returns false for indexed or invalid handles.

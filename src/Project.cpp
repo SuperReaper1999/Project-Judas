@@ -60,6 +60,8 @@ std::string Project::SerializeToString(const ProjectSettings& s) {
     if (!s.audio.groups.empty()) out += "audio-groups " + Quote(s.audio.Serialize()) + "\n";
     if (!s.iconAsset.empty()) out += "icon-asset " + Quote(s.iconAsset) + "\n";
     if(!s.worldManifest.empty()) out += "world-manifest " + Quote(s.worldManifest) + "\n";
+    if(s.exportAssetPolicy!="all")out+="export-asset-policy "+Quote(s.exportAssetPolicy)+"\n";
+    if(!s.runtimeAssets.empty()){std::ostringstream roots;for(const auto& id:s.runtimeAssets)roots<<std::quoted(id)<<' ';out+="runtime-assets "+Quote(roots.str())+"\n";}
     auto sceneList=[&](const char* key,const std::vector<std::string>& paths){if(paths.empty())return;std::ostringstream list;for(const auto& path:paths)list<<std::quoted(path)<<' ';out+=std::string(key)+" "+Quote(list.str())+"\n";};sceneList("export-scenes",s.exportScenes);sceneList("exclude-scenes",s.excludeScenes);
     out += "startup-scene " + Quote(s.startupScene) + "\n";
     out += "assets-dir " + Quote(s.assetsDir) + "\n";
@@ -75,7 +77,7 @@ std::string Project::SerializeToString(const ProjectSettings& s) {
 }
 
 bool Project::ParseFromString(const std::string& text, ProjectSettings& outSettings, std::string& outError) {
-    if(IsNamedDocument(text)){std::string legacy;if(!NamedToLegacy(text,"project",legacy,outError))return false;return ParseFromString(legacy,outSettings,outError);}
+    if(IsNamedDocument(text)){std::string legacy;if(!NamedToLegacy(text,"project",legacy,outError,false))return false;return ParseFromString(legacy,outSettings,outError);}
     std::istringstream stream(text);
     std::string line;
     std::size_t lineNumber = 0;
@@ -129,6 +131,8 @@ bool Project::ParseFromString(const std::string& text, ProjectSettings& outSetti
         if (key == "name") s.name = value;
         else if (key == "audio-groups") {if(!ProjectAudioSettings::Parse(value,s.audio,outError))return false;}
         else if (key == "icon-asset") s.iconAsset = value;
+        else if(key=="export-asset-policy"){if(value!="all"&&value!="closure"){outError="export asset policy must be all or closure";return false;}s.exportAssetPolicy=value;}
+        else if(key=="runtime-assets"){std::istringstream list(value);std::string id;std::set<std::string> seen;while(list>>std::quoted(id)){if(!IsValidAssetId(id)||!seen.insert(id).second){outError="invalid/duplicate runtime asset root";return false;}s.runtimeAssets.push_back(id);}if(!list.eof()){outError="invalid runtime asset list";return false;}}
         else if(key=="export-scenes"||key=="exclude-scenes"){std::istringstream list(value);std::string path;std::set<std::string> seen;auto& paths=key=="export-scenes"?s.exportScenes:s.excludeScenes;while(list>>std::quoted(path)){if(path.empty()||std::filesystem::path(path).is_absolute()||std::filesystem::path(path).lexically_normal().generic_string()!=path||path.find("..")!=std::string::npos||!seen.insert(path).second){outError="invalid/duplicate export scene path";return false;}paths.push_back(path);}if(!list.eof()){outError="invalid export scene list";return false;}}
         else if (key == "startup-scene") s.startupScene = value;
         else if (key == "assets-dir") s.assetsDir = value;

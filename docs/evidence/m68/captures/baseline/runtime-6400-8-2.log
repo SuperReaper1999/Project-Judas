@@ -1,0 +1,6 @@
+step,time,posX,posY,posZ,upX,upY,upZ,grounded,velX,velY,velZ,gravX,gravY,gravZ,controlled,frame,steps,paused
+0,0.00000,0.000000,0.000000,0.000000,0.000000,1.000000,0.000000,0,0.000000,0.000000,0.000000,0.000000,0.000000,0.000000,0,0,1,0
+Renderer fragment texture units: 32 (material path uses 12)
+Project: Entity scaling repro (/home/conner/Documents/GitHub/Project-Judas/.cache/m68-baseline/captures/owned/scaling/repro.judasproj)
+Scene: repro (/home/conner/Documents/GitHub/Project-Judas/.cache/m68-baseline/captures/owned/scaling/Scenes/main.judas)
+World origin (m): 0.000, 0.000, 0.000

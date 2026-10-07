@@ -1,0 +1,4 @@
+FRAMES 500
+LOG_EVERY 0
+ACTION skate_bail 1 20 21
+ACTION skate_bail 1 240 241

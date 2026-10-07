@@ -1,0 +1,39 @@
+Section A: player torch transform
+  OK   at zero yaw/pitch and identity orientation, torch origin is basePosition + eyeHeight*worldUp
+  OK   at zero yaw/pitch, torch direction is the base orientation's own -Z forward
+Section A: torch direction follows free-look yaw/pitch
+  OK   a 90 degree yaw turns the torch direction from -Z toward -X
+  OK   a 90 degree pitch turns the torch direction from -Z toward +Y
+Section C: torch transform rotate-the-universe invariance
+  OK   rotating the whole scenario rotates the torch's world position identically
+  OK   rotating the whole scenario rotates the torch's world direction identically — no hidden world-axis assumption
+Section B: spacecraft light attachment (position + direction)
+  OK   a 90 degree ship yaw rotates a local nose offset into the correct world position
+  OK   the same yaw rotates the headlight's local -Z direction into world -X
+Section B: spacecraft light attachment under an arbitrary quaternion
+  OK   wingtip world position matches shipPosition + shipOrientation * localOffset exactly, for an arbitrary combined pitch/yaw/roll orientation
+Section C: spacecraft light rotate-the-universe invariance
+  OK   rotating the whole scenario rotates the headlight's world position identically
+  OK   rotating the whole scenario rotates the headlight's world direction identically
+Section D: distance attenuation
+  OK   attenuation strictly decreases as distance increases
+  OK   attenuation at exactly zero distance is finite (no 1/0 singularity)
+  OK   attenuation at zero distance is positive, not zero
+  OK   attenuation reaches exactly zero at the configured range
+  OK   attenuation stays at zero beyond the configured range, doesn't reappear
+Section E: spotlight cone factor
+  OK   dead center of the cone (cosAngle = 1) gets full strength
+  OK   exactly at the inner cone edge, contribution is still full strength
+  OK   exactly at the outer cone edge, contribution is exactly zero
+  OK   well outside the cone (90 degrees off-axis) contributes zero
+  OK   midway between inner and outer, contribution is strictly between 0 and 1 (a smooth transition, not a binary edge)
+  OK   the cone factor decreases monotonically from the inner edge to the outer edge
+Section F: torch toggle obeys the same input-ownership boundary as UI input
+  OK   torch toggles normally during ordinary gameplay
+  OK   menu is open for the rest of this check
+  OK   a toggle request while the menu owns input does not change torch state
+  OK   menu closed
+  OK   torch state is unchanged merely by closing the menu (no stale toggle fires on resume)
+  OK   gameplay control of the torch is fully restored after resume
+
+ALL TESTS PASSED

@@ -86,7 +86,7 @@ void RuntimeWorld::RemoveRegionObject(EntityId id) {
     erase(m_entities);erase(m_extraEntities);m_entityIndexVersion=~0u;erase(m_staticBodies);erase(m_staticRenderables);erase(m_staticLights);
     erase(m_audioZones);erase(m_audioEmitters);erase(m_particleEmitters);erase(m_renderCameras);
     RemoveDeformable(id);m_deformableOwners.erase(id);m_characters.erase(id);m_animationInstances.erase(id);m_animationOwners.erase(id);m_jointOwners.erase(id);m_jointParticipants.erase(id);
-    m_scriptDefinitions.erase(id);m_scriptOwners.erase(id);m_entityCategories.erase(id);m_hierarchy.DestroyObject(id);
+    m_scriptDefinitions.erase(id);m_scriptOwners.erase(id);m_characterOwners.erase(id);m_entityCategories.erase(id);m_hierarchy.DestroyObject(id);
     if(auto it=m_regionAssets.find(id);it!=m_regionAssets.end()){
         if(m_assets)for(auto& a:it->second){m_assets->ReleaseRef(a);auto ref=std::find(m_referencedAssets.begin(),m_referencedAssets.end(),a);if(ref!=m_referencedAssets.end())m_referencedAssets.erase(ref);}
         m_regionAssets.erase(it);

@@ -1,0 +1,28 @@
+PASS baseline world construction
+PASS capture stable body/motor/runtime hierarchy state
+PASS decode scene participant
+PASS normal private construction from resolved snapshot
+PASS participant restore/fixup
+PASS rigid momentum exact
+PASS motor velocity/support reference restored
+PASS runtime ID and allocation counter durable
+PASS hierarchy stable identity retained
+PASS no duplicate runtime bodies
+PASS explicit navigation handoff resumes without new scripted action
+PASS support-following observation retained independently of gravity
+PASS pending authoritative forces survive first resumed step
+PASS old world native body handle cannot alias restored body
+PASS truncated participant rejects private world without changing live world
+PASS missing required participant rejects
+PASS newer participant rejects before publication
+PASS explicit simple transient accepted but required motor cannot be excluded
+PASS destroy authored hierarchy through normal lifecycle
+PASS destroyed hierarchy capture
+PASS destroyed authored entity does not resurrect
+PASS authoritative contact history restored
+PASS first resumed touching pair reports stay, never replays enter
+PASS boot save materializes lazy required participants without a fixed step
+PASS boot motor/navigation state reconstructs without motion or missing records
+PASS moving and rotating support resumes without doubled carrier motion or false landing
+PASS resting body and spring hinge remain stable over first three resumed steps
+SUMMARY 27 checks 0 failures

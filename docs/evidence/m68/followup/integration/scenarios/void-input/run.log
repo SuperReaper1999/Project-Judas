@@ -1,0 +1,26 @@
+JS: stage 1 t=1.0
+JS: {"t":1,"stage":1,"mode":"ship","ship":[0,61.2,0],"sv":0,"landed":true,"hull":100,"pilot":null,"suit":100,"raiders":0,"kills":0,"bolts":{"fired":0,"hits":0,"raiderHits":0,"last":""},"ids":""}
+JS: {"t":2,"stage":1,"mode":"ship","ship":[0,61.2,0],"sv":0,"landed":true,"hull":100,"pilot":null,"suit":100,"raiders":3,"kills":0,"bolts":{"fired":0,"hits":0,"raiderHits":0,"last":""},"ids":"4611686018427387904,4611686018427387911,4611686018427387918"}
+JS: {"t":3,"stage":1,"mode":"ship","ship":[0,61.2,0],"sv":0,"landed":true,"hull":100,"pilot":null,"suit":100,"raiders":3,"kills":0,"bolts":{"fired":0,"hits":0,"raiderHits":0,"last":""},"ids":"4611686018427387904,4611686018427387911,4611686018427387918"}
+JS: {"t":4,"stage":1,"mode":"ship","ship":[0,71.4,0],"sv":20,"landed":false,"hull":100,"pilot":null,"suit":100,"raiders":3,"kills":0,"bolts":{"fired":0,"hits":0,"raiderHits":0,"last":""},"ids":"4611686018427387904,4611686018427387911,4611686018427387918"}
+JS: DMG 4 bolt hull=100
+JS: {"t":5,"stage":1,"mode":"ship","ship":[-0.1,90,0.1],"sv":9.2,"landed":false,"hull":96,"pilot":null,"suit":100,"raiders":3,"kills":0,"bolts":{"fired":1,"hits":0,"raiderHits":0,"last":""},"ids":"4611686018427387904,4611686018427387911,4611686018427387918"}
+JS: DMG 4 bolt hull=96
+JS: {"t":6,"stage":1,"mode":"ship","ship":[-0.3,94.6,0.3],"sv":2,"landed":false,"hull":92,"pilot":null,"suit":100,"raiders":3,"kills":0,"bolts":{"fired":9,"hits":0,"raiderHits":0,"last":""},"ids":"4611686018427387904,4611686018427387911,4611686018427387918"}
+JS: DMG 4 bolt hull=92
+JS: DMG 4 bolt hull=88
+JS: DMG 4 bolt hull=84
+JS: {"t":7,"stage":1,"mode":"ship","ship":[-0.6,95.7,0.6],"sv":1.2,"landed":false,"hull":80,"pilot":null,"suit":100,"raiders":3,"kills":0,"bolts":{"fired":18,"hits":0,"raiderHits":0,"last":""},"ids":"4611686018427387904,4611686018427387911,4611686018427387918"}
+JS: {"t":8,"stage":1,"mode":"ship","ship":[-1,96,1],"sv":0.3,"landed":false,"hull":80,"pilot":null,"suit":100,"raiders":3,"kills":0,"bolts":{"fired":19,"hits":0,"raiderHits":0,"last":""},"ids":"4611686018427387904,4611686018427387911,4611686018427387918"}
+JS: DMG 4 bolt hull=80
+JS: DMG 4 bolt hull=76
+JS: DMG 4 bolt hull=72
+JS: {"t":9,"stage":1,"mode":"ship","ship":[-1.7,96.1,1.1],"sv":0.5,"landed":false,"hull":68,"pilot":null,"suit":100,"raiders":3,"kills":0,"bolts":{"fired":19,"hits":0,"raiderHits":0,"last":""},"ids":"4611686018427387904,4611686018427387911,4611686018427387918"}
+JS: DMG 4 bolt hull=68
+JS: {"t":10,"stage":1,"mode":"ship","ship":[-2,96,1],"sv":0.4,"landed":false,"hull":64,"pilot":null,"suit":100,"raiders":3,"kills":0,"bolts":{"fired":19,"hits":0,"raiderHits":0,"last":""},"ids":"4611686018427387904,4611686018427387911,4611686018427387918"}
+Consumer observation frames=600 scriptErrors=0
+Renderer fragment texture units: 32 (material path uses 12)
+World state: legacy .judasstate (F6/F7) saves disabled for additive compositions; save slots remain available
+Project: Judas Three Games (/tmp/judas-post-m65-11x9gjfj/project/post_m65_consumers.judasproj)
+Scene: Void Courier (/tmp/judas-post-m65-11x9gjfj/project/Scenes/void/system.judas)
+World origin (m): 0.000, 0.000, 0.000

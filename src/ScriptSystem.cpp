@@ -1094,12 +1094,12 @@ void ScriptSystem::Frame(const InputSystem* input,float dt){
  JUDAS_PROFILE_SCOPE("JavaScript update");m->CheckThread();m->input=input;m->delta=dt;m->fixed=false;
     std::vector<std::pair<SceneObjectId,uint64_t>> order;for(const auto& entry:m->instances)order.push_back(entry.first);
     // Slot order follows authored vector order, not numeric slot identity.
-    if(m->world){order.clear();for(const auto& o:m->world->ScriptObjects(true))for(const auto& slot:o.scripts)if(m->instances.count({o.id,slot.id}))order.push_back({o.id,slot.id});}
+    if(m->world){order.clear();for(auto key:m->world->ScriptKeys())if(m->instances.count(key))order.push_back(key);}
     for(auto key:order){auto it=m->instances.find(key);if(it==m->instances.end()||(m->world&&!m->world->RuntimeDefinition(key.first)))continue;auto& i=it->second;if(!i.started){i.started=true;m->Callback(i,i.loaded?"restore":"start");}m->Callback(i,"update");}}
 void ScriptSystem::Fixed(const InputSystem* input,float dt){
  JUDAS_PROFILE_SCOPE("JavaScript fixedUpdate");m->CheckThread();m->input=input;m->delta=dt;m->fixed=true;
-    auto objects=m->world?m->world->ScriptObjects(true):std::vector<SceneObject>{};
-    for(const auto& o:objects)for(const auto& slot:o.scripts){auto it=m->instances.find({o.id,slot.id});if(it==m->instances.end()||!m->world->RuntimeDefinition(o.id))continue;auto& i=it->second;if(!i.started){i.started=true;m->Callback(i,i.loaded?"restore":"start");}m->Callback(i,"fixedUpdate");}}
+    auto keys=m->world?m->world->ScriptKeys():std::vector<std::pair<EntityId,uint64_t>>{};
+    for(auto key:keys){auto it=m->instances.find(key);if(it==m->instances.end()||!m->world->RuntimeDefinition(key.first))continue;auto& i=it->second;if(!i.started){i.started=true;m->Callback(i,i.loaded?"restore":"start");}m->Callback(i,"fixedUpdate");}}
 std::vector<ScriptStateRecord> ScriptSystem::Capture(bool required,const std::vector<SceneObjectId>* only)const{m->CheckThread();std::vector<ScriptStateRecord> result;std::set<SceneObjectId> selected;if(only)selected.insert(only->begin(),only->end());
     for(const auto& entry:m->instances){const auto& i=entry.second;if(only&&!selected.count(i.entity))continue;if(m->world&&!m->world->RuntimeDefinition(i.entity))continue;if(i.fault){if(required)result.push_back({i.entity,i.slot.id,""});continue;}auto value=JS_GetPropertyStr(m->ctx,i.value,"state");std::string text,error;
         if(m->Json(value,text,error))result.push_back({i.entity,i.slot.id,text});else {result.push_back({i.entity,i.slot.id,""});std::fprintf(stderr,"script state %llu/%llu: %s\n",(unsigned long long)i.entity,(unsigned long long)i.slot.id,error.c_str());}JS_FreeValue(m->ctx,value);}
@@ -1159,13 +1159,13 @@ bool ScriptSystem::SourceFingerprint(const AssetDatabase& assets,const Scene& sc
 
 void ScriptSystem::UIFrame(const InputSystem* input,float dt){
  JUDAS_PROFILE_SCOPE("JavaScript UI update");m->CheckThread();m->input=input;m->delta=dt;m->fixed=false;
-    for(const auto& o:m->world->ScriptObjects(true))for(const auto& slot:o.scripts){auto it=m->instances.find({o.id,slot.id});if(it==m->instances.end())continue;auto& i=it->second;if(!i.started){i.started=true;m->Callback(i,i.loaded?"restore":"start");}m->Callback(i,"uiUpdate");}
+    for(auto key:m->world->ScriptKeys()){auto it=m->instances.find(key);if(it==m->instances.end()||!m->world->RuntimeDefinition(key.first))continue;auto& i=it->second;if(!i.started){i.started=true;m->Callback(i,i.loaded?"restore":"start");}m->Callback(i,"uiUpdate");}
 }
 void ScriptSystem::UIEvents(const InputSystem* input,float dt){
  JUDAS_PROFILE_SCOPE("JavaScript UI events");m->CheckThread();m->input=input;m->delta=dt;m->fixed=false;
     if(!m->world->UIIfLoaded())return;
     auto events=m->world->UI().TakeEvents();
-    for(const auto& event:events)for(const auto& o:m->world->ScriptObjects(true))for(const auto& slot:o.scripts){auto it=m->instances.find({o.id,slot.id});if(it==m->instances.end()||it->second.fault||!m->world->RuntimeDefinition(o.id))continue;
+    for(const auto& event:events)for(auto key:m->world->ScriptKeys()){auto it=m->instances.find(key);if(it==m->instances.end()||it->second.fault||!m->world->RuntimeDefinition(key.first))continue;
         auto& i=it->second;ProfileScope assetScope(m->AssetLabel(i));m->polls=0;m->currentOwner=i.entity;m->currentSlot=i.slot.id;auto fn=JS_GetPropertyStr(m->ctx,i.value,"onUI");if(JS_IsException(fn)){m->Error(i,"onUI");JS_FreeValue(m->ctx,fn);continue;}if(JS_IsFunction(m->ctx,fn)){
             auto e=JS_NewObject(m->ctx);JS_SetPropertyStr(m->ctx,e,"document",JS_NewString(m->ctx,event.document.c_str()));JS_SetPropertyStr(m->ctx,e,"element",JS_NewString(m->ctx,event.element.c_str()));JS_SetPropertyStr(m->ctx,e,"type",JS_NewString(m->ctx,event.type.c_str()));JS_SetPropertyStr(m->ctx,e,"value",JS_NewFloat64(m->ctx,event.value));
             auto result=JS_Call(m->ctx,fn,i.value,1,&e);if(JS_IsException(result))m->Error(i,"onUI");else if(JS_PromiseState(m->ctx,result)!=JS_PROMISE_NOT_A_PROMISE){JS_ThrowTypeError(m->ctx,"async UI callback unsupported");m->Error(i,"onUI");}JS_FreeValue(m->ctx,result);JS_FreeValue(m->ctx,e);
@@ -1217,9 +1217,9 @@ void ScriptSystem::Presentation(const InputSystem* input,float dt,float alpha){
  JUDAS_PROFILE_SCOPE("JavaScript presentation");
     m->CheckThread();m->input=input;m->delta=dt;m->fixed=false;
     m->presentationAlpha=std::clamp(alpha,0.f,1.f);m->inPresentation=true;
-    for(const auto& o:m->world->ScriptObjects(true))for(const auto& slot:o.scripts){
-        auto it=m->instances.find({o.id,slot.id});
-        if(it==m->instances.end()||!m->world->RuntimeDefinition(o.id))continue;
+    for(auto key:m->world->ScriptKeys()){
+        auto it=m->instances.find(key);
+        if(it==m->instances.end()||!m->world->RuntimeDefinition(key.first))continue;
         auto& instance=it->second;
         if(!instance.started){instance.started=true;m->Callback(instance,instance.loaded?"restore":"start");}
         m->Callback(instance,"presentationUpdate",true);

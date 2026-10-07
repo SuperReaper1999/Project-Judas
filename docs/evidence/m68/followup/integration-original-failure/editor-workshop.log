@@ -1,0 +1,10 @@
+Renderer fragment texture units: 32 (material path uses 12)
+[editor autotest] duplicate created id 454: scene CHANGED; undo restores: IDENTICAL
+[editor autotest] wrote: /home/conner/Documents/GitHub/Project-Judas/.cache/m68-integration-1/editor-workshop.edit.png
+[editor autotest] edit frame: 365 draw calls, 5308 triangles, 1265 debug lines
+[editor autotest] wrote: /home/conner/Documents/GitHub/Project-Judas/.cache/m68-integration-1/editor-workshop.play.png
+[editor autotest] play frame: 1 steps, step 0.158 ms, 17 bodies, 0 contacts, 464 draw calls, 7460 triangles, 1 shadow passes, 0 lights, 2209 debug lines, 0 particles
+[editor autotest] resources: 6 meshes, 0 textures, 0 terrain meshes, hits 5364, misses 14, failed 0, uploads 6, resident 1253496 bytes
+[editor autotest] jobs: 7 workers, 16 completed, 0 failed, 0 cancelled
+[editor autotest] authored scene after play/stop is IDENTICAL
+[editor autotest] save ok

@@ -1,0 +1,90 @@
+7:4611686018427387907:0x0p+0
+JudasWorldState 2
+compatibility 5 sha256 ce055b213997e1715f465cff1b8a4041ab72c7c0c994ff39397c1f8a45021d8c
+baseline "FTFT6 ordinary mixed lifecycle"
+next-runtime-id 4611686018427387907
+
+entity 2 moved
+  position 0.23749994 3.0950067 0.11874997
+  rotation 0.96746284 0.09396679 -0.14095017 0.18793358
+  linear-velocity 0.25 0.1 0.125
+  angular-velocity 0.2 -0.3 0.4
+end
+
+entity 3 moved
+  position 4.1749973 3.070005 0.0875
+  rotation 0.9822903 0.06958583 -0.10437875 0.13917166
+  linear-velocity 0.25 0.1 0.125
+  angular-velocity 0.2 -0.3 0.4
+end
+
+entity 4 destroyed
+
+entity 5 moved
+  position 12.237496 3.0950067 0.11874997
+  rotation 0.96746284 0.09396679 -0.14095017 0.18793358
+  linear-velocity 0.25 0.1 0.125
+  angular-velocity 0.2 -0.3 0.4
+end
+
+entity 4611686018427387904 created
+  position 19.94999 4.0125027 0.025000002
+  rotation 0.99890643 -0.012495406 0.024990812 0.03748621
+  linear-velocity -0.2 0.05 0.1
+  angular-velocity -0.1 0.2 0.3
+object 4611686018427387904 "Created survivor"
+  position 0 0 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  body dynamic sphere
+  body.half-extents 0.5 0.5 0.5
+  body.radius 0.25
+  body.terrain ""
+  body.mass 3
+  body.friction 0.6
+  body.restitution 0.1
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+end
+
+entity 4611686018427387906 created
+  position 20 4 0
+  rotation 1 0 0 0
+  linear-velocity -0.2 0.05 0.1
+  angular-velocity -0.1 0.2 0.3
+object 4611686018427387906 "Created survivor"
+  position 0 0 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  body dynamic sphere
+  body.half-extents 0.5 0.5 0.5
+  body.radius 0.25
+  body.terrain ""
+  body.mass 3
+  body.friction 0.6
+  body.restitution 0.1
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+end
+door 6 true
+light-switch 7 true
+2:0:0:0:0:0:-0x1p+0:0
+3:0:0:1:0:0:-0x1p+0:1
+4:2:2:2:0:0:-0x1p+0:4294967295
+5:0:0:3:0:0:-0x1p+0:3
+4611686018427387904:0:0:4:0:0:-0x1p+0:1048578
+4611686018427387906:0:0:5:0:0:-0x1p+0:5
+0:0x1.e6665ep-3,0x1.8c292ep+1,0x1.e6665ep-4,0x1.ef574ap-1,0x1.80e352p-4,-0x1.20aa7cp-3,0x1.80e352p-3,0x1p-2,0x1.99999ap-4,0x1p-3,0x1.99999ap-3,-0x1.333334p-2,0x1.99999ap-2
+1:0x1.0b3328p+2,0x1.88f5ecp+1,0x1.666666p-4,0x1.f6eec2p-1,0x1.1d0608p-4,-0x1.ab890ep-4,0x1.1d0608p-3,0x1p-2,0x1.99999ap-4,0x1p-3,0x1.99999ap-3,-0x1.333334p-2,0x1.99999ap-2
+1048578:0x1.3f3328p+4,0x1.00ccd8p+2,0x1.99999cp-6,0x1.ff70aap-1,-0x1.99731p-7,0x1.99731p-6,0x1.331648p-5,-0x1.99999ap-3,0x1.99999ap-5,0x1.99999ap-4,-0x1.99999ap-4,0x1.99999ap-3,0x1.333334p-2
+3:0x1.879992p+3,0x1.8c292ep+1,0x1.e6665ep-4,0x1.ef574ap-1,0x1.80e352p-4,-0x1.20aa7cp-3,0x1.80e352p-3,0x1p-2,0x1.99999ap-4,0x1p-3,0x1.99999ap-3,-0x1.333334p-2,0x1.99999ap-2
+4:0x1.e8p+4,0x1.8p+1,0x0p+0,0x1p+0,0x0p+0,0x0p+0,0x0p+0,0x0p+0,0x0p+0,0x0p+0,0x0p+0,0x0p+0,0x0p+0
+5:0x1.4p+4,0x1p+2,0x0p+0,0x1p+0,0x0p+0,0x0p+0,0x0p+0,-0x1.99999ap-3,0x1.99999ap-5,0x1.99999ap-4,-0x1.99999ap-4,0x1.99999ap-3,0x1.333334p-2

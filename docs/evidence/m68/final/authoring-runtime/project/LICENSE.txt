@@ -1,0 +1,7 @@
+World Workshop original content and articulated glTF fixture: CC0 1.0 Universal.
+To the extent possible under law, the author dedicates this original project art,
+recipes, scripts and layout content to the public domain. No warranty is provided.
+https://creativecommons.org/publicdomain/zero/1.0/
+
+Bundled DejaVu/Noto fonts retain their own licenses; see Assets/fonts notices.
+Engine code and dependencies retain the repository's existing licensing.

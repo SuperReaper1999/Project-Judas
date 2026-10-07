@@ -1,0 +1,44 @@
+Renderer fragment texture units: 32 (material path uses 12)
+PASS registry names and IDs roundtrip
+PASS delete retires ID and rename preserves identity
+PASS reserved default and unsupported registry version rejected
+PASS create normal project
+PASS save project categories
+PASS project reload preserves registry IDs and names
+PASS scene tags/body/player/door/render/camera configuration roundtrip
+PASS classification changes authored fingerprint
+PASS real runtime constructs assigned categories
+PASS all-tag queries include static/body-free entities
+PASS candidate intersection and excluded tag query
+PASS generic runtime add/remove/has tag
+PASS unregistered assignment rejected before live world mutation
+PASS runtime creation/destruction respects classification
+PASS unregistered tags rejected for auto-ID runtime creation
+PASS save ordinary prefab source
+PASS prefab normal asset identity
+PASS instantiate tagged/layered prefab
+PASS generic override wins while non-overridden tag/layer values propagate
+PASS linked prefab actual runtime path
+PASS prefab source filtering changes reject incompatible save
+PASS legacy scene defaults unchanged and needs no registry setup
+PASS real physics initialized
+PASS bilateral mask rejects real separated impact before narrowphase
+COUNTS rejected_pairs=2 candidates=0 contacts=0
+PASS default physical collision still stops body
+PASS explicit query includes physically noncolliding tagged layer
+PASS query excludes layer independently
+PASS query ignores generation-safe body handle
+PASS default player physical sweep passes mask-zero ghost
+PASS explicit filtered capsule sweep hits query-only geometry
+PASS slot reuse resets category state and rejects stale handle
+PASS ordinary inspector edit captures tag override
+PASS classification edit undo restores source-derived tags
+PASS real engine GL context
+PASS render world resolves project layers
+PASS real M33 camera masks produce different target pixels
+PASS main/M33 meshes and particles use independent mask filtering
+PASS render filtering does not stop particle simulation
+PASS target restores previous render-mask state
+PERFORMANCE permitted=1 submissions=1000 rejected=0 cpu_ms=8.657683
+PERFORMANCE permitted=0 submissions=0 rejected=1000 cpu_ms=0.008383
+SUMMARY 39 checks 0 failures

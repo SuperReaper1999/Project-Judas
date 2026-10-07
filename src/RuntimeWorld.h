@@ -301,9 +301,14 @@ public:
     void UpdateUIScripts(InputSystem* input,float dt);
     void DispatchUIEvents(const InputSystem* input,float dt);
     ScriptSystem* Scripts() const {return m_scripts.get();}
-    struct MetadataWork {uint64_t lookups=0,indexRebuilds=0,definitionsCopied=0;};
+    struct MetadataWork {uint64_t lookups=0,indexRebuilds=0,definitionsCopied=0,scriptSlotsCopied=0,touchBodyResolutions=0;};
     MetadataWork MetadataStats()const{return m_metadataWork;}
     std::vector<SceneObject> ScriptObjects(bool scriptedOnly=false) const;
+    // Internal callback snapshots contain only slot metadata; full definitions
+    // remain available to explicit world enumeration. Keys freeze authored order.
+    std::vector<SceneObject> ScriptSlots() const;
+    std::vector<std::pair<EntityId,uint64_t>> ScriptKeys() const;
+    std::vector<EntityId> DefinitionIds() const;
     const SceneObject* RuntimeDefinition(EntityId id) const;
     bool SetRuntimeTransform(EntityId id,const SceneTransform& transform);
     bool SetMaterialSlot(EntityId,unsigned,const MaterialSlot&);
@@ -534,6 +539,7 @@ private:
     std::unique_ptr<RuntimeUI> m_ui;
     std::unique_ptr<LocalizationSession> m_localization;
     std::map<EntityId,SceneObject> m_scriptDefinitions;
+    std::set<EntityId> m_characterOwners;
     std::set<EntityId> m_scriptOwners; // Ordered membership; inert scenery is not copied into callback phases.
     std::vector<EntityRecord> m_extraEntities; // normal non-dynamic runtime components
     // Store positions rather than pointers: vector growth never aliases stale records.

@@ -1,0 +1,37 @@
+Renderer fragment texture units: 32 (material path uses 12)
+PASS ordinary Spring Range project
+PASS normal engine host
+PASS actual scene and prefabs build
+PASS normal fixed-step game
+PASS baked assets current; no navigation errors
+PASS all chase/shooter scripts execute fault-free
+PASS six independent prefab roots and sensors
+PASS JS navigation guidance actually moves motor
+PASS chase agent holds a route
+PASS chase remains physically supported
+PASS separate landing surface coexists
+PASS actual project link connects separate region
+NAV game: 2 surfaces 89 tile layers 186 polygons 6 agents 2 obstacles
+PASS JS disables generic obstacle; cache revision changes
+PASS physical blocker changes independently through normal collider API
+PASS runtime prefab spawn creates another independent navigator
+PASS authoritative sensor follows current motor pose
+PASS real ray hit reaches JS enemy health
+PASS second real hit defeats through JS only
+PASS defeat clears navigation and sensor lifecycle
+M53 GAME fixed/script/presentation 1.059 ms/step, 54 bodies
+M53 rendered offscreen 640x360: mean 1.918 ms (521.5 FPS) p95 2.406 ms max 4.086 ms, draws 75; first render 25.115 ms
+PASS continued game remains fault-free
+PASS Stop destroys world-owned navigation and scripts
+PASS normal cleanup fixture project
+PASS cleanup fixture world builds
+PASS cleanup fixture fixed-step session
+PASS cleanup fixture callbacks start safely
+JS: M53_NAV_DESTROY_CALLBACK
+JS: M53_NAV_DESTROY_CALLBACK
+JS: M53_NAV_DESTROY_CALLBACK
+JS: M53_NAV_DESTROY_CALLBACK
+JS: M53_NAV_DESTROY_CALLBACK
+JS: M53_NAV_DESTROY_CALLBACK
+PASS direct destruction permits navigation cleanup callbacks
+M53 game 26 checks, 0 failures

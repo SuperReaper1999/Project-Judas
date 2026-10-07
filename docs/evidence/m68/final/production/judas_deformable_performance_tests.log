@@ -1,0 +1,14 @@
+PHASE Deformable attachments 0.001216ms
+PHASE Deformable edge edge contacts 0.889715ms
+PHASE Deformable fixed step 7.497213ms
+PHASE Deformable force prediction 0.125835ms
+PHASE Deformable internal constraints 6.126572ms
+PHASE Deformable plastic flow 0.035366ms
+PHASE Deformable rigid contacts 0.001046ms
+PHASE Deformable self pair cache 0.177031ms
+PHASE Deformable surface contacts 1.073961ms
+PHASE Deformable vertex face contacts 0.001144ms
+PERFORMANCE mode=active nodes=1585 triangles=2976 tets=288 constraints=14612 substeps=4 iterations=4 median_ms=7.505678 p95_ms=7.878572 max_ms=7.878572 hot_allocations=0 hot_bytes=0 contacts=0 candidates=22256 sleeping=0/0 slowest=Deformable fixed step 6.082162ms
+PHASE Deformable fixed step 0.018660ms
+PERFORMANCE mode=settling/sleeping nodes=1585 triangles=2976 tets=288 constraints=14612 substeps=4 iterations=4 median_ms=0.019727 p95_ms=0.019843 max_ms=0.019843 hot_allocations=0 hot_bytes=0 contacts=0 candidates=0 sleeping=1/1 slowest=Deformable fixed step 0.017455ms
+PERFORMANCE mode=no-deformable nodes=0 triangles=2976 tets=288 constraints=14612 substeps=4 iterations=4 median_ms=0.000849 p95_ms=0.000878 max_ms=0.000878 hot_allocations=0 hot_bytes=0 contacts=0 candidates=0 sleeping=1/1 slowest= 0.000000ms

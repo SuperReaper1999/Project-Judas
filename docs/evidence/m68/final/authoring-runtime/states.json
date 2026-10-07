@@ -1,0 +1,51 @@
+[
+  [
+    3,
+    {
+      "behind": true,
+      "camera": true,
+      "first": "4611686018427387904",
+      "invalidInit": true,
+      "invalidLayout": true,
+      "invalidRange": true,
+      "layout": true,
+      "projected": true,
+      "second": "4611686018427387905",
+      "spawned": true,
+      "stale": true,
+      "viewRay": true
+    }
+  ],
+  [
+    4611686018427387904,
+    {
+      "constructedVelocity": {
+        "x": 3,
+        "y": 0,
+        "z": 0
+      },
+      "label": "Example 1",
+      "payload": {
+        "serial": 1
+      },
+      "restored": false,
+      "started": 1
+    }
+  ],
+  [
+    4611686018427387905,
+    {
+      "constructedVelocity": {
+        "x": 3,
+        "y": 0,
+        "z": 0
+      },
+      "label": "Example 2",
+      "payload": {
+        "serial": 2
+      },
+      "restored": false,
+      "started": 1
+    }
+  ]
+]

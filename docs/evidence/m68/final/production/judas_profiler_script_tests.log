@@ -1,0 +1,22 @@
+script asset=1ed33680b66f7e9b733af8a2c271a3be entity=1 slot=1 start: InternalError: interrupted
+    at <anonymous> (Assets/interrupt.js:1:1)
+    at __judas (native)
+    at call (judas:2:51)
+    at scope (judas:217:74)
+    at start (Assets/interrupt.js:1:70)
+
+PASS registered custom scope script
+PASS headless normal script world
+PASS nested/throw/counter behaviour stays safe
+PASS callback executes once and preserves return/exception
+PASS script/entity destruction leaves no open scopes
+PASS registered custom scope script
+PASS headless normal script world
+PASS nested/throw/counter behaviour stays safe
+PASS callback executes once and preserves return/exception
+PASS disabled and enabled custom callbacks have identical game state
+PASS script/entity destruction leaves no open scopes
+PASS unique JS markers exhaust bounded cache visibly
+PASS runaway interruption is preserved
+PASS interrupt and destroy cannot unbalance recording
+M56 JS 14 checks 0 failures

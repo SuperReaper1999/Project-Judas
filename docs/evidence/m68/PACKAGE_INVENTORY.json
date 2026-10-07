@@ -1,0 +1,208 @@
+{
+  "baseline": {
+    "package-workshop": {
+      "logicalBytes": 53090883,
+      "physicalAllocatedBytesUniqueInodes": 53268480,
+      "fileCounts": {
+        ".png": 1,
+        ".txt": 4,
+        "runtime/text/libraries": 5,
+        ".judasproj": 1,
+        ".judas": 3,
+        ".judascollision": 5,
+        ".judasmeta": 25,
+        ".judasmodel": 11,
+        ".judasui": 1,
+        ".judasloc": 2,
+        ".js": 2,
+        ".judasworld": 1,
+        ".ttf": 2,
+        ".judasprefab": 1
+      },
+      "logicalBytesByCategory": {
+        ".png": 577211,
+        ".txt": 13867,
+        "runtime/text/libraries": 50638436,
+        ".judasproj": 3007,
+        ".judas": 687575,
+        ".judascollision": 56659,
+        ".judasmeta": 3230,
+        ".judasmodel": 89647,
+        ".judasui": 12106,
+        ".judasloc": 171,
+        ".js": 5254,
+        ".judasworld": 1177,
+        ".ttf": 1000176,
+        ".judasprefab": 2367
+      }
+    },
+    "package-small": {
+      "logicalBytes": 52038302,
+      "physicalAllocatedBytesUniqueInodes": 52097024,
+      "fileCounts": {
+        ".png": 1,
+        ".txt": 3,
+        "runtime/text/libraries": 5,
+        ".judasproj": 1,
+        ".judas": 3,
+        ".judasmeta": 5,
+        ".judasui": 1,
+        ".js": 2,
+        ".ttf": 1,
+        ".judasprefab": 1
+      },
+      "logicalBytesByCategory": {
+        ".png": 577211,
+        ".txt": 4672,
+        "runtime/text/libraries": 50638436,
+        ".judasproj": 2471,
+        ".judas": 43863,
+        ".judasmeta": 514,
+        ".judasui": 4481,
+        ".js": 5806,
+        ".ttf": 759720,
+        ".judasprefab": 1128
+      }
+    },
+    "package-professional": {
+      "logicalBytes": 210198673,
+      "physicalAllocatedBytesUniqueInodes": 210300928,
+      "fileCounts": {
+        ".png": 1,
+        ".txt": 3,
+        "runtime/text/libraries": 5,
+        ".judasproj": 1,
+        ".judas": 2,
+        ".judascollision": 1,
+        ".judasmeta": 13,
+        ".judasui": 1,
+        ".js": 2,
+        ".judasmodel": 6,
+        ".judasworld": 1,
+        ".ttf": 1,
+        ".judasprefab": 1
+      },
+      "logicalBytesByCategory": {
+        ".png": 577211,
+        ".txt": 4672,
+        "runtime/text/libraries": 50638436,
+        ".judasproj": 3231,
+        ".judas": 38334,
+        ".judascollision": 4047,
+        ".judasmeta": 1392,
+        ".judasui": 4634,
+        ".js": 4424,
+        ".judasmodel": 158151513,
+        ".judasworld": 145,
+        ".ttf": 759720,
+        ".judasprefab": 10914
+      }
+    }
+  },
+  "candidate": {
+    "package-workshop": {
+      "logicalBytes": 53185621,
+      "physicalAllocatedBytesUniqueInodes": 53366784,
+      "fileCounts": {
+        ".png": 1,
+        ".json": 1,
+        ".txt": 4,
+        "runtime/text/libraries": 5,
+        ".judasproj": 1,
+        ".judas": 3,
+        ".judascollision": 5,
+        ".judasmeta": 25,
+        ".judasmodel": 11,
+        ".judasui": 1,
+        ".judasloc": 2,
+        ".js": 2,
+        ".judasworld": 1,
+        ".ttf": 2,
+        ".judasprefab": 1
+      },
+      "logicalBytesByCategory": {
+        ".png": 577211,
+        ".json": 10945,
+        ".txt": 13916,
+        "runtime/text/libraries": 50722180,
+        ".judasproj": 3007,
+        ".judas": 687575,
+        ".judascollision": 56659,
+        ".judasmeta": 3230,
+        ".judasmodel": 89647,
+        ".judasui": 12106,
+        ".judasloc": 171,
+        ".js": 5254,
+        ".judasworld": 1177,
+        ".ttf": 1000176,
+        ".judasprefab": 2367
+      }
+    },
+    "package-small": {
+      "logicalBytes": 52124738,
+      "physicalAllocatedBytesUniqueInodes": 52191232,
+      "fileCounts": {
+        ".png": 1,
+        ".json": 1,
+        ".txt": 3,
+        "runtime/text/libraries": 5,
+        ".judasproj": 1,
+        ".judas": 3,
+        ".judasmeta": 5,
+        ".judasui": 1,
+        ".js": 2,
+        ".ttf": 1,
+        ".judasprefab": 1
+      },
+      "logicalBytesByCategory": {
+        ".png": 577211,
+        ".json": 2643,
+        ".txt": 4721,
+        "runtime/text/libraries": 50722180,
+        ".judasproj": 2471,
+        ".judas": 43863,
+        ".judasmeta": 514,
+        ".judasui": 4481,
+        ".js": 5806,
+        ".ttf": 759720,
+        ".judasprefab": 1128
+      }
+    },
+    "package-professional": {
+      "logicalBytes": 210288053,
+      "physicalAllocatedBytesUniqueInodes": 210395136,
+      "fileCounts": {
+        ".png": 1,
+        ".json": 1,
+        ".txt": 3,
+        "runtime/text/libraries": 5,
+        ".judasproj": 1,
+        ".judas": 2,
+        ".judascollision": 1,
+        ".judasmeta": 13,
+        ".judasui": 1,
+        ".js": 2,
+        ".judasmodel": 6,
+        ".judasworld": 1,
+        ".ttf": 1,
+        ".judasprefab": 1
+      },
+      "logicalBytesByCategory": {
+        ".png": 577211,
+        ".json": 5587,
+        ".txt": 4721,
+        "runtime/text/libraries": 50722180,
+        ".judasproj": 3231,
+        ".judas": 38334,
+        ".judascollision": 4047,
+        ".judasmeta": 1392,
+        ".judasui": 4634,
+        ".js": 4424,
+        ".judasmodel": 158151513,
+        ".judasworld": 145,
+        ".ttf": 759720,
+        ".judasprefab": 10914
+      }
+    }
+  }
+}

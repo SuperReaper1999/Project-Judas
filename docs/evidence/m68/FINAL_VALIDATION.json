@@ -1,0 +1,78 @@
+{
+  "head": "52828779993843d9c8b0060f5e30e49e61d0466f",
+  "state": "uncommitted M68 candidate, human review pending; M67 remains provisional",
+  "singleCleanGate": {
+    "build": "Release, zero warnings, 903.058 seconds",
+    "productionDiscovered": 149,
+    "passedInitially": 148,
+    "failedInitially": [
+      "judas_scalability_pipeline_tests: invalid external-source fixture"
+    ],
+    "originalResultPreserved": "final/RESULTS.json",
+    "asyncCases": 12,
+    "asyncChecks": 246,
+    "asyncFailures": 0
+  },
+  "affectedFollowups": {
+    "pipelineChecks": 276,
+    "pipelineFailures": 0,
+    "structuralRepeats": [
+      2055,
+      2055
+    ],
+    "privateGLHandoffRepeats": [
+      9,
+      9
+    ],
+    "reimportChecks": 37,
+    "cookbookChecks": 260,
+    "cookbookFailures": 0,
+    "sourceTypesLive": {
+      "publicSymbols": 297,
+      "topLevelExports": 27,
+      "nativeOperations": 202,
+      "callbacks": 15,
+      "typeChecker": "5.9.3",
+      "examples": 31,
+      "negativeDriftChecks": 3,
+      "runtimeEnumeration": true,
+      "pass": true
+    },
+    "saveApplicationWriteReadChecks": [
+      13,
+      20
+    ],
+    "streamedSaveWriteReadReadBChecks": [
+      11,
+      19,
+      19
+    ],
+    "saveLoadPerformanceCycles": 7,
+    "editor": [
+      "Three Games Play/Stop authored restore",
+      "Workshop Play/Stop authored restore"
+    ],
+    "consumerScenarios": [
+      "Skate out/back/out residency observer",
+      "Skate save/load + locale",
+      "Skate street/checkpoint input",
+      "Rooftop checkpoint",
+      "Void physical board/ascend/fire/camera + runtime mission participants",
+      "two real Skate bails/recoveries, 13 mapped bodies each"
+    ],
+    "sceneSwitches": 7,
+    "movedSourceHiddenPackages": [
+      "Three Games actual runtime, scene switches/pause",
+      "Workshop fresh-process source-slot load",
+      "original full-quality professional model archive startup"
+    ],
+    "runnerHygieneChecks": 14
+  },
+  "broadRerun": false,
+  "lateCorrectionScope": "diagnostic/test fixtures, packaging save identity, order-independent exact liquid assertion and owned runner/bail proof; no fluid/runtime gameplay/JS API change",
+  "protectedChanges": [],
+  "historicalEvidenceChanges": [],
+  "roadmapAbsent": true,
+  "commitPushMergeTag": false,
+  "automatedPassesDoNotSupplyHumanAcceptance": true
+}

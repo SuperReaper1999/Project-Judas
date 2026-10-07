@@ -1,0 +1,16 @@
+[  5%] Built target judas_app_icon
+[ 20%] Built target freetype
+[ 25%] Built target judas_icu_build
+[ 30%] Built target judas_quickjs
+[ 35%] Built target judas_navigation_backend
+[ 35%] Built target judas_glad
+[ 35%] Built target judas_profiler
+[ 35%] Built target judas_audio_backend
+[ 35%] Built target judas_ufbx
+[ 35%] Built target harfbuzz
+[ 35%] Built target judas_materials
+[ 90%] Built target judas_engine
+[ 95%] Built target judas_model_import
+[ 95%] Building CXX object CMakeFiles/judas_scalability_pipeline_tests.dir/tests/ScalabilityPipelineTests.cpp.o
+[100%] Linking CXX executable judas_scalability_pipeline_tests
+[100%] Built target judas_scalability_pipeline_tests

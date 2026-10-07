@@ -1,0 +1,23 @@
+Renderer fragment texture units: 32 (material path uses 12)
+M31 resource stress: generating 24 sphere meshes (160x160) and 16 1024x1024 textures under /tmp/judas_m31_stress_1028668
+  137.5 MB of asset files
+  7 workers, scene 'Tiny game' playing (3 dynamic bodies)
+  async: all 40 assets Ready after 1.52 s; per-asset latency (request->Ready) min 185 ms avg 1039 ms max 1516 ms; 40 uploads; resident 296.3 MB (peak 296.3 MB)
+  cancel: 20 loads cancelled by dropped demand, 9 stale completions discarded, 20 ready, 0 loading
+  evict: budget 60.2 MB -> resident 120.5 MB before, 85.3 MB after, 4 evictions; referenced textures survived: yes
+  reload: 4 evicted meshes re-requested and Ready again after 0.29 s
+  blocking: all 40 assets loaded on the main thread in 3.30 s (one per frame)
+
+Per-phase main-thread measurements (frame = pump + play frame + swap; 60 Hz fixed step):
+  baseline (no loads)          frames  120 | frame avg   0.22 ms p99   1.68 ms max    5.71 ms (pump max   0.00 ms) | >33 ms:   0 | fixed steps     1 (expected ~    2, 0 saturated) | queue max  0 avg   0.0 | worker util   0.0% | jobs done 0
+  async load (40 assets)       frames 6157 | frame avg   0.23 ms p99   0.48 ms max   19.80 ms (pump max  19.01 ms) | >33 ms:   0 | fixed steps    91 (expected ~   91, 0 saturated) | queue max  1 avg   0.0 | worker util  39.0% | jobs done 40
+  cancel + release             frames    1 | frame avg   0.29 ms p99   0.29 ms max    0.29 ms (pump max   0.01 ms) | >33 ms:   0 | fixed steps     0 (expected ~    0, 0 saturated) | queue max  0 avg   0.0 | worker util   3.8% | jobs done 0
+  evict + reload               frames 1356 | frame avg   0.22 ms p99   0.42 ms max   11.78 ms (pump max  11.34 ms) | >33 ms:   0 | fixed steps    19 (expected ~   18, 0 saturated) | queue max  0 avg   0.0 | worker util  29.3% | jobs done 4
+  BLOCKING load (40 assets)    frames   40 | frame avg  82.45 ms p99 136.86 ms max  136.86 ms (pump max   0.00 ms) | >33 ms:  24 | fixed steps   195 (expected ~  198, 7 saturated) | queue max  0 avg   0.0 | worker util   0.0% | jobs done 0
+
+Claim under test: expensive resource preparation no longer forces the main thread to wait for the whole operation.
+  async  : worst frame   19.80 ms,   0 frames over 33 ms, 0 saturated catch-up frames, wall 1.52 s
+  blocking: worst frame  136.86 ms,  24 frames over 33 ms, 7 saturated catch-up frames, wall 3.30 s
+  (the work itself is not free: worker busy time during the async phase was 4.14 s across 7 workers)
+
+shutdown clean (resources, workers, renderer, window in that order); temporary project removed

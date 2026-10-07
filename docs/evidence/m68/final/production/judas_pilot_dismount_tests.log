@@ -1,0 +1,13 @@
+Section A: upright dismount leaves a player already above the hull in place
+  OK   box support distance uses its current local half-height
+  OK   player clearance uses capsule radius plus half-segment
+  OK   normal top-side release does not move the player
+Section B: release after rolling clears the hull along local gravity-up
+  OK   the secured pilot is underneath the rolled ship before release
+  OK   release places the capsule just clear on the gravity-facing side
+  OK   only the positional clearance correction is applied
+Section C: zero gravity does not invent a preferred egress direction
+  OK   zero-gravity release preserves the captured position
+Section D: rotated-world dismount equivalence
+  OK   rotating ship, gravity, and position rotates the egress result rigidly
+All pilot dismount tests passed.

@@ -1,0 +1,136 @@
+{
+  "pass": true,
+  "checks": 14,
+  "runs": [
+    {
+      "label": "judas_scalability_tests-usage",
+      "command": [
+        "build/judas_scalability_tests"
+      ],
+      "exit": 2,
+      "expected": 2,
+      "output": "usage: judas_scalability_tests NEW-owned-output [--measure-baseline]\n"
+    },
+    {
+      "label": "judas_scalability_tests-existing-destination",
+      "command": [
+        "build/judas_scalability_tests",
+        ".cache/m68-runner-hygiene"
+      ],
+      "exit": 1,
+      "expected": 1,
+      "output": "FAIL output exists; choose a fresh owned directory after 0 checks\n"
+    },
+    {
+      "label": "judas_scalability_pipeline_tests-usage",
+      "command": [
+        "build/judas_scalability_pipeline_tests"
+      ],
+      "exit": 2,
+      "expected": 2,
+      "output": "usage: judas_scalability_pipeline_tests NEW-output Release-runtime\n"
+    },
+    {
+      "label": "judas_scalability_pipeline_tests-existing-destination",
+      "command": [
+        "build/judas_scalability_pipeline_tests",
+        ".cache/m68-runner-hygiene",
+        "build/judas"
+      ],
+      "exit": 1,
+      "expected": 1,
+      "output": "FAIL after 1 checks: fresh owned output required\n"
+    },
+    {
+      "label": "judas_resource_handoff_tests-usage",
+      "command": [
+        "build/judas_resource_handoff_tests"
+      ],
+      "exit": 2,
+      "expected": 2,
+      "output": "usage: judas_resource_handoff_tests NEW-owned-output\n"
+    },
+    {
+      "label": "judas_resource_handoff_tests-existing-destination",
+      "command": [
+        "build/judas_resource_handoff_tests",
+        ".cache/m68-runner-hygiene"
+      ],
+      "exit": 1,
+      "expected": 1,
+      "output": "FAIL fresh owned output required\n"
+    },
+    {
+      "label": "m68_measure.py-usage",
+      "command": [
+        "python3",
+        "scripts/m68_measure.py"
+      ],
+      "exit": 2,
+      "expected": 2,
+      "output": "usage: m68_measure.py [-h] --output OUTPUT --bin BIN\n                      --tracks {runtime,import,export,authoring,resource} [{runtime,import,export,authoring,resource} ...]\nm68_measure.py: error: the following arguments are required: --output, --bin, --tracks\n"
+    },
+    {
+      "label": "m68_measure.py-existing-destination",
+      "command": [
+        "python3",
+        "scripts/m68_measure.py",
+        "--output",
+        ".cache/m68-runner-hygiene",
+        "--bin",
+        "build"
+      ],
+      "exit": 2,
+      "expected": 2,
+      "output": "usage: m68_measure.py [-h] --output OUTPUT --bin BIN\n                      --tracks {runtime,import,export,authoring,resource} [{runtime,import,export,authoring,resource} ...]\nm68_measure.py: error: the following arguments are required: --tracks\n"
+    },
+    {
+      "label": "m68_integration.py-usage",
+      "command": [
+        "python3",
+        "scripts/m68_integration.py"
+      ],
+      "exit": 2,
+      "expected": 2,
+      "output": "usage: m68_integration.py [-h] --output OUTPUT\nm68_integration.py: error: the following arguments are required: --output\n"
+    },
+    {
+      "label": "m68_integration.py-existing-destination",
+      "command": [
+        "python3",
+        "scripts/m68_integration.py",
+        "--output",
+        ".cache/m68-runner-hygiene"
+      ],
+      "exit": 2,
+      "expected": 2,
+      "output": "usage: m68_integration.py [-h] --output OUTPUT\nm68_integration.py: error: Choose NEW output; prior evidence is preserved.\n"
+    },
+    {
+      "label": "m68_authoring_scale.py-usage",
+      "command": [
+        "python3",
+        "scripts/m68_authoring_scale.py"
+      ],
+      "exit": 2,
+      "expected": 2,
+      "output": "usage: m68_authoring_scale.py [-h] --output OUTPUT --baseline-bin BASELINE_BIN\n                              --final-bin FINAL_BIN\nm68_authoring_scale.py: error: the following arguments are required: --output, --baseline-bin, --final-bin\n"
+    },
+    {
+      "label": "m68_authoring_scale.py-existing-destination",
+      "command": [
+        "python3",
+        "scripts/m68_authoring_scale.py",
+        "--output",
+        ".cache/m68-runner-hygiene",
+        "--baseline-bin",
+        ".cache/m68-baseline/bin/judas_world_authoring_performance",
+        "--final-bin",
+        "build/judas_world_authoring_performance"
+      ],
+      "exit": 2,
+      "expected": 2,
+      "output": "usage: m68_authoring_scale.py [-h] --output OUTPUT --baseline-bin BASELINE_BIN\n                              --final-bin FINAL_BIN\nm68_authoring_scale.py: error: Output exists; choose a fresh directory.\n"
+    }
+  ]
+}

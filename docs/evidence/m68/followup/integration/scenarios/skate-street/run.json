@@ -1,0 +1,231 @@
+{
+  "exit_code": 0,
+  "frames": 720,
+  "runtime_sha256": "04dc060d569d50d8f0bd8eb4829802daeeafbe108ca8c6e3d588491d21f9beae",
+  "observer_sha256": "ff7b1693efeface6a3ae0a4d660dd779b84eddc10110e3863a4cfddef0035d49",
+  "temporary_scene_sha256": "fd1d5a9cea0b9e049f02d93ccb378ef865a469815578766a9e23b2981249d899",
+  "last_observation": {
+    "frame": 720,
+    "scene": "Scenes/skate/park.judas",
+    "paused": false,
+    "bodies": 61,
+    "dynamic": 1,
+    "sleeping": 0,
+    "audioVoices": 7,
+    "mixedPeak": 0.188696,
+    "contacts": 0,
+    "states": [
+      {
+        "entity": "10",
+        "state": {
+          "checkpoint": null,
+          "spawn": {
+            "position": {
+              "x": 36.599998474121094,
+              "y": -18.43000030517578,
+              "z": -250
+            },
+            "rotation": {
+              "x": 0,
+              "y": 0,
+              "z": 0,
+              "w": 1
+            }
+          },
+          "game": {
+            "score": 0,
+            "best": 0,
+            "runSeconds": 180,
+            "timeLeft": 168.9999994263053,
+            "over": false,
+            "letters": {},
+            "goals": {},
+            "bails": 0,
+            "stats": {
+              "tricks": 0,
+              "landed": 0,
+              "maxCombo": 0,
+              "airTime": 11.016667241230607,
+              "grindTime": 0
+            }
+          }
+        }
+      },
+      {
+        "entity": "40",
+        "state": {}
+      },
+      {
+        "entity": "109",
+        "state": {
+          "kind": "ledge",
+          "name": "Funbox Ledge"
+        }
+      },
+      {
+        "entity": "114",
+        "state": {}
+      },
+      {
+        "entity": "115",
+        "state": {}
+      },
+      {
+        "entity": "123",
+        "state": {
+          "kind": "rail",
+          "name": "Handrail"
+        }
+      },
+      {
+        "entity": "127",
+        "state": {
+          "kind": "ledge",
+          "name": "Platform Ledge Edge"
+        }
+      },
+      {
+        "entity": "130",
+        "state": {
+          "kind": "rail",
+          "name": "Flat Bar"
+        }
+      },
+      {
+        "entity": "132",
+        "state": {
+          "kind": "ledge",
+          "name": "Street Ledge Edge"
+        }
+      },
+      {
+        "entity": "135",
+        "state": {
+          "kind": "coping",
+          "name": "QP Coping"
+        }
+      },
+      {
+        "entity": "138",
+        "state": {
+          "kind": "coping",
+          "name": "Mini Coping E"
+        }
+      },
+      {
+        "entity": "141",
+        "state": {
+          "kind": "coping",
+          "name": "Mini Coping W"
+        }
+      },
+      {
+        "entity": "155",
+        "state": {
+          "taken": false
+        }
+      },
+      {
+        "entity": "156",
+        "state": {
+          "taken": false
+        }
+      },
+      {
+        "entity": "157",
+        "state": {
+          "taken": false
+        }
+      },
+      {
+        "entity": "158",
+        "state": {
+          "taken": false
+        }
+      },
+      {
+        "entity": "159",
+        "state": {
+          "taken": false
+        }
+      },
+      {
+        "entity": "1000000",
+        "state": {}
+      }
+    ],
+    "regions": [
+      {
+        "id": "street-0",
+        "state": "unloaded",
+        "entities": 11,
+        "integrationMs": 1.15881,
+        "largestUnitMs": 0.36781
+      },
+      {
+        "id": "street-1",
+        "state": "unloaded",
+        "entities": 9,
+        "integrationMs": 0.939385,
+        "largestUnitMs": 0.317947
+      },
+      {
+        "id": "street-2",
+        "state": "unloaded",
+        "entities": 9,
+        "integrationMs": 1.16962,
+        "largestUnitMs": 0.466899
+      },
+      {
+        "id": "street-3",
+        "state": "unloaded",
+        "entities": 11,
+        "integrationMs": 1.07581,
+        "largestUnitMs": 0.399279
+      },
+      {
+        "id": "street-4",
+        "state": "unloaded",
+        "entities": 10,
+        "integrationMs": 1.24393,
+        "largestUnitMs": 0.625334
+      }
+    ],
+    "objects": [
+      {
+        "id": "2",
+        "p": [
+          0,
+          -0.5,
+          -12
+        ]
+      },
+      {
+        "id": "10",
+        "p": [
+          36.6,
+          -614.797,
+          -415.25
+        ]
+      },
+      {
+        "id": "12",
+        "p": [
+          36.6,
+          -613.158,
+          -414.98
+        ],
+        "leftFoot": [
+          0.00153486,
+          0.412854,
+          0.146299
+        ],
+        "rightFoot": [
+          -0.00280476,
+          0.452953,
+          -0.189928
+        ]
+      }
+    ]
+  }
+}

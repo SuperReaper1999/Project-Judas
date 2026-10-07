@@ -1,0 +1,28 @@
+VECTOR identity-500 density acceleration actual=0,19.619993209838867,0 expected=-0,19.620001862496181,-0 error=8.6526573142009511e-06 tolerance=4.0000000000000003e-05
+VECTOR identity-500 physical drift actual=0,19.783500671386719,0 expected=-0,19.783502909807009,-0 error=2.2384202900127548e-06 tolerance=8.0000000000000007e-05
+VECTOR identity-1000 density acceleration actual=0,0,0 expected=0,-0,0 error=0 tolerance=4.0000000000000003e-05
+VECTOR identity-1000 physical drift actual=0,0,0 expected=0,-0,0 error=0 tolerance=8.0000000000000007e-05
+VECTOR identity-2000 density acceleration actual=0,-9.8099966049194336,0 expected=0,-9.8100009312480907,0 error=4.3263286571004755e-06 tolerance=4.0000000000000003e-05
+VECTOR identity-2000 physical drift actual=0,-9.8917503356933594,0 expected=0,-9.8917514549035044,0 error=1.1192101450063774e-06 tolerance=8.0000000000000007e-05
+VECTOR rotated-500 density acceleration actual=-12.519650459289551,15.063624382019043,1.1356359720230103 expected=-12.519673046750626,15.063618491927713,1.1356351967859712 error=2.3355675245078238e-05 tolerance=4.0000000000000003e-05
+VECTOR rotated-500 physical drift actual=-12.623997688293457,15.189154624938965,1.1450997591018677 expected=-12.624004313866644,15.189149438202943,1.1450988831474118 error=8.4597722680224443e-06 tolerance=8.0000000000000007e-05
+VECTOR rotated-1000 density acceleration actual=0,0,0 expected=0,-0,-0 error=0 tolerance=4.0000000000000003e-05
+VECTOR rotated-1000 physical drift actual=0,0,0 expected=0,-0,-0 error=0 tolerance=8.0000000000000007e-05
+VECTOR rotated-2000 density acceleration actual=6.2598247528076172,-7.5318121910095215,-0.56781792640686035 expected=6.2598365233753128,-7.5318092459638564,-0.56781759839298562 error=1.2137839632700165e-05 tolerance=4.0000000000000003e-05
+VECTOR rotated-2000 physical drift actual=6.3119983673095703,-7.5945773124694824,-0.57254987955093384 expected=6.312002156933322,-7.5945747191014714,-0.57254944157370591 error=4.6128765290315437e-06 tolerance=8.0000000000000007e-05
+VECTOR common free fall density 500.000000 actual=0,-39.24005126953125,0 expected=0,-39.24005126953125,0 error=0 tolerance=5.0000000000000002e-05
+VECTOR common free fall density 1000.000000 actual=0,-39.24005126953125,0 expected=0,-39.24005126953125,0 error=0 tolerance=5.0000000000000002e-05
+VECTOR common free fall density 2000.000000 actual=0,-39.24005126953125,0 expected=0,-39.24005126953125,0 error=0 tolerance=5.0000000000000002e-05
+VECTOR neutral immersed has no secular drift actual=0,0,0 expected=0,0,0 error=0 tolerance=0
+VECTOR neutral immersed has no acceleration actual=0,0,0 expected=0,0,0 error=0 tolerance=0
+VECTOR zero gravity invents no buoyancy 500.000000 actual=0,0,0 expected=0,0,0 error=0 tolerance=0
+VECTOR zero gravity invents no buoyancy 1000.000000 actual=0,0,0 expected=0,0,0 error=0 tolerance=0
+VECTOR zero gravity invents no buoyancy 2000.000000 actual=0,0,0 expected=0,0,0 error=0 tolerance=0
+VECTOR relative drag exponential oracle actual=0.92493033409118652,-0.24417059123516083,0.12208529561758041 expected=0.92493089522419336,-0.24417228955518799,0.122086144777594 error=1.9799580537737721e-06 tolerance=7.9999999999999996e-06
+VECTOR large configured drag cannot overshoot fluid velocity actual=0.40000000596046448,0.20000000298023224,-0.10000000149011612 expected=0.40000000596046448,0.20000000298023224,-0.10000000149011612 error=0 tolerance=0
+VECTOR full look pitch drives swimming actual=-2.1478753089904785,1.6269475221633911,-2.9562952518463135 expected=-2.1478747057551306,1.626946891759542,-2.9562951676105342 error=8.7658289080005563e-07 tolerance=5.0000000000000004e-06
+VECTOR jump input supplies bounded swim pulse actual=0,0.066666670143604279,0 expected=0,0.066666670143604279,0 error=0 tolerance=9.9999999999999995e-08
+VECTOR disabled input produces no swim propulsion actual=0,0,0 expected=0,0,0 error=0 tolerance=0
+VECTOR leaving fluid restores dry gravity without stale drag actual=0,1.7944216728210449,0 expected=0,1.7944217278721428,0 error=5.5051097902492074e-08 tolerance=2.9999999999999999e-07
+VECTOR fully submerged supported jump is propulsion not a hidden launch actual=0,0.066666677594184875,0 expected=0,0.066666670143604279,0 error=7.4505805969238281e-09 tolerance=2.9999999999999999e-07
+{"checks":89,"failures":0,"steps":2475,"seconds":0.015870038999999999,"pass":true}

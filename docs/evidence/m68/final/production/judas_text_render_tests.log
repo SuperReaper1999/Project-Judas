@@ -1,0 +1,55 @@
+Renderer fragment texture units: 32 (material path uses 12)
+Text coverage missing for 259 clusters; primary-font .notdef shown
+PASS normal GL renderer context
+GL NVIDIA Corporation / NVIDIA GeForce GTX 970/PCIe/SSE2
+PASS DejaVuSans.ttf
+PASS NotoSansArabic-Regular.ttf
+PASS NotoSansDevanagari-Regular.ttf
+PASS NotoSansJP-Regular.otf
+PASS FT coverage available for submitted glyph
+PASS FT coverage available for submitted glyph
+PASS FT coverage available for submitted glyph
+PASS FT coverage available for submitted glyph
+PASS FT coverage available for submitted glyph
+PASS FT coverage available for submitted glyph
+PASS FT coverage available for submitted glyph
+PASS FT coverage available for submitted glyph
+PASS FT coverage available for submitted glyph
+PASS FT coverage available for submitted glyph
+PASS FT coverage available for submitted glyph
+PASS FT coverage available for submitted glyph
+PASS FT coverage available for submitted glyph
+PASS FT coverage available for submitted glyph
+PASS FT coverage available for submitted glyph
+PASS FT coverage available for submitted glyph
+PASS FT coverage available for submitted glyph
+PASS FT coverage available for submitted glyph
+PASS FT coverage available for submitted glyph
+PASS FT coverage available for submitted glyph
+PASS FT coverage available for submitted glyph
+PASS FT coverage available for submitted glyph
+PASS FT coverage available for submitted glyph
+PASS FT coverage available for submitted glyph
+PASS FT coverage available for submitted glyph
+PASS FT coverage available for submitted glyph
+PASS FT coverage available for submitted glyph
+PASS FT coverage available for submitted glyph
+PASS FT coverage available for submitted glyph
+PASS FT coverage available for submitted glyph
+PASS FT coverage available for submitted glyph
+PASS FT coverage available for submitted glyph
+PASS FT coverage available for submitted glyph
+COVERAGE pixels=5524 mismatched=0 max=1.04
+PASS actual GL glyph placement/coverage agrees with independent CPU raster positions
+PASS consecutive compatible glyphs batched in hierarchy order
+PASS warm glyphs do not rerasterize / UI is exposure independent
+PASS real GL rectangular text clipping
+PASS bounded eight-page atlas evicts under real CJK glyph pressure
+PASS retained layout rerasterizes correctly after atlas eviction; no stale UVs
+PASS font/project reset leaves retained CPU glyph identities safe
+PASS M56 profile exports cold/warm/changing HUD/layout/glyph/cache/draw evidence
+PERFORMANCE ASCII 100 labels cold_ms=6.6113 median_ms=0.5922 p95_ms=1.0017 max_ms=6.6113 atlas_bytes=4194304 layout_bytes=42174 font_bytes=759720 new_rasters=23 draws=100
+PASS M56 profile exports cold/warm/changing HUD/layout/glyph/cache/draw evidence
+PERFORMANCE multilingual 100 labels cold_ms=7.3194 median_ms=0.5564 p95_ms=0.6818 max_ms=7.3194 atlas_bytes=4194304 layout_bytes=65263 font_bytes=5752416 new_rasters=31 draws=100
+PASS GL text/eviction/clip/scale has no errors
+SUMMARY 48 checks 0 failures

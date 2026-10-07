@@ -1,0 +1,56 @@
+Renderer fragment texture units: 32 (material path uses 12)
+World state: /home/conner/Documents/GitHub/Project-Judas/projects/shooter_game/Saves/range.judasstate (none saved)
+Project: Spring Range (/home/conner/Documents/GitHub/Project-Judas/projects/shooter_game/shooter_game.judasproj)
+Scene: Spring Range (/home/conner/Documents/GitHub/Project-Judas/projects/shooter_game/Scenes/range.judas)
+World origin (m): 0.000, 0.000, 0.000
+Renderer fragment texture units: 32 (material path uses 12)
+World state: legacy .judasstate (F6/F7) saves disabled for additive compositions; save slots remain available
+Project: Streamed Spring Range (/home/conner/Documents/GitHub/Project-Judas/projects/streamed_range/streamed_range.judasproj)
+Scene: Streamed Spring Range (/home/conner/Documents/GitHub/Project-Judas/projects/streamed_range/Scenes/bootstrap.judas)
+World origin (m): 0.000, 0.000, 0.000
+M59_PERF original frame interval median=2.135931 p95=2.848583 max=5.107456 ms
+M59_PERF original integration median=0.000000 p95=0.000000 max=0.000000 ms
+M59_PERF original fixed median=0.999481 p95=1.358528 max=3.530018 ms
+REGION all-resident gallery-0 state=active preparation=5.506941 load=64.190371 integration=1.069538 largest_unit=0.323735 bytes=361356 retained=18282
+REGION all-resident gallery-1 state=active preparation=3.933724 load=72.985212 integration=0.607905 largest_unit=0.329162 bytes=343209 retained=0
+REGION all-resident gallery-2 state=active preparation=4.535566 load=69.461067 integration=0.540619 largest_unit=0.286378 bytes=343209 retained=0
+REGION all-resident gallery-3 state=active preparation=4.283961 load=83.156106 integration=0.657295 largest_unit=0.321510 bytes=343209 retained=0
+REGION all-resident gallery-4 state=active preparation=3.579951 load=88.413762 integration=0.643947 largest_unit=0.322258 bytes=343209 retained=0
+REGION all-resident gallery-5 state=active preparation=4.000724 load=100.886265 integration=0.527597 largest_unit=0.283388 bytes=343209 retained=0
+REGION all-resident liquid state=active preparation=2.464835 load=10.305697 integration=0.117839 largest_unit=0.024507 bytes=66330 retained=0
+REGION all-resident oblique state=unloaded preparation=0.000000 load=0.000000 integration=0.000000 largest_unit=0.000000 bytes=0 retained=0
+Renderer fragment texture units: 32 (material path uses 12)
+World state: legacy .judasstate (F6/F7) saves disabled for additive compositions; save slots remain available
+Project: Streamed Spring Range (/home/conner/Documents/GitHub/Project-Judas/projects/streamed_range/streamed_range.judasproj)
+Scene: Streamed Spring Range (/home/conner/Documents/GitHub/Project-Judas/projects/streamed_range/Scenes/bootstrap.judas)
+World origin (m): 0.000, 0.000, 0.000
+M59_PERF all-resident frame interval median=2.141552 p95=3.040443 max=4.938300 ms
+M59_PERF all-resident integration median=0.192821 p95=0.291103 max=0.620301 ms
+M59_PERF all-resident fixed median=0.625068 p95=0.857410 max=1.677150 ms
+REGION streamed gallery-0 state=active preparation=5.841792 load=59.065935 integration=0.726057 largest_unit=0.274438 bytes=361356 retained=18282
+REGION streamed gallery-1 state=active preparation=2.783622 load=16.672762 integration=0.651913 largest_unit=0.310151 bytes=343209 retained=0
+REGION streamed gallery-2 state=unloaded preparation=0.000000 load=0.000000 integration=0.000000 largest_unit=0.000000 bytes=0 retained=0
+REGION streamed gallery-3 state=unloaded preparation=0.000000 load=0.000000 integration=0.000000 largest_unit=0.000000 bytes=0 retained=0
+REGION streamed gallery-4 state=unloaded preparation=0.000000 load=0.000000 integration=0.000000 largest_unit=0.000000 bytes=0 retained=0
+REGION streamed gallery-5 state=unloaded preparation=0.000000 load=0.000000 integration=0.000000 largest_unit=0.000000 bytes=0 retained=0
+REGION streamed liquid state=active preparation=1.116695 load=7.434249 integration=0.113752 largest_unit=0.023013 bytes=66330 retained=0
+REGION streamed oblique state=unloaded preparation=0.000000 load=0.000000 integration=0.000000 largest_unit=0.000000 bytes=0 retained=0
+Renderer fragment texture units: 32 (material path uses 12)
+World state: legacy .judasstate (F6/F7) saves disabled for additive compositions; save slots remain available
+Project: Streamed Spring Range (/home/conner/Documents/GitHub/Project-Judas/projects/streamed_range/streamed_range.judasproj)
+Scene: Streamed Spring Range (/home/conner/Documents/GitHub/Project-Judas/projects/streamed_range/Scenes/bootstrap.judas)
+World origin (m): 0.000, 0.000, 0.000
+M59_PERF streamed frame interval median=1.282776 p95=1.858448 max=3.487888 ms
+M59_PERF streamed integration median=0.045078 p95=0.081179 max=0.480756 ms
+M59_PERF streamed fixed median=0.373876 p95=0.502226 max=0.881325 ms
+REGION streamed-real-time gallery-0 state=active preparation=3.766042 load=60.470637 integration=0.708246 largest_unit=0.288632 bytes=361356 retained=18282
+REGION streamed-real-time gallery-1 state=unloaded preparation=0.000000 load=0.000000 integration=0.000000 largest_unit=0.000000 bytes=0 retained=0
+REGION streamed-real-time gallery-2 state=unloaded preparation=0.000000 load=0.000000 integration=0.000000 largest_unit=0.000000 bytes=0 retained=0
+REGION streamed-real-time gallery-3 state=unloaded preparation=0.000000 load=0.000000 integration=0.000000 largest_unit=0.000000 bytes=0 retained=0
+REGION streamed-real-time gallery-4 state=unloaded preparation=0.000000 load=0.000000 integration=0.000000 largest_unit=0.000000 bytes=0 retained=0
+REGION streamed-real-time gallery-5 state=unloaded preparation=0.000000 load=0.000000 integration=0.000000 largest_unit=0.000000 bytes=0 retained=0
+REGION streamed-real-time liquid state=unloaded preparation=0.000000 load=0.000000 integration=0.000000 largest_unit=0.000000 bytes=0 retained=0
+REGION streamed-real-time oblique state=unloaded preparation=0.000000 load=0.000000 integration=0.000000 largest_unit=0.000000 bytes=0 retained=0
+M59_PERF streamed-real-time frame interval median=0.726593 p95=1.162481 max=2.331747 ms
+M59_PERF streamed-real-time integration median=0.032900 p95=0.046765 max=0.375822 ms
+M59_PERF streamed-real-time fixed median=0.402014 p95=0.609070 max=0.622978 ms

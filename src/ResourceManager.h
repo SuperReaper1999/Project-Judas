@@ -81,6 +81,9 @@ struct ResourceStats {
     std::size_t failed = 0;
     std::size_t loading = 0;   // Queued + Loading + CpuReady
     std::size_t ready = 0;     // Ready mesh + texture entries
+    std::size_t admittedRequests=0;
+    std::uint64_t admittedBytesEstimate=0,preparedMeshBytes=0;
+    double lastPumpMs=0,peakPumpMs=0;
     unsigned long long hits = 0;
     unsigned long long misses = 0;  // loads started
     unsigned long long uploads = 0;  // GPU objects created by Pump
@@ -171,7 +174,10 @@ public:
     unsigned int RefCount(const AssetId& id) const;
 
     // The GL-thread handoff: uploads finished decodes (at most
-    // `maxUploads` this call — GPU upload is main-thread work and a
+    // `maxUploads` complete assets this call, with a shared 2 ms soft elapsed
+    // budget. Mesh maps yield privately between driver units. Driver calls
+    // remain indivisible and may overrun; Ready is published only when complete.
+    // GPU upload is main-thread work and a
     // multi-megabyte mesh costs milliseconds, so the default spreads a
     // burst of completions over frames), discards stale/cancelled
     // completions, then enforces the budget. Call once per frame.
@@ -225,6 +231,8 @@ private:
         AssetType type = AssetType::Mesh;
         std::string path;
         unsigned int generation = 0;
+        MeshHandle stagedMesh;size_t uploadCursor=0;
+        JobPriority priority=JobPriority::Normal;std::uint64_t admissionBytes=0;
         std::atomic<int> stage{0};  // 0 queued, 1 running, 2 done
         bool succeeded = false;
         bool cancelled = false;
@@ -277,6 +285,9 @@ private:
     static void RunLoadTask(LoadTask& task, const JobContext* context);
     static void TraceTask(const LoadTask& task, ResourceTracePoint point, std::size_t bytes = 0);
     void CompleteTask(Entry& entry, const std::shared_ptr<LoadTask>& task);
+    bool AdvanceUpload(const std::shared_ptr<LoadTask>& task,double budgetMs);
+    void DropUpload(LoadTask& task);
+    void AdmitPending();
     void FinishSynchronously(Entry& entry, const AssetId& id, AssetType expected);
     void DestroyGpu(Entry& entry);
     void Fail(Entry& entry, const std::string& message);

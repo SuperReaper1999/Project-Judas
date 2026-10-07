@@ -1,0 +1,46 @@
+Section A: sustained thrust produces velocity matching F/m*t (not a speed snap)
+  OK   measured speed after 1s of thrust matches (F/m)*t within 2%
+  OK   velocity direction matches the ship's forward axis (world -Z at identity)
+  OK   velocity actually built up gradually rather than snapping instantly to a fixed speed (single-step delta would be far smaller than the 1s total)
+Section B: releasing all translational input does not brake — velocity persists
+  OK   built up real velocity before releasing thrust
+  OK   velocity is unchanged (within 1%) after 2 full seconds of coasting with no input — no hidden damping/drag/braking
+Section C: rotating the spacecraft does not rotate its existing linear velocity
+  OK   linear velocity is UNCHANGED by a 180-degree orientation change with no thrust applied — momentum belongs to the world, not the ship's nose
+Section D: counter-thrust (facing backwards) slows, stops, then reverses velocity
+  OK   built up real forward velocity before turning around
+  OK   speed along the original direction decreases monotonically across all steps while decelerating (never bounces back up)
+  OK   velocity along the original direction passed through approximately zero
+  OK   after sustained counter-thrust, velocity has reversed to the opposite direction
+Section E: perpendicular thrust adds a new velocity component without erasing the old one
+  OK   sanity: the new thrust direction is genuinely perpendicular to the original velocity
+  OK   the ORIGINAL velocity component is preserved (within 2%), not erased by new thrust
+  OK   a NEW velocity component has grown along the new thrust direction
+  OK   the resulting speed is the vector sum, not a replacement — trajectory bends, it doesn't snap
+Section F: identical force produces acceleration proportional to 1/mass
+  OK   20kg body's speed matches F/m*t within 2%
+  OK   80kg body's speed matches F/m*t within 2%
+  OK   the 20kg body (1/4 the mass) accelerates to ~4x the speed of the 80kg body under identical force — F=ma, not a fixed speed cap
+Section G: releasing all rotational input does not stop rotation — angular velocity persists
+  OK   built up real angular velocity before releasing torque
+  OK   angular velocity is unchanged (within 2%) after 2 seconds with no rotational input — no auto-level/attitude-hold/damping
+Section H: counter-torque slows, stops, then reverses angular velocity
+  OK   built up real angular velocity before applying counter-torque
+  OK   sustained counter-torque reversed the angular velocity's sign about the yaw axis
+Section I: torque about different body axes produces DIFFERENT angular acceleration, matching the real inverse inertia tensor
+  OK   pitch (about local X) angular speed after 0.5s matches torque * inverseInertia * t within 2%
+  OK   yaw (about local Y) angular speed after 0.5s matches torque * inverseInertia * t within 2%
+  OK   roll (about local Z) angular speed after 0.5s matches torque * inverseInertia * t within 2%
+  OK   pitch/yaw/roll all produce MEASURABLY DIFFERENT angular speeds under identical torque — real tensor, not a uniform scalar
+Section J: gravity and control thrust compose additively, neither replaces the other
+  OK   combined gravity+thrust velocity equals the sum of each effect measured alone (within 2%) — composition, not replacement
+  OK   thrust's own contribution is still present in the combined result — gravity did not override control
+Section K: a no-op when `controlled` is false — no force, no torque, nothing to undo
+  OK   linear velocity is untouched while not controlled, even with input held for 10 steps
+  OK   angular velocity is untouched while not controlled, even with input held for 10 steps
+Section L: rotate-the-universe equivalence for force/torque-driven control
+  OK   rotated-back linear velocity matches the unrotated reference
+  OK   rotated-back angular velocity matches the unrotated reference
+  OK   rotated-back orientation matches the unrotated reference — no hidden world-axis assumption in force/torque-driven spacecraft control
+
+ALL TESTS PASSED

@@ -76,12 +76,24 @@ void EditorDocument::BeginEdit() {
     m_editInProgress = true;
 }
 
-void EditorDocument::CommitEdit(bool capturePrefab) {
+void EditorDocument::CommitEdit(bool capturePrefab){CommitEditImpl(capturePrefab,false);}
+bool EditorDocument::CommitCandidate(Scene&& candidate,std::string& error,bool capturePrefab,bool validated){
+    // The candidate already owns its copy; transfer the live scene into history
+    // rather than making a second whole-document snapshot for the same action.
+    if(!m_editInProgress){m_pendingSnapshot=std::move(m_scene);m_editInProgress=true;}
+    m_scene=std::move(candidate);CommitEditImpl(capturePrefab,validated);
+    error=m_validationError;return error.empty();
+}
+void EditorDocument::CommitEditImpl(bool capturePrefab,bool alreadyValidated) {
     if (!m_editInProgress) return;
     m_editInProgress = false;
     m_validationError.clear();
-    if(capturePrefab)CapturePrefabEdits(m_pendingSnapshot,m_scene);
-    if(!ValidEdit(m_scene,m_validationError)){m_scene=m_pendingSnapshot;PruneSelection();return;}
+    if(capturePrefab){
+        // Prefab override capture edits authored data after a parsed source load.
+        if(std::any_of(m_scene.Objects().begin(),m_scene.Objects().end(),[](const auto& o){return o.prefabRoot!=0;}))alreadyValidated=false;
+        CapturePrefabEdits(m_pendingSnapshot,m_scene);
+    }
+    if(!alreadyValidated&&!ValidEdit(m_scene,m_validationError)){m_scene=m_pendingSnapshot;PruneSelection();return;}
     if (ScenesEqual(m_pendingSnapshot, m_scene)) return;
     m_undo.push_back(std::move(m_pendingSnapshot));
     if (m_undo.size() > kMaxHistory) m_undo.erase(m_undo.begin());
@@ -124,39 +136,35 @@ bool EditorDocument::BatchProperties(const std::map<std::string,std::string>& pr
  PruneSelection();if(m_selection.empty()){error="select objects first";return false;}
  for(auto& [key,_]:properties)if(key=="parent"||key.rfind("prefab",0)==0){error="Use the hierarchy/prefab command for "+key+"; ordinary property batches cannot replace identity links";return false;}
  auto candidate=m_scene;for(auto id:m_selection)if(!ApplyObjectProperties(*candidate.Find(id),properties,error))return false;
- if(!ValidEdit(candidate,error))return false;
- BeginEdit();m_scene=std::move(candidate);CommitEdit();return true;
+ return CommitCandidate(std::move(candidate),error);
 }
 bool EditorDocument::BatchTransform(glm::vec3 translation,glm::quat rotation,glm::vec3 scale,std::string& error,bool individual,bool world){
  PruneSelection();if(m_selection.empty()){error="select objects first";return false;}if(!std::isfinite(glm::dot(translation,translation))||!std::isfinite(glm::dot(rotation,rotation))||glm::dot(rotation,rotation)<1e-10f||!std::isfinite(glm::dot(scale,scale))||glm::any(glm::lessThanEqual(scale,glm::vec3(0)))){error="finite translation, nonzero rotation and positive scale required";return false;}
  auto roots=SelectionRoots();Scene flat;if(!FlattenHierarchy(m_scene,flat,error))return false;glm::vec3 pivot(0);for(auto id:roots)pivot+=flat.Find(id)->transform.position;pivot/=float(roots.size());auto candidate=m_scene;
- for(auto id:roots){auto* o=candidate.Find(id);auto t=world?flat.Find(id)->transform:o->transform;auto q=glm::normalize(rotation);if(!individual){if(!world){error="shared pivot requires world axes";return false;}t.position=pivot+q*((t.position-pivot)*scale)+translation;}else t.position+=translation;t.rotation=glm::normalize(q*t.rotation);t.scale*=scale;if(world){if(!SetWorld(*o,t,flat,error))return false;}else o->transform=t;auto check=ObjectProperties(*o);if(!ApplyObjectProperties(*o,check,error))return false;}
- if(!ValidEdit(candidate,error))return false;
- BeginEdit();m_scene=std::move(candidate);CommitEdit();return true;
+ for(auto id:roots){auto* o=candidate.Find(id);auto t=world?flat.Find(id)->transform:o->transform;auto q=glm::normalize(rotation);if(!individual){if(!world){error="shared pivot requires world axes";return false;}t.position=pivot+q*((t.position-pivot)*scale)+translation;}else t.position+=translation;t.rotation=glm::normalize(q*t.rotation);t.scale*=scale;if(world){if(!SetWorld(*o,t,flat,error))return false;}else o->transform=t;}
+ return CommitCandidate(std::move(candidate),error);
 }
 bool EditorDocument::ReparentSelection(SceneObjectId parent,std::string& error,bool preserveWorld){
  PruneSelection();Scene flat;if(!FlattenHierarchy(m_scene,flat,error))return false;auto candidate=m_scene;glm::mat4 inverse(1);if(parent){auto* p=flat.Find(parent);if(!p){error="missing parent";return false;}auto& t=p->transform;inverse=glm::inverse(glm::translate(glm::mat4(1),t.position)*glm::mat4_cast(t.rotation)*glm::scale(glm::mat4(1),t.scale));}
  for(auto id:SelectionRoots()){auto* o=candidate.Find(id);if(o->prefabRoot&&o->prefabRoot!=id){error="reparent prefab roots; unpack source members first";return false;}if(!preserveWorld){o->parent=parent;continue;}auto& t=flat.Find(id)->transform;JointTransform local;if(!DecomposeRigidPose(inverse*glm::translate(glm::mat4(1),t.position)*glm::mat4_cast(t.rotation)*glm::scale(glm::mat4(1),t.scale),local,error))return false;o->parent=parent;o->transform={local.translation,local.rotation,local.scale};}
- if(!ValidEdit(candidate,error))return false;
- BeginEdit();m_scene=std::move(candidate);CommitEdit();return true;
+ return CommitCandidate(std::move(candidate),error);
 }
 bool EditorDocument::GroupSelection(std::string& error){PruneSelection();if(m_selection.empty()){error="select objects before grouping";return false;}BeginEdit();auto name="Folder "+std::to_string(m_scene.NextId());for(auto id:m_selection)m_scene.Find(id)->authoringFolder=name;CommitEdit(false);return true;}
 void EditorDocument::CopyComponent(const std::string& prefix){m_componentClipboard.clear();m_clipboardPrefix=prefix;auto* o=SelectedObject();if(!o)return;for(auto& [key,value]:ObjectProperties(*o))if(ComponentKey(key,prefix))m_componentClipboard[key]=value;}
-bool EditorDocument::PasteComponent(std::string& error){if(m_componentClipboard.empty()){error="component clipboard is empty";return false;}auto candidate=m_scene;for(auto id:m_selection){auto* o=candidate.Find(id);if(!o)continue;auto properties=m_componentClipboard;for(const auto& [key,_]:ObjectProperties(*o))if(ComponentKey(key,m_clipboardPrefix)&&!properties.count(key))properties[key]="@remove";if(!ApplyObjectProperties(*o,properties,error))return false;}if(!ValidEdit(candidate,error))return false;
- BeginEdit();m_scene=std::move(candidate);CommitEdit();return true;}
+bool EditorDocument::PasteComponent(std::string& error){if(m_componentClipboard.empty()){error="component clipboard is empty";return false;}auto candidate=m_scene;for(auto id:m_selection){auto* o=candidate.Find(id);if(!o)continue;auto properties=m_componentClipboard;for(const auto& [key,_]:ObjectProperties(*o))if(ComponentKey(key,m_clipboardPrefix)&&!properties.count(key))properties[key]="@remove";if(!ApplyObjectProperties(*o,properties,error))return false;}return CommitCandidate(std::move(candidate),error);}
 bool EditorDocument::DuplicateSelection(std::string& error){
  PruneSelection();if(m_selection.empty())return false;std::set<SceneObjectId> members(m_selection.begin(),m_selection.end());bool changed=true;while(changed){changed=false;for(auto& o:m_scene.Objects())if(members.count(o.parent))changed|=members.insert(o.id).second;}
  auto candidate=m_scene;std::map<SceneObjectId,SceneObjectId> ids;for(auto id:members)ids[id]=candidate.CreateObject("copy").id;
  for(auto& o:m_scene.Objects())if(members.count(o.id)){auto copy=o;copy.id=ids.at(o.id);copy.name+=" copy";auto remap=[&](SceneObjectId& id){if(ids.count(id))id=ids.at(id);};remap(copy.parent);remap(copy.prefabRoot);if(copy.socket)remap(copy.socket->target);if(copy.render)remap(copy.render->textureCamera);if(copy.joint){remap(copy.joint->bodyA);remap(copy.joint->bodyB);}if(copy.liquidConnection){remap(copy.liquidConnection->source);remap(copy.liquidConnection->destination);}if(copy.deformable)for(auto& a:copy.deformable->attachments)remap(a.target);for(auto& slot:copy.scripts)slot.properties=ScriptSystem::RemapPropertyEntities(slot.properties,ids);for(auto& [_,id]:copy.prefabIds)remap(id);*candidate.Find(copy.id)=std::move(copy);}
- if(!ValidEdit(candidate,error))return false;
- BeginEdit();m_scene=std::move(candidate);CommitEdit(false);std::vector<SceneObjectId> selection;for(auto id:m_selection)selection.push_back(ids.at(id));m_selection=selection;m_selected=m_selection.back();return true;
+ if(!CommitCandidate(std::move(candidate),error,false))return false;
+ std::vector<SceneObjectId> selection;for(auto id:m_selection)selection.push_back(ids.at(id));m_selection=selection;m_selected=m_selection.back();return true;
 }
 
 std::vector<SceneObjectId> EditorDocument::SelectionRoots()const{std::vector<SceneObjectId> roots;for(auto id:m_selection){bool inherited=false;auto* o=m_scene.Find(id);for(auto p=o?o->parent:0;p;){if(IsSelected(p)){inherited=true;break;}auto* parent=m_scene.Find(p);p=parent?parent->parent:0;}if(o&&!inherited)roots.push_back(id);}return roots;}
 std::vector<SceneObjectId> EditorDocument::Search(const std::string& query)const{if(m_searchGeneration==m_generation&&m_searchQuery==query)return m_searchResults;JUDAS_PROFILE_SCOPE("Hierarchy filter");std::set<SceneObjectId> keep;for(auto& o:m_scene.Objects()){bool match=query.empty()||o.name.find(query)!=std::string::npos||o.authoringFolder.find(query)!=std::string::npos;auto properties=ObjectProperties(o);for(auto& [k,v]:properties)match|=k.find(query)!=std::string::npos||v.find(query)!=std::string::npos;if(match){keep.insert(o.id);for(auto p=o.parent;p;){keep.insert(p);auto* ancestor=m_scene.Find(p);p=ancestor?ancestor->parent:0;}}}std::vector<SceneObjectId> ids;for(auto& o:m_scene.Objects())if(keep.count(o.id))ids.push_back(o.id);m_searchGeneration=m_generation;m_searchQuery=query;m_searchResults=ids;return ids;}
 void EditorDocument::SelectRange(SceneObjectId id,const std::vector<SceneObjectId>& visible,bool additive){auto a=std::find(visible.begin(),visible.end(),m_selected),b=std::find(visible.begin(),visible.end(),id);if(a==visible.end()||b==visible.end()){Select(id,additive);return;}if(!additive)m_selection.clear();if(a>b)std::swap(a,b);for(auto i=a;i<=b;++i)if(!IsSelected(*i))m_selection.push_back(*i);m_selected=id;}
-bool EditorDocument::DeleteSelection(std::string& error){auto candidate=m_scene;auto roots=SelectionRoots();if(roots.empty()){error="select objects first";return false;}for(auto id:roots)candidate.DestroyObject(id);std::string text;SaveSceneToString(candidate,text);Scene validated;if(!LoadSceneFromString(text,validated,error))return false;BeginEdit();m_scene=std::move(validated);CommitEdit();PruneSelection();return true;}
-bool EditorDocument::ApplySource(const std::string& text,std::string& error){Scene candidate;if(!LoadSceneFromString(text,candidate,error))return false;BeginEdit();m_scene=std::move(candidate);CommitEdit();PruneSelection();return true;}
+bool EditorDocument::DeleteSelection(std::string& error){auto candidate=m_scene;auto roots=SelectionRoots();if(roots.empty()){error="select objects first";return false;}for(auto id:roots)candidate.DestroyObject(id);std::string text;SaveSceneToString(candidate,text);Scene validated;if(!LoadSceneFromString(text,validated,error))return false;if(!CommitCandidate(std::move(validated),error,true,true))return false;PruneSelection();return true;}
+bool EditorDocument::ApplySource(const std::string& text,std::string& error){Scene candidate;if(!LoadSceneFromString(text,candidate,error))return false;if(!CommitCandidate(std::move(candidate),error,true,true))return false;PruneSelection();return true;}
 bool EditorDocument::ExternalChanged()const{return !m_path.empty()&&Source(m_path)!=m_loadedSource;}
 
 bool EditorDocument::SaveNamed(std::string& error){

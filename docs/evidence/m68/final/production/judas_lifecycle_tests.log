@@ -1,0 +1,93 @@
+Section A: identity survives full -> coarse -> dormant -> full, no duplicates
+  OK   scene begins: 
+  OK   the crate settled on the ground
+  OK   full -> coarse: 
+  OK   coarse: the physics body is gone
+  OK   the previous incarnation's handle is invalid
+  OK   coarse is still Active (loaded)
+  OK   coarse -> dormant: 
+  OK   dormant is Unloaded, not destroyed
+  OK   dormant -> coarse
+  OK   coarse -> full (reconstruction): 
+  OK   no entity was duplicated
+  OK   exactly one body came back
+  OK   same id, same name, one reconstruction recorded
+  OK   the reconstructed body has a fresh, valid handle
+  OK   body -> entity lookup follows the live incarnation only
+Section B: physical state preserved; reconstruction creates no artificial momentum
+  OK   both runs are deterministic up to the transition
+  OK   a resting crate goes coarse as Settled
+  OK   a settled coarse crate keeps its pose exactly
+  OK   reconstruction restored pose, linear and angular velocity exactly
+      sixty steps after reconstruction: displacement 0.00000 m; untransitioned reference 0.00000 m
+  OK   the reconstructed crate then moves exactly as the never-transitioned crate does: no impulse was added
+  OK   dormant: time is frozen for the entity; nothing was zeroed
+  OK   reconstructed sphere carries its linear and angular velocity
+Section C: unload != destroy
+  OK   destroyed entity is marked Destroyed
+  OK   a destroyed entity cannot be reconstructed: 
+  OK   an unloaded entity comes back
+  OK   counts: one destroyed, four full
+  OK   R reset does not resurrect a destroyed entity
+  OK   an unmanaged entity may still be commanded explicitly (managed only gates the policy)
+Section D: capability limits are explicit
+  OK   scene begins: 
+  OK   a compound body is recognised as Full-only
+  OK   asking it to reduce fails clearly: 
+  OK   ...and it stays Full
+Section E: coarse inertial motion evolves consistently and promotes without discontinuity
+  OK   a moving sphere goes coarse as Inertial
+  OK   120 coarse steps were simulated
+  OK   coarse position advanced by v*t in zero gravity (real state, not an animation)
+  OK   full/coarse/full matches the all-full run within 1 mm after 240 steps
+  OK   a ballistic crate under uniform gravity: coarse arc matches the live arc to 2 mm
+Section F: the distance policy drives transitions; the machinery works without it
+  OK   policy scene begins: 
+  OK   at load, a managed entity beyond the coarse radius is never given a body
+  OK   an unmanaged entity at the same distance stays Full: the policy ignores it
+  OK   the near crate is Full
+  OK   brought within the full radius, the policy reconstructed it
+  OK   between the radii, the policy demoted it to Coarse
+  OK   a forced fidelity is respected by the policy
+  OK   clearing the override hands control back
+  OK   a scene without a policy installs none
+  OK   transitions still work when commanded explicitly
+  OK   ...and nothing changes it back on its own
+  OK   a game-supplied policy governs managed entities and only those
+Section G: baseline + delta reproduces the modified world; the baseline file is untouched
+  OK   a runtime-created entity gets a runtime-range id
+  OK   delta lists the moved, destroyed and created entities
+  OK   an entity that never left its authored state has no delta
+  OK   delta text loads back: 
+  OK   delta save -> load -> save is byte-identical
+  OK   the baseline scene is byte-identical after gameplay changed the world
+  OK   delta applies to a fresh baseline: 
+  OK   the moved entity is where it was left
+  OK   the destroyed entity remains absent
+  OK   the created entity returned with its identity
+  OK   untouched baseline content is baseline-identical (bit-exact)
+  OK   the runtime id counter continues past restored entities
+  OK   a new runtime entity after reload does not reuse a restored id
+  OK   without the delta, the baseline is pristine
+Section H: malformed or inconsistent world state fails before touching the world
+  OK   an unknown entity id is rejected: 
+  OK   ...and nothing changed
+  OK   a delta with one bad record applies none of its good records either
+  OK   an unsupported version fails
+  OK   a malformed physical state fails with a line number: world state line 1: unsupported world state version 7
+  OK   a missing compatibility/header line fails
+  OK   a missing file fails clearly
+  OK   a missing file at launch is simply 'no saved state'
+Section I: far-origin equivalence and reference-frame semantics across transitions
+  OK   different authored origins have different strict baseline identities
+  OK   identical local lifecycle history yields byte-identical delta payloads at near and far origin
+  OK   relative velocity to a rotating frame is unchanged by demotion
+Section J: measured evidence that dormant/reduced entities stop consuming full simulation work
+  entities 1500 | all-full: 1501 physics bodies, 1500 full entities, 100.671 ms/step, load 41.2 ms
+  policy 12/20 m: 20 physics bodies, 19 full, 41 coarse, 1440 dormant, 0.366 ms/step, load 30.7 ms
+  promote all 1500: 2.35 ms (0.0016 ms each); policy re-demoted 1478 in one step; delta capture+serialize 11.56 ms (300 records, 69521 bytes); parse+apply 1.53 ms
+  OK   all-full run has every crate as a live body
+  OK   the policy keeps under 100 crates Full and most dormant
+  OK   physics body count equals Full entities + ground: dormant/coarse entities own no body
+  OK   the reduced world steps in under a quarter of the all-full time
+Lifecycle tests: PASS (0 failures)

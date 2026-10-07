@@ -1,0 +1,27 @@
+Renderer fragment texture units: 32 (material path uses 12)
+World state: /home/conner/Documents/GitHub/Project-Judas/projects/touch_demo/Saves/main.judasstate (none saved)
+Project: Collision and sensor events (/home/conner/Documents/GitHub/Project-Judas/projects/touch_demo/touch_demo.judasproj)
+Scene: M42 collision / trigger events — P spawn / R reset (/home/conner/Documents/GitHub/Project-Judas/projects/touch_demo/Scenes/main.judas)
+World origin (m): 0.000, 0.000, 0.000
+PASS normal asynchronous Application resource path
+PASS JS Start spawns ordinary prefab and owns authored HUD
+JS: triggerEnter: 6 / 4611686018427387904
+JS: triggerEnter: 4611686018427387904 / 6
+JS: collisionEnter: 4 / 5
+JS: collisionEnter: 5 / 4
+JS: triggerExit: 6 / 4611686018427387904
+JS: triggerExit: 4611686018427387904 / 6
+HUD Collision 2/284/0 | Trigger 2/220/2
+collisionStay: 5 / 4
+PASS real fixed-step collision callbacks reach JS HUD
+PASS real fixed-step trigger enter/stay/exit reaches HUD
+STATE 4 {"events":144}
+STATE 5 {"events":144}
+STATE 6 {"events":112}
+STATE 7 {"events":0}
+STATE 8 {}
+STATE 4611686018427387904 {"events":112}
+PASS excluded layer stays silent; spawned prefab participates
+PASS demo callbacks have no script faults
+PASS ordinary standalone shutdown
+SUMMARY 7 checks 0 failures

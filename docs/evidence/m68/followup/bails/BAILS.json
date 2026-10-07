@@ -1,0 +1,46 @@
+{
+  "pass": true,
+  "states": [
+    {
+      "bails": 1,
+      "active": true,
+      "bodies": 13
+    },
+    {
+      "bails": 1,
+      "active": true,
+      "bodies": 13
+    },
+    {
+      "bails": 1,
+      "active": true,
+      "bodies": 13
+    },
+    {
+      "bails": 1,
+      "active": false,
+      "bodies": 0
+    },
+    {
+      "bails": 2,
+      "active": true,
+      "bodies": 13
+    },
+    {
+      "bails": 2,
+      "active": true,
+      "bodies": 13
+    },
+    {
+      "bails": 2,
+      "active": true,
+      "bodies": 13
+    },
+    {
+      "bails": 2,
+      "active": false,
+      "bodies": 0
+    }
+  ],
+  "note": "Logical skate_bail uses authored X binding; existing harness explicitly blocks resources for deterministic readiness. Earlier T input was checkpoint, not bail."
+}

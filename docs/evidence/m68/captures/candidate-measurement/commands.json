@@ -1,0 +1,812 @@
+[
+  {
+    "label": "runtime-0-0-0",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/m68-final-captures/owned/scaling/repro.judasproj"
+    ],
+    "cwd": "/tmp",
+    "wallMs": 200.72841900400817,
+    "exit": 0,
+    "userSeconds": 0.14,
+    "systemSeconds": 0.05,
+    "peakRSSKiB": 181584.0
+  },
+  {
+    "label": "runtime-0-0-1",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/m68-final-captures/owned/scaling/repro.judasproj"
+    ],
+    "cwd": "/tmp",
+    "wallMs": 229.1615859940066,
+    "exit": 0,
+    "userSeconds": 0.18,
+    "systemSeconds": 0.04,
+    "peakRSSKiB": 181560.0
+  },
+  {
+    "label": "runtime-0-0-2",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/m68-final-captures/owned/scaling/repro.judasproj"
+    ],
+    "cwd": "/tmp",
+    "wallMs": 202.48344800347695,
+    "exit": 0,
+    "userSeconds": 0.14,
+    "systemSeconds": 0.05,
+    "peakRSSKiB": 182132.0
+  },
+  {
+    "label": "runtime-0-1-0",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/m68-final-captures/owned/scaling/repro.judasproj"
+    ],
+    "cwd": "/tmp",
+    "wallMs": 205.0267789963982,
+    "exit": 0,
+    "userSeconds": 0.16,
+    "systemSeconds": 0.04,
+    "peakRSSKiB": 183984.0
+  },
+  {
+    "label": "runtime-0-1-1",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/m68-final-captures/owned/scaling/repro.judasproj"
+    ],
+    "cwd": "/tmp",
+    "wallMs": 225.39720100030536,
+    "exit": 0,
+    "userSeconds": 0.16,
+    "systemSeconds": 0.05,
+    "peakRSSKiB": 183852.0
+  },
+  {
+    "label": "runtime-0-1-2",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/m68-final-captures/owned/scaling/repro.judasproj"
+    ],
+    "cwd": "/tmp",
+    "wallMs": 203.0339630000526,
+    "exit": 0,
+    "userSeconds": 0.13,
+    "systemSeconds": 0.06,
+    "peakRSSKiB": 184348.0
+  },
+  {
+    "label": "runtime-0-8-0",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/m68-final-captures/owned/scaling/repro.judasproj"
+    ],
+    "cwd": "/tmp",
+    "wallMs": 268.46668700454757,
+    "exit": 0,
+    "userSeconds": 0.21,
+    "systemSeconds": 0.05,
+    "peakRSSKiB": 185964.0
+  },
+  {
+    "label": "runtime-0-8-1",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/m68-final-captures/owned/scaling/repro.judasproj"
+    ],
+    "cwd": "/tmp",
+    "wallMs": 280.6353539999691,
+    "exit": 0,
+    "userSeconds": 0.22,
+    "systemSeconds": 0.05,
+    "peakRSSKiB": 185788.0
+  },
+  {
+    "label": "runtime-0-8-2",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/m68-final-captures/owned/scaling/repro.judasproj"
+    ],
+    "cwd": "/tmp",
+    "wallMs": 264.37811399955535,
+    "exit": 0,
+    "userSeconds": 0.21,
+    "systemSeconds": 0.04,
+    "peakRSSKiB": 186448.0
+  },
+  {
+    "label": "runtime-400-0-0",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/m68-final-captures/owned/scaling/repro.judasproj"
+    ],
+    "cwd": "/tmp",
+    "wallMs": 205.24692199978745,
+    "exit": 0,
+    "userSeconds": 0.15,
+    "systemSeconds": 0.05,
+    "peakRSSKiB": 185640.0
+  },
+  {
+    "label": "runtime-400-0-1",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/m68-final-captures/owned/scaling/repro.judasproj"
+    ],
+    "cwd": "/tmp",
+    "wallMs": 220.62386800098466,
+    "exit": 0,
+    "userSeconds": 0.16,
+    "systemSeconds": 0.05,
+    "peakRSSKiB": 185932.0
+  },
+  {
+    "label": "runtime-400-0-2",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/m68-final-captures/owned/scaling/repro.judasproj"
+    ],
+    "cwd": "/tmp",
+    "wallMs": 204.16033199580852,
+    "exit": 0,
+    "userSeconds": 0.15,
+    "systemSeconds": 0.04,
+    "peakRSSKiB": 185836.0
+  },
+  {
+    "label": "runtime-400-1-0",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/m68-final-captures/owned/scaling/repro.judasproj"
+    ],
+    "cwd": "/tmp",
+    "wallMs": 247.43214000045555,
+    "exit": 0,
+    "userSeconds": 0.19,
+    "systemSeconds": 0.05,
+    "peakRSSKiB": 189896.0
+  },
+  {
+    "label": "runtime-400-1-1",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/m68-final-captures/owned/scaling/repro.judasproj"
+    ],
+    "cwd": "/tmp",
+    "wallMs": 233.355295000365,
+    "exit": 0,
+    "userSeconds": 0.17,
+    "systemSeconds": 0.05,
+    "peakRSSKiB": 190172.0
+  },
+  {
+    "label": "runtime-400-1-2",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/m68-final-captures/owned/scaling/repro.judasproj"
+    ],
+    "cwd": "/tmp",
+    "wallMs": 229.50553999544354,
+    "exit": 0,
+    "userSeconds": 0.17,
+    "systemSeconds": 0.05,
+    "peakRSSKiB": 190560.0
+  },
+  {
+    "label": "runtime-400-8-0",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/m68-final-captures/owned/scaling/repro.judasproj"
+    ],
+    "cwd": "/tmp",
+    "wallMs": 319.29236199357547,
+    "exit": 0,
+    "userSeconds": 0.25,
+    "systemSeconds": 0.05,
+    "peakRSSKiB": 192368.0
+  },
+  {
+    "label": "runtime-400-8-1",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/m68-final-captures/owned/scaling/repro.judasproj"
+    ],
+    "cwd": "/tmp",
+    "wallMs": 292.11871799634537,
+    "exit": 0,
+    "userSeconds": 0.24,
+    "systemSeconds": 0.05,
+    "peakRSSKiB": 192744.0
+  },
+  {
+    "label": "runtime-400-8-2",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/m68-final-captures/owned/scaling/repro.judasproj"
+    ],
+    "cwd": "/tmp",
+    "wallMs": 302.85207999986596,
+    "exit": 0,
+    "userSeconds": 0.25,
+    "systemSeconds": 0.04,
+    "peakRSSKiB": 192412.0
+  },
+  {
+    "label": "runtime-800-0-0",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/m68-final-captures/owned/scaling/repro.judasproj"
+    ],
+    "cwd": "/tmp",
+    "wallMs": 222.72420899389545,
+    "exit": 0,
+    "userSeconds": 0.17,
+    "systemSeconds": 0.04,
+    "peakRSSKiB": 190228.0
+  },
+  {
+    "label": "runtime-800-0-1",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/m68-final-captures/owned/scaling/repro.judasproj"
+    ],
+    "cwd": "/tmp",
+    "wallMs": 221.24043700023321,
+    "exit": 0,
+    "userSeconds": 0.16,
+    "systemSeconds": 0.05,
+    "peakRSSKiB": 190536.0
+  },
+  {
+    "label": "runtime-800-0-2",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/m68-final-captures/owned/scaling/repro.judasproj"
+    ],
+    "cwd": "/tmp",
+    "wallMs": 233.23284900106955,
+    "exit": 0,
+    "userSeconds": 0.17,
+    "systemSeconds": 0.05,
+    "peakRSSKiB": 191156.0
+  },
+  {
+    "label": "runtime-800-1-0",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/m68-final-captures/owned/scaling/repro.judasproj"
+    ],
+    "cwd": "/tmp",
+    "wallMs": 263.16126700112363,
+    "exit": 0,
+    "userSeconds": 0.21,
+    "systemSeconds": 0.05,
+    "peakRSSKiB": 198020.0
+  },
+  {
+    "label": "runtime-800-1-1",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/m68-final-captures/owned/scaling/repro.judasproj"
+    ],
+    "cwd": "/tmp",
+    "wallMs": 280.1883779975469,
+    "exit": 0,
+    "userSeconds": 0.22,
+    "systemSeconds": 0.05,
+    "peakRSSKiB": 197012.0
+  },
+  {
+    "label": "runtime-800-1-2",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/m68-final-captures/owned/scaling/repro.judasproj"
+    ],
+    "cwd": "/tmp",
+    "wallMs": 268.36519399512326,
+    "exit": 0,
+    "userSeconds": 0.2,
+    "systemSeconds": 0.06,
+    "peakRSSKiB": 197492.0
+  },
+  {
+    "label": "runtime-800-8-0",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/m68-final-captures/owned/scaling/repro.judasproj"
+    ],
+    "cwd": "/tmp",
+    "wallMs": 342.64525499747833,
+    "exit": 0,
+    "userSeconds": 0.28,
+    "systemSeconds": 0.05,
+    "peakRSSKiB": 199528.0
+  },
+  {
+    "label": "runtime-800-8-1",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/m68-final-captures/owned/scaling/repro.judasproj"
+    ],
+    "cwd": "/tmp",
+    "wallMs": 334.3858119987999,
+    "exit": 0,
+    "userSeconds": 0.26,
+    "systemSeconds": 0.06,
+    "peakRSSKiB": 198896.0
+  },
+  {
+    "label": "runtime-800-8-2",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/m68-final-captures/owned/scaling/repro.judasproj"
+    ],
+    "cwd": "/tmp",
+    "wallMs": 349.1045970004052,
+    "exit": 0,
+    "userSeconds": 0.29,
+    "systemSeconds": 0.05,
+    "peakRSSKiB": 199948.0
+  },
+  {
+    "label": "runtime-6400-0-0",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/m68-final-captures/owned/scaling/repro.judasproj"
+    ],
+    "cwd": "/tmp",
+    "wallMs": 2016.3130869987071,
+    "exit": 0,
+    "userSeconds": 1.93,
+    "systemSeconds": 0.08,
+    "peakRSSKiB": 253360.0
+  },
+  {
+    "label": "runtime-6400-0-1",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/m68-final-captures/owned/scaling/repro.judasproj"
+    ],
+    "cwd": "/tmp",
+    "wallMs": 2032.5153160010814,
+    "exit": 0,
+    "userSeconds": 1.94,
+    "systemSeconds": 0.09,
+    "peakRSSKiB": 253020.0
+  },
+  {
+    "label": "runtime-6400-0-2",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/m68-final-captures/owned/scaling/repro.judasproj"
+    ],
+    "cwd": "/tmp",
+    "wallMs": 2026.3728759964579,
+    "exit": 0,
+    "userSeconds": 1.91,
+    "systemSeconds": 0.1,
+    "peakRSSKiB": 253156.0
+  },
+  {
+    "label": "runtime-6400-1-0",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/m68-final-captures/owned/scaling/repro.judasproj"
+    ],
+    "cwd": "/tmp",
+    "wallMs": 2351.6096280000056,
+    "exit": 0,
+    "userSeconds": 2.24,
+    "systemSeconds": 0.1,
+    "peakRSSKiB": 292496.0
+  },
+  {
+    "label": "runtime-6400-1-1",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/m68-final-captures/owned/scaling/repro.judasproj"
+    ],
+    "cwd": "/tmp",
+    "wallMs": 2440.140024998982,
+    "exit": 0,
+    "userSeconds": 2.33,
+    "systemSeconds": 0.1,
+    "peakRSSKiB": 292236.0
+  },
+  {
+    "label": "runtime-6400-1-2",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/m68-final-captures/owned/scaling/repro.judasproj"
+    ],
+    "cwd": "/tmp",
+    "wallMs": 2351.984174005338,
+    "exit": 0,
+    "userSeconds": 2.26,
+    "systemSeconds": 0.07,
+    "peakRSSKiB": 292404.0
+  },
+  {
+    "label": "runtime-6400-8-0",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/m68-final-captures/owned/scaling/repro.judasproj"
+    ],
+    "cwd": "/tmp",
+    "wallMs": 2363.2946490033646,
+    "exit": 0,
+    "userSeconds": 2.26,
+    "systemSeconds": 0.09,
+    "peakRSSKiB": 292928.0
+  },
+  {
+    "label": "runtime-6400-8-1",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/m68-final-captures/owned/scaling/repro.judasproj"
+    ],
+    "cwd": "/tmp",
+    "wallMs": 2354.025744003593,
+    "exit": 0,
+    "userSeconds": 2.24,
+    "systemSeconds": 0.1,
+    "peakRSSKiB": 292904.0
+  },
+  {
+    "label": "runtime-6400-8-2",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/m68-final-captures/owned/scaling/repro.judasproj"
+    ],
+    "cwd": "/tmp",
+    "wallMs": 2392.8625249973265,
+    "exit": 0,
+    "userSeconds": 2.27,
+    "systemSeconds": 0.11,
+    "peakRSSKiB": 292332.0
+  },
+  {
+    "label": "import-external-cold-0",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_model_import_cli",
+      "--recipe",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/m68-final-captures/owned/import/Imports/external.judasimport"
+    ],
+    "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+    "wallMs": 18.727843002125155,
+    "exit": 0,
+    "userSeconds": 0.0,
+    "systemSeconds": 0.01,
+    "peakRSSKiB": 26724.0
+  },
+  {
+    "label": "import-external-unchanged-0",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_model_import_cli",
+      "--recipe",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/m68-final-captures/owned/import/Imports/external.judasimport"
+    ],
+    "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+    "wallMs": 17.297520003921818,
+    "exit": 0,
+    "userSeconds": 0.0,
+    "systemSeconds": 0.0,
+    "peakRSSKiB": 25412.0
+  },
+  {
+    "label": "import-external-cold-1",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_model_import_cli",
+      "--recipe",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/m68-final-captures/owned/import/Imports/external.judasimport"
+    ],
+    "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+    "wallMs": 18.488369998522103,
+    "exit": 0,
+    "userSeconds": 0.0,
+    "systemSeconds": 0.01,
+    "peakRSSKiB": 26472.0
+  },
+  {
+    "label": "import-external-unchanged-1",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_model_import_cli",
+      "--recipe",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/m68-final-captures/owned/import/Imports/external.judasimport"
+    ],
+    "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+    "wallMs": 17.472304003604222,
+    "exit": 0,
+    "userSeconds": 0.0,
+    "systemSeconds": 0.0,
+    "peakRSSKiB": 25272.0
+  },
+  {
+    "label": "import-external-cold-2",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_model_import_cli",
+      "--recipe",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/m68-final-captures/owned/import/Imports/external.judasimport"
+    ],
+    "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+    "wallMs": 19.93565099837724,
+    "exit": 0,
+    "userSeconds": 0.0,
+    "systemSeconds": 0.01,
+    "peakRSSKiB": 26532.0
+  },
+  {
+    "label": "import-external-unchanged-2",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_model_import_cli",
+      "--recipe",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/m68-final-captures/owned/import/Imports/external.judasimport"
+    ],
+    "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+    "wallMs": 19.640519996755756,
+    "exit": 0,
+    "userSeconds": 0.0,
+    "systemSeconds": 0.01,
+    "peakRSSKiB": 25360.0
+  },
+  {
+    "label": "import-skate_original-cold-0",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_model_import_cli",
+      "--recipe",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/m68-final-captures/owned/import/Imports/skate_original.judasimport"
+    ],
+    "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+    "wallMs": 11913.282187000732,
+    "exit": 2,
+    "userSeconds": 10.34,
+    "systemSeconds": 1.09,
+    "peakRSSKiB": 1078744.0
+  },
+  {
+    "label": "import-skate_original-unchanged-0",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_model_import_cli",
+      "--recipe",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/m68-final-captures/owned/import/Imports/skate_original.judasimport"
+    ],
+    "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+    "wallMs": 2755.279844001052,
+    "exit": 0,
+    "userSeconds": 2.68,
+    "systemSeconds": 0.06,
+    "peakRSSKiB": 25276.0
+  },
+  {
+    "label": "import-skate_original-cold-1",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_model_import_cli",
+      "--recipe",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/m68-final-captures/owned/import/Imports/skate_original.judasimport"
+    ],
+    "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+    "wallMs": 12190.097756996693,
+    "exit": 2,
+    "userSeconds": 10.55,
+    "systemSeconds": 1.09,
+    "peakRSSKiB": 1078556.0
+  },
+  {
+    "label": "import-skate_original-unchanged-1",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_model_import_cli",
+      "--recipe",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/m68-final-captures/owned/import/Imports/skate_original.judasimport"
+    ],
+    "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+    "wallMs": 2871.0530810058117,
+    "exit": 0,
+    "userSeconds": 2.79,
+    "systemSeconds": 0.07,
+    "peakRSSKiB": 25532.0
+  },
+  {
+    "label": "import-skate_original-cold-2",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_model_import_cli",
+      "--recipe",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/m68-final-captures/owned/import/Imports/skate_original.judasimport"
+    ],
+    "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+    "wallMs": 12368.949400995916,
+    "exit": 2,
+    "userSeconds": 10.81,
+    "systemSeconds": 1.13,
+    "peakRSSKiB": 1078860.0
+  },
+  {
+    "label": "import-skate_original-unchanged-2",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_model_import_cli",
+      "--recipe",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/m68-final-captures/owned/import/Imports/skate_original.judasimport"
+    ],
+    "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+    "wallMs": 2747.6524580051773,
+    "exit": 0,
+    "userSeconds": 2.68,
+    "systemSeconds": 0.05,
+    "peakRSSKiB": 25540.0
+  },
+  {
+    "label": "authoring-0",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_world_authoring_performance",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/m68-final-captures/authoring-0"
+    ],
+    "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+    "wallMs": 5430.549942997459,
+    "exit": 0,
+    "userSeconds": 5.32,
+    "systemSeconds": 0.09,
+    "peakRSSKiB": 56412.0
+  },
+  {
+    "label": "authoring-1",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_world_authoring_performance",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/m68-final-captures/authoring-1"
+    ],
+    "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+    "wallMs": 5613.261106002028,
+    "exit": 0,
+    "userSeconds": 5.49,
+    "systemSeconds": 0.11,
+    "peakRSSKiB": 56264.0
+  },
+  {
+    "label": "authoring-2",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_world_authoring_performance",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/m68-final-captures/authoring-2"
+    ],
+    "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+    "wallMs": 5438.579418994777,
+    "exit": 0,
+    "userSeconds": 5.34,
+    "systemSeconds": 0.08,
+    "peakRSSKiB": 56312.0
+  },
+  {
+    "label": "export-small-0",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_export",
+      "/home/conner/Documents/GitHub/Project-Judas/projects/character_demo/character_demo.judasproj",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/m68-final-captures/owned/package-small",
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas"
+    ],
+    "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+    "wallMs": 57.272961996204685,
+    "exit": 0,
+    "userSeconds": 0.02,
+    "systemSeconds": 0.03,
+    "peakRSSKiB": 16900.0
+  },
+  {
+    "label": "export-small-1",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_export",
+      "/home/conner/Documents/GitHub/Project-Judas/projects/character_demo/character_demo.judasproj",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/m68-final-captures/owned/package-small",
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas"
+    ],
+    "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+    "wallMs": 65.8091829973273,
+    "exit": 0,
+    "userSeconds": 0.03,
+    "systemSeconds": 0.03,
+    "peakRSSKiB": 16504.0
+  },
+  {
+    "label": "export-small-2",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_export",
+      "/home/conner/Documents/GitHub/Project-Judas/projects/character_demo/character_demo.judasproj",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/m68-final-captures/owned/package-small",
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas"
+    ],
+    "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+    "wallMs": 61.226935002196115,
+    "exit": 0,
+    "userSeconds": 0.02,
+    "systemSeconds": 0.03,
+    "peakRSSKiB": 16212.0
+  },
+  {
+    "label": "export-workshop-0",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_export",
+      "/home/conner/Documents/GitHub/Project-Judas/projects/world_workshop/world_workshop.judasproj",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/m68-final-captures/owned/package-workshop",
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas"
+    ],
+    "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+    "wallMs": 106.67464399739401,
+    "exit": 0,
+    "userSeconds": 0.07,
+    "systemSeconds": 0.03,
+    "peakRSSKiB": 20896.0
+  },
+  {
+    "label": "export-workshop-1",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_export",
+      "/home/conner/Documents/GitHub/Project-Judas/projects/world_workshop/world_workshop.judasproj",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/m68-final-captures/owned/package-workshop",
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas"
+    ],
+    "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+    "wallMs": 105.61017000145512,
+    "exit": 0,
+    "userSeconds": 0.06,
+    "systemSeconds": 0.03,
+    "peakRSSKiB": 20324.0
+  },
+  {
+    "label": "export-workshop-2",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_export",
+      "/home/conner/Documents/GitHub/Project-Judas/projects/world_workshop/world_workshop.judasproj",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/m68-final-captures/owned/package-workshop",
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas"
+    ],
+    "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+    "wallMs": 107.47757000353886,
+    "exit": 0,
+    "userSeconds": 0.07,
+    "systemSeconds": 0.03,
+    "peakRSSKiB": 20496.0
+  },
+  {
+    "label": "export-professional-0",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_export",
+      "/home/conner/Documents/GitHub/Project-Judas/projects/import_lab/import_lab.judasproj",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/m68-final-captures/owned/package-professional",
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas"
+    ],
+    "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+    "wallMs": 6633.965533001174,
+    "exit": 0,
+    "userSeconds": 5.74,
+    "systemSeconds": 0.87,
+    "peakRSSKiB": 779400.0
+  },
+  {
+    "label": "export-professional-1",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_export",
+      "/home/conner/Documents/GitHub/Project-Judas/projects/import_lab/import_lab.judasproj",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/m68-final-captures/owned/package-professional",
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas"
+    ],
+    "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+    "wallMs": 6719.435300998157,
+    "exit": 0,
+    "userSeconds": 5.84,
+    "systemSeconds": 0.84,
+    "peakRSSKiB": 779236.0
+  },
+  {
+    "label": "export-professional-2",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_export",
+      "/home/conner/Documents/GitHub/Project-Judas/projects/import_lab/import_lab.judasproj",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/m68-final-captures/owned/package-professional",
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas"
+    ],
+    "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+    "wallMs": 6648.731453999062,
+    "exit": 0,
+    "userSeconds": 5.79,
+    "systemSeconds": 0.84,
+    "peakRSSKiB": 779420.0
+  }
+]

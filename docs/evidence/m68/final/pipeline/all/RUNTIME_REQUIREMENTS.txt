@@ -1,0 +1,8 @@
+Judas Linux desktop Release package. Run ./judas (no arguments).
+Requires compatible glibc/libstdc++, SDL2 and its system dependencies, OpenGL 3.3 drivers.
+No editor or development tree is required. Platform libraries are system provided; not bundled.
+Unicode text libraries and ICU locale/boundary data are statically linked.
+Project fonts/catalogs are packaged assets; no desktop font or ICU_DATA lookup.
+Asset policy and inclusion reasons: DEPENDENCIES.json. All is conservative; closure requires explicit dynamic/runtime roots. Scenes follow project inclusion/exclusion policy.
+Saves: $XDG_DATA_HOME/judas/games/<save-id>/Saves, otherwise $HOME/.local/share/...
+Third-party notices: engine/third_party/RUNTIME_NOTICES.txt and engine/licenses.

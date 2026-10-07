@@ -1,0 +1,50 @@
+Renderer fragment texture units: 32 (material path uses 12)
+asset 97c3acdb99c5ffefb002c03ecec7a8ed: Optional extension ignored: KHR_materials_specular
+asset 97c3acdb99c5ffefb002c03ecec7a8ed: Optional extension ignored: KHR_materials_specular
+RIG sleep_latency_seconds=9 sleeping_fixed_ms=0.0246622
+ARTICULATION id=200 sleeping=13/13
+RIG count=1 mapped=13 sleeping=13 fixed_ms=0.0964327
+RIG resettle cycle=0 fixed_ms=0.0466788
+RIG resettle cycle=1 fixed_ms=0.0480124
+RIG resettle cycle=2 fixed_ms=0.048309
+RIG sleep_latency_seconds=13 sleeping_fixed_ms=0.480984
+ARTICULATION id=200 sleeping=13/13
+ARTICULATION id=201 sleeping=13/13
+ARTICULATION id=202 sleeping=13/13
+ARTICULATION id=203 sleeping=13/13
+ARTICULATION id=204 sleeping=13/13
+ARTICULATION id=205 sleeping=13/13
+ARTICULATION id=206 sleeping=13/13
+ARTICULATION id=207 sleeping=13/13
+ARTICULATION id=208 sleeping=13/13
+ARTICULATION id=209 sleeping=13/13
+RIG count=10 mapped=130 sleeping=130 fixed_ms=6.94824
+RIG resettle cycle=0 fixed_ms=0.500669
+RIG resettle cycle=1 fixed_ms=0.494921
+RIG resettle cycle=2 fixed_ms=0.510046
+RIG sleep_latency_seconds=30 sleeping_fixed_ms=1.10767
+ARTICULATION id=200 sleeping=13/13
+ARTICULATION id=201 sleeping=13/13
+ARTICULATION id=202 sleeping=13/13
+ARTICULATION id=203 sleeping=13/13
+ARTICULATION id=204 sleeping=13/13
+ARTICULATION id=205 sleeping=13/13
+ARTICULATION id=206 sleeping=13/13
+ARTICULATION id=207 sleeping=13/13
+ARTICULATION id=208 sleeping=13/13
+ARTICULATION id=209 sleeping=13/13
+ARTICULATION id=210 sleeping=13/13
+ARTICULATION id=211 sleeping=13/13
+ARTICULATION id=212 sleeping=13/13
+ARTICULATION id=213 sleeping=13/13
+ARTICULATION id=214 sleeping=13/13
+ARTICULATION id=215 sleeping=13/13
+ARTICULATION id=216 sleeping=13/13
+ARTICULATION id=217 sleeping=13/13
+ARTICULATION id=218 sleeping=13/13
+ARTICULATION id=219 sleeping=13/13
+RIG count=20 mapped=260 sleeping=260 fixed_ms=18.5445
+RIG resettle cycle=0 fixed_ms=1.17911
+RIG resettle cycle=1 fixed_ms=1.16955
+RIG resettle cycle=2 fixed_ms=1.19164
+Imported ragdoll checks 93 PASS

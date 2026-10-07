@@ -1037,6 +1037,15 @@ void Renderer::EndShadowPass() {
 }
 
 MeshHandle Renderer::CreateMesh(const MeshData& data) {
+    auto handle=BeginMeshUpload(data);
+    if(!handle.IsValid())return {};
+    for(size_t i=0;i<data.materials.size();++i)for(size_t j=0;j<5;++j)
+        if(!UploadMeshMap(handle,data,i,j)){DestroyMesh(handle);return {};}
+    return handle;
+}
+
+MeshHandle Renderer::BeginMeshUpload(const MeshData& data) {
+    JUDAS_PROFILE_SCOPE("Mesh geometry upload");
     if (data.skeletal) {
         const auto count=data.skeletal->skeleton.skinNodes.size();
         GLint texels=0;glGetIntegerv(GL_MAX_TEXTURE_BUFFER_SIZE,&texels);
@@ -1047,7 +1056,7 @@ MeshHandle Renderer::CreateMesh(const MeshData& data) {
         }
     }else if(!data.skinVertices.empty())return {};
     GpuMesh mesh;
-    mesh.primitives=data.primitives;for(const auto& material:data.materials)mesh.materials.push_back(CreateMaterial(material));
+    mesh.primitives=data.primitives;for(const auto& material:data.materials)mesh.materials.push_back(CreateMaterial(MaterialSettings(material)));
     mesh.alive = true;
     if(data.skeletal){mesh.restSkin=ResolveSkinMatrices(data.skeletal->skeleton,data.skeletal->skeleton.rest);for(auto& part:data.primitives)if(part.count)mesh.partOrientation.push_back(data.skinVertices.at(data.indices.empty()?part.first:data.indices.at(part.first)));else mesh.partOrientation.emplace_back();}
     for(const auto& v:data.vertices)mesh.bounds.Include(v.position);
@@ -1147,9 +1156,10 @@ TextureHandle Renderer::CreateTexture(const TextureData& data,bool srgb) {
 
     glGenTextures(1, &texture.textureId);
     glBindTexture(GL_TEXTURE_2D, texture.textureId);
+    {JUDAS_PROFILE_SCOPE("Texture driver texel upload");
     glTexImage2D(GL_TEXTURE_2D, 0, srgb?GL_SRGB8_ALPHA8:GL_RGBA8, data.width, data.height, 0, GL_RGBA, GL_UNSIGNED_BYTE,
-                 data.pixels.data());
-    glGenerateMipmap(GL_TEXTURE_2D);
+                 data.pixels.data());}
+    {JUDAS_PROFILE_SCOPE("Texture driver mipmap generation");glGenerateMipmap(GL_TEXTURE_2D);}
 
     // Linear filtering both ways (mipmapped minification), repeat wrapping —
     // ordinary, sufficient defaults for one UV-mapped demo texture; nothing

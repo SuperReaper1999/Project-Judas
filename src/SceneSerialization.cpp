@@ -1147,7 +1147,7 @@ bool SaveSceneToFile(const Scene& scene, const std::string& path, std::string& o
 
 bool LoadSceneFromString(const std::string& text, Scene& outScene, std::string& outError) {
     outError.clear();
-    if(IsNamedDocument(text)){std::string legacy;if(!NamedToLegacy(text,"scene",legacy,outError))return false;return LoadSceneFromString(legacy,outScene,outError);}
+    if(IsNamedDocument(text)){std::string legacy;if(!NamedToLegacy(text,"scene",legacy,outError,false))return false;return LoadSceneFromString(legacy,outScene,outError);}
     Reader reader(text, outError);
     Scene scene;
     std::vector<Token> tokens;

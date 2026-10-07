@@ -1,0 +1,78 @@
+[
+  {
+    "label": "structural-0",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_scalability_tests",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/m68-final-byte-captures/structural-0"
+    ],
+    "exit": 0,
+    "wallMs": 7594.495108998672,
+    "environment": {}
+  },
+  {
+    "label": "structural-1",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_scalability_tests",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/m68-final-byte-captures/structural-1"
+    ],
+    "exit": 0,
+    "wallMs": 7561.475400994823,
+    "environment": {}
+  },
+  {
+    "label": "resource-0",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_model_runtime_tests",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/m68-final-byte-captures/resource-0"
+    ],
+    "exit": 0,
+    "wallMs": 6420.662491997064,
+    "environment": {}
+  },
+  {
+    "label": "resource-1",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_model_runtime_tests",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/m68-final-byte-captures/resource-1"
+    ],
+    "exit": 0,
+    "wallMs": 6458.486179995816,
+    "environment": {}
+  },
+  {
+    "label": "resource-2",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_model_runtime_tests",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/m68-final-byte-captures/resource-2"
+    ],
+    "exit": 0,
+    "wallMs": 6435.2922570033115,
+    "environment": {}
+  },
+  {
+    "label": "private-handoff-0",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_resource_handoff_tests",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/m68-final-byte-captures/private-handoff-0"
+    ],
+    "exit": 0,
+    "wallMs": 6000.230741999985,
+    "environment": {
+      "SDL_VIDEODRIVER": "x11",
+      "LIBGL_ALWAYS_SOFTWARE": "0"
+    }
+  },
+  {
+    "label": "private-handoff-1",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_resource_handoff_tests",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/m68-final-byte-captures/private-handoff-1"
+    ],
+    "exit": 0,
+    "wallMs": 5983.917322002526,
+    "environment": {
+      "SDL_VIDEODRIVER": "x11",
+      "LIBGL_ALWAYS_SOFTWARE": "0"
+    }
+  }
+]

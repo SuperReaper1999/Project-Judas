@@ -12,7 +12,7 @@
 //
 // Undo stores whole-Scene snapshots. Scenes are small authored documents
 // (measured with the M67 several-hundred-object workshop). A copy per committed edit
-// is cheap, trivially correct, and covers creation, deletion, reordering,
+// preserves complete revisions, and covers creation, deletion, reordering,
 // component add/remove and settings changes with one mechanism — no
 // per-property command classes to keep in sync with the data model.
 class EditorDocument {
@@ -71,6 +71,8 @@ public:
     void Redo();
 
 private:
+    void CommitEditImpl(bool capturePrefab,bool alreadyValidated);
+    bool CommitCandidate(Scene&&,std::string& error,bool capturePrefab=true,bool alreadyValidated=false);
     mutable uint64_t m_searchGeneration=~uint64_t(0);mutable std::string m_searchQuery;mutable std::vector<SceneObjectId> m_searchResults;
     Scene m_scene;
     std::string m_path,m_loadedSource,m_validationError;

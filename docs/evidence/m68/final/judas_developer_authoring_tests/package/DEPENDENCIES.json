@@ -1,0 +1,14 @@
+{
+  "assetBytes": 0,
+  "auxiliary": [],
+  "deduplicatedBytes": 0,
+  "excluded": [],
+  "excludedAssetBytes": 0,
+  "included": [],
+  "physicalAssetBytes": 0,
+  "policy": "all",
+  "scenes": [
+    "Scenes/main.judas"
+  ],
+  "version": 1
+}

@@ -1,0 +1,100 @@
+{
+  "head": "52828779993843d9c8b0060f5e30e49e61d0466f",
+  "phase": "Final candidate after affected checks; no commit",
+  "scope": "changed engine/tools/tests/current docs; original pre-gate freeze and raw results preserved",
+  "sha256": {
+    "CMakeLists.txt": "bd5cbb2dc4c5d97854a0e3cec5030827f577ac75589136eb760d1218ba8f7a3b",
+    "docs/M38.md": "e23ac952c390659beae5f208f289cf52615b365036fccb1867a2185b0aa0cc05",
+    "docs/M67_WORLD_BUILDING.md": "d74cc12768027afacad19cb18d93a4c79dbf265fef4c8e6e4a4ae71fc0e7a0fc",
+    "docs/MODEL_IMPORT.md": "767b2680ec4fe3f822eb8593b2a5bae506845cfea65cd7eb63c410db2eef2bbc",
+    "docs/SCALABILITY.md": "0af823e9daabf96cec1e8dc707be77a69e139a1dfd79bea3f953f2d263fd997e",
+    "scripts/m68_authoring_scale.py": "e3925d4c24151c8796073b3cd5be908b988f18dfd4ca3b399878fb045fac589e",
+    "scripts/m68_integration.py": "9d87b39116d73ea533c1dbeb1870213f5984b62fcb8b2557fab56798d71a53cb",
+    "scripts/m68_measure.py": "ba3ae35a68d4d5dc3d4b4b67723a8ccfa026171ab407218c25b06d202bf5d589",
+    "scripts/m68_validation.py": "9bbcfcc68331a974bd7ea2e7df3f687f0ab66166e8ab413ca770bc80d100588b",
+    "src/AssetDependencies.cpp": "fbea0f28d544b1c114df9c081f66a068b63b4d0d3b95fec3765889c99f4435db",
+    "src/AssetDependencies.h": "928b133067d5ddc029366d16a1b2f089c2d1ded6ace3c6b7744207bf9331eac4",
+    "src/CoarseSimulation.cpp": "cdc9a209891ffd5497fec63b44b5100a7ec25709118a1575c854247ba22fcac6",
+    "src/Material.cpp": "e9e45ba04431d0c6414b8e0accde73bc1feff6d0944d60d523cafe0687acd3dd",
+    "src/Material.h": "7f9a5767c27260e4ab5cc996f90bdf52503d46d0e736870d33298945c642bc63",
+    "src/ModelArchive.cpp": "daccf8c92585a51fe20d3fc3079b38f54dfe0ba834ae7f965f18e70d497e18c8",
+    "src/ModelArchive.h": "02c68215af21903d04f556a601d3cec8c3478ba6371e6b68693958d2aaf43674",
+    "src/ModelCook.cpp": "210fac9e5fd6864aabc27677af92119e53b768b284ba4d469f54efd023fd5d06",
+    "src/ModelCook.h": "c0307c72d10a24f10a1273dcd4851f9cad6c60c0de0efd7a7014c9a12f96a7f1",
+    "src/NamedAuthoring.cpp": "db6fb935e85bf6e40fd03b6df087d51e1362bf4003df802ddfbb6fabc8ad197e",
+    "src/NamedAuthoring.h": "89aca6bc92bbbc772fbcbfcafe466b8382bda7f4b706f1103ff373c662b492a5",
+    "src/Project.cpp": "32cb5f1503ae504cb86f485cab883880585e9d64c7cbe80f889b8c23bfa60d87",
+    "src/Project.h": "86b60d7f208a58cb2573424b752eae1c357990f6690cfe782858fc99d3c297aa",
+    "src/ProjectExporter.cpp": "c7d008bc7013b51cb4b47b7733f6a5d5312dd3235c18b82fb28187084c77511b",
+    "src/ProjectExporter.h": "3d3decf7f81feaed957774b320e0766d9e22a201437b559b1786178ca72b87a6",
+    "src/Renderer.cpp": "866ef070ef808d8df0ec414accdf8159afc59315fc813892038dba3fd1a899ed",
+    "src/Renderer.h": "bf67bdf912a8fa314b273adfdae4ab19389293058ba701690123937989b059ab",
+    "src/RendererMaterials.inl": "b1bad60e3783216fd7d2b5358793a235a3aa67273cd83c7d7707dce0b25d3b44",
+    "src/ResourceManager.cpp": "408db1ec47556d4e239bb396d0348c13cff9815012feda5c7237865fa83a1b8f",
+    "src/ResourceManager.h": "d5815f9314f293a257c510a63ee87e4d231ac1427cbaff064d4a30ae88585a39",
+    "src/RuntimeUI.cpp": "cb2e4d441d9f0d613efd7df66502edb56d181a85a765cece5a3bbb2e6ec3b5ff",
+    "src/RuntimeWorld.cpp": "2a4470f41a32d043d89bfaefd9a98de142a4f321ce3d19f63a855c072ccb795c",
+    "src/RuntimeWorld.h": "ccc390440ebf8a04811616c9e12fc30c7dbf8f9c42f0ad22107367f7add12035",
+    "src/SaveService.cpp": "35cd7b0bbe0b7e82eebf51bb983f1f968693543cd1d81bade0d59d8b724db092",
+    "src/SaveService.h": "374943f9607e5d2f17043a78966c7de78fba0f377af617ebcb8a6505d18c90d2",
+    "src/SceneSerialization.cpp": "b0554d2c4a1c3760257d20355537c86b31849be4cbdfde33250da4ac281d3651",
+    "src/ScriptSystem.cpp": "0df8e54bfe3b660841d393b7d67fe71ef8ef819b02d13d1278fd2e9052df869a",
+    "src/WorldCharacter.cpp": "d999aef4e90ed66443496948fd6c3a54ab0c0203ca817a4dcd63d3a97b43180d",
+    "src/WorldRegions.cpp": "5f7879f1eacd552438213df04c4222e18015ec7b10cfdee8b8a419834e41a2eb",
+    "src/WorldScripts.cpp": "b53f7aa854ff9bfe6e1dcc10d264912ef5c4b64f052420d75d6115901a6bf4d5",
+    "src/WorldStreaming.cpp": "1026e4b3fe9d1bff4c827a3465fb15701bdcfa091967463aabf826b3a3928e7a",
+    "src/authoring/AuthoringDocument.cpp": "85b9acbf18195096061d6f724549e30ae4bb2051f75f3909df40ff5c9a325b25",
+    "src/authoring/ContentReferences.cpp": "4a9d7ac7e8b0b03b0b6b15d0d2f9174577fa66f1b62510d62a6d3cf79484ff55",
+    "src/editor/EditorDocument.h": "b443a917bb84d6ef2ed042d69e926fcb8aae97efdfdc18c845db3964ddbfa49f",
+    "src/editor/EditorHistory.cpp": "107489e9e84659ef10f789a9a7413ee5c2fa7a7146fbac447b9bb91975f04606",
+    "src/editor/EditorPanels.cpp": "227ba1fb8b13163ed19fb6fccc8ec1009527f2cf322a0fc7978d6fcd4b41e8fc",
+    "tests/ResourceHandoffTests.cpp": "533e0674bce99f8fdd0786f5e76d331a1a4c9043b4c91b7513253664f4090f47",
+    "tests/SaveApplicationTests.cpp": "e34df81d445ec72b4b7fc00c6883e3be6612584d619d478f1f1b147e9e5373bf",
+    "tests/ScalabilityPipelineTests.cpp": "1342ad740e496a60f898ab1d17ff2f2d2c2726a73fe7c152e1e0b1b639ce44b6",
+    "tests/ScalabilityTests.cpp": "ddcda9d177fb6e31eae0cff92f2b3740531d590e6ab50ff2c4642e5fa85f1384",
+    "tools/ModelImportCli.cpp": "e595c6b44bf47039d9abfb4ca90a2ea9ee6b18d144e76c992ff3365e1c28565d"
+  },
+  "deltaSincePreGateFreeze": {
+    "docs/M38.md": {
+      "beforeCleanGate": null,
+      "final": "e23ac952c390659beae5f208f289cf52615b365036fccb1867a2185b0aa0cc05"
+    },
+    "docs/M67_WORLD_BUILDING.md": {
+      "beforeCleanGate": null,
+      "final": "d74cc12768027afacad19cb18d93a4c79dbf265fef4c8e6e4a4ae71fc0e7a0fc"
+    },
+    "docs/MODEL_IMPORT.md": {
+      "beforeCleanGate": null,
+      "final": "767b2680ec4fe3f822eb8593b2a5bae506845cfea65cd7eb63c410db2eef2bbc"
+    },
+    "docs/SCALABILITY.md": {
+      "beforeCleanGate": null,
+      "final": "0af823e9daabf96cec1e8dc707be77a69e139a1dfd79bea3f953f2d263fd997e"
+    },
+    "scripts/m68_integration.py": {
+      "beforeCleanGate": "59f8d034281853af03ff77913ea85284c165b9d397bc43af0ba5c1b134881ac6",
+      "final": "9d87b39116d73ea533c1dbeb1870213f5984b62fcb8b2557fab56798d71a53cb"
+    },
+    "src/ProjectExporter.cpp": {
+      "beforeCleanGate": "3059b17e02bb2d0fba02e5695ef62470105d56e56063ee0039ded0e1bc72ef75",
+      "final": "c7d008bc7013b51cb4b47b7733f6a5d5312dd3235c18b82fb28187084c77511b"
+    },
+    "src/SaveService.cpp": {
+      "beforeCleanGate": null,
+      "final": "35cd7b0bbe0b7e82eebf51bb983f1f968693543cd1d81bade0d59d8b724db092"
+    },
+    "src/SaveService.h": {
+      "beforeCleanGate": null,
+      "final": "374943f9607e5d2f17043a78966c7de78fba0f377af617ebcb8a6505d18c90d2"
+    },
+    "tests/SaveApplicationTests.cpp": {
+      "beforeCleanGate": null,
+      "final": "e34df81d445ec72b4b7fc00c6883e3be6612584d619d478f1f1b147e9e5373bf"
+    },
+    "tests/ScalabilityPipelineTests.cpp": {
+      "beforeCleanGate": "cc1cd543ed2c3238e7b17e743dbcfc6c6cb27f8bc12e799b653fd87ef72beafe",
+      "final": "1342ad740e496a60f898ab1d17ff2f2d2c2726a73fe7c152e1e0b1b639ce44b6"
+    }
+  },
+  "deltaNote": "A null beforeCleanGate hash means the path was not covered by the preserved code-only freeze; it does not assert the file was created afterward."
+}

@@ -1,0 +1,56 @@
+A: box resting on a large flat box (30 s after 2 s settle)
+    mu 0.8: drift 0.000000 m (0.0000 mm/s), spin 0.000000 rad, rest gap 0.50000 m, max speed 0.000000 m/s | rotated universe: drift 0.000000 m, spin 0.000000 rad, gap 0.50000 m
+  OK   resting box state stays finite
+  OK   resting box drifts less than 1 mm in 30 s (M29 measured ~5 mm/s)
+  OK   resting box does not develop a spin
+  OK   rest height is the half-height within the penetration slop
+  OK   rotated universe rests identically
+    mu 0.3: drift 0.000000 m (0.0000 mm/s), spin 0.000000 rad, rest gap 0.50000 m, max speed 0.000000 m/s | rotated universe: drift 0.000000 m, spin 0.000000 rad, gap 0.50000 m
+  OK   resting box state stays finite
+  OK   resting box drifts less than 1 mm in 30 s (M29 measured ~5 mm/s)
+  OK   resting box does not develop a spin
+  OK   rest height is the half-height within the penetration slop
+  OK   rotated universe rests identically
+B: five-box stack (20 s after 2 s settle)
+    top drift 0.000000 m, max lateral offset 0.005305 m, max height error 0.01097 m, final max speed 0.000000 m/s | rotated: 0.000000 / 0.005194 / 0.01136 / 0.000000
+  OK   stack stays finite
+  OK   top of the stack drifts less than 2 mm in 20 s
+  OK   stack stays aligned (landing offset < 1 cm)
+  OK   stack does not sink or inflate
+  OK   stack is at rest
+C: sphere resting on a flat box (30 s)
+    drift 0.0000000 m, gap 0.50000 m, speed 0.0000000 m/s, angular 0.0000000 rad/s
+  OK   resting sphere neither rolls (beyond float resolution) nor sinks
+    drift 0.0000000 m, gap 0.50000 m, speed 0.0000000 m/s, angular 0.0000000 rad/s
+  OK   resting sphere neither rolls (beyond float resolution) nor sinks
+D: static and kinetic friction on a 20-degree incline
+    mu 0.8: creep -0.000000 m in 10 s (rotated 0.000000 m); mu 0.1: a = 2.4334 m/s^2 (rotated 2.4334), analytic 2.4334
+  OK   static friction holds a box on a slope below its friction angle (< 2 mm in 10 s)
+  OK   kinetic friction slide acceleration matches g(sin - mu cos) within 5%
+E: box carried by a moving platform (frictionless floor, 5 s)
+    platform travelled 10.000 m, box relative drift 0.000001 m
+  OK   a resting box rides a moving support without slipping
+    platform travelled 42.587 m, box relative drift 0.001467 m
+  OK   a resting box rides a moving support without slipping
+F: restitution of a dropped sphere
+    e 0.0: impact 6.376 m/s, rebound 0.000 m/s (ratio 0.000)
+  OK   zero restitution does not bounce
+    e 0.0: impact 6.377 m/s, rebound 0.000 m/s (ratio 0.000)
+  OK   zero restitution does not bounce
+    e 0.5: impact 6.376 m/s, rebound 3.270 m/s (ratio 0.513)
+  OK   rebound ratio matches restitution
+    e 0.5: impact 6.377 m/s, rebound 3.270 m/s (ratio 0.513)
+  OK   rebound ratio matches restitution
+G: 40-body pile in a static bin: finite, no mechanical-energy gain
+    energy 11776.4 J -> 253.1 J, largest gain over start 0.000 J, largest one-step gain 0.004 J; last step: 159 candidates / 980 possible, 55 colliding pairs, 133 points
+  OK   pile stays finite
+  OK   pile never exceeds its initial mechanical energy
+  OK   pile dissipates energy overall
+    energy 11776.4 J -> 253.7 J, largest gain over start 0.000 J, largest one-step gain 0.007 J; last step: 249 candidates / 980 possible, 56 colliding pairs, 130 points
+  OK   pile stays finite
+  OK   pile never exceeds its initial mechanical energy
+  OK   pile dissipates energy overall
+H: isolated collisions conserve linear momentum
+    9 steps with contact; largest momentum error 0.000003 kg m/s of 9.082
+  OK   contact impulses are equal and opposite
+Rigid contact tests: PASS (0 failures)

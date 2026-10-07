@@ -1,0 +1,3 @@
+M57 material lab procedural textures, environment and static test mesh: original Project Judas content, CC0 1.0.
+Bend bar: original Project Judas M46 asset; see models/LICENSE.txt.
+DejaVu font license: see fonts/LICENSE.txt.

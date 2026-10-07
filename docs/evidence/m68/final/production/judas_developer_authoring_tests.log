@@ -1,0 +1,21 @@
+PASS named menu through normal serializer
+PASS normal UI loader round-trip
+PASS invalid vector rejected without crash
+PASS cycle rejected by ordinary UI validator
+PASS named input uses normal map serializer
+PASS input normal parser round-trip
+PASS invalid binding rejected by normal map validation
+PASS named scene applies actual property records
+PASS scene normal loader round-trip
+PASS unknown scene property rejected
+PASS canonical scene fields reject non-string authoring values
+PASS ordinary project
+PASS export policy serializer
+PASS export selection normal round-trip
+PASS explicit export excludes unused registered scene
+PASS invalid startup policy rejects package
+PASS audio invalid clip diagnostic
+PASS audio invalid settings diagnostic
+PASS audio missing group diagnostic
+PASS audio capacity diagnostic
+SUMMARY 20 checks 0 failures

@@ -1,0 +1,4 @@
+STEPS 360
+REALTIME
+LOG_EVERY 100000
+SCREENSHOT 359 /home/conner/Documents/GitHub/Project-Judas/.cache/m68-baseline/first-use/ready.png

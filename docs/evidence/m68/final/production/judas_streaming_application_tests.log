@@ -1,0 +1,63 @@
+Renderer fragment texture units: 32 (material path uses 12)
+World state: legacy .judasstate (F6/F7) saves disabled for additive compositions; save slots remain available
+Project: Streamed Spring Range (/home/conner/Documents/GitHub/Project-Judas/projects/streamed_range/streamed_range.judasproj)
+Scene: Streamed Spring Range (/home/conner/Documents/GitHub/Project-Judas/projects/streamed_range/Scenes/bootstrap.judas)
+World origin (m): 0.000, 0.000, 0.000
+PASS normal project manifest service
+PASS pending reads leave the root solid and massless motor proxy live
+PASS root JS and localized UI execute during delayed load
+PASS fixed simulation progresses during worker gate
+PASS carry action against empty space does not disable player callbacks
+PASS additive load preserves played world/root identity
+PASS persistent M58 UI survives activation
+PASS region local hinge IDs bind to ordinary physics
+PASS cross-region route through ordinary explicit link
+PASS streamed target receives real hit-point impulse
+PASS first F9 requests next gallery through real project input
+PASS adjacent scenes with identical IDs stay independent
+PASS region-to-region navigation seam
+PASS travelling navigator adopted by ordinary project JS
+PASS ordinary prefab motor remains root-owned after adoption
+PASS F7 requests liquid through real project input
+PASS required liquid resources ready at activation
+STATE gallery-0 active 
+STATE gallery-1 active 
+STATE gallery-2 unloaded 
+STATE gallery-3 unloaded 
+STATE gallery-4 unloaded 
+STATE gallery-5 unloaded 
+STATE liquid active 
+STATE oblique unloaded 
+PASS real CharacterMotor navigator crosses additive seam through normal scripted link
+PASS conserved liquid region remains explicitly pinned
+PASS pin/release does not recreate initial liquid
+PASS project player/targets/navigator/residency scripts remain healthy
+PLAYER_SHOT {"yaw":0.1701,"pitch":-0.0042,"third":false,"score":100,"shots":1,"hits":1,"unique":1,"lastHit":"4611686018427387905","paused":false,"weaponCooldown":0,"round":{"score":100,"shots":1,"hits":1,"unique":1,"elapsed":5.933333642780781,"message":"+100 - physical hit!","flash":0},"residency":{"names":["gallery-0","gallery-1","liquid"],"held":null,"next":2},"scored":true}
+PASS actual logical look/fire scores on a streamed physical target through project JS
+PASS ordinary actual-GL game screenshot
+PASS full authored composition baseline finishes asynchronously
+PASS streamed physical prop available for actual carry control
+PASS Q raycast picks/adopts physical prop using public viewRay property
+PASS carry branch leaves player callbacks active
+PASS F10 releases every manual demand through project input
+PASS F10 preserves safety-pinned conserved liquid
+PASS carried prop responds to ordinary finite forces
+PASS movement still responds after carry action
+PASS Q release and function keys keep demo fault-free
+PASS whole replacement occurs with an actual read outstanding
+PASS session locale switch queues through ordinary M58 service
+PASS whole-world reload remains available
+PASS whole replacement invalidates old request token
+PASS composed disk saves remain disabled after whole reload
+PASS old-world held worker observes cancellation
+PASS old region handles do not resurrect
+PASS bounded session state survives whole replacement
+PASS fresh world UI constructed after reload
+PASS reload cleanup/start has no script faults
+PASS normal bounded worker pool
+PASS locale survives additive activation and whole-world replacement
+PASS reload cleanup/start has no script faults
+PASS normal bounded worker pool
+PASS locale survives additive activation and whole-world replacement
+PASS normal standalone application exits
+M59 application 48 checks 0 failures

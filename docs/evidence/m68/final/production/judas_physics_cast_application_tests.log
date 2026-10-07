@@ -1,0 +1,14 @@
+Renderer fragment texture units: 32 (material path uses 12)
+World state: /home/conner/Documents/GitHub/Project-Judas/docs/evidence/m68/final/fixture-details/judas_physics_cast_application_tests/project/Saves/main.judasstate (none saved)
+Project: Runtime geometric queries (/home/conner/Documents/GitHub/Project-Judas/docs/evidence/m68/final/fixture-details/judas_physics_cast_application_tests/project/query_demo.judasproj)
+Scene: M44 geometric queries — G ray/sphere / P spawn (/home/conner/Documents/GitHub/Project-Judas/docs/evidence/m68/final/fixture-details/judas_physics_cast_application_tests/project/Scenes/main.judas)
+World origin (m): 0.000, 0.000, 0.000
+PASS actual JS cast callbacks have no faults
+PASS JS checks ray/shape hits, filtering, prefab, read-only and safe destroyed wrapper
+PASS normal active-camera snapshot drives authored query HUD
+PASS project spawn binding loaded
+PASS physical P activates demo prefab spawn
+PASS physical Escape displays authored pause panel
+PASS physical Escape resumes demo
+PASS normal Application startup, rendering and shutdown
+SUMMARY 8 checks 0 failures

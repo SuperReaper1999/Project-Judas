@@ -1,0 +1,16 @@
+{
+  "assetId": "d15b628722311f90a9146c4d51e12ce2",
+  "decodedProducts": 0,
+  "diagnostics": [],
+  "error": "",
+  "hierarchyNodes": 72,
+  "output": "/home/conner/Documents/GitHub/Project-Judas/.cache/m68-final-captures/owned/import/Assets/models/skate_original.judasmodel",
+  "paletteEntries": 109,
+  "parts": 6,
+  "receiptHit": true,
+  "sourceBones": 65,
+  "sourceUnitMeters": 0.01,
+  "success": true,
+  "unchanged": true,
+  "vertices": 150561
+}

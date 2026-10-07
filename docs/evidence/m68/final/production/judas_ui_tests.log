@@ -1,0 +1,64 @@
+Section A: UIStack push/pop/clear
+  OK   a fresh stack reports closed
+  OK   a fresh stack has no top screen
+  OK   pushing one screen opens the stack
+  OK   top is the just-pushed screen
+  OK   pushing a second screen makes IT the top
+  OK   popping returns to the previous screen
+  OK   still open with one screen remaining
+  OK   popping the last screen closes the stack
+  OK   Clear() closes the stack regardless of depth
+  OK   popping an already-empty stack is a harmless no-op
+Section B: UIMenuScreen layout, focus navigation, hit-testing
+  OK   focus starts on the first button
+  OK   MoveFocus(+1) advances focus to the next button
+  OK   focus wraps from the last button back to the first
+  OK   focus wraps backward from the first button to the last
+  OK   Layout at multiple window sizes runs without crashing/degenerating
+  OK   a click outside every button reports a miss
+  OK   a missed click activates nothing
+Section C: PauseMenu open/nested/back/resume flow
+  OK   menu starts closed (gameplay owns input)
+  OK   HandleBackRequest opens the menu from closed
+  OK   menu is still open on the nested screen
+  OK   back from the nested screen returns to the root, doesn't close the menu
+  OK   back from the pause root closes the menu (resume)
+  OK   reset restores clean Play menu state
+  OK   Options callback belongs to the reset live menu
+  OK   Quit callback belongs to the reset live menu
+  OK   reset restores clean Play menu state
+  OK   Options callback belongs to the reset live menu
+  OK   Quit callback belongs to the reset live menu
+  OK   reset restores clean Play menu state
+  OK   Options callback belongs to the reset live menu
+  OK   Quit callback belongs to the reset live menu
+Section D: Resume closes the menu even from a nested screen
+  OK   on the nested screen before testing Resume's own reach
+  OK   activating Resume closes the menu entirely
+Section E: Quit sets a flag Application polls, doesn't act itself
+  OK   quit not requested initially
+  OK   activating Quit sets the flag
+Section F: the options screen's HUD-visibility toggle
+  OK   HUD starts visible
+  OK   activating the toggle once hides the HUD
+  OK   activating it again shows the HUD
+  OK   HUD visibility persists after backing out of the options screen
+  OK   HUD visibility persists after the whole menu closes
+Section G: input-ownership boundary tracks menu open/closed state
+  OK   gameplay owns input before any pause request
+  OK   gameplay input suppressed the instant the menu opens
+  OK   gameplay input restored the instant the menu closes (resume)
+Section H: HUDViewData holds exactly the live values it's given
+  OK   grounded round-trips
+  OK   gravityMagnitude round-trips
+  OK   controllingSpacecraft round-trips
+  OK   pilotAttached round-trips
+  OK   spacecraftSasEnabled round-trips
+  OK   spacecraftLinearSpeed round-trips
+  OK   celestialReferenceAvailable round-trips
+  OK   celestialBodyWorldSpeed round-trips
+  OK   spacecraftRelativeCelestialSpeed round-trips
+  OK   pilotWorldSpeed round-trips
+  OK   pilotRelativeSpacecraftSpeed round-trips
+
+ALL TESTS PASSED

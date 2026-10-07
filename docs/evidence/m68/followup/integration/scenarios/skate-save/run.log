@@ -1,0 +1,151 @@
+JS: SKATER start rails=8 autopilot=false
+JS: STREAM t=0.10 street-0 - -> unloaded entities=0 prepMs=0.00 integMs=0.00 largestUnitMs=0.00 skater=(0.00,3.27,23.50) v=0.1
+JS: STREAM t=0.10 street-1 - -> unloaded entities=0 prepMs=0.00 integMs=0.00 largestUnitMs=0.00 skater=(0.00,3.27,23.50) v=0.1
+JS: STREAM t=0.10 street-2 - -> unloaded entities=0 prepMs=0.00 integMs=0.00 largestUnitMs=0.00 skater=(0.00,3.27,23.50) v=0.1
+JS: STREAM t=0.10 street-3 - -> unloaded entities=0 prepMs=0.00 integMs=0.00 largestUnitMs=0.00 skater=(0.00,3.27,23.50) v=0.1
+JS: STREAM t=0.10 street-4 - -> unloaded entities=0 prepMs=0.00 integMs=0.00 largestUnitMs=0.00 skater=(0.00,3.27,23.50) v=0.1
+JS: STREAM t=0.20 street-0 unloaded -> prepared entities=11 prepMs=1.93 integMs=0.00 largestUnitMs=0.00 skater=(0.00,3.28,23.50) v=0.0
+JS: STREAM t=0.60 street-0 prepared -> installing entities=11 prepMs=1.93 integMs=0.09 largestUnitMs=0.02 skater=(0.00,3.28,23.50) v=0.0
+JS: STREAM t=0.70 street-0 installing -> active entities=11 prepMs=1.93 integMs=0.38 largestUnitMs=0.07 skater=(0.00,3.28,23.50) v=0.0
+JS: SAVES save queued
+JS: SAVES save queued
+JS: SAVES save queued
+JS: SAVES save queued
+JS: SAVES save queued
+JS: SAVES save queued
+JS: SAVES save queued
+JS: SAVES save queued
+JS: SAVES save queued
+JS: SAVES save queued
+JS: SAVES save queued
+JS: SAVES save queued
+JS: SAVES save queued
+JS: SAVES save queued
+JS: SAVES save queued
+JS: SAVES save queued
+JS: SAVES save queued
+JS: SAVES save queued
+JS: SAVES save queued
+JS: SAVES save queued
+JS: SAVES save queued
+JS: SAVES save queued
+JS: SAVES save queued
+JS: SAVES save queued
+JS: SAVES save queued
+JS: SAVES save queued
+JS: SAVES save queued
+JS: SAVES save queued
+JS: SAVES save queued
+JS: SAVES save queued
+JS: SAVES save queued
+JS: SAVES save queued
+JS: SAVES save queued
+JS: SAVES save queued
+JS: SAVES save queued
+JS: SAVES save queued
+JS: SAVES save queued
+JS: SAVES save queued
+JS: SAVES save queued
+JS: SAVES save queued
+JS: SAVES save queued
+JS: SAVES save queued
+JS: SAVES save queued
+JS: SAVES save queued
+JS: SAVES save queued
+JS: SAVES save queued
+JS: SAVES save queued
+JS: SAVES save queued
+JS: SAVES save queued
+JS: SAVES save queued
+JS: SAVES save queued
+JS: SAVES save queued
+JS: SAVES save queued
+JS: SAVES save queued
+JS: SAVES save queued
+JS: SAVES save queued
+JS: SAVES save queued
+JS: SAVES save queued
+JS: SAVES save queued
+JS: SAVES save queued
+JS: SAVES save queued
+JS: SAVES save queued
+JS: SAVES save queued
+JS: SAVES save queued
+JS: SAVES save queued
+JS: SAVES save queued
+JS: SAVES save queued
+JS: SAVES save queued
+JS: SAVES save queued
+JS: SAVES save queued
+JS: SAVES save queued
+JS: SAVES save queued
+JS: SAVES save queued
+JS: SAVES save queued
+JS: SAVES save queued
+JS: SAVES save queued
+JS: SAVES save queued
+JS: SAVES save queued
+JS: SAVES save queued
+JS: SAVES save queued
+JS: SAVES save queued
+JS: SAVES save queued
+JS: SAVES save queued
+JS: SAVES save queued
+JS: SAVES save writing
+JS: SAVES save writing
+JS: SAVES save completed
+JS: SAVES load queued
+JS: SAVES load queued
+JS: SAVES load queued
+JS: SAVES load queued
+JS: SAVES load queued
+JS: SAVES load queued
+JS: SAVES load queued
+JS: SAVES load queued
+JS: SAVES load queued
+JS: SAVES load queued
+JS: SAVES load queued
+JS: SAVES load queued
+JS: SAVES load queued
+JS: SAVES load queued
+JS: SAVES load queued
+JS: SAVES load queued
+JS: SAVES load queued
+JS: SAVES load queued
+JS: SAVES load queued
+JS: SAVES load queued
+JS: SAVES load queued
+JS: SAVES load queued
+JS: SAVES load queued
+JS: SAVES load queued
+JS: SAVES load queued
+JS: SAVES load queued
+JS: SAVES load queued
+JS: SAVES load queued
+JS: SAVES load queued
+JS: SAVES load queued
+JS: SAVES load queued
+JS: SAVES load queued
+JS: SAVES load queued
+JS: SAVES load queued
+JS: SAVES load queued
+JS: SAVES load queued
+JS: SAVES load queued
+JS: SAVES load queued
+JS: SAVES load queued
+JS: SAVES load queued
+JS: SAVES load queued
+JS: SAVES load reading
+JS: SKATER restore score=0 time=176.7 rails=10 p=(0.00,1.82,18.46) v=(0.00,-2.64,-5.41)
+JS: STREAM t=0.10 street-0 - -> active entities=11 prepMs=0.00 integMs=0.00 largestUnitMs=0.00 skater=(0.00,1.59,17.99) v=6.4
+JS: STREAM t=0.10 street-1 - -> unloaded entities=0 prepMs=0.00 integMs=0.00 largestUnitMs=0.00 skater=(0.00,1.59,17.99) v=6.4
+JS: STREAM t=0.10 street-2 - -> unloaded entities=0 prepMs=0.00 integMs=0.00 largestUnitMs=0.00 skater=(0.00,1.59,17.99) v=6.4
+JS: STREAM t=0.10 street-3 - -> unloaded entities=0 prepMs=0.00 integMs=0.00 largestUnitMs=0.00 skater=(0.00,1.59,17.99) v=6.4
+JS: STREAM t=0.10 street-4 - -> unloaded entities=0 prepMs=0.00 integMs=0.00 largestUnitMs=0.00 skater=(0.00,1.59,17.99) v=6.4
+Consumer observation frames=480 scriptErrors=0
+Renderer fragment texture units: 32 (material path uses 12)
+World state: legacy .judasstate (F6/F7) saves disabled for additive compositions; save slots remain available
+Project: Judas Three Games (/tmp/judas-post-m65-_9vgnz03/project/post_m65_consumers.judasproj)
+Scene: Judas Skate Park (/tmp/judas-post-m65-_9vgnz03/project/Scenes/skate/park.judas)
+World origin (m): 0.000, 0.000, 0.000
+asset 97c3acdb99c5ffefb002c03ecec7a8ed: Optional extension ignored: KHR_materials_specular

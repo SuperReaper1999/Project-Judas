@@ -1,0 +1,46 @@
+[
+  {
+    "label": "baseline",
+    "repeat": 0,
+    "exit": 0,
+    "wallMs": 53259.39291699615,
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/m68-baseline/bin/judas_world_authoring_performance",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/m68-authoring-large/baseline-0"
+    ],
+    "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/m68-authoring-large/owned"
+  },
+  {
+    "label": "baseline",
+    "repeat": 1,
+    "exit": 0,
+    "wallMs": 52806.66985299467,
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/m68-baseline/bin/judas_world_authoring_performance",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/m68-authoring-large/baseline-1"
+    ],
+    "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/m68-authoring-large/owned"
+  },
+  {
+    "label": "final",
+    "repeat": 0,
+    "exit": 0,
+    "wallMs": 44560.37648000347,
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_world_authoring_performance",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/m68-authoring-large/final-0"
+    ],
+    "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/m68-authoring-large/owned"
+  },
+  {
+    "label": "final",
+    "repeat": 1,
+    "exit": 0,
+    "wallMs": 43959.212535002735,
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_world_authoring_performance",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/m68-authoring-large/final-1"
+    ],
+    "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/m68-authoring-large/owned"
+  }
+]

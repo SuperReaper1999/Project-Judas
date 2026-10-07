@@ -1,0 +1,22 @@
+particle_mass=100 body_mass=1 common_boost=0 rotation_angle=0 dt=0.01666666753590107 initial_energy=50 final_energy=49.504952877759933 energy_change=-0.49504712224006653 initial_momentum=100,0,0 final_momentum=100,0,0 momentum_residual=0 body_v=0.99009901285171509,0,0 body_w=0,0,0 particle_v=0.99009901285171509,0,0 contained_impulse=0.99009901285171509,0,0
+ORACLE common_speed=0.99009900990099009 expected_energy=49.504950495049499 mechanics=1
+CHECK no_unexplained_energy_creation=1 momentum_closed=1
+particle_mass=100 body_mass=1 common_boost=0 rotation_angle=0.90999996662139893 dt=0.01666666753590107 initial_energy=50 final_energy=49.504952847957625 energy_change=-0.49504715204237471 initial_momentum=64.133537292480469,57.783203125,50.477630615234375 final_momentum=64.133537292480469,57.783203125,50.477630615234375 momentum_residual=0 body_v=0.63498532772064209,0.57211101055145264,0.49977859854698181 body_w=-4.9454673245463709e-08,2.1802688365823997e-07,-1.8895613607128325e-07 particle_v=0.63498550653457642,0.57211095094680786,0.49977850914001465 contained_impulse=0.63498538732528687,0.57211101055145264,0.49977859854698181
+ORACLE common_speed=0.99009900990099009 expected_energy=49.504950495049499 mechanics=1
+CHECK no_unexplained_energy_creation=1 momentum_closed=1
+particle_mass=100 body_mass=80 common_boost=0 rotation_angle=0 dt=0.01666666753590107 initial_energy=50 final_energy=27.777777433395386 energy_change=-22.222222566604614 initial_momentum=100,0,0 final_momentum=100,0,0 momentum_residual=0 body_v=0.55555558204650879,0,0 body_w=0,0,0 particle_v=0.55555552244186401,0,0 contained_impulse=44.444446563720703,0,0
+ORACLE common_speed=0.55555555555555558 expected_energy=27.777777777777782 mechanics=1
+CHECK no_unexplained_energy_creation=1 momentum_closed=1
+particle_mass=100 body_mass=80 common_boost=0 rotation_angle=0.90999996662139893 dt=0.01666666753590107 initial_energy=50 final_energy=27.777778387070061 energy_change=-22.222221612929939 initial_momentum=64.133537292480469,57.783203125,50.477630615234375 final_momentum=64.133537292480469,57.783203125,50.477630615234375 momentum_residual=0 body_v=0.35629734396934509,0.32101786136627197,0.2804313600063324 body_w=-2.7012125869418924e-08,1.2239651425716147e-07,-1.0499341129843742e-07 particle_v=0.35629749298095703,0.32101777195930481,0.28043121099472046 contained_impulse=28.503787994384766,25.681428909301758,22.434507369995117
+ORACLE common_speed=0.55555555555555558 expected_energy=27.777777777777782 mechanics=1
+CHECK no_unexplained_energy_creation=1 momentum_closed=1
+particle_mass=100 body_mass=1000 common_boost=0 rotation_angle=0 dt=0.01666666753590107 initial_energy=50 final_energy=4.5454548906442369 energy_change=-45.454545109355763 initial_momentum=100,0,0 final_momentum=100,0,0 momentum_residual=0 body_v=0.090909093618392944,0,0 body_w=0,0,0 particle_v=0.090909123420715332,0,0 contained_impulse=90.909088134765625,0,0
+ORACLE common_speed=0.090909090909090912 expected_energy=4.5454545454545459 mechanics=1
+CHECK no_unexplained_energy_creation=1 momentum_closed=1
+particle_mass=100 body_mass=1000 common_boost=0 rotation_angle=0.90999996662139893 dt=0.01666666753590107 initial_energy=50 final_energy=4.5454550880847142 energy_change=-45.454544911915285 initial_momentum=64.133537292480469,57.783203125,50.477630615234375 final_momentum=64.133537292480469,57.783203125,50.477630615234375 momentum_residual=0 body_v=0.058303207159042358,0.052530195564031601,0.045888766646385193 body_w=-4.897384719981801e-09,2.006453847513967e-08,-1.7047048217477823e-08 particle_v=0.058303356170654297,0.052530109882354736,0.045888662338256836 contained_impulse=58.303203582763672,52.530193328857422,45.888763427734375
+ORACLE common_speed=0.090909090909090912 expected_energy=4.5454545454545459 mechanics=1
+CHECK no_unexplained_energy_creation=1 momentum_closed=1
+particle_mass=100 body_mass=80 common_boost=3 rotation_angle=0 dt=0.01666666753590107 initial_energy=1160 final_energy=1137.7777709960938 energy_change=-22.22222900390625 initial_momentum=640,0,0 final_momentum=640,0,0 momentum_residual=0 body_v=3.5555555820465088,0,0 body_w=0,0,0 particle_v=3.5555555820465088,0,0 contained_impulse=44.444442749023438,0,0
+ORACLE common_speed=3.5555555555555554 expected_energy=1137.7777777777778 mechanics=1
+CHECK no_unexplained_energy_creation=1 momentum_closed=1
+SUMMARY cases=7 failures=0

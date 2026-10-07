@@ -28,3 +28,9 @@ bool ValidPhysicalMaterial(const PhysicalMaterial& m,std::string& error){if(!std
 std::string SerializePhysicalMaterial(const PhysicalMaterial& m){std::ostringstream s;s<<std::setprecision(9)<<"JudasPhysicalMaterial 1\nfriction "<<m.friction<<"\nrestitution "<<m.restitution<<'\n';return s.str();}
 bool ParsePhysicalMaterial(const std::string& text,PhysicalMaterial& out,std::string& error){std::istringstream s(text);std::string k;int v;PhysicalMaterial m;bool f=false,r=false;if(!(s>>k>>v)||k!="JudasPhysicalMaterial"||v!=1){error="expected JudasPhysicalMaterial 1";return false;}while(s>>k){if(k=="friction"&&!f){s>>m.friction;f=true;}else if(k=="restitution"&&!r){s>>m.restitution;r=true;}else{error="unknown/duplicate physical material field "+k;return false;}if(!s){error="invalid physical material "+k;return false;}}if(!f||!r){error="physical material requires friction and restitution";return false;}if(!ValidPhysicalMaterial(m,error))return false;out=m;return true;}
 bool LoadPhysicalMaterial(const std::string& path,PhysicalMaterial& m,std::string& error){std::ifstream f(path);if(!f){error="cannot read physical material "+path;return false;}std::ostringstream text;text<<f.rdbuf();return ParsePhysicalMaterial(text.str(),m,error);}
+
+MaterialDefinition MaterialSettings(const MaterialDefinition& d){
+ MaterialDefinition m;m.model=d.model;m.alpha=d.alpha;m.baseColor=d.baseColor;m.metallic=d.metallic;m.roughness=d.roughness;m.emissive=d.emissive;m.emissiveIntensity=d.emissiveIntensity;m.normalStrength=d.normalStrength;m.occlusionStrength=d.occlusionStrength;m.alphaCutoff=d.alphaCutoff;m.doubleSided=d.doubleSided;m.flipV=d.flipV;m.uvScale=d.uvScale;m.uvOffset=d.uvOffset;
+ for(size_t i=0;i<m.maps.size();++i){auto& a=m.maps[i];auto& b=d.maps[i];a.asset=b.asset;a.sampler=b.sampler;a.uvSet=b.uvSet;a.scale=b.scale;a.offset=b.offset;a.rotation=b.rotation;}
+ return m;
+}

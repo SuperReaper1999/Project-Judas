@@ -1,0 +1,121 @@
+Section A: project file format
+  OK   serialized project starts with the format identifier and version
+  OK   serialized project parses: 
+  OK   parse round-trips every field, including an escaped quote
+  OK   serialize -> parse -> serialize is byte-identical
+  OK   an unknown version fails ()
+  OK   a missing header fails ()
+  OK   a missing required key fails ()
+  OK   a duplicate key fails ()
+  OK   an unknown key fails ()
+  OK   an absolute directory fails ()
+  OK   a startup scene outside the project fails ()
+  OK   CreateNew creates a project: 
+  OK   CreateNew wrote the project file and the Assets/Scenes/Saves directories
+  OK   the project file is named after the project
+  OK   same-name projects get distinct durable save namespaces
+  OK   a directory holding a project refuses a second one
+  OK   a created project loads back with the same root
+  OK   FindProjectFileFor walks up from a nested scene path to the project file
+  OK   FindProjectFileFor finds nothing above the project
+  OK   Resolve joins onto the project root
+  OK   MakeRelative strips the project root
+  OK   world-state deltas live in the project's saves directory by scene stem
+  OK   Save writes the startup scene setting
+Section B: stable asset identity through import, rename and move
+  OK   asset ids are 32 lowercase hex digits
+  OK   minted ids are valid and distinct
+  OK   asset types follow the engine's loadable extensions
+  OK   temporary project created
+  OK   an empty assets directory scans clean
+  OK   importing a valid .obj succeeds: 
+  OK   the imported mesh has a valid id, the mesh type and the destination path
+  OK   the file and its sidecar were written
+  OK   importing a texture with an empty destination keeps its file name
+  OK   an unsupported extension is refused: 
+  OK   an undecodable mesh is refused and leaves nothing behind: unsupported asset type '.md' (supported: .obj, .png/.jpg/.bmp/.tga, .ttf, .wav/.mp3/.flac)
+  OK   importing onto an existing destination is refused
+  OK   the scene file carries the asset id and no file name
+  OK   renaming and moving the mesh succeeds: destination already exists: /tmp/judas_asset_identity_981414/game/Assets/models/lighthouse.obj
+  OK   file and sidecar moved together
+  OK   a move may not change the extension
+  OK   a fresh scan resolves the SAME id at the new path (no filename guessing)
+  OK   the rescanned project has no problems and no untracked files
+  OK   the saved scene's reference resolves to the moved asset
+  OK   a sidecar whose file is gone is reported as missing, not silently dropped
+  OK   a file without a sidecar is listed as untracked
+  OK   Track adopts the file in place with the requested id
+  OK   an id already in use is refused
+  OK   duplicate ids and corrupt sidecars are reported as problems, not guessed around
+  OK   the first holder of a duplicated id stays usable
+Section C: resource manager semantics (headless: every load fails honestly)
+  OK   an unrequested asset is Unloaded
+  OK   without a renderer a request fails with a message and no handle: no renderer (headless)
+  OK   the load attempt counted one miss and one failure
+  OK   a failed asset is remembered: the second request is a hit that returns the same error, no retry
+  OK   Invalidate forgets the failure
+  OK   a request after Invalidate loads again
+  OK   requesting a mesh id as a texture is handled
+  OK   a type mismatch is a Failed state
+  OK   an unknown id fails with a message: no renderer (headless)
+  OK   an empty id is a no-op request, not a failure
+  OK   ReleaseAll leaves nothing loaded
+Section D: the tiny flat game project launches through its startup scene
+  OK   the tiny game project loads: 
+  OK   its startup scene is project data and exists
+  OK   its asset directory scans clean
+  OK   project -> startup scene -> runtime builds and steps: 
+  OK   no planets, policy, vehicle, terrain, fluid or atmosphere: a simple project stays simple
+  OK   ground, three boxes, a door, a lamp and a player start were instantiated
+  OK   after four seconds the boxes rest on the ground at their authored height
+  OK   the player stands on the ground
+  OK   every entity stays Full without a policy (M29 integration)
+Section E: the technology demonstration is an ordinary project
+  OK   judas_tech_demo.judasproj loads: 
+  OK   it points at the existing assets tree and starts on the terrain scene
+  OK   every shipped asset is tracked, none untracked, no problems
+  OK   editor/fallback icon has normal stable project asset identity
+  OK   shipped prefab resolves through ordinary project asset identity
+  OK   shipped audio resolves through ordinary project assets
+  OK   the fixed demo asset ids resolve to their files
+  OK   every mesh/texture reference in the nine shipped scenes resolves by id (10 references)
+  OK   every shipped scene instantiates headlessly
+  OK   the demo's startup scene runs as a project: 
+  OK   and it is the terrain demonstration (terrain + spacecraft)
+Section F: gizmo mathematics and undo/redo participation
+  OK   world-space handles ignore the object's rotation
+  OK   local-space handles follow the object's rotation (local X of a 90-degree yaw is world -Z)
+  OK   scale handles are always the object's local axes
+  OK   a ray at the X handle picks X
+  OK   a ray at the Y handle picks Y
+  OK   a ray far from every handle picks nothing
+  OK   a ray on the Y ring (away from the other rings) picks the Y rotation handle
+  OK   a ray on the X ring picks the X rotation handle
+  OK   a translate drag begins from a ray on the axis
+  OK   dragging 3 m along the X handle moves exactly 3 m along X and nothing else
+  OK   snapping rounds the 2.7 m delta to 2.5 m (0.5 m steps from the start)
+  OK   snap rounds to the nearest step
+  OK   a rotate drag begins from a ray on the Y ring
+  OK   dragging a quarter turn around Y rotates the object's X axis to -Z and leaves the position alone
+  OK   rotation snapping rounds a 14-degree drag to 15 degrees
+  OK   a scale drag begins from a ray on the Y handle
+  OK   dragging half a handle length along Y adds 0.5 to the Y scale only
+  OK   a ten-frame drag lands at 4 m and records one undo step
+  OK   undo restores the pre-drag transform in one step
+  OK   redo reapplies the whole drag
+  OK   a cancelled edit records nothing
+Section G: every authorable component round-trips through save/load unchanged
+  OK   objects carrying every component type serialize
+  OK   and load: 
+  OK   every component's every field survives exactly (what the inspector edits is what the file holds)
+  OK   all twelve component types are present after reload
+  OK   asset references round-trip as ids
+Section H: playing a project scene never writes the authored scene
+  OK   the original authored scene file is readable
+  OK   tiny game scene loads: 
+  OK   it instantiates: 
+  OK   a session begins
+  OK   the runtime body moved
+  OK   the authored scene is byte-identical after play (no delta ever written into it)
+  OK   the scene file on disk is untouched
+Project tests: PASS (0 failures)

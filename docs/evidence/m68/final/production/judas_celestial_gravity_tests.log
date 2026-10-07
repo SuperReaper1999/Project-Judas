@@ -1,0 +1,3 @@
+Rotation errors: position 0.00927825 m, velocity 0.00654223 m/s
+Orbit metrics: radius 29.82561..30.17765 m, period 8.95000 s (analytic 8.93602 s), max momentum error 0, barycentre drift 0.000209808 m, energy 0.000134, angular momentum 1.04e-05; half-step energy 4.23e-05
+PASS: celestial gravity force, barycentre, orbit, conservation, perturbation, rotation.

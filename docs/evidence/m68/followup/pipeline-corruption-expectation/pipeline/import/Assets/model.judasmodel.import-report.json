@@ -1,0 +1,64 @@
+{
+  "assetId": "b5b73ac4d3973e0526b0afb11364a246",
+  "clips": [
+    {
+      "duration": 1.0,
+      "loop": false,
+      "motionExtracted": false,
+      "name": "Translate"
+    }
+  ],
+  "diagnostics": [],
+  "hierarchyNodes": 9,
+  "importRecord": "{\"digest\":\"82694f6cc72bb83be88679aaa36b1983855e230f1a1ba33ef0acad1a3d2f7b74\",\"inputs\":{\"Sources/b5b73ac4d3973e0526b0afb11364a246/café color.png\":\"2640059609118b695c139804676372eca75c30d30e5906775902d13e44f5356c\",\"Sources/b5b73ac4d3973e0526b0afb11364a246/external.gltf\":\"d51bd2005bbf55cc0f3090c6ee9d0257d31a6c823524f2efbee4a7168e0c70f8\",\"Sources/b5b73ac4d3973e0526b0afb11364a246/geometry.bin\":\"fc2755c39e78066f23cc6d198b3bd9357424523fe2202c596dda90bf80495161\"},\"manifest\":{\"assetId\":\"b5b73ac4d3973e0526b0afb11364a246\",\"clips\":[{\"duration\":1.0,\"loop\":false,\"motionExtracted\":false,\"name\":\"Translate\"}],\"diagnostics\":[],\"hierarchyNodes\":9,\"inputs\":{\"Sources/b5b73ac4d3973e0526b0afb11364a246/café color.png\":\"2640059609118b695c139804676372eca75c30d30e5906775902d13e44f5356c\",\"Sources/b5b73ac4d3973e0526b0afb11364a246/external.gltf\":\"d51bd2005bbf55cc0f3090c6ee9d0257d31a6c823524f2efbee4a7168e0c70f8\",\"Sources/b5b73ac4d3973e0526b0afb11364a246/geometry.bin\":\"fc2755c39e78066f23cc6d198b3bd9357424523fe2202c596dda90bf80495161\"},\"joints\":[\"Shared\",\"Shared/BoneA\",\"Shared/BoneB\",\"SkinA\",\"SkinB\",\"OtherRig\",\"OtherRig/OtherBone\",\"OtherSkin\",\"MirroredAttachment\",\"__JudasMotionRoot\"],\"materialKeys\":[\"Fixture\"],\"parts\":[{\"identity\":\"MirroredAttachment/material/Fixture\",\"node\":8,\"triangles\":1},{\"identity\":\"OtherSkin/material/Fixture\",\"node\":7,\"triangles\":1},{\"identity\":\"SkinA/material/Fixture\",\"node\":3,\"triangles\":1},{\"identity\":\"SkinB/material/Fixture\",\"node\":4,\"triangles\":1}],\"recipeDigest\":\"82694f6cc72bb83be88679aaa36b1983855e230f1a1ba33ef0acad1a3d2f7b74\",\"revision\":\"M66-ufbx-0.23.1-cgltf-1.15-cook-9-model-1\",\"skinPaletteEntries\":6,\"sourceBones\":0,\"sourceUnitMeters\":1.0,\"vertices\":12},\"recipe\":\"Imports/model.judasimport\",\"revision\":\"M66-ufbx-0.23.1-cgltf-1.15-cook-9-model-1\"}",
+  "inputs": {
+    "Sources/b5b73ac4d3973e0526b0afb11364a246/café color.png": "2640059609118b695c139804676372eca75c30d30e5906775902d13e44f5356c",
+    "Sources/b5b73ac4d3973e0526b0afb11364a246/external.gltf": "d51bd2005bbf55cc0f3090c6ee9d0257d31a6c823524f2efbee4a7168e0c70f8",
+    "Sources/b5b73ac4d3973e0526b0afb11364a246/geometry.bin": "fc2755c39e78066f23cc6d198b3bd9357424523fe2202c596dda90bf80495161"
+  },
+  "joints": [
+    "Shared",
+    "Shared/BoneA",
+    "Shared/BoneB",
+    "SkinA",
+    "SkinB",
+    "OtherRig",
+    "OtherRig/OtherBone",
+    "OtherSkin",
+    "MirroredAttachment",
+    "__JudasMotionRoot"
+  ],
+  "materialKeys": [
+    "Fixture"
+  ],
+  "outputHash": "476f6a7fecba47e1ad57a12d57999a8d695f00f9330390ffbd691e4b22594e4b",
+  "parts": [
+    {
+      "identity": "MirroredAttachment/material/Fixture",
+      "node": 8,
+      "triangles": 1
+    },
+    {
+      "identity": "OtherSkin/material/Fixture",
+      "node": 7,
+      "triangles": 1
+    },
+    {
+      "identity": "SkinA/material/Fixture",
+      "node": 3,
+      "triangles": 1
+    },
+    {
+      "identity": "SkinB/material/Fixture",
+      "node": 4,
+      "triangles": 1
+    }
+  ],
+  "recipeDigest": "82694f6cc72bb83be88679aaa36b1983855e230f1a1ba33ef0acad1a3d2f7b74",
+  "recordHash": "e8b61169bd9883ee38773535cc8b81ebcc82effb7489f456ae3c916811259ed2",
+  "revision": "M66-ufbx-0.23.1-cgltf-1.15-cook-9-model-1",
+  "skinPaletteEntries": 6,
+  "sourceBones": 0,
+  "sourceUnitMeters": 1.0,
+  "vertices": 12
+}

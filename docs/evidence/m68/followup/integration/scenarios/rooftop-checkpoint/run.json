@@ -1,0 +1,119 @@
+{
+  "exit_code": 0,
+  "frames": 140,
+  "runtime_sha256": "04dc060d569d50d8f0bd8eb4829802daeeafbe108ca8c6e3d588491d21f9beae",
+  "observer_sha256": "ff7b1693efeface6a3ae0a4d660dd779b84eddc10110e3863a4cfddef0035d49",
+  "temporary_scene_sha256": "40f93ee17a9c208dceb62e1c99d8d5f7bf0f8f74abb853f277084ef4feef69f5",
+  "last_observation": {
+    "frame": 140,
+    "scene": "Scenes/rooftop/rooftops.judas",
+    "paused": false,
+    "bodies": 67,
+    "dynamic": 0,
+    "sleeping": 0,
+    "audioVoices": 4,
+    "mixedPeak": 0.617276,
+    "contacts": 0,
+    "states": [
+      {
+        "entity": "10",
+        "state": {
+          "yaw": 0,
+          "pitch": 0
+        }
+      },
+      {
+        "entity": "10",
+        "state": {
+          "checkpoint": 1,
+          "elapsed": 1.0500000547617674,
+          "running": true,
+          "finished": false,
+          "falls": 0
+        }
+      },
+      {
+        "entity": "5001",
+        "state": {}
+      },
+      {
+        "entity": "5002",
+        "state": {}
+      },
+      {
+        "entity": "5003",
+        "state": {}
+      },
+      {
+        "entity": "5004",
+        "state": {}
+      },
+      {
+        "entity": "5005",
+        "state": {}
+      },
+      {
+        "entity": "1000000",
+        "state": {}
+      }
+    ],
+    "regions": [
+      {
+        "id": "street-0",
+        "state": "unloaded",
+        "entities": 0,
+        "integrationMs": 0,
+        "largestUnitMs": 0
+      },
+      {
+        "id": "street-1",
+        "state": "unloaded",
+        "entities": 0,
+        "integrationMs": 0,
+        "largestUnitMs": 0
+      },
+      {
+        "id": "street-2",
+        "state": "unloaded",
+        "entities": 0,
+        "integrationMs": 0,
+        "largestUnitMs": 0
+      },
+      {
+        "id": "street-3",
+        "state": "unloaded",
+        "entities": 0,
+        "integrationMs": 0,
+        "largestUnitMs": 0
+      },
+      {
+        "id": "street-4",
+        "state": "unloaded",
+        "entities": 0,
+        "integrationMs": 0,
+        "largestUnitMs": 0
+      }
+    ],
+    "objects": [
+      {
+        "id": "10",
+        "p": [
+          0,
+          20.12,
+          -32.0833
+        ],
+        "supported": true,
+        "v": [
+          0,
+          0,
+          0
+        ],
+        "normal": [
+          0,
+          1,
+          0
+        ]
+      }
+    ]
+  }
+}

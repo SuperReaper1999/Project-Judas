@@ -1,0 +1,10 @@
+{
+  "exit": 0,
+  "seconds": 1.0211824209982296,
+  "command": [
+    "/home/conner/Documents/GitHub/Project-Judas/build/judas_save_application_tests",
+    "/home/conner/Documents/GitHub/Project-Judas/projects/save_lab/save_lab.judasproj",
+    "read",
+    "/home/conner/Documents/GitHub/Project-Judas/.cache/m68-save-application-followup/save"
+  ]
+}

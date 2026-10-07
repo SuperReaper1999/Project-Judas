@@ -1,0 +1,26 @@
+PASS fresh owned output required
+PASS 
+PASS initial validated recipe generation
+PASS 
+PASS unchanged content receipt requires zero product decodes
+PASS editor unchanged preview needs one decode
+PASS corrupt disposable receipt uses validated embedded provenance
+PASS 
+PASS same-mtime content edit invalidates generation
+PASS 
+PASS restored content preserves exact cooked representation
+PASS 
+PASS corrupt base cache reconstructs from author-owned sources
+PASS accepted unchanged generation stages
+PASS 
+PASS post-worker same-mtime edit cannot publish stale generation
+PASS first changed generation staged privately
+PASS newer import wins without older staging overwrite
+PASS GPU settings retain meaning without image payload copies
+PASS 
+PASS 
+PASS 
+PASS 
+PASS 
+PASS 
+FAIL after 26 checks: : filesystem error: cannot rename: No such file or directory [.authoring-stage-0ce758c19a0c18fd25fdef81af874a5f] []

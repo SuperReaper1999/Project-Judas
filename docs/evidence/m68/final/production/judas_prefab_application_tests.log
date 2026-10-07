@@ -1,0 +1,17 @@
+Renderer fragment texture units: 32 (material path uses 12)
+Project: Judas Technology Demonstration (/home/conner/Documents/GitHub/Project-Judas/judas_tech_demo.judasproj)
+Scene: Prefab workshop (assets/scenes/prefab_demo.judas)
+World origin (m): 0.000, 0.000, 0.000
+PASS demo authored scene loads
+PASS demo actual async application
+PASS demo two linked authored instances
+PASS runtime independent root and children created
+PASS runtime hierarchy deletion succeeds
+PASS ordinary physics and renderer remain live
+PASS demo ordinary scene rendering submits draws
+PASS demo ordinary simulation advances
+PASS authored prefab root independent runtime state
+PASS authored prefab root independent runtime state
+PASS runtime does not rewrite authored prefab scene
+PASS demo application startup and shutdown
+SUMMARY 12 checks 0 failures

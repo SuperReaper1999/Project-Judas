@@ -1,0 +1,18 @@
+{
+  "baseline": {
+    "judas_model_runtime_tests": "6d358a274ea472ffc07880db230c396a17f593e310699f3d6e44ac4507a47ac1",
+    "judas_scalability_tests": "7e1b5309d580e3e7310237b5b73e082059ee3d1ff6b9b0b76ab9e2b1ce8b2714",
+    "judas_export": "f70d9672d7c5eb5e0c27369464eb7f00ea47dba1717326331fe635cdc04780bb",
+    "judas": "2240be64e2285af86e3b872a594198e1ceeb088ea21ff7d91d7afc653384f533",
+    "judas_world_authoring_performance": "a757396d6edda57ad90f7230a72473ecc8e2fb60220e5f2d6e612849140b9947",
+    "judas_model_import_cli": "4c0df9e936d579ab6cbcf69b9e475c8d61b75f0659cc35170cfe4ac4d49ebbbf"
+  },
+  "candidate-capture": {
+    "judas_model_runtime_tests": "0ff78774859a1dd431382a068d50bbf4c7e7c32f24b8f4d0ce97121544766e9e",
+    "judas_scalability_tests": "1367dbdf2cd258457963974f15e779908cdfe1a493f3258473d7286be836e8a9",
+    "judas_export": "7abcad494ed0a8230a7968a369fef3efca7632f1a10aa939feda57220a31e70f",
+    "judas": "7073e3898f092e3eb6bb7d47c6bc387708a140b52dd36481cd317f6a1410641d",
+    "judas_world_authoring_performance": "558388876e3695223936f8423ed76a8314cf7ce7b33aee13109c8a7ceb4c2035",
+    "judas_model_import_cli": "d2532d7de9bb3bd8f2323ac962d449b2df1aefe1ef6760c9ffb6de832fa9a598"
+  }
+}

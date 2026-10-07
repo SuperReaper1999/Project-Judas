@@ -1,0 +1,34 @@
+PASS load can start from ordinary boot world
+PASS held UI activation is not reintroduced as a post-load jump edge
+PASS fresh process adopted prop retains qualified origin and root ownership
+PASS game data restored before callbacks
+PASS selected locale restored at publication
+PASS changed nonresident region restored suspended without loading universe
+PASS only saved initial resident subset built
+PASS ordinary revisit requests saved suspended region
+PASS destroyed region target and joint never respawn after process exit
+PASS adopted traveller not duplicated by region revisit
+PASS authored adopted source remains tombstoned
+PASS qualified joint/scripts restore through normal activation
+PASS changed suspended prop restored on revisit
+PASS backtracking retains independent game data
+PASS defeated enemy survives fresh load without gameplay resurrection
+PASS actual score and spawned prefab count survive fresh load
+PASS load/backtrack can save a second independent slot
+REGION gallery-0 active pins=0 
+REGION gallery-1 active pins=0 
+REGION gallery-2 active pins=0 
+REGION gallery-3 active pins=0 
+REGION gallery-4 unloaded pins=0 
+REGION gallery-5 unloaded pins=0 
+REGION liquid active pins=2 
+REGION oblique unloaded pins=0 
+REQUEST queued 
+PASS two committed composed-world slots independent
+PASS fresh standalone streamed process exits cleanly
+SUMMARY read-b checks=19 failures=0 frames=175
+Renderer fragment texture units: 32 (material path uses 12)
+World state: legacy .judasstate (F6/F7) saves disabled for additive compositions; save slots remain available
+Project: Streamed Spring Range (/home/conner/Documents/GitHub/Project-Judas/projects/streamed_range/streamed_range.judasproj)
+Scene: Streamed Spring Range (/home/conner/Documents/GitHub/Project-Judas/projects/streamed_range/Scenes/bootstrap.judas)
+World origin (m): 0.000, 0.000, 0.000

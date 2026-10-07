@@ -1,0 +1,322 @@
+{
+  "runtime-0-0": {
+    "samples": 3,
+    "wallMs": {
+      "median": 223.03114300302695,
+      "maximum": 460.24941799987573,
+      "minimum": 209.52728299744194
+    },
+    "userSeconds": 0.16,
+    "systemSeconds": 0.05,
+    "peakRSSKiB": 182524.0,
+    "exits": [
+      0,
+      0,
+      0
+    ]
+  },
+  "runtime-0-1": {
+    "samples": 3,
+    "wallMs": {
+      "median": 209.47866599453846,
+      "maximum": 222.44457000488183,
+      "minimum": 204.79567800066434
+    },
+    "userSeconds": 0.16,
+    "systemSeconds": 0.05,
+    "peakRSSKiB": 184428.0,
+    "exits": [
+      0,
+      0,
+      0
+    ]
+  },
+  "runtime-0-8": {
+    "samples": 3,
+    "wallMs": {
+      "median": 269.30915499542607,
+      "maximum": 278.52261299995007,
+      "minimum": 266.93144700402627
+    },
+    "userSeconds": 0.22,
+    "systemSeconds": 0.04,
+    "peakRSSKiB": 186348.0,
+    "exits": [
+      0,
+      0,
+      0
+    ]
+  },
+  "runtime-400-0": {
+    "samples": 3,
+    "wallMs": {
+      "median": 215.43093399668578,
+      "maximum": 240.3765929993824,
+      "minimum": 212.9623110013199
+    },
+    "userSeconds": 0.16,
+    "systemSeconds": 0.05,
+    "peakRSSKiB": 186648.0,
+    "exits": [
+      0,
+      0,
+      0
+    ]
+  },
+  "runtime-400-1": {
+    "samples": 3,
+    "wallMs": {
+      "median": 491.79913999978453,
+      "maximum": 504.88658399990527,
+      "minimum": 491.01281199546065
+    },
+    "userSeconds": 0.42,
+    "systemSeconds": 0.07,
+    "peakRSSKiB": 238660.0,
+    "exits": [
+      0,
+      0,
+      0
+    ]
+  },
+  "runtime-400-8": {
+    "samples": 3,
+    "wallMs": {
+      "median": 559.3299890024355,
+      "maximum": 589.1171949988347,
+      "minimum": 557.5012490007794
+    },
+    "userSeconds": 0.49,
+    "systemSeconds": 0.07,
+    "peakRSSKiB": 239100.0,
+    "exits": [
+      0,
+      0,
+      0
+    ]
+  },
+  "runtime-800-0": {
+    "samples": 3,
+    "wallMs": {
+      "median": 246.45791300281417,
+      "maximum": 252.89380900358083,
+      "minimum": 235.0834160024533
+    },
+    "userSeconds": 0.19,
+    "systemSeconds": 0.04,
+    "peakRSSKiB": 190856.0,
+    "exits": [
+      0,
+      0,
+      0
+    ]
+  },
+  "runtime-800-1": {
+    "samples": 3,
+    "wallMs": {
+      "median": 813.024310999026,
+      "maximum": 832.7697510030703,
+      "minimum": 810.0681669966434
+    },
+    "userSeconds": 0.74,
+    "systemSeconds": 0.06,
+    "peakRSSKiB": 243336.0,
+    "exits": [
+      0,
+      0,
+      0
+    ]
+  },
+  "runtime-800-8": {
+    "samples": 3,
+    "wallMs": {
+      "median": 923.1555280057364,
+      "maximum": 955.6609350038343,
+      "minimum": 907.8522290001274
+    },
+    "userSeconds": 0.83,
+    "systemSeconds": 0.07,
+    "peakRSSKiB": 243680.0,
+    "exits": [
+      0,
+      0,
+      0
+    ]
+  },
+  "runtime-6400-0": {
+    "samples": 3,
+    "wallMs": {
+      "median": 2275.1672159938607,
+      "maximum": 2291.7015929997433,
+      "minimum": 2265.8360929999617
+    },
+    "userSeconds": 2.17,
+    "systemSeconds": 0.09,
+    "peakRSSKiB": 254280.0,
+    "exits": [
+      0,
+      0,
+      0
+    ]
+  },
+  "runtime-6400-1": {
+    "samples": 3,
+    "wallMs": {
+      "median": 12126.472977004596,
+      "maximum": 12235.757114001899,
+      "minimum": 11895.826403000683
+    },
+    "userSeconds": 12.0,
+    "systemSeconds": 0.12,
+    "peakRSSKiB": 311548.0,
+    "exits": [
+      0,
+      0,
+      0
+    ]
+  },
+  "runtime-6400-8": {
+    "samples": 3,
+    "wallMs": {
+      "median": 12301.187817000027,
+      "maximum": 12722.61011700175,
+      "minimum": 12249.430042997119
+    },
+    "userSeconds": 12.15,
+    "systemSeconds": 0.14,
+    "peakRSSKiB": 311944.0,
+    "exits": [
+      0,
+      0,
+      0
+    ]
+  },
+  "import-external-cold": {
+    "samples": 3,
+    "wallMs": {
+      "median": 17.70989299984649,
+      "maximum": 18.80423500551842,
+      "minimum": 17.077379001420923
+    },
+    "userSeconds": 0.0,
+    "systemSeconds": 0.0,
+    "peakRSSKiB": 26940.0,
+    "exits": [
+      0,
+      0,
+      0
+    ]
+  },
+  "import-external-unchanged": {
+    "samples": 3,
+    "wallMs": {
+      "median": 16.323602001648396,
+      "maximum": 16.697295002813917,
+      "minimum": 15.461921997484751
+    },
+    "userSeconds": 0.0,
+    "systemSeconds": 0.0,
+    "peakRSSKiB": 27480.0,
+    "exits": [
+      0,
+      0,
+      0
+    ]
+  },
+  "import-skate_original-cold": {
+    "samples": 3,
+    "wallMs": {
+      "median": 12344.213350006612,
+      "maximum": 12344.627873004356,
+      "minimum": 12251.00919000397
+    },
+    "userSeconds": 10.86,
+    "systemSeconds": 1.37,
+    "peakRSSKiB": 1392260.0,
+    "exits": [
+      2,
+      2,
+      2
+    ]
+  },
+  "import-skate_original-unchanged": {
+    "samples": 3,
+    "wallMs": {
+      "median": 6382.637714996235,
+      "maximum": 6396.065296001325,
+      "minimum": 6382.249163994857
+    },
+    "userSeconds": 5.54,
+    "systemSeconds": 0.82,
+    "peakRSSKiB": 857604.0,
+    "exits": [
+      0,
+      0,
+      0
+    ]
+  },
+  "authoring": {
+    "samples": 3,
+    "wallMs": {
+      "median": 6732.890849001706,
+      "maximum": 6929.3616249997285,
+      "minimum": 6703.909833006037
+    },
+    "userSeconds": 6.66,
+    "systemSeconds": 0.06,
+    "peakRSSKiB": 58592.0,
+    "exits": [
+      0,
+      0,
+      0
+    ]
+  },
+  "export-small": {
+    "samples": 3,
+    "wallMs": {
+      "median": 55.03031700209249,
+      "maximum": 63.633892001234926,
+      "minimum": 52.31491599988658
+    },
+    "userSeconds": 0.02,
+    "systemSeconds": 0.02,
+    "peakRSSKiB": 17036.0,
+    "exits": [
+      0,
+      0,
+      0
+    ]
+  },
+  "export-workshop": {
+    "samples": 3,
+    "wallMs": {
+      "median": 111.09652699815342,
+      "maximum": 118.78876500122715,
+      "minimum": 107.84981599863386
+    },
+    "userSeconds": 0.07,
+    "systemSeconds": 0.03,
+    "peakRSSKiB": 22780.0,
+    "exits": [
+      0,
+      0,
+      0
+    ]
+  },
+  "export-professional": {
+    "samples": 3,
+    "wallMs": {
+      "median": 6995.857193003758,
+      "maximum": 7071.797609998612,
+      "minimum": 6802.220941994165
+    },
+    "userSeconds": 5.99,
+    "systemSeconds": 0.9,
+    "peakRSSKiB": 847336.0,
+    "exits": [
+      0,
+      0,
+      0
+    ]
+  }
+}

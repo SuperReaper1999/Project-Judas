@@ -1,0 +1,56 @@
+[  5%] Built target judas_icu_build
+[  5%] Built target judas_quickjs
+[ 11%] Built target judas_app_icon
+[ 29%] Built target freetype
+[ 35%] Built target judas_glad
+[ 35%] Built target judas_navigation_backend
+[ 35%] Built target judas_profiler
+[ 35%] Built target judas_audio_backend
+[ 35%] Built target judas_ufbx
+[ 35%] Built target harfbuzz
+[ 35%] Built target judas_materials
+[ 35%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldFracture.cpp.o
+[ 35%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldDeformables.cpp.o
+[ 35%] Building CXX object CMakeFiles/judas_engine.dir/src/Localization.cpp.o
+[ 35%] Building CXX object CMakeFiles/judas_engine.dir/src/LiquidSystem.cpp.o
+[ 35%] Building CXX object CMakeFiles/judas_engine.dir/src/NavigationSystem.cpp.o
+[ 35%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldAnimation.cpp.o
+[ 35%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldRagdoll.cpp.o
+[ 35%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldCharacter.cpp.o
+[ 35%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldStreaming.cpp.o
+[ 35%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldRegions.cpp.o
+[ 35%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldScripts.cpp.o
+[ 41%] Building CXX object CMakeFiles/judas_engine.dir/src/RuntimeUI.cpp.o
+[ 41%] Building CXX object CMakeFiles/judas_engine.dir/src/ScriptSystem.cpp.o
+[ 41%] Building CXX object CMakeFiles/judas_engine.dir/src/ProjectExporter.cpp.o
+[ 41%] Building CXX object CMakeFiles/judas_engine.dir/src/AssetDependencies.cpp.o
+[ 41%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldAudio.cpp.o
+[ 41%] Building CXX object CMakeFiles/judas_engine.dir/src/Renderer.cpp.o
+[ 47%] Building CXX object CMakeFiles/judas_engine.dir/src/CollisionAuthoring.cpp.o
+[ 47%] Building CXX object CMakeFiles/judas_engine.dir/src/UIWidgets.cpp.o
+[ 47%] Building CXX object CMakeFiles/judas_engine.dir/src/PauseMenu.cpp.o
+[ 47%] Building CXX object CMakeFiles/judas_engine.dir/src/HUD.cpp.o
+[ 47%] Building CXX object CMakeFiles/judas_engine.dir/src/ProductionFluidCoupling.cpp.o
+[ 47%] Building CXX object CMakeFiles/judas_engine.dir/src/Door.cpp.o
+[ 52%] Building CXX object CMakeFiles/judas_engine.dir/src/LightSwitch.cpp.o
+[ 52%] Building CXX object CMakeFiles/judas_engine.dir/src/ResourceManager.cpp.o
+/home/conner/Documents/GitHub/Project-Judas/src/ResourceManager.cpp: In member function ‘ResourceManager::Entry& ResourceManager::Begin(const AssetId&, AssetType, JobPriority)’:
+/home/conner/Documents/GitHub/Project-Judas/src/ResourceManager.cpp:162:10: error: ‘error_code’ is not a member of ‘std’
+  162 |     std::error_code sizeError;auto size=std::filesystem::file_size(path,sizeError);
+      |          ^~~~~~~~~~
+/home/conner/Documents/GitHub/Project-Judas/src/ResourceManager.cpp:14:1: note: ‘std::error_code’ is defined in header ‘<system_error>’; this is probably fixable by adding ‘#include <system_error>’
+   13 | #include "TextureLoader.h"
+  +++ |+#include <system_error>
+   14 | 
+/home/conner/Documents/GitHub/Project-Judas/src/ResourceManager.cpp:162:58: error: ‘file_size’ is not a member of ‘std::filesystem’
+  162 |     std::error_code sizeError;auto size=std::filesystem::file_size(path,sizeError);
+      |                                                          ^~~~~~~~~
+/home/conner/Documents/GitHub/Project-Judas/src/ResourceManager.cpp:162:73: error: ‘sizeError’ was not declared in this scope
+  162 |     std::error_code sizeError;auto size=std::filesystem::file_size(path,sizeError);
+      |                                                                         ^~~~~~~~~
+[ 52%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldDebugView.cpp.o
+gmake[3]: *** [CMakeFiles/judas_engine.dir/build.make:1367: CMakeFiles/judas_engine.dir/src/ResourceManager.cpp.o] Error 1
+gmake[3]: *** Waiting for unfinished jobs....
+gmake[2]: *** [CMakeFiles/Makefile2:959: CMakeFiles/judas_engine.dir/all] Error 2
+gmake[1]: *** [CMakeFiles/Makefile2:7680: CMakeFiles/judas_model_import_cli.dir/rule] Error 2
+gmake: *** [Makefile:2451: judas_model_import_cli] Error 2

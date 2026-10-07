@@ -13,13 +13,32 @@
 #include <thread>
 #include <cstdio>
 #include <algorithm>
-namespace {int checks=0,failures=0;void Check(bool value,const char* text){++checks;failures+=!value;std::printf("%s %s\n",value?"PASS":"FAIL",text);std::fflush(stdout);}void Quit(){SDL_Event e{};e.type=SDL_QUIT;SDL_PushEvent(&e);}}
+namespace {
+// Liquid owners are persisted by stable entity identity, not their transient
+// resource-publication order. Compare every field byte, allowing only that order
+// to differ after a fresh asynchronous reconstruction.
+std::string OrderedLiquidRecords(const std::string& bytes){
+ SaveArchive a(bytes);uint32_t count=0;a(count);a.Require(count<=65536,"liquid owner count");
+ std::map<EntityId,std::string> records;
+ for(uint32_t i=0;i<count;++i){
+  const auto begin=a.position;EntityId id=0;std::string material;double density=0,volume=0;bool enabled=false,equilibrium=false,surface=false;
+  a(id,material,density,enabled,equilibrium,volume,surface);
+  if(surface){std::vector<std::vector<glm::dvec4>> solids;a(solids);uint32_t cells=0,faces=0;a(cells,faces,enabled);a.Require(cells<=65536&&faces<=65536,"liquid topology count");
+   for(uint32_t j=0;j<cells;++j){double v=0,q=0,previous=0;glm::dvec3 velocity{};a(v,q,previous,velocity);}
+   for(uint32_t j=0;j<faces;++j){double discharge=0;a(discharge);}
+  }
+  a.Require(records.emplace(id,bytes.substr(begin,a.position-begin)).second,"duplicate liquid owner");
+ }
+ std::string ordered;for(const auto& [id,record]:records){(void)id;ordered+=record;}
+ return std::to_string(count)+":"+ordered+bytes.substr(a.position);
+}
+int checks=0,failures=0;void Check(bool value,const char* text){++checks;failures+=!value;std::printf("%s %s\n",value?"PASS":"FAIL",text);std::fflush(stdout);}void Quit(){SDL_Event e{};e.type=SDL_QUIT;SDL_PushEvent(&e);}}
 int main(int argc,char** argv){if(argc<4){std::fprintf(stderr,"usage: %s <project.judasproj> <write|read> <output-dir>\n",argv[0]);return 2;}std::string project=argv[1],mode=argv[2],out=argv[3];std::filesystem::create_directories(out);bool reading=mode=="read";unsigned frame=0,phase=0,requestFrame=0,restoredFrame=0;uint64_t rejectedRequest=0;bool frozen=false;RuntimeWorld* initial=nullptr;GameSnapshot expected;std::string error;ApplicationControl control;control.hidden=true;
  control.hostReady=[](EngineHost& host){std::string e;host.GetWindow().SetTestInputMode(true);SDL_GL_SetSwapInterval(0);host.Audio().Init(e,true);};
  control.frameSeconds=[&](float){return frozen?0.f:1.f/60;};
  control.worldReady=[&](EngineHost&,RuntimeWorld& world,InteractivePlay&){initial=&world;};
  control.beforeFrame=[&](EngineHost& host,RuntimeWorld& world,InteractivePlay&){if(requestFrame){if(frame==requestFrame)QueueTestKey(host.GetWindow(),reading?SDL_SCANCODE_F8:SDL_SCANCODE_F5,true);if(frame==requestFrame+1)QueueTestKey(host.GetWindow(),reading?SDL_SCANCODE_F8:SDL_SCANCODE_F5,false);if(!reading&&frame==requestFrame+4)QueueTestKey(host.GetWindow(),SDL_SCANCODE_F5,true);if(!reading&&frame==requestFrame+5)QueueTestKey(host.GetWindow(),SDL_SCANCODE_F5,false);}
-  if(reading&&&world!=initial&&!restoredFrame){restoredFrame=frame;SaveArchive liquid;world.Liquids().Persist(liquid);Check(liquid.bytes==expected.participants.at("liquid").data,"fresh process exact owner/cell/flow/parcel partition before resume");Check(world.RagdollActive(6100),"active articulation reconstructed, no bind-pose reset");Scene saved;WorldPersistence::SceneFrom(expected.participants,saved,error);bool poses=true;for(auto& o:saved.Objects())if(o.body){auto b=world.RuntimeBody(o.id);auto pose=world.Physics().GetTransform(b);poses&=b.IsValid()&&glm::length(pose.position-o.transform.position)<1e-5f;}Check(poses,"fresh process physical world poses match captured boundary");auto* a=world.RuntimeAnimation(6101);Check(a&&a->mixer.Transitioning()&&std::abs(a->mixer.elapsed-.4f)<1e-5f,"in-progress crossfade continues from captured contributor state");Check(world.SceneControl()->Get("labTicks")!="null","bounded game/session state restored before callbacks");Check(world.Physics().AliveBodyCount()==std::size_t(std::count_if(saved.Objects().begin(),saved.Objects().end(),[](const auto& o){return bool(o.body);})+std::count_if(saved.Objects().begin(),saved.Objects().end(),[](const auto& o){return bool(o.characterMotor);})),"mapped rigid bodies and massless motor proxies instantiated exactly once");frozen=true;}
+  if(reading&&&world!=initial&&!restoredFrame){restoredFrame=frame;SaveArchive liquid;world.Liquids().Persist(liquid);Check(OrderedLiquidRecords(liquid.bytes)==OrderedLiquidRecords(expected.participants.at("liquid").data),"fresh process exact owner/cell/flow/parcel partition by stable entity before resume");Check(world.RagdollActive(6100),"active articulation reconstructed, no bind-pose reset");Scene saved;WorldPersistence::SceneFrom(expected.participants,saved,error);bool poses=true;for(auto& o:saved.Objects())if(o.body){auto b=world.RuntimeBody(o.id);auto pose=world.Physics().GetTransform(b);poses&=b.IsValid()&&glm::length(pose.position-o.transform.position)<1e-5f;}Check(poses,"fresh process physical world poses match captured boundary");auto* a=world.RuntimeAnimation(6101);Check(a&&a->mixer.Transitioning()&&std::abs(a->mixer.elapsed-.4f)<1e-5f,"in-progress crossfade continues from captured contributor state");Check(world.SceneControl()->Get("labTicks")!="null","bounded game/session state restored before callbacks");Check(world.Physics().AliveBodyCount()==std::size_t(std::count_if(saved.Objects().begin(),saved.Objects().end(),[](const auto& o){return bool(o.body);})+std::count_if(saved.Objects().begin(),saved.Objects().end(),[](const auto& o){return bool(o.characterMotor);})),"mapped rigid bodies and massless motor proxies instantiated exactly once");frozen=true;}
  };
  control.afterFrame=[&](EngineHost& host,RuntimeWorld& world,InteractivePlay&){++frame;auto* service=world.SceneControl()->Saves(host.Resources());
   if(world.Scripts()&&!world.Scripts()->Diagnostics().empty()){for(auto& d:world.Scripts()->Diagnostics())std::printf("FAULT %s %s\n",d.callback.c_str(),d.message.c_str());Check(false,"ordinary project scripts remain healthy");Quit();return;}

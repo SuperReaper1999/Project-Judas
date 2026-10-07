@@ -1,0 +1,178 @@
+JS: SKATER start rails=8 autopilot=false
+JS: STREAM t=0.00 street-0 - -> unloaded entities=0 prepMs=0.00 integMs=0.00 largestUnitMs=0.00 skater=(36.60,-18.43,-250.00) v=0.0
+JS: STREAM t=0.00 street-1 - -> unloaded entities=0 prepMs=0.00 integMs=0.00 largestUnitMs=0.00 skater=(36.60,-18.43,-250.00) v=0.0
+JS: STREAM t=0.00 street-2 - -> unloaded entities=0 prepMs=0.00 integMs=0.00 largestUnitMs=0.00 skater=(36.60,-18.43,-250.00) v=0.0
+JS: STREAM t=0.00 street-3 - -> unloaded entities=0 prepMs=0.00 integMs=0.00 largestUnitMs=0.00 skater=(36.60,-18.43,-250.00) v=0.0
+JS: STREAM t=0.00 street-4 - -> unloaded entities=0 prepMs=0.00 integMs=0.00 largestUnitMs=0.00 skater=(36.60,-18.43,-250.00) v=0.0
+JS: STREAM t=0.00 street-0 unloaded -> prepared entities=11 prepMs=1.87 integMs=0.00 largestUnitMs=0.00 skater=(36.60,-18.45,-250.00) v=0.2
+JS: STREAM t=0.00 street-1 unloaded -> prepared entities=9 prepMs=1.61 integMs=0.00 largestUnitMs=0.00 skater=(36.60,-18.45,-250.00) v=0.2
+JS: STREAM t=0.00 street-2 unloaded -> prepared entities=9 prepMs=2.31 integMs=0.00 largestUnitMs=0.00 skater=(36.60,-18.45,-250.00) v=0.2
+JS: STREAM t=0.00 street-3 unloaded -> prepared entities=11 prepMs=1.84 integMs=0.00 largestUnitMs=0.00 skater=(36.60,-18.45,-250.00) v=0.2
+JS: STREAM t=0.00 street-0 prepared -> installing entities=11 prepMs=1.87 integMs=0.01 largestUnitMs=0.00 skater=(36.60,-18.51,-250.00) v=0.2
+JS: STREAM t=0.00 street-0 installing -> active entities=11 prepMs=1.87 integMs=0.36 largestUnitMs=0.05 skater=(36.60,-18.53,-250.00) v=0.2
+JS: STREAM t=0.00 street-1 prepared -> installing entities=9 prepMs=1.61 integMs=0.07 largestUnitMs=0.03 skater=(36.60,-18.53,-250.00) v=0.2
+JS: STREAM t=0.00 street-1 installing -> active entities=9 prepMs=1.61 integMs=0.22 largestUnitMs=0.03 skater=(36.60,-18.54,-250.00) v=0.2
+JS: STREAM t=0.00 street-3 prepared -> installing entities=11 prepMs=1.84 integMs=0.17 largestUnitMs=0.04 skater=(36.60,-18.54,-250.00) v=0.2
+JS: STREAM t=0.00 street-3 installing -> active entities=11 prepMs=1.84 integMs=0.28 largestUnitMs=0.04 skater=(36.60,-18.56,-250.00) v=0.2
+JS: TEL t=0.10 mode=ride g=0 p=(36.60,-18.63,-250.00) v=0.82 vy=-0.82 n=(0.00,1.00,0.00) up=(0.00,1.00,0.00) c=0 drop=0.300 E=-182.44 score=0 combo=0
+JS: TEL t=0.20 mode=ride g=0 p=(36.60,-18.77,-250.00) v=1.80 vy=-1.80 n=(0.00,1.00,0.00) up=(0.00,1.00,0.00) c=0 drop=0.300 E=-182.52 score=0 combo=0
+JS: TEL t=0.30 mode=ride g=0 p=(36.60,-19.01,-250.00) v=2.78 vy=-2.78 n=(0.00,1.00,0.00) up=(0.00,1.00,0.00) c=0 drop=0.300 E=-182.60 score=0 combo=0
+JS: TEL t=0.40 mode=ride g=0 p=(36.60,-19.34,-250.00) v=3.76 vy=-3.76 n=(0.00,1.00,0.00) up=(0.00,1.00,0.00) c=0 drop=0.300 E=-182.68 score=0 combo=0
+JS: TEL t=0.50 mode=ride g=0 p=(36.60,-19.78,-250.00) v=4.74 vy=-4.74 n=(0.00,1.00,0.00) up=(0.00,1.00,0.00) c=0 drop=0.300 E=-182.76 score=0 combo=0
+JS: TEL t=0.60 mode=ride g=0 p=(36.60,-20.31,-250.00) v=5.72 vy=-5.72 n=(0.00,1.00,0.00) up=(0.00,1.00,0.00) c=0 drop=0.300 E=-182.84 score=0 combo=0
+JS: TEL t=0.70 mode=ride g=0 p=(36.60,-20.94,-250.00) v=6.70 vy=-6.70 n=(0.00,1.00,0.00) up=(0.00,1.00,0.00) c=0 drop=0.300 E=-182.92 score=0 combo=0
+JS: TEL t=0.80 mode=ride g=0 p=(36.60,-21.66,-250.00) v=7.68 vy=-7.68 n=(0.00,1.00,0.00) up=(0.00,1.00,0.00) c=0 drop=0.300 E=-183.00 score=0 combo=0
+JS: TEL t=0.90 mode=ride g=0 p=(36.60,-22.49,-250.00) v=8.67 vy=-8.67 n=(0.00,1.00,0.00) up=(0.00,1.00,0.00) c=0 drop=0.300 E=-183.08 score=0 combo=0
+JS: POS t=1.00 p=(36.60,-23.41,-250.00) score=0
+JS: TEL t=1.00 mode=ride g=0 p=(36.60,-23.41,-250.00) v=9.65 vy=-9.65 n=(0.00,1.00,0.00) up=(0.00,1.00,0.00) c=0 drop=0.300 E=-183.16 score=0 combo=0
+JS: TEL t=1.10 mode=ride g=0 p=(36.60,-24.44,-250.00) v=10.63 vy=-10.63 n=(0.00,1.00,0.00) up=(0.00,1.00,0.00) c=0 drop=0.300 E=-183.24 score=0 combo=0
+JS: TEL t=1.20 mode=ride g=0 p=(36.60,-25.56,-250.00) v=11.61 vy=-11.61 n=(0.00,1.00,0.00) up=(0.00,1.00,0.00) c=0 drop=0.300 E=-183.32 score=0 combo=0
+JS: TEL t=1.30 mode=ride g=0 p=(36.60,-26.77,-250.00) v=12.59 vy=-12.59 n=(0.00,1.00,0.00) up=(0.00,1.00,0.00) c=0 drop=0.300 E=-183.41 score=0 combo=0
+JS: TEL t=1.40 mode=ride g=0 p=(36.60,-28.09,-250.00) v=13.57 vy=-13.57 n=(0.00,1.00,0.00) up=(0.00,1.00,0.00) c=0 drop=0.300 E=-183.49 score=0 combo=0
+JS: TEL t=1.50 mode=ride g=0 p=(36.60,-29.50,-250.00) v=14.55 vy=-14.55 n=(0.00,1.00,0.00) up=(0.00,1.00,0.00) c=0 drop=0.300 E=-183.57 score=0 combo=0
+JS: TEL t=1.60 mode=ride g=0 p=(36.60,-31.02,-250.00) v=15.53 vy=-15.53 n=(0.00,1.00,0.00) up=(0.00,1.00,0.00) c=0 drop=0.300 E=-183.65 score=0 combo=0
+JS: TEL t=1.70 mode=ride g=0 p=(36.60,-32.63,-250.00) v=16.51 vy=-16.51 n=(0.00,1.00,0.00) up=(0.00,1.00,0.00) c=0 drop=0.300 E=-183.73 score=0 combo=0
+JS: TEL t=1.80 mode=ride g=0 p=(36.60,-34.34,-250.00) v=17.49 vy=-17.49 n=(0.00,1.00,0.00) up=(0.00,1.00,0.00) c=0 drop=0.300 E=-183.81 score=0 combo=0
+JS: TEL t=1.90 mode=ride g=0 p=(36.60,-36.14,-250.00) v=18.48 vy=-18.48 n=(0.00,1.00,0.00) up=(0.00,1.00,0.00) c=0 drop=0.300 E=-183.89 score=0 combo=0
+JS: POS t=2.00 p=(36.60,-38.05,-250.00) score=0
+JS: TEL t=2.00 mode=ride g=0 p=(36.60,-38.05,-250.00) v=19.46 vy=-19.46 n=(0.00,1.00,0.00) up=(0.00,1.00,0.00) c=0 drop=0.300 E=-183.97 score=0 combo=0
+JS: TEL t=2.10 mode=ride g=0 p=(36.60,-40.05,-250.00) v=20.44 vy=-20.44 n=(0.00,1.00,0.00) up=(0.00,1.00,0.00) c=0 drop=0.300 E=-184.05 score=0 combo=0
+JS: TEL t=2.20 mode=ride g=0 p=(36.60,-42.15,-250.00) v=21.42 vy=-21.42 n=(0.00,1.00,0.00) up=(0.00,1.00,0.00) c=0 drop=0.300 E=-184.13 score=0 combo=0
+JS: TEL t=2.30 mode=ride g=0 p=(36.60,-44.35,-250.00) v=22.40 vy=-22.40 n=(0.00,1.00,0.00) up=(0.00,1.00,0.00) c=0 drop=0.300 E=-184.21 score=0 combo=0
+JS: TEL t=2.40 mode=ride g=0 p=(36.60,-46.65,-250.00) v=23.38 vy=-23.38 n=(0.00,1.00,0.00) up=(0.00,1.00,0.00) c=0 drop=0.300 E=-184.29 score=0 combo=0
+JS: TEL t=2.50 mode=ride g=0 p=(36.60,-49.04,-250.00) v=24.36 vy=-24.36 n=(0.00,1.00,0.00) up=(0.00,1.00,0.00) c=0 drop=0.300 E=-184.37 score=0 combo=0
+JS: TEL t=2.60 mode=ride g=0 p=(36.60,-51.54,-250.00) v=25.34 vy=-25.34 n=(0.00,1.00,0.00) up=(0.00,1.00,0.00) c=0 drop=0.300 E=-184.45 score=0 combo=0
+JS: TEL t=2.70 mode=ride g=0 p=(36.60,-54.13,-250.00) v=26.32 vy=-26.32 n=(0.00,1.00,0.00) up=(0.00,1.00,0.00) c=0 drop=0.300 E=-184.53 score=0 combo=0
+JS: TEL t=2.80 mode=ride g=0 p=(36.60,-56.82,-250.00) v=27.30 vy=-27.30 n=(0.00,1.00,0.00) up=(0.00,1.00,0.00) c=0 drop=0.300 E=-184.61 score=0 combo=0
+JS: TEL t=2.90 mode=ride g=0 p=(36.60,-59.60,-250.00) v=28.29 vy=-28.29 n=(0.00,1.00,0.00) up=(0.00,1.00,0.00) c=0 drop=0.300 E=-184.69 score=0 combo=0
+JS: POS t=3.00 p=(36.60,-62.49,-250.00) score=0
+JS: STREAM t=3.00 street-2 prepared -> active entities=9 prepMs=2.31 integMs=0.24 largestUnitMs=0.03 skater=(36.60,-62.49,-250.00) v=29.3
+JS: TEL t=3.00 mode=ride g=0 p=(36.60,-62.49,-250.00) v=29.27 vy=-29.27 n=(0.00,1.00,0.00) up=(0.00,1.00,0.00) c=0 drop=0.300 E=-184.77 score=0 combo=0
+JS: REVIEW backtrack {"x":0,"y":3.28,"z":23}
+JS: TEL t=3.10 mode=ride g=1 p=(0.00,3.28,23.00) v=0.19 vy=0.19 n=(0.00,1.00,0.00) up=(0.00,1.00,0.00) c=4 drop=0.281 E=32.20 score=0 combo=0
+JS: STREAM t=3.20 street-1 active -> unloaded entities=9 prepMs=1.61 integMs=1.19 largestUnitMs=0.36 skater=(0.00,3.28,23.00) v=0.0
+JS: STREAM t=3.20 street-2 active -> unloaded entities=9 prepMs=2.31 integMs=0.83 largestUnitMs=0.35 skater=(0.00,3.28,23.00) v=0.0
+JS: STREAM t=3.20 street-3 active -> unloaded entities=11 prepMs=1.84 integMs=0.94 largestUnitMs=0.38 skater=(0.00,3.28,23.00) v=0.0
+JS: TEL t=3.20 mode=ride g=1 p=(0.00,3.28,23.00) v=0.17 vy=0.17 n=(0.00,1.00,0.00) up=(0.00,1.00,0.00) c=4 drop=0.283 E=32.22 score=0 combo=0
+JS: TEL t=3.30 mode=ride g=1 p=(0.00,3.28,23.00) v=0.17 vy=0.17 n=(0.00,1.00,0.00) up=(0.00,1.00,0.00) c=4 drop=0.283 E=32.22 score=0 combo=0
+JS: TEL t=3.40 mode=ride g=1 p=(0.00,3.28,23.00) v=0.16 vy=0.16 n=(0.00,1.00,0.00) up=(0.00,1.00,0.00) c=4 drop=0.284 E=32.23 score=0 combo=0
+JS: TEL t=3.50 mode=ride g=1 p=(0.00,3.28,23.00) v=0.16 vy=0.16 n=(0.00,1.00,0.00) up=(0.00,1.00,0.00) c=4 drop=0.284 E=32.23 score=0 combo=0
+JS: TEL t=3.60 mode=ride g=1 p=(0.00,3.28,23.00) v=0.16 vy=0.16 n=(0.00,1.00,0.00) up=(0.00,1.00,0.00) c=4 drop=0.284 E=32.23 score=0 combo=0
+JS: TEL t=3.70 mode=ride g=1 p=(0.00,3.28,23.00) v=0.16 vy=0.16 n=(0.00,1.00,0.00) up=(0.00,1.00,0.00) c=4 drop=0.284 E=32.23 score=0 combo=0
+JS: TEL t=3.80 mode=ride g=1 p=(0.00,3.28,23.00) v=0.16 vy=0.16 n=(0.00,1.00,0.00) up=(0.00,1.00,0.00) c=4 drop=0.284 E=32.23 score=0 combo=0
+JS: TEL t=3.90 mode=ride g=1 p=(0.00,3.28,23.00) v=0.16 vy=0.16 n=(0.00,1.00,0.00) up=(0.00,1.00,0.00) c=4 drop=0.284 E=32.23 score=0 combo=0
+JS: POS t=4.00 p=(0.00,3.28,23.00) score=0
+JS: TEL t=4.00 mode=ride g=1 p=(0.00,3.28,23.00) v=0.16 vy=0.16 n=(0.00,1.00,0.00) up=(0.00,1.00,0.00) c=4 drop=0.284 E=32.23 score=0 combo=0
+JS: TEL t=4.10 mode=ride g=1 p=(0.00,3.28,23.00) v=0.16 vy=0.16 n=(0.00,1.00,0.00) up=(0.00,1.00,0.00) c=4 drop=0.284 E=32.23 score=0 combo=0
+JS: TEL t=4.20 mode=ride g=1 p=(0.00,3.28,23.00) v=0.16 vy=0.16 n=(0.00,1.00,0.00) up=(0.00,1.00,0.00) c=4 drop=0.284 E=32.23 score=0 combo=0
+JS: TEL t=4.30 mode=ride g=1 p=(0.00,3.28,23.00) v=0.16 vy=0.16 n=(0.00,1.00,0.00) up=(0.00,1.00,0.00) c=4 drop=0.284 E=32.23 score=0 combo=0
+JS: TEL t=4.40 mode=ride g=1 p=(0.00,3.28,23.00) v=0.16 vy=0.16 n=(0.00,1.00,0.00) up=(0.00,1.00,0.00) c=4 drop=0.284 E=32.23 score=0 combo=0
+JS: TEL t=4.50 mode=ride g=1 p=(0.00,3.28,23.00) v=0.16 vy=0.16 n=(0.00,1.00,0.00) up=(0.00,1.00,0.00) c=4 drop=0.284 E=32.23 score=0 combo=0
+JS: TEL t=4.60 mode=ride g=1 p=(0.00,3.28,23.00) v=0.16 vy=0.16 n=(0.00,1.00,0.00) up=(0.00,1.00,0.00) c=4 drop=0.284 E=32.23 score=0 combo=0
+JS: TEL t=4.70 mode=ride g=1 p=(0.00,3.28,23.00) v=0.16 vy=0.16 n=(0.00,1.00,0.00) up=(0.00,1.00,0.00) c=4 drop=0.284 E=32.23 score=0 combo=0
+JS: TEL t=4.80 mode=ride g=1 p=(0.00,3.28,23.00) v=0.16 vy=0.16 n=(0.00,1.00,0.00) up=(0.00,1.00,0.00) c=4 drop=0.284 E=32.23 score=0 combo=0
+JS: TEL t=4.90 mode=ride g=1 p=(0.00,3.28,23.00) v=0.16 vy=0.16 n=(0.00,1.00,0.00) up=(0.00,1.00,0.00) c=4 drop=0.284 E=32.23 score=0 combo=0
+JS: POS t=5.00 p=(0.00,3.28,23.00) score=0
+JS: TEL t=5.00 mode=ride g=1 p=(0.00,3.28,23.00) v=0.16 vy=0.16 n=(0.00,1.00,0.00) up=(0.00,1.00,0.00) c=4 drop=0.284 E=32.23 score=0 combo=0
+JS: TEL t=5.10 mode=ride g=1 p=(0.00,3.28,23.00) v=0.16 vy=0.16 n=(0.00,1.00,0.00) up=(0.00,1.00,0.00) c=4 drop=0.284 E=32.23 score=0 combo=0
+JS: TEL t=5.20 mode=ride g=1 p=(0.00,3.28,23.00) v=0.16 vy=0.16 n=(0.00,1.00,0.00) up=(0.00,1.00,0.00) c=4 drop=0.284 E=32.23 score=0 combo=0
+JS: TEL t=5.30 mode=ride g=1 p=(0.00,3.28,23.00) v=0.16 vy=0.16 n=(0.00,1.00,0.00) up=(0.00,1.00,0.00) c=4 drop=0.284 E=32.23 score=0 combo=0
+JS: TEL t=5.40 mode=ride g=1 p=(0.00,3.28,23.00) v=0.16 vy=0.16 n=(0.00,1.00,0.00) up=(0.00,1.00,0.00) c=4 drop=0.284 E=32.23 score=0 combo=0
+JS: TEL t=5.50 mode=ride g=1 p=(0.00,3.28,23.00) v=0.16 vy=0.16 n=(0.00,1.00,0.00) up=(0.00,1.00,0.00) c=4 drop=0.284 E=32.23 score=0 combo=0
+JS: TEL t=5.60 mode=ride g=1 p=(0.00,3.28,23.00) v=0.16 vy=0.16 n=(0.00,1.00,0.00) up=(0.00,1.00,0.00) c=4 drop=0.284 E=32.23 score=0 combo=0
+JS: TEL t=5.70 mode=ride g=1 p=(0.00,3.28,23.00) v=0.16 vy=0.16 n=(0.00,1.00,0.00) up=(0.00,1.00,0.00) c=4 drop=0.284 E=32.23 score=0 combo=0
+JS: TEL t=5.80 mode=ride g=1 p=(0.00,3.28,23.00) v=0.16 vy=0.16 n=(0.00,1.00,0.00) up=(0.00,1.00,0.00) c=4 drop=0.284 E=32.23 score=0 combo=0
+JS: TEL t=5.90 mode=ride g=1 p=(0.00,3.28,23.00) v=0.16 vy=0.16 n=(0.00,1.00,0.00) up=(0.00,1.00,0.00) c=4 drop=0.284 E=32.23 score=0 combo=0
+JS: POS t=6.00 p=(0.00,3.28,23.00) score=0
+JS: TEL t=6.00 mode=ride g=1 p=(0.00,3.28,23.00) v=0.16 vy=0.16 n=(0.00,1.00,0.00) up=(0.00,1.00,0.00) c=4 drop=0.284 E=32.23 score=0 combo=0
+JS: TEL t=6.10 mode=ride g=1 p=(0.00,3.28,23.00) v=0.16 vy=0.16 n=(0.00,1.00,0.00) up=(0.00,1.00,0.00) c=4 drop=0.284 E=32.23 score=0 combo=0
+JS: TEL t=6.20 mode=ride g=1 p=(0.00,3.28,23.00) v=0.16 vy=0.16 n=(0.00,1.00,0.00) up=(0.00,1.00,0.00) c=4 drop=0.284 E=32.23 score=0 combo=0
+JS: TEL t=6.30 mode=ride g=1 p=(0.00,3.28,23.00) v=0.16 vy=0.16 n=(0.00,1.00,0.00) up=(0.00,1.00,0.00) c=4 drop=0.284 E=32.23 score=0 combo=0
+JS: TEL t=6.40 mode=ride g=1 p=(0.00,3.28,23.00) v=0.16 vy=0.16 n=(0.00,1.00,0.00) up=(0.00,1.00,0.00) c=4 drop=0.284 E=32.23 score=0 combo=0
+JS: TEL t=6.50 mode=ride g=1 p=(0.00,3.28,23.00) v=0.16 vy=0.16 n=(0.00,1.00,0.00) up=(0.00,1.00,0.00) c=4 drop=0.284 E=32.23 score=0 combo=0
+JS: TEL t=6.60 mode=ride g=1 p=(0.00,3.28,23.00) v=0.16 vy=0.16 n=(0.00,1.00,0.00) up=(0.00,1.00,0.00) c=4 drop=0.284 E=32.23 score=0 combo=0
+JS: TEL t=6.70 mode=ride g=1 p=(0.00,3.28,23.00) v=0.16 vy=0.16 n=(0.00,1.00,0.00) up=(0.00,1.00,0.00) c=4 drop=0.284 E=32.23 score=0 combo=0
+JS: TEL t=6.80 mode=ride g=1 p=(0.00,3.28,23.00) v=0.16 vy=0.16 n=(0.00,1.00,0.00) up=(0.00,1.00,0.00) c=4 drop=0.284 E=32.23 score=0 combo=0
+JS: TEL t=6.90 mode=ride g=1 p=(0.00,3.28,23.00) v=0.16 vy=0.16 n=(0.00,1.00,0.00) up=(0.00,1.00,0.00) c=4 drop=0.284 E=32.23 score=0 combo=0
+JS: POS t=7.00 p=(0.00,3.28,23.00) score=0
+JS: TEL t=7.00 mode=ride g=1 p=(0.00,3.28,23.00) v=0.16 vy=0.16 n=(0.00,1.00,0.00) up=(0.00,1.00,0.00) c=4 drop=0.284 E=32.23 score=0 combo=0
+JS: REVIEW backtrack {"x":36.6,"y":-18.43,"z":-250}
+JS: TEL t=7.10 mode=ride g=0 p=(36.60,-18.47,-250.00) v=0.82 vy=-0.82 n=(0.00,1.00,0.00) up=(0.00,1.00,0.00) c=0 drop=0.300 E=-180.87 score=0 combo=0
+JS: STREAM t=7.20 street-1 unloaded -> installing entities=9 prepMs=1.24 integMs=1.42 largestUnitMs=0.36 skater=(36.60,-18.61,-250.00) v=1.8
+JS: STREAM t=7.20 street-2 unloaded -> prepared entities=9 prepMs=1.29 integMs=0.86 largestUnitMs=0.35 skater=(36.60,-18.61,-250.00) v=1.8
+JS: STREAM t=7.20 street-3 unloaded -> installing entities=11 prepMs=1.60 integMs=0.94 largestUnitMs=0.38 skater=(36.60,-18.61,-250.00) v=1.8
+JS: TEL t=7.20 mode=ride g=0 p=(36.60,-18.61,-250.00) v=1.80 vy=-1.80 n=(0.00,1.00,0.00) up=(0.00,1.00,0.00) c=0 drop=0.300 E=-180.95 score=0 combo=0
+JS: STREAM t=7.30 street-1 installing -> active entities=9 prepMs=1.24 integMs=1.46 largestUnitMs=0.36 skater=(36.60,-18.85,-250.00) v=2.8
+JS: STREAM t=7.30 street-2 prepared -> active entities=9 prepMs=1.29 integMs=1.17 largestUnitMs=0.35 skater=(36.60,-18.85,-250.00) v=2.8
+JS: TEL t=7.30 mode=ride g=1 p=(36.60,-18.85,-250.00) v=3.01 vy=2.95 n=(0.00,0.99,-0.10) up=(0.00,1.00,0.00) c=4 drop=-0.136 E=-180.35 score=0 combo=0
+JS: STREAM t=7.40 street-3 installing -> active entities=11 prepMs=1.60 integMs=1.24 largestUnitMs=0.38 skater=(36.60,-18.53,-250.07) v=1.2
+JS: TEL t=7.40 mode=ride g=1 p=(36.60,-18.53,-250.07) v=1.21 vy=1.10 n=(0.00,0.99,-0.10) up=(0.00,1.00,-0.08) c=4 drop=0.185 E=-181.04 score=0 combo=0
+JS: TEL t=7.50 mode=ride g=1 p=(36.60,-18.47,-250.12) v=0.68 vy=0.44 n=(0.00,0.99,-0.10) up=(0.00,0.99,-0.10) c=4 drop=0.251 E=-180.95 score=0 combo=0
+JS: TEL t=7.60 mode=ride g=1 p=(36.60,-18.45,-250.17) v=0.63 vy=0.21 n=(0.00,0.99,-0.10) up=(0.00,0.99,-0.10) c=4 drop=0.273 E=-180.82 score=0 combo=0
+JS: TEL t=7.70 mode=ride g=1 p=(36.60,-18.45,-250.24) v=0.69 vy=0.13 n=(0.00,0.99,-0.10) up=(0.00,0.99,-0.10) c=4 drop=0.280 E=-180.77 score=0 combo=0
+JS: TEL t=7.80 mode=ride g=1 p=(36.60,-18.46,-250.31) v=0.77 vy=0.10 n=(0.00,0.99,-0.10) up=(0.00,0.99,-0.10) c=4 drop=0.282 E=-180.76 score=0 combo=0
+JS: TEL t=7.90 mode=ride g=1 p=(36.60,-18.46,-250.39) v=0.86 vy=0.08 n=(0.00,0.99,-0.10) up=(0.00,0.99,-0.10) c=4 drop=0.283 E=-180.77 score=0 combo=0
+JS: POS t=8.00 p=(36.60,-18.47,-250.48) score=0
+JS: TEL t=8.00 mode=ride g=1 p=(36.60,-18.47,-250.48) v=0.95 vy=0.07 n=(0.00,0.99,-0.10) up=(0.00,0.99,-0.10) c=4 drop=0.284 E=-180.77 score=0 combo=0
+JS: TEL t=8.10 mode=ride g=1 p=(36.60,-18.48,-250.58) v=1.04 vy=0.05 n=(0.00,0.99,-0.10) up=(0.00,0.99,-0.10) c=4 drop=0.284 E=-180.78 score=0 combo=0
+JS: TEL t=8.20 mode=ride g=1 p=(36.60,-18.50,-250.68) v=1.13 vy=0.04 n=(0.00,0.99,-0.10) up=(0.00,0.99,-0.10) c=4 drop=0.284 E=-180.80 score=0 combo=0
+JS: TEL t=8.30 mode=ride g=1 p=(36.60,-18.51,-250.80) v=1.22 vy=0.04 n=(0.00,0.99,-0.10) up=(0.00,0.99,-0.10) c=4 drop=0.284 E=-180.81 score=0 combo=0
+JS: TEL t=8.40 mode=ride g=1 p=(36.60,-18.52,-250.93) v=1.31 vy=0.03 n=(0.00,0.99,-0.10) up=(0.00,0.99,-0.10) c=4 drop=0.284 E=-180.82 score=0 combo=0
+JS: TEL t=8.50 mode=ride g=1 p=(36.60,-18.53,-251.06) v=1.41 vy=0.02 n=(0.00,0.99,-0.10) up=(0.00,0.99,-0.10) c=4 drop=0.284 E=-180.84 score=0 combo=0
+JS: TEL t=8.60 mode=ride g=1 p=(36.60,-18.55,-251.21) v=1.50 vy=0.01 n=(0.00,0.99,-0.10) up=(0.00,0.99,-0.10) c=4 drop=0.284 E=-180.85 score=0 combo=0
+JS: TEL t=8.70 mode=ride g=1 p=(36.60,-18.57,-251.36) v=1.59 vy=-0.00 n=(0.00,0.99,-0.10) up=(0.00,0.99,-0.10) c=4 drop=0.284 E=-180.87 score=0 combo=0
+JS: TEL t=8.80 mode=ride g=1 p=(36.60,-18.58,-251.52) v=1.68 vy=-0.01 n=(0.00,0.99,-0.10) up=(0.00,0.99,-0.10) c=4 drop=0.284 E=-180.89 score=0 combo=0
+JS: TEL t=8.90 mode=ride g=1 p=(36.60,-18.60,-251.69) v=1.77 vy=-0.02 n=(0.00,0.99,-0.10) up=(0.00,0.99,-0.10) c=4 drop=0.284 E=-180.91 score=0 combo=0
+JS: POS t=9.00 p=(36.60,-18.62,-251.87) score=0
+JS: TEL t=9.00 mode=ride g=1 p=(36.60,-18.62,-251.87) v=1.86 vy=-0.03 n=(0.00,0.99,-0.10) up=(0.00,0.99,-0.10) c=4 drop=0.284 E=-180.93 score=0 combo=0
+JS: TEL t=9.10 mode=ride g=1 p=(36.60,-18.64,-252.06) v=1.95 vy=-0.04 n=(0.00,0.99,-0.10) up=(0.00,0.99,-0.10) c=4 drop=0.284 E=-180.95 score=0 combo=0
+JS: TEL t=9.20 mode=ride g=1 p=(36.60,-18.66,-252.26) v=2.04 vy=-0.05 n=(0.00,0.99,-0.10) up=(0.00,0.99,-0.10) c=4 drop=0.284 E=-180.98 score=0 combo=0
+JS: TEL t=9.30 mode=ride g=1 p=(36.60,-18.68,-252.47) v=2.13 vy=-0.06 n=(0.00,0.99,-0.10) up=(0.00,0.99,-0.10) c=4 drop=0.284 E=-181.00 score=0 combo=0
+JS: TEL t=9.40 mode=ride g=1 p=(36.60,-18.71,-252.69) v=2.22 vy=-0.07 n=(0.00,0.99,-0.10) up=(0.00,0.99,-0.10) c=4 drop=0.284 E=-181.03 score=0 combo=0
+JS: TEL t=9.50 mode=ride g=1 p=(36.60,-18.73,-252.91) v=2.31 vy=-0.08 n=(0.00,0.99,-0.10) up=(0.00,0.99,-0.10) c=4 drop=0.284 E=-181.06 score=0 combo=0
+JS: TEL t=9.60 mode=ride g=1 p=(36.60,-18.75,-253.15) v=2.41 vy=-0.09 n=(0.00,0.99,-0.10) up=(0.00,0.99,-0.10) c=4 drop=0.284 E=-181.09 score=0 combo=0
+JS: TEL t=9.70 mode=ride g=1 p=(36.60,-18.78,-253.39) v=2.50 vy=-0.10 n=(0.00,0.99,-0.10) up=(0.00,0.99,-0.10) c=4 drop=0.284 E=-181.12 score=0 combo=0
+JS: TEL t=9.80 mode=ride g=1 p=(36.60,-18.81,-253.65) v=2.59 vy=-0.11 n=(0.00,0.99,-0.10) up=(0.00,0.99,-0.10) c=4 drop=0.284 E=-181.15 score=0 combo=0
+JS: TEL t=9.90 mode=ride g=1 p=(36.60,-18.83,-253.91) v=2.68 vy=-0.12 n=(0.00,0.99,-0.10) up=(0.00,0.99,-0.10) c=4 drop=0.284 E=-181.18 score=0 combo=0
+JS: POS t=10.00 p=(36.60,-18.86,-254.18) score=0
+JS: TEL t=10.00 mode=ride g=1 p=(36.60,-18.86,-254.18) v=2.77 vy=-0.13 n=(0.00,0.99,-0.10) up=(0.00,0.99,-0.10) c=4 drop=0.284 E=-181.22 score=0 combo=0
+JS: TEL t=10.10 mode=ride g=1 p=(36.60,-18.89,-254.46) v=2.85 vy=-0.14 n=(0.00,0.99,-0.10) up=(0.00,0.99,-0.10) c=4 drop=0.284 E=-181.25 score=0 combo=0
+JS: TEL t=10.20 mode=ride g=1 p=(36.60,-18.92,-254.75) v=2.94 vy=-0.15 n=(0.00,0.99,-0.10) up=(0.00,0.99,-0.10) c=4 drop=0.284 E=-181.29 score=0 combo=0
+JS: TEL t=10.30 mode=ride g=1 p=(36.60,-18.95,-255.05) v=3.03 vy=-0.15 n=(0.00,0.99,-0.10) up=(0.00,0.99,-0.10) c=4 drop=0.284 E=-181.33 score=0 combo=0
+JS: TEL t=10.40 mode=ride g=1 p=(36.60,-18.99,-255.35) v=3.12 vy=-0.16 n=(0.00,0.99,-0.10) up=(0.00,0.99,-0.10) c=4 drop=0.284 E=-181.38 score=0 combo=0
+JS: TEL t=10.50 mode=ride g=1 p=(36.60,-19.02,-255.67) v=3.21 vy=-0.17 n=(0.00,0.99,-0.10) up=(0.00,0.99,-0.10) c=4 drop=0.284 E=-181.42 score=0 combo=0
+JS: TEL t=10.60 mode=ride g=1 p=(36.60,-19.05,-255.99) v=3.30 vy=-0.18 n=(0.00,0.99,-0.10) up=(0.00,0.99,-0.10) c=4 drop=0.284 E=-181.46 score=0 combo=0
+JS: TEL t=10.70 mode=ride g=1 p=(36.60,-19.09,-256.33) v=3.39 vy=-0.19 n=(0.00,0.99,-0.10) up=(0.00,0.99,-0.10) c=4 drop=0.284 E=-181.51 score=0 combo=0
+JS: TEL t=10.80 mode=ride g=1 p=(36.60,-19.12,-256.67) v=3.48 vy=-0.20 n=(0.00,0.99,-0.10) up=(0.00,0.99,-0.10) c=4 drop=0.284 E=-181.56 score=0 combo=0
+JS: TEL t=10.90 mode=ride g=1 p=(36.60,-19.16,-257.02) v=3.57 vy=-0.21 n=(0.00,0.99,-0.10) up=(0.00,0.99,-0.10) c=4 drop=0.284 E=-181.61 score=0 combo=0
+JS: POS t=11.00 p=(36.60,-19.20,-257.38) score=0
+JS: TEL t=11.00 mode=ride g=1 p=(36.60,-19.20,-257.38) v=3.65 vy=-0.22 n=(0.00,0.99,-0.10) up=(0.00,0.99,-0.10) c=4 drop=0.284 E=-181.67 score=0 combo=0
+JS: TEL t=11.10 mode=ride g=1 p=(36.60,-19.24,-257.75) v=3.74 vy=-0.23 n=(0.00,0.99,-0.10) up=(0.00,0.99,-0.10) c=4 drop=0.284 E=-181.72 score=0 combo=0
+JS: TEL t=11.20 mode=ride g=1 p=(36.60,-19.28,-258.12) v=3.83 vy=-0.24 n=(0.00,0.99,-0.10) up=(0.00,0.99,-0.10) c=4 drop=0.284 E=-181.78 score=0 combo=0
+JS: TEL t=11.30 mode=ride g=1 p=(36.60,-19.32,-258.51) v=3.92 vy=-0.25 n=(0.00,0.99,-0.10) up=(0.00,0.99,-0.10) c=4 drop=0.284 E=-181.84 score=0 combo=0
+JS: TEL t=11.40 mode=ride g=1 p=(36.60,-19.36,-258.90) v=4.00 vy=-0.26 n=(0.00,0.99,-0.10) up=(0.00,0.99,-0.10) c=4 drop=0.284 E=-181.90 score=0 combo=0
+JS: TEL t=11.50 mode=ride g=1 p=(36.60,-19.40,-259.31) v=4.09 vy=-0.27 n=(0.00,0.99,-0.10) up=(0.00,0.99,-0.10) c=4 drop=0.284 E=-181.97 score=0 combo=0
+JS: TEL t=11.60 mode=ride g=1 p=(36.60,-19.44,-259.72) v=4.18 vy=-0.27 n=(0.00,0.99,-0.10) up=(0.00,0.99,-0.10) c=4 drop=0.284 E=-182.03 score=0 combo=0
+JS: TEL t=11.70 mode=ride g=1 p=(36.60,-19.49,-260.14) v=4.26 vy=-0.28 n=(0.00,0.99,-0.10) up=(0.00,0.99,-0.10) c=4 drop=0.284 E=-182.10 score=0 combo=0
+JS: TEL t=11.80 mode=ride g=1 p=(36.60,-19.53,-260.57) v=4.35 vy=-0.29 n=(0.00,0.99,-0.10) up=(0.00,0.99,-0.10) c=4 drop=0.284 E=-182.18 score=0 combo=0
+JS: TEL t=11.90 mode=ride g=1 p=(36.60,-19.58,-261.00) v=4.43 vy=-0.30 n=(0.00,0.99,-0.10) up=(0.00,0.99,-0.10) c=4 drop=0.284 E=-182.25 score=0 combo=0
+JS: POS t=12.00 p=(36.60,-19.63,-261.45) score=0
+JS: TEL t=12.00 mode=ride g=1 p=(36.60,-19.63,-261.45) v=4.52 vy=-0.31 n=(0.00,0.99,-0.10) up=(0.00,0.99,-0.10) c=4 drop=0.284 E=-182.33 score=0 combo=0
+JS: TEL t=12.10 mode=ride g=1 p=(36.60,-19.67,-261.90) v=4.60 vy=-0.32 n=(0.00,0.99,-0.10) up=(0.00,0.99,-0.10) c=4 drop=0.284 E=-182.41 score=0 combo=0
+JS: TEL t=12.20 mode=ride g=1 p=(36.60,-19.72,-262.37) v=4.69 vy=-0.33 n=(0.00,0.99,-0.10) up=(0.00,0.99,-0.10) c=4 drop=0.284 E=-182.49 score=0 combo=0
+JS: TEL t=12.30 mode=ride g=1 p=(36.60,-19.77,-262.84) v=4.77 vy=-0.34 n=(0.00,0.99,-0.10) up=(0.00,0.99,-0.10) c=4 drop=0.284 E=-182.58 score=0 combo=0
+JS: TEL t=12.40 mode=ride g=1 p=(36.60,-19.82,-263.32) v=4.86 vy=-0.35 n=(0.00,0.99,-0.10) up=(0.00,0.99,-0.10) c=4 drop=0.284 E=-182.66 score=0 combo=0
+JS: TEL t=12.50 mode=ride g=1 p=(36.60,-19.87,-263.81) v=4.94 vy=-0.35 n=(0.00,0.99,-0.10) up=(0.00,0.99,-0.10) c=4 drop=0.284 E=-182.76 score=0 combo=0
+JS: TEL t=12.60 mode=ride g=1 p=(36.60,-19.93,-264.30) v=5.03 vy=-0.36 n=(0.00,0.99,-0.10) up=(0.00,0.99,-0.10) c=4 drop=0.284 E=-182.85 score=0 combo=0
+JS: TEL t=12.70 mode=ride g=1 p=(36.60,-19.98,-264.81) v=5.11 vy=-0.37 n=(0.00,0.99,-0.10) up=(0.00,0.99,-0.10) c=4 drop=0.284 E=-182.95 score=0 combo=0
+JS: TEL t=12.80 mode=ride g=1 p=(36.60,-20.03,-265.32) v=5.19 vy=-0.38 n=(0.00,0.99,-0.10) up=(0.00,0.99,-0.10) c=4 drop=0.284 E=-183.05 score=0 combo=0
+JS: TEL t=12.90 mode=ride g=1 p=(36.60,-20.09,-265.84) v=5.28 vy=-0.39 n=(0.00,0.99,-0.10) up=(0.00,0.99,-0.10) c=4 drop=0.284 E=-183.15 score=0 combo=0
+JS: POS t=13.00 p=(36.60,-20.14,-266.37) score=0
+JS: TEL t=13.00 mode=ride g=1 p=(36.60,-20.14,-266.37) v=5.36 vy=-0.40 n=(0.00,0.99,-0.10) up=(0.00,0.99,-0.10) c=4 drop=0.284 E=-183.26 score=0 combo=0
+Consumer observation frames=840 scriptErrors=0
+Renderer fragment texture units: 32 (material path uses 12)
+World state: legacy .judasstate (F6/F7) saves disabled for additive compositions; save slots remain available
+Project: Judas Three Games (/tmp/judas-post-m65-ubpd4gbv/project/post_m65_consumers.judasproj)
+Scene: Judas Skate Park (/tmp/judas-post-m65-ubpd4gbv/project/Scenes/skate/park.judas)
+World origin (m): 0.000, 0.000, 0.000
+asset 97c3acdb99c5ffefb002c03ecec7a8ed: Optional extension ignored: KHR_materials_specular

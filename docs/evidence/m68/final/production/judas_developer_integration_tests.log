@@ -1,0 +1,67 @@
+PASS two-bone reaches known reachable target
+PASS IK preserves actual segment lengths
+PASS unreachable target reports actual residual without stretch
+PASS folded/degenerate pole remains finite
+PASS zero weight preserves incoming resolved pose
+PASS UV instance overrides serializer round-trip
+PASS shared physical resource uses existing coefficient limits
+PASS typed entity inspector schema
+PASS authored entity references remap, numeric properties untouched
+PASS batch edits preserve unchanged mixed fields
+PASS one undo restores complete batch
+PASS cyclic batch parenting rejected without partial mutation
+PASS component copy/paste uses real property records
+PASS component paste undo restores whole state
+PASS multi duplicate includes subtree exactly once
+PASS duplicated hierarchy references remapped
+PASS one duplicate action undo
+PASS joint connected articulation settles coherently
+PASS torque wakes entire articulation
+PASS active joint drive prevents silent sleeping
+PASS impulse wakes neighbour through constraint
+PASS destroy/reuse cannot alias sleep generation
+PASS unforced still zero-gravity body sleeps
+PASS existing two-way fluid contact wakes and transfers momentum
+PASS ordinary stacked contact island sleeps
+PASS cached speculative contact wakes connected resting pile
+PASS meaningful changed gravity wakes resting body
+PASS impact regression starts with sleeping support
+PASS new gravity-driven TOI wakes sleeper with an anchored motion ledger
+PASS walking off roof releases actual support
+PASS moving support genuine outward departure
+PASS gentle net outward acceleration departs instead of being erased by support
+uphill supports=45/45
+PASS inclined tangent remains supported
+PASS downhill tangent support follows ramp
+PASS outward jump releases inclined support
+uphill supports=45/45
+PASS inclined tangent remains supported
+PASS downhill tangent support follows ramp
+PASS outward jump releases inclined support
+sleep=1 v=0
+PASS balanced gravity-supported crate sleeps
+PASS sleeping geometry remains queryable
+PASS impulse wakes resting crate
+PASS woken crate physically moves
+PASS moving support wakes contact island
+PASS checkpoint script registered
+PASS ordinary sensor/motor runtime
+motor events {"enter":1,"stay":1,"exit":1,"safe":true,"impulse":null}
+PASS motor sensor enter/stay/exit coalesced
+PASS massless motor event safe entity, absent solved impulse
+PASS sensor callbacks fault-free
+PASS M39 rejected motor/sensor pair never enters
+PASS generic collider disabling disables motor proxy
+PASS disabled proxy cannot be reenabled by motor update
+PASS destroyed motor retires sensor without stale callback
+PASS ordinary uniform/radial resolver world
+PASS oblique uniform overriding region selected
+PASS radial outside override restored
+PASS resolver transition back is position dependent
+PASS motor/event benchmark ordinary world
+PASS M56 motor/event profile
+PASS motor/event benchmark ordinary world
+PASS M56 motor/event profile
+PASS motor/event benchmark ordinary world
+PASS M56 motor/event profile
+SUMMARY 62 checks 0 failures

@@ -133,6 +133,7 @@ add_library(judas_engine STATIC
     src/Classification.cpp
     src/GamePackage.cpp
     src/ProjectExporter.cpp
+    src/AssetDependencies.cpp
     src/AudioStream.cpp
     src/AudioEnvironment.cpp
     src/AudioData.cpp
@@ -1356,3 +1357,14 @@ target_compile_options(judas_world_authoring_application_tests PRIVATE -Wall -We
 add_executable(judas_world_authoring_performance tests/WorldAuthoringPerformance.cpp src/editor/EditorHistory.cpp)
 target_link_libraries(judas_world_authoring_performance PRIVATE judas_world_authoring)
 target_compile_options(judas_world_authoring_performance PRIVATE -Wall -Wextra)
+
+# M68 structural work counts and comparable residency captures, with owned output.
+add_executable(judas_scalability_tests tests/ScalabilityTests.cpp)
+target_link_libraries(judas_scalability_tests PRIVATE judas_engine)
+target_compile_options(judas_scalability_tests PRIVATE -Wall -Wextra)
+add_executable(judas_scalability_pipeline_tests tests/ScalabilityPipelineTests.cpp src/editor/EditorHistory.cpp)
+target_link_libraries(judas_scalability_pipeline_tests PRIVATE judas_model_import)
+target_compile_options(judas_scalability_pipeline_tests PRIVATE -Wall -Wextra)
+add_executable(judas_resource_handoff_tests tests/ResourceHandoffTests.cpp)
+target_link_libraries(judas_resource_handoff_tests PRIVATE judas_engine)
+target_compile_options(judas_resource_handoff_tests PRIVATE -Wall -Wextra)

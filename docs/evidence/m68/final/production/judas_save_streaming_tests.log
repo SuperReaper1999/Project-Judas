@@ -1,0 +1,18 @@
+Renderer fragment texture units: 32 (material path uses 12)
+World state: legacy .judasstate (F6/F7) saves disabled for additive compositions; save slots remain available
+Project: Streamed Spring Range (/home/conner/Documents/GitHub/Project-Judas/projects/streamed_range/streamed_range.judasproj)
+Scene: Streamed Spring Range (/home/conner/Documents/GitHub/Project-Judas/projects/streamed_range/Scenes/bootstrap.judas)
+World origin (m): 0.000, 0.000, 0.000
+PASS real project look/fire defeats an enemy before save
+PASS real gameplay awards score before save
+PASS real N action spawns an independent prefab participant
+PASS adoption changes ownership without changing durable identity
+PASS ordinary target and joint destruction becomes tombstone
+PASS representative changed region entity
+PASS actual unload retains changed state and tombstones
+PASS normal composed slot request
+PASS save does not change travelling identity
+SAVE capture_ms=5.03455 worker_ms=15.29709 bytes=66477 active=4 suspended_bytes=159969
+PASS slot metadata refreshed after real commit
+PASS fresh standalone streamed process exits cleanly
+SUMMARY write checks=11 failures=0 frames=135

@@ -1,0 +1,30 @@
+FRAMES 240
+LOG_EVERY 0
+ACTION collection_skate 1 5 6
+WAIT_SERVICES scene 10000 6
+EXPECT_SCENE Scenes/skate/park.judas 7
+ACTION collection_rooftop 1 60 61
+WAIT_SERVICES scene 10000 61
+EXPECT_SCENE Scenes/rooftop/rooftops.judas 62
+ACTION collection_void 1 100 101
+WAIT_SERVICES scene 10000 101
+EXPECT_SCENE Scenes/void/system.judas 102
+ACTION collection_menu 1 150 151
+WAIT_SERVICES scene 10000 151
+EXPECT_SCENE Scenes/launcher.judas 152
+ACTION collection_skate 1 170 171
+WAIT_SERVICES scene 10000 171
+EXPECT_SCENE Scenes/skate/park.judas 172
+ACTION collection_rooftop 1 200 201
+WAIT_SERVICES scene 10000 201
+EXPECT_SCENE Scenes/rooftop/rooftops.judas 202
+ACTION collection_menu 1 220 221
+WAIT_SERVICES scene 10000 221
+EXPECT_SCENE Scenes/launcher.judas 222
+WAIT_SERVICES stream 15000 8
+ACTION skate_pause 1 50 51
+EXPECT_PAUSED 1 52
+ACTION rooftop_pause 1 90 91
+EXPECT_PAUSED 1 92
+ACTION void_pause 1 130 131
+EXPECT_PAUSED 1 132

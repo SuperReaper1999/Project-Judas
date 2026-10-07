@@ -1,0 +1,14 @@
+{
+  "checks": 9,
+  "failures": 0,
+  "postUnloadBytes": 0,
+  "privateFrames": 6,
+  "pumpMs": {
+    "maximum": 73.79405,
+    "median": 0.000992,
+    "p95": 0.002203
+  },
+  "readyIncludingCancellationMs": 5742.558554,
+  "residentBytes": 349352976,
+  "samples": 5052
+}

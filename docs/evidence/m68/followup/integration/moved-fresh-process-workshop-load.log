@@ -1,0 +1,15 @@
+PASS normal named workshop startup with several hundred objects
+PASS approved original multipart fixture loads through normal M66 resources
+PASS opening pause remains modal across focus/back events
+PASS normal cold load queued
+PASS cold save restores script-owned traveller references and spawn state
+PASS cold saved adopted traveller resolves safely
+PASS cold process retains configured camera projection
+PASS reload/cold-load callbacks leave no stale handles
+PASS normal application lifecycle
+SUMMARY 9 checks 0 failures frames=30
+Renderer fragment texture units: 32 (material path uses 12)
+World state: legacy .judasstate (F6/F7) saves disabled for additive compositions; save slots remain available
+Project: World Workshop (/tmp/JudasM68-workshop-1136702/game.judasproj)
+Scene: M67 World Workshop (/tmp/JudasM68-workshop-1136702/Scenes/workshop.judas)
+World origin (m): 0.000, 0.000, 0.000

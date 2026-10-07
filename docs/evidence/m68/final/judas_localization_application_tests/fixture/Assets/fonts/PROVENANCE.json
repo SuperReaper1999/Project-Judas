@@ -1,0 +1,57 @@
+{
+  "fonts": [
+    {
+      "file": "DejaVuSans.ttf",
+      "source": "Existing Judas assets/fonts/DejaVuSans.ttf at M57 checkpoint ba16c2c52c60194a95ff161d55b93ff874863b77",
+      "sha256": "b4c632e3cdf9acc7f28758fb5a323c8524d7fc6660d46904d9b6cbe2809c419c",
+      "bytes": 759720
+    },
+    {
+      "file": "NotoSansArabic-Regular.ttf",
+      "repository": "notofonts/noto-fonts",
+      "commit": "ffebf8c1ee449e544955a7e813c54f9b73848eac",
+      "url": "https://raw.githubusercontent.com/notofonts/noto-fonts/ffebf8c1ee449e544955a7e813c54f9b73848eac/hinted/ttf/NotoSansArabic/NotoSansArabic-Regular.ttf",
+      "sha256": "ceea25b464a656dc3b26849bab9356740401af62aedf1bfa8b7f0d9b75925b1b",
+      "bytes": 240456
+    },
+    {
+      "file": "NotoSansDevanagari-Regular.ttf",
+      "repository": "notofonts/noto-fonts",
+      "commit": "ffebf8c1ee449e544955a7e813c54f9b73848eac",
+      "url": "https://raw.githubusercontent.com/notofonts/noto-fonts/ffebf8c1ee449e544955a7e813c54f9b73848eac/hinted/ttf/NotoSansDevanagari/NotoSansDevanagari-Regular.ttf",
+      "sha256": "385e78e6359a9d88a0f243d53b1209d7548361ba2194e2b9ec779bcaa7e8949d",
+      "bytes": 219212
+    },
+    {
+      "file": "NotoSansJP-Regular.otf",
+      "repository": "notofonts/noto-cjk",
+      "commit": "f8d157532fbfaeda587e826d4cd5b21a49186f7c",
+      "url": "https://raw.githubusercontent.com/notofonts/noto-cjk/f8d157532fbfaeda587e826d4cd5b21a49186f7c/Sans/SubsetOTF/JP/NotoSansJP-Regular.otf",
+      "sha256": "dff723ba59d57d136764a04b9b2d03205544f7cd785a711442d6d2d085ac5073",
+      "bytes": 4533028
+    }
+  ],
+  "redistribution_notice": {
+    "file": "LICENSE.txt",
+    "sha256": "e1a67380aececb95eb3fbca80d021133d13437e3eb2ba665240f9bb3845769ae",
+    "contains": "Original DejaVu notice plus Noto SIL Open Font License notices"
+  },
+  "source_license_records": [
+    {
+      "file": "OFL-Noto.txt",
+      "repository": "notofonts/noto-fonts",
+      "commit": "ffebf8c1ee449e544955a7e813c54f9b73848eac",
+      "url": "https://raw.githubusercontent.com/notofonts/noto-fonts/ffebf8c1ee449e544955a7e813c54f9b73848eac/LICENSE",
+      "sha256": "0dab92d0544f7b233403f14b84a663bdbfa746982eda629e7f4f9ffe1b036feb",
+      "bytes": 4377
+    },
+    {
+      "file": "OFL-CJK.txt",
+      "repository": "notofonts/noto-cjk",
+      "commit": "f8d157532fbfaeda587e826d4cd5b21a49186f7c",
+      "url": "https://raw.githubusercontent.com/notofonts/noto-cjk/f8d157532fbfaeda587e826d4cd5b21a49186f7c/Sans/LICENSE",
+      "sha256": "6a73f9541c2de74158c0e7cf6b0a58ef774f5a780bf191f2d7ec9cc53efe2bf2",
+      "bytes": 4301
+    }
+  ]
+}

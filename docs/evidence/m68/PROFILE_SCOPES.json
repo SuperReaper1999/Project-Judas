@@ -1,0 +1,816 @@
+{
+  "baseline/import-skate_original-cold-0-profile.json": {
+    "Model source normalization": {
+      "count": 4,
+      "totalMs": 1716.43945,
+      "maxMs": 1609.566356
+    },
+    "Pose skin matrices": {
+      "count": 210,
+      "totalMs": 0.901959,
+      "maxMs": 0.024124
+    },
+    "Animation clip sampling": {
+      "count": 204,
+      "totalMs": 0.809552,
+      "maxMs": 0.009076
+    },
+    "Model import recipe": {
+      "count": 1,
+      "totalMs": 11245.549931,
+      "maxMs": 11245.549931
+    }
+  },
+  "baseline/runtime-0-1-0-profile.json": {
+    "Host startup": {
+      "count": 1,
+      "totalMs": 160.271176,
+      "maxMs": 160.271176
+    },
+    "Resource release": {
+      "count": 2,
+      "totalMs": 0.000298,
+      "maxMs": 0.00015
+    },
+    "Project resources": {
+      "count": 1,
+      "totalMs": 0.120748,
+      "maxMs": 0.120748
+    },
+    "World destroy": {
+      "count": 2,
+      "totalMs": 0.18475,
+      "maxMs": 0.182061
+    },
+    "World build": {
+      "count": 1,
+      "totalMs": 1.87474,
+      "maxMs": 1.87474
+    },
+    "Audio control and retirement": {
+      "count": 239,
+      "totalMs": 0.02926,
+      "maxMs": 0.001159
+    },
+    "Resource completion and budget": {
+      "count": 119,
+      "totalMs": 0.016866,
+      "maxMs": 0.000175
+    },
+    "Resource pump": {
+      "count": 119,
+      "totalMs": 0.044845,
+      "maxMs": 0.000402
+    },
+    "Script synchronization": {
+      "count": 476,
+      "totalMs": 0.04825,
+      "maxMs": 0.000147
+    },
+    "Script asset: Assets/noop.js": {
+      "count": 477,
+      "totalMs": 0.07823,
+      "maxMs": 0.000442
+    },
+    "Script lifecycle callback": {
+      "count": 477,
+      "totalMs": 0.114717,
+      "maxMs": 0.00073
+    },
+    "JavaScript UI update": {
+      "count": 119,
+      "totalMs": 0.060031,
+      "maxMs": 0.000593
+    },
+    "JavaScript update": {
+      "count": 119,
+      "totalMs": 0.051498,
+      "maxMs": 0.00046
+    },
+    "JavaScript fixedUpdate": {
+      "count": 119,
+      "totalMs": 0.062141,
+      "maxMs": 0.00059
+    },
+    "Physics broadphase": {
+      "count": 119,
+      "totalMs": 0.005799,
+      "maxMs": 5e-05
+    },
+    "Physics contacts": {
+      "count": 119,
+      "totalMs": 0.008031,
+      "maxMs": 7.4e-05
+    },
+    "Physics contact and joint solver": {
+      "count": 119,
+      "totalMs": 0.024206,
+      "maxMs": 0.000245
+    },
+    "Physics proxy refresh": {
+      "count": 119,
+      "totalMs": 0.031311,
+      "maxMs": 0.000302
+    },
+    "Rigid physics": {
+      "count": 119,
+      "totalMs": 0.100134,
+      "maxMs": 0.000904
+    },
+    "Character motors": {
+      "count": 119,
+      "totalMs": 0.007355,
+      "maxMs": 8e-05
+    },
+    "Animation instances": {
+      "count": 119,
+      "totalMs": 0.003601,
+      "maxMs": 3.3e-05
+    },
+    "Ragdoll physics to pose": {
+      "count": 119,
+      "totalMs": 0.0037110000000000003,
+      "maxMs": 3.8e-05
+    },
+    "Visual particle simulation": {
+      "count": 119,
+      "totalMs": 0.005675,
+      "maxMs": 5e-05
+    },
+    "Fixed simulation step": {
+      "count": 119,
+      "totalMs": 0.33956000000000003,
+      "maxMs": 0.003131
+    },
+    "Simulation systems": {
+      "count": 119,
+      "totalMs": 0.348083,
+      "maxMs": 0.003204
+    },
+    "JavaScript presentation": {
+      "count": 119,
+      "totalMs": 0.053743,
+      "maxMs": 0.00048
+    },
+    "Audio main update": {
+      "count": 119,
+      "totalMs": 0.028544,
+      "maxMs": 0.000296
+    },
+    "Play frame": {
+      "count": 119,
+      "totalMs": 0.733728,
+      "maxMs": 0.006773
+    },
+    "Host shutdown": {
+      "count": 1,
+      "totalMs": 4.921228,
+      "maxMs": 4.921228
+    },
+    "Worker queue wait": {
+      "count": 7,
+      "totalMs": 135.734907,
+      "maxMs": 19.492753
+    }
+  },
+  "baseline/runtime-6400-1-0-profile.json": {
+    "Host startup": {
+      "count": 1,
+      "totalMs": 150.67378,
+      "maxMs": 150.67378
+    },
+    "Resource release": {
+      "count": 2,
+      "totalMs": 0.00042100000000000004,
+      "maxMs": 0.000284
+    },
+    "Project resources": {
+      "count": 1,
+      "totalMs": 0.101734,
+      "maxMs": 0.101734
+    },
+    "World destroy": {
+      "count": 2,
+      "totalMs": 3.705702,
+      "maxMs": 3.700301
+    },
+    "World build": {
+      "count": 1,
+      "totalMs": 1827.115813,
+      "maxMs": 1827.115813
+    },
+    "Audio control and retirement": {
+      "count": 239,
+      "totalMs": 0.083731,
+      "maxMs": 0.001381
+    },
+    "Resource completion and budget": {
+      "count": 119,
+      "totalMs": 0.075636,
+      "maxMs": 0.010025
+    },
+    "Resource pump": {
+      "count": 119,
+      "totalMs": 0.170742,
+      "maxMs": 0.010686
+    },
+    "Script synchronization": {
+      "count": 476,
+      "totalMs": 0.378709,
+      "maxMs": 0.012196
+    },
+    "Script asset: Assets/noop.js": {
+      "count": 477,
+      "totalMs": 0.97124,
+      "maxMs": 0.015991
+    },
+    "Script lifecycle callback": {
+      "count": 477,
+      "totalMs": 1.08057,
+      "maxMs": 0.016315
+    },
+    "JavaScript UI update": {
+      "count": 119,
+      "totalMs": 0.209376,
+      "maxMs": 0.003682
+    },
+    "JavaScript update": {
+      "count": 119,
+      "totalMs": 0.130561,
+      "maxMs": 0.002304
+    },
+    "JavaScript fixedUpdate": {
+      "count": 119,
+      "totalMs": 0.477286,
+      "maxMs": 0.013236
+    },
+    "Physics broadphase": {
+      "count": 119,
+      "totalMs": 0.00739,
+      "maxMs": 0.000115
+    },
+    "Physics contacts": {
+      "count": 119,
+      "totalMs": 0.074741,
+      "maxMs": 0.001001
+    },
+    "Physics contact and joint solver": {
+      "count": 119,
+      "totalMs": 0.322089,
+      "maxMs": 0.005172
+    },
+    "Physics proxy refresh": {
+      "count": 119,
+      "totalMs": 0.151713,
+      "maxMs": 0.011043
+    },
+    "Rigid physics": {
+      "count": 119,
+      "totalMs": 0.733249,
+      "maxMs": 0.01798
+    },
+    "Character motors": {
+      "count": 119,
+      "totalMs": 14.125275,
+      "maxMs": 0.458483
+    },
+    "Animation instances": {
+      "count": 119,
+      "totalMs": 0.019525,
+      "maxMs": 0.000372
+    },
+    "Ragdoll physics to pose": {
+      "count": 119,
+      "totalMs": 0.031249,
+      "maxMs": 0.00047
+    },
+    "Visual particle simulation": {
+      "count": 119,
+      "totalMs": 0.005958,
+      "maxMs": 0.000187
+    },
+    "Fixed simulation step": {
+      "count": 119,
+      "totalMs": 1125.540706,
+      "maxMs": 12.412793
+    },
+    "Simulation systems": {
+      "count": 119,
+      "totalMs": 1125.586289,
+      "maxMs": 12.413492
+    },
+    "JavaScript presentation": {
+      "count": 119,
+      "totalMs": 0.584962,
+      "maxMs": 0.017497
+    },
+    "Audio main update": {
+      "count": 119,
+      "totalMs": 0.24010599999999999,
+      "maxMs": 0.015915
+    },
+    "Play frame": {
+      "count": 119,
+      "totalMs": 1127.958173,
+      "maxMs": 12.432756
+    },
+    "Host shutdown": {
+      "count": 1,
+      "totalMs": 4.751302,
+      "maxMs": 4.751302
+    },
+    "Worker queue wait": {
+      "count": 7,
+      "totalMs": 80429.300471,
+      "maxMs": 11490.022696
+    }
+  },
+  "baseline/import-skate_original-unchanged-0-profile.json": {
+    "Model import recipe": {
+      "count": 1,
+      "totalMs": 6342.773253,
+      "maxMs": 6342.773253
+    }
+  },
+  "candidate-measurement/import-skate_original-cold-0-profile.json": {
+    "Model recipe/receipt parsing": {
+      "count": 2,
+      "totalMs": 0.13974,
+      "maxMs": 0.082566
+    },
+    "Model content hashing": {
+      "count": 20,
+      "totalMs": 4226.23374,
+      "maxMs": 687.34145
+    },
+    "Model source normalization": {
+      "count": 4,
+      "totalMs": 1696.9480729999998,
+      "maxMs": 1598.120849
+    },
+    "Pose skin matrices": {
+      "count": 210,
+      "totalMs": 0.900446,
+      "maxMs": 0.014503
+    },
+    "Animation clip sampling": {
+      "count": 204,
+      "totalMs": 0.842062,
+      "maxMs": 0.014908
+    },
+    "Model import recipe": {
+      "count": 1,
+      "totalMs": 11862.480956,
+      "maxMs": 11862.480956
+    },
+    "Model generation publication": {
+      "count": 1,
+      "totalMs": 0.416389,
+      "maxMs": 0.416389
+    }
+  },
+  "candidate-measurement/runtime-0-1-0-profile.json": {
+    "Mesh geometry upload": {
+      "count": 2,
+      "totalMs": 0.02811,
+      "maxMs": 0.016658
+    },
+    "Texture driver texel upload": {
+      "count": 1,
+      "totalMs": 0.031657,
+      "maxMs": 0.031657
+    },
+    "Texture driver mipmap generation": {
+      "count": 1,
+      "totalMs": 0.000954,
+      "maxMs": 0.000954
+    },
+    "Host startup": {
+      "count": 1,
+      "totalMs": 158.698463,
+      "maxMs": 158.698463
+    },
+    "Resource release": {
+      "count": 2,
+      "totalMs": 0.000435,
+      "maxMs": 0.000224
+    },
+    "Project resources": {
+      "count": 1,
+      "totalMs": 0.100404,
+      "maxMs": 0.100404
+    },
+    "World destroy": {
+      "count": 2,
+      "totalMs": 0.166307,
+      "maxMs": 0.163936
+    },
+    "World build": {
+      "count": 1,
+      "totalMs": 1.724808,
+      "maxMs": 1.724808
+    },
+    "Audio control and retirement": {
+      "count": 239,
+      "totalMs": 0.02883,
+      "maxMs": 0.001245
+    },
+    "Resource completion and budget": {
+      "count": 119,
+      "totalMs": 0.021373,
+      "maxMs": 0.000226
+    },
+    "Resource pump": {
+      "count": 119,
+      "totalMs": 0.050725,
+      "maxMs": 0.00047
+    },
+    "Script synchronization": {
+      "count": 476,
+      "totalMs": 0.051101,
+      "maxMs": 0.003342
+    },
+    "Script asset: Assets/noop.js": {
+      "count": 477,
+      "totalMs": 0.076634,
+      "maxMs": 0.000492
+    },
+    "Script lifecycle callback": {
+      "count": 477,
+      "totalMs": 0.112307,
+      "maxMs": 0.000798
+    },
+    "JavaScript UI update": {
+      "count": 119,
+      "totalMs": 0.043827,
+      "maxMs": 0.000404
+    },
+    "JavaScript update": {
+      "count": 119,
+      "totalMs": 0.040713,
+      "maxMs": 0.000366
+    },
+    "JavaScript fixedUpdate": {
+      "count": 119,
+      "totalMs": 0.05067,
+      "maxMs": 0.000524
+    },
+    "Physics broadphase": {
+      "count": 119,
+      "totalMs": 0.005832,
+      "maxMs": 5e-05
+    },
+    "Physics contacts": {
+      "count": 119,
+      "totalMs": 0.007831,
+      "maxMs": 7.3e-05
+    },
+    "Physics contact and joint solver": {
+      "count": 119,
+      "totalMs": 0.019611,
+      "maxMs": 0.000235
+    },
+    "Physics proxy refresh": {
+      "count": 119,
+      "totalMs": 0.032777,
+      "maxMs": 0.000312
+    },
+    "Rigid physics": {
+      "count": 119,
+      "totalMs": 0.099881,
+      "maxMs": 0.000908
+    },
+    "Character motors": {
+      "count": 119,
+      "totalMs": 0.00711,
+      "maxMs": 7.9e-05
+    },
+    "Animation instances": {
+      "count": 119,
+      "totalMs": 0.003571,
+      "maxMs": 3.1e-05
+    },
+    "Ragdoll physics to pose": {
+      "count": 119,
+      "totalMs": 0.0036880000000000003,
+      "maxMs": 3.3e-05
+    },
+    "Visual particle simulation": {
+      "count": 119,
+      "totalMs": 0.003577,
+      "maxMs": 3.1e-05
+    },
+    "Fixed simulation step": {
+      "count": 119,
+      "totalMs": 0.313239,
+      "maxMs": 0.006171
+    },
+    "Simulation systems": {
+      "count": 119,
+      "totalMs": 0.322117,
+      "maxMs": 0.006245
+    },
+    "JavaScript presentation": {
+      "count": 119,
+      "totalMs": 0.040118,
+      "maxMs": 0.000366
+    },
+    "Audio main update": {
+      "count": 119,
+      "totalMs": 0.030538,
+      "maxMs": 0.000296
+    },
+    "Play frame": {
+      "count": 119,
+      "totalMs": 0.684717,
+      "maxMs": 0.009293
+    },
+    "Host shutdown": {
+      "count": 1,
+      "totalMs": 4.636925,
+      "maxMs": 4.636925
+    },
+    "Worker queue wait": {
+      "count": 7,
+      "totalMs": 127.231086,
+      "maxMs": 18.311232
+    }
+  },
+  "candidate-measurement/runtime-6400-1-0-profile.json": {
+    "Mesh geometry upload": {
+      "count": 2,
+      "totalMs": 0.030174,
+      "maxMs": 0.018212
+    },
+    "Texture driver texel upload": {
+      "count": 1,
+      "totalMs": 0.032033,
+      "maxMs": 0.032033
+    },
+    "Texture driver mipmap generation": {
+      "count": 1,
+      "totalMs": 0.000908,
+      "maxMs": 0.000908
+    },
+    "Host startup": {
+      "count": 1,
+      "totalMs": 157.715108,
+      "maxMs": 157.715108
+    },
+    "Resource release": {
+      "count": 2,
+      "totalMs": 0.00031,
+      "maxMs": 0.000248
+    },
+    "Project resources": {
+      "count": 1,
+      "totalMs": 0.115358,
+      "maxMs": 0.115358
+    },
+    "World destroy": {
+      "count": 2,
+      "totalMs": 3.437677,
+      "maxMs": 3.434074
+    },
+    "World build": {
+      "count": 1,
+      "totalMs": 1798.535571,
+      "maxMs": 1798.535571
+    },
+    "Audio control and retirement": {
+      "count": 239,
+      "totalMs": 0.030784,
+      "maxMs": 0.001594
+    },
+    "Resource completion and budget": {
+      "count": 119,
+      "totalMs": 0.025036,
+      "maxMs": 0.000256
+    },
+    "Resource pump": {
+      "count": 119,
+      "totalMs": 0.056928,
+      "maxMs": 0.000582
+    },
+    "Script synchronization": {
+      "count": 476,
+      "totalMs": 0.060534,
+      "maxMs": 0.000294
+    },
+    "Script asset: Assets/noop.js": {
+      "count": 477,
+      "totalMs": 0.166865,
+      "maxMs": 0.010471
+    },
+    "Script lifecycle callback": {
+      "count": 477,
+      "totalMs": 0.225848,
+      "maxMs": 0.017019
+    },
+    "JavaScript UI update": {
+      "count": 119,
+      "totalMs": 0.060936,
+      "maxMs": 0.000638
+    },
+    "JavaScript update": {
+      "count": 119,
+      "totalMs": 0.05459,
+      "maxMs": 0.000604
+    },
+    "JavaScript fixedUpdate": {
+      "count": 119,
+      "totalMs": 0.096637,
+      "maxMs": 0.010759
+    },
+    "Physics broadphase": {
+      "count": 119,
+      "totalMs": 0.005806,
+      "maxMs": 5.6e-05
+    },
+    "Physics contacts": {
+      "count": 119,
+      "totalMs": 0.010147,
+      "maxMs": 0.000234
+    },
+    "Physics contact and joint solver": {
+      "count": 119,
+      "totalMs": 0.030606,
+      "maxMs": 0.000451
+    },
+    "Physics proxy refresh": {
+      "count": 119,
+      "totalMs": 0.041994,
+      "maxMs": 0.000464
+    },
+    "Rigid physics": {
+      "count": 119,
+      "totalMs": 0.127333,
+      "maxMs": 0.001563
+    },
+    "Character motors": {
+      "count": 119,
+      "totalMs": 0.00732,
+      "maxMs": 7.1e-05
+    },
+    "Animation instances": {
+      "count": 119,
+      "totalMs": 0.003657,
+      "maxMs": 3.6e-05
+    },
+    "Ragdoll physics to pose": {
+      "count": 119,
+      "totalMs": 0.003947,
+      "maxMs": 6.8e-05
+    },
+    "Visual particle simulation": {
+      "count": 119,
+      "totalMs": 0.009323,
+      "maxMs": 0.003357
+    },
+    "Fixed simulation step": {
+      "count": 119,
+      "totalMs": 14.560389,
+      "maxMs": 0.170369
+    },
+    "Simulation systems": {
+      "count": 119,
+      "totalMs": 14.571194,
+      "maxMs": 0.170459
+    },
+    "JavaScript presentation": {
+      "count": 119,
+      "totalMs": 0.109847,
+      "maxMs": 0.017276
+    },
+    "Audio main update": {
+      "count": 119,
+      "totalMs": 0.035442,
+      "maxMs": 0.000416
+    },
+    "Play frame": {
+      "count": 119,
+      "totalMs": 15.12799,
+      "maxMs": 0.184254
+    },
+    "Host shutdown": {
+      "count": 1,
+      "totalMs": 4.985627,
+      "maxMs": 4.985627
+    },
+    "Worker queue wait": {
+      "count": 7,
+      "totalMs": 13633.919894,
+      "maxMs": 1947.841133
+    }
+  },
+  "candidate-measurement/import-skate_original-unchanged-0-profile.json": {
+    "Model recipe/receipt parsing": {
+      "count": 3,
+      "totalMs": 0.417403,
+      "maxMs": 0.292389
+    },
+    "Model content hashing": {
+      "count": 9,
+      "totalMs": 2738.847294,
+      "maxMs": 683.642905
+    },
+    "Model import recipe": {
+      "count": 1,
+      "totalMs": 2740.129969,
+      "maxMs": 2740.129969
+    },
+    "Model generation publication": {
+      "count": 1,
+      "totalMs": 0.835296,
+      "maxMs": 0.835296
+    }
+  },
+  "baseline/import-cold": {
+    "Model source normalization": {
+      "count": 4,
+      "totalMs": 1716.43945,
+      "maxMs": 1609.566356
+    },
+    "Pose skin matrices": {
+      "count": 210,
+      "totalMs": 0.901959,
+      "maxMs": 0.024124
+    },
+    "Animation clip sampling": {
+      "count": 204,
+      "totalMs": 0.809552,
+      "maxMs": 0.009076
+    },
+    "Model import recipe": {
+      "count": 1,
+      "totalMs": 11245.549931,
+      "maxMs": 11245.549931
+    }
+  },
+  "baseline/import-unchanged": {
+    "Model import recipe": {
+      "count": 1,
+      "totalMs": 6342.773253,
+      "maxMs": 6342.773253
+    }
+  },
+  "candidate-measurement/import-cold": {
+    "Model recipe/receipt parsing": {
+      "count": 2,
+      "totalMs": 0.13974,
+      "maxMs": 0.082566
+    },
+    "Model content hashing": {
+      "count": 20,
+      "totalMs": 4226.23374,
+      "maxMs": 687.34145
+    },
+    "Model source normalization": {
+      "count": 4,
+      "totalMs": 1696.9480729999998,
+      "maxMs": 1598.120849
+    },
+    "Pose skin matrices": {
+      "count": 210,
+      "totalMs": 0.900446,
+      "maxMs": 0.014503
+    },
+    "Animation clip sampling": {
+      "count": 204,
+      "totalMs": 0.842062,
+      "maxMs": 0.014908
+    },
+    "Model import recipe": {
+      "count": 1,
+      "totalMs": 11862.480956,
+      "maxMs": 11862.480956
+    },
+    "Model generation publication": {
+      "count": 1,
+      "totalMs": 0.416389,
+      "maxMs": 0.416389
+    }
+  },
+  "candidate-measurement/import-unchanged": {
+    "Model recipe/receipt parsing": {
+      "count": 3,
+      "totalMs": 0.417403,
+      "maxMs": 0.292389
+    },
+    "Model content hashing": {
+      "count": 9,
+      "totalMs": 2738.847294,
+      "maxMs": 683.642905
+    },
+    "Model import recipe": {
+      "count": 1,
+      "totalMs": 2740.129969,
+      "maxMs": 2740.129969
+    },
+    "Model generation publication": {
+      "count": 1,
+      "totalMs": 0.835296,
+      "maxMs": 0.835296
+    }
+  }
+}

@@ -1,0 +1,26 @@
+PASS fresh process reads committed selected slot
+PASS queued operation cancels before commit boundary
+PASS detached incompatible fixture committed only in isolated test namespace
+PASS conflicting save/scene requests return busy
+PASS unsupported participant leaves original live world playable
+FAIL fresh process exact owner/cell/flow/parcel partition before resume
+PASS active articulation reconstructed, no bind-pose reset
+PASS fresh process physical world poses match captured boundary
+PASS in-progress crossfade continues from captured contributor state
+PASS bounded game/session state restored before callbacks
+PASS mapped rigid bodies and massless motor proxies instantiated exactly once
+PASS restore-aware scripts instantiated once with saved state
+PASS load retains current machine master volume, not saved preference
+PASS persistent music resumes selected cursor, not zero
+PASS first resumed steps retain exact M54 ledger
+PASS first resumed disturbed water updates remain healthy
+PASS first resumed physical articulation finite
+PASS resumed animation transition advances
+PASS restore callback avoids new-game resets and script faults
+PASS ordinary standalone process startup/save or restore/shutdown
+SUMMARY mode=read checks=20 failures=1 frames=80
+Renderer fragment texture units: 32 (material path uses 12)
+Project: Judas Save / Load State Lab (/home/conner/Documents/GitHub/Project-Judas/projects/save_lab/save_lab.judasproj)
+Scene: Save Lab / waves, cup, poses and music (/home/conner/Documents/GitHub/Project-Judas/projects/save_lab/Scenes/lab.judas)
+World origin (m): 1000000000000.000, -2000000000000.000, 3000000000000.000
+Runtime outer services: required participant missing/newer: motors

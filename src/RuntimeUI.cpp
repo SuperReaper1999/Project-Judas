@@ -45,7 +45,7 @@ std::string SerializeUIDocument(const UIDocument& d){bool modern=std::any_of(d.e
         for(auto v:{e.margin,e.padding,e.background,e.color})for(int c=0;c<4;++c)s<<v[c]<<' ';
         s<<e.spacing<<' '<<e.fontSize<<' '<<e.value<<' '<<e.minimum<<' '<<e.maximum<<' '<<std::quoted(e.text)<<' '<<std::quoted(e.texture)<<' '<<std::quoted(e.font);if(modern)s<<' '<<std::quoted(e.textKey)<<' '<<int(e.direction)<<' '<<e.textLogicalAlign<<' '<<e.mirrorRow;s<<'\n';}return s.str();}
 bool ParseUIDocument(const std::string& text,UIDocument& out,std::string& error){
-    if(IsNamedDocument(text)){std::string legacy;if(!NamedToLegacy(text,"ui",legacy,error))return false;return ParseUIDocument(legacy,out,error);}
+    if(IsNamedDocument(text)){std::string legacy;if(!NamedToLegacy(text,"ui",legacy,error,false))return false;return ParseUIDocument(legacy,out,error);}
     if(text.size()>4*1024*1024){error="UI document too large";return false;}if(!ValidTextUTF8(text,error)){error="UI document UTF-8: "+error;return false;}
     std::istringstream s(text);s.imbue(std::locale::classic());std::string magic;int version;size_t count=0;UIDocument d;
     auto fail=[&](){error="malformed or unsupported UI document";return false;};

@@ -1,0 +1,32 @@
+[  5%] Built target judas_icu_build
+[ 10%] Built target judas_quickjs
+[ 15%] Built target judas_app_icon
+[ 15%] Built target judas_glad
+[ 15%] Built target judas_profiler
+[ 20%] Built target judas_navigation_backend
+[ 35%] Built target freetype
+[ 35%] Built target judas_audio_backend
+[ 35%] Built target judas_ufbx
+[ 35%] Built target harfbuzz
+[ 35%] Built target judas_materials
+[ 35%] Building CXX object CMakeFiles/judas_engine.dir/src/AssetDependencies.cpp.o
+[ 35%] Linking CXX static library libjudas_engine.a
+[ 90%] Built target judas_engine
+[ 95%] Built target judas_model_import
+[ 95%] Building CXX object CMakeFiles/judas_scalability_pipeline_tests.dir/src/editor/EditorHistory.cpp.o
+[ 95%] Building CXX object CMakeFiles/judas_scalability_pipeline_tests.dir/tests/ScalabilityPipelineTests.cpp.o
+/home/conner/Documents/GitHub/Project-Judas/tests/ScalabilityPipelineTests.cpp: In function ‘int main(int, char**)’:
+/home/conner/Documents/GitHub/Project-Judas/tests/ScalabilityPipelineTests.cpp:58:73: error: ‘Serialize’ is not a member of ‘Project’
+   58 |   ProjectSettings parsed;std::string named;Check(LegacyToNamed(Project::Serialize(project.Settings()),"project",named,error)&&Project::ParseFromString(named,parsed,error)&&parsed.runtimeAssets==project.Settings().runtimeAssets&&parsed.exportAssetPolicy=="closure","named/legacy export roots round trip");
+      |                                                                         ^~~~~~~~~
+/home/conner/Documents/GitHub/Project-Judas/tests/ScalabilityPipelineTests.cpp:70:3: warning: this ‘for’ clause does not guard... [-Wmisleading-indentation]
+   70 |   for(int i=0;i<200;++i)doc.Undo();Check(!doc.CanUndo()&&glm::length(doc.GetScene().Find(doc.Selected())->transform.position-initial)<1e-5f,"all 200 exact history revisions retained");for(int i=0;i<200;++i)doc.Redo();Check(!doc.CanRedo(),"all 200 revisions redo independently");
+      |   ^~~
+/home/conner/Documents/GitHub/Project-Judas/tests/ScalabilityPipelineTests.cpp:70:36: note: ...this statement, but the latter is misleadingly indented as if it were guarded by the ‘for’
+   70 |   for(int i=0;i<200;++i)doc.Undo();Check(!doc.CanUndo()&&glm::length(doc.GetScene().Find(doc.Selected())->transform.position-initial)<1e-5f,"all 200 exact history revisions retained");for(int i=0;i<200;++i)doc.Redo();Check(!doc.CanRedo(),"all 200 revisions redo independently");
+      |                                    ^~~~~
+gmake[3]: *** [CMakeFiles/judas_scalability_pipeline_tests.dir/build.make:79: CMakeFiles/judas_scalability_pipeline_tests.dir/tests/ScalabilityPipelineTests.cpp.o] Error 1
+gmake[3]: *** Waiting for unfinished jobs....
+gmake[2]: *** [CMakeFiles/Makefile2:8149: CMakeFiles/judas_scalability_pipeline_tests.dir/all] Error 2
+gmake[1]: *** [CMakeFiles/Makefile2:8156: CMakeFiles/judas_scalability_pipeline_tests.dir/rule] Error 2
+gmake: *** [Makefile:2594: judas_scalability_pipeline_tests] Error 2

@@ -11,10 +11,11 @@ struct ProjectExportResult {
     std::string packageDirectory;
     std::size_t assetCount = 0, sceneCount = 0;
     std::uintmax_t bytes = 0;
+    std::uintmax_t assetBytes=0,deduplicatedBytes=0,excludedAssetBytes=0;
     double seconds = 0;
 };
 // Linux desktop baseline. Copies a verified Release runtime, all registered
-// assets (including runtime-only IDs), and all project scenes. Transactional
+// assets by default, or opt-in dependency closure with explicit runtime roots. Transactional
 // staging: existing packages are replaced, arbitrary directories are refused.
 bool ExportProject(const Project& project, const ProjectExportOptions& options,
                    ProjectExportResult& result, std::string& error);

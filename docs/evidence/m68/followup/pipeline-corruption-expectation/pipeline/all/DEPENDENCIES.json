@@ -1,0 +1,72 @@
+{
+  "assetBytes": 9368,
+  "auxiliary": [],
+  "deduplicatedBytes": 4524,
+  "excluded": [],
+  "excludedAssetBytes": 0,
+  "included": [
+    {
+      "bytes": 1979,
+      "id": "11111111111111111111111111111111",
+      "path": "Assets/mesh.obj",
+      "reasons": [
+        "conservative registered asset policy",
+        "dependency of 33333333333333333333333333333333"
+      ],
+      "sha256": "02f2100ff796fdb504190cfc829194d487c83e60597fbe977609daa40f9aaf34",
+      "sharedPayload": false,
+      "type": "mesh"
+    },
+    {
+      "bytes": 2262,
+      "id": "22222222222222222222222222222222",
+      "path": "Assets/texture.png",
+      "reasons": [
+        "conservative registered asset policy",
+        "dependency of 33333333333333333333333333333333"
+      ],
+      "sha256": "197f8c6ff5dda9a4f0bd31c604cf93fa5380c58b5b9a7dab70bd30131d978c9a",
+      "sharedPayload": false,
+      "type": "texture"
+    },
+    {
+      "bytes": 603,
+      "id": "33333333333333333333333333333333",
+      "path": "Assets/prop.judasprefab",
+      "reasons": [
+        "conservative registered asset policy"
+      ],
+      "sha256": "0bb4cba3ef28e6a75b239248f4a9157556f471b81b6ae107ef1c907c7e13f5d0",
+      "sharedPayload": false,
+      "type": "prefab"
+    },
+    {
+      "bytes": 2262,
+      "id": "44444444444444444444444444444444",
+      "path": "Assets/shared.png",
+      "reasons": [
+        "conservative registered asset policy"
+      ],
+      "sha256": "197f8c6ff5dda9a4f0bd31c604cf93fa5380c58b5b9a7dab70bd30131d978c9a",
+      "sharedPayload": true,
+      "type": "texture"
+    },
+    {
+      "bytes": 2262,
+      "id": "55555555555555555555555555555555",
+      "path": "Assets/unreferenced.png",
+      "reasons": [
+        "conservative registered asset policy"
+      ],
+      "sha256": "197f8c6ff5dda9a4f0bd31c604cf93fa5380c58b5b9a7dab70bd30131d978c9a",
+      "sharedPayload": true,
+      "type": "texture"
+    }
+  ],
+  "physicalAssetBytes": 4844,
+  "policy": "all",
+  "scenes": [
+    "Scenes/start.judas"
+  ],
+  "version": 1
+}

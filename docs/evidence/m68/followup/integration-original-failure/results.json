@@ -1,0 +1,89 @@
+[
+  {
+    "label": "game-switches",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/m68-integration-1/owned/games/post_m65_consumers.judasproj"
+    ],
+    "cwd": "/tmp",
+    "exit": 0,
+    "seconds": 3.7395888989995
+  },
+  {
+    "label": "editor-three-games",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_editor",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/m68-integration-1/owned/games/post_m65_consumers.judasproj"
+    ],
+    "cwd": "/tmp",
+    "exit": 0,
+    "seconds": 1.9586428030015668
+  },
+  {
+    "label": "editor-workshop",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_editor",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/m68-integration-1/owned/workshop/world_workshop.judasproj"
+    ],
+    "cwd": "/tmp",
+    "exit": 0,
+    "seconds": 2.0329950969971833
+  },
+  {
+    "label": "workshop-fresh-write",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_world_authoring_application_tests",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/m68-integration-1/owned/workshop/world_workshop.judasproj",
+      "write",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/m68-integration-1/workshop-save"
+    ],
+    "cwd": "/tmp",
+    "exit": 0,
+    "seconds": 1.0737036199934664
+  },
+  {
+    "label": "export-three-games",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_export",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/m68-integration-1/owned/games/post_m65_consumers.judasproj",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/m68-integration-1/owned/package-three-games",
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas"
+    ],
+    "cwd": "/tmp",
+    "exit": 0,
+    "seconds": 1.7306116260006092
+  },
+  {
+    "label": "moved-three-games",
+    "command": [
+      "/tmp/JudasM68-three-games-1061621/judas"
+    ],
+    "cwd": "/tmp",
+    "exit": 0,
+    "seconds": 3.741396147001069
+  },
+  {
+    "label": "export-workshop",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_export",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/m68-integration-1/owned/workshop/world_workshop.judasproj",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/m68-integration-1/owned/package-workshop",
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas"
+    ],
+    "cwd": "/tmp",
+    "exit": 0,
+    "seconds": 0.10157067399995867
+  },
+  {
+    "label": "moved-fresh-process-workshop-load",
+    "command": [
+      "/tmp/JudasM68-workshop-1061621/review-observer",
+      "/tmp/JudasM68-workshop-1061621/game.judasproj",
+      "read",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/m68-integration-1/workshop-save"
+    ],
+    "cwd": "/tmp",
+    "exit": 1,
+    "seconds": 0.6962888589987415
+  }
+]
