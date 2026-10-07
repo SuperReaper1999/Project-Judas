@@ -1,6 +1,6 @@
 # Current public JudasJS inventory
 
-M67 authoring and runtime-seam review of the registered virtual module based on starting checkpoint `b9a8cf3b8d8cd3786272480a8abe6cbe9fffe859`.
+M69 paired input and batch-query review of the registered virtual module based on starting checkpoint `c042797c755df68b45e36aa917c4ca72818b9bcd`. M67 human authoring review remains deferred.
 Each row is a runtime export/member (constructors and plain handle fields included).
 Native dispatcher operations are implementation details, not additional JS APIs.
 
@@ -211,6 +211,10 @@ Native dispatcher operations are implementation details, not additional JS APIs.
 | `input.pointerCapture` | `pointerCapture`, `setPointerCapture` | [declaration](../judas.d.ts) | [reference](input.md) |
 | `input.pressed` | `pressed` | [declaration](../judas.d.ts) | [reference](input.md) |
 | `input.released` | `released` | [declaration](../judas.d.ts) | [reference](input.md) |
+| `input.stick` | `stick` | [declaration](../judas.d.ts) | [reference](input.md) |
+| `input.stickDelta` | `stickDelta` | [declaration](../judas.d.ts) | [reference](input.md) |
+| `input.stickSamples` | `stickSamples` | [declaration](../judas.d.ts) | [reference](input.md) |
+| `input.vector` | `vector` | [declaration](../judas.d.ts) | [reference](input.md) |
 | `liquid` | JS wrapper/data | [declaration](../judas.d.ts) | [reference](liquid.md) |
 | `liquid.accounting` | `liquidAccounting` | [declaration](../judas.d.ts) | [reference](liquid.md) |
 | `liquid.connections` | `liquidConnections` | [declaration](../judas.d.ts) | [reference](liquid.md) |
@@ -237,12 +241,15 @@ Native dispatcher operations are implementation details, not additional JS APIs.
 | `physics` | JS wrapper/data | [declaration](../judas.d.ts) | [reference](physics.md) |
 | `physics.boxCast` | `cast` | [declaration](../judas.d.ts) | [reference](physics.md) |
 | `physics.capsuleCast` | `cast` | [declaration](../judas.d.ts) | [reference](physics.md) |
+| `physics.capsuleCastMany` | `castMany` | [declaration](../judas.d.ts) | [reference](physics.md) |
 | `physics.closestPoint` | `closestPoint` | [declaration](../judas.d.ts) | [reference](physics.md) |
 | `physics.createJoint` | `jointCreate` | [declaration](../judas.d.ts) | [reference](physics.md) |
 | `physics.gravity` | `gravitySample` | [declaration](../judas.d.ts) | [reference](physics.md) |
 | `physics.joint` | `joint` | [declaration](../judas.d.ts) | [reference](physics.md) |
 | `physics.raycast` | `cast` | [declaration](../judas.d.ts) | [reference](physics.md) |
+| `physics.raycastMany` | `castMany` | [declaration](../judas.d.ts) | [reference](physics.md) |
 | `physics.sphereCast` | `cast` | [declaration](../judas.d.ts) | [reference](physics.md) |
+| `physics.sphereCastMany` | `castMany` | [declaration](../judas.d.ts) | [reference](physics.md) |
 | `profiler` | JS wrapper/data | [declaration](../judas.d.ts) | [reference](profiling.md) |
 | `profiler.counter` | `profileCounter` | [declaration](../judas.d.ts) | [reference](profiling.md) |
 | `profiler.scope` | `profileScope` | [declaration](../judas.d.ts) | [reference](profiling.md) |

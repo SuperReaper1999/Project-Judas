@@ -115,8 +115,9 @@ private:
     std::set<std::string> m_consumed;
     SDL_GameController* m_controller=nullptr;
     SDL_JoystickID m_controllerId=-1;
+    bool m_controllerInputReady=false;
     bool m_inputFocused=true;
-    void RefreshController();
+    void RefreshController(bool poll=true);
     SDL_Window* m_window = nullptr;
     SDL_GLContext m_glContext = nullptr;
     bool m_sdlInitialized = false;

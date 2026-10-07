@@ -1,0 +1,13 @@
+Renderer fragment texture units: 32 (material path uses 12)
+PASS real EngineHost
+PASS paired-stick normal registered script
+PASS paired-stick normal project
+PASS paired-stick ordinary scene
+PASS paired-stick runtime builds
+PASS paired-stick ordinary paired binding
+PASS paired-stick ordinary fixed-step session
+PASS paired-stick real VM callbacks without faults
+EXAMPLE paired-stick {"raw":{"x":0,"y":0},"circular":{"x":0,"y":0},"frameDelta":{"x":0,"y":0},"samples":[{"x":0.75,"y":0.75,"sequence":3,"time":0.179137746},{"x":0,"y":0,"sequence":4,"time":0.179142173}],"observations":2,"resets":1,"overflows":0,"capacity":128,"sequence":4,"frameReads":100,"fixedReads":100}
+PASS paired-stick documented outcome
+PASS paired-stick teardown
+SUMMARY 10 checks 0 failures

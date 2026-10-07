@@ -1,0 +1,4 @@
+REALTIME 90
+LOG_EVERY 0
+ACTION compare_rays 1 10 60
+SCREENSHOT 89 /home/conner/Documents/GitHub/Project-Judas/.cache/m69/remaining-checks/example.png

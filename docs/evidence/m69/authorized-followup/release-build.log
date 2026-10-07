@@ -1,0 +1,101 @@
+[  4%] Built target judas_app_icon
+[  4%] Built target judas_icu_build
+[  9%] Built target judas_quickjs
+[ 23%] Built target freetype
+[ 23%] Built target judas_glad
+[ 33%] Built target judas_navigation_backend
+[ 38%] Built target judas_profiler
+[ 38%] Built target judas_audio_backend
+[ 38%] Built target harfbuzz
+[ 42%] Built target judas_materials
+[ 95%] Built target judas_engine
+[100%] Built target judas
+[  4%] Built target judas_quickjs
+[  4%] Built target judas_icu_build
+[  8%] Built target judas_app_icon
+[ 20%] Built target freetype
+[ 20%] Built target judas_glad
+[ 24%] Built target judas_profiler
+[ 32%] Built target judas_navigation_backend
+[ 32%] Built target judas_audio_backend
+[ 32%] Built target judas_ufbx
+[ 32%] Built target harfbuzz
+[ 36%] Built target judas_imgui
+[ 40%] Built target judas_materials
+[ 84%] Built target judas_engine
+[ 96%] Built target judas_navigation_baker
+[ 96%] Built target judas_model_import
+[ 96%] Built target judas_world_authoring
+[100%] Built target judas_editor
+[  0%] Built target judas_icu_build
+[  4%] Built target judas_app_icon
+[  9%] Built target judas_quickjs
+[ 22%] Built target freetype
+[ 31%] Built target judas_glad
+[ 31%] Built target judas_profiler
+[ 36%] Built target judas_navigation_backend
+[ 36%] Built target judas_audio_backend
+[ 40%] Built target judas_ufbx
+[ 40%] Built target judas_materials
+[ 40%] Built target harfbuzz
+[ 90%] Built target judas_engine
+[100%] Built target judas_model_import
+[100%] Built target judas_world_authoring
+[100%] Built target judas_scene_author
+[  0%] Built target judas_icu_build
+[  5%] Built target judas_quickjs
+[ 10%] Built target judas_app_icon
+[ 25%] Built target freetype
+[ 25%] Built target judas_glad
+[ 35%] Built target judas_navigation_backend
+[ 40%] Built target judas_profiler
+[ 40%] Built target judas_audio_backend
+[ 45%] Built target judas_materials
+[ 45%] Built target harfbuzz
+[100%] Built target judas_engine
+[100%] Building CXX object CMakeFiles/judas_paired_input_tests.dir/tools/StructuredAuthor.cpp.o
+[100%] Building CXX object CMakeFiles/judas_paired_input_tests.dir/tests/PairedInputTests.cpp.o
+[100%] Linking CXX executable judas_paired_input_tests
+[100%] Built target judas_paired_input_tests
+[  5%] Built target judas_icu_build
+[  5%] Built target judas_quickjs
+[ 10%] Built target judas_app_icon
+[ 25%] Built target freetype
+[ 25%] Built target judas_glad
+[ 35%] Built target judas_navigation_backend
+[ 40%] Built target judas_profiler
+[ 40%] Built target judas_audio_backend
+[ 45%] Built target judas_materials
+[ 45%] Built target harfbuzz
+[100%] Built target judas_engine
+[100%] Building CXX object CMakeFiles/judas_paired_input_script_tests.dir/tests/PairedInputScriptTests.cpp.o
+[100%] Linking CXX executable judas_paired_input_script_tests
+[100%] Built target judas_paired_input_script_tests
+[  0%] Built target judas_icu_build
+[  5%] Built target judas_quickjs
+[ 10%] Built target judas_app_icon
+[ 25%] Built target freetype
+[ 30%] Built target judas_glad
+[ 30%] Built target judas_profiler
+[ 40%] Built target judas_navigation_backend
+[ 40%] Built target judas_audio_backend
+[ 45%] Built target judas_materials
+[ 45%] Built target harfbuzz
+[100%] Built target judas_engine
+[100%] Building CXX object CMakeFiles/judas_physics_batch_script_tests.dir/tests/PhysicsBatchScriptTests.cpp.o
+[100%] Linking CXX executable judas_physics_batch_script_tests
+[100%] Built target judas_physics_batch_script_tests
+[  0%] Built target judas_icu_build
+[  4%] Built target judas_app_icon
+[  9%] Built target judas_quickjs
+[ 23%] Built target freetype
+[ 33%] Built target judas_profiler
+[ 28%] Built target judas_glad
+[ 38%] Built target judas_navigation_backend
+[ 38%] Built target judas_audio_backend
+[ 42%] Built target judas_materials
+[ 42%] Built target harfbuzz
+[ 95%] Built target judas_engine
+[ 95%] Building CXX object CMakeFiles/judasjs_examples_tests.dir/tests/JudasJSExamplesTests.cpp.o
+[100%] Linking CXX executable judasjs_examples_tests
+[100%] Built target judasjs_examples_tests

@@ -1,0 +1,15 @@
+script asset=21d1c85d558d8ef67c4dc6388e30797e entity=1 slot=1 start: Error: sphere independent witness/order/miss
+    at check (Assets/batch.js:7:43)
+    at start (Assets/batch.js:29:77)
+
+M69 batch queries FAIL after 6 checks: real VM correctness phase without faults
+PASS normal registered script asset
+PASS ordinary project category registries
+PASS ordinary prefab asset
+PASS normal authoritative runtime world
+PASS normal runtime prefab spawn
+SCRIPT FAILURE Error: sphere independent witness/order/miss
+    at check (Assets/batch.js:7:43)
+    at start (Assets/batch.js:29:77)
+
+FAIL real VM correctness phase without faults

@@ -1,0 +1,21 @@
+{
+  "batch": {
+    "bridgeCalls": 1.0,
+    "filterPreparations": 1.0,
+    "geometricQueries": 100.0,
+    "maximumCallbackUs": 592.994,
+    "medianCallbackUs": 437.359,
+    "profiledGeometryMs": 0.09024000000000007
+  },
+  "rays": 100,
+  "samples": 21,
+  "scalar": {
+    "bridgeCalls": 100.0,
+    "filterPreparations": 100.0,
+    "geometricQueries": 100.0,
+    "maximumCallbackUs": 825.816,
+    "medianCallbackUs": 705.637,
+    "profiledGeometryMs": 0.103704
+  },
+  "warmupCallbacks": 5
+}

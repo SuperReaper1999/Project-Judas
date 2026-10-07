@@ -11,12 +11,15 @@ to maximum distance. No all-hits binding exists.
 
 | Method | Signature / result |
 |---|---|
-| `raycast` | `(origin, direction, maximum, filter={}) → CastHit|null` |
-| `sphereCast` | `(origin, radius, direction, maximum, filter={}) → CastHit|null` |
-| `capsuleCast` | `({position,rotation?}, radius, halfHeight, direction, maximum, filter={}) → CastHit|null` |
-| `boxCast` | `({position,rotation?}, halfExtents, direction, maximum, filter={}) → CastHit|null` |
-| `closestPoint` | `(point, maximum, filter={}) → ClosestPointHit|null`; bounded nearest **surface** search |
-| `joint` | `(ownerEntity) → Joint|null`; owner is the entity authoring the joint component, not automatically a connected body. |
+| `raycast` | `(origin, direction, maximum, filter={}) → CastHit\|null` |
+| `raycastMany` | `([{origin,direction,maximum}, …], filter={}) → (CastHit\|null)[]`; up to 256 |
+| `sphereCast` | `(origin, radius, direction, maximum, filter={}) → CastHit\|null` |
+| `sphereCastMany` | `([{origin,radius,direction,maximum}, …], filter={}) → (CastHit\|null)[]`; up to 256 |
+| `capsuleCast` | `({position,rotation?}, radius, halfHeight, direction, maximum, filter={}) → CastHit\|null` |
+| `capsuleCastMany` | `([{pose:{position,rotation?},radius,halfHeight,direction,maximum}, …], filter={}) → (CastHit\|null)[]`; up to 256 |
+| `boxCast` | `({position,rotation?}, halfExtents, direction, maximum, filter={}) → CastHit\|null` |
+| `closestPoint` | `(point, maximum, filter={}) → ClosestPointHit\|null`; bounded nearest **surface** search |
+| `joint` | `(ownerEntity) → Joint\|null`; owner is the entity authoring the joint component, not automatically a connected body. |
 
 Pose-local Y is the capsule core axis, not universal world up. Capsule full height
 is `2*(halfHeight+radius)`. Boxes use positive half extents. Default cast rotation
@@ -38,6 +41,52 @@ are project-name arrays; `ignored` is Entity[] (up to 256), `includeSensors` def
 false. Includes default to all, excludes to none; all required tags must match,
 any excluded tag rejects. Unknown names throw. Query masks are independent of
 physical body collision masks. Ignored missing bodies are skipped safely.
+
+## Batched nearest casts (M69)
+
+`raycastMany`, `sphereCastMany` and `capsuleCastMany` cross the JS/native bridge
+**once per accepted batch**. Native code validates all requests, prepares the
+one shared `QueryFilter` once, then performs the existing scalar geometry query
+for each request. This saves bridge/filter marshalling work; 100 rays still mean
+100 geometric queries. There is no promised machine-independent speedup.
+
+The input must be an array of at most **256** requests. Results correspond
+one-for-one in **input order**, retaining null misses and repeated requests;
+there is no result sort, truncation or implicit splitting. `[]` returns `[]`.
+Oversized requests throw RangeError. Malformed entries throw an indexed TypeError
+before any geometry query executes, so an invalid middle entry cannot produce a
+partial result. Invalid shared filter names/handles follow scalar query rules.
+
+All scalar limits apply: finite coordinates/distance/dimensions, nonzero finite
+direction, nonnegative maximum/radius/halfHeight, and nonzero valid quaternion
+when supplied. Directions/rotations normalize as in scalar casts. A zero maximum
+can test initial overlap. Capsule `pose` is required; omitted rotation is identity.
+Pose-local Y remains the capsule axis, not world up.
+
+Batches are synchronous read-only questions against the same authoritative world
+as scalar casts. They do not advance physics, run callbacks between requests or
+copy a world snapshot for a worker. Use `fixedUpdate` for gameplay queries that
+should coincide with authoritative control; other phases have the same legal
+read-only query behaviour as scalar calls. Retained hits are detached observations
+with ordinary generation-safe Entity wrappers; they do not extend body lifetime.
+Sensors, layers/tags, exclusions, ignored entities and rotated geometry use the
+same `QueryFilter` and broadphase/narrowphase. Terrain inherits existing scalar
+approximation/coverage. No box, overlap or all-hits batch binding is provided.
+
+```js
+const rays = [
+  {origin: {x:0,y:2,z:0}, direction: {x:0,y:0,z:-1}, maximum: 12},
+  {origin: {x:1,y:2,z:0}, direction: {x:0,y:0,z:-1}, maximum: 12}
+];
+const hits = physics.raycastMany(rays, {ignored: [this.entity]});
+for (let i=0; i<hits.length; ++i) {
+  const hit=hits[i]; // Null stays at the request's index.
+  if (hit?.entity?.valid) console.log(i, hit.entity.id, hit.distance);
+}
+```
+
+[The copyable 100-ray fan](examples/ray-fan.js) includes optional scalar-result
+comparison. It only returns observations; ledge selection/climbing remain game JS.
 
 `world.overlap(min,max,filter={})` returns entity wrappers from conservative
 broadphase bounds in ascending body-slot order, NOT exact overlap penetration

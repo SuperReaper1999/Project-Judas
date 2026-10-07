@@ -15,6 +15,8 @@ physics or VM. Example names/IDs are content, not engine-owned semantics.
 | [input-motion.js](examples/input-motion.js) | Any movable visual entity; `move_x` axis. Explicit teleport example, not collision locomotion. |
 | [spawn.js](examples/spawn.js) | Registered prefab ID property; constructs independent hierarchy. |
 | [queries.js](examples/queries.js) | Floor below origin, colliders; ray and sphere cast, ignore owner. |
+| [paired-stick.js](examples/paired-stick.js) | `flick_stick` paired right-stick binding; frame raw/circular/delta display and fixed-step ordered observations without stealing another reader's samples. |
+| [ray-fan.js](examples/ray-fan.js) | Owner facing a wall/ledge (local -Z), `compare_rays` action; 100 ordered batch hit/miss results and an optional same-world scalar comparison. |
 | [contacts.js](examples/contacts.js) | Dynamic collider resting on floor; enter/stay/exit reactions. Use same script on authored sensor for triggers. |
 | [audio.js](examples/audio.js) | Authored AudioEmitter; play/pause/resume/stop requests. |
 | [particles.js](examples/particles.js) | Authored visual ParticleEmitter. |
@@ -91,3 +93,44 @@ Fixture is the original rig in [current integration project](../../projects/m65_
 example for configured projection/behind points, layout snapshots/atomic mutation,
 independent prefab initial properties/state/world velocity and stale handles. It
 uses registered assets from [World Workshop](../../projects/world_workshop/README.md).
+
+## Paired input and batched queries (M69 candidate)
+
+[paired-stick.js](examples/paired-stick.js) keeps render-frame reads separate from
+authoritative fixed-step observation processing. Its `state` exposes raw and
+circular values, net frame delta, twelve recent delivered samples, monotonic
+cursor, reset/overflow counts and per-phase read counts. Author `flick_stick` as
+shown in [input reference](input.md#circular-vector-binding). Hardware absence
+means neutral readings; synthetic focused checks are not human controller testing.
+
+[ray-fan.js](examples/ray-fan.js) builds a 10×10 fan from the owner's local
+orientation, with ordinary `maximum`, `spread` and `height` script properties.
+It records all 100 result positions, including null misses, in `state.results`.
+Bind `compare_rays` to a convenient logical action (the small fixture uses C) to
+perform 100 scalar calls on the unchanged world and record `state.matched`.
+That comparison is optional game-side evidence, not the production batch path.
+The example implements no trick recognizer or ledge-choice policy.
+
+The final M69 gate executes these two cases only through
+`judasjs_examples_tests <fresh-output> paired-stick` and
+`judasjs_examples_tests <fresh-output> ray-fan`, using private copies of ordinary
+project content. API/types/live enumeration uses the existing `surface` case and
+`scripts/check_judasjs_api.mjs`. See [M69 evidence](../evidence/m69/REPORT.md) for
+the actual commands/results and any untested hardware claims; do not substitute
+the older M50 runner, which would build and execute unrelated examples again.
+
+### Small operator fixture
+
+`python3 scripts/create_m69_example.py` creates a private ordinary project at
+`.cache/m69/example/m69_example.judasproj` by copying the current character arena.
+It preserves source projects and refuses an existing output. Launch with
+`build/judas .cache/m69/example/m69_example.judasproj` (or open that project in the
+editor). The final M69 gate creates this copy; it is not a required runtime tool.
+
+The normal `.judasui` HUD displays raw/circular/frame values, six ordered samples,
+cursor/reset/overflow counts and all-hit/miss totals. Right-stick diagonals and
+out-and-back movement exercise observations; C compares the 100-ray batch with
+100 scalar rays in the same world. Escape pauses/resumes, R reloads, Q quits.
+No device is substituted for human controller feel: an absent controller reads
+neutral. The source [generator](../../scripts/create_m69_example.py) and its small
+JS display subclasses use only ordinary authoring and public APIs.

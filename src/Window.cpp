@@ -49,6 +49,7 @@ Window::~Window() {
 
 void Window::Shutdown() {
     if(m_controller){SDL_GameControllerClose(m_controller);m_controller=nullptr;}
+    m_controllerId=-1;m_controllerInputReady=false;
     m_input.Reset();
     if (m_glContext) {
         SDL_GL_DeleteContext(m_glContext);
@@ -105,6 +106,7 @@ void Window::ClearPendingRequests() {
 }
 
 void Window::SetInputClaimed(bool keyboard, bool mouse) {
+    if(m_keyboardClaimed!=keyboard){m_controllerInputReady=false;m_input.ClearDevice("stick:");}
     m_keyboardClaimed = keyboard;
     m_mouseClaimed = mouse;
 }
@@ -113,17 +115,26 @@ namespace {
 const char* PadButton(int b){static const char* names[]={"South","East","West","North","Back","Guide","Start","LeftStick","RightStick","LeftShoulder","RightShoulder","DpadUp","DpadDown","DpadLeft","DpadRight"};return b>=0&&b<15?names[b]:nullptr;}
 const char* PadAxis(int a){static const char* names[]={"LeftX","LeftY","RightX","RightY","LeftTrigger","RightTrigger"};return a>=0&&a<6?names[a]:nullptr;}
 const char* MouseButton(int b){switch(b){case 1:return "Left";case 2:return "Middle";case 3:return "Right";case 4:return "X1";case 5:return "X2";default:return nullptr;}}
+float NormalizedPadAxis(int axis,int value){return axis>=4?std::max(0,value)/32767.f:value/(value<0?32768.f:32767.f);}
 }
-void Window::RefreshController(){
-    if(m_controller&&!SDL_GameControllerGetAttached(m_controller)){SDL_GameControllerClose(m_controller);m_controller=nullptr;m_controllerId=-1;m_input.ClearDevice("pad:");m_input.ClearDevice("stick:");}
-    if(!m_controller){for(int i=0;i<SDL_NumJoysticks();++i)if(SDL_IsGameController(i)){m_controller=SDL_GameControllerOpen(i);if(m_controller){m_controllerId=SDL_JoystickInstanceID(SDL_GameControllerGetJoystick(m_controller));break;}}}
-    if(m_controller){
+void Window::RefreshController(bool poll){
+    if(m_controller&&!SDL_GameControllerGetAttached(m_controller)){SDL_GameControllerClose(m_controller);m_controller=nullptr;m_controllerId=-1;m_controllerInputReady=false;m_input.ClearDevice("pad:");m_input.ClearDevice("stick:");}
+    if(!m_controller){for(int i=0;i<SDL_NumJoysticks();++i)if(SDL_IsGameController(i)){m_controller=SDL_GameControllerOpen(i);if(m_controller){m_controllerId=SDL_JoystickInstanceID(SDL_GameControllerGetJoystick(m_controller));m_controllerInputReady=false;m_input.ClearDevice("stick:");break;}}}
+    if(m_controller&&poll){
+        const bool available=!m_keyboardClaimed&&m_inputFocused;
         for(int b=0;b<15;++b)m_input.SetPhysical(std::string("pad:")+PadButton(b),(m_keyboardClaimed||!m_inputFocused)?0:SDL_GameControllerGetButton(m_controller,static_cast<SDL_GameControllerButton>(b)));
-        for(int a=0;a<6;++a){const int v=SDL_GameControllerGetAxis(m_controller,static_cast<SDL_GameControllerAxis>(a));const float normalized=a>=4?std::max(0,v)/32767.f:v/(v<0?32768.f:32767.f);m_input.SetPhysical(std::string("stick:")+PadAxis(a),(m_keyboardClaimed||!m_inputFocused)?0:normalized);}
+        auto axis=[&](int a){return available?NormalizedPadAxis(a,SDL_GameControllerGetAxis(m_controller,static_cast<SDL_GameControllerAxis>(a))):0.f;};
+        m_input.SetStick("left",axis(0),axis(1),!m_controllerInputReady||!available);
+        m_input.SetStick("right",axis(2),axis(3),!m_controllerInputReady||!available);
+        for(int a=4;a<6;++a)m_input.SetPhysical(std::string("stick:")+PadAxis(a),axis(a));
+        m_controllerInputReady=available;
     }
 }
 void Window::PollEvents(){
     m_input.BeginFrame();m_consumed.clear();
+    // Select one controller before events, but do not overwrite the previous
+    // pair with its final poll: each delivered axis event must remain observable.
+    if(!m_testInputMode)RefreshController(false);
     for(const auto& [control,value]:m_testPhysical){m_input.SetPhysical(control,value);}
     m_testPhysical.clear();
     if(m_keyboardClaimed)m_input.ClearDevice("key:");
@@ -137,13 +148,17 @@ void Window::PollEvents(){
         else if(event.type==SDL_WINDOWEVENT){
             if(event.window.event==SDL_WINDOWEVENT_CLOSE)m_shouldClose=true;
             if(event.window.event==SDL_WINDOWEVENT_SIZE_CHANGED){m_width=event.window.data1;m_height=event.window.data2;}
-            if(event.window.event==SDL_WINDOWEVENT_FOCUS_LOST&&!m_testInputMode){m_inputFocused=false;m_input.Reset();ClearPendingRequests();}
+            if(event.window.event==SDL_WINDOWEVENT_FOCUS_LOST&&!m_testInputMode){m_inputFocused=false;m_controllerInputReady=false;m_input.Reset();ClearPendingRequests();}
             if(event.window.event==SDL_WINDOWEVENT_FOCUS_GAINED){
-                m_inputFocused=true;
+                m_inputFocused=true;m_controllerInputReady=false;
                 // SDL/compositor capture can disappear independently of the
                 // gameplay request. Restore that request, preserving paused UI.
                 SetMouseCaptured(m_mouseCaptured);
             }
+        }else if(event.type==SDL_CONTROLLERDEVICEREMOVED&&event.cdevice.which==m_controllerId){
+            RefreshController(false);
+        }else if(event.type==SDL_CONTROLLERAXISMOTION&&event.caxis.which==m_controllerId&&m_controllerInputReady&&!m_keyboardClaimed&&m_inputFocused){
+            if(const auto* axis=PadAxis(event.caxis.axis))m_input.SetPhysical(std::string("stick:")+axis,NormalizedPadAxis(event.caxis.axis,event.caxis.value));
         }else if((event.type==SDL_KEYDOWN||event.type==SDL_KEYUP)&&!m_keyboardClaimed){
             m_input.SetPhysical(std::string("key:")+SDL_GetScancodeName(event.key.keysym.scancode),event.type==SDL_KEYDOWN?1:0);
         }else if((event.type==SDL_MOUSEBUTTONDOWN||event.type==SDL_MOUSEBUTTONUP)&&!m_mouseClaimed){

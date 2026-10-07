@@ -1,9 +1,9 @@
-# JudasJS — current API reference (M67 provisional)
+# JudasJS — current API reference (M69 candidate)
 
 JUDAS PROVIDES ENGINE PRIMITIVES. JAVASCRIPT PROVIDES GAME BEHAVIOUR.
 
-This reference describes accepted M66 plus the provisional M67 candidate, based on
-checkpoint `b9a8cf3b8d8cd3786272480a8abe6cbe9fffe859`. It is not an eternal
+This reference describes the M69 paired-input/query candidate on accepted M68,
+checkpoint `c042797c755df68b45e36aa917c4ca72818b9bcd`. It is not an eternal
 compatibility/semantic-version promise. Source authority is `src/ScriptSystem.cpp`
 and the runtime systems it calls; demos do not define API.
 M67 is checkpointed provisionally by operator authorization; proper human validation
@@ -29,7 +29,7 @@ M59 added optional additive residency through [scenes streaming](judasjs/streami
 | Entity, transform, tags, spawnPrefab | [Entities/prefabs](judasjs/entities.md) |
 | profiler.scope / profiler.counter | [Custom diagnostics](judasjs/profiling.md) |
 | input, time, console | [Input/time](judasjs/input.md) |
-| physics.raycast/sphereCast/capsuleCast/boxCast/closestPoint, Entity.collider, Joint, contacts/triggers | [Physics](judasjs/physics.md) · [Collider inspection](judasjs/entities.md#entitycollider) |
+| physics.raycast/sphereCast/capsuleCast, their Many batches, boxCast/closestPoint, Entity.collider, Joint, contacts/triggers | [Physics](judasjs/physics.md) · [Collider inspection](judasjs/entities.md#entitycollider) |
 | Audio, particles, camera, world.fluidSample | [Effects/view](judasjs/effects-camera.md) |
 | ui, UIDocument, UIElement, onUI | [Runtime UI](judasjs/ui.md) |
 | localization, Unicode layout, catalogs/fonts | [Localization/text](judasjs/localization.md) |
@@ -107,6 +107,12 @@ independent one-shots, authored groups/fades and approximate spatial effects.
 [Project slots, durable references and restore lifecycle](judasjs/saves.md) | [Subsystem participation and storage](M61_SAVES.md).
 
 M64 adds [collider snapshots / closest surface queries](M64_COLLISION.md) through the existing physics/entity APIs.
+
+M69 adds raw paired controller snapshots, explicit circular vector bindings and
+bounded ordered observation history through [input](judasjs/input.md#paired-sticks-m69),
+plus synchronous 256-entry [nearest-cast batches](judasjs/physics.md#batched-nearest-casts-m69).
+The [two focused examples](judasjs/cookbook.md#paired-input-and-batched-queries-m69-candidate)
+use the ordinary public APIs; trick recognition and ledge selection stay in game JS.
 
 M65 adds resolved joints/limb IK/visual sockets, gravity samples, shared physical
 materials/runtime joints and ordinary motor touch events. [Integration](M65_INTEGRATION.md)

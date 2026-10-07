@@ -1,0 +1,23 @@
+Renderer fragment texture units: 32 (material path uses 12)
+PASS ordinary private project created
+PASS real EngineHost and input service
+PASS registered public-API probe asset
+PASS normal authored UI for pause routing
+PASS project saves paired binding normally
+PASS registered startup scene saved
+PASS normal world with script and UI
+PASS normal input map installed
+PASS ordinary play session begins
+PASS out-and-back delivered before a fixed step survives a zero-step render frame
+PASS neutral endpoint and net delta do not erase the observation history
+PASS ordered timed copied snapshots are non-destructive across readers
+PASS public input arguments validated in real frame callbacks
+PASS catch-up fixed steps recognize new sample IDs once per script cursor
+PASS raw and circular values marshal independently through VM
+PASS real JS cursor reader detects bounded history overflow
+PASS authored modal pause opens through normal logical input
+PASS resume discards observations delivered while paused without losing its button edge
+PASS registered scene reload at safe outer boundary
+PASS scene replacement invalidates old paired observations before new scripts
+PASS replacement VM has no stale input/script faults
+SUMMARY 21 checks 0 failures

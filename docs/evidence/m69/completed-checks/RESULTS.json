@@ -1,0 +1,100 @@
+{
+  "pass": true,
+  "scope": "Operator-authorized test fixture correction and pending checks; passed input fixtures not repeated.",
+  "commands": [
+    {
+      "name": "batch-build",
+      "command": [
+        "cmake",
+        "--build",
+        "/home/conner/Documents/GitHub/Project-Judas/build",
+        "--parallel",
+        "4",
+        "--target",
+        "judas_physics_batch_script_tests"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+      "exitCode": 0,
+      "seconds": 8.280891104994225
+    },
+    {
+      "name": "batch-vm",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_physics_batch_script_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m69/remaining-checks/batch-vm"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+      "exitCode": 0,
+      "seconds": 0.06431938700552564
+    },
+    {
+      "name": "cookbook-paired-stick",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judasjs_examples_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m69/remaining-checks/examples",
+        "paired-stick"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+      "exitCode": 0,
+      "seconds": 0.21465884299686877
+    },
+    {
+      "name": "cookbook-ray-fan",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judasjs_examples_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m69/remaining-checks/examples",
+        "ray-fan"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+      "exitCode": 0,
+      "seconds": 0.31491575799736893
+    },
+    {
+      "name": "cookbook-surface",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judasjs_examples_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m69/remaining-checks/examples",
+        "surface"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+      "exitCode": 0,
+      "seconds": 0.2157395149988588
+    },
+    {
+      "name": "api-types-live",
+      "command": [
+        "/home/conner/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/bin/node",
+        "/home/conner/Documents/GitHub/Project-Judas/scripts/check_judasjs_api.mjs",
+        "--typescript",
+        "/tmp/judas-m66-typescript/package/lib/typescript.js",
+        "--runtime",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m69/remaining-checks/examples/surface.json"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+      "exitCode": 0,
+      "seconds": 1.2667865719995461
+    },
+    {
+      "name": "create-example",
+      "command": [
+        "python3",
+        "/home/conner/Documents/GitHub/Project-Judas/scripts/create_m69_example.py",
+        "--output",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m69/example"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+      "exitCode": 0,
+      "seconds": 0.11450391100515844
+    },
+    {
+      "name": "example-startup",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m69/example/m69_example.judasproj"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+      "exitCode": 0,
+      "seconds": 0.4150913080011378
+    }
+  ]
+}

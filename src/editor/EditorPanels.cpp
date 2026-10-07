@@ -905,27 +905,28 @@ void DrawProjectSettingsPanel(EditorDocument& doc, EditorPanelState& state, Edit
         for(auto it=nav.profiles.begin();it!=nav.profiles.end();++it){auto& p=it->second;ImGui::PushID(int(it->first)+1000);char name[256];CopyToBuffer(p.name,name,sizeof(name));if(ImGui::InputText("Profile name",name,sizeof(name)))p.name=name;ImGui::DragFloat("Radius",&p.radius,.01f,.02f,10);ImGui::DragFloat("Height",&p.height,.05f,.1f,20);ImGui::DragFloat("Slope degrees",&p.slope,1,0,89);ImGui::DragFloat("Climb",&p.climb,.01f,0,p.height*.9f);if(it->first&&ImGui::Button("Delete profile")){nav.profiles.erase(it);ImGui::PopID();break;}ImGui::PopID();}
         ImGui::TextWrapped("Stable IDs are never reused. Up to 62 navigation areas and 64 lifetime profile IDs. Changing profiles/source geometry requires rebaking; Save project persists settings.");
     }
-    if(ImGui::CollapsingHeader("Input actions and axes")){
-        static char newName[128]="";static bool newAxis=false;
-        ImGui::InputText("New input name",newName,sizeof(newName));ImGui::Checkbox("Analog axis",&newAxis);
-        if(ImGui::Button("Create input")){if(!s.input.Add(newName,newAxis))state.status="Input name is empty or already exists";else newName[0]=0;}
-        ImGui::TextWrapped("Controls: key:Space, mouse:Left, mouse:dx/dy/wheelX/wheelY, pad:South, stick:LeftX. Edit bindings, then Save project. Play uses these bindings.");
+    if(ImGui::CollapsingHeader("Input actions, axes and vectors")){
+        static char newName[128]="";static int newType=0;
+        ImGui::InputText("New input name",newName,sizeof(newName));ImGui::Combo("Input type",&newType,"Action\0Scalar axis\0Paired vector\0");
+        if(ImGui::Button("Create input")){if(!(newType==2?s.input.AddVector(newName):s.input.Add(newName,newType==1)))state.status="Input name is empty or already exists";else newName[0]=0;}
+        ImGui::TextWrapped("Scalar controls: key:Space, mouse:Left, mouse:dx/dy/wheelX/wheelY, pad:South, stick:LeftX. Paired vectors use stick:Left or stick:Right. Circular processing preserves direction, then applies signed X/Y scales. Save project persists bindings.");
         for(std::size_t i=0;i<s.input.entries.size();++i){
             auto& entry=s.input.entries[i];ImGui::PushID(static_cast<int>(i));
-            if(ImGui::TreeNode(entry.name.c_str(),"%s (%s)",entry.name.c_str(),entry.axis?"axis":"action")){
+            if(ImGui::TreeNode(entry.name.c_str(),"%s (%s)",entry.name.c_str(),entry.vector?"vector":entry.axis?"axis":"action")){
                 char inputName[129];CopyToBuffer(entry.name,inputName,sizeof(inputName));
                 if(ImGui::InputText("Rename",inputName,sizeof(inputName)))s.input.Rename(entry.name,inputName);
                 if(ImGui::Button("Delete input")){const auto name=entry.name;s.input.Remove(name);ImGui::TreePop();ImGui::PopID();break;}
                 for(std::size_t b=0;b<entry.bindings.size();++b){
                     ImGui::PushID(static_cast<int>(b));auto binding=entry.bindings[b];char control[129];CopyToBuffer(binding.control,control,sizeof(control));
                     bool changed=ImGui::InputText("Control",control,sizeof(control));binding.control=control;
-                    changed|=ImGui::DragFloat("Scale",&binding.scale,.05f,-10000,10000);
+                    changed|=ImGui::DragFloat(entry.vector?"X scale / inversion":"Scale",&binding.scale,.05f,-10000,10000);
+                    if(entry.vector){changed|=ImGui::DragFloat("Y scale / inversion",&binding.scaleY,.05f,-10000,10000);changed|=ImGui::Checkbox("Circular deadzone",&binding.circular);}
                     if(binding.control.rfind("stick:",0)==0)changed|=ImGui::SliderFloat("Deadzone",&binding.deadzone,0,.99f);
                     if(changed&&!s.input.ReplaceBinding(entry.name,b,binding))state.status="Invalid input binding";
                     if(ImGui::Button("Remove binding")){s.input.RemoveBinding(entry.name,b);ImGui::PopID();break;}
                     ImGui::Separator();ImGui::PopID();
                 }
-                if(ImGui::Button("Add binding"))s.input.AddBinding(entry.name,{"key:Space"});
+                if(ImGui::Button("Add binding"))s.input.AddBinding(entry.name,entry.vector?InputBinding{"stick:Left",1,.15f,1,true}:InputBinding{"key:Space"});
                 ImGui::TreePop();
             }ImGui::PopID();
         }

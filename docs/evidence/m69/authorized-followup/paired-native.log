@@ -1,0 +1,44 @@
+PASS paired binding authors independently of existing scalar bindings
+PASS paired map installs
+PASS default scalar action short-press semantics survive zero-step frames
+PASS old button catch-up steps do not duplicate edges
+PASS opposed keyboard and unclamped mouse scalar bindings remain compatible
+PASS old relative mouse binding still resets each frame
+PASS raw paired values/frame delta are independent from fixed steps
+PASS circular deadzone preserves diagonal direction then applies Y inversion
+PASS old scalar deadzones retain independent response
+PASS raw diagonal is not clamped to unit circle; new processed radial response is
+PASS circular boundary is neutral
+PASS circular travel outside deadzone is rescaled once
+PASS invalid/nonfinite paired settings reject atomically
+PASS paired and scalar binding types remain distinct
+PASS extended legacy input map round-trips paired fields
+PASS old default input maps preserve their canonical v1 representation
+PASS M67 named input documents round-trip vector/circular/inversion settings
+PASS normal project input-map integration round-trips
+PASS named project authoring retains paired map
+PASS compact structured authoring keeps old scalar defaults
+PASS compact structured authoring exposes paired settings through normal serializer
+PASS out-and-back observations survive neutral endpoint/net delta before any fixed step
+PASS repeated readers receive identical non-destructive snapshots
+PASS observation IDs order monotonically with receipt-time seconds
+PASS zero-step frames/catch-up steps retain history while reader cursor prevents repeats
+PASS bounded ring reports overflow instead of pretending truncated flick is complete
+PASS global sequence gaps from other stick do not fabricate per-stick overflow
+PASS pause/session edge discard clears stick history/delta with detectable reset
+PASS first observation after discontinuity establishes baseline without fabricated flick
+PASS subsequent actual movement remains observable after baseline
+PASS disconnect clears raw movement and pending observations
+PASS UI consumption suppresses paired bindings sharing a constituent scalar control
+PASS input resumes held values without stale consumed observations
+PASS normal SDL/GL Window input backend starts
+PASS two synthetic SDL controllers exercise actual device selection; no hardware claim
+PASS delivered SDL neutral/diagonal/neutral axis events survive one render pump; other controller ignored
+PASS backend negative/positive endpoints reuse current normalization and SDL signs
+PASS normal focus loss neutralizes raw pair and clears history
+PASS focus regain restores held controller as baseline without false motion
+PASS editor-owned controller input is neutral with no pending gameplay flick
+PASS editor ownership release rebaselines held controller
+PASS controller reassignment uses same new device pair with neutral delta/history
+PASS no controller yields defined neutral raw pair
+SUMMARY checks=43 failures=0

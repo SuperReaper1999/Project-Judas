@@ -1,0 +1,29 @@
+{
+  "startingHead": "c042797c755df68b45e36aa917c4ca72818b9bcd",
+  "pass": false,
+  "commands": [
+    {
+      "name": "release-build",
+      "command": [
+        "cmake",
+        "--build",
+        "/home/conner/Documents/GitHub/Project-Judas/build",
+        "--parallel",
+        "4",
+        "--target",
+        "judas",
+        "judas_editor",
+        "judas_scene_author",
+        "judas_paired_input_tests",
+        "judas_paired_input_script_tests",
+        "judas_physics_batch_script_tests",
+        "judasjs_examples_tests"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+      "exitCode": 2,
+      "seconds": 102.78222716799792
+    }
+  ],
+  "scope": "One incremental Release build; paired input/native VM, query batch, two cookbook examples and API/type/live checks. No production suite or hardware-feel claim.",
+  "failure": "release-build failed (2); STOP, no retry. See /home/conner/Documents/GitHub/Project-Judas/.cache/m69/gate/release-build.log"
+}

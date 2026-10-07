@@ -97,6 +97,10 @@ float InteractivePlay::Frame(Window& window, Renderer& renderer, float frameDelt
     JUDAS_PROFILE_SCOPE("Play frame");
     RuntimeWorld& world = m_session.World();
 
+    // Paired controller observations belong to this play session. A menu's
+    // resume frame must not replay stick movement delivered while it owned input.
+    if (!m_captureInitialized || IsPaused()) window.Input().DiscardStickHistory();
+
     // --- Milestone 13: the single input-routing boundary ---
     // Everything UI-related is handled here, before any gameplay system
     // sees this frame's input. Gameplay code is never told a menu exists;

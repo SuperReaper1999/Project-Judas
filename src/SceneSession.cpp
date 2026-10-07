@@ -99,6 +99,7 @@ bool SceneSession::AdvanceOuter(std::unique_ptr<RuntimeWorld>& owner,Interactive
     if(previous!=owner.get())input.DiscardPending();
     // A save error must remain visible rather than being overwritten by Apply.
     std::string transitionError;bool ok=Apply(owner,play,resources,transitionError);
+    if(previous!=owner.get())input.DiscardStickHistory();
     if(!transitionError.empty()){if(!error.empty())error+="; ";error+=transitionError;}
     return ok;
 }

@@ -18,7 +18,7 @@ void Check(bool ok,const std::string& label){++checks;failures+=!ok;std::printf(
 int main(int argc,char** argv){
  fs::path out=argc>1?argv[1]:"build/m50-results";fs::create_directories(out);std::string only=argc>2?argv[2]:"";
  std::string error;EngineHost host;Check(host.Init("M50 cookbook",640,360,false,error),"real EngineHost");if(failures)return 1;host.Audio().Init(error,true);
- const char* names[]={"authoring-runtime","imported-model","developer-integration","fracture","deformable","saves","streaming","localization","materials","profiling","liquid-surface","liquid","navigation","surface","presentation","impulse-point","physical-control","minimal","input-motion","spawn","queries","contacts","trigger","audio","particles","ui","scene-session","joint","animation","ragdoll","character","stale-handle"};
+ const char* names[]={"paired-stick","ray-fan","authoring-runtime","imported-model","developer-integration","fracture","deformable","saves","streaming","localization","materials","profiling","liquid-surface","liquid","navigation","surface","presentation","impulse-point","physical-control","minimal","input-motion","spawn","queries","contacts","trigger","audio","particles","ui","scene-session","joint","animation","ragdoll","character","stale-handle"};
  for(auto name:names){if(!only.empty()&&only!=name)continue;
   std::string n=name,project=n=="authoring-runtime"?"world_workshop":n=="imported-model"?"import_lab":n=="developer-integration"?"m65_integration":n=="fracture"?"fracture_lab":n=="deformable"?"deformable_lab":n=="streaming"?"streamed_range":n=="localization"?"text_lab":n=="liquid-surface"?"liquid_surface_demo":n=="liquid"?"liquid_reservoir_demo":n=="navigation"?"shooter_game":n=="audio"?"script_demo":n=="joint"?"joint_demo":n=="animation"||n=="ragdoll"?"ragdoll_demo":"character_demo";
   auto root=fs::absolute(fs::path("build/m50-examples")/n);fs::remove_all(root);fs::create_directories(root);fs::copy("projects/"+project,root,fs::copy_options::recursive);
@@ -54,6 +54,13 @@ export default class extends Base {
   if(n=="contacts"||n=="trigger"){for(auto& o:scene.Objects()){o.joint.reset();if(o.id!=1&&o.id!=owner)o.body.reset();}def->transform.position={0,.4,0};def->body->halfExtents={.4,.4,.4};def->body->sensor=n=="trigger";}
   if(n=="materials"&&!def->render)def->render=SceneRenderComponent{};
   if(n=="particles")def->particleEmitter=ParticleEmitterSettings{};
+  if(n=="ray-fan"){
+   // Private ordinary content: local-forward wall, no owner body/camera policy.
+   def->body.reset();def->transform.position={0,0,0};def->transform.rotation=glm::quat(1,0,0,0);
+   auto& wall=scene.CreateObject("Cookbook query wall");wall.transform.position={0,2,-10};
+   wall.body=SceneBodyComponent{};wall.body->motion=SceneBodyMotion::Static;wall.body->halfExtents={5,4,.25f};
+   def=scene.Find(owner); // CreateObject may reallocate the ordinary object array.
+  }
   def->scripts.push_back({1,script.id,true,n=="saves"?"{\"cancelForFixture\":true}":"{}"});
   auto& resources=host.Resources();resources.WaitForAll();RuntimeWorld world;
   Check(world.Build(scene,&resources,error,&p.Settings().classification,&p.Settings().navigation),n+" runtime builds");if(!world.IsBuilt()){std::puts(error.c_str());continue;}
@@ -61,7 +68,17 @@ export default class extends Base {
   if(n=="localization")world.UI().Load("cffe801f7c121dc6c96bbf4582e3f46c","text_lab",owner,error);
   if(n=="imported-model"){resources.GetMesh(def->render->meshAsset,error);resources.WaitForAll();world.UpdateAnimations(0);}
   if(n=="animation"||n=="ragdoll"){resources.GetMesh("46464646464646464646464646464601",error);resources.WaitForAll();world.UpdateAnimations(0);}
-  auto& window=host.GetWindow();window.SetTestInputMode(true);window.Input().SetMap(p.Settings().input,error);window.Input().SetPhysical("key:D",1);
+  auto& window=host.GetWindow();window.SetTestInputMode(true);
+  auto exampleInput=p.Settings().input;
+  if(n=="paired-stick"){Check(exampleInput.AddVector("flick_stick")&&exampleInput.AddBinding("flick_stick",{"stick:Right",1,.2f,1,true}),"paired-stick ordinary paired binding");}
+  if(n=="ray-fan"){Check(exampleInput.Add("compare_rays",false)&&exampleInput.AddBinding("compare_rays",{"key:C"}),"ray-fan ordinary compare action");}
+  window.Input().SetMap(exampleInput,error);window.Input().SetPhysical("key:D",1);
+  if(n=="paired-stick"){
+   window.Input().SetStick("right",0,0,true);
+   window.Input().SetStick("right",.75f,.75f);
+   window.Input().SetStick("right",0,0); // Delivered out-and-back before ANY fixed step.
+  }
+  if(n=="ray-fan")window.Input().SetPhysical("key:C",1);
   if(n=="localization"){world.Localization().Refresh();resources.WaitForAll();world.Localization().Refresh();}
   GameSession game;Check(game.Begin(world,error),n+" ordinary fixed-step session");
   if(n=="audio"){resources.WaitForAll();world.BeginAudio();world.UpdateAudio(glm::mat4(1),1,1.f/60);}
@@ -86,6 +103,8 @@ export default class extends Base {
    n=="impulse-point"?yes("angular")&&yes("rejectsInvalid")&&yes("linear")&&yes("unchanged"):
    n=="physical-control"?yes("capture")&&state.find("\"mass\":40")!=std::string::npos:
    n=="minimal"?state.find("\"started\":1")!=std::string::npos&&state.find("\"steps\":100")!=std::string::npos:
+   n=="paired-stick"?state.find("\"observations\":2")!=std::string::npos&&state.find("\"frameReads\":100")!=std::string::npos&&state.find("\"fixedReads\":100")!=std::string::npos&&state.find("\"capacity\":128")!=std::string::npos&&state.find("\"x\":0.75")!=std::string::npos:
+   n=="ray-fan"?yes("matched")&&state.find("\"count\":100")!=std::string::npos&&state.find("\"comparisons\":1")!=std::string::npos&&state.find("\"hits\":100")!=std::string::npos:
    n=="input-motion"?yes("moved"):n=="spawn"?yes("spawned"):n=="queries"?yes("ray")&&yes("shape")&&yes("closest")&&yes("collider"):
    n=="contacts"||n=="trigger"?state.find("\"enters\":1")!=std::string::npos&&state.find("\"exits\":1")!=std::string::npos&&state.find("\"stays\":0")==std::string::npos:
    n=="audio"?yes("requested")&&yes("stopped")&&yes("settings")&&yes("seek")&&yes("oneShot")&&yes("group")&&yes("pausedDrop"):n=="particles"?yes("configured")&&yes("burst"):

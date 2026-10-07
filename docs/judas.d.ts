@@ -1,5 +1,5 @@
-/** Current JudasJS through the M67 candidate; reviewed against ScriptSystem.cpp
- * based on accepted M66 b9a8cf3b8d8cd3786272480a8abe6cbe9fffe859. Tooling only, no TS runtime.
+/** Current JudasJS through the M69 candidate; reviewed against ScriptSystem.cpp
+ * based on accepted M68 c042797c755df68b45e36aa917c4ca72818b9bcd. Tooling only, no TS runtime.
  * See JUDASJS.md. Ordinary returned objects are detached snapshots.
  */
 declare module "judas" {
@@ -18,6 +18,10 @@ declare module "judas" {
   export interface TransformPatch { position?: Vec3; rotation?: Quat; scale?: Vec3 }
   export interface CastPose { position: Vec3; rotation?: Quat }
   export interface Ray { origin: Vec3; direction: Vec3 }
+  /** One nearest-hit request, using the scalar cast's coordinates and units. */
+  export interface RaycastRequest extends Ray { maximum: number }
+  export interface SphereCastRequest extends RaycastRequest { radius: number }
+  export interface CapsuleCastRequest { pose: CastPose; radius: number; halfHeight: number; direction: Vec3; maximum: number }
   export interface QueryFilter {
     includeLayers?: string[]; excludeLayers?: string[];
     requiredTags?: string[]; excludedTags?: string[];
@@ -331,8 +335,12 @@ declare module "judas" {
     closestPoint(point:Vec3,maximum:number,filter?:QueryFilter):ClosestPointHit|null;
     joint(owner: Entity): Joint | null;
     raycast(origin: Vec3, direction: Vec3, maximum: number, filter?: QueryFilter): CastHit | null;
+    /** Synchronous, ordered nearest hits; at most 256 requests, one native bridge crossing. */
+    raycastMany(rays: RaycastRequest[], filter?: QueryFilter): (CastHit | null)[];
     sphereCast(origin: Vec3, radius: number, direction: Vec3, maximum: number, filter?: QueryFilter): CastHit | null;
+    sphereCastMany(casts: SphereCastRequest[], filter?: QueryFilter): (CastHit | null)[];
     capsuleCast(pose: CastPose, radius: number, halfHeight: number, direction: Vec3, maximum: number, filter?: QueryFilter): CastHit | null;
+    capsuleCastMany(casts: CapsuleCastRequest[], filter?: QueryFilter): (CastHit | null)[];
     boxCast(pose: CastPose, halfExtents: Vec3, direction: Vec3, maximum: number, filter?: QueryFilter): CastHit | null;
   };
   /** Opaque request token; only valid in the requesting played-world session. */
@@ -371,7 +379,32 @@ declare module "judas" {
     reload(): void;
   };
   export const session: { get(key: string): JSONValue; set(key: string, value: JSONValue): void; delete(key: string): void };
-  export const input: { pointerCapture: boolean; held(name: string): boolean; pressed(name: string): boolean; released(name: string): boolean; axis(name: string): number };
+  export type StickSide = "left" | "right";
+  export interface InputVector { x: number; y: number }
+  /** Copied backend observation: receipt time in monotonic seconds, not simulation time. */
+  export interface StickSample extends InputVector { sequence: number; time: number }
+  export interface StickHistory {
+    samples: StickSample[];
+    /** Global observation cursor, including observations of the other stick. */
+    sequence: number;
+    /** Cursor predates a reset; discard recognizer state instead of treating the gap as motion. */
+    reset: boolean;
+    /** Requested side has dropped observations; returned history is incomplete. */
+    overflow: boolean;
+    capacity: 128;
+  }
+  export const input: {
+    pointerCapture: boolean;
+    held(name: string): boolean; pressed(name: string): boolean; released(name: string): boolean; axis(name: string): number;
+    /** Raw normalized components, before Judas processing. X right+, Y down+; no unit-circle clamp. */
+    stick(side: StickSide): InputVector;
+    /** Net raw movement observed during the latest render pump, independent of fixed-step count. */
+    stickDelta(side: StickSide): InputVector;
+    /** Processed named paired binding, or neutral if absent/consumed. */
+    vector(name: string): InputVector;
+    /** Non-destructive ordered snapshot; cursor must be a nonnegative safe integer. */
+    stickSamples(side: StickSide, afterSequence?: number): StickHistory;
+  };
   export const time: { readonly elapsed: number; readonly delta: number; readonly fixed: boolean };
   export const console: { log(...args: unknown[]): void };
   export class UIElement {

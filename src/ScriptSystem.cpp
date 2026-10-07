@@ -108,7 +108,9 @@ export const world={entity,get appearance(){return call('appearanceInfo')},setAp
  spawnPrefab:(asset,transform={},options={})=>entity(call('spawn',asset,transform,options)),
  overlap:(min,max,filter={})=>call('overlap',min,max,filter).map(entity),
  sweepCapsule:(from,displacement,rotation={w:1,x:0,y:0,z:0},filter={})=>call('sweep',from,displacement,filter,rotation)};
-const cast=(origin,direction,maximum,filter,shape)=>{const hit=call('cast',origin,direction,filter,{...shape,maximum});return hit?{...hit,entity:entity(hit.entityId)}:null};
+const castResult=hit=>hit?{...hit,entity:entity(hit.entityId)}:null;
+const cast=(origin,direction,maximum,filter,shape)=>castResult(call('cast',origin,direction,filter,{...shape,maximum}));
+const castMany=(kind,requests,filter)=>call('castMany',kind,requests,filter).map(castResult);
 export class Material {
  constructor(entityId,slot=0){this.entityId=entityId;this.slot=slot}
  get state(){return call('materialInfo',this.entityId,this.slot)}
@@ -243,8 +245,11 @@ export const physics={
  closestPoint:(point,maximum,filter={})=>{const hit=call('closestPoint',point,{x:0,y:0,z:0},filter,{maximum});return hit?{...hit,entity:entity(hit.entityId)}:null},
  joint:owner=>{const id=call('joint',owner.id);return id?new Joint(id):null},
  raycast:(origin,direction,maximum,filter={})=>cast(origin,direction,maximum,filter,{kind:'ray'}),
+ raycastMany:(rays,filter={})=>castMany('ray',rays,filter),
  sphereCast:(origin,radius,direction,maximum,filter={})=>cast(origin,direction,maximum,filter,{kind:'sphere',radius}),
+ sphereCastMany:(casts,filter={})=>castMany('sphere',casts,filter),
  capsuleCast:(pose,radius,halfHeight,direction,maximum,filter={})=>cast(pose.position,direction,maximum,filter,{kind:'capsule',rotation:pose.rotation,radius,halfHeight}),
+ capsuleCastMany:(casts,filter={})=>castMany('capsule',casts,filter),
  boxCast:(pose,halfExtents,direction,maximum,filter={})=>cast(pose.position,direction,maximum,filter,{kind:'box',rotation:pose.rotation,halfExtents})};
 export const scenes={get current(){return call('sceneCurrent')},get registered(){return call('sceneList')},load:name=>call('sceneLoad',name),reload:()=>call('sceneReload'),
  get regions(){return call('regionList')},get streamingStats(){return call('regionStats')},
@@ -255,7 +260,7 @@ export const scenes={get current(){return call('sceneCurrent')},get registered()
 export const localization={get locale(){return call('localeInfo').locale},get available(){return call('localeInfo').available},get revision(){return call('localeInfo').revision},get direction(){return call('localeInfo').direction},setLocale:locale=>call('localeChoose',locale),format:(key,args={})=>call('localeFormat',key,args),number:(value,options={})=>call('localeNumber',value,options),reload:()=>call('localeReload')};
 export const saves={save:(slot,options={})=>call('saveRequest','save',slot,options),load:slot=>call('saveRequest','load',slot,{}),delete:slot=>call('saveRequest','delete',slot,{}),refresh:()=>call('saveRequest','list','',{}),list:()=>call('saveList'),exists:slot=>call('saveList').some(s=>s.id===slot),status:request=>call('saveStatus',request),cancel:request=>call('saveCancel',request),exclude:(entity,excluded=true)=>call('saveExclude',entity.id,excluded),reference:entity=>call('saveReference',entity.id),resolve:key=>entity(call('saveResolve',key))};
 export const session={get:key=>call('sessionGet',key),set:(key,value)=>call('sessionSet',key,value),delete:key=>call('sessionDelete',key)};
-export const input={get pointerCapture(){return call('pointerCapture')},set pointerCapture(value){call('setPointerCapture',value)},held:name=>call('held',name),pressed:name=>call('pressed',name),released:name=>call('released',name),axis:name=>call('axis',name)};
+export const input={get pointerCapture(){return call('pointerCapture')},set pointerCapture(value){call('setPointerCapture',value)},held:name=>call('held',name),pressed:name=>call('pressed',name),released:name=>call('released',name),axis:name=>call('axis',name),stick:side=>call('stick',side),stickDelta:side=>call('stickDelta',side),vector:name=>call('vector',name),stickSamples:(side,after=0)=>call('stickSamples',side,after)};
 export const profiler={scope:(label,callback)=>call("profileScope",label,callback),counter:(label,value,mode="sum")=>call("profileCounter",label,value,mode)};
 export const time={get elapsed(){return call('elapsed')},get delta(){return call('delta')},get fixed(){return call('fixed')}};
 export const console={log:(...args)=>call('log',args.map(String).join(' '))};
@@ -640,6 +645,25 @@ JSValue ScriptSystem::Impl::Native(JSContext* c,JSValueConst,int argc,JSValueCon
     if(op=="fixed")return JS_NewBool(c,s->fixed);
     if(op=="pointerCapture")return JS_NewBool(c,world.pointerCapture);
     if(op=="setPointerCapture"){if(!JS_IsBool(arg(1)))return JS_ThrowTypeError(c,"pointerCapture must be boolean");world.pointerCapture=JS_ToBool(c,arg(1));return JS_TRUE;}
+    if(op=="stick"||op=="stickDelta"||op=="vector"||op=="stickSamples"){
+        if(!JS_IsString(arg(1)))return JS_ThrowTypeError(c,"input.%s requires a string",op.c_str());
+        const auto name=String(c,arg(1));
+        if(op!="vector"&&name!="left"&&name!="right")return JS_ThrowTypeError(c,"stick side must be 'left' or 'right'");
+        auto pair=[&](InputVector v){auto o=JS_NewObject(c);JS_SetPropertyStr(c,o,"x",JS_NewFloat64(c,v.x));JS_SetPropertyStr(c,o,"y",JS_NewFloat64(c,v.y));return o;};
+        if(op=="stick")return pair(s->input?s->input->Stick(name):InputVector{});
+        if(op=="stickDelta")return pair(s->input?s->input->StickDelta(name):InputVector{});
+        if(op=="vector")return pair(s->input?s->input->Vector(name):InputVector{});
+        double after=0;
+        if(!JS_IsNumber(arg(2))||JS_ToFloat64(c,&after,arg(2))||!std::isfinite(after)||after<0||after!=std::floor(after)||after>9007199254740991.0)
+            return JS_ThrowTypeError(c,"stick sample cursor must be a nonnegative safe integer");
+        const auto snapshot=s->input?s->input->StickSamples(name,static_cast<uint64_t>(after)):InputStickSnapshot{};
+        if(after>static_cast<double>(snapshot.sequence))return JS_ThrowTypeError(c,"stick sample cursor is ahead of this input service");
+        auto out=JS_NewObject(c),samples=JS_NewArray(c);uint32_t index=0;
+        for(const auto& sample:snapshot.samples){auto value=pair({sample.x,sample.y});JS_SetPropertyStr(c,value,"sequence",JS_NewFloat64(c,static_cast<double>(sample.sequence)));JS_SetPropertyStr(c,value,"time",JS_NewFloat64(c,sample.time));JS_SetPropertyUint32(c,samples,index++,value);}
+        JS_SetPropertyStr(c,out,"samples",samples);JS_SetPropertyStr(c,out,"sequence",JS_NewFloat64(c,static_cast<double>(snapshot.sequence)));
+        JS_SetPropertyStr(c,out,"reset",JS_NewBool(c,snapshot.reset));JS_SetPropertyStr(c,out,"overflow",JS_NewBool(c,snapshot.overflow));JS_SetPropertyStr(c,out,"capacity",JS_NewUint32(c,static_cast<uint32_t>(snapshot.capacity)));
+        return out;
+    }
     if(op=="held"||op=="pressed"||op=="released"||op=="axis"){
         auto name=String(c,arg(1));if(!s->input)return op=="axis"?JS_NewFloat64(c,0):JS_FALSE;
         if(op=="axis")return JS_NewFloat64(c,s->input->Axis(name));
@@ -752,19 +776,93 @@ JSValue ScriptSystem::Impl::Native(JSContext* c,JSValueConst,int argc,JSValueCon
     if(op=="queryTags"){CategoryMask required,excluded;if(!tagMask(arg(1),required)||!tagMask(arg(2),excluded))return JS_ThrowTypeError(c,"unknown tag");return ids(world.QueryEntities(required,excluded));}
     if(op=="spawn"){SceneTransform t;if(!readTransform(arg(2),t))return JS_ThrowTypeError(c,"invalid transform");RuntimeWorld::PrefabSpawnOptions options;auto config=arg(3);if(!KnownOptions(c,config,{"velocity","angularVelocity","scripts"}))return JS_ThrowTypeError(c,"spawn options accept velocity/angularVelocity/scripts only");for(auto [key,destination]:{std::pair<const char*,std::optional<glm::vec3>*>{"velocity",&options.velocity},{"angularVelocity",&options.angularVelocity}}){auto v=JS_GetPropertyStr(c,config,key);if(!JS_IsUndefined(v)){glm::vec3 motion;if(!ReadVec(c,v,motion)){JS_FreeValue(c,v);return JS_ThrowTypeError(c,"finite prefab motion required");}*destination=motion;}JS_FreeValue(c,v);}auto list=JS_GetPropertyStr(c,config,"scripts");std::string error;if(!JS_IsUndefined(list)){if(!JS_IsArray(list)){JS_FreeValue(c,list);return JS_ThrowTypeError(c,"scripts array required");}auto len=JS_GetPropertyStr(c,list,"length");uint32_t n=0;JS_ToUint32(c,&n,len);JS_FreeValue(c,len);if(n>256){JS_FreeValue(c,list);return JS_ThrowRangeError(c,"script init limit");}for(uint32_t i=0;i<n;++i){auto value=JS_GetPropertyUint32(c,list,i);RuntimeWorld::PrefabScriptInit init;auto src=JS_GetPropertyStr(c,value,"source"),slot=JS_GetPropertyStr(c,value,"slot"),props=JS_GetPropertyStr(c,value,"properties"),state=JS_GetPropertyStr(c,value,"state");bool valid=KnownOptions(c,value,{"source","slot","properties","state"});try{auto decimal=[&](JSValueConst v){auto text=String(c,v);if(text.empty()||text.find_first_not_of("0123456789")!=std::string::npos)throw std::runtime_error("decimal ID required");return std::stoull(text);};if(!JS_IsUndefined(src))init.source=decimal(src);init.slot=decimal(slot);}catch(...){valid=false;}if(!JS_IsUndefined(props))valid&=s->Json(props,init.properties,error);if(!JS_IsUndefined(state))valid&=s->Json(state,init.state,error);JS_FreeValue(c,src);JS_FreeValue(c,slot);JS_FreeValue(c,props);JS_FreeValue(c,state);JS_FreeValue(c,value);if(!valid){JS_FreeValue(c,list);return JS_ThrowTypeError(c,"invalid prefab script initialization: %s",error.c_str());}options.scripts.push_back(init);}}JS_FreeValue(c,list);auto id=world.SpawnPrefab(String(c,arg(1)),t,error,options);if(!id)return JS_ThrowTypeError(c,"spawn: %s",error.c_str());return JS_NewString(c,std::to_string(id).c_str());}
     if(op=="viewRay"){if(world.view){auto o=JS_NewObject(c);JS_SetPropertyStr(c,o,"origin",Vec(c,world.view->pose.position));JS_SetPropertyStr(c,o,"direction",Vec(c,world.view->pose.rotation*glm::vec3(0,0,-1)));return o;}if(!s->hasView)return JS_NULL;auto o=JS_NewObject(c);JS_SetPropertyStr(c,o,"origin",Vec(c,s->viewOrigin));JS_SetPropertyStr(c,o,"direction",Vec(c,s->viewDirection));return o;}
-    if(op=="overlap"||op=="sweep"||op=="cast"||op=="closestPoint"){
-        glm::vec3 min,max;if(!ReadVec(c,arg(1),min)||!ReadVec(c,arg(2),max))return JS_ThrowTypeError(c,"invalid bounds");PhysicsQueryFilter filter;
-        auto include=JS_GetPropertyStr(c,arg(3),"includeLayers");auto exclude=JS_GetPropertyStr(c,arg(3),"excludeLayers");
+    // Scalar and batch operations share filter preparation and hit snapshots.
+    // A batch prepares immutable request values before entering any geometry query.
+    auto queryFilter=[&](JSValueConst options,PhysicsQueryFilter& filter,std::string& error){
+        JUDAS_PROFILE_COUNTER("Physics query filter preparations",1,ProfileCounterMode::Sum);
+        auto include=JS_GetPropertyStr(c,options,"includeLayers");auto exclude=JS_GetPropertyStr(c,options,"excludeLayers");
         auto layerMask=[&](JSValueConst a,CategoryMask& mask){if(JS_IsUndefined(a))return true;if(!JS_IsArray(a))return false;auto len=JS_GetPropertyStr(c,a,"length");uint32_t n=0;JS_ToUint32(c,&n,len);JS_FreeValue(c,len);if(n>64)return false;mask=0;
             for(uint32_t i=0;i<n;++i){auto v=JS_GetPropertyUint32(c,a,i);auto name=String(c,v);JS_FreeValue(c,v);int id=world.Categories().collision.Find(name);if(id<0)return false;mask|=CategoryBit(id);}return true;};
-        auto sensors=JS_GetPropertyStr(c,arg(3),"includeSensors");if(!JS_IsUndefined(sensors)&&!JS_IsBool(sensors)){JS_FreeValue(c,sensors);return JS_ThrowTypeError(c,"includeSensors must be boolean");}filter.includeSensors=JS_ToBool(c,sensors)>0;JS_FreeValue(c,sensors);
-        auto required=JS_GetPropertyStr(c,arg(3),"requiredTags"),excluded=JS_GetPropertyStr(c,arg(3),"excludedTags"),ignored=JS_GetPropertyStr(c,arg(3),"ignored");
+        auto sensors=JS_GetPropertyStr(c,options,"includeSensors");if(!JS_IsUndefined(sensors)&&!JS_IsBool(sensors)){JS_FreeValue(c,sensors);JS_FreeValue(c,include);JS_FreeValue(c,exclude);error="includeSensors must be boolean";return false;}filter.includeSensors=JS_ToBool(c,sensors)>0;JS_FreeValue(c,sensors);
+        auto required=JS_GetPropertyStr(c,options,"requiredTags"),excluded=JS_GetPropertyStr(c,options,"excludedTags"),ignored=JS_GetPropertyStr(c,options,"ignored");
         bool tagsOk=(JS_IsUndefined(required)||tagMask(required,filter.requiredTags))&&(JS_IsUndefined(excluded)||tagMask(excluded,filter.excludedTags));
         JS_FreeValue(c,required);JS_FreeValue(c,excluded);
         if(!JS_IsUndefined(ignored)){auto len=JS_GetPropertyStr(c,ignored,"length");uint32_t n=0;JS_ToUint32(c,&n,len);JS_FreeValue(c,len);if(n>256)tagsOk=false;
             for(uint32_t i=0;tagsOk&&i<n;++i){auto v=JS_GetPropertyUint32(c,ignored,i);auto idv=JS_GetPropertyStr(c,v,"id");try{auto body=world.RuntimeBody(std::stoull(String(c,idv)));if(body.IsValid())filter.ignoredBodies.push_back(body);}catch(...){tagsOk=false;}JS_FreeValue(c,idv);JS_FreeValue(c,v);}}
         JS_FreeValue(c,ignored);
-        bool ok=tagsOk&&layerMask(include,filter.includeLayers)&&layerMask(exclude,filter.excludeLayers);JS_FreeValue(c,include);JS_FreeValue(c,exclude);if(!ok)return JS_ThrowTypeError(c,"unknown collision layer");
+        bool ok=tagsOk&&layerMask(include,filter.includeLayers)&&layerMask(exclude,filter.excludeLayers);JS_FreeValue(c,include);JS_FreeValue(c,exclude);if(!ok){error="unknown collision layer/tag or invalid ignored entity";return false;}return true;
+    };
+    struct PreparedCast {std::string kind;BodyTransform pose;glm::vec3 direction{0},halfExtents{0};float maximum=0,radius=0,halfHeight=0;};
+    auto prepareCast=[&](JSValueConst origin,JSValueConst direction,JSValueConst spec,const std::string& kind,JSValueConst rotation,PreparedCast& request,std::string& error,bool readCoordinates=true){
+        request.kind=kind;
+        if(readCoordinates&&(!ReadVec(c,origin,request.pose.position)||!ReadVec(c,direction,request.direction))){error="invalid bounds";return false;}
+        if(!Number(c,spec,"maximum",request.maximum)){error="invalid cast maximum";return false;}
+        if((kind=="sphere"||kind=="capsule")&&!Number(c,spec,"radius",request.radius)){error="invalid radius";return false;}
+        if(kind=="capsule"&&!Number(c,spec,"halfHeight",request.halfHeight)){error="invalid capsule halfHeight";return false;}
+        if(kind=="box"){auto h=JS_GetPropertyStr(c,spec,"halfExtents");bool valid=ReadVec(c,h,request.halfExtents);JS_FreeValue(c,h);if(!valid){error="invalid halfExtents";return false;}}
+        if(kind=="box"||kind=="capsule")if(!JS_IsUndefined(rotation)&&!(Number(c,rotation,"w",request.pose.rotation.w)&&Number(c,rotation,"x",request.pose.rotation.x)&&Number(c,rotation,"y",request.pose.rotation.y)&&Number(c,rotation,"z",request.pose.rotation.z))){error="invalid cast rotation";return false;}
+        if(kind!="ray"&&kind!="sphere"&&kind!="capsule"&&kind!="box"){error="unknown cast shape";return false;}
+        // These are the existing PhysicsWorld::Cast admissibility rules, evaluated
+        // before the batch's first query (double norms preserve tiny directions).
+        auto q=request.pose.rotation;double q2=glm::dot(glm::dvec4(q.x,q.y,q.z,q.w),glm::dvec4(q.x,q.y,q.z,q.w));
+        double d2=glm::dot(glm::dvec3(request.direction),glm::dvec3(request.direction));
+        if(request.maximum<0||d2<=0||!std::isfinite(q2)||q2<=0){error="cast requires nonzero orientation/direction and nonnegative distance";return false;}
+        if(request.radius<0||request.halfHeight<0||(kind=="box"&&(request.halfExtents.x<=0||request.halfExtents.y<=0||request.halfExtents.z<=0))){error="invalid cast dimensions";return false;}
+        return true;
+    };
+    auto executeCast=[&](const PreparedCast& request,const PhysicsQueryFilter& filter){
+        JUDAS_PROFILE_SCOPE("Physics query geometry");
+        JUDAS_PROFILE_COUNTER("Physics geometric queries",1,ProfileCounterMode::Sum);
+        if(request.kind=="ray")return world.Physics().Raycast(request.pose.position,request.direction,request.maximum,filter);
+        if(request.kind=="sphere")return world.Physics().SphereCast(request.pose.position,request.radius,request.direction,request.maximum,filter);
+        if(request.kind=="capsule")return world.Physics().CapsuleCast(request.pose,request.radius,request.halfHeight,request.direction,request.maximum,filter);
+        return world.Physics().BoxCast(request.pose,request.halfExtents,request.direction,request.maximum,filter);
+    };
+    auto castHit=[&](const PhysicsCastHit& hit)->JSValue{
+        if(!hit.hit)return JS_NULL;
+        auto o=JS_NewObject(c);auto id=world.EntityIdOfBody(hit.body);
+        JS_SetPropertyStr(c,o,"entityId",JS_NewString(c,std::to_string(id).c_str()));
+        JS_SetPropertyStr(c,o,"bodyId",JS_NewUint32(c,hit.body.id));
+        JS_SetPropertyStr(c,o,"point",Vec(c,hit.point));JS_SetPropertyStr(c,o,"normal",Vec(c,hit.normal));
+        JS_SetPropertyStr(c,o,"distance",JS_NewFloat64(c,hit.distance));JS_SetPropertyStr(c,o,"fraction",JS_NewFloat64(c,hit.fraction));
+        std::string physical;float friction=0,restitution=0;world.Physics().GetPhysicalMaterial(hit.body,physical,friction,restitution);JS_SetPropertyStr(c,o,"physicalMaterial",physical.empty()?JS_NULL:JS_NewString(c,physical.c_str()));
+        JS_SetPropertyStr(c,o,"primitiveIndex",JS_NewInt32(c,hit.primitiveIndex));
+        JS_SetPropertyStr(c,o,"childKey",JS_NewUint32(c,hit.childKey));JS_SetPropertyStr(c,o,"feature",hit.feature==UINT32_MAX?JS_NULL:JS_NewUint32(c,hit.feature));
+        JS_SetPropertyStr(c,o,"initialOverlap",JS_NewBool(c,hit.initialOverlap));
+        JS_SetPropertyStr(c,o,"shape",JS_NewString(c,hit.shape==ShapeType::Capsule?"capsule":hit.shape==ShapeType::Sphere?"sphere":hit.shape==ShapeType::Terrain?"terrain":hit.shape==ShapeType::ConvexHull?"hull":hit.shape==ShapeType::TriangleMesh?"triangle-mesh":"box"));
+        return o;
+    };
+    if(op=="castMany"){
+        JUDAS_PROFILE_COUNTER("Physics query bridge calls",1,ProfileCounterMode::Sum);
+        auto kind=String(c,arg(1));auto requests=arg(2);
+        if(kind!="ray"&&kind!="sphere"&&kind!="capsule")return JS_ThrowTypeError(c,"unknown batch cast shape");
+        if(!JS_IsArray(requests))return JS_ThrowTypeError(c,"castMany requests must be an array");
+        auto length=JS_GetPropertyStr(c,requests,"length");uint32_t count=0;bool valid=JS_ToUint32(c,&count,length)==0;JS_FreeValue(c,length);
+        if(!valid)return JS_ThrowTypeError(c,"invalid castMany length");
+        if(count>256)return JS_ThrowRangeError(c,"castMany accepts at most 256 requests");
+        PhysicsQueryFilter filter;std::string error;
+        if(!queryFilter(arg(3),filter,error))return JS_ThrowTypeError(c,"castMany filter: %s",error.c_str());
+        std::array<PreparedCast,256> prepared;
+        for(uint32_t i=0;i<count;++i){
+            auto entry=JS_GetPropertyUint32(c,requests,i);
+            if(!JS_IsObject(entry)){JS_FreeValue(c,entry);return JS_ThrowTypeError(c,"castMany[%u]: request object required",i);}
+            auto pose=kind=="capsule"?JS_GetPropertyStr(c,entry,"pose"):JS_UNDEFINED;
+            if(kind=="capsule"&&!JS_IsObject(pose)){JS_FreeValue(c,pose);JS_FreeValue(c,entry);return JS_ThrowTypeError(c,"castMany[%u]: capsule pose required",i);}
+            auto origin=JS_GetPropertyStr(c,kind=="capsule"?pose:entry,kind=="capsule"?"position":"origin");
+            auto direction=JS_GetPropertyStr(c,entry,"direction");
+            auto rotation=kind=="capsule"?JS_GetPropertyStr(c,pose,"rotation"):JS_UNDEFINED;
+            valid=prepareCast(origin,direction,entry,kind,rotation,prepared[i],error);
+            JS_FreeValue(c,rotation);JS_FreeValue(c,direction);JS_FreeValue(c,origin);JS_FreeValue(c,pose);JS_FreeValue(c,entry);
+            if(!valid)return JS_ThrowTypeError(c,"castMany[%u]: %s",i,error.c_str());
+        }
+        auto results=JS_NewArray(c);
+        try{for(uint32_t i=0;i<count;++i)JS_SetPropertyUint32(c,results,i,castHit(executeCast(prepared[i],filter)));}
+        catch(const std::exception& e){JS_FreeValue(c,results);return JS_ThrowTypeError(c,"castMany: %s",e.what());}
+        return results;
+    }
+    if(op=="overlap"||op=="sweep"||op=="cast"||op=="closestPoint"){
+        glm::vec3 min,max;if(!ReadVec(c,arg(1),min)||!ReadVec(c,arg(2),max))return JS_ThrowTypeError(c,"invalid bounds");PhysicsQueryFilter filter;
+        std::string error;if(!queryFilter(arg(3),filter,error))return JS_ThrowTypeError(c,"%s",error.c_str());
         if(op=="closestPoint"){
             float maximum=0;if(!Number(c,arg(4),"maximum",maximum))return JS_ThrowTypeError(c,"invalid closestPoint maximum");
             PhysicsClosestPoint hit;try{hit=world.Physics().ClosestPoint(min,maximum,filter);}catch(const std::exception& e){return JS_ThrowTypeError(c,"closestPoint: %s",e.what());}
@@ -775,36 +873,13 @@ JSValue ScriptSystem::Impl::Native(JSContext* c,JSValueConst,int argc,JSValueCon
             JS_SetPropertyStr(c,o,"contains",hit.containmentKnown?JS_NewBool(c,hit.contains):JS_NULL);JS_SetPropertyStr(c,o,"primitiveIndex",JS_NewInt32(c,hit.primitiveIndex));JS_SetPropertyStr(c,o,"childKey",JS_NewUint32(c,hit.childKey));JS_SetPropertyStr(c,o,"feature",hit.feature==UINT32_MAX?JS_NULL:JS_NewUint32(c,hit.feature));return o;
         }
         if(op=="cast") {
-            auto spec=arg(4);float maximum=0,radius=0,halfHeight=0;BodyTransform pose;pose.position=min;
-            auto kindValue=JS_GetPropertyStr(c,spec,"kind");auto kind=String(c,kindValue);JS_FreeValue(c,kindValue);
-            if(!Number(c,spec,"maximum",maximum))return JS_ThrowTypeError(c,"invalid cast maximum");
-            if(kind=="sphere"||kind=="capsule")if(!Number(c,spec,"radius",radius))return JS_ThrowTypeError(c,"invalid radius");
-            if(kind=="capsule"&&!Number(c,spec,"halfHeight",halfHeight))return JS_ThrowTypeError(c,"invalid capsule halfHeight");
-            glm::vec3 halfExtents{0};
-            if(kind=="box"){auto h=JS_GetPropertyStr(c,spec,"halfExtents");bool valid=ReadVec(c,h,halfExtents);JS_FreeValue(c,h);if(!valid)return JS_ThrowTypeError(c,"invalid halfExtents");}
-            if(kind=="box"||kind=="capsule") {auto r=JS_GetPropertyStr(c,spec,"rotation");
-                bool valid=JS_IsUndefined(r)||(Number(c,r,"w",pose.rotation.w)&&Number(c,r,"x",pose.rotation.x)&&Number(c,r,"y",pose.rotation.y)&&Number(c,r,"z",pose.rotation.z));
-                JS_FreeValue(c,r);if(!valid)return JS_ThrowTypeError(c,"invalid cast rotation");}
-            PhysicsCastHit hit;
-            try {
-                if(kind=="ray")hit=world.Physics().Raycast(min,max,maximum,filter);
-                else if(kind=="sphere")hit=world.Physics().SphereCast(min,radius,max,maximum,filter);
-                else if(kind=="capsule")hit=world.Physics().CapsuleCast(pose,radius,halfHeight,max,maximum,filter);
-                else if(kind=="box")hit=world.Physics().BoxCast(pose,halfExtents,max,maximum,filter);
-                else return JS_ThrowTypeError(c,"unknown cast shape");
-            }catch(const std::exception& e){return JS_ThrowTypeError(c,"cast: %s",e.what());}
-            if(!hit.hit)return JS_NULL;
-            auto o=JS_NewObject(c);auto id=world.EntityIdOfBody(hit.body);
-            JS_SetPropertyStr(c,o,"entityId",JS_NewString(c,std::to_string(id).c_str()));
-            JS_SetPropertyStr(c,o,"bodyId",JS_NewUint32(c,hit.body.id));
-            JS_SetPropertyStr(c,o,"point",Vec(c,hit.point));JS_SetPropertyStr(c,o,"normal",Vec(c,hit.normal));
-            JS_SetPropertyStr(c,o,"distance",JS_NewFloat64(c,hit.distance));JS_SetPropertyStr(c,o,"fraction",JS_NewFloat64(c,hit.fraction));
-            std::string physical;float friction=0,restitution=0;world.Physics().GetPhysicalMaterial(hit.body,physical,friction,restitution);JS_SetPropertyStr(c,o,"physicalMaterial",physical.empty()?JS_NULL:JS_NewString(c,physical.c_str()));
-            JS_SetPropertyStr(c,o,"primitiveIndex",JS_NewInt32(c,hit.primitiveIndex));
-            JS_SetPropertyStr(c,o,"childKey",JS_NewUint32(c,hit.childKey));JS_SetPropertyStr(c,o,"feature",hit.feature==UINT32_MAX?JS_NULL:JS_NewUint32(c,hit.feature));
-            JS_SetPropertyStr(c,o,"initialOverlap",JS_NewBool(c,hit.initialOverlap));
-            JS_SetPropertyStr(c,o,"shape",JS_NewString(c,hit.shape==ShapeType::Capsule?"capsule":hit.shape==ShapeType::Sphere?"sphere":hit.shape==ShapeType::Terrain?"terrain":hit.shape==ShapeType::ConvexHull?"hull":hit.shape==ShapeType::TriangleMesh?"triangle-mesh":"box"));
-            return o;
+            JUDAS_PROFILE_COUNTER("Physics query bridge calls",1,ProfileCounterMode::Sum);
+            auto spec=arg(4);auto value=JS_GetPropertyStr(c,spec,"kind");auto kind=String(c,value);JS_FreeValue(c,value);
+            auto rotation=JS_GetPropertyStr(c,spec,"rotation");PreparedCast request;request.pose.position=min;request.direction=max;
+            bool valid=prepareCast(arg(1),arg(2),spec,kind,rotation,request,error,false);JS_FreeValue(c,rotation);
+            if(!valid)return JS_ThrowTypeError(c,"cast: %s",error.c_str());
+            try{return castHit(executeCast(request,filter));}
+            catch(const std::exception& e){return JS_ThrowTypeError(c,"cast: %s",e.what());}
         }
         if(op=="sweep"){glm::quat rotation;auto r=arg(4);
             if(!Number(c,r,"w",rotation.w)||!Number(c,r,"x",rotation.x)||!Number(c,r,"y",rotation.y)||!Number(c,r,"z",rotation.z)||!std::isfinite(glm::dot(rotation,rotation))||glm::dot(rotation,rotation)<1e-12f)return JS_ThrowTypeError(c,"invalid rotation");

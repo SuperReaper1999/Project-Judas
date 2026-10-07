@@ -1,0 +1,14 @@
+[  0%] Built target judas_icu_build
+[  5%] Built target judas_quickjs
+[ 10%] Built target judas_app_icon
+[ 25%] Built target freetype
+[ 30%] Built target judas_glad
+[ 30%] Built target judas_profiler
+[ 40%] Built target judas_navigation_backend
+[ 40%] Built target judas_audio_backend
+[ 45%] Built target judas_materials
+[ 45%] Built target harfbuzz
+[100%] Built target judas_engine
+[100%] Building CXX object CMakeFiles/judas_physics_batch_script_tests.dir/tests/PhysicsBatchScriptTests.cpp.o
+[100%] Linking CXX executable judas_physics_batch_script_tests
+[100%] Built target judas_physics_batch_script_tests

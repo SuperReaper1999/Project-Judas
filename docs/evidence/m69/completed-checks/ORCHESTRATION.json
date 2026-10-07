@@ -1,0 +1,12 @@
+{
+  "command": [
+    "cmake",
+    "-S",
+    "/home/conner/Documents/GitHub/Project-Judas",
+    "-B",
+    "/home/conner/Documents/GitHub/Project-Judas/build"
+  ],
+  "exitCode": 0,
+  "seconds": 1.8345242909999797,
+  "scope": "Configure-only check of stale-Make orchestration correction. Existing Release cache reused; no build/test repeated."
+}

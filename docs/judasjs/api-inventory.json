@@ -1,5 +1,5 @@
 {
-  "checkpoint": "b9a8cf3b8d8cd3786272480a8abe6cbe9fffe859",
+  "checkpoint": "c042797c755df68b45e36aa917c4ca72818b9bcd",
   "authority": "src/ScriptSystem.cpp::library + Impl::Native",
   "symbols": [
     {
@@ -2175,6 +2175,50 @@
       "reference": "docs/judasjs/input.md"
     },
     {
+      "symbol": "input.stick",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "stick"
+      ],
+      "type": "docs/judas.d.ts:input.stick",
+      "reference": "docs/judasjs/input.md"
+    },
+    {
+      "symbol": "input.stickDelta",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "stickDelta"
+      ],
+      "type": "docs/judas.d.ts:input.stickDelta",
+      "reference": "docs/judasjs/input.md"
+    },
+    {
+      "symbol": "input.stickSamples",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "stickSamples"
+      ],
+      "type": "docs/judas.d.ts:input.stickSamples",
+      "reference": "docs/judasjs/input.md"
+    },
+    {
+      "symbol": "input.vector",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "vector"
+      ],
+      "type": "docs/judas.d.ts:input.vector",
+      "reference": "docs/judasjs/input.md"
+    },
+    {
       "symbol": "liquid",
       "kinds": [
         "namespace"
@@ -2453,6 +2497,17 @@
       "reference": "docs/judasjs/physics.md"
     },
     {
+      "symbol": "physics.capsuleCastMany",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "castMany"
+      ],
+      "type": "docs/judas.d.ts:physics.capsuleCastMany",
+      "reference": "docs/judasjs/physics.md"
+    },
+    {
       "symbol": "physics.closestPoint",
       "kinds": [
         "call"
@@ -2508,6 +2563,17 @@
       "reference": "docs/judasjs/physics.md"
     },
     {
+      "symbol": "physics.raycastMany",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "castMany"
+      ],
+      "type": "docs/judas.d.ts:physics.raycastMany",
+      "reference": "docs/judasjs/physics.md"
+    },
+    {
       "symbol": "physics.sphereCast",
       "kinds": [
         "call"
@@ -2516,6 +2582,17 @@
         "cast"
       ],
       "type": "docs/judas.d.ts:physics.sphereCast",
+      "reference": "docs/judasjs/physics.md"
+    },
+    {
+      "symbol": "physics.sphereCastMany",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "castMany"
+      ],
+      "type": "docs/judas.d.ts:physics.sphereCastMany",
       "reference": "docs/judasjs/physics.md"
     },
     {
@@ -3198,6 +3275,7 @@
     "cameraInfo",
     "cameraProjection",
     "cast",
+    "castMany",
     "characterAcceleration",
     "characterConfigure",
     "characterEnabled",
@@ -3351,6 +3429,9 @@
     "socketClear",
     "socketSet",
     "spawn",
+    "stick",
+    "stickDelta",
+    "stickSamples",
     "stopAudio",
     "sweep",
     "torque",
@@ -3364,6 +3445,7 @@
     "uiSet",
     "uiUnload",
     "valid",
+    "vector",
     "velocity",
     "viewRay",
     "viewportSize"

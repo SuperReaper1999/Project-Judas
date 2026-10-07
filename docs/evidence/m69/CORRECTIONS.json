@@ -1,0 +1,14 @@
+{
+  "operatorAuthorized": true,
+  "changedSinceOriginalFreeze": {
+    "scripts/m69_validation.py": {
+      "before": "892e381175cfe182e98e29ecffb5795faf4c01469c5b7d593bfb8584846b6662",
+      "after": "45576c33bf7724f9c7194a40c285409748b014896c7bffe85f7128ab67944b11"
+    },
+    "tests/PhysicsBatchScriptTests.cpp": {
+      "before": "a6904f269b59db396cceb60c53efc27855f3da00195b4dc8736098cb130a3c34",
+      "after": "57a68bbca6957bc4b5523acf795be24140e6c5e61747400d487de168547822a0"
+    }
+  },
+  "scope": "Test miss origin Y4 -> Y8; gate CMake generation before multi-target Make. No runtime implementation changed."
+}

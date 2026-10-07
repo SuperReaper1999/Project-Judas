@@ -1,0 +1,7 @@
+Renderer fragment texture units: 32 (material path uses 12)
+World state: /home/conner/Documents/GitHub/Project-Judas/.cache/m69/example/Saves/flat.judasstate (none saved)
+Project: M69 Input and Query Examples (/home/conner/Documents/GitHub/Project-Judas/.cache/m69/example/m69_example.judasproj)
+Scene: M49 / flat (/home/conner/Documents/GitHub/Project-Judas/.cache/m69/example/Scenes/flat.judas)
+World origin (m): 0.000, 0.000, 0.000
+step,time,posX,posY,posZ,upX,upY,upZ,grounded,velX,velY,velZ,gravX,gravY,gravZ,controlled,frame,steps,paused,obj0PosX,obj0PosY,obj0PosZ,obj0VelX,obj0VelY,obj0VelZ,obj1PosX,obj1PosY,obj1PosZ,obj1VelX,obj1VelY,obj1VelZ
+[TestHarness] Wrote screenshot: /home/conner/Documents/GitHub/Project-Judas/.cache/m69/remaining-checks/example.png

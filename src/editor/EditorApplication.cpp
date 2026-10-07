@@ -533,6 +533,7 @@ void EditorApplication::StopPlay() {
     m_panels.runtimeInfo.clear();
     m_panels.status = "Stopped: authored scene restored";
     m_host->GetWindow().SetMouseCaptured(false);
+    m_host->GetWindow().Input().DiscardStickHistory();
 }
 
 void EditorApplication::HandleRequests(EditorRequests& r) {
@@ -1177,6 +1178,7 @@ int EditorApplication::Run(int argc, char** argv) {
                 if(previousWorld!=m_world.get())window.Input().DiscardPending();
         if(!error.empty()){std::fprintf(stderr,"Save service: %s\n",error.c_str());error.clear();}
                 if(!scenes->Apply(m_world,*m_play,host.Resources(),error))std::fprintf(stderr,"Scene transition: %s\n",error.c_str());
+                if(previousWorld!=m_world.get())window.Input().DiscardStickHistory();
                 m_panels.runtime=m_world.get();
                 m_panels.worldStatePath=m_play->WorldStatePath();
             }

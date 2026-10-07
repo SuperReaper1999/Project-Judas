@@ -1,0 +1,2291 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 50c10ca..f4a3134 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -1368,3 +1368,15 @@ target_compile_options(judas_scalability_pipeline_tests PRIVATE -Wall -Wextra)
+ add_executable(judas_resource_handoff_tests tests/ResourceHandoffTests.cpp)
+ target_link_libraries(judas_resource_handoff_tests PRIVATE judas_engine)
+ target_compile_options(judas_resource_handoff_tests PRIVATE -Wall -Wextra)
++
++# M69 focused controller observations and one-bridge physics batches.
++add_executable(judas_paired_input_tests tests/PairedInputTests.cpp tools/StructuredAuthor.cpp)
++target_include_directories(judas_paired_input_tests PRIVATE tools)
++target_link_libraries(judas_paired_input_tests PRIVATE judas_engine)
++target_compile_options(judas_paired_input_tests PRIVATE -Wall -Wextra)
++add_executable(judas_paired_input_script_tests tests/PairedInputScriptTests.cpp)
++target_link_libraries(judas_paired_input_script_tests PRIVATE judas_engine)
++target_compile_options(judas_paired_input_script_tests PRIVATE -Wall -Wextra)
++add_executable(judas_physics_batch_script_tests tests/PhysicsBatchScriptTests.cpp)
++target_link_libraries(judas_physics_batch_script_tests PRIVATE judas_engine)
++target_compile_options(judas_physics_batch_script_tests PRIVATE -Wall -Wextra -Wpedantic)
+diff --git a/docs/JUDASJS.md b/docs/JUDASJS.md
+index d382953..e089d44 100644
+--- a/docs/JUDASJS.md
++++ b/docs/JUDASJS.md
+@@ -1,9 +1,9 @@
+-# JudasJS — current API reference (M67 provisional)
++# JudasJS — current API reference (M69 candidate)
+ 
+ JUDAS PROVIDES ENGINE PRIMITIVES. JAVASCRIPT PROVIDES GAME BEHAVIOUR.
+ 
+-This reference describes accepted M66 plus the provisional M67 candidate, based on
+-checkpoint `b9a8cf3b8d8cd3786272480a8abe6cbe9fffe859`. It is not an eternal
++This reference describes the M69 paired-input/query candidate on accepted M68,
++checkpoint `c042797c755df68b45e36aa917c4ca72818b9bcd`. It is not an eternal
+ compatibility/semantic-version promise. Source authority is `src/ScriptSystem.cpp`
+ and the runtime systems it calls; demos do not define API.
+ M67 is checkpointed provisionally by operator authorization; proper human validation
+@@ -29,7 +29,7 @@ M59 added optional additive residency through [scenes streaming](judasjs/streami
+ | Entity, transform, tags, spawnPrefab | [Entities/prefabs](judasjs/entities.md) |
+ | profiler.scope / profiler.counter | [Custom diagnostics](judasjs/profiling.md) |
+ | input, time, console | [Input/time](judasjs/input.md) |
+-| physics.raycast/sphereCast/capsuleCast/boxCast/closestPoint, Entity.collider, Joint, contacts/triggers | [Physics](judasjs/physics.md) · [Collider inspection](judasjs/entities.md#entitycollider) |
++| physics.raycast/sphereCast/capsuleCast, their Many batches, boxCast/closestPoint, Entity.collider, Joint, contacts/triggers | [Physics](judasjs/physics.md) · [Collider inspection](judasjs/entities.md#entitycollider) |
+ | Audio, particles, camera, world.fluidSample | [Effects/view](judasjs/effects-camera.md) |
+ | ui, UIDocument, UIElement, onUI | [Runtime UI](judasjs/ui.md) |
+ | localization, Unicode layout, catalogs/fonts | [Localization/text](judasjs/localization.md) |
+@@ -108,6 +108,12 @@ independent one-shots, authored groups/fades and approximate spatial effects.
+ 
+ M64 adds [collider snapshots / closest surface queries](M64_COLLISION.md) through the existing physics/entity APIs.
+ 
++M69 adds raw paired controller snapshots, explicit circular vector bindings and
++bounded ordered observation history through [input](judasjs/input.md#paired-sticks-m69),
++plus synchronous 256-entry [nearest-cast batches](judasjs/physics.md#batched-nearest-casts-m69).
++The [two focused examples](judasjs/cookbook.md#paired-input-and-batched-queries-m69-candidate)
++use the ordinary public APIs; trick recognition and ledge selection stay in game JS.
++
+ M65 adds resolved joints/limb IK/visual sockets, gravity samples, shared physical
+ materials/runtime joints and ordinary motor touch events. [Integration](M65_INTEGRATION.md)
+ and [named authoring](CONTENT_AUTHORING.md) provide current examples.
+diff --git a/docs/judas.d.ts b/docs/judas.d.ts
+index d1bb163..7672366 100644
+--- a/docs/judas.d.ts
++++ b/docs/judas.d.ts
+@@ -1,5 +1,5 @@
+-/** Current JudasJS through the M67 candidate; reviewed against ScriptSystem.cpp
+- * based on accepted M66 b9a8cf3b8d8cd3786272480a8abe6cbe9fffe859. Tooling only, no TS runtime.
++/** Current JudasJS through the M69 candidate; reviewed against ScriptSystem.cpp
++ * based on accepted M68 c042797c755df68b45e36aa917c4ca72818b9bcd. Tooling only, no TS runtime.
+  * See JUDASJS.md. Ordinary returned objects are detached snapshots.
+  */
+ declare module "judas" {
+@@ -18,6 +18,10 @@ declare module "judas" {
+   export interface TransformPatch { position?: Vec3; rotation?: Quat; scale?: Vec3 }
+   export interface CastPose { position: Vec3; rotation?: Quat }
+   export interface Ray { origin: Vec3; direction: Vec3 }
++  /** One nearest-hit request, using the scalar cast's coordinates and units. */
++  export interface RaycastRequest extends Ray { maximum: number }
++  export interface SphereCastRequest extends RaycastRequest { radius: number }
++  export interface CapsuleCastRequest { pose: CastPose; radius: number; halfHeight: number; direction: Vec3; maximum: number }
+   export interface QueryFilter {
+     includeLayers?: string[]; excludeLayers?: string[];
+     requiredTags?: string[]; excludedTags?: string[];
+@@ -331,8 +335,12 @@ declare module "judas" {
+     closestPoint(point:Vec3,maximum:number,filter?:QueryFilter):ClosestPointHit|null;
+     joint(owner: Entity): Joint | null;
+     raycast(origin: Vec3, direction: Vec3, maximum: number, filter?: QueryFilter): CastHit | null;
++    /** Synchronous, ordered nearest hits; at most 256 requests, one native bridge crossing. */
++    raycastMany(rays: RaycastRequest[], filter?: QueryFilter): (CastHit | null)[];
+     sphereCast(origin: Vec3, radius: number, direction: Vec3, maximum: number, filter?: QueryFilter): CastHit | null;
++    sphereCastMany(casts: SphereCastRequest[], filter?: QueryFilter): (CastHit | null)[];
+     capsuleCast(pose: CastPose, radius: number, halfHeight: number, direction: Vec3, maximum: number, filter?: QueryFilter): CastHit | null;
++    capsuleCastMany(casts: CapsuleCastRequest[], filter?: QueryFilter): (CastHit | null)[];
+     boxCast(pose: CastPose, halfExtents: Vec3, direction: Vec3, maximum: number, filter?: QueryFilter): CastHit | null;
+   };
+   /** Opaque request token; only valid in the requesting played-world session. */
+@@ -371,7 +379,32 @@ declare module "judas" {
+     reload(): void;
+   };
+   export const session: { get(key: string): JSONValue; set(key: string, value: JSONValue): void; delete(key: string): void };
+-  export const input: { pointerCapture: boolean; held(name: string): boolean; pressed(name: string): boolean; released(name: string): boolean; axis(name: string): number };
++  export type StickSide = "left" | "right";
++  export interface InputVector { x: number; y: number }
++  /** Copied backend observation: receipt time in monotonic seconds, not simulation time. */
++  export interface StickSample extends InputVector { sequence: number; time: number }
++  export interface StickHistory {
++    samples: StickSample[];
++    /** Global observation cursor, including observations of the other stick. */
++    sequence: number;
++    /** Cursor predates a reset; discard recognizer state instead of treating the gap as motion. */
++    reset: boolean;
++    /** Requested side has dropped observations; returned history is incomplete. */
++    overflow: boolean;
++    capacity: 128;
++  }
++  export const input: {
++    pointerCapture: boolean;
++    held(name: string): boolean; pressed(name: string): boolean; released(name: string): boolean; axis(name: string): number;
++    /** Raw normalized components, before Judas processing. X right+, Y down+; no unit-circle clamp. */
++    stick(side: StickSide): InputVector;
++    /** Net raw movement observed during the latest render pump, independent of fixed-step count. */
++    stickDelta(side: StickSide): InputVector;
++    /** Processed named paired binding, or neutral if absent/consumed. */
++    vector(name: string): InputVector;
++    /** Non-destructive ordered snapshot; cursor must be a nonnegative safe integer. */
++    stickSamples(side: StickSide, afterSequence?: number): StickHistory;
++  };
+   export const time: { readonly elapsed: number; readonly delta: number; readonly fixed: boolean };
+   export const console: { log(...args: unknown[]): void };
+   export class UIElement {
+diff --git a/docs/judasjs/API_INVENTORY.md b/docs/judasjs/API_INVENTORY.md
+index 75a7187..6f742f9 100644
+--- a/docs/judasjs/API_INVENTORY.md
++++ b/docs/judasjs/API_INVENTORY.md
+@@ -1,6 +1,6 @@
+ # Current public JudasJS inventory
+ 
+-M67 authoring and runtime-seam review of the registered virtual module based on starting checkpoint `b9a8cf3b8d8cd3786272480a8abe6cbe9fffe859`.
++M69 paired input and batch-query review of the registered virtual module based on starting checkpoint `c042797c755df68b45e36aa917c4ca72818b9bcd`. M67 human authoring review remains deferred.
+ Each row is a runtime export/member (constructors and plain handle fields included).
+ Native dispatcher operations are implementation details, not additional JS APIs.
+ 
+@@ -211,6 +211,10 @@ Native dispatcher operations are implementation details, not additional JS APIs.
+ | `input.pointerCapture` | `pointerCapture`, `setPointerCapture` | [declaration](../judas.d.ts) | [reference](input.md) |
+ | `input.pressed` | `pressed` | [declaration](../judas.d.ts) | [reference](input.md) |
+ | `input.released` | `released` | [declaration](../judas.d.ts) | [reference](input.md) |
++| `input.stick` | `stick` | [declaration](../judas.d.ts) | [reference](input.md) |
++| `input.stickDelta` | `stickDelta` | [declaration](../judas.d.ts) | [reference](input.md) |
++| `input.stickSamples` | `stickSamples` | [declaration](../judas.d.ts) | [reference](input.md) |
++| `input.vector` | `vector` | [declaration](../judas.d.ts) | [reference](input.md) |
+ | `liquid` | JS wrapper/data | [declaration](../judas.d.ts) | [reference](liquid.md) |
+ | `liquid.accounting` | `liquidAccounting` | [declaration](../judas.d.ts) | [reference](liquid.md) |
+ | `liquid.connections` | `liquidConnections` | [declaration](../judas.d.ts) | [reference](liquid.md) |
+@@ -237,12 +241,15 @@ Native dispatcher operations are implementation details, not additional JS APIs.
+ | `physics` | JS wrapper/data | [declaration](../judas.d.ts) | [reference](physics.md) |
+ | `physics.boxCast` | `cast` | [declaration](../judas.d.ts) | [reference](physics.md) |
+ | `physics.capsuleCast` | `cast` | [declaration](../judas.d.ts) | [reference](physics.md) |
++| `physics.capsuleCastMany` | `castMany` | [declaration](../judas.d.ts) | [reference](physics.md) |
+ | `physics.closestPoint` | `closestPoint` | [declaration](../judas.d.ts) | [reference](physics.md) |
+ | `physics.createJoint` | `jointCreate` | [declaration](../judas.d.ts) | [reference](physics.md) |
+ | `physics.gravity` | `gravitySample` | [declaration](../judas.d.ts) | [reference](physics.md) |
+ | `physics.joint` | `joint` | [declaration](../judas.d.ts) | [reference](physics.md) |
+ | `physics.raycast` | `cast` | [declaration](../judas.d.ts) | [reference](physics.md) |
++| `physics.raycastMany` | `castMany` | [declaration](../judas.d.ts) | [reference](physics.md) |
+ | `physics.sphereCast` | `cast` | [declaration](../judas.d.ts) | [reference](physics.md) |
++| `physics.sphereCastMany` | `castMany` | [declaration](../judas.d.ts) | [reference](physics.md) |
+ | `profiler` | JS wrapper/data | [declaration](../judas.d.ts) | [reference](profiling.md) |
+ | `profiler.counter` | `profileCounter` | [declaration](../judas.d.ts) | [reference](profiling.md) |
+ | `profiler.scope` | `profileScope` | [declaration](../judas.d.ts) | [reference](profiling.md) |
+diff --git a/docs/judasjs/api-inventory.json b/docs/judasjs/api-inventory.json
+index cd7d223..32ff9cf 100644
+--- a/docs/judasjs/api-inventory.json
++++ b/docs/judasjs/api-inventory.json
+@@ -1,5 +1,5 @@
+ {
+-  "checkpoint": "b9a8cf3b8d8cd3786272480a8abe6cbe9fffe859",
++  "checkpoint": "c042797c755df68b45e36aa917c4ca72818b9bcd",
+   "authority": "src/ScriptSystem.cpp::library + Impl::Native",
+   "symbols": [
+     {
+@@ -2174,6 +2174,50 @@
+       "type": "docs/judas.d.ts:input.released",
+       "reference": "docs/judasjs/input.md"
+     },
++    {
++      "symbol": "input.stick",
++      "kinds": [
++        "call"
++      ],
++      "native": [
++        "stick"
++      ],
++      "type": "docs/judas.d.ts:input.stick",
++      "reference": "docs/judasjs/input.md"
++    },
++    {
++      "symbol": "input.stickDelta",
++      "kinds": [
++        "call"
++      ],
++      "native": [
++        "stickDelta"
++      ],
++      "type": "docs/judas.d.ts:input.stickDelta",
++      "reference": "docs/judasjs/input.md"
++    },
++    {
++      "symbol": "input.stickSamples",
++      "kinds": [
++        "call"
++      ],
++      "native": [
++        "stickSamples"
++      ],
++      "type": "docs/judas.d.ts:input.stickSamples",
++      "reference": "docs/judasjs/input.md"
++    },
++    {
++      "symbol": "input.vector",
++      "kinds": [
++        "call"
++      ],
++      "native": [
++        "vector"
++      ],
++      "type": "docs/judas.d.ts:input.vector",
++      "reference": "docs/judasjs/input.md"
++    },
+     {
+       "symbol": "liquid",
+       "kinds": [
+@@ -2452,6 +2496,17 @@
+       "type": "docs/judas.d.ts:physics.capsuleCast",
+       "reference": "docs/judasjs/physics.md"
+     },
++    {
++      "symbol": "physics.capsuleCastMany",
++      "kinds": [
++        "call"
++      ],
++      "native": [
++        "castMany"
++      ],
++      "type": "docs/judas.d.ts:physics.capsuleCastMany",
++      "reference": "docs/judasjs/physics.md"
++    },
+     {
+       "symbol": "physics.closestPoint",
+       "kinds": [
+@@ -2507,6 +2562,17 @@
+       "type": "docs/judas.d.ts:physics.raycast",
+       "reference": "docs/judasjs/physics.md"
+     },
++    {
++      "symbol": "physics.raycastMany",
++      "kinds": [
++        "call"
++      ],
++      "native": [
++        "castMany"
++      ],
++      "type": "docs/judas.d.ts:physics.raycastMany",
++      "reference": "docs/judasjs/physics.md"
++    },
+     {
+       "symbol": "physics.sphereCast",
+       "kinds": [
+@@ -2518,6 +2584,17 @@
+       "type": "docs/judas.d.ts:physics.sphereCast",
+       "reference": "docs/judasjs/physics.md"
+     },
++    {
++      "symbol": "physics.sphereCastMany",
++      "kinds": [
++        "call"
++      ],
++      "native": [
++        "castMany"
++      ],
++      "type": "docs/judas.d.ts:physics.sphereCastMany",
++      "reference": "docs/judasjs/physics.md"
++    },
+     {
+       "symbol": "profiler",
+       "kinds": [
+@@ -3198,6 +3275,7 @@
+     "cameraInfo",
+     "cameraProjection",
+     "cast",
++    "castMany",
+     "characterAcceleration",
+     "characterConfigure",
+     "characterEnabled",
+@@ -3351,6 +3429,9 @@
+     "socketClear",
+     "socketSet",
+     "spawn",
++    "stick",
++    "stickDelta",
++    "stickSamples",
+     "stopAudio",
+     "sweep",
+     "torque",
+@@ -3364,6 +3445,7 @@
+     "uiSet",
+     "uiUnload",
+     "valid",
++    "vector",
+     "velocity",
+     "viewRay",
+     "viewportSize"
+diff --git a/docs/judasjs/cookbook.md b/docs/judasjs/cookbook.md
+index 427f1aa..a05f093 100644
+--- a/docs/judasjs/cookbook.md
++++ b/docs/judasjs/cookbook.md
+@@ -15,6 +15,8 @@ physics or VM. Example names/IDs are content, not engine-owned semantics.
+ | [input-motion.js](examples/input-motion.js) | Any movable visual entity; `move_x` axis. Explicit teleport example, not collision locomotion. |
+ | [spawn.js](examples/spawn.js) | Registered prefab ID property; constructs independent hierarchy. |
+ | [queries.js](examples/queries.js) | Floor below origin, colliders; ray and sphere cast, ignore owner. |
++| [paired-stick.js](examples/paired-stick.js) | `flick_stick` paired right-stick binding; frame raw/circular/delta display and fixed-step ordered observations without stealing another reader's samples. |
++| [ray-fan.js](examples/ray-fan.js) | Owner facing a wall/ledge (local -Z), `compare_rays` action; 100 ordered batch hit/miss results and an optional same-world scalar comparison. |
+ | [contacts.js](examples/contacts.js) | Dynamic collider resting on floor; enter/stay/exit reactions. Use same script on authored sensor for triggers. |
+ | [audio.js](examples/audio.js) | Authored AudioEmitter; play/pause/resume/stop requests. |
+ | [particles.js](examples/particles.js) | Authored visual ParticleEmitter. |
+@@ -91,3 +93,44 @@ Fixture is the original rig in [current integration project](../../projects/m65_
+ example for configured projection/behind points, layout snapshots/atomic mutation,
+ independent prefab initial properties/state/world velocity and stale handles. It
+ uses registered assets from [World Workshop](../../projects/world_workshop/README.md).
++
++## Paired input and batched queries (M69 candidate)
++
++[paired-stick.js](examples/paired-stick.js) keeps render-frame reads separate from
++authoritative fixed-step observation processing. Its `state` exposes raw and
++circular values, net frame delta, twelve recent delivered samples, monotonic
++cursor, reset/overflow counts and per-phase read counts. Author `flick_stick` as
++shown in [input reference](input.md#circular-vector-binding). Hardware absence
++means neutral readings; synthetic focused checks are not human controller testing.
++
++[ray-fan.js](examples/ray-fan.js) builds a 10×10 fan from the owner's local
++orientation, with ordinary `maximum`, `spread` and `height` script properties.
++It records all 100 result positions, including null misses, in `state.results`.
++Bind `compare_rays` to a convenient logical action (the small fixture uses C) to
++perform 100 scalar calls on the unchanged world and record `state.matched`.
++That comparison is optional game-side evidence, not the production batch path.
++The example implements no trick recognizer or ledge-choice policy.
++
++The final M69 gate executes these two cases only through
++`judasjs_examples_tests <fresh-output> paired-stick` and
++`judasjs_examples_tests <fresh-output> ray-fan`, using private copies of ordinary
++project content. API/types/live enumeration uses the existing `surface` case and
++`scripts/check_judasjs_api.mjs`. See [M69 evidence](../evidence/m69/REPORT.md) for
++the actual commands/results and any untested hardware claims; do not substitute
++the older M50 runner, which would build and execute unrelated examples again.
++
++### Small operator fixture
++
++`python3 scripts/create_m69_example.py` creates a private ordinary project at
++`.cache/m69/example/m69_example.judasproj` by copying the current character arena.
++It preserves source projects and refuses an existing output. Launch with
++`build/judas .cache/m69/example/m69_example.judasproj` (or open that project in the
++editor). The final M69 gate creates this copy; it is not a required runtime tool.
++
++The normal `.judasui` HUD displays raw/circular/frame values, six ordered samples,
++cursor/reset/overflow counts and all-hit/miss totals. Right-stick diagonals and
++out-and-back movement exercise observations; C compares the 100-ray batch with
++100 scalar rays in the same world. Escape pauses/resumes, R reloads, Q quits.
++No device is substituted for human controller feel: an absent controller reads
++neutral. The source [generator](../../scripts/create_m69_example.py) and its small
++JS display subclasses use only ordinary authoring and public APIs.
+diff --git a/docs/judasjs/input.md b/docs/judasjs/input.md
+index bda9a3f..e2258e9 100644
+--- a/docs/judasjs/input.md
++++ b/docs/judasjs/input.md
+@@ -6,9 +6,11 @@
+ 
+ `import {input} from 'judas'`. Names refer to the current project's M35 map.
+ `held(name)`, `pressed(name)`, `released(name)` return booleans; `axis(name)`
+-returns a number. Unknown names/no attached input return false/zero. There are no
+-raw key, mouse, controller, binding-edit or consumption APIs exposed to JS.
+-Project/editor/C++ own binding authoring; scripts consume the logical surface.
++returns a number. Unknown names/no attached input return false/zero. `vector(name)`
++returns a copied `{x,y}` for a named paired binding, or neutral for an unknown name.
++Paired controller reads are described below; there is still no raw key/mouse,
++binding-edit or consumption API exposed to JS. Project/editor/C++ own binding
++authoring; scripts consume the logical surface.
+ 
+ Frame action edges live for one logical frame. Fixed callbacks use a latched
+ snapshot: a short press across zero-step frames survives to the next fixed step,
+@@ -24,6 +26,120 @@ appropriate. UI can consume a logical action and all actions/axes sharing its
+ physical bindings; consumed reads are false/zero for that frame's fixed steps.
+ One active logical gamepad is supported; hardware feel remains operator-tested.
+ 
++## Paired sticks (M69)
++
++| Method | Result |
++|---|---|
++| `stick(side)` | Side `left` or `right`; copied current raw `{x,y}` with components in [-1,1]. |
++| `stickDelta(side)` | Side `left` or `right`; copied net raw change during the latest render input pump, components in [-2,2]. |
++| `vector(name)` | Copied processed named paired binding `{x,y}`. |
++| `stickSamples(side, afterSequence=0)` | Non-destructive ordered observation snapshot; cursor must be a nonnegative safe integer. |
++
++Both raw components belong to the **same selected controller**. Values use the
++existing signed SDL normalization (negative /32768, positive /32767), X right is
++positive, Y down is positive. Raw means before Judas deadzone, scale, smoothing
++or response processing; controller firmware and OS processing still apply.
++Raw diagonals are not clamped to a unit circle. Existing scalar axis mappings,
++buttons, triggers and mouse/keyboard bindings keep their previous processing.
++Invalid side names/cursors throw TypeError, including a cursor ahead of this
++input service (for example one retained from another service lifetime). No
++controller/unavailable or UI-consumed gameplay input yields neutral values.
++These are input snapshots, not mutable device state.
++When a callback has no attached input service, pair reads are neutral and
++`stickSamples(side,0)` returns empty history with sequence 0, both flags false
++and capacity 128. A positive retained cursor then fails the same ahead-cursor
++check; keep cursors within their input-service/world lifecycle.
++
++The current raw pair and frame delta advance on the ordinary render-frame input
++pump, even if no fixed step runs. Repeated readers see the same snapshot. Delta is
++an **endpoint difference**, not path length: neutral → diagonal → neutral can have
++zero delta. Use history to retain delivered intermediate movement.
++
++### Circular vector binding
++
++Add a vector entry in the project's existing input map/inspector. Example M67
++named `input` document (the same `data` is the project's named `input` group):
++
++```json
++{
++  "schema": 1,
++  "kind": "input",
++  "data": [{
++      "name": "flick_stick", "axis": false, "vector": true,
++      "bindings": [{
++        "control": "stick:Right", "scale": 1, "scaleY": 1,
++        "deadzone": 0.2, "circular": true
++      }]
++    }]
++}
++```
++
++`stick:Left`/`stick:Right` select the whole physical pair. `scale` acts on X,
++`scaleY` on Y; negative scales invert. Both must be finite. With `circular:true`,
++let raw pair `v`, magnitude `m`, inner deadzone `0 <= d < 1`:
++
++```text
++m <= d: (0,0)
++m > d:  (v/m) * min(1, (m-d)/(1-d))
++```
++
++This radial response is applied **once**, then the two signed scales, then
++component clamping to [-1,1]. It preserves the raw direction before deliberate
++unequal scaling/inversion. Raw `stick()` is unaffected. `circular:false` retains
++independent component deadzone processing; omitted fields mean `vector:false`,
++`scaleY:1`, `circular:false`. Existing maps need no changes. Invalid/nonfinite
++settings are rejected by ordinary input-map validation. Multiple bindings retain
++normal summed/component-clamped map behaviour.
++
++Legacy maps without new fields continue writing version 1. The new legacy format
++uses version 2 and kind 2 for vectors:
++
++```text
++2 1 "flick_stick" 2 1 "stick:Right" 1 0.2 1 1
++```
++
++Each binding stores `control scale deadzone scaleY circular`; existing action/axis
++kinds remain 0/1. Named load/save and the input inspector use the same InputMap.
++
++### Ordered observations and fixed-step delivery
++
++`stickSamples()` returns:
++
++```js
++{samples: [{sequence, time, x, y}], sequence, reset, overflow, capacity: 128}
++```
++
++`sequence` is the latest **global** monotonic observation/reset cursor, shared by
++both sticks and retained across resets; each returned sample's sequence is strictly
++ordered. `time` is monotonic **seconds since this InputSystem was constructed**,
++measured at receipt by the backend pump; it is neither simulation elapsed time
++nor a precise hardware capture timestamp. Capacity is 128 observations **per
++stick**. Only delivered movement can be retained; this does not recover movement
++that the device/backend never reported.
++
++Store the returned cursor per recognizer. Read after that cursor to process each
++new observation once in `fixedUpdate`; zero-step frames accumulate observations,
++and further catch-up steps return none until the next delivered change. Readers
++do not steal samples from other scripts. A frame reader may separately inspect
++the latest raw/circular pair and delta for presentation.
++
++`reset:true` means the cursor predates a focus/controller/session/pause history
++reset; clear previous recognizer state before processing the **included new**
++samples. `overflow:true` means older requested observations were evicted; the
++returned suffix is incomplete, so do not classify it as a complete flick. Adopt
++the returned cursor and restart recognition from a known baseline. The first
++observation after reset/reassignment/focus regain establishes a baseline without
++creating movement/delta, avoiding artificial flicks. Disconnect, focus loss,
++pause and scene lifecycle clear pending history rather than replaying stale
++actions on resume. An observation history does not move authoritative gameplay
++into render callbacks.
++
++[Copyable right-stick reader](examples/paired-stick.js) shows both values, frame
++delta, independent cursor/reset/overflow handling and recent ordered samples.
++[100-ray fan](examples/ray-fan.js) demonstrates the corresponding query batch.
++[The small operator fixture](cookbook.md#small-operator-fixture) displays these
++samples using ordinary authored UI, with C for same-world scalar comparison.
++
+ ## time
+ 
+ `time.elapsed`: authoritative simulation seconds (fixed clock, pauses with world).
+diff --git a/docs/judasjs/physics.md b/docs/judasjs/physics.md
+index 9598b38..56cbaca 100644
+--- a/docs/judasjs/physics.md
++++ b/docs/judasjs/physics.md
+@@ -11,12 +11,15 @@ to maximum distance. No all-hits binding exists.
+ 
+ | Method | Signature / result |
+ |---|---|
+-| `raycast` | `(origin, direction, maximum, filter={}) → CastHit|null` |
+-| `sphereCast` | `(origin, radius, direction, maximum, filter={}) → CastHit|null` |
+-| `capsuleCast` | `({position,rotation?}, radius, halfHeight, direction, maximum, filter={}) → CastHit|null` |
+-| `boxCast` | `({position,rotation?}, halfExtents, direction, maximum, filter={}) → CastHit|null` |
+-| `closestPoint` | `(point, maximum, filter={}) → ClosestPointHit|null`; bounded nearest **surface** search |
+-| `joint` | `(ownerEntity) → Joint|null`; owner is the entity authoring the joint component, not automatically a connected body. |
++| `raycast` | `(origin, direction, maximum, filter={}) → CastHit\|null` |
++| `raycastMany` | `([{origin,direction,maximum}, …], filter={}) → (CastHit\|null)[]`; up to 256 |
++| `sphereCast` | `(origin, radius, direction, maximum, filter={}) → CastHit\|null` |
++| `sphereCastMany` | `([{origin,radius,direction,maximum}, …], filter={}) → (CastHit\|null)[]`; up to 256 |
++| `capsuleCast` | `({position,rotation?}, radius, halfHeight, direction, maximum, filter={}) → CastHit\|null` |
++| `capsuleCastMany` | `([{pose:{position,rotation?},radius,halfHeight,direction,maximum}, …], filter={}) → (CastHit\|null)[]`; up to 256 |
++| `boxCast` | `({position,rotation?}, halfExtents, direction, maximum, filter={}) → CastHit\|null` |
++| `closestPoint` | `(point, maximum, filter={}) → ClosestPointHit\|null`; bounded nearest **surface** search |
++| `joint` | `(ownerEntity) → Joint\|null`; owner is the entity authoring the joint component, not automatically a connected body. |
+ 
+ Pose-local Y is the capsule core axis, not universal world up. Capsule full height
+ is `2*(halfHeight+radius)`. Boxes use positive half extents. Default cast rotation
+@@ -39,6 +42,52 @@ false. Includes default to all, excludes to none; all required tags must match,
+ any excluded tag rejects. Unknown names throw. Query masks are independent of
+ physical body collision masks. Ignored missing bodies are skipped safely.
+ 
++## Batched nearest casts (M69)
++
++`raycastMany`, `sphereCastMany` and `capsuleCastMany` cross the JS/native bridge
++**once per accepted batch**. Native code validates all requests, prepares the
++one shared `QueryFilter` once, then performs the existing scalar geometry query
++for each request. This saves bridge/filter marshalling work; 100 rays still mean
++100 geometric queries. There is no promised machine-independent speedup.
++
++The input must be an array of at most **256** requests. Results correspond
++one-for-one in **input order**, retaining null misses and repeated requests;
++there is no result sort, truncation or implicit splitting. `[]` returns `[]`.
++Oversized requests throw RangeError. Malformed entries throw an indexed TypeError
++before any geometry query executes, so an invalid middle entry cannot produce a
++partial result. Invalid shared filter names/handles follow scalar query rules.
++
++All scalar limits apply: finite coordinates/distance/dimensions, nonzero finite
++direction, nonnegative maximum/radius/halfHeight, and nonzero valid quaternion
++when supplied. Directions/rotations normalize as in scalar casts. A zero maximum
++can test initial overlap. Capsule `pose` is required; omitted rotation is identity.
++Pose-local Y remains the capsule axis, not world up.
++
++Batches are synchronous read-only questions against the same authoritative world
++as scalar casts. They do not advance physics, run callbacks between requests or
++copy a world snapshot for a worker. Use `fixedUpdate` for gameplay queries that
++should coincide with authoritative control; other phases have the same legal
++read-only query behaviour as scalar calls. Retained hits are detached observations
++with ordinary generation-safe Entity wrappers; they do not extend body lifetime.
++Sensors, layers/tags, exclusions, ignored entities and rotated geometry use the
++same `QueryFilter` and broadphase/narrowphase. Terrain inherits existing scalar
++approximation/coverage. No box, overlap or all-hits batch binding is provided.
++
++```js
++const rays = [
++  {origin: {x:0,y:2,z:0}, direction: {x:0,y:0,z:-1}, maximum: 12},
++  {origin: {x:1,y:2,z:0}, direction: {x:0,y:0,z:-1}, maximum: 12}
++];
++const hits = physics.raycastMany(rays, {ignored: [this.entity]});
++for (let i=0; i<hits.length; ++i) {
++  const hit=hits[i]; // Null stays at the request's index.
++  if (hit?.entity?.valid) console.log(i, hit.entity.id, hit.distance);
++}
++```
++
++[The copyable 100-ray fan](examples/ray-fan.js) includes optional scalar-result
++comparison. It only returns observations; ledge selection/climbing remain game JS.
++
+ `world.overlap(min,max,filter={})` returns entity wrappers from conservative
+ broadphase bounds in ascending body-slot order, NOT exact overlap penetration
+ tests or an entity-ID sort. `world.sweepCapsule(from,
+diff --git a/scripts/check_judasjs_api.mjs b/scripts/check_judasjs_api.mjs
+index d500534..ad2ae80 100644
+--- a/scripts/check_judasjs_api.mjs
++++ b/scripts/check_judasjs_api.mjs
+@@ -54,9 +54,10 @@ const symbols=[...runtime.keys()].sort();
+ const nativeOps=[...new Set([...library.matchAll(/call\(['"]([^'"]+)['"]/g)].map(m=>m[1]))].sort();
+ for(const op of nativeOps)if(!source.slice(source.indexOf('JSValue ScriptSystem::Impl::Native')).match(new RegExp('op\\s*(?:==|!=)\\s*"'+op+'"')))throw Error('Unimplemented native operation '+op);
+ const mapPath=path.join(root,'docs/judasjs/api-inventory.json');
+-const schema={checkpoint:'b9a8cf3b8d8cd3786272480a8abe6cbe9fffe859',authority:'src/ScriptSystem.cpp::library + Impl::Native',symbols:symbols.map(k=>{
++const schema={checkpoint:'c042797c755df68b45e36aa917c4ca72818b9bcd',authority:'src/ScriptSystem.cpp::library + Impl::Native',symbols:symbols.map(k=>{
+  const v=runtime.get(k);let native=v.native;
+- if(k.startsWith('physics.')&&!['physics.joint','physics.closestPoint','physics.gravity','physics.createJoint'].includes(k))native=['cast'];
++ if(['physics.raycastMany','physics.sphereCastMany','physics.capsuleCastMany'].includes(k))native=['castMany'];
++ else if(k.startsWith('physics.')&&!['physics.joint','physics.closestPoint','physics.gravity','physics.createJoint'].includes(k))native=['cast'];
+  const streaming=k.startsWith('scenes.')&&!['scenes.current','scenes.registered','scenes.load','scenes.reload'].includes(k);
+  const audioMember=k.startsWith('Entity.')&&(k.includes('Audio')||k==='Entity.audio');
+  const page=audioMember?'audio.md':streaming?'streaming.md':['world.appearance','world.setAppearance','Entity.material'].includes(k)?'materials.md':['world.setView','world.clearView','world.viewRay','world.fluidSample','world.project','world.viewport','Entity.setCameraProjection'].includes(k)?'effects-camera.md':pages[k.split('.')[0]];
+@@ -66,7 +67,7 @@ const schema={checkpoint:'b9a8cf3b8d8cd3786272480a8abe6cbe9fffe859',authority:'s
+ if(args.includes('--write-inventory')){
+  fs.writeFileSync(mapPath,JSON.stringify(schema,null,2)+'\n');
+  const rows=schema.symbols.map(s=>`| \`${s.symbol}\` | ${s.native.map(n=>'`'+n+'`').join(', ')||'JS wrapper/data'} | [declaration](../judas.d.ts) | [reference](${path.basename(s.reference)}) |`);
+- fs.writeFileSync(path.join(root,'docs/judasjs/API_INVENTORY.md'),'# Current public JudasJS inventory\n\nM67 authoring and runtime-seam review of the registered virtual module based on starting checkpoint `'+schema.checkpoint+'`.\nEach row is a runtime export/member (constructors and plain handle fields included).\nNative dispatcher operations are implementation details, not additional JS APIs.\n\n| Runtime symbol | Native bridge operation | Type | Reference |\n|---|---|---|---|\n'+rows.join('\n')+'\n\n## Lifecycle and dynamic exceptions\n\n'+schema.callbacks.map(n=>'`'+n+'`').join(', ')+' are structural ScriptBehaviour callbacks, not module exports.\n\n'+Object.entries(schema.exceptions).map(([k,v])=>'- **'+k+'**: '+v).join('\n')+'\n\nThe machine check fails missing/phantom exports/members, getter/setter drift and inventory drift.\nStructured return/configuration types and behavioural semantics require source review; it is not full semantic certification.\n');
++ fs.writeFileSync(path.join(root,'docs/judasjs/API_INVENTORY.md'),'# Current public JudasJS inventory\n\nM69 paired input and batch-query review of the registered virtual module based on starting checkpoint `'+schema.checkpoint+'`. M67 human authoring review remains deferred.\nEach row is a runtime export/member (constructors and plain handle fields included).\nNative dispatcher operations are implementation details, not additional JS APIs.\n\n| Runtime symbol | Native bridge operation | Type | Reference |\n|---|---|---|---|\n'+rows.join('\n')+'\n\n## Lifecycle and dynamic exceptions\n\n'+schema.callbacks.map(n=>'`'+n+'`').join(', ')+' are structural ScriptBehaviour callbacks, not module exports.\n\n'+Object.entries(schema.exceptions).map(([k,v])=>'- **'+k+'**: '+v).join('\n')+'\n\nThe machine check fails missing/phantom exports/members, getter/setter drift and inventory drift.\nStructured return/configuration types and behavioural semantics require source review; it is not full semantic certification.\n');
+ }
+ function checkSurface(declarations){
+  const missing=symbols.filter(k=>!declarations.has(k)),phantom=[...declarations.keys()].filter(k=>!runtime.has(k));
+diff --git a/src/InputSystem.cpp b/src/InputSystem.cpp
+index 8987c18..4cd9ee3 100644
+--- a/src/InputSystem.cpp
++++ b/src/InputSystem.cpp
+@@ -14,32 +14,42 @@ bool Binding(const InputBinding& b){
+     const auto colon=b.control.find(':');const auto type=b.control.substr(0,colon);
+     return colon!=std::string::npos&&colon+1<b.control.size()&&Name(b.control)&&
+       (type=="key"||type=="mouse"||type=="pad"||type=="stick")&&
+-      std::isfinite(b.scale)&&std::isfinite(b.deadzone)&&b.deadzone>=0&&b.deadzone<1;
++      std::isfinite(b.scale)&&std::isfinite(b.scaleY)&&std::isfinite(b.deadzone)&&b.deadzone>=0&&b.deadzone<1;
+ }
++bool Paired(const InputBinding& b){return b.control=="stick:Left"||b.control=="stick:Right";}
++bool BindingFor(const InputEntry& e,const InputBinding& b){
++    return Binding(b)&&(e.vector?(!e.axis&&Paired(b)):
++        (!Paired(b)&&b.scaleY==1&&!b.circular));
++}
++int StickIndex(const std::string& side){return side=="left"?0:side=="right"?1:-1;}
++std::string StickControl(int index,const char* axis){return std::string("stick:")+(index==0?"Left":"Right")+axis;}
+ }
+ InputEntry* InputMap::Find(const std::string& n){for(auto& e:entries)if(e.name==n)return &e;return nullptr;}
+ const InputEntry* InputMap::Find(const std::string& n)const{for(const auto& e:entries)if(e.name==n)return &e;return nullptr;}
+ bool InputMap::Add(const std::string& n,bool axis){if(!Name(n)||Find(n))return false;entries.push_back({n,axis,{}});return true;}
++bool InputMap::AddVector(const std::string& n){if(!Add(n,false))return false;entries.back().vector=true;return true;}
+ bool InputMap::Rename(const std::string& from,const std::string& to){auto* e=Find(from);if(!e||!Name(to)||(to!=from&&Find(to)))return false;e->name=to;return true;}
+ bool InputMap::Remove(const std::string& n){auto it=std::find_if(entries.begin(),entries.end(),[&](const auto& e){return e.name==n;});if(it==entries.end())return false;entries.erase(it);return true;}
+-bool InputMap::AddBinding(const std::string& n,InputBinding b){auto* e=Find(n);if(!e||!Binding(b))return false;e->bindings.push_back(std::move(b));return true;}
+-bool InputMap::ReplaceBinding(const std::string& n,std::size_t i,InputBinding b){auto* e=Find(n);if(!e||i>=e->bindings.size()||!Binding(b))return false;e->bindings[i]=std::move(b);return true;}
++bool InputMap::AddBinding(const std::string& n,InputBinding b){auto* e=Find(n);if(!e||!BindingFor(*e,b))return false;e->bindings.push_back(std::move(b));return true;}
++bool InputMap::ReplaceBinding(const std::string& n,std::size_t i,InputBinding b){auto* e=Find(n);if(!e||i>=e->bindings.size()||!BindingFor(*e,b))return false;e->bindings[i]=std::move(b);return true;}
+ bool InputMap::RemoveBinding(const std::string& n,std::size_t i){auto* e=Find(n);if(!e||i>=e->bindings.size())return false;e->bindings.erase(e->bindings.begin()+i);return true;}
+ bool InputMap::Validate(std::string& error)const{
+     std::set<std::string> names;
+-    for(const auto& e:entries){if(!Name(e.name)||!names.insert(e.name).second){error="invalid/duplicate input name";return false;}for(const auto& b:e.bindings)if(!Binding(b)){error="invalid input binding";return false;}}
++    for(const auto& e:entries){if(!Name(e.name)||!names.insert(e.name).second){error="invalid/duplicate input name";return false;}if(e.axis&&e.vector){error="input cannot be both scalar axis and paired vector: "+e.name;return false;}for(const auto& b:e.bindings)if(!BindingFor(e,b)){error="invalid input binding: "+e.name+" (paired vectors require stick:Left/Right; scalar bindings retain their original settings)";return false;}}
+     error.clear();return true;
+ }
+ std::string InputMap::Serialize()const{
+-    std::ostringstream out;out.imbue(std::locale::classic());out<<std::setprecision(9)<<"1 "<<entries.size()<<' ';
+-    for(const auto& e:entries){out<<std::quoted(e.name)<<' '<<e.axis<<' '<<e.bindings.size()<<' ';for(const auto& b:e.bindings)out<<std::quoted(b.control)<<' '<<b.scale<<' '<<b.deadzone<<' ';}return out.str();
++    // Existing maps keep their exact canonical v1 representation/save identity.
++    const bool paired=std::any_of(entries.begin(),entries.end(),[](const auto& e){return e.vector;});
++    std::ostringstream out;out.imbue(std::locale::classic());out<<std::setprecision(9)<<(paired?2:1)<<' '<<entries.size()<<' ';
++    for(const auto& e:entries){out<<std::quoted(e.name)<<' '<<(e.vector?2:int(e.axis))<<' '<<e.bindings.size()<<' ';for(const auto& b:e.bindings){out<<std::quoted(b.control)<<' '<<b.scale<<' '<<b.deadzone<<' ';if(paired)out<<b.scaleY<<' '<<b.circular<<' ';}}return out.str();
+ }
+ bool InputMap::Parse(const std::string& text,InputMap& out,std::string& error){
+     if(IsNamedDocument(text))return AuthoringJSON::ParseInputDocument(text,out,error);
+     std::istringstream in(text);in.imbue(std::locale::classic());int version=0;std::size_t count=0;InputMap result;
+-    if(!(in>>version>>count)||version!=1||count>10000){error="unsupported/invalid input map";return false;}
+-    for(std::size_t i=0;i<count;++i){InputEntry e;int axis;std::size_t bindings;if(!(in>>std::quoted(e.name)>>axis>>bindings)||axis<0||axis>1||bindings>10000){error="malformed input entry";return false;}e.axis=axis;
+-        for(std::size_t b=0;b<bindings;++b){InputBinding value;if(!(in>>std::quoted(value.control)>>value.scale>>value.deadzone)){error="malformed input binding";return false;}e.bindings.push_back(value);}result.entries.push_back(e);}
++    if(!(in>>version>>count)||(version!=1&&version!=2)||count>10000){error="unsupported/invalid input map";return false;}
++    for(std::size_t i=0;i<count;++i){InputEntry e;int kind;std::size_t bindings;if(!(in>>std::quoted(e.name)>>kind>>bindings)||kind<0||kind>(version==1?1:2)||bindings>10000){error="malformed input entry";return false;}e.axis=kind==1;e.vector=kind==2;
++        for(std::size_t b=0;b<bindings;++b){InputBinding value;if(!(in>>std::quoted(value.control)>>value.scale>>value.deadzone)){error="malformed input binding";return false;}if(version==2){int circular;if(!(in>>value.scaleY>>circular)||circular<0||circular>1){error="malformed paired input binding";return false;}value.circular=circular!=0;}e.bindings.push_back(value);}result.entries.push_back(e);}
+     in>>std::ws;if(!in.eof()||!result.Validate(error)){if(error.empty())error="trailing input data";return false;}out=std::move(result);return true;
+ }
+ InputMap InputMap::Defaults(){
+@@ -66,8 +76,25 @@ InputMap InputMap::Defaults(){
+ InputSystem::InputSystem():m_map(InputMap::Defaults()){Evaluate();}
+ bool InputSystem::SetMap(const InputMap& map,std::string& error){if(!map.Validate(error))return false;m_map=map;Reset();return true;}
+ float InputSystem::Deadzone(float v,float d){return std::abs(v)<=d?0:std::copysign((std::min(1.f,std::abs(v))-d)/(1-d),v);}
++InputVector InputSystem::CircularDeadzone(InputVector v,float d){
++    const float magnitude=std::hypot(v.x,v.y);
++    if(magnitude<=d)return {};
++    const float response=std::min(1.f,(magnitude-d)/(1-d))/magnitude;
++    return {v.x*response,v.y*response};
++}
+ void InputSystem::Evaluate(){
+     for(const auto& e:m_map.entries){float value=0;bool held=false;
++        if(e.vector){
++            double sumX=0,sumY=0;
++            for(const auto& b:e.bindings){const int index=b.control=="stick:Left"?0:1;
++                InputVector v{m_raw[StickControl(index,"X")],m_raw[StickControl(index,"Y")]};
++                if(b.circular)v=CircularDeadzone(v,b.deadzone);
++                else v={Deadzone(v.x,b.deadzone),Deadzone(v.y,b.deadzone)};
++                sumX+=double(v.x)*b.scale;sumY+=double(v.y)*b.scaleY;
++            }
++            m_vectors[e.name]={float(std::clamp(sumX,-1.0,1.0)),float(std::clamp(sumY,-1.0,1.0))};
++            continue;
++        }
+         for(const auto& b:e.bindings){auto it=m_raw.find(b.control);float v=it==m_raw.end()?0:it->second;if(b.control.rfind("stick:",0)==0)v=Deadzone(v,b.deadzone);v*=b.scale;
+             value+=v;
+             held=held||v>.5f;}
+@@ -75,21 +102,73 @@ void InputSystem::Evaluate(){
+         else {auto& s=m_actions[e.name];if(held!=s.held){s.pressed|=held;s.released|=!held;auto& p=m_pending[e.name];p.pressed|=held;p.released|=!held;}s.held=held;}
+     }
+ }
+-void InputSystem::BeginFrame(){m_consumed.clear();for(auto& p:m_actions){p.second.pressed=false;p.second.released=false;}for(const char* c:{"mouse:dx","mouse:dy","mouse:wheelX","mouse:wheelY"})m_raw[c]=0;Evaluate();}
+-void InputSystem::SetPhysical(const std::string& c,float v){if(!std::isfinite(v))return;m_raw[c]=v;Evaluate();}
++void InputSystem::BeginFrame(){m_consumed.clear();for(int i=0;i<2;++i)m_stickFrameStart[i]={m_raw[StickControl(i,"X")],m_raw[StickControl(i,"Y")]};for(auto& p:m_actions){p.second.pressed=false;p.second.released=false;}for(const char* c:{"mouse:dx","mouse:dy","mouse:wheelX","mouse:wheelY"})m_raw[c]=0;Evaluate();}
++void InputSystem::SetPhysical(const std::string& c,float v){
++    if(!std::isfinite(v))return;
++    for(int i=0;i<2;++i)if(c==StickControl(i,"X")||c==StickControl(i,"Y")){
++        SetStick(i==0?"left":"right",c==StickControl(i,"X")?v:m_raw[StickControl(i,"X")],c==StickControl(i,"Y")?v:m_raw[StickControl(i,"Y")]);return;
++    }
++    m_raw[c]=v;Evaluate();
++}
++void InputSystem::SetStick(const std::string& side,float x,float y,bool baseline){
++    const int i=StickIndex(side);if(i<0||!std::isfinite(x)||!std::isfinite(y))return;
++    x=std::clamp(x,-1.f,1.f);y=std::clamp(y,-1.f,1.f);
++    const bool changed=x!=m_raw[StickControl(i,"X")]||y!=m_raw[StickControl(i,"Y")];
++    m_raw[StickControl(i,"X")]=x;m_raw[StickControl(i,"Y")]=y;
++    if(baseline||!m_stickReady[i]){m_stickFrameStart[i]={x,y};m_stickReady[i]=true;}
++    else if(changed){
++        auto& history=m_stickHistory[i];
++        history.push_back({++m_stickSequence,std::chrono::duration<double>(std::chrono::steady_clock::now()-m_inputClock).count(),x,y});
++        if(history.size()>128){m_stickDroppedThrough[i]=history.front().sequence;history.pop_front();}
++    }
++    Evaluate();
++}
+ void InputSystem::AddDelta(const std::string& c,float v){if(std::isfinite(v))SetPhysical(c,m_raw[c]+v);}
+-void InputSystem::ClearDevice(const std::string& prefix){for(auto& p:m_raw)if(p.first.rfind(prefix,0)==0)p.second=0;Evaluate();}
+-void InputSystem::Reset(){m_consumed.clear();m_raw.clear();m_axes.clear();m_actions.clear();m_pending.clear();m_fixed.clear();Evaluate();DiscardPending();}
+-void InputSystem::DiscardPending(){m_pending.clear();m_fixed.clear();for(auto& s:m_actions){s.second.pressed=false;s.second.released=false;}}
++void InputSystem::ClearDevice(const std::string& prefix){for(auto& p:m_raw)if(p.first.rfind(prefix,0)==0)p.second=0;if(prefix.rfind("stick:",0)==0)DiscardStickHistory();Evaluate();}
++void InputSystem::Reset(){m_consumed.clear();m_raw.clear();m_axes.clear();m_vectors.clear();m_actions.clear();m_pending.clear();m_fixed.clear();Evaluate();DiscardPending();}
++void InputSystem::DiscardPending(){m_pending.clear();m_fixed.clear();for(auto& s:m_actions){s.second.pressed=false;s.second.released=false;}DiscardStickHistory();}
++void InputSystem::DiscardStickHistory(){
++    m_stickResetSequence=++m_stickSequence;
++    for(int i=0;i<2;++i){m_stickHistory[i].clear();m_stickDroppedThrough[i]=0;m_stickReady[i]=false;m_stickFrameStart[i]={m_raw[StickControl(i,"X")],m_raw[StickControl(i,"Y")]};}
++}
++bool InputSystem::StickConsumed(const std::string& side)const{
++    const int i=StickIndex(side);if(i<0)return false;
++    const auto prefix=StickControl(i,"");
++    for(const auto& name:m_consumed)if(const auto* entry=m_map.Find(name))for(const auto& binding:entry->bindings)if(binding.control==prefix||binding.control==prefix+"X"||binding.control==prefix+"Y")return true;
++    return false;
++}
++InputVector InputSystem::Stick(const std::string& side)const{
++    const int i=StickIndex(side);if(i<0||StickConsumed(side))return {};
++    const auto x=m_raw.find(StickControl(i,"X")),y=m_raw.find(StickControl(i,"Y"));
++    return {x==m_raw.end()?0:x->second,y==m_raw.end()?0:y->second};
++}
++InputVector InputSystem::StickDelta(const std::string& side)const{
++    const int i=StickIndex(side);if(i<0||StickConsumed(side))return {};
++    const auto v=Stick(side);return {v.x-m_stickFrameStart[i].x,v.y-m_stickFrameStart[i].y};
++}
++InputVector InputSystem::Vector(const std::string& name)const{
++    if(std::find(m_consumed.begin(),m_consumed.end(),name)!=m_consumed.end())return {};
++    const auto it=m_vectors.find(name);return it==m_vectors.end()?InputVector{}:it->second;
++}
++InputStickSnapshot InputSystem::StickSamples(const std::string& side,std::uint64_t after)const{
++    InputStickSnapshot result;result.sequence=m_stickSequence;result.reset=after<m_stickResetSequence;
++    const int i=StickIndex(side);if(i<0)return result;
++    result.overflow=after<m_stickDroppedThrough[i];
++    if(!StickConsumed(side))for(const auto& sample:m_stickHistory[i])if(sample.sequence>after)result.samples.push_back(sample);
++    return result;
++}
+ InputActionState InputSystem::Action(const std::string& n)const{if(std::find(m_consumed.begin(),m_consumed.end(),n)!=m_consumed.end())return {};auto it=m_actions.find(n);return it==m_actions.end()?InputActionState{}:it->second;}
+ float InputSystem::Axis(const std::string& n)const{if(std::find(m_consumed.begin(),m_consumed.end(),n)!=m_consumed.end())return 0;auto it=m_axes.find(n);return it==m_axes.end()?0:it->second;}
+ void InputSystem::BeginFixedStep()const{m_fixed=m_actions;for(auto& p:m_fixed){auto it=m_pending.find(p.first);p.second.pressed=it!=m_pending.end()&&it->second.pressed;p.second.released=it!=m_pending.end()&&it->second.released;}m_pending.clear();}
+ InputActionState InputSystem::FixedAction(const std::string& n)const{if(std::find(m_consumed.begin(),m_consumed.end(),n)!=m_consumed.end())return {};auto it=m_fixed.find(n);return it==m_fixed.end()?InputActionState{}:it->second;}
+ 
+ void InputSystem::ConsumeBindings(const std::vector<std::string>& names){
+-    std::set<std::string> controls;for(const auto& n:names)if(auto* e=m_map.Find(n))for(const auto& b:e->bindings)controls.insert(b.control);
+-    for(const auto& e:m_map.entries)if(std::find(names.begin(),names.end(),e.name)!=names.end()||std::any_of(e.bindings.begin(),e.bindings.end(),[&](const auto& b){return controls.count(b.control);})){
++    std::set<std::string> controls;auto add=[&](const InputBinding& b){controls.insert(b.control);if(Paired(b)){controls.insert(b.control+"X");controls.insert(b.control+"Y");}};
++    for(const auto& n:names)if(auto* e=m_map.Find(n))for(const auto& b:e->bindings)add(b);
++    auto shared=[&](const InputBinding& b){return controls.count(b.control)||(Paired(b)&&(controls.count(b.control+"X")||controls.count(b.control+"Y")));};
++    for(const auto& e:m_map.entries)if(std::find(names.begin(),names.end(),e.name)!=names.end()||std::any_of(e.bindings.begin(),e.bindings.end(),shared)){
+         if(std::find(m_consumed.begin(),m_consumed.end(),e.name)==m_consumed.end())m_consumed.push_back(e.name);
+         m_pending.erase(e.name);m_fixed.erase(e.name);
+     }
++    if(std::any_of(controls.begin(),controls.end(),[](const auto& c){return c=="stick:Left"||c=="stick:LeftX"||c=="stick:LeftY"||c=="stick:Right"||c=="stick:RightX"||c=="stick:RightY";}))DiscardStickHistory();
+ }
+diff --git a/src/InputSystem.h b/src/InputSystem.h
+index 5a788cf..f1631c9 100644
+--- a/src/InputSystem.h
++++ b/src/InputSystem.h
+@@ -1,5 +1,9 @@
+ #pragma once
+ #include <map>
++#include <array>
++#include <chrono>
++#include <cstdint>
++#include <deque>
+ #include <string>
+ #include <vector>
+ 
+@@ -8,11 +12,15 @@
+ struct InputBinding {
+     std::string control;
+     float scale=1, deadzone=0;
++    // Paired controls use scale for X and scaleY for Y, after processing.
++    float scaleY=1;
++    bool circular=false;
+ };
+ struct InputEntry {
+     std::string name;
+     bool axis=false;
+     std::vector<InputBinding> bindings;
++    bool vector=false;
+ };
+ struct InputMap {
+     std::vector<InputEntry> entries;
+@@ -23,6 +31,7 @@ struct InputMap {
+     InputEntry* Find(const std::string& name);
+     const InputEntry* Find(const std::string& name) const;
+     bool Add(const std::string& name,bool axis);
++    bool AddVector(const std::string& name);
+     bool Rename(const std::string& from,const std::string& to);
+     bool Remove(const std::string& name);
+     bool AddBinding(const std::string& name,InputBinding binding);
+@@ -30,6 +39,14 @@ struct InputMap {
+     bool RemoveBinding(const std::string& name,std::size_t index);
+ };
+ struct InputActionState { bool held=false,pressed=false,released=false; };
++struct InputVector { float x=0,y=0; };
++struct InputStickSample { std::uint64_t sequence=0;double time=0;float x=0,y=0; };
++struct InputStickSnapshot {
++    std::vector<InputStickSample> samples;
++    std::uint64_t sequence=0;
++    bool reset=false,overflow=false;
++    std::size_t capacity=128;
++};
+ class InputSystem {
+ public:
+     InputSystem();
+@@ -41,11 +58,22 @@ public:
+     void ClearDevice(const std::string& prefix);
+     void Reset();
+     void DiscardPending();
++    void DiscardStickHistory();
+     // Consume logical inputs and every action/axis sharing their physical bindings.
+     // Suppression persists through catch-up fixed steps until BeginFrame.
+     void ConsumeBindings(const std::vector<std::string>& names);
+     InputActionState Action(const std::string& name) const;
+     float Axis(const std::string& name) const;
++    // Latest backend pair and net movement during this render/input frame.
++    // These are copied values; fixed-step readers never consume observations.
++    InputVector Stick(const std::string& side) const;
++    InputVector StickDelta(const std::string& side) const;
++    InputVector Vector(const std::string& name) const;
++    InputStickSnapshot StickSamples(const std::string& side,std::uint64_t after=0) const;
++    // Window's selected-controller adapter submits paired polls atomically.
++    // A baseline restores held input without inventing motion on reassignment.
++    void SetStick(const std::string& side,float x,float y,bool baseline=false);
++    static InputVector CircularDeadzone(InputVector value,float deadzone);
+     // All consumers see the same snapshot. Edges accumulate across zero-step
+     // frames; first fixed step drains them, later catch-up steps see no repeat.
+     void BeginFixedStep() const;
+@@ -53,9 +81,17 @@ public:
+     static float Deadzone(float value,float deadzone);
+ private:
+     void Evaluate();
++    bool StickConsumed(const std::string& side) const;
+     std::vector<std::string> m_consumed;
+     InputMap m_map;
+     std::map<std::string,float> m_raw,m_axes;
++    std::map<std::string,InputVector> m_vectors;
+     std::map<std::string,InputActionState> m_actions;
+     mutable std::map<std::string,InputActionState> m_pending,m_fixed;
++    std::array<InputVector,2> m_stickFrameStart{};
++    std::array<bool,2> m_stickReady{};
++    std::array<std::deque<InputStickSample>,2> m_stickHistory;
++    std::array<std::uint64_t,2> m_stickDroppedThrough{};
++    std::uint64_t m_stickSequence=0,m_stickResetSequence=0;
++    std::chrono::steady_clock::time_point m_inputClock=std::chrono::steady_clock::now();
+ };
+diff --git a/src/InteractivePlay.cpp b/src/InteractivePlay.cpp
+index fcb8b5b..fb01b87 100644
+--- a/src/InteractivePlay.cpp
++++ b/src/InteractivePlay.cpp
+@@ -97,6 +97,10 @@ float InteractivePlay::Frame(Window& window, Renderer& renderer, float frameDelt
+     JUDAS_PROFILE_SCOPE("Play frame");
+     RuntimeWorld& world = m_session.World();
+ 
++    // Paired controller observations belong to this play session. A menu's
++    // resume frame must not replay stick movement delivered while it owned input.
++    if (!m_captureInitialized || IsPaused()) window.Input().DiscardStickHistory();
++
+     // --- Milestone 13: the single input-routing boundary ---
+     // Everything UI-related is handled here, before any gameplay system
+     // sees this frame's input. Gameplay code is never told a menu exists;
+diff --git a/src/NamedInput.h b/src/NamedInput.h
+index 9390129..247cb01 100644
+--- a/src/NamedInput.h
++++ b/src/NamedInput.h
+@@ -2,8 +2,17 @@
+ #include "InputSystem.h"
+ #include "AuthoringJSON.h"
+ namespace AuthoringJSON {
+-inline J input(const InputMap& m){J a=J::array();for(auto& e:m.entries){J bs=J::array();for(auto& b:e.bindings)bs.push_back({{"control",b.control},{"scale",b.scale},{"deadzone",b.deadzone}});a.push_back({{"name",e.name},{"axis",e.axis},{"bindings",bs}});}return a;}
+-inline InputMap input(const J& a){require(a.is_array()&&a.size()<=10000,"input entries limit/type");InputMap m;for(auto& e:a){keys(e,{"name","axis","bindings"},"input");InputEntry r;r.name=e.at("name").get<std::string>();r.axis=e.at("axis").get<bool>();require(e.at("bindings").is_array()&&e.at("bindings").size()<=10000,"input bindings limit/type");for(auto& b:e.at("bindings")){keys(b,{"control","scale","deadzone"},"input/binding");r.bindings.push_back({b.at("control").get<std::string>(),typed<float>(b.at("scale")),typed<float>(b.at("deadzone"))});}m.entries.push_back(r);}std::string error;require(m.Validate(error),"input: "+error);return m;}
++inline J input(const InputMap& m){
++ J a=J::array();for(const auto& e:m.entries){J bs=J::array();for(const auto& b:e.bindings){J value={{"control",b.control},{"scale",b.scale},{"deadzone",b.deadzone}};if(e.vector){value["scaleY"]=b.scaleY;value["circular"]=b.circular;}bs.push_back(std::move(value));}J value={{"name",e.name},{"axis",e.axis},{"bindings",bs}};if(e.vector)value["vector"]=true;a.push_back(std::move(value));}return a;
++}
++inline InputMap input(const J& a){
++ require(a.is_array()&&a.size()<=10000,"input entries limit/type");InputMap m;
++ for(const auto& e:a){keys(e,{"name","axis","vector","bindings"},"input");InputEntry r;r.name=e.at("name").get<std::string>();r.axis=e.at("axis").get<bool>();r.vector=e.value("vector",false);
++  require(e.at("bindings").is_array()&&e.at("bindings").size()<=10000,"input bindings limit/type");
++  for(const auto& b:e.at("bindings")){keys(b,{"control","scale","deadzone","scaleY","circular"},"input/binding");InputBinding value{b.at("control").get<std::string>(),typed<float>(b.at("scale")),typed<float>(b.at("deadzone"))};if(b.contains("scaleY"))value.scaleY=typed<float>(b.at("scaleY"));value.circular=b.value("circular",false);r.bindings.push_back(value);}
++  m.entries.push_back(std::move(r));}
++ std::string error;require(m.Validate(error),"input: "+error);return m;
++}
+ inline bool ParseInputDocument(const std::string& text,InputMap& out,std::string& error){
+  try {auto j=parse(text);keys(j,{"kind","schema","data"},"document");require(j.at("kind")=="input","document kind mismatch");require(j.at("schema").is_number_integer()&&j.at("schema")==1,"unsupported authoring schema");auto candidate=input(j.at("data"));out=std::move(candidate);error.clear();return true;}catch(const std::exception& e){error=e.what();return false;}
+ }
+diff --git a/src/SceneSession.cpp b/src/SceneSession.cpp
+index 4c4b051..8f9105f 100644
+--- a/src/SceneSession.cpp
++++ b/src/SceneSession.cpp
+@@ -99,6 +99,7 @@ bool SceneSession::AdvanceOuter(std::unique_ptr<RuntimeWorld>& owner,Interactive
+     if(previous!=owner.get())input.DiscardPending();
+     // A save error must remain visible rather than being overwritten by Apply.
+     std::string transitionError;bool ok=Apply(owner,play,resources,transitionError);
++    if(previous!=owner.get())input.DiscardStickHistory();
+     if(!transitionError.empty()){if(!error.empty())error+="; ";error+=transitionError;}
+     return ok;
+ }
+diff --git a/src/ScriptSystem.cpp b/src/ScriptSystem.cpp
+index 46b7e85..c883ef0 100644
+--- a/src/ScriptSystem.cpp
++++ b/src/ScriptSystem.cpp
+@@ -108,7 +108,9 @@ export const world={entity,get appearance(){return call('appearanceInfo')},setAp
+  spawnPrefab:(asset,transform={},options={})=>entity(call('spawn',asset,transform,options)),
+  overlap:(min,max,filter={})=>call('overlap',min,max,filter).map(entity),
+  sweepCapsule:(from,displacement,rotation={w:1,x:0,y:0,z:0},filter={})=>call('sweep',from,displacement,filter,rotation)};
+-const cast=(origin,direction,maximum,filter,shape)=>{const hit=call('cast',origin,direction,filter,{...shape,maximum});return hit?{...hit,entity:entity(hit.entityId)}:null};
++const castResult=hit=>hit?{...hit,entity:entity(hit.entityId)}:null;
++const cast=(origin,direction,maximum,filter,shape)=>castResult(call('cast',origin,direction,filter,{...shape,maximum}));
++const castMany=(kind,requests,filter)=>call('castMany',kind,requests,filter).map(castResult);
+ export class Material {
+  constructor(entityId,slot=0){this.entityId=entityId;this.slot=slot}
+  get state(){return call('materialInfo',this.entityId,this.slot)}
+@@ -243,8 +245,11 @@ export const physics={
+  closestPoint:(point,maximum,filter={})=>{const hit=call('closestPoint',point,{x:0,y:0,z:0},filter,{maximum});return hit?{...hit,entity:entity(hit.entityId)}:null},
+  joint:owner=>{const id=call('joint',owner.id);return id?new Joint(id):null},
+  raycast:(origin,direction,maximum,filter={})=>cast(origin,direction,maximum,filter,{kind:'ray'}),
++ raycastMany:(rays,filter={})=>castMany('ray',rays,filter),
+  sphereCast:(origin,radius,direction,maximum,filter={})=>cast(origin,direction,maximum,filter,{kind:'sphere',radius}),
++ sphereCastMany:(casts,filter={})=>castMany('sphere',casts,filter),
+  capsuleCast:(pose,radius,halfHeight,direction,maximum,filter={})=>cast(pose.position,direction,maximum,filter,{kind:'capsule',rotation:pose.rotation,radius,halfHeight}),
++ capsuleCastMany:(casts,filter={})=>castMany('capsule',casts,filter),
+  boxCast:(pose,halfExtents,direction,maximum,filter={})=>cast(pose.position,direction,maximum,filter,{kind:'box',rotation:pose.rotation,halfExtents})};
+ export const scenes={get current(){return call('sceneCurrent')},get registered(){return call('sceneList')},load:name=>call('sceneLoad',name),reload:()=>call('sceneReload'),
+  get regions(){return call('regionList')},get streamingStats(){return call('regionStats')},
+@@ -255,7 +260,7 @@ export const scenes={get current(){return call('sceneCurrent')},get registered()
+ export const localization={get locale(){return call('localeInfo').locale},get available(){return call('localeInfo').available},get revision(){return call('localeInfo').revision},get direction(){return call('localeInfo').direction},setLocale:locale=>call('localeChoose',locale),format:(key,args={})=>call('localeFormat',key,args),number:(value,options={})=>call('localeNumber',value,options),reload:()=>call('localeReload')};
+ export const saves={save:(slot,options={})=>call('saveRequest','save',slot,options),load:slot=>call('saveRequest','load',slot,{}),delete:slot=>call('saveRequest','delete',slot,{}),refresh:()=>call('saveRequest','list','',{}),list:()=>call('saveList'),exists:slot=>call('saveList').some(s=>s.id===slot),status:request=>call('saveStatus',request),cancel:request=>call('saveCancel',request),exclude:(entity,excluded=true)=>call('saveExclude',entity.id,excluded),reference:entity=>call('saveReference',entity.id),resolve:key=>entity(call('saveResolve',key))};
+ export const session={get:key=>call('sessionGet',key),set:(key,value)=>call('sessionSet',key,value),delete:key=>call('sessionDelete',key)};
+-export const input={get pointerCapture(){return call('pointerCapture')},set pointerCapture(value){call('setPointerCapture',value)},held:name=>call('held',name),pressed:name=>call('pressed',name),released:name=>call('released',name),axis:name=>call('axis',name)};
++export const input={get pointerCapture(){return call('pointerCapture')},set pointerCapture(value){call('setPointerCapture',value)},held:name=>call('held',name),pressed:name=>call('pressed',name),released:name=>call('released',name),axis:name=>call('axis',name),stick:side=>call('stick',side),stickDelta:side=>call('stickDelta',side),vector:name=>call('vector',name),stickSamples:(side,after=0)=>call('stickSamples',side,after)};
+ export const profiler={scope:(label,callback)=>call("profileScope",label,callback),counter:(label,value,mode="sum")=>call("profileCounter",label,value,mode)};
+ export const time={get elapsed(){return call('elapsed')},get delta(){return call('delta')},get fixed(){return call('fixed')}};
+ export const console={log:(...args)=>call('log',args.map(String).join(' '))};
+@@ -640,6 +645,25 @@ JSValue ScriptSystem::Impl::Native(JSContext* c,JSValueConst,int argc,JSValueCon
+     if(op=="fixed")return JS_NewBool(c,s->fixed);
+     if(op=="pointerCapture")return JS_NewBool(c,world.pointerCapture);
+     if(op=="setPointerCapture"){if(!JS_IsBool(arg(1)))return JS_ThrowTypeError(c,"pointerCapture must be boolean");world.pointerCapture=JS_ToBool(c,arg(1));return JS_TRUE;}
++    if(op=="stick"||op=="stickDelta"||op=="vector"||op=="stickSamples"){
++        if(!JS_IsString(arg(1)))return JS_ThrowTypeError(c,"input.%s requires a string",op.c_str());
++        const auto name=String(c,arg(1));
++        if(op!="vector"&&name!="left"&&name!="right")return JS_ThrowTypeError(c,"stick side must be 'left' or 'right'");
++        auto pair=[&](InputVector v){auto o=JS_NewObject(c);JS_SetPropertyStr(c,o,"x",JS_NewFloat64(c,v.x));JS_SetPropertyStr(c,o,"y",JS_NewFloat64(c,v.y));return o;};
++        if(op=="stick")return pair(s->input?s->input->Stick(name):InputVector{});
++        if(op=="stickDelta")return pair(s->input?s->input->StickDelta(name):InputVector{});
++        if(op=="vector")return pair(s->input?s->input->Vector(name):InputVector{});
++        double after=0;
++        if(!JS_IsNumber(arg(2))||JS_ToFloat64(c,&after,arg(2))||!std::isfinite(after)||after<0||after!=std::floor(after)||after>9007199254740991.0)
++            return JS_ThrowTypeError(c,"stick sample cursor must be a nonnegative safe integer");
++        const auto snapshot=s->input?s->input->StickSamples(name,static_cast<uint64_t>(after)):InputStickSnapshot{};
++        if(after>static_cast<double>(snapshot.sequence))return JS_ThrowTypeError(c,"stick sample cursor is ahead of this input service");
++        auto out=JS_NewObject(c),samples=JS_NewArray(c);uint32_t index=0;
++        for(const auto& sample:snapshot.samples){auto value=pair({sample.x,sample.y});JS_SetPropertyStr(c,value,"sequence",JS_NewFloat64(c,static_cast<double>(sample.sequence)));JS_SetPropertyStr(c,value,"time",JS_NewFloat64(c,sample.time));JS_SetPropertyUint32(c,samples,index++,value);}
++        JS_SetPropertyStr(c,out,"samples",samples);JS_SetPropertyStr(c,out,"sequence",JS_NewFloat64(c,static_cast<double>(snapshot.sequence)));
++        JS_SetPropertyStr(c,out,"reset",JS_NewBool(c,snapshot.reset));JS_SetPropertyStr(c,out,"overflow",JS_NewBool(c,snapshot.overflow));JS_SetPropertyStr(c,out,"capacity",JS_NewUint32(c,static_cast<uint32_t>(snapshot.capacity)));
++        return out;
++    }
+     if(op=="held"||op=="pressed"||op=="released"||op=="axis"){
+         auto name=String(c,arg(1));if(!s->input)return op=="axis"?JS_NewFloat64(c,0):JS_FALSE;
+         if(op=="axis")return JS_NewFloat64(c,s->input->Axis(name));
+@@ -752,19 +776,93 @@ JSValue ScriptSystem::Impl::Native(JSContext* c,JSValueConst,int argc,JSValueCon
+     if(op=="queryTags"){CategoryMask required,excluded;if(!tagMask(arg(1),required)||!tagMask(arg(2),excluded))return JS_ThrowTypeError(c,"unknown tag");return ids(world.QueryEntities(required,excluded));}
+     if(op=="spawn"){SceneTransform t;if(!readTransform(arg(2),t))return JS_ThrowTypeError(c,"invalid transform");RuntimeWorld::PrefabSpawnOptions options;auto config=arg(3);if(!KnownOptions(c,config,{"velocity","angularVelocity","scripts"}))return JS_ThrowTypeError(c,"spawn options accept velocity/angularVelocity/scripts only");for(auto [key,destination]:{std::pair<const char*,std::optional<glm::vec3>*>{"velocity",&options.velocity},{"angularVelocity",&options.angularVelocity}}){auto v=JS_GetPropertyStr(c,config,key);if(!JS_IsUndefined(v)){glm::vec3 motion;if(!ReadVec(c,v,motion)){JS_FreeValue(c,v);return JS_ThrowTypeError(c,"finite prefab motion required");}*destination=motion;}JS_FreeValue(c,v);}auto list=JS_GetPropertyStr(c,config,"scripts");std::string error;if(!JS_IsUndefined(list)){if(!JS_IsArray(list)){JS_FreeValue(c,list);return JS_ThrowTypeError(c,"scripts array required");}auto len=JS_GetPropertyStr(c,list,"length");uint32_t n=0;JS_ToUint32(c,&n,len);JS_FreeValue(c,len);if(n>256){JS_FreeValue(c,list);return JS_ThrowRangeError(c,"script init limit");}for(uint32_t i=0;i<n;++i){auto value=JS_GetPropertyUint32(c,list,i);RuntimeWorld::PrefabScriptInit init;auto src=JS_GetPropertyStr(c,value,"source"),slot=JS_GetPropertyStr(c,value,"slot"),props=JS_GetPropertyStr(c,value,"properties"),state=JS_GetPropertyStr(c,value,"state");bool valid=KnownOptions(c,value,{"source","slot","properties","state"});try{auto decimal=[&](JSValueConst v){auto text=String(c,v);if(text.empty()||text.find_first_not_of("0123456789")!=std::string::npos)throw std::runtime_error("decimal ID required");return std::stoull(text);};if(!JS_IsUndefined(src))init.source=decimal(src);init.slot=decimal(slot);}catch(...){valid=false;}if(!JS_IsUndefined(props))valid&=s->Json(props,init.properties,error);if(!JS_IsUndefined(state))valid&=s->Json(state,init.state,error);JS_FreeValue(c,src);JS_FreeValue(c,slot);JS_FreeValue(c,props);JS_FreeValue(c,state);JS_FreeValue(c,value);if(!valid){JS_FreeValue(c,list);return JS_ThrowTypeError(c,"invalid prefab script initialization: %s",error.c_str());}options.scripts.push_back(init);}}JS_FreeValue(c,list);auto id=world.SpawnPrefab(String(c,arg(1)),t,error,options);if(!id)return JS_ThrowTypeError(c,"spawn: %s",error.c_str());return JS_NewString(c,std::to_string(id).c_str());}
+     if(op=="viewRay"){if(world.view){auto o=JS_NewObject(c);JS_SetPropertyStr(c,o,"origin",Vec(c,world.view->pose.position));JS_SetPropertyStr(c,o,"direction",Vec(c,world.view->pose.rotation*glm::vec3(0,0,-1)));return o;}if(!s->hasView)return JS_NULL;auto o=JS_NewObject(c);JS_SetPropertyStr(c,o,"origin",Vec(c,s->viewOrigin));JS_SetPropertyStr(c,o,"direction",Vec(c,s->viewDirection));return o;}
+-    if(op=="overlap"||op=="sweep"||op=="cast"||op=="closestPoint"){
+-        glm::vec3 min,max;if(!ReadVec(c,arg(1),min)||!ReadVec(c,arg(2),max))return JS_ThrowTypeError(c,"invalid bounds");PhysicsQueryFilter filter;
+-        auto include=JS_GetPropertyStr(c,arg(3),"includeLayers");auto exclude=JS_GetPropertyStr(c,arg(3),"excludeLayers");
++    // Scalar and batch operations share filter preparation and hit snapshots.
++    // A batch prepares immutable request values before entering any geometry query.
++    auto queryFilter=[&](JSValueConst options,PhysicsQueryFilter& filter,std::string& error){
++        JUDAS_PROFILE_COUNTER("Physics query filter preparations",1,ProfileCounterMode::Sum);
++        auto include=JS_GetPropertyStr(c,options,"includeLayers");auto exclude=JS_GetPropertyStr(c,options,"excludeLayers");
+         auto layerMask=[&](JSValueConst a,CategoryMask& mask){if(JS_IsUndefined(a))return true;if(!JS_IsArray(a))return false;auto len=JS_GetPropertyStr(c,a,"length");uint32_t n=0;JS_ToUint32(c,&n,len);JS_FreeValue(c,len);if(n>64)return false;mask=0;
+             for(uint32_t i=0;i<n;++i){auto v=JS_GetPropertyUint32(c,a,i);auto name=String(c,v);JS_FreeValue(c,v);int id=world.Categories().collision.Find(name);if(id<0)return false;mask|=CategoryBit(id);}return true;};
+-        auto sensors=JS_GetPropertyStr(c,arg(3),"includeSensors");if(!JS_IsUndefined(sensors)&&!JS_IsBool(sensors)){JS_FreeValue(c,sensors);return JS_ThrowTypeError(c,"includeSensors must be boolean");}filter.includeSensors=JS_ToBool(c,sensors)>0;JS_FreeValue(c,sensors);
+-        auto required=JS_GetPropertyStr(c,arg(3),"requiredTags"),excluded=JS_GetPropertyStr(c,arg(3),"excludedTags"),ignored=JS_GetPropertyStr(c,arg(3),"ignored");
++        auto sensors=JS_GetPropertyStr(c,options,"includeSensors");if(!JS_IsUndefined(sensors)&&!JS_IsBool(sensors)){JS_FreeValue(c,sensors);JS_FreeValue(c,include);JS_FreeValue(c,exclude);error="includeSensors must be boolean";return false;}filter.includeSensors=JS_ToBool(c,sensors)>0;JS_FreeValue(c,sensors);
++        auto required=JS_GetPropertyStr(c,options,"requiredTags"),excluded=JS_GetPropertyStr(c,options,"excludedTags"),ignored=JS_GetPropertyStr(c,options,"ignored");
+         bool tagsOk=(JS_IsUndefined(required)||tagMask(required,filter.requiredTags))&&(JS_IsUndefined(excluded)||tagMask(excluded,filter.excludedTags));
+         JS_FreeValue(c,required);JS_FreeValue(c,excluded);
+         if(!JS_IsUndefined(ignored)){auto len=JS_GetPropertyStr(c,ignored,"length");uint32_t n=0;JS_ToUint32(c,&n,len);JS_FreeValue(c,len);if(n>256)tagsOk=false;
+             for(uint32_t i=0;tagsOk&&i<n;++i){auto v=JS_GetPropertyUint32(c,ignored,i);auto idv=JS_GetPropertyStr(c,v,"id");try{auto body=world.RuntimeBody(std::stoull(String(c,idv)));if(body.IsValid())filter.ignoredBodies.push_back(body);}catch(...){tagsOk=false;}JS_FreeValue(c,idv);JS_FreeValue(c,v);}}
+         JS_FreeValue(c,ignored);
+-        bool ok=tagsOk&&layerMask(include,filter.includeLayers)&&layerMask(exclude,filter.excludeLayers);JS_FreeValue(c,include);JS_FreeValue(c,exclude);if(!ok)return JS_ThrowTypeError(c,"unknown collision layer");
++        bool ok=tagsOk&&layerMask(include,filter.includeLayers)&&layerMask(exclude,filter.excludeLayers);JS_FreeValue(c,include);JS_FreeValue(c,exclude);if(!ok){error="unknown collision layer/tag or invalid ignored entity";return false;}return true;
++    };
++    struct PreparedCast {std::string kind;BodyTransform pose;glm::vec3 direction{0},halfExtents{0};float maximum=0,radius=0,halfHeight=0;};
++    auto prepareCast=[&](JSValueConst origin,JSValueConst direction,JSValueConst spec,const std::string& kind,JSValueConst rotation,PreparedCast& request,std::string& error,bool readCoordinates=true){
++        request.kind=kind;
++        if(readCoordinates&&(!ReadVec(c,origin,request.pose.position)||!ReadVec(c,direction,request.direction))){error="invalid bounds";return false;}
++        if(!Number(c,spec,"maximum",request.maximum)){error="invalid cast maximum";return false;}
++        if((kind=="sphere"||kind=="capsule")&&!Number(c,spec,"radius",request.radius)){error="invalid radius";return false;}
++        if(kind=="capsule"&&!Number(c,spec,"halfHeight",request.halfHeight)){error="invalid capsule halfHeight";return false;}
++        if(kind=="box"){auto h=JS_GetPropertyStr(c,spec,"halfExtents");bool valid=ReadVec(c,h,request.halfExtents);JS_FreeValue(c,h);if(!valid){error="invalid halfExtents";return false;}}
++        if(kind=="box"||kind=="capsule")if(!JS_IsUndefined(rotation)&&!(Number(c,rotation,"w",request.pose.rotation.w)&&Number(c,rotation,"x",request.pose.rotation.x)&&Number(c,rotation,"y",request.pose.rotation.y)&&Number(c,rotation,"z",request.pose.rotation.z))){error="invalid cast rotation";return false;}
++        if(kind!="ray"&&kind!="sphere"&&kind!="capsule"&&kind!="box"){error="unknown cast shape";return false;}
++        // These are the existing PhysicsWorld::Cast admissibility rules, evaluated
++        // before the batch's first query (double norms preserve tiny directions).
++        auto q=request.pose.rotation;double q2=glm::dot(glm::dvec4(q.x,q.y,q.z,q.w),glm::dvec4(q.x,q.y,q.z,q.w));
++        double d2=glm::dot(glm::dvec3(request.direction),glm::dvec3(request.direction));
++        if(request.maximum<0||d2<=0||!std::isfinite(q2)||q2<=0){error="cast requires nonzero orientation/direction and nonnegative distance";return false;}
++        if(request.radius<0||request.halfHeight<0||(kind=="box"&&(request.halfExtents.x<=0||request.halfExtents.y<=0||request.halfExtents.z<=0))){error="invalid cast dimensions";return false;}
++        return true;
++    };
++    auto executeCast=[&](const PreparedCast& request,const PhysicsQueryFilter& filter){
++        JUDAS_PROFILE_SCOPE("Physics query geometry");
++        JUDAS_PROFILE_COUNTER("Physics geometric queries",1,ProfileCounterMode::Sum);
++        if(request.kind=="ray")return world.Physics().Raycast(request.pose.position,request.direction,request.maximum,filter);
++        if(request.kind=="sphere")return world.Physics().SphereCast(request.pose.position,request.radius,request.direction,request.maximum,filter);
++        if(request.kind=="capsule")return world.Physics().CapsuleCast(request.pose,request.radius,request.halfHeight,request.direction,request.maximum,filter);
++        return world.Physics().BoxCast(request.pose,request.halfExtents,request.direction,request.maximum,filter);
++    };
++    auto castHit=[&](const PhysicsCastHit& hit)->JSValue{
++        if(!hit.hit)return JS_NULL;
++        auto o=JS_NewObject(c);auto id=world.EntityIdOfBody(hit.body);
++        JS_SetPropertyStr(c,o,"entityId",JS_NewString(c,std::to_string(id).c_str()));
++        JS_SetPropertyStr(c,o,"bodyId",JS_NewUint32(c,hit.body.id));
++        JS_SetPropertyStr(c,o,"point",Vec(c,hit.point));JS_SetPropertyStr(c,o,"normal",Vec(c,hit.normal));
++        JS_SetPropertyStr(c,o,"distance",JS_NewFloat64(c,hit.distance));JS_SetPropertyStr(c,o,"fraction",JS_NewFloat64(c,hit.fraction));
++        std::string physical;float friction=0,restitution=0;world.Physics().GetPhysicalMaterial(hit.body,physical,friction,restitution);JS_SetPropertyStr(c,o,"physicalMaterial",physical.empty()?JS_NULL:JS_NewString(c,physical.c_str()));
++        JS_SetPropertyStr(c,o,"primitiveIndex",JS_NewInt32(c,hit.primitiveIndex));
++        JS_SetPropertyStr(c,o,"childKey",JS_NewUint32(c,hit.childKey));JS_SetPropertyStr(c,o,"feature",hit.feature==UINT32_MAX?JS_NULL:JS_NewUint32(c,hit.feature));
++        JS_SetPropertyStr(c,o,"initialOverlap",JS_NewBool(c,hit.initialOverlap));
++        JS_SetPropertyStr(c,o,"shape",JS_NewString(c,hit.shape==ShapeType::Capsule?"capsule":hit.shape==ShapeType::Sphere?"sphere":hit.shape==ShapeType::Terrain?"terrain":hit.shape==ShapeType::ConvexHull?"hull":hit.shape==ShapeType::TriangleMesh?"triangle-mesh":"box"));
++        return o;
++    };
++    if(op=="castMany"){
++        JUDAS_PROFILE_COUNTER("Physics query bridge calls",1,ProfileCounterMode::Sum);
++        auto kind=String(c,arg(1));auto requests=arg(2);
++        if(kind!="ray"&&kind!="sphere"&&kind!="capsule")return JS_ThrowTypeError(c,"unknown batch cast shape");
++        if(!JS_IsArray(requests))return JS_ThrowTypeError(c,"castMany requests must be an array");
++        auto length=JS_GetPropertyStr(c,requests,"length");uint32_t count=0;bool valid=JS_ToUint32(c,&count,length)==0;JS_FreeValue(c,length);
++        if(!valid)return JS_ThrowTypeError(c,"invalid castMany length");
++        if(count>256)return JS_ThrowRangeError(c,"castMany accepts at most 256 requests");
++        PhysicsQueryFilter filter;std::string error;
++        if(!queryFilter(arg(3),filter,error))return JS_ThrowTypeError(c,"castMany filter: %s",error.c_str());
++        std::array<PreparedCast,256> prepared;
++        for(uint32_t i=0;i<count;++i){
++            auto entry=JS_GetPropertyUint32(c,requests,i);
++            if(!JS_IsObject(entry)){JS_FreeValue(c,entry);return JS_ThrowTypeError(c,"castMany[%u]: request object required",i);}
++            auto pose=kind=="capsule"?JS_GetPropertyStr(c,entry,"pose"):JS_UNDEFINED;
++            if(kind=="capsule"&&!JS_IsObject(pose)){JS_FreeValue(c,pose);JS_FreeValue(c,entry);return JS_ThrowTypeError(c,"castMany[%u]: capsule pose required",i);}
++            auto origin=JS_GetPropertyStr(c,kind=="capsule"?pose:entry,kind=="capsule"?"position":"origin");
++            auto direction=JS_GetPropertyStr(c,entry,"direction");
++            auto rotation=kind=="capsule"?JS_GetPropertyStr(c,pose,"rotation"):JS_UNDEFINED;
++            valid=prepareCast(origin,direction,entry,kind,rotation,prepared[i],error);
++            JS_FreeValue(c,rotation);JS_FreeValue(c,direction);JS_FreeValue(c,origin);JS_FreeValue(c,pose);JS_FreeValue(c,entry);
++            if(!valid)return JS_ThrowTypeError(c,"castMany[%u]: %s",i,error.c_str());
++        }
++        auto results=JS_NewArray(c);
++        try{for(uint32_t i=0;i<count;++i)JS_SetPropertyUint32(c,results,i,castHit(executeCast(prepared[i],filter)));}
++        catch(const std::exception& e){JS_FreeValue(c,results);return JS_ThrowTypeError(c,"castMany: %s",e.what());}
++        return results;
++    }
++    if(op=="overlap"||op=="sweep"||op=="cast"||op=="closestPoint"){
++        glm::vec3 min,max;if(!ReadVec(c,arg(1),min)||!ReadVec(c,arg(2),max))return JS_ThrowTypeError(c,"invalid bounds");PhysicsQueryFilter filter;
++        std::string error;if(!queryFilter(arg(3),filter,error))return JS_ThrowTypeError(c,"%s",error.c_str());
+         if(op=="closestPoint"){
+             float maximum=0;if(!Number(c,arg(4),"maximum",maximum))return JS_ThrowTypeError(c,"invalid closestPoint maximum");
+             PhysicsClosestPoint hit;try{hit=world.Physics().ClosestPoint(min,maximum,filter);}catch(const std::exception& e){return JS_ThrowTypeError(c,"closestPoint: %s",e.what());}
+@@ -775,36 +873,13 @@ JSValue ScriptSystem::Impl::Native(JSContext* c,JSValueConst,int argc,JSValueCon
+             JS_SetPropertyStr(c,o,"contains",hit.containmentKnown?JS_NewBool(c,hit.contains):JS_NULL);JS_SetPropertyStr(c,o,"primitiveIndex",JS_NewInt32(c,hit.primitiveIndex));JS_SetPropertyStr(c,o,"childKey",JS_NewUint32(c,hit.childKey));JS_SetPropertyStr(c,o,"feature",hit.feature==UINT32_MAX?JS_NULL:JS_NewUint32(c,hit.feature));return o;
+         }
+         if(op=="cast") {
+-            auto spec=arg(4);float maximum=0,radius=0,halfHeight=0;BodyTransform pose;pose.position=min;
+-            auto kindValue=JS_GetPropertyStr(c,spec,"kind");auto kind=String(c,kindValue);JS_FreeValue(c,kindValue);
+-            if(!Number(c,spec,"maximum",maximum))return JS_ThrowTypeError(c,"invalid cast maximum");
+-            if(kind=="sphere"||kind=="capsule")if(!Number(c,spec,"radius",radius))return JS_ThrowTypeError(c,"invalid radius");
+-            if(kind=="capsule"&&!Number(c,spec,"halfHeight",halfHeight))return JS_ThrowTypeError(c,"invalid capsule halfHeight");
+-            glm::vec3 halfExtents{0};
+-            if(kind=="box"){auto h=JS_GetPropertyStr(c,spec,"halfExtents");bool valid=ReadVec(c,h,halfExtents);JS_FreeValue(c,h);if(!valid)return JS_ThrowTypeError(c,"invalid halfExtents");}
+-            if(kind=="box"||kind=="capsule") {auto r=JS_GetPropertyStr(c,spec,"rotation");
+-                bool valid=JS_IsUndefined(r)||(Number(c,r,"w",pose.rotation.w)&&Number(c,r,"x",pose.rotation.x)&&Number(c,r,"y",pose.rotation.y)&&Number(c,r,"z",pose.rotation.z));
+-                JS_FreeValue(c,r);if(!valid)return JS_ThrowTypeError(c,"invalid cast rotation");}
+-            PhysicsCastHit hit;
+-            try {
+-                if(kind=="ray")hit=world.Physics().Raycast(min,max,maximum,filter);
+-                else if(kind=="sphere")hit=world.Physics().SphereCast(min,radius,max,maximum,filter);
+-                else if(kind=="capsule")hit=world.Physics().CapsuleCast(pose,radius,halfHeight,max,maximum,filter);
+-                else if(kind=="box")hit=world.Physics().BoxCast(pose,halfExtents,max,maximum,filter);
+-                else return JS_ThrowTypeError(c,"unknown cast shape");
+-            }catch(const std::exception& e){return JS_ThrowTypeError(c,"cast: %s",e.what());}
+-            if(!hit.hit)return JS_NULL;
+-            auto o=JS_NewObject(c);auto id=world.EntityIdOfBody(hit.body);
+-            JS_SetPropertyStr(c,o,"entityId",JS_NewString(c,std::to_string(id).c_str()));
+-            JS_SetPropertyStr(c,o,"bodyId",JS_NewUint32(c,hit.body.id));
+-            JS_SetPropertyStr(c,o,"point",Vec(c,hit.point));JS_SetPropertyStr(c,o,"normal",Vec(c,hit.normal));
+-            JS_SetPropertyStr(c,o,"distance",JS_NewFloat64(c,hit.distance));JS_SetPropertyStr(c,o,"fraction",JS_NewFloat64(c,hit.fraction));
+-            std::string physical;float friction=0,restitution=0;world.Physics().GetPhysicalMaterial(hit.body,physical,friction,restitution);JS_SetPropertyStr(c,o,"physicalMaterial",physical.empty()?JS_NULL:JS_NewString(c,physical.c_str()));
+-            JS_SetPropertyStr(c,o,"primitiveIndex",JS_NewInt32(c,hit.primitiveIndex));
+-            JS_SetPropertyStr(c,o,"childKey",JS_NewUint32(c,hit.childKey));JS_SetPropertyStr(c,o,"feature",hit.feature==UINT32_MAX?JS_NULL:JS_NewUint32(c,hit.feature));
+-            JS_SetPropertyStr(c,o,"initialOverlap",JS_NewBool(c,hit.initialOverlap));
+-            JS_SetPropertyStr(c,o,"shape",JS_NewString(c,hit.shape==ShapeType::Capsule?"capsule":hit.shape==ShapeType::Sphere?"sphere":hit.shape==ShapeType::Terrain?"terrain":hit.shape==ShapeType::ConvexHull?"hull":hit.shape==ShapeType::TriangleMesh?"triangle-mesh":"box"));
+-            return o;
++            JUDAS_PROFILE_COUNTER("Physics query bridge calls",1,ProfileCounterMode::Sum);
++            auto spec=arg(4);auto value=JS_GetPropertyStr(c,spec,"kind");auto kind=String(c,value);JS_FreeValue(c,value);
++            auto rotation=JS_GetPropertyStr(c,spec,"rotation");PreparedCast request;request.pose.position=min;request.direction=max;
++            bool valid=prepareCast(arg(1),arg(2),spec,kind,rotation,request,error,false);JS_FreeValue(c,rotation);
++            if(!valid)return JS_ThrowTypeError(c,"cast: %s",error.c_str());
++            try{return castHit(executeCast(request,filter));}
++            catch(const std::exception& e){return JS_ThrowTypeError(c,"cast: %s",e.what());}
+         }
+         if(op=="sweep"){glm::quat rotation;auto r=arg(4);
+             if(!Number(c,r,"w",rotation.w)||!Number(c,r,"x",rotation.x)||!Number(c,r,"y",rotation.y)||!Number(c,r,"z",rotation.z)||!std::isfinite(glm::dot(rotation,rotation))||glm::dot(rotation,rotation)<1e-12f)return JS_ThrowTypeError(c,"invalid rotation");
+diff --git a/src/Window.cpp b/src/Window.cpp
+index 0e698b4..b29d79a 100644
+--- a/src/Window.cpp
++++ b/src/Window.cpp
+@@ -49,6 +49,7 @@ Window::~Window() {
+ 
+ void Window::Shutdown() {
+     if(m_controller){SDL_GameControllerClose(m_controller);m_controller=nullptr;}
++    m_controllerId=-1;m_controllerInputReady=false;
+     m_input.Reset();
+     if (m_glContext) {
+         SDL_GL_DeleteContext(m_glContext);
+@@ -105,6 +106,7 @@ void Window::ClearPendingRequests() {
+ }
+ 
+ void Window::SetInputClaimed(bool keyboard, bool mouse) {
++    if(m_keyboardClaimed!=keyboard){m_controllerInputReady=false;m_input.ClearDevice("stick:");}
+     m_keyboardClaimed = keyboard;
+     m_mouseClaimed = mouse;
+ }
+@@ -113,17 +115,26 @@ namespace {
+ const char* PadButton(int b){static const char* names[]={"South","East","West","North","Back","Guide","Start","LeftStick","RightStick","LeftShoulder","RightShoulder","DpadUp","DpadDown","DpadLeft","DpadRight"};return b>=0&&b<15?names[b]:nullptr;}
+ const char* PadAxis(int a){static const char* names[]={"LeftX","LeftY","RightX","RightY","LeftTrigger","RightTrigger"};return a>=0&&a<6?names[a]:nullptr;}
+ const char* MouseButton(int b){switch(b){case 1:return "Left";case 2:return "Middle";case 3:return "Right";case 4:return "X1";case 5:return "X2";default:return nullptr;}}
++float NormalizedPadAxis(int axis,int value){return axis>=4?std::max(0,value)/32767.f:value/(value<0?32768.f:32767.f);}
+ }
+-void Window::RefreshController(){
+-    if(m_controller&&!SDL_GameControllerGetAttached(m_controller)){SDL_GameControllerClose(m_controller);m_controller=nullptr;m_controllerId=-1;m_input.ClearDevice("pad:");m_input.ClearDevice("stick:");}
+-    if(!m_controller){for(int i=0;i<SDL_NumJoysticks();++i)if(SDL_IsGameController(i)){m_controller=SDL_GameControllerOpen(i);if(m_controller){m_controllerId=SDL_JoystickInstanceID(SDL_GameControllerGetJoystick(m_controller));break;}}}
+-    if(m_controller){
++void Window::RefreshController(bool poll){
++    if(m_controller&&!SDL_GameControllerGetAttached(m_controller)){SDL_GameControllerClose(m_controller);m_controller=nullptr;m_controllerId=-1;m_controllerInputReady=false;m_input.ClearDevice("pad:");m_input.ClearDevice("stick:");}
++    if(!m_controller){for(int i=0;i<SDL_NumJoysticks();++i)if(SDL_IsGameController(i)){m_controller=SDL_GameControllerOpen(i);if(m_controller){m_controllerId=SDL_JoystickInstanceID(SDL_GameControllerGetJoystick(m_controller));m_controllerInputReady=false;m_input.ClearDevice("stick:");break;}}}
++    if(m_controller&&poll){
++        const bool available=!m_keyboardClaimed&&m_inputFocused;
+         for(int b=0;b<15;++b)m_input.SetPhysical(std::string("pad:")+PadButton(b),(m_keyboardClaimed||!m_inputFocused)?0:SDL_GameControllerGetButton(m_controller,static_cast<SDL_GameControllerButton>(b)));
+-        for(int a=0;a<6;++a){const int v=SDL_GameControllerGetAxis(m_controller,static_cast<SDL_GameControllerAxis>(a));const float normalized=a>=4?std::max(0,v)/32767.f:v/(v<0?32768.f:32767.f);m_input.SetPhysical(std::string("stick:")+PadAxis(a),(m_keyboardClaimed||!m_inputFocused)?0:normalized);}
++        auto axis=[&](int a){return available?NormalizedPadAxis(a,SDL_GameControllerGetAxis(m_controller,static_cast<SDL_GameControllerAxis>(a))):0.f;};
++        m_input.SetStick("left",axis(0),axis(1),!m_controllerInputReady||!available);
++        m_input.SetStick("right",axis(2),axis(3),!m_controllerInputReady||!available);
++        for(int a=4;a<6;++a)m_input.SetPhysical(std::string("stick:")+PadAxis(a),axis(a));
++        m_controllerInputReady=available;
+     }
+ }
+ void Window::PollEvents(){
+     m_input.BeginFrame();m_consumed.clear();
++    // Select one controller before events, but do not overwrite the previous
++    // pair with its final poll: each delivered axis event must remain observable.
++    if(!m_testInputMode)RefreshController(false);
+     for(const auto& [control,value]:m_testPhysical){m_input.SetPhysical(control,value);}
+     m_testPhysical.clear();
+     if(m_keyboardClaimed)m_input.ClearDevice("key:");
+@@ -137,13 +148,17 @@ void Window::PollEvents(){
+         else if(event.type==SDL_WINDOWEVENT){
+             if(event.window.event==SDL_WINDOWEVENT_CLOSE)m_shouldClose=true;
+             if(event.window.event==SDL_WINDOWEVENT_SIZE_CHANGED){m_width=event.window.data1;m_height=event.window.data2;}
+-            if(event.window.event==SDL_WINDOWEVENT_FOCUS_LOST&&!m_testInputMode){m_inputFocused=false;m_input.Reset();ClearPendingRequests();}
++            if(event.window.event==SDL_WINDOWEVENT_FOCUS_LOST&&!m_testInputMode){m_inputFocused=false;m_controllerInputReady=false;m_input.Reset();ClearPendingRequests();}
+             if(event.window.event==SDL_WINDOWEVENT_FOCUS_GAINED){
+-                m_inputFocused=true;
++                m_inputFocused=true;m_controllerInputReady=false;
+                 // SDL/compositor capture can disappear independently of the
+                 // gameplay request. Restore that request, preserving paused UI.
+                 SetMouseCaptured(m_mouseCaptured);
+             }
++        }else if(event.type==SDL_CONTROLLERDEVICEREMOVED&&event.cdevice.which==m_controllerId){
++            RefreshController(false);
++        }else if(event.type==SDL_CONTROLLERAXISMOTION&&event.caxis.which==m_controllerId&&m_controllerInputReady&&!m_keyboardClaimed&&m_inputFocused){
++            if(const auto* axis=PadAxis(event.caxis.axis))m_input.SetPhysical(std::string("stick:")+axis,NormalizedPadAxis(event.caxis.axis,event.caxis.value));
+         }else if((event.type==SDL_KEYDOWN||event.type==SDL_KEYUP)&&!m_keyboardClaimed){
+             m_input.SetPhysical(std::string("key:")+SDL_GetScancodeName(event.key.keysym.scancode),event.type==SDL_KEYDOWN?1:0);
+         }else if((event.type==SDL_MOUSEBUTTONDOWN||event.type==SDL_MOUSEBUTTONUP)&&!m_mouseClaimed){
+diff --git a/src/Window.h b/src/Window.h
+index 22a4988..9dbafeb 100644
+--- a/src/Window.h
++++ b/src/Window.h
+@@ -115,8 +115,9 @@ private:
+     std::set<std::string> m_consumed;
+     SDL_GameController* m_controller=nullptr;
+     SDL_JoystickID m_controllerId=-1;
++    bool m_controllerInputReady=false;
+     bool m_inputFocused=true;
+-    void RefreshController();
++    void RefreshController(bool poll=true);
+     SDL_Window* m_window = nullptr;
+     SDL_GLContext m_glContext = nullptr;
+     bool m_sdlInitialized = false;
+diff --git a/src/editor/EditorApplication.cpp b/src/editor/EditorApplication.cpp
+index fd40e19..ad01000 100644
+--- a/src/editor/EditorApplication.cpp
++++ b/src/editor/EditorApplication.cpp
+@@ -533,6 +533,7 @@ void EditorApplication::StopPlay() {
+     m_panels.runtimeInfo.clear();
+     m_panels.status = "Stopped: authored scene restored";
+     m_host->GetWindow().SetMouseCaptured(false);
++    m_host->GetWindow().Input().DiscardStickHistory();
+ }
+ 
+ void EditorApplication::HandleRequests(EditorRequests& r) {
+@@ -1177,6 +1178,7 @@ int EditorApplication::Run(int argc, char** argv) {
+                 if(previousWorld!=m_world.get())window.Input().DiscardPending();
+         if(!error.empty()){std::fprintf(stderr,"Save service: %s\n",error.c_str());error.clear();}
+                 if(!scenes->Apply(m_world,*m_play,host.Resources(),error))std::fprintf(stderr,"Scene transition: %s\n",error.c_str());
++                if(previousWorld!=m_world.get())window.Input().DiscardStickHistory();
+                 m_panels.runtime=m_world.get();
+                 m_panels.worldStatePath=m_play->WorldStatePath();
+             }
+diff --git a/src/editor/EditorPanels.cpp b/src/editor/EditorPanels.cpp
+index 0366b3d..6c0012f 100644
+--- a/src/editor/EditorPanels.cpp
++++ b/src/editor/EditorPanels.cpp
+@@ -905,27 +905,28 @@ void DrawProjectSettingsPanel(EditorDocument& doc, EditorPanelState& state, Edit
+         for(auto it=nav.profiles.begin();it!=nav.profiles.end();++it){auto& p=it->second;ImGui::PushID(int(it->first)+1000);char name[256];CopyToBuffer(p.name,name,sizeof(name));if(ImGui::InputText("Profile name",name,sizeof(name)))p.name=name;ImGui::DragFloat("Radius",&p.radius,.01f,.02f,10);ImGui::DragFloat("Height",&p.height,.05f,.1f,20);ImGui::DragFloat("Slope degrees",&p.slope,1,0,89);ImGui::DragFloat("Climb",&p.climb,.01f,0,p.height*.9f);if(it->first&&ImGui::Button("Delete profile")){nav.profiles.erase(it);ImGui::PopID();break;}ImGui::PopID();}
+         ImGui::TextWrapped("Stable IDs are never reused. Up to 62 navigation areas and 64 lifetime profile IDs. Changing profiles/source geometry requires rebaking; Save project persists settings.");
+     }
+-    if(ImGui::CollapsingHeader("Input actions and axes")){
+-        static char newName[128]="";static bool newAxis=false;
+-        ImGui::InputText("New input name",newName,sizeof(newName));ImGui::Checkbox("Analog axis",&newAxis);
+-        if(ImGui::Button("Create input")){if(!s.input.Add(newName,newAxis))state.status="Input name is empty or already exists";else newName[0]=0;}
+-        ImGui::TextWrapped("Controls: key:Space, mouse:Left, mouse:dx/dy/wheelX/wheelY, pad:South, stick:LeftX. Edit bindings, then Save project. Play uses these bindings.");
++    if(ImGui::CollapsingHeader("Input actions, axes and vectors")){
++        static char newName[128]="";static int newType=0;
++        ImGui::InputText("New input name",newName,sizeof(newName));ImGui::Combo("Input type",&newType,"Action\0Scalar axis\0Paired vector\0");
++        if(ImGui::Button("Create input")){if(!(newType==2?s.input.AddVector(newName):s.input.Add(newName,newType==1)))state.status="Input name is empty or already exists";else newName[0]=0;}
++        ImGui::TextWrapped("Scalar controls: key:Space, mouse:Left, mouse:dx/dy/wheelX/wheelY, pad:South, stick:LeftX. Paired vectors use stick:Left or stick:Right. Circular processing preserves direction, then applies signed X/Y scales. Save project persists bindings.");
+         for(std::size_t i=0;i<s.input.entries.size();++i){
+             auto& entry=s.input.entries[i];ImGui::PushID(static_cast<int>(i));
+-            if(ImGui::TreeNode(entry.name.c_str(),"%s (%s)",entry.name.c_str(),entry.axis?"axis":"action")){
++            if(ImGui::TreeNode(entry.name.c_str(),"%s (%s)",entry.name.c_str(),entry.vector?"vector":entry.axis?"axis":"action")){
+                 char inputName[129];CopyToBuffer(entry.name,inputName,sizeof(inputName));
+                 if(ImGui::InputText("Rename",inputName,sizeof(inputName)))s.input.Rename(entry.name,inputName);
+                 if(ImGui::Button("Delete input")){const auto name=entry.name;s.input.Remove(name);ImGui::TreePop();ImGui::PopID();break;}
+                 for(std::size_t b=0;b<entry.bindings.size();++b){
+                     ImGui::PushID(static_cast<int>(b));auto binding=entry.bindings[b];char control[129];CopyToBuffer(binding.control,control,sizeof(control));
+                     bool changed=ImGui::InputText("Control",control,sizeof(control));binding.control=control;
+-                    changed|=ImGui::DragFloat("Scale",&binding.scale,.05f,-10000,10000);
++                    changed|=ImGui::DragFloat(entry.vector?"X scale / inversion":"Scale",&binding.scale,.05f,-10000,10000);
++                    if(entry.vector){changed|=ImGui::DragFloat("Y scale / inversion",&binding.scaleY,.05f,-10000,10000);changed|=ImGui::Checkbox("Circular deadzone",&binding.circular);}
+                     if(binding.control.rfind("stick:",0)==0)changed|=ImGui::SliderFloat("Deadzone",&binding.deadzone,0,.99f);
+                     if(changed&&!s.input.ReplaceBinding(entry.name,b,binding))state.status="Invalid input binding";
+                     if(ImGui::Button("Remove binding")){s.input.RemoveBinding(entry.name,b);ImGui::PopID();break;}
+                     ImGui::Separator();ImGui::PopID();
+                 }
+-                if(ImGui::Button("Add binding"))s.input.AddBinding(entry.name,{"key:Space"});
++                if(ImGui::Button("Add binding"))s.input.AddBinding(entry.name,entry.vector?InputBinding{"stick:Left",1,.15f,1,true}:InputBinding{"key:Space"});
+                 ImGui::TreePop();
+             }ImGui::PopID();
+         }
+diff --git a/tests/JudasJSExamplesTests.cpp b/tests/JudasJSExamplesTests.cpp
+index 40755dc..f9ffc1d 100644
+--- a/tests/JudasJSExamplesTests.cpp
++++ b/tests/JudasJSExamplesTests.cpp
+@@ -18,7 +18,7 @@ void Check(bool ok,const std::string& label){++checks;failures+=!ok;std::printf(
+ int main(int argc,char** argv){
+  fs::path out=argc>1?argv[1]:"build/m50-results";fs::create_directories(out);std::string only=argc>2?argv[2]:"";
+  std::string error;EngineHost host;Check(host.Init("M50 cookbook",640,360,false,error),"real EngineHost");if(failures)return 1;host.Audio().Init(error,true);
+- const char* names[]={"authoring-runtime","imported-model","developer-integration","fracture","deformable","saves","streaming","localization","materials","profiling","liquid-surface","liquid","navigation","surface","presentation","impulse-point","physical-control","minimal","input-motion","spawn","queries","contacts","trigger","audio","particles","ui","scene-session","joint","animation","ragdoll","character","stale-handle"};
++ const char* names[]={"paired-stick","ray-fan","authoring-runtime","imported-model","developer-integration","fracture","deformable","saves","streaming","localization","materials","profiling","liquid-surface","liquid","navigation","surface","presentation","impulse-point","physical-control","minimal","input-motion","spawn","queries","contacts","trigger","audio","particles","ui","scene-session","joint","animation","ragdoll","character","stale-handle"};
+  for(auto name:names){if(!only.empty()&&only!=name)continue;
+   std::string n=name,project=n=="authoring-runtime"?"world_workshop":n=="imported-model"?"import_lab":n=="developer-integration"?"m65_integration":n=="fracture"?"fracture_lab":n=="deformable"?"deformable_lab":n=="streaming"?"streamed_range":n=="localization"?"text_lab":n=="liquid-surface"?"liquid_surface_demo":n=="liquid"?"liquid_reservoir_demo":n=="navigation"?"shooter_game":n=="audio"?"script_demo":n=="joint"?"joint_demo":n=="animation"||n=="ragdoll"?"ragdoll_demo":"character_demo";
+   auto root=fs::absolute(fs::path("build/m50-examples")/n);fs::remove_all(root);fs::create_directories(root);fs::copy("projects/"+project,root,fs::copy_options::recursive);
+@@ -54,6 +54,13 @@ export default class extends Base {
+   if(n=="contacts"||n=="trigger"){for(auto& o:scene.Objects()){o.joint.reset();if(o.id!=1&&o.id!=owner)o.body.reset();}def->transform.position={0,.4,0};def->body->halfExtents={.4,.4,.4};def->body->sensor=n=="trigger";}
+   if(n=="materials"&&!def->render)def->render=SceneRenderComponent{};
+   if(n=="particles")def->particleEmitter=ParticleEmitterSettings{};
++  if(n=="ray-fan"){
++   // Private ordinary content: local-forward wall, no owner body/camera policy.
++   def->body.reset();def->transform.position={0,0,0};def->transform.rotation=glm::quat(1,0,0,0);
++   auto& wall=scene.CreateObject("Cookbook query wall");wall.transform.position={0,2,-10};
++   wall.body=SceneBodyComponent{};wall.body->motion=SceneBodyMotion::Static;wall.body->halfExtents={5,4,.25f};
++   def=scene.Find(owner); // CreateObject may reallocate the ordinary object array.
++  }
+   def->scripts.push_back({1,script.id,true,n=="saves"?"{\"cancelForFixture\":true}":"{}"});
+   auto& resources=host.Resources();resources.WaitForAll();RuntimeWorld world;
+   Check(world.Build(scene,&resources,error,&p.Settings().classification,&p.Settings().navigation),n+" runtime builds");if(!world.IsBuilt()){std::puts(error.c_str());continue;}
+@@ -61,7 +68,17 @@ export default class extends Base {
+   if(n=="localization")world.UI().Load("cffe801f7c121dc6c96bbf4582e3f46c","text_lab",owner,error);
+   if(n=="imported-model"){resources.GetMesh(def->render->meshAsset,error);resources.WaitForAll();world.UpdateAnimations(0);}
+   if(n=="animation"||n=="ragdoll"){resources.GetMesh("46464646464646464646464646464601",error);resources.WaitForAll();world.UpdateAnimations(0);}
+-  auto& window=host.GetWindow();window.SetTestInputMode(true);window.Input().SetMap(p.Settings().input,error);window.Input().SetPhysical("key:D",1);
++  auto& window=host.GetWindow();window.SetTestInputMode(true);
++  auto exampleInput=p.Settings().input;
++  if(n=="paired-stick"){Check(exampleInput.AddVector("flick_stick")&&exampleInput.AddBinding("flick_stick",{"stick:Right",1,.2f,1,true}),"paired-stick ordinary paired binding");}
++  if(n=="ray-fan"){Check(exampleInput.Add("compare_rays",false)&&exampleInput.AddBinding("compare_rays",{"key:C"}),"ray-fan ordinary compare action");}
++  window.Input().SetMap(exampleInput,error);window.Input().SetPhysical("key:D",1);
++  if(n=="paired-stick"){
++   window.Input().SetStick("right",0,0,true);
++   window.Input().SetStick("right",.75f,.75f);
++   window.Input().SetStick("right",0,0); // Delivered out-and-back before ANY fixed step.
++  }
++  if(n=="ray-fan")window.Input().SetPhysical("key:C",1);
+   if(n=="localization"){world.Localization().Refresh();resources.WaitForAll();world.Localization().Refresh();}
+   GameSession game;Check(game.Begin(world,error),n+" ordinary fixed-step session");
+   if(n=="audio"){resources.WaitForAll();world.BeginAudio();world.UpdateAudio(glm::mat4(1),1,1.f/60);}
+@@ -86,6 +103,8 @@ export default class extends Base {
+    n=="impulse-point"?yes("angular")&&yes("rejectsInvalid")&&yes("linear")&&yes("unchanged"):
+    n=="physical-control"?yes("capture")&&state.find("\"mass\":40")!=std::string::npos:
+    n=="minimal"?state.find("\"started\":1")!=std::string::npos&&state.find("\"steps\":100")!=std::string::npos:
++   n=="paired-stick"?state.find("\"observations\":2")!=std::string::npos&&state.find("\"frameReads\":100")!=std::string::npos&&state.find("\"fixedReads\":100")!=std::string::npos&&state.find("\"capacity\":128")!=std::string::npos&&state.find("\"x\":0.75")!=std::string::npos:
++   n=="ray-fan"?yes("matched")&&state.find("\"count\":100")!=std::string::npos&&state.find("\"comparisons\":1")!=std::string::npos&&state.find("\"hits\":100")!=std::string::npos:
+    n=="input-motion"?yes("moved"):n=="spawn"?yes("spawned"):n=="queries"?yes("ray")&&yes("shape")&&yes("closest")&&yes("collider"):
+    n=="contacts"||n=="trigger"?state.find("\"enters\":1")!=std::string::npos&&state.find("\"exits\":1")!=std::string::npos&&state.find("\"stays\":0")==std::string::npos:
+    n=="audio"?yes("requested")&&yes("stopped")&&yes("settings")&&yes("seek")&&yes("oneShot")&&yes("group")&&yes("pausedDrop"):n=="particles"?yes("configured")&&yes("burst"):
+diff --git a/tools/StructuredAuthor.cpp b/tools/StructuredAuthor.cpp
+index 0c0ace6..9206c26 100644
+--- a/tools/StructuredAuthor.cpp
++++ b/tools/StructuredAuthor.cpp
+@@ -40,7 +40,7 @@ bool WriteStructuredContent(const std::string& source,const std::string& output,
+    BOOL(v,visible);BOOL(v,enabled);BOOL(v,clip);BOOL(v,wrap);BOOL(v,fit);BOOL(v,mirrorRow);V2(v,anchorMin);V2(v,anchorMax);V2(v,offset);V2(v,size);V2(v,relativeSize);V2(v,align);V2(v,textAlign);V4(v,margin);V4(v,padding);V4(v,background);V4(v,color);NUM(v,spacing);NUM(v,fontSize);NUM(v,value);NUM(v,minimum);NUM(v,maximum);d.elements.push_back(e);
+   });if(!SaveUIDocument(output,d,error)){return false;}
+  }else if(kind=="input"){
+-  r.known(root,{"kind","entries"});InputMap map;Owned entries{r.c,r.prop(root,"entries")};r.each(entries,[&](JSValueConst v){r.known(v,{"name","axis","bindings"});InputEntry e;r.string(v,"name",e.name);r.boolean(v,"axis",e.axis);Owned bindings{r.c,r.prop(v,"bindings")};r.each(bindings,[&](JSValueConst b){r.known(b,{"control","scale","deadzone"});InputBinding x;r.string(b,"control",x.control);r.number(b,"scale",x.scale);r.number(b,"deadzone",x.deadzone);e.bindings.push_back(x);});map.entries.push_back(e);});if(!map.Validate(error)){return false;}std::ofstream out(output);out<<map.Serialize();if(!out)throw std::runtime_error("cannot write input map");
++  r.known(root,{"kind","entries"});InputMap map;Owned entries{r.c,r.prop(root,"entries")};r.each(entries,[&](JSValueConst v){r.known(v,{"name","axis","vector","bindings"});InputEntry e;r.string(v,"name",e.name);r.boolean(v,"axis",e.axis);r.boolean(v,"vector",e.vector);Owned bindings{r.c,r.prop(v,"bindings")};r.each(bindings,[&](JSValueConst b){r.known(b,{"control","scale","deadzone","scaleY","circular"});InputBinding x;r.string(b,"control",x.control);r.number(b,"scale",x.scale);r.number(b,"deadzone",x.deadzone);r.number(b,"scaleY",x.scaleY);r.boolean(b,"circular",x.circular);e.bindings.push_back(x);});map.entries.push_back(e);});if(!map.Validate(error)){return false;}std::ofstream out(output);out<<map.Serialize();if(!out)throw std::runtime_error("cannot write input map");
+  }else if(kind=="scene"){
+   r.known(root,{"kind","name","objects"});Scene scene;r.string(root,"name",scene.Settings().name);Owned objects{r.c,r.prop(root,"objects")};r.each(objects,[&](JSValueConst v){r.known(v,{"id","name","parent","components","fields"});std::string name,id,parent="0";r.string(v,"name",name);r.string(v,"id",id);r.string(v,"parent",parent);SceneObject e;if(id.empty()||parent.empty()||id.find_first_not_of("0123456789")!=std::string::npos||parent.find_first_not_of("0123456789")!=std::string::npos)throw std::runtime_error("id/parent require stable decimal identities");e.id=std::stoull(id);e.parent=std::stoull(parent);e.name=name;Owned components{r.c,r.prop(v,"components")};r.each(components,[&](JSValueConst item){auto name=r.text(item);
+ #define COMPONENT(n,t,member) if(name==n)e.member=t{};else
+diff --git a/docs/M69.md b/docs/M69.md
+new file mode 100644
+index 0000000..346a570
+--- /dev/null
++++ b/docs/M69.md
+@@ -0,0 +1,73 @@
++# M69 — paired controller input and batched physics queries
++
++Candidate based on `c042797c755df68b45e36aa917c4ca72818b9bcd` (M68).
++M67's deferred human authoring review remains deferred. This work adds two engine
++primitives; flick recognition, ledge selection and climbing remain project JS.
++
++## Public surface
++
++```js
++import {input, physics} from 'judas';
++const raw = input.stick('right');
++const circular = input.vector('flick_stick');
++const delta = input.stickDelta('right');
++const snapshot = input.stickSamples('right', cursor);
++cursor = snapshot.sequence;
++const hits = physics.raycastMany([{origin, direction, maximum: 30}], filter);
++```
++
++[Input reference](judasjs/input.md) defines the ordinary named/legacy vector binding,
++X/Y scaling and radial deadzone. Raw SDL axes retain their signed normalization and
++positive-down Y convention; raw diagonals are not circle-clipped. Existing scalar
++maps keep their previous processing and canonical version-1 serialization.
++
++InputSystem holds current raw pairs, render-frame endpoint deltas and 128 ordered
++observations per stick. Each reader owns a cursor; reads do not consume another
++reader's samples. Global sequence numbers and per-stick eviction watermarks expose
++reset/overflow explicitly. Steady-clock receipt seconds are not hardware capture
++timestamps. The existing selected-controller SDL event pump records intermediate
++delivered axis observations, then polls both axes together. Lifecycle/input
++ownership transitions clear history and establish a new baseline. Nothing can
++recover motion the backend did not deliver.
++
++[Physics reference](judasjs/physics.md) covers `raycastMany`, `sphereCastMany` and
++`capsuleCastMany`. All three accept at most 256 requests and one normal shared
++filter. One dispatcher crossing prepares the filter once, validates every entry,
++then performs the same authoritative PhysicsWorld casts as scalar calls. Results
++are ordered scalar-style hit snapshots/null with normal safe entity wrappers.
++There is no batch box/overlap family, new geometry, query scheduler or copied world.
++
++## Examples and operator check
++
++[Right-stick reader](judasjs/examples/paired-stick.js) displays raw/circular/frame
++values and retains recent ordered observations at fixed boundaries.
++[100-ray fan](judasjs/examples/ray-fan.js) returns ordered hit data in the owner's
++local orientation and compares scalar results on the `compare_rays` logical action.
++The tiny generated operator fixture is described in the
++[cookbook](judasjs/cookbook.md); source projects remain unchanged.
++
++1. Connect a controller and try right-stick cardinal/diagonal values. Raw diagonal
++   components can both reach 1; circular output preserves direction and caps magnitude.
++2. Flick out and back: neutral endpoint/net delta can coexist with ordered nonzero
++   intermediate samples. Inspect reset/overflow counters rather than treating gaps
++   as complete gestures. Hardware timing/feel requires this operator check.
++3. Press C in the fixture to compare the 100-ray batch with scalar results. Misses
++   remain in place and matches are reported. This is query data, not ledge selection.
++
++## Validation boundary
++
++`scripts/m69_validation.py` performs one existing-config incremental Release build,
++then one focused native-input/real-VM query/input pass, the two executed public
++examples, TypeScript/source/live API coverage and one generated-fixture startup.
++It stops on the first failure;
++no second build/test cycle is authorized automatically. No production suite,
++historical rebuild, consumer-game port or export matrix is needed here.
++
++The query fixture measures 100 scalar crossings versus one batch crossing in the
++same VM/world, with five warm-up callbacks and 21 measured callbacks per mode.
++Both modes still perform 100 geometric queries. Profiling scopes/counters separate
++geometry from total callback cost; this is no universal speedup promise.
++
++Actual gate outcome, commands, measurement, changed files and candidate SHA-256
++fingerprints are recorded under [evidence/m69](evidence/m69/REPORT.md). Synthetic SDL
++delivery and real VM checks do not claim human controller validation.
+diff --git a/docs/judasjs/examples/paired-stick.js b/docs/judasjs/examples/paired-stick.js
+new file mode 100644
+index 0000000..1edec17
+--- /dev/null
++++ b/docs/judasjs/examples/paired-stick.js
+@@ -0,0 +1,38 @@
++import {input} from 'judas';
++
++/** Author a vector named flick_stick using stick:Right, circular=true, deadzone=.2.
++ * Frame values are for presentation. Ordered observations are processed once at
++ * fixed boundaries; recognizing a trick from them remains project behaviour. */
++export default class {
++  constructor() {
++    this.cursor=0;
++    this.state={raw:{x:0,y:0},circular:{x:0,y:0},frameDelta:{x:0,y:0},
++      samples:/** @type {import('judas').StickSample[]} */([]),observations:0,
++      resets:0,overflows:0,capacity:128,sequence:0,frameReads:0,fixedReads:0};
++  }
++  update() {
++    this.state.raw=input.stick('right');
++    this.state.circular=input.vector('flick_stick');
++    this.state.frameDelta=input.stickDelta('right');
++    ++this.state.frameReads;
++  }
++  fixedUpdate() {
++    const snapshot=input.stickSamples('right',this.cursor);
++    if(snapshot.reset||snapshot.overflow) {
++      // Do not connect old recognizer motion across a lifecycle reset or gap.
++      this.state.samples=[];
++      this.state.resets+=snapshot.reset?1:0;
++      this.state.overflows+=snapshot.overflow?1:0;
++    }
++    // Each reader keeps its own cursor; this never consumes another reader's data.
++    for(const observation of snapshot.samples) {
++      this.state.samples.push(observation);
++      ++this.state.observations;
++    }
++    this.state.samples=this.state.samples.slice(-12); // Small display only.
++    this.cursor=snapshot.sequence;
++    this.state.sequence=snapshot.sequence;
++    this.state.capacity=snapshot.capacity;
++    ++this.state.fixedReads;
++  }
++}
+diff --git a/docs/judasjs/examples/ray-fan.js b/docs/judasjs/examples/ray-fan.js
+new file mode 100644
+index 0000000..1c3b1fb
+--- /dev/null
++++ b/docs/judasjs/examples/ray-fan.js
+@@ -0,0 +1,65 @@
++import {input,physics} from 'judas';
++
++export const properties={maximum:{type:'number',default:30},spread:{type:'number',default:.35},height:{type:'number',default:2}};
++
++/** @param {import('judas').Quat} q @param {import('judas').Vec3} v */
++function rotate(q,v) {
++  const t={x:2*(q.y*v.z-q.z*v.y),y:2*(q.z*v.x-q.x*v.z),z:2*(q.x*v.y-q.y*v.x)};
++  return {x:v.x+q.w*t.x+q.y*t.z-q.z*t.y,
++    y:v.y+q.w*t.y+q.z*t.x-q.x*t.z,z:v.z+q.w*t.z+q.x*t.y-q.y*t.x};
++}
++
++/** A 10x10 fan in the owner's local forward/up/right frame, not universal up.
++ * @param {import('judas').Transform} transform
++ * @param {{maximum:number,spread:number,height:number}} settings
++ * @returns {import('judas').RaycastRequest[]}
++ */
++export function makeRayFan(transform,settings) {
++  const forward=rotate(transform.rotation,{x:0,y:0,z:-1});
++  const right=rotate(transform.rotation,{x:1,y:0,z:0});
++  const up=rotate(transform.rotation,{x:0,y:1,z:0});
++  const origin={x:transform.position.x+up.x*settings.height,
++    y:transform.position.y+up.y*settings.height,z:transform.position.z+up.z*settings.height};
++  const rays=[];
++  for(let row=0;row<10;++row)for(let column=0;column<10;++column) {
++    const x=(column/9*2-1)*settings.spread,y=(row/9*2-1)*settings.spread;
++    rays.push({origin,direction:{x:forward.x+right.x*x+up.x*y,
++      y:forward.y+right.y*x+up.y*y,z:forward.z+right.z*x+up.z*y},maximum:settings.maximum});
++  }
++  return rays;
++}
++
++/** @param {import('judas').CastHit|null} a @param {import('judas').CastHit|null} b */
++function sameHit(a,b) {
++  if(!a||!b)return a===b;
++  /** @param {number} x @param {number} y */
++  const close=(x,y)=>Math.abs(x-y)<1e-5;
++  return a.entityId===b.entityId&&a.bodyId===b.bodyId&&a.primitiveIndex===b.primitiveIndex&&
++    a.childKey===b.childKey&&a.feature===b.feature&&a.shape===b.shape&&a.initialOverlap===b.initialOverlap&&
++    close(a.distance,b.distance)&&close(a.fraction,b.fraction)&&
++    close(a.point.x,b.point.x)&&close(a.point.y,b.point.y)&&close(a.point.z,b.point.z)&&
++    close(a.normal.x,b.normal.x)&&close(a.normal.y,b.normal.y)&&close(a.normal.z,b.normal.z);
++}
++
++export default class {
++  /** @param {import('judas').ScriptContext<{maximum:number,spread:number,height:number}>} context */
++  constructor({entity,properties}) {
++    this.entity=entity;this.settings=properties;
++    this.state={count:0,hits:0,matched:false,comparisons:0,
++      results:/** @type {(null|{entity:string,distance:number,point:import('judas').Vec3,normal:import('judas').Vec3})[]} */([])};
++  }
++  fixedUpdate() {
++    const rays=makeRayFan(this.entity.transform,this.settings);
++    const filter={ignored:[this.entity]};
++    const hits=physics.raycastMany(rays,filter); // ONE bridge call, still 100 queries.
++    this.state.count=hits.length;
++    this.state.hits=hits.filter(Boolean).length;
++    this.state.results=hits.map(hit=>hit?{entity:hit.entityId,distance:hit.distance,point:hit.point,normal:hit.normal}:null);
++    if(input.pressed('compare_rays')) {
++      const scalar=rays.map(ray=>physics.raycast(ray.origin,ray.direction,ray.maximum,filter));
++      this.state.matched=hits.every((hit,index)=>sameHit(hit,scalar[index]));
++      ++this.state.comparisons;
++    }
++    // Selecting a ledge or starting a climb from these observations is game JS.
++  }
++}
+diff --git a/scripts/create_m69_example.py b/scripts/create_m69_example.py
+new file mode 100644
+index 0000000..0ffab2a
+--- /dev/null
++++ b/scripts/create_m69_example.py
+@@ -0,0 +1,230 @@
++#!/usr/bin/env python3
++"""Create a small ordinary M69 input/query example in a disposable project copy.
++
++This writes content only. It does not compile, run tests, launch Judas, export a
++package or modify the source project. Existing output is deliberately preserved.
++"""
++import argparse
++import json
++from pathlib import Path
++import re
++import shlex
++import shutil
++
++ROOT = Path(__file__).resolve().parents[1]
++PREFIX = '69' * 12
++FONT = '41414141414141414141414141414103'
++
++
++def asset(number):
++    return PREFIX + f'{number:08x}'
++
++
++def write_asset(path, text, number, kind):
++    path.parent.mkdir(parents=True, exist_ok=True)
++    path.write_text(text, encoding='utf-8')
++    Path(str(path) + '.judasmeta').write_text(
++        f'JudasAssetMeta 1\nid "{asset(number)}"\ntype {kind}\nsource ""\n')
++
++
++def paired_map(legacy):
++    """Retain the copied map, adding only the ordinary example bindings."""
++    tokens = shlex.split(legacy)
++    if tokens[0] != '1':
++        raise ValueError('The source fixture must use the existing version-1 map')
++    count, cursor, entries = int(tokens[1]), 2, []
++    for _ in range(count):
++        name, kind, length = tokens[cursor:cursor + 3]
++        cursor += 3
++        bindings = []
++        for _ in range(int(length)):
++            control, scale, deadzone = tokens[cursor:cursor + 3]
++            cursor += 3
++            bindings.append([control, scale, deadzone, '1', '0'])
++        entries.append([name, kind, bindings])
++    if cursor != len(tokens):
++        raise ValueError('Unexpected trailing source input-map data')
++    entries += [['flick_stick', '2', [['stick:Right', '1', '0.2', '1', '1']]],
++                ['compare_rays', '0', [['key:C', '1', '0', '1', '0']]],
++                ['fixture_quit', '0', [['key:Q', '1', '0', '1', '0']]]]
++    output = ['2', str(len(entries))]
++    for name, kind, bindings in entries:
++        output += [json.dumps(name), kind, str(len(bindings))]
++        for control, scale, deadzone, scale_y, circular in bindings:
++            output += [json.dumps(control), scale, deadzone, scale_y, circular]
++    return ' '.join(output)
++
++
++def ui_element(identity, parent='', kind=2, position=(0, 0), size=(180, 40), text='', **patch):
++    # The complete normal M67 schema is intentionally ordinary project content.
++    element = dict(id=identity, parent=parent, text=text, texture='', font=FONT,
++                   textKey='', textLogicalAlign=-1, mirrorRow=False,
++                   visible=True, enabled=True, clip=False, wrap=True, fit=True,
++                   spacing=8, fontSize=20, value=0, minimum=0, maximum=1,
++                   kind=kind, flow=0, direction=0, anchorMin=[0, 0], anchorMax=[0, 0],
++                   offset=list(position), size=list(size), relativeSize=[0, 0],
++                   align=[0, 0], textAlign=[0, 0], margin=[0, 0, 0, 0],
++                   padding=[0, 0, 0, 0], background=[0, 0, 0, 0], color=[.92, .96, 1, 1])
++    element.update(patch)
++    return element
++
++
++def hud_document():
++    elements = [ui_element('canvas', kind=0, size=(0, 0)),
++                ui_element('title', 'canvas', position=(24, 20), size=(1232, 48),
++                           text='M69 / PAIRED INPUT + 100-RAY QUERIES', fontSize=27),
++                ui_element('input_panel', 'canvas', kind=1, position=(24, 84), size=(604, 552),
++                           clip=True, background=[.025, .06, .09, .92]),
++                ui_element('raw', 'input_panel', position=(14, 18), size=(576, 44), text='Raw: neutral'),
++                ui_element('circular', 'input_panel', position=(14, 62), size=(576, 44), text='Circular: neutral'),
++                ui_element('delta', 'input_panel', position=(14, 106), size=(576, 64), text='Frame delta: neutral'),
++                ui_element('samples', 'input_panel', position=(14, 182), size=(576, 240), text='Ordered backend observations: none', fontSize=18),
++                ui_element('flags', 'input_panel', position=(14, 430), size=(576, 100), text='Waiting for fixed boundary', fontSize=18),
++                ui_element('query_panel', 'canvas', kind=1, position=(650, 84), size=(606, 552),
++                           clip=True, background=[.035, .065, .09, .92]),
++                ui_element('fan', 'query_panel', position=(14, 18), size=(578, 110), text='100-ray fan: waiting'),
++                ui_element('ordered', 'query_panel', position=(14, 134), size=(578, 210), text='Results keep input order', fontSize=18),
++                ui_element('comparison', 'query_panel', position=(14, 350), size=(578, 100), text='Press C to compare all 100 with scalar rays'),
++                ui_element('limits', 'query_panel', position=(14, 458), size=(578, 80), fontSize=17,
++                           text='One batch bridge / 100 geometric queries.\nNo ledge selection or trick recognizer.'),
++                ui_element('help', 'canvas', position=(24, 654), size=(1232, 56), fontSize=18,
++                           text='Right stick: diagonal and out/back samples | C: scalar compare | Esc: pause | R: reload | Q: quit\nNo controller means neutral input. Hardware feel still needs human review.'),
++                ui_element('pause', 'canvas', kind=1, position=(400, 210), size=(480, 300),
++                           visible=False, clip=True, background=[.015, .025, .05, 1]),
++                ui_element('pause_title', 'pause', position=(20, 18), size=(440, 52), text='PAUSED / history reset', fontSize=25),
++                ui_element('resume', 'pause', kind=4, position=(20, 86), size=(440, 54), text='Resume', background=[.1, .24, .35, 1]),
++                ui_element('reload', 'pause', kind=4, position=(20, 154), size=(440, 54), text='Reload example', background=[.1, .24, .35, 1]),
++                ui_element('quit', 'pause', kind=4, position=(20, 222), size=(440, 54), text='Quit', background=[.1, .24, .35, 1])]
++    return {'kind': 'ui', 'schema': 1, 'data': {'reference': [1280, 720],
++            'visible': True, 'enabled': True, 'modal': False, 'elements': elements}}
++
++
++PAIRED_DISPLAY = r'''import Reader from './paired-stick.js';
++import {ui} from 'judas';
++const pair=v=>`(${v.x.toFixed(4)}, ${v.y.toFixed(4)})`;
++export default class extends Reader {
++ update(){super.update();const h=ui.get('m69');if(!h)return;
++  const s=this.state;
++  h.get('raw').text=`RAW right: ${pair(s.raw)}`;
++  h.get('circular').text=`CIRCULAR (inner .20): ${pair(s.circular)}`;
++  h.get('delta').text=`Latest render-pump net delta: ${pair(s.frameDelta)}\nOut-and-back may have zero net delta.`;
++  h.get('samples').text='Recent ordered observations (seconds):\n'+(s.samples.slice(-6).map(v=>`#${v.sequence}  t=${v.time.toFixed(3)}  ${pair(v)}`).join('\n')||'none / neutral');
++  h.get('flags').text=`Cursor ${s.sequence} | capacity ${s.capacity}/stick\nObserved ${s.observations} | resets ${s.resets} | overflows ${s.overflows}\nFrame reads ${s.frameReads} | fixed reads ${s.fixedReads}`;
++ }
++}
++'''
++
++FAN_DISPLAY = r'''import Fan from './ray-fan.js';
++export {properties} from './ray-fan.js';
++import {ui} from 'judas';
++export default class extends Fan {
++ update(){const h=ui.get('m69');if(!h)return;const s=this.state;
++  h.get('fan').text=`Ordered fan: ${s.count} rays\nHits ${s.hits} | misses ${s.count-s.hits}`;
++  h.get('ordered').text='First 6 requests (index preserved):\n'+s.results.slice(0,6).map((v,i)=>v?`${i}: entity ${v.entity} / ${v.distance.toFixed(3)} m`:`${i}: null`).join('\n');
++  h.get('comparison').text=s.comparisons?`Scalar comparisons: ${s.comparisons}\nAll 100 equal: ${s.matched?'YES':'NO'}`:'Press C to compare all 100 with scalar rays';
++ }
++}
++'''
++
++VIEW = r'''import {input,ui,world,scenes} from 'judas';
++export default class {
++ start(){ui.debugOverlayVisible=false;input.pointerCapture=false;
++  // Explicit authored flat-fixture view; not an engine world-up convention.
++  world.setView({position:{x:0,y:3,z:8},rotation:{w:1,x:0,y:0,z:0}},70);
++ }
++ uiUpdate(){const h=ui.get('m69');if(!h)return;
++  if(input.pressed('pause')){h.modal=!h.modal;h.get('pause').visible=h.modal;}
++  if(input.pressed('reset'))scenes.reload();
++  if(input.pressed('fixture_quit'))ui.quit();
++ }
++ onUI(e){if(e.document!=='m69')return;const h=ui.get('m69');if(!h)return;
++  // Escape is already handled once in uiUpdate, including the opening frame.
++  if(e.type==='click'&&e.element==='resume'){h.modal=false;h.get('pause').visible=false;}
++  if(e.type==='click'&&e.element==='reload')scenes.reload();
++  if(e.type==='click'&&e.element==='quit')ui.quit();
++ }
++ destroy(){world.clearView();}
++}
++'''
++
++
++def project_scene(source):
++    # Preserve copied arena geometry; replace only example-owned script/UI policy.
++    source = re.sub(r'^  (?:scripts|script\.[^ ]+|ui\.[^ ]+) .*\n', '', source, flags=re.M)
++    match = re.search(r'^object 40 .*?^end$', source, re.M | re.S)
++    if not match:
++        raise ValueError('Copied character fixture lost its example owner (40)')
++    owner = match.group(0)
++    owner = re.sub(r'^  body(?:\.[^ ]+)? .*\n', '', owner, flags=re.M)
++    owner = re.sub(r'^  position .*$', '  position 0 0 6', owner, flags=re.M)
++    owner = re.sub(r'^  rotation .*$', '  rotation 1 0 0 0', owner, flags=re.M)
++    slots = ['  scripts 3']
++    for index, number in enumerate([3, 4, 5]):
++        slots += [f'  script.{index}.id {index+1}', f'  script.{index}.asset "{asset(number)}"',
++                  f'  script.{index}.enabled true', f'  script.{index}.properties "{{}}"']
++    slots += [f'  ui.asset "{asset(6)}"', '  ui.name "m69"', '  ui.enabled true']
++    owner = owner[:-3] + '\n'.join(slots) + '\nend'
++    source = source[:match.start()] + owner + source[match.end():]
++    source = re.sub(r'^  next-id .*$', '  next-id 70', source, flags=re.M)
++    floor = re.search(r'^object 1 .*?^end$', source, re.M | re.S)
++    if not floor:
++        raise ValueError('Copied character fixture lost its complete box definition')
++    # Reuse a complete normal serialized collider/render block, including the
++    # existing required fields. This is content construction, not a new format.
++    wall = re.sub(r'^object 1 .*$', 'object 69 "Example query wall"', floor.group(0), flags=re.M)
++    wall = re.sub(r'^  position .*$', '  position 0 2 -8', wall, flags=re.M)
++    wall = re.sub(r'^  (render|body)\.half-extents .*$', r'  \1.half-extents 3.2 2 0.25', wall, flags=re.M)
++    wall = re.sub(r'^  render.color .*$', '  render.color 0.1 0.65 0.8', wall, flags=re.M)
++    source += '\n' + wall + '\n'
++    return source
++
++
++def main():
++    parser = argparse.ArgumentParser(description=__doc__)
++    parser.add_argument('--output', type=Path, default=ROOT / '.cache/m69/example')
++    args = parser.parse_args()
++    output = args.output.resolve()
++    if output.exists():
++        parser.error('Output already exists; preserve it and choose a fresh --output.')
++    if ROOT / '.cache' not in output.parents and Path('/tmp') not in output.parents:
++        parser.error('Use a disposable .cache or /tmp directory, not a current source project.')
++    shutil.copytree(ROOT / 'projects/character_demo', output)
++    scripts = output / 'Assets/scripts'
++    for number, name in [(1, 'paired-stick'), (2, 'ray-fan')]:
++        write_asset(scripts / (name + '.js'),
++                    (ROOT / f'docs/judasjs/examples/{name}.js').read_text(), number, 'script')
++    for number, name, text in [(3, 'paired-display', PAIRED_DISPLAY),
++                               (4, 'fan-display', FAN_DISPLAY), (5, 'example-view', VIEW)]:
++        write_asset(scripts / (name + '.js'), text, number, 'script')
++    write_asset(output / 'Assets/ui/m69.judasui', json.dumps(hud_document(), indent=2) + '\n', 6, 'ui')
++    scene = output / 'Scenes/flat.judas'
++    scene.write_text(project_scene(scene.read_text()))
++    old = output / 'character_demo.judasproj'
++    lines = old.read_text().splitlines()
++    project = []
++    for line in lines:
++        if line.startswith('name '):
++            line = 'name "M69 Input and Query Examples"'
++        elif line.startswith('legacy-gameplay '):
++            continue
++        elif line.startswith('input-map '):
++            line = 'input-map ' + json.dumps(paired_map(shlex.split(line)[1]))
++        project.append(line)
++    project.append('legacy-gameplay "false"')
++    destination = output / 'm69_example.judasproj'
++    destination.write_text('\n'.join(project) + '\n')
++    old.unlink()
++    (output / 'README.md').write_text('''# M69 ordinary input/query example
++
++Generated private copy of character_demo. Current source projects were not edited.
++Right stick: cardinal, diagonal, out-and-back readings and ordered observations.
++C: compare one 100-ray batch with 100 scalar rays on the same world.
++Escape: pause/resume; R: scene reload; Q: quit. Pause also has ordinary UI buttons.
++No controller yields neutral input; this fixture cannot certify hardware feel.
++No trick recognition, ledge policy or character-controller feature is included.
++''')
++    print(destination)
++
++
++if __name__ == '__main__':
++    main()
+diff --git a/scripts/m69_validation.py b/scripts/m69_validation.py
+new file mode 100644
+index 0000000..01b5e5e
+--- /dev/null
++++ b/scripts/m69_validation.py
+@@ -0,0 +1,110 @@
++#!/usr/bin/env python3
++"""M69's single incremental Release build and focused pass; stop on first failure.
++
++Reuses the existing build configuration; does not run production suites or retry.
++Output must be fresh, so a completed/failed gate cannot be overwritten by accident.
++Node/TypeScript are developer tooling only, not game runtime dependencies.
++"""
++import argparse
++import hashlib
++import json
++import os
++from pathlib import Path
++import subprocess
++import time
++
++ROOT = Path(__file__).resolve().parents[1]
++START = 'c042797c755df68b45e36aa917c4ca72818b9bcd'
++
++
++def main():
++    parser = argparse.ArgumentParser(description=__doc__)
++    parser.add_argument('--output', type=Path, default=ROOT / '.cache/m69/gate')
++    parser.add_argument('--jobs', type=int, default=4)
++    parser.add_argument('--node', required=True)
++    parser.add_argument('--typescript', required=True)
++    args = parser.parse_args()
++    output = args.output.resolve()
++    if output.exists():
++        parser.error('Preserve the existing gate. A second cycle requires operator instruction.')
++    head = subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=ROOT, text=True).strip()
++    if head != START:
++        parser.error('Starting checkpoint changed; inspect before building.')
++    output.mkdir(parents=True)
++    # Freeze affected implementation/tooling/docs before the first build. Evidence
++    # reports are intentionally excluded: they will record the gate's actual outcome.
++    tracked = subprocess.check_output(['git', 'diff', '--name-only', 'HEAD'], cwd=ROOT, text=True).splitlines()
++    new = subprocess.check_output(['git', 'ls-files', '--others', '--exclude-standard'], cwd=ROOT, text=True).splitlines()
++    paths = sorted(p for p in set(tracked + new) if not p.startswith('docs/evidence/') and (ROOT / p).is_file())
++    hashes = {p: hashlib.sha256((ROOT / p).read_bytes()).hexdigest() for p in paths}
++    evidence = ROOT / 'docs/evidence/m69'
++    evidence.mkdir(parents=True, exist_ok=True)
++    freeze = {'startingHead': START, 'algorithm': 'sha256', 'files': hashes}
++    (evidence / 'FINAL_FINGERPRINTS.json').write_text(json.dumps(freeze, indent=2) + '\n')
++    patch = subprocess.check_output(['git', 'diff', 'HEAD'], cwd=ROOT, text=True)
++    for path in sorted(p for p in new if p in hashes):
++        # git diff's exit 1 means the new file differs from /dev/null, not a failure.
++        patch += subprocess.run(['git', 'diff', '--no-index', '--', '/dev/null', path],
++                                cwd=ROOT, text=True, stdout=subprocess.PIPE).stdout
++    (evidence / 'CANDIDATE.diff').write_text(patch)
++    summary = {'startingHead': START, 'pass': False, 'commands': [],
++               'scope': 'One incremental Release build; paired input/native VM, query batch, two cookbook examples and API/type/live checks. No production suite or hardware-feel claim.'}
++    env = {k: v for k, v in os.environ.items() if not k.startswith('JUDAS_')}
++    env.update(SDL_VIDEODRIVER='x11', SDL_AUDIODRIVER='dummy',
++               XDG_DATA_HOME=str(output / 'user-data'))
++
++    def run(name, command, timeout=240, extra=None):
++        command = [str(p) for p in command]
++        row = {'name': name, 'command': command, 'cwd': str(ROOT)}
++        summary['commands'].append(row)
++        print('RUN ' + name, flush=True)
++        start = time.monotonic()
++        try:
++            with (output / (name + '.log')).open('w') as log:
++                result = subprocess.run(command, cwd=ROOT, env=dict(env, **(extra or {})), stdout=log,
++                                        stderr=subprocess.STDOUT, timeout=timeout)
++            row.update(exitCode=result.returncode, seconds=time.monotonic() - start)
++            if result.returncode:
++                raise RuntimeError(f'{name} failed ({result.returncode}); STOP, no retry. See {output / (name + ".log")}')
++        except subprocess.TimeoutExpired:
++            row.update(timeout=True, seconds=time.monotonic() - start)
++            raise RuntimeError(f'{name} timed out; STOP, no retry.')
++        print('PASS ' + name, flush=True)
++
++    try:
++        # Generate new target rules before Make parses the multi-target request.
++        # Automatic regeneration inside an existing target leaves its running
++        # parent Make process with the old rules. Reuse the cached Release setup.
++        run('generate-targets', ['cmake', '-S', ROOT, '-B', ROOT / 'build'])
++        run('release-build', ['cmake', '--build', ROOT / 'build', '--parallel', args.jobs,
++                             '--target', 'judas', 'judas_editor', 'judas_scene_author',
++                             'judas_paired_input_tests', 'judas_paired_input_script_tests',
++                             'judas_physics_batch_script_tests', 'judasjs_examples_tests'], 1800)
++        run('paired-native', [ROOT / 'build/judas_paired_input_tests', output / 'paired-native'])
++        run('paired-vm', [ROOT / 'build/judas_paired_input_script_tests', output / 'paired-vm'])
++        run('batch-vm', [ROOT / 'build/judas_physics_batch_script_tests', output / 'batch-vm'])
++        for example in ('paired-stick', 'ray-fan', 'surface'):
++            run('cookbook-' + example, [ROOT / 'build/judasjs_examples_tests', output / 'examples', example])
++        run('api-types-live', [args.node, ROOT / 'scripts/check_judasjs_api.mjs',
++                              '--typescript', args.typescript, '--runtime', output / 'examples/surface.json'])
++        run('create-example', ['python3', ROOT / 'scripts/create_m69_example.py',
++                               '--output', ROOT / '.cache/m69/example'])
++        steps = output / 'example.steps'
++        steps.write_text('REALTIME 90\nLOG_EVERY 0\nACTION compare_rays 1 10 60\n'
++                         f'SCREENSHOT 89 {output / "example.png"}\n')
++        run('example-startup', [ROOT / 'build/judas', ROOT / '.cache/m69/example/m69_example.judasproj'],
++            extra={'JUDAS_TEST_SCRIPT': str(steps)})
++        changed = [p for p, h in hashes.items() if not (ROOT / p).is_file() or hashlib.sha256((ROOT / p).read_bytes()).hexdigest() != h]
++        if changed:
++            raise RuntimeError('Candidate changed during gate: ' + ', '.join(changed))
++        summary['pass'] = True
++    except Exception as error:
++        summary['failure'] = str(error)
++        print(str(error), flush=True)
++    finally:
++        (output / 'RESULTS.json').write_text(json.dumps(summary, indent=2) + '\n')
++    return 0 if summary['pass'] else 1
++
++
++if __name__ == '__main__':
++    raise SystemExit(main())
+diff --git a/tests/PairedInputScriptTests.cpp b/tests/PairedInputScriptTests.cpp
+new file mode 100644
+index 0000000..8108174
+--- /dev/null
++++ b/tests/PairedInputScriptTests.cpp
+@@ -0,0 +1,114 @@
++// M69: the real VM and play boundary, not a mocked input object.
++#include "AuthoringJSON.h"
++#include "EngineHost.h"
++#include "InteractivePlay.h"
++#include "Project.h"
++#include "RuntimeWorld.h"
++#include "SceneSerialization.h"
++#include "SceneSession.h"
++#include "ScriptSystem.h"
++#include <cmath>
++#include <cstdio>
++#include <filesystem>
++#include <fstream>
++
++namespace fs=std::filesystem;
++using J=AuthoringJSON::J;
++namespace {
++int checks=0,failures=0;
++void Check(bool ok,const char* text){++checks;failures+=!ok;std::printf("%s %s\n",ok?"PASS":"FAIL",text);}
++J State(RuntimeWorld& world){
++    if(world.Scripts())for(const auto& s:world.Scripts()->Capture())if(s.entity==1)return J::parse(s.json);
++    return J::object();
++}
++void Flick(InputSystem& input){
++    input.SetStick("right",0,0,true);
++    input.SetStick("right",.6f,.8f);
++    input.SetStick("right",0,0);
++}
++}
++int main(int argc,char** argv){
++    const fs::path out=argc>1?argv[1]:".cache/m69/paired-js";
++    fs::create_directories(out);const auto root=fs::absolute(out/"project");
++    std::string error;Project project;
++    Check(Project::CreateNew(root.string(),"M69 paired input",project,error),"ordinary private project created");
++    if(failures){std::puts(error.c_str());return 1;}
++    EngineHost host;
++    Check(host.Init("M69 paired input",640,360,false,error),"real EngineHost and input service");
++    if(failures){std::puts(error.c_str());return 1;}
++    host.Audio().Init(error,true);host.OpenProjectAssets(root.string(),(root/"Assets").string());
++    host.Resources().SetBlockingMode(true);
++    std::ofstream(root/"Assets/probe.js")<<R"JS(
++import {input,ui,time} from 'judas';
++export default class {
++ constructor(){this.state={frames:0,steps:0,frameSamples:0,fixedSamples:0,resets:0,overflows:0};this.frameCursor=0;this.fixedCursor=0;}
++ uiUpdate(){const d=ui.get('fixture');if(d&&input.pressed('pause'))d.modal=!d.modal;}
++ update(){
++  const s=input.stickSamples('right',this.frameCursor);this.frameCursor=s.sequence;
++  this.state.frames++;this.state.resets+=s.reset?1:0;this.state.overflows+=s.overflow?1:0;
++  if(!s.reset&&!s.overflow)this.state.frameSamples+=s.samples.length;
++  this.state.raw=input.stick('right');this.state.delta=input.stickDelta('right');this.state.mapped=input.vector('flick_stick');
++  this.state.capacity=s.capacity;this.state.ordered=s.samples.every((v,i)=>i===0||(v.sequence>s.samples[i-1].sequence&&v.time>=s.samples[i-1].time));
++  this.state.frameIsFixed=time.fixed;
++  const a=input.stickSamples('right',0),b=input.stickSamples('right',0);
++  this.state.repeated=JSON.stringify(a)===JSON.stringify(b);
++  if(a.samples.length){a.samples[0].x=99;this.state.copied=input.stickSamples('right',0).samples[0].x!==99;}else this.state.copied=true;
++  let rejected=0;for(const f of [()=>input.stick('middle'),()=>input.stickDelta('RIGHT'),()=>input.stickSamples('right',-.1),()=>input.stickSamples('left',Infinity),()=>input.stickSamples('right','0'),()=>input.stickSamples('right',s.sequence+1),()=>input.vector(3)]){try{f();}catch(e){if(e instanceof TypeError)rejected++;}}
++  this.state.invalidRejected=rejected===7;
++ }
++ fixedUpdate(){
++  const s=input.stickSamples('right',this.fixedCursor);this.fixedCursor=s.sequence;
++  this.state.steps++;if(!s.reset&&!s.overflow)this.state.fixedSamples+=s.samples.length;
++  this.state.fixedIsFixed=time.fixed;
++ }
++}
++)JS";
++    AssetRecord script;Check(host.Assets().Track((root/"Assets/probe.js").string(),script,error),"registered public-API probe asset");
++    UIDocument doc;UIElement canvas;canvas.id="canvas";canvas.kind=UIKind::Canvas;doc.elements.push_back(canvas);
++    std::ofstream(root/"Assets/fixture.judasui")<<SerializeUIDocument(doc);
++    AssetRecord uiAsset;Check(host.Assets().Track((root/"Assets/fixture.judasui").string(),uiAsset,error),"normal authored UI for pause routing");
++    InputMap map=InputMap::Defaults();map.AddVector("flick_stick");map.AddBinding("flick_stick",{"stick:Right",1,.2f,1,true});
++    project.Settings().input=map;project.Settings().startupScene="Scenes/probe.judas";
++    project.Settings().legacyGameplay=false;Check(project.Save(error),"project saves paired binding normally");
++    Scene scene;auto& owner=scene.CreateObject("Input reader");owner.scripts.push_back({1,script.id,true,"{}"});owner.ui=SceneUIComponent{uiAsset.id,"fixture",true};
++    Check(SaveSceneToFile(scene,project.StartupScenePath(),error),"registered startup scene saved");
++    auto world=std::make_unique<RuntimeWorld>();
++    Check(world->Build(scene,&host.Resources(),error),"normal world with script and UI");world->legacyGameplay=false;
++    if(failures){std::puts(error.c_str());host.Shutdown();return 1;}
++    auto control=std::make_shared<SceneSession>(project,project.StartupScenePath());world->SetSceneControl(control);
++    auto& window=host.GetWindow();window.SetTestInputMode(true);Check(window.Input().SetMap(map,error),"normal input map installed");
++    InteractivePlay play;Check(play.Begin(*world,WorldCoordinates{},error),"ordinary play session begins");
++    auto frame=[&](float dt){play.Frame(window,host.GetRenderer(),dt,false,false);};
++    frame(0);window.BeginTestFrame();
++    Flick(window.Input());const auto delivered=window.Input().StickSamples("right").samples.size();frame(1.f/240);
++    auto state=State(*world);
++    Check(delivered>=2&&state.value("frameSamples",0)==int(delivered)&&play.LastFixedStepsThisFrame()==0,"out-and-back delivered before a fixed step survives a zero-step render frame");
++    Check(state["raw"]["x"]==0&&state["raw"]["y"]==0&&state["delta"]["x"]==0&&state["delta"]["y"]==0,"neutral endpoint and net delta do not erase the observation history");
++    Check(state.value("repeated",false)&&state.value("copied",false)&&state.value("ordered",false)&&state.value("capacity",0)==128,"ordered timed copied snapshots are non-destructive across readers");
++    Check(state.value("invalidRejected",false)&&!state.value("frameIsFixed",true),"public input arguments validated in real frame callbacks");
++    // Initialize the fixed reader's cursor before the next observed flick.
++    window.BeginTestFrame();frame(1.f/60);
++    const int fixedBefore=State(*world).value("fixedSamples",0);
++    window.BeginTestFrame();const auto before=window.Input().StickSamples("right").sequence;
++    Flick(window.Input());const auto later=window.Input().StickSamples("right",before).samples.size();frame(.05f);
++    state=State(*world);
++    Check(play.LastFixedStepsThisFrame()>=3&&state.value("fixedSamples",0)==fixedBefore+int(later)&&state.value("fixedIsFixed",false),"catch-up fixed steps recognize new sample IDs once per script cursor");
++    window.BeginTestFrame();window.Input().SetStick("right",.6f,.8f);frame(0);state=State(*world);
++    Check(std::abs(state["raw"]["x"].get<double>()-.6)<1e-5&&std::abs(state["raw"]["y"].get<double>()-.8)<1e-5&&std::abs(state["mapped"]["x"].get<double>()-.6)<1e-5&&std::abs(state["mapped"]["y"].get<double>()-.8)<1e-5,"raw and circular values marshal independently through VM");
++    window.BeginTestFrame();for(int i=0;i<140;++i)window.Input().SetStick("right",(i&1)?.3f:-.3f,.2f);frame(0);
++    Check(State(*world).value("overflows",0)>0,"real JS cursor reader detects bounded history overflow");
++    window.BeginTestFrame();window.Input().SetPhysical("key:Escape",1);frame(1.f/60);
++    Check(play.IsPaused(),"authored modal pause opens through normal logical input");
++    window.BeginTestFrame();window.Input().SetPhysical("key:Escape",0);Flick(window.Input());frame(1.f/60);
++    const int acceptedBefore=State(*world).value("fixedSamples",0);
++    window.BeginTestFrame();Flick(window.Input());window.Input().SetPhysical("key:Escape",1);frame(1.f/60);
++    Check(!play.IsPaused()&&State(*world).value("fixedSamples",0)==acceptedBefore,"resume discards observations delivered while paused without losing its button edge");
++    const auto oldCursor=window.Input().StickSamples("right").sequence;Flick(window.Input());
++    Check(control->Reload(error)&&control->AdvanceOuter(world,play,host.Resources(),window.Input(),error),"registered scene reload at safe outer boundary");
++    const auto fresh=window.Input().StickSamples("right",oldCursor);
++    Check(fresh.reset&&fresh.samples.empty(),"scene replacement invalidates old paired observations before new scripts");
++    frame(0);Check(world->Scripts()&&world->Scripts()->Diagnostics().empty(),"replacement VM has no stale input/script faults");
++    std::ofstream(out/"state.json")<<State(*world).dump(2)<<'\n';
++    play.End();world->Destroy();host.Shutdown();
++    std::printf("SUMMARY %d checks %d failures\n",checks,failures);return failures?1:0;
++}
+diff --git a/tests/PairedInputTests.cpp b/tests/PairedInputTests.cpp
+new file mode 100644
+index 0000000..93af234
+--- /dev/null
++++ b/tests/PairedInputTests.cpp
+@@ -0,0 +1,127 @@
++#include "InputSystem.h"
++#include "NamedAuthoring.h"
++#include "Project.h"
++#include "Window.h"
++#include "StructuredAuthor.h"
++#include <algorithm>
++#include <cmath>
++#include <cstdio>
++#include <limits>
++#include <filesystem>
++#include <fstream>
++
++namespace {
++int checks=0,failures=0;
++void Check(bool ok,const char* text){++checks;if(!ok)++failures;std::printf("%s %s\n",ok?"PASS":"FAIL",text);}
++bool Near(float a,float b){return std::abs(a-b)<2e-5f;}
++bool Neutral(InputVector v){return v.x==0&&v.y==0;}
++}
++int main(int argc,char** argv){
++    std::string error;
++    const auto legacy=InputMap::Defaults();
++    InputMap map=legacy;
++    Check(map.AddVector("paired")&&map.AddBinding("paired",{"stick:Right",1,.2f,-1,true}),"paired binding authors independently of existing scalar bindings");
++    InputSystem input;
++    Check(input.SetMap(map,error),"paired map installs");
++    input.BeginFrame();input.SetPhysical("key:Space",1);input.SetPhysical("key:Space",0);input.BeginFrame();input.BeginFixedStep();
++    Check(input.FixedAction("jump").pressed&&input.FixedAction("jump").released&&!input.FixedAction("jump").held,"default scalar action short-press semantics survive zero-step frames");
++    input.BeginFixedStep();Check(!input.FixedAction("jump").pressed,"old button catch-up steps do not duplicate edges");
++    input.SetPhysical("key:A",1);input.SetPhysical("key:D",1);input.AddDelta("mouse:dx",13);
++    Check(input.Axis("move_x")==0&&input.Axis("look_x")==13,"opposed keyboard and unclamped mouse scalar bindings remain compatible");
++    input.BeginFrame();Check(input.Axis("look_x")==0,"old relative mouse binding still resets each frame");
++    input.SetStick("right",0,0); // first controller observation establishes baseline
++    input.BeginFrame();input.SetStick("right",.6f,.8f);
++    auto raw=input.Stick("right"),mapped=input.Vector("paired"),delta=input.StickDelta("right");
++    Check(Near(raw.x,.6f)&&Near(raw.y,.8f)&&Near(delta.x,.6f)&&Near(delta.y,.8f),"raw paired values/frame delta are independent from fixed steps");
++    Check(Near(mapped.x,.6f)&&Near(mapped.y,-.8f),"circular deadzone preserves diagonal direction then applies Y inversion");
++    Check(Near(input.Axis("look_stick_x"),(.6f-.15f)/.85f)&&Near(input.Axis("look_stick_y"),(.8f-.15f)/.85f),"old scalar deadzones retain independent response");
++    input.SetStick("right",1,1);raw=input.Stick("right");mapped=input.Vector("paired");
++    Check(raw.x==1&&raw.y==1&&Near(mapped.x,std::sqrt(.5f))&&Near(mapped.y,-std::sqrt(.5f)),"raw diagonal is not clamped to unit circle; new processed radial response is");
++    input.SetStick("right",.2f,0);Check(Neutral(input.Vector("paired")),"circular boundary is neutral");
++    input.SetStick("right",.6f,0);Check(Near(input.Vector("paired").x,.5f),"circular travel outside deadzone is rescaled once");
++    Check(!map.ReplaceBinding("paired",0,{"stick:Right",1,1,1,true})&&!map.ReplaceBinding("paired",0,{"stick:Right",1,-.1f,1,true})&&!map.ReplaceBinding("paired",0,{"stick:Right",std::numeric_limits<float>::infinity(),.2f,1,true}),"invalid/nonfinite paired settings reject atomically");
++    Check(!map.AddBinding("jump",{"stick:Right",1,0,1,true})&&!map.AddBinding("paired",{"key:Space"}),"paired and scalar binding types remain distinct");
++    InputMap parsed;Check(InputMap::Parse(map.Serialize(),parsed,error)&&parsed.Serialize()==map.Serialize()&&map.Serialize().rfind("2 ",0)==0,"extended legacy input map round-trips paired fields");
++    Check(InputMap::Parse(legacy.Serialize(),parsed,error)&&parsed.Serialize()==legacy.Serialize()&&legacy.Serialize().rfind("1 ",0)==0,"old default input maps preserve their canonical v1 representation");
++    std::string named,back;
++    Check(LegacyToNamed(map.Serialize(),"input",named,error)&&InputMap::Parse(named,parsed,error)&&parsed.Serialize()==map.Serialize()&&NamedToLegacy(named,"input",back,error)&&back==map.Serialize(),"M67 named input documents round-trip vector/circular/inversion settings");
++    ProjectSettings settings;settings.name="Paired input";settings.input=map;ProjectSettings project;
++    Check(Project::ParseFromString(Project::SerializeToString(settings),project,error)&&project.input.Serialize()==map.Serialize(),"normal project input-map integration round-trips");
++    Check(LegacyToNamed(Project::SerializeToString(settings),"project",named,error)&&Project::ParseFromString(named,project,error)&&project.input.Serialize()==map.Serialize(),"named project authoring retains paired map");
++    const auto authoring=std::filesystem::absolute(argc>1?argv[1]:".cache/m69/paired-native");std::filesystem::create_directories(authoring);
++    auto structured=[&](const std::string& text){std::ofstream(authoring/"input.json")<<text;if(!WriteStructuredContent((authoring/"input.json").string(),(authoring/"input.map").string(),error))return false;std::ifstream in(authoring/"input.map");const std::string bytes((std::istreambuf_iterator<char>(in)),{});return InputMap::Parse(bytes,parsed,error);};
++    Check(structured(R"({"kind":"input","entries":[{"name":"old","axis":true,"bindings":[{"control":"stick:LeftX","deadzone":0.2}]}]})")&&parsed.Find("old")&&parsed.Find("old")->axis&&parsed.Find("old")->bindings[0].scaleY==1&&!parsed.Find("old")->bindings[0].circular,"compact structured authoring keeps old scalar defaults");
++    Check(structured(R"({"kind":"input","entries":[{"name":"pair","vector":true,"bindings":[{"control":"stick:Right","scale":0.5,"scaleY":-1,"deadzone":0.2,"circular":true}]}]})")&&parsed.Find("pair")&&parsed.Find("pair")->vector&&parsed.Find("pair")->bindings[0].circular&&parsed.Find("pair")->bindings[0].scaleY==-1,"compact structured authoring exposes paired settings through normal serializer");
++
++    input.Reset();input.SetStick("right",0,0);const auto cursor=input.StickSamples("right").sequence;
++    input.BeginFrame();input.SetStick("right",.75f,.75f);input.SetStick("right",0,0);
++    auto samples=input.StickSamples("right",cursor),again=input.StickSamples("right",cursor);
++    Check(Neutral(input.Stick("right"))&&Neutral(input.StickDelta("right"))&&samples.samples.size()==2&&samples.samples.front().x==.75f&&samples.samples.back().x==0,"out-and-back observations survive neutral endpoint/net delta before any fixed step");
++    Check(samples.samples.size()==again.samples.size()&&samples.sequence==again.sequence&&!samples.reset&&!samples.overflow,"repeated readers receive identical non-destructive snapshots");
++    Check(samples.samples.size()==2&&samples.samples[0].sequence<samples.samples[1].sequence&&samples.samples[0].time<=samples.samples[1].time&&samples.samples[0].time>=0,"observation IDs order monotonically with receipt-time seconds");
++    input.BeginFrame();input.BeginFixedStep();input.BeginFixedStep();
++    Check(input.StickSamples("right",cursor).samples.size()==2&&input.StickSamples("right",samples.sequence).samples.empty(),"zero-step frames/catch-up steps retain history while reader cursor prevents repeats");
++    const auto prior=input.StickSamples("right").sequence;
++    for(int i=0;i<140;++i)input.SetStick("right",i%2?1.f:0.f,0);
++    const auto overflow=input.StickSamples("right",prior);
++    Check(overflow.capacity==128&&overflow.samples.size()==128&&overflow.overflow&&!overflow.reset,"bounded ring reports overflow instead of pretending truncated flick is complete");
++    const auto recent=overflow.samples.back().sequence;
++    input.SetStick("left",0,0);for(int i=0;i<150;++i)input.SetStick("left",i%2?1.f:0.f,0);
++    Check(!input.StickSamples("right",recent).overflow,"global sequence gaps from other stick do not fabricate per-stick overflow");
++    input.DiscardPending();auto reset=input.StickSamples("right",recent);
++    Check(reset.reset&&reset.samples.empty()&&Neutral(input.StickDelta("right")),"pause/session edge discard clears stick history/delta with detectable reset");
++    input.SetStick("right",.9f,.4f);Check(input.StickSamples("right",reset.sequence).samples.empty()&&Neutral(input.StickDelta("right")),"first observation after discontinuity establishes baseline without fabricated flick");
++    input.BeginFrame();input.SetStick("right",0,0);Check(input.StickSamples("right",reset.sequence).samples.size()==1,"subsequent actual movement remains observable after baseline");
++    const auto clearCursor=input.StickSamples("right").sequence;input.ClearDevice("stick:");
++    Check(Neutral(input.Stick("right"))&&Neutral(input.StickDelta("right"))&&input.StickSamples("right",clearCursor).reset&&input.StickSamples("right",clearCursor).samples.empty(),"disconnect clears raw movement and pending observations");
++    input.SetStick("right",0,0);input.SetStick("right",.6f,.8f);input.ConsumeBindings({"look_stick_x"});
++    Check(Neutral(input.Stick("right"))&&Neutral(input.Vector("paired"))&&input.StickSamples("right").samples.empty(),"UI consumption suppresses paired bindings sharing a constituent scalar control");
++    input.BeginFrame();Check(Near(input.Stick("right").x,.6f)&&input.StickSamples("right").samples.empty(),"input resumes held values without stale consumed observations");
++
++    Window window;const bool initialized=window.Init("M69 paired input",320,240,false);
++    Check(initialized,"normal SDL/GL Window input backend starts");
++    if(initialized){
++#if SDL_VERSION_ATLEAST(2,0,14)
++        SDL_SetHint(SDL_HINT_JOYSTICK_ALLOW_BACKGROUND_EVENTS,"1");
++        const int device=SDL_JoystickAttachVirtual(SDL_JOYSTICK_TYPE_GAMECONTROLLER,6,15,0);
++        const int secondDevice=SDL_JoystickAttachVirtual(SDL_JOYSTICK_TYPE_GAMECONTROLLER,6,15,0);
++        Check(device>=0&&secondDevice>=0&&SDL_IsGameController(device)&&SDL_IsGameController(secondDevice),"two synthetic SDL controllers exercise actual device selection; no hardware claim");
++        SDL_Joystick* pad=device>=0?SDL_JoystickOpen(device):nullptr;
++        SDL_Joystick* other=secondDevice>=0?SDL_JoystickOpen(secondDevice):nullptr;
++        if(pad&&other){
++            const auto id=SDL_JoystickInstanceID(pad),otherId=SDL_JoystickInstanceID(other);
++            window.PollEvents();const auto backendCursor=window.Input().StickSamples("right").sequence;
++            auto axisEvent=[](SDL_JoystickID which,int axis,Sint16 value){SDL_Event e{};e.type=SDL_CONTROLLERAXISMOTION;e.caxis.which=which;e.caxis.axis=Uint8(axis);e.caxis.value=value;SDL_PushEvent(&e);};
++            axisEvent(id,SDL_CONTROLLER_AXIS_RIGHTX,24575);axisEvent(id,SDL_CONTROLLER_AXIS_RIGHTY,24575);axisEvent(id,SDL_CONTROLLER_AXIS_RIGHTX,0);axisEvent(id,SDL_CONTROLLER_AXIS_RIGHTY,0);
++            axisEvent(otherId,SDL_CONTROLLER_AXIS_RIGHTX,32767);window.PollEvents();
++            const auto observed=window.Input().StickSamples("right",backendCursor);
++            Check(observed.samples.size()==4&&Near(observed.samples[1].x,24575.f/32767.f)&&Near(observed.samples[1].y,24575.f/32767.f)&&Neutral(window.Input().Stick("right"))&&Neutral(window.Input().StickDelta("right")),"delivered SDL neutral/diagonal/neutral axis events survive one render pump; other controller ignored");
++            SDL_JoystickSetVirtualAxis(pad,SDL_CONTROLLER_AXIS_RIGHTX,-32768);SDL_JoystickSetVirtualAxis(pad,SDL_CONTROLLER_AXIS_RIGHTY,16384);window.PollEvents();
++            Check(window.Input().Stick("right").x==-1&&Near(window.Input().Stick("right").y,16384.f/32767.f),"backend negative/positive endpoints reuse current normalization and SDL signs");
++            auto focus=[&](Uint8 state){SDL_Event e{};e.type=SDL_WINDOWEVENT;e.window.windowID=SDL_GetWindowID(window.NativeWindow());e.window.event=state;SDL_PushEvent(&e);};
++            const auto focusCursor=window.Input().StickSamples("right").sequence;focus(SDL_WINDOWEVENT_FOCUS_LOST);window.PollEvents();
++            Check(Neutral(window.Input().Stick("right"))&&window.Input().StickSamples("right",focusCursor).reset&&window.Input().StickSamples("right",focusCursor).samples.empty(),"normal focus loss neutralizes raw pair and clears history");
++            focus(SDL_WINDOWEVENT_FOCUS_GAINED);window.PollEvents();
++            Check(window.Input().Stick("right").x==-1&&Neutral(window.Input().StickDelta("right"))&&window.Input().StickSamples("right").samples.empty(),"focus regain restores held controller as baseline without false motion");
++            window.SetInputClaimed(true,false);window.PollEvents();
++            Check(Neutral(window.Input().Stick("right"))&&window.Input().StickSamples("right").samples.empty(),"editor-owned controller input is neutral with no pending gameplay flick");
++            window.SetInputClaimed(false,false);window.PollEvents();
++            Check(window.Input().Stick("right").x==-1&&Neutral(window.Input().StickDelta("right"))&&window.Input().StickSamples("right").samples.empty(),"editor ownership release rebaselines held controller");
++            SDL_JoystickSetVirtualAxis(other,SDL_CONTROLLER_AXIS_RIGHTX,16384);window.PollEvents();
++            const auto disconnectCursor=window.Input().StickSamples("right").sequence;
++            SDL_JoystickClose(pad);pad=nullptr;SDL_JoystickDetachVirtual(device);window.PollEvents();
++            Check(Near(window.Input().Stick("right").x,16384.f/32767.f)&&Neutral(window.Input().StickDelta("right"))&&window.Input().StickSamples("right",disconnectCursor).reset&&window.Input().StickSamples("right",disconnectCursor).samples.empty(),"controller reassignment uses same new device pair with neutral delta/history");
++        }
++        if(pad)SDL_JoystickClose(pad);
++        if(other)SDL_JoystickClose(other);
++        // Only this process's two fixture devices were attached above.
++        if(secondDevice>=0){const int remaining=SDL_NumJoysticks()-1;if(remaining>=0&&SDL_JoystickIsVirtual(remaining))SDL_JoystickDetachVirtual(remaining);}
++        if(pad&&device>=0&&device<SDL_NumJoysticks()&&SDL_JoystickIsVirtual(device))SDL_JoystickDetachVirtual(device);
++        window.PollEvents();Check(Neutral(window.Input().Stick("right")),"no controller yields defined neutral raw pair");
++#else
++        Check(false,"SDL virtual-controller fixture requires SDL >=2.0.14");
++#endif
++        window.Shutdown();
++    }
++    std::printf("SUMMARY checks=%d failures=%d\n",checks,failures);return failures?1:0;
++}
+diff --git a/tests/PhysicsBatchScriptTests.cpp b/tests/PhysicsBatchScriptTests.cpp
+new file mode 100644
+index 0000000..0033344
+--- /dev/null
++++ b/tests/PhysicsBatchScriptTests.cpp
+@@ -0,0 +1,143 @@
++// M69: real QuickJS/public Judas API on the unchanged authoritative query path.
++// One fixture covers correctness, prevalidation and a matched warmed 100-ray cost.
++#include "ScriptSystem.h"
++#include "RuntimeWorld.h"
++#include "ResourceManager.h"
++#include "SceneSerialization.h"
++#include "PerformanceProfiler.h"
++#include "InputSystem.h"
++#include "../third_party/nlohmann/json.hpp"
++#include <algorithm>
++#include <chrono>
++#include <cmath>
++#include <cstdio>
++#include <filesystem>
++#include <fstream>
++#include <stdexcept>
++
++namespace fs=std::filesystem;
++using Json=nlohmann::json;
++namespace {
++unsigned checks=0;
++void Check(bool value,const char* message){++checks;std::printf("%s %s\n",value?"PASS":"FAIL",message);if(!value)throw std::runtime_error(message);}
++Json State(RuntimeWorld& world){auto states=world.Scripts()->Capture();if(states.size()!=1)throw std::runtime_error("one probe state required");return Json::parse(states[0].json);}
++void Phase(RuntimeWorld& world,const char* phase){auto states=world.Scripts()->Capture();states[0].json=Json{{"phase",phase},{"checks",0}}.dump();std::string error;Check(world.Scripts()->Restore(states,error),"normal script state selects focused fixture phase");}
++struct Counts {double bridges=0,filters=0,queries=0,geometryMs=0;};
++Counts RecordedStep(RuntimeWorld& world,InputSystem& input){
++ auto& profiler=PerformanceProfiler::Get();profiler.Clear();profiler.Enable(true);profiler.RegisterThread("M69 query fixture");
++ {ProfileFrame frame("M69 query fixture");world.FixedScripts(&input,1.f/60);}
++ Counts count;auto history=profiler.History();if(history.empty())throw std::runtime_error("profiler frame unavailable");
++ for(const auto& counter:history.back().counters){if(counter.name=="Physics query bridge calls")count.bridges=counter.value;if(counter.name=="Physics query filter preparations")count.filters=counter.value;if(counter.name=="Physics geometric queries")count.queries=counter.value;}
++ for(const auto& scope:history.back().scopes)if(scope.name=="Physics query geometry")count.geometryMs+=double(scope.end-scope.start)/1e6;
++ profiler.Enable(false);return count;
++}
++struct Cost {double medianUs=0,maximumUs=0;};
++Cost Warmed(RuntimeWorld& world,InputSystem& input){
++ // The same cached rays, filter, VM, geometry and 100 real queries in both modes.
++ for(unsigned i=0;i<5;++i)world.FixedScripts(&input,1.f/60);
++ std::vector<double> elapsed;for(unsigned i=0;i<21;++i){auto before=std::chrono::steady_clock::now();world.FixedScripts(&input,1.f/60);elapsed.push_back(std::chrono::duration<double,std::micro>(std::chrono::steady_clock::now()-before).count());}
++ std::sort(elapsed.begin(),elapsed.end());return {elapsed[elapsed.size()/2],elapsed.back()};
++}
++}
++int main(int argc,char** argv){try{
++ const auto root=fs::absolute(argc>1?fs::path(argv[1]):fs::path("build/m69-query-fixture"));fs::create_directories(root/"Assets");
++ std::ofstream(root/"Assets/batch.js")<<R"JS(import {physics,world} from 'judas';
++const origin={x:0,y:0,z:0},direction={x:1,y:0,z:0},pose={position:origin};
++// A ray at y=4 clears the dynamic box, but a sphere/capsule there reaches it.
++// Keep this common miss clear of the entire finite swept volume for all shapes.
++const ray={origin,direction,maximum:20},miss={origin:{x:0,y:8,z:0},direction,maximum:20};
++const sphere={...ray,radius:.5},capsule={pose,radius:.25,halfHeight:.75,direction,maximum:20};
++export default class {
++ constructor(){this.state={checks:0,phase:'correctness'};this.rays=Array.from({length:100},(_,i)=>({...ray,direction:{x:1,y:(i-50)/1000,z:0}}));this.filter={includeLayers:['Default']};}
++ check(value,label){if(!value)throw Error(label);this.state.checks++;}
++ near(value,expected){return Math.abs(value-expected)<4e-5;}
++ same(a,b){this.check(JSON.stringify(a)===JSON.stringify(b),'scalar/batch snapshot mismatch');}
++ rejects(callback,index=null){let caught=false;try{callback();}catch(e){caught=e instanceof TypeError||e instanceof RangeError;this.check(index===null||e.message.includes('['+index+']'),'indexed request diagnostic');}this.check(caught,'invalid request must reject');}
++ start(){
++  const nearest=physics.raycast(origin,direction,20),hits=physics.raycastMany([ray,miss,ray]);
++  this.same(nearest,hits[0]);this.same(nearest,hits[2]);this.check(hits.length===3&&hits[1]===null,'order and miss preserved');
++  this.check(nearest.entity.id==='2'&&nearest.entity.valid&&this.near(nearest.distance,3)&&this.near(nearest.fraction,.15),'independent nearest distance/entity');
++  this.check(this.near(nearest.point.x,3)&&this.near(nearest.normal.x,-1)&&nearest.shape==='box','independent point/normal/shape');this.saved=nearest;
++  const filters=[{includeLayers:['Other']},{excludeLayers:['Default']},{requiredTags:['wanted']},{excludedTags:['wanted']},{ignored:[world.entity('2')]},{includeSensors:true}];
++  for(const filter of filters)this.same(physics.raycast(origin,direction,20,filter),physics.raycastMany([ray],filter)[0]);
++  this.check(physics.raycastMany([ray],filters[0])[0]===null,'include layer miss');
++  this.check(physics.raycastMany([ray],filters[3])[0].entity.id==='3','excluded tag reaches far body');
++  this.check(physics.raycastMany([ray],filters[4])[0].entity.id==='3','ignored entity reaches far body');
++  this.check(physics.raycastMany([ray],filters[5])[0].entity.id==='4','sensor opt-in nearest');
++  this.check(physics.raycastMany([ray])[0].entity.id==='2','disabled and default sensor omitted');
++  const rotated={origin,direction:{x:0,y:0,z:-1},maximum:10},rh=physics.raycastMany([rotated])[0];
++  this.same(rh,physics.raycast(origin,rotated.direction,10));this.check(rh.entity.id==='5'&&this.near(rh.distance,5-Math.SQRT2),'rotated box analytic ray');
++  const inside={origin:{x:4,y:0,z:0},direction,maximum:0},ih=physics.raycastMany([inside])[0];
++  this.check(ih.initialOverlap&&ih.distance===0&&ih.fraction===0,'zero distance overlap');
++  const shapes=physics.sphereCastMany([sphere,{...sphere,origin:miss.origin},sphere]);
++  this.same(shapes[0],physics.sphereCast(origin,.5,direction,20));this.same(shapes[0],shapes[2]);
++  this.check(shapes[1]===null&&this.near(shapes[0].distance,2.5)&&this.near(shapes[0].point.x,3),'sphere independent witness/order/miss');
++  const capsules=physics.capsuleCastMany([capsule,{...capsule,pose:{position:miss.origin}},capsule]);
++  this.same(capsules[0],physics.capsuleCast(pose,.25,.75,direction,20));this.same(capsules[0],capsules[2]);
++  this.check(capsules[1]===null&&this.near(capsules[0].distance,2.75),'capsule independent distance/order/miss');
++  const quaternion={w:Math.cos(.35),x:0,y:0,z:Math.sin(.35)},rotatedCapsule={...capsule,pose:{position:origin,rotation:quaternion}};
++  this.same(physics.capsuleCastMany([rotatedCapsule])[0],physics.capsuleCast(rotatedCapsule.pose,.25,.75,direction,20));
++  this.same(physics.sphereCastMany([{...sphere,radius:0}])[0],physics.raycast(origin,direction,20));
++  this.same(physics.capsuleCastMany([{...capsule,radius:0,halfHeight:0}])[0],physics.capsuleCast(pose,0,0,direction,20));
++  for(const filter of filters){this.same(physics.sphereCastMany([sphere],filter)[0],physics.sphereCast(origin,.5,direction,20,filter));this.same(physics.capsuleCastMany([capsule],filter)[0],physics.capsuleCast(pose,.25,.75,direction,20,filter));}
++  for(const [many,entry] of [[physics.raycastMany,ray],[physics.sphereCastMany,sphere],[physics.capsuleCastMany,capsule]]){
++   this.check(many([]).length===0,'empty batch');this.check(many(Array(256).fill(entry)).length===256,'256 accepted');
++   this.rejects(()=>many(Array(257).fill(entry)));this.rejects(()=>many([entry,{...entry,direction:{x:0,y:0,z:0}},entry]),1);this.rejects(()=>many([entry,{...entry,maximum:NaN},entry]),1);
++  }
++  this.rejects(()=>physics.raycastMany([ray,null,ray]),1);this.rejects(()=>physics.raycastMany({}));
++  this.rejects(()=>physics.raycastMany([ray,{...ray,maximum:-1}]),1);
++  this.rejects(()=>physics.sphereCastMany([sphere,{...sphere,radius:-1}]),1);
++  this.rejects(()=>physics.capsuleCastMany([capsule,{...capsule,halfHeight:-1}]),1);
++  this.rejects(()=>physics.capsuleCastMany([capsule,{...capsule,pose:{position:origin,rotation:{w:0,x:0,y:0,z:0}}}]),1);
++  this.rejects(()=>physics.raycastMany([ray],{includeLayers:['does-not-exist']}));
++  const runtime=physics.raycastMany([ray],{requiredTags:['runtime']})[0];this.check(runtime&&runtime.entity.valid&&this.near(runtime.distance,11.5),'runtime prefab query participates');
++  const dynamic=physics.raycastMany([{origin:{x:0,y:3,z:0},direction,maximum:20}])[0];this.check(dynamic?.entity.id==='7'&&this.near(dynamic.distance,3.5),'dynamic body query');
++  this.state.ready=true;
++ }
++ fixedUpdate(){
++  if(this.state.phase==='invalid'){for(const [many,entry] of [[physics.raycastMany,ray],[physics.sphereCastMany,sphere],[physics.capsuleCastMany,capsule]])this.rejects(()=>many([entry,{...entry,direction:{x:0,y:0,z:0}},entry]),1);return;}
++  if(this.state.phase==='lifetime'){
++   this.check(!this.saved.entity.valid,'snapshot entity handle invalid after destruction');let stale=false;try{this.saved.entity.transform;}catch(e){stale=e instanceof ReferenceError;}this.check(stale,'stale hit access raises ReferenceError');
++   const hit=physics.raycastMany([ray],{ignored:[this.saved.entity]})[0];this.same(hit,physics.raycast(origin,direction,20,{ignored:[this.saved.entity]}));
++   this.check(hit&&hit.bodyId!==this.saved.bodyId&&hit.entity?.valid&&this.near(hit.distance,3.5),'stale ignore cannot alias reused runtime body');return;
++  }
++  const hits=this.state.phase==='scalar'?this.rays.map(r=>physics.raycast(r.origin,r.direction,r.maximum,this.filter)):physics.raycastMany(this.rays,this.filter);
++  this.state.checksum=hits.reduce((sum,hit)=>sum+(hit?.distance??0),0);this.state.results=hits.length;
++ }
++})JS";
++ AssetDatabase assets;assets.Scan(root.string(),(root/"Assets").string());AssetRecord script,prefab;std::string error;
++ Check(assets.Track((root/"Assets/batch.js").string(),script,error),"normal registered script asset");
++ ProjectClassification categories;unsigned wanted=0,runtimeTag=0,otherLayer=0;
++ Check(categories.tags.Add("wanted",wanted)&&categories.tags.Add("runtime",runtimeTag)&&categories.collision.Add("Other",otherLayer),"ordinary project category registries");
++ Scene definition;auto owner=definition.CreateObject("Query script").id;definition.Find(owner)->scripts.push_back({1,script.id,true,"{}"});
++ auto box=[&](const char* name,glm::vec3 position,glm::vec3 extents){auto id=definition.CreateObject(name).id;auto* object=definition.Find(id);object->transform.position=position;object->body=SceneBodyComponent{};object->body->halfExtents=extents;return id;};
++ auto near=box("Nearest",{4,0,0},{1,1,1});definition.Find(near)->tags=CategoryBit(wanted);
++ box("Farther",{8,0,0},{1,1,1});auto sensor=box("Sensor",{2,0,0},{.1f,.1f,.1f});definition.Find(sensor)->body->sensor=true;
++ auto rotated=box("Rotated",{0,0,-5},{1,1,1});definition.Find(rotated)->transform.rotation=glm::angleAxis(glm::radians(45.f),glm::vec3(0,1,0));
++ auto disabled=box("Disabled",{1,0,0},{.1f,.1f,.1f});definition.Find(disabled)->body->enabled=false;
++ auto dynamic=box("Dynamic",{4,3,0},{.5f,.5f,.5f});definition.Find(dynamic)->body->motion=SceneBodyMotion::Dynamic;
++ Scene prefabScene;auto spawned=prefabScene.CreateObject("Runtime box").id;auto* spawn=prefabScene.Find(spawned);spawn->body=SceneBodyComponent{};spawn->tags=CategoryBit(runtimeTag);
++ Check(SaveSceneToFile(prefabScene,(root/"Assets/query.judasprefab").string(),error)&&assets.Track((root/"Assets/query.judasprefab").string(),prefab,error),"ordinary prefab asset");
++ ResourceManager resources(nullptr,&assets);RuntimeWorld world;world.legacyGameplay=false;Check(world.Build(definition,&resources,error,&categories),"normal authoritative runtime world");
++ SceneTransform placement;placement.position={12,0,0};Check(world.SpawnPrefab(prefab.id,placement,error)!=0,"normal runtime prefab spawn");
++ auto nearBody=world.RuntimeBody(near);auto dynamicBody=world.RuntimeBody(dynamic);auto nearBefore=world.Physics().GetTransform(nearBody);auto dynamicBefore=world.Physics().GetTransform(dynamicBody);
++ InputSystem input;world.UpdateScripts(&input,1.f/60);
++ for(const auto& diagnostic:world.Scripts()->Diagnostics())std::printf("SCRIPT FAILURE %s\n",diagnostic.message.c_str());
++ Check(world.Scripts()->Diagnostics().empty(),"real VM correctness phase without faults");auto state=State(world);Check(state.value("ready",false)&&state.value("checks",0)>=65,"public batch/scalar, independent geometric and limit assertions");
++ std::printf("VM_CORRECTNESS_CHECKS %u\n",state["checks"].get<unsigned>());
++ auto nearAfter=world.Physics().GetTransform(nearBody);auto dynamicAfter=world.Physics().GetTransform(dynamicBody);
++ Check(nearBefore.position==nearAfter.position&&nearBefore.rotation==nearAfter.rotation&&dynamicBefore.position==dynamicAfter.position&&dynamicBefore.rotation==dynamicAfter.rotation&&world.Physics().GetLinearVelocity(dynamicBody)==glm::vec3(0),"queries never mutate authoritative poses or velocity");
++ Phase(world,"invalid");auto invalid=RecordedStep(world,input);Check(invalid.bridges==3&&invalid.filters==3&&invalid.queries==0,"invalid middle entry executes zero geometry queries in all three batches");
++ Phase(world,"scalar");auto scalarCount=RecordedStep(world,input);auto scalarState=State(world);auto scalarCost=Warmed(world,input);
++ Phase(world,"batch");auto batchCount=RecordedStep(world,input);auto batchState=State(world);auto batchCost=Warmed(world,input);
++ Check(scalarCount.bridges==100&&batchCount.bridges==1,"100 scalar bridges versus exactly one accepted batch bridge");
++ Check(scalarCount.filters==100&&batchCount.filters==1&&scalarCount.queries==100&&batchCount.queries==100,"filter preparation once, same 100 actual geometric queries");
++ Check(scalarState["results"]==batchState["results"]&&std::abs(scalarState["checksum"].get<double>()-batchState["checksum"].get<double>())<1e-8,"matched modes preserve result/checksum");
++ Json measurement={{"rays",100},{"warmupCallbacks",5},{"samples",21},{"scalar",{{"bridgeCalls",scalarCount.bridges},{"filterPreparations",scalarCount.filters},{"geometricQueries",scalarCount.queries},{"medianCallbackUs",scalarCost.medianUs},{"maximumCallbackUs",scalarCost.maximumUs},{"profiledGeometryMs",scalarCount.geometryMs}}},{"batch",{{"bridgeCalls",batchCount.bridges},{"filterPreparations",batchCount.filters},{"geometricQueries",batchCount.queries},{"medianCallbackUs",batchCost.medianUs},{"maximumCallbackUs",batchCost.maximumUs},{"profiledGeometryMs",batchCount.geometryMs}}}};
++ std::ofstream(root/"measurement.json")<<measurement.dump(2)<<'\n';std::printf("MATCHED_MEASUREMENT %s\n",measurement.dump().c_str());
++ Check(world.DestroyEntity(near),"normal entity destruction");placement.position={4,0,0};auto replacement=world.SpawnPrefab(prefab.id,placement,error);Check(replacement&&world.RuntimeBody(replacement).id!=nearBody.id,"body reuse changes generation");
++ Phase(world,"lifetime");world.FixedScripts(&input,1.f/60);
++ for(const auto& diagnostic:world.Scripts()->Diagnostics())std::printf("SCRIPT FAILURE %s\n",diagnostic.message.c_str());
++ Check(world.Scripts()->Diagnostics().empty()&&State(world).value("checks",0)>=4,"destroyed hit and stale ignore remain safe through native VM");
++ world.Destroy();resources.Shutdown();std::printf("M69 batch queries: %u C++ checks PASS\n",checks);return 0;
++}catch(const std::exception& error){std::fprintf(stderr,"M69 batch queries FAIL after %u checks: %s\n",checks,error.what());return 1;}}

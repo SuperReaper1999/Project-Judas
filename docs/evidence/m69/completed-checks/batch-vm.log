@@ -1,0 +1,22 @@
+PASS normal registered script asset
+PASS ordinary project category registries
+PASS ordinary prefab asset
+PASS normal authoritative runtime world
+PASS normal runtime prefab spawn
+PASS real VM correctness phase without faults
+PASS public batch/scalar, independent geometric and limit assertions
+VM_CORRECTNESS_CHECKS 80
+PASS queries never mutate authoritative poses or velocity
+PASS normal script state selects focused fixture phase
+PASS invalid middle entry executes zero geometry queries in all three batches
+PASS normal script state selects focused fixture phase
+PASS normal script state selects focused fixture phase
+PASS 100 scalar bridges versus exactly one accepted batch bridge
+PASS filter preparation once, same 100 actual geometric queries
+PASS matched modes preserve result/checksum
+MATCHED_MEASUREMENT {"batch":{"bridgeCalls":1.0,"filterPreparations":1.0,"geometricQueries":100.0,"maximumCallbackUs":592.994,"medianCallbackUs":437.359,"profiledGeometryMs":0.09024000000000007},"rays":100,"samples":21,"scalar":{"bridgeCalls":100.0,"filterPreparations":100.0,"geometricQueries":100.0,"maximumCallbackUs":825.816,"medianCallbackUs":705.637,"profiledGeometryMs":0.103704},"warmupCallbacks":5}
+PASS normal entity destruction
+PASS body reuse changes generation
+PASS normal script state selects focused fixture phase
+PASS destroyed hit and stale ignore remain safe through native VM
+M69 batch queries: 19 C++ checks PASS
