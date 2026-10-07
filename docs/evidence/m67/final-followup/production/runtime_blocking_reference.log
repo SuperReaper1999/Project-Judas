@@ -1,0 +1,9 @@
+Renderer fragment texture units: 32 (material path uses 12)
+World state: /home/conner/Documents/GitHub/Project-Judas/build/ftft2-validation/project/Saves/main.judasstate (none saved)
+Project: FTFT2 async (/home/conner/Documents/GitHub/Project-Judas/build/ftft2-validation/project/main.judasproj)
+Scene: FTFT2 async application (/home/conner/Documents/GitHub/Project-Judas/build/ftft2-validation/project/Scenes/main.judas)
+World origin (m): 0.000, 0.000, 0.000
+step,time,posX,posY,posZ,upX,upY,upZ,grounded,velX,velY,velZ,gravX,gravY,gravZ,controlled,frame,steps,paused,obj0PosX,obj0PosY,obj0PosZ,obj0VelX,obj0VelY,obj0VelZ
+0,0.00000,0.000000,2.000000,6.000000,0.000000,1.000000,0.000000,0,0.000000,0.000000,0.000000,0.000000,0.000000,0.000000,0,0,1,0,-1.995833,1.000000,0.000000,0.250000,0.000000,0.000000
+1,0.01667,0.000000,2.000000,6.000000,0.000000,1.000000,0.000000,0,0.000000,0.000000,0.000000,0.000000,0.000000,0.000000,0,1,1,0,-1.991667,1.000000,0.000000,0.250000,0.000000,0.000000
+2,0.03333,0.000000,2.000000,6.000000,0.000000,1.000000,0.000000,0,0.000000,0.000000,0.000000,0.000000,0.000000,0.000000,0,2,1,0,-1.987500,1.000000,0.000000,0.250000,0.000000,0.000000

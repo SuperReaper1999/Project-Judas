@@ -1,0 +1,1063 @@
+[  1%] Built target judas_icu_build
+[  2%] Built target judas_app_icon
+[  2%] Built target judas_quickjs
+[  3%] Built target judas_navigation_backend
+[  3%] Built target judas_glad
+[  3%] Built target judas_profiler
+[  3%] Built target judas_audio_backend
+[  3%] Built target harfbuzz
+[  3%] Built target judas_ufbx
+[  6%] Built target freetype
+[  6%] Built target judas_imgui
+[  8%] Built target judas_physics_tests
+[ 10%] Built target judas_collision_tests
+[ 11%] Built target judas_rigid_contact_tests
+[ 12%] Built target judas_broadphase_tests
+[ 12%] Built target judas_pilot_attachment_tests
+[ 13%] Built target judas_celestial_gravity_tests
+[ 15%] Built target judas_step_climb_tests
+[ 16%] Built target judas_pilot_dismount_tests
+[ 16%] Built target judas_shadow_tests
+[ 16%] Building CXX object CMakeFiles/judas_spacecraft_control_tests.dir/src/InputSystem.cpp.o
+[ 16%] Building CXX object CMakeFiles/judas_spacecraft_flight_tests.dir/src/InputSystem.cpp.o
+[ 17%] Built target judas_reference_frame_tests
+[ 17%] Built target judas_player_view_tests
+[ 17%] Building CXX object CMakeFiles/judas_player_curved_locomotion_tests.dir/tests/PlayerCurvedLocomotionTests.cpp.o
+[ 19%] Built target judas_object_manipulation_tests
+[ 19%] Building CXX object CMakeFiles/judas_world_coordinates_tests.dir/tests/WorldCoordinatesTests.cpp.o
+[ 19%] Building CXX object CMakeFiles/judas_player_curved_locomotion_tests.dir/src/CharacterMotor.cpp.o
+[ 19%] Building CXX object CMakeFiles/judas_world_coordinates_tests.dir/src/CelestialGravity.cpp.o
+[ 19%] Building CXX object CMakeFiles/judas_world_coordinates_tests.dir/src/DynamicBody.cpp.o
+[ 19%] Building CXX object CMakeFiles/judas_player_curved_locomotion_tests.dir/src/PlayerController.cpp.o
+[ 19%] Building CXX object CMakeFiles/judas_world_coordinates_tests.dir/src/FlyingPrimitiveControl.cpp.o
+[ 20%] Building CXX object CMakeFiles/judas_player_curved_locomotion_tests.dir/src/PlayerView.cpp.o
+[ 20%] Building CXX object CMakeFiles/judas_world_coordinates_tests.dir/src/InteractionSystem.cpp.o
+[ 20%] Building CXX object CMakeFiles/judas_player_curved_locomotion_tests.dir/src/LightTransforms.cpp.o
+[ 21%] Building CXX object CMakeFiles/judas_world_coordinates_tests.dir/src/ObjectManipulation.cpp.o
+[ 21%] Building CXX object CMakeFiles/judas_player_curved_locomotion_tests.dir/src/PilotControl.cpp.o
+[ 21%] Building CXX object CMakeFiles/judas_player_curved_locomotion_tests.dir/src/PilotAttachment.cpp.o
+[ 21%] Building CXX object CMakeFiles/judas_world_coordinates_tests.dir/src/CharacterMotor.cpp.o
+[ 21%] Linking CXX executable judas_spacecraft_control_tests
+[ 22%] Built target judas_spacecraft_control_tests
+[ 22%] Building CXX object CMakeFiles/judas_compound_body_tests.dir/tests/CompoundBodyTests.cpp.o
+[ 22%] Linking CXX executable judas_spacecraft_flight_tests
+[ 24%] Built target judas_spacecraft_flight_tests
+[ 24%] Building CXX object CMakeFiles/judas_fluid_world_tests.dir/tests/FluidWorldTests.cpp.o
+[ 24%] Building CXX object CMakeFiles/judas_player_curved_locomotion_tests.dir/src/FlyingPrimitiveControl.cpp.o
+[ 24%] Building CXX object CMakeFiles/judas_compound_body_tests.dir/src/CollisionAsset.cpp.o
+[ 24%] Building CXX object CMakeFiles/judas_world_coordinates_tests.dir/src/PlayerController.cpp.o
+[ 24%] Building CXX object CMakeFiles/judas_fluid_world_tests.dir/src/FluidWorld.cpp.o
+[ 24%] Building CXX object CMakeFiles/judas_player_curved_locomotion_tests.dir/src/Window.cpp.o
+[ 24%] Building CXX object CMakeFiles/judas_world_coordinates_tests.dir/src/PlayerView.cpp.o
+[ 24%] Building CXX object CMakeFiles/judas_world_coordinates_tests.dir/src/LightTransforms.cpp.o
+[ 24%] Building CXX object CMakeFiles/judas_world_coordinates_tests.dir/src/ReferenceFrame.cpp.o
+[ 24%] Building CXX object CMakeFiles/judas_player_curved_locomotion_tests.dir/src/InputSystem.cpp.o
+[ 24%] Building CXX object CMakeFiles/judas_world_coordinates_tests.dir/src/ShadowTransforms.cpp.o
+[ 24%] Building CXX object CMakeFiles/judas_world_coordinates_tests.dir/src/Window.cpp.o
+[ 25%] Building CXX object CMakeFiles/judas_fluid_world_tests.dir/src/CollisionAsset.cpp.o
+[ 25%] Building CXX object CMakeFiles/judas_compound_body_tests.dir/src/CollisionGeometry.cpp.o
+[ 25%] Building CXX object CMakeFiles/judas_world_coordinates_tests.dir/src/InputSystem.cpp.o
+[ 25%] Building CXX object CMakeFiles/judas_compound_body_tests.dir/third_party/quickhull/QuickHull.cpp.o
+[ 25%] Building CXX object CMakeFiles/judas_player_curved_locomotion_tests.dir/src/StepClimb.cpp.o
+[ 25%] Building CXX object CMakeFiles/judas_fluid_world_tests.dir/src/CollisionGeometry.cpp.o
+[ 25%] Building CXX object CMakeFiles/judas_player_curved_locomotion_tests.dir/src/PhysicsWorld.cpp.o
+[ 26%] Building CXX object CMakeFiles/judas_compound_body_tests.dir/src/JointSolver.cpp.o
+[ 26%] Building CXX object CMakeFiles/judas_world_coordinates_tests.dir/src/StepClimb.cpp.o
+[ 26%] Building CXX object CMakeFiles/judas_compound_body_tests.dir/src/PhysicsCastGeometry.cpp.o
+[ 26%] Building CXX object CMakeFiles/judas_world_coordinates_tests.dir/src/PhysicsWorld.cpp.o
+[ 26%] Building CXX object CMakeFiles/judas_fluid_world_tests.dir/third_party/quickhull/QuickHull.cpp.o
+[ 26%] Building CXX object CMakeFiles/judas_compound_body_tests.dir/src/ImpactSolver.cpp.o
+[ 26%] Building CXX object CMakeFiles/judas_compound_body_tests.dir/src/RigidBody.cpp.o
+[ 26%] Building CXX object CMakeFiles/judas_compound_body_tests.dir/src/RigidBodyGravity.cpp.o
+[ 26%] Building CXX object CMakeFiles/judas_compound_body_tests.dir/src/Contacts.cpp.o
+[ 26%] Building CXX object CMakeFiles/judas_fluid_world_tests.dir/src/JointSolver.cpp.o
+[ 26%] Building CXX object CMakeFiles/judas_fluid_world_tests.dir/src/PhysicsCastGeometry.cpp.o
+[ 26%] Building CXX object CMakeFiles/judas_fluid_world_tests.dir/src/ImpactSolver.cpp.o
+[ 26%] Building CXX object CMakeFiles/judas_compound_body_tests.dir/src/ContactSolver.cpp.o
+[ 26%] Building CXX object CMakeFiles/judas_fluid_world_tests.dir/src/RigidBody.cpp.o
+[ 26%] Building CXX object CMakeFiles/judas_fluid_world_tests.dir/src/RigidBodyGravity.cpp.o
+[ 26%] Building CXX object CMakeFiles/judas_fluid_world_tests.dir/src/Contacts.cpp.o
+[ 26%] Building CXX object CMakeFiles/judas_compound_body_tests.dir/src/RadialTerrain.cpp.o
+[ 26%] Building CXX object CMakeFiles/judas_compound_body_tests.dir/src/Broadphase.cpp.o
+[ 26%] Building CXX object CMakeFiles/judas_compound_body_tests.dir/src/Narrowphase.cpp.o
+[ 26%] Building CXX object CMakeFiles/judas_player_curved_locomotion_tests.dir/src/CollisionAsset.cpp.o
+[ 26%] Building CXX object CMakeFiles/judas_fluid_world_tests.dir/src/ContactSolver.cpp.o
+[ 26%] Building CXX object CMakeFiles/judas_world_coordinates_tests.dir/src/CollisionAsset.cpp.o
+[ 26%] Building CXX object CMakeFiles/judas_fluid_world_tests.dir/src/RadialTerrain.cpp.o
+[ 26%] Building CXX object CMakeFiles/judas_fluid_world_tests.dir/src/Broadphase.cpp.o
+[ 26%] Building CXX object CMakeFiles/judas_compound_body_tests.dir/src/PhysicsWorld.cpp.o
+[ 27%] Building CXX object CMakeFiles/judas_fluid_world_tests.dir/src/Narrowphase.cpp.o
+[ 27%] Building CXX object CMakeFiles/judas_player_curved_locomotion_tests.dir/src/CollisionGeometry.cpp.o
+[ 28%] Building CXX object CMakeFiles/judas_world_coordinates_tests.dir/src/CollisionGeometry.cpp.o
+[ 29%] Building CXX object CMakeFiles/judas_player_curved_locomotion_tests.dir/third_party/quickhull/QuickHull.cpp.o
+[ 29%] Building CXX object CMakeFiles/judas_fluid_world_tests.dir/src/FaithfulGravity.cpp.o
+[ 29%] Building CXX object CMakeFiles/judas_fluid_world_tests.dir/src/RadicalGravity.cpp.o
+[ 29%] Building CXX object CMakeFiles/judas_fluid_world_tests.dir/src/SphericalVolume.cpp.o
+[ 29%] Building CXX object CMakeFiles/judas_fluid_world_tests.dir/src/BoxVolume.cpp.o
+[ 29%] Building CXX object CMakeFiles/judas_fluid_world_tests.dir/src/GravityContextMap.cpp.o
+[ 29%] Building CXX object CMakeFiles/judas_world_coordinates_tests.dir/third_party/quickhull/QuickHull.cpp.o
+[ 29%] Building CXX object CMakeFiles/judas_fluid_world_tests.dir/src/PhysicsWorld.cpp.o
+[ 29%] Building CXX object CMakeFiles/judas_player_curved_locomotion_tests.dir/src/JointSolver.cpp.o
+[ 29%] Building CXX object CMakeFiles/judas_player_curved_locomotion_tests.dir/src/PhysicsCastGeometry.cpp.o
+[ 29%] Building CXX object CMakeFiles/judas_world_coordinates_tests.dir/src/JointSolver.cpp.o
+[ 29%] Building CXX object CMakeFiles/judas_player_curved_locomotion_tests.dir/src/ImpactSolver.cpp.o
+[ 29%] Building CXX object CMakeFiles/judas_world_coordinates_tests.dir/src/PhysicsCastGeometry.cpp.o
+[ 29%] Building CXX object CMakeFiles/judas_player_curved_locomotion_tests.dir/src/RigidBody.cpp.o
+[ 29%] Building CXX object CMakeFiles/judas_player_curved_locomotion_tests.dir/src/RigidBodyGravity.cpp.o
+[ 29%] Building CXX object CMakeFiles/judas_player_curved_locomotion_tests.dir/src/Contacts.cpp.o
+[ 29%] Building CXX object CMakeFiles/judas_world_coordinates_tests.dir/src/ImpactSolver.cpp.o
+[ 30%] Linking CXX executable judas_compound_body_tests
+[ 30%] Built target judas_compound_body_tests
+[ 30%] Building CXX object CMakeFiles/judas_fluid_rigid_coupling_tests.dir/tests/FluidRigidCouplingTests.cpp.o
+[ 30%] Building CXX object CMakeFiles/judas_world_coordinates_tests.dir/src/RigidBody.cpp.o
+[ 30%] Building CXX object CMakeFiles/judas_world_coordinates_tests.dir/src/RigidBodyGravity.cpp.o
+[ 30%] Building CXX object CMakeFiles/judas_world_coordinates_tests.dir/src/Contacts.cpp.o
+[ 30%] Building CXX object CMakeFiles/judas_fluid_rigid_coupling_tests.dir/src/FluidWorld.cpp.o
+[ 30%] Building CXX object CMakeFiles/judas_player_curved_locomotion_tests.dir/src/ContactSolver.cpp.o
+[ 30%] Building CXX object CMakeFiles/judas_player_curved_locomotion_tests.dir/src/RadialTerrain.cpp.o
+[ 30%] Building CXX object CMakeFiles/judas_player_curved_locomotion_tests.dir/src/Broadphase.cpp.o
+[ 30%] Building CXX object CMakeFiles/judas_world_coordinates_tests.dir/src/ContactSolver.cpp.o
+[ 30%] Building CXX object CMakeFiles/judas_player_curved_locomotion_tests.dir/src/Narrowphase.cpp.o
+[ 30%] Building CXX object CMakeFiles/judas_fluid_rigid_coupling_tests.dir/src/ObjectManipulation.cpp.o
+[ 30%] Building CXX object CMakeFiles/judas_world_coordinates_tests.dir/src/RadialTerrain.cpp.o
+[ 30%] Linking CXX executable judas_fluid_world_tests
+[ 31%] Building CXX object CMakeFiles/judas_fluid_rigid_coupling_tests.dir/src/DynamicBody.cpp.o
+[ 31%] Built target judas_fluid_world_tests
+[ 31%] Building CXX object CMakeFiles/judas_fluid_rigid_coupling_tests.dir/src/CollisionAsset.cpp.o
+[ 31%] Building CXX object CMakeFiles/judas_player_curved_locomotion_tests.dir/src/RadicalGravity.cpp.o
+[ 31%] Building CXX object CMakeFiles/judas_world_coordinates_tests.dir/src/Broadphase.cpp.o
+[ 31%] Building CXX object CMakeFiles/judas_world_coordinates_tests.dir/src/Narrowphase.cpp.o
+[ 32%] Building CXX object CMakeFiles/judas_world_coordinates_tests.dir/src/FaithfulGravity.cpp.o
+[ 32%] Building CXX object CMakeFiles/judas_world_coordinates_tests.dir/src/RadicalGravity.cpp.o
+[ 32%] Building CXX object CMakeFiles/judas_fluid_surface_tests.dir/tests/FluidSurfaceTests.cpp.o
+[ 32%] Building CXX object CMakeFiles/judas_fluid_surface_tests.dir/src/FluidSurface.cpp.o
+[ 33%] Linking CXX executable judas_player_curved_locomotion_tests
+[ 33%] Built target judas_player_curved_locomotion_tests
+[ 33%] Building CXX object CMakeFiles/judas_terrain_physics_tests.dir/tests/TerrainPhysicsTests.cpp.o
+[ 33%] Linking CXX executable judas_fluid_surface_tests
+[ 33%] Built target judas_fluid_surface_tests
+[ 33%] Building CXX object CMakeFiles/judas_fluid_rigid_coupling_tests.dir/src/CollisionGeometry.cpp.o
+[ 33%] Building CXX object CMakeFiles/judas_fluid_rigid_coupling_tests.dir/third_party/quickhull/QuickHull.cpp.o
+[ 33%] Building CXX object CMakeFiles/judas_world_coordinates_tests.dir/src/SphericalVolume.cpp.o
+[ 33%] Building CXX object CMakeFiles/judas_terrain_physics_tests.dir/src/TerrainDemo.cpp.o
+[ 33%] Building CXX object CMakeFiles/judas_world_coordinates_tests.dir/src/BoxVolume.cpp.o
+[ 33%] Building CXX object CMakeFiles/judas_world_coordinates_tests.dir/src/GravityContextMap.cpp.o
+[ 33%] Building CXX object CMakeFiles/judas_terrain_physics_tests.dir/src/CharacterMotor.cpp.o
+[ 33%] Linking CXX executable judas_world_coordinates_tests
+[ 33%] Built target judas_world_coordinates_tests
+[ 33%] Building CXX object CMakeFiles/judas_fluid_rigid_coupling_tests.dir/src/JointSolver.cpp.o
+[ 33%] Building CXX object CMakeFiles/judas_terrain_fluid_tests.dir/tests/TerrainFluidTests.cpp.o
+[ 33%] Building CXX object CMakeFiles/judas_terrain_physics_tests.dir/src/PlayerController.cpp.o
+[ 33%] Building CXX object CMakeFiles/judas_fluid_rigid_coupling_tests.dir/src/PhysicsCastGeometry.cpp.o
+[ 33%] Building CXX object CMakeFiles/judas_fluid_rigid_coupling_tests.dir/src/ImpactSolver.cpp.o
+[ 34%] Building CXX object CMakeFiles/judas_atmosphere_tests.dir/tests/AtmosphereTests.cpp.o
+[ 34%] Building CXX object CMakeFiles/judas_terrain_physics_tests.dir/src/PlayerView.cpp.o
+[ 34%] Building CXX object CMakeFiles/judas_terrain_fluid_tests.dir/src/TerrainDemo.cpp.o
+[ 34%] Building CXX object CMakeFiles/judas_fluid_rigid_coupling_tests.dir/src/RigidBody.cpp.o
+[ 34%] Building CXX object CMakeFiles/judas_terrain_physics_tests.dir/src/LightTransforms.cpp.o
+[ 34%] Building CXX object CMakeFiles/judas_fluid_rigid_coupling_tests.dir/src/RigidBodyGravity.cpp.o
+[ 34%] Building CXX object CMakeFiles/judas_atmosphere_tests.dir/src/AtmosphereField.cpp.o
+[ 34%] Building CXX object CMakeFiles/judas_terrain_physics_tests.dir/src/StepClimb.cpp.o
+[ 34%] Building CXX object CMakeFiles/judas_terrain_fluid_tests.dir/src/FluidWorld.cpp.o
+[ 34%] Building CXX object CMakeFiles/judas_fluid_rigid_coupling_tests.dir/src/Contacts.cpp.o
+[ 34%] Building CXX object CMakeFiles/judas_terrain_physics_tests.dir/src/Window.cpp.o
+[ 34%] Building CXX object CMakeFiles/judas_atmosphere_tests.dir/src/ReferenceFrame.cpp.o
+[ 34%] Building CXX object CMakeFiles/judas_atmosphere_tests.dir/src/TerrainDemo.cpp.o
+[ 34%] Building CXX object CMakeFiles/judas_atmosphere_tests.dir/src/RadialTerrain.cpp.o
+[ 34%] Building CXX object CMakeFiles/judas_terrain_physics_tests.dir/src/InputSystem.cpp.o
+[ 34%] Linking CXX executable judas_atmosphere_tests
+[ 34%] Built target judas_atmosphere_tests
+[ 34%] Building CXX object CMakeFiles/judas_atmospheric_flight_tests.dir/tests/AtmosphericFlightTests.cpp.o
+[ 34%] Building CXX object CMakeFiles/judas_fluid_rigid_coupling_tests.dir/src/ContactSolver.cpp.o
+[ 34%] Building CXX object CMakeFiles/judas_terrain_fluid_tests.dir/src/CollisionAsset.cpp.o
+[ 34%] Building CXX object CMakeFiles/judas_atmospheric_flight_tests.dir/src/AtmosphereField.cpp.o
+[ 34%] Building CXX object CMakeFiles/judas_fluid_rigid_coupling_tests.dir/src/RadialTerrain.cpp.o
+[ 34%] Building CXX object CMakeFiles/judas_atmospheric_flight_tests.dir/src/AerodynamicDrag.cpp.o
+[ 35%] Building CXX object CMakeFiles/judas_fluid_rigid_coupling_tests.dir/src/Broadphase.cpp.o
+[ 35%] Building CXX object CMakeFiles/judas_atmospheric_flight_tests.dir/src/ReferenceFrame.cpp.o
+[ 35%] Building CXX object CMakeFiles/judas_fluid_rigid_coupling_tests.dir/src/Narrowphase.cpp.o
+[ 35%] Building CXX object CMakeFiles/judas_atmospheric_flight_tests.dir/src/CelestialGravity.cpp.o
+[ 35%] Building CXX object CMakeFiles/judas_atmospheric_flight_tests.dir/src/DynamicBody.cpp.o
+[ 36%] Building CXX object CMakeFiles/judas_atmospheric_flight_tests.dir/src/FlyingPrimitiveControl.cpp.o
+[ 36%] Building CXX object CMakeFiles/judas_terrain_physics_tests.dir/src/CollisionAsset.cpp.o
+[ 36%] Building CXX object CMakeFiles/judas_terrain_fluid_tests.dir/src/CollisionGeometry.cpp.o
+[ 36%] Building CXX object CMakeFiles/judas_atmospheric_flight_tests.dir/src/Window.cpp.o
+[ 36%] Building CXX object CMakeFiles/judas_fluid_rigid_coupling_tests.dir/src/PhysicsWorld.cpp.o
+[ 36%] Building CXX object CMakeFiles/judas_atmospheric_flight_tests.dir/src/InputSystem.cpp.o
+[ 36%] Building CXX object CMakeFiles/judas_terrain_fluid_tests.dir/third_party/quickhull/QuickHull.cpp.o
+[ 37%] Building CXX object CMakeFiles/judas_terrain_physics_tests.dir/src/CollisionGeometry.cpp.o
+[ 37%] Building CXX object CMakeFiles/judas_terrain_fluid_tests.dir/src/JointSolver.cpp.o
+[ 37%] Building CXX object CMakeFiles/judas_terrain_fluid_tests.dir/src/PhysicsCastGeometry.cpp.o
+[ 37%] Building CXX object CMakeFiles/judas_terrain_physics_tests.dir/third_party/quickhull/QuickHull.cpp.o
+[ 37%] Building CXX object CMakeFiles/judas_terrain_fluid_tests.dir/src/ImpactSolver.cpp.o
+[ 37%] Building CXX object CMakeFiles/judas_atmospheric_flight_tests.dir/src/CollisionAsset.cpp.o
+[ 37%] Building CXX object CMakeFiles/judas_terrain_fluid_tests.dir/src/RigidBody.cpp.o
+[ 38%] Building CXX object CMakeFiles/judas_terrain_fluid_tests.dir/src/RigidBodyGravity.cpp.o
+[ 38%] Building CXX object CMakeFiles/judas_terrain_fluid_tests.dir/src/Contacts.cpp.o
+[ 38%] Building CXX object CMakeFiles/judas_terrain_physics_tests.dir/src/JointSolver.cpp.o
+[ 38%] Building CXX object CMakeFiles/judas_terrain_physics_tests.dir/src/PhysicsCastGeometry.cpp.o
+[ 38%] Building CXX object CMakeFiles/judas_terrain_physics_tests.dir/src/ImpactSolver.cpp.o
+[ 38%] Building CXX object CMakeFiles/judas_atmospheric_flight_tests.dir/src/CollisionGeometry.cpp.o
+[ 38%] Building CXX object CMakeFiles/judas_terrain_fluid_tests.dir/src/ContactSolver.cpp.o
+[ 38%] Building CXX object CMakeFiles/judas_terrain_physics_tests.dir/src/RigidBody.cpp.o
+[ 38%] Linking CXX executable judas_fluid_rigid_coupling_tests
+[ 38%] Built target judas_fluid_rigid_coupling_tests
+[ 38%] Building CXX object CMakeFiles/judas_combustion_tests.dir/tests/CombustionTests.cpp.o
+[ 38%] Building CXX object CMakeFiles/judas_terrain_physics_tests.dir/src/RigidBodyGravity.cpp.o
+[ 38%] Building CXX object CMakeFiles/judas_terrain_physics_tests.dir/src/Contacts.cpp.o
+[ 38%] Building CXX object CMakeFiles/judas_terrain_fluid_tests.dir/src/RadialTerrain.cpp.o
+[ 38%] Building CXX object CMakeFiles/judas_terrain_fluid_tests.dir/src/Broadphase.cpp.o
+[ 38%] Building CXX object CMakeFiles/judas_atmospheric_flight_tests.dir/third_party/quickhull/QuickHull.cpp.o
+[ 38%] Building CXX object CMakeFiles/judas_terrain_fluid_tests.dir/src/Narrowphase.cpp.o
+[ 38%] Building CXX object CMakeFiles/judas_combustion_tests.dir/src/CombustionWorld.cpp.o
+[ 38%] Building CXX object CMakeFiles/judas_combustion_tests.dir/src/FirePresentation.cpp.o
+[ 38%] Building CXX object CMakeFiles/judas_combustion_tests.dir/src/AtmosphereField.cpp.o
+[ 38%] Building CXX object CMakeFiles/judas_terrain_physics_tests.dir/src/ContactSolver.cpp.o
+[ 38%] Building CXX object CMakeFiles/judas_combustion_tests.dir/src/TerrainDemo.cpp.o
+[ 38%] Building CXX object CMakeFiles/judas_atmospheric_flight_tests.dir/src/JointSolver.cpp.o
+[ 38%] Building CXX object CMakeFiles/judas_terrain_physics_tests.dir/src/RadialTerrain.cpp.o
+[ 38%] Building CXX object CMakeFiles/judas_combustion_tests.dir/src/ReferenceFrame.cpp.o
+[ 38%] Building CXX object CMakeFiles/judas_atmospheric_flight_tests.dir/src/PhysicsCastGeometry.cpp.o
+[ 39%] Building CXX object CMakeFiles/judas_combustion_tests.dir/src/CelestialGravity.cpp.o
+[ 39%] Building CXX object CMakeFiles/judas_terrain_physics_tests.dir/src/Broadphase.cpp.o
+[ 39%] Building CXX object CMakeFiles/judas_combustion_tests.dir/src/RadicalGravity.cpp.o
+[ 39%] Building CXX object CMakeFiles/judas_terrain_fluid_tests.dir/src/FaithfulGravity.cpp.o
+[ 39%] Building CXX object CMakeFiles/judas_combustion_tests.dir/src/FlyingPrimitiveControl.cpp.o
+[ 39%] Building CXX object CMakeFiles/judas_terrain_physics_tests.dir/src/Narrowphase.cpp.o
+[ 39%] Building CXX object CMakeFiles/judas_terrain_fluid_tests.dir/src/RadicalGravity.cpp.o
+[ 39%] Building CXX object CMakeFiles/judas_terrain_fluid_tests.dir/src/SphericalVolume.cpp.o
+[ 39%] Building CXX object CMakeFiles/judas_atmospheric_flight_tests.dir/src/ImpactSolver.cpp.o
+[ 39%] Building CXX object CMakeFiles/judas_terrain_fluid_tests.dir/src/BoxVolume.cpp.o
+[ 39%] Building CXX object CMakeFiles/judas_terrain_fluid_tests.dir/src/GravityContextMap.cpp.o
+[ 39%] Building CXX object CMakeFiles/judas_combustion_tests.dir/src/Window.cpp.o
+[ 39%] Building CXX object CMakeFiles/judas_atmospheric_flight_tests.dir/src/RigidBody.cpp.o
+[ 40%] Building CXX object CMakeFiles/judas_terrain_fluid_tests.dir/src/PhysicsWorld.cpp.o
+[ 40%] Building CXX object CMakeFiles/judas_atmospheric_flight_tests.dir/src/RigidBodyGravity.cpp.o
+[ 40%] Building CXX object CMakeFiles/judas_atmospheric_flight_tests.dir/src/Contacts.cpp.o
+[ 40%] Building CXX object CMakeFiles/judas_combustion_tests.dir/src/InputSystem.cpp.o
+[ 41%] Building CXX object CMakeFiles/judas_terrain_physics_tests.dir/src/PhysicsWorld.cpp.o
+[ 42%] Building CXX object CMakeFiles/judas_atmospheric_flight_tests.dir/src/ContactSolver.cpp.o
+[ 42%] Building CXX object CMakeFiles/judas_atmospheric_flight_tests.dir/src/RadialTerrain.cpp.o
+[ 42%] Building CXX object CMakeFiles/judas_atmospheric_flight_tests.dir/src/Broadphase.cpp.o
+[ 42%] Building CXX object CMakeFiles/judas_atmospheric_flight_tests.dir/src/Narrowphase.cpp.o
+[ 42%] Building CXX object CMakeFiles/judas_combustion_tests.dir/src/CollisionAsset.cpp.o
+[ 42%] Building CXX object CMakeFiles/judas_atmospheric_flight_tests.dir/src/PhysicsWorld.cpp.o
+[ 42%] Linking CXX executable judas_terrain_fluid_tests
+[ 42%] Built target judas_terrain_fluid_tests
+[ 42%] Building C object CMakeFiles/judas_materials.dir/third_party/mikktspace/mikktspace.c.o
+[ 42%] Building CXX object CMakeFiles/judas_combustion_tests.dir/src/CollisionGeometry.cpp.o
+[ 42%] Linking CXX static library libjudas_materials.a
+[ 42%] Built target judas_materials
+[ 42%] Building CXX object CMakeFiles/judas_terrain_physics_tests.dir/src/RadicalGravity.cpp.o
+[ 43%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldFracture.cpp.o
+[ 43%] Linking CXX executable judas_terrain_physics_tests
+[ 43%] Built target judas_terrain_physics_tests
+[ 43%] Building CXX object CMakeFiles/judas_engine.dir/src/Fracture.cpp.o
+[ 43%] Building CXX object CMakeFiles/judas_combustion_tests.dir/third_party/quickhull/QuickHull.cpp.o
+[ 43%] Building CXX object CMakeFiles/judas_combustion_tests.dir/src/JointSolver.cpp.o
+[ 43%] Building CXX object CMakeFiles/judas_engine.dir/src/DeformableAsset.cpp.o
+[ 43%] Building CXX object CMakeFiles/judas_combustion_tests.dir/src/PhysicsCastGeometry.cpp.o
+[ 43%] Building CXX object CMakeFiles/judas_engine.dir/src/Deformable.cpp.o
+[ 43%] Building CXX object CMakeFiles/judas_combustion_tests.dir/src/ImpactSolver.cpp.o
+[ 43%] Building CXX object CMakeFiles/judas_combustion_tests.dir/src/RigidBody.cpp.o
+[ 44%] Building CXX object CMakeFiles/judas_combustion_tests.dir/src/RigidBodyGravity.cpp.o
+[ 44%] Building CXX object CMakeFiles/judas_combustion_tests.dir/src/Contacts.cpp.o
+[ 44%] Linking CXX executable judas_atmospheric_flight_tests
+[ 44%] Built target judas_atmospheric_flight_tests
+[ 44%] Building CXX object CMakeFiles/judas_combustion_tests.dir/src/ContactSolver.cpp.o
+[ 44%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldDeformables.cpp.o
+[ 44%] Building CXX object CMakeFiles/judas_combustion_tests.dir/src/RadialTerrain.cpp.o
+[ 44%] Building CXX object CMakeFiles/judas_engine.dir/src/TextLayout.cpp.o
+[ 44%] Building CXX object CMakeFiles/judas_engine.dir/src/Localization.cpp.o
+[ 44%] Building CXX object CMakeFiles/judas_combustion_tests.dir/src/Broadphase.cpp.o
+[ 44%] Building CXX object CMakeFiles/judas_combustion_tests.dir/src/Narrowphase.cpp.o
+[ 44%] Building CXX object CMakeFiles/judas_engine.dir/src/Material.cpp.o
+[ 44%] Building CXX object CMakeFiles/judas_engine.dir/src/Environment.cpp.o
+[ 44%] Building CXX object CMakeFiles/judas_combustion_tests.dir/src/PhysicsWorld.cpp.o
+[ 44%] Building CXX object CMakeFiles/judas_engine.dir/src/Tangents.cpp.o
+[ 44%] Building CXX object CMakeFiles/judas_engine.dir/src/LiquidGeometry.cpp.o
+[ 44%] Building CXX object CMakeFiles/judas_engine.dir/src/LiquidTypes.cpp.o
+[ 45%] Building CXX object CMakeFiles/judas_engine.dir/src/LiquidSystem.cpp.o
+[ 45%] Building CXX object CMakeFiles/judas_engine.dir/src/LiquidSurface.cpp.o
+[ 45%] Building CXX object CMakeFiles/judas_engine.dir/src/NavigationSystem.cpp.o
+[ 45%] Building CXX object CMakeFiles/judas_engine.dir/src/NavigationTypes.cpp.o
+[ 45%] Linking CXX executable judas_combustion_tests
+[ 45%] Building CXX object CMakeFiles/judas_engine.dir/src/NavigationAsset.cpp.o
+[ 45%] Built target judas_combustion_tests
+[ 45%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldAnimation.cpp.o
+[ 45%] Building CXX object CMakeFiles/judas_engine.dir/src/PoseComposition.cpp.o
+[ 45%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldRagdoll.cpp.o
+[ 45%] Building CXX object CMakeFiles/judas_engine.dir/src/GltfLoader.cpp.o
+[ 45%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldCharacter.cpp.o
+[ 45%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldStreaming.cpp.o
+[ 45%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldRegions.cpp.o
+[ 46%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldScripts.cpp.o
+[ 46%] Building CXX object CMakeFiles/judas_engine.dir/src/RuntimeUI.cpp.o
+[ 46%] Building CXX object CMakeFiles/judas_engine.dir/src/ScriptSystem.cpp.o
+[ 46%] Building CXX object CMakeFiles/judas_engine.dir/src/Classification.cpp.o
+[ 46%] Building CXX object CMakeFiles/judas_engine.dir/src/GamePackage.cpp.o
+[ 46%] Building CXX object CMakeFiles/judas_engine.dir/src/ProjectExporter.cpp.o
+[ 46%] Building CXX object CMakeFiles/judas_engine.dir/src/AudioStream.cpp.o
+[ 46%] Building CXX object CMakeFiles/judas_engine.dir/src/AudioEnvironment.cpp.o
+[ 46%] Building CXX object CMakeFiles/judas_engine.dir/src/AudioData.cpp.o
+[ 46%] Building CXX object CMakeFiles/judas_engine.dir/src/AudioSystem.cpp.o
+[ 46%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldAudio.cpp.o
+[ 46%] Building CXX object CMakeFiles/judas_engine.dir/src/Window.cpp.o
+[ 47%] Building CXX object CMakeFiles/judas_engine.dir/src/InputSystem.cpp.o
+[ 47%] Building CXX object CMakeFiles/judas_engine.dir/src/Renderer.cpp.o
+[ 47%] Building CXX object CMakeFiles/judas_engine.dir/src/SkeletalAnimation.cpp.o
+[ 47%] Building CXX object CMakeFiles/judas_engine.dir/src/CharacterMotor.cpp.o
+[ 47%] Building CXX object CMakeFiles/judas_engine.dir/src/PlayerController.cpp.o
+[ 47%] Building CXX object CMakeFiles/judas_engine.dir/src/PlayerView.cpp.o
+[ 47%] Building CXX object CMakeFiles/judas_engine.dir/src/StepClimb.cpp.o
+[ 47%] Building CXX object CMakeFiles/judas_engine.dir/src/DynamicBody.cpp.o
+[ 47%] Building CXX object CMakeFiles/judas_engine.dir/src/FlyingPrimitiveControl.cpp.o
+[ 47%] Building CXX object CMakeFiles/judas_engine.dir/src/PilotAttachment.cpp.o
+[ 47%] Building CXX object CMakeFiles/judas_engine.dir/src/PilotControl.cpp.o
+[ 47%] Building CXX object CMakeFiles/judas_engine.dir/src/ReferenceFrame.cpp.o
+[ 48%] Building CXX object CMakeFiles/judas_engine.dir/src/CollisionAuthoring.cpp.o
+[ 48%] Building CXX object CMakeFiles/judas_engine.dir/src/CollisionSource.cpp.o
+[ 48%] Building CXX object CMakeFiles/judas_engine.dir/src/ModelLoader.cpp.o
+[ 48%] Building CXX object CMakeFiles/judas_engine.dir/src/ModelArchive.cpp.o
+[ 48%] Building CXX object CMakeFiles/judas_engine.dir/src/FontLoader.cpp.o
+[ 48%] Building CXX object CMakeFiles/judas_engine.dir/src/UIWidgets.cpp.o
+[ 48%] Building CXX object CMakeFiles/judas_engine.dir/src/PauseMenu.cpp.o
+[ 48%] Building CXX object CMakeFiles/judas_engine.dir/src/HUD.cpp.o
+[ 48%] Building CXX object CMakeFiles/judas_engine.dir/src/LightTransforms.cpp.o
+[ 48%] Building CXX object CMakeFiles/judas_engine.dir/src/LightAttenuation.cpp.o
+[ 48%] Building CXX object CMakeFiles/judas_engine.dir/src/ShadowTransforms.cpp.o
+[ 49%] Building CXX object CMakeFiles/judas_engine.dir/src/HingeTransform.cpp.o
+[ 49%] Building CXX object CMakeFiles/judas_engine.dir/src/InteractionSystem.cpp.o
+[ 49%] Building CXX object CMakeFiles/judas_engine.dir/src/ObjectManipulation.cpp.o
+[ 49%] Building CXX object CMakeFiles/judas_engine.dir/src/FluidWorld.cpp.o
+[ 49%] Building CXX object CMakeFiles/judas_engine.dir/src/ProductionFluidCoupling.cpp.o
+[ 49%] Building CXX object CMakeFiles/judas_engine.dir/src/FluidHydrostatics.cpp.o
+[ 49%] Building CXX object CMakeFiles/judas_engine.dir/src/FluidSurface.cpp.o
+[ 49%] Building CXX object CMakeFiles/judas_engine.dir/src/CombustionWorld.cpp.o
+[ 49%] Building CXX object CMakeFiles/judas_engine.dir/src/FirePresentation.cpp.o
+[ 49%] Building CXX object CMakeFiles/judas_engine.dir/src/TerrainDemo.cpp.o
+[ 49%] Building CXX object CMakeFiles/judas_engine.dir/src/TerrainLibrary.cpp.o
+[ 49%] Building CXX object CMakeFiles/judas_engine.dir/src/Door.cpp.o
+[ 50%] Building CXX object CMakeFiles/judas_engine.dir/src/LightSwitch.cpp.o
+[ 50%] Building CXX object CMakeFiles/judas_engine.dir/src/FaithfulGravity.cpp.o
+[ 50%] Building CXX object CMakeFiles/judas_engine.dir/src/RadicalGravity.cpp.o
+[ 50%] Building CXX object CMakeFiles/judas_engine.dir/src/SphericalVolume.cpp.o
+[ 50%] Building CXX object CMakeFiles/judas_engine.dir/src/BoxVolume.cpp.o
+[ 50%] Building CXX object CMakeFiles/judas_engine.dir/src/GravityContextMap.cpp.o
+[ 50%] Building CXX object CMakeFiles/judas_engine.dir/src/CelestialGravity.cpp.o
+[ 50%] Building CXX object CMakeFiles/judas_engine.dir/src/AtmosphereField.cpp.o
+[ 50%] Building CXX object CMakeFiles/judas_engine.dir/src/AerodynamicDrag.cpp.o
+[ 50%] Building CXX object CMakeFiles/judas_engine.dir/src/VisualParticles.cpp.o
+[ 50%] Building CXX object CMakeFiles/judas_engine.dir/src/Prefab.cpp.o
+[ 50%] Building CXX object CMakeFiles/judas_engine.dir/src/Scene.cpp.o
+[ 51%] Building CXX object CMakeFiles/judas_engine.dir/src/Ragdoll.cpp.o
+[ 51%] Building CXX object CMakeFiles/judas_engine.dir/src/SceneSerialization.cpp.o
+[ 51%] Building CXX object CMakeFiles/judas_engine.dir/src/NamedAuthoring.cpp.o
+[ 51%] Building CXX object CMakeFiles/judas_engine.dir/src/SceneFingerprint.cpp.o
+[ 51%] Building CXX object CMakeFiles/judas_engine.dir/src/Project.cpp.o
+[ 51%] Building CXX object CMakeFiles/judas_engine.dir/src/AssetDatabase.cpp.o
+[ 51%] Building CXX object CMakeFiles/judas_engine.dir/src/JobSystem.cpp.o
+[ 51%] Building CXX object CMakeFiles/judas_engine.dir/src/AsyncFile.cpp.o
+[ 51%] Building CXX object CMakeFiles/judas_engine.dir/src/ResourceManager.cpp.o
+[ 51%] Building CXX object CMakeFiles/judas_engine.dir/src/EnginePaths.cpp.o
+[ 51%] Building CXX object CMakeFiles/judas_engine.dir/src/DebugDraw.cpp.o
+[ 51%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldDebugView.cpp.o
+[ 52%] Building CXX object CMakeFiles/judas_engine.dir/src/SceneSession.cpp.o
+[ 52%] Building CXX object CMakeFiles/judas_engine.dir/src/RuntimeWorld.cpp.o
+[ 52%] Building CXX object CMakeFiles/judas_engine.dir/src/GameSession.cpp.o
+[ 52%] Building CXX object CMakeFiles/judas_engine.dir/src/Simulation.cpp.o
+[ 52%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldPresentation.cpp.o
+[ 52%] Building CXX object CMakeFiles/judas_engine.dir/src/GameplayHud.cpp.o
+[ 52%] Building CXX object CMakeFiles/judas_engine.dir/src/EngineHost.cpp.o
+[ 52%] Building CXX object CMakeFiles/judas_engine.dir/src/InteractivePlay.cpp.o
+[ 52%] Building CXX object CMakeFiles/judas_engine.dir/src/ScreenshotWriter.cpp.o
+[ 52%] Building CXX object CMakeFiles/judas_engine.dir/src/FidelityPolicy.cpp.o
+[ 52%] Building CXX object CMakeFiles/judas_engine.dir/src/CoarseSimulation.cpp.o
+[ 52%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldState.cpp.o
+[ 53%] Building CXX object CMakeFiles/judas_engine.dir/src/SaveStorage.cpp.o
+[ 53%] Building CXX object CMakeFiles/judas_engine.dir/src/SaveService.cpp.o
+[ 53%] Building CXX object CMakeFiles/judas_engine.dir/src/MotorPersistence.cpp.o
+[ 53%] Building CXX object CMakeFiles/judas_engine.dir/src/LiquidPersistence.cpp.o
+[ 53%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldPersistence.cpp.o
+[ 53%] Building CXX object CMakeFiles/judas_engine.dir/src/CollisionAsset.cpp.o
+[ 53%] Building CXX object CMakeFiles/judas_engine.dir/src/CollisionGeometry.cpp.o
+[ 53%] Building CXX object CMakeFiles/judas_engine.dir/third_party/quickhull/QuickHull.cpp.o
+[ 53%] Building CXX object CMakeFiles/judas_engine.dir/src/JointSolver.cpp.o
+[ 53%] Building CXX object CMakeFiles/judas_engine.dir/src/PhysicsCastGeometry.cpp.o
+[ 53%] Building CXX object CMakeFiles/judas_engine.dir/src/ImpactSolver.cpp.o
+[ 54%] Building CXX object CMakeFiles/judas_engine.dir/src/RigidBody.cpp.o
+[ 54%] Building CXX object CMakeFiles/judas_engine.dir/src/RigidBodyGravity.cpp.o
+[ 54%] Building CXX object CMakeFiles/judas_engine.dir/src/Contacts.cpp.o
+[ 54%] Building CXX object CMakeFiles/judas_engine.dir/src/ContactSolver.cpp.o
+[ 54%] Building CXX object CMakeFiles/judas_engine.dir/src/RadialTerrain.cpp.o
+[ 54%] Building CXX object CMakeFiles/judas_engine.dir/src/Broadphase.cpp.o
+[ 54%] Building CXX object CMakeFiles/judas_engine.dir/src/Narrowphase.cpp.o
+[ 54%] Building CXX object CMakeFiles/judas_engine.dir/src/PhysicsWorld.cpp.o
+[ 54%] Linking CXX static library libjudas_engine.a
+[ 54%] Built target judas_engine
+[ 54%] Building CXX object CMakeFiles/judas_navigation_baker.dir/src/NavigationBake.cpp.o
+[ 54%] Building CXX object CMakeFiles/judas_world_authoring.dir/src/authoring/ContentReferences.cpp.o
+[ 54%] Building CXX object CMakeFiles/judas_model_import.dir/src/FbxImport.cpp.o
+[ 54%] Building CXX object CMakeFiles/judas.dir/src/main.cpp.o
+[ 54%] Building CXX object CMakeFiles/judas.dir/src/Application.cpp.o
+[ 55%] Building CXX object CMakeFiles/judas_navigation_baker.dir/third_party/recastnavigation/Recast/Source/Recast.cpp.o
+[ 55%] Building CXX object CMakeFiles/judas_navigation_baker.dir/third_party/recastnavigation/Recast/Source/RecastAlloc.cpp.o
+[ 55%] Building CXX object CMakeFiles/judas_navigation_baker.dir/third_party/recastnavigation/Recast/Source/RecastArea.cpp.o
+[ 55%] Building CXX object CMakeFiles/judas_navigation_baker.dir/third_party/recastnavigation/Recast/Source/RecastAssert.cpp.o
+[ 55%] Building CXX object CMakeFiles/judas_navigation_baker.dir/third_party/recastnavigation/Recast/Source/RecastContour.cpp.o
+[ 56%] Building CXX object CMakeFiles/judas_world_authoring.dir/src/authoring/WorldBuilder.cpp.o
+[ 56%] Building CXX object CMakeFiles/judas_navigation_baker.dir/third_party/recastnavigation/Recast/Source/RecastFilter.cpp.o
+[ 56%] Building CXX object CMakeFiles/judas_navigation_baker.dir/third_party/recastnavigation/Recast/Source/RecastLayers.cpp.o
+[ 56%] Building CXX object CMakeFiles/judas_navigation_baker.dir/third_party/recastnavigation/Recast/Source/RecastMesh.cpp.o
+[ 57%] Building CXX object CMakeFiles/judas.dir/src/RuntimeOptions.cpp.o
+[ 57%] Building CXX object CMakeFiles/judas_navigation_baker.dir/third_party/recastnavigation/Recast/Source/RecastMeshDetail.cpp.o
+[ 57%] Building CXX object CMakeFiles/judas_model_import.dir/src/ObjImport.cpp.o
+[ 57%] Building CXX object CMakeFiles/judas_navigation_baker.dir/third_party/recastnavigation/Recast/Source/RecastRasterization.cpp.o
+[ 57%] Building CXX object CMakeFiles/judas_navigation_baker.dir/third_party/recastnavigation/Recast/Source/RecastRegion.cpp.o
+[ 57%] Building CXX object CMakeFiles/judas.dir/src/RuntimeDiagnostics.cpp.o
+[ 57%] Building CXX object CMakeFiles/judas.dir/src/TestHarness.cpp.o
+[ 57%] Linking CXX static library libjudas_navigation_baker.a
+[ 57%] Built target judas_navigation_baker
+[ 58%] Building CXX object CMakeFiles/judas_resource_stress.dir/tools/ResourceStress.cpp.o
+[ 58%] Building CXX object CMakeFiles/judas_model_import.dir/src/ModelCook.cpp.o
+[ 58%] Linking CXX executable judas
+[ 58%] Built target judas
+[ 58%] Building CXX object CMakeFiles/judas_model_import.dir/src/ModelCollision.cpp.o
+[ 58%] Linking CXX executable judas_resource_stress
+[ 58%] Building CXX object CMakeFiles/judas_world_authoring.dir/src/authoring/AuthoringDocument.cpp.o
+[ 58%] Built target judas_resource_stress
+[ 58%] Building CXX object CMakeFiles/judas_scene_tests.dir/tests/SceneTests.cpp.o
+[ 58%] Linking CXX executable judas_scene_tests
+[ 58%] Built target judas_scene_tests
+[ 58%] Building CXX object CMakeFiles/judas_lifecycle_tests.dir/tests/LifecycleTests.cpp.o
+[ 58%] Building CXX object CMakeFiles/judas_world_authoring.dir/src/authoring/SkeletonAuthoring.cpp.o
+[ 58%] Building CXX object CMakeFiles/judas_world_authoring.dir/src/authoring/RecipePreview.cpp.o
+[ 58%] Building CXX object CMakeFiles/judas_project_tests.dir/tests/ProjectTests.cpp.o
+[ 58%] Linking CXX executable judas_lifecycle_tests
+[ 58%] Linking CXX static library libjudas_model_import.a
+[ 58%] Built target judas_model_import
+[ 58%] Building CXX object CMakeFiles/judas_job_tests.dir/tests/JobTests.cpp.o
+[ 58%] Linking CXX static library libjudas_world_authoring.a
+[ 58%] Built target judas_world_authoring
+[ 58%] Building CXX object CMakeFiles/judas_asset_tests.dir/tests/AssetTests.cpp.o
+[ 58%] Built target judas_lifecycle_tests
+[ 58%] Building CXX object CMakeFiles/judas_project_tests.dir/src/editor/GizmoMath.cpp.o
+[ 58%] Linking CXX executable judas_asset_tests
+[ 59%] Building CXX object CMakeFiles/judas_project_tests.dir/src/editor/EditorHistory.cpp.o
+[ 59%] Built target judas_asset_tests
+[ 59%] Building CXX object CMakeFiles/judas_ui_tests.dir/tests/UITests.cpp.o
+[ 60%] Building CXX object CMakeFiles/judas_lighting_tests.dir/tests/LightingTests.cpp.o
+[ 60%] Building CXX object CMakeFiles/judas_lighting_tests.dir/src/LightTransforms.cpp.o
+[ 60%] Building CXX object CMakeFiles/judas_ui_tests.dir/src/UIWidgets.cpp.o
+[ 60%] Building CXX object CMakeFiles/judas_lighting_tests.dir/src/LightAttenuation.cpp.o
+[ 60%] Building CXX object CMakeFiles/judas_lighting_tests.dir/src/PauseMenu.cpp.o
+[ 60%] Linking CXX executable judas_job_tests
+[ 60%] Building CXX object CMakeFiles/judas_ui_tests.dir/src/PauseMenu.cpp.o
+[ 60%] Built target judas_job_tests
+[ 60%] Building CXX object CMakeFiles/judas_interactable_tests.dir/tests/InteractableTests.cpp.o
+[ 60%] Building CXX object CMakeFiles/judas_lighting_tests.dir/src/UIWidgets.cpp.o
+[ 61%] Building CXX object CMakeFiles/judas_ui_tests.dir/src/HUD.cpp.o
+[ 61%] Building CXX object CMakeFiles/judas_interactable_tests.dir/src/HingeTransform.cpp.o
+[ 61%] Building CXX object CMakeFiles/judas_lighting_tests.dir/src/HUD.cpp.o
+[ 61%] Building CXX object CMakeFiles/judas_interactable_tests.dir/src/InteractionSystem.cpp.o
+[ 61%] Building CXX object CMakeFiles/judas_ui_tests.dir/src/Renderer.cpp.o
+[ 61%] Building CXX object CMakeFiles/judas_interactable_tests.dir/src/Door.cpp.o
+[ 61%] Building CXX object CMakeFiles/judas_lighting_tests.dir/src/Renderer.cpp.o
+[ 61%] Building CXX object CMakeFiles/judas_interactable_tests.dir/src/LightSwitch.cpp.o
+[ 61%] Building CXX object CMakeFiles/judas_interactable_tests.dir/src/PauseMenu.cpp.o
+[ 61%] Linking CXX executable judas_project_tests
+[ 62%] Building CXX object CMakeFiles/judas_interactable_tests.dir/src/UIWidgets.cpp.o
+[ 62%] Built target judas_project_tests
+[ 62%] Building CXX object CMakeFiles/judas_scene_fingerprint_tests.dir/tests/SceneFingerprintTests.cpp.o
+[ 62%] Building CXX object CMakeFiles/judas_interactable_tests.dir/src/HUD.cpp.o
+[ 62%] Building CXX object CMakeFiles/judas_interactable_tests.dir/src/Renderer.cpp.o
+[ 62%] Building CXX object CMakeFiles/judas_ui_tests.dir/src/SkeletalAnimation.cpp.o
+[ 62%] Building CXX object CMakeFiles/judas_lighting_tests.dir/src/SkeletalAnimation.cpp.o
+[ 62%] Building CXX object CMakeFiles/judas_ui_tests.dir/src/FontLoader.cpp.o
+[ 62%] Building CXX object CMakeFiles/judas_lighting_tests.dir/src/FontLoader.cpp.o
+[ 62%] Linking CXX executable judas_scene_fingerprint_tests
+[ 62%] Built target judas_scene_fingerprint_tests
+[ 62%] Building CXX object CMakeFiles/judas_world_state_tests.dir/tests/WorldStateTests.cpp.o
+[ 62%] Linking CXX executable judas_ui_tests
+[ 62%] Linking CXX executable judas_lighting_tests
+[ 62%] Built target judas_ui_tests
+[ 62%] Building CXX object CMakeFiles/judas_interactable_tests.dir/src/SkeletalAnimation.cpp.o
+[ 62%] Built target judas_lighting_tests
+[ 62%] Building CXX object CMakeFiles/judas_async_application_tests.dir/tests/AsyncApplicationTests.cpp.o
+[ 62%] Building CXX object CMakeFiles/judas_interactable_tests.dir/src/FontLoader.cpp.o
+[ 62%] Building CXX object CMakeFiles/judas_interactable_tests.dir/src/CollisionAsset.cpp.o
+[ 62%] Building CXX object CMakeFiles/judas_interactable_tests.dir/src/CollisionGeometry.cpp.o
+[ 62%] Building CXX object CMakeFiles/judas_interactable_tests.dir/third_party/quickhull/QuickHull.cpp.o
+[ 62%] Linking CXX executable judas_world_state_tests
+[ 62%] Building CXX object CMakeFiles/judas_interactable_tests.dir/src/JointSolver.cpp.o
+[ 62%] Built target judas_world_state_tests
+[ 62%] Building CXX object CMakeFiles/judas_uniform_gravity_scene_tests.dir/tests/UniformGravitySceneTests.cpp.o
+[ 62%] Building CXX object CMakeFiles/judas_async_application_tests.dir/src/Application.cpp.o
+[ 62%] Building CXX object CMakeFiles/judas_interactable_tests.dir/src/PhysicsCastGeometry.cpp.o
+[ 62%] Building CXX object CMakeFiles/judas_interactable_tests.dir/src/ImpactSolver.cpp.o
+[ 62%] Building CXX object CMakeFiles/judas_interactable_tests.dir/src/RigidBody.cpp.o
+[ 63%] Building CXX object CMakeFiles/judas_interactable_tests.dir/src/RigidBodyGravity.cpp.o
+[ 63%] Building CXX object CMakeFiles/judas_interactable_tests.dir/src/Contacts.cpp.o
+[ 63%] Building CXX object CMakeFiles/judas_interactable_tests.dir/src/ContactSolver.cpp.o
+[ 63%] Building CXX object CMakeFiles/judas_async_application_tests.dir/src/RuntimeOptions.cpp.o
+[ 63%] Building CXX object CMakeFiles/judas_interactable_tests.dir/src/RadialTerrain.cpp.o
+[ 63%] Linking CXX executable judas_uniform_gravity_scene_tests
+[ 63%] Building CXX object CMakeFiles/judas_interactable_tests.dir/src/Broadphase.cpp.o
+[ 63%] Built target judas_uniform_gravity_scene_tests
+[ 63%] Building CXX object CMakeFiles/judas_interactable_tests.dir/src/Narrowphase.cpp.o
+[ 63%] Building CXX object CMakeFiles/judas_interactable_tests.dir/src/PhysicsWorld.cpp.o
+[ 63%] Building CXX object CMakeFiles/judas_async_application_tests.dir/src/RuntimeDiagnostics.cpp.o
+[ 63%] Building CXX object CMakeFiles/judas_contact_geometry_tests.dir/tests/ContactGeometryProbe.cpp.o
+[ 63%] Building CXX object CMakeFiles/judas_async_application_tests.dir/src/TestHarness.cpp.o
+[ 63%] Linking CXX executable judas_contact_geometry_tests
+[ 63%] Built target judas_contact_geometry_tests
+[ 63%] Building CXX object CMakeFiles/judas_contact_lifecycle_tests.dir/tests/ContactLifecycleTests.cpp.o
+[ 63%] Building CXX object CMakeFiles/judas_contact_cache_tests.dir/tests/ContactCacheTests.cpp.o
+[ 63%] Linking CXX executable judas_contact_cache_tests
+[ 63%] Built target judas_contact_cache_tests
+[ 63%] Building CXX object CMakeFiles/judas_contact_storage_tests.dir/tests/ContactStorageTests.cpp.o
+[ 63%] Linking CXX executable judas_contact_lifecycle_tests
+[ 63%] Linking CXX executable judas_async_application_tests
+[ 63%] Built target judas_contact_lifecycle_tests
+[ 63%] Building CXX object CMakeFiles/judas_timing_defect_probe.dir/tests/TimingDefectProbe.cpp.o
+[ 63%] Built target judas_async_application_tests
+[ 63%] Building CXX object CMakeFiles/judas_rigid_motion_tests.dir/tests/RigidMotionTests.cpp.o
+[ 63%] Linking CXX executable judas_contact_storage_tests
+[ 63%] Built target judas_contact_storage_tests
+[ 63%] Building CXX object CMakeFiles/judas_poisson_policy_witness.dir/tests/PoissonPolicyWitness.cpp.o
+[ 63%] Linking CXX executable judas_rigid_motion_tests
+[ 63%] Linking CXX executable judas_timing_defect_probe
+[ 63%] Built target judas_rigid_motion_tests
+[ 63%] Building CXX object CMakeFiles/judas_impact_solver_tests.dir/tests/ImpactSolverTests.cpp.o
+[ 63%] Built target judas_timing_defect_probe
+[ 63%] Building CXX object CMakeFiles/judas_impact_timing_tests.dir/tests/ImpactTimingTests.cpp.o
+[ 63%] Linking CXX executable judas_poisson_policy_witness
+[ 63%] Built target judas_poisson_policy_witness
+[ 63%] Building CXX object CMakeFiles/judas_project_application_tests.dir/tests/ProjectApplicationTests.cpp.o
+[ 64%] Linking CXX executable judas_impact_solver_tests
+[ 64%] Built target judas_impact_solver_tests
+[ 64%] Building CXX object CMakeFiles/judas_lifecycle_integration_tests.dir/tests/LifecycleIntegrationTests.cpp.o
+[ 64%] Linking CXX executable judas_impact_timing_tests
+[ 64%] Built target judas_impact_timing_tests
+[ 64%] Building CXX object CMakeFiles/judas_project_application_tests.dir/src/Application.cpp.o
+[ 64%] Linking CXX executable judas_interactable_tests
+[ 64%] Built target judas_interactable_tests
+[ 64%] Building CXX object CMakeFiles/judas_asset_integrity_tests.dir/tests/AssetIntegrityTests.cpp.o
+[ 64%] Building CXX object CMakeFiles/judas_project_application_tests.dir/src/RuntimeOptions.cpp.o
+[ 64%] Linking CXX executable judas_asset_integrity_tests
+[ 64%] Built target judas_asset_integrity_tests
+[ 64%] Building CXX object CMakeFiles/judas_coarse_celestial_tests.dir/tests/CoarseCelestialTests.cpp.o
+[ 64%] Linking CXX executable judas_lifecycle_integration_tests
+[ 64%] Building CXX object CMakeFiles/judas_project_application_tests.dir/src/RuntimeDiagnostics.cpp.o
+[ 64%] Building CXX object CMakeFiles/judas_project_application_tests.dir/src/TestHarness.cpp.o
+[ 64%] Built target judas_lifecycle_integration_tests
+[ 64%] Building CXX object CMakeFiles/judas_orbital_integrity_tests.dir/tests/OrbitalIntegrityTests.cpp.o
+[ 64%] Building CXX object CMakeFiles/judas_spacecraft_frame_integration_tests.dir/tests/SpacecraftFrameIntegrationTests.cpp.o
+[ 64%] Linking CXX executable judas_coarse_celestial_tests
+[ 64%] Built target judas_coarse_celestial_tests
+[ 64%] Building CXX object CMakeFiles/judas_thermal_accounting_tests.dir/tests/ThermalAccountingTests.cpp.o
+[ 64%] Linking CXX executable judas_project_application_tests
+[ 64%] Linking CXX executable judas_orbital_integrity_tests
+[ 64%] Built target judas_project_application_tests
+[ 64%] Building CXX object CMakeFiles/judas_combustion_integration_tests.dir/tests/CombustionIntegrationTests.cpp.o
+[ 64%] Built target judas_orbital_integrity_tests
+[ 64%] Building CXX object CMakeFiles/judas_player_swimming_tests.dir/tests/PlayerSwimmingTests.cpp.o
+[ 64%] Linking CXX executable judas_thermal_accounting_tests
+[ 64%] Built target judas_thermal_accounting_tests
+[ 64%] Building CXX object CMakeFiles/judas_fluid_metadata_tests.dir/tests/FluidMetadataTests.cpp.o
+[ 64%] Linking CXX executable judas_spacecraft_frame_integration_tests
+[ 64%] Built target judas_spacecraft_frame_integration_tests
+[ 64%] Building CXX object CMakeFiles/judas_fluid_hydrostatics_tests.dir/tests/FluidHydrostaticsTests.cpp.o
+[ 64%] Linking CXX executable judas_player_swimming_tests
+[ 64%] Built target judas_player_swimming_tests
+[ 65%] Building CXX object CMakeFiles/judas_production_fluid_tests.dir/tests/ProductionFluidTests.cpp.o
+[ 65%] Linking CXX executable judas_fluid_hydrostatics_tests
+[ 65%] Built target judas_fluid_hydrostatics_tests
+[ 65%] Building CXX object CMakeFiles/judas_fluid_container_integration_tests.dir/tests/FluidContainerIntegrationTests.cpp.o
+[ 65%] Linking CXX executable judas_combustion_integration_tests
+[ 65%] Built target judas_combustion_integration_tests
+[ 65%] Building CXX object CMakeFiles/judas_player_fluid_integration_tests.dir/tests/PlayerFluidIntegrationTests.cpp.o
+[ 65%] Linking CXX executable judas_fluid_metadata_tests
+[ 65%] Built target judas_fluid_metadata_tests
+[ 65%] Building CXX object CMakeFiles/judas_fluid_cavity_impact_tests.dir/tests/FluidCavityImpactTests.cpp.o
+[ 65%] Linking CXX executable judas_production_fluid_tests
+[ 65%] Built target judas_production_fluid_tests
+[ 65%] Building CXX object CMakeFiles/judas_fluid_smoothing_budget_tests.dir/tests/FluidSmoothingBudgetTests.cpp.o
+[ 65%] Linking CXX executable judas_fluid_smoothing_budget_tests
+[ 65%] Built target judas_fluid_smoothing_budget_tests
+[ 65%] Building CXX object CMakeFiles/judas_fluid_boundary_contact_tests.dir/tests/FluidBoundaryContactTests.cpp.o
+[ 65%] Linking CXX executable judas_fluid_container_integration_tests
+[ 65%] Linking CXX executable judas_fluid_cavity_impact_tests
+[ 65%] Built target judas_fluid_container_integration_tests
+[ 65%] Building CXX object CMakeFiles/judas_particle_contact_batch_tests.dir/tests/ParticleContactBatchTests.cpp.o
+[ 65%] Linking CXX executable judas_fluid_boundary_contact_tests
+[ 65%] Built target judas_fluid_cavity_impact_tests
+[ 65%] Building CXX object CMakeFiles/judas_production_fluid_performance.dir/tests/ProductionFluidPerformance.cpp.o
+[ 65%] Built target judas_fluid_boundary_contact_tests
+[ 65%] Building CXX object CMakeFiles/judas_render_camera_tests.dir/tests/RenderCameraTests.cpp.o
+[ 65%] Linking CXX executable judas_player_fluid_integration_tests
+[ 65%] Linking CXX executable judas_particle_contact_batch_tests
+[ 65%] Built target judas_particle_contact_batch_tests
+[ 65%] Building CXX object CMakeFiles/judas_audio_tests.dir/tests/AudioTests.cpp.o
+[ 65%] Built target judas_player_fluid_integration_tests
+[ 65%] Building CXX object CMakeFiles/judas_input_tests.dir/tests/InputTests.cpp.o
+[ 65%] Linking CXX executable judas_production_fluid_performance
+[ 65%] Linking CXX executable judas_input_tests
+[ 65%] Built target judas_production_fluid_performance
+[ 65%] Building CXX object CMakeFiles/judas_prefab_tests.dir/tests/PrefabTests.cpp.o
+[ 65%] Built target judas_input_tests
+[ 65%] Building CXX object CMakeFiles/judas_prefab_tests.dir/src/editor/EditorHistory.cpp.o
+[ 65%] Building CXX object CMakeFiles/judas_render_camera_tests.dir/src/editor/EditorHistory.cpp.o
+[ 65%] Building CXX object CMakeFiles/judas_audio_tests.dir/src/editor/EditorHistory.cpp.o
+[ 65%] Building CXX object CMakeFiles/judas_prefab_application_tests.dir/tests/PrefabApplicationTests.cpp.o
+[ 65%] Linking CXX executable judas_prefab_tests
+[ 65%] Built target judas_prefab_tests
+[ 65%] Building CXX object CMakeFiles/judas_visual_particle_tests.dir/tests/VisualParticleTests.cpp.o
+[ 65%] Building CXX object CMakeFiles/judas_prefab_application_tests.dir/src/Application.cpp.o
+[ 65%] Linking CXX executable judas_render_camera_tests
+[ 65%] Built target judas_render_camera_tests
+[ 66%] Building CXX object CMakeFiles/judas_particle_application_tests.dir/tests/ParticleApplicationTests.cpp.o
+[ 66%] Linking CXX executable judas_audio_tests
+[ 66%] Built target judas_audio_tests
+[ 66%] Building CXX object CMakeFiles/judas_prefab_application_tests.dir/src/RuntimeOptions.cpp.o
+[ 66%] Building CXX object CMakeFiles/judas_prefab_application_tests.dir/src/RuntimeDiagnostics.cpp.o
+[ 66%] Building CXX object CMakeFiles/judas_particle_application_tests.dir/src/Application.cpp.o
+[ 66%] Building CXX object CMakeFiles/judas_prefab_application_tests.dir/src/TestHarness.cpp.o
+[ 66%] Building CXX object CMakeFiles/judas_export.dir/src/ExportMain.cpp.o
+[ 66%] Building CXX object CMakeFiles/judas_visual_particle_tests.dir/src/editor/EditorHistory.cpp.o
+[ 67%] Linking CXX executable judas_export
+[ 67%] Built target judas_export
+[ 67%] Building CXX object CMakeFiles/judas_export_tests.dir/tests/ExportTests.cpp.o
+[ 67%] Linking CXX executable judas_prefab_application_tests
+[ 67%] Building CXX object CMakeFiles/judas_particle_application_tests.dir/src/RuntimeOptions.cpp.o
+[ 67%] Built target judas_prefab_application_tests
+[ 67%] Building CXX object CMakeFiles/judas_package_application_tests.dir/tests/PackageApplicationTests.cpp.o
+[ 67%] Linking CXX executable judas_export_tests
+[ 67%] Built target judas_export_tests
+[ 67%] Building CXX object CMakeFiles/judas_particle_application_tests.dir/src/RuntimeDiagnostics.cpp.o
+[ 67%] Building CXX object CMakeFiles/judas_particle_application_tests.dir/src/TestHarness.cpp.o
+[ 67%] Building CXX object CMakeFiles/judas_classification_tests.dir/tests/ClassificationTests.cpp.o
+[ 67%] Linking CXX executable judas_visual_particle_tests
+[ 67%] Built target judas_visual_particle_tests
+[ 67%] Building CXX object CMakeFiles/judas_script_tests.dir/tests/ScriptTests.cpp.o
+[ 67%] Building CXX object CMakeFiles/judas_package_application_tests.dir/src/Application.cpp.o
+[ 67%] Linking CXX executable judas_particle_application_tests
+[ 67%] Built target judas_particle_application_tests
+[ 67%] Building CXX object CMakeFiles/judas_classification_tests.dir/src/editor/EditorHistory.cpp.o
+[ 67%] Building CXX object CMakeFiles/judas_package_application_tests.dir/src/RuntimeOptions.cpp.o
+[ 67%] Linking CXX executable judas_script_tests
+[ 67%] Built target judas_script_tests
+[ 67%] Building CXX object CMakeFiles/judas_script_application_tests.dir/tests/ScriptApplicationTests.cpp.o
+[ 67%] Building CXX object CMakeFiles/judas_package_application_tests.dir/src/RuntimeDiagnostics.cpp.o
+[ 67%] Building CXX object CMakeFiles/judas_package_application_tests.dir/src/TestHarness.cpp.o
+[ 67%] Building CXX object CMakeFiles/judas_script_application_tests.dir/src/Application.cpp.o
+[ 67%] Building CXX object CMakeFiles/judas_script_application_tests.dir/src/RuntimeOptions.cpp.o
+[ 67%] Linking CXX executable judas_classification_tests
+[ 67%] Built target judas_classification_tests
+[ 67%] Building CXX object CMakeFiles/judas_runtime_ui_tests.dir/tests/RuntimeUITests.cpp.o
+[ 67%] Linking CXX executable judas_package_application_tests
+[ 67%] Building CXX object CMakeFiles/judas_script_application_tests.dir/src/RuntimeDiagnostics.cpp.o
+[ 67%] Built target judas_package_application_tests
+[ 67%] Building CXX object CMakeFiles/judas_script_application_tests.dir/src/TestHarness.cpp.o
+[ 67%] Building CXX object CMakeFiles/judas_runtime_ui_application_tests.dir/tests/RuntimeUIApplicationTests.cpp.o
+[ 67%] Building CXX object CMakeFiles/judas_touch_event_tests.dir/tests/TouchEventTests.cpp.o
+[ 67%] Linking CXX executable judas_runtime_ui_tests
+[ 67%] Building CXX object CMakeFiles/judas_runtime_ui_application_tests.dir/src/Application.cpp.o
+[ 67%] Linking CXX executable judas_script_application_tests
+[ 67%] Linking CXX executable judas_touch_event_tests
+[ 67%] Built target judas_runtime_ui_tests
+[ 67%] Building CXX object CMakeFiles/judas_touch_application_tests.dir/tests/TouchApplicationTests.cpp.o
+[ 67%] Built target judas_script_application_tests
+[ 67%] Building CXX object CMakeFiles/judas_runtime_ui_application_tests.dir/src/RuntimeOptions.cpp.o
+[ 67%] Built target judas_touch_event_tests
+[ 67%] Building CXX object CMakeFiles/judas_scene_transition_tests.dir/tests/SceneTransitionTests.cpp.o
+[ 68%] Building CXX object CMakeFiles/judas_runtime_ui_application_tests.dir/src/RuntimeDiagnostics.cpp.o
+[ 68%] Building CXX object CMakeFiles/judas_runtime_ui_application_tests.dir/src/TestHarness.cpp.o
+[ 69%] Building CXX object CMakeFiles/judas_scene_transition_tests.dir/src/Application.cpp.o
+[ 70%] Building CXX object CMakeFiles/judas_touch_application_tests.dir/src/Application.cpp.o
+[ 70%] Building CXX object CMakeFiles/judas_touch_application_tests.dir/src/RuntimeOptions.cpp.o
+[ 70%] Linking CXX executable judas_runtime_ui_application_tests
+[ 70%] Building CXX object CMakeFiles/judas_scene_transition_tests.dir/src/RuntimeOptions.cpp.o
+[ 70%] Building CXX object CMakeFiles/judas_touch_application_tests.dir/src/RuntimeDiagnostics.cpp.o
+[ 70%] Built target judas_runtime_ui_application_tests
+[ 70%] Building CXX object CMakeFiles/judas_physics_cast_tests.dir/tests/PhysicsCastTests.cpp.o
+[ 70%] Building CXX object CMakeFiles/judas_touch_application_tests.dir/src/TestHarness.cpp.o
+[ 70%] Linking CXX executable judas_physics_cast_tests
+[ 70%] Built target judas_physics_cast_tests
+[ 70%] Building CXX object CMakeFiles/judas_physics_cast_application_tests.dir/tests/PhysicsCastApplicationTests.cpp.o
+[ 70%] Building CXX object CMakeFiles/judas_physics_cast_application_tests.dir/src/Application.cpp.o
+[ 70%] Building CXX object CMakeFiles/judas_scene_transition_tests.dir/src/RuntimeDiagnostics.cpp.o
+[ 70%] Building CXX object CMakeFiles/judas_scene_transition_tests.dir/src/TestHarness.cpp.o
+[ 70%] Building CXX object CMakeFiles/judas_physics_cast_application_tests.dir/src/RuntimeOptions.cpp.o
+[ 70%] Linking CXX executable judas_touch_application_tests
+[ 70%] Built target judas_touch_application_tests
+[ 71%] Building CXX object CMakeFiles/judas_physics_cast_application_tests.dir/src/RuntimeDiagnostics.cpp.o
+[ 71%] Building CXX object CMakeFiles/judas_physics_cast_application_tests.dir/src/TestHarness.cpp.o
+[ 71%] Building CXX object CMakeFiles/judas_joint_tests.dir/tests/JointTests.cpp.o
+[ 71%] Building CXX object CMakeFiles/judas_joint_authoring_tests.dir/tests/JointAuthoringTests.cpp.o
+[ 71%] Linking CXX executable judas_joint_tests
+[ 71%] Built target judas_joint_tests
+[ 71%] Building CXX object CMakeFiles/judas_joint_application_tests.dir/tests/JointApplicationTests.cpp.o
+[ 71%] Linking CXX executable judas_scene_transition_tests
+[ 71%] Built target judas_scene_transition_tests
+[ 71%] Building CXX object CMakeFiles/judas_skeletal_animation_tests.dir/tests/SkeletalAnimationTests.cpp.o
+[ 71%] Linking CXX executable judas_physics_cast_application_tests
+[ 71%] Linking CXX executable judas_joint_authoring_tests
+[ 71%] Built target judas_physics_cast_application_tests
+[ 71%] Building CXX object CMakeFiles/judas_animation_application_tests.dir/tests/AnimationApplicationTests.cpp.o
+[ 71%] Building CXX object CMakeFiles/judas_joint_application_tests.dir/src/Application.cpp.o
+[ 71%] Built target judas_joint_authoring_tests
+[ 71%] Building CXX object CMakeFiles/judas_pose_composition_tests.dir/tests/PoseCompositionTests.cpp.o
+[ 71%] Linking CXX executable judas_skeletal_animation_tests
+[ 71%] Building CXX object CMakeFiles/judas_animation_application_tests.dir/src/Application.cpp.o
+[ 71%] Built target judas_skeletal_animation_tests
+[ 71%] Building CXX object CMakeFiles/judas_pose_composition_application_tests.dir/tests/PoseCompositionApplicationTests.cpp.o
+[ 71%] Linking CXX executable judas_pose_composition_tests
+[ 71%] Built target judas_pose_composition_tests
+[ 71%] Building CXX object CMakeFiles/judas_ragdoll_tests.dir/tests/RagdollTests.cpp.o
+[ 72%] Building CXX object CMakeFiles/judas_joint_application_tests.dir/src/RuntimeOptions.cpp.o
+[ 73%] Building CXX object CMakeFiles/judas_pose_composition_application_tests.dir/src/Application.cpp.o
+[ 73%] Building CXX object CMakeFiles/judas_joint_application_tests.dir/src/RuntimeDiagnostics.cpp.o
+[ 73%] Building CXX object CMakeFiles/judas_animation_application_tests.dir/src/RuntimeOptions.cpp.o
+[ 73%] Building CXX object CMakeFiles/judas_joint_application_tests.dir/src/TestHarness.cpp.o
+[ 73%] Linking CXX executable judas_ragdoll_tests
+[ 73%] Building CXX object CMakeFiles/judas_animation_application_tests.dir/src/RuntimeDiagnostics.cpp.o
+[ 73%] Built target judas_ragdoll_tests
+[ 73%] Building CXX object CMakeFiles/judas_ragdoll_application_tests.dir/tests/RagdollApplicationTests.cpp.o
+[ 73%] Building CXX object CMakeFiles/judas_pose_composition_application_tests.dir/src/RuntimeOptions.cpp.o
+[ 73%] Building CXX object CMakeFiles/judas_animation_application_tests.dir/src/TestHarness.cpp.o
+[ 73%] Building CXX object CMakeFiles/judas_pose_composition_application_tests.dir/src/RuntimeDiagnostics.cpp.o
+[ 73%] Linking CXX executable judas_joint_application_tests
+[ 73%] Building CXX object CMakeFiles/judas_ragdoll_application_tests.dir/src/Application.cpp.o
+[ 73%] Built target judas_joint_application_tests
+[ 73%] Building CXX object CMakeFiles/judas_fluid_demo_probe.dir/tools/FluidDemoProbe.cpp.o
+[ 73%] Building CXX object CMakeFiles/judas_pose_composition_application_tests.dir/src/TestHarness.cpp.o
+[ 73%] Linking CXX executable judas_animation_application_tests
+[ 73%] Built target judas_animation_application_tests
+[ 73%] Building CXX object CMakeFiles/judas_ragdoll_application_tests.dir/src/RuntimeOptions.cpp.o
+[ 74%] Building CXX object CMakeFiles/judas_fluid_demo_probe.dir/src/Application.cpp.o
+[ 74%] Building CXX object CMakeFiles/judas_ragdoll_application_tests.dir/src/RuntimeDiagnostics.cpp.o
+[ 74%] Building CXX object CMakeFiles/judas_ragdoll_application_tests.dir/src/TestHarness.cpp.o
+[ 74%] Linking CXX executable judas_pose_composition_application_tests
+[ 74%] Building CXX object CMakeFiles/judas_fluid_demo_probe.dir/src/RuntimeOptions.cpp.o
+[ 74%] Built target judas_pose_composition_application_tests
+[ 74%] Building CXX object CMakeFiles/judas_fluid_demo_integration_tests.dir/tests/FluidDemoIntegrationTests.cpp.o
+[ 74%] Building CXX object CMakeFiles/judas_fluid_demo_probe.dir/src/RuntimeDiagnostics.cpp.o
+[ 74%] Building CXX object CMakeFiles/judas_fluid_demo_probe.dir/src/TestHarness.cpp.o
+[ 75%] Linking CXX executable judas_ragdoll_application_tests
+[ 75%] Building CXX object CMakeFiles/judas_character_motor_tests.dir/tests/CharacterMotorTests.cpp.o
+[ 75%] Built target judas_ragdoll_application_tests
+[ 76%] Building CXX object CMakeFiles/judas_character_motor_application_tests.dir/tests/CharacterMotorApplicationTests.cpp.o
+[ 76%] Linking CXX executable judas_fluid_demo_integration_tests
+[ 76%] Built target judas_fluid_demo_integration_tests
+[ 76%] Building CXX object CMakeFiles/judasjs_examples_tests.dir/tests/JudasJSExamplesTests.cpp.o
+[ 76%] Linking CXX executable judas_fluid_demo_probe
+[ 76%] Linking CXX executable judas_character_motor_tests
+[ 76%] Built target judas_fluid_demo_probe
+[ 76%] Building CXX object CMakeFiles/judas_boundary_migration_tests.dir/tests/BoundaryMigrationTests.cpp.o
+[ 76%] Built target judas_character_motor_tests
+[ 76%] Building CXX object CMakeFiles/judas_shooter_game_tests.dir/tests/ShooterGameTests.cpp.o
+[ 76%] Linking CXX executable judas_character_motor_application_tests
+[ 76%] Built target judas_character_motor_application_tests
+[ 76%] Building CXX object CMakeFiles/judas_shooter_application_tests.dir/tests/ShooterApplicationTests.cpp.o
+[ 77%] Linking CXX executable judasjs_examples_tests
+[ 77%] Linking CXX executable judas_boundary_migration_tests
+[ 77%] Built target judasjs_examples_tests
+[ 78%] Building CXX object CMakeFiles/judas_script_presentation_tests.dir/tests/ScriptPresentationTests.cpp.o
+[ 78%] Linking CXX executable judas_shooter_game_tests
+[ 78%] Building CXX object CMakeFiles/judas_shooter_application_tests.dir/src/Application.cpp.o
+[ 78%] Built target judas_boundary_migration_tests
+[ 78%] Building CXX object CMakeFiles/judas_navigation_bake.dir/tools/NavigationBake.cpp.o
+[ 78%] Built target judas_shooter_game_tests
+[ 78%] Building CXX object CMakeFiles/judas_navigation_tests.dir/tests/NavigationTests.cpp.o
+[ 78%] Linking CXX executable judas_navigation_bake
+[ 78%] Built target judas_navigation_bake
+[ 79%] Building CXX object CMakeFiles/judas_navigation_game_tests.dir/tests/NavigationGameTests.cpp.o
+[ 79%] Linking CXX executable judas_script_presentation_tests
+[ 79%] Building CXX object CMakeFiles/judas_shooter_application_tests.dir/src/RuntimeOptions.cpp.o
+[ 79%] Built target judas_script_presentation_tests
+[ 79%] Building CXX object CMakeFiles/judas_shooter_application_tests.dir/src/RuntimeDiagnostics.cpp.o
+[ 79%] Building CXX object CMakeFiles/judas_shooter_application_tests.dir/src/TestHarness.cpp.o
+[ 79%] Building CXX object CMakeFiles/judas_liquid_tests.dir/tests/LiquidTests.cpp.o
+[ 79%] Linking CXX executable judas_navigation_game_tests
+[ 79%] Linking CXX executable judas_navigation_tests
+[ 79%] Built target judas_navigation_game_tests
+[ 80%] Building CXX object CMakeFiles/judas_liquid_bake.dir/tools/LiquidBake.cpp.o
+[ 80%] Built target judas_navigation_tests
+[ 80%] Building CXX object CMakeFiles/judas_liquid_application_tests.dir/tests/LiquidApplicationTests.cpp.o
+[ 80%] Linking CXX executable judas_liquid_tests
+[ 80%] Built target judas_liquid_tests
+[ 80%] Building CXX object CMakeFiles/judas_liquid_surface_tests.dir/tests/LiquidSurfaceTests.cpp.o
+[ 80%] Linking CXX executable judas_liquid_bake
+[ 81%] Linking CXX executable judas_shooter_application_tests
+[ 81%] Built target judas_liquid_bake
+[ 81%] Building CXX object CMakeFiles/judas_liquid_surface_application_tests.dir/tests/LiquidSurfaceApplicationTests.cpp.o
+[ 81%] Built target judas_shooter_application_tests
+[ 81%] Building CXX object CMakeFiles/judas_liquid_surface_refill_tests.dir/tests/LiquidSurfaceRefillTests.cpp.o
+[ 81%] Linking CXX executable judas_liquid_application_tests
+[ 81%] Built target judas_liquid_application_tests
+[ 81%] Building CXX object CMakeFiles/judas_liquid_surface_loop_tests.dir/tests/LiquidSurfaceLoopTests.cpp.o
+[ 81%] Linking CXX executable judas_liquid_surface_tests
+[ 82%] Linking CXX executable judas_liquid_surface_refill_tests
+[ 82%] Built target judas_liquid_surface_tests
+[ 82%] Building CXX object CMakeFiles/judas_profiler_tests.dir/tests/PerformanceProfilerTests.cpp.o
+[ 82%] Linking CXX executable judas_liquid_surface_application_tests
+[ 82%] Built target judas_liquid_surface_refill_tests
+[ 83%] Building CXX object CMakeFiles/judas_profiler_script_tests.dir/tests/ProfilerScriptTests.cpp.o
+[ 83%] Built target judas_liquid_surface_application_tests
+[ 83%] Building CXX object CMakeFiles/judas_profiler_application_tests.dir/tests/ProfilerApplicationTests.cpp.o
+[ 83%] Building CXX object CMakeFiles/judas_liquid_surface_loop_tests.dir/src/Application.cpp.o
+[ 83%] Linking CXX executable judas_profiler_tests
+[ 83%] Built target judas_profiler_tests
+[ 83%] Building CXX object CMakeFiles/judas_liquid_surface_loop_tests.dir/src/RuntimeOptions.cpp.o
+[ 83%] Linking CXX executable judas_profiler_script_tests
+[ 83%] Building CXX object CMakeFiles/judas_liquid_surface_loop_tests.dir/src/RuntimeDiagnostics.cpp.o
+[ 83%] Built target judas_profiler_script_tests
+[ 83%] Building CXX object CMakeFiles/judas_environment_bake.dir/tools/EnvironmentBake.cpp.o
+[ 83%] Linking CXX executable judas_environment_bake
+[ 83%] Building CXX object CMakeFiles/judas_liquid_surface_loop_tests.dir/src/TestHarness.cpp.o
+[ 83%] Built target judas_environment_bake
+[ 83%] Building CXX object CMakeFiles/judas_material_tests.dir/tests/MaterialTests.cpp.o
+[ 83%] Building CXX object CMakeFiles/judas_profiler_application_tests.dir/src/editor/ProfilerView.cpp.o
+[ 83%] Building CXX object CMakeFiles/judas_profiler_application_tests.dir/src/Application.cpp.o
+[ 83%] Building CXX object CMakeFiles/judas_profiler_application_tests.dir/src/RuntimeOptions.cpp.o
+[ 83%] Building CXX object CMakeFiles/judas_profiler_application_tests.dir/src/RuntimeDiagnostics.cpp.o
+[ 83%] Linking CXX executable judas_liquid_surface_loop_tests
+[ 83%] Linking CXX executable judas_material_tests
+[ 83%] Building CXX object CMakeFiles/judas_profiler_application_tests.dir/src/TestHarness.cpp.o
+[ 83%] Built target judas_liquid_surface_loop_tests
+[ 83%] Building CXX object CMakeFiles/judas_material_application_tests.dir/tests/MaterialApplicationTests.cpp.o
+[ 83%] Built target judas_material_tests
+[ 83%] Building CXX object CMakeFiles/judas_text_localization_tests.dir/tests/TextLocalizationTests.cpp.o
+[ 83%] Building CXX object CMakeFiles/judas_text_render_tests.dir/tests/TextRenderTests.cpp.o
+[ 83%] Linking CXX executable judas_text_render_tests
+[ 83%] Linking CXX executable judas_profiler_application_tests
+[ 83%] Built target judas_text_render_tests
+[ 83%] Building CXX object CMakeFiles/judas_localization_application_tests.dir/tests/LocalizationApplicationTests.cpp.o
+[ 83%] Linking CXX executable judas_text_localization_tests
+[ 83%] Built target judas_profiler_application_tests
+[ 84%] Building CXX object CMakeFiles/judas_streaming_tests.dir/tests/WorldStreamingTests.cpp.o
+[ 85%] Building CXX object CMakeFiles/judas_material_application_tests.dir/src/Application.cpp.o
+[ 85%] Built target judas_text_localization_tests
+[ 85%] Building CXX object CMakeFiles/judas_localization_application_tests.dir/src/Application.cpp.o
+[ 85%] Building CXX object CMakeFiles/judas_material_application_tests.dir/src/TestHarness.cpp.o
+[ 85%] Building CXX object CMakeFiles/judas_localization_application_tests.dir/src/TestHarness.cpp.o
+[ 85%] Building CXX object CMakeFiles/judas_localization_application_tests.dir/src/RuntimeDiagnostics.cpp.o
+[ 85%] Linking CXX executable judas_streaming_tests
+[ 85%] Building CXX object CMakeFiles/judas_localization_application_tests.dir/src/RuntimeOptions.cpp.o
+[ 85%] Built target judas_streaming_tests
+[ 85%] Building CXX object CMakeFiles/judas_material_application_tests.dir/src/RuntimeDiagnostics.cpp.o
+[ 85%] Building CXX object CMakeFiles/judas_streaming_demo_builder.dir/tools/StreamingDemo.cpp.o
+[ 85%] Building CXX object CMakeFiles/judas_material_application_tests.dir/src/RuntimeOptions.cpp.o
+[ 85%] Linking CXX executable judas_localization_application_tests
+[ 85%] Building CXX object CMakeFiles/judas_streaming_application_tests.dir/tests/StreamingApplicationTests.cpp.o
+[ 85%] Built target judas_localization_application_tests
+[ 86%] Building CXX object CMakeFiles/judas_streaming_performance_tests.dir/tests/StreamingPerformanceTests.cpp.o
+[ 86%] Linking CXX executable judas_material_application_tests
+[ 86%] Built target judas_material_application_tests
+[ 86%] Building CXX object CMakeFiles/judas_streaming_performance_tests.dir/src/Application.cpp.o
+[ 86%] Linking CXX executable judas_streaming_demo_builder
+[ 86%] Built target judas_streaming_demo_builder
+[ 86%] Building CXX object CMakeFiles/judas_streaming_performance_tests.dir/src/RuntimeOptions.cpp.o
+[ 86%] Building CXX object CMakeFiles/judas_streaming_application_tests.dir/src/Application.cpp.o
+[ 86%] Building CXX object CMakeFiles/judas_streaming_performance_tests.dir/src/RuntimeDiagnostics.cpp.o
+[ 86%] Building CXX object CMakeFiles/judas_streaming_performance_tests.dir/src/TestHarness.cpp.o
+[ 86%] Building CXX object CMakeFiles/judas_streaming_application_tests.dir/src/RuntimeOptions.cpp.o
+[ 86%] Building CXX object CMakeFiles/judas_streaming_revisit_tests.dir/tests/StreamingRevisitTests.cpp.o
+[ 86%] Building CXX object CMakeFiles/judas_streaming_application_tests.dir/src/RuntimeDiagnostics.cpp.o
+[ 86%] Building CXX object CMakeFiles/judas_streaming_application_tests.dir/src/TestHarness.cpp.o
+[ 86%] Building CXX object CMakeFiles/judas_streaming_revisit_tests.dir/src/Application.cpp.o
+[ 86%] Building CXX object CMakeFiles/judas_streaming_revisit_tests.dir/src/RuntimeOptions.cpp.o
+[ 86%] Linking CXX executable judas_streaming_performance_tests
+[ 86%] Built target judas_streaming_performance_tests
+[ 86%] Building CXX object CMakeFiles/judas_audio_acoustics_tests.dir/tests/AudioAcousticsTests.cpp.o
+[ 86%] Building CXX object CMakeFiles/judas_streaming_revisit_tests.dir/src/RuntimeDiagnostics.cpp.o
+[ 86%] Linking CXX executable judas_streaming_application_tests
+[ 86%] Building CXX object CMakeFiles/judas_streaming_revisit_tests.dir/src/TestHarness.cpp.o
+[ 86%] Building CXX object CMakeFiles/judas_audio_demo.dir/tools/AudioDemo.cpp.o
+[ 86%] Built target judas_streaming_application_tests
+[ 86%] Building CXX object CMakeFiles/judas_audio_world_tests.dir/tests/AudioWorldTests.cpp.o
+[ 86%] Linking CXX executable judas_audio_acoustics_tests
+[ 86%] Built target judas_audio_acoustics_tests
+[ 86%] Building CXX object CMakeFiles/judas_audio_application_tests.dir/tests/AudioApplicationTests.cpp.o
+[ 86%] Linking CXX executable judas_audio_demo
+[ 86%] Linking CXX executable judas_streaming_revisit_tests
+[ 86%] Built target judas_audio_demo
+[ 86%] Building CXX object CMakeFiles/judas_save_storage_tests.dir/tests/SaveStorageTests.cpp.o
+[ 86%] Built target judas_streaming_revisit_tests
+[ 86%] Building CXX object CMakeFiles/judas_audio_application_tests.dir/src/Application.cpp.o
+[ 86%] Linking CXX executable judas_save_storage_tests
+[ 86%] Building CXX object CMakeFiles/judas_audio_application_tests.dir/src/RuntimeOptions.cpp.o
+[ 87%] Linking CXX executable judas_audio_world_tests
+[ 87%] Built target judas_save_storage_tests
+[ 87%] Building CXX object CMakeFiles/judas_world_persistence_tests.dir/tests/WorldPersistenceTests.cpp.o
+[ 87%] Built target judas_audio_world_tests
+[ 87%] Building CXX object CMakeFiles/judas_audio_application_tests.dir/src/RuntimeDiagnostics.cpp.o
+[ 88%] Building CXX object CMakeFiles/judas_audio_application_tests.dir/src/TestHarness.cpp.o
+[ 88%] Building CXX object CMakeFiles/judas_save_application_tests.dir/tests/SaveApplicationTests.cpp.o
+[ 88%] Building CXX object CMakeFiles/judas_save_streaming_tests.dir/tests/SaveStreamingTests.cpp.o
+[ 88%] Linking CXX executable judas_world_persistence_tests
+[ 88%] Built target judas_world_persistence_tests
+[ 88%] Building CXX object CMakeFiles/judas_save_performance_tests.dir/tests/SavePerformanceTests.cpp.o
+[ 88%] Linking CXX executable judas_audio_application_tests
+[ 88%] Building CXX object CMakeFiles/judas_save_application_tests.dir/src/Application.cpp.o
+[ 88%] Building CXX object CMakeFiles/judas_save_streaming_tests.dir/src/Application.cpp.o
+[ 88%] Built target judas_audio_application_tests
+[ 88%] Building CXX object CMakeFiles/judas_save_application_tests.dir/src/RuntimeOptions.cpp.o
+[ 89%] Building CXX object CMakeFiles/judas_save_performance_tests.dir/src/Application.cpp.o
+[ 89%] Building CXX object CMakeFiles/judas_save_application_tests.dir/src/RuntimeDiagnostics.cpp.o
+[ 89%] Building CXX object CMakeFiles/judas_save_performance_tests.dir/src/RuntimeOptions.cpp.o
+[ 89%] Building CXX object CMakeFiles/judas_save_streaming_tests.dir/src/RuntimeOptions.cpp.o
+[ 89%] Building CXX object CMakeFiles/judas_save_application_tests.dir/src/TestHarness.cpp.o
+[ 89%] Building CXX object CMakeFiles/judas_save_streaming_tests.dir/src/RuntimeDiagnostics.cpp.o
+[ 89%] Building CXX object CMakeFiles/judas_save_performance_tests.dir/src/RuntimeDiagnostics.cpp.o
+[ 89%] Building CXX object CMakeFiles/judas_save_streaming_tests.dir/src/TestHarness.cpp.o
+[ 89%] Building CXX object CMakeFiles/judas_save_performance_tests.dir/src/TestHarness.cpp.o
+[ 89%] Building CXX object CMakeFiles/judas_deformable_tests.dir/tests/DeformableTests.cpp.o
+[ 89%] Linking CXX executable judas_save_application_tests
+[ 89%] Built target judas_save_application_tests
+[ 89%] Building CXX object CMakeFiles/judas_deformable_bake.dir/tools/DeformableBake.cpp.o
+[ 90%] Linking CXX executable judas_save_streaming_tests
+[ 90%] Linking CXX executable judas_deformable_bake
+[ 90%] Built target judas_save_streaming_tests
+[ 90%] Built target judas_deformable_bake
+[ 90%] Building CXX object CMakeFiles/judas_deformable_performance_tests.dir/tests/DeformablePerformanceTests.cpp.o
+[ 90%] Building CXX object CMakeFiles/judas_deformable_application_tests.dir/tests/DeformableApplicationTests.cpp.o
+[ 90%] Linking CXX executable judas_save_performance_tests
+[ 90%] Built target judas_save_performance_tests
+[ 90%] Building CXX object CMakeFiles/judas_deformable_application_tests.dir/src/Application.cpp.o
+[ 90%] Linking CXX executable judas_deformable_performance_tests
+[ 90%] Built target judas_deformable_performance_tests
+[ 90%] Building CXX object CMakeFiles/judas_fracture_tests.dir/tests/FractureTests.cpp.o
+[ 90%] Linking CXX executable judas_deformable_tests
+[ 90%] Built target judas_deformable_tests
+[ 90%] Building CXX object CMakeFiles/judas_fracture_application_tests.dir/tests/FractureApplicationTests.cpp.o
+[ 91%] Building CXX object CMakeFiles/judas_deformable_application_tests.dir/src/RuntimeOptions.cpp.o
+[ 91%] Linking CXX executable judas_fracture_tests
+[ 91%] Built target judas_fracture_tests
+[ 91%] Building CXX object CMakeFiles/judas_deformable_application_tests.dir/src/RuntimeDiagnostics.cpp.o
+[ 91%] Building CXX object CMakeFiles/judas_deformable_application_tests.dir/src/TestHarness.cpp.o
+[ 91%] Building CXX object CMakeFiles/judas_fracture_application_tests.dir/src/Application.cpp.o
+[ 91%] Building CXX object CMakeFiles/judas_fracture_application_tests.dir/src/RuntimeOptions.cpp.o
+[ 91%] Building CXX object CMakeFiles/judas_fracture_application_tests.dir/src/RuntimeDiagnostics.cpp.o
+[ 91%] Linking CXX executable judas_deformable_application_tests
+[ 92%] Building CXX object CMakeFiles/judas_fracture_application_tests.dir/src/TestHarness.cpp.o
+[ 92%] Built target judas_deformable_application_tests
+[ 92%] Building CXX object CMakeFiles/judas_fracture_performance_tests.dir/tests/FracturePerformanceTests.cpp.o
+[ 92%] Building CXX object CMakeFiles/judas_collision_geometry_tests.dir/tests/CollisionGeometryTests.cpp.o
+[ 92%] Building CXX object CMakeFiles/judas_collision_cook.dir/tools/CollisionCook.cpp.o
+[ 92%] Linking CXX executable judas_collision_cook
+[ 92%] Linking CXX executable judas_fracture_performance_tests
+[ 92%] Built target judas_fracture_performance_tests
+[ 92%] Building CXX object CMakeFiles/judas_collision_application_tests.dir/tests/CollisionApplicationTests.cpp.o
+[ 92%] Built target judas_collision_cook
+[ 92%] Building CXX object CMakeFiles/judas_developer_integration_tests.dir/tests/DeveloperIntegrationTests.cpp.o
+[ 92%] Linking CXX executable judas_fracture_application_tests
+[ 92%] Built target judas_fracture_application_tests
+[ 92%] Building CXX object CMakeFiles/judas_collision_application_tests.dir/src/Application.cpp.o
+[ 92%] Building CXX object CMakeFiles/judas_collision_application_tests.dir/src/RuntimeOptions.cpp.o
+[ 92%] Building CXX object CMakeFiles/judas_developer_integration_tests.dir/src/editor/EditorHistory.cpp.o
+[ 92%] Linking CXX executable judas_collision_geometry_tests
+[ 92%] Built target judas_collision_geometry_tests
+[ 92%] Building CXX object CMakeFiles/judas_developer_author.dir/tools/DeveloperIntegrationAuthor.cpp.o
+[ 92%] Building CXX object CMakeFiles/judas_developer_application_tests.dir/tests/DeveloperApplicationTests.cpp.o
+[ 93%] Building CXX object CMakeFiles/judas_collision_application_tests.dir/src/RuntimeDiagnostics.cpp.o
+[ 93%] Building CXX object CMakeFiles/judas_collision_application_tests.dir/src/TestHarness.cpp.o
+[ 93%] Building CXX object CMakeFiles/judas_developer_application_tests.dir/src/Application.cpp.o
+[ 93%] Linking CXX executable judas_developer_author
+[ 93%] Linking CXX executable judas_developer_integration_tests
+[ 93%] Built target judas_developer_author
+[ 94%] Building CXX object CMakeFiles/judas_developer_application_tests.dir/src/RuntimeOptions.cpp.o
+[ 94%] Built target judas_developer_integration_tests
+[ 94%] Building CXX object CMakeFiles/judas_developer_authoring_tests.dir/tests/DeveloperAuthoringTests.cpp.o
+[ 94%] Linking CXX executable judas_collision_application_tests
+[ 94%] Building CXX object CMakeFiles/judas_developer_application_tests.dir/src/RuntimeDiagnostics.cpp.o
+[ 94%] Built target judas_collision_application_tests
+[ 94%] Building CXX object CMakeFiles/judas_consumer_review.dir/tools/ConsumerReview.cpp.o
+[ 94%] Building CXX object CMakeFiles/judas_developer_authoring_tests.dir/tools/StructuredAuthor.cpp.o
+[ 94%] Building CXX object CMakeFiles/judas_developer_application_tests.dir/src/TestHarness.cpp.o
+[ 94%] Building CXX object CMakeFiles/judas_consumer_review.dir/src/Application.cpp.o
+[ 94%] Linking CXX executable judas_developer_authoring_tests
+[ 94%] Building CXX object CMakeFiles/judas_consumer_authoring_tests.dir/tests/ConsumerAuthoringTests.cpp.o
+[ 94%] Built target judas_developer_authoring_tests
+[ 94%] Building CXX object CMakeFiles/judas_consumer_authoring_tests.dir/src/editor/EditorHistory.cpp.o
+[ 94%] Linking CXX executable judas_developer_application_tests
+[ 94%] Built target judas_developer_application_tests
+[ 94%] Building CXX object CMakeFiles/judas_consumer_capsule_repro.dir/tools/ConsumerCapsuleRepro.cpp.o
+[ 94%] Building CXX object CMakeFiles/judas_consumer_review.dir/src/RuntimeOptions.cpp.o
+[ 94%] Linking CXX executable judas_consumer_capsule_repro
+[ 94%] Built target judas_consumer_capsule_repro
+[ 94%] Building CXX object CMakeFiles/judas_consumer_review.dir/src/RuntimeDiagnostics.cpp.o
+[ 94%] Building CXX object CMakeFiles/judas_consumer_reference_repro.dir/tools/ConsumerReferenceRepro.cpp.o
+[ 94%] Linking CXX executable judas_consumer_reference_repro
+[ 95%] Building CXX object CMakeFiles/judas_consumer_review.dir/src/TestHarness.cpp.o
+[ 95%] Building CXX object CMakeFiles/judas_post_consumer_query_tests.dir/tests/PostConsumerQueryTests.cpp.o
+[ 95%] Built target judas_consumer_reference_repro
+[ 95%] Building CXX object CMakeFiles/judas_post_consumer_metadata_tests.dir/tests/PostConsumerMetadataTests.cpp.o
+[ 95%] Linking CXX executable judas_post_consumer_query_tests
+[ 95%] Built target judas_post_consumer_query_tests
+[ 95%] Building CXX object CMakeFiles/judas_post_consumer_ragdoll_tests.dir/tests/PostConsumerRagdollTests.cpp.o
+[ 95%] Linking CXX executable judas_consumer_authoring_tests
+[ 95%] Built target judas_consumer_authoring_tests
+[ 95%] Building CXX object CMakeFiles/judas_model_import_cli.dir/tools/ModelImportCli.cpp.o
+[ 95%] Linking CXX executable judas_consumer_review
+[ 95%] Built target judas_consumer_review
+[ 95%] Building CXX object CMakeFiles/judas_model_import_tests.dir/tests/ModelImportTests.cpp.o
+[ 95%] Linking CXX executable judas_post_consumer_metadata_tests
+[ 95%] Built target judas_post_consumer_metadata_tests
+[ 96%] Building CXX object CMakeFiles/judas_model_reimport_tests.dir/tests/ModelReimportTests.cpp.o
+[ 97%] Linking CXX executable judas_post_consumer_ragdoll_tests
+[ 97%] Built target judas_post_consumer_ragdoll_tests
+[ 97%] Building CXX object CMakeFiles/judas_model_runtime_tests.dir/tests/ModelRuntimeTests.cpp.o
+[ 97%] Linking CXX executable judas_model_import_cli
+[ 97%] Linking CXX executable judas_model_import_tests
+[ 97%] Built target judas_model_import_cli
+[ 97%] Building CXX object CMakeFiles/judas_model_application_tests.dir/tests/ModelApplicationTests.cpp.o
+[ 97%] Built target judas_model_import_tests
+[ 97%] Building CXX object CMakeFiles/judas_world_building_tests.dir/tests/WorldBuildingTests.cpp.o
+[ 97%] Linking CXX executable judas_model_runtime_tests
+[ 97%] Built target judas_model_runtime_tests
+[ 97%] Building CXX object CMakeFiles/judas_world_authoring_runtime_tests.dir/tests/WorldAuthoringRuntimeTests.cpp.o
+[ 97%] Linking CXX executable judas_model_reimport_tests
+[ 97%] Built target judas_model_reimport_tests
+[ 97%] Building CXX object CMakeFiles/judas_world_building_tests.dir/src/editor/EditorHistory.cpp.o
+[ 97%] Building CXX object CMakeFiles/judas_model_application_tests.dir/src/Application.cpp.o
+[ 97%] Building CXX object CMakeFiles/judas_world_authoring_application_tests.dir/tests/WorldAuthoringApplicationTests.cpp.o
+[ 97%] Linking CXX executable judas_world_authoring_runtime_tests
+[ 97%] Built target judas_world_authoring_runtime_tests
+[ 97%] Building CXX object CMakeFiles/judas_world_authoring_performance.dir/tests/WorldAuthoringPerformance.cpp.o
+[ 97%] Building CXX object CMakeFiles/judas_model_application_tests.dir/src/RuntimeOptions.cpp.o
+[ 97%] Linking CXX executable judas_world_building_tests
+[ 97%] Built target judas_world_building_tests
+[ 97%] Building CXX object CMakeFiles/judas_world_authoring_application_tests.dir/src/Application.cpp.o
+[ 98%] Building CXX object CMakeFiles/judas_model_application_tests.dir/src/RuntimeDiagnostics.cpp.o
+[ 98%] Building CXX object CMakeFiles/judas_model_application_tests.dir/src/TestHarness.cpp.o
+[ 99%] Building CXX object CMakeFiles/judas_editor.dir/src/editor/EditorMain.cpp.o
+[100%] Building CXX object CMakeFiles/judas_world_authoring_performance.dir/src/editor/EditorHistory.cpp.o
+[100%] Building CXX object CMakeFiles/judas_world_authoring_application_tests.dir/src/RuntimeOptions.cpp.o
+[100%] Building CXX object CMakeFiles/judas_editor.dir/src/editor/EditorApplication.cpp.o
+[100%] Linking CXX executable judas_model_application_tests
+[100%] Built target judas_model_application_tests
+[100%] Building CXX object CMakeFiles/judas_scene_author.dir/tools/SceneAuthor.cpp.o
+[100%] Building CXX object CMakeFiles/judas_world_authoring_application_tests.dir/src/RuntimeDiagnostics.cpp.o
+[100%] Building CXX object CMakeFiles/judas_world_authoring_application_tests.dir/src/TestHarness.cpp.o
+[100%] Linking CXX executable judas_world_authoring_performance
+[100%] Building CXX object CMakeFiles/judas_scene_author.dir/tools/StructuredAuthor.cpp.o
+[100%] Built target judas_world_authoring_performance
+[100%] Building CXX object CMakeFiles/judas_editor.dir/src/editor/EditorCamera.cpp.o
+[100%] Building CXX object CMakeFiles/judas_editor.dir/src/editor/EditorHistory.cpp.o
+[100%] Linking CXX executable judas_world_authoring_application_tests
+[100%] Built target judas_world_authoring_application_tests
+[100%] Building CXX object CMakeFiles/judas_scene_author.dir/tools/AuthoringCLI.cpp.o
+[100%] Building CXX object CMakeFiles/judas_scene_author.dir/tools/RecipeCLI.cpp.o
+[100%] Building CXX object CMakeFiles/judas_editor.dir/src/editor/EditorPanels.cpp.o
+[100%] Building CXX object CMakeFiles/judas_scene_author.dir/tools/ContentServicesCLI.cpp.o
+[100%] Building CXX object CMakeFiles/judas_editor.dir/src/editor/WorldTools.cpp.o
+[100%] Building CXX object CMakeFiles/judas_editor.dir/src/editor/ProfilerView.cpp.o
+[100%] Linking CXX executable judas_scene_author
+[100%] Built target judas_scene_author
+[100%] Building CXX object CMakeFiles/judas_editor.dir/src/editor/EditorWidgets.cpp.o
+[100%] Building CXX object CMakeFiles/judas_editor.dir/src/editor/ComponentEditors.cpp.o
+[100%] Building CXX object CMakeFiles/judas_editor.dir/src/editor/GizmoMath.cpp.o
+[100%] Linking CXX executable judas_editor
+[100%] Built target judas_editor

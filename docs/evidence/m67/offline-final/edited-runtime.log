@@ -1,0 +1,8 @@
+step,time,posX,posY,posZ,upX,upY,upZ,grounded,velX,velY,velZ,gravX,gravY,gravZ,controlled,frame,steps,paused
+[TestHarness] Wrote screenshot: /home/conner/Documents/GitHub/Project-Judas/.cache/m67/offline-followup-final/paused.png
+[TestHarness] Wrote screenshot: /home/conner/Documents/GitHub/Project-Judas/.cache/m67/offline-followup-final/edited-runtime.png
+Renderer fragment texture units: 32 (material path uses 12)
+World state: disk saves disabled for additive compositions
+Project: World Workshop (/home/conner/Documents/GitHub/Project-Judas/.cache/m67/offline-followup-final/package/game.judasproj)
+Scene: M67 World Workshop (/home/conner/Documents/GitHub/Project-Judas/.cache/m67/offline-followup-final/package/Scenes/workshop.judas)
+World origin (m): 0.000, 0.000, 0.000

@@ -1,4 +1,6 @@
 #include "InputSystem.h"
+#include "NamedAuthoring.h"
+#include "NamedInput.h"
 #include <algorithm>
 #include <cmath>
 #include <iomanip>
@@ -33,6 +35,7 @@ std::string InputMap::Serialize()const{
     for(const auto& e:entries){out<<std::quoted(e.name)<<' '<<e.axis<<' '<<e.bindings.size()<<' ';for(const auto& b:e.bindings)out<<std::quoted(b.control)<<' '<<b.scale<<' '<<b.deadzone<<' ';}return out.str();
 }
 bool InputMap::Parse(const std::string& text,InputMap& out,std::string& error){
+    if(IsNamedDocument(text))return AuthoringJSON::ParseInputDocument(text,out,error);
     std::istringstream in(text);in.imbue(std::locale::classic());int version=0;std::size_t count=0;InputMap result;
     if(!(in>>version>>count)||version!=1||count>10000){error="unsupported/invalid input map";return false;}
     for(std::size_t i=0;i<count;++i){InputEntry e;int axis;std::size_t bindings;if(!(in>>std::quoted(e.name)>>axis>>bindings)||axis<0||axis>1||bindings>10000){error="malformed input entry";return false;}e.axis=axis;

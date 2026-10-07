@@ -1,6 +1,7 @@
 #include <iomanip>
 #include <set>
 #include "Project.h"
+#include "NamedAuthoring.h"
 #include "AssetDatabase.h"
 
 #include <filesystem>
@@ -74,6 +75,7 @@ std::string Project::SerializeToString(const ProjectSettings& s) {
 }
 
 bool Project::ParseFromString(const std::string& text, ProjectSettings& outSettings, std::string& outError) {
+    if(IsNamedDocument(text)){std::string legacy;if(!NamedToLegacy(text,"project",legacy,outError))return false;return ParseFromString(legacy,outSettings,outError);}
     std::istringstream stream(text);
     std::string line;
     std::size_t lineNumber = 0;
@@ -175,6 +177,7 @@ bool Project::Load(const std::string& projectFilePath, std::string& outError) {
         return false;
     }
     m_settings = settings;
+    m_loadedSource=buffer.str();m_hasLoadedSource=true;
     m_runtimeSaveDirectory.clear();
     m_projectFile = Generic(fs::absolute(projectFilePath).lexically_normal());
     m_rootDir = Generic(fs::path(m_projectFile).parent_path());
@@ -187,19 +190,15 @@ bool Project::Save(std::string& outError) const {
         outError = "project has no file path";
         return false;
     }
-    std::ofstream file(m_projectFile, std::ios::binary | std::ios::trunc);
-    if (!file) {
-        outError = "could not write project file: " + m_projectFile;
-        return false;
-    }
-    file << SerializeToString(m_settings);
-    return static_cast<bool>(file);
+    if(m_hasLoadedSource){std::ifstream input(m_projectFile,std::ios::binary);std::string current(std::istreambuf_iterator<char>(input),{});if(current!=m_loadedSource){outError="Project changed externally; reload or Save As a reviewed copy";return false;}}
+    if(!WriteAuthoredDocument(m_projectFile,SerializeToString(m_settings),"project",outError))return false;
+    std::ifstream input(m_projectFile,std::ios::binary);m_loadedSource.assign(std::istreambuf_iterator<char>(input),{});return true;
 }
 
 bool Project::SaveAs(const std::string& projectFilePath, std::string& outError) {
-    m_projectFile = Generic(fs::absolute(projectFilePath).lexically_normal());
-    m_rootDir = Generic(fs::path(m_projectFile).parent_path());
-    return Save(outError);
+    auto oldFile=m_projectFile,oldRoot=m_rootDir,oldSource=m_loadedSource;bool oldLoaded=m_hasLoadedSource;
+    m_projectFile = Generic(fs::absolute(projectFilePath).lexically_normal());m_rootDir = Generic(fs::path(m_projectFile).parent_path());m_hasLoadedSource=false;
+    if(Save(outError)){m_hasLoadedSource=true;return true;}m_projectFile=oldFile;m_rootDir=oldRoot;m_loadedSource=oldSource;m_hasLoadedSource=oldLoaded;return false;
 }
 
 bool Project::CreateNew(const std::string& rootDir, const std::string& name, Project& outProject, std::string& outError) {

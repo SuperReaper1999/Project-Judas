@@ -95,6 +95,10 @@ struct EditorPanelState {
     std::shared_ptr<ModelCookTask> importTask,importAccepted;
     bool importPublished=false;
     unsigned modelPreviewClip=0;float modelPreviewTime=0,modelPreviewYaw=.45f;bool modelPreviewPlaying=false,modelPreviewSkeleton=true;
+    std::vector<std::string> skeletonPicked;
+    std::optional<RagdollDefinition> skeletonFitPreview;
+    SceneObjectId skeletonFitOwner=0;
+    uint64_t skeletonFitGeneration=0;
     ModelCollisionCleanup collisionCleanup;CollisionDiagnostic collisionDiagnostic;std::string collisionDiagnosticAsset;bool modelDiagnosticVisible=false;
     std::uintptr_t modelPreviewToken=0;std::vector<std::string> modelPreviewHidden;
     std::string modelMapSource,modelMapTarget;
@@ -109,6 +113,8 @@ struct EditorPanelState {
     RuntimeWorld* runtime = nullptr;
     std::string worldStatePath;
     bool playPaused = false;
+    bool showWorldBuilding=false;
+    DebugLineList recipePreview;
     DebugLineList navigationPreview;
     DebugLineList liquidPreview;
     DebugLineList deformablePreview;
@@ -118,6 +124,9 @@ struct EditorPanelState {
     int deformableColumns=12,deformableRows=16,deformableSubdivision=2;
     glm::vec3 deformableSize{2,3,1};
     bool textPreview=false,textReload=false;
+    bool showUIDocument=false;bool uiCanvasPreview=false;UIDocument uiPreviewDocument;uint64_t uiPreviewRevision=0;
+    std::uintptr_t uiPreviewToken=0;glm::ivec2 uiPreviewResolution{1280,720};
+    std::map<std::string,UILayout> uiPreviewLayout;std::string uiCanvasSelected;glm::vec2 uiCanvasPick{-1};
     UIElement textElement;
     std::string previewLocale;
     glm::vec2 textPreviewPosition{0},textPreviewSize{0};
@@ -136,6 +145,7 @@ struct EditorPanelState {
     GizmoMode gizmoMode = GizmoMode::Translate;
     GizmoSpace gizmoSpace = GizmoSpace::World;
     bool gizmoSnap = false;
+    bool gizmoIndividualOrigins = false;
     DebugViewOptions debug;
     bool showProfiler = false;
     bool profilerInspect = false;
@@ -179,3 +189,5 @@ void DrawStreamingPanel(EditorDocument&,EditorPanelState&,EditorRequests&);
 
 struct CollisionCookSettings;
 bool BakeEditorCollision(EditorDocument&,SceneObjectId,EditorPanelState&,const AssetId&,const CollisionCookSettings&,const std::string&);
+
+void DrawWorldBuildingPanel(EditorDocument&,EditorPanelState&);

@@ -1,11 +1,16 @@
-# JudasJS — current API reference (M64)
+# JudasJS — current API reference (M67 provisional)
 
 JUDAS PROVIDES ENGINE PRIMITIVES. JAVASCRIPT PROVIDES GAME BEHAVIOUR.
 
-This reference describes the public virtual `judas` module through accepted M64
-checkpoint `e452751ee98f6c1900a9f6b8dad3fe6bcdecb27b`. It is not an
-eternal compatibility/semantic-version promise. Source authority is
-`src/ScriptSystem.cpp` and the runtime systems it calls; demos do not define API.
+This reference describes accepted M66 plus the provisional M67 candidate, based on
+checkpoint `b9a8cf3b8d8cd3786272480a8abe6cbe9fffe859`. It is not an eternal
+compatibility/semantic-version promise. Source authority is `src/ScriptSystem.cpp`
+and the runtime systems it calls; demos do not define API.
+M67 is checkpointed provisionally by operator authorization; proper human validation
+remains deferred rather than claimed complete.
+M67 adds generic camera projection, transient UI layout and prefab construction
+options; see [supported authoring](NAMED_AUTHORING.md) and the
+[executed example](judasjs/examples/authoring-runtime.js).
 M50 introduced the documentation/tooling. M51 adds generic mass/inertia snapshots
 and pointer capture intent; see [engine/game boundary](M51_ENGINE_BOUNDARY.md).
 M52 exposes the existing generic impulse-at-point body operation and render pose

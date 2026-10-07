@@ -1,0 +1,82 @@
+OBSERVATION Import normalized sibling-prefix escape accepted=0 error=destination must be inside the assets directory
+PASS Import normalized sibling-prefix escape: request refused
+PASS Import normalized sibling-prefix escape: useful refusal error
+PASS Import normalized sibling-prefix escape: every existing file/sidecar byte preserved and no new files
+PASS Import normalized sibling-prefix escape: database identity and diagnostics unchanged
+OBSERVATION Import absolute sibling-prefix escape accepted=0 error=destination must be inside the assets directory
+PASS Import absolute sibling-prefix escape: request refused
+PASS Import absolute sibling-prefix escape: useful refusal error
+PASS Import absolute sibling-prefix escape: every existing file/sidecar byte preserved and no new files
+PASS Import absolute sibling-prefix escape: database identity and diagnostics unchanged
+OBSERVATION Move normalized sibling-prefix escape accepted=0 error=destination must be inside the assets directory
+PASS Move normalized sibling-prefix escape: request refused
+PASS Move normalized sibling-prefix escape: useful refusal error
+PASS Move normalized sibling-prefix escape: every existing file/sidecar byte preserved and no new files
+PASS Move normalized sibling-prefix escape: database identity and diagnostics unchanged
+OBSERVATION Move absolute sibling-prefix escape accepted=0 error=destination must be inside the assets directory
+PASS Move absolute sibling-prefix escape: request refused
+PASS Move absolute sibling-prefix escape: useful refusal error
+PASS Move absolute sibling-prefix escape: every existing file/sidecar byte preserved and no new files
+PASS Move absolute sibling-prefix escape: database identity and diagnostics unchanged
+OBSERVATION Import over corrupt orphan sidecar accepted=0 error=asset metadata already exists: /tmp/judas_asset_integrity_1791395776390322087/import_corrupt_orphan/Assets/orphan.obj.judasmeta
+PASS Import over corrupt orphan sidecar: request refused
+PASS Import over corrupt orphan sidecar: useful refusal error
+PASS Import over corrupt orphan sidecar: every existing file/sidecar byte preserved and no new files
+PASS Import over corrupt orphan sidecar: database identity and diagnostics unchanged
+OBSERVATION Import over missing-asset identity accepted=0 error=asset metadata already exists: /tmp/judas_asset_integrity_1791395776390322087/import_valid_orphan/Assets/orphan.obj.judasmeta
+PASS Import over missing-asset identity: request refused
+PASS Import over missing-asset identity: useful refusal error
+PASS Import over missing-asset identity: every existing file/sidecar byte preserved and no new files
+PASS Import over missing-asset identity: database identity and diagnostics unchanged
+OBSERVATION Move over corrupt orphan sidecar accepted=0 error=asset metadata already exists: /tmp/judas_asset_integrity_1791395776390322087/move_corrupt_orphan/Assets/orphan.obj.judasmeta
+PASS Move over corrupt orphan sidecar: request refused
+PASS Move over corrupt orphan sidecar: useful refusal error
+PASS Move over corrupt orphan sidecar: every existing file/sidecar byte preserved and no new files
+PASS Move over corrupt orphan sidecar: database identity and diagnostics unchanged
+OBSERVATION Move over missing-asset identity accepted=0 error=asset metadata already exists: /tmp/judas_asset_integrity_1791395776390322087/move_valid_orphan/Assets/orphan.obj.judasmeta
+PASS Move over missing-asset identity: request refused
+PASS Move over missing-asset identity: useful refusal error
+PASS Move over missing-asset identity: every existing file/sidecar byte preserved and no new files
+PASS Move over missing-asset identity: database identity and diagnostics unchanged
+OBSERVATION Track existing identity with fresh forced ID accepted=0 error=asset metadata already exists: /tmp/judas_asset_integrity_1791395776390322087/track_existing_identity/Assets/original.obj.judasmeta
+PASS Track existing identity with fresh forced ID: request refused
+PASS Track existing identity with fresh forced ID: useful refusal error
+PASS Track existing identity with fresh forced ID: every existing file/sidecar byte preserved and no new files
+PASS Track existing identity with fresh forced ID: database identity and diagnostics unchanged
+OBSERVATION Track existing corrupt sidecar accepted=0 error=asset metadata already exists: /tmp/judas_asset_integrity_1791395776390322087/track_corrupt_sidecar/Assets/broken.obj.judasmeta
+PASS Track existing corrupt sidecar: request refused
+PASS Track existing corrupt sidecar: useful refusal error
+PASS Track existing corrupt sidecar: every existing file/sidecar byte preserved and no new files
+PASS Track existing corrupt sidecar: database identity and diagnostics unchanged
+OBSERVATION Track preserves dangling metadata symlink accepted=0 error=asset metadata already exists: /tmp/judas_asset_integrity_1791395776390322087/dangling_meta_Track/Assets/target.obj.judasmeta
+PASS Track preserves dangling metadata symlink: request refused
+PASS Track preserves dangling metadata symlink: useful refusal error
+PASS Track preserves dangling metadata symlink: every existing file/sidecar byte preserved and no new files
+PASS Track preserves dangling metadata symlink: database identity and diagnostics unchanged
+OBSERVATION Import preserves dangling metadata symlink accepted=0 error=asset metadata already exists: /tmp/judas_asset_integrity_1791395776390322087/dangling_meta_Import/Assets/target.obj.judasmeta
+PASS Import preserves dangling metadata symlink: request refused
+PASS Import preserves dangling metadata symlink: useful refusal error
+PASS Import preserves dangling metadata symlink: every existing file/sidecar byte preserved and no new files
+PASS Import preserves dangling metadata symlink: database identity and diagnostics unchanged
+OBSERVATION Move preserves dangling metadata symlink accepted=0 error=asset metadata already exists: /tmp/judas_asset_integrity_1791395776390322087/dangling_meta_Move/Assets/target.obj.judasmeta
+PASS Move preserves dangling metadata symlink: request refused
+PASS Move preserves dangling metadata symlink: useful refusal error
+PASS Move preserves dangling metadata symlink: every existing file/sidecar byte preserved and no new files
+PASS Move preserves dangling metadata symlink: database identity and diagnostics unchanged
+OBSERVATION Track sibling directory asset accepted=0 error=asset is not inside the assets directory: /tmp/judas_asset_integrity_1791395776390322087/track_outside/Assets_backup/external.obj
+PASS Track sibling directory asset: request refused
+PASS Track sibling directory asset: useful refusal error
+PASS Track sibling directory asset: every existing file/sidecar byte preserved and no new files
+PASS Track sibling directory asset: database identity and diagnostics unchanged
+PASS Track accepts a file component beginning with two dots inside assets
+PASS Track records exact inside file identity
+PASS Import normalized path within assets
+PASS Move normalized path within assets
+PASS Move preserves referenced ID and resolves new path
+PASS Move keeps metadata byte-for-byte
+PASS Rescan resolves same ID to moved decoded asset
+PASS Duplicate metadata keeps deterministic first holder
+PASS Duplicate metadata reported explicitly
+PASS Duplicate scan preserves every file byte
+PASS temporary fixtures removed
+Asset integrity: 17 cases, 67 checks, 0 failures

@@ -96,6 +96,8 @@ public:
 
 private:
     std::string m_projectFile;
+    mutable std::string m_loadedSource;
+    bool m_hasLoadedSource=false;
     std::string m_rootDir;
     ProjectSettings m_settings;
     std::string m_runtimeSaveDirectory;

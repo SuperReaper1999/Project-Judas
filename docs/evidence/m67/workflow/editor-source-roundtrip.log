@@ -1,0 +1,11 @@
+Renderer fragment texture units: 32 (material path uses 12)
+[editor autotest] shared authoring batch + undo PASS: 
+[editor autotest] duplicate created id 455: scene CHANGED; undo restores: IDENTICAL
+[editor autotest] wrote: /home/conner/Documents/GitHub/Project-Judas/.cache/m67/workflow-final-1/editor.edit.png
+[editor autotest] edit frame: 366 draw calls, 5320 triangles, 1268 debug lines
+[editor autotest] wrote: /home/conner/Documents/GitHub/Project-Judas/.cache/m67/workflow-final-1/editor.play.png
+[editor autotest] play frame: 0 steps, step 0.574 ms, 17 bodies, 0 contacts, 465 draw calls, 7472 triangles, 1 shadow passes, 0 lights, 2209 debug lines, 0 particles
+[editor autotest] resources: 6 meshes, 0 textures, 0 terrain meshes, hits 5364, misses 14, failed 0, uploads 6, resident 1253496 bytes
+[editor autotest] jobs: 7 workers, 16 completed, 0 failed, 0 cancelled
+[editor autotest] authored scene after play/stop is IDENTICAL
+[editor autotest] save ok

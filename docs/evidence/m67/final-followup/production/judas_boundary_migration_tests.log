@@ -1,0 +1,29 @@
+Renderer fragment texture units: 32 (material path uses 12)
+PASS ordinary project explicitly disables historical gameplay
+PASS execution setting round trips
+PASS missing setting preserves historical compatibility
+PASS normal engine host
+PASS workshop builds normally
+PASS legacy adapters inactive
+PASS ordinary JS requests capture and starts without faults
+PASS input/query/tag acquires ordinary body in JS
+PASS holding applies finite physical forces and tensor torque
+PASS JS mass-scaled throw releases body
+PASS query/tag chooses JS hinge policy
+PASS JS door spring moves real M45 hinge
+PASS camera selection belongs to script
+M51_SCRIPTED_FIXED_AVERAGE_MS 0.377178
+PASS workshop composition remains fault-free
+PASS no implicit C++ spawn without script view
+PASS ordinary flight scene builds
+PASS JS transfers control via query/tag
+PASS script thrust moves normal rigid body
+PASS script attitude controller uses generic inertia
+PASS script exits safely to CharacterMotor
+PASS destroyed target handle cannot alias live body
+PASS radial scene uses same project script path
+PASS radial project controls execute
+PASS current copied pool registers normally
+PASS JS swimming uses unchanged production fluid queries
+PASS Stop destroys script state and capture intent
+SUMMARY 26 checks 0 failures

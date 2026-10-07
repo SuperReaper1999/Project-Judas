@@ -1,5 +1,6 @@
 #include "PerformanceProfiler.h"
 #include "RuntimeUI.h"
+#include "NamedAuthoring.h"
 #include "AssetDatabase.h"
 #include "InputSystem.h"
 #include "Renderer.h"
@@ -44,6 +45,7 @@ std::string SerializeUIDocument(const UIDocument& d){bool modern=std::any_of(d.e
         for(auto v:{e.margin,e.padding,e.background,e.color})for(int c=0;c<4;++c)s<<v[c]<<' ';
         s<<e.spacing<<' '<<e.fontSize<<' '<<e.value<<' '<<e.minimum<<' '<<e.maximum<<' '<<std::quoted(e.text)<<' '<<std::quoted(e.texture)<<' '<<std::quoted(e.font);if(modern)s<<' '<<std::quoted(e.textKey)<<' '<<int(e.direction)<<' '<<e.textLogicalAlign<<' '<<e.mirrorRow;s<<'\n';}return s.str();}
 bool ParseUIDocument(const std::string& text,UIDocument& out,std::string& error){
+    if(IsNamedDocument(text)){std::string legacy;if(!NamedToLegacy(text,"ui",legacy,error))return false;return ParseUIDocument(legacy,out,error);}
     if(text.size()>4*1024*1024){error="UI document too large";return false;}if(!ValidTextUTF8(text,error)){error="UI document UTF-8: "+error;return false;}
     std::istringstream s(text);s.imbue(std::locale::classic());std::string magic;int version;size_t count=0;UIDocument d;
     auto fail=[&](){error="malformed or unsupported UI document";return false;};
@@ -57,24 +59,27 @@ bool ParseUIDocument(const std::string& text,UIDocument& out,std::string& error)
     s>>std::ws;if(!s.eof()||!d.Validate(error))return false;out=std::move(d);return true;
 }
 bool LoadUIDocument(const std::string& path,UIDocument& out,std::string& error){std::ifstream f(path);if(!f){error="cannot read UI document: "+path;return false;}std::ostringstream s;s<<f.rdbuf();return ParseUIDocument(s.str(),out,error);}
-bool SaveUIDocument(const std::string& path,const UIDocument& d,std::string& error){if(!d.Validate(error))return false;std::ofstream f(path);f<<SerializeUIDocument(d);if(!f){error="cannot write UI document: "+path;return false;}return true;}
+bool SaveUIDocument(const std::string& path,const UIDocument& d,std::string& error){if(!d.Validate(error))return false;return WriteAuthoredDocument(path,SerializeUIDocument(d),"ui",error);}
+
 bool ValidateUIAssets(const UIDocument& d,const AssetDatabase& a,std::string& error){for(const auto& e:d.elements)for(auto p:{std::make_pair(e.texture,AssetType::Texture),std::make_pair(e.font,AssetType::Font)})if(!p.first.empty()){auto* r=a.Find(p.first);if(!r||r->missing||r->type!=p.second){error="missing/wrong-type UI asset "+p.first;return false;}}return true;}
 RuntimeUI::~RuntimeUI(){Clear();}
 std::uint32_t RuntimeUI::Load(const std::string& asset,const std::string& name,std::uint64_t owner,std::string& error,std::uint64_t slot){auto* a=m_resources?m_resources->Assets():nullptr;auto* r=a?a->Find(asset):nullptr;UIDocument d;
     if(!r||r->missing||r->type!=AssetType::UI){error="missing UI document asset "+asset;return 0;}if(!LoadUIDocument(r->path,d,error)||!ValidateUIAssets(d,*a,error))return 0;return Add(d,name,owner,error,slot);}
 std::uint32_t RuntimeUI::Add(const UIDocument& d,const std::string& name,std::uint64_t owner,std::string& error,std::uint64_t slot){if(name.empty()||Find(name)||!d.Validate(error)){if(error.empty())error="duplicate/empty UI document name";return 0;}if(!m_next){error="UI handle space exhausted";return 0;}
-    auto id=m_next++;m_documents.emplace(id,Instance{d,name,{},{},owner,slot,{},{}});return id;}
-bool RuntimeUI::Unload(std::uint32_t h){auto it=m_documents.find(h);if(it==m_documents.end())return false;const auto name=it->second.name;for(auto i=m_localizedText.begin();i!=m_localizedText.end();)if(i->first.first==h)i=m_localizedText.erase(i);else ++i;if(m_resources)for(const auto& ref:it->second.refs)m_resources->ReleaseRef(ref);m_documents.erase(it);m_events.erase(std::remove_if(m_events.begin(),m_events.end(),[&](const auto& e){return e.document==name;}),m_events.end());return true;}
+    InvalidateLayout();auto id=m_next++;m_documents.emplace(id,Instance{d,name,{},{},owner,slot,{},{}});return id;}
+bool RuntimeUI::Unload(std::uint32_t h){InvalidateLayout();auto it=m_documents.find(h);if(it==m_documents.end())return false;const auto name=it->second.name;for(auto i=m_localizedText.begin();i!=m_localizedText.end();)if(i->first.first==h)i=m_localizedText.erase(i);else ++i;if(m_resources)for(const auto& ref:it->second.refs)m_resources->ReleaseRef(ref);m_documents.erase(it);m_events.erase(std::remove_if(m_events.begin(),m_events.end(),[&](const auto& e){return e.document==name;}),m_events.end());return true;}
 void RuntimeUI::Clear(){while(!m_documents.empty())Unload(m_documents.begin()->first);m_events.clear();m_localizedText.clear();m_quit=false;}
 void RuntimeUI::RemoveOwner(std::uint64_t id){std::vector<uint32_t> remove;for(auto& p:m_documents)if(p.second.owner==id)remove.push_back(p.first);for(auto h:remove)Unload(h);}
 std::uint32_t RuntimeUI::Find(const std::string& n)const{for(const auto& p:m_documents)if(p.second.name==n)return p.first;return 0;}
-UIDocument* RuntimeUI::Document(uint32_t h){auto it=m_documents.find(h);return it==m_documents.end()?nullptr:&it->second.doc;}
+UIDocument* RuntimeUI::Document(uint32_t h){InvalidateLayout();auto it=m_documents.find(h);return it==m_documents.end()?nullptr:&it->second.doc;}
 const UIDocument* RuntimeUI::Document(uint32_t h)const{auto it=m_documents.find(h);return it==m_documents.end()?nullptr:&it->second.doc;}
 UIElement* RuntimeUI::Element(uint32_t h,const std::string& id){auto* d=Document(h);return d?ById(*d,id):nullptr;}
 const UILayout* RuntimeUI::LayoutOf(uint32_t h,const std::string& id)const{auto it=m_documents.find(h);if(it==m_documents.end())return nullptr;auto p=it->second.layout.find(id);return p==it->second.layout.end()?nullptr:&p->second;}
 bool RuntimeUI::Paused()const{for(auto& p:m_documents)if(p.second.doc.visible&&p.second.doc.enabled&&p.second.doc.modal)return true;return false;}
 bool RuntimeUI::OwnsInput()const{return Paused();}
 void RuntimeUI::Layout(int w,int h){
+    auto localeRevision=m_localization?m_localization->Revision():0;if(w==m_layoutWidth&&h==m_layoutHeight&&m_layoutRevision==m_computedRevision&&localeRevision==m_localeRevision)return;
+    m_layoutWidth=w;m_layoutHeight=h;m_computedRevision=m_layoutRevision;m_localeRevision=localeRevision;
     JUDAS_PROFILE_SCOPE("Runtime UI layout");auto start=Clock::now();m_stats.elements=0;
     for(auto& p:m_documents){auto& in=p.second;in.layout.clear();auto& d=in.doc;float scale=std::min(w/d.reference.x,h/d.reference.y);glm::vec2 origin=(glm::vec2(w,h)-d.reference*scale)*.5f;
         std::map<std::string,float> cursor;for(auto& e:d.elements){UILayout l;if(e.parent.empty()){l.rect={origin,d.reference*scale};l.clip={{0,0},{w,h}};l.visible=d.visible&&e.visible;l.enabled=d.enabled&&e.enabled;}
@@ -141,3 +146,5 @@ void RuntimeUI::Draw(Renderer& r,int w,int h){
 }
 
 void RuntimeUI::RemoveSlotOwner(std::uint64_t owner,std::uint64_t slot){std::vector<uint32_t> remove;for(auto& p:m_documents)if(p.second.owner==owner&&p.second.slot==slot)remove.push_back(p.first);for(auto h:remove)Unload(h);}
+
+bool RuntimeUI::SetElementLayout(uint32_t h,const std::string& id,const std::map<std::string,glm::vec2>& patch,std::string& error){auto* e=Element(h,id);if(!e){error="stale UI document/element";return false;}auto candidate=*e;for(auto& [key,v]:patch){if(key=="offset")candidate.offset=v;else if(key=="size")candidate.size=v;else if(key=="anchorMin")candidate.anchorMin=v;else if(key=="anchorMax")candidate.anchorMax=v;else if(key=="relativeSize")candidate.relativeSize=v;else if(key=="align")candidate.align=v;else{error="unknown layout property "+key;return false;}}UIDocument proof;UIElement root;root.id="__layout_root";root.kind=UIKind::Canvas;auto test=candidate;test.id="__layout_element";test.parent=root.id;test.kind=UIKind::Panel;proof.elements={root,test};if(!proof.Validate(error))return false;*e=candidate;InvalidateLayout();return true;}

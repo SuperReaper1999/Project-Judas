@@ -459,7 +459,7 @@ void RenderWorldFrame(Renderer& renderer, int width, int height, const RuntimeWo
     JUDAS_PROFILE_SCOPE("Main camera");
     RendererProfileScope mainGPU(renderer,"Main camera");
     if(world.view){const auto& v=*world.view;auto q=v.pose.rotation;
-        renderer.SetCamera(glm::lookAt(v.pose.position,v.pose.position+q*glm::vec3(0,0,-1),q*glm::vec3(0,1,0)),glm::perspective(glm::radians(v.fov),float(width)/height,.1f,500.f));
+        renderer.SetCamera(glm::lookAt(v.pose.position,v.pose.position+q*glm::vec3(0,0,-1),q*glm::vec3(0,1,0)),glm::perspective(glm::radians(v.fov),float(width)/height,v.nearPlane,v.farPlane));
     }else renderer.SetCamera(view, projection);
     renderer.SetRenderMask(world.Settings().mainCameraRenderMask);
     renderer.SetDynamicLights(lights);

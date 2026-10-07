@@ -1,0 +1,28 @@
+PASS nearest ray / normalized direction / fraction
+PASS ray surface point and outward normal
+PASS ray miss
+PASS maximum distance clips hit
+PASS ignored generation-aware body
+PASS layer and required tag filter independent of physical mask
+PASS excluded tag
+PASS excluded layer
+PASS disabled collider omitted
+PASS sensor opt-in
+PASS sensor explicitly queried
+PASS sphere cast surface witness
+PASS independent capsule dimensions (no player shape needed)
+PASS box cast robust SAT and target surface witness
+PASS box filtering shared
+PASS rotated box analytic ray
+PASS sphere against rotated box corner
+PASS queries leave pose and velocity unchanged
+PASS zero distance initial overlap
+PASS long ray cannot skip thin box
+PASS stale ignore cannot suppress reused slot
+PASS invalid direction rejected
+PASS real radial terrain ray / independent flat elevation oracle
+PASS radial terrain sphere cast
+PASS radial terrain capsule samples
+PASS real broadphase limits 1024-body world to 32 ray candidates
+PERF 10000 rays 61.760073 ms; 10000 sphere casts 63.851306 ms; candidates 32 / 1024
+SUMMARY 26 checks 0 failures

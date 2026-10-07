@@ -1,0 +1,21 @@
+PASS normal named workshop startup with several hundred objects
+PASS approved original multipart fixture loads through normal M66 resources
+PASS real logical input drives initialized prefab and same-player third-person camera
+PASS ordinary runtime localization switches to Arabic
+PASS pause/resume releases modal state without gameplay input leak
+PASS actual posed skeleton stable socket resolves
+PASS same pose resolver applies authored non-humanoid limb target
+PASS first region activated normally
+PASS project JS adopted and qualified a referenced traveller
+PASS first region retires outside retention interest
+PASS cross/revisit retains adopted traveller and qualified save reference
+PASS normal save queued after region crossing/revisit
+PASS separate-process snapshot saved
+PASS reload/cold-load callbacks leave no stale handles
+PASS normal application lifecycle
+SUMMARY 15 checks 0 failures frames=213
+Renderer fragment texture units: 32 (material path uses 12)
+World state: disk saves disabled for additive compositions
+Project: World Workshop (/home/conner/Documents/GitHub/Project-Judas/projects/world_workshop/world_workshop.judasproj)
+Scene: M67 World Workshop (/home/conner/Documents/GitHub/Project-Judas/projects/world_workshop/Scenes/workshop.judas)
+World origin (m): 0.000, 0.000, 0.000

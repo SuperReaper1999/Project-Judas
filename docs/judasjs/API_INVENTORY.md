@@ -1,6 +1,6 @@
 # Current public JudasJS inventory
 
-M66 import review of the registered virtual module based on starting checkpoint `3e5147a4ed97102200da91b4181c97b2a98942ba`.
+M67 authoring and runtime-seam review of the registered virtual module based on starting checkpoint `b9a8cf3b8d8cd3786272480a8abe6cbe9fffe859`.
 Each row is a runtime export/member (constructors and plain handle fields included).
 Native dispatcher operations are implementation details, not additional JS APIs.
 
@@ -103,6 +103,7 @@ Native dispatcher operations are implementation details, not additional JS APIs.
 | `Entity.setAudioEnabled` | `audioEnabled` | [declaration](../judas.d.ts) | [reference](audio.md) |
 | `Entity.setAudioVelocity` | `audioVelocity` | [declaration](../judas.d.ts) | [reference](audio.md) |
 | `Entity.setCameraEnabled` | `camera` | [declaration](../judas.d.ts) | [reference](entities.md) |
+| `Entity.setCameraProjection` | `cameraProjection` | [declaration](../judas.d.ts) | [reference](effects-camera.md) |
 | `Entity.setColliderEnabled` | `colliderEnabled` | [declaration](../judas.d.ts) | [reference](entities.md) |
 | `Entity.setNavigationEnabled` | `navEnabled` | [declaration](../judas.d.ts) | [reference](entities.md) |
 | `Entity.setPartVisible` | `modelPartVisible` | [declaration](../judas.d.ts) | [reference](entities.md) |
@@ -189,6 +190,8 @@ Native dispatcher operations are implementation details, not additional JS APIs.
 | `UIElement.font` | `uiGet`, `uiSet` | [declaration](../judas.d.ts) | [reference](ui.md) |
 | `UIElement.handle` | JS wrapper/data | [declaration](../judas.d.ts) | [reference](ui.md) |
 | `UIElement.id` | JS wrapper/data | [declaration](../judas.d.ts) | [reference](ui.md) |
+| `UIElement.layout` | `uiLayout` | [declaration](../judas.d.ts) | [reference](ui.md) |
+| `UIElement.setLayout` | `uiLayout` | [declaration](../judas.d.ts) | [reference](ui.md) |
 | `UIElement.text` | `uiGet`, `uiSet` | [declaration](../judas.d.ts) | [reference](ui.md) |
 | `UIElement.textAlignment` | `uiGet`, `uiSet` | [declaration](../judas.d.ts) | [reference](ui.md) |
 | `UIElement.textKey` | `uiGet`, `uiSet` | [declaration](../judas.d.ts) | [reference](ui.md) |
@@ -292,12 +295,14 @@ Native dispatcher operations are implementation details, not additional JS APIs.
 | `world.entity` | JS wrapper/data | [declaration](../judas.d.ts) | [reference](entities.md) |
 | `world.fluidSample` | `fluidSample` | [declaration](../judas.d.ts) | [reference](effects-camera.md) |
 | `world.overlap` | `overlap` | [declaration](../judas.d.ts) | [reference](entities.md) |
+| `world.project` | `projectViewport` | [declaration](../judas.d.ts) | [reference](effects-camera.md) |
 | `world.queryTags` | `queryTags` | [declaration](../judas.d.ts) | [reference](entities.md) |
 | `world.setAppearance` | `appearanceSet` | [declaration](../judas.d.ts) | [reference](materials.md) |
 | `world.setView` | `setView` | [declaration](../judas.d.ts) | [reference](effects-camera.md) |
 | `world.spawnPrefab` | `spawn` | [declaration](../judas.d.ts) | [reference](entities.md) |
 | `world.sweepCapsule` | `sweep` | [declaration](../judas.d.ts) | [reference](entities.md) |
 | `world.viewRay` | `viewRay` | [declaration](../judas.d.ts) | [reference](effects-camera.md) |
+| `world.viewport` | `viewportSize` | [declaration](../judas.d.ts) | [reference](effects-camera.md) |
 
 ## Lifecycle and dynamic exceptions
 

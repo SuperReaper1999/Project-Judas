@@ -1,0 +1,42 @@
+Renderer fragment texture units: 32 (material path uses 12)
+PASS real EngineHost
+PASS ordinary current registered project
+PASS current scene load
+PASS ordinary world / game lifecycle
+PASS JS project starts motor and separate camera
+PASS real fixed path uses JS intent, not C++ player locomotion
+PASS independent scripted second motor
+PASS authored M45 translating support is physical
+PASS authored M45 rotating support is physical
+PASS launch is project JS velocity intent through fixed logical press
+PASS current project prefab motor spawn
+PASS spawn/destruction retires safe motor access
+PASS existing persistence restores motor entity motion
+PASS restored motor position and velocity coherent
+PASS reset clears motor and camera runtime state
+PASS Stop releases world-owned motors and view
+PASS current scene load
+PASS ordinary world / game lifecycle
+PASS JS project starts motor and separate camera
+PASS real fixed path uses JS intent, not C++ player locomotion
+PASS independent scripted second motor
+PASS authored M45 translating support is physical
+PASS authored M45 rotating support is physical
+PASS launch is project JS velocity intent through fixed logical press
+PASS current project prefab motor spawn
+PASS spawn/destruction retires safe motor access
+PASS existing persistence restores motor entity motion
+PASS restored motor position and velocity coherent
+PASS reset clears motor and camera runtime state
+PASS Stop releases world-owned motors and view
+PASS current scene load
+PASS ordinary world / game lifecycle
+PASS JS project starts motor and separate camera
+PASS real fixed path uses JS intent, not C++ player locomotion
+SWIM immersion=0.621584 vertical_change=0.138298
+PASS JS buoyancy/drag/propulsion uses existing fluid query, motor has no swimming mode
+PASS existing persistence restores motor entity motion
+PASS restored motor position and velocity coherent
+PASS reset clears motor and camera runtime state
+PASS Stop releases world-owned motors and view
+SUMMARY 39 checks 0 failures

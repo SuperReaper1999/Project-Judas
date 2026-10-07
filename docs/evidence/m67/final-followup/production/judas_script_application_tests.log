@@ -1,0 +1,71 @@
+Renderer fragment texture units: 32 (material path uses 12)
+World state: /home/conner/Documents/GitHub/Project-Judas/build/m40-application/Saves/main.judasstate (none saved)
+Project: JavaScript gameplay (/home/conner/Documents/GitHub/Project-Judas/build/m40-application/script_demo.judasproj)
+Scene: M40 JavaScript gameplay — K key / G door / P prefab / J pulse / F6 save (/home/conner/Documents/GitHub/Project-Judas/build/m40-application/Scenes/main.judas)
+World origin (m): 0.000, 0.000, 0.000
+PASS real miniaudio engine in device-free mode; no listening claim
+PASS scripted game uses actual asynchronous application resources
+JS: Key collected: saved JavaScript state.
+JS: Door opened
+JS: Spawned independent scripted hierarchy 4611686018427387904
+JS: Tagged physics candidates: 1
+JS: Spawned independent scripted hierarchy 4611686018427387906
+JS: Tagged physics candidates: 2
+PASS JS gameplay executes inside real rendered application frames
+APP_STATE 4/1 {"collected":true}
+APP_STATE 5/1 {"open":true,"height":0.30000001564621925}
+APP_STATE 6/1 {"spawned":2}
+APP_STATE 4611686018427387904/1 {"steps":8,"pulses":1}
+APP_STATE 4611686018427387906/1 {"steps":6,"pulses":1}
+PASS JS key/locked-door/prefab/effects game rules and controlled state
+PASS one authoritative fixed callback cadence per actual fixed step
+PASS scripted authored audio routes through normal resources
+PASS ordinary save captures authored and runtime-spawned JS state
+Renderer fragment texture units: 32 (material path uses 12)
+World state: /home/conner/Documents/GitHub/Project-Judas/build/m40-application/Saves/main.judasstate (none saved)
+Project: JavaScript gameplay (/home/conner/Documents/GitHub/Project-Judas/build/m40-application/script_demo.judasproj)
+Scene: M40 JavaScript gameplay — K key / G door / P prefab / J pulse / F6 save (/home/conner/Documents/GitHub/Project-Judas/build/m40-application/Scenes/main.judas)
+World origin (m): 0.000, 0.000, 0.000
+PASS ordinary runtime shutdown
+PASS real miniaudio engine in device-free mode; no listening claim
+PASS scripted game uses actual asynchronous application resources
+PASS normal world save loads before first script callback
+PASS JS gameplay executes inside real rendered application frames
+APP_STATE 4/1 {"collected":true}
+APP_STATE 5/1 {"open":true,"height":0.6333333663642406}
+APP_STATE 6/1 {"spawned":2}
+APP_STATE 4611686018427387904/1 {"steps":18,"pulses":1}
+APP_STATE 4611686018427387906/1 {"steps":16,"pulses":1}
+PASS JS key/locked-door/prefab/effects game rules and controlled state
+PASS one authoritative fixed callback cadence per actual fixed step
+PASS scripted authored audio routes through normal resources
+Renderer fragment texture units: 32 (material path uses 12)
+World state: /home/conner/.local/share/judas/games/80b8626f2131567afd783e0ef856bc036aed9caa74fd6bae1a9c1f7b85b13f17/Saves/main.judasstate (none saved)
+Project: JavaScript gameplay (/home/conner/Documents/GitHub/Project-Judas/build/m40-moved-game/game.judasproj)
+Scene: M40 JavaScript gameplay — K key / G door / P prefab / J pulse / F6 save (/home/conner/Documents/GitHub/Project-Judas/build/m40-moved-game/Scenes/main.judas)
+World origin (m): 0.000, 0.000, 0.000
+PASS moved package runs from unrelated working directory
+PASS real miniaudio engine in device-free mode; no listening claim
+PASS scripted game uses actual asynchronous application resources
+JS: Key collected: saved JavaScript state.
+JS: Door opened
+JS: Spawned independent scripted hierarchy 4611686018427387904
+JS: Tagged physics candidates: 1
+JS: Spawned independent scripted hierarchy 4611686018427387906
+JS: Tagged physics candidates: 2
+PASS JS gameplay executes inside real rendered application frames
+APP_STATE 4/1 {"collected":true}
+APP_STATE 5/1 {"open":true,"height":0.30000001564621925}
+APP_STATE 6/1 {"spawned":2}
+APP_STATE 4611686018427387904/1 {"steps":8,"pulses":1}
+APP_STATE 4611686018427387906/1 {"steps":6,"pulses":1}
+PASS JS key/locked-door/prefab/effects game rules and controlled state
+PASS one authoritative fixed callback cadence per actual fixed step
+PASS scripted authored audio routes through normal resources
+PASS ordinary save captures authored and runtime-spawned JS state
+PASS ordinary runtime shutdown
+PASS ordinary runtime shutdown
+PASS script project loads through normal project configuration
+PASS normal M38 export packages registered JS and imported modules
+PASS moved exported application runs JS gameplay without repository/Node
+SUMMARY 19 checks 0 failures

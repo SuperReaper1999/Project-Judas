@@ -1,0 +1,14 @@
+edited-export 0
+final-export 0
+source-hidden-moved-runtime 1
+Traceback (most recent call last):
+  File "/home/conner/Documents/GitHub/Project-Judas/docs/evidence/m67/verify_workflow.py", line 72, in <module>
+    if __name__=='__main__':main()
+                            ~~~~^^
+  File "/home/conner/Documents/GitHub/Project-Judas/docs/evidence/m67/verify_workflow.py", line 65, in main
+    run('source-hidden-moved-runtime',['unshare','--user','--map-root-user','--mount','--net','python3','-c',launch,empty,ROOT.parent,package/'judas'],{'JUDAS_TEST_SCRIPT':str(steps),'JUDAS_PROFILE_OUTPUT':str(hidden/'profile.json'),'XDG_DATA_HOME':str(moved/'user-data'),'XDG_CONFIG_HOME':str(moved/'config')},cwd='/tmp')
+    ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/conner/Documents/GitHub/Project-Judas/docs/evidence/m67/verify_workflow.py", line 16, in run
+    assert (r.returncode==0 if expect==0 else r.returncode!=0),(label,text[-3000:])
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ('source-hidden-moved-runtime', 'step,time,posX,posY,posZ,upX,upY,upZ,grounded,velX,velY,velZ,gravX,gravY,gravZ,controlled,frame,steps,paused\nRenderer fragment texture units: 32 (material path uses 12)\nWorld state: disk saves disabled for additive compositions\nProject: World Workshop (/tmp/judas-m67-offline-workflow-export-followup-1/WorldWorkshop/game.judasproj)\nScene: M67 World Workshop (/tmp/judas-m67-offline-workflow-export-followup-1/WorldWorkshop/Scenes/workshop.judas)\nWorld origin (m): 0.000, 0.000, 0.000\n[TestHarness] pause expectation failed\n')

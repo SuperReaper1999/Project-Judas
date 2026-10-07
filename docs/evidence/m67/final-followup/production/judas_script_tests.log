@@ -1,0 +1,64 @@
+script asset=f0af40661c622c05615d2ca149143dd7 entity=1 slot=5 update: Error: intentional fault
+    at update (Assets/fault.js:1:42)
+
+script asset=3ca99cbe83f7c4c98ca98d57dd271384 entity=2 slot=3 update: InternalError: interrupted
+    at update (Assets/loop.js:1:1)
+
+script asset=eead1d380cd7a680937f973620962e3e entity=1 slot=6 module: SyntaxError: expecting ';'
+    at Assets/syntax.js:1:32
+
+script asset=00000000000000000000000000000000 entity=2 slot=4 module: ReferenceError: missing script asset 00000000000000000000000000000000
+
+script asset=f0af40661c622c05615d2ca149143dd7 entity=1 slot=5 update: Error: intentional fault
+    at update (Assets/fault.js:1:42)
+
+script asset=3ca99cbe83f7c4c98ca98d57dd271384 entity=2 slot=3 update: InternalError: interrupted
+    at update (Assets/loop.js:1:1)
+
+script asset=1eea5604e257a368a02a56d022ce833a entity=1 slot=1 update: ReferenceError: stale or invalid entity 2
+    at __judas (native)
+    at call (judas:2:51)
+    at get transform (judas:6:25)
+    at update (Assets/stale.js:1:119)
+
+PASS registered JavaScript assets
+PASS restricted module metadata and relative import
+PASS typed authored properties with source defaults
+PASS script slots scene round-trip
+PASS ordinary runtime constructs scripted world
+PASS real VM runs callbacks without faults
+STATE 1/4 {"frames":2,"steps":2,"start":1,"speed":7}
+STATE 2/2 {"frames":2,"steps":2,"start":1,"speed":3}
+PASS frame/fixed callbacks have separate cadence
+PASS independent instances and authored overrides
+PASS controlled script state saved
+PASS controlled script state parsed
+PASS script state restore before VM callbacks
+PASS restored state visible to resumed gameplay
+PASS invalid slot leaves live state unchanged
+PASS JSON-like state accepts finite bounded data only
+PASS scripted prefab uses ordinary component serialization
+PASS scripted prefab registered normally
+PASS generic prefab property override preserves script data
+PASS runtime SpawnPrefab creates ordinary scripted hierarchy
+PASS runtime-created script instance and state restore together
+PASS spawned behaviours independent and normal hierarchy destruction
+PASS native binding world uses project classifications
+NATIVE {"parent":null,"classification":{"renderLayer":0,"collisionLayer":0,"collisionMask":"18446744073709551615"},"velocity":{"x":1,"y":0,"z":0},"angular":{"x":0,"y":0,"z":2},"tag":true,"query":1,"overlap":1,"sweep":false,"position":{"x":0,"y":2,"z":0},"input":true}
+PASS fixed script receives latched short logical-input press
+PASS tags and filtered authoritative physics queries
+PASS forces/impulse/velocity and immediate authoritative transform readback
+PERFORMANCE scripts=0 frame_plus_fixed_us=0.008
+PERFORMANCE scripts=10 frame_plus_fixed_us=20.901
+PERFORMANCE scripts=100 frame_plus_fixed_us=317.480
+PASS transitive script source change rejects old save
+PASS hostile fixture builds on normal path
+PASS throw/infinite loop fault only offending instances once
+PASS ordinary entity destruction invalidates native script handle
+PASS syntax/missing script assets do not abort unrelated world construction
+PASS module and callback faults remain isolated with useful diagnostics
+PASS reset restores authored scripted static transforms and fresh session
+PASS retained JS wrapper rejects destroyed native entity
+PASS authored slot order and shared session module caching
+PASS no-world inspector reads code without constructing gameplay instances
+SUMMARY 34 checks 0 failures

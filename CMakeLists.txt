@@ -188,6 +188,7 @@ add_library(judas_engine STATIC
     src/Scene.cpp
     src/Ragdoll.cpp
     src/SceneSerialization.cpp
+    src/NamedAuthoring.cpp
     src/SceneFingerprint.cpp
     src/Project.cpp
     src/AssetDatabase.cpp
@@ -261,6 +262,7 @@ add_executable(judas_editor
     src/editor/EditorCamera.cpp
     src/editor/EditorHistory.cpp
     src/editor/EditorPanels.cpp
+    src/editor/WorldTools.cpp
     src/editor/ProfilerView.cpp
     src/editor/EditorWidgets.cpp
     src/editor/ComponentEditors.cpp
@@ -271,7 +273,7 @@ target_compile_options(judas_editor PRIVATE -Wall -Wextra)
 
 # Milestone 30: the scene authoring tool that writes the shipped demonstration
 # scenes and the tiny game scene (tools/SceneAuthor.cpp tools/StructuredAuthor.cpp).
-add_executable(judas_scene_author tools/SceneAuthor.cpp tools/StructuredAuthor.cpp)
+add_executable(judas_scene_author tools/SceneAuthor.cpp tools/StructuredAuthor.cpp tools/AuthoringCLI.cpp tools/RecipeCLI.cpp tools/ContentServicesCLI.cpp)
 target_link_libraries(judas_scene_author PRIVATE judas_engine)
 target_compile_options(judas_scene_author PRIVATE -Wall -Wextra)
 
@@ -1329,3 +1331,28 @@ target_link_libraries(judas_model_runtime_tests PRIVATE judas_engine)
 add_executable(judas_model_application_tests tests/ModelApplicationTests.cpp src/Application.cpp src/RuntimeOptions.cpp src/RuntimeDiagnostics.cpp src/TestHarness.cpp)
 target_link_libraries(judas_model_application_tests PRIVATE judas_engine)
 target_compile_options(judas_model_application_tests PRIVATE -Wall -Wextra)
+
+add_executable(judas_world_building_tests tests/WorldBuildingTests.cpp src/editor/EditorHistory.cpp)
+target_link_libraries(judas_world_building_tests PRIVATE judas_engine)
+target_compile_options(judas_world_building_tests PRIVATE -Wall -Wextra)
+
+add_library(judas_world_authoring STATIC src/authoring/ContentReferences.cpp src/authoring/WorldBuilder.cpp src/authoring/AuthoringDocument.cpp src/authoring/SkeletonAuthoring.cpp src/authoring/RecipePreview.cpp)
+target_include_directories(judas_world_authoring PUBLIC src/authoring)
+target_link_libraries(judas_world_authoring PUBLIC judas_engine)
+target_compile_options(judas_world_authoring PRIVATE -Wall -Wextra)
+target_link_libraries(judas_scene_author PRIVATE judas_world_authoring)
+target_link_libraries(judas_editor PRIVATE judas_world_authoring)
+target_link_libraries(judas_world_building_tests PRIVATE judas_world_authoring)
+
+target_link_libraries(judas_scene_author PRIVATE judas_model_import)
+
+add_executable(judas_world_authoring_runtime_tests tests/WorldAuthoringRuntimeTests.cpp)
+target_link_libraries(judas_world_authoring_runtime_tests PRIVATE judas_engine)
+target_compile_options(judas_world_authoring_runtime_tests PRIVATE -Wall -Wextra)
+
+add_executable(judas_world_authoring_application_tests tests/WorldAuthoringApplicationTests.cpp src/Application.cpp src/RuntimeOptions.cpp src/RuntimeDiagnostics.cpp src/TestHarness.cpp)
+target_link_libraries(judas_world_authoring_application_tests PRIVATE judas_engine)
+target_compile_options(judas_world_authoring_application_tests PRIVATE -Wall -Wextra)
+add_executable(judas_world_authoring_performance tests/WorldAuthoringPerformance.cpp src/editor/EditorHistory.cpp)
+target_link_libraries(judas_world_authoring_performance PRIVATE judas_world_authoring)
+target_compile_options(judas_world_authoring_performance PRIVATE -Wall -Wextra)

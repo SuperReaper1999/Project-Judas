@@ -1,0 +1,76 @@
+Renderer fragment texture units: 32 (material path uses 12)
+Localization: missing localization key absent.integration.key
+Localization: missing localization key absent.integration.key
+Localization catalog 080d5a0eff4ae2e45e0519ccd1ff96e3: bad: ICU MessageFormat at UTF-16 offset 0: U_UNMATCHED_BRACES
+PASS normal host
+PASS ordinary text lab project
+PASS catalog startup JS fixture registered normally
+PASS catalog startup scripted world builds
+PASS actual catalog decode paused before asynchronous publication
+PASS unpublished catalog retains distinct non-missing diagnostic
+PASS JudasJS unpublished catalog returns visible placeholder without TypeError
+PASS published JS lookup and genuine missing fallback work; invalid arguments still throw
+PASS genuinely absent published key retains existing missing-key diagnostic
+PASS startup-only test asset removed before unchanged-baseline fingerprint checks
+PASS invalid replacement never publishes partial catalog / prior message remains live
+PASS valid replacement reload publishes revision and supplementary UTF-8
+PASS real font decode worker reaches controlled completion
+PASS delayed old-generation font cannot publish after project release
+PASS lab scene parses
+PASS session-bound world baseline builds
+PASS prefab instance keeps ordinary UI document/font/catalog asset references
+PASS authored localized fingerprint independent of project machine path
+PASS authored catalog byte revision changes baseline fingerprint
+PASS transient locale is not an authored fingerprint input
+PASS fresh Play/project session starts from authored default rather than leaked override
+PASS custom process C++ numeric locale does not change scene/project/UI serialization
+PASS two documents have independent runtime elements
+PASS authored horizontal row explicitly mirrors under RTL locale
+PASS per-instance key/text override does not mutate shared authoring
+PASS unloaded document handle remains invalid
+Renderer fragment texture units: 32 (material path uses 12)
+World state: /home/conner/Documents/GitHub/Project-Judas/projects/text_lab/Saves/lab.judasstate (none saved)
+Project: M58 Text lab (/home/conner/Documents/GitHub/Project-Judas/projects/text_lab/text_lab.judasproj)
+Scene: M58 Unicode text lab (/home/conner/Documents/GitHub/Project-Judas/projects/text_lab/Scenes/lab.judas)
+World origin (m): 0.000, 0.000, 0.000
+Text coverage missing for 1 clusters; primary-font .notdef shown
+Text coverage missing for 1 clusters; primary-font .notdef shown
+Text coverage missing for 1 clusters; primary-font .notdef shown
+Text coverage missing for 1 clusters; primary-font .notdef shown
+Text coverage missing for 1 clusters; primary-font .notdef shown
+Text coverage missing for 1 clusters; primary-font .notdef shown
+Text coverage missing for 1 clusters; primary-font .notdef shown
+Text coverage missing for 1 clusters; primary-font .notdef shown
+Text coverage missing for 1 clusters; primary-font .notdef shown
+Text coverage missing for 1 clusters; primary-font .notdef shown
+Text coverage missing for 1 clusters; primary-font .notdef shown
+Text coverage missing for 1 clusters; primary-font .notdef shown
+Text coverage missing for 1 clusters; primary-font .notdef shown
+Text coverage missing for 1 clusters; primary-font .notdef shown
+Text coverage missing for 1 clusters; primary-font .notdef shown
+Text coverage missing for 1 clusters; primary-font .notdef shown
+GL application NVIDIA Corporation / NVIDIA GeForce GTX 970/PCIe/SSE2
+PASS registered UI document loads in real application
+PASS playing locale changes without script faults
+PASS safe scene reload reconstructs world but retains session locale
+APPLICATION text_lab fixed_ms=0.0051 glyph_rasters=290 atlas_bytes=4194304 font_bytes=5752416 layout_bytes=53424 bodies=0
+PASS final application scripts fault-free
+PASS M56 application text/locale profile exports
+Renderer fragment texture units: 32 (material path uses 12)
+World state: /home/conner/Documents/GitHub/Project-Judas/projects/shooter_game/Saves/range.judasstate (none saved)
+Project: Spring Range (/home/conner/Documents/GitHub/Project-Judas/projects/shooter_game/shooter_game.judasproj)
+Scene: Spring Range (/home/conner/Documents/GitHub/Project-Judas/projects/shooter_game/Scenes/range.judas)
+World origin (m): 0.000, 0.000, 0.000
+PASS application startup/render/reload/Stop completed
+GL application NVIDIA Corporation / NVIDIA GeForce GTX 970/PCIe/SSE2
+PASS registered UI document loads in real application
+PASS playing locale changes without script faults
+PASS paused language change preserves modal state and released capture
+PASS paused localization does not advance gameplay time
+PASS resume after locale change restores pointer policy
+PASS safe scene reload reconstructs world but retains session locale
+APPLICATION shooter_game fixed_ms=1.1568 glyph_rasters=420 atlas_bytes=4194304 font_bytes=5292748 layout_bytes=38061 bodies=52
+PASS final application scripts fault-free
+PASS M56 application text/locale profile exports
+PASS application startup/render/reload/Stop completed
+SUMMARY 41 checks 0 failures

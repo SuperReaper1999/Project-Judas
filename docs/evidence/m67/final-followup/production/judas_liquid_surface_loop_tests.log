@@ -1,0 +1,14 @@
+Renderer fragment texture units: 32 (material path uses 12)
+World state: /home/conner/Documents/GitHub/Project-Judas/projects/liquid_surface_demo/Saves/lab.judasstate (none saved)
+Project: Dynamic Liquid Surface Lab (/home/conner/Documents/GitHub/Project-Judas/projects/liquid_surface_demo/liquid_surface_demo.judasproj)
+Scene: Dynamic Surface / Flat Pool (projects/liquid_surface_demo/Scenes/lab.judas)
+World origin (m): 1000000000000.000, -2000000000000.000, 3000000000000.000
+M55 loop frame samples 61 median 4.15673 p95 7.43676 max 8.37099 ms
+M55 loop fixed samples 17 median 2.35782 p95 3.17582 max 3.81886 ms
+M55 loop render samples 61 median 3.65789 p95 4.10024 max 4.37052 ms
+M55 loop surface samples 61 median 0.00013 p95 0.00026 max 0.00038 ms
+M55 loop liquid samples 17 median 2.11240 p95 2.76665 max 2.90644 ms
+M55 loop containers samples 17 median 0.30505 p95 0.34711 max 0.40805 ms
+M55 loop solid storage samples 17 median 1.27502 p95 1.59066 max 1.67683 ms
+M55 loop loading samples 17 median 0.04226 p95 0.41001 max 0.41499 ms
+M55 loop catchup 0 capped 0 frames 76 failures 0

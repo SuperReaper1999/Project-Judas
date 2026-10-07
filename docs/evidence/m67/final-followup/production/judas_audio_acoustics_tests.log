@@ -1,0 +1,210 @@
+PASS device-free production miniaudio engine
+PASS bounded streaming file identity
+PASS incremental digest identical to canonical primitive across pages
+PASS cancelled incremental hash leaves identity unchanged
+PASS incremental WAV/MP3/FLAC source created
+PASS bounded prefill completes
+PASS known header length or explicit unknown MP3 length with fixed PCM allocation
+STREAM codec=wav prefill_ms=2.4347 bytes=65536 duration_known=1 duration_s=60.00000
+PASS stream starts after ready generation
+PASS actual production graph PCM read
+PASS stream produces real decoded PCM
+PASS stream pause
+PASS actual production graph PCM read
+PASS paused independent cursor holds
+PASS seek prefill is bounded and generation-current
+SEEK codec=wav latency_ms=1.0894
+PASS seek seconds converted to media frames
+PASS resume stream after seek
+PASS actual production graph PCM read
+PASS seek does not replay old pages
+PASS rapid seek accepted
+PASS rapid seek accepted
+PASS rapid seek accepted
+PASS only latest rapid seek generation readies
+PASS rapid seek final target wins
+PASS decoder and pages retire on worker
+PASS incremental WAV/MP3/FLAC source created
+PASS bounded prefill completes
+PASS known header length or explicit unknown MP3 length with fixed PCM allocation
+STREAM codec=mp3 prefill_ms=5.3675 bytes=65536 duration_known=0 duration_s=0.00000
+PASS stream starts after ready generation
+PASS actual production graph PCM read
+PASS stream produces real decoded PCM
+PASS stream pause
+PASS actual production graph PCM read
+PASS paused independent cursor holds
+PASS seek prefill is bounded and generation-current
+SEEK codec=mp3 latency_ms=23.5872
+PASS seek seconds converted to media frames
+PASS resume stream after seek
+PASS actual production graph PCM read
+PASS seek does not replay old pages
+PASS rapid seek accepted
+PASS rapid seek accepted
+PASS rapid seek accepted
+PASS only latest rapid seek generation readies
+PASS rapid seek final target wins
+PASS decoder and pages retire on worker
+PASS incremental WAV/MP3/FLAC source created
+PASS bounded prefill completes
+PASS known header length or explicit unknown MP3 length with fixed PCM allocation
+STREAM codec=flac prefill_ms=1.1182 bytes=65536 duration_known=1 duration_s=60.00000
+PASS stream starts after ready generation
+PASS actual production graph PCM read
+PASS stream produces real decoded PCM
+PASS stream pause
+PASS actual production graph PCM read
+PASS paused independent cursor holds
+PASS seek prefill is bounded and generation-current
+SEEK codec=flac latency_ms=5.3958
+PASS seek seconds converted to media frames
+PASS resume stream after seek
+PASS actual production graph PCM read
+PASS seek does not replay old pages
+PASS rapid seek accepted
+PASS rapid seek accepted
+PASS rapid seek accepted
+PASS only latest rapid seek generation readies
+PASS rapid seek final target wins
+PASS decoder and pages retire on worker
+PASS MP3 without Xing length starts without whole-file duration scan
+PASS unknown-duration compressed stream accepts worker seek
+PASS actual production graph PCM read
+PASS natural MP3 EOF publishes learned length without a prefill scan
+PASS same immutable stream asset independent prefill
+PASS actual production graph PCM read
+PASS two same-asset cursors independent
+PASS seek near EOF
+PASS actual production graph PCM read
+PASS EOF distinct from starvation
+PASS seek from EOF
+PASS actual production graph PCM read
+PASS EOF restart does not overwrite requested seek
+PASS loop-compatible fixture prefill
+PASS actual production graph PCM read
+PASS loop crosses page/EOF boundaries without inserted silence
+PASS actual production graph PCM read
+PASS delayed worker underrun is safe silence, never EOF
+PASS actual production graph PCM read
+PASS starvation silence holds media cursor
+PASS underrun recovers real decoded PCM
+PASS actual production graph PCM read
+RETIRE delayed_decode_ms=150 detach_ms=0.0018
+PASS normal voice removal does not wait for delayed decoder
+PASS retired handle cannot resurrect
+PASS missing stream reports decoder error
+PASS corrupt stream fails explicitly without publishing PCM
+PASS failed decoder retirement is safe
+PASS actual production graph PCM read
+PASS actual production graph PCM read
+DOPPLER actual_hz=1000.00 expected_hz=1000.00
+PASS PCM frequency follows stationary/approach/recede/co-moving ratio
+PASS actual production graph PCM read
+PASS actual production graph PCM read
+DOPPLER actual_hz=1111.00 expected_hz=1111.11
+PASS PCM frequency follows stationary/approach/recede/co-moving ratio
+PASS actual production graph PCM read
+PASS actual production graph PCM read
+DOPPLER actual_hz=909.00 expected_hz=909.09
+PASS PCM frequency follows stationary/approach/recede/co-moving ratio
+PASS actual production graph PCM read
+PASS actual production graph PCM read
+DOPPLER actual_hz=1000.00 expected_hz=1000.00
+PASS PCM frequency follows stationary/approach/recede/co-moving ratio
+PASS arbitrary orientation Doppler equivariance
+PASS coincident/extreme motion finite
+PASS actual production graph PCM read
+PASS actual production graph PCM read
+PASS real PCM Doppler at rotated fixed-origin coordinates
+PASS actual production graph PCM read
+PASS actual production graph PCM read
+PASS actual production graph PCM read
+PASS real obstruction low-pass suppresses high-frequency energy
+PASS actual production graph PCM read
+PASS actual production graph PCM read
+PASS occlusion gain is separate single application
+PASS actual production graph PCM read
+PASS actual production graph PCM read
+PASS actual bypass restores dry gain and spectrum
+PASS actual production graph PCM read
+PASS impulse produces real decaying reverb tail
+REVERB tail_rms=0.00268154567
+PASS actual production graph PCM read
+PASS stopped source leaves a decaying bounded wet tail
+PASS one shared reverb processor
+PASS actual production graph PCM read
+PASS zone parameter changes remain finite
+PASS actual production graph PCM read
+PASS zone parameter changes remain finite
+PASS actual production graph PCM read
+PASS zone parameter changes remain finite
+PASS actual production graph PCM read
+PASS zone parameter changes remain finite
+PASS actual production graph PCM read
+PASS zone parameter changes remain finite
+PASS actual production graph PCM read
+PASS zone parameter changes remain finite
+PASS actual production graph PCM read
+PASS zone parameter changes remain finite
+PASS actual production graph PCM read
+PASS zone parameter changes remain finite
+PASS actual production graph PCM read
+PASS zone parameter changes remain finite
+PASS actual production graph PCM read
+PASS zone parameter changes remain finite
+PASS actual production graph PCM read
+PASS zone parameter changes remain finite
+PASS actual production graph PCM read
+PASS zone parameter changes remain finite
+PASS actual production graph PCM read
+PASS zone parameter changes remain finite
+PASS actual production graph PCM read
+PASS zone parameter changes remain finite
+PASS actual production graph PCM read
+PASS zone parameter changes remain finite
+PASS actual production graph PCM read
+PASS zone parameter changes remain finite
+PASS actual production graph PCM read
+PASS zone parameter changes remain finite
+PASS actual production graph PCM read
+PASS zone parameter changes remain finite
+PASS actual production graph PCM read
+PASS zone parameter changes remain finite
+PASS actual production graph PCM read
+PASS zone parameter changes remain finite
+PASS full world Stop clears reverb state
+PASS actual production graph PCM read
+PASS authored group fade
+PASS actual production graph PCM read
+PASS actual production graph PCM read
+PASS audio-clock fade reaches actual group gain
+PASS unrelated pause does not stop music
+PASS actual production graph PCM read
+PASS group pause freezes cursor without restart/burst
+PASS actual production graph PCM read
+PASS group resume preserves cursor
+PASS invariant reverb asset roundtrip
+PASS project sound groups roundtrip
+PASS paused group drops independent one-shot requests without allocating voices
+PASS actual production graph PCM read
+PASS resume emits no deferred one-shot burst
+PASS audio groups fit normal single-line project tokenizer
+PASS stream/acoustic/zone settings normal scene roundtrip
+PASS new authored acoustic fields affect canonical fingerprint
+PASS normal audio prefab authoring
+PASS normal linked audio prefab instance
+PASS generic prefab acoustic property override captured
+PASS actual 180-second music incremental prefill
+PASS three-times-longer file uses identical PCM allocation
+PASS stream PCM plateaus across repeated pages
+PASS actual production graph PCM read
+PERFORMANCE voices=0 dsp_one_second_ms=0.261763 reverb=0 buffered_bytes=2688000 streams=0
+PASS modest workload output finite
+PASS actual production graph PCM read
+PERFORMANCE voices=8 dsp_one_second_ms=12.887225 reverb=1 buffered_bytes=2688000 streams=0
+PASS modest workload output finite
+PASS actual production graph PCM read
+PERFORMANCE voices=32 dsp_one_second_ms=33.672943 reverb=1 buffered_bytes=2688000 streams=0
+PASS modest workload output finite
+SUMMARY checks=194 failures=0

@@ -1,0 +1,18 @@
+{
+  "script_sha256": "c335209ec1177a1076757d811ea42599237f2f04340bb44b367a1d537dc29079",
+  "exit_code": "Build failed; no stale binaries are accepted. See docs/evidence/m67/final/production/build.log",
+  "output_adapters": [],
+  "scope": "unchanged assertions and production paths; only gravity evidence output redirected",
+  "results": "docs/evidence/m67/final/production/results.json",
+  "overall_pass": false,
+  "reviewed_shared_source_exceptions": [
+    "src/RuntimeWorld.cpp",
+    "src/RuntimeWorld.h",
+    "src/SceneFingerprint.cpp",
+    "src/SceneFingerprint.h",
+    "src/WorldState.cpp"
+  ],
+  "fixture_output_adapters": [],
+  "production_suite_count": null,
+  "integration_assertions": null
+}

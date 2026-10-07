@@ -63,3 +63,9 @@ heap is carried through scene replacement. Copyable [UI example](examples/ui.js)
 ## M58 text / direction / fonts
 
 `textKey`, `font`, `direction`, `textAlignment` and project locale revisions are documented in [localization](localization.md). Runtime labels use the shared Unicode layout path; the former ASCII-only limitation is superseded. Text entry/IME remains outside the current UI API.
+
+## UIElement.layout / setLayout (M67)
+
+`element.layout` returns a copy of `{offset,size,anchorMin,anchorMax,relativeSize,align}`, each `{x,y}`. `element.setLayout(patch)` accepts any subset of those six keys, validates the whole patch, updates atomically and returns a fresh layout snapshot. Unknown keys, nonfinite values or invalid sizing throw `TypeError`; unloaded document/element handles throw `ReferenceError`. No raw layout storage is exposed.
+
+Offsets/sizes use the document reference-resolution units. Anchors, relativeSize and align use the normal RuntimeUI proportions. A flow parent still owns placement on its layout axis: runtime changes do not bypass that rule. Layout invalidation is batched until the next normal input/draw layout pass; drawing, rectangular clipping, focus and pointer tests then use the same computed geometry. A zero/empty patch is legal. Set several fields in one call. These edits are transient presentation state; restore them from the game's existing serialize/restore policy when needed. They do not edit the authored `.judasui` file or automatically become persistent VM state.

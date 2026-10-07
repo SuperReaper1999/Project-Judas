@@ -1,0 +1,78 @@
+{
+  "kind": "recipe",
+  "schema": 1,
+  "data": {
+    "id": "path-rails",
+    "type": "path",
+    "templateId": 7,
+    "prefabAsset": "",
+    "renderAsset": "",
+    "collisionAsset": "",
+    "proxyAsset": "",
+    "geometryRevision": "",
+    "count": 21,
+    "segments": 24,
+    "collisionSegments": 0,
+    "spacing": 1.2,
+    "radius": 4.0,
+    "startDegrees": 0.0,
+    "endDegrees": 90.0,
+    "twistDegrees": 25,
+    "smooth": true,
+    "closed": true,
+    "frame": {
+      "position": [
+        16,
+        1,
+        -18
+      ],
+      "rotation": [
+        1,
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ]
+    },
+    "path": [
+      [
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        -12
+      ],
+      [
+        4,
+        1,
+        -22
+      ]
+    ],
+    "profile": [
+      [
+        -2.0,
+        -0.15000000596046448
+      ],
+      [
+        2.0,
+        -0.15000000596046448
+      ],
+      [
+        2.0,
+        0.15000000596046448
+      ],
+      [
+        -2.0,
+        0.15000000596046448
+      ]
+    ],
+    "elements": []
+  }
+}

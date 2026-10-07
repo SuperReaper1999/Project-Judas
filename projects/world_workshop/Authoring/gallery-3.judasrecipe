@@ -1,0 +1,73 @@
+{
+  "kind": "recipe",
+  "schema": 1,
+  "data": {
+    "id": "gallery-3",
+    "type": "linear",
+    "templateId": 7,
+    "prefabAsset": "",
+    "renderAsset": "",
+    "collisionAsset": "",
+    "proxyAsset": "",
+    "geometryRevision": "",
+    "count": 32,
+    "segments": 24,
+    "collisionSegments": 0,
+    "spacing": 1.5,
+    "radius": 4.0,
+    "startDegrees": 0.0,
+    "endDegrees": 90.0,
+    "twistDegrees": 0.0,
+    "smooth": false,
+    "closed": true,
+    "frame": {
+      "position": [
+        -8,
+        1,
+        -12
+      ],
+      "rotation": [
+        0.70710678,
+        0,
+        0.70710678,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ]
+    },
+    "path": [
+      [
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        -10.0
+      ]
+    ],
+    "profile": [
+      [
+        -2.0,
+        -0.15000000596046448
+      ],
+      [
+        2.0,
+        -0.15000000596046448
+      ],
+      [
+        2.0,
+        0.15000000596046448
+      ],
+      [
+        -2.0,
+        0.15000000596046448
+      ]
+    ],
+    "elements": []
+  }
+}

@@ -1,0 +1,283 @@
+[
+  {
+    "name": "performance",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_world_authoring_performance",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/m67/workflow-final-1/performance"
+    ],
+    "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+    "exit": 0,
+    "seconds": 6.581332256999303,
+    "expected": 0
+  },
+  {
+    "name": "vm-enumeration",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judasjs_examples_tests",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/m67/workflow-final-1/enumeration",
+      "surface"
+    ],
+    "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+    "exit": 0,
+    "seconds": 0.34636666100050206,
+    "expected": 0
+  },
+  {
+    "name": "api-types-live",
+    "command": [
+      "/home/conner/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/bin/node",
+      "/home/conner/Documents/GitHub/Project-Judas/scripts/check_judasjs_api.mjs",
+      "--typescript",
+      "/tmp/judas-m66-typescript/package/lib/typescript.js",
+      "--runtime",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/m67/workflow-final-1/enumeration/surface.json"
+    ],
+    "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+    "exit": 0,
+    "seconds": 0.9332283860021562,
+    "expected": 0
+  },
+  {
+    "name": "inspect",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_scene_author",
+      "--inspect",
+      "scene",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/m67/workflow-final-1/edited-project/Scenes/workshop.judas"
+    ],
+    "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+    "exit": 0,
+    "seconds": 0.17012038500251947,
+    "expected": 0
+  },
+  {
+    "name": "dependencies",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_scene_author",
+      "--dependencies",
+      "scene",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/m67/workflow-final-1/edited-project/Scenes/workshop.judas"
+    ],
+    "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+    "exit": 0,
+    "seconds": 0.05113826299930224,
+    "expected": 0
+  },
+  {
+    "name": "references",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_scene_author",
+      "--references",
+      "scene",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/m67/workflow-final-1/edited-project/Scenes/workshop.judas"
+    ],
+    "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+    "exit": 0,
+    "seconds": 0.06817910300014773,
+    "expected": 0
+  },
+  {
+    "name": "generation-preview",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_scene_author",
+      "--generate",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/m67/workflow-final-1/edited-project/Authoring/gallery-0.judasrecipe",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/m67/workflow-final-1/edited-project/Scenes/workshop.judas",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/m67/workflow-final-1/edited-project/world_workshop.judasproj",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/m67/workflow-final-1/edited-project/Scenes/workshop.judas",
+      "--dry-run"
+    ],
+    "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+    "exit": 0,
+    "seconds": 0.1003718440006196,
+    "expected": 0
+  },
+  {
+    "name": "generation-edit",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_scene_author",
+      "--generate",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/m67/workflow-final-1/edited-project/Authoring/gallery-0.judasrecipe",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/m67/workflow-final-1/edited-project/Scenes/workshop.judas",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/m67/workflow-final-1/edited-project/world_workshop.judasproj",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/m67/workflow-final-1/edited-project/Scenes/workshop.judas",
+      "--overwrite"
+    ],
+    "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+    "exit": 0,
+    "seconds": 0.19375042100000428,
+    "expected": 0
+  },
+  {
+    "name": "semantic-diff",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_scene_author",
+      "--diff",
+      "scene",
+      "/home/conner/Documents/GitHub/Project-Judas/projects/world_workshop/Scenes/workshop.judas",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/m67/workflow-final-1/edited-project/Scenes/workshop.judas"
+    ],
+    "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+    "exit": 0,
+    "seconds": 0.23255389900077716,
+    "expected": 0
+  },
+  {
+    "name": "physical-profile-edit",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_scene_author",
+      "--generate",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/m67/workflow-final-1/edited-project/Authoring/quarter.judasrecipe",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/m67/workflow-final-1/edited-project/Scenes/workshop.judas",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/m67/workflow-final-1/edited-project/world_workshop.judasproj",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/m67/workflow-final-1/edited-project/Scenes/workshop.judas",
+      "--overwrite"
+    ],
+    "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+    "exit": 0,
+    "seconds": 0.20586573900072835,
+    "expected": 0
+  },
+  {
+    "name": "ui-source-edit",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_scene_author",
+      "--edit",
+      "ui",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/m67/workflow-final-1/edited-project/Assets/ui/workshop.judasui",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/m67/workflow-final-1/edited-project/Assets/ui/workshop.judasui",
+      "/data/elements/5/offset",
+      "[12,8]",
+      "--overwrite"
+    ],
+    "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+    "exit": 0,
+    "seconds": 0.008151391997671453,
+    "expected": 0
+  },
+  {
+    "name": "input-source-edit",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_scene_author",
+      "--edit",
+      "project",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/m67/workflow-final-1/edited-project/world_workshop.judasproj",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/m67/workflow-final-1/edited-project/world_workshop.judasproj",
+      "/data/input/0/bindings/0/scale",
+      "0.9",
+      "--overwrite"
+    ],
+    "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+    "exit": 0,
+    "seconds": 0.00893193700176198,
+    "expected": 0
+  },
+  {
+    "name": "syntax-diagnostic",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_scene_author",
+      "--validate",
+      "scene",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/m67/workflow-final-1/invalid.judas"
+    ],
+    "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+    "exit": 1,
+    "seconds": 0.0065874050014826935,
+    "expected": 1
+  },
+  {
+    "name": "reference-diagnostic",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_scene_author",
+      "--validate",
+      "scene",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/m67/workflow-final-1/invalid.judas"
+    ],
+    "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+    "exit": 1,
+    "seconds": 0.0056499450001865625,
+    "expected": 1
+  },
+  {
+    "name": "geometry-diagnostic",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_scene_author",
+      "--generate",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/m67/workflow-final-1/invalid.judasrecipe",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/m67/workflow-final-1/edited-project/Scenes/workshop.judas",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/m67/workflow-final-1/edited-project/world_workshop.judasproj",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/m67/workflow-final-1/edited-project/Scenes/workshop.judas",
+      "--overwrite"
+    ],
+    "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+    "exit": 1,
+    "seconds": 0.00906029399993713,
+    "expected": 1
+  },
+  {
+    "name": "editor-source-roundtrip",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_editor",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/m67/workflow-final-1/edited-project/world_workshop.judasproj"
+    ],
+    "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+    "exit": 0,
+    "seconds": 2.1467580310018093,
+    "expected": 0
+  },
+  {
+    "name": "cold-write",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_world_authoring_application_tests",
+      "/home/conner/Documents/GitHub/Project-Judas/projects/world_workshop/world_workshop.judasproj",
+      "write",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/m67/workflow-final-1/cold"
+    ],
+    "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+    "exit": 0,
+    "seconds": 1.403214317997481,
+    "expected": 0
+  },
+  {
+    "name": "cold-read",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_world_authoring_application_tests",
+      "/home/conner/Documents/GitHub/Project-Judas/projects/world_workshop/world_workshop.judasproj",
+      "read",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/m67/workflow-final-1/cold"
+    ],
+    "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+    "exit": 0,
+    "seconds": 0.6621475110005122,
+    "expected": 0
+  },
+  {
+    "name": "three-games",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_consumer_review",
+      "/home/conner/Documents/GitHub/Project-Judas/projects/post_m65_consumers/post_m65_consumers.judasproj",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/m67/workflow-final-1/consumer-events.txt",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/m67/workflow-final-1/three-games",
+      "820"
+    ],
+    "cwd": "/tmp",
+    "exit": 0,
+    "seconds": 5.160981536999316,
+    "expected": 0
+  },
+  {
+    "name": "edited-export",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_scene_author",
+      "--build-project",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/m67/workflow-final-1/edited-project/world_workshop.judasproj",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/m67/workflow-final-1/edited-package",
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas",
+      "/home/conner/Documents/GitHub/Project-Judas/data"
+    ],
+    "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+    "exit": 1,
+    "seconds": 0.01188850299877231,
+    "expected": 0
+  }
+]

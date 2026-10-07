@@ -44,6 +44,8 @@ public:
     UIElement* Element(std::uint32_t handle,const std::string& id);
     const UILayout* LayoutOf(std::uint32_t handle,const std::string& id)const;
     void Layout(int width,int height);
+    bool SetElementLayout(std::uint32_t handle,const std::string& id,const std::map<std::string,glm::vec2>& patch,std::string& error);
+    void InvalidateLayout(){++m_layoutRevision;}
     void Input(InputSystem& input,glm::vec2 pointer,bool pointerAvailable,int width,int height);
     void Draw(Renderer& renderer,int width,int height);
     std::vector<UIEvent> TakeEvents();
@@ -58,6 +60,7 @@ private:
     ResourceManager* m_resources=nullptr;std::vector<UIEvent> m_events;
     LocalizationSession* m_localization=nullptr;
     std::map<std::pair<uint32_t,std::string>,std::pair<uint64_t,std::string>> m_localizedText;
+    uint64_t m_layoutRevision=1,m_computedRevision=0,m_localeRevision=0;int m_layoutWidth=0,m_layoutHeight=0;
     bool m_quit=false;UIStats m_stats;glm::vec2 m_lastPointer{-1};
     void Activate(Instance& doc,UIElement& e,const char* type="click");
 };

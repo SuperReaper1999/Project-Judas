@@ -1,0 +1,11 @@
+Renderer fragment texture units: 32 (material path uses 12)
+[editor autotest] shared authoring batch + undo PASS: 
+[editor autotest] duplicate created id 455: scene CHANGED; undo restores: IDENTICAL
+[editor autotest] FAILED: /home/conner/Documents/GitHub/Project-Judas/.cache/m67/ui-editor-followup/editor.edit.png
+[editor autotest] edit frame: 366 draw calls, 5320 triangles, 1268 debug lines
+[editor autotest] FAILED: /home/conner/Documents/GitHub/Project-Judas/.cache/m67/ui-editor-followup/editor.play.png
+[editor autotest] play frame: 1 steps, step 0.562 ms, 17 bodies, 0 contacts, 465 draw calls, 7472 triangles, 1 shadow passes, 0 lights, 2209 debug lines, 0 particles
+[editor autotest] resources: 6 meshes, 0 textures, 0 terrain meshes, hits 5982, misses 15, failed 0, uploads 6, resident 1253568 bytes
+[editor autotest] jobs: 7 workers, 17 completed, 0 failed, 0 cancelled
+[editor autotest] authored scene after play/stop is IDENTICAL
+[editor autotest] save /home/conner/Documents/GitHub/Project-Judas/.cache/m67/ui-editor-followup/editor.saved.judas: cannot write staging file /home/conner/Documents/GitHub/Project-Judas/.cache/m67/ui-editor-followup/editor.saved.judas.authoring-stage-3d39e379f803f79e222735980a42cf71

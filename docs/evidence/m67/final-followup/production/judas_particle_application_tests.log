@@ -1,0 +1,16 @@
+Renderer fragment texture units: 32 (material path uses 12)
+Project: Judas Technology Demonstration (/home/conner/Documents/GitHub/Project-Judas/judas_tech_demo.judasproj)
+Scene: Visibility and visual emitters (assets/scenes/particle_demo.judas)
+World origin (m): 0.000, 0.000, 0.000
+PASS authored demo loads
+PASS actual async application path
+PASS normal runtime constructs three emitters
+PASS normal runtime secondary camera
+PASS loop emitter updates through ordinary fixed steps
+PASS gravity emitter updates through ordinary fixed steps
+PASS startup burst persists at expected lifetime
+PASS actual offscreen camera passes update
+PASS normal scene pass submits particles
+PASS Play does not rewrite emitter configuration
+PASS normal demo startup/render/fixed-step/shutdown
+SUMMARY 11 checks 0 failures

@@ -52,3 +52,13 @@ field sampling, not direct water ownership, exact pressure or a new fluid solver
 Use sampled liquid acceleration with Judas gravity for project-specific swimming
 behaviour; the motor provides geometric motion, not a built-in swim mode.
 Existing 20 Hz demo/coarse-fluid limitations remain [documented](../FLUID_DEMO.md).
+
+## CameraRange, world.project and world.viewport (M67)
+
+`world.setView(pose, fov=70, range={near:0.1,far:500})` accepts a partial transform and optional clipping range. Omitted clipping members retain these defaults on that call; set both each presentation update to keep a longer range. Both values must be finite and positive with `near < far`. Unknown range keys throw `TypeError`. `entity.setCameraProjection({near,far})` changes an existing secondary/render-target camera, returning false if the entity has no camera; `entity.camera` includes the current `near` and `far`. These are runtime settings, captured by the existing camera/world save participants.
+
+The actual view projection drives Renderer frustum culling and projection. `world.viewRay` uses the current script-owned view's origin and local `-Z` direction; it has no implicit weapon meaning. Secondary cameras retain their authored projection modes and independent masks.
+
+`world.project(worldPoint)` returns null until a script-owned view and a positive viewport size exist. Otherwise it returns `{x,y,depth,distance,behind,inside}`: x/y are normalized top-left viewport coordinates; depth is OpenGL normalized depth mapped to 0–1; distance is signed view-axis distance in metres, not Euclidean distance. `behind` identifies a point on/behind the camera plane; `inside` includes the near/far clipping bounds. Outside coordinates are not clamped. A point exactly on the camera plane returns the safe centre coordinates with `behind=true`, `inside=false`. Results are snapshots. `world.viewport` returns pixel `{width,height}`, zero before the interactive view is established. Read it again after resize.
+
+Use `presentationUpdate` for view/marker placement, not authoritative movement. A larger far range with a very small near plane reduces depth precision; this does not supply infinite viewing distance or live origin rebasing.

@@ -1,0 +1,317 @@
+A: exact authored baseline compatibility
+  PASS build runtime world: 
+  PASS save compatible delta
+  PASS load compatible delta: 
+  PASS build runtime world: 
+  PASS same authored baseline accepts delta: 
+  PASS compatible delta restores moved transform
+  PASS authored scene round-trip loads: 
+  PASS build runtime world: 
+  PASS canonical authored round-trip remains compatible: 
+  PASS build runtime world: 
+  PASS same name; changed transform rejects usefully: authored baseline fingerprint mismatch for 'FTFT1 same scene name': saved deltas require exactly compatible authored scene content
+  PASS same name; changed transform leaves exact observable live state unchanged
+  PASS build runtime world: 
+  PASS same name; changed stable object ID rejects usefully: authored baseline fingerprint mismatch for 'FTFT1 same scene name': saved deltas require exactly compatible authored scene content
+  PASS same name; changed stable object ID leaves exact observable live state unchanged
+  PASS build runtime world: 
+  PASS same name; changed body component rejects usefully: authored baseline fingerprint mismatch for 'FTFT1 same scene name': saved deltas require exactly compatible authored scene content
+  PASS same name; changed body component leaves exact observable live state unchanged
+  PASS build runtime world: 
+  PASS same name; added component rejects usefully: authored baseline fingerprint mismatch for 'FTFT1 same scene name': saved deltas require exactly compatible authored scene content
+  PASS same name; added component leaves exact observable live state unchanged
+  PASS build runtime world: 
+  PASS same name; removed component rejects usefully: authored baseline fingerprint mismatch for 'FTFT1 same scene name': saved deltas require exactly compatible authored scene content
+  PASS same name; removed component leaves exact observable live state unchanged
+  PASS build runtime world: 
+  PASS same name; added object rejects usefully: authored baseline fingerprint mismatch for 'FTFT1 same scene name': saved deltas require exactly compatible authored scene content
+  PASS same name; added object leaves exact observable live state unchanged
+  PASS build runtime world: 
+  PASS same name; removed object rejects usefully: authored baseline fingerprint mismatch for 'FTFT1 same scene name': saved deltas require exactly compatible authored scene content
+  PASS same name; removed object leaves exact observable live state unchanged
+  PASS build runtime world: 
+  PASS same name; changed absolute origin rejects usefully: authored baseline fingerprint mismatch for 'FTFT1 same scene name': saved deltas require exactly compatible authored scene content
+  PASS same name; changed absolute origin leaves exact observable live state unchanged
+  PASS build runtime world: 
+  PASS same name; changed lighting setting rejects usefully: authored baseline fingerprint mismatch for 'FTFT1 same scene name': saved deltas require exactly compatible authored scene content
+  PASS same name; changed lighting setting leaves exact observable live state unchanged
+  PASS build runtime world: 
+  PASS same name; changed next authored ID rejects usefully: authored baseline fingerprint mismatch for 'FTFT1 same scene name': saved deltas require exactly compatible authored scene content
+  PASS same name; changed next authored ID leaves exact observable live state unchanged
+  PASS build runtime world: 
+  PASS same name; changed authored order rejects usefully: authored baseline fingerprint mismatch for 'FTFT1 same scene name': saved deltas require exactly compatible authored scene content
+  PASS same name; changed authored order leaves exact observable live state unchanged
+  PASS build runtime world: 
+  PASS runtime motion and fidelity do not enter baseline fingerprint: 
+  PASS authoring scene untouched by capture/load/runtime mutation
+B: complete preflight before any live mutation
+  PASS build runtime world: 
+  PASS unknown entity reference rejects usefully: world state refers to unknown authored entity 999
+  PASS unknown entity reference leaves exact observable live state unchanged
+  PASS build runtime world: 
+  PASS invalid zero entity reference rejects usefully: invalid or duplicate entity record 0
+  PASS invalid zero entity reference leaves exact observable live state unchanged
+  PASS build runtime world: 
+  PASS duplicate entity reference rejects usefully: invalid or duplicate entity record 1
+  PASS duplicate entity reference leaves exact observable live state unchanged
+  PASS build runtime world: 
+  PASS mixed valid destroy then non-destroyable vehicle rejects usefully: entity 3 (Body 2) cannot be destroyed at runtime
+  PASS mixed valid destroy then non-destroyable vehicle leaves exact observable live state unchanged
+  PASS build runtime world: 
+  PASS mixed valid destroy then unsupported created component rejects usefully: runtime creation supports prop bodies/render/light/audio-emitter/render-camera/celestial components; scene-global and gameplay ownership components remain scene-authored
+  PASS mixed valid destroy then unsupported created component leaves exact observable live state unchanged
+  PASS build runtime world: 
+  PASS unknown door reference rejects usefully: world state refers to an unknown interactable 999
+  PASS unknown door reference leaves exact observable live state unchanged
+  PASS build runtime world: 
+  PASS invalid zero switch reference rejects usefully: invalid or duplicate interactable reference 0
+  PASS invalid zero switch reference leaves exact observable live state unchanged
+  PASS build runtime world: 
+  PASS wrong interactable type rejects usefully: world state refers to an unknown interactable 4
+  PASS wrong interactable type leaves exact observable live state unchanged
+  PASS build runtime world: 
+  PASS duplicate interactable reference rejects usefully: invalid or duplicate interactable reference 4
+  PASS duplicate interactable reference leaves exact observable live state unchanged
+  PASS build runtime world: 
+  PASS created contradictory flags rejects usefully: invalid or duplicate entity record 4611686018427387904
+  PASS created contradictory flags leaves exact observable live state unchanged
+  PASS build runtime world: 
+  PASS created ID outside runtime range rejects usefully: invalid created entity id, definition id or next-runtime-id
+  PASS created ID outside runtime range leaves exact observable live state unchanged
+  PASS build runtime world: 
+  PASS created definition ID mismatch rejects usefully: invalid created entity id, definition id or next-runtime-id
+  PASS created definition ID mismatch leaves exact observable live state unchanged
+  PASS build runtime world: 
+  PASS created mesh body cannot instantiate rejects usefully: runtime creation supports prop bodies/render/light/audio-emitter/render-camera/celestial components; scene-global and gameplay ownership components remain scene-authored
+  PASS created mesh body cannot instantiate leaves exact observable live state unchanged
+  PASS build runtime world: 
+  PASS created invalid body mass rejects usefully: scene line 17: a dynamic body needs a positive body.mass
+  PASS created invalid body mass leaves exact observable live state unchanged
+  PASS build runtime world: 
+  PASS created invalid box extents rejects usefully: invalid runtime body mass, geometry, material or rotation
+  PASS created invalid box extents leaves exact observable live state unchanged
+  PASS build runtime world: 
+  PASS created nonfinite authored component rejects usefully: authored scene fingerprint: object 1 body: non-finite number
+  PASS created nonfinite authored component leaves exact observable live state unchanged
+  PASS build runtime world: 
+  PASS nonfinite state position rejects usefully: entity 1 has non-finite state or a degenerate rotation
+  PASS nonfinite state position leaves exact observable live state unchanged
+  PASS build runtime world: 
+  PASS nonfinite state velocity rejects usefully: entity 1 has non-finite state or a degenerate rotation
+  PASS nonfinite state velocity leaves exact observable live state unchanged
+  PASS build runtime world: 
+  PASS zero quaternion rejects usefully: entity 1 has non-finite state or a degenerate rotation
+  PASS zero quaternion leaves exact observable live state unchanged
+  PASS build runtime world: 
+  PASS next ID outside runtime range rejects usefully: invalid baseline name or next-runtime-id
+  PASS next ID outside runtime range leaves exact observable live state unchanged
+  PASS build runtime world: 
+  PASS next ID would recycle created identity rejects usefully: invalid created entity id, definition id or next-runtime-id
+  PASS next ID would recycle created identity leaves exact observable live state unchanged
+  PASS build runtime world: 
+  PASS exhausted next ID rejects usefully: invalid baseline name or next-runtime-id
+  PASS exhausted next ID leaves exact observable live state unchanged
+  PASS build runtime world: 
+  PASS unsupported in-memory save version rejects usefully: unsupported world-state compatibility version or fingerprint algorithm
+  PASS unsupported in-memory save version leaves exact observable live state unchanged
+  PASS build runtime world: 
+  PASS unsupported fingerprint schema rejects usefully: unsupported world-state compatibility version or fingerprint algorithm
+  PASS unsupported fingerprint schema leaves exact observable live state unchanged
+  PASS build runtime world: 
+  PASS unknown fingerprint algorithm rejects usefully: unsupported world-state compatibility version or fingerprint algorithm
+  PASS unknown fingerprint algorithm leaves exact observable live state unchanged
+  PASS build runtime world: 
+  PASS fingerprint mismatch rejects usefully: authored baseline fingerprint mismatch for 'FTFT1 same scene name': saved deltas require exactly compatible authored scene content
+  PASS fingerprint mismatch leaves exact observable live state unchanged
+  PASS build runtime world: 
+  PASS missing fingerprint rejects usefully: missing or invalid authored-baseline SHA-256 fingerprint; unverifiable saves cannot be applied
+  PASS missing fingerprint leaves exact observable live state unchanged
+  PASS build runtime world: 
+  PASS moved reference to already destroyed live entity rejects usefully: cannot move destroyed entity 1
+  PASS moved reference to already destroyed live entity leaves exact observable live state unchanged
+C: asset-backed creation preflight has no world or resource side effects
+  PASS valid destroy followed by missing mesh asset rejects usefully: unknown asset id aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  PASS valid destroy followed by missing mesh asset leaves exact observable live state unchanged
+  PASS failed asset validation makes no resource load requests
+C: valid created/destroyed/moved/door/switch persistence through application load helper
+  PASS build runtime world: 
+  PASS create runtime persistent entity: 
+  PASS destroy runtime-created entity: 
+  PASS capture keeps surviving runtime creation and omits unreferenced creation tombstone
+  PASS write valid save: 
+  PASS build runtime world: 
+  PASS real application load helper applies compatible save: 
+  PASS moved position and both velocities restored
+  PASS authored destroyed entity remains absent
+  PASS created identity and provenance restored
+  PASS door and switch changes restored
+  PASS counter retains destroyed runtime identity history
+  PASS successful load does not rewrite source save
+  PASS next creation cannot reuse destroyed creation identity
+  PASS build runtime world: 
+  PASS build runtime world: 
+  PASS dormant physical-state delta reloads: 
+  PASS dormant entity retains moved state on reconstruction
+D: malformed/unverifiable saves leave world and original bytes unchanged
+  PASS build runtime world: 
+  PASS serialize valid hostile-fixture seed
+  PASS fixture locates directive JudasWorldState 
+  PASS fixture locates directive compatibility 
+  PASS malformed fixture mutation finds compatibility 5 sha256 
+  PASS malformed fixture mutation finds compatibility 5 sha256 
+  PASS malformed fixture mutation finds compatibility 5 sha256 
+  PASS malformed fixture mutation finds entity 1 moved
+  PASS malformed fixture mutation finds entity 1 moved
+  PASS malformed fixture mutation finds entity 1 moved
+  PASS fixture locates directive   position 
+  PASS fixture locates directive   rotation 
+  PASS fixture locates directive   position 
+  PASS malformed fixture mutation finds end
+
+  PASS malformed fixture mutation finds end
+
+  PASS fixture locates directive next-runtime-id 
+  PASS malformed fixture mutation finds 71c0d81f08a364de4b07147f0a74e8f0ae2152a14658fba057480088973cf7e5
+  PASS serialize valid created entity for nested-parser check
+  PASS malformed fixture mutation finds end
+
+  PASS write hostile save fixture
+  PASS empty file rejects through shared application helper: could not read world state file: /tmp/judas-ftft1-26802248414208/invalid_0.judasstate
+  PASS empty file leaves live state/handles/identities unchanged
+  PASS empty file leaves existing save bytes unchanged
+  PASS write hostile save fixture
+  PASS malformed header rejects through shared application helper: /tmp/judas-ftft1-26802248414208/invalid_1.judasstate: world state line 1: expected 'JudasWorldState <version>' on the first line
+  PASS malformed header leaves live state/handles/identities unchanged
+  PASS malformed header leaves existing save bytes unchanged
+  PASS write hostile save fixture
+  PASS unverifiable legacy v1 rejects through shared application helper: /tmp/judas-ftft1-26802248414208/invalid_2.judasstate: world state line 1: unsupported world state version 1; legacy saves have no verifiable baseline fingerprint; preserve/archive the file explicitly
+  PASS unverifiable legacy v1 leaves live state/handles/identities unchanged
+  PASS unverifiable legacy v1 leaves existing save bytes unchanged
+  PASS write hostile save fixture
+  PASS unsupported format rejects through shared application helper: /tmp/judas-ftft1-26802248414208/invalid_3.judasstate: world state line 1: unsupported world state version 99
+  PASS unsupported format leaves live state/handles/identities unchanged
+  PASS unsupported format leaves existing save bytes unchanged
+  PASS write hostile save fixture
+  PASS missing compatibility record rejects through shared application helper: /tmp/judas-ftft1-26802248414208/invalid_4.judasstate: world state file is missing its compatibility, baseline or next-runtime-id line
+  PASS missing compatibility record leaves live state/handles/identities unchanged
+  PASS missing compatibility record leaves existing save bytes unchanged
+  PASS write hostile save fixture
+  PASS duplicate compatibility record rejects through shared application helper: /tmp/judas-ftft1-26802248414208/invalid_5.judasstate: world state line 12: expected one supported compatibility <schema> sha256 <fingerprint> record
+  PASS duplicate compatibility record leaves live state/handles/identities unchanged
+  PASS duplicate compatibility record leaves existing save bytes unchanged
+  PASS write hostile save fixture
+  PASS unknown fingerprint algorithm rejects through shared application helper: /tmp/judas-ftft1-26802248414208/invalid_6.judasstate: unsupported world-state compatibility version or fingerprint algorithm
+  PASS unknown fingerprint algorithm leaves live state/handles/identities unchanged
+  PASS unknown fingerprint algorithm leaves existing save bytes unchanged
+  PASS write hostile save fixture
+  PASS unsupported fingerprint version rejects through shared application helper: /tmp/judas-ftft1-26802248414208/invalid_7.judasstate: world state line 2: expected one supported compatibility <schema> sha256 <fingerprint> record
+  PASS unsupported fingerprint version leaves live state/handles/identities unchanged
+  PASS unsupported fingerprint version leaves existing save bytes unchanged
+  PASS write hostile save fixture
+  PASS unverifiable pre-fluid schema 1 rejects through shared application helper: /tmp/judas-ftft1-26802248414208/invalid_8.judasstate: world state line 2: expected one supported compatibility <schema> sha256 <fingerprint> record
+  PASS unverifiable pre-fluid schema 1 leaves live state/handles/identities unchanged
+  PASS unverifiable pre-fluid schema 1 leaves existing save bytes unchanged
+  PASS write hostile save fixture
+  PASS duplicate baseline rejects through shared application helper: /tmp/judas-ftft1-26802248414208/invalid_9.judasstate: world state line 12: baseline expects one quoted name
+  PASS duplicate baseline leaves live state/handles/identities unchanged
+  PASS duplicate baseline leaves existing save bytes unchanged
+  PASS write hostile save fixture
+  PASS duplicate next ID rejects through shared application helper: /tmp/judas-ftft1-26802248414208/invalid_10.judasstate: world state line 12: next-runtime-id must be an integer in the runtime range
+  PASS duplicate next ID leaves live state/handles/identities unchanged
+  PASS duplicate next ID leaves existing save bytes unchanged
+  PASS write hostile save fixture
+  PASS duplicate entity rejects through shared application helper: /tmp/judas-ftft1-26802248414208/invalid_11.judasstate: world state line 12: entity 1 listed twice
+  PASS duplicate entity leaves live state/handles/identities unchanged
+  PASS duplicate entity leaves existing save bytes unchanged
+  PASS write hostile save fixture
+  PASS unknown entity rejects through shared application helper: world state refers to unknown authored entity 999
+  PASS unknown entity leaves live state/handles/identities unchanged
+  PASS unknown entity leaves existing save bytes unchanged
+  PASS write hostile save fixture
+  PASS negative entity ID rejects through shared application helper: /tmp/judas-ftft1-26802248414208/invalid_13.judasstate: world state line 6: entity expects '<id> moved|destroyed|created'
+  PASS negative entity ID leaves live state/handles/identities unchanged
+  PASS negative entity ID leaves existing save bytes unchanged
+  PASS write hostile save fixture
+  PASS overflow entity ID rejects through shared application helper: /tmp/judas-ftft1-26802248414208/invalid_14.judasstate: world state line 6: entity expects '<id> moved|destroyed|created'
+  PASS overflow entity ID leaves live state/handles/identities unchanged
+  PASS overflow entity ID leaves existing save bytes unchanged
+  PASS write hostile save fixture
+  PASS nonfinite physical state rejects through shared application helper: /tmp/judas-ftft1-26802248414208/invalid_15.judasstate: world state line 7: unexpected 'position' in an entity block
+  PASS nonfinite physical state leaves live state/handles/identities unchanged
+  PASS nonfinite physical state leaves existing save bytes unchanged
+  PASS write hostile save fixture
+  PASS zero quaternion rejects through shared application helper: /tmp/judas-ftft1-26802248414208/invalid_16.judasstate: entity 1 has non-finite state or a degenerate rotation
+  PASS zero quaternion leaves live state/handles/identities unchanged
+  PASS zero quaternion leaves existing save bytes unchanged
+  PASS write hostile save fixture
+  PASS embedded NUL physical field rejects through shared application helper: /tmp/judas-ftft1-26802248414208/invalid_17.judasstate: world state contains a NUL byte
+  PASS embedded NUL physical field leaves live state/handles/identities unchanged
+  PASS embedded NUL physical field leaves existing save bytes unchanged
+  PASS write hostile save fixture
+  PASS duplicate physical field rejects through shared application helper: /tmp/judas-ftft1-26802248414208/invalid_18.judasstate: world state line 11: unexpected 'position' in an entity block
+  PASS duplicate physical field leaves live state/handles/identities unchanged
+  PASS duplicate physical field leaves existing save bytes unchanged
+  PASS write hostile save fixture
+  PASS extra end token rejects through shared application helper: /tmp/judas-ftft1-26802248414208/invalid_19.judasstate: world state line 11: unexpected 'end' in an entity block
+  PASS extra end token leaves live state/handles/identities unchanged
+  PASS extra end token leaves existing save bytes unchanged
+  PASS write hostile save fixture
+  PASS truncated entity block rejects through shared application helper: /tmp/judas-ftft1-26802248414208/invalid_20.judasstate: world state line 10: entity block is missing its 'end'
+  PASS truncated entity block leaves live state/handles/identities unchanged
+  PASS truncated entity block leaves existing save bytes unchanged
+  PASS write hostile save fixture
+  PASS unknown directive rejects through shared application helper: /tmp/judas-ftft1-26802248414208/invalid_21.judasstate: world state line 12: unknown directive 'future-magic'
+  PASS unknown directive leaves live state/handles/identities unchanged
+  PASS unknown directive leaves existing save bytes unchanged
+  PASS write hostile save fixture
+  PASS duplicate interactable rejects through shared application helper: /tmp/judas-ftft1-26802248414208/invalid_22.judasstate: invalid or duplicate interactable reference 4
+  PASS duplicate interactable leaves live state/handles/identities unchanged
+  PASS duplicate interactable leaves existing save bytes unchanged
+  PASS write hostile save fixture
+  PASS zero interactable rejects through shared application helper: /tmp/judas-ftft1-26802248414208/invalid_23.judasstate: invalid or duplicate interactable reference 0
+  PASS zero interactable leaves live state/handles/identities unchanged
+  PASS zero interactable leaves existing save bytes unchanged
+  PASS write hostile save fixture
+  PASS unknown interactable rejects through shared application helper: world state refers to an unknown interactable 999
+  PASS unknown interactable leaves live state/handles/identities unchanged
+  PASS unknown interactable leaves existing save bytes unchanged
+  PASS write hostile save fixture
+  PASS counter overflow rejects through shared application helper: /tmp/judas-ftft1-26802248414208/invalid_25.judasstate: world state line 4: next-runtime-id must be an integer in the runtime range
+  PASS counter overflow leaves live state/handles/identities unchanged
+  PASS counter overflow leaves existing save bytes unchanged
+  PASS write hostile save fixture
+  PASS fingerprint mismatch rejects through shared application helper: authored baseline fingerprint mismatch for 'FTFT1 same scene name': saved deltas require exactly compatible authored scene content
+  PASS fingerprint mismatch leaves live state/handles/identities unchanged
+  PASS fingerprint mismatch leaves existing save bytes unchanged
+  PASS write hostile save fixture
+  PASS extra nested object end token rejects through shared application helper: /tmp/judas-ftft1-26802248414208/invalid_27.judasstate: world state line 11: created entity definition: scene line 17: end expects no values
+  PASS extra nested object end token leaves live state/handles/identities unchanged
+  PASS extra nested object end token leaves existing save bytes unchanged
+  PASS genuinely missing file means no saved state
+  PASS existing directory is an error, not a missing save
+  PASS invalid parse fails
+  PASS parse failure leaves prior output record unchanged
+  PASS successful parse clears stale caller error
+  PASS write hostile save fixture
+  PASS invalid state refuses to serialize: 
+  PASS invalid save request does not truncate existing valid save
+  PASS control characters in saved name reject: entity 1 has non-finite state or a degenerate rotation
+  PASS invalid string cannot truncate existing save
+  PASS control characters in saved name reject: invalid baseline name or next-runtime-id
+  PASS invalid string cannot truncate existing save
+  PASS write hostile save fixture
+  PASS saving cannot silently overwrite unverifiable legacy file: invalid baseline name or next-runtime-id
+  PASS legacy file remains byte-identical on attempted overwrite
+  PASS build runtime world: 
+  PASS save from incompatible baseline cannot overwrite existing deltas: /tmp/judas-ftft1-26802248414208/protected-legacy.judasstate: world state line 1: unsupported world state version 1; legacy saves have no verifiable baseline fingerprint; preserve/archive the file explicitly
+  PASS incompatible save overwrite preserves existing file
+E: the final allocatable identity remains persistable without overflow
+  PASS build runtime world: 
+  PASS last allocatable ID is created
+  PASS exhausted next-ID sentinel can be serialized
+  PASS exhausted counter save parses: 
+  PASS build runtime world: 
+  PASS last-ID creation reloads: 
+  PASS exhausted allocator rejects further creation without wrapping
+  PASS allocator exhaustion leaves world unchanged
+FTFT1: 307 checks, 0 failures, 0.039554 seconds

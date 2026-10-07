@@ -1,0 +1,73 @@
+{
+  "assetId": "0f1849bd6d28f0f68f42a06c96baf623",
+  "clips": [
+    {
+      "duration": 2.0,
+      "loop": false,
+      "motionExtracted": false,
+      "name": "Sway"
+    }
+  ],
+  "diagnostics": [],
+  "hierarchyNodes": 7,
+  "inputs": {
+    "Sources/0f1849bd6d28f0f68f42a06c96baf623/figure.gltf": "3457aa643df533759970b643854e1d81657400f3e14ed0010465e6b71b4db91e"
+  },
+  "joints": [
+    "Spindle",
+    "Spindle/Fork",
+    "Spindle/Fork/Branch-A",
+    "Spindle/Fork/Branch-A/Tip-A",
+    "Spindle/Fork/Branch-B",
+    "Spindle/Fork/Branch-B/Tip-B",
+    "Multipart model",
+    "__JudasMotionRoot"
+  ],
+  "materialKeys": [
+    "Branch-A",
+    "Branch-B",
+    "Fork",
+    "Spindle",
+    "Tip-A",
+    "Tip-B"
+  ],
+  "outputHash": "77b41d15768fe8e67eda7c61cec6213b86a30f7d0b888429b45b50be8398d5c3",
+  "parts": [
+    {
+      "identity": "Multipart model/material/Branch-A",
+      "node": 6,
+      "triangles": 12
+    },
+    {
+      "identity": "Multipart model/material/Branch-B",
+      "node": 6,
+      "triangles": 12
+    },
+    {
+      "identity": "Multipart model/material/Fork",
+      "node": 6,
+      "triangles": 12
+    },
+    {
+      "identity": "Multipart model/material/Spindle",
+      "node": 6,
+      "triangles": 12
+    },
+    {
+      "identity": "Multipart model/material/Tip-A",
+      "node": 6,
+      "triangles": 12
+    },
+    {
+      "identity": "Multipart model/material/Tip-B",
+      "node": 6,
+      "triangles": 12
+    }
+  ],
+  "recipeDigest": "9edaa02150ea11c3b153e23026cdf4adcb521388c2f6dde33970a26a5e966e54",
+  "revision": "M66-ufbx-0.23.1-cgltf-1.15-cook-9-model-1",
+  "skinPaletteEntries": 6,
+  "sourceBones": 0,
+  "sourceUnitMeters": 1.0,
+  "vertices": 216
+}

@@ -1,0 +1,82 @@
+{
+  "heads": {
+    "HEAD": "b9a8cf3b8d8cd3786272480a8abe6cbe9fffe859",
+    "main": "b9a8cf3b8d8cd3786272480a8abe6cbe9fffe859",
+    "origin/main": "b9a8cf3b8d8cd3786272480a8abe6cbe9fffe859"
+  },
+  "index": "empty",
+  "candidateFiles": 491,
+  "fingerprintedFiles": 487,
+  "trackedModifiedFiles": 39,
+  "newFiles": 452,
+  "protectedTrackedFilesVerifiedUnchanged": 34324,
+  "protectedScopes": [
+    "all existing docs/evidence (including FTFT/P1 and M33-M66)",
+    "prototypes",
+    "all existing projects",
+    "third_party",
+    "assets"
+  ],
+  "specificSourcesVerifiedUnchanged": [
+    "src/FluidWorld.cpp",
+    "src/ProductionFluidCoupling.cpp",
+    "src/LiquidSystem.cpp",
+    "src/PhysicsWorld.cpp",
+    "src/CharacterMotor.cpp",
+    "src/ModelImport.cpp",
+    "src/FbxImport.cpp",
+    "src/SceneFingerprint.cpp",
+    "src/SceneFingerprint.h"
+  ],
+  "postGateSourceChanges": [
+    "src/authoring/WorldBuilder.cpp",
+    "src/editor/EditorApplication.cpp",
+    "src/editor/EditorPanels.cpp",
+    "src/editor/EditorPanels.h",
+    "tests/WorldAuthoringApplicationTests.cpp",
+    "tests/WorldBuildingTests.cpp"
+  ],
+  "postGateProjectChange": "projects/world_workshop/Assets/scripts/workshop.js: opening-frame/event-type pause policy; runtime UI/input unchanged",
+  "broadGateSourcesStayedFrozen": true,
+  "roadmap": "absent",
+  "gitStatus": " M CMakeLists.txt\n M docs/ARCHITECTURE.md\n M docs/CONTENT_AUTHORING.md\n M docs/JUDASJS.md\n M docs/judas.d.ts\n M docs/judasjs/API_INVENTORY.md\n M docs/judasjs/api-inventory.json\n M docs/judasjs/cookbook.md\n M docs/judasjs/effects-camera.md\n M docs/judasjs/entities.md\n M docs/judasjs/ui.md\n M scripts/check_judasjs_api.mjs\n M src/InputSystem.cpp\n M src/InteractivePlay.cpp\n M src/Project.cpp\n M src/Project.h\n M src/RuntimeUI.cpp\n M src/RuntimeUI.h\n M src/RuntimeWorld.cpp\n M src/RuntimeWorld.h\n M src/SaveService.cpp\n M src/Scene.cpp\n M src/Scene.h\n M src/SceneSerialization.cpp\n M src/ScriptSystem.cpp\n M src/WorldCharacter.cpp\n M src/WorldPersistence.cpp\n M src/WorldPresentation.cpp\n M src/WorldStreaming.cpp\n M src/editor/ComponentEditors.cpp\n M src/editor/EditorApplication.cpp\n M src/editor/EditorApplication.h\n M src/editor/EditorDocument.h\n M src/editor/EditorHistory.cpp\n M src/editor/EditorPanels.cpp\n M src/editor/EditorPanels.h\n M src/editor/EditorWidgets.cpp\n M tests/JudasJSExamplesTests.cpp\n M tools/SceneAuthor.cpp\n?? docs/M67_WORLD_BUILDING.md\n?? docs/NAMED_AUTHORING.md\n?? docs/evidence/m67/\n?? docs/judasjs/examples/authoring-runtime.js\n?? projects/world_workshop/\n?? scripts/m67_create_workshop.py\n?? scripts/m67_validation.py\n?? src/AuthoringJSON.h\n?? src/AuthoringNumeric.h\n?? src/CameraProjection.h\n?? src/NamedAuthoring.cpp\n?? src/NamedAuthoring.h\n?? src/NamedInput.h\n?? src/authoring/\n?? src/editor/WorldTools.cpp\n?? tests/WorldAuthoringApplicationTests.cpp\n?? tests/WorldAuthoringPerformance.cpp\n?? tests/WorldAuthoringRuntimeTests.cpp\n?? tests/WorldBuildingTests.cpp\n?? tools/AuthoringCLI.cpp\n?? tools/AuthoringCLI.h\n?? tools/ContentServicesCLI.cpp\n?? tools/ContentServicesCLI.h\n?? tools/RecipeCLI.cpp\n?? tools/RecipeCLI.h\n?? tools/m67_fixture.py\n",
+  "protectedTreeIds": {
+    "docs/evidence": "1aa118a2060620f1a981aa5db2b55402fc338678",
+    "prototypes": "7357cf2dd092efea3cb719d819d42e0ae85dacb5",
+    "projects": "29c693187a95c22a89069f57aae7f0e0e4c9b6a8",
+    "third_party": "7135d2c40dfaf31357f4e8edd25c6e7480c9d9ee",
+    "assets": "fa6eba8acaa4b53e096d632c12e84bfcb596efa6"
+  },
+  "gitMutations": "No stage, commit, push, merge or tag; local main and origin/main refs unchanged.",
+  "limits": "This compares tracked repository content; other Claude workspaces/processes were not inspected or changed.",
+  "checkpointAuthorization": {
+    "status": "PROVISIONAL",
+    "authorizedOn": "2026-10-07",
+    "humanValidation": "deferred; not accepted or claimed complete",
+    "implementation": "unchanged from the recorded candidate",
+    "documentationStatusChanges": [
+      {
+        "file": "docs/ARCHITECTURE.md",
+        "reviewedCandidateSha256": "5af865f8da0757187044f04738f36a5eaa487fd81865d6b0d311c0db5d47b055",
+        "provisionalStatusSha256": "e61d78eb1b944d87e82a8e9c7929e13e1596e93a185cc61a7c09a759fb64d7b0"
+      },
+      {
+        "file": "docs/JUDASJS.md",
+        "reviewedCandidateSha256": "8ff942f4b222cd49dd7d99684ed88dbbb5b0d8ba5663eeed53154fd34da0132e",
+        "provisionalStatusSha256": "f526d220a1f5041c811ca950056d0cc86cd463470a26c1279ef8a89a0f3a8bc7"
+      },
+      {
+        "file": "docs/M67_WORLD_BUILDING.md",
+        "reviewedCandidateSha256": "7bb0b5b27439f7759aa4f9922a7e18f24d779c9e99ce98f68012f34466836b67",
+        "provisionalStatusSha256": "7c18a42d23d26d135cbe28f5bdd9eb1a498e6c90f96d302e3505e5b36c85e1de"
+      },
+      {
+        "file": "docs/evidence/m67/REPORT.md",
+        "reviewedCandidateSha256": "34667c3efdc9ae22d7d53beea1cacd4a94f5b9ee6854cc0758e2759ad31826d0",
+        "provisionalStatusSha256": "b12d17dea9a75793b707382f4ade0671e31e1a8882170c3ec548601c7f5781c6"
+      }
+    ],
+    "policy": "Only the four explicit documentation status hashes updated after the original 487 fingerprints passed; implementation, assets and validation records retain their expected hashes."
+  },
+  "recordScope": "Original pre-checkpoint state above, followed by operator authorization for provisional commit/push. The commit itself contains no Git result or self-referential commit hash."
+}

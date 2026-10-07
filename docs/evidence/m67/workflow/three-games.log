@@ -1,0 +1,16 @@
+JS: SKATER start rails=8 autopilot=false
+JS: STREAM t=0.10 street-0 - -> unloaded entities=0 prepMs=0.00 integMs=0.00 largestUnitMs=0.00 skater=(0.00,3.27,23.50) v=0.1
+JS: STREAM t=0.10 street-1 - -> unloaded entities=0 prepMs=0.00 integMs=0.00 largestUnitMs=0.00 skater=(0.00,3.27,23.50) v=0.1
+JS: STREAM t=0.10 street-2 - -> unloaded entities=0 prepMs=0.00 integMs=0.00 largestUnitMs=0.00 skater=(0.00,3.27,23.50) v=0.1
+JS: STREAM t=0.10 street-3 - -> unloaded entities=0 prepMs=0.00 integMs=0.00 largestUnitMs=0.00 skater=(0.00,3.27,23.50) v=0.1
+JS: STREAM t=0.10 street-4 - -> unloaded entities=0 prepMs=0.00 integMs=0.00 largestUnitMs=0.00 skater=(0.00,3.27,23.50) v=0.1
+JS: STREAM t=0.20 street-0 unloaded -> prepared entities=11 prepMs=2.97 integMs=0.00 largestUnitMs=0.00 skater=(0.00,3.28,23.50) v=0.0
+JS: STREAM t=0.50 street-0 prepared -> installing entities=11 prepMs=2.97 integMs=0.07 largestUnitMs=0.02 skater=(0.00,3.28,23.50) v=0.0
+JS: STREAM t=0.60 street-0 installing -> active entities=11 prepMs=2.97 integMs=0.35 largestUnitMs=0.08 skater=(0.00,3.28,23.48) v=0.4
+Consumer observation frames=820 scriptErrors=0
+Renderer fragment texture units: 32 (material path uses 12)
+World state: disk saves disabled for additive compositions
+Project: Judas Three Games (/home/conner/Documents/GitHub/Project-Judas/projects/post_m65_consumers/post_m65_consumers.judasproj)
+Scene: Three Games (/home/conner/Documents/GitHub/Project-Judas/projects/post_m65_consumers/Scenes/launcher.judas)
+World origin (m): 0.000, 0.000, 0.000
+asset 97c3acdb99c5ffefb002c03ecec7a8ed: Optional extension ignored: KHR_materials_specular

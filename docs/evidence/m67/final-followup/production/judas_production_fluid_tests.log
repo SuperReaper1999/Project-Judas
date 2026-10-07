@@ -1,0 +1,33 @@
+PRECONDITION half_020 warmup_steps=240 mean_particle_speed=0.0314854
+PRECONDITION half_020 observed_release_surface=1.79422 body_top=1 clearance=0.794216
+CASE half_020 failures=0 acceptance_failures=0 diagnostic_checks=1 diagnostic_failures=0 observational_scale=0 mass=108.0000076 particles=1152 y=1.743201375 vy=0.4970087409 fraction=0.4947488606 observed_fraction=0.5749003092 max_speed=2.84900713 particle_ms=27.284952 executed_ms=30.487953 amortized_ms=16.90059028
+PRECONDITION neutral_020 warmup_steps=240 mean_particle_speed=0.03148542828
+PRECONDITION neutral_020 observed_release_surface=1.794216372 body_top=1 clearance=0.7942163721
+CASE neutral_020 failures=0 acceptance_failures=0 diagnostic_checks=1 diagnostic_failures=0 observational_scale=0 mass=216.0000153 particles=1152 y=0.6938326955 vy=-0.00452953577 fraction=1 observed_fraction=1 max_speed=0.007178930566 particle_ms=27.724183 executed_ms=32.186605 amortized_ms=18.445428
+PRECONDITION dense_020 warmup_steps=240 mean_particle_speed=0.03148542828
+PRECONDITION dense_020 observed_release_surface=1.794216372 body_top=1 clearance=0.7942163721
+CASE dense_020 failures=0 acceptance_failures=0 diagnostic_checks=1 diagnostic_failures=0 observational_scale=0 mass=432.0000305 particles=1152 y=0.2999999225 vy=-2.102991115e-10 fraction=0.9977340102 observed_fraction=1 max_speed=1.486845255 particle_ms=27.941897 executed_ms=31.782348 amortized_ms=18.31753359
+PRECONDITION half_025 warmup_steps=240 mean_particle_speed=0.04995711722
+PRECONDITION half_025 observed_release_surface=1.709437966 body_top=1 clearance=0.7094379663
+CASE half_025 failures=0 acceptance_failures=0 diagnostic_checks=1 diagnostic_failures=0 observational_scale=0 mass=108.0000076 particles=592 y=1.674544692 vy=0.05327218771 fraction=0.4911017716 observed_fraction=0.5727238973 max_speed=2.495819807 particle_ms=13.688353 executed_ms=15.618347 amortized_ms=8.764104796
+PRECONDITION neutral_025 warmup_steps=240 mean_particle_speed=0.04995711722
+PRECONDITION neutral_025 observed_release_surface=1.709437966 body_top=1 clearance=0.7094379663
+CASE neutral_025 failures=0 acceptance_failures=0 diagnostic_checks=1 diagnostic_failures=0 observational_scale=0 mass=216.0000153 particles=592 y=0.6949644685 vy=-0.004269495606 fraction=1 observed_fraction=1 max_speed=0.01304107904 particle_ms=14.178031 executed_ms=16.649933 amortized_ms=9.628385379
+PRECONDITION dense_025 warmup_steps=240 mean_particle_speed=0.04995711722
+PRECONDITION dense_025 observed_release_surface=1.709437966 body_top=1 clearance=0.7094379663
+CASE dense_025 failures=0 acceptance_failures=0 diagnostic_checks=1 diagnostic_failures=0 observational_scale=0 mass=432.0000305 particles=592 y=0.2995390594 vy=-2.462445248e-10 fraction=0.9999544024 observed_fraction=1 max_speed=1.418739915 particle_ms=13.937685 executed_ms=16.172945 amortized_ms=9.451212646
+PRECONDITION rotated_half warmup_steps=240 mean_particle_speed=0.03238120868
+PRECONDITION rotated_half observed_release_surface=1.790143944 body_top=1 clearance=0.7901439443
+CASE rotated_half failures=0 acceptance_failures=0 diagnostic_checks=1 diagnostic_failures=0 observational_scale=0 mass=108.0000076 particles=1152 y=1.798630714 vy=0.4992298484 fraction=0.4905540347 observed_fraction=0.5297556559 max_speed=2.79246521 particle_ms=32.148652 executed_ms=35.251255 amortized_ms=19.22026987
+PRECONDITION zero_gravity warmup_steps=240 mean_particle_speed=0.09721527804
+DIAGNOSTIC_FAIL zero_gravity reference pool is quiescent before body release
+CASE zero_gravity failures=0 acceptance_failures=0 diagnostic_checks=1 diagnostic_failures=1 observational_scale=0 mass=216.0000153 particles=1152 y=0.699906528 vy=-1.72976379e-05 fraction=0.9952398539 observed_fraction=1 max_speed=9.547368245e-05 particle_ms=19.349655 executed_ms=22.810255 amortized_ms=13.16629065
+CASE common_freefall failures=0 acceptance_failures=0 diagnostic_checks=0 diagnostic_failures=0 observational_scale=0 mass=216.0000153 particles=1152 y=-79.09819031 vy=-39.48853302 fraction=0.6320958734 observed_fraction=1 max_speed=39.48853302 particle_ms=12.975575 executed_ms=14.990486 amortized_ms=8.962398158
+PRECONDITION small_mass_125x warmup_steps=240 mean_particle_speed=0.0458832144
+PRECONDITION small_mass_125x observed_release_surface=1.850445963 body_top=0.7599999905 clearance=1.090445973
+DIAGNOSTIC_FAIL small_mass_125x independent measured box/surface immersion within 10 percentage points
+CASE small_mass_125x failures=0 acceptance_failures=0 diagnostic_checks=4 diagnostic_failures=1 observational_scale=1 mass=0.864000082 particles=1196 y=1.987862706 vy=-0.147368148 fraction=0.4232022464 observed_fraction=0.3923370361 max_speed=3.457350016 particle_ms=27.745037 executed_ms=28.656107 amortized_ms=15.02041356
+PRECONDITION light_80kg warmup_steps=240 mean_particle_speed=0.03647305543
+PRECONDITION light_80kg observed_release_surface=1.798503734 body_top=0.9714417458 clearance=0.8270619884
+CASE light_80kg failures=0 acceptance_failures=0 diagnostic_checks=1 diagnostic_failures=0 observational_scale=0 mass=80 particles=1152 y=1.812934875 vy=0.3960065842 fraction=0.4887241125 observed_fraction=0.5376515706 max_speed=2.848567724 particle_ms=27.399631 executed_ms=30.283322 amortized_ms=16.59040162
+SUMMARY checks=8021 failures=0 acceptance_failures=0 diagnostic_checks=13 diagnostic_failures=2 strict_diagnostics=0 steps=5040

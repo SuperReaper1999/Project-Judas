@@ -1,3 +1,4 @@
+#include "CameraProjection.h"
 #include "WorldStreaming.h"
 #include "SaveService.h"
 #include "PerformanceProfiler.h"
@@ -32,6 +33,12 @@ std::string Exception(JSContext* c){auto e=JS_GetException(c);auto stack=JS_GetP
 JSValue Vec(JSContext* c,glm::vec3 v){auto o=JS_NewObject(c);JS_SetPropertyStr(c,o,"x",JS_NewFloat64(c,v.x));JS_SetPropertyStr(c,o,"y",JS_NewFloat64(c,v.y));JS_SetPropertyStr(c,o,"z",JS_NewFloat64(c,v.z));return o;}
 bool Number(JSContext* c,JSValueConst o,const char* key,float& value){auto v=JS_GetPropertyStr(c,o,key);double n=0;bool ok=JS_ToFloat64(c,&n,v)==0&&std::isfinite(n)&&std::abs(n)<=1e20;JS_FreeValue(c,v);value=static_cast<float>(n);return ok;}
 bool ReadVec(JSContext* c,JSValueConst o,glm::vec3& v){return Number(c,o,"x",v.x)&&Number(c,o,"y",v.y)&&Number(c,o,"z",v.z);}
+bool KnownOptions(JSContext* c,JSValueConst value,std::initializer_list<const char*> allowed){
+ if(!JS_IsObject(value))return false;
+ JSPropertyEnum* properties=nullptr;uint32_t count=0;
+ if(JS_GetOwnPropertyNames(c,&properties,&count,value,JS_GPN_STRING_MASK|JS_GPN_ENUM_ONLY))return false;
+ bool valid=true;for(uint32_t i=0;i<count;++i){const char* key=JS_AtomToCString(c,properties[i].atom);bool known=false;for(auto name:allowed)known|=key&&std::strcmp(key,name)==0;valid&=known;JS_FreeCString(c,key);JS_FreeAtom(c,properties[i].atom);}js_free(c,properties);return valid;
+}
 const char* library=R"JS(
 const call=(op,...args)=>globalThis.__judas(op,...args);
 export class Entity {
@@ -92,11 +99,12 @@ export class Entity {
  burst(count){return call('burst',this.id,count)}
  setParticles(settings){return call('particles',this.id,settings)}
  setCameraEnabled(enabled){return call('camera',this.id,enabled)}
+ setCameraProjection(range){return call('cameraProjection',this.id,range)}
 }
 export const audio={group:name=>call('audioGroup',name),setGroup:(name,settings,fadeSeconds=0)=>call('audioGroupSet',name,settings,fadeSeconds),get diagnostics(){return call('audioDiagnostics')}};
 export const entity=id=>id&&id!=='0'?new Entity(id):null;
-export const world={entity,get appearance(){return call('appearanceInfo')},setAppearance:settings=>call('appearanceSet',settings),setView:(pose,fov=70)=>call("setView",pose,fov),clearView:()=>call("clearView"),fluidSample:(point,up,halfHeight,radius,tangent)=>call("fluidSample",point,up,halfHeight,radius,tangent),get viewRay(){return call('viewRay')},queryTags:(required=[],excluded=[])=>call('queryTags',required,excluded).map(entity),
- spawnPrefab:(asset,transform)=>entity(call('spawn',asset,transform)),
+export const world={entity,get appearance(){return call('appearanceInfo')},setAppearance:settings=>call('appearanceSet',settings),setView:(pose,fov=70,range={})=>call("setView",pose,fov,range),project:point=>call("projectViewport",point),get viewport(){return call("viewportSize")},clearView:()=>call("clearView"),fluidSample:(point,up,halfHeight,radius,tangent)=>call("fluidSample",point,up,halfHeight,radius,tangent),get viewRay(){return call('viewRay')},queryTags:(required=[],excluded=[])=>call('queryTags',required,excluded).map(entity),
+ spawnPrefab:(asset,transform={},options={})=>entity(call('spawn',asset,transform,options)),
  overlap:(min,max,filter={})=>call('overlap',min,max,filter).map(entity),
  sweepCapsule:(from,displacement,rotation={w:1,x:0,y:0,z:0},filter={})=>call('sweep',from,displacement,filter,rotation)};
 const cast=(origin,direction,maximum,filter,shape)=>{const hit=call('cast',origin,direction,filter,{...shape,maximum});return hit?{...hit,entity:entity(hit.entityId)}:null};
@@ -253,6 +261,8 @@ export const console={log:(...args)=>call('log',args.map(String).join(' '))};
 
 export class UIElement {
  constructor(handle,id){this.handle=handle;this.id=id}
+ get layout(){return call('uiLayout',this.handle,this.id)}
+ setLayout(patch){return call('uiLayout',this.handle,this.id,patch)}
  get text(){return call('uiGet',this.handle,this.id,'text')}
  set text(v){call('uiSet',this.handle,this.id,'text',v)}
  get visible(){return call('uiGet',this.handle,this.id,'visible')}
@@ -610,6 +620,7 @@ JSValue ScriptSystem::Impl::Native(JSContext* c,JSValueConst,int argc,JSValueCon
     if(op=="uiFind")return JS_NewUint32(c,world.UI().Find(String(c,arg(1))));
     if(op=="uiQuit"){world.UI().RequestQuit();return JS_UNDEFINED;}
     if(op=="uiLoad"){std::string error;auto h=world.UI().Load(String(c,arg(1)),String(c,arg(2)),s->currentOwner,error,s->currentSlot);if(!h)return JS_ThrowTypeError(c,"UI: %s",error.c_str());return JS_NewUint32(c,h);}
+    if(op=="uiLayout"){uint32_t h=0;JS_ToUint32(c,&h,arg(1));auto id=String(c,arg(2));auto* e=world.UI().Element(h,id);if(!e)return JS_ThrowReferenceError(c,"stale UI document/element");if(argc>3){if(!JS_IsObject(arg(3)))return JS_ThrowTypeError(c,"layout patch object required");std::map<std::string,glm::vec2> patch;JSPropertyEnum* props=nullptr;uint32_t count=0;if(JS_GetOwnPropertyNames(c,&props,&count,arg(3),JS_GPN_STRING_MASK|JS_GPN_ENUM_ONLY))return JS_EXCEPTION;bool valid=count<=6;for(uint32_t i=0;i<count;++i){auto key=JS_AtomToString(c,props[i].atom);auto name=String(c,key);JS_FreeValue(c,key);auto v=JS_GetProperty(c,arg(3),props[i].atom);glm::vec2 xy;valid&=Number(c,v,"x",xy.x)&&Number(c,v,"y",xy.y);patch[name]=xy;JS_FreeValue(c,v);JS_FreeAtom(c,props[i].atom);}js_free(c,props);std::string error;if(!valid||!world.UI().SetElementLayout(h,id,patch,error))return JS_ThrowTypeError(c,"UI layout: %s",error.c_str());e=world.UI().Element(h,id);}auto o=JS_NewObject(c);for(auto [key,v]:{std::pair<const char*,glm::vec2>{"offset",e->offset},{"size",e->size},{"anchorMin",e->anchorMin},{"anchorMax",e->anchorMax},{"relativeSize",e->relativeSize},{"align",e->align}}){auto xy=JS_NewObject(c);JS_SetPropertyStr(c,xy,"x",JS_NewFloat64(c,v.x));JS_SetPropertyStr(c,xy,"y",JS_NewFloat64(c,v.y));JS_SetPropertyStr(c,o,key,xy);}return o;}
     if(op=="uiGet"||op=="uiSet"||op=="uiUnload"){
         uint32_t h=0;JS_ToUint32(c,&h,arg(1));auto* d=world.UI().Document(h);if(!d)return JS_ThrowReferenceError(c,"stale/unloaded UI document");
         if(op=="uiUnload"){world.UI().Unload(h);return JS_TRUE;}
@@ -643,8 +654,10 @@ JSValue ScriptSystem::Impl::Native(JSContext* c,JSValueConst,int argc,JSValueCon
         if(!JS_IsUndefined(scale))ok=ok&&ReadVec(c,scale,t.scale)&&t.scale.x>0&&t.scale.y>0&&t.scale.z>0;
         JS_FreeValue(c,p);JS_FreeValue(c,r);JS_FreeValue(c,scale);return ok;};
     if(op=="setView"){
-        const bool initialView=!world.view;SceneTransform t;double fov=70;if(!readTransform(arg(1),t)||JS_ToFloat64(c,&fov,arg(2))||!world.SetRuntimeView(t,float(fov)))return JS_ThrowTypeError(c,"invalid runtime view");if(initialView)world.ResetAudioMotion();return JS_TRUE;
+        const bool initialView=!world.view;SceneTransform t;double fov=70;float nearPlane=.1f,farPlane=500;auto range=arg(3);if(!KnownOptions(c,range,{"near","far"}))return JS_ThrowTypeError(c,"camera range accepts near/far only");for(auto [key,value]:{std::pair<const char*,float*>{"near",&nearPlane},{"far",&farPlane}}){auto v=JS_GetPropertyStr(c,range,key);bool has=!JS_IsUndefined(v);JS_FreeValue(c,v);if(has&&!Number(c,range,key,*value))return JS_ThrowTypeError(c,"finite camera range required");}if(!readTransform(arg(1),t)||JS_ToFloat64(c,&fov,arg(2))||!world.SetRuntimeView(t,float(fov),nearPlane,farPlane))return JS_ThrowTypeError(c,"invalid runtime view");if(initialView)world.ResetAudioMotion();return JS_TRUE;
     }
+    if(op=="viewportSize"){auto o=JS_NewObject(c);JS_SetPropertyStr(c,o,"width",JS_NewInt32(c,world.viewportWidth));JS_SetPropertyStr(c,o,"height",JS_NewInt32(c,world.viewportHeight));return o;}
+    if(op=="projectViewport"){glm::vec3 point;if(!ReadVec(c,arg(1),point))return JS_ThrowTypeError(c,"finite world point required");if(!world.view||world.viewportWidth<=0||world.viewportHeight<=0)return JS_NULL;const auto& v=*world.view;auto q=v.pose.rotation;auto p=ProjectViewport(glm::lookAt(v.pose.position,v.pose.position+q*glm::vec3(0,0,-1),q*glm::vec3(0,1,0)),glm::perspective(glm::radians(v.fov),float(world.viewportWidth)/world.viewportHeight,v.nearPlane,v.farPlane),point);auto o=JS_NewObject(c);JS_SetPropertyStr(c,o,"x",JS_NewFloat64(c,p.position.x));JS_SetPropertyStr(c,o,"y",JS_NewFloat64(c,p.position.y));JS_SetPropertyStr(c,o,"depth",JS_NewFloat64(c,p.depth));JS_SetPropertyStr(c,o,"distance",JS_NewFloat64(c,p.distance));JS_SetPropertyStr(c,o,"behind",JS_NewBool(c,p.behind));JS_SetPropertyStr(c,o,"inside",JS_NewBool(c,p.inside));return o;}
     if(op=="clearView"){world.view.reset();world.ResetAudioMotion();return JS_TRUE;}
     if(op=="fluidSample"){
         glm::vec3 p,up,tangent;double height,radius;
@@ -736,8 +749,8 @@ JSValue ScriptSystem::Impl::Native(JSContext* c,JSValueConst,int argc,JSValueCon
         return o;
     }
     if(op=="queryTags"){CategoryMask required,excluded;if(!tagMask(arg(1),required)||!tagMask(arg(2),excluded))return JS_ThrowTypeError(c,"unknown tag");return ids(world.QueryEntities(required,excluded));}
-    if(op=="spawn"){SceneTransform t;if(!readTransform(arg(2),t))return JS_ThrowTypeError(c,"invalid transform");std::string error;auto id=world.SpawnPrefab(String(c,arg(1)),t,error);if(!id)return JS_ThrowTypeError(c,"spawn: %s",error.c_str());return JS_NewString(c,std::to_string(id).c_str());}
-    if(op=="viewRay"){if(!s->hasView)return JS_NULL;auto o=JS_NewObject(c);JS_SetPropertyStr(c,o,"origin",Vec(c,s->viewOrigin));JS_SetPropertyStr(c,o,"direction",Vec(c,s->viewDirection));return o;}
+    if(op=="spawn"){SceneTransform t;if(!readTransform(arg(2),t))return JS_ThrowTypeError(c,"invalid transform");RuntimeWorld::PrefabSpawnOptions options;auto config=arg(3);if(!KnownOptions(c,config,{"velocity","angularVelocity","scripts"}))return JS_ThrowTypeError(c,"spawn options accept velocity/angularVelocity/scripts only");for(auto [key,destination]:{std::pair<const char*,std::optional<glm::vec3>*>{"velocity",&options.velocity},{"angularVelocity",&options.angularVelocity}}){auto v=JS_GetPropertyStr(c,config,key);if(!JS_IsUndefined(v)){glm::vec3 motion;if(!ReadVec(c,v,motion)){JS_FreeValue(c,v);return JS_ThrowTypeError(c,"finite prefab motion required");}*destination=motion;}JS_FreeValue(c,v);}auto list=JS_GetPropertyStr(c,config,"scripts");std::string error;if(!JS_IsUndefined(list)){if(!JS_IsArray(list)){JS_FreeValue(c,list);return JS_ThrowTypeError(c,"scripts array required");}auto len=JS_GetPropertyStr(c,list,"length");uint32_t n=0;JS_ToUint32(c,&n,len);JS_FreeValue(c,len);if(n>256){JS_FreeValue(c,list);return JS_ThrowRangeError(c,"script init limit");}for(uint32_t i=0;i<n;++i){auto value=JS_GetPropertyUint32(c,list,i);RuntimeWorld::PrefabScriptInit init;auto src=JS_GetPropertyStr(c,value,"source"),slot=JS_GetPropertyStr(c,value,"slot"),props=JS_GetPropertyStr(c,value,"properties"),state=JS_GetPropertyStr(c,value,"state");bool valid=KnownOptions(c,value,{"source","slot","properties","state"});try{auto decimal=[&](JSValueConst v){auto text=String(c,v);if(text.empty()||text.find_first_not_of("0123456789")!=std::string::npos)throw std::runtime_error("decimal ID required");return std::stoull(text);};if(!JS_IsUndefined(src))init.source=decimal(src);init.slot=decimal(slot);}catch(...){valid=false;}if(!JS_IsUndefined(props))valid&=s->Json(props,init.properties,error);if(!JS_IsUndefined(state))valid&=s->Json(state,init.state,error);JS_FreeValue(c,src);JS_FreeValue(c,slot);JS_FreeValue(c,props);JS_FreeValue(c,state);JS_FreeValue(c,value);if(!valid){JS_FreeValue(c,list);return JS_ThrowTypeError(c,"invalid prefab script initialization: %s",error.c_str());}options.scripts.push_back(init);}}JS_FreeValue(c,list);auto id=world.SpawnPrefab(String(c,arg(1)),t,error,options);if(!id)return JS_ThrowTypeError(c,"spawn: %s",error.c_str());return JS_NewString(c,std::to_string(id).c_str());}
+    if(op=="viewRay"){if(world.view){auto o=JS_NewObject(c);JS_SetPropertyStr(c,o,"origin",Vec(c,world.view->pose.position));JS_SetPropertyStr(c,o,"direction",Vec(c,world.view->pose.rotation*glm::vec3(0,0,-1)));return o;}if(!s->hasView)return JS_NULL;auto o=JS_NewObject(c);JS_SetPropertyStr(c,o,"origin",Vec(c,s->viewOrigin));JS_SetPropertyStr(c,o,"direction",Vec(c,s->viewDirection));return o;}
     if(op=="overlap"||op=="sweep"||op=="cast"||op=="closestPoint"){
         glm::vec3 min,max;if(!ReadVec(c,arg(1),min)||!ReadVec(c,arg(2),max))return JS_ThrowTypeError(c,"invalid bounds");PhysicsQueryFilter filter;
         auto include=JS_GetPropertyStr(c,arg(3),"includeLayers");auto exclude=JS_GetPropertyStr(c,arg(3),"excludeLayers");
@@ -958,7 +971,8 @@ JSValue ScriptSystem::Impl::Native(JSContext* c,JSValueConst,int argc,JSValueCon
         auto value=JS_GetPropertyStr(c,it->second.value,"state");std::string text,error;bool ok=s->Json(value,text,error);JS_FreeValue(c,value);
         if(!ok)return JS_ThrowTypeError(c,"state: %s",error.c_str());
         return JS_ParseJSON(c,text.data(),text.size(),"state snapshot");}
-    if(op=="cameraInfo"){for(const auto& camera:world.PresentationCameras())if(camera.id==id){auto o=JS_NewObject(c);JS_SetPropertyStr(c,o,"enabled",JS_NewBool(c,camera.settings.enabled));JS_SetPropertyStr(c,o,"width",JS_NewInt32(c,camera.settings.width));JS_SetPropertyStr(c,o,"height",JS_NewInt32(c,camera.settings.height));return o;}return JS_NULL;}
+    if(op=="cameraProjection"){float nearPlane=0,farPlane=0;if(!Number(c,arg(2),"near",nearPlane)||!Number(c,arg(2),"far",farPlane)||!ValidCameraRange(nearPlane,farPlane))return JS_ThrowTypeError(c,"valid near/far range required");for(auto& camera:world.PresentationCameras())if(camera.id==id){camera.settings.nearPlane=nearPlane;camera.settings.farPlane=farPlane;return JS_TRUE;}return JS_FALSE;}
+    if(op=="cameraInfo"){for(const auto& camera:world.PresentationCameras())if(camera.id==id){auto o=JS_NewObject(c);JS_SetPropertyStr(c,o,"enabled",JS_NewBool(c,camera.settings.enabled));JS_SetPropertyStr(c,o,"width",JS_NewInt32(c,camera.settings.width));JS_SetPropertyStr(c,o,"height",JS_NewInt32(c,camera.settings.height));JS_SetPropertyStr(c,o,"near",JS_NewFloat64(c,camera.settings.nearPlane));JS_SetPropertyStr(c,o,"far",JS_NewFloat64(c,camera.settings.farPlane));return o;}return JS_NULL;}
     if(op=="parent")return JS_NewString(c,std::to_string(definition->parent).c_str());
     if(op=="children"){std::vector<EntityId> result;for(const auto& o:world.ScriptObjects())if(o.parent==id)result.push_back(o.id);return ids(result);}
     if(op=="destroy"){std::string error;if(!world.DestroyHierarchy(id,error))return JS_ThrowTypeError(c,"destroy: %s",error.c_str());return JS_TRUE;}
@@ -1048,7 +1062,8 @@ void ScriptSystem::Synchronize(const std::vector<SceneObject>& objects){
         auto ctor=JS_GetPropertyStr(m->ctx,ns,"default");JS_FreeValue(m->ctx,ns);
         auto propertyText=WriteProperties(fields);
         auto props=JS_ParseJSON(m->ctx,propertyText.data(),propertyText.size(),"authored properties");
-        auto args=JS_NewObject(m->ctx);i.loaded=m->resumed.count(key)!=0;JS_SetPropertyStr(m->ctx,args,"restored",JS_NewBool(m->ctx,i.loaded));JS_SetPropertyStr(m->ctx,args,"properties",props);
+        auto initialState=m->world->TakeSpawnState(object.id,slot.id);
+        auto args=JS_NewObject(m->ctx);JS_SetPropertyStr(m->ctx,args,"initialState",JS_ParseJSON(m->ctx,initialState.data(),initialState.size(),"prefab initial state"));i.loaded=m->resumed.count(key)!=0;JS_SetPropertyStr(m->ctx,args,"restored",JS_NewBool(m->ctx,i.loaded));JS_SetPropertyStr(m->ctx,args,"properties",props);
         auto libraryNs=m->NamespaceLibrary();
         auto entityFn=JS_GetPropertyStr(m->ctx,libraryNs,"entity");
         for(const auto& field:fields)if(field.type=="entity"){

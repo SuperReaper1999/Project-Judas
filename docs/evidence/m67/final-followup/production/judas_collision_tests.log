@@ -1,0 +1,11 @@
+=== Judas Collision / Contact / Gravity-Context Tests ===
+
+Section C: resting box on an arbitrary-oriented plane
+Section C: friction decelerates identically under rotation
+Section C: bounce restitution independent of orientation
+Section C: two-box stack under arbitrary gravity direction
+Section E: multiple simultaneous gravity contexts do not contaminate
+Section F: zero gravity in unclaimed space (no invented +Y/-Y fallback)
+Section G: context transitions never blend two fields
+
+ALL TESTS PASSED

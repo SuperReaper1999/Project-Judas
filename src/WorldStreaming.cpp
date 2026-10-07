@@ -1,3 +1,4 @@
+#include "NamedAuthoring.h"
 #include "WorldPersistence.h"
 #include "ScriptSystem.h"
 #include "WorldStreaming.h"
@@ -26,9 +27,10 @@ void remap(SceneObject& o,const std::map<SceneObjectId,SceneObjectId>& ids){auto
 bool reference(SceneObject& o,const std::string& field,SceneObjectId id){if(field.rfind("script:",0)==0){auto split=field.find(':',7);if(split==std::string::npos)return false;uint64_t slot=0;try{slot=std::stoull(field.substr(7,split-7));}catch(...){return false;}for(auto& s:o.scripts)if(s.id==slot)return ScriptSystem::SetPropertyEntity(s.properties,field.substr(split+1),id);return false;}if(field.rfind("deformable:",0)==0&&o.deformable){for(auto& a:o.deformable->attachments)if(a.group==field.substr(11)){a.target=id;return true;}return false;}if(field=="socket"&&o.socket){o.socket->target=id;return true;}if(field=="parent"){o.parent=id;return true;}if(field=="textureCamera"&&o.render){o.render->textureCamera=id;return true;}if(field=="bodyA"&&o.joint){o.joint->bodyA=id;return true;}if(field=="bodyB"&&o.joint){o.joint->bodyB=id;return true;}if(field=="source"&&o.liquidConnection){o.liquidConnection->source=id;return true;}if(field=="destination"&&o.liquidConnection){o.liquidConnection->destination=id;return true;}return false;}
 }
 bool ParseWorldManifest(const std::string& text,WorldManifest& out,std::string& error){
+    if(IsNamedDocument(text)){std::string legacy;if(!NamedToLegacy(text,"world",legacy,error))return false;return ParseWorldManifest(legacy,out,error);}
     if(text.size()>1024*1024||text.find('\0')!=std::string::npos){error="world manifest exceeds 1MiB or contains NUL";return false;}
     std::istringstream input(text);std::string line;WorldManifest m;unsigned n=0;bool header=false,budget=false;
-    while(std::getline(input,line)){++n;std::istringstream s(line);std::string key;if(!(s>>key)||key[0]=='#')continue;
+    while(std::getline(input,line)){++n;std::istringstream s(line);s.imbue(std::locale::classic());std::string key;if(!(s>>key)||key[0]=='#')continue;
         auto bad=[&]{error="world manifest line "+std::to_string(n)+": invalid "+key;return false;};
         if(!header){int version;if(key!="JudasWorld"||!(s>>version)||version!=1)return bad();header=true;}
         else if(key=="budget"){if(budget||!(s>>m.installMilliseconds>>m.unitsPerFrame>>m.maxPreparing>>m.pendingBytes>>m.liveBytes>>m.retainedBytes>>m.resourceCacheBytes))return bad();budget=true;}

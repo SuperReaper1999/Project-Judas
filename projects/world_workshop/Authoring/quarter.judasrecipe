@@ -1,0 +1,73 @@
+{
+  "kind": "recipe",
+  "schema": 1,
+  "data": {
+    "id": "quarter",
+    "type": "arc",
+    "templateId": 0,
+    "prefabAsset": "",
+    "renderAsset": "",
+    "collisionAsset": "",
+    "proxyAsset": "",
+    "geometryRevision": "",
+    "count": 8,
+    "segments": 48,
+    "collisionSegments": 16,
+    "spacing": 2.0,
+    "radius": 5,
+    "startDegrees": 0.0,
+    "endDegrees": 90,
+    "twistDegrees": 0.0,
+    "smooth": false,
+    "closed": true,
+    "frame": {
+      "position": [
+        8,
+        0.15,
+        -8
+      ],
+      "rotation": [
+        1,
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ]
+    },
+    "path": [
+      [
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        -10.0
+      ]
+    ],
+    "profile": [
+      [
+        -3,
+        -0.15
+      ],
+      [
+        3,
+        -0.15
+      ],
+      [
+        3,
+        0.15
+      ],
+      [
+        -3,
+        0.15
+      ]
+    ],
+    "elements": []
+  }
+}

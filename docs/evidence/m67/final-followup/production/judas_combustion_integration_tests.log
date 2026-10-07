@@ -1,0 +1,17 @@
+CASE vacuum-cooling-identity steps=1 failures=0 T=300->299.98 fuel=0.01->0.01 ignition=-1 extinction=-1
+CASE vacuum-heater-identity steps=1 failures=0 T=300->300.059 fuel=0.01->0.01 ignition=-1 extinction=-1
+CASE finite-fuel-identity steps=90 failures=0 T=650->650 fuel=0.001->0 ignition=0 extinction=20
+CASE no-oxygen-identity steps=90 failures=0 T=650->650 fuel=0.01->0.01 ignition=-1 extinction=-1
+CASE cold-identity steps=90 failures=0 T=300->300 fuel=0.01->0.01 ignition=-1 extinction=-1
+CASE travel-vacuum-identity steps=360 failures=0 T=650->442.045 fuel=0.1->0.0958258 ignition=0 extinction=129
+CASE finite-fuel-rotated steps=90 failures=0 T=650->650 fuel=0.001->0 ignition=0 extinction=20
+CASE no-oxygen-rotated steps=90 failures=0 T=650->650 fuel=0.01->0.01 ignition=-1 extinction=-1
+CASE cold-rotated steps=90 failures=0 T=300->300 fuel=0.01->0.01 ignition=-1 extinction=-1
+CASE travel-vacuum-rotated steps=360 failures=0 T=650->442.045 fuel=0.1->0.0958258 ignition=0 extinction=129
+CASE finite-fuel-fixed-far steps=90 failures=0 T=650->650 fuel=0.001->0 ignition=0 extinction=20
+CASE no-oxygen-fixed-far steps=90 failures=0 T=650->650 fuel=0.01->0.01 ignition=-1 extinction=-1
+CASE cold-fixed-far steps=90 failures=0 T=300->300 fuel=0.01->0.01 ignition=-1 extinction=-1
+CASE travel-vacuum-fixed-far steps=360 failures=0 T=650->442.045 fuel=0.1->0.0958258 ignition=0 extinction=129
+CASE heater-extinction-identity steps=400 failures=0 T=300->339.255 fuel=0.02->0.0159622 ignition=30 extinction=130
+CASE heater-extinction-yaw-translated steps=400 failures=0 T=300->339.255 fuel=0.02->0.0159623 ignition=30 extinction=130
+SUMMARY fixtures=16 checks=29619 failures=0 fixed_steps=2692 seconds=0.0578432

@@ -1,4 +1,9 @@
-# Named content authoring (M65)
+# Content authoring
+
+Current M67 candidate: [supported named documents and CLI](NAMED_AUTHORING.md)
+are editable in place through ordinary loaders/editor/export.
+
+## Historical M65 structured converter (retained compatibility workflow)
 
 Build `judas_scene_author`. Use:
 

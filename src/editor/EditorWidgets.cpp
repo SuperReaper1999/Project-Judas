@@ -11,25 +11,37 @@ void TrackEdit(EditorDocument& doc) {
 }
 
 bool DragVec3(EditorDocument& doc, const char* label, glm::vec3& value, float speed) {
-    const bool changed = ImGui::DragFloat3(label, &value.x, speed, 0.0f, 0.0f, "%.4g");
+    auto candidate=value;
+    const bool changed = ImGui::DragFloat3(label, &candidate.x, speed, 0.0f, 0.0f, "%.4g");
+    if(ImGui::IsItemActivated())doc.BeginEdit();
+    if(changed)value=candidate;
     TrackEdit(doc);
     return changed;
 }
 
 bool DragScalar(EditorDocument& doc, const char* label, float& value, float speed, float min, float max) {
-    const bool changed = ImGui::DragFloat(label, &value, speed, min, max, "%.4g");
+    auto candidate=value;
+    const bool changed = ImGui::DragFloat(label, &candidate, speed, min, max, "%.4g");
+    if(ImGui::IsItemActivated())doc.BeginEdit();
+    if(changed)value=candidate;
     TrackEdit(doc);
     return changed;
 }
 
 bool DragInt(EditorDocument& doc, const char* label, int& value, int min, int max) {
-    const bool changed = ImGui::DragInt(label, &value, 1.0f, min, max);
+    auto candidate=value;
+    const bool changed = ImGui::DragInt(label, &candidate, 1.0f, min, max);
+    if(ImGui::IsItemActivated())doc.BeginEdit();
+    if(changed)value=candidate;
     TrackEdit(doc);
     return changed;
 }
 
 bool ColorEdit(EditorDocument& doc, const char* label, glm::vec3& value) {
-    const bool changed = ImGui::ColorEdit3(label, &value.x, ImGuiColorEditFlags_Float | ImGuiColorEditFlags_HDR);
+    auto candidate=value;
+    const bool changed = ImGui::ColorEdit3(label, &candidate.x, ImGuiColorEditFlags_Float | ImGuiColorEditFlags_HDR);
+    if(ImGui::IsItemActivated())doc.BeginEdit();
+    if(changed)value=candidate;
     TrackEdit(doc);
     return changed;
 }

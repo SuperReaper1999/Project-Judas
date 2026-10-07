@@ -1,0 +1,56 @@
+centimetre round-trip error: 2.11506617e-07 m
+  OK   centimetre displacement survives a billion-metre world offset
+  OK   direct float conversion is diagnosed
+slow-body displacement near/far: 0.0399971008 / 0.0399971008 m (expected 0.04)
+  OK   4 cm of authoritative motion survives billion-metre translation
+  OK   physics initializes
+  OK   physics initializes
+  OK   physics initializes
+  OK   raw float rigid-body physics has no special zero at small translation
+  OK   rigid-body integration and contact match after global translation
+  OK   physics initializes
+  OK   rigid-body result matches after combined rotation and translation
+  OK   local radial gravity matches after large translation
+  OK   gravity context and boundary classification survive translation
+  OK   gravity context and boundary classification survive translation
+  OK   gravity context and boundary classification survive translation
+  OK   gravity context and boundary classification survive translation
+  OK   gravity context and boundary classification survive translation
+  OK   orbit physics initializes
+  OK   orbit physics initializes
+  OK   orbit physics initializes
+  OK   raw float orbit and spacecraft remain equivalent at small translation
+  OK   two-body orbit, thrusting spacecraft and SAS match after large translation
+  OK   orbit remains bounded, spacecraft state finite, and SAS settles
+  OK   orbit physics initializes
+rotated orbit differences A/B/ship: 0.000485 / 0.000484 / 0.000325 m
+  OK   orbit and spacecraft match after combined rotation and translation
+  OK   player physics initializes
+  OK   player shape initializes
+  OK   player physics initializes
+  OK   player shape initializes
+  OK   player physics initializes
+  OK   player shape initializes
+  OK   raw float player locomotion has no special zero at small translation
+  OK   player walks, jumps and lands on the curved support in both placements
+  OK   player, both cameras, and torch match after large translation
+  OK   absolute player results differ by exactly the universe translation
+  OK   interaction physics initializes
+  OK   translated object can be targeted at ordinary range
+  OK   translated object can be picked up
+  OK   translated held object can be thrown
+  OK   throw impulse stays local and direction correct
+  OK   translated moving reference frame round trips
+  OK   translated rotating-frame velocity round trips
+  OK   reference-frame point has correct absolute placement
+  OK   interaction physics initializes
+  OK   translated object can be targeted at ordinary range
+  OK   translated object can be picked up
+  OK   translated held object can be thrown
+  OK   throw impulse stays local and direction correct
+  OK   translated moving reference frame round trips
+  OK   translated rotating-frame velocity round trips
+  OK   reference-frame point has correct absolute placement
+  OK   interaction, carried object, throw, and reference frame match after translation
+  OK   shadow camera uses precise local focus after global translation
+M23 world-coordinate failures: 0

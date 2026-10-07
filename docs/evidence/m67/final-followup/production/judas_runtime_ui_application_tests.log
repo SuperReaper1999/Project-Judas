@@ -1,0 +1,46 @@
+Renderer fragment texture units: 32 (material path uses 12)
+World state: /home/conner/Documents/GitHub/Project-Judas/build/m41-application-project/Saves/main.judasstate (none saved)
+Project: Authored runtime UI (/home/conner/Documents/GitHub/Project-Judas/build/m41-application-project/ui_demo.judasproj)
+Scene: M41 authored runtime UI — K key / G door / P prefab / J pulse / F6 save (/home/conner/Documents/GitHub/Project-Judas/build/m41-application-project/Scenes/main.judas)
+World origin (m): 0.000, 0.000, 0.000
+PASS normal asynchronous Application resources
+PASS authored main menu owns pause before first physics step
+PASS JS Start releases cursor ownership and resumes ordinary simulation
+JS: Spawned independent scripted hierarchy 4611686018427387904
+JS: Tagged physics candidates: 1
+PASS live JS HUD reflects ordinary prefab spawning
+PASS Escape opens authored pause without simulation step
+PASS keyboard activates authored nested Options
+PASS slider input invokes JS change event
+PASS toggle value-change controls HUD through JS
+PASS Back returns to pause and no fixed time was invented
+PASS Back resumes ordinary fixed step
+PASS UI script callbacks remain fault-free
+PERFORMANCE UI elements=25 update_us=8.433 render_us=15.748 draws=1
+Renderer fragment texture units: 32 (material path uses 12)
+World state: /home/conner/.local/share/judas/games/173a7cc0fb54bd30bacf056c6456011a0d1a626f7eaf24c0f5376875898f4cae/Saves/main.judasstate (none saved)
+Project: Authored runtime UI (/home/conner/Documents/GitHub/Project-Judas/build/m41-moved-game/game.judasproj)
+Scene: M41 authored runtime UI — K key / G door / P prefab / J pulse / F6 save (/home/conner/Documents/GitHub/Project-Judas/build/m41-moved-game/Scenes/main.judas)
+World origin (m): 0.000, 0.000, 0.000
+PASS moved package unrelated working directory
+PASS normal asynchronous Application resources
+PASS authored main menu owns pause before first physics step
+PASS JS Start releases cursor ownership and resumes ordinary simulation
+JS: Spawned independent scripted hierarchy 4611686018427387904
+JS: Tagged physics candidates: 1
+PASS live JS HUD reflects ordinary prefab spawning
+PASS Escape opens authored pause without simulation step
+PASS keyboard activates authored nested Options
+PASS slider input invokes JS change event
+PASS toggle value-change controls HUD through JS
+PASS Back returns to pause and no fixed time was invented
+PASS Back resumes ordinary fixed step
+PASS UI script callbacks remain fault-free
+PERFORMANCE UI elements=25 update_us=8.745 render_us=15.885 draws=1
+PASS ordinary UI runtime shutdown
+PASS ordinary UI runtime shutdown
+PASS normal UI project settings load
+PASS M38 packages UI documents, scripts, fonts and images
+PASS UI document transitive dependencies packaged
+PASS moved exported game executes real UI/script interaction
+SUMMARY 16 checks 0 failures

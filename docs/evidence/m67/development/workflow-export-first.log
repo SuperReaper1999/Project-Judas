@@ -1,0 +1,31 @@
+performance 0
+vm-enumeration 0
+api-types-live 0
+inspect 0
+dependencies 0
+references 0
+generation-preview 0
+generation-edit 0
+semantic-diff 0
+physical-profile-edit 0
+ui-source-edit 0
+input-source-edit 0
+syntax-diagnostic 1
+reference-diagnostic 1
+geometry-diagnostic 1
+editor-source-roundtrip 0
+cold-write 0
+cold-read 0
+three-games 0
+edited-export 1
+Traceback (most recent call last):
+  File "/home/conner/Documents/GitHub/Project-Judas/docs/evidence/m67/verify_workflow.py", line 68, in <module>
+    if __name__=='__main__':main()
+                            ~~~~^^
+  File "/home/conner/Documents/GitHub/Project-Judas/docs/evidence/m67/verify_workflow.py", line 52, in main
+    run('edited-export',[cli,'--build-project',config,out/'edited-package',ROOT/'build/judas',ROOT/'data'])
+    ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/conner/Documents/GitHub/Project-Judas/docs/evidence/m67/verify_workflow.py", line 16, in run
+    assert (r.returncode==0 if expect==0 else r.returncode!=0),(label,text[-3000:])
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ('edited-export', 'content service: Export failed: Missing engine UI font\n')

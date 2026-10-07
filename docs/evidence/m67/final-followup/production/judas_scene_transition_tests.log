@@ -1,0 +1,30 @@
+Renderer fragment texture units: 32 (material path uses 12)
+World state: /home/conner/Documents/GitHub/Project-Judas/docs/evidence/m67/final-followup/fixture-details/judas_scene_transition_tests/project/Saves/a.judasstate (none saved)
+Project: M43 scene transitions (/home/conner/Documents/GitHub/Project-Judas/docs/evidence/m67/final-followup/fixture-details/judas_scene_transition_tests/project/scene_demo.judasproj)
+Scene: M43 Scene A — E send courier / P spawn / R reload (/home/conner/Documents/GitHub/Project-Judas/docs/evidence/m67/final-followup/fixture-details/judas_scene_transition_tests/project/Scenes/a.judas)
+World origin (m): 0.000, 0.000, 0.000
+Runtime outer services: /home/conner/Documents/GitHub/Project-Judas/docs/evidence/m67/final-followup/fixture-details/judas_scene_transition_tests/project/Scenes/b.judas: scene line 1: expected 'JudasScene <version>' on the first line
+PASS initial registered scene A
+PASS absolute/unregistered request rejected without queuing
+PASS nonfinite session data rejected
+PASS bounded JSON session state accepted
+PASS ordinary runtime prefab triggers real sensor
+PASS M42 callback finished before A to B; session survives
+PASS old runtime spawned hierarchy destroyed
+PASS fresh scripts and scene UI start without faults
+PASS outgoing modal UI owns the cursor
+PASS multiple valid requests accepted deterministically
+PASS B to A; first request wins
+PASS new unpaused scene recaptures cursor after modal scene
+PASS reload queued
+PASS reload removes spawned entities
+PASS reload restores authored transform
+PASS reload retains session but not trigger history
+PASS missing scene fails safely
+PASS all JS lifecycle callbacks valid
+PASS registered malformed scene request deferred
+PASS malformed candidate consumed without changing current scene
+PASS failed transition retains live systems and session
+PASS ordinary Application transitions and shutdown
+PASS no runtime world retained by project/session state
+SUMMARY 23 checks 0 failures

@@ -1,0 +1,58 @@
+sequence	operation	asset	generation	thread	context_current	handle	bytes	path
+1	MeshCreated		0	139295019679424	1	0	2016	
+2	MeshCreated		0	139295019679424	1	1	129024	
+3	TextureCreated		0	139295019679424	1	0	4	
+4	FileReadBegin	000000000000000000000000f7200001	0	139294905718464	0	0	0	/home/conner/Documents/GitHub/Project-Judas/build/ftft2-fixtures/residency/a/Assets/1.obj
+5	FileReadChunk	000000000000000000000000f7200001	0	139294905718464	0	0	1048576	/home/conner/Documents/GitHub/Project-Judas/build/ftft2-fixtures/residency/a/Assets/1.obj
+6	FileReadChunk	000000000000000000000000f7200001	0	139294905718464	0	0	2097152	/home/conner/Documents/GitHub/Project-Judas/build/ftft2-fixtures/residency/a/Assets/1.obj
+7	FileReadChunk	000000000000000000000000f7200001	0	139294905718464	0	0	2355232	/home/conner/Documents/GitHub/Project-Judas/build/ftft2-fixtures/residency/a/Assets/1.obj
+8	FileReadEnd	000000000000000000000000f7200001	0	139294905718464	0	0	2355232	/home/conner/Documents/GitHub/Project-Judas/build/ftft2-fixtures/residency/a/Assets/1.obj
+9	DecodeBegin	000000000000000000000000f7200001	0	139294905718464	0	0	2355232	/home/conner/Documents/GitHub/Project-Judas/build/ftft2-fixtures/residency/a/Assets/1.obj
+10	DecodeEnd	000000000000000000000000f7200001	0	139294905718464	0	0	2355232	/home/conner/Documents/GitHub/Project-Judas/build/ftft2-fixtures/residency/a/Assets/1.obj
+11	LoadComplete	000000000000000000000000f7200001	0	139294905718464	0	0	2355232	/home/conner/Documents/GitHub/Project-Judas/build/ftft2-fixtures/residency/a/Assets/1.obj
+12	MeshCreated		0	139295019679424	1	2	180	
+13	FileReadBegin	000000000000000000000000f720000c	0	139294914111168	0	0	0	/home/conner/Documents/GitHub/Project-Judas/build/ftft2-fixtures/residency/a/Assets/12.obj
+14	FileReadBegin	000000000000000000000000f720000d	0	139294922503872	0	0	0	/home/conner/Documents/GitHub/Project-Judas/build/ftft2-fixtures/residency/a/Assets/13.obj
+15	FileReadBegin	000000000000000000000000f720000e	0	139294664885952	0	0	0	/home/conner/Documents/GitHub/Project-Judas/build/ftft2-fixtures/residency/a/Assets/14.obj
+16	FileReadChunk	000000000000000000000000f720000c	0	139294914111168	0	0	32	/home/conner/Documents/GitHub/Project-Judas/build/ftft2-fixtures/residency/a/Assets/12.obj
+17	FileReadEnd	000000000000000000000000f720000c	0	139294914111168	0	0	32	/home/conner/Documents/GitHub/Project-Judas/build/ftft2-fixtures/residency/a/Assets/12.obj
+18	DecodeBegin	000000000000000000000000f720000c	0	139294914111168	0	0	32	/home/conner/Documents/GitHub/Project-Judas/build/ftft2-fixtures/residency/a/Assets/12.obj
+19	FileReadChunk	000000000000000000000000f720000d	0	139294922503872	0	0	32	/home/conner/Documents/GitHub/Project-Judas/build/ftft2-fixtures/residency/a/Assets/13.obj
+20	FileReadEnd	000000000000000000000000f720000d	0	139294922503872	0	0	32	/home/conner/Documents/GitHub/Project-Judas/build/ftft2-fixtures/residency/a/Assets/13.obj
+21	FileReadChunk	000000000000000000000000f720000e	0	139294664885952	0	0	32	/home/conner/Documents/GitHub/Project-Judas/build/ftft2-fixtures/residency/a/Assets/14.obj
+22	DecodeEnd	000000000000000000000000f720000c	0	139294914111168	0	0	32	/home/conner/Documents/GitHub/Project-Judas/build/ftft2-fixtures/residency/a/Assets/12.obj
+23	LoadComplete	000000000000000000000000f720000c	0	139294914111168	0	0	32	/home/conner/Documents/GitHub/Project-Judas/build/ftft2-fixtures/residency/a/Assets/12.obj
+24	FileReadEnd	000000000000000000000000f720000e	0	139294664885952	0	0	32	/home/conner/Documents/GitHub/Project-Judas/build/ftft2-fixtures/residency/a/Assets/14.obj
+25	DecodeBegin	000000000000000000000000f720000e	0	139294664885952	0	0	32	/home/conner/Documents/GitHub/Project-Judas/build/ftft2-fixtures/residency/a/Assets/14.obj
+26	DecodeBegin	000000000000000000000000f720000d	0	139294922503872	0	0	32	/home/conner/Documents/GitHub/Project-Judas/build/ftft2-fixtures/residency/a/Assets/13.obj
+27	DecodeEnd	000000000000000000000000f720000e	0	139294664885952	0	0	32	/home/conner/Documents/GitHub/Project-Judas/build/ftft2-fixtures/residency/a/Assets/14.obj
+28	DecodeEnd	000000000000000000000000f720000d	0	139294922503872	0	0	32	/home/conner/Documents/GitHub/Project-Judas/build/ftft2-fixtures/residency/a/Assets/13.obj
+29	LoadComplete	000000000000000000000000f720000d	0	139294922503872	0	0	32	/home/conner/Documents/GitHub/Project-Judas/build/ftft2-fixtures/residency/a/Assets/13.obj
+30	LoadComplete	000000000000000000000000f720000e	0	139294664885952	0	0	32	/home/conner/Documents/GitHub/Project-Judas/build/ftft2-fixtures/residency/a/Assets/14.obj
+31	MeshCreated		0	139295019679424	1	3	180	
+32	MeshCreated		0	139295019679424	1	4	180	
+33	CpuReady	000000000000000000000000f720000e	0	139295019679424	0	0	0	/home/conner/Documents/GitHub/Project-Judas/build/ftft2-fixtures/residency/a/Assets/14.obj
+34	TextureCreated		0	139295019679424	1	1	4194304	
+35	MeshCreated		0	139295019679424	1	5	180	
+36	MeshDestroyed		0	139295019679424	1	3	180	
+37	MeshDestroyed		0	139295019679424	1	4	180	
+38	FileReadBegin	000000000000000000000000f720000c	1	139294989072064	0	0	0	/home/conner/Documents/GitHub/Project-Judas/build/ftft2-fixtures/residency/a/Assets/12.obj
+39	FileReadChunk	000000000000000000000000f720000c	1	139294989072064	0	0	32	/home/conner/Documents/GitHub/Project-Judas/build/ftft2-fixtures/residency/a/Assets/12.obj
+40	FileReadEnd	000000000000000000000000f720000c	1	139294989072064	0	0	32	/home/conner/Documents/GitHub/Project-Judas/build/ftft2-fixtures/residency/a/Assets/12.obj
+41	DecodeBegin	000000000000000000000000f720000c	1	139294989072064	0	0	32	/home/conner/Documents/GitHub/Project-Judas/build/ftft2-fixtures/residency/a/Assets/12.obj
+42	DecodeEnd	000000000000000000000000f720000c	1	139294989072064	0	0	32	/home/conner/Documents/GitHub/Project-Judas/build/ftft2-fixtures/residency/a/Assets/12.obj
+43	LoadComplete	000000000000000000000000f720000c	1	139294989072064	0	0	32	/home/conner/Documents/GitHub/Project-Judas/build/ftft2-fixtures/residency/a/Assets/12.obj
+44	MeshCreated		0	139295019679424	1	6	180	
+45	ManagerShutdownBegin		0	139295019679424	0	0	0	
+46	MeshDestroyed		0	139295019679424	1	2	180	
+47	MeshDestroyed		0	139295019679424	1	6	180	
+48	MeshDestroyed		0	139295019679424	1	5	180	
+49	ManagerShutdownEnd		0	139295019679424	0	0	0	
+50	WorkersJoined		0	139295019679424	1	0	0	
+51	TextureDestroyed		0	139295019679424	1	1	4194304	
+52	RendererShutdownBegin		0	139295019679424	1	0	0	
+53	MeshDestroyed		0	139295019679424	1	0	2016	
+54	MeshDestroyed		0	139295019679424	1	1	129024	
+55	TextureDestroyed		0	139295019679424	1	0	4	
+56	RendererShutdownEnd		0	139295019679424	1	0	0	
+57	ContextDestroyed		0	139295019679424	0	0	0	

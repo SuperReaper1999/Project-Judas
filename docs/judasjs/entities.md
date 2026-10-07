@@ -135,3 +135,11 @@ part/unready mesh. Stale entity handles throw through normal validity checks.
 Hidden parts are omitted from ordinary camera, secondary-camera and shadow draws;
 this does not disable physics or remove skeleton joints. Editor assignments serialize
 as render hidden-part keys. Stop restores authored visibility.
+
+## world.spawnPrefab construction options (M67)
+
+`world.spawnPrefab(asset, transform={}, options={})` keeps ordinary spawn behaviour when options are absent. Options accept only `velocity`, `angularVelocity` and `scripts`. Initial velocity is world-space m/s and angular velocity is world-space rad/s; both require a dynamic root body. The whole hierarchy, resource/shape references and initialization are validated before any hierarchy member is created.
+
+`scripts` contains at most 256 unique `{source?,slot,properties?,state?}` records. `source` is a decimal source-prefab entity ID (omitted/0 selects the root); `slot` is its authored script slot ID. `properties` replaces that slot's authored property object and is checked against its existing exported schema. Use normal typed entity-reference values (`{entity:"ID"}`); the engine accepts only live published external entities or members of the new hierarchy. Construction state is bounded plain JSON (64 KiB per slot), passed as `context.initialState` to the constructor. There is no module-global pending map. Unknown/disabled/duplicate slots, stale refs and malformed data throw before publication.
+
+Construction data and body motion are applied before publication/first integration. The constructor sees final properties and initialState; `start` follows normal resource readiness/synchronization, before the instance's first script fixedUpdate. Physical integration uses the ordinary fixed-step boundary; spawning inside a fixed callback can integrate the body before its next script synchronization, so do not assume its velocity remains numerically equal to the initial velocity in a later callback. Instances are independent. Capture values you need into your script's existing serialized state. On M61 restore, `context.restored` is true, `initialState` is null, existing saved properties/motion/script state are restored, and fresh initialization is not reapplied or start called twice. There is no arbitrary async JS constructor.

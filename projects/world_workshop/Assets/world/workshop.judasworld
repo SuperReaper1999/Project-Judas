@@ -1,0 +1,66 @@
+{
+  "kind": "world",
+  "schema": 1,
+  "data": {
+    "budget": {
+      "installMilliseconds": 2,
+      "unitsPerFrame": 16,
+      "maxPreparing": 2,
+      "pendingBytes": 33554432,
+      "liveBytes": 67108864,
+      "retainedBytes": 4194304,
+      "resourceCacheBytes": 67108864
+    },
+    "regions": [
+      {
+        "id": "east",
+        "scene": "Scenes/east.judas",
+        "origin": [
+          0,
+          0,
+          -45
+        ],
+        "rotation": [
+          0,
+          0,
+          0,
+          1
+        ],
+        "halfExtents": [
+          12,
+          6,
+          12
+        ],
+        "priority": 1,
+        "policy": "snapshot",
+        "estimatedBytes": 65536,
+        "dependencies": []
+      },
+      {
+        "id": "west",
+        "scene": "Scenes/west.judas",
+        "origin": [
+          0,
+          0,
+          -95
+        ],
+        "rotation": [
+          0,
+          0,
+          0,
+          1
+        ],
+        "halfExtents": [
+          12,
+          6,
+          12
+        ],
+        "priority": 1,
+        "policy": "snapshot",
+        "estimatedBytes": 65536,
+        "dependencies": []
+      }
+    ],
+    "references": []
+  }
+}

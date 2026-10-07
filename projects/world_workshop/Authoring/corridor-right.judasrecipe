@@ -1,0 +1,78 @@
+{
+  "kind": "recipe",
+  "schema": 1,
+  "data": {
+    "id": "corridor-right",
+    "type": "sweep",
+    "templateId": 0,
+    "prefabAsset": "",
+    "renderAsset": "",
+    "collisionAsset": "",
+    "proxyAsset": "",
+    "geometryRevision": "",
+    "count": 8,
+    "segments": 12,
+    "collisionSegments": 6,
+    "spacing": 2.0,
+    "radius": 4.0,
+    "startDegrees": 0.0,
+    "endDegrees": 90.0,
+    "twistDegrees": 0.0,
+    "smooth": true,
+    "closed": true,
+    "frame": {
+      "position": [
+        0,
+        0.1,
+        -22
+      ],
+      "rotation": [
+        1,
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ]
+    },
+    "path": [
+      [
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        -8
+      ],
+      [
+        3,
+        0,
+        -16
+      ]
+    ],
+    "profile": [
+      [
+        1.95,
+        -0.1
+      ],
+      [
+        2.15,
+        -0.1
+      ],
+      [
+        2.15,
+        2.7
+      ],
+      [
+        1.95,
+        2.7
+      ]
+    ],
+    "elements": []
+  }
+}

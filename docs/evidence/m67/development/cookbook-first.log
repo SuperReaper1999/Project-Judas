@@ -1,0 +1,6 @@
+Renderer fragment texture units: 32 (material path uses 12)
+script asset=f9e3548ee68b4e35140a404cc41257d4 entity=3 slot=1 start: TypeError: cannot read property 'far' of undefined
+    at start (Assets/example.js:25:110)
+
+terminate called after throwing an instance of 'nlohmann::json_abi_v3_11_3::detail::type_error'
+  what():  [json.exception.type_error.306] cannot use value() with null

@@ -1,0 +1,84 @@
+[
+  {
+    "op": "replace",
+    "path": "/data/settings/authoring-recipes/json/gallery-0/data/count",
+    "value": 33
+  },
+  {
+    "op": "add",
+    "path": "/data/settings/authoring-recipes/json/gallery-0/data/elements/-",
+    "value": {
+      "key": "gallery-0/32",
+      "object": 454,
+      "generated": {
+        "_name": "\"Array template\"",
+        "position": "-22.999996 1 -59.999996",
+        "render": "box",
+        "render.alpha": "1",
+        "render.color": "0.12 0.65 0.75",
+        "render.half-extents": "0.15 1 0.15",
+        "render.mesh-asset": "\"\"",
+        "render.radius": "0.5",
+        "render.secondary-alpha": "1",
+        "render.secondary-color": "0.8 0.8 0.8",
+        "render.texture-asset": "\"\"",
+        "rotation": "0.7071068 0 0.7071068 0",
+        "scale": "1 1 1"
+      }
+    }
+  },
+  {
+    "op": "replace",
+    "path": "/data/settings/next-id",
+    "value": 455
+  },
+  {
+    "op": "add",
+    "path": "/data/objects/-",
+    "value": {
+      "id": 454,
+      "name": "Array template",
+      "fields": {
+        "position": [
+          -22.999996,
+          1,
+          -59.999996
+        ],
+        "rotation": [
+          0.7071068,
+          0,
+          0.7071068,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ],
+        "render": {
+          "symbol": "box"
+        },
+        "render.half-extents": [
+          0.15,
+          1,
+          0.15
+        ],
+        "render.radius": 0.5,
+        "render.color": [
+          0.12,
+          0.65,
+          0.75
+        ],
+        "render.alpha": 1,
+        "render.secondary-color": [
+          0.8,
+          0.8,
+          0.8
+        ],
+        "render.secondary-alpha": 1,
+        "render.mesh-asset": "",
+        "render.texture-asset": ""
+      }
+    }
+  }
+]

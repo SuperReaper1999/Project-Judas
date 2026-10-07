@@ -1,0 +1,64 @@
+[  5%] Built target judas_icu_build
+[  5%] Built target judas_quickjs
+[ 11%] Built target judas_app_icon
+[ 27%] Built target freetype
+[ 27%] Built target judas_glad
+[ 27%] Built target judas_profiler
+[ 33%] Built target judas_navigation_backend
+[ 33%] Built target judas_audio_backend
+[ 33%] Built target judas_materials
+[ 33%] Built target harfbuzz
+[ 94%] Built target judas_engine
+[100%] Building CXX object CMakeFiles/judas_world_authoring.dir/src/authoring/WorldBuilder.cpp.o
+[100%] Linking CXX static library libjudas_world_authoring.a
+[100%] Built target judas_world_authoring
+[100%] Linking CXX executable judas_world_building_tests
+[100%] Built target judas_world_building_tests
+[  5%] Built target judas_icu_build
+[  5%] Built target judas_quickjs
+[ 11%] Built target judas_app_icon
+[ 27%] Built target freetype
+[ 27%] Built target judas_glad
+[ 27%] Built target judas_profiler
+[ 33%] Built target judas_navigation_backend
+[ 33%] Built target judas_audio_backend
+[ 33%] Built target judas_materials
+[ 33%] Built target judas_ufbx
+[ 33%] Built target harfbuzz
+[ 94%] Built target judas_engine
+[ 94%] Built target judas_model_import
+[100%] Built target judas_world_authoring
+[100%] Linking CXX executable judas_scene_author
+[100%] Built target judas_scene_author
+[  5%] Built target judas_icu_build
+[  5%] Built target judas_quickjs
+[ 10%] Built target judas_app_icon
+[ 25%] Built target freetype
+[ 25%] Built target judas_glad
+[ 25%] Built target judas_profiler
+[ 30%] Built target judas_navigation_backend
+[ 30%] Built target judas_audio_backend
+[ 30%] Built target judas_ufbx
+[ 30%] Built target harfbuzz
+[ 30%] Built target judas_imgui
+[ 30%] Built target judas_materials
+[ 85%] Built target judas_engine
+[ 95%] Built target judas_world_authoring
+[ 95%] Built target judas_model_import
+[ 95%] Built target judas_navigation_baker
+[ 95%] Linking CXX executable judas_editor
+[100%] Built target judas_editor
+[  5%] Built target judas_icu_build
+[ 10%] Built target judas_app_icon
+[ 10%] Built target judas_quickjs
+[ 26%] Built target freetype
+[ 26%] Built target judas_glad
+[ 26%] Built target judas_profiler
+[ 31%] Built target judas_navigation_backend
+[ 31%] Built target judas_audio_backend
+[ 31%] Built target judas_materials
+[ 31%] Built target harfbuzz
+[ 89%] Built target judas_engine
+[ 94%] Built target judas_world_authoring
+[ 94%] Linking CXX executable judas_world_authoring_performance
+[100%] Built target judas_world_authoring_performance

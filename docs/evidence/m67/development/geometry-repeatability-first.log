@@ -1,0 +1,191 @@
+PASS named scene conversion: 
+PASS normal loader reads named scene
+PASS legacy bytes unchanged through named roundtrip
+PASS property ordering and whitespace preserve authored meaning
+PASS canonical fingerprint 5 unaffected by named formatting
+PASS duplicate JSON keys reject
+PASS unknown authoring version rejects
+PASS unknown component field rejects
+PASS failed decode preserves last-good scene
+PASS duplicate stable entity ID rejects
+PASS negative stable entity ID rejects
+PASS full project named fields
+PASS project input registries settings roundtrip
+PASS named UI complete fields
+PASS UI Unicode/layout/localization roundtrip
+PASS runtime layout origin
+PASS batched UI layout mutation
+PASS layout and hit geometry move together
+PASS negative size rejects atomically
+PASS stale UI handles reject
+PASS extended camera range projects distant object
+PASS behind-camera point identified
+PASS clipping range validates and rejects far point
+PASS named source staged publication
+PASS editor opens named source
+PASS parent and child batch world delta
+PASS selected child inherits delta exactly once
+PASS undo restores whole authored transaction
+PASS cancel restores snapshot
+PASS organizational folder does not change transform parent
+PASS editor saves same named source
+PASS editor save keeps selected named format
+PASS external divergence prevents silent overwrite
+PASS invalid source edit retains last-good document
+PASS linear recipe: [json.exception.parse_error.101] parse error at line 1, column 2: syntax error while parsing object key - invalid literal; last read: '{b'; expected string literal
+PASS linear spacing independent expectation
+PASS regeneration succeeds
+PASS surviving generated IDs retain identity
+PASS instance override survives regenerated spacing
+PASS explicit removal list
+PASS closed arc passes actual M64 cooker: 
+FAIL same recipe inputs produce deterministic immutable revision asset identities
+PASS coherent ramp winding/caps accepted by actual cooker
+PASS actual ramp triangle query reaches expected surface
+PASS normal CharacterMotor traverses generated curved collision, not presentation-only geometry
+PASS edited convex profile validates with unchanged topology size
+PASS spacing-based path placement
+PASS path endpoint independent expectation
+PASS zero tangent rejected; no publication
+PASS concave/invalid physical profile rejected
+PASS worker preview carries source/document revision
+PASS accepted preview parameters match exact request
+PASS cooperative cancellation leaves no live document mutation
+PASS shared source document
+PASS invalid draft preserves validated source
+PASS validated source one undo action
+PASS source undo/redo stable
+PASS shared source staged save
+PASS source external conflict retains dirty/last-good state
+PASS recoverable publication succeeds
+PASS publication rejects external mismatched baseline
+PASS alignment one transaction
+PASS align uses primary world coordinate
+PASS alignment undo
+PASS numeric snap validates
+PASS batch rename document order
+PASS generic selected-chain fit: 
+PASS fit preserves authored mass/resistance and unmapped joints
+PASS fit offsets and parent independent expectation
+PASS current writer roundtrip projects/shooter_game/Assets/prefabs/navigator.judasprefab
+PASS current writer roundtrip projects/shooter_game/Scenes/range.judas
+PASS current writer roundtrip projects/query_demo/Assets/prefabs/target.judasprefab
+PASS current writer roundtrip projects/query_demo/Scenes/main.judas
+PASS current writer roundtrip projects/streamed_range/Assets/prefabs/navigator.judasprefab
+PASS current writer roundtrip projects/streamed_range/Scenes/liquid.judas
+PASS current writer roundtrip projects/streamed_range/Scenes/gallery-0.judas
+PASS current writer roundtrip projects/streamed_range/Scenes/gallery-1.judas
+PASS current writer roundtrip projects/streamed_range/Scenes/gallery-3.judas
+PASS current writer roundtrip projects/streamed_range/Scenes/gallery-5.judas
+PASS current writer roundtrip projects/streamed_range/Scenes/gallery-2.judas
+PASS current writer roundtrip projects/streamed_range/Scenes/gallery-4.judas
+PASS current writer roundtrip projects/streamed_range/Scenes/bootstrap.judas
+PASS current writer roundtrip projects/streamed_range/Scenes/oblique.judas
+PASS current writer roundtrip projects/liquid_reservoir_demo/Assets/prefabs/bucket.judasprefab
+PASS current writer roundtrip projects/liquid_reservoir_demo/Scenes/lab.judas
+PASS current writer roundtrip projects/liquid_reservoir_demo/Scenes/radial.judas
+PASS current writer roundtrip projects/classification_demo/Assets/assembly.judasprefab
+PASS current writer roundtrip projects/classification_demo/Scenes/main.judas
+PASS current writer roundtrip projects/ragdoll_demo/Assets/prefabs/bar.judasprefab
+PASS current writer roundtrip projects/ragdoll_demo/Scenes/main.judas
+PASS current writer roundtrip projects/boundary_demo/Assets/prefabs/motor.judasprefab
+PASS current writer roundtrip projects/boundary_demo/Scenes/pool.judas
+PASS current writer roundtrip projects/boundary_demo/Scenes/planet.judas
+PASS current writer roundtrip projects/boundary_demo/Scenes/flat.judas
+PASS current writer roundtrip projects/boundary_demo/Scenes/flight.judas
+PASS current writer roundtrip projects/fluid_demo/Scenes/pool.judas
+PASS current writer roundtrip projects/fluid_demo/Scenes/planet.judas
+PASS current writer roundtrip projects/joint_demo/Assets/prefabs/target.judasprefab
+PASS current writer roundtrip projects/joint_demo/Scenes/main.judas
+PASS current writer roundtrip projects/pose_demo/Assets/prefabs/bar.judasprefab
+PASS current writer roundtrip projects/pose_demo/Scenes/main.judas
+PASS current writer roundtrip projects/material_lab/Assets/prefabs/bar.judasprefab
+PASS current writer roundtrip projects/material_lab/Scenes/lab.judas
+PASS current writer roundtrip projects/export_demo/Assets/prefabs/beacon.judasprefab
+PASS current writer roundtrip projects/export_demo/Scenes/start.judas
+PASS current writer roundtrip projects/ui_demo/Assets/prefabs/prop.judasprefab
+PASS current writer roundtrip projects/ui_demo/Scenes/main.judas
+PASS current writer roundtrip projects/fracture_lab/Assets/prefabs/panel.judasprefab
+PASS current writer roundtrip projects/fracture_lab/Scenes/game.judas
+PASS current writer roundtrip projects/fracture_lab/Scenes/radial.judas
+PASS current writer roundtrip projects/fracture_lab/Scenes/annex.judas
+PASS current writer roundtrip projects/fracture_lab/Scenes/flat.judas
+PASS current writer roundtrip projects/save_lab/Assets/prefabs/bucket.judasprefab
+PASS current writer roundtrip projects/save_lab/Scenes/lab.judas
+PASS current writer roundtrip projects/post_m65_consumers/Assets/void/prefabs/debris.judasprefab
+PASS current writer roundtrip projects/post_m65_consumers/Assets/void/prefabs/raider.judasprefab
+PASS current writer roundtrip projects/post_m65_consumers/Scenes/launcher.judas
+PASS current writer roundtrip projects/post_m65_consumers/Scenes/rooftop/autotest.judas
+PASS current writer roundtrip projects/post_m65_consumers/Scenes/rooftop/rooftops.judas
+PASS current writer roundtrip projects/post_m65_consumers/Scenes/void/system.judas
+PASS current writer roundtrip projects/post_m65_consumers/Scenes/void/autotest.judas
+PASS current writer roundtrip projects/post_m65_consumers/Scenes/skate/springlab.judas
+PASS current writer roundtrip projects/post_m65_consumers/Scenes/skate/sliderrepro.judas
+PASS current writer roundtrip projects/post_m65_consumers/Scenes/skate/park.judas
+PASS current writer roundtrip projects/post_m65_consumers/Scenes/skate/smoke.judas
+PASS current writer roundtrip projects/post_m65_consumers/Scenes/skate/lab.judas
+PASS current writer roundtrip projects/post_m65_consumers/Scenes/skate/street-4.judas
+PASS current writer roundtrip projects/post_m65_consumers/Scenes/skate/street-0.judas
+PASS current writer roundtrip projects/post_m65_consumers/Scenes/skate/street-1.judas
+PASS current writer roundtrip projects/post_m65_consumers/Scenes/skate/jointlab.judas
+PASS current writer roundtrip projects/post_m65_consumers/Scenes/skate/street-3.judas
+PASS current writer roundtrip projects/post_m65_consumers/Scenes/skate/street-2.judas
+PASS current writer roundtrip projects/animation_demo/Assets/prefabs/bar.judasprefab
+PASS current writer roundtrip projects/animation_demo/Scenes/main.judas
+PASS current writer roundtrip projects/audio_lab/Scenes/listening.judas
+PASS current writer roundtrip projects/text_lab/Scenes/lab.judas
+PASS current writer roundtrip projects/scene_demo/Assets/prefabs/participant.judasprefab
+PASS current writer roundtrip projects/scene_demo/Scenes/a.judas
+PASS current writer roundtrip projects/scene_demo/Scenes/b.judas
+PASS current writer roundtrip projects/collision_lab/Assets/prefabs/prop.judasprefab
+PASS current writer roundtrip projects/collision_lab/Scenes/skate-mesh.judas
+PASS current writer roundtrip projects/collision_lab/Scenes/skate-boxes.judas
+PASS current writer roundtrip projects/collision_lab/Scenes/annex.judas
+PASS current writer roundtrip projects/collision_lab/Scenes/flat.judas
+PASS current writer roundtrip projects/script_demo/Assets/prefabs/prop.judasprefab
+PASS current writer roundtrip projects/script_demo/Scenes/main.judas
+PASS current writer roundtrip projects/character_demo/Assets/prefabs/motor.judasprefab
+PASS current writer roundtrip projects/character_demo/Scenes/pool.judas
+PASS current writer roundtrip projects/character_demo/Scenes/planet.judas
+PASS current writer roundtrip projects/character_demo/Scenes/flat.judas
+PASS current writer roundtrip projects/liquid_surface_demo/Assets/prefabs/bucket.judasprefab
+PASS current writer roundtrip projects/liquid_surface_demo/Scenes/lab.judas
+PASS current writer roundtrip projects/liquid_surface_demo/Scenes/radial.judas
+PASS current writer roundtrip projects/deformable_lab/Assets/prefabs/cloth.judasprefab
+PASS current writer roundtrip projects/deformable_lab/Scenes/radial.judas
+PASS current writer roundtrip projects/deformable_lab/Scenes/annex.judas
+PASS current writer roundtrip projects/deformable_lab/Scenes/flat.judas
+PASS current writer roundtrip projects/tiny_game/Scenes/main.judas
+PASS current writer roundtrip projects/world_workshop/Assets/prefabs/debris.judasprefab
+PASS current writer roundtrip projects/world_workshop/Scenes/west.judas
+PASS current writer roundtrip projects/world_workshop/Scenes/east.judas
+PASS current writer roundtrip projects/world_workshop/Scenes/workshop.judas
+PASS current writer roundtrip projects/import_lab/Assets/prefabs/full_rig.judasprefab
+PASS current writer roundtrip projects/import_lab/Scenes/main.judas
+PASS current writer roundtrip projects/import_lab/Scenes/region.judas
+PASS current writer roundtrip projects/m65_integration/Assets/prefabs/rider.judasprefab
+PASS current writer roundtrip projects/m65_integration/Assets/prefabs/posed.judasprefab
+PASS current writer roundtrip projects/m65_integration/Scenes/integration.judas
+PASS current writer roundtrip projects/m65_integration/Scenes/annex.judas
+PASS current writer roundtrip projects/m65_integration/Scenes/rooftops.judas
+PASS current writer roundtrip projects/touch_demo/Assets/prefabs/participant.judasprefab
+PASS current writer roundtrip projects/touch_demo/Scenes/main.judas
+PASS current-component coverage across ordinary projects, not historical evidence
+PASS standalone named input
+PASS input ordering/deadzones complete roundtrip
+PASS world named budgets/qualified references
+PASS qualified region reference independent expected identity
+PASS editor folders/recipes do not change canonical gameplay fingerprint
+PASS numeric parsing/writing ignores process C++ decimal-comma locale
+PASS recipe nested unknown fields fail with context
+PASS negative stable recipe identity rejects before unsigned wrapping
+PASS physical geometry rejects unsupported entity scale instead of visual/collision disagreement
+PASS lower-resolution physical proxy uses same valid recipe without relaxing cooker
+PASS batch identity/link fields reject rather than silently ignoring the edit
+PASS continuous invalid edit rejects and restores last good on commit
+PASS dedicated hierarchy command rejects cycle atomically
+PASS editor-only recipe/folder changes participate in undo equality while retaining gameplay fingerprint
+PASS typed asset dependency discovery without constructing script VM
+PASS real imported multipart non-humanoid skeleton fit through shared service
+PASS original M66 multipart rig resolves selected stable joints without name-specific fitter
+SUMMARY 190 checks 1 failures

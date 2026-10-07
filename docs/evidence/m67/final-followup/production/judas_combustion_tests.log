@@ -1,0 +1,98 @@
+Section A: sampled gas composition and thermal equation of state
+  OK   oxidizer is explicit mass density derived from the gas mixture
+  OK   sampled gas temperature, density and pressure satisfy P = rho R T
+  OK   pressure, density, oxidizer and gas temperature all vanish at the finite vacuum limit
+Section B: thermal ignition, fuel and independent energy budget
+  OK   physics world initialized
+  OK   cold combustible material remains unburned in oxidizer-rich gas
+  OK   heat without combustible fuel cannot create fire
+  OK   physics world initialized
+  heater ignition: step 76, T 402.191 K, absorbed 3183.099 W
+  OK   a nearby powered radiator heats fuel across its ignition condition
+  OK   physics world initialized
+  burnout: step 239, fuel 0.000000 kg, T 850.004 K, integrated heat 16000.029 J, chemical 16000.000 J, sensible 16000.146 J
+  OK   fuel decreases monotonically to exhaustion, then burning and heat release cease
+  OK   integrated reaction heat and temperature gain independently match consumed fuel energy
+  OK   physics world initialized
+  OK   material and gas heat outputs partition consumed chemical energy without loss
+  OK   presented temperature interpolates without changing authoritative thermal state
+Section C: heat-transfer spread versus separation
+  OK   physics world initialized
+  OK   physics world initialized
+  near ignition 1.517 s, far ignition step -1; peak neighbour heat near 1690.663 W, far 3.987 W; final neighbour T 722.192 / 251.131 K
+  OK   nearby fuel heats and later ignites from actual radiative transfer
+  OK   a substantially separated body does not ignite in the same duration
+Section D: exact terrain demo spread after the heater turns off
+  OK   authored terrain-spread physics world initialized
+  OK   authored combustible block starts in physical terrain atmosphere
+  OK   authored combustible block starts in physical terrain atmosphere
+  OK   authored combustible block starts in physical terrain atmosphere
+  OK   authored terrain-spread physics world initialized
+  OK   authored combustible block starts in physical terrain atmosphere
+  OK   authored combustible block starts in physical terrain atmosphere
+  OK   authored combustible block starts in physical terrain atmosphere
+  OK   authored terrain-spread physics world initialized
+  OK   authored combustible block starts in physical terrain atmosphere
+  OK   authored combustible block starts in physical terrain atmosphere
+  OK   authored combustible block starts in physical terrain atmosphere
+  authored heater off 4.500 s, A ignition 3.433 s, B ignition 12.933 s, A exhaustion 57.200 s, far ignition -1, initial rhoO2 0.008986 kg/m^3, peak B transfer 7619.446 W
+  no-A-radiation control: heater off 4.500 s, B ignition step -1, B peak/final T 340.224/283.510 K, peak B transfer 0.291012 W
+  OK   exact authored B ignites 10-25 s after start from A's transferred heat, after heater is off
+  OK   distant demo block stays cold while finite A fuel is consumed in 60 seconds
+  OK   with A's radiation removed, the same finite heater exposure cannot ignite B
+  OK   rotating and translating the exact terrain/fire setup preserves ignition times and temperatures
+Section E: pairwise thermal exchange conserves transferred energy
+  OK   physics world initialized
+  OK   nearby hot and cold material exchange equal and opposite radiative heat
+  OK   two-body sensible energy changes only by independently measured ambient exchange
+Section F: oxidizer, vacuum extinction and thermal return
+  OK   physics world initialized
+  OK   physics world initialized
+  OK   the same hot fuel burns with oxidizer but not in equally dense inert gas
+  OK   physics world initialized
+  OK   moving burning fuel into vacuum stops the reaction without consuming more fuel
+  OK   hot fuel with remaining mass re-enters oxidizer and reacts from its actual state
+  OK   physics world initialized
+  OK   vacuum-cooled fuel does not reignite on return merely because it once burned
+Section G: gas-relative flow, rotation and far-origin equivalence
+  OK   physics world initialized
+  OK   physics world initialized
+  OK   physics world initialized
+  OK   shared gas/body frame velocity leaves oxygen supply and burning unchanged
+  OK   actual relative airflow increases oxygen delivery and reaction rate
+  OK   physics world initialized
+  OK   physics world initialized
+  OK   rotating and translating the physical scenario preserves thermal scalars
+  OK   M23 double-origin translation preserves identical local combustion state
+  OK   physics world initialized
+  OK   rotating atmosphere uses point velocity rather than only frame-centre velocity
+Section H: moving rigid body carries combustion through gas into vacuum
+  OK   physics world initialized
+  moving body final r 130.000 m, fuel 0.987989 kg, T 510.057 K
+  OK   thermal material follows the actual moving PhysicsWorld body and extinguishes at vacuum
+  OK   thermal reset restores initial fuel and temperature without stale burn rate
+Section I: SAS-held ship lifts physical burning cargo into vacuum
+  OK   physics world initialized
+  OK   physics world initialized
+  OK   physics world initialized
+  SAS on/off A exit step 188/-1; SAS three-block A/B/C 224/224/224; ship/cargo r 116.295/116.770 m, gap 0.0257 m, step 0.3787 m
+  OK   production SAS plus 1200 N thrust carries the off-centre block by ordinary rigid contact
+  OK   the physically carried material extinguishes as its own position reaches vacuum
+  OK   without attitude hold, the off-centre block can slide off during ascent
+  OK   the real near-spread A/B block pair rides the SAS-held ship into vacuum together
+Section J: visual product motion has no hidden world up or ether
+  OK   zero gravity and zero relative flow yield a symmetric visual, not a +Y candle plume
+  OK   presentation vanishes when authoritative combustion rate is zero
+  OK   rotated and translated universe preserves the whole flame/smoke geometry
+  OK   a shared body/gas velocity boost does not create visual wind
+  OK   real gas-relative flow carries visible products in its actual direction
+Section K: thin-air heat consumes representable finite fuel
+  OK   physics world initialized
+  OK   thin gas burns less than half a float fuel ULP yet consumes real fuel
+  r 109.1 m, first loss 3.140e-09 kg, float ULP 7.451e-09 kg, total loss 0.0000314 kg, heat 502.417 / 502.417 J
+  OK   thin-air chemical heat equals actual fuel mass lost over many steps
+Section L: bounded fixed-step cost measurement
+  OK   physics world initialized
+  10000 thermal steps: 2.401 ms, 0.00024 ms/step, fuel 98.333333 kg, T 499.365 K
+  OK   long thermal run remains finite; measured cost is diagnostic, not a hardware threshold
+Combustion tests: PASS (0 failures)

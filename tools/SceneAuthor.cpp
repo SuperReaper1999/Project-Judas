@@ -1,3 +1,6 @@
+#include "AuthoringCLI.h"
+#include "ContentServicesCLI.h"
+#include "RecipeCLI.h"
 #include "StructuredAuthor.h"
 // Scene authoring tool (developer tooling, not part of the engine): bakes
 // the technology demonstration's M27-era constants into Judas scene files,
@@ -711,6 +714,9 @@ bool Write(const Scene& s, const std::string& path) {
 }  // namespace
 
 int main(int argc, char** argv) {
+    if(auto result=RunContentServicesCLI(argc,argv);result>=0)return result;
+    if(int result=RunRecipeCLI(argc,argv);result>=0)return result;
+    if(int result=RunAuthoringCLI(argc,argv);result>=0)return result;
     if(argc==4&&std::string(argv[1])=="--structured"){std::string error;if(!WriteStructuredContent(argv[2],argv[3],error)){std::fprintf(stderr,"%s\n",error.c_str());return 1;}return 0;}
     const std::string dir = argc > 1 ? argv[1] : "assets/scenes";
     bool ok = true;

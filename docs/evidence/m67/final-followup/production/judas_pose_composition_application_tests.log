@@ -1,0 +1,12 @@
+Renderer fragment texture units: 32 (material path uses 12)
+World state: /home/conner/Documents/GitHub/Project-Judas/docs/evidence/m67/final-followup/fixture-details/judas_pose_composition_application_tests/project/Saves/main.judasstate (none saved)
+Project: Skeletal animation (/home/conner/Documents/GitHub/Project-Judas/docs/evidence/m67/final-followup/fixture-details/judas_pose_composition_application_tests/project/animation_demo.judasproj)
+Scene: M46 skeletal animation — G clip / J pause / K seek / C speed / P spawn (/home/conner/Documents/GitHub/Project-Judas/docs/evidence/m67/final-followup/fixture-details/judas_pose_composition_application_tests/project/Scenes/main.judas)
+World origin (m): 0.000, 0.000, 0.000
+PASS real JS crossfade/layers, prefab and stale handles
+PASS scene reload reconstructs fresh animation state
+PASS validated external source participates without mutating clip source
+PASS invalid external pose rejected atomically
+PASS demo authored pause menu opens
+PASS normal Application animation startup/reload/shutdown
+SUMMARY 6 checks 0 failures frames=5

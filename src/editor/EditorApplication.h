@@ -58,7 +58,9 @@ private:
     std::string WorldStatePathFor(const std::string& scenePath) const;
     void FrameEditMode(float deltaSeconds);
     void DrawModelImportPreview(float deltaSeconds);
-    RenderTargetHandle m_modelPreviewTarget;
+    RenderTargetHandle m_modelPreviewTarget,m_uiPreviewTarget;
+    std::unique_ptr<RuntimeUI> m_uiPreview;uint64_t m_uiPreviewRevision=0;
+    void DrawUIAuthoringPreview();
     std::string m_modelPreviewAsset;
     std::weak_ptr<const struct MeshData> m_modelPreviewData;
     glm::vec3 m_modelPreviewMin{0},m_modelPreviewMax{0};

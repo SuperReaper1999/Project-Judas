@@ -84,6 +84,7 @@ bool OptEq(const std::optional<T>& a, const std::optional<T>& b, F&& equal) {
 }  // namespace
 
 bool SceneObjectsEqual(const SceneObject& a, const SceneObject& b) {
+    if(a.authoringFolder!=b.authoringFolder)return false;
     if(DeformableProperties(a)!=DeformableProperties(b))return false;
     if(NavigationProperties(a)!=NavigationProperties(b))return false;
     if(a.scripts!=b.scripts)return false;
@@ -232,6 +233,7 @@ bool ScenesEqual(const Scene& a, const Scene& b) {
     const SceneSettings& sa = a.Settings();
     const SceneSettings& sb = b.Settings();
     if(sa.mainCameraRenderMask!=sb.mainCameraRenderMask)return false;
+    if(sa.authoringRecipes!=sb.authoringRecipes)return false;
     if (sa.name != sb.name || !Eq(sa.worldOrigin, sb.worldOrigin) ||
         !Eq(sa.sunDirection, sb.sunDirection) || !Eq(sa.sunColor, sb.sunColor) ||
         !Eq(sa.ambientColor, sb.ambientColor) || sa.fluidScale != sb.fluidScale ||

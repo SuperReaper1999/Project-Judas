@@ -1,0 +1,73 @@
+PASS ordinary project
+PASS source A
+PASS source B with same IDs
+PASS one authoritative world
+PASS registered scene sources
+PASS asynchronous parse/staged activation
+PASS colliding source IDs remapped independently
+PASS both groups inhabit same physics inventory
+PASS double origin subtracted before float narrowing
+PASS independent duplicate demand retained
+PASS budgeted real unregistration
+PASS old entity and body invalidated
+PASS return reconstructs region
+PASS changed pose retained with fresh identity
+PASS ordinary gameplay destruction
+PASS destroyed region suspends
+PASS destroyed region returns
+PASS destroyed source does not respawn on return
+PASS transfer ordinary hierarchy to root
+PASS adopted body pins its in-use gravity region
+PASS source region unloads after adoption
+PASS adoption preserves runtime identity and motion
+PASS held real job does not stall simulation
+PASS preload completes without publishing
+PASS preload has no public colliders/entities
+PASS pause prevents activation
+PASS one-unit staged installation remains private
+PASS cancel during installation rolls back staged registrations
+PASS cancel left no orphan bodies
+PASS pressure world
+PASS pressure candidate active
+PASS state pressure pins instead of resets
+PASS dependency cycle fails clearly
+PASS malformed source safely fails
+PASS unrelated active region remains valid
+PASS oblique body and field use same relocated frame
+PASS oblique body and field use same relocated frame
+PASS reversed completion preserves authored uniform precedence
+PASS 96 declared regions / repeated visits retain one physical working set
+PASS retained metadata and pending bytes plateau after visits
+PASS cancellation while real reader is held
+PASS second preload reaches immutable prepared state
+PASS cancellation after preparation discards product without activation
+PASS registered session-state script
+PASS real VM produces retained JSON state
+PASS scripted region suspension removes instance
+PASS recreated script resumes JSON rather than resetting
+PASS removed requester releases only its slot demand
+PASS hard dependency installs qualified joint target first
+PASS cross-region joint uses ordinary M45 handle
+PASS dependent group retains external constrained body
+PASS ordinary cross-group geometry queried in shared broadphase
+PASS actual contacts from additive geometry reach the shared authoritative solver
+PASS qualified constrained groups suspend in dependency order
+PASS retained qualified joint rebinds fresh neighbour identity
+PASS runtime joint control settings survive suspension without stale native body handles
+PASS ordinary world-anchored regional joint registration
+PASS world-anchored hinge has a real native handle
+PASS body-less regional registration
+PASS body-less region teardown preserves existing physical joint handles
+PASS idle motor root velocity survives ordinary region suspension
+PASS composed disk delta explicitly rejected
+PASS translated/oblique world joint endpoint transforms exactly once
+PASS suspended world joint endpoint retains correct local frame on revisit
+PASS existing ordinary ragdoll fixture loads
+PASS skeletal geometry declared as required before ragdoll publication
+PASS localized high priority wins one-reader budget without boosting remote demand
+PASS interest rejects out-of-range priority before native conversion
+PASS reserved particle pool memory included before installation
+PASS oversized prepared particle storage fails cleanly instead of changing quality
+PASS unrepresentable fixed-frame placement fails before entity registration
+M59_INACTIVE 100000 single-scene early returns 0.195480 ms
+M59 71 checks 0 failures

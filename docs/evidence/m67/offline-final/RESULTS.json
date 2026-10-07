@@ -1,0 +1,68 @@
+{
+  "pass": true,
+  "deterministic_scene_and_cooked_products": true,
+  "commands": [
+    {
+      "name": "generate-a",
+      "exit": 0,
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_scene_author",
+        "--generate",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m67/offline-followup-final/a/Authoring/quarter.judasrecipe",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m67/offline-followup-final/a/Scenes/workshop.judas",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m67/offline-followup-final/a/world_workshop.judasproj",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m67/offline-followup-final/a/Scenes/workshop.judas",
+        "--overwrite"
+      ]
+    },
+    {
+      "name": "generate-b",
+      "exit": 0,
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_scene_author",
+        "--generate",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m67/offline-followup-final/b/Authoring/quarter.judasrecipe",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m67/offline-followup-final/b/Scenes/workshop.judas",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m67/offline-followup-final/b/world_workshop.judasproj",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m67/offline-followup-final/b/Scenes/workshop.judas",
+        "--overwrite"
+      ]
+    },
+    {
+      "name": "editor",
+      "exit": 0,
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_editor",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m67/offline-followup-final/a/world_workshop.judasproj"
+      ]
+    },
+    {
+      "name": "performance",
+      "exit": 0,
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_world_authoring_performance",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m67/offline-followup-final/performance"
+      ]
+    },
+    {
+      "name": "export-edited-final",
+      "exit": 0,
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_scene_author",
+        "--build-project",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m67/offline-followup-final/a/world_workshop.judasproj",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m67/offline-followup-final/package",
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas",
+        "/home/conner/Documents/GitHub/Project-Judas"
+      ]
+    },
+    {
+      "name": "edited-runtime",
+      "exit": 0,
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m67/offline-followup-final/package/judas"
+      ]
+    }
+  ],
+  "note": "Affected offline authoring/editor and workshop script checks only. Engine runtime unchanged since full gate."
+}

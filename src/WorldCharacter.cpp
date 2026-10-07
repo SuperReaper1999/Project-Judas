@@ -1,3 +1,4 @@
+#include "CameraProjection.h"
 #include "PerformanceProfiler.h"
 #include "RuntimeWorld.h"
 #include <glm/gtc/matrix_transform.hpp>
@@ -37,9 +38,9 @@ void RuntimeWorld::UpdateCharacters(float dt){
     }
     m_physics.FinishQueryTouches();
 }
-bool RuntimeWorld::SetRuntimeView(const SceneTransform& pose,float fov){
-    if(!std::isfinite(glm::dot(pose.position,pose.position))||!std::isfinite(glm::dot(pose.rotation,pose.rotation))||glm::dot(pose.rotation,pose.rotation)<1e-12f||!std::isfinite(fov)||fov<=1||fov>=179)return false;
-    view=RuntimeView{pose,fov};view->pose.rotation=glm::normalize(pose.rotation);return true;
+bool RuntimeWorld::SetRuntimeView(const SceneTransform& pose,float fov,float nearPlane,float farPlane){
+    if(!ValidCameraRange(nearPlane,farPlane)||!std::isfinite(glm::dot(pose.position,pose.position))||!std::isfinite(glm::dot(pose.rotation,pose.rotation))||glm::dot(pose.rotation,pose.rotation)<1e-12f||!std::isfinite(fov)||fov<=1||fov>=179)return false;
+    view=RuntimeView{pose,fov,nearPlane,farPlane};view->pose.rotation=glm::normalize(pose.rotation);return true;
 }
 
 bool RuntimeWorld::SetCharacterSettings(EntityId id,const CharacterMotorSettings& settings){

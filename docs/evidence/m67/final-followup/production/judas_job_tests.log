@@ -1,0 +1,79 @@
+Section A: job execution, failure, cancellation, shutdown
+  OK   a requested worker count is honoured
+  OK   submission returns a valid handle
+  OK   a job runs to Completed
+  OK   it ran on a worker thread, not the caller
+  OK   a throwing job is Failed with its message
+  OK   SetError reports a failure without throwing
+  OK   a forgotten record reads Unknown
+  OK   stats count completed and failed jobs
+  OK   one job runs while the rest wait
+  OK   a queued job is cancelled without running
+  OK   cancelling a running job only raises its flag
+  OK   the running job observed the flag and reported Cancelled
+  OK   the uncancelled queued job still ran; the cancelled one never did
+  OK   both cancellations are counted
+  OK   shutdown waited for the two running jobs
+  OK   the fifty queued jobs were cancelled without running
+  OK   shutdown cancelled the queue and joined every worker
+  OK   submission after shutdown is refused
+  OK   shutdown did not deadlock
+Section B: priority preference without starvation, many concurrent jobs
+  OK   all 24 prioritised jobs ran
+  OK   High jobs dominate the first ten completions (8 of 10)
+  OK   the first job after the blocker is High
+  OK   the last job to run is not High
+  OK   all Low jobs completed under a continuous High stream (High completed: 140)
+  OK   the High stream kept running meanwhile
+  OK   2000 jobs across three priorities all completed
+  OK   they ran on the worker threads only (4 distinct workers)
+  OK   the queue drained completely
+Section C: asynchronous file reads
+  OK   a valid read completes with every byte of the file
+  OK   a missing file fails with a useful message: 
+  OK   a queued read is cancelled
+  OK   it stays Cancelled and holds no data
+  OK   a request nobody holds is freed once the read finishes (no dangling worker reference)
+  OK   200 simultaneous reads all succeed
+  OK   after shutdown no request is left Pending (100 cancelled)
+  OK   a read submitted after shutdown fails immediately
+Section D: asynchronous resource loading (real assets, headless residency)
+  OK   a request starts a load and returns Queued
+  OK   a second request joins the in-flight load (one load, one hit)
+  OK   GetMesh does not block: no handle, 'loading'
+  OK   before Pump the entry is not Ready even though the worker finished (loading)
+  OK   Pump on the owner thread installs the decoded mesh
+  OK   the decode ran on a worker thread
+  OK   the owner thread is the constructing thread; still one load
+  OK   resident bytes are accounted from the decoded data
+  OK   fifty requests for one texture decoded it exactly once
+  OK   an unknown id fails immediately with a message
+  OK   requesting a mesh id as a texture fails
+  OK   a sidecar for a corrupt mesh is written
+  OK   a corrupt mesh ends Failed with the parser's message: OBJ model '/tmp/judas_m31_assets_290276/Assets/bad.obj' parsed but contains no triangle data.
+  OK   a failed asset is not retried by itself
+  OK   after the file is repaired, Invalidate + request loads it (failed asset recovery)
+  OK   a missing file fails without a job
+  OK   the load waits behind the blocker
+  OK   Release while queued leaves the entry Unloaded
+  OK   the late completion was discarded as stale, not installed
+  OK   release + re-request loads the new generation once and it becomes Ready
+  OK   dropping the last reference cancels a queued load
+  OK   it stays Cancelled; a later request would load again
+  OK   and does
+  OK   completed CPU preparation waits for an upload slot
+  OK   one consumer releasing CPU-ready data preserves the other consumer's demand
+  OK   the final consumer releasing CPU-ready data cancels the pending upload
+  OK   a later Pump discards released CPU-ready data without installing it
+  OK   new demand reloads a cancelled CPU-ready resource through the worker decoder
+  OK   three resident resources are accounted (359245 bytes)
+  OK   over budget, the least recently used unreferenced resource is evicted
+  OK   eviction is counted and bytes drop
+  OK   a referenced resource is never evicted even when the budget cannot be met
+  OK   the manager stays over budget rather than destroy an active resource
+  OK   eviction never touches the asset database
+  OK   requesting an evicted resource loads it again normally
+  OK   blocking mode loads on the caller without a job
+  OK   and the decode ran on the caller
+  OK   a manager destroyed with loads outstanding leaves no job behind
+Job tests: PASS (0 failures)

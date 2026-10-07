@@ -1,5 +1,5 @@
 {
-  "checkpoint": "3e5147a4ed97102200da91b4181c97b2a98942ba",
+  "checkpoint": "b9a8cf3b8d8cd3786272480a8abe6cbe9fffe859",
   "authority": "src/ScriptSystem.cpp::library + Impl::Native",
   "symbols": [
     {
@@ -1026,6 +1026,17 @@
       "reference": "docs/judasjs/entities.md"
     },
     {
+      "symbol": "Entity.setCameraProjection",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "cameraProjection"
+      ],
+      "type": "docs/judas.d.ts:Entity.setCameraProjection",
+      "reference": "docs/judasjs/effects-camera.md"
+    },
+    {
       "symbol": "Entity.setColliderEnabled",
       "kinds": [
         "call"
@@ -1924,6 +1935,28 @@
       ],
       "native": [],
       "type": "docs/judas.d.ts:UIElement.id",
+      "reference": "docs/judasjs/ui.md"
+    },
+    {
+      "symbol": "UIElement.layout",
+      "kinds": [
+        "get"
+      ],
+      "native": [
+        "uiLayout"
+      ],
+      "type": "docs/judas.d.ts:UIElement.layout",
+      "reference": "docs/judasjs/ui.md"
+    },
+    {
+      "symbol": "UIElement.setLayout",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "uiLayout"
+      ],
+      "type": "docs/judas.d.ts:UIElement.setLayout",
       "reference": "docs/judasjs/ui.md"
     },
     {
@@ -3043,6 +3076,17 @@
       "reference": "docs/judasjs/entities.md"
     },
     {
+      "symbol": "world.project",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "projectViewport"
+      ],
+      "type": "docs/judas.d.ts:world.project",
+      "reference": "docs/judasjs/effects-camera.md"
+    },
+    {
       "symbol": "world.queryTags",
       "kinds": [
         "call"
@@ -3107,6 +3151,17 @@
       ],
       "type": "docs/judas.d.ts:world.viewRay",
       "reference": "docs/judasjs/effects-camera.md"
+    },
+    {
+      "symbol": "world.viewport",
+      "kinds": [
+        "get"
+      ],
+      "native": [
+        "viewportSize"
+      ],
+      "type": "docs/judas.d.ts:world.viewport",
+      "reference": "docs/judasjs/effects-camera.md"
     }
   ],
   "nativeOperations": [
@@ -3141,6 +3196,7 @@
     "burst",
     "camera",
     "cameraInfo",
+    "cameraProjection",
     "cast",
     "characterAcceleration",
     "characterConfigure",
@@ -3247,6 +3303,7 @@
     "pressed",
     "profileCounter",
     "profileScope",
+    "projectViewport",
     "queryTags",
     "ragdollActive",
     "ragdollBody",
@@ -3301,13 +3358,15 @@
     "uiDiagnostics",
     "uiFind",
     "uiGet",
+    "uiLayout",
     "uiLoad",
     "uiQuit",
     "uiSet",
     "uiUnload",
     "valid",
     "velocity",
-    "viewRay"
+    "viewRay",
+    "viewportSize"
   ],
   "callbacks": [
     "onFracture",

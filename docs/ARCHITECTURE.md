@@ -8,10 +8,20 @@ milestones land, rather than kept as a per-milestone snapshot — see
 
 ## Current reference and historical capability overview
 
-Accepted baseline: M65 plus the accepted consumer repairs (`3e5147a4ed97102200da91b4181c97b2a98942ba`).
-M65 is the latest completed, human-accepted milestone. M58 Unicode/localization
-and the later milestones are checkpointed, not awaiting candidate review.
+Accepted baseline: M66 (`b9a8cf3b8d8cd3786272480a8abe6cbe9fffe859`).
+M66 is the latest completed, human-accepted milestone. M67 is provisionally
+checkpointed by operator authorization; proper human validation is deferred.
+M58 through M66 are checkpointed, not awaiting candidate review.
 The earlier M57-baseline/M58-pending wording recorded a previous review state.
+
+M66 supplies the [commodity multipart import/cook pipeline](MODEL_IMPORT.md).
+The provisional M67 candidate joins editor commands, persistent recipes and schema-1 named
+project/scene/prefab/UI/input/world documents through existing validators. Renderer
+still owns graphics; recipes run on the existing job pool. Named documents are
+loaded/saved directly in the normal files; canonical fingerprint schema remains 5.
+M67 also supplies camera clipping/projection, transient UI layout mutation and
+bounded prefab initialization through normal public JS/runtime paths.
+See [world building](M67_WORLD_BUILDING.md) and [format/identity policy](NAMED_AUTHORING.md).
 
 **Current reading guide:** Judas owns engine primitives; project JavaScript owns
 game behaviour. Current projects use CharacterMotor + logical input + JS rather

@@ -1,0 +1,20 @@
+Renderer fragment texture units: 32 (material path uses 12)
+World state: /home/conner/Documents/GitHub/Project-Judas/projects/shooter_game/Saves/range.judasstate (none saved)
+Project: Spring Range (/home/conner/Documents/GitHub/Project-Judas/projects/shooter_game/shooter_game.judasproj)
+Scene: Spring Range (/home/conner/Documents/GitHub/Project-Judas/projects/shooter_game/Scenes/range.judas)
+World origin (m): 0.000, 0.000, 0.000
+PASS normal asynchronous resources
+PASS normal standalone starts in playable captured view
+PASS actual GL world plus UI screenshot
+PASS normal application fire scores on real target
+PASS normal application camera toggle
+PASS actual GL world plus UI screenshot
+PASS pause shows UI before authoritative simulation
+PASS actual GL world plus UI screenshot
+PASS paused frames never step gameplay
+PASS paused fire does not leak
+PASS keyboard Resume restores game and capture
+PASS queued outer-boundary reload genuinely reconstructs game
+PASS no script faults in actual application
+PASS normal standalone shutdown
+SUMMARY 14 checks 0 failures

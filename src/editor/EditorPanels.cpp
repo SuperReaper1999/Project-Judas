@@ -1,3 +1,6 @@
+#include "AuthoringDocument.h"
+#include "ContentReferences.h"
+#include "NamedAuthoring.h"
 #include "CollisionAsset.h"
 #include "ModelCook.h"
 #include "PoseComposition.h"
@@ -67,6 +70,7 @@ void DrawAddComponentMenu(EditorDocument& doc, SceneObject& o) {
 }  // namespace
 
 void DrawEditorMainMenu(EditorDocument& doc, EditorPanelState& state, EditorRequests& requests) {
+    if(!doc.ValidationError().empty())state.status="Edit rejected; previous document restored: "+doc.ValidationError();
     if (!ImGui::BeginMainMenuBar()) return;
     const bool editing = state.mode == EditorMode::Edit;
     const bool hasProject = state.project && state.project->IsLoaded();
@@ -124,6 +128,7 @@ void DrawEditorMainMenu(EditorDocument& doc, EditorPanelState& state, EditorRequ
     }
     if (ImGui::BeginMenu("View")) {
         ImGui::MenuItem("Asset Browser", nullptr, &state.showAssetBrowser);
+        ImGui::MenuItem("World building / named source", nullptr, &state.showWorldBuilding);
         ImGui::MenuItem("Profiler", nullptr, &state.showProfiler);
         ImGui::EndMenu();
     }
@@ -177,10 +182,12 @@ void DrawHierarchyPanel(EditorDocument& doc, EditorPanelState& state, EditorRequ
     int move = 0;
     SceneObjectId moveId = kInvalidSceneObjectId;
     ImGui::BeginChild("list", ImVec2(0.0f, -32.0f));
+    auto visible=doc.Search(state.hierarchySearch);
+    if(state.project&&!state.hierarchySearch.empty()){std::set<SceneObjectId> matches(visible.begin(),visible.end());for(auto& o:doc.GetScene().Objects())for(auto& [id,name]:state.project->Settings().classification.tags.names)if((o.tags&CategoryBit(id))&&name.find(state.hierarchySearch)!=std::string::npos){matches.insert(o.id);for(auto p=o.parent;p;){matches.insert(p);auto* parent=doc.GetScene().Find(p);p=parent?parent->parent:0;}}visible.assign(matches.begin(),matches.end());}
     for (const SceneObject& o : scene.Objects()) {
         ImGui::PushID(static_cast<int>(o.id));
         const bool selected = doc.IsSelected(o.id);
-        if(!state.hierarchySearch.empty()&&o.name.find(state.hierarchySearch)==std::string::npos){ImGui::PopID();continue;}
+        if(std::find(visible.begin(),visible.end(),o.id)==visible.end()){ImGui::PopID();continue;}
         if (editing && state.renamingId == o.id) {
             char buffer[256];
             CopyToBuffer(state.renameBuffer, buffer, sizeof(buffer));
@@ -199,7 +206,7 @@ void DrawHierarchyPanel(EditorDocument& doc, EditorPanelState& state, EditorRequ
             ImGui::PopID();
             continue;
         }
-        std::string label = o.name.empty() ? "(unnamed)" : o.name;
+        std::string label = (o.authoringFolder.empty()?std::string():o.authoringFolder+" / ")+(o.name.empty()?"(unnamed)":o.name);
         const std::string indicators = ComponentIndicators(o);
         if (!indicators.empty()) label += "  [" + indicators + "]";
         if (state.runtime) {
@@ -218,7 +225,7 @@ void DrawHierarchyPanel(EditorDocument& doc, EditorPanelState& state, EditorRequ
         label += "##" + std::to_string(o.id);
         if (broken) ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(1.0f, 0.55f, 0.3f, 1.0f));
         if (ImGui::Selectable(label.c_str(), selected, ImGuiSelectableFlags_AllowDoubleClick)) {
-            doc.Select(o.id,ImGui::GetIO().KeyCtrl);
+            if(ImGui::GetIO().KeyShift)doc.SelectRange(o.id,visible,ImGui::GetIO().KeyCtrl);else doc.Select(o.id,ImGui::GetIO().KeyCtrl);
             if (editing && ImGui::IsMouseDoubleClicked(ImGuiMouseButton_Left)) {
                 state.renamingId = o.id;
                 state.renameBuffer = o.name;
@@ -246,17 +253,11 @@ void DrawHierarchyPanel(EditorDocument& doc, EditorPanelState& state, EditorRequ
         if (ImGui::Button("Delete") && doc.Selected() != kInvalidSceneObjectId) toDelete = doc.Selected();
         ImGui::SameLine();
         if(ImGui::Button("Duplicate selection")){std::string error;if(!doc.DuplicateSelection(error))state.status=error;}
-        ImGui::SameLine();if(ImGui::Button("Group")){std::string error;if(!doc.GroupSelection(error))state.status=error;}
+        ImGui::SameLine();if(ImGui::Button("Folder")){std::string error;if(!doc.GroupSelection(error))state.status=error;}
         ImGui::SameLine();
         if (ImGui::Button("Focus")) requests.focusSelection = true;
     }
-    if (toDelete != kInvalidSceneObjectId) {
-        doc.BeginEdit();
-        scene.DestroyObject(toDelete);
-        doc.CommitEdit();
-        if (doc.Selected() == toDelete) doc.Select(kInvalidSceneObjectId);
-        state.status = "Deleted object";
-    }
+    if (toDelete != kInvalidSceneObjectId) {std::string error;if(!doc.DeleteSelection(error))state.status="Deletion rejected: "+error;else state.status="Deleted selected hierarchies";}
     if (move != 0) {
         doc.BeginEdit();
         scene.MoveObject(moveId, move);
@@ -271,9 +272,10 @@ void DrawInspectorPanel(EditorDocument& doc, EditorPanelState& state) {
     if (!ImGui::Begin("Inspector")) { ImGui::End(); return; }
     doc.PruneSelection();
     if(state.mode==EditorMode::Edit&&doc.Selection().size()>1){
-        ImGui::Text("%zu selected (local transforms)",doc.Selection().size());static glm::vec3 delta(0),angles(0),factor(1);
+        ImGui::Text("%zu selected",doc.Selection().size());static glm::vec3 delta(0),angles(0),factor(1);static bool worldAxes=true,individual=true;
+        ImGui::Checkbox("World axes",&worldAxes);ImGui::SameLine();ImGui::Checkbox("Individual origins",&individual);
         ImGui::DragFloat3("Translation delta",&delta.x,.05f);ImGui::DragFloat3("Rotation delta degrees",&angles.x,1);ImGui::DragFloat3("Scale multiplier",&factor.x,.01f);
-        if(ImGui::Button("Apply transform delta")){std::string error;if(!doc.BatchTransform(delta,glm::quat(glm::radians(angles)),factor,error))state.status=error;else{delta=angles=glm::vec3(0);factor=glm::vec3(1);}}
+        if(ImGui::Button("Apply transform delta")){std::string error;if(!doc.BatchTransform(delta,glm::quat(glm::radians(angles)),factor,error,individual,worldAxes))state.status=error;else{delta=angles=glm::vec3(0);factor=glm::vec3(1);}}
         if(ImGui::BeginCombo("Parent all (keep world pose)","Choose parent")){if(ImGui::Selectable("None")){std::string error;if(!doc.ReparentSelection(0,error))state.status=error;}for(auto& p:doc.GetScene().Objects())if(!doc.IsSelected(p.id)&&ImGui::Selectable((p.name+" ##"+std::to_string(p.id)).c_str())){std::string error;if(!doc.ReparentSelection(p.id,error))state.status=error;}ImGui::EndCombo();}
         auto common=ObjectProperties(*doc.SelectedObject());std::set<std::string> mixed;for(auto id:doc.Selection()){auto properties=ObjectProperties(*doc.GetScene().Find(id));for(auto it=common.begin();it!=common.end();){auto found=properties.find(it->first);if(found==properties.end())it=common.erase(it);else{if(found->second!=it->second)mixed.insert(it->first);++it;}}}
         ImGui::TextWrapped("Common authored fields: mixed values change only after Apply. Values use normal record notation.");
@@ -456,30 +458,53 @@ void DrawSceneSettingsPanel(EditorDocument& doc, EditorPanelState& state) {
 
 namespace {
 void DrawUILayoutEditor(const AssetRecord& record,EditorPanelState& state){
-    static std::string path,error;static UIDocument source;static int selected=0;static bool loaded=false;
-    if(path!=record.path){path=record.path;loaded=LoadUIDocument(path,source,error);selected=0;}
+    static AuthoringDocument document;static UIDocument source;static std::string error;static int selected=0;static bool loaded=false,pending=false;static std::vector<char> text(4*1024*1024+1);static uint64_t textGeneration=~uint64_t(0);static bool sourceDirty=false;static std::set<std::string> selection;static UIElement clipboard;static bool hasClipboard=false;
+    auto reloadTyped=[&]{sourceDirty=false;loaded=ParseUIDocument(document.Source(),source,error);selected=0;pending=false;selection.clear();state.uiPreviewDocument=source;++state.uiPreviewRevision;textGeneration=~uint64_t(0);};
+    if(document.Path()!=record.path){if(loaded&&(document.Dirty()||pending||sourceDirty)){ImGui::TextWrapped("Unsaved UI %s. Save or discard before opening another document.",document.Path().c_str());if(ImGui::Button("Discard previous UI changes")){loaded=false;pending=false;}return;}loaded=document.Load("ui",record.path,error);if(loaded)reloadTyped();}
     if(!loaded){ImGui::TextWrapped("UI: %s",error.c_str());return;}
-    if(ImGui::Button("Save UI source")){if(SaveUIDocument(path,source,error))state.status="Saved UI source; restart Play to load it";else state.status=error;}
-    ImGui::SameLine();if(ImGui::Button("Reload UI source"))loaded=LoadUIDocument(path,source,error);
-    ImGui::InputFloat2("Reference resolution",&source.reference.x);ImGui::Checkbox("Initially visible",&source.visible);ImGui::SameLine();ImGui::Checkbox("Enabled document",&source.enabled);ImGui::Checkbox("Modal (pause gameplay)",&source.modal);
-    for(size_t i=0;i<source.elements.size();++i){ImGui::PushID(int(i));if(ImGui::Selectable(source.elements[i].id.c_str(),selected==int(i)))selected=int(i);ImGui::PopID();}
-    if(ImGui::Button("Add child panel")){UIElement e;e.id="element_"+std::to_string(source.elements.size()+1);while(std::any_of(source.elements.begin(),source.elements.end(),[&](const auto& x){return x.id==e.id;}))e.id+="_";e.parent=source.elements[selected].id;source.elements.push_back(e);selected=int(source.elements.size())-1;}
+    auto flush=[&]{if(!pending)return true;std::string named;if(!LegacyToNamed(SerializeUIDocument(source),"ui",named,error)||!document.Replace(named,error))return false;pending=false;return true;};
+    if(!ImGui::BeginTable("UI authoring columns",2,ImGuiTableFlags_Resizable))return;
+    ImGui::TableSetupColumn("Properties / source",ImGuiTableColumnFlags_WidthFixed,440);
+    ImGui::TableSetupColumn("Canvas",ImGuiTableColumnFlags_WidthStretch);
+    ImGui::TableNextColumn();ImGui::BeginChild("UI properties and source",{0,0},true);
+    ImGui::Text("%s%s",record.relativePath.c_str(),document.Dirty()||pending?" *":"");
+    if(document.ExternalChanged())ImGui::TextColored({1,.6f,.2f,1},"External edit detected; saving is blocked until reviewed reload.");
+    if(ImGui::Button("Save UI source")){if(sourceDirty)state.status="Apply or discard the named source draft before saving";else if(flush()&&document.Save(error))state.status="Saved named UI source; restart Play to reload";else state.status=error;}
+    ImGui::SameLine();if(ImGui::Button("Reload (discard dirty UI)")){if(document.Load("ui",record.path,error))reloadTyped();}
+    ImGui::SameLine();if(ImGui::Button("Undo UI")){if(sourceDirty)state.status="Apply or explicitly discard the named source draft before visual undo";else if(flush()&&document.Undo())reloadTyped();}
+    ImGui::SameLine();if(ImGui::Button("Redo UI")){if(sourceDirty)state.status="Apply or explicitly discard the named source draft before visual redo";else if(document.Redo())reloadTyped();}
     if(selected<0||selected>=int(source.elements.size()))selected=0;
-    auto& e=source.elements[selected];auto str=[](const char* label,std::string& s){char b[2048];std::snprintf(b,sizeof(b),"%s",s.c_str());if(ImGui::InputText(label,b,sizeof(b)))s=b;};
-    str("Stable element ID",e.id);if(selected)str("Parent ID",e.parent);
+    if(!state.uiCanvasSelected.empty()){for(size_t i=0;i<source.elements.size();++i)if(source.elements[i].id==state.uiCanvasSelected)selected=int(i);state.uiCanvasSelected.clear();}
+    auto before=SerializeUIDocument(source);
+    ImGui::Checkbox("Document visible",&source.visible);ImGui::SameLine();ImGui::Checkbox("Document enabled",&source.enabled);ImGui::Checkbox("Modal (pause gameplay)",&source.modal);
+    ImGui::BeginChild("UI hierarchy",{0,130},true);for(size_t i=0;i<source.elements.size();++i){ImGui::PushID(int(i));auto& e=source.elements[i];if(ImGui::Selectable((e.parent.empty()?e.id:e.parent+" / "+e.id).c_str(),selected==int(i)||selection.count(e.id))){selected=int(i);if(!ImGui::GetIO().KeyCtrl)selection.clear();if(selection.count(e.id))selection.erase(e.id);else selection.insert(e.id);}ImGui::PopID();}ImGui::EndChild();
+    if(ImGui::Button("Add child panel")){UIElement e;e.id="element_"+std::to_string(source.elements.size()+1);while(std::any_of(source.elements.begin(),source.elements.end(),[&](const auto& x){return x.id==e.id;}))e.id+="_";e.parent=source.elements[selected].id;source.elements.push_back(e);selected=int(source.elements.size())-1;}
+    ImGui::SameLine();if(selected&&ImGui::Button("Duplicate subtree")){auto root=source.elements[selected].id;std::set<std::string> members{root};std::map<std::string,std::string> ids;bool more=true;while(more){more=false;for(auto& e:source.elements)if(members.count(e.parent))more|=members.insert(e.id).second;}for(auto& key:members){auto copy=key+"_copy";while(std::any_of(source.elements.begin(),source.elements.end(),[&](const auto& e){return e.id==copy;}))copy+="_";ids[key]=copy;}std::vector<UIElement> copies;for(auto e:source.elements)if(members.count(e.id)){auto id=e.id;e.id=ids.at(id);if(ids.count(e.parent))e.parent=ids.at(e.parent);if(id==root)e.offset+=glm::vec2(12);copies.push_back(e);}source.elements.insert(source.elements.end(),copies.begin(),copies.end());}
+    auto& e=source.elements[selected];auto str=[](const char* label,std::string& s){char b[16385];std::snprintf(b,sizeof(b),"%s",s.c_str());if(ImGui::InputText(label,b,sizeof(b)))s=b;};
+    ImGui::TextDisabled("Stable ID: %s",e.id.c_str());
+    if(selected){if(ImGui::BeginCombo("Parent",e.parent.c_str())){for(auto& parent:source.elements)if(parent.id!=e.id&&ImGui::Selectable(parent.id.c_str(),e.parent==parent.id))e.parent=parent.id;ImGui::EndCombo();}}
     int kind=int(e.kind);if(selected&&ImGui::Combo("Element type",&kind,"Canvas\0Panel\0Text\0Image\0Button\0Slider\0Toggle\0"))e.kind=UIKind(kind);
     int flow=int(e.flow);if(ImGui::Combo("Child layout",&flow,"Free\0Horizontal\0Vertical\0"))e.flow=UIFlow(flow);
+    for(auto& parent:source.elements)if(parent.id==e.parent&&parent.flow!=UIFlow::Free)ImGui::TextWrapped("%s owns this element's %s placement; offsets and margins still contribute.",parent.id.c_str(),parent.flow==UIFlow::Horizontal?"horizontal":"vertical");
+    if(auto it=state.uiPreviewLayout.find(e.id);it!=state.uiPreviewLayout.end())ImGui::TextDisabled("Effective rectangle %.1f %.1f / %.1f %.1f px",it->second.rect.position.x,it->second.rect.position.y,it->second.rect.size.x,it->second.rect.size.y);
     ImGui::Checkbox("Visible",&e.visible);ImGui::SameLine();ImGui::Checkbox("Enabled",&e.enabled);ImGui::Checkbox("Clip children",&e.clip);
-    ImGui::InputFloat2("Anchor min",&e.anchorMin.x);ImGui::InputFloat2("Anchor max",&e.anchorMax.x);ImGui::InputFloat2("Offset",&e.offset.x);ImGui::InputFloat2("Fixed size",&e.size.x);ImGui::InputFloat2("Relative size",&e.relativeSize.x);ImGui::InputFloat2("Pivot alignment",&e.align.x);
-    ImGui::InputFloat4("Margins L T R B",&e.margin.x);ImGui::InputFloat4("Padding L T R B",&e.padding.x);ImGui::InputFloat("Spacing",&e.spacing);
-    ImGui::ColorEdit4("Background",&e.background.x);ImGui::ColorEdit4("Tint",&e.color.x);str("Text",e.text);str("Localization key",e.textKey);int direction=int(e.direction);if(ImGui::Combo("Text direction (auto inherits)",&direction,"Auto\0LTR\0RTL\0"))e.direction=TextDirection(direction);int alignment=e.textLogicalAlign+1;if(ImGui::Combo("Horizontal text alignment",&alignment,"Legacy numeric\0Left\0Right\0Center\0Start\0End\0"))e.textLogicalAlign=alignment-1;ImGui::Checkbox("Mirror horizontal children for RTL locale",&e.mirrorRow);str("Font asset ID",e.font);str("Texture asset ID",e.texture);ImGui::InputFloat("Font size",&e.fontSize);ImGui::InputFloat2("Text alignment",&e.textAlign.x);ImGui::Checkbox("Wrap text",&e.wrap);ImGui::Checkbox("Fit image",&e.fit);
-    ImGui::Checkbox("Rendered text preview",&state.textPreview);
-    if(state.textPreview){state.textElement=e;if(state.project){auto& c=state.project->Settings().localization;if(state.previewLocale.empty())state.previewLocale=c.defaultLocale;if(ImGui::BeginCombo("Preview locale",state.previewLocale.c_str())){for(auto& [tag,entry]:c.locales){(void)entry;if(ImGui::Selectable(tag.c_str(),tag==state.previewLocale))state.previewLocale=tag;}ImGui::EndCombo();}}
-        ImGui::TextDisabled("Actual Judas glyph rendering; editor chrome is not translated.");state.textPreviewPosition={ImGui::GetCursorScreenPos().x,ImGui::GetCursorScreenPos().y};state.textPreviewSize={std::max(80.f,ImGui::GetContentRegionAvail().x),150};ImGui::InvisibleButton("Text preview area",{state.textPreviewSize.x,state.textPreviewSize.y});}
+    ImGui::InputFloat2("Anchor min",&e.anchorMin.x);ImGui::InputFloat2("Anchor max",&e.anchorMax.x);ImGui::InputFloat2("Offset (reference px)",&e.offset.x);ImGui::InputFloat2("Fixed size",&e.size.x);ImGui::InputFloat2("Relative size",&e.relativeSize.x);ImGui::InputFloat2("Pivot alignment",&e.align.x);ImGui::InputFloat4("Margins L T R B",&e.margin.x);ImGui::InputFloat4("Padding L T R B",&e.padding.x);ImGui::InputFloat("Spacing",&e.spacing);
+    ImGui::ColorEdit4("Background",&e.background.x);ImGui::ColorEdit4("Tint",&e.color.x);str("Text",e.text);str("Localization key",e.textKey);int direction=int(e.direction);if(ImGui::Combo("Text direction",&direction,"Auto\0LTR\0RTL\0"))e.direction=TextDirection(direction);int alignment=e.textLogicalAlign+1;if(ImGui::Combo("Text alignment",&alignment,"Legacy\0Left\0Right\0Center\0Start\0End\0"))e.textLogicalAlign=alignment-1;ImGui::Checkbox("Mirror horizontal children for RTL",&e.mirrorRow);auto assetPick=[&](const char* label,AssetType type,std::string& id){if(!state.assets)return;if(ImGui::BeginCombo(label,id.empty()?"(default / none)":id.c_str())){if(ImGui::Selectable("(default / none)",id.empty()))id.clear();for(auto& [key,asset]:state.assets->Records())if(asset.type==type&&!asset.missing&&ImGui::Selectable(asset.relativePath.c_str(),id==key))id=key;ImGui::EndCombo();}};assetPick("Font",AssetType::Font,e.font);assetPick("Image",AssetType::Texture,e.texture);ImGui::InputFloat("Font size",&e.fontSize);ImGui::InputFloat2("Text alignment legacy",&e.textAlign.x);ImGui::Checkbox("Wrap",&e.wrap);ImGui::Checkbox("Fit image",&e.fit);
+    if(ImGui::Button("Copy style")){clipboard=e;hasClipboard=true;}ImGui::SameLine();if(hasClipboard&&ImGui::Button("Paste style to selected")){if(selection.empty())selection.insert(e.id);for(auto& target:source.elements)if(selection.count(target.id)){target.background=clipboard.background;target.color=clipboard.color;target.font=clipboard.font;target.fontSize=clipboard.fontSize;target.textLogicalAlign=clipboard.textLogicalAlign;}}
     ImGui::InputFloat("Value",&e.value);ImGui::InputFloat("Minimum",&e.minimum);ImGui::InputFloat("Maximum",&e.maximum);
-    if(selected&&ImGui::Button("Delete element subtree")){std::set<std::string> remove{e.id};for(const auto& x:source.elements)if(remove.count(x.parent))remove.insert(x.id);source.elements.erase(std::remove_if(source.elements.begin(),source.elements.end(),[&](const auto& x){return remove.count(x.id);}),source.elements.end());selected=0;}
-    if(!source.Validate(error))ImGui::TextWrapped("Cannot save: %s",error.c_str());
+    if(selected&&ImGui::Button("Delete element subtree")){std::set<std::string> remove{e.id};bool more=true;while(more){more=false;for(const auto& x:source.elements)if(remove.count(x.parent))more|=remove.insert(x.id).second;}source.elements.erase(std::remove_if(source.elements.begin(),source.elements.end(),[&](const auto& x){return remove.count(x.id);}),source.elements.end());selected=0;}
+    auto after=SerializeUIDocument(source);if(after!=before)pending=true;
+    if(!ImGui::IsAnyItemActive())flush();
+    if(!source.Validate(error)){ImGui::TextWrapped("Last-good source retained: %s",error.c_str());if(ImGui::Button("Discard invalid visual draft"))reloadTyped();}else if(state.uiPreviewRevision==0||after!=before){state.uiPreviewDocument=source;++state.uiPreviewRevision;}
+    if(ImGui::CollapsingHeader("Named UI source")){if(textGeneration!=document.Generation()&&!sourceDirty){CopyToBuffer(document.Source(),text.data(),text.size());textGeneration=document.Generation();}if(ImGui::InputTextMultiline("##ui-source",text.data(),text.size(),{0,250}))sourceDirty=true;if(ImGui::Button("Discard named draft")){sourceDirty=false;textGeneration=~uint64_t(0);}if(ImGui::Button("Validate / apply UI source")){if(flush()&&document.Replace(text.data(),error))reloadTyped();else state.status=error;}}
+    ImGui::EndChild();ImGui::TableNextColumn();
+    ImGui::TextUnformatted("Canvas - normal runtime layout / shaping");
+    ImGui::Checkbox("Runtime canvas preview",&state.uiCanvasPreview);ImGui::InputInt2("Preview resolution",&state.uiPreviewResolution.x);state.uiPreviewResolution=glm::clamp(state.uiPreviewResolution,glm::ivec2(160,90),glm::ivec2(2560,1440));
+    if(state.project){auto& c=state.project->Settings().localization;if(state.previewLocale.empty())state.previewLocale=c.defaultLocale;if(ImGui::BeginCombo("Preview locale",state.previewLocale.c_str())){for(auto& [tag,entry]:c.locales){(void)entry;if(ImGui::Selectable(tag.c_str(),tag==state.previewLocale))state.previewLocale=tag;}ImGui::EndCombo();}}
+    if(state.uiCanvasPreview&&state.uiPreviewToken){float width=std::max(160.f,ImGui::GetContentRegionAvail().x),height=width*state.uiPreviewResolution.y/state.uiPreviewResolution.x;auto origin=ImGui::GetCursorScreenPos();ImGui::Image(ImTextureID(state.uiPreviewToken),{width,height},{0,1},{1,0});if(ImGui::IsItemHovered()&&ImGui::IsMouseClicked(0)){auto mouse=ImGui::GetMousePos();state.uiCanvasPick={(mouse.x-origin.x)/width*state.uiPreviewResolution.x,(mouse.y-origin.y)/height*state.uiPreviewResolution.y};}}
+    ImGui::EndTable();
 }
+
 }
 bool BakeEditorCollision(EditorDocument& doc,SceneObjectId target,EditorPanelState& state,
                          const AssetId& sourceId,const CollisionCookSettings& settings,
@@ -615,6 +640,9 @@ void DrawAssetBrowserPanel(EditorDocument& doc, EditorPanelState& state, EditorR
     }
 
     ImGui::BeginChild("assets", ImVec2(0.0f, 0.0f), ImGuiChildFlags_None);
+    static char assetSearch[256]{};static int assetTypeFilter=-1;static bool missingOnly=false;
+    ImGui::InputTextWithHint("Asset search","name, stable ID or source",assetSearch,sizeof(assetSearch));
+    const char* assetTypes[]={"All","Mesh","Texture","Font","Audio","Prefab","Script","UI","Navigation","Liquid","Material","Environment","Catalog","World","Audio effect","Deformable","Collision","Physical material"};int selectedType=assetTypeFilter+1;if(ImGui::Combo("Asset type",&selectedType,assetTypes,18))assetTypeFilter=selectedType-1;ImGui::Checkbox("Missing only",&missingOnly);
     if (ImGui::BeginTable("assetTable", 4, ImGuiTableFlags_RowBg | ImGuiTableFlags_BordersInnerV | ImGuiTableFlags_SizingStretchProp)) {
         ImGui::TableSetupColumn("Type", ImGuiTableColumnFlags_WidthFixed, 60.0f);
         ImGui::TableSetupColumn("Path");
@@ -622,6 +650,9 @@ void DrawAssetBrowserPanel(EditorDocument& doc, EditorPanelState& state, EditorR
         ImGui::TableSetupColumn("Id", ImGuiTableColumnFlags_WidthFixed, 130.0f);
         ImGui::TableHeadersRow();
         for (const auto& [id, record] : db.Records()) {
+            if(*assetSearch&&record.relativePath.find(assetSearch)==std::string::npos&&id.find(assetSearch)==std::string::npos&&record.source.find(assetSearch)==std::string::npos)continue;
+            if(assetTypeFilter>=0&&int(record.type)!=assetTypeFilter)continue;
+            if(missingOnly&&!record.missing)continue;
             ImGui::TableNextRow();
             ImGui::TableSetColumnIndex(0);
             ImGui::TextUnformatted(AssetTypeName(record.type));
@@ -681,6 +712,22 @@ void DrawAssetBrowserPanel(EditorDocument& doc, EditorPanelState& state, EditorR
         if (const AssetRecord* record = db.Find(state.browserSelection)) {
             ImGui::Separator();
             ImGui::Text("Selected: %s", record->relativePath.c_str());
+            ImGui::TextWrapped("Provenance: %s",record->source.empty()?"project-owned":record->source.c_str());
+            static uint64_t usersGeneration=~uint64_t(0);static std::string usersAsset;static std::vector<SceneObjectId> users;
+            if(usersGeneration!=doc.Generation()||usersAsset!=record->id){users.clear();usersGeneration=doc.Generation();usersAsset=record->id;for(auto& o:doc.GetScene().Objects())for(auto& [key,value]:ObjectProperties(o))if(value.find(record->id)!=std::string::npos){users.push_back(o.id);break;}}
+            if(ImGui::TreeNode("Current scene users")){for(auto id:users)if(auto* user=doc.GetScene().Find(id))if(ImGui::Selectable((user->name+" ##asset-user"+std::to_string(id)).c_str()))doc.Select(id);ImGui::TreePop();}
+            if(ImGui::TreeNode("Asset dependencies")){
+                static std::string dependencyKey,dependencyError;static std::set<AssetId> dependencies;
+                auto key=record->id+record->path;
+                if(dependencyKey!=key){dependencyKey=key;DirectAssetDependencies(*record,dependencies,dependencyError);}
+                if(ImGui::SmallButton("Refresh dependency source"))DirectAssetDependencies(*record,dependencies,dependencyError);
+                for(auto& id:dependencies){auto* target=db.Find(id);ImGui::TextWrapped("%s / %s",id.c_str(),target?target->relativePath.c_str():"MISSING");}
+                if(!dependencyError.empty())ImGui::TextWrapped("%s",dependencyError.c_str());
+                ImGui::TextWrapped("Typed prefab/UI/material/model/collision references. Dynamic script IDs use the registered-asset export policy.");
+                ImGui::TreePop();
+            }
+            if(record->type==AssetType::Mesh&&state.resources){if(auto model=state.resources->TryGetSkeletal(record->id)){if(ImGui::TreeNode("Shared skeleton")){for(auto& name:model->skeleton.names)ImGui::TextUnformatted(name.c_str());ImGui::TreePop();}}}
+
             if(record->type==AssetType::Collision&&state.mode==EditorMode::Edit){CollisionAsset asset;std::string error;if(LoadCollisionAsset(record->path,asset,error)){ImGui::Text("Physical %s: %zu vertices / %zu faces",asset.convex?"hull":"triangle surface",asset.vertices.size(),asset.faces.size());auto source=db.Find(asset.sourceAsset);bool stale=!source||source->missing||CollisionAssetStale(asset,source->path,error);ImGui::TextWrapped("%s",stale?error.c_str():"Source/settings fingerprint current");if(ImGui::Button("Rebake saved source/settings")&&source){CollisionCookSettings settings;settings.convex=asset.convex;settings.twoSided=asset.twoSided;settings.primitive=asset.selectedPrimitive;settings.transform=asset.sourceTransform;ModelCollisionCleanup cleanup;ModelCollisionCleanupReport cleanupReport;CollisionDiagnostic diagnostic;if(ReadModelCollisionCleanup(record->path,cleanup,error)&&CookImportedCollisionFile(source->path,source->id,settings,cleanup,record->path,asset,cleanupReport,diagnostic,error)){if(state.resources)state.resources->Invalidate(record->id);state.status="Rebaked physical collider";}else state.status=error;}for(auto& warning:asset.warnings)ImGui::TextWrapped("%s",warning.c_str());}else ImGui::TextWrapped("%s",error.c_str());}
             if(record->type==AssetType::Material&&state.mode==EditorMode::Edit){
                 static std::string selected,error;static MaterialDefinition draft;if(selected!=record->id){selected=record->id;LoadMaterial(record->path,draft,error);}
@@ -695,10 +742,9 @@ void DrawAssetBrowserPanel(EditorDocument& doc, EditorPanelState& state, EditorR
                 if(ImGui::Button("Save shared reverb")){std::ofstream f(record->path);f<<SerializeAudioEnvironment(draft);if(f){if(state.resources)state.resources->Invalidate(record->id);state.status="Saved reverb settings";error.clear();}else error="Cannot write reverb settings";}ImGui::SameLine();if(ImGui::Button("Reload reverb"))LoadAudioEnvironment(record->path,draft,error);if(!error.empty())ImGui::TextWrapped("%s",error.c_str());
             }
             if(record->type==AssetType::World&&state.mode==EditorMode::Edit&&ImGui::CollapsingHeader("World manifest source",ImGuiTreeNodeFlags_DefaultOpen)){
-                static std::string worldPath;static std::vector<char> buffer(1024*1024+1);if(worldPath!=record->path){worldPath=record->path;std::ifstream f(worldPath);std::string text(std::istreambuf_iterator<char>(f),{});std::snprintf(buffer.data(),buffer.size(),"%s",text.c_str());}
-                ImGui::TextWrapped("Region IDs, source scenes, double absolute placement, bounds, priority, snapshot/resident policy and dependencies. Unit scale only.");
-                ImGui::InputTextMultiline("JudasWorld 1",buffer.data(),buffer.size(),{0,260});
-                if(ImGui::Button("Validate and save world manifest")){WorldManifest manifest;std::string error;if(ParseWorldManifest(buffer.data(),manifest,error)&&state.project&&ValidateWorldManifest(manifest,*state.project,error)){std::ofstream f(record->path,std::ios::binary);f<<buffer.data();state.status=f?"Saved world manifest":"World write failed";++state.worldPreviewRevision;}else state.status=error;}
+                ImGui::TextWrapped("Edit this registered manifest through the shared named document editor. Validation, undo and external-change protection use the same service as the CLI.");
+                if(ImGui::Button("Open world/source authoring tools"))state.showWorldBuilding=true;
+                ImGui::TextWrapped("Path: %s",record->path.c_str());
             }
             if(record->type==AssetType::Catalog&&state.mode==EditorMode::Edit&&ImGui::CollapsingHeader("Catalog UTF-8 source")){
                 static std::string catalogPath;static std::vector<char> buffer(2*1024*1024+1);if(catalogPath!=record->path){catalogPath=record->path;std::ifstream f(catalogPath);std::string text(std::istreambuf_iterator<char>(f),{});std::snprintf(buffer.data(),buffer.size(),"%s",text.c_str());}
@@ -706,7 +752,15 @@ void DrawAssetBrowserPanel(EditorDocument& doc, EditorPanelState& state, EditorR
                 if(ImGui::Button("Validate and save catalog")){Catalog parsed;std::string error;if(ParseCatalog(buffer.data(),parsed,error)){std::ofstream f(record->path,std::ios::binary);f<<buffer.data();state.status=f?"Saved UTF-8 catalog":"Catalog write failed";state.textReload=true;if(state.resources)state.resources->Invalidate(record->id);}else state.status=error;}
                 ImGui::SameLine();if(ImGui::Button("Reload preview catalog"))state.textReload=true;
             }
-            if(record->type==AssetType::UI&&state.mode==EditorMode::Edit&&ImGui::CollapsingHeader("Edit UI document",ImGuiTreeNodeFlags_DefaultOpen))DrawUILayoutEditor(*record,state);
+            if(record->type==AssetType::UI&&state.mode==EditorMode::Edit){
+                if(ImGui::Button("Edit UI document"))state.showUIDocument=true;
+                if(state.showUIDocument){
+                    ImGui::SetNextWindowPos({120,45},ImGuiCond_FirstUseEver);
+                    ImGui::SetNextWindowSize({1040,700},ImGuiCond_FirstUseEver);
+                    if(ImGui::Begin("UI document",&state.showUIDocument))DrawUILayoutEditor(*record,state);
+                    ImGui::End();
+                }
+            }
             if(record->type==AssetType::Prefab&&state.mode==EditorMode::Edit&&ImGui::Button("Place prefab instance")){
                 Scene source;std::string error;SceneObjectId root=0;
                 if(LoadPrefab(db,record->id,source,error)){

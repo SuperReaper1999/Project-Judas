@@ -718,7 +718,7 @@ void EditorApplication::PickAtPixel(int x, int y) {
             best = o.id;
         }
     }
-    m_document.Select(best);
+    m_document.Select(best, ImGui::GetIO().KeyCtrl);
 }
 
 void EditorApplication::UpdateGizmo(bool allowInteraction) {
@@ -736,19 +736,32 @@ void EditorApplication::UpdateGizmo(bool allowInteraction) {
     m_camera.PixelRay(mx, my, window.Width(), window.Height(), rayOrigin, rayDirection);
     Scene flattened;std::string error;
     if(!FlattenHierarchy(m_document.GetScene(),flattened,error))return;
-    const auto presented=flattened.Find(selected->id)->transform;
+    auto presented=flattened.Find(selected->id)->transform;
+    if(m_document.Selection().size()>1){presented.position={0,0,0};auto roots=m_document.SelectionRoots();for(auto id:roots)presented.position+=flattened.Find(id)->transform.position;presented.position/=float(roots.size());}
     const glm::vec3 origin = presented.position;
     // Handles keep a roughly constant on-screen size.
     m_gizmoHandleLength = std::max(0.2f, glm::length(origin - m_camera.Position()) * 0.14f);
     const bool snap = m_panels.gizmoSnap || ImGui::GetIO().KeyCtrl;
 
     if (m_drag.Active()) {
+        if(ImGui::IsKeyPressed(ImGuiKey_Escape)){m_document.CancelEdit();m_drag=GizmoDrag{};return;}
         if (ImGui::IsMouseDown(ImGuiMouseButton_Left)) {
             auto value=UpdateGizmoDrag(m_drag, rayOrigin, rayDirection, snap);
-            if(selected->parent){const auto& parent=flattened.Find(selected->parent)->transform;
-                value.position=(glm::inverse(parent.rotation)*(value.position-parent.position))/parent.scale;
-                value.rotation=glm::inverse(parent.rotation)*value.rotation;value.scale/=parent.scale;}
-            selected->transform=value;
+            Scene baseline;std::string error;
+            if(FlattenHierarchy(m_document.EditBaseline(),baseline,error)){
+                auto delta=value.position-m_drag.startTransform.position;
+                auto rotation=glm::normalize(value.rotation*glm::inverse(m_drag.startTransform.rotation));
+                auto scale=value.scale/m_drag.startTransform.scale;
+                auto candidate=m_document.EditBaseline();
+                for(auto id:m_document.SelectionRoots()){
+                    auto t=baseline.Find(id)->transform;t.position=(m_panels.gizmoIndividualOrigins?t.position:m_drag.origin+rotation*((t.position-m_drag.origin)*scale))+delta;t.rotation=glm::normalize(rotation*t.rotation);t.scale*=scale;
+                    glm::mat4 matrix=glm::translate(glm::mat4(1),t.position)*glm::mat4_cast(t.rotation)*glm::scale(glm::mat4(1),t.scale);
+                    auto* o=candidate.Find(id);
+                    if(o->parent){auto p=baseline.Find(o->parent)->transform;matrix=glm::inverse(glm::translate(glm::mat4(1),p.position)*glm::mat4_cast(p.rotation)*glm::scale(glm::mat4(1),p.scale))*matrix;}
+                    JointTransform local;if(!DecomposeRigidPose(matrix,local,error))break;o->transform={local.translation,local.rotation,local.scale};
+                }
+                if(error.empty())m_document.GetScene()=std::move(candidate);else m_panels.status=error;
+            }
         } else {
             // Release: one undo step for the whole drag.
             m_document.CommitEdit();
@@ -776,11 +789,29 @@ void EditorApplication::DrawEditOverlay(Renderer& renderer, const Scene& scene) 
     m_debugLines.Clear();
     BuildAuthoredDebugLines(scene, m_panels.debug, m_debugLines);
     if(m_panels.debug.navigation)m_debugLines.Append(m_panels.navigationPreview);
-    m_debugLines.Append(m_panels.liquidPreview);m_debugLines.Append(m_panels.deformablePreview);m_debugLines.Append(m_panels.collisionPreview);
+    m_debugLines.Append(m_panels.recipePreview);m_debugLines.Append(m_panels.liquidPreview);m_debugLines.Append(m_panels.deformablePreview);m_debugLines.Append(m_panels.collisionPreview);
     for(auto id:m_document.Selection())if(const SceneObject* selected=scene.Find(id))BuildSelectionLines(*selected,m_debugLines);
     if(const auto* selected=scene.Find(m_document.Selected())){
         const auto* owner=selected->socket?scene.Find(selected->socket->target):selected;
         if(owner&&owner->render){auto asset=m_host->Resources().TryGetSkeletal(owner->render->meshAsset);if(asset){auto global=PoseGlobalMatrices(asset->skeleton,asset->skeleton.rest);auto t=owner->transform;auto model=glm::translate(glm::mat4(1),t.position)*glm::mat4_cast(t.rotation)*glm::scale(glm::mat4(1),t.scale);for(auto& matrix:global){JointTransform joint;std::string error;if(DecomposeRigidPose(model*matrix,joint,error))m_debugLines.Axes(joint.translation,joint.rotation,.18f);}}}
+    }
+    if(m_panels.skeletonFitPreview&&m_panels.skeletonFitGeneration==m_document.Generation()) {
+        if(const auto* o=scene.Find(m_panels.skeletonFitOwner);o&&o->render) {
+            if(auto asset=m_host->Resources().TryGetSkeletal(o->render->meshAsset)) {
+                auto global=PoseGlobalMatrices(asset->skeleton,asset->skeleton.rest);
+                auto model=glm::translate(glm::mat4(1),o->transform.position)*glm::mat4_cast(o->transform.rotation)*glm::scale(glm::mat4(1),o->transform.scale);
+                for(const auto& bone:m_panels.skeletonFitPreview->bones) {
+                    int index=FindSkeletonJoint(asset->skeleton,bone.joint);
+                    if(index<0)continue;
+                    JointTransform joint;std::string error;
+                    if(!DecomposeRigidPose(model*global[size_t(index)],joint,error))continue;
+                    auto center=joint.translation+joint.rotation*(joint.scale*bone.offset);
+                    auto orientation=glm::normalize(joint.rotation*bone.orientation);
+                    if(bone.shape==RagdollShape::Sphere)m_debugLines.Sphere(center,bone.radius,{1,.5f,.1f});
+                    else m_debugLines.Box(center,orientation,bone.halfExtents*joint.scale,{1,.5f,.1f});
+                }
+            }
+        }
     }
     renderer.DrawDebugLines(m_debugLines.Lines(), /*depthTest=*/true);
     renderer.DrawDebugLines(m_gizmoLines.Lines(), /*depthTest=*/false);
@@ -898,6 +929,7 @@ void EditorApplication::DrawModelImportPreview(float deltaSeconds) {
  renderer.SetLighting(glm::normalize(glm::vec3(1,2,3)),{1.8f,1.8f,1.8f},{.35f,.35f,.35f});renderer.SetSceneAppearance(true,1,{},1,{1,0,0,0},false,{.035f,.045f,.065f});renderer.SetDynamicLights({});renderer.SetMaterialBindings({});renderer.DrawMesh(mesh,{0,0,0},{1,0,0,0},{1,1,1},{},{1,1,1},1,palette.empty()?nullptr:&palette,&m_panels.modelPreviewHidden);
  DebugLineList lines;if(m_panels.modelDiagnosticVisible&&m_panels.collisionDiagnosticAsset==task.assetId){auto p=glm::vec3(m_panels.collisionDiagnostic.point);float size=std::max(.05f,radius*.02f);lines.Line(p-glm::vec3(size,0,0),p+glm::vec3(size,0,0),{1,0,0});lines.Line(p-glm::vec3(0,size,0),p+glm::vec3(0,size,0),{1,0,0});lines.Line(p-glm::vec3(0,0,size),p+glm::vec3(0,0,size),{1,0,0});}lines.Line({lo.x,lo.y,lo.z},{lo.x+1,lo.y,lo.z},{1,1,1});lines.Axes({0,0,0},{1,0,0,0},.3f);
  if(m_panels.modelPreviewSkeleton&&asset)for(size_t i=0;i<global.size();++i)if(asset->skeleton.parents[i]>=0)lines.Line(glm::vec3(global[i][3]),glm::vec3(global[asset->skeleton.parents[i]][3]),{.2f,1,.6f});
+ if(asset)for(auto& key:m_panels.skeletonPicked){int joint=FindSkeletonJoint(asset->skeleton,key);if(joint>=0&&size_t(joint)<global.size()){JointTransform t;std::string error;if(DecomposeRigidPose(global[joint],t,error))lines.Axes(t.translation,t.rotation,.15f);}}
  if(asset&&!asset->clips.empty()){auto& clip=asset->clips[std::min(size_t(m_panels.modelPreviewClip),asset->clips.size()-1)];glm::vec3 previous(0);for(unsigned i=0;i<=60;++i){auto p=SampleRootMotion(clip,double(clip.duration)*i/60,false).translation;if(i)lines.Line(previous,p,{1,.7f,.1f});previous=p;}}
  renderer.DrawDebugLines(lines.Lines(),false);renderer.EndRenderTarget();m_panels.modelPreviewToken=renderer.EditorImageToken(renderer.RenderTargetTexture(m_modelPreviewTarget));
 }
@@ -1112,10 +1144,8 @@ int EditorApplication::Run(int argc, char** argv) {
             if (ctrl && ImGui::IsKeyPressed(ImGuiKey_D)) requests.duplicateId = m_document.Selected();
             if (ImGui::IsKeyPressed(ImGuiKey_F5)) requests.play = true;
             if (ImGui::IsKeyPressed(ImGuiKey_Delete) && m_document.Selected() != kInvalidSceneObjectId) {
-                m_document.BeginEdit();
-                m_document.GetScene().DestroyObject(m_document.Selected());
-                m_document.CommitEdit();
-                m_document.Select(kInvalidSceneObjectId);
+                std::string error;
+                if(!m_document.DeleteSelection(error))m_panels.status=error;
             }
             if (!m_lookActive && !ctrl) {
                 if (ImGui::IsKeyPressed(ImGuiKey_F)) requests.focusSelection = true;
@@ -1126,7 +1156,7 @@ int EditorApplication::Run(int argc, char** argv) {
                     m_panels.gizmoSpace = m_panels.gizmoSpace == GizmoSpace::Local ? GizmoSpace::World : GizmoSpace::Local;
                 }
             }
-        } else if (m_panels.mode == EditorMode::Play && ImGui::IsKeyPressed(ImGuiKey_F5)) {
+        } else if (m_panels.mode == EditorMode::Play && !io.WantTextInput && !ImGui::IsPopupOpen(nullptr,ImGuiPopupFlags_AnyPopupId) && ImGui::IsKeyPressed(ImGuiKey_F5)) {
             requests.stop = true;
         }
 
@@ -1177,6 +1207,7 @@ int EditorApplication::Run(int argc, char** argv) {
             DrawHierarchyPanel(m_document, m_panels, requests);
         }
         if (m_panels.mode == EditorMode::Edit) {
+            DrawWorldBuildingPanel(m_document, m_panels);
             DrawSceneSettingsPanel(m_document, m_panels);
             DrawAssetBrowserPanel(m_document, m_panels, requests);
             DrawProjectSettingsPanel(m_document, m_panels, requests);
@@ -1206,6 +1237,7 @@ int EditorApplication::Run(int argc, char** argv) {
         AdvanceStabilizationAutomation();
 
         DrawModelImportPreview(deltaSeconds);
+        DrawUIAuthoringPreview();
         editorBuildScope.End();
         ImGui::Render();
         // The 3D frame already sits in the default framebuffer; the UI
@@ -1258,13 +1290,24 @@ int EditorApplication::Run(int argc, char** argv) {
                 }
             }
             if (autotestFrame == 5) {
+                if(std::getenv("JUDAS_EDITOR_AUTOTEST_AUTHORING")) {
+                    m_panels.showWorldBuilding=true;m_panels.showUIDocument=true;m_panels.uiCanvasPreview=true;
+                    for(auto& [id,record]:m_host->Assets().Records())if(record.type==AssetType::UI){m_panels.browserSelection=id;break;}
+                    if(const char* locale=std::getenv("JUDAS_EDITOR_AUTOTEST_AUTHORING_LOCALE"))m_panels.previewLocale=locale;
+                    auto& objects=m_document.GetScene().Objects();
+                    if(objects.size()>2){m_document.Select(objects[0].id);m_document.Select(objects[2].id,true);std::string error;
+                        bool edited=m_document.BatchTransform({.25f,0,0},{1,0,0,0},{1,1,1},error,true,true);m_document.Undo();
+                        std::string restored;SaveSceneToString(m_document.GetScene(),restored);
+                        std::fprintf(stderr,"[editor autotest] shared authoring batch + undo %s: %s\n",edited&&restored==autotestBaseline?"PASS":"FAIL",error.c_str());
+                    }
+                }
                 if(std::getenv("JUDAS_EDITOR_AUTOTEST_STREAMING"))m_panels.worldPreview=true;
                 if (!m_document.GetScene().Objects().empty()) m_document.Select(m_document.GetScene().Objects().front().id);
                 DebugViewOptions all;
                 all.collisionShapes = all.playerCapsule = all.contacts = all.gravity = all.frameAxes = all.lights =
                     all.interactionRanges = all.lifecycle = all.terrainNormals = all.fluidParticles = all.atmosphere = true;
                 m_panels.debug = all;
-                m_panels.showProfiler = true;
+                m_panels.showProfiler = !std::getenv("JUDAS_EDITOR_AUTOTEST_AUTHORING");
             } else if (autotestFrame == 10) {
                 // Duplicate + undo must leave the scene exactly as authored.
                 const SceneObjectId selected = m_document.Selected();
@@ -1325,6 +1368,8 @@ int EditorApplication::Run(int argc, char** argv) {
     for (const std::string& id : m_heldAssets) host.Resources().ReleaseRef(id);
     m_heldAssets.clear();
     window.SetEventHook(nullptr);
+    if(m_uiPreviewTarget.IsValid())renderer.DestroyRenderTarget(m_uiPreviewTarget);
+    m_uiPreview.reset();
     if(m_modelPreviewTarget.IsValid())renderer.DestroyRenderTarget(m_modelPreviewTarget);
     if(!m_modelPreviewAsset.empty())host.Resources().ReleaseRef(m_modelPreviewAsset);
     m_panels.importTask.reset();
@@ -1334,4 +1379,14 @@ int EditorApplication::Run(int argc, char** argv) {
     m_previewLocalization.reset();
     m_host = nullptr;
     return m_stabilization && m_stabilization->failures ? 1 : 0;
+}
+
+void EditorApplication::DrawUIAuthoringPreview(){
+ if(m_panels.mode!=EditorMode::Edit||!m_panels.showAssetBrowser||!m_panels.uiCanvasPreview||!m_panels.uiPreviewRevision)return;
+ JUDAS_PROFILE_SCOPE("UI authoring canvas");auto& renderer=m_host->GetRenderer();auto& resources=m_host->Resources();auto key=m_project.ProjectFile()+m_project.Settings().localization.Encode();if(key!=m_previewLocalizationKey){m_previewLocalization=std::make_unique<LocalizationSession>(m_project.Settings().localization);m_previewLocalization->Bind(&resources);m_previewLocalizationKey=key;}
+ std::string error;if(!m_panels.previewLocale.empty())m_previewLocalization->SetLocale(m_panels.previewLocale,error);m_previewLocalization->Refresh();
+ if(!m_uiPreview||m_uiPreviewRevision!=m_panels.uiPreviewRevision){auto candidate=std::make_unique<RuntimeUI>(&resources);if(!candidate->Add(m_panels.uiPreviewDocument,"authoring",0,error)){m_panels.status=error;return;}m_uiPreview=std::move(candidate);m_uiPreviewRevision=m_panels.uiPreviewRevision;}
+ m_uiPreview->SetLocalization(m_previewLocalization.get());int width=m_panels.uiPreviewResolution.x,height=m_panels.uiPreviewResolution.y;if(!renderer.ResizeRenderTarget(m_uiPreviewTarget,width,height,error)||!renderer.BeginRenderTarget(m_uiPreviewTarget)){m_panels.status=error;return;}
+ renderer.SetSceneAppearance(false,1,{},1,{1,0,0,0},false,{.035f,.045f,.065f});renderer.BeginFrame(width,height);renderer.EndFrame();renderer.BeginUIFrame(width,height);m_uiPreview->Draw(renderer,width,height);renderer.EndUIFrame();renderer.EndRenderTarget();m_panels.uiPreviewToken=renderer.EditorImageToken(renderer.RenderTargetTexture(m_uiPreviewTarget));m_panels.uiPreviewLayout.clear();auto handle=m_uiPreview->Find("authoring");for(auto& e:m_panels.uiPreviewDocument.elements)if(auto* l=m_uiPreview->LayoutOf(handle,e.id))m_panels.uiPreviewLayout[e.id]=*l;
+ if(m_panels.uiCanvasPick.x>=0){for(auto it=m_panels.uiPreviewDocument.elements.rbegin();it!=m_panels.uiPreviewDocument.elements.rend();++it){auto* l=m_uiPreview->LayoutOf(handle,it->id);if(l&&l->visible&&l->rect.Contains(m_panels.uiCanvasPick)&&l->clip.Contains(m_panels.uiCanvasPick)){m_panels.uiCanvasSelected=it->id;break;}}m_panels.uiCanvasPick={-1,-1};}
 }

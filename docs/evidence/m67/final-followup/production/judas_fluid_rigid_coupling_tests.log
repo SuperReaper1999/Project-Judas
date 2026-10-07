@@ -1,0 +1,83 @@
+Filled compound body on ordinary ground
+  OK   one dynamic body has a bottom and four open walls
+    100 particles, 180 steps: 242.1 ms total, 1.345 ms/step; contacts 57689; escaped 0; max cup displacement 0.0000 m; lowest -0.2920 m
+  OK   filled fluid stays inside the upright geometric vessel
+  OK   fluid does not pass through dynamic bottom
+  OK   loaded dynamic vessel stays on ground
+  OK   coupled contact preserves fluid mass
+Live-sized resting cup, 3 s and 10 s diagnostics (measurement only)
+    moving cup, smoothing .015 at  3 s: energy 0.8429 J, rms 0.3285 m/s, max 0.9593 m/s, COM drift 0.0893 m, cup drift 0.0000 m (local x 0.0000 m), cup speed 0.0220 m/s, cup spin 0.0120 rad/s, empty drift 0.0000 m, speed 0.0000 m/s, spin 0.0000 rad/s (local x 0.0000 m), over-density 0.22%
+    moving cup, smoothing .015 at 10 s: energy 0.3883 J, rms 0.2229 m/s, max 0.6768 m/s, COM drift 0.0910 m, cup drift 0.0000 m (local x 0.0000 m), cup speed 0.0202 m/s, cup spin 0.0072 rad/s, empty drift 0.0000 m, speed 0.0000 m/s, spin 0.0000 rad/s (local x 0.0000 m), over-density 0.19%
+    moving cup, smoothing .015 final-second mean energy 0.4850 J
+  OK   resting-fluid measurement preserves the live demo's 125 particle masses
+    frozen cup, smoothing .015 at  3 s: energy 0.9435 J, rms 0.3475 m/s, max 1.1090 m/s, COM drift 0.0887 m, cup drift 0.0000 m (local x 0.0000 m), cup speed 0.0000 m/s, cup spin 0.0000 rad/s, empty drift 0.0000 m, speed 0.0000 m/s, spin 0.0000 rad/s (local x 0.0000 m), over-density 0.21%
+    frozen cup, smoothing .015 at 10 s: energy 0.6380 J, rms 0.2858 m/s, max 0.9126 m/s, COM drift 0.0898 m, cup drift 0.0000 m (local x 0.0000 m), cup speed 0.0000 m/s, cup spin 0.0000 rad/s, empty drift 0.0000 m, speed 0.0000 m/s, spin 0.0000 rad/s (local x 0.0000 m), over-density 0.27%
+    frozen cup, smoothing .015 final-second mean energy 0.6433 J
+  OK   resting-fluid measurement preserves the live demo's 125 particle masses
+    moving cup, smoothing .150 at  3 s: energy 0.0003 J, rms 0.0066 m/s, max 0.0234 m/s, COM drift 0.0912 m, cup drift 0.0000 m (local x 0.0000 m), cup speed 0.0213 m/s, cup spin 0.0004 rad/s, empty drift 0.0000 m, speed 0.0000 m/s, spin 0.0000 rad/s (local x 0.0000 m), over-density 0.13%
+    moving cup, smoothing .150 at 10 s: energy 0.0001 J, rms 0.0031 m/s, max 0.0074 m/s, COM drift 0.0912 m, cup drift 0.0000 m (local x 0.0000 m), cup speed 0.0213 m/s, cup spin 0.0005 rad/s, empty drift 0.0000 m, speed 0.0000 m/s, spin 0.0000 rad/s (local x 0.0000 m), over-density 0.14%
+    moving cup, smoothing .150 final-second mean energy 0.0001 J
+  OK   resting-fluid measurement preserves the live demo's 125 particle masses
+    radial cups, smoothing .150 at  3 s: energy 0.0014 J, rms 0.0133 m/s, max 0.0565 m/s, COM drift 0.0909 m, cup drift 0.0000 m (local x 0.0000 m), cup speed 0.0213 m/s, cup spin 0.0005 rad/s, empty drift 0.0000 m, speed 0.0000 m/s, spin 0.0000 rad/s (local x 0.0000 m), over-density 0.15%
+    radial cups, smoothing .150 at 10 s: energy 0.0010 J, rms 0.0113 m/s, max 0.0365 m/s, COM drift 0.0910 m, cup drift 0.0000 m (local x 0.0000 m), cup speed 0.0213 m/s, cup spin 0.0004 rad/s, empty drift 0.0000 m, speed 0.0000 m/s, spin 0.0000 rad/s (local x 0.0000 m), over-density 0.14%
+    radial cups, smoothing .150 final-second mean energy 0.0012 J
+  OK   resting-fluid measurement preserves the live demo's 125 particle masses
+    radial cups, friction 2.0 at  3 s: energy 0.0014 J, rms 0.0133 m/s, max 0.0565 m/s, COM drift 0.0909 m, cup drift 0.0000 m (local x 0.0000 m), cup speed 0.0213 m/s, cup spin 0.0005 rad/s, empty drift 0.0000 m, speed 0.0000 m/s, spin 0.0000 rad/s (local x 0.0000 m), over-density 0.15%
+    radial cups, friction 2.0 at 10 s: energy 0.0010 J, rms 0.0113 m/s, max 0.0365 m/s, COM drift 0.0910 m, cup drift 0.0000 m (local x 0.0000 m), cup speed 0.0213 m/s, cup spin 0.0004 rad/s, empty drift 0.0000 m, speed 0.0000 m/s, spin 0.0000 rad/s (local x 0.0000 m), over-density 0.14%
+    radial cups, friction 2.0 final-second mean energy 0.0012 J
+  OK   resting-fluid measurement preserves the live demo's 125 particle masses
+    radial cups, mass 240 at  3 s: energy 0.0004 J, rms 0.0071 m/s, max 0.0215 m/s, COM drift 0.0909 m, cup drift 0.0000 m (local x 0.0000 m), cup speed 0.0107 m/s, cup spin 0.0002 rad/s, empty drift 0.0000 m, speed 0.0000 m/s, spin 0.0000 rad/s (local x 0.0000 m), over-density 0.14%
+    radial cups, mass 240 at 10 s: energy 0.0007 J, rms 0.0092 m/s, max 0.0502 m/s, COM drift 0.0910 m, cup drift 0.0000 m (local x 0.0000 m), cup speed 0.0106 m/s, cup spin 0.0002 rad/s, empty drift 0.0000 m, speed 0.0000 m/s, spin 0.0000 rad/s (local x 0.0000 m), over-density 0.14%
+    radial cups, mass 240 final-second mean energy 0.0006 J
+  OK   resting-fluid measurement preserves the live demo's 125 particle masses
+Fluid contact transfers impulse to the rigid body
+    contacts 2, impulse x 3.00000 Ns, body vx 0.30000 m/s, water vx 0.00000 m/s
+  OK   water striking a wall returns an outward reaction impulse
+  OK   reaction impulse accelerates the ordinary dynamic body
+  OK   rigid body's momentum change equals the applied contact impulse
+Force/torque-driven vessel moves fluid in zero gravity
+    vessel x 0.3992 m, angle 0.1191 rad; water displacement (0.3662, 0.0112, 0.0000) m; contacts 6
+  OK   ordinary force and torque translate and rotate one compound body
+  OK   moving and rotating walls impart motion to initially resting fluid
+  OK   coupled moving-container state stays finite
+    pure torque: vessel angle 0.4330 rad; water displacement 0.0676 m; contacts 6
+  OK   rotating walls alone impart motion without gravity or vessel translation force
+Two force/torque-driven compound cups pour the same water (smoothing 0.015)
+  OK   ordinary manipulation acquires Cup A
+    step  30: A angle 0.01, A (-0.15,0.74), B angle 0.00, B y -0.00, water COM (-0.15,0.77), in B 0
+    step  60: A angle 0.81, A (-0.15,0.73), B angle 0.00, B y -0.00, water COM (-0.10,0.73), in B 0
+    step  90: A angle 1.86, A (-0.15,0.73), B angle 0.00, B y -0.00, water COM (-0.09,0.63), in B 0
+    step 120: A angle 2.18, A (-0.16,0.75), B angle 0.00, B y -0.00, water COM (0.29,0.17), in B 106
+    step 150: A angle 2.15, A (-0.15,0.76), B angle 0.00, B y -0.00, water COM (0.28,0.08), in B 107
+    step 180: A angle 2.15, A (-0.50,0.76), B angle 0.00, B y -0.00, water COM (0.28,0.06), in B 107
+  OK   ordinary manipulation acquires Cup B
+    step 210: A angle 1.92, A (-1.07,0.29), B angle 0.00, B y 0.01, water COM (0.31,0.06), in B 107
+    step 240: A angle 0.18, A (-1.43,0.03), B angle 0.07, B y 0.26, water COM (0.33,0.27), in B 107
+    step 270: A angle 0.12, A (-1.42,-0.00), B angle 0.98, B y 0.33, water COM (0.42,0.23), in B 107
+    step 300: A angle 0.12, A (-1.42,-0.00), B angle 1.99, B y 0.34, water COM (0.51,-0.13), in B 98
+    step 330: A angle 0.12, A (-1.42,-0.00), B angle 2.17, B y 0.35, water COM (1.08,-0.64), in B 0
+    crossed A open rim 125 particles; peak in B 107, in B before re-pour 107, those leaving B 107
+  OK   physical A tip sends fluid across its open rim into physical B
+  OK   the same particles later leave torque-driven Cup B
+  OK   two physical pours preserve fluid mass
+Two force/torque-driven compound cups pour the same water (smoothing 0.150)
+  OK   ordinary manipulation acquires Cup A
+    step  30: A angle 0.01, A (-0.15,0.74), B angle 0.00, B y -0.00, water COM (-0.15,0.77), in B 0
+    step  60: A angle 0.80, A (-0.15,0.73), B angle 0.00, B y -0.00, water COM (-0.10,0.73), in B 0
+    step  90: A angle 1.86, A (-0.15,0.73), B angle 0.00, B y -0.00, water COM (-0.11,0.66), in B 0
+    step 120: A angle 2.19, A (-0.16,0.74), B angle 0.00, B y -0.00, water COM (0.28,0.17), in B 106
+    step 150: A angle 2.15, A (-0.15,0.76), B angle 0.00, B y -0.00, water COM (0.25,0.06), in B 110
+    step 180: A angle 2.15, A (-0.50,0.76), B angle 0.00, B y -0.00, water COM (0.23,0.05), in B 110
+  OK   ordinary manipulation acquires Cup B
+    step 210: A angle 1.91, A (-1.07,0.29), B angle 0.00, B y 0.01, water COM (0.26,0.05), in B 110
+    step 240: A angle 0.15, A (-1.42,0.02), B angle 0.05, B y 0.26, water COM (0.28,0.26), in B 110
+    step 270: A angle 0.06, A (-1.42,-0.00), B angle 0.97, B y 0.33, water COM (0.39,0.27), in B 110
+    step 300: A angle 0.06, A (-1.42,-0.00), B angle 1.98, B y 0.33, water COM (0.42,0.10), in B 107
+    step 330: A angle 0.06, A (-1.42,-0.00), B angle 2.17, B y 0.35, water COM (0.93,-0.29), in B 0
+    crossed A open rim 125 particles; peak in B 110, in B before re-pour 110, those leaving B 110
+  OK   physical A tip sends fluid across its open rim into physical B
+  OK   the same particles later leave torque-driven Cup B
+  OK   two physical pours preserve fluid mass
+Two-vessel demo-resolution timing (measurement only)
+    125 particles, 11 box colliders, 60 coupled steps: 141.5 ms total, 2.358 ms/step
+Fluid/rigid coupling: PASS (0 failures)

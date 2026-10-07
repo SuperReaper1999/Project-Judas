@@ -1,0 +1,73 @@
+{
+  "kind": "recipe",
+  "schema": 1,
+  "data": {
+    "id": "ledge",
+    "type": "sweep",
+    "templateId": 0,
+    "prefabAsset": "",
+    "renderAsset": "",
+    "collisionAsset": "",
+    "proxyAsset": "",
+    "geometryRevision": "",
+    "count": 8,
+    "segments": 4,
+    "collisionSegments": 0,
+    "spacing": 2.0,
+    "radius": 4.0,
+    "startDegrees": 0.0,
+    "endDegrees": 90.0,
+    "twistDegrees": 0.0,
+    "smooth": false,
+    "closed": true,
+    "frame": {
+      "position": [
+        -12,
+        1,
+        -10
+      ],
+      "rotation": [
+        1,
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ]
+    },
+    "path": [
+      [
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        -16
+      ]
+    ],
+    "profile": [
+      [
+        -1,
+        -0.15
+      ],
+      [
+        1,
+        -0.15
+      ],
+      [
+        1,
+        0.15
+      ],
+      [
+        -1,
+        0.15
+      ]
+    ],
+    "elements": []
+  }
+}

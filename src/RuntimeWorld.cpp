@@ -762,7 +762,7 @@ void RuntimeWorld::RestoreAuthoredState() {
     for(auto id:articulations){std::string error;LeaveRagdoll(id,0,error);}
     // Destroy callbacks may still inspect lazy runtime components. Retire
     // scripts before clearing them so callbacks cannot recreate reset state.
-    m_scripts.reset();
+    m_scripts.reset();spawnStates.clear();
     m_ragdollReturns.clear();m_ragdollAutostarted.clear();ClearDeformables();ClearCharacters();m_animationInstances.clear();
     m_ui.reset();m_localization.reset();pointerCapture=false;m_touchEntityHistory.clear();m_physics.ClearTouchHistory();
     if (!m_built) return;
@@ -984,6 +984,7 @@ bool RuntimeWorld::ValidateEntityDestruction(EntityId id, std::string& error) co
 bool RuntimeWorld::DestroyEntity(EntityId id, std::string* outError) {
     std::string error;
     if (!ValidateEntityDestruction(id, error)) { if (outError) *outError = error; return false; }
+    for(auto it=spawnStates.begin();it!=spawnStates.end();)if(it->first.first==id)it=spawnStates.erase(it);else++it;
     RemoveDeformable(id);m_deformableOwners.erase(id);
     m_liquid->Remove(m_liquid->Handle(id));
     LeaveRagdoll(id,0,error);
@@ -1143,11 +1144,24 @@ EntityId RuntimeWorld::CreateEntity(const SceneObject& definitionIn, const Entit
     return definition.id;
 }
 
-EntityId RuntimeWorld::SpawnPrefab(const AssetId& asset,const SceneTransform& placement,std::string& error) {
+EntityId RuntimeWorld::SpawnPrefab(const AssetId& asset,const SceneTransform& placement,std::string& error,const PrefabSpawnOptions& options) {
     if(!m_assets||!m_assets->Assets()){error="no project asset database";return 0;}
     Scene source;if(!LoadPrefab(*m_assets->Assets(),asset,source,error))return 0;
     Scene instance;instance.SetNextId(m_nextRuntimeId);SceneObjectId root=0;
     if(!InstantiatePrefab(instance,source,asset,placement,root,error))return 0;
+    auto* rootDefinition=instance.Find(root);if(!rootDefinition){error="prefab root missing";return 0;}
+    if(options.scripts.size()>256){error="prefab initialization exceeds 256 script slots";return 0;}
+    auto finite=[](glm::vec3 v){return std::isfinite(glm::dot(v,v));};if((options.velocity&&!finite(*options.velocity))||(options.angularVelocity&&!finite(*options.angularVelocity))){error="finite initial motion required";return 0;}
+    if((options.velocity||options.angularVelocity)&&(!rootDefinition->body||rootDefinition->body->motion!=SceneBodyMotion::Dynamic)){error="initial motion requires a dynamic prefab root";return 0;}
+    if(options.velocity)rootDefinition->body->initialLinearVelocity=*options.velocity;
+    std::map<std::pair<EntityId,uint64_t>,std::string> states;std::set<std::pair<EntityId,uint64_t>> initialized;
+    for(const auto& init:options.scripts){auto target=root;if(init.source){auto found=rootDefinition->prefabIds.find(init.source);if(found==rootDefinition->prefabIds.end()){error="unknown prefab source entity";return 0;}target=found->second;}auto* object=instance.Find(target);auto slot=std::find_if(object->scripts.begin(),object->scripts.end(),[&](const auto& v){return v.id==init.slot;});if(slot==object->scripts.end()||!slot->enabled||!initialized.emplace(target,init.slot).second){error="unknown/disabled/duplicate prefab script slot";return 0;}
+        if(!init.properties.empty())slot->properties=init.properties;
+        std::string schema;if(!ScriptSystem::Inspect(*m_assets->Assets(),slot->asset,schema,error))return 0;std::vector<ScriptProperty> fields;if(!ScriptSystem::ReadProperties(schema,slot->properties,fields,error))return 0;
+        for(auto id:ScriptSystem::PropertyEntities(slot->properties))if(id&&!instance.Find(id)&&(!RuntimeDefinition(id)||!IsPublished(id))){error="initial properties contain stale/unpublished entity reference";return 0;}
+        if(init.state.size()>65536||!ScriptSystem::ValidateJson(init.state,error,false))return 0;
+        states[{target,init.slot}]=init.state;
+    }
     Scene flat;if(!FlattenHierarchy(instance,flat,error))return 0;
     if(!ValidateSceneClassification(flat,m_categories,error))return 0;
     // Complete preflight before creating any member. The resolved hierarchy is
@@ -1171,6 +1185,8 @@ EntityId RuntimeWorld::SpawnPrefab(const AssetId& asset,const SceneTransform& pl
         }
         if(!progress){error="cyclic runtime camera/parent creation dependencies";for(auto prior:created)DestroyEntity(prior);return 0;}
     }
+    if(options.angularVelocity){EntityPhysicalState state;if(GetEntityState(root,state)){state.angularVelocity=*options.angularVelocity;SetEntityState(root,state);}}
+    spawnStates.insert(states.begin(),states.end());
     SynchronizeJoints();
     return root;
 }
@@ -1275,7 +1291,7 @@ LightSwitch* RuntimeWorld::FindLightSwitch(SceneObjectId id) {
 void RuntimeWorld::Destroy() {
     m_regionPending.clear();m_regionAssets.clear();m_composed=false;
  JUDAS_PROFILE_SCOPE("World destroy"); PerformanceProfiler::Get().Boundary("World destroy");
-    m_scripts.reset();
+    m_scripts.reset();spawnStates.clear();
     m_ragdolls.clear();m_ragdollReturns.clear();m_ragdollAutostarted.clear();
     ClearDeformables();m_deformableOwners.clear();
     ClearCharacters();
@@ -1412,3 +1428,5 @@ bool RuntimeWorld::SetModelPartVisible(EntityId id,const std::string& key,bool v
  for(auto& r:m_dynamicVisuals)if(r.id==id)r.render.hiddenParts=hidden;
  return true;
 }
+
+std::string RuntimeWorld::TakeSpawnState(EntityId id,uint64_t slot){auto it=spawnStates.find({id,slot});if(it==spawnStates.end())return "null";auto state=std::move(it->second);spawnStates.erase(it);return state;}

@@ -1,0 +1,31 @@
+sequence	operation	asset	generation	thread	context_current	handle	bytes	path
+1	MeshCreated		0	139295019679424	1	0	2016	
+2	MeshCreated		0	139295019679424	1	1	129024	
+3	TextureCreated		0	139295019679424	1	0	4	
+4	FileReadBegin	000000000000000000000000f7200001	0	139294972286656	0	0	0	/home/conner/Documents/GitHub/Project-Judas/build/ftft2-fixtures/read-cancel/a/Assets/1.obj
+5	FileReadChunk	000000000000000000000000f7200001	0	139294972286656	0	0	1048576	/home/conner/Documents/GitHub/Project-Judas/build/ftft2-fixtures/read-cancel/a/Assets/1.obj
+6	FileReadChunk	000000000000000000000000f7200001	0	139294972286656	0	0	2097152	/home/conner/Documents/GitHub/Project-Judas/build/ftft2-fixtures/read-cancel/a/Assets/1.obj
+7	FileReadChunk	000000000000000000000000f7200001	0	139294972286656	0	0	2355232	/home/conner/Documents/GitHub/Project-Judas/build/ftft2-fixtures/read-cancel/a/Assets/1.obj
+8	FileReadEnd	000000000000000000000000f7200001	0	139294972286656	0	0	2355232	/home/conner/Documents/GitHub/Project-Judas/build/ftft2-fixtures/read-cancel/a/Assets/1.obj
+9	DecodeBegin	000000000000000000000000f7200001	0	139294972286656	0	0	2355232	/home/conner/Documents/GitHub/Project-Judas/build/ftft2-fixtures/read-cancel/a/Assets/1.obj
+10	DecodeEnd	000000000000000000000000f7200001	0	139294972286656	0	0	2355232	/home/conner/Documents/GitHub/Project-Judas/build/ftft2-fixtures/read-cancel/a/Assets/1.obj
+11	LoadComplete	000000000000000000000000f7200001	0	139294972286656	0	0	2355232	/home/conner/Documents/GitHub/Project-Judas/build/ftft2-fixtures/read-cancel/a/Assets/1.obj
+12	MeshCreated		0	139295019679424	1	2	180	
+13	FileReadBegin	000000000000000000000000f7200005	0	139294980679360	0	0	0	/home/conner/Documents/GitHub/Project-Judas/build/ftft2-fixtures/read-cancel/a/Assets/5.obj
+14	FileReadChunk	000000000000000000000000f7200005	0	139294980679360	0	0	1048576	/home/conner/Documents/GitHub/Project-Judas/build/ftft2-fixtures/read-cancel/a/Assets/5.obj
+15	CancelRequested	000000000000000000000000f7200005	0	139295019679424	0	0	0	/home/conner/Documents/GitHub/Project-Judas/build/ftft2-fixtures/read-cancel/a/Assets/5.obj
+16	FileReadEnd	000000000000000000000000f7200005	0	139294980679360	0	0	0	/home/conner/Documents/GitHub/Project-Judas/build/ftft2-fixtures/read-cancel/a/Assets/5.obj
+17	LoadComplete	000000000000000000000000f7200005	0	139294980679360	0	0	0	/home/conner/Documents/GitHub/Project-Judas/build/ftft2-fixtures/read-cancel/a/Assets/5.obj
+18	StaleDiscarded	000000000000000000000000f7200005	0	139295019679424	0	0	0	/home/conner/Documents/GitHub/Project-Judas/build/ftft2-fixtures/read-cancel/a/Assets/5.obj
+19	TextureCreated		0	139295019679424	1	1	4194304	
+20	ManagerShutdownBegin		0	139295019679424	0	0	0	
+21	MeshDestroyed		0	139295019679424	1	2	180	
+22	ManagerShutdownEnd		0	139295019679424	0	0	0	
+23	WorkersJoined		0	139295019679424	1	0	0	
+24	TextureDestroyed		0	139295019679424	1	1	4194304	
+25	RendererShutdownBegin		0	139295019679424	1	0	0	
+26	MeshDestroyed		0	139295019679424	1	0	2016	
+27	MeshDestroyed		0	139295019679424	1	1	129024	
+28	TextureDestroyed		0	139295019679424	1	0	4	
+29	RendererShutdownEnd		0	139295019679424	1	0	0	
+30	ContextDestroyed		0	139295019679424	0	0	0	

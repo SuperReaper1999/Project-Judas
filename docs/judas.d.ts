@@ -1,5 +1,5 @@
-/** Current JudasJS through M64; reviewed against ScriptSystem.cpp based on M63
- * b5676438ed12d9cb3d05c634eaf5f578d7216ada. Tooling only, no TS runtime.
+/** Current JudasJS through the M67 candidate; reviewed against ScriptSystem.cpp
+ * based on accepted M66 b9a8cf3b8d8cd3786272480a8abe6cbe9fffe859. Tooling only, no TS runtime.
  * See JUDASJS.md. Ordinary returned objects are detached snapshots.
  */
 declare module "judas" {
@@ -24,7 +24,12 @@ declare module "judas" {
     ignored?: Entity[]; includeSensors?: boolean;
   }
   export interface Classification { renderLayer: number; collisionLayer: number; collisionMask: string }
-  export interface CameraInfo { enabled: boolean; width: number; height: number }
+  export interface CameraRange {near:number;far:number}
+  export interface ViewportPoint {x:number;y:number;depth:number;distance:number;behind:boolean;inside:boolean}
+  export interface UIElementLayout {offset:{x:number;y:number};size:{x:number;y:number};anchorMin:{x:number;y:number};anchorMax:{x:number;y:number};relativeSize:{x:number;y:number};align:{x:number;y:number}}
+  export interface PrefabScriptInit {source?:EntityId;slot:string|number;properties?:Record<string,number|boolean|string|{entity:EntityId}|null>;state?:JSONValue}
+  export interface PrefabSpawnOptions {velocity?:Vec3;angularVelocity?:Vec3;scripts?:PrefabScriptInit[]}
+  export interface CameraInfo { near:number;far:number; enabled: boolean; width: number; height: number }
   export interface AudioInfo {
     enabled:boolean;playing:boolean;requested:boolean;ready:boolean;streamed:boolean;loop:boolean;starved:boolean;
     state:"loading"|"seeking"|"ready"|"playing"|"paused"|"ended"|"starved"|"failed";
@@ -136,6 +141,7 @@ declare module "judas" {
     burst(count: number): boolean;
     setParticles(settings: ParticleSettingsPatch): boolean;
     setCameraEnabled(enabled: boolean): boolean;
+    setCameraProjection(range:CameraRange):boolean;
   }
   /** Does not check existence; null for absent/falsy input or string "0". Use .valid. */
   export function entity(id: string | number | bigint | null | undefined): Entity | null;
@@ -143,12 +149,14 @@ declare module "judas" {
     entity: typeof entity;
     readonly appearance:Appearance;
     setAppearance(settings:Partial<Appearance>):boolean;
-    setView(pose: TransformPatch, fov?: number): boolean;
+    setView(pose: TransformPatch, fov?: number, range?: CameraRange): boolean;
+    project(point:Vec3):ViewportPoint|null;
+    readonly viewport:{width:number;height:number};
     clearView(): boolean;
     fluidSample(point: Vec3, up: Vec3, halfHeight: number, radius: number, tangent: Vec3): FluidSample;
     readonly viewRay: Ray | null;
     queryTags(required?: string[], excluded?: string[]): Entity[];
-    spawnPrefab(asset: AssetId, transform: TransformPatch): Entity;
+    spawnPrefab(asset: AssetId, transform?: TransformPatch, options?: PrefabSpawnOptions): Entity;
     /** Conservative broadphase candidates, not exact overlap results. */
     overlap(min: Vec3, max: Vec3, filter?: QueryFilter): Entity[];
     /** Legacy fixed player-sized capsule; prefer physics.capsuleCast for explicit dimensions. */
@@ -370,6 +378,8 @@ declare module "judas" {
     constructor(handle: number, id: string);
     handle: number;
     id: string;
+    readonly layout:UIElementLayout;
+    setLayout(patch:Partial<UIElementLayout>):UIElementLayout;
     text: string;
     /** Assigning text clears an authored textKey. Assigning textKey restores localization binding. */
     textKey: string;
@@ -431,7 +441,7 @@ declare module "judas" {
     reference(entity: Entity): string | null;
     resolve(key: string): Entity | null;
   };
-  export interface ScriptContext<P extends ScriptProperties = ScriptProperties> { entity: Entity; properties: P; readonly restored: boolean }
+  export interface ScriptContext<P extends ScriptProperties = ScriptProperties> { entity: Entity; properties: P; readonly restored: boolean; readonly initialState:JSONValue }
   /** Structural tooling interface, not a runtime-exported base class. */
   export interface ScriptBehaviour {
     state?: JSONValue;

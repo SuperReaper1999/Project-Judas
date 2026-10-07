@@ -1,0 +1,55 @@
+{
+  "batchSelection": 32,
+  "measurements": {
+    "Arc generation plus actual cook": {
+      "cold": 23.299152,
+      "maximum": 20.224841,
+      "median": 19.053287,
+      "p95": 20.211713
+    },
+    "Array regeneration": {
+      "cold": 21.60134,
+      "maximum": 22.614855,
+      "median": 21.32535,
+      "p95": 22.066538
+    },
+    "Batch translation plus undo": {
+      "cold": 41.840252,
+      "maximum": 49.891086,
+      "median": 39.804637,
+      "p95": 49.242492
+    },
+    "Filter cached": {
+      "cold": 9.343112,
+      "maximum": 0.018945,
+      "median": 0.009176,
+      "p95": 0.014036
+    },
+    "Filter changed query": {
+      "cold": 8.487096,
+      "maximum": 10.281878,
+      "median": 7.29894,
+      "p95": 8.417322
+    },
+    "Runtime layout mutation": {
+      "cold": 0.016744,
+      "maximum": 0.004157,
+      "median": 0.00312,
+      "p95": 0.003588
+    },
+    "Selection": {
+      "cold": 0.659746,
+      "maximum": 0.016435,
+      "median": 0.004237,
+      "p95": 0.007544
+    },
+    "Source normalize and reload": {
+      "cold": 118.893965,
+      "maximum": 122.892025,
+      "median": 112.359373,
+      "p95": 122.778543
+    }
+  },
+  "objects": 364,
+  "units": "milliseconds"
+}

@@ -1,0 +1,44 @@
+sequence	operation	asset	generation	thread	context_current	handle	bytes	path
+1	MeshCreated		0	139295019679424	1	0	2016	
+2	MeshCreated		0	139295019679424	1	1	129024	
+3	TextureCreated		0	139295019679424	1	0	4	
+4	FileReadBegin	000000000000000000000000f7200001	0	139294905718464	0	0	0	/home/conner/Documents/GitHub/Project-Judas/build/ftft2-fixtures/missing-recovery/a/Assets/1.obj
+5	FileReadChunk	000000000000000000000000f7200001	0	139294905718464	0	0	1048576	/home/conner/Documents/GitHub/Project-Judas/build/ftft2-fixtures/missing-recovery/a/Assets/1.obj
+6	FileReadChunk	000000000000000000000000f7200001	0	139294905718464	0	0	2097152	/home/conner/Documents/GitHub/Project-Judas/build/ftft2-fixtures/missing-recovery/a/Assets/1.obj
+7	FileReadChunk	000000000000000000000000f7200001	0	139294905718464	0	0	2355232	/home/conner/Documents/GitHub/Project-Judas/build/ftft2-fixtures/missing-recovery/a/Assets/1.obj
+8	FileReadEnd	000000000000000000000000f7200001	0	139294905718464	0	0	2355232	/home/conner/Documents/GitHub/Project-Judas/build/ftft2-fixtures/missing-recovery/a/Assets/1.obj
+9	DecodeBegin	000000000000000000000000f7200001	0	139294905718464	0	0	2355232	/home/conner/Documents/GitHub/Project-Judas/build/ftft2-fixtures/missing-recovery/a/Assets/1.obj
+10	DecodeEnd	000000000000000000000000f7200001	0	139294905718464	0	0	2355232	/home/conner/Documents/GitHub/Project-Judas/build/ftft2-fixtures/missing-recovery/a/Assets/1.obj
+11	LoadComplete	000000000000000000000000f7200001	0	139294905718464	0	0	2355232	/home/conner/Documents/GitHub/Project-Judas/build/ftft2-fixtures/missing-recovery/a/Assets/1.obj
+12	MeshCreated		0	139295019679424	1	2	180	
+13	FileReadBegin	000000000000000000000000f7200008	0	139294914111168	0	0	0	/home/conner/Documents/GitHub/Project-Judas/build/ftft2-fixtures/missing-recovery/a/Assets/8.obj
+14	FileReadBegin	000000000000000000000000f720000b	0	139294922503872	0	0	0	/home/conner/Documents/GitHub/Project-Judas/build/ftft2-fixtures/missing-recovery/a/Assets/11.obj
+15	FileReadEnd	000000000000000000000000f7200008	0	139294914111168	0	0	0	/home/conner/Documents/GitHub/Project-Judas/build/ftft2-fixtures/missing-recovery/a/Assets/8.obj
+16	LoadComplete	000000000000000000000000f7200008	0	139294914111168	0	0	0	/home/conner/Documents/GitHub/Project-Judas/build/ftft2-fixtures/missing-recovery/a/Assets/8.obj
+17	FileReadChunk	000000000000000000000000f720000b	0	139294922503872	0	0	32	/home/conner/Documents/GitHub/Project-Judas/build/ftft2-fixtures/missing-recovery/a/Assets/11.obj
+18	FileReadEnd	000000000000000000000000f720000b	0	139294922503872	0	0	32	/home/conner/Documents/GitHub/Project-Judas/build/ftft2-fixtures/missing-recovery/a/Assets/11.obj
+19	DecodeBegin	000000000000000000000000f720000b	0	139294922503872	0	0	32	/home/conner/Documents/GitHub/Project-Judas/build/ftft2-fixtures/missing-recovery/a/Assets/11.obj
+20	DecodeEnd	000000000000000000000000f720000b	0	139294922503872	0	0	32	/home/conner/Documents/GitHub/Project-Judas/build/ftft2-fixtures/missing-recovery/a/Assets/11.obj
+21	LoadComplete	000000000000000000000000f720000b	0	139294922503872	0	0	32	/home/conner/Documents/GitHub/Project-Judas/build/ftft2-fixtures/missing-recovery/a/Assets/11.obj
+22	MeshCreated		0	139295019679424	1	3	180	
+23	TextureCreated		0	139295019679424	1	1	4194304	
+24	FileReadBegin	000000000000000000000000f7200008	1	139294664885952	0	0	0	/home/conner/Documents/GitHub/Project-Judas/build/ftft2-fixtures/missing-recovery/a/Assets/8.obj
+25	FileReadChunk	000000000000000000000000f7200008	1	139294664885952	0	0	32	/home/conner/Documents/GitHub/Project-Judas/build/ftft2-fixtures/missing-recovery/a/Assets/8.obj
+26	FileReadEnd	000000000000000000000000f7200008	1	139294664885952	0	0	32	/home/conner/Documents/GitHub/Project-Judas/build/ftft2-fixtures/missing-recovery/a/Assets/8.obj
+27	DecodeBegin	000000000000000000000000f7200008	1	139294664885952	0	0	32	/home/conner/Documents/GitHub/Project-Judas/build/ftft2-fixtures/missing-recovery/a/Assets/8.obj
+28	DecodeEnd	000000000000000000000000f7200008	1	139294664885952	0	0	32	/home/conner/Documents/GitHub/Project-Judas/build/ftft2-fixtures/missing-recovery/a/Assets/8.obj
+29	LoadComplete	000000000000000000000000f7200008	1	139294664885952	0	0	32	/home/conner/Documents/GitHub/Project-Judas/build/ftft2-fixtures/missing-recovery/a/Assets/8.obj
+30	MeshCreated		0	139295019679424	1	4	180	
+31	ManagerShutdownBegin		0	139295019679424	0	0	0	
+32	MeshDestroyed		0	139295019679424	1	2	180	
+33	MeshDestroyed		0	139295019679424	1	4	180	
+34	MeshDestroyed		0	139295019679424	1	3	180	
+35	ManagerShutdownEnd		0	139295019679424	0	0	0	
+36	WorkersJoined		0	139295019679424	1	0	0	
+37	TextureDestroyed		0	139295019679424	1	1	4194304	
+38	RendererShutdownBegin		0	139295019679424	1	0	0	
+39	MeshDestroyed		0	139295019679424	1	0	2016	
+40	MeshDestroyed		0	139295019679424	1	1	129024	
+41	TextureDestroyed		0	139295019679424	1	0	4	
+42	RendererShutdownEnd		0	139295019679424	1	0	0	
+43	ContextDestroyed		0	139295019679424	0	0	0	

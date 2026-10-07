@@ -1,0 +1,37 @@
+Renderer fragment texture units: 32 (material path uses 12)
+PASS cgltf GLB skin import
+PASS cgltf embedded glTF import
+PASS bone hierarchy includes mesh and ancestors
+PASS vertex influences and two named clips
+PASS inverse bind transforms resolve rest skin to identity
+PASS known Wave sample uses independent trigonometric reference
+PASS joint hierarchy deforms known vertex to analytic point
+PASS linear quaternion interpolation stays normalized
+PASS STEP interpolation
+PASS CUBICSPLINE Hermite translation
+PASS shared immutable asset independent playback
+PASS loop and speed wrap
+PASS non-loop terminates at end
+PASS stop resets playback to rest
+PASS invalid glTF fails transactionally
+PASS unregistered external buffers rejected clearly
+PASS ordinary authored animation scene loads
+PASS animation configuration serialization round-trip
+PASS authored playback contributes to strict content fingerprint
+PASS real GL EngineHost initializes
+PASS normal resource pipeline remains asynchronous
+PASS normal async decode and GPU handoff retain immutable skeleton
+PASS decode occurs on worker and GPU creation on context owner
+PASS actual GPU palette changes rendered skin pixels
+PASS arbitrary authored world rotation reaches normal skinned renderer
+PASS ordinary RuntimeWorld builds animation components
+PASS runtime instances share asset but own final poses and players
+PASS external pose producer can resolve final pose independently of clip player
+PASS runtime prefab creates ordinary animated instance
+PASS destroyed animated prefab handle rejects access
+PASS world teardown releases pose state
+PASS world reconstruction after Stop
+PASS fresh Play has authored playback state
+PERFORMANCE pose_sample_resolve_us=0.447853 eight_instances_gl_frame_ms=0.280905 frames=20
+PASS normal shutdown balances skinned and static GPU mesh resources
+SUMMARY 34 checks 0 failures

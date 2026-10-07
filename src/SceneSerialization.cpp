@@ -1,6 +1,9 @@
 #include <set>
 #include <charconv>
 #include "SceneSerialization.h"
+#include "NamedAuthoring.h"
+#include "AuthoringNumeric.h"
+#include "../third_party/nlohmann/json.hpp"
 #include "Prefab.h"
 #include "AssetDatabase.h"
 
@@ -26,6 +29,7 @@ const char* B(bool value) { return value ? "true" : "false"; }
 // bit-exactly (9 significant digits always suffice for a float, 17 for a
 // double).
 std::string F(float v) {
+    AuthoringNumericLocale numericLocale;
     char buffer[64];
     for (int precision = 1; precision <= 9; ++precision) {
         std::snprintf(buffer, sizeof(buffer), "%.*g", precision, static_cast<double>(v));
@@ -35,6 +39,7 @@ std::string F(float v) {
     return buffer;
 }
 std::string D(double v) {
+    AuthoringNumericLocale numericLocale;
     char buffer[64];
     for (int precision = 1; precision <= 17; ++precision) {
         std::snprintf(buffer, sizeof(buffer), "%.*g", precision, v);
@@ -81,6 +86,7 @@ private:
 
 void WriteObject(Writer& w, const SceneObject& o) {
     w.Raw("object " + std::to_string(o.id) + " " + Quote(o.name) + "\n");
+    if (!o.authoringFolder.empty()) w.Line("authoring-folder",Quote(o.authoringFolder));
     if (o.parent) w.Line("parent", std::to_string(o.parent));
     if (o.prefabRoot) {
         w.Line("prefab.asset", Quote(o.prefabAsset));
@@ -406,6 +412,7 @@ private:
 };
 
 bool ParseFloat(const Token& t, float& out) {
+    AuthoringNumericLocale numericLocale;
     if (t.quoted || t.text.empty()) return false;
     char* end = nullptr;
     const double value = std::strtod(t.text.c_str(), &end);
@@ -414,6 +421,7 @@ bool ParseFloat(const Token& t, float& out) {
     return std::isfinite(out);
 }
 bool ParseDouble(const Token& t, double& out) {
+    AuthoringNumericLocale numericLocale;
     if (t.quoted || t.text.empty()) return false;
     char* end = nullptr;
     out = std::strtod(t.text.c_str(), &end);
@@ -632,6 +640,7 @@ bool ParseSettings(Reader& reader, const Block& block, Scene& scene) {
     } else {
         return reader.Fail("fidelity-policy must be 'none' or 'distance <fullRadius> <coarseRadius>'");
     }
+    if(p.Has("authoring-recipes")){std::string text;if(!p.String("authoring-recipes",text))return false;if(text.size()>4*1024*1024)return reader.Fail("authoring recipes exceed 4 MiB");try{auto recipes=nlohmann::ordered_json::parse(text);if(!recipes.is_object()||recipes.size()>128)return reader.Fail("invalid authoring recipe map");for(auto it=recipes.begin();it!=recipes.end();++it)s.authoringRecipes[it.key()]=it.value().dump();}catch(const std::exception&){return reader.Fail("invalid authoring recipe JSON");}}
     if(p.Has("main-camera.render-mask")&&!p.Mask("main-camera.render-mask",s.mainCameraRenderMask))return false;
     SceneObjectId nextId = 0;
     if (!p.Id("next-id", nextId)) return false;
@@ -651,6 +660,7 @@ bool ParseObject(Reader& reader, const std::vector<Token>& header, const Block& 
     o.name = header[2].text;
 
     ObjectParser p(reader, block);
+    if(p.Has("authoring-folder")&&!p.String("authoring-folder",o.authoringFolder))return false;
     if(p.Has("tags")&&!p.Mask("tags",o.tags))return false;
     if(p.Has("render-layer")&&!p.Layer("render-layer",o.renderLayer))return false;
     if (p.Has("parent") && !p.Id("parent", o.parent)) return false;
@@ -1104,6 +1114,7 @@ bool SaveSceneToString(const Scene& scene, std::string& outText) {
     w.Raw("JudasScene " + std::to_string(kSceneFormatVersion) + "\n");
     w.Raw("settings\n");
     const SceneSettings& s = scene.Settings();
+    if(!s.authoringRecipes.empty()){nlohmann::ordered_json recipes=nlohmann::ordered_json::object();for(auto& [id,value]:s.authoringRecipes)recipes[id]=nlohmann::ordered_json::parse(value);w.Line("authoring-recipes",Quote(recipes.dump()));}
     w.Line("name", Quote(s.name));
     w.Line("world-origin", DV(s.worldOrigin));
     w.Line("sun-direction", V(s.sunDirection));
@@ -1131,21 +1142,12 @@ bool SaveSceneToString(const Scene& scene, std::string& outText) {
 bool SaveSceneToFile(const Scene& scene, const std::string& path, std::string& outError) {
     std::string text;
     SaveSceneToString(scene, text);
-    std::ofstream file(path, std::ios::binary | std::ios::trunc);
-    if (!file) {
-        outError = "could not open scene file for writing: " + path;
-        return false;
-    }
-    file << text;
-    if (!file) {
-        outError = "failed writing scene file: " + path;
-        return false;
-    }
-    return true;
+    return WriteAuthoredDocument(path,text,std::filesystem::path(path).extension()==".judasprefab"?"prefab":"scene",outError);
 }
 
 bool LoadSceneFromString(const std::string& text, Scene& outScene, std::string& outError) {
     outError.clear();
+    if(IsNamedDocument(text)){std::string legacy;if(!NamedToLegacy(text,"scene",legacy,outError))return false;return LoadSceneFromString(legacy,outScene,outError);}
     Reader reader(text, outError);
     Scene scene;
     std::vector<Token> tokens;

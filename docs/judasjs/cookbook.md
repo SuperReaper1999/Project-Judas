@@ -84,3 +84,10 @@ Fixture is the original rig in [current integration project](../../projects/m65_
 
 - [Imported parts and extracted clip interval](examples/imported-model.js)
   ([model workflow](../MODEL_IMPORT.md)): attach to the original import-lab model.
+
+## Authoring-to-runtime seams (M67 candidate)
+
+[authoring-runtime.js](examples/authoring-runtime.js) is an executed public-API
+example for configured projection/behind points, layout snapshots/atomic mutation,
+independent prefab initial properties/state/world velocity and stale handles. It
+uses registered assets from [World Workshop](../../projects/world_workshop/README.md).

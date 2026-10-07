@@ -316,6 +316,7 @@ struct SceneObject {
     unsigned renderLayer = 0;
     SceneObjectId id = kInvalidSceneObjectId;
     std::string name;
+    std::string authoringFolder; // organization only, never a transform parent
     // Authored parent-local transform. No implied rigid constraint.
     SceneObjectId parent = 0;
     // Provenance is authored bookkeeping only; components remain ordinary.
@@ -347,6 +348,8 @@ enum class SceneFidelityPolicy { None, Distance };
 
 // Scene-wide authored settings.
 struct SceneSettings {
+    std::map<std::string,std::string> authoringRecipes; // scene-owned recipes, excluded from runtime fingerprint
+
     bool linearRendering=false,environmentBackground=false;
     glm::vec3 backgroundColor{.08f,.09f,.11f};
     float exposure=1,environmentIntensity=1;

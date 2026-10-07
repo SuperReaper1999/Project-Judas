@@ -210,6 +210,7 @@ float InteractivePlay::Frame(Window& window, Renderer& renderer, float frameDelt
         view = player.GetViewMatrix(presentationAlpha, m_session.ViewMode());
     }
     if(world.view){const auto& v=*world.view;view=glm::lookAt(v.pose.position,v.pose.position+v.pose.rotation*glm::vec3(0,0,-1),v.pose.rotation*glm::vec3(0,1,0));}
+    world.viewportWidth=window.Width();world.viewportHeight=height;
     if(world.Scripts())world.Scripts()->SetView(view);
     world.UpdateAudio(view,presentationAlpha,frameDeltaTime);
     // Audio publication is a runtime service, independent of drawing/capture.

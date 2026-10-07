@@ -1,0 +1,8 @@
+FRAMES 300
+LOG_EVERY 0
+ACTION pause 1 170 171
+EXPECT_PAUSED 1 180
+SCREENSHOT 190 /home/conner/Documents/GitHub/Project-Judas/.cache/m67/offline-followup-final/paused.png
+ACTION pause 1 210 211
+EXPECT_PAUSED 0 220
+SCREENSHOT 250 /home/conner/Documents/GitHub/Project-Judas/.cache/m67/offline-followup-final/edited-runtime.png

@@ -1,0 +1,36 @@
+Renderer fragment texture units: 32 (material path uses 12)
+PASS frustum accepts visible bounds
+PASS frustum rejects outside bounds
+PASS rotated scaled corner bounds conservative
+PASS independent camera accepts other bounds
+PASS orthographic projection uses same extraction
+PASS startup burst fills reusable pool
+PASS actual arbitrary Judas gravity acceleration
+PASS seed and updates repeat deterministically
+PASS emitter bounds contain active billboard extents
+PASS expiry returns particles to pool
+PASS nonzero random variation repeats with emitter seed
+PASS local particles follow transformed emitter
+PASS all authored particle properties roundtrip
+PASS particle changes invalidate authored baseline
+PASS ordinary component works in prefab source
+PASS ordinary runtime builds emitter
+PASS runtime update owns particle state
+PASS ordinary runtime entity supports burst API
+PASS destroying emitter releases its pool
+PASS Play particle state discarded without authored mutation
+PASS actual engine GL context
+PASS culled ordinary mesh has no draw submission
+PASS visible ordinary mesh still renders actual pixels
+PASS offscreen emitter no particle submission
+PASS offscreen particles age coherently
+PASS same emitter visible from different camera
+PASS target end restores camera frustum
+PERFORMANCE culling=0 facing=1 median_cpu_ms=2.180315 draws=300 culled=0
+PERFORMANCE culling=0 facing=0 median_cpu_ms=2.182495 draws=300 culled=0
+PERFORMANCE culling=1 facing=1 median_cpu_ms=2.110837 draws=300 culled=0
+PERFORMANCE culling=1 facing=0 median_cpu_ms=0.023909 draws=0 culled=300
+PERFORMANCE emitters=8 visible=1 cpu_ms=0.061919 draws=8 particles=32
+PERFORMANCE emitters=8 visible=0 cpu_ms=0.000279 draws=0 particles=0
+PASS world shutdown releases visual state
+SUMMARY 28 checks 0 failures

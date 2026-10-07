@@ -1,0 +1,211 @@
+FTFT7 COARSE CHECK full_coarse serialized_scene PASS
+FTFT7 COARSE CHECK full_coarse demote_A PASS
+FTFT7 COARSE BUDGET full_coarse step=1 px=-7399999588219.875 py=0 pz=0 residual=357627.8671875 normalized=4.0821269835197702e-08
+FTFT7 COARSE CHECK full_coarse coarse_initial_Newton_dv PASS
+FTFT7 COARSE CHECK full_coarse other_initial_Newton_dv PASS
+FTFT7 COARSE CHECK full_coarse collision_free_step_0 PASS
+FTFT7 COARSE BUDGET full_coarse step=2 px=-7399999528615.2305 py=0 pz=0 residual=417232.51171875 normalized=4.7624814807730656e-08
+FTFT7 COARSE CHECK full_coarse collision_free_step_1 PASS
+FTFT7 COARSE BUDGET full_coarse step=3 px=-7399999349801.2969 py=0 pz=0 residual=596046.4453125 normalized=6.8035449725329507e-08
+FTFT7 COARSE CHECK full_coarse collision_free_step_2 PASS
+FTFT7 COARSE BUDGET full_coarse step=4 px=-7399999588219.875 py=0 pz=0 residual=357627.8671875 normalized=4.0821269835197702e-08
+FTFT7 COARSE CHECK full_coarse collision_free_step_3 PASS
+FTFT7 COARSE BUDGET full_coarse step=5 px=-7399999469010.5859 py=0 pz=0 residual=476837.15625 normalized=5.4428359780263605e-08
+FTFT7 COARSE CHECK full_coarse collision_free_step_4 PASS
+FTFT7 COARSE BUDGET full_coarse step=6 px=-7399999647824.5195 py=0 pz=0 residual=298023.22265625 normalized=3.4017724862664754e-08
+FTFT7 COARSE CHECK full_coarse collision_free_step_5 PASS
+FTFT7 COARSE BUDGET full_coarse step=7 px=-7400000065057.0312 py=0 pz=0 residual=119209.2890625 normalized=1.3607089945065901e-08
+FTFT7 COARSE CHECK full_coarse collision_free_step_6 PASS
+FTFT7 COARSE BUDGET full_coarse step=8 px=-7399999588219.875 py=0 pz=0 residual=357627.8671875 normalized=4.0821269835197702e-08
+FTFT7 COARSE CHECK full_coarse collision_free_step_7 PASS
+FTFT7 COARSE BUDGET full_coarse step=9 px=-7399999826638.4531 py=0 pz=0 residual=119209.2890625 normalized=1.3607089945065901e-08
+FTFT7 COARSE CHECK full_coarse collision_free_step_8 PASS
+FTFT7 COARSE BUDGET full_coarse step=10 px=-7399999767033.8086 py=0 pz=0 residual=178813.93359375 normalized=2.0410634917598851e-08
+FTFT7 COARSE CHECK full_coarse collision_free_step_9 PASS
+FTFT7 COARSE BUDGET full_coarse step=11 px=-7399999349801.2969 py=0 pz=0 residual=596046.4453125 normalized=6.8035449725329507e-08
+FTFT7 COARSE CHECK full_coarse collision_free_step_10 PASS
+FTFT7 COARSE BUDGET full_coarse step=12 px=-7399999111382.7188 py=0 pz=0 residual=834465.0234375 normalized=9.5249629615461313e-08
+FTFT7 COARSE CHECK full_coarse collision_free_step_11 PASS
+FTFT7 COARSE CHECK full_coarse closed_system_momentum_budget PASS
+FTFT7 COARSE CHECK coarse_local_vehicle serialized_scene PASS
+FTFT7 COARSE CHECK coarse_local_vehicle demote_A PASS
+FTFT7 COARSE BUDGET coarse_local_vehicle step=1 px=-7399999588219.875 py=0 pz=0 residual=357627.8671875 normalized=4.0821269835197702e-08
+FTFT7 COARSE CHECK coarse_local_vehicle coarse_initial_Newton_dv PASS
+FTFT7 COARSE CHECK coarse_local_vehicle other_initial_Newton_dv PASS
+FTFT7 COARSE CHECK coarse_local_vehicle collision_free_step_0 PASS
+FTFT7 COARSE BUDGET coarse_local_vehicle step=2 px=-7399999528615.2305 py=0 pz=0 residual=417232.51171875 normalized=4.7624814807730656e-08
+FTFT7 COARSE CHECK coarse_local_vehicle collision_free_step_1 PASS
+FTFT7 COARSE BUDGET coarse_local_vehicle step=3 px=-7399999349801.2969 py=0 pz=0 residual=596046.4453125 normalized=6.8035449725329507e-08
+FTFT7 COARSE CHECK coarse_local_vehicle collision_free_step_2 PASS
+FTFT7 COARSE BUDGET coarse_local_vehicle step=4 px=-7399999588219.875 py=0 pz=0 residual=357627.8671875 normalized=4.0821269835197702e-08
+FTFT7 COARSE CHECK coarse_local_vehicle collision_free_step_3 PASS
+FTFT7 COARSE BUDGET coarse_local_vehicle step=5 px=-7399999469010.5859 py=0 pz=0 residual=476837.15625 normalized=5.4428359780263605e-08
+FTFT7 COARSE CHECK coarse_local_vehicle collision_free_step_4 PASS
+FTFT7 COARSE BUDGET coarse_local_vehicle step=6 px=-7399999647824.5195 py=0 pz=0 residual=298023.22265625 normalized=3.4017724862664754e-08
+FTFT7 COARSE CHECK coarse_local_vehicle collision_free_step_5 PASS
+FTFT7 COARSE BUDGET coarse_local_vehicle step=7 px=-7400000065057.0312 py=0 pz=0 residual=119209.2890625 normalized=1.3607089945065901e-08
+FTFT7 COARSE CHECK coarse_local_vehicle collision_free_step_6 PASS
+FTFT7 COARSE BUDGET coarse_local_vehicle step=8 px=-7399999588219.875 py=0 pz=0 residual=357627.8671875 normalized=4.0821269835197702e-08
+FTFT7 COARSE CHECK coarse_local_vehicle collision_free_step_7 PASS
+FTFT7 COARSE BUDGET coarse_local_vehicle step=9 px=-7399999826638.4531 py=0 pz=0 residual=119209.2890625 normalized=1.3607089945065901e-08
+FTFT7 COARSE CHECK coarse_local_vehicle collision_free_step_8 PASS
+FTFT7 COARSE BUDGET coarse_local_vehicle step=10 px=-7399999767033.8086 py=0 pz=0 residual=178813.93359375 normalized=2.0410634917598851e-08
+FTFT7 COARSE CHECK coarse_local_vehicle collision_free_step_9 PASS
+FTFT7 COARSE BUDGET coarse_local_vehicle step=11 px=-7399999349801.2969 py=0 pz=0 residual=596046.4453125 normalized=6.8035449725329507e-08
+FTFT7 COARSE CHECK coarse_local_vehicle collision_free_step_10 PASS
+FTFT7 COARSE BUDGET coarse_local_vehicle step=12 px=-7399999111382.7188 py=0 pz=0 residual=834465.0234375 normalized=9.5249629615461313e-08
+FTFT7 COARSE CHECK coarse_local_vehicle collision_free_step_11 PASS
+FTFT7 COARSE CHECK coarse_local_vehicle closed_system_momentum_budget PASS
+FTFT7 COARSE CHECK coarse_coarse serialized_scene PASS
+FTFT7 COARSE CHECK coarse_coarse demote_A PASS
+FTFT7 COARSE CHECK coarse_coarse demote_B PASS
+FTFT7 COARSE BUDGET coarse_coarse step=1 px=-7399999588219.875 py=0 pz=0 residual=357627.8671875 normalized=4.0821269835197702e-08
+FTFT7 COARSE CHECK coarse_coarse coarse_initial_Newton_dv PASS
+FTFT7 COARSE CHECK coarse_coarse other_initial_Newton_dv PASS
+FTFT7 COARSE CHECK coarse_coarse collision_free_step_0 PASS
+FTFT7 COARSE BUDGET coarse_coarse step=2 px=-7399999528615.2305 py=0 pz=0 residual=417232.51171875 normalized=4.7624814807730656e-08
+FTFT7 COARSE CHECK coarse_coarse collision_free_step_1 PASS
+FTFT7 COARSE BUDGET coarse_coarse step=3 px=-7399999349801.2969 py=0 pz=0 residual=596046.4453125 normalized=6.8035449725329507e-08
+FTFT7 COARSE CHECK coarse_coarse collision_free_step_2 PASS
+FTFT7 COARSE BUDGET coarse_coarse step=4 px=-7399999588219.875 py=0 pz=0 residual=357627.8671875 normalized=4.0821269835197702e-08
+FTFT7 COARSE CHECK coarse_coarse collision_free_step_3 PASS
+FTFT7 COARSE BUDGET coarse_coarse step=5 px=-7399999469010.5859 py=0 pz=0 residual=476837.15625 normalized=5.4428359780263605e-08
+FTFT7 COARSE CHECK coarse_coarse collision_free_step_4 PASS
+FTFT7 COARSE BUDGET coarse_coarse step=6 px=-7399999647824.5195 py=0 pz=0 residual=298023.22265625 normalized=3.4017724862664754e-08
+FTFT7 COARSE CHECK coarse_coarse collision_free_step_5 PASS
+FTFT7 COARSE BUDGET coarse_coarse step=7 px=-7400000065057.0312 py=0 pz=0 residual=119209.2890625 normalized=1.3607089945065901e-08
+FTFT7 COARSE CHECK coarse_coarse collision_free_step_6 PASS
+FTFT7 COARSE BUDGET coarse_coarse step=8 px=-7399999588219.875 py=0 pz=0 residual=357627.8671875 normalized=4.0821269835197702e-08
+FTFT7 COARSE CHECK coarse_coarse collision_free_step_7 PASS
+FTFT7 COARSE BUDGET coarse_coarse step=9 px=-7399999826638.4531 py=0 pz=0 residual=119209.2890625 normalized=1.3607089945065901e-08
+FTFT7 COARSE CHECK coarse_coarse collision_free_step_8 PASS
+FTFT7 COARSE BUDGET coarse_coarse step=10 px=-7399999767033.8086 py=0 pz=0 residual=178813.93359375 normalized=2.0410634917598851e-08
+FTFT7 COARSE CHECK coarse_coarse collision_free_step_9 PASS
+FTFT7 COARSE BUDGET coarse_coarse step=11 px=-7399999349801.2969 py=0 pz=0 residual=596046.4453125 normalized=6.8035449725329507e-08
+FTFT7 COARSE CHECK coarse_coarse collision_free_step_10 PASS
+FTFT7 COARSE BUDGET coarse_coarse step=12 px=-7399999111382.7188 py=0 pz=0 residual=834465.0234375 normalized=9.5249629615461313e-08
+FTFT7 COARSE CHECK coarse_coarse collision_free_step_11 PASS
+FTFT7 COARSE CHECK coarse_coarse closed_system_momentum_budget PASS
+FTFT7 COARSE CHECK coarse_at_rest serialized_scene PASS
+FTFT7 COARSE CHECK coarse_at_rest demote_A PASS
+FTFT7 COARSE BUDGET coarse_at_rest step=1 px=0 py=0 pz=0 residual=0 normalized=0
+FTFT7 COARSE CHECK coarse_at_rest coarse_initial_Newton_dv PASS
+FTFT7 COARSE CHECK coarse_at_rest other_initial_Newton_dv PASS
+FTFT7 COARSE CHECK coarse_at_rest collision_free_step_0 PASS
+FTFT7 COARSE BUDGET coarse_at_rest step=2 px=0 py=0 pz=0 residual=0 normalized=0
+FTFT7 COARSE CHECK coarse_at_rest collision_free_step_1 PASS
+FTFT7 COARSE BUDGET coarse_at_rest step=3 px=0 py=0 pz=0 residual=0 normalized=0
+FTFT7 COARSE CHECK coarse_at_rest collision_free_step_2 PASS
+FTFT7 COARSE BUDGET coarse_at_rest step=4 px=0 py=0 pz=0 residual=0 normalized=0
+FTFT7 COARSE CHECK coarse_at_rest collision_free_step_3 PASS
+FTFT7 COARSE BUDGET coarse_at_rest step=5 px=0 py=0 pz=0 residual=0 normalized=0
+FTFT7 COARSE CHECK coarse_at_rest collision_free_step_4 PASS
+FTFT7 COARSE BUDGET coarse_at_rest step=6 px=0 py=0 pz=0 residual=0 normalized=0
+FTFT7 COARSE CHECK coarse_at_rest collision_free_step_5 PASS
+FTFT7 COARSE BUDGET coarse_at_rest step=7 px=0 py=0 pz=0 residual=0 normalized=0
+FTFT7 COARSE CHECK coarse_at_rest collision_free_step_6 PASS
+FTFT7 COARSE BUDGET coarse_at_rest step=8 px=0 py=0 pz=0 residual=0 normalized=0
+FTFT7 COARSE CHECK coarse_at_rest collision_free_step_7 PASS
+FTFT7 COARSE BUDGET coarse_at_rest step=9 px=0 py=0 pz=0 residual=0 normalized=0
+FTFT7 COARSE CHECK coarse_at_rest collision_free_step_8 PASS
+FTFT7 COARSE BUDGET coarse_at_rest step=10 px=0 py=0 pz=0 residual=0 normalized=0
+FTFT7 COARSE CHECK coarse_at_rest collision_free_step_9 PASS
+FTFT7 COARSE BUDGET coarse_at_rest step=11 px=0 py=0 pz=0 residual=0 normalized=0
+FTFT7 COARSE CHECK coarse_at_rest collision_free_step_10 PASS
+FTFT7 COARSE BUDGET coarse_at_rest step=12 px=0 py=0 pz=0 residual=0 normalized=0
+FTFT7 COARSE CHECK coarse_at_rest collision_free_step_11 PASS
+FTFT7 COARSE CHECK coarse_at_rest closed_system_momentum_budget PASS
+FTFT7 COARSE CHECK both_coarse_at_rest serialized_scene PASS
+FTFT7 COARSE CHECK both_coarse_at_rest demote_A PASS
+FTFT7 COARSE CHECK both_coarse_at_rest demote_B PASS
+FTFT7 COARSE BUDGET both_coarse_at_rest step=1 px=0 py=0 pz=0 residual=0 normalized=0
+FTFT7 COARSE CHECK both_coarse_at_rest coarse_initial_Newton_dv PASS
+FTFT7 COARSE CHECK both_coarse_at_rest other_initial_Newton_dv PASS
+FTFT7 COARSE CHECK both_coarse_at_rest collision_free_step_0 PASS
+FTFT7 COARSE BUDGET both_coarse_at_rest step=2 px=0 py=0 pz=0 residual=0 normalized=0
+FTFT7 COARSE CHECK both_coarse_at_rest collision_free_step_1 PASS
+FTFT7 COARSE BUDGET both_coarse_at_rest step=3 px=0 py=0 pz=0 residual=0 normalized=0
+FTFT7 COARSE CHECK both_coarse_at_rest collision_free_step_2 PASS
+FTFT7 COARSE BUDGET both_coarse_at_rest step=4 px=0 py=0 pz=0 residual=0 normalized=0
+FTFT7 COARSE CHECK both_coarse_at_rest collision_free_step_3 PASS
+FTFT7 COARSE BUDGET both_coarse_at_rest step=5 px=0 py=0 pz=0 residual=0 normalized=0
+FTFT7 COARSE CHECK both_coarse_at_rest collision_free_step_4 PASS
+FTFT7 COARSE BUDGET both_coarse_at_rest step=6 px=0 py=0 pz=0 residual=0 normalized=0
+FTFT7 COARSE CHECK both_coarse_at_rest collision_free_step_5 PASS
+FTFT7 COARSE BUDGET both_coarse_at_rest step=7 px=0 py=0 pz=0 residual=0 normalized=0
+FTFT7 COARSE CHECK both_coarse_at_rest collision_free_step_6 PASS
+FTFT7 COARSE BUDGET both_coarse_at_rest step=8 px=0 py=0 pz=0 residual=0 normalized=0
+FTFT7 COARSE CHECK both_coarse_at_rest collision_free_step_7 PASS
+FTFT7 COARSE BUDGET both_coarse_at_rest step=9 px=0 py=0 pz=0 residual=0 normalized=0
+FTFT7 COARSE CHECK both_coarse_at_rest collision_free_step_8 PASS
+FTFT7 COARSE BUDGET both_coarse_at_rest step=10 px=0 py=0 pz=0 residual=0 normalized=0
+FTFT7 COARSE CHECK both_coarse_at_rest collision_free_step_9 PASS
+FTFT7 COARSE BUDGET both_coarse_at_rest step=11 px=0 py=0 pz=0 residual=0 normalized=0
+FTFT7 COARSE CHECK both_coarse_at_rest collision_free_step_10 PASS
+FTFT7 COARSE BUDGET both_coarse_at_rest step=12 px=0 py=0 pz=0 residual=0 normalized=0
+FTFT7 COARSE CHECK both_coarse_at_rest collision_free_step_11 PASS
+FTFT7 COARSE CHECK both_coarse_at_rest closed_system_momentum_budget PASS
+FTFT7 COARSE CHECK rotated_translated serialized_scene PASS
+FTFT7 COARSE CHECK rotated_translated demote_A PASS
+FTFT7 COARSE BUDGET rotated_translated step=1 px=-6053064500334.0586 py=-3687283023989.9062 pz=-2127051329841.0264 residual=200474.61974572638 normalized=2.2883084749360107e-08
+FTFT7 COARSE CHECK rotated_translated coarse_initial_Newton_dv PASS
+FTFT7 COARSE CHECK rotated_translated other_initial_Newton_dv PASS
+FTFT7 COARSE CHECK rotated_translated collision_free_step_0 PASS
+FTFT7 COARSE BUDGET rotated_translated step=2 px=-6053064619543.3477 py=-3687283120847.4536 pz=-2127051344742.1875 residual=67055.22509765625 normalized=7.6539883240247278e-09
+FTFT7 COARSE CHECK rotated_translated collision_free_step_1 PASS
+FTFT7 COARSE BUDGET rotated_translated step=3 px=-6053064500334.0586 py=-3687283009088.7451 pz=-2127051434149.1543 residual=238883.78554906728 normalized=2.726728159854161e-08
+FTFT7 COARSE CHECK rotated_translated collision_free_step_2 PASS
+FTFT7 COARSE BUDGET rotated_translated step=4 px=-6053064500334.0586 py=-3687282971835.8423 pz=-2127051314939.8652 residual=228065.66659098497 normalized=2.6032452305634402e-08
+FTFT7 COARSE CHECK rotated_translated collision_free_step_3 PASS
+FTFT7 COARSE BUDGET rotated_translated step=5 px=-6053064679147.9922 py=-3687282958797.3262 pz=-2127051344742.1875 residual=157445.85833352205 normalized=1.7971586249927448e-08
+FTFT7 COARSE CHECK rotated_translated collision_free_step_4 PASS
+FTFT7 COARSE BUDGET rotated_translated step=6 px=-6053064679147.9922 py=-3687282917819.1333 pz=-2127051404346.832 residual=215044.78137357411 normalized=2.4546189254882042e-08
+FTFT7 COARSE CHECK rotated_translated collision_free_step_5 PASS
+FTFT7 COARSE BUDGET rotated_translated step=7 px=-6053064619543.3477 py=-3687282913162.5205 pz=-2127051434149.1543 residual=240535.5777950965 normalized=2.7455824676973006e-08
+FTFT7 COARSE CHECK rotated_translated collision_free_step_6 PASS
+FTFT7 COARSE BUDGET rotated_translated step=8 px=-6053064679147.9922 py=-3687282937376.9072 pz=-2127051523556.1211 residual=272953.78835284221 normalized=3.1156186650755023e-08
+FTFT7 COARSE CHECK rotated_translated collision_free_step_7 PASS
+FTFT7 COARSE BUDGET rotated_translated step=9 px=-6053064619543.3477 py=-3687283005363.4551 pz=-2127051612963.0879 residual=322555.07171663578 normalized=3.6817902694064343e-08
+FTFT7 COARSE CHECK rotated_translated collision_free_step_8 PASS
+FTFT7 COARSE BUDGET rotated_translated step=10 px=-6053064857961.9258 py=-3687282953209.3906 pz=-2127051672567.7324 residual=430734.42370097223 normalized=4.9165985871517027e-08
+FTFT7 COARSE CHECK rotated_translated collision_free_step_9 PASS
+FTFT7 COARSE BUDGET rotated_translated step=11 px=-6053064798357.2812 py=-3687282934582.9395 pz=-2127051583160.7656 residual=343697.14699487149 normalized=3.9231155309197594e-08
+FTFT7 COARSE CHECK rotated_translated collision_free_step_10 PASS
+FTFT7 COARSE BUDGET rotated_translated step=12 px=-6053064619543.3477 py=-3687282934582.9395 pz=-2127051493753.7988 residual=259810.62207738301 normalized=2.965596588396803e-08
+FTFT7 COARSE CHECK rotated_translated collision_free_step_11 PASS
+FTFT7 COARSE CHECK rotated_translated closed_system_momentum_budget PASS
+FTFT7 COARSE CHECK reversed_creation_boost serialized_scene PASS
+FTFT7 COARSE CHECK reversed_creation_boost demote_A PASS
+FTFT7 COARSE BUDGET reversed_creation_boost step=1 px=2946934926360.1406 py=-9687282999413.9062 pz=872948642969.8125 residual=238418.578125 normalized=1.5847884367965654e-08
+FTFT7 COARSE CHECK reversed_creation_boost coarse_initial_Newton_dv PASS
+FTFT7 COARSE CHECK reversed_creation_boost other_initial_Newton_dv PASS
+FTFT7 COARSE CHECK reversed_creation_boost collision_free_step_0 PASS
+FTFT7 COARSE BUDGET reversed_creation_boost step=2 px=2946934926360.1406 py=-9687282999413.9062 pz=872948642969.8125 residual=238418.578125 normalized=1.5847884367965654e-08
+FTFT7 COARSE CHECK reversed_creation_boost collision_free_step_1 PASS
+FTFT7 COARSE BUDGET reversed_creation_boost step=3 px=2946934687941.5625 py=-9687282999413.9062 pz=872948762179.10156 residual=491512.4903594756 normalized=3.2671250595848684e-08
+FTFT7 COARSE CHECK reversed_creation_boost collision_free_step_2 PASS
+FTFT7 COARSE BUDGET reversed_creation_boost step=4 px=2946934687941.5625 py=-9687282999413.9062 pz=872948642969.8125 residual=476837.15625 normalized=3.1695768735931308e-08
+FTFT7 COARSE CHECK reversed_creation_boost collision_free_step_3 PASS
+FTFT7 COARSE BUDGET reversed_creation_boost step=5 px=2946934926360.1406 py=-9687282999413.9062 pz=872948642969.8125 residual=238418.578125 normalized=1.5847884367965654e-08
+FTFT7 COARSE CHECK reversed_creation_boost collision_free_step_4 PASS
+FTFT7 COARSE BUDGET reversed_creation_boost step=6 px=2946934926360.1406 py=-9687282999413.9062 pz=872948762179.10156 residual=266560.0738931722 normalized=1.7718473373163749e-08
+FTFT7 COARSE CHECK reversed_creation_boost collision_free_step_5 PASS
+FTFT7 COARSE BUDGET reversed_creation_boost step=7 px=2946934926360.1406 py=-9687282999413.9062 pz=872948762179.10156 residual=266560.0738931722 normalized=1.7718473373163749e-08
+FTFT7 COARSE CHECK reversed_creation_boost collision_free_step_6 PASS
+FTFT7 COARSE BUDGET reversed_creation_boost step=8 px=2946934926360.1406 py=-9687282760995.3281 pz=872948881388.39062 residual=412953.09078082972 normalized=2.7449340917793099e-08
+FTFT7 COARSE CHECK reversed_creation_boost collision_free_step_7 PASS
+FTFT7 COARSE BUDGET reversed_creation_boost step=9 px=2946934926360.1406 py=-9687282522576.75 pz=872949000597.67969 residual=641961.66814289917 normalized=4.2671734582952845e-08
+FTFT7 COARSE CHECK reversed_creation_boost collision_free_step_8 PASS
+FTFT7 COARSE BUDGET reversed_creation_boost step=10 px=2946935164778.7188 py=-9687282522576.75 pz=872949000597.67969 residual=596046.4453125 normalized=3.9619710919914137e-08
+FTFT7 COARSE CHECK reversed_creation_boost collision_free_step_9 PASS
+FTFT7 COARSE BUDGET reversed_creation_boost step=11 px=2946935164778.7188 py=-9687282760995.3281 pz=872948881388.39062 residual=337174.78670608433 normalized=2.2412293008097595e-08
+FTFT7 COARSE CHECK reversed_creation_boost collision_free_step_10 PASS
+FTFT7 COARSE BUDGET reversed_creation_boost step=12 px=2946935164778.7188 py=-9687282760995.3281 pz=872948762179.10156 residual=266560.0738931722 normalized=1.7718473373163749e-08
+FTFT7 COARSE CHECK reversed_creation_boost collision_free_step_11 PASS
+FTFT7 COARSE CHECK reversed_creation_boost closed_system_momentum_budget PASS
+FTFT7 COARSE CHECK gravity_fidelity demote PASS
+FTFT7 GRAVITY FIDELITY full=(1,1.95000005,3) coarse=(1,1.95000005,3) expected=(1,1.9499999973922968,3)
+FTFT7 COARSE CHECK full_ordinary_uses_authored_local_gravity PASS
+FTFT7 COARSE CHECK coarse_ordinary_uses_same_authored_local_gravity PASS
+FTFT7 COARSE CHECK gravity_fidelity_preserves_trajectory PASS
+FTFT7 coarse celestial: 125 checks, 0 failures, 86 steps

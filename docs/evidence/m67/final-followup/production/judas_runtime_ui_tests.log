@@ -1,0 +1,25 @@
+Renderer fragment texture units: 32 (material path uses 12)
+PASS UI document round-trip
+PASS duplicate stable IDs rejected
+PASS stable lookup
+PASS reference-resolution anchors at two sizes
+PASS real pointer press/release click
+PASS controller focus and toggle activation
+PASS shared-binding consumption blocks gameplay and fixed input
+PASS hidden/disabled controls do not activate
+PASS unload invalidates handles
+PASS unloaded handle never revives
+PASS real engine host and GL context
+PASS UI demo project loads
+PASS normal UI asset registry
+PASS scene UI/script component load
+PASS normal world constructs UI document
+PASS authored main menu modal
+PASS UI draws modify actual GL framebuffer pixels
+PASS actual GL UI pixels captured
+PASS JS receives click and starts HUD
+PASS JS modifies HUD text
+PASS JS migrates pause menu to authored panel
+PASS Stop releases UI/VM and leaves authored scene unchanged
+PERFORMANCE elements=100 layout_us=0.218 render_us=686.165 submissions=103
+SUMMARY 22 checks 0 failures

@@ -1,0 +1,25 @@
+sequence	operation	asset	generation	thread	context_current	handle	bytes	path
+1	MeshCreated		0	139295019679424	1	0	2016	
+2	MeshCreated		0	139295019679424	1	1	129024	
+3	TextureCreated		0	139295019679424	1	0	4	
+4	FileReadBegin	000000000000000000000000f7200001	0	139294690064064	0	0	0	/home/conner/Documents/GitHub/Project-Judas/build/ftft2-fixtures/shared-progress/a/Assets/1.obj
+5	FileReadChunk	000000000000000000000000f7200001	0	139294690064064	0	0	1048576	/home/conner/Documents/GitHub/Project-Judas/build/ftft2-fixtures/shared-progress/a/Assets/1.obj
+6	TextureCreated		0	139295019679424	1	1	4194304	
+7	FileReadChunk	000000000000000000000000f7200001	0	139294690064064	0	0	2097152	/home/conner/Documents/GitHub/Project-Judas/build/ftft2-fixtures/shared-progress/a/Assets/1.obj
+8	FileReadChunk	000000000000000000000000f7200001	0	139294690064064	0	0	2355232	/home/conner/Documents/GitHub/Project-Judas/build/ftft2-fixtures/shared-progress/a/Assets/1.obj
+9	FileReadEnd	000000000000000000000000f7200001	0	139294690064064	0	0	2355232	/home/conner/Documents/GitHub/Project-Judas/build/ftft2-fixtures/shared-progress/a/Assets/1.obj
+10	DecodeBegin	000000000000000000000000f7200001	0	139294690064064	0	0	2355232	/home/conner/Documents/GitHub/Project-Judas/build/ftft2-fixtures/shared-progress/a/Assets/1.obj
+11	DecodeEnd	000000000000000000000000f7200001	0	139294690064064	0	0	2355232	/home/conner/Documents/GitHub/Project-Judas/build/ftft2-fixtures/shared-progress/a/Assets/1.obj
+12	LoadComplete	000000000000000000000000f7200001	0	139294690064064	0	0	2355232	/home/conner/Documents/GitHub/Project-Judas/build/ftft2-fixtures/shared-progress/a/Assets/1.obj
+13	MeshCreated		0	139295019679424	1	2	180	
+14	ManagerShutdownBegin		0	139295019679424	0	0	0	
+15	MeshDestroyed		0	139295019679424	1	2	180	
+16	ManagerShutdownEnd		0	139295019679424	0	0	0	
+17	WorkersJoined		0	139295019679424	1	0	0	
+18	TextureDestroyed		0	139295019679424	1	1	4194304	
+19	RendererShutdownBegin		0	139295019679424	1	0	0	
+20	MeshDestroyed		0	139295019679424	1	0	2016	
+21	MeshDestroyed		0	139295019679424	1	1	129024	
+22	TextureDestroyed		0	139295019679424	1	0	4	
+23	RendererShutdownEnd		0	139295019679424	1	0	0	
+24	ContextDestroyed		0	139295019679424	0	0	0	

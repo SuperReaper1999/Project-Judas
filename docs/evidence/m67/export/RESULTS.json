@@ -1,0 +1,73 @@
+{
+  "pass": true,
+  "human_gui_clicks": "NOT RUN; shared commands and actual editor drawing/Play-Stop tested",
+  "source_project": "/home/conner/Documents/GitHub/Project-Judas/projects/world_workshop/world_workshop.judasproj",
+  "edited_project": "/home/conner/Documents/GitHub/Project-Judas/.cache/m67/workflow-final-1/edited-project/world_workshop.judasproj",
+  "package": "/home/conner/Documents/GitHub/Project-Judas/.cache/m67/packages/workflow-export-followup-2/WorldWorkshop",
+  "moved_package": "/tmp/judas-m67-offline-workflow-export-followup-2/WorldWorkshop",
+  "package_bytes": 53090883,
+  "asset_count": 25,
+  "runtime_sha256": "a6ce064c47bfe02a3abdca6b0cd78d26345b6c3077ae8323ba63649ab639503d",
+  "commands": [
+    {
+      "name": "edited-export",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_scene_author",
+        "--build-project",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m67/workflow-final-1/edited-project/world_workshop.judasproj",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m67/workflow-export-followup-2/edited-package",
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas",
+        "/home/conner/Documents/GitHub/Project-Judas"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+      "exit": 0,
+      "seconds": 0.11694598100075382,
+      "expected": 0
+    },
+    {
+      "name": "final-export",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_scene_author",
+        "--build-project",
+        "/home/conner/Documents/GitHub/Project-Judas/projects/world_workshop/world_workshop.judasproj",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m67/packages/workflow-export-followup-2/WorldWorkshop",
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas",
+        "/home/conner/Documents/GitHub/Project-Judas"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+      "exit": 0,
+      "seconds": 0.109075804000895,
+      "expected": 0
+    },
+    {
+      "name": "source-hidden-moved-runtime",
+      "command": [
+        "unshare",
+        "--user",
+        "--map-root-user",
+        "--mount",
+        "--net",
+        "python3",
+        "-c",
+        "import os,subprocess,sys;subprocess.run(['mount','--bind',sys.argv[1],sys.argv[2]],check=True);os.chdir('/tmp');os.execv(sys.argv[3],[sys.argv[3]])",
+        "/tmp/judas-m67-offline-workflow-export-followup-2/empty-source",
+        "/home/conner/Documents/GitHub",
+        "/tmp/judas-m67-offline-workflow-export-followup-2/WorldWorkshop/judas"
+      ],
+      "cwd": "/tmp",
+      "exit": 0,
+      "seconds": 0.8710277459977078,
+      "expected": 0
+    },
+    {
+      "name": "edited-package-startup",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m67/workflow-export-followup-2/edited-package/judas"
+      ],
+      "cwd": "/tmp",
+      "exit": 0,
+      "seconds": 0.5015262669985532,
+      "expected": 0
+    }
+  ]
+}

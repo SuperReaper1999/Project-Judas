@@ -326,9 +326,11 @@ public:
     bool SetCharacterSettings(EntityId,const CharacterMotorSettings&);
     void ClearCharacters();
     struct CharacterInstance {CharacterMotor motor;SceneTransform previous;};
-    struct RuntimeView {SceneTransform pose;float fov=70;};
+    struct RuntimeView {SceneTransform pose;float fov=70,nearPlane=.1f,farPlane=500;};
+    int viewportWidth=0,viewportHeight=0;
     std::optional<RuntimeView> view;
-    bool SetRuntimeView(const SceneTransform& pose,float fov);
+    std::map<std::pair<EntityId,uint64_t>,std::string> spawnStates; // consumed once by script construction; never restore defaults
+    bool SetRuntimeView(const SceneTransform& pose,float fov,float nearPlane=.1f,float farPlane=500);
     struct AnimationLayer {AnimationLayerSettings settings;AnimationPlayback playback;std::vector<int> mask;SkeletalPose reference;};
     struct AnimationInstance {EntityId owner=0;std::shared_ptr<const SkeletalAsset> asset;AnimationPlayback playback;PoseMixer mixer;SkeletalPose sourcePose,finalPose;std::vector<glm::mat4> skin;std::vector<AnimationLayer> layers;std::map<std::string,PoseContribution> external;std::string error;std::vector<glm::mat4> previousWorld,recentWorld;float motionDt=0;};
     AnimationInstance* RuntimeAnimation(EntityId);
@@ -432,7 +434,10 @@ public:
     EntityId CreateEntity(const SceneObject& definition, const EntityPhysicalState* state,
                           std::string* outError = nullptr);
     SceneTransform PresentedTransform(SceneObjectId id, const SceneTransform& fallback, float alpha) const;
-    EntityId SpawnPrefab(const AssetId& asset, const SceneTransform& placement, std::string& error);
+    struct PrefabScriptInit {SceneObjectId source=0;uint64_t slot=0;std::string properties,state="null";};
+    struct PrefabSpawnOptions {std::optional<glm::vec3> velocity,angularVelocity;std::vector<PrefabScriptInit> scripts;};
+    EntityId SpawnPrefab(const AssetId& asset, const SceneTransform& placement, std::string& error,const PrefabSpawnOptions& options={});
+    std::string TakeSpawnState(EntityId id,uint64_t slot);
     bool DestroyHierarchy(EntityId root, std::string& error);
     const std::vector<EntityRecord>& AdditionalEntities() const { return m_extraEntities; }
     EntityId AllocateRuntimeEntityId();

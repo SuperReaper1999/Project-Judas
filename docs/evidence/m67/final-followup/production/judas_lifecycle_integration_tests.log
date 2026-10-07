@@ -1,0 +1,77 @@
+PASS serialize ordinary authored scene: 
+PASS reload ordinary authored scene: 
+PASS ordinary runtime/session construction: 
+PASS ordinary runtime/session construction: 
+PASS tiny game installs no distance/planet policy
+PASS tiny game has no celestial sources
+PASS read stable entity 2
+PASS moving Full -> Coarse: 
+PASS moving Coarse is Active and inertial
+PASS demoted body's old physics generation is invalid
+PASS read stable entity 2
+PASS coarse translation matches independent zero-gravity v*t oracle
+PASS read stable entity 2
+PASS moving Coarse agrees with never-demoted full world
+PASS read stable entity 3
+PASS moving Full -> Dormant: 
+PASS Dormant is Unloaded, not destroyed
+PASS runtime creation obtains non-authored ID: 
+PASS fixture genuinely reuses a physics slot with a new generation
+PASS read stable entity 4611686018427387904
+PASS read stable entity 4611686018427387904
+PASS stale mutation/reset/destruction cannot reach the reused occupant
+PASS body-to-entity lookup follows live generation only
+PASS read stable entity 3
+PASS dormant moving state remains bit-exact while others advance
+PASS read stable entity 2
+PASS Coarse -> Full reconstructs: 
+PASS read stable entity 2
+PASS reconstruction preserves moving pose and both velocities exactly
+PASS same entity receives one new live incarnation
+PASS read stable entity 2
+PASS read stable entity 2
+PASS mixed fidelity state matches independent full trajectory
+PASS leave moving entity Coarse for persistence
+PASS unload runtime-created survivor
+PASS permanently destroy authored body
+PASS second runtime identity is monotonic
+PASS destroy second runtime-created entity
+PASS permanent destruction rejects reconstruction
+PASS save fixture simultaneously contains all fidelity/lifecycle states
+PASS read stable entity 2
+PASS read stable entity 3
+PASS read stable entity 5
+PASS read stable entity 4611686018427387904
+PASS save mixed lifecycle deltas through production serializer: entity 4 is destroyed
+PASS runtime transitions never rewrite authored scene file
+PASS ordinary runtime/session construction: 
+PASS standalone/editor shared load helper restores mixed history: 
+PASS read stable entity 2
+PASS reloaded entity preserves retained pose/velocities 2
+PASS fidelity is reselected by ordinary no-policy construction, not persisted
+PASS read stable entity 3
+PASS reloaded entity preserves retained pose/velocities 3
+PASS fidelity is reselected by ordinary no-policy construction, not persisted
+PASS read stable entity 5
+PASS reloaded entity preserves retained pose/velocities 5
+PASS fidelity is reselected by ordinary no-policy construction, not persisted
+PASS read stable entity 4611686018427387904
+PASS reloaded entity preserves retained pose/velocities 4611686018427387904
+PASS fidelity is reselected by ordinary no-policy construction, not persisted
+PASS authored destruction survives reload
+PASS destroyed runtime creation stays absent without ID reuse
+PASS destroyed authored identity remains non-reconstructible after reload
+PASS door/switch deltas survive the same mixed reload
+PASS successful application does not rewrite existing save
+PASS new runtime entity after mixed reload cannot recycle any consumed identity
+PASS write same-name changed-component authored fixture
+PASS ordinary runtime/session construction: 
+PASS incompatible destination already contains a runtime creation
+PASS same-name changed baseline rejects mixed save usefully: authored baseline fingerprint mismatch for 'FTFT6 ordinary mixed lifecycle': saved deltas require exactly compatible authored scene content
+PASS failed load leaves handles/live state/reductions/identities/counters unchanged
+PASS failed load leaves original save bytes unchanged
+PASS all replay/rejection work leaves authored baseline file unchanged
+PASS write restored.snapshot.txt
+PASS write rejected-before.snapshot.txt
+PASS write rejected-after.snapshot.txt
+{"checks":76,"failures":0,"fixed_steps":121,"seconds":0.043475187999999998,"pass":true}
