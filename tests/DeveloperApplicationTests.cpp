@@ -14,7 +14,7 @@
 #include <thread>
 #include <cstdio>
 namespace {unsigned checks=0,failures=0;void check(bool ok,const std::string& message){++checks;failures+=!ok;printf("%s %s\n",ok?"PASS":"FAIL",message.c_str());fflush(stdout);}}
-int main(int argc,char** argv){if(argc!=4)return 2;std::string mode=argv[2],out=argv[3],error;std::filesystem::create_directories(out);unsigned frame=0,phase=0;uint64_t request=0,token=0;RuntimeWorld* original=nullptr;bool frozen=false,restored=false;EntityId adopted=0;BodyHandle stale;glm::vec3 initial{0};
+int main(int argc,char** argv){if(argc!=4){std::fprintf(stderr,"usage: %s <project.judasproj> <mode> <output-dir>\n",argv[0]);return 2;}std::string mode=argv[2],out=argv[3],error;std::filesystem::create_directories(out);unsigned frame=0,phase=0;uint64_t request=0,token=0;RuntimeWorld* original=nullptr;bool frozen=false,restored=false;EntityId adopted=0;BodyHandle stale;glm::vec3 initial{0};
  setenv("JUDAS_PROFILE","1",1);ApplicationControl control;control.hidden=true;control.hostReady=[](EngineHost& h){h.GetWindow().SetTestInputMode(true);SDL_GL_SetSwapInterval(0);std::string e;h.Audio().Init(e,true);};control.frameSeconds=[&](float){return frozen?0.f:1.f/60;};control.worldReady=[&](EngineHost&,RuntimeWorld& w,InteractivePlay&){original=&w;};
  control.afterFrame=[&](EngineHost& h,RuntimeWorld& w,InteractivePlay& play){++frame;for(auto& d:w.Scripts()->Diagnostics()){check(false,"script "+d.callback+": "+d.message);w.UI().RequestQuit();return;}
  if(mode.rfind("bench-",0)==0||mode.rfind("pose-",0)==0){

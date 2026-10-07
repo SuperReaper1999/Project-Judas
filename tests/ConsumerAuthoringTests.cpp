@@ -9,7 +9,7 @@
 #include <set>
 namespace {unsigned count=0,failed=0;void check(bool ok,const std::string& message){++count;failed+=!ok;std::cout<<(ok?"PASS ":"FAIL ")<<message<<'\n';}}
 int main(int argc,char** argv){
-    if(argc!=3)return 2;
+    if(argc!=3){std::cerr<<"usage: "<<argv[0]<<" <consumers-project-dir> <output-dir>\n";return 2;}
     std::filesystem::path root=argv[1],out=argv[2];std::filesystem::create_directories(out);std::string error;
     Project project;check(project.Load((root/"post_m65_consumers.judasproj").string(),error),"combined ordinary project loads");
     check(!project.Settings().legacyGameplay,"combined project has no legacy gameplay path");
