@@ -718,7 +718,16 @@ int main(int argc, char** argv) {
     if(int result=RunRecipeCLI(argc,argv);result>=0)return result;
     if(int result=RunAuthoringCLI(argc,argv);result>=0)return result;
     if(argc==4&&std::string(argv[1])=="--structured"){std::string error;if(!WriteStructuredContent(argv[2],argv[3],error)){std::fprintf(stderr,"%s\n",error.c_str());return 1;}return 0;}
-    const std::string dir = argc > 1 ? argv[1] : "assets/scenes";
+    // Regeneration overwrites committed scenes, so it needs an explicit directory; a bare
+    // invocation (e.g. to discover the authoring CLI) must not rewrite tracked files.
+    if (argc < 2) {
+        std::fprintf(stderr, "usage: %s <scene-dir> [tiny-game-scene-dir]   regenerate the demonstration scenes\n"
+                             "       %s --structured <input.json> <output>\n"
+                             "       %s --create|--inspect|--validate|--convert|--edit|--patch ...   see docs/NAMED_AUTHORING.md\n",
+                     argv[0], argv[0], argv[0]);
+        return 2;
+    }
+    const std::string dir = argv[1];
     bool ok = true;
     ok &= Write(MakeClassic(0), dir + "/classic.judas");
     ok &= Write(MakeClassic(1), dir + "/classic_fluid_rotated.judas");

@@ -17,7 +17,7 @@ namespace fs=std::filesystem;
 int checks=0,failures=0;
 void Check(bool ok,const std::string& label){++checks;failures+=!ok;std::cout<<(ok?"PASS ":"FAIL ")<<label<<'\n';}
 int main(int argc,char** argv){
- if(argc!=2)return 2;
+ if(argc!=2){std::cerr<<"usage: "<<argv[0]<<" <fresh-output-dir>\n";return 2;}
  const auto out=fs::absolute(argv[1]);fs::create_directories(out);auto root=out/"project";
  if(fs::exists(root)){std::cerr<<"Use a fresh result directory\n";return 2;}
  fs::copy("projects/world_workshop",root,fs::copy_options::recursive);
