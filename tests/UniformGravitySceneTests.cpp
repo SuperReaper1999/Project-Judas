@@ -173,7 +173,7 @@ Outcome Exercise(const Fixture& f, const Scene& scene, const std::string& path,
 }
 }
 int main(int argc,char** argv) {
-    fs::path directory="docs/evidence/ftft3/fixtures", output="docs/evidence/ftft3/construction";
+    fs::path directory="docs/evidence/ftft3/fixtures", output="build/ftft3-construction";
     std::string prefix;
     for(int i=1;i<argc;++i) {
         const std::string arg=argv[i];

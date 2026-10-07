@@ -13,7 +13,7 @@
 #include <cstdio>
 #include <cmath>
 namespace{int checks=0,failures=0;void Check(bool v,const char* s){++checks;failures+=!v;std::printf("%s %s\n",v?"PASS":"FAIL",s);std::fflush(stdout);}void Quit(){SDL_Event e{};e.type=SDL_QUIT;SDL_PushEvent(&e);}}
-int main(int argc,char** argv){if(argc<4)return 2;std::string path=argv[1],mode=argv[2],out=argv[3];std::filesystem::create_directories(out);bool read=mode!="write",second=mode=="read-b";unsigned frames=0,phase=0;bool frozen=false;uint64_t demand=0,request=0;EntityId traveller=0,changed=0,defeated=0;unsigned gameFrame=0;bool gameVerified=false;std::string key,error;RuntimeWorld* initial=nullptr;ApplicationControl control;control.hidden=true;
+int main(int argc,char** argv){if(argc<4){std::fprintf(stderr,"usage: %s <project.judasproj> <write|read|read-b> <output-dir>\n",argv[0]);return 2;}std::string path=argv[1],mode=argv[2],out=argv[3];std::filesystem::create_directories(out);bool read=mode!="write",second=mode=="read-b";unsigned frames=0,phase=0;bool frozen=false;uint64_t demand=0,request=0;EntityId traveller=0,changed=0,defeated=0;unsigned gameFrame=0;bool gameVerified=false;std::string key,error;RuntimeWorld* initial=nullptr;ApplicationControl control;control.hidden=true;
  control.hostReady=[](EngineHost& host){host.GetWindow().SetTestInputMode(true);SDL_GL_SetSwapInterval(0);std::string error;host.Audio().Init(error,true);};control.frameSeconds=[&](float){return frozen?0.f:1.f/60;};control.worldReady=[&](EngineHost&,RuntimeWorld& w,InteractivePlay&){initial=&w;};
  control.beforeFrame=[&](EngineHost& host,RuntimeWorld& w,InteractivePlay&){
   if(read&&phase==1)host.GetWindow().Input().SetPhysical("pad:South",true);

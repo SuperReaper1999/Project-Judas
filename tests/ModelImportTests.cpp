@@ -22,7 +22,7 @@ glm::mat4 Matrix(ufbx_matrix m){return {{m.m00,m.m10,m.m20,0},{m.m01,m.m11,m.m21
 glm::vec3 Deformed(const MeshData& m,size_t i,const std::vector<glm::mat4>& palette){auto& w=m.skinVertices[i];glm::mat4 blend(0);for(int k=0;k<4;++k)blend+=palette[w.joints[k]]*w.weights[k]+palette[w.joints1[k]]*w.weights1[k];return glm::vec3(blend*glm::vec4(m.vertices[i].position,1));}
 int main(int argc,char** argv){
  fs::path source=argc>1?argv[1]:".cache/m66/originals/Skateboarder.fbx";
- fs::path output=argc>2?argv[2]:"docs/evidence/m66/development/fidelity";fs::create_directories(output);
+ fs::path output=argc>2?argv[2]:"build/m66-fidelity";fs::create_directories(output);
  MeshData model;ModelImportSettings settings;ModelImportReport report;std::string error;
  MeshData tangentFixture;tangentFixture.vertices.resize(3);tangentFixture.vertices[0].position={0,0,0};tangentFixture.vertices[1].position={0,1,0};tangentFixture.vertices[2].position={0,0,1};for(auto& v:tangentFixture.vertices)v.normal={-.99999994f,0,0};Check(GenerateMeshTangents(tangentFixture)&&std::isfinite(tangentFixture.vertices[0].tangent.x)&&std::isfinite(tangentFixture.vertices[0].tangent.y)&&std::abs(glm::dot(glm::vec3(tangentFixture.vertices[0].tangent),tangentFixture.vertices[0].normal))<1e-5,"near-axis degenerate UV fallback yields finite orthogonal tangent");
  auto begin=std::chrono::steady_clock::now();bool imported=ImportModelSource(source.string(),settings,model,report,error);Check(imported,"original FBX imports without preprocessing");if(!imported){std::cerr<<error<<'\n';return 1;}

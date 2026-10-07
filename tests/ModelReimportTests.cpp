@@ -18,7 +18,11 @@ Json Read(const fs::path& p){std::ifstream f(p);return Json::parse(f);}void Writ
 bool Cook(const std::string& recipe,ModelCookTask& t){std::string error;bool ok=CookModelRecipe(recipe,t)&&PublishModelImport(t,error);if(!ok)std::cout<<"DIAGNOSTIC "<<t.error<<" "<<error<<'\n';return ok;}
 }
 int main(int argc,char** argv){try{
- fs::path root=argc>1?argv[1]:"/tmp/judas-m66-reimport";fs::create_directories(root);std::string recipe,error;Check(CreateModelRecipe(root.string(),"tests/fixtures/m66/external.gltf","Assets/model.judasmodel",recipe,error),"recipe copies approved external image and buffer into owned sources");if(recipe.empty()){std::cerr<<error;return 1;}
+ // Recipe creation refuses existing owned sources: the default build-tree root is test-owned and recreated;
+ // an explicit root must be fresh.
+ fs::path root=argc>1?argv[1]:"build/m66-reimport";if(argc<=1)fs::remove_all(root);
+ else if(fs::exists(root)&&!fs::is_empty(root)){std::cerr<<"reimport root must be a fresh directory: "<<root.string()<<"\n";return 2;}
+ fs::create_directories(root);std::string recipe,error;Check(CreateModelRecipe(root.string(),"tests/fixtures/m66/external.gltf","Assets/model.judasmodel",recipe,error),"recipe copies approved external image and buffer into owned sources");if(recipe.empty()){std::cerr<<error;return 1;}
  ModelCookTask first;Check(Cook(recipe,first),"initial coherent generation publishes");if(!first.success)return 1;auto initial=Hash(first.output);auto settings=Read(recipe);auto owned=root/settings.at("source").get<std::string>();MeshData model;Check(LoadModelMesh(first.output,model,error),"normal runtime loader reads cooked asset without source parser");auto materialKeys=model.materialKeys;std::vector<std::string> parts;for(auto& p:model.primitives)parts.push_back(p.part);
  ModelCookTask same;Check(Cook(recipe,same)&&same.unchanged&&Hash(first.output)==initial,"unchanged recipe preserves output bytes and asset identity");
  auto source=Read(owned);std::swap(source["nodes"][1],source["nodes"][2]); // exchange node records and explicitly repair every index
