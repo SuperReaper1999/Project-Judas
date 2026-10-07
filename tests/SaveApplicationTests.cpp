@@ -14,7 +14,7 @@
 #include <cstdio>
 #include <algorithm>
 namespace {int checks=0,failures=0;void Check(bool value,const char* text){++checks;failures+=!value;std::printf("%s %s\n",value?"PASS":"FAIL",text);std::fflush(stdout);}void Quit(){SDL_Event e{};e.type=SDL_QUIT;SDL_PushEvent(&e);}}
-int main(int argc,char** argv){if(argc<4)return 2;std::string project=argv[1],mode=argv[2],out=argv[3];std::filesystem::create_directories(out);bool reading=mode=="read";unsigned frame=0,phase=0,requestFrame=0,restoredFrame=0;uint64_t rejectedRequest=0;bool frozen=false;RuntimeWorld* initial=nullptr;GameSnapshot expected;std::string error;ApplicationControl control;control.hidden=true;
+int main(int argc,char** argv){if(argc<4){std::fprintf(stderr,"usage: %s <project.judasproj> <write|read> <output-dir>\n",argv[0]);return 2;}std::string project=argv[1],mode=argv[2],out=argv[3];std::filesystem::create_directories(out);bool reading=mode=="read";unsigned frame=0,phase=0,requestFrame=0,restoredFrame=0;uint64_t rejectedRequest=0;bool frozen=false;RuntimeWorld* initial=nullptr;GameSnapshot expected;std::string error;ApplicationControl control;control.hidden=true;
  control.hostReady=[](EngineHost& host){std::string e;host.GetWindow().SetTestInputMode(true);SDL_GL_SetSwapInterval(0);host.Audio().Init(e,true);};
  control.frameSeconds=[&](float){return frozen?0.f:1.f/60;};
  control.worldReady=[&](EngineHost&,RuntimeWorld& world,InteractivePlay&){initial=&world;};

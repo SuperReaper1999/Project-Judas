@@ -13,7 +13,7 @@
 #include <filesystem>
 using Clock=std::chrono::steady_clock;
 int main(int argc,char** argv){
- if(argc!=3)return 2;
+ if(argc!=3){std::fprintf(stderr,"usage: %s <project.judasproj> <output-dir>\n",argv[0]);return 2;}
  std::string project=argv[1],out=argv[2];std::filesystem::create_directories(out);
  unsigned frame=0,phase=0,samples=0;uint64_t request=0;bool failed=false,resume=false;Clock::time_point before;
  ApplicationControl control;control.hidden=true;

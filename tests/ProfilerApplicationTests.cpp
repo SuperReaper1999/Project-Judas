@@ -34,7 +34,7 @@ int main(int argc,char** argv){
    unsigned frame=0,stepCount=0;std::uint64_t start=0,previous=0;std::string state;double bucketVolume=0;bool cursorReleased=true,intentUnchanged=true;
    std::vector<double> times,steps,uis;ApplicationControl control;control.hidden=true;control.frameSeconds=[](float){return 1.f/60;};
    control.hostReady=[&](EngineHost& host){
-    SDL_GL_SetSwapInterval(0);IMGUI_CHECKVERSION();ImGui::CreateContext();ImGui::StyleColorsDark();ImGui_ImplSDL2_InitForOpenGL(host.GetWindow().NativeWindow(),host.GetWindow().NativeGLContext());ImGui_ImplOpenGL3_Init("#version 330");
+    SDL_GL_SetSwapInterval(0);IMGUI_CHECKVERSION();ImGui::CreateContext();ImGui::GetIO().IniFilename=nullptr;ImGui::StyleColorsDark();ImGui_ImplSDL2_InitForOpenGL(host.GetWindow().NativeWindow(),host.GetWindow().NativeGLContext());ImGui_ImplOpenGL3_Init("#version 330");
     host.OpenProjectAssets(project.RootDir(),project.AssetsDir());
     for(const auto& [id,record]:host.Assets().Records())switch(record.type){case AssetType::Mesh:host.Resources().RequestMesh(id);break;case AssetType::Texture:host.Resources().RequestTexture(id);break;case AssetType::Navigation:host.Resources().RequestNavigation(id);break;case AssetType::Liquid:host.Resources().RequestLiquid(id);break;case AssetType::Audio:host.Resources().RequestAudio(id);break;default:break;}
     host.Resources().WaitForAll();
@@ -42,6 +42,8 @@ int main(int argc,char** argv){
    control.worldReady=[&](EngineHost& host,RuntimeWorld&,InteractivePlay&){host.GetWindow().SetTestInputMode(true);host.Resources().WaitForAll();};
    control.beforeFrame=[&](EngineHost& host,RuntimeWorld& world,InteractivePlay& play){
     play.SetPointerCaptureAllowed(mode!=2);
+    // Desktop mouse motion must not reach deterministic trials (issue #4); queue some through real SDL.
+    if(frame<5)for(int i=0;i<4;++i){SDL_Event motion{};motion.type=SDL_MOUSEMOTION;motion.motion.xrel=3;motion.motion.yrel=2;SDL_PushEvent(&motion);}
     const auto now=PerformanceProfiler::Now();double interval=previous?double(now-previous)/1e6:0;previous=now;start=now;
     if(frame>30)times.push_back(interval);
     auto& input=host.GetWindow().Input();input.SetPhysical("key:W",!liquid&&frame<45?1:0);

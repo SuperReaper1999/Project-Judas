@@ -123,7 +123,7 @@ int Application::Run(int argc, char** argv, ApplicationControl* control) {
         return 1;
     }
     play.SetWorldStatePath(world.IsComposed()?std::string{}:options.worldStatePath, worldStateApplied);
-    if(world.IsComposed())std::fprintf(stderr,"World state: disk saves disabled for additive compositions\n");
+    if(world.IsComposed())std::fprintf(stderr,"World state: legacy .judasstate (F6/F7) saves disabled for additive compositions; save slots remain available\n");
     else if (!options.worldStatePath.empty()) {
         std::fprintf(stderr, "World state: %s (%s)\n", options.worldStatePath.c_str(),
                      worldStateApplied ? "loaded" : "none saved");

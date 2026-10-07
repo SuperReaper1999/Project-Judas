@@ -325,7 +325,7 @@ int RunCase(const std::string& name,const fs::path& output) {
 }
 }
 int main(int argc,char** argv) {
-    std::string selected="all";fs::path output="docs/evidence/ftft2";
+    std::string selected="all";fs::path output="build/ftft2-application";
     for(int i=1;i<argc;++i){std::string arg=argv[i];if(arg=="--case"&&i+1<argc)selected=argv[++i];else if(arg=="--output"&&i+1<argc)output=argv[++i];else return 2;}
     fs::create_directories(output);
     if(std::getenv("JUDAS_TEST_SCRIPT")||std::getenv("JUDAS_RESOURCE_MODE")){std::fprintf(stderr,"Unset scripted/blocking overrides for async integration\n");return 2;}

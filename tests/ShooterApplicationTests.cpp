@@ -16,7 +16,7 @@ void Check(bool ok,const char* label){++checks;failures+=!ok;std::printf("%s %s\
 void Key(SDL_Scancode key,bool down){SDL_Event e{};e.type=down?SDL_KEYDOWN:SDL_KEYUP;e.key.keysym.scancode=key;e.key.keysym.sym=SDL_GetKeyFromScancode(key);SDL_PushEvent(&e);}
 void Click(bool down){SDL_Event e{};e.type=down?SDL_MOUSEBUTTONDOWN:SDL_MOUSEBUTTONUP;e.button.button=SDL_BUTTON_LEFT;SDL_PushEvent(&e);}
 std::string State(RuntimeWorld& w){if(w.Scripts())for(auto& x:w.Scripts()->Capture())if(x.entity==10)return x.json;return {};}
-int main(int argc,char**argv){if(argc<3)return 2;std::filesystem::create_directories(argv[2]);const bool perf=argc>3;int frame=0;std::size_t paused=0;int shots=0;
+int main(int argc,char**argv){if(argc<3){std::fprintf(stderr,"usage: %s <project.judasproj> <output-dir> [perf]\n",argv[0]);return 2;}std::filesystem::create_directories(argv[2]);const bool perf=argc>3;int frame=0;std::size_t paused=0;int shots=0;
  using Clock=std::chrono::steady_clock;Clock::time_point begin,last;std::vector<double> ms,fixed;
  std::ofstream csv(std::filesystem::path(argv[2])/(perf?"performance.csv":"application.csv"));csv<<"frame,cpu_ms,render_submit_ms,fixed_steps,wall_ms\n";
  ApplicationControl control;control.hidden=true;if(!perf)control.frameSeconds=[](float){return 1.f/60;};
