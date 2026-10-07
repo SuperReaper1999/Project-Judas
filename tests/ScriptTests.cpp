@@ -69,6 +69,7 @@ fixedUpdate(){this.entity.applyImpulse({x:1,y:0,z:0});this.entity.applyForce({x:
     auto nativeStates=nativeWorld.Scripts()->Capture();auto nativeText=nativeStates.empty()?"":nativeStates[0].json;std::printf("NATIVE %s\n",nativeText.c_str());
     Check(nativeWorld.Scripts()->Diagnostics().empty()&&nativeText.find("\"input\":true")!=std::string::npos,"fixed script receives latched short logical-input press");
     Check(nativeText.find("\"tag\":true")!=std::string::npos&&nativeText.find("\"query\":1")!=std::string::npos&&nativeText.find("\"overlap\":1")!=std::string::npos,"tags and filtered authoritative physics queries");
+    Check(nativeText.find("\"sweep\":true")!=std::string::npos,"world.sweepCapsule hits a body in a script-owned (non-legacy) world");
     Check(nativeText.find("\"velocity\":{\"x\":1")!=std::string::npos&&nativeText.find("\"position\":{\"x\":0,\"y\":2")!=std::string::npos,"forces/impulse/velocity and immediate authoritative transform readback");nativeWorld.Destroy();
     for(int count:{0,10,100}){Scene load;for(int i=0;i<count;++i){auto& o=load.CreateObject("light script");o.scripts.push_back({1,script.id,true,"{}"});}RuntimeWorld perf;perf.Build(load,&resources,error);perf.UpdateScripts(&input,.016f);
         auto start=std::chrono::steady_clock::now();for(int i=0;i<200;++i){perf.UpdateScripts(&input,.016f);perf.FixedScripts(&input,.016f);}

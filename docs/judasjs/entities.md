@@ -94,8 +94,8 @@ Deformable-local picking queries the current surface, separate from rigid M44 ca
 
 M64 read-only detached snapshot, or null without a living physics body. Stale
 Entity reads throw `ReferenceError`. Fields: `type`, `key`, `position`,
-`rotation`, `halfExtents` (box, otherwise null), `radius` (sphere, otherwise
-null), `asset` (cooked asset ID or null), `vertexCount`, `triangleCount`,
+`rotation`, `halfExtents` (box, otherwise null), `radius` (sphere or capsule,
+otherwise null), `halfHeight` (capsule cylinder half-height, otherwise null), `asset` (cooked asset ID or null), `vertexCount`, `triangleCount`,
 `twoSided`, `centerOfMassOffset`, `enabled`, `sensor`, and `children`. Child
 metadata uses the same geometry fields plus stable authored key and local pose;
 maximum 64 children, no full mesh/native pointers. Root local pose is identity;

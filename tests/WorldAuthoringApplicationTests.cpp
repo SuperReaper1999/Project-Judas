@@ -21,7 +21,7 @@ std::string Region(WorldStreaming& s,const std::string& name){for(auto& r:s.Regi
 void Quit(){SDL_Event event{};event.type=SDL_QUIT;SDL_PushEvent(&event);}
 J State(RuntimeWorld& w){for(auto& s:w.Scripts()->Capture())if(s.entity==3)return J::parse(s.json);return J::object();}
 int main(int argc,char** argv){
-    if(argc!=4)return 2;
+    if(argc!=4){std::cerr<<"usage: "<<argv[0]<<" <project.judasproj> <probe|write|read> <output-dir>\n";return 2;}
     std::string project=argv[1],mode=argv[2],error;fs::path out=argv[3];fs::create_directories(out);
     unsigned frame=0,phase=0,at=0;bool done=false,ready=false,freeze=false;EntityId originalTraveller=0;uint64_t request=0;RuntimeWorld* before=nullptr;J expected;
     ApplicationControl control;control.hidden=true;

@@ -32,6 +32,8 @@ CSV preserves legacy step/time/pose/up/velocity/gravity/control and objN body co
 adding frame/fixed-step-count/paused. The first 19 fields are stable; runtime body
 births may append objN values beyond the initial header. ENTITY changes the primary pose/motion columns
 to that entity; gravity is sampled there. Without ENTITY, the legacy observer is used.
+`SAMPLE_GRAVITY x y z` (repeatable) prints `sample,x,y,z,gx,gy,gz` from the world's
+gravity resolver before the first frame and before the CSV header; it does not step.
 
 Legacy HOLD W/A/S/D/Q/E/I/K/J/L/U/O begin end, TAP SPACE/R/F frame and LOOK remain,
 using both legacy compatibility action state and normal physical input. Invalid/unbound

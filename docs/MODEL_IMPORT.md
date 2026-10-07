@@ -8,6 +8,12 @@ Judas normalizes content; scripts decide what the content means.
 
 ## Import, inspect, place
 
+**Clean checkouts:** the import lab's scene uses the original character, which is
+local-only (see [Import lab and original assets](#import-lab-and-original-assets)).
+Without those files the lab scene fails to build (`unknown asset id`), and so does the
+[imported-model example](judasjs/examples/imported-model.js). The workflow below still
+applies to your own sources and the CC0 fixtures in `tests/fixtures/m66`.
+
 Open `projects/import_lab/import_lab.judasproj` in `build/judas_editor`.
 In **Assets → Model import / reimport** choose the original file and a
 project-relative output such as `Assets/models/actor.judasmodel`. **Copy source

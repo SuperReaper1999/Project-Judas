@@ -5,6 +5,7 @@
 #include <array>
 #include <atomic>
 #include "ScriptSystem.h"
+#include "PlayerController.h"
 #include "CollisionAsset.h"
 #include "AssetDatabase.h"
 #include "InputSystem.h"
@@ -807,7 +808,9 @@ JSValue ScriptSystem::Impl::Native(JSContext* c,JSValueConst,int argc,JSValueCon
         }
         if(op=="sweep"){glm::quat rotation;auto r=arg(4);
             if(!Number(c,r,"w",rotation.w)||!Number(c,r,"x",rotation.x)||!Number(c,r,"y",rotation.y)||!Number(c,r,"z",rotation.z)||!std::isfinite(glm::dot(rotation,rotation))||glm::dot(rotation,rotation)<1e-12f)return JS_ThrowTypeError(c,"invalid rotation");
-            auto hit=world.Physics().SweepPlayerShape(min,glm::normalize(rotation),max,false,0,1,&filter);auto o=JS_NewObject(c);
+            // Same player-sized capsule as the legacy controller, without requiring its spawned shape:
+            // script-owned (non-legacy) worlds never register one, and every sweep reported a miss.
+            auto hit=world.Physics().SweepCapsuleMotion(PlayerController::CapsuleRadius(),PlayerController::CapsuleHalfHeight(),min,glm::normalize(rotation),max,false,0,1,&filter,0,kAllCategories,false);auto o=JS_NewObject(c);
             JS_SetPropertyStr(c,o,"hit",JS_NewBool(c,hit.hit));JS_SetPropertyStr(c,o,"distance",JS_NewFloat64(c,hit.distance));JS_SetPropertyStr(c,o,"normal",Vec(c,hit.normal));
             auto entityId=world.EntityIdOfBody(hit.hitBody);JS_SetPropertyStr(c,o,"entityId",JS_NewString(c,std::to_string(entityId).c_str()));return o;
         }
