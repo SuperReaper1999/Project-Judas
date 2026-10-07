@@ -1,0 +1,18 @@
+[
+  {
+    "project": "/home/conner/Documents/GitHub/Project-Judas/projects/import_lab/import_lab.judasproj",
+    "output": "/home/conner/Documents/GitHub/Project-Judas/.cache/m66/packages/lab",
+    "wallMs": 7322.983393998584,
+    "bytes": 209773248,
+    "files": 38,
+    "exit": 0
+  },
+  {
+    "project": "/home/conner/Documents/GitHub/Project-Judas/.cache/m66/three-games-import-review/post_m65_consumers.judasproj",
+    "output": "/home/conner/Documents/GitHub/Project-Judas/.cache/m66/packages/three-games",
+    "wallMs": 8063.12096199872,
+    "bytes": 229805814,
+    "files": 308,
+    "exit": 0
+  }
+]

@@ -1,0 +1,14 @@
+{
+  "format": "JudasImport",
+  "version": 1,
+  "assetId": "00f95bedb4129c33beab3ab1bc22dd34",
+  "source": "Sources/capacity256/capacity256.gltf",
+  "output": "Assets/models/capacity256.judasmodel",
+  "settings": {
+    "unitMeters": 0,
+    "sampleRate": 60,
+    "allowBaseMesh": false,
+    "dependencyRemaps": {}
+  },
+  "motions": []
+}

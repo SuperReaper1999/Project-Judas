@@ -1,0 +1,3 @@
+JudasWorld 1
+budget 2 8 2 536870912 536870912 16777216 536870912
+region "rig" "Scenes/region.judas" 0 0 -10 0 0 0 1 8 8 8 1 "snapshot" 262144 ""

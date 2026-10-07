@@ -1,0 +1,17 @@
+# Generated gate fixture copies/packages remain local; logs, results and screenshots are evidence.
+**/package/
+**/Assets/
+**/assets/
+*.judas
+*.judasproj
+*.judasmat
+*.judasmeta
+*.judasui
+*.judasprefab
+*.judasloc
+*.judasenv
+*.judasstate
+*.glb
+*.ttf
+*.otf
+*.hdr

@@ -1,0 +1,29 @@
+{
+  "cleanup": {
+    "flipped": 0,
+    "orientPatches": true,
+    "removeDegenerates": true,
+    "removed": 7,
+    "weldTolerance": 0.0,
+    "welded": 0
+  },
+  "diagnostic": {
+    "action": "Select the reported source location; use explicit collision cleanup or a separate physical source. Visual import remains valid.",
+    "code": "inconsistent-winding",
+    "face": 109,
+    "node": "__root/pCylinder1",
+    "point": [
+      0.01910439133644104,
+      -6.183981895446777e-07,
+      -0.43889087438583374
+    ],
+    "vertices": [
+      161,
+      183
+    ]
+  },
+  "error": "inconsistent adjacent winding [node=__root/pCylinder1, original face=109, location=(0.0191044, -6.18398e-07, -0.438891)]",
+  "output": "/tmp/m66-halfpipe-test.judascollision",
+  "source": ".cache/m66/halfpipe-preview.judasmodel",
+  "success": false
+}

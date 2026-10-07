@@ -150,6 +150,7 @@ public:
     MeshHandle TryGetMesh(const AssetId& id);
     MeshHandle TryGetCollisionMesh(const AssetId& id); // optional Renderer-owned physical preview
 
+    const std::vector<MeshPrimitive>* TryGetModelParts(const AssetId&)const;
     std::shared_ptr<const SkeletalAsset> TryGetSkeletal(const AssetId& id) const;
     TextureHandle TryGetTexture(const AssetId& id);
 

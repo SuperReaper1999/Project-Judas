@@ -1,0 +1,14 @@
+{
+  "format": "JudasImport",
+  "version": 1,
+  "assetId": "c4486f87ac712c7d6501d3a57603178a",
+  "source": "Sources/external/external.gltf",
+  "output": "Assets/models/external.judasmodel",
+  "settings": {
+    "unitMeters": 0,
+    "sampleRate": 60,
+    "allowBaseMesh": false,
+    "dependencyRemaps": {}
+  },
+  "motions": []
+}

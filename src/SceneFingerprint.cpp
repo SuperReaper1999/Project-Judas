@@ -327,6 +327,7 @@ bool ComputeSceneFingerprint(const Scene& scene, std::string& outFingerprint,
         if (o.id >= scene.NextId()) w.Fail("stable ID must precede NextId");
         WriteObject(w, o);
     }
+    size_t hiddenCount=0;for(const auto& o:scene.Objects())hiddenCount+=o.render&&!o.render->hiddenParts.empty();if(hiddenCount){w.Text("Judas.ModelParts.1");w.U64(hiddenCount);for(const auto& o:scene.Objects())if(o.render&&!o.render->hiddenParts.empty()){w.U64(o.id);w.U64(o.render->hiddenParts.size());for(auto& key:o.render->hiddenParts)w.Text(key);}}
     size_t materialCount=0;for(const auto& o:scene.Objects())materialCount+=o.render&&!o.render->materials.empty();
     if(s.backgroundColor!=glm::vec3(.08f,.09f,.11f)){w.Text("Judas.Background.1");w.Vector(s.backgroundColor);}
     if(materialCount||s.linearRendering||!s.environmentAsset.empty()){w.Text("Judas.Materials.1");w.Boolean(s.linearRendering);w.Number(s.exposure);w.Text(s.environmentAsset);w.Number(s.environmentIntensity);w.Quaternion(s.environmentRotation);w.Boolean(s.environmentBackground);w.U64(materialCount);for(const auto& o:scene.Objects())if(o.render&&!o.render->materials.empty()){w.U64(o.id);w.Text(EncodeMaterialSlots(o.render->materials));}}

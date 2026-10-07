@@ -1,0 +1,9 @@
+A0: prepared and uncached contacts over unchanged independent fixture inputs
+CONTACT_CACHE fixture_rows=823 primitive_pairs=887
+A: prepared bounds retain uncached expression-order bits
+B: static door ResetBody, tiny/real rotation, slot reuse and vector reallocation
+C: integration and position correction invalidate only derived data
+D: multiple manifolds share prepared body data and solver frames
+CACHE shared bodies=9 contacts=32 orientation_hits=24 orientation_rebuilds=8 bound_hits=48 bound_rebuilds=8 shape_rebuilds=0 solver_frames=18 bytes=17552 allocations=9
+E: player queries retain independently useful previous/current geometry
+{"checks":13327,"failures":0,"bitwise_bound_comparisons":2894,"world_cache_inspections":546,"player_sweeps":8}

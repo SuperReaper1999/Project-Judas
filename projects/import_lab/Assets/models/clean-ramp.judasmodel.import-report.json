@@ -1,0 +1,26 @@
+{
+  "assetId": "1428714793cebb6bab30f46928af585c",
+  "clips": [],
+  "diagnostics": [],
+  "hierarchyNodes": 0,
+  "inputs": {
+    "Sources/clean-ramp/ramp.obj": "5721da9cb5a430424f4dc600652bc193bf3fc18617b7b67427394496500feb59"
+  },
+  "materialKeys": [
+    "__default"
+  ],
+  "outputHash": "4e102e6087b17048ee0a98a59002846bcdd964bda80295ab88842ec64e3b1822",
+  "parts": [
+    {
+      "identity": "unnamed/material/__default",
+      "node": 0,
+      "triangles": 32
+    }
+  ],
+  "recipeDigest": "4b079459ff79ea8660b4fa1de1cf9471ff661640bf25ef9d228007d9f19fb1de",
+  "revision": "M66-ufbx-0.23.1-cgltf-1.15-cook-9-model-1",
+  "skinPaletteEntries": 0,
+  "sourceBones": 0,
+  "sourceUnitMeters": 1.0,
+  "vertices": 96
+}

@@ -1,0 +1,60 @@
+{
+  "assetId": "d7bc89f7d9bc43f8fd3f2cb61702dfa5",
+  "clips": [
+    {
+      "duration": 1.0,
+      "loop": false,
+      "motionExtracted": false,
+      "name": "Translate"
+    }
+  ],
+  "diagnostics": [],
+  "hierarchyNodes": 9,
+  "inputs": {
+    "Sources/multipart/multipart.gltf": "7b3156591036cf314f647e6899385e30b948f5e9b9637d46da4ca4a0d07e2d4d"
+  },
+  "joints": [
+    "Shared",
+    "Shared/BoneA",
+    "Shared/BoneB",
+    "SkinA",
+    "SkinB",
+    "OtherRig",
+    "OtherRig/OtherBone",
+    "OtherSkin",
+    "MirroredAttachment",
+    "__JudasMotionRoot"
+  ],
+  "materialKeys": [
+    "Fixture"
+  ],
+  "outputHash": "162e96a09e0e4b9118d77b2feb67c9c1096640819dcb68fc85aa942d763cb2c5",
+  "parts": [
+    {
+      "identity": "MirroredAttachment/material/Fixture",
+      "node": 8,
+      "triangles": 1
+    },
+    {
+      "identity": "OtherSkin/material/Fixture",
+      "node": 7,
+      "triangles": 1
+    },
+    {
+      "identity": "SkinA/material/Fixture",
+      "node": 3,
+      "triangles": 1
+    },
+    {
+      "identity": "SkinB/material/Fixture",
+      "node": 4,
+      "triangles": 1
+    }
+  ],
+  "recipeDigest": "3476862295280b395e334de5b844122593214cd98f145febb1c5e38a880d863c",
+  "revision": "M66-ufbx-0.23.1-cgltf-1.15-cook-9-model-1",
+  "skinPaletteEntries": 6,
+  "sourceBones": 0,
+  "sourceUnitMeters": 1.0,
+  "vertices": 12
+}

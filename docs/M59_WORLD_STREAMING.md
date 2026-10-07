@@ -185,3 +185,11 @@ store resident state, retained records, tombstones and adopted qualified identit
 across process exit, including pinned liquid/articulation families. This replaces
 the prior absence of composed-world disk persistence; it does not relax eviction
 policy or turn a pin into a save.
+
+## M66 candidate: imported animation suspension
+
+Ordinary animated snapshot regions now reuse the M61 per-instance pose record
+when retiring/revisiting. Shared cooked dependencies load before publication;
+active ragdolls/return transitions remain pinned. Retained animation records are
+bounded to 1 MiB per instance and use streaming participant version 3 in modern
+slots. Earlier versions remain readable. See [Model import](MODEL_IMPORT.md).

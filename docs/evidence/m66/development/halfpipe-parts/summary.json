@@ -1,0 +1,1520 @@
+[
+  {
+    "identity": "__root/pCylinder1/material/aiStandardSurface5",
+    "material": 0,
+    "ordinal": 0,
+    "triangles": 402,
+    "success": false,
+    "diagnostic": {
+      "action": "Select the reported source location; use explicit collision cleanup or a separate physical source. Visual import remains valid.",
+      "code": "t-junction",
+      "face": 49,
+      "node": "__root/pCylinder1",
+      "point": [
+        0.6033868789672852,
+        0.1302761510014534,
+        -0.419185534119606
+      ],
+      "vertices": [
+        96,
+        90
+      ]
+    },
+    "error": "T-junction in collision source; triangulate connected topology before cooking [node=__root/pCylinder1, original face=49, location=(0.603387, 0.130276, -0.419186)]"
+  },
+  {
+    "identity": "__root/pCylinder2/material/aiStandardSurface5",
+    "material": 0,
+    "ordinal": 1,
+    "triangles": 236,
+    "success": false,
+    "diagnostic": {
+      "action": "Select the reported source location; use explicit collision cleanup or a separate physical source. Visual import remains valid.",
+      "code": "t-junction",
+      "face": 49,
+      "node": "__root/pCylinder1",
+      "point": [
+        0.6033868789672852,
+        0.1302761510014534,
+        -0.419185534119606
+      ],
+      "vertices": [
+        96,
+        90
+      ]
+    },
+    "error": "T-junction in collision source; triangulate connected topology before cooking [node=__root/pCylinder1, original face=49, location=(0.603387, 0.130276, -0.419186)]"
+  },
+  {
+    "identity": "__root/pCube2/material/aiStandardSurface5",
+    "material": 0,
+    "ordinal": 2,
+    "triangles": 124,
+    "success": false,
+    "diagnostic": {
+      "action": "Select the reported source location; use explicit collision cleanup or a separate physical source. Visual import remains valid.",
+      "code": "t-junction",
+      "face": 49,
+      "node": "__root/pCylinder1",
+      "point": [
+        0.6033868789672852,
+        0.1302761510014534,
+        -0.419185534119606
+      ],
+      "vertices": [
+        96,
+        90
+      ]
+    },
+    "error": "T-junction in collision source; triangulate connected topology before cooking [node=__root/pCylinder1, original face=49, location=(0.603387, 0.130276, -0.419186)]"
+  },
+  {
+    "identity": "__root/pCube3/material/aiStandardSurface5",
+    "material": 0,
+    "ordinal": 3,
+    "triangles": 124,
+    "success": false,
+    "diagnostic": {
+      "action": "Select the reported source location; use explicit collision cleanup or a separate physical source. Visual import remains valid.",
+      "code": "t-junction",
+      "face": 49,
+      "node": "__root/pCylinder1",
+      "point": [
+        0.6033868789672852,
+        0.1302761510014534,
+        -0.419185534119606
+      ],
+      "vertices": [
+        96,
+        90
+      ]
+    },
+    "error": "T-junction in collision source; triangulate connected topology before cooking [node=__root/pCylinder1, original face=49, location=(0.603387, 0.130276, -0.419186)]"
+  },
+  {
+    "identity": "__root/pCube4/material/aiStandardSurface5",
+    "material": 0,
+    "ordinal": 4,
+    "triangles": 12,
+    "success": false,
+    "diagnostic": {
+      "action": "Select the reported source location; use explicit collision cleanup or a separate physical source. Visual import remains valid.",
+      "code": "t-junction",
+      "face": 49,
+      "node": "__root/pCylinder1",
+      "point": [
+        0.6033868789672852,
+        0.1302761510014534,
+        -0.419185534119606
+      ],
+      "vertices": [
+        96,
+        90
+      ]
+    },
+    "error": "T-junction in collision source; triangulate connected topology before cooking [node=__root/pCylinder1, original face=49, location=(0.603387, 0.130276, -0.419186)]"
+  },
+  {
+    "identity": "__root/pCube5/material/aiStandardSurface5",
+    "material": 0,
+    "ordinal": 5,
+    "triangles": 12,
+    "success": false,
+    "diagnostic": {
+      "action": "Select the reported source location; use explicit collision cleanup or a separate physical source. Visual import remains valid.",
+      "code": "t-junction",
+      "face": 49,
+      "node": "__root/pCylinder1",
+      "point": [
+        0.6033868789672852,
+        0.1302761510014534,
+        -0.419185534119606
+      ],
+      "vertices": [
+        96,
+        90
+      ]
+    },
+    "error": "T-junction in collision source; triangulate connected topology before cooking [node=__root/pCylinder1, original face=49, location=(0.603387, 0.130276, -0.419186)]"
+  },
+  {
+    "identity": "__root/pCube6/material/aiStandardSurface5",
+    "material": 0,
+    "ordinal": 6,
+    "triangles": 12,
+    "success": false,
+    "diagnostic": {
+      "action": "Select the reported source location; use explicit collision cleanup or a separate physical source. Visual import remains valid.",
+      "code": "t-junction",
+      "face": 49,
+      "node": "__root/pCylinder1",
+      "point": [
+        0.6033868789672852,
+        0.1302761510014534,
+        -0.419185534119606
+      ],
+      "vertices": [
+        96,
+        90
+      ]
+    },
+    "error": "T-junction in collision source; triangulate connected topology before cooking [node=__root/pCylinder1, original face=49, location=(0.603387, 0.130276, -0.419186)]"
+  },
+  {
+    "identity": "__root/pCube7/material/aiStandardSurface5",
+    "material": 0,
+    "ordinal": 7,
+    "triangles": 12,
+    "success": false,
+    "diagnostic": {
+      "action": "Select the reported source location; use explicit collision cleanup or a separate physical source. Visual import remains valid.",
+      "code": "t-junction",
+      "face": 49,
+      "node": "__root/pCylinder1",
+      "point": [
+        0.6033868789672852,
+        0.1302761510014534,
+        -0.419185534119606
+      ],
+      "vertices": [
+        96,
+        90
+      ]
+    },
+    "error": "T-junction in collision source; triangulate connected topology before cooking [node=__root/pCylinder1, original face=49, location=(0.603387, 0.130276, -0.419186)]"
+  },
+  {
+    "identity": "__root/pCube8/material/aiStandardSurface5",
+    "material": 0,
+    "ordinal": 8,
+    "triangles": 12,
+    "success": false,
+    "diagnostic": {
+      "action": "Select the reported source location; use explicit collision cleanup or a separate physical source. Visual import remains valid.",
+      "code": "t-junction",
+      "face": 49,
+      "node": "__root/pCylinder1",
+      "point": [
+        0.6033868789672852,
+        0.1302761510014534,
+        -0.419185534119606
+      ],
+      "vertices": [
+        96,
+        90
+      ]
+    },
+    "error": "T-junction in collision source; triangulate connected topology before cooking [node=__root/pCylinder1, original face=49, location=(0.603387, 0.130276, -0.419186)]"
+  },
+  {
+    "identity": "__root/pCube9/material/aiStandardSurface5",
+    "material": 0,
+    "ordinal": 9,
+    "triangles": 12,
+    "success": false,
+    "diagnostic": {
+      "action": "Select the reported source location; use explicit collision cleanup or a separate physical source. Visual import remains valid.",
+      "code": "t-junction",
+      "face": 49,
+      "node": "__root/pCylinder1",
+      "point": [
+        0.6033868789672852,
+        0.1302761510014534,
+        -0.419185534119606
+      ],
+      "vertices": [
+        96,
+        90
+      ]
+    },
+    "error": "T-junction in collision source; triangulate connected topology before cooking [node=__root/pCylinder1, original face=49, location=(0.603387, 0.130276, -0.419186)]"
+  },
+  {
+    "identity": "__root/pCube10/material/aiStandardSurface5",
+    "material": 0,
+    "ordinal": 10,
+    "triangles": 12,
+    "success": false,
+    "diagnostic": {
+      "action": "Select the reported source location; use explicit collision cleanup or a separate physical source. Visual import remains valid.",
+      "code": "t-junction",
+      "face": 49,
+      "node": "__root/pCylinder1",
+      "point": [
+        0.6033868789672852,
+        0.1302761510014534,
+        -0.419185534119606
+      ],
+      "vertices": [
+        96,
+        90
+      ]
+    },
+    "error": "T-junction in collision source; triangulate connected topology before cooking [node=__root/pCylinder1, original face=49, location=(0.603387, 0.130276, -0.419186)]"
+  },
+  {
+    "identity": "__root/pCube11/material/aiStandardSurface12",
+    "material": 1,
+    "ordinal": 11,
+    "triangles": 12,
+    "success": false,
+    "diagnostic": {
+      "action": "Select the reported source location; use explicit collision cleanup or a separate physical source. Visual import remains valid.",
+      "code": "t-junction",
+      "face": 49,
+      "node": "__root/pCylinder1",
+      "point": [
+        0.6033868789672852,
+        0.1302761510014534,
+        -0.419185534119606
+      ],
+      "vertices": [
+        96,
+        90
+      ]
+    },
+    "error": "T-junction in collision source; triangulate connected topology before cooking [node=__root/pCylinder1, original face=49, location=(0.603387, 0.130276, -0.419186)]"
+  },
+  {
+    "identity": "__root/pCube12/material/aiStandardSurface12",
+    "material": 1,
+    "ordinal": 12,
+    "triangles": 12,
+    "success": false,
+    "diagnostic": {
+      "action": "Select the reported source location; use explicit collision cleanup or a separate physical source. Visual import remains valid.",
+      "code": "t-junction",
+      "face": 49,
+      "node": "__root/pCylinder1",
+      "point": [
+        0.6033868789672852,
+        0.1302761510014534,
+        -0.419185534119606
+      ],
+      "vertices": [
+        96,
+        90
+      ]
+    },
+    "error": "T-junction in collision source; triangulate connected topology before cooking [node=__root/pCylinder1, original face=49, location=(0.603387, 0.130276, -0.419186)]"
+  },
+  {
+    "identity": "__root/pCube13/material/aiStandardSurface12",
+    "material": 1,
+    "ordinal": 13,
+    "triangles": 12,
+    "success": false,
+    "diagnostic": {
+      "action": "Select the reported source location; use explicit collision cleanup or a separate physical source. Visual import remains valid.",
+      "code": "t-junction",
+      "face": 49,
+      "node": "__root/pCylinder1",
+      "point": [
+        0.6033868789672852,
+        0.1302761510014534,
+        -0.419185534119606
+      ],
+      "vertices": [
+        96,
+        90
+      ]
+    },
+    "error": "T-junction in collision source; triangulate connected topology before cooking [node=__root/pCylinder1, original face=49, location=(0.603387, 0.130276, -0.419186)]"
+  },
+  {
+    "identity": "__root/pCube14/material/aiStandardSurface12",
+    "material": 1,
+    "ordinal": 14,
+    "triangles": 12,
+    "success": false,
+    "diagnostic": {
+      "action": "Select the reported source location; use explicit collision cleanup or a separate physical source. Visual import remains valid.",
+      "code": "t-junction",
+      "face": 49,
+      "node": "__root/pCylinder1",
+      "point": [
+        0.6033868789672852,
+        0.1302761510014534,
+        -0.419185534119606
+      ],
+      "vertices": [
+        96,
+        90
+      ]
+    },
+    "error": "T-junction in collision source; triangulate connected topology before cooking [node=__root/pCylinder1, original face=49, location=(0.603387, 0.130276, -0.419186)]"
+  },
+  {
+    "identity": "__root/pCube15/material/aiStandardSurface12",
+    "material": 1,
+    "ordinal": 15,
+    "triangles": 12,
+    "success": false,
+    "diagnostic": {
+      "action": "Select the reported source location; use explicit collision cleanup or a separate physical source. Visual import remains valid.",
+      "code": "t-junction",
+      "face": 49,
+      "node": "__root/pCylinder1",
+      "point": [
+        0.6033868789672852,
+        0.1302761510014534,
+        -0.419185534119606
+      ],
+      "vertices": [
+        96,
+        90
+      ]
+    },
+    "error": "T-junction in collision source; triangulate connected topology before cooking [node=__root/pCylinder1, original face=49, location=(0.603387, 0.130276, -0.419186)]"
+  },
+  {
+    "identity": "__root/pCube16/material/aiStandardSurface5",
+    "material": 0,
+    "ordinal": 16,
+    "triangles": 12,
+    "success": false,
+    "diagnostic": {
+      "action": "Select the reported source location; use explicit collision cleanup or a separate physical source. Visual import remains valid.",
+      "code": "t-junction",
+      "face": 49,
+      "node": "__root/pCylinder1",
+      "point": [
+        0.6033868789672852,
+        0.1302761510014534,
+        -0.419185534119606
+      ],
+      "vertices": [
+        96,
+        90
+      ]
+    },
+    "error": "T-junction in collision source; triangulate connected topology before cooking [node=__root/pCylinder1, original face=49, location=(0.603387, 0.130276, -0.419186)]"
+  },
+  {
+    "identity": "__root/pCube17/material/aiStandardSurface5",
+    "material": 0,
+    "ordinal": 17,
+    "triangles": 12,
+    "success": false,
+    "diagnostic": {
+      "action": "Select the reported source location; use explicit collision cleanup or a separate physical source. Visual import remains valid.",
+      "code": "t-junction",
+      "face": 49,
+      "node": "__root/pCylinder1",
+      "point": [
+        0.6033868789672852,
+        0.1302761510014534,
+        -0.419185534119606
+      ],
+      "vertices": [
+        96,
+        90
+      ]
+    },
+    "error": "T-junction in collision source; triangulate connected topology before cooking [node=__root/pCylinder1, original face=49, location=(0.603387, 0.130276, -0.419186)]"
+  },
+  {
+    "identity": "__root/pCube18/material/aiStandardSurface5",
+    "material": 0,
+    "ordinal": 18,
+    "triangles": 12,
+    "success": false,
+    "diagnostic": {
+      "action": "Select the reported source location; use explicit collision cleanup or a separate physical source. Visual import remains valid.",
+      "code": "t-junction",
+      "face": 49,
+      "node": "__root/pCylinder1",
+      "point": [
+        0.6033868789672852,
+        0.1302761510014534,
+        -0.419185534119606
+      ],
+      "vertices": [
+        96,
+        90
+      ]
+    },
+    "error": "T-junction in collision source; triangulate connected topology before cooking [node=__root/pCylinder1, original face=49, location=(0.603387, 0.130276, -0.419186)]"
+  },
+  {
+    "identity": "__root/Handrail_01/material/aiStandardSurface12",
+    "material": 1,
+    "ordinal": 19,
+    "triangles": 320,
+    "success": false,
+    "diagnostic": {
+      "action": "Select the reported source location; use explicit collision cleanup or a separate physical source. Visual import remains valid.",
+      "code": "t-junction",
+      "face": 49,
+      "node": "__root/pCylinder1",
+      "point": [
+        0.6033868789672852,
+        0.1302761510014534,
+        -0.419185534119606
+      ],
+      "vertices": [
+        96,
+        90
+      ]
+    },
+    "error": "T-junction in collision source; triangulate connected topology before cooking [node=__root/pCylinder1, original face=49, location=(0.603387, 0.130276, -0.419186)]"
+  },
+  {
+    "identity": "__root/Handrail_02/material/aiStandardSurface12",
+    "material": 1,
+    "ordinal": 20,
+    "triangles": 320,
+    "success": false,
+    "diagnostic": {
+      "action": "Select the reported source location; use explicit collision cleanup or a separate physical source. Visual import remains valid.",
+      "code": "t-junction",
+      "face": 49,
+      "node": "__root/pCylinder1",
+      "point": [
+        0.6033868789672852,
+        0.1302761510014534,
+        -0.419185534119606
+      ],
+      "vertices": [
+        96,
+        90
+      ]
+    },
+    "error": "T-junction in collision source; triangulate connected topology before cooking [node=__root/pCylinder1, original face=49, location=(0.603387, 0.130276, -0.419186)]"
+  },
+  {
+    "identity": "__root/Handrail_03/material/aiStandardSurface12",
+    "material": 1,
+    "ordinal": 21,
+    "triangles": 320,
+    "success": false,
+    "diagnostic": {
+      "action": "Select the reported source location; use explicit collision cleanup or a separate physical source. Visual import remains valid.",
+      "code": "t-junction",
+      "face": 49,
+      "node": "__root/pCylinder1",
+      "point": [
+        0.6033868789672852,
+        0.1302761510014534,
+        -0.419185534119606
+      ],
+      "vertices": [
+        96,
+        90
+      ]
+    },
+    "error": "T-junction in collision source; triangulate connected topology before cooking [node=__root/pCylinder1, original face=49, location=(0.603387, 0.130276, -0.419186)]"
+  },
+  {
+    "identity": "__root/Handrail_04/material/aiStandardSurface12",
+    "material": 1,
+    "ordinal": 22,
+    "triangles": 320,
+    "success": false,
+    "diagnostic": {
+      "action": "Select the reported source location; use explicit collision cleanup or a separate physical source. Visual import remains valid.",
+      "code": "t-junction",
+      "face": 49,
+      "node": "__root/pCylinder1",
+      "point": [
+        0.6033868789672852,
+        0.1302761510014534,
+        -0.419185534119606
+      ],
+      "vertices": [
+        96,
+        90
+      ]
+    },
+    "error": "T-junction in collision source; triangulate connected topology before cooking [node=__root/pCylinder1, original face=49, location=(0.603387, 0.130276, -0.419186)]"
+  },
+  {
+    "identity": "__root/Handrail_05/material/aiStandardSurface12",
+    "material": 1,
+    "ordinal": 23,
+    "triangles": 320,
+    "success": false,
+    "diagnostic": {
+      "action": "Select the reported source location; use explicit collision cleanup or a separate physical source. Visual import remains valid.",
+      "code": "t-junction",
+      "face": 49,
+      "node": "__root/pCylinder1",
+      "point": [
+        0.6033868789672852,
+        0.1302761510014534,
+        -0.419185534119606
+      ],
+      "vertices": [
+        96,
+        90
+      ]
+    },
+    "error": "T-junction in collision source; triangulate connected topology before cooking [node=__root/pCylinder1, original face=49, location=(0.603387, 0.130276, -0.419186)]"
+  },
+  {
+    "identity": "__root/Handrail_06/material/aiStandardSurface12",
+    "material": 1,
+    "ordinal": 24,
+    "triangles": 320,
+    "success": false,
+    "diagnostic": {
+      "action": "Select the reported source location; use explicit collision cleanup or a separate physical source. Visual import remains valid.",
+      "code": "t-junction",
+      "face": 49,
+      "node": "__root/pCylinder1",
+      "point": [
+        0.6033868789672852,
+        0.1302761510014534,
+        -0.419185534119606
+      ],
+      "vertices": [
+        96,
+        90
+      ]
+    },
+    "error": "T-junction in collision source; triangulate connected topology before cooking [node=__root/pCylinder1, original face=49, location=(0.603387, 0.130276, -0.419186)]"
+  },
+  {
+    "identity": "__root/Handrail_07/material/aiStandardSurface12",
+    "material": 1,
+    "ordinal": 25,
+    "triangles": 320,
+    "success": false,
+    "diagnostic": {
+      "action": "Select the reported source location; use explicit collision cleanup or a separate physical source. Visual import remains valid.",
+      "code": "t-junction",
+      "face": 49,
+      "node": "__root/pCylinder1",
+      "point": [
+        0.6033868789672852,
+        0.1302761510014534,
+        -0.419185534119606
+      ],
+      "vertices": [
+        96,
+        90
+      ]
+    },
+    "error": "T-junction in collision source; triangulate connected topology before cooking [node=__root/pCylinder1, original face=49, location=(0.603387, 0.130276, -0.419186)]"
+  },
+  {
+    "identity": "__root/Handrail_08/material/aiStandardSurface12",
+    "material": 1,
+    "ordinal": 26,
+    "triangles": 320,
+    "success": false,
+    "diagnostic": {
+      "action": "Select the reported source location; use explicit collision cleanup or a separate physical source. Visual import remains valid.",
+      "code": "t-junction",
+      "face": 49,
+      "node": "__root/pCylinder1",
+      "point": [
+        0.6033868789672852,
+        0.1302761510014534,
+        -0.419185534119606
+      ],
+      "vertices": [
+        96,
+        90
+      ]
+    },
+    "error": "T-junction in collision source; triangulate connected topology before cooking [node=__root/pCylinder1, original face=49, location=(0.603387, 0.130276, -0.419186)]"
+  },
+  {
+    "identity": "__root/Handrail_09/material/aiStandardSurface12",
+    "material": 1,
+    "ordinal": 27,
+    "triangles": 320,
+    "success": false,
+    "diagnostic": {
+      "action": "Select the reported source location; use explicit collision cleanup or a separate physical source. Visual import remains valid.",
+      "code": "t-junction",
+      "face": 49,
+      "node": "__root/pCylinder1",
+      "point": [
+        0.6033868789672852,
+        0.1302761510014534,
+        -0.419185534119606
+      ],
+      "vertices": [
+        96,
+        90
+      ]
+    },
+    "error": "T-junction in collision source; triangulate connected topology before cooking [node=__root/pCylinder1, original face=49, location=(0.603387, 0.130276, -0.419186)]"
+  },
+  {
+    "identity": "__root/Handrail_10/material/aiStandardSurface12",
+    "material": 1,
+    "ordinal": 28,
+    "triangles": 320,
+    "success": false,
+    "diagnostic": {
+      "action": "Select the reported source location; use explicit collision cleanup or a separate physical source. Visual import remains valid.",
+      "code": "t-junction",
+      "face": 49,
+      "node": "__root/pCylinder1",
+      "point": [
+        0.6033868789672852,
+        0.1302761510014534,
+        -0.419185534119606
+      ],
+      "vertices": [
+        96,
+        90
+      ]
+    },
+    "error": "T-junction in collision source; triangulate connected topology before cooking [node=__root/pCylinder1, original face=49, location=(0.603387, 0.130276, -0.419186)]"
+  },
+  {
+    "identity": "__root/Handrail_11/material/aiStandardSurface12",
+    "material": 1,
+    "ordinal": 29,
+    "triangles": 320,
+    "success": false,
+    "diagnostic": {
+      "action": "Select the reported source location; use explicit collision cleanup or a separate physical source. Visual import remains valid.",
+      "code": "t-junction",
+      "face": 49,
+      "node": "__root/pCylinder1",
+      "point": [
+        0.6033868789672852,
+        0.1302761510014534,
+        -0.419185534119606
+      ],
+      "vertices": [
+        96,
+        90
+      ]
+    },
+    "error": "T-junction in collision source; triangulate connected topology before cooking [node=__root/pCylinder1, original face=49, location=(0.603387, 0.130276, -0.419186)]"
+  },
+  {
+    "identity": "__root/Handrail_12/material/aiStandardSurface12",
+    "material": 1,
+    "ordinal": 30,
+    "triangles": 320,
+    "success": false,
+    "diagnostic": {
+      "action": "Select the reported source location; use explicit collision cleanup or a separate physical source. Visual import remains valid.",
+      "code": "t-junction",
+      "face": 49,
+      "node": "__root/pCylinder1",
+      "point": [
+        0.6033868789672852,
+        0.1302761510014534,
+        -0.419185534119606
+      ],
+      "vertices": [
+        96,
+        90
+      ]
+    },
+    "error": "T-junction in collision source; triangulate connected topology before cooking [node=__root/pCylinder1, original face=49, location=(0.603387, 0.130276, -0.419186)]"
+  },
+  {
+    "identity": "__root/Handrail_13/material/aiStandardSurface12",
+    "material": 1,
+    "ordinal": 31,
+    "triangles": 320,
+    "success": false,
+    "diagnostic": {
+      "action": "Select the reported source location; use explicit collision cleanup or a separate physical source. Visual import remains valid.",
+      "code": "t-junction",
+      "face": 49,
+      "node": "__root/pCylinder1",
+      "point": [
+        0.6033868789672852,
+        0.1302761510014534,
+        -0.419185534119606
+      ],
+      "vertices": [
+        96,
+        90
+      ]
+    },
+    "error": "T-junction in collision source; triangulate connected topology before cooking [node=__root/pCylinder1, original face=49, location=(0.603387, 0.130276, -0.419186)]"
+  },
+  {
+    "identity": "__root/Handrail_14/material/aiStandardSurface12",
+    "material": 1,
+    "ordinal": 32,
+    "triangles": 320,
+    "success": false,
+    "diagnostic": {
+      "action": "Select the reported source location; use explicit collision cleanup or a separate physical source. Visual import remains valid.",
+      "code": "t-junction",
+      "face": 49,
+      "node": "__root/pCylinder1",
+      "point": [
+        0.6033868789672852,
+        0.1302761510014534,
+        -0.419185534119606
+      ],
+      "vertices": [
+        96,
+        90
+      ]
+    },
+    "error": "T-junction in collision source; triangulate connected topology before cooking [node=__root/pCylinder1, original face=49, location=(0.603387, 0.130276, -0.419186)]"
+  },
+  {
+    "identity": "__root/Handrail_15/material/aiStandardSurface12",
+    "material": 1,
+    "ordinal": 33,
+    "triangles": 320,
+    "success": false,
+    "diagnostic": {
+      "action": "Select the reported source location; use explicit collision cleanup or a separate physical source. Visual import remains valid.",
+      "code": "t-junction",
+      "face": 49,
+      "node": "__root/pCylinder1",
+      "point": [
+        0.6033868789672852,
+        0.1302761510014534,
+        -0.419185534119606
+      ],
+      "vertices": [
+        96,
+        90
+      ]
+    },
+    "error": "T-junction in collision source; triangulate connected topology before cooking [node=__root/pCylinder1, original face=49, location=(0.603387, 0.130276, -0.419186)]"
+  },
+  {
+    "identity": "__root/Handrail_16/material/aiStandardSurface12",
+    "material": 1,
+    "ordinal": 34,
+    "triangles": 320,
+    "success": false,
+    "diagnostic": {
+      "action": "Select the reported source location; use explicit collision cleanup or a separate physical source. Visual import remains valid.",
+      "code": "t-junction",
+      "face": 49,
+      "node": "__root/pCylinder1",
+      "point": [
+        0.6033868789672852,
+        0.1302761510014534,
+        -0.419185534119606
+      ],
+      "vertices": [
+        96,
+        90
+      ]
+    },
+    "error": "T-junction in collision source; triangulate connected topology before cooking [node=__root/pCylinder1, original face=49, location=(0.603387, 0.130276, -0.419186)]"
+  },
+  {
+    "identity": "__root/Handrail_17/material/aiStandardSurface12",
+    "material": 1,
+    "ordinal": 35,
+    "triangles": 320,
+    "success": false,
+    "diagnostic": {
+      "action": "Select the reported source location; use explicit collision cleanup or a separate physical source. Visual import remains valid.",
+      "code": "t-junction",
+      "face": 49,
+      "node": "__root/pCylinder1",
+      "point": [
+        0.6033868789672852,
+        0.1302761510014534,
+        -0.419185534119606
+      ],
+      "vertices": [
+        96,
+        90
+      ]
+    },
+    "error": "T-junction in collision source; triangulate connected topology before cooking [node=__root/pCylinder1, original face=49, location=(0.603387, 0.130276, -0.419186)]"
+  },
+  {
+    "identity": "__root/Handrail_18/material/aiStandardSurface12",
+    "material": 1,
+    "ordinal": 36,
+    "triangles": 320,
+    "success": false,
+    "diagnostic": {
+      "action": "Select the reported source location; use explicit collision cleanup or a separate physical source. Visual import remains valid.",
+      "code": "t-junction",
+      "face": 49,
+      "node": "__root/pCylinder1",
+      "point": [
+        0.6033868789672852,
+        0.1302761510014534,
+        -0.419185534119606
+      ],
+      "vertices": [
+        96,
+        90
+      ]
+    },
+    "error": "T-junction in collision source; triangulate connected topology before cooking [node=__root/pCylinder1, original face=49, location=(0.603387, 0.130276, -0.419186)]"
+  },
+  {
+    "identity": "__root/Handrail_19/material/aiStandardSurface12",
+    "material": 1,
+    "ordinal": 37,
+    "triangles": 320,
+    "success": false,
+    "diagnostic": {
+      "action": "Select the reported source location; use explicit collision cleanup or a separate physical source. Visual import remains valid.",
+      "code": "t-junction",
+      "face": 49,
+      "node": "__root/pCylinder1",
+      "point": [
+        0.6033868789672852,
+        0.1302761510014534,
+        -0.419185534119606
+      ],
+      "vertices": [
+        96,
+        90
+      ]
+    },
+    "error": "T-junction in collision source; triangulate connected topology before cooking [node=__root/pCylinder1, original face=49, location=(0.603387, 0.130276, -0.419186)]"
+  },
+  {
+    "identity": "__root/Handrail_20/material/aiStandardSurface8",
+    "material": 2,
+    "ordinal": 38,
+    "triangles": 320,
+    "success": false,
+    "diagnostic": {
+      "action": "Select the reported source location; use explicit collision cleanup or a separate physical source. Visual import remains valid.",
+      "code": "t-junction",
+      "face": 49,
+      "node": "__root/pCylinder1",
+      "point": [
+        0.6033868789672852,
+        0.1302761510014534,
+        -0.419185534119606
+      ],
+      "vertices": [
+        96,
+        90
+      ]
+    },
+    "error": "T-junction in collision source; triangulate connected topology before cooking [node=__root/pCylinder1, original face=49, location=(0.603387, 0.130276, -0.419186)]"
+  },
+  {
+    "identity": "__root/Handrail_21/material/aiStandardSurface8",
+    "material": 2,
+    "ordinal": 39,
+    "triangles": 320,
+    "success": false,
+    "diagnostic": {
+      "action": "Select the reported source location; use explicit collision cleanup or a separate physical source. Visual import remains valid.",
+      "code": "t-junction",
+      "face": 49,
+      "node": "__root/pCylinder1",
+      "point": [
+        0.6033868789672852,
+        0.1302761510014534,
+        -0.419185534119606
+      ],
+      "vertices": [
+        96,
+        90
+      ]
+    },
+    "error": "T-junction in collision source; triangulate connected topology before cooking [node=__root/pCylinder1, original face=49, location=(0.603387, 0.130276, -0.419186)]"
+  },
+  {
+    "identity": "__root/Handrail_22/material/aiStandardSurface8",
+    "material": 2,
+    "ordinal": 40,
+    "triangles": 320,
+    "success": false,
+    "diagnostic": {
+      "action": "Select the reported source location; use explicit collision cleanup or a separate physical source. Visual import remains valid.",
+      "code": "t-junction",
+      "face": 49,
+      "node": "__root/pCylinder1",
+      "point": [
+        0.6033868789672852,
+        0.1302761510014534,
+        -0.419185534119606
+      ],
+      "vertices": [
+        96,
+        90
+      ]
+    },
+    "error": "T-junction in collision source; triangulate connected topology before cooking [node=__root/pCylinder1, original face=49, location=(0.603387, 0.130276, -0.419186)]"
+  },
+  {
+    "identity": "__root/Handrail_23/material/aiStandardSurface8",
+    "material": 2,
+    "ordinal": 41,
+    "triangles": 320,
+    "success": false,
+    "diagnostic": {
+      "action": "Select the reported source location; use explicit collision cleanup or a separate physical source. Visual import remains valid.",
+      "code": "t-junction",
+      "face": 49,
+      "node": "__root/pCylinder1",
+      "point": [
+        0.6033868789672852,
+        0.1302761510014534,
+        -0.419185534119606
+      ],
+      "vertices": [
+        96,
+        90
+      ]
+    },
+    "error": "T-junction in collision source; triangulate connected topology before cooking [node=__root/pCylinder1, original face=49, location=(0.603387, 0.130276, -0.419186)]"
+  },
+  {
+    "identity": "__root/Handrail_24/material/aiStandardSurface12",
+    "material": 1,
+    "ordinal": 42,
+    "triangles": 320,
+    "success": false,
+    "diagnostic": {
+      "action": "Select the reported source location; use explicit collision cleanup or a separate physical source. Visual import remains valid.",
+      "code": "t-junction",
+      "face": 49,
+      "node": "__root/pCylinder1",
+      "point": [
+        0.6033868789672852,
+        0.1302761510014534,
+        -0.419185534119606
+      ],
+      "vertices": [
+        96,
+        90
+      ]
+    },
+    "error": "T-junction in collision source; triangulate connected topology before cooking [node=__root/pCylinder1, original face=49, location=(0.603387, 0.130276, -0.419186)]"
+  },
+  {
+    "identity": "__root/Handrail_25/material/aiStandardSurface12",
+    "material": 1,
+    "ordinal": 43,
+    "triangles": 320,
+    "success": false,
+    "diagnostic": {
+      "action": "Select the reported source location; use explicit collision cleanup or a separate physical source. Visual import remains valid.",
+      "code": "t-junction",
+      "face": 49,
+      "node": "__root/pCylinder1",
+      "point": [
+        0.6033868789672852,
+        0.1302761510014534,
+        -0.419185534119606
+      ],
+      "vertices": [
+        96,
+        90
+      ]
+    },
+    "error": "T-junction in collision source; triangulate connected topology before cooking [node=__root/pCylinder1, original face=49, location=(0.603387, 0.130276, -0.419186)]"
+  },
+  {
+    "identity": "__root/Handrail_26/material/aiStandardSurface12",
+    "material": 1,
+    "ordinal": 44,
+    "triangles": 320,
+    "success": false,
+    "diagnostic": {
+      "action": "Select the reported source location; use explicit collision cleanup or a separate physical source. Visual import remains valid.",
+      "code": "t-junction",
+      "face": 49,
+      "node": "__root/pCylinder1",
+      "point": [
+        0.6033868789672852,
+        0.1302761510014534,
+        -0.419185534119606
+      ],
+      "vertices": [
+        96,
+        90
+      ]
+    },
+    "error": "T-junction in collision source; triangulate connected topology before cooking [node=__root/pCylinder1, original face=49, location=(0.603387, 0.130276, -0.419186)]"
+  },
+  {
+    "identity": "__root/Handrail_27/material/aiStandardSurface12",
+    "material": 1,
+    "ordinal": 45,
+    "triangles": 320,
+    "success": false,
+    "diagnostic": {
+      "action": "Select the reported source location; use explicit collision cleanup or a separate physical source. Visual import remains valid.",
+      "code": "t-junction",
+      "face": 49,
+      "node": "__root/pCylinder1",
+      "point": [
+        0.6033868789672852,
+        0.1302761510014534,
+        -0.419185534119606
+      ],
+      "vertices": [
+        96,
+        90
+      ]
+    },
+    "error": "T-junction in collision source; triangulate connected topology before cooking [node=__root/pCylinder1, original face=49, location=(0.603387, 0.130276, -0.419186)]"
+  },
+  {
+    "identity": "__root/Handrail_28/material/aiStandardSurface12",
+    "material": 1,
+    "ordinal": 46,
+    "triangles": 320,
+    "success": false,
+    "diagnostic": {
+      "action": "Select the reported source location; use explicit collision cleanup or a separate physical source. Visual import remains valid.",
+      "code": "t-junction",
+      "face": 49,
+      "node": "__root/pCylinder1",
+      "point": [
+        0.6033868789672852,
+        0.1302761510014534,
+        -0.419185534119606
+      ],
+      "vertices": [
+        96,
+        90
+      ]
+    },
+    "error": "T-junction in collision source; triangulate connected topology before cooking [node=__root/pCylinder1, original face=49, location=(0.603387, 0.130276, -0.419186)]"
+  },
+  {
+    "identity": "__root/Handrail_29/material/aiStandardSurface12",
+    "material": 1,
+    "ordinal": 47,
+    "triangles": 320,
+    "success": false,
+    "diagnostic": {
+      "action": "Select the reported source location; use explicit collision cleanup or a separate physical source. Visual import remains valid.",
+      "code": "t-junction",
+      "face": 49,
+      "node": "__root/pCylinder1",
+      "point": [
+        0.6033868789672852,
+        0.1302761510014534,
+        -0.419185534119606
+      ],
+      "vertices": [
+        96,
+        90
+      ]
+    },
+    "error": "T-junction in collision source; triangulate connected topology before cooking [node=__root/pCylinder1, original face=49, location=(0.603387, 0.130276, -0.419186)]"
+  },
+  {
+    "identity": "__root/Handrail_30/material/aiStandardSurface12",
+    "material": 1,
+    "ordinal": 48,
+    "triangles": 320,
+    "success": false,
+    "diagnostic": {
+      "action": "Select the reported source location; use explicit collision cleanup or a separate physical source. Visual import remains valid.",
+      "code": "t-junction",
+      "face": 49,
+      "node": "__root/pCylinder1",
+      "point": [
+        0.6033868789672852,
+        0.1302761510014534,
+        -0.419185534119606
+      ],
+      "vertices": [
+        96,
+        90
+      ]
+    },
+    "error": "T-junction in collision source; triangulate connected topology before cooking [node=__root/pCylinder1, original face=49, location=(0.603387, 0.130276, -0.419186)]"
+  },
+  {
+    "identity": "__root/Handrail_31/material/aiStandardSurface12",
+    "material": 1,
+    "ordinal": 49,
+    "triangles": 320,
+    "success": false,
+    "diagnostic": {
+      "action": "Select the reported source location; use explicit collision cleanup or a separate physical source. Visual import remains valid.",
+      "code": "t-junction",
+      "face": 49,
+      "node": "__root/pCylinder1",
+      "point": [
+        0.6033868789672852,
+        0.1302761510014534,
+        -0.419185534119606
+      ],
+      "vertices": [
+        96,
+        90
+      ]
+    },
+    "error": "T-junction in collision source; triangulate connected topology before cooking [node=__root/pCylinder1, original face=49, location=(0.603387, 0.130276, -0.419186)]"
+  },
+  {
+    "identity": "__root/Handrail_32/material/aiStandardSurface12",
+    "material": 1,
+    "ordinal": 50,
+    "triangles": 320,
+    "success": false,
+    "diagnostic": {
+      "action": "Select the reported source location; use explicit collision cleanup or a separate physical source. Visual import remains valid.",
+      "code": "t-junction",
+      "face": 49,
+      "node": "__root/pCylinder1",
+      "point": [
+        0.6033868789672852,
+        0.1302761510014534,
+        -0.419185534119606
+      ],
+      "vertices": [
+        96,
+        90
+      ]
+    },
+    "error": "T-junction in collision source; triangulate connected topology before cooking [node=__root/pCylinder1, original face=49, location=(0.603387, 0.130276, -0.419186)]"
+  },
+  {
+    "identity": "__root/Handrail_33/material/aiStandardSurface12",
+    "material": 1,
+    "ordinal": 51,
+    "triangles": 320,
+    "success": false,
+    "diagnostic": {
+      "action": "Select the reported source location; use explicit collision cleanup or a separate physical source. Visual import remains valid.",
+      "code": "t-junction",
+      "face": 49,
+      "node": "__root/pCylinder1",
+      "point": [
+        0.6033868789672852,
+        0.1302761510014534,
+        -0.419185534119606
+      ],
+      "vertices": [
+        96,
+        90
+      ]
+    },
+    "error": "T-junction in collision source; triangulate connected topology before cooking [node=__root/pCylinder1, original face=49, location=(0.603387, 0.130276, -0.419186)]"
+  },
+  {
+    "identity": "__root/Handrail_34/material/aiStandardSurface12",
+    "material": 1,
+    "ordinal": 52,
+    "triangles": 320,
+    "success": false,
+    "diagnostic": {
+      "action": "Select the reported source location; use explicit collision cleanup or a separate physical source. Visual import remains valid.",
+      "code": "t-junction",
+      "face": 49,
+      "node": "__root/pCylinder1",
+      "point": [
+        0.6033868789672852,
+        0.1302761510014534,
+        -0.419185534119606
+      ],
+      "vertices": [
+        96,
+        90
+      ]
+    },
+    "error": "T-junction in collision source; triangulate connected topology before cooking [node=__root/pCylinder1, original face=49, location=(0.603387, 0.130276, -0.419186)]"
+  },
+  {
+    "identity": "__root/Handrail_35/material/aiStandardSurface12",
+    "material": 1,
+    "ordinal": 53,
+    "triangles": 320,
+    "success": false,
+    "diagnostic": {
+      "action": "Select the reported source location; use explicit collision cleanup or a separate physical source. Visual import remains valid.",
+      "code": "t-junction",
+      "face": 49,
+      "node": "__root/pCylinder1",
+      "point": [
+        0.6033868789672852,
+        0.1302761510014534,
+        -0.419185534119606
+      ],
+      "vertices": [
+        96,
+        90
+      ]
+    },
+    "error": "T-junction in collision source; triangulate connected topology before cooking [node=__root/pCylinder1, original face=49, location=(0.603387, 0.130276, -0.419186)]"
+  },
+  {
+    "identity": "__root/Handrail_36/material/aiStandardSurface12",
+    "material": 1,
+    "ordinal": 54,
+    "triangles": 320,
+    "success": false,
+    "diagnostic": {
+      "action": "Select the reported source location; use explicit collision cleanup or a separate physical source. Visual import remains valid.",
+      "code": "t-junction",
+      "face": 49,
+      "node": "__root/pCylinder1",
+      "point": [
+        0.6033868789672852,
+        0.1302761510014534,
+        -0.419185534119606
+      ],
+      "vertices": [
+        96,
+        90
+      ]
+    },
+    "error": "T-junction in collision source; triangulate connected topology before cooking [node=__root/pCylinder1, original face=49, location=(0.603387, 0.130276, -0.419186)]"
+  },
+  {
+    "identity": "__root/Handrail_37/material/aiStandardSurface12",
+    "material": 1,
+    "ordinal": 55,
+    "triangles": 320,
+    "success": false,
+    "diagnostic": {
+      "action": "Select the reported source location; use explicit collision cleanup or a separate physical source. Visual import remains valid.",
+      "code": "t-junction",
+      "face": 49,
+      "node": "__root/pCylinder1",
+      "point": [
+        0.6033868789672852,
+        0.1302761510014534,
+        -0.419185534119606
+      ],
+      "vertices": [
+        96,
+        90
+      ]
+    },
+    "error": "T-junction in collision source; triangulate connected topology before cooking [node=__root/pCylinder1, original face=49, location=(0.603387, 0.130276, -0.419186)]"
+  },
+  {
+    "identity": "__root/Handrail_38/material/aiStandardSurface12",
+    "material": 1,
+    "ordinal": 56,
+    "triangles": 320,
+    "success": false,
+    "diagnostic": {
+      "action": "Select the reported source location; use explicit collision cleanup or a separate physical source. Visual import remains valid.",
+      "code": "t-junction",
+      "face": 49,
+      "node": "__root/pCylinder1",
+      "point": [
+        0.6033868789672852,
+        0.1302761510014534,
+        -0.419185534119606
+      ],
+      "vertices": [
+        96,
+        90
+      ]
+    },
+    "error": "T-junction in collision source; triangulate connected topology before cooking [node=__root/pCylinder1, original face=49, location=(0.603387, 0.130276, -0.419186)]"
+  },
+  {
+    "identity": "__root/Handrail_39/material/aiStandardSurface12",
+    "material": 1,
+    "ordinal": 57,
+    "triangles": 320,
+    "success": false,
+    "diagnostic": {
+      "action": "Select the reported source location; use explicit collision cleanup or a separate physical source. Visual import remains valid.",
+      "code": "t-junction",
+      "face": 49,
+      "node": "__root/pCylinder1",
+      "point": [
+        0.6033868789672852,
+        0.1302761510014534,
+        -0.419185534119606
+      ],
+      "vertices": [
+        96,
+        90
+      ]
+    },
+    "error": "T-junction in collision source; triangulate connected topology before cooking [node=__root/pCylinder1, original face=49, location=(0.603387, 0.130276, -0.419186)]"
+  },
+  {
+    "identity": "__root/Handrail_40/material/aiStandardSurface12",
+    "material": 1,
+    "ordinal": 58,
+    "triangles": 320,
+    "success": false,
+    "diagnostic": {
+      "action": "Select the reported source location; use explicit collision cleanup or a separate physical source. Visual import remains valid.",
+      "code": "t-junction",
+      "face": 49,
+      "node": "__root/pCylinder1",
+      "point": [
+        0.6033868789672852,
+        0.1302761510014534,
+        -0.419185534119606
+      ],
+      "vertices": [
+        96,
+        90
+      ]
+    },
+    "error": "T-junction in collision source; triangulate connected topology before cooking [node=__root/pCylinder1, original face=49, location=(0.603387, 0.130276, -0.419186)]"
+  },
+  {
+    "identity": "__root/Handrail_41/material/aiStandardSurface12",
+    "material": 1,
+    "ordinal": 59,
+    "triangles": 320,
+    "success": false,
+    "diagnostic": {
+      "action": "Select the reported source location; use explicit collision cleanup or a separate physical source. Visual import remains valid.",
+      "code": "t-junction",
+      "face": 49,
+      "node": "__root/pCylinder1",
+      "point": [
+        0.6033868789672852,
+        0.1302761510014534,
+        -0.419185534119606
+      ],
+      "vertices": [
+        96,
+        90
+      ]
+    },
+    "error": "T-junction in collision source; triangulate connected topology before cooking [node=__root/pCylinder1, original face=49, location=(0.603387, 0.130276, -0.419186)]"
+  },
+  {
+    "identity": "__root/Handrail_42/material/aiStandardSurface12",
+    "material": 1,
+    "ordinal": 60,
+    "triangles": 320,
+    "success": false,
+    "diagnostic": {
+      "action": "Select the reported source location; use explicit collision cleanup or a separate physical source. Visual import remains valid.",
+      "code": "t-junction",
+      "face": 49,
+      "node": "__root/pCylinder1",
+      "point": [
+        0.6033868789672852,
+        0.1302761510014534,
+        -0.419185534119606
+      ],
+      "vertices": [
+        96,
+        90
+      ]
+    },
+    "error": "T-junction in collision source; triangulate connected topology before cooking [node=__root/pCylinder1, original face=49, location=(0.603387, 0.130276, -0.419186)]"
+  },
+  {
+    "identity": "__root/Handrail_43/material/aiStandardSurface12",
+    "material": 1,
+    "ordinal": 61,
+    "triangles": 320,
+    "success": false,
+    "diagnostic": {
+      "action": "Select the reported source location; use explicit collision cleanup or a separate physical source. Visual import remains valid.",
+      "code": "t-junction",
+      "face": 49,
+      "node": "__root/pCylinder1",
+      "point": [
+        0.6033868789672852,
+        0.1302761510014534,
+        -0.419185534119606
+      ],
+      "vertices": [
+        96,
+        90
+      ]
+    },
+    "error": "T-junction in collision source; triangulate connected topology before cooking [node=__root/pCylinder1, original face=49, location=(0.603387, 0.130276, -0.419186)]"
+  },
+  {
+    "identity": "__root/Handrail_44/material/aiStandardSurface12",
+    "material": 1,
+    "ordinal": 62,
+    "triangles": 320,
+    "success": false,
+    "diagnostic": {
+      "action": "Select the reported source location; use explicit collision cleanup or a separate physical source. Visual import remains valid.",
+      "code": "t-junction",
+      "face": 49,
+      "node": "__root/pCylinder1",
+      "point": [
+        0.6033868789672852,
+        0.1302761510014534,
+        -0.419185534119606
+      ],
+      "vertices": [
+        96,
+        90
+      ]
+    },
+    "error": "T-junction in collision source; triangulate connected topology before cooking [node=__root/pCylinder1, original face=49, location=(0.603387, 0.130276, -0.419186)]"
+  },
+  {
+    "identity": "__root/Handrail_45/material/aiStandardSurface12",
+    "material": 1,
+    "ordinal": 63,
+    "triangles": 320,
+    "success": false,
+    "diagnostic": {
+      "action": "Select the reported source location; use explicit collision cleanup or a separate physical source. Visual import remains valid.",
+      "code": "t-junction",
+      "face": 49,
+      "node": "__root/pCylinder1",
+      "point": [
+        0.6033868789672852,
+        0.1302761510014534,
+        -0.419185534119606
+      ],
+      "vertices": [
+        96,
+        90
+      ]
+    },
+    "error": "T-junction in collision source; triangulate connected topology before cooking [node=__root/pCylinder1, original face=49, location=(0.603387, 0.130276, -0.419186)]"
+  },
+  {
+    "identity": "__root/Handrail_46/material/aiStandardSurface12",
+    "material": 1,
+    "ordinal": 64,
+    "triangles": 320,
+    "success": false,
+    "diagnostic": {
+      "action": "Select the reported source location; use explicit collision cleanup or a separate physical source. Visual import remains valid.",
+      "code": "t-junction",
+      "face": 49,
+      "node": "__root/pCylinder1",
+      "point": [
+        0.6033868789672852,
+        0.1302761510014534,
+        -0.419185534119606
+      ],
+      "vertices": [
+        96,
+        90
+      ]
+    },
+    "error": "T-junction in collision source; triangulate connected topology before cooking [node=__root/pCylinder1, original face=49, location=(0.603387, 0.130276, -0.419186)]"
+  },
+  {
+    "identity": "__root/Handrail_47/material/aiStandardSurface12",
+    "material": 1,
+    "ordinal": 65,
+    "triangles": 320,
+    "success": false,
+    "diagnostic": {
+      "action": "Select the reported source location; use explicit collision cleanup or a separate physical source. Visual import remains valid.",
+      "code": "t-junction",
+      "face": 49,
+      "node": "__root/pCylinder1",
+      "point": [
+        0.6033868789672852,
+        0.1302761510014534,
+        -0.419185534119606
+      ],
+      "vertices": [
+        96,
+        90
+      ]
+    },
+    "error": "T-junction in collision source; triangulate connected topology before cooking [node=__root/pCylinder1, original face=49, location=(0.603387, 0.130276, -0.419186)]"
+  }
+]

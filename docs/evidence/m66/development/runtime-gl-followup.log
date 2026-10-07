@@ -1,0 +1,6 @@
+PASS ordinary registered import project
+PASS import lab authored scene parses
+Renderer fragment texture units: 32 (material path uses 12)
+PASS normal GL 3.3 EngineHost
+FAIL cold cooked async load and owner-thread GPU publication
+loading

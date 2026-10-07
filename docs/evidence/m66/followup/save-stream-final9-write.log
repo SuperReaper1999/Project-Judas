@@ -1,0 +1,17 @@
+Renderer fragment texture units: 32 (material path uses 12)
+World state: disk saves disabled for additive compositions
+Project: M66 Import Lab (/home/conner/Documents/GitHub/Project-Judas/projects/import_lab/import_lab.judasproj)
+Scene: M66 original rig — G clips, J mask, K additive, I IK, F ragdoll, B root intent (/home/conner/Documents/GitHub/Project-Judas/projects/import_lab/Scenes/main.judas)
+World origin (m): 0.000, 0.000, 0.000
+PASS normal app loads complete original hierarchy plus root-track helper
+PASS normal app shares immutable asset with independent instances
+PASS retained save region uses full-rig mixer
+PASS capture retained save animation
+PASS suspend imported region before disk save
+PASS saved instance layer uses stable skeleton identity
+PASS saved instance part visibility authored by stable key
+PASS saved independent original rig physical subset
+PASS modern slot request
+PASS unchanged imported content committed through normal SaveService
+PASS ordinary project process startup/lifecycle/shutdown
+SUMMARY mode=stream-write checks=11 failures=0 frames=1018

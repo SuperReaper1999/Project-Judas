@@ -1,0 +1,29 @@
+{
+  "cleanup": {
+    "flipped": 2,
+    "orientPatches": true,
+    "removeDegenerates": true,
+    "removed": 7,
+    "weldTolerance": 0.0,
+    "welded": 0
+  },
+  "diagnostic": {
+    "action": "Select the reported source location; use explicit collision cleanup or a separate physical source. Visual import remains valid.",
+    "code": "t-junction",
+    "face": 49,
+    "node": "__root/pCylinder1",
+    "point": [
+      0.6033868789672852,
+      0.1302761510014534,
+      -0.419185534119606
+    ],
+    "vertices": [
+      96,
+      90
+    ]
+  },
+  "error": "T-junction in collision source; triangulate connected topology before cooking [node=__root/pCylinder1, original face=49, location=(0.603387, 0.130276, -0.419186)]",
+  "output": "/tmp/m66-halfpipe-part.judascollision",
+  "source": ".cache/m66/halfpipe-preview.judasmodel",
+  "success": false
+}

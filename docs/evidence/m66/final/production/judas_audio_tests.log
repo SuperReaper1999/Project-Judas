@@ -1,0 +1,64 @@
+Renderer fragment texture units: 32 (material path uses 12)
+PASS unused service opens no device and owns no voices
+PASS actual miniaudio engine starts in explicit device-free test mode
+PASS ordinary metadata discovers stable audio asset
+PASS audio metadata round-trips normal type/id
+PASS real WAV decoder produces whole clip PCM
+PASS compressed MP3 uses same backend decoder
+PASS failed decode leaves existing data intact
+PASS ordinary import validates decoder and creates stable audio metadata
+PASS audio rename/move preserves stable identity
+PASS corrupt file fails through actual resource IO/decoder path
+PASS corrected input recovers through supported invalidation path
+PASS shared requests install one clip through real resource pipeline
+PASS actual IO/decode runs on existing worker pool
+PASS voice starts through engine API
+PASS full emitter/listener pose reaches real backend without world-up substitution
+PASS pause preserves active voice
+PASS paused cursor stays fixed and resume retains it
+PASS loop stays active after clip duration
+PASS stop rewinds without orphan voice
+PASS quarter-turn listener rotation has independently known forward/up axes
+PASS 2D mode routes to backend non-spatial path
+PASS non-spatial position updates have no effect
+PASS actual inverse-distance backend gain matches independent reference values
+PASS linear attenuation is finite and clamps beyond maximum distance
+PASS no distance attenuation retains actual backend spatial panning configuration
+PASS invalid audio settings fail without silent clamping
+PASS generic one-shot starts
+PASS completed standalone one-shot auto-releases
+PASS authored one-shot retains finished state without auto-retirement
+PASS explicit Stop resets a completed one-shot state
+PASS emitter/listener authored values round-trip
+PASS authored audio changes strict baseline fingerprint
+PASS multiple enabled authored listeners reject deterministically
+PASS ordinary runtime builds authored audio bindings
+PASS real Play entry starts world audio lifecycle
+PASS Play creates two voices sharing decoded assets
+PASS moving entity presentation updates its emitter position
+PASS world play/stop/pause/resume controls use same voices
+PASS disabling emitter releases its voice immediately
+PASS destroying dynamic emitter releases its voice immediately
+PASS Stop leaves no voices and never changes authored scene
+PASS audio authoring undo restores original state
+PASS missing audio fails visibly without affecting valid clip
+PASS valid audio remains usable after unrelated load failure
+PASS normal EngineHost starts audio service independently of Renderer
+PASS explicit device-free mode uses host-owned actual backend
+PASS same authored bindings build through process services
+PASS interactive runtime entry uses shared audio lifecycle
+PASS ordinary interactive frame creates voices and updates active-camera listener
+PASS ordinary Stop releases host voices without authored mutations
+PASS project closure clears runtime clips and voices
+PASS process shutdown closes audio backend
+PASS performance fixture uses ordinary world bindings
+PASS performance fixture creates requested actual backend voices
+PERFORMANCE voices=0 world_audio_update_mean_us=0.431434 mix_one_second_cpu_ms=0.026468 (device-free backend DSP; no perceptual claim)
+PASS performance fixture uses ordinary world bindings
+PASS performance fixture creates requested actual backend voices
+PERFORMANCE voices=4 world_audio_update_mean_us=1.825309 mix_one_second_cpu_ms=2.045914 (device-free backend DSP; no perceptual claim)
+PASS performance fixture uses ordinary world bindings
+PASS performance fixture creates requested actual backend voices
+PERFORMANCE voices=32 world_audio_update_mean_us=14.752621 mix_one_second_cpu_ms=16.378635 (device-free backend DSP; no perceptual claim)
+PASS shutdown releases every registered voice/clip and backend engine
+SUMMARY checks=59 failures=0

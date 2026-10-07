@@ -1,0 +1,80 @@
+ M .gitignore
+ M CMakeLists.txt
+ M docs/ANIMATION.md
+ M docs/ARCHITECTURE.md
+ M docs/JUDASJS.md
+ M docs/M59_WORLD_STREAMING.md
+ M docs/MATERIALS.md
+ M docs/judas.d.ts
+ M docs/judasjs/API_INVENTORY.md
+ M docs/judasjs/animation-ragdolls.md
+ M docs/judasjs/api-inventory.json
+ M docs/judasjs/cookbook.md
+ M docs/judasjs/entities.md
+ M scripts/check_judasjs_api.mjs
+ M src/AssetDatabase.cpp
+ M src/CollisionAsset.cpp
+ M src/CollisionAsset.h
+ M src/CollisionSource.cpp
+ M src/GltfLoader.cpp
+ M src/GltfLoader.h
+ M src/Material.cpp
+ M src/Material.h
+ M src/MeshData.h
+ M src/ModelLoader.cpp
+ M src/PoseComposition.cpp
+ M src/ProjectExporter.cpp
+ M src/Ragdoll.cpp
+ M src/Renderer.cpp
+ M src/Renderer.h
+ M src/RendererMaterials.inl
+ M src/ResourceManager.cpp
+ M src/ResourceManager.h
+ M src/RuntimeWorld.cpp
+ M src/RuntimeWorld.h
+ M src/SaveService.cpp
+ M src/Scene.h
+ M src/SceneFingerprint.cpp
+ M src/SceneSerialization.cpp
+ M src/ScriptSystem.cpp
+ M src/SkeletalAnimation.cpp
+ M src/SkeletalAnimation.h
+ M src/Tangents.cpp
+ M src/TextureLoader.cpp
+ M src/WorldPersistence.cpp
+ M src/WorldPersistence.h
+ M src/WorldPresentation.cpp
+ M src/WorldRagdoll.cpp
+ M src/WorldStreaming.cpp
+ M src/editor/EditorApplication.cpp
+ M src/editor/EditorApplication.h
+ M src/editor/EditorPanels.cpp
+ M src/editor/EditorPanels.h
+ M tests/JudasJSExamplesTests.cpp
+ M third_party/RUNTIME_NOTICES.txt
+?? docs/MODEL_IMPORT.md
+?? docs/evidence/m66/
+?? docs/judasjs/examples/imported-model.js
+?? projects/import_lab/
+?? scripts/m66_create_consumer.py
+?? scripts/m66_create_lab.py
+?? scripts/m66_import_measurements.py
+?? scripts/m66_validation.py
+?? src/FbxImport.cpp
+?? src/ModelArchive.cpp
+?? src/ModelArchive.h
+?? src/ModelCollision.cpp
+?? src/ModelCollision.h
+?? src/ModelCook.cpp
+?? src/ModelCook.h
+?? src/ModelImport.h
+?? src/ObjImport.cpp
+?? tests/ModelApplicationTests.cpp
+?? tests/ModelImportTests.cpp
+?? tests/ModelReimportTests.cpp
+?? tests/ModelRuntimeTests.cpp
+?? tests/fixtures/m66/
+?? third_party/nlohmann/
+?? third_party/ufbx/
+?? tools/ModelImportCli.cpp
+?? tools/m66_fixtures.py

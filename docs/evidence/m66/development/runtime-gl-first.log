@@ -1,0 +1,3 @@
+PASS ordinary registered import project
+FAIL import lab authored scene parses
+/home/conner/Documents/GitHub/Project-Judas/projects/import_lab/Scenes/main.judas: scene line 730: missing required key 'motor.collisionLayer'

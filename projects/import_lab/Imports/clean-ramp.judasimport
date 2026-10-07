@@ -1,0 +1,14 @@
+{
+  "format": "JudasImport",
+  "version": 1,
+  "assetId": "1428714793cebb6bab30f46928af585c",
+  "source": "Sources/clean-ramp/ramp.obj",
+  "output": "Assets/models/clean-ramp.judasmodel",
+  "settings": {
+    "unitMeters": 0,
+    "sampleRate": 60,
+    "allowBaseMesh": false,
+    "dependencyRemaps": {}
+  },
+  "motions": []
+}

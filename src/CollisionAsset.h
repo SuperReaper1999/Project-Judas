@@ -36,7 +36,13 @@ struct CollisionAsset {
     void Candidates(glm::dvec3 minimum,glm::dvec3 maximum,std::vector<uint32_t>&,uint64_t* tested=nullptr) const;
 };
 struct CollisionCookSettings {bool convex=false,twoSided=false;unsigned primitive=0;glm::dmat4 transform{1};};
-bool CookCollision(const MeshData&,const CollisionCookSettings&,CollisionAsset&,std::string&);
+struct CollisionDiagnostic {
+    std::string code,node,action;
+    uint32_t sourceFace=UINT32_MAX;
+    std::vector<uint32_t> sourceVertices;
+    glm::dvec3 point{0},minimum{0},maximum{0};
+};
+bool CookCollision(const MeshData&,const CollisionCookSettings&,CollisionAsset&,std::string&,CollisionDiagnostic* diagnostic=nullptr);
 bool SaveCollisionAsset(const std::string&,const CollisionAsset&,std::string&);
 bool DecodeCollisionAsset(const std::vector<uint8_t>&,CollisionAsset&,std::string&);
 bool LoadCollisionAsset(const std::string&,CollisionAsset&,std::string&);

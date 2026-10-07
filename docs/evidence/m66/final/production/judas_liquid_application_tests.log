@@ -1,0 +1,46 @@
+Renderer fragment texture units: 32 (material path uses 12)
+PASS ordinary registered M54 project
+PASS normal EngineHost
+PASS current scene loads
+PASS ordinary resource/world/session path
+PASS all ordinary baked/cavity assets resolve
+PASS project liquid HUD/controls execute
+PASS JS fixedUpdate transfers exactly 800 L
+PASS refill restores identical equilibrium
+PASS fixed double absolute origin preserves local submersion
+PASS prefab generic serialization preserves every cavity wall
+PASS prefab bucket begins genuinely empty
+PASS connected opening scoop debits main basin by contained volume
+PASS removed cup carries actual water without external connectivity
+PASS unsupported gravity suspends old cavity while retaining volume and diagnostic
+PASS supported return reconstructs current cavity and clears diagnostic
+PASS second scoop equilibrates delta without repeated duplication
+POUR main=0.974912 bucket=1.9261685667e-09 receiver=0.0250879980738 detached=0 total=1 error=4.4408920985e-16
+PASS tilt emits ballistic conserved parcels into actual receiving basin
+PASS scoop carry pour conserves complete material ledger
+PASS separate depressions disconnected below saddle
+PASS above saddle opens hydraulic redistribution
+PASS graph merge never duplicates owned quantity
+PASS drain closes connection and preserves separate residual pools
+PASS ordinary runtime prefab creates independent empty container
+PASS destroyed container invalidates handle and retains owned detached volume
+PASS ordinary buoyant rigid body remains live
+PASS implicit hydrostatics physically support ordinary body under selected gravity
+M54 lab fixed/script 4.1621 ms; rendered offscreen640x360 mean 5.443 ms 183.7 FPS p95 6.843 ms max 18.409 ms draws 51 reservoirs 6 containers 1 parcels 1 bodies 34
+PASS continued scripts remain fault free
+PASS authored reset invalidates liquid handles and restores authored volume
+PASS Stop releases all world-owned liquid state
+PASS current scene loads
+PASS ordinary resource/world/session path
+PASS all ordinary baked/cavity assets resolve
+PASS project liquid HUD/controls execute
+PASS JS fixedUpdate transfers exactly 800 L
+PASS refill restores identical equilibrium
+PASS fixed double absolute origin preserves local submersion
+PASS ordinary buoyant rigid body remains live
+PASS implicit hydrostatics physically support ordinary body under selected gravity
+M54 radial fixed/script 1.7746 ms; rendered offscreen640x360 mean 4.216 ms 237.2 FPS p95 5.004 ms max 16.447 ms draws 23 reservoirs 2 containers 0 parcels 0 bodies 13
+PASS continued scripts remain fault free
+PASS authored reset invalidates liquid handles and restores authored volume
+PASS Stop releases all world-owned liquid state
+M54 application 41 checks 0 failures

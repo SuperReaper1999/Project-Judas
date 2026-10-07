@@ -1,0 +1,26 @@
+Section A: pressure, density and hydrostatic profile
+  OK   reference gas has configured mass density and independently known pressure
+  OK   density and pressure decrease monotonically while remaining finite and positive
+  OK   pressure and mass density obey P = K rho^gamma
+  OK   10 m altitude matches an independent high-precision profile value
+  maximum |dP/dr + rho*mu/r^2| / |rho*mu/r^2|: 0.000150
+  OK   finite-difference pressure gradient balances inverse-square gravity within 0.3%
+  OK   prescribed equilibrium profile remains stable for 600 fixed-step samples
+Section B: vacuum and actual terrain exclusion
+  OK   density and pressure approach exact vacuum smoothly at the finite top
+  OK   invalid or distant radial samples cannot produce negative or nonfinite gas
+  OK   ordinary hill/valley solid geometry excludes interior gas without a smooth-sphere shortcut
+  OK   surface relief does not invent nonhydrostatic height-based pressure layers
+  OK   terrain exclusion follows its rotated, translated physical geometry
+Section C: motion, rotation and origin independence
+  OK   gas velocity includes planetary translation and omega cross local radius
+  OK   the rotating frame point velocity is not mistaken for its centre velocity
+  rotate+translate errors: rho 0.00000000 kg/m^3, P 0.00000000 Pa, v 0.000002 m/s
+  OK   rotate/translate the universe preserves gas scalar and vector fields
+  OK   M23 far absolute origin changes no local atmosphere state
+  OK   vacuum has no stale gas state from earlier dense samples
+Section D: configuration guard and field sampling cost
+  OK   nonphysical zero-thickness atmosphere is rejected
+  100000 gas samples: 7.456 ms (0.0746 us/sample); checksum 1195.502
+  OK   bounded profile samples remain finite under repeated use
+Atmosphere tests: PASS (0 failures)

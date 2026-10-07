@@ -57,6 +57,11 @@ private:
     std::string ResolveScenePath(const std::string& input) const;
     std::string WorldStatePathFor(const std::string& scenePath) const;
     void FrameEditMode(float deltaSeconds);
+    void DrawModelImportPreview(float deltaSeconds);
+    RenderTargetHandle m_modelPreviewTarget;
+    std::string m_modelPreviewAsset;
+    std::weak_ptr<const struct MeshData> m_modelPreviewData;
+    glm::vec3 m_modelPreviewMin{0},m_modelPreviewMax{0};
     void UpdateGizmo(bool allowInteraction);
     void DrawEditOverlay(class Renderer& renderer, const Scene& scene);
     void CollectProfilerData(float frameDeltaSeconds);

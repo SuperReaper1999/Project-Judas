@@ -1,0 +1,14 @@
+Renderer fragment texture units: 32 (material path uses 12)
+World state: /home/conner/Documents/GitHub/Project-Judas/docs/evidence/m66/final/fixture-details/judas_joint_application_tests/project/Saves/main.judasstate (none saved)
+Project: Rigid-body joints (/home/conner/Documents/GitHub/Project-Judas/docs/evidence/m66/final/fixture-details/judas_joint_application_tests/project/joint_demo.judasproj)
+Scene: M45 rigid-body joints — G motor / P assembly (/home/conner/Documents/GitHub/Project-Judas/docs/evidence/m66/final/fixture-details/judas_joint_application_tests/project/Scenes/main.judas)
+World origin (m): 0.000, 0.000, 0.000
+PASS actual JS joint callbacks have no faults
+PASS JS controls limits/motors/springs and rejects stale/invalid handles
+PASS joint state drives authored HUD
+PASS project spawn binding loaded
+PASS physical P activates demo prefab spawn
+PASS physical Escape displays authored pause panel
+PASS physical Escape resumes demo
+PASS normal Application startup, rendering and shutdown
+SUMMARY 8 checks 0 failures

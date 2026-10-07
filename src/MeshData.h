@@ -23,17 +23,25 @@ struct MeshVertex {
     glm::vec3 position{0.0f};
     glm::vec3 normal{0.0f};
     glm::vec2 uv{0.0f};
+    glm::vec2 uv1{0.0f};
     glm::vec4 tangent{1,0,0,1};
 
 };
 
-struct MeshSkinVertex {glm::uvec4 joints{0};glm::vec4 weights{1,0,0,0};};
+struct MeshSkinVertex {glm::uvec4 joints{0};glm::vec4 weights{1,0,0,0};glm::uvec4 joints1{0};glm::vec4 weights1{0};};
 
-struct MeshPrimitive {unsigned first=0,count=0;int material=-1;};
+struct MeshPrimitive {unsigned first=0,count=0;int material=-1;std::string part;int node=-1;MeshPrimitive(unsigned start=0,unsigned length=0,int slot=-1,std::string key={},int sourceNode=-1):first(start),count(length),material(slot),part(std::move(key)),node(sourceNode){}};
+struct ModelSourceLocation {uint32_t node=0,element=0;};
 struct MeshData {
+    // Import-time provenance, indexed like vertices and triangles respectively.
+    // Binary source IDs are not text line numbers.
+    std::vector<std::string> sourceNodes;
+    std::vector<ModelSourceLocation> vertexLocations,faceLocations;
     std::vector<MaterialDefinition> materials;
+    std::vector<std::string> materialKeys;
     std::vector<MeshPrimitive> primitives;
     std::vector<std::string> importWarnings;
+    std::string importRecord; // immutable source recipe/digests, used only by authoring/export
     std::vector<MeshSkinVertex> skinVertices;
     std::shared_ptr<const SkeletalAsset> skeletal;
     std::vector<MeshVertex> vertices;

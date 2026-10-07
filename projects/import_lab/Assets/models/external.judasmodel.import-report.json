@@ -1,0 +1,62 @@
+{
+  "assetId": "c4486f87ac712c7d6501d3a57603178a",
+  "clips": [
+    {
+      "duration": 1.0,
+      "loop": false,
+      "motionExtracted": false,
+      "name": "Translate"
+    }
+  ],
+  "diagnostics": [],
+  "hierarchyNodes": 9,
+  "inputs": {
+    "Sources/external/café color.png": "2640059609118b695c139804676372eca75c30d30e5906775902d13e44f5356c",
+    "Sources/external/external.gltf": "d51bd2005bbf55cc0f3090c6ee9d0257d31a6c823524f2efbee4a7168e0c70f8",
+    "Sources/external/geometry.bin": "fc2755c39e78066f23cc6d198b3bd9357424523fe2202c596dda90bf80495161"
+  },
+  "joints": [
+    "Shared",
+    "Shared/BoneA",
+    "Shared/BoneB",
+    "SkinA",
+    "SkinB",
+    "OtherRig",
+    "OtherRig/OtherBone",
+    "OtherSkin",
+    "MirroredAttachment",
+    "__JudasMotionRoot"
+  ],
+  "materialKeys": [
+    "Fixture"
+  ],
+  "outputHash": "40980e4d456f7462e4f14bc9f135d9da145489f0d7dcfc0f6e8cdc1649783569",
+  "parts": [
+    {
+      "identity": "MirroredAttachment/material/Fixture",
+      "node": 8,
+      "triangles": 1
+    },
+    {
+      "identity": "OtherSkin/material/Fixture",
+      "node": 7,
+      "triangles": 1
+    },
+    {
+      "identity": "SkinA/material/Fixture",
+      "node": 3,
+      "triangles": 1
+    },
+    {
+      "identity": "SkinB/material/Fixture",
+      "node": 4,
+      "triangles": 1
+    }
+  ],
+  "recipeDigest": "0e345a24094223e6fca7c92a3657d4a6922ea536696f14c692b09444b033f014",
+  "revision": "M66-ufbx-0.23.1-cgltf-1.15-cook-9-model-1",
+  "skinPaletteEntries": 6,
+  "sourceBones": 0,
+  "sourceUnitMeters": 1.0,
+  "vertices": 12
+}

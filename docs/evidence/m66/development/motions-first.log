@@ -1,0 +1,50 @@
+{
+  "clips": [
+    {
+      "duration": 9.079999923706055,
+      "name": "Take 001",
+      "tracks": 195
+    },
+    {
+      "duration": 0.03333333507180214,
+      "name": "mixamo.com",
+      "tracks": 195
+    },
+    {
+      "duration": 9.079999923706055,
+      "name": "SkateboardingPush/Take 001",
+      "tracks": 195
+    },
+    {
+      "duration": 2.299999952316284,
+      "name": "SkateboardingPush/mixamo.com",
+      "tracks": 156
+    },
+    {
+      "duration": 9.079999923706055,
+      "name": "SkateboardingCruise/Take 001",
+      "tracks": 195
+    },
+    {
+      "duration": 1.0333333015441895,
+      "name": "SkateboardingCruise/mixamo.com",
+      "tracks": 156
+    },
+    {
+      "duration": 9.079999923706055,
+      "name": "Walking/Take 001",
+      "tracks": 195
+    },
+    {
+      "duration": 1.0333333015441895,
+      "name": "Walking/mixamo.com",
+      "tracks": 156
+    }
+  ],
+  "nodes": 72,
+  "paletteEntries": 109,
+  "parts": 6,
+  "sourceBones": 65,
+  "sourceUnitMeters": 0.01,
+  "vertices": 150561
+}

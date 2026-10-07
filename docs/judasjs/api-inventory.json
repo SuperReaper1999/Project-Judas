@@ -1,5 +1,5 @@
 {
-  "checkpoint": "26e6f089fde0f39d68659882f6204da3a453473e",
+  "checkpoint": "3e5147a4ed97102200da91b4181c97b2a98942ba",
   "authority": "src/ScriptSystem.cpp::library + Impl::Native",
   "symbols": [
     {
@@ -174,6 +174,17 @@
       ],
       "native": [],
       "type": "docs/judas.d.ts:Animation.resume",
+      "reference": "docs/judasjs/animation-ragdolls.md"
+    },
+    {
+      "symbol": "Animation.rootMotion",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "animationRootMotion"
+      ],
+      "type": "docs/judas.d.ts:Animation.rootMotion",
       "reference": "docs/judasjs/animation-ragdolls.md"
     },
     {
@@ -806,6 +817,17 @@
       "reference": "docs/judasjs/materials.md"
     },
     {
+      "symbol": "Entity.modelParts",
+      "kinds": [
+        "get"
+      ],
+      "native": [
+        "modelParts"
+      ],
+      "type": "docs/judas.d.ts:Entity.modelParts",
+      "reference": "docs/judasjs/entities.md"
+    },
+    {
       "symbol": "Entity.navigation",
       "kinds": [
         "get"
@@ -1023,6 +1045,17 @@
         "navEnabled"
       ],
       "type": "docs/judas.d.ts:Entity.setNavigationEnabled",
+      "reference": "docs/judasjs/entities.md"
+    },
+    {
+      "symbol": "Entity.setPartVisible",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "modelPartVisible"
+      ],
+      "type": "docs/judas.d.ts:Entity.setPartVisible",
       "reference": "docs/judasjs/entities.md"
     },
     {
@@ -3089,6 +3122,7 @@
     "animationPlay",
     "animationRemoveLayer",
     "animationRemoveLimb",
+    "animationRootMotion",
     "animationSeek",
     "animationSet",
     "animationStop",
@@ -3183,6 +3217,8 @@
     "materialClear",
     "materialInfo",
     "materialOverride",
+    "modelPartVisible",
+    "modelParts",
     "navAgentExists",
     "navAgentState",
     "navAreas",

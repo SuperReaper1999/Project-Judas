@@ -1,0 +1,13 @@
+Renderer fragment texture units: 32 (material path uses 12)
+[editor autotest] shared import + GPU preview PASS (6 parts)
+[editor autotest] ordinary imported placement PASS
+[editor autotest] imported placement one undo PASS
+[editor autotest] duplicate created id 1000: scene CHANGED; undo restores: IDENTICAL
+[editor autotest] wrote: /tmp/m66-editor-import.edit.png
+[editor autotest] edit frame: 100 draw calls, 167012 triangles, 110 debug lines
+[editor autotest] wrote: /tmp/m66-editor-import.play.png
+[editor autotest] play frame: 1 steps, step 0.427 ms, 4 bodies, 0 contacts, 157 draw calls, 434024 triangles, 1 shadow passes, 0 lights, 318 debug lines, 0 particles
+[editor autotest] resources: 6 meshes, 0 textures, 0 terrain meshes, hits 17812, misses 14, failed 0, uploads 12, resident 379976733 bytes
+[editor autotest] jobs: 7 workers, 16 completed, 0 failed, 0 cancelled
+[editor autotest] authored scene after play/stop is IDENTICAL
+[editor autotest] save ok

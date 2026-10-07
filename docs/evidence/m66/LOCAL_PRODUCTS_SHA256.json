@@ -1,0 +1,17 @@
+{
+  "scope": "Local acceptance assets and runtime binaries, not publication permission",
+  "files": {
+    "projects/import_lab/Assets/collision/clean-ramp.judascollision": "a0560b6d430d8e7329b246711c0e9700f6d15ecd9f393bc7b8d5fe9c2d868ac0",
+    "projects/import_lab/Assets/models/capacity256.judasmodel": "a81b54bd55caf2535e27c7bf852ad44c4d9bf1fa17065f7f54c9a7e06ef7ea20",
+    "projects/import_lab/Assets/models/clean-ramp.judasmodel": "4e102e6087b17048ee0a98a59002846bcdd964bda80295ab88842ec64e3b1822",
+    "projects/import_lab/Assets/models/external.judasmodel": "40980e4d456f7462e4f14bc9f135d9da145489f0d7dcfc0f6e8cdc1649783569",
+    "projects/import_lab/Assets/models/halfpipe.judasmodel": "7ba04ba9bc88a9eb1155d234f8d789d10f1bfc343f00e12424e8233183e7842d",
+    "projects/import_lab/Assets/models/multipart.judasmodel": "162e96a09e0e4b9118d77b2feb67c9c1096640819dcb68fc85aa942d763cb2c5",
+    "projects/import_lab/Assets/models/skate_original.judasmodel": "611932b1eb7bc920d4858b9563e7a0d2ed3b9ae42c250d782d0ec905e5fa1275"
+  },
+  "binaries": {
+    "build/judas": "f2f4d33ff666b57422aa416c1ca55599e70d247eb5cc77eef2acb2d5be059b9d",
+    "build/judas_editor": "84fa489369ff945869bd15948fcee91ccb56daf30886f5b6717f13b5363478d7",
+    "build/judas_model_import_cli": "20799d57a7a90684d0622cae11b51bf8789b9560d76f394da940a378ed1ca9ab"
+  }
+}

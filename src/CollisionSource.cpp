@@ -1,11 +1,14 @@
 #include "CollisionAsset.h"
 #include "SceneFingerprint.h"
+#include "ModelLoader.h"
+#include "SkeletalAnimation.h"
 #include <sstream>
 #include <iomanip>
 #include "cgltf.h"
 #include "../third_party/tiny_obj_loader.h"
 #include <filesystem>
 #include <memory>
+#include <map>
 #include <stdexcept>
 #include <cmath>
 
@@ -13,15 +16,22 @@ bool LoadCollisionSource(const std::string& path,unsigned selected,MeshData& out
  try {
   MeshData mesh;
   const auto extension=std::filesystem::path(path).extension().string();
-  if(extension==".obj") {
+  if(extension==".judasmodel") {
+   MeshData model;if(!LoadModelMesh(path,model,error))throw std::runtime_error(error);if(selected>=model.primitives.size())throw std::runtime_error("selected normalized model part missing");auto& part=model.primitives[selected];auto palette=model.skeletal?ResolveSkinMatrices(model.skeletal->skeleton,model.skeletal->skeleton.rest):std::vector<glm::mat4>{};
+   mesh.sourceNodes=model.sourceNodes;std::map<uint32_t,uint32_t> remap;
+   for(unsigned i=part.first;i<part.first+part.count;++i){unsigned original=model.indices.at(i);auto [entry,fresh]=remap.emplace(original,uint32_t(mesh.vertices.size()));if(fresh){auto vertex=model.vertices.at(original);if(!palette.empty()){auto& weights=model.skinVertices.at(original);glm::mat4 matrix(0);for(int k=0;k<4;++k)matrix+=palette.at(weights.joints[k])*weights.weights[k]+palette.at(weights.joints1[k])*weights.weights1[k];vertex.position=glm::vec3(matrix*glm::vec4(vertex.position,1));}mesh.vertices.push_back(vertex);if(!model.sourceVertexIds.empty())mesh.sourceVertexIds.push_back(model.sourceVertexIds.at(original));if(!model.vertexLocations.empty())mesh.vertexLocations.push_back(model.vertexLocations.at(original));}mesh.indices.push_back(entry->second);if(i%3==0&&!model.faceLocations.empty())mesh.faceLocations.push_back(model.faceLocations.at(i/3));}
+   // The normalized rest binding may reflect a static attachment. Baking it
+   // into collision vertices also changes oriented winding, once per triangle.
+   if(!palette.empty())for(unsigned i=0;i<mesh.indices.size();i+=3){auto original=model.indices.at(part.first+i);auto& w=model.skinVertices.at(original);glm::mat4 m(0);for(int k=0;k<4;++k)m+=palette.at(w.joints[k])*w.weights[k]+palette.at(w.joints1[k])*w.weights1[k];if(glm::determinant(glm::mat3(m))<0)std::swap(mesh.indices[i+1],mesh.indices[i+2]);}
+  } else if(extension==".obj") {
    tinyobj::attrib_t attributes;std::vector<tinyobj::shape_t> shapes;std::vector<tinyobj::material_t> materials;std::string warning,diagnostic;
    if(!tinyobj::LoadObj(&attributes,&shapes,&materials,&warning,&diagnostic,path.c_str()))throw std::runtime_error(diagnostic);
    if(selected>=shapes.size())throw std::runtime_error("selected OBJ object/group missing");
-   const auto& shape=shapes[selected];
+   const auto& shape=shapes[selected];mesh.sourceNodes.push_back(shape.name);unsigned corner=0;
    for(auto index:shape.mesh.indices) {
     if(index.vertex_index<0||size_t(index.vertex_index)*3+2>=attributes.vertices.size())throw std::runtime_error("OBJ collision position index out of range");
     MeshVertex vertex;vertex.position={attributes.vertices[3*index.vertex_index],attributes.vertices[3*index.vertex_index+1],attributes.vertices[3*index.vertex_index+2]};
-    mesh.indices.push_back(mesh.vertices.size());mesh.vertices.push_back(vertex);mesh.sourceVertexIds.push_back(index.vertex_index);
+    mesh.indices.push_back(mesh.vertices.size());mesh.vertices.push_back(vertex);mesh.sourceVertexIds.push_back(index.vertex_index);mesh.vertexLocations.push_back({0,uint32_t(index.vertex_index)});if(corner++%3==0)mesh.faceLocations.push_back({0,corner/3});
    }
   } else if(extension==".gltf"||extension==".glb") {
    cgltf_options options{};cgltf_data* raw=nullptr;
@@ -44,7 +54,7 @@ bool LoadCollisionSource(const std::string& path,unsigned selected,MeshData& out
    size_t count=primitive->indices?primitive->indices->count:positions->count;
    if(count>196608||count%3)throw std::runtime_error("collision triangle index limit/range");
    for(size_t i=0;i<count;++i){size_t v=primitive->indices?cgltf_accessor_read_index(primitive->indices,i):i;if(v>=positions->count)throw std::runtime_error("collision vertex index out of range");mesh.indices.push_back(v);}
-  } else throw std::runtime_error("collision source must be OBJ/glTF/GLB");
+  } else throw std::runtime_error("collision source must be OBJ/glTF/GLB or an imported .judasmodel");
   if(mesh.vertices.empty())throw std::runtime_error("selected source contains no collision geometry");
   // The returned data is already the selected geometry; do not select a second time.
   output=std::move(mesh);error.clear();return true;

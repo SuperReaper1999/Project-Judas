@@ -1,0 +1,208 @@
+Renderer fragment texture units: 32 (material path uses 12)
+World state: /home/conner/Documents/GitHub/Project-Judas/projects/shooter_game/Saves/range.judasstate (none saved)
+Project: Spring Range (/home/conner/Documents/GitHub/Project-Judas/projects/shooter_game/shooter_game.judasproj)
+Scene: Spring Range (/home/conner/Documents/GitHub/Project-Judas/projects/shooter_game/Scenes/range.judas)
+World origin (m): 0.000, 0.000, 0.000
+Renderer fragment texture units: 32 (material path uses 12)
+World state: /home/conner/Documents/GitHub/Project-Judas/projects/shooter_game/Saves/range.judasstate (none saved)
+Project: Spring Range (/home/conner/Documents/GitHub/Project-Judas/projects/shooter_game/shooter_game.judasproj)
+Scene: Spring Range (/home/conner/Documents/GitHub/Project-Judas/projects/shooter_game/Scenes/range.judas)
+World origin (m): 0.000, 0.000, 0.000
+Renderer fragment texture units: 32 (material path uses 12)
+World state: /home/conner/Documents/GitHub/Project-Judas/projects/shooter_game/Saves/range.judasstate (none saved)
+Project: Spring Range (/home/conner/Documents/GitHub/Project-Judas/projects/shooter_game/shooter_game.judasproj)
+Scene: Spring Range (/home/conner/Documents/GitHub/Project-Judas/projects/shooter_game/Scenes/range.judas)
+World origin (m): 0.000, 0.000, 0.000
+Renderer fragment texture units: 32 (material path uses 12)
+World state: /home/conner/Documents/GitHub/Project-Judas/projects/shooter_game/Saves/range.judasstate (none saved)
+Project: Spring Range (/home/conner/Documents/GitHub/Project-Judas/projects/shooter_game/shooter_game.judasproj)
+Scene: Spring Range (/home/conner/Documents/GitHub/Project-Judas/projects/shooter_game/Scenes/range.judas)
+World origin (m): 0.000, 0.000, 0.000
+Renderer fragment texture units: 32 (material path uses 12)
+World state: /home/conner/Documents/GitHub/Project-Judas/projects/shooter_game/Saves/range.judasstate (none saved)
+Project: Spring Range (/home/conner/Documents/GitHub/Project-Judas/projects/shooter_game/shooter_game.judasproj)
+Scene: Spring Range (/home/conner/Documents/GitHub/Project-Judas/projects/shooter_game/Scenes/range.judas)
+World origin (m): 0.000, 0.000, 0.000
+Renderer fragment texture units: 32 (material path uses 12)
+World state: /home/conner/Documents/GitHub/Project-Judas/projects/shooter_game/Saves/range.judasstate (none saved)
+Project: Spring Range (/home/conner/Documents/GitHub/Project-Judas/projects/shooter_game/shooter_game.judasproj)
+Scene: Spring Range (/home/conner/Documents/GitHub/Project-Judas/projects/shooter_game/Scenes/range.judas)
+World origin (m): 0.000, 0.000, 0.000
+PASS ordinary integration project
+PASS profiled project scripts remain fault-free
+PASS profiled liquid path retains accepted solve behaviour
+PASS real outer application lifecycle
+PASS same actual fixed-step input count for every mode
+M56 shooter_game trial 1 mode 0 outer interval incl collection/swap median 2.22720 p95 2.71976 max 3.17693 ms
+M56 shooter_game trial 1 mode 0 fixed median 1.05982 p95 1.22850 max 1.84569 ms
+M56 shooter_game trial 1 mode 0 profiler UI median 0.00000 p95 0.00000 max 0.00000 ms
+PASS ordinary integration project
+PASS profiled project scripts remain fault-free
+PASS profiled liquid path retains accepted solve behaviour
+PASS real outer application lifecycle
+PASS same actual fixed-step input count for every mode
+PASS capture/UI do not alter deterministic physics and script state
+M56 shooter_game trial 2 mode 1 outer interval incl collection/swap median 2.89197 p95 4.36552 max 5.00031 ms
+M56 shooter_game trial 2 mode 1 fixed median 1.36852 p95 2.11616 max 2.48638 ms
+M56 shooter_game trial 2 mode 1 profiler UI median 0.00000 p95 0.00000 max 0.00000 ms
+PASS outer frames contain fixed identities and completed delayed GPU results
+PASS submission counters describe each frame rather than cumulative standalone totals
+PASS bounded structured integration capture
+M56 capacity 70652768 bytes drops 0 truncated 0 GPU dropped 0
+PASS ordinary integration project
+PASS profiled project scripts remain fault-free
+PASS profiled liquid path retains accepted solve behaviour
+PASS real outer application lifecycle
+PASS same actual fixed-step input count for every mode
+PASS live profiler inspection releases cursor while fixed simulation continues
+PASS editor cursor routing preserves script pointer-capture intent
+PASS capture/UI do not alter deterministic physics and script state
+M56 shooter_game trial 3 mode 2 outer interval incl collection/swap median 2.67272 p95 4.29681 max 4.84830 ms
+M56 shooter_game trial 3 mode 2 fixed median 1.12356 p95 1.86137 max 1.98879 ms
+M56 shooter_game trial 3 mode 2 profiler UI median 0.25683 p95 0.37986 max 0.41516 ms
+PASS outer frames contain fixed identities and completed delayed GPU results
+PASS submission counters describe each frame rather than cumulative standalone totals
+PASS bounded structured integration capture
+M56 capacity 70653128 bytes drops 0 truncated 0 GPU dropped 0
+PASS ordinary integration project
+PASS profiled project scripts remain fault-free
+PASS profiled liquid path retains accepted solve behaviour
+PASS real outer application lifecycle
+PASS same actual fixed-step input count for every mode
+PASS capture/UI do not alter deterministic physics and script state
+M56 shooter_game trial 4 mode 1 outer interval incl collection/swap median 2.46690 p95 3.33016 max 5.88241 ms
+M56 shooter_game trial 4 mode 1 fixed median 1.14744 p95 1.60903 max 2.73689 ms
+M56 shooter_game trial 4 mode 1 profiler UI median 0.00000 p95 0.00000 max 0.00000 ms
+PASS outer frames contain fixed identities and completed delayed GPU results
+PASS submission counters describe each frame rather than cumulative standalone totals
+M56 capacity 70653128 bytes drops 0 truncated 0 GPU dropped 0
+PASS ordinary integration project
+PASS profiled project scripts remain fault-free
+PASS profiled liquid path retains accepted solve behaviour
+PASS real outer application lifecycle
+PASS same actual fixed-step input count for every mode
+PASS capture/UI do not alter deterministic physics and script state
+M56 shooter_game trial 5 mode 0 outer interval incl collection/swap median 2.33529 p95 2.82057 max 3.38829 ms
+M56 shooter_game trial 5 mode 0 fixed median 1.12781 p95 1.32032 max 1.85920 ms
+M56 shooter_game trial 5 mode 0 profiler UI median 0.00000 p95 0.00000 max 0.00000 ms
+PASS ordinary integration project
+PASS profiled project scripts remain fault-free
+PASS profiled liquid path retains accepted solve behaviour
+PASS real outer application lifecycle
+PASS same actual fixed-step input count for every mode
+PASS live profiler inspection releases cursor while fixed simulation continues
+PASS editor cursor routing preserves script pointer-Renderer fragment texture units: 32 (material path uses 12)
+World state: /home/conner/Documents/GitHub/Project-Judas/projects/liquid_surface_demo/Saves/lab.judasstate (none saved)
+Project: Dynamic Liquid Surface Lab (/home/conner/Documents/GitHub/Project-Judas/projects/liquid_surface_demo/liquid_surface_demo.judasproj)
+Scene: Dynamic Surface / Flat Pool (/home/conner/Documents/GitHub/Project-Judas/projects/liquid_surface_demo/Scenes/lab.judas)
+World origin (m): 1000000000000.000, -2000000000000.000, 3000000000000.000
+Renderer fragment texture units: 32 (material path uses 12)
+World state: /home/conner/Documents/GitHub/Project-Judas/projects/liquid_surface_demo/Saves/lab.judasstate (none saved)
+Project: Dynamic Liquid Surface Lab (/home/conner/Documents/GitHub/Project-Judas/projects/liquid_surface_demo/liquid_surface_demo.judasproj)
+Scene: Dynamic Surface / Flat Pool (/home/conner/Documents/GitHub/Project-Judas/projects/liquid_surface_demo/Scenes/lab.judas)
+World origin (m): 1000000000000.000, -2000000000000.000, 3000000000000.000
+Renderer fragment texture units: 32 (material path uses 12)
+World state: /home/conner/Documents/GitHub/Project-Judas/projects/liquid_surface_demo/Saves/lab.judasstate (none saved)
+Project: Dynamic Liquid Surface Lab (/home/conner/Documents/GitHub/Project-Judas/projects/liquid_surface_demo/liquid_surface_demo.judasproj)
+Scene: Dynamic Surface / Flat Pool (/home/conner/Documents/GitHub/Project-Judas/projects/liquid_surface_demo/Scenes/lab.judas)
+World origin (m): 1000000000000.000, -2000000000000.000, 3000000000000.000
+Renderer fragment texture units: 32 (material path uses 12)
+World state: /home/conner/Documents/GitHub/Project-Judas/projects/liquid_surface_demo/Saves/lab.judasstate (none saved)
+Project: Dynamic Liquid Surface Lab (/home/conner/Documents/GitHub/Project-Judas/projects/liquid_surface_demo/liquid_surface_demo.judasproj)
+Scene: Dynamic Surface / Flat Pool (/home/conner/Documents/GitHub/Project-Judas/projects/liquid_surface_demo/Scenes/lab.judas)
+World origin (m): 1000000000000.000, -2000000000000.000, 3000000000000.000
+Renderer fragment texture units: 32 (material path uses 12)
+World state: /home/conner/Documents/GitHub/Project-Judas/projects/liquid_surface_demo/Saves/lab.judasstate (none saved)
+Project: Dynamic Liquid Surface Lab (/home/conner/Documents/GitHub/Project-Judas/projects/liquid_surface_demo/liquid_surface_demo.judasproj)
+Scene: Dynamic Surface / Flat Pool (/home/conner/Documents/GitHub/Project-Judas/projects/liquid_surface_demo/Scenes/lab.judas)
+World origin (m): 1000000000000.000, -2000000000000.000, 3000000000000.000
+capture intent
+PASS capture/UI do not alter deterministic physics and script state
+M56 shooter_game trial 6 mode 2 outer interval incl collection/swap median 3.14977 p95 4.75318 max 7.14830 ms
+M56 shooter_game trial 6 mode 2 fixed median 1.32753 p95 2.03344 max 3.01665 ms
+M56 shooter_game trial 6 mode 2 profiler UI median 0.31391 p95 0.47583 max 0.80295 ms
+PASS outer frames contain fixed identities and completed delayed GPU results
+PASS submission counters describe each frame rather than cumulative standalone totals
+M56 capacity 70652992 bytes drops 0 truncated 0 GPU dropped 0
+PASS ordinary integration project
+PASS profiled project scripts remain fault-free
+PASS profiled liquid path retains accepted solve behaviour
+PASS real outer application lifecycle
+PASS same actual fixed-step input count for every mode
+M56 liquid_surface_demo trial 1 mode 0 outer interval incl collection/swap median 10.72611 p95 12.80750 max 14.24312 ms
+M56 liquid_surface_demo trial 1 mode 0 fixed median 5.00531 p95 6.60234 max 7.22291 ms
+M56 liquid_surface_demo trial 1 mode 0 profiler UI median 0.00000 p95 0.00000 max 0.00000 ms
+PASS ordinary integration project
+PASS profiled project scripts remain fault-free
+PASS profiled liquid path retains accepted solve behaviour
+PASS real outer application lifecycle
+PASS same actual fixed-step input count for every mode
+PASS capture/UI do not alter deterministic physics and script state
+M56 liquid_surface_demo trial 2 mode 1 outer interval incl collection/swap median 10.54150 p95 12.42731 max 17.99662 ms
+M56 liquid_surface_demo trial 2 mode 1 fixed median 4.77228 p95 6.47348 max 11.98271 ms
+M56 liquid_surface_demo trial 2 mode 1 profiler UI median 0.00000 p95 0.00000 max 0.00000 ms
+PASS outer frames contain fixed identities and completed delayed GPU results
+PASS moving storage is distinguishable from water presentation
+PASS submission counters describe each frame rather than cumulative standalone totals
+PASS bounded structured integration capture
+M56 capacity 70653000 bytes drops 0 truncated 0 GPU dropped 0
+PASS ordinary integration project
+PASS profiled project scripts remain fault-free
+PASS profiled liquid path retains accepted solve behaviour
+PASS real outer application lifecycle
+PASS same actual fixed-step input count for every mode
+PASS live profiler inspection releases cursor while fixed simulation continues
+PASS editor cursor routing preserves script pointer-capture intent
+PASS capture/UI do not alter deterministic physics and script state
+M56 liquid_surface_demo trial 3 mode 2 outer interval incl collection/swap median 11.08707 p95 13.46809 max 16.39647 ms
+M56 liquid_surface_demo trial 3 mode 2 fixed median 4.78894 p95 6.53481 max 8.54977 ms
+M56 liquid_surface_demo trial 3 mode 2 profiler UI median 0.32480 p95 0.52053 max 0.61198 ms
+PASS outer frames contain fixed identities and completed delayed GPU results
+PASS moving storage is distinguishable from water presentation
+PASS submission counters describe each frame rather than cumulative standalone totals
+PASS bounded structured integration capture
+M56 capacity 70653000 bytes drops 0 truncated 0 GPU dropped 0
+PASS ordinary integration project
+PASS profiled project scripts remain fault-free
+PASS profiled liquid path retains accepted solve behaviour
+PASS real outer application lifecycle
+PASS same actual fixed-step input count for every mode
+PASS capture/UI do not alter deterministic physics and script state
+M56 liquid_surface_demo trial 4 mode 1 outer interval incl collection/swap median 10.73884 p95 14.71996 max 19.54056 ms
+M56 liquid_surface_demo trial 4 mode 1 fixed median 4.82086 p95 7.47268 max 13.00988 ms
+M56 liquid_surface_demo trial 4 mode 1 profiler UI median 0.00000 p95 0.00000 max 0.00000 ms
+PASS outer frames contain fixed identities and completed delayed GPU results
+PASS moving storage is distinguishable from water presentation
+PASS submission counters describe each frame rather than cumulative standalone totals
+M56 capacity 70653000 bytes drops 0 truncated 0 GPU dropped 0
+PASS ordinary integration project
+PASS profiled project scripts remain fRenderer fragment texture units: 32 (material path uses 12)
+World state: /home/conner/Documents/GitHub/Project-Judas/projects/liquid_surface_demo/Saves/lab.judasstate (none saved)
+Project: Dynamic Liquid Surface Lab (/home/conner/Documents/GitHub/Project-Judas/projects/liquid_surface_demo/liquid_surface_demo.judasproj)
+Scene: Dynamic Surface / Flat Pool (/home/conner/Documents/GitHub/Project-Judas/projects/liquid_surface_demo/Scenes/lab.judas)
+World origin (m): 1000000000000.000, -2000000000000.000, 3000000000000.000
+ault-free
+PASS profiled liquid path retains accepted solve behaviour
+PASS real outer application lifecycle
+PASS same actual fixed-step input count for every mode
+PASS capture/UI do not alter deterministic physics and script state
+M56 liquid_surface_demo trial 5 mode 0 outer interval incl collection/swap median 10.95585 p95 12.75704 max 15.04981 ms
+M56 liquid_surface_demo trial 5 mode 0 fixed median 4.79315 p95 6.15030 max 6.68519 ms
+M56 liquid_surface_demo trial 5 mode 0 profiler UI median 0.00000 p95 0.00000 max 0.00000 ms
+PASS ordinary integration project
+PASS profiled project scripts remain fault-free
+PASS profiled liquid path retains accepted solve behaviour
+PASS real outer application lifecycle
+PASS same actual fixed-step input count for every mode
+PASS live profiler inspection releases cursor while fixed simulation continues
+PASS editor cursor routing preserves script pointer-capture intent
+PASS capture/UI do not alter deterministic physics and script state
+M56 liquid_surface_demo trial 6 mode 2 outer interval incl collection/swap median 10.84977 p95 14.95481 max 17.45129 ms
+M56 liquid_surface_demo trial 6 mode 2 fixed median 4.70145 p95 8.36487 max 9.74847 ms
+M56 liquid_surface_demo trial 6 mode 2 profiler UI median 0.30634 p95 0.48521 max 0.57118 ms
+PASS outer frames contain fixed identities and completed delayed GPU results
+PASS moving storage is distinguishable from water presentation
+PASS submission counters describe each frame rather than cumulative standalone totals
+M56 capacity 70652864 bytes drops 0 truncated 0 GPU dropped 0
+PASS captured workload actually acquires liquid through physical bucket opening
+M56 application 103 checks 0 failures

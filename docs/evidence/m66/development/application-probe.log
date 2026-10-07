@@ -1,0 +1,20 @@
+Renderer fragment texture units: 32 (material path uses 12)
+World state: disk saves disabled for additive compositions
+Project: M66 Import Lab (/home/conner/Documents/GitHub/Project-Judas/projects/import_lab/import_lab.judasproj)
+Scene: M66 original rig — G clips, J mask, K additive, I IK, F ragdoll, B root intent (/home/conner/Documents/GitHub/Project-Judas/projects/import_lab/Scenes/main.judas)
+World origin (m): 0.000, 0.000, 0.000
+PASS normal app loads complete original hierarchy plus root-track helper
+PASS normal app shares immutable asset with independent instances
+script asset=d0746f586067a88c75400be5568e7e8a entity=90 slot=1 fixedUpdate: TypeError: not a function
+    at fixedUpdate (Assets/scripts/lab.js:24:289)
+
+FAULT fixedUpdate TypeError: not a function
+    at fixedUpdate (Assets/scripts/lab.js:24:289)
+
+FAIL ordinary import lab JS callbacks healthy
+FAULT fixedUpdate TypeError: not a function
+    at fixedUpdate (Assets/scripts/lab.js:24:289)
+
+FAIL ordinary import lab JS callbacks healthy
+FAIL ordinary project process startup/lifecycle/shutdown
+SUMMARY mode=probe checks=5 failures=3 frames=774

@@ -1,0 +1,40 @@
+Renderer fragment texture units: 32 (material path uses 12)
+PASS ordinary authored ragdoll scene loads
+PASS mapping/passive constraints serialize normally
+PASS mapping contributes to baseline fingerprint
+PASS real EngineHost context/resources
+PASS normal runtime builds shared animation and ragdoll authoring
+PASS enter from current mid-Wave pose
+PASS bone/body offsets produce current resolved world transforms
+PASS physics source preserves activation pose without bind flash
+PASS M44 query sees mapped ordinary entity/body
+PASS articulation internals cannot become orphaned save entities
+PASS adjacent collision suppressed by generation-aware physical filter
+PASS ordinary impulse changes mapped body momentum
+PASS ordinary game fixed-step path starts
+PASS normal Judas gravity/contact path advances finite ragdoll
+PASS M45 hinge limits and physics-to-local hierarchy mapping remain coherent
+PASS leave releases bodies/constraints immediately
+PASS return contribution captures physical pose without one-frame reset
+PASS visual return retires cleanly through M47
+PASS retired generation handle is invalid
+PASS oblique instance maps through arbitrary reference basis
+PASS slot reuse does not resurrect old handles or exclusions
+PASS mapped body destruction tears down remaining articulation
+PASS prefab-spawned ordinary instance supports ragdoll
+PASS disable and hierarchy destruction clean physics
+PASS small group shares one immutable skeleton with independent articulations
+PASS group destruction leaves no orphaned physics
+PASS authored reset clears return contribution and mixer state
+PASS asset replacement invalidates pose motion observations
+PASS asset replacement safely retires old articulation
+PASS Stop/reload reconstructs authored world
+PASS fresh Play has no stale bodies/constraints
+PASS equivalent free-fall authored scene builds
+PASS equivalent current-pose articulation enters
+PASS equivalent free-fall authored scene builds
+PASS equivalent current-pose articulation enters
+PASS rotated gravity/world articulation produces equivalent physical displacement
+PERFORMANCE one_articulation_whole_fixed_step_ms=0.067954 five_articulations_whole_fixed_step_ms=0.115007 samples=120 mapped_bodies_each=3
+OBSERVATIONS mapped_center_residual=3.69837096e-07 max_hinge_angle=1.20015776
+SUMMARY 36 checks 0 failures

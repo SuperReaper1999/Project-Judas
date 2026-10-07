@@ -1,0 +1,43 @@
+Section A: ComputeHingeTransform at zero angle
+  OK   zero angle reproduces the closed-pose center exactly
+  OK   zero angle reproduces the closed-pose orientation exactly
+Section A: ComputeHingeTransform at a 90 degree swing
+  OK   a 90 degree swing moves the center from +X to -Z around the pivot, preserving distance
+Section A: ComputeHingeTransform rotate-the-universe invariance
+  OK   rotating the whole scenario rotates the swung position identically — the door works relative to its own authored transform, never a fixed world axis
+  OK   rotating the whole scenario rotates the swung orientation identically
+Section B: SelectInteractable range and facing
+  OK   selects the one candidate that is both in range and roughly faced
+Section B: SelectInteractable picks the CLOSEST qualifying candidate
+  OK   the closer of two qualifying candidates wins, regardless of list order
+Section B: SelectInteractable returns nullptr when nothing qualifies
+  OK   nothing selected when every candidate is out of range — this is the entire 'stop offering interaction' mechanism, no separate state to clear
+  OK   an empty candidate list selects nothing without crashing
+Section D/E: door open/close animation and physics collision coherence
+  OK   PhysicsWorld initializes for the door test
+  OK   door starts closed
+  OK   door starts at zero swing angle
+  OK   closed-door prompt reads 'open'
+  OK   Interact() toggles the door open
+  OK   open-door prompt reads 'close'
+  OK   after enough fixed steps, the door reaches exactly its open angle (clamped, not overshooting)
+  OK   the door's physics body position matches its own computed open pose
+  OK   the door's physics body orientation matches its own computed open pose
+  OK   interacting again closes the door
+  OK   the door swings fully closed again
+Section D: door interaction point follows its own swing
+  OK   the door's interaction point moves as it swings open, not fixed to its closed pose
+Section F: light switch uses the exact same Interactable path as the door
+  OK   lamp starts off
+  OK   off-switch prompt reads 'turn on'
+  OK   the light switch is selectable through the generic interaction path
+  OK   Interact(), called generically through the Interactable interface, toggles the lamp on
+  OK   on-switch prompt reads 'turn off'
+  OK   the lever visibly swings toward its toggled angle over several fixed steps
+Section G: interact key obeys the same input-ownership boundary as the torch
+  OK   interact fires normally during ordinary gameplay
+  OK   an interact request while the menu owns input does not trigger the target
+  OK   closing the menu alone does not trigger a stale interact
+  OK   gameplay control of interaction is fully restored after resume
+
+ALL TESTS PASSED

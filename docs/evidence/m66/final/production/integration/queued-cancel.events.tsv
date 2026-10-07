@@ -1,0 +1,27 @@
+sequence	operation	asset	generation	thread	context_current	handle	bytes	path
+1	MeshCreated		0	132106863197888	1	0	2016	
+2	MeshCreated		0	132106863197888	1	1	129024	
+3	TextureCreated		0	132106863197888	1	0	4	
+4	FileReadBegin	000000000000000000000000f7200001	0	132106407634624	0	0	0	/home/conner/Documents/GitHub/Project-Judas/build/ftft2-fixtures/queued-cancel/a/Assets/1.obj
+5	FileReadChunk	000000000000000000000000f7200001	0	132106407634624	0	0	1048576	/home/conner/Documents/GitHub/Project-Judas/build/ftft2-fixtures/queued-cancel/a/Assets/1.obj
+6	FileReadChunk	000000000000000000000000f7200001	0	132106407634624	0	0	2097152	/home/conner/Documents/GitHub/Project-Judas/build/ftft2-fixtures/queued-cancel/a/Assets/1.obj
+7	FileReadChunk	000000000000000000000000f7200001	0	132106407634624	0	0	2355232	/home/conner/Documents/GitHub/Project-Judas/build/ftft2-fixtures/queued-cancel/a/Assets/1.obj
+8	FileReadEnd	000000000000000000000000f7200001	0	132106407634624	0	0	2355232	/home/conner/Documents/GitHub/Project-Judas/build/ftft2-fixtures/queued-cancel/a/Assets/1.obj
+9	DecodeBegin	000000000000000000000000f7200001	0	132106407634624	0	0	2355232	/home/conner/Documents/GitHub/Project-Judas/build/ftft2-fixtures/queued-cancel/a/Assets/1.obj
+10	DecodeEnd	000000000000000000000000f7200001	0	132106407634624	0	0	2355232	/home/conner/Documents/GitHub/Project-Judas/build/ftft2-fixtures/queued-cancel/a/Assets/1.obj
+11	LoadComplete	000000000000000000000000f7200001	0	132106407634624	0	0	2355232	/home/conner/Documents/GitHub/Project-Judas/build/ftft2-fixtures/queued-cancel/a/Assets/1.obj
+12	MeshCreated		0	132106863197888	1	2	180	
+13	CancelRequested	000000000000000000000000f7200004	0	132106863197888	0	0	0	/home/conner/Documents/GitHub/Project-Judas/build/ftft2-fixtures/queued-cancel/a/Assets/4.obj
+14	StaleDiscarded	000000000000000000000000f7200004	0	132106863197888	0	0	0	/home/conner/Documents/GitHub/Project-Judas/build/ftft2-fixtures/queued-cancel/a/Assets/4.obj
+15	TextureCreated		0	132106863197888	1	1	4194304	
+16	ManagerShutdownBegin		0	132106863197888	0	0	0	
+17	MeshDestroyed		0	132106863197888	1	2	180	
+18	ManagerShutdownEnd		0	132106863197888	0	0	0	
+19	WorkersJoined		0	132106863197888	1	0	0	
+20	TextureDestroyed		0	132106863197888	1	1	4194304	
+21	RendererShutdownBegin		0	132106863197888	1	0	0	
+22	MeshDestroyed		0	132106863197888	1	0	2016	
+23	MeshDestroyed		0	132106863197888	1	1	129024	
+24	TextureDestroyed		0	132106863197888	1	0	4	
+25	RendererShutdownEnd		0	132106863197888	1	0	0	
+26	ContextDestroyed		0	132106863197888	0	0	0	

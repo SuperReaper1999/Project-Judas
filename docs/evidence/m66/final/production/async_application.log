@@ -1,0 +1,345 @@
+Renderer fragment texture units: 32 (material path uses 12)
+World state: /home/conner/Documents/GitHub/Project-Judas/build/ftft2-fixtures/shared-progress/a/Saves/main.judasstate (none saved)
+Project: FTFT2 async (/home/conner/Documents/GitHub/Project-Judas/build/ftft2-fixtures/shared-progress/a/main.judasproj)
+Scene: FTFT2 async application (/home/conner/Documents/GitHub/Project-Judas/build/ftft2-fixtures/shared-progress/a/Scenes/main.judas)
+World origin (m): 0.000, 0.000, 0.000
+PASS normal application has async workers and real renderer (no headless residency)
+ASYNC enabled=1 workers=7 renderer_present=1
+PASS two real authored consumers share demand
+PASS release one consumer keeps shared in-flight load alive
+PASS normal SDL events reached actual gameplay view toggle while IO outstanding
+PASS normal fixed-step scene advances physically while IO is held
+PASS normal rendering produces framebuffer content while the real read remains pending
+PROGRESS frames=4 fixed_steps=4 body_x_before=-2 body_x_after=-1.98333311 draw_calls=24 triangles=288 spatial_pixels=1 outstanding_state=loading
+PASS actual GL mesh buffers are resident for asset 1
+PASS GPU vertex contents match current asset, max x=1.000000
+PASS shared authored demand decoded exactly once
+Renderer fragment texture units: 32 (material path uses 12)
+World state: /home/conner/Documents/GitHub/Project-Judas/build/ftft2-fixtures/queued-cancel/a/Saves/main.judasstate (none saved)
+Project: FTFT2 async (/home/conner/Documents/GitHub/Project-Judas/build/ftft2-fixtures/queued-cancel/a/main.judasproj)
+Scene: FTFT2 async application (/home/conner/Documents/GitHub/Project-Judas/build/ftft2-fixtures/queued-cancel/a/Scenes/main.judas)
+World origin (m): 0.000, 0.000, 0.000
+PASS normal application returned cleanly
+PASS literal decode/read operations run on workers; GPU creation/destruction on owning thread with current context
+PASS shutdown order: resources drained, workers joined, renderer destroyed, then context destroyed
+PASS all traced mesh/texture objects destroyed exactly once before renderer/context destruction
+PASS no decoder operation after worker join
+PASS no decoder operation after worker join
+PASS no decoder operation after worker join
+PASS no decoder operation after worker join
+PASS no decoder operation after worker join
+PASS no decoder operation after worker join
+PASS no decoder operation after worker join
+OWNERSHIP main=132106863197888 decode_events=2 GPU_created=5 GPU_destroyed=5 trace_events=24
+PASS case completed every required assertion phase
+CASE shared-progress PASS frames=128 seconds=0.936065
+PASS normal application has async workers and real renderer (no headless residency)
+ASYNC enabled=1 workers=7 renderer_present=1
+PASS actual GL mesh buffers are resident for asset 1
+PASS GPU vertex contents match current asset, max x=1.000000
+PASS request genuinely queued behind bounded worker pool
+PASS last demand cancellation cannot resurrect or upload resource
+PASS cancelled queue never executes actual IO
+Renderer fragment texture units: 32 (material path uses 12)
+World state: /home/conner/Documents/GitHub/Project-Judas/build/ftft2-fixtures/read-cancel/a/Saves/main.judasstate (none saved)
+Project: FTFT2 async (/home/conner/Documents/GitHub/Project-Judas/build/ftft2-fixtures/read-cancel/a/main.judasproj)
+Scene: FTFT2 async application (/home/conner/Documents/GitHub/Project-Judas/build/ftft2-fixtures/read-cancel/a/Scenes/main.judas)
+World origin (m): 0.000, 0.000, 0.000
+PASS normal application returned cleanly
+PASS literal decode/read operations run on workers; GPU creation/destruction on owning thread with current context
+PASS shutdown order: resources drained, workers joined, renderer destroyed, then context destroyed
+PASS all traced mesh/texture objects destroyed exactly once before renderer/context destruction
+PASS no decoder operation after worker join
+PASS no decoder operation after worker join
+PASS no decoder operation after worker join
+PASS no decoder operation after worker join
+PASS no decoder operation after worker join
+PASS no decoder operation after worker join
+PASS no decoder operation after worker join
+OWNERSHIP main=132106863197888 decode_events=2 GPU_created=5 GPU_destroyed=5 trace_events=26
+PASS case completed every required assertion phase
+CASE queued-cancel PASS frames=1 seconds=0.172044
+PASS normal application has async workers and real renderer (no headless residency)
+ASYNC enabled=1 workers=7 renderer_present=1
+PASS actual GL mesh buffers are resident for asset 1
+PASS GPU vertex contents match current asset, max x=1.000000
+PASS cancel after an actual file chunk, before next cooperative boundary
+PASS last demand cancellation cannot resurrect or upload resource
+PASS running read stops at cooperative chunk boundary, without decoder entry
+Renderer fragment texture units: 32 (material path uses 12)
+World state: /home/conner/Documents/GitHub/Project-Judas/build/ftft2-fixtures/cpu-ready-cancel/a/Saves/main.judasstate (none saved)
+Project: FTFT2 async (/home/conner/Documents/GitHub/Project-Judas/build/ftft2-fixtures/cpu-ready-cancel/a/main.judasproj)
+Scene: FTFT2 async application (/home/conner/Documents/GitHub/Project-Judas/build/ftft2-fixtures/cpu-ready-cancel/a/Scenes/main.judas)
+World origin (m): 0.000, 0.000, 0.000
+PASS normal application returned cleanly
+PASS literal decode/read operations run on workers; GPU creation/destruction on owning thread with current context
+PASS shutdown order: resources drained, workers joined, renderer destroyed, then context destroyed
+PASS all traced mesh/texture objects destroyed exactly once before renderer/context destruction
+PASS no decoder operation after worker join
+PASS no decoder operation after worker join
+PASS no decoder operation after worker join
+PASS no decoder operation after worker join
+PASS no decoder operation after worker join
+PASS no decoder operation after worker join
+PASS no decoder operation after worker join
+OWNERSHIP main=132106863197888 decode_events=2 GPU_created=5 GPU_destroyed=5 trace_events=30
+PASS case completed every required assertion phase
+CASE read-cancel PASS frames=1 seconds=0.209196
+PASS normal application has async workers and real renderer (no headless residency)
+ASYNC enabled=1 workers=7 renderer_present=1
+PASS actual GL mesh buffers are resident for asset 1
+PASS GPU vertex contents match current asset, max x=1.000000
+PASS decoded CPU preparation awaits real upload budget
+PASS last demand cancellation cannot resurrect or upload resource
+PASS CPU-ready cancellation discards actual decoded data without GPU creation
+Renderer fragment texture units: 32 (material path uses 12)
+World state: /home/conner/Documents/GitHub/Project-Judas/build/ftft2-fixtures/stale-generation/a/Saves/main.judasstate (none saved)
+Project: FTFT2 async (/home/conner/Documents/GitHub/Project-Judas/build/ftft2-fixtures/stale-generation/a/main.judasproj)
+Scene: FTFT2 async application (/home/conner/Documents/GitHub/Project-Judas/build/ftft2-fixtures/stale-generation/a/Scenes/main.judas)
+World origin (m): 0.000, 0.000, 0.000
+PASS normal application returned cleanly
+PASS literal decode/read operations run on workers; GPU creation/destruction on owning thread with current context
+PASS shutdown order: resources drained, workers joined, renderer destroyed, then context destroyed
+PASS all traced mesh/texture objects destroyed exactly once before renderer/context destruction
+PASS no decoder operation after worker join
+PASS no decoder operation after worker join
+PASS no decoder operation after worker join
+PASS no decoder operation after worker join
+PASS no decoder operation after worker join
+PASS no decoder operation after worker join
+PASS no decoder operation after worker join
+OWNERSHIP main=132106863197888 decode_events=4 GPU_created=5 GPU_destroyed=5 trace_events=33
+PASS case completed every required assertion phase
+CASE cpu-ready-cancel PASS frames=1 seconds=0.201710
+PASS normal application has async workers and real renderer (no headless residency)
+ASYNC enabled=1 workers=7 renderer_present=1
+PASS actual GL mesh buffers are resident for asset 1
+PASS GPU vertex contents match current asset, max x=1.000000
+PASS actual GL mesh buffers are resident for asset 7
+PASS GPU vertex contents match current asset, max x=7.000000
+PASS late old completion discarded without replacing newer GPU handle
+PASS actual GL mesh buffers are resident for asset 7
+PASS GPU vertex contents match current asset, max x=7.000000
+Renderer fragment texture units: 32 (material path uses 12)
+World state: /home/conner/Documents/GitHub/Project-Judas/build/ftft2-fixtures/project-switch/a/Saves/main.judasstate (none saved)
+Project: FTFT2 async (/home/conner/Documents/GitHub/Project-Judas/build/ftft2-fixtures/project-switch/a/main.judasproj)
+Scene: FTFT2 async application (/home/conner/Documents/GitHub/Project-Judas/build/ftft2-fixtures/project-switch/a/Scenes/main.judas)
+World origin (m): 0.000, 0.000, 0.000
+PASS normal application returned cleanly
+PASS literal decode/read operations run on workers; GPU creation/destruction on owning thread with current context
+PASS shutdown order: resources drained, workers joined, renderer destroyed, then context destroyed
+PASS all traced mesh/texture objects destroyed exactly once before renderer/context destruction
+PASS no decoder operation after worker join
+PASS no decoder operation after worker join
+PASS no decoder operation after worker join
+PASS no decoder operation after worker join
+PASS no decoder operation after worker join
+PASS no decoder operation after worker join
+PASS no decoder operation after worker join
+OWNERSHIP main=132106863197888 decode_events=6 GPU_created=6 GPU_destroyed=6 trace_events=40
+PASS case completed every required assertion phase
+CASE stale-generation PASS frames=3 seconds=0.180167
+PASS normal application has async workers and real renderer (no headless residency)
+ASYNC enabled=1 workers=7 renderer_present=1
+PASS actual GL mesh buffers are resident for asset 1
+PASS GPU vertex contents match current asset, max x=1.000000
+PASS old project decode is held outstanding at project replacement entry
+PASS project replacement drains old work before database handoff
+PASS old project resource is unavailable after closure
+PASS application scene/session handoff uses real world lifecycle: 
+PASS actual GL mesh buffers are resident for asset 7
+PASS GPU vertex contents match current asset, max x=9.000000
+PASS new project's reference count reflects its actual consumer
+Renderer fragment texture units: 32 (material path uses 12)
+World state: /home/conner/Documents/GitHub/Project-Judas/build/ftft2-fixtures/project-close/a/Saves/main.judasstate (none saved)
+Project: FTFT2 async (/home/conner/Documents/GitHub/Project-Judas/build/ftft2-fixtures/project-close/a/main.judasproj)
+Scene: FTFT2 async application (/home/conner/Documents/GitHub/Project-Judas/build/ftft2-fixtures/project-close/a/Scenes/main.judas)
+World origin (m): 0.000, 0.000, 0.000
+PASS normal application returned cleanly
+PASS literal decode/read operations run on workers; GPU creation/destruction on owning thread with current context
+PASS shutdown order: resources drained, workers joined, renderer destroyed, then context destroyed
+PASS all traced mesh/texture objects destroyed exactly once before renderer/context destruction
+PASS no decoder operation after worker join
+PASS no decoder operation after worker join
+PASS no decoder operation after worker join
+PASS no decoder operation after worker join
+PASS no decoder operation after worker join
+PASS no decoder operation after worker join
+PASS no decoder operation after worker join
+OWNERSHIP main=132106863197888 decode_events=6 GPU_created=6 GPU_destroyed=6 trace_events=40
+PASS case completed every required assertion phase
+CASE project-switch PASS frames=2 seconds=0.168927
+PASS normal application has async workers and real renderer (no headless residency)
+ASYNC enabled=1 workers=7 renderer_present=1
+PASS actual GL mesh buffers are resident for asset 1
+PASS GPU vertex contents match current asset, max x=1.000000
+PASS old project decode is held outstanding at project replacement entry
+PASS project replacement drains old work before database handoff
+PASS old project resource is unavailable after closure
+PASS application scene/session handoff uses real world lifecycle: 
+PASS closed project data cannot return in subsequent normal pump
+Renderer fragment texture units: 32 (material path uses 12)
+World state: /home/conner/Documents/GitHub/Project-Judas/build/ftft2-fixtures/missing-recovery/a/Saves/main.judasstate (none saved)
+Project: FTFT2 async (/home/conner/Documents/GitHub/Project-Judas/build/ftft2-fixtures/missing-recovery/a/main.judasproj)
+Scene: FTFT2 async application (/home/conner/Documents/GitHub/Project-Judas/build/ftft2-fixtures/missing-recovery/a/Scenes/main.judas)
+World origin (m): 0.000, 0.000, 0.000
+PASS normal application returned cleanly
+PASS literal decode/read operations run on workers; GPU creation/destruction on owning thread with current context
+PASS shutdown order: resources drained, workers joined, renderer destroyed, then context destroyed
+PASS all traced mesh/texture objects destroyed exactly once before renderer/context destruction
+PASS no decoder operation after worker join
+PASS no decoder operation after worker join
+PASS no decoder operation after worker join
+PASS no decoder operation after worker join
+PASS no decoder operation after worker join
+PASS no decoder operation after worker join
+PASS no decoder operation after worker join
+OWNERSHIP main=132106863197888 decode_events=4 GPU_created=5 GPU_destroyed=5 trace_events=32
+PASS case completed every required assertion phase
+CASE project-close PASS frames=1 seconds=0.173742
+PASS normal application has async workers and real renderer (no headless residency)
+ASYNC enabled=1 workers=7 renderer_present=1
+PASS actual GL mesh buffers are resident for asset 1
+PASS GPU vertex contents match current asset, max x=1.000000
+PASS real missing/corrupt load fails with a visible error
+PASS actual GL mesh buffers are resident for asset 11
+PASS GPU vertex contents match current asset, max x=1.000000
+PASS actual GL mesh buffers are resident for asset 8
+PASS GPU vertex contents match current asset, max x=4.000000
+PASS actual GL mesh buffers are resident for asset 11
+PASS GPU vertex contents match current asset, max x=1.000000
+Renderer fragment texture units: 32 (material path uses 12)
+World state: /home/conner/Documents/GitHub/Project-Judas/build/ftft2-fixtures/corrupt-recovery/a/Saves/main.judasstate (none saved)
+Project: FTFT2 async (/home/conner/Documents/GitHub/Project-Judas/build/ftft2-fixtures/corrupt-recovery/a/main.judasproj)
+Scene: FTFT2 async application (/home/conner/Documents/GitHub/Project-Judas/build/ftft2-fixtures/corrupt-recovery/a/Scenes/main.judas)
+World origin (m): 0.000, 0.000, 0.000
+PASS normal application returned cleanly
+PASS literal decode/read operations run on workers; GPU creation/destruction on owning thread with current context
+PASS shutdown order: resources drained, workers joined, renderer destroyed, then context destroyed
+PASS all traced mesh/texture objects destroyed exactly once before renderer/context destruction
+PASS no decoder operation after worker join
+PASS no decoder operation after worker join
+PASS no decoder operation after worker join
+PASS no decoder operation after worker join
+PASS no decoder operation after worker join
+PASS no decoder operation after worker join
+PASS no decoder operation after worker join
+OWNERSHIP main=132106863197888 decode_events=6 GPU_created=7 GPU_destroyed=7 trace_events=43
+PASS case completed every required assertion phase
+CASE missing-recovery PASS frames=3 seconds=0.174780
+PASS normal application has async workers and real renderer (no headless residency)
+ASYNC enabled=1 workers=7 renderer_present=1
+PASS actual GL mesh buffers are resident for asset 1
+PASS GPU vertex contents match current asset, max x=1.000000
+PASS real missing/corrupt load fails with a visible error
+PASS actual GL mesh buffers are resident for asset 11
+PASS GPU vertex contents match current asset, max x=1.000000
+PASS actual image decoder reports corrupt PNG
+PASS actual GL mesh buffers are resident for asset 9
+PASS GPU vertex contents match current asset, max x=4.000000
+PASS actual GPU texture pixels match decoded PNG
+PASS actual GL mesh buffers are resident for asset 11
+PASS GPU vertex contents match current asset, max x=1.000000
+Renderer fragment texture units: 32 (material path uses 12)
+World state: /home/conner/Documents/GitHub/Project-Judas/build/ftft2-fixtures/residency/a/Saves/main.judasstate (none saved)
+Project: FTFT2 async (/home/conner/Documents/GitHub/Project-Judas/build/ftft2-fixtures/residency/a/main.judasproj)
+Scene: FTFT2 async application (/home/conner/Documents/GitHub/Project-Judas/build/ftft2-fixtures/residency/a/Scenes/main.judas)
+World origin (m): 0.000, 0.000, 0.000
+PASS normal application returned cleanly
+PASS literal decode/read operations run on workers; GPU creation/destruction on owning thread with current context
+PASS shutdown order: resources drained, workers joined, renderer destroyed, then context destroyed
+PASS all traced mesh/texture objects destroyed exactly once before renderer/context destruction
+PASS no decoder operation after worker join
+PASS no decoder operation after worker join
+PASS no decoder operation after worker join
+PASS no decoder operation after worker join
+PASS no decoder operation after worker join
+PASS no decoder operation after worker join
+PASS no decoder operation after worker join
+OWNERSHIP main=132106863197888 decode_events=12 GPU_created=8 GPU_destroyed=8 trace_events=60
+PASS case completed every required assertion phase
+CASE corrupt-recovery PASS frames=4 seconds=0.183524
+PASS normal application has async workers and real renderer (no headless residency)
+ASYNC enabled=1 workers=7 renderer_present=1
+PASS actual GL mesh buffers are resident for asset 1
+PASS GPU vertex contents match current asset, max x=1.000000
+PASS actual GL mesh buffers are resident for asset 12
+PASS GPU vertex contents match current asset, max x=1.000000
+PASS LRU evicts and actually destroys the oldest unused GPU buffers
+PASS budget protects active consumers and reports unavoidable over-budget residency
+OVER_BUDGET resident=360 budget=0
+PASS actual GL mesh buffers are resident for asset 12
+PASS GPU vertex contents match current asset, max x=1.000000
+PASS evicted asset reloads into a newly created real GPU handle
+Renderer fragment texture units: 32 (material path uses 12)
+World state: /home/conner/Documents/GitHub/Project-Judas/build/ftft2-fixtures/upload-budget/a/Saves/main.judasstate (none saved)
+Project: FTFT2 async (/home/conner/Documents/GitHub/Project-Judas/build/ftft2-fixtures/upload-budget/a/main.judasproj)
+Scene: FTFT2 async application (/home/conner/Documents/GitHub/Project-Judas/build/ftft2-fixtures/upload-budget/a/Scenes/main.judas)
+World origin (m): 0.000, 0.000, 0.000
+PASS normal application returned cleanly
+PASS literal decode/read operations run on workers; GPU creation/destruction on owning thread with current context
+PASS shutdown order: resources drained, workers joined, renderer destroyed, then context destroyed
+PASS all traced mesh/texture objects destroyed exactly once before renderer/context destruction
+PASS no decoder operation after worker join
+PASS no decoder operation after worker join
+PASS no decoder operation after worker join
+PASS no decoder operation after worker join
+PASS no decoder operation after worker join
+PASS no decoder operation after worker join
+PASS no decoder operation after worker join
+OWNERSHIP main=132106863197888 decode_events=10 GPU_created=9 GPU_destroyed=9 trace_events=57
+PASS case completed every required assertion phase
+CASE residency PASS frames=6 seconds=0.256292
+PASS normal application has async workers and real renderer (no headless residency)
+ASYNC enabled=1 workers=7 renderer_present=1
+PASS actual GL mesh buffers are resident for asset 1
+PASS GPU vertex contents match current asset, max x=1.000000
+PASS normal per-frame Pump uploads exactly its two-resource budget
+PASS third genuinely decoded resource remains CPU-ready
+PASS actual GPU texture pixels match decoded PNG
+PASS actual GL mesh buffers are resident for asset 2
+PASS GPU vertex contents match current asset, max x=1.000000
+PASS actual GL mesh buffers are resident for asset 11
+PASS GPU vertex contents match current asset, max x=1.000000
+Renderer fragment texture units: 32 (material path uses 12)
+World state: /home/conner/Documents/GitHub/Project-Judas/build/ftft2-fixtures/shutdown-outstanding/a/Saves/main.judasstate (none saved)
+Project: FTFT2 async (/home/conner/Documents/GitHub/Project-Judas/build/ftft2-fixtures/shutdown-outstanding/a/main.judasproj)
+Scene: FTFT2 async application (/home/conner/Documents/GitHub/Project-Judas/build/ftft2-fixtures/shutdown-outstanding/a/Scenes/main.judas)
+World origin (m): 0.000, 0.000, 0.000
+PASS normal application returned cleanly
+PASS literal decode/read operations run on workers; GPU creation/destruction on owning thread with current context
+PASS shutdown order: resources drained, workers joined, renderer destroyed, then context destroyed
+PASS all traced mesh/texture objects destroyed exactly once before renderer/context destruction
+PASS no decoder operation after worker join
+PASS no decoder operation after worker join
+PASS no decoder operation after worker join
+PASS no decoder operation after worker join
+PASS no decoder operation after worker join
+PASS no decoder operation after worker join
+PASS no decoder operation after worker join
+OWNERSHIP main=132106863197888 decode_events=8 GPU_created=8 GPU_destroyed=8 trace_events=49
+PASS case completed every required assertion phase
+CASE upload-budget PASS frames=2 seconds=0.231181
+PASS normal application has async workers and real renderer (no headless residency)
+ASYNC enabled=1 workers=7 renderer_present=1
+PASS actual GL mesh buffers are resident for asset 1
+PASS GPU vertex contents match current asset, max x=1.000000
+PASS shutdown fixture holds real CPU-ready data
+PASS shutdown has simultaneous running read and queued resource work
+PASS application exits with CPU-ready work unconsumed
+PASS normal application returned cleanly
+PASS literal decode/read operations run on workers; GPU creation/destruction on owning thread with current context
+PASS shutdown order: resources drained, workers joined, renderer destroyed, then context destroyed
+PASS all traced mesh/texture objects destroyed exactly once before renderer/context destruction
+PASS no decoder operation after worker join
+PASS no decoder operation after worker join
+PASS no decoder operation after worker join
+PASS no decoder operation after worker join
+PASS no decoder operation after worker join
+PASS no decoder operation after worker join
+PASS no decoder operation after worker join
+OWNERSHIP main=132106863197888 decode_events=4 GPU_created=5 GPU_destroyed=5 trace_events=41
+PASS shutdown cancels queued work and running read before decoding
+PASS case completed every required assertion phase
+CASE shutdown-outstanding PASS frames=3 seconds=0.181015
+FTFT2 integration: 246 checks, 0 failures

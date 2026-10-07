@@ -1,0 +1,26 @@
+{
+  "cleanup": {
+    "flipped": 0,
+    "orientPatches": true,
+    "removeDegenerates": true,
+    "removed": 0,
+    "weldTolerance": 0.0,
+    "welded": 0
+  },
+  "diagnostic": {
+    "action": "",
+    "code": "",
+    "face": 4294967295,
+    "node": "",
+    "point": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "vertices": []
+  },
+  "error": "",
+  "output": "/tmp/m66-halfpipe-42.judascollision",
+  "source": ".cache/m66/halfpipe-preview.judasmodel",
+  "success": true
+}

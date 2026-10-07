@@ -1,0 +1,16 @@
+{
+  "workers": 7,
+  "assets": 40,
+  "phases": [
+    {"name": "baseline (no loads)", "frames": 120, "avgMs": 0.603492, "p99Ms": 2.28747, "maxMs": 43.5867, "over33": 1, "fixedSteps": 4, "wallSeconds": 0.0738394, "saturated": 0, "maxQueue": 0, "workerBusySeconds": 0, "jobsCompleted": 0},
+    {"name": "async load (40 assets)", "frames": 1047, "avgMs": 1.14639, "p99Ms": 32.2372, "maxMs": 82.6331, "over33": 10, "fixedSteps": 73, "wallSeconds": 1.22, "saturated": 0, "maxQueue": 35, "workerBusySeconds": 7.98849, "jobsCompleted": 40},
+    {"name": "cancel + release", "frames": 1, "avgMs": 0.46786, "p99Ms": 0.46786, "maxMs": 0.46786, "over33": 0, "fixedSteps": 0, "wallSeconds": 0.000842527, "saturated": 0, "maxQueue": 5, "workerBusySeconds": 0.0010954, "jobsCompleted": 0},
+    {"name": "evict + reload", "frames": 759, "avgMs": 0.339558, "p99Ms": 3.68818, "maxMs": 15.7458, "over33": 0, "fixedSteps": 17, "wallSeconds": 0.279383, "saturated": 0, "maxQueue": 0, "workerBusySeconds": 0.917503, "jobsCompleted": 4},
+    {"name": "BLOCKING load (40 assets)", "frames": 40, "avgMs": 86.8349, "p99Ms": 158.317, "maxMs": 158.317, "over33": 24, "fixedSteps": 203, "wallSeconds": 3.47448, "saturated": 12, "maxQueue": 0, "workerBusySeconds": 0, "jobsCompleted": 0}
+  ],
+  "asyncLoadSeconds": 1.22,
+  "blockingLoadSeconds": 3.47448,
+  "bytesBeforeEviction": 126342480,
+  "bytesAfterEviction": 89478480,
+  "evictions": 4
+}

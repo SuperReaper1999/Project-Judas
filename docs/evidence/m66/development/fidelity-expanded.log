@@ -1,0 +1,85 @@
+PASS original FBX imports without preprocessing
+PASS 65 source bones / 72 hierarchy nodes / six retained parts
+PASS original vertex/face provenance survives triangulation and tangent seams
+PASS independent source evaluator loads original
+PASS normalized default hierarchy equals source-evaluated transforms
+PASS baked named takes agree with source evaluation at independent off-grid times
+PASS per-mesh skin bindings reproduce original deformed vertices within 2 mm
+PASS FBX centimetres normalized to metre-scale character without height guessing
+PASS source embedded material textures retained
+PASS self-contained runtime archive validates and round-trips
+PASS normalized model bytes deterministic on round-trip
+PASS malformed runtime payload fails transactionally
+PASS root interval loop and reverse sampling do not teleport
+PASS 256 weighted-joint fixture imports
+PASS all 256 joints and eight meaningful high-index influences deform vertices
+PASS multiple skins, independent rig and affine attachment import
+PASS per-skin palettes and static attachment retained
+PASS distinct inverse binds preserved and skinned mesh-node transform not double-applied
+FAIL external Unicode/encoded-space texture and buffer resolve in approved root
+glTF: missing/oversized external image: caf/u00e9%20color.png
+PASS original animation-only file maps onto complete rig with verified proportions
+MOTION SkateboardingPush.fbx off_grid_joint_error=0.000124693
+PASS assembled motion agrees with independent source evaluation within declared bake tolerance
+PASS original animation-only file maps onto complete rig with verified proportions
+MOTION SkateboardingCruise.fbx off_grid_joint_error=4.87566e-05
+PASS assembled motion agrees with independent source evaluation within declared bake tolerance
+PASS original animation-only file maps onto complete rig with verified proportions
+MOTION Walking.fbx off_grid_joint_error=0.000549316
+PASS assembled motion agrees with independent source evaluation within declared bake tolerance
+{
+  "archiveBytes": 130895546,
+  "checks": 25,
+  "dimensionsMetres": [
+    1.780761957168579,
+    1.8011791706085205,
+    0.324788361787796
+  ],
+  "embeddedMaps": 4,
+  "failures": 1,
+  "hierarchyNodes": 72,
+  "importMs": 1490.221714,
+  "parts": 6,
+  "restMatrixMaxError": 2.384185791015625e-07,
+  "samples": [
+    {
+      "clip": "Take 001",
+      "jointMatrixMaxError": 2.384185791015625e-07,
+      "time": 0.0,
+      "vertexPositionMaxErrorMetres": 3.8558215464945533e-07
+    },
+    {
+      "clip": "Take 001",
+      "jointMatrixMaxError": 2.7799978852272034e-07,
+      "time": 0.12300000339746475,
+      "vertexPositionMaxErrorMetres": 3.8356020581886696e-07
+    },
+    {
+      "clip": "Take 001",
+      "jointMatrixMaxError": 2.384185791015625e-07,
+      "time": 0.7129999995231628,
+      "vertexPositionMaxErrorMetres": 4.0796712141855096e-07
+    },
+    {
+      "clip": "mixamo.com",
+      "jointMatrixMaxError": 2.384185791015625e-07,
+      "time": 0.0,
+      "vertexPositionMaxErrorMetres": 5.335137416295765e-07
+    },
+    {
+      "clip": "mixamo.com",
+      "jointMatrixMaxError": 2.384185791015625e-07,
+      "time": 0.03333333507180214,
+      "vertexPositionMaxErrorMetres": 5.335137416295765e-07
+    },
+    {
+      "clip": "mixamo.com",
+      "jointMatrixMaxError": 2.384185791015625e-07,
+      "time": 0.03333333507180214,
+      "vertexPositionMaxErrorMetres": 5.335137416295765e-07
+    }
+  ],
+  "skinPaletteEntries": 109,
+  "sourceBones": 65,
+  "vertices": 150561
+}

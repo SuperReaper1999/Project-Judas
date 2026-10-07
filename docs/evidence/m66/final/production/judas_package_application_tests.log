@@ -1,0 +1,18 @@
+Renderer fragment texture units: 32 (material path uses 12)
+Project: Judas Export Demo (/tmp/judas-m38-app-153387/moved package/game.judasproj)
+Scene: Judas exported game (/tmp/judas-m38-app-153387/moved package/Scenes/start.judas)
+World origin (m): 0.000, 0.000, 0.000
+PASS explicit executable-relative project
+PASS unrelated working directory
+PASS packaged font ignores poisoned development override
+PASS ordinary non-blocking resources
+PASS normal application installs packaged input map
+PASS ordinary particles and render-target camera constructed
+PASS prefab registered from package
+PASS normal runtime SpawnPrefab from packaged stable ID
+PASS actual mesh texture and audio decoders all succeed
+PASS packaged audio creates runtime voices (not listening evidence)
+PASS normal rendering camera/particle work
+PASS rendered package screenshot
+PASS moved-package normal startup and shutdown
+SUMMARY 13 checks 0 failures

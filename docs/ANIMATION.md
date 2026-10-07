@@ -25,7 +25,12 @@ replace that resolution policy without changing assets or GPU skinning. M46
 implements one active clip, not blending, IK, ragdolls or physical bone mapping.
 M45 rigid joints are distinct from skeleton nodes.
 
-## Import and limits
+## Historical M46 import and limits
+
+**Superseded by M66 candidate:** [Model import](MODEL_IMPORT.md) documents the
+current multipart/affine/eight-weight import path and size-aware palette. The
+following retains the original M46 scope; its 48-joint/one-mesh restrictions
+do not describe the M66 candidate.
 
 Import `.glb` or `.gltf` as an ordinary Mesh asset. cgltf is pinned to 1.15
 (MIT, Johannes Kuhlmann); source/header/license/provenance are under

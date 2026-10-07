@@ -1,0 +1,14 @@
+{
+  "assetId": "00f95bedb4129c33beab3ab1bc22dd34",
+  "diagnostics": [],
+  "error": "",
+  "hierarchyNodes": 258,
+  "output": "/home/conner/Documents/GitHub/Project-Judas/.cache/m66-import-performance/Assets/models/capacity256.judasmodel",
+  "paletteEntries": 256,
+  "parts": 1,
+  "sourceBones": 0,
+  "sourceUnitMeters": 1.0,
+  "success": true,
+  "unchanged": false,
+  "vertices": 771
+}

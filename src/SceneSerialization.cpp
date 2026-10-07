@@ -157,6 +157,7 @@ void WriteObject(Writer& w, const SceneObject& o) {
         w.Line("render.secondary-alpha", F(r.secondaryAlpha));
         w.Line("render.mesh-asset", Quote(r.meshAsset));
         w.Line("render.texture-asset", Quote(r.textureAsset));
+        if(!r.hiddenParts.empty()){w.Line("render.hidden-part-count",std::to_string(r.hiddenParts.size()));for(size_t i=0;i<r.hiddenParts.size();++i)w.Line("render.hidden-part-"+std::to_string(i),Quote(r.hiddenParts[i]));}
         if(!r.materials.empty())w.Line("render.materials",Quote(EncodeMaterialSlots(r.materials)));
         if (r.textureCamera) w.Line("render.texture-camera", std::to_string(r.textureCamera));
     }
@@ -690,7 +691,7 @@ bool ParseObject(Reader& reader, const std::vector<Token>& header, const Block& 
     if(p.Has("animation.enabled")){SceneAnimationComponent a;
         if(!p.Bool("animation.enabled",a.enabled)||!p.Bool("animation.play-on-start",a.playOnStart)||!p.Bool("animation.loop",a.loop)||!p.String("animation.clip",a.clip)||!p.Float("animation.speed",a.speed)||!p.Float("animation.time",a.time)||a.time<0)return false;
         if(p.Has("animation.layers")){int count=0;if(!p.Int("animation.layers",count)||count<0||count>16)return reader.Fail("invalid layer count");for(int i=0;i<count;++i){AnimationLayerSettings l;auto key="animation.layer."+std::to_string(i)+".";int masks=0;
-            if(!p.String(key+"id",l.id)||!p.String(key+"clip",l.clip)||!p.Bool(key+"enabled",l.enabled)||!p.Bool(key+"additive",l.additive)||!p.Float(key+"weight",l.weight)||!p.Float(key+"speed",l.speed)||!p.Float(key+"time",l.time)||!p.String(key+"reference-clip",l.referenceClip)||!p.Float(key+"reference-time",l.referenceTime)||!p.Int(key+"mask-count",masks)||masks<0||masks>128)return false;
+            if(!p.String(key+"id",l.id)||!p.String(key+"clip",l.clip)||!p.Bool(key+"enabled",l.enabled)||!p.Bool(key+"additive",l.additive)||!p.Float(key+"weight",l.weight)||!p.Float(key+"speed",l.speed)||!p.Float(key+"time",l.time)||!p.String(key+"reference-clip",l.referenceClip)||!p.Float(key+"reference-time",l.referenceTime)||!p.Int(key+"mask-count",masks)||masks<0||masks>int(kModelNodeLimit))return false;
             for(int n=0;n<masks;++n){std::string joint;if(!p.String(key+"mask."+std::to_string(n),joint))return false;l.mask.push_back(joint);}a.layers.push_back(std::move(l));}
         }std::string layerError;if(!ValidAnimationLayers(a.layers,layerError))return reader.Fail(layerError);
         if(p.Has("animation.limbs")){int count=0;if(!p.Int("animation.limbs",count)||count<0||count>16)return reader.Fail("16 IK contributor limit");std::set<std::string> ids;for(int i=0;i<count;++i){LimbIKSettings k;auto key="animation.limb."+std::to_string(i)+".";if(!p.String(key+"id",k.id)||!p.String(key+"root",k.root)||!p.String(key+"middle",k.middle)||!p.String(key+"end",k.end)||!p.Vec3(key+"target",k.target)||!p.Vec3(key+"pole",k.pole)||!p.Float(key+"weight",k.weight)||!p.Bool(key+"enabled",k.enabled)||!p.Int(key+"order",k.order))return false;std::string error;if(!ids.insert(k.id).second||!ValidLimbIK(k,error))return reader.Fail("invalid/duplicate IK: "+error);a.limbs.push_back(k);}}
@@ -736,6 +737,7 @@ bool ParseObject(Reader& reader, const std::vector<Token>& header, const Block& 
         if (!p.Float("render.secondary-alpha", r.secondaryAlpha)) return false;
         if (!p.String("render.mesh-asset", r.meshAsset)) return false;
         if (!p.String("render.texture-asset", r.textureAsset)) return false;
+        if(p.Has("render.hidden-part-count")){int count=0;if(!p.Int("render.hidden-part-count",count)||count<0||count>16384)return false;for(int i=0;i<count;++i){std::string key;if(!p.String("render.hidden-part-"+std::to_string(i),key)||key.empty())return false;r.hiddenParts.push_back(key);}}
         if(p.Has("render.materials")){std::string text;if(!p.String("render.materials",text))return false;std::string error;if(!DecodeMaterialSlots(text,r.materials,error))return reader.Fail(error);}
         if (p.Has("render.texture-camera") && !p.Id("render.texture-camera", r.textureCamera)) return false;
         o.render = r;

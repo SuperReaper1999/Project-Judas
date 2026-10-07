@@ -1,0 +1,71 @@
+PASS M54 physical cavity bake
+PASS physical surface partition bake
+PASS expected cell and shared-face connectivity
+PASS cached cubic storage/inversion agrees with independent geometric clipping
+PASS coarse cells cannot silently join vertically disconnected pockets
+PASS cached interpolated cap topology agrees with independent geometric clipping
+PASS calm equal-coordinate water remains at rest and conserves volume
+PASS uneven floor bake retains geometric storage
+PASS uneven lake at rest has no artificial pressure-driven motion
+PASS partly dry sloping shoreline remains well-balanced
+PASS shoreline fixture genuinely contains wet and dry cells
+PASS wet/dry disturbance stays nonnegative and conservative
+PASS wet/dry disturbance does not grow uncontrolled energy
+PASS spatial disturbance is localized
+PASS disturbance solves within bounded pressure/continuity budget
+PASS shared-face propagation preserves nonnegative conserved volume
+PASS disturbance energy is bounded and damped
+energy initial 157.211142725 peak 157.211142725 final 156.961968141
+PASS surface geometry bake serializes through normal basin asset
+PASS baked surface cells/faces round trip
+PASS dynamic owners use normal world-generation liquid handles
+PASS 1000 to 200 litre drain changes partition and owner together
+PASS substantial drain retains nonzero waves rather than resetting the surface
+PASS 1000 litre refill preserves moving flow state
+PASS surface cells are not counted again in system ledger
+PASS surface suspension retains allocation
+PASS dynamic owner removal uses normal safe lifetime
+PASS withdrawal takes donor momentum while unrelated faces remain unchanged
+PASS fully drained surface has no orphan flow and solves at rest
+PASS newly wet full cell starts at its physical capacity coordinate and zero arrival momentum
+PASS dry to full-cell refill propagates conservatively within unchanged bounded solver policy
+full-cell rewet peak pressure iterations 11
+PASS real submerged solid removes space, never liquid
+PASS body displacement redistributes through pressure/continuity
+PASS overlapping solid union is not subtracted twice
+PASS body exit restores space without adding water
+body fixture including 180 steps 20.751441 ms
+PASS moderate body translation and exit retain water and restore space
+PASS local crest/trough occupancy follows spatial transactions without flattening
+PASS render cap and authoritative local query agree
+PASS separate pools retain missing cells and closed barriers
+PASS spatial debit cannot cross a disconnected dry gap
+PASS drained and rewetted island cannot exchange water across missing physical faces
+PASS dry raised sill retains actual physical wet-connectivity geometry
+PASS submerged heads below a dry sill neither connect nor exchange water
+PASS refill reconnects regions only through wet sill faces, with no negative storage or remote transfer
+PASS coarser surface resolution retains conservative stable propagation
+PASS genuine radial storage/conical cells/geodesic face metrics bake
+PASS radial lake transport conserves volume under actual radial coordinate
+PASS radial flow velocities are tangent in each cell frame
+PASS bounded splash debits real donor water and preserves owner/parcel accounting
+splash reception requested 2.16173805203e-08 received 2.16173805203e-08 total 32
+PASS parcel reception deposits the actual quantity into a local surface allocation
+PASS bounded solve failure restores the entire partition and discharge
+propagation far amplitude 0.0148788062 reflection 1 half-dt maximum level difference 0.00222918844 m
+PASS disturbance propagates to far wall and reverses flow on reflection
+PASS half timestep has a consistent damped surface state
+PASS per-camera water entry/exit intervals follow physical boundaries
+PASS presentation query uses the same previous/current surface state as rendering
+PASS arbitrarily rotated uniform geometry/gravity bakes without world-up assumptions
+PASS oblique lake retains the correct gravity-normal equilibrium
+PASS invalid timestep cannot mutate state
+PASS deep pool fixed surface resolution bake
+PASS deep-water implicit stepping is bounded and conservative
+depth 10 disturbance energy 0.8 final 0.219938678
+depth 10 cells 128 faces 232 average step 0.121347 ms iterations 4.87
+PASS deep pool fixed surface resolution bake
+PASS deep-water implicit stepping is bounded and conservative
+depth 100 disturbance energy 0.08 final 0.0210502914
+depth 100 cells 128 faces 232 average step 0.131580 ms iterations 7.08
+M55 core 61 checks 0 failures

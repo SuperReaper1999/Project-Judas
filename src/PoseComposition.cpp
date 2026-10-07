@@ -9,7 +9,7 @@ std::string SkeletonJointKey(const Skeleton& s,int node){
  std::string name=s.names[node]; // escape delimiter so imported names remain unambiguous
  size_t p=0;while((p=name.find('%',p))!=std::string::npos){name.replace(p,1,"%25");p+=3;}
  p=0;while((p=name.find('/',p))!=std::string::npos){name.replace(p,1,"%2F");p+=3;}
- return s.parents[node]<0?name:SkeletonJointKey(s,s.parents[node])+"/"+name;
+ return s.parents[node]<0||s.parents[node]==s.motionRoot?name:SkeletonJointKey(s,s.parents[node])+"/"+name;
 }
 int FindSkeletonJoint(const Skeleton& s,const std::string& key){int found=-1;
  for(size_t i=0;i<s.names.size();++i)if(SkeletonJointKey(s,int(i))==key){if(found>=0)return -1;found=int(i);}
@@ -48,7 +48,7 @@ SkeletalPose ResolvePose(const Skeleton& s,const SkeletalPose& base,const std::v
 bool AnimationLayerSettings::operator==(const AnimationLayerSettings& b)const{return id==b.id&&clip==b.clip&&referenceClip==b.referenceClip&&enabled==b.enabled&&additive==b.additive&&weight==b.weight&&speed==b.speed&&time==b.time&&referenceTime==b.referenceTime&&mask==b.mask;}
 bool ValidAnimationLayers(const std::vector<AnimationLayerSettings>& layers,std::string& error){
  if(layers.size()>16){error="at most 16 animation layers";return false;}std::set<std::string> ids;
- for(const auto& l:layers)if(l.id.empty()||!ids.insert(l.id).second||!std::isfinite(l.weight)||l.weight<0||l.weight>1||!std::isfinite(l.speed)||!std::isfinite(l.time)||l.time<0||!std::isfinite(l.referenceTime)||l.referenceTime<0||l.mask.size()>128){error="invalid animation layer";return false;}
+ for(const auto& l:layers)if(l.id.empty()||!ids.insert(l.id).second||!std::isfinite(l.weight)||l.weight<0||l.weight>1||!std::isfinite(l.speed)||!std::isfinite(l.time)||l.time<0||!std::isfinite(l.referenceTime)||l.referenceTime<0||l.mask.size()>kModelNodeLimit){error="invalid animation layer";return false;}
  return true;
 }
 float PoseMixer::Fraction()const{return duration>0?std::clamp(elapsed/duration,0.f,1.f):1;}
@@ -106,12 +106,14 @@ bool SolveLimbIK(const Skeleton& s,const SkeletalPose& input,const LimbIKSetting
  bend=glm::normalize(bend);float reach=glm::clamp(distance,std::abs(l1-l2)+1e-5f,l1+l2-1e-5f);
  float x=(l1*l1-l2*l2+reach*reach)/(2*reach),y=std::sqrt(std::max(0.f,l1*l1-x*x));
  auto desiredMiddle=a+direction*x+bend*y,desiredEnd=a+direction*reach;
+ JointTransform rootFixed,midFixed;
+ if(!s.affine.empty()&&(!DecomposeRigidPose(s.affine[root],rootFixed,diagnostic)||!DecomposeRigidPose(s.affine[mid],midFixed,diagnostic)))return false;
  output=input;auto rootRotation=glm::normalize(LimbAlignment(b-a,desiredMiddle-a,bend)*ar.rotation);
- output.local[root].rotation=glm::normalize(glm::inverse(parent.rotation)*rootRotation);
+ output.local[root].rotation=glm::normalize(glm::inverse(parent.rotation*rootFixed.rotation)*rootRotation);
  globals=PoseGlobalMatrices(s,output);b=glm::vec3(globals[mid][3]);c=glm::vec3(globals[end][3]);
  if(!DecomposeRigidPose(globals[mid],br,diagnostic))return false;
  auto midRotation=glm::normalize(LimbAlignment(c-b,desiredEnd-b,bend)*br.rotation);
- output.local[mid].rotation=glm::normalize(glm::inverse(rootRotation)*midRotation);
+ output.local[mid].rotation=glm::normalize(glm::inverse(rootRotation*midFixed.rotation)*midRotation);
  output=BlendPoses(input,output,k.weight,{root,mid});globals=PoseGlobalMatrices(s,output);targetError=glm::length(glm::vec3(globals[end][3])-k.target);
  return ValidPose(s,output,diagnostic);
 }

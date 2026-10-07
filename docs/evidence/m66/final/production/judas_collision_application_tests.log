@@ -1,0 +1,29 @@
+Renderer fragment texture units: 32 (material path uses 12)
+World state: disk saves disabled for additive compositions
+Project: Collision Geometry Lab (/home/conner/Documents/GitHub/Project-Judas/projects/collision_lab/collision_lab.judasproj)
+Scene: Collision geometry lab (/home/conner/Documents/GitHub/Project-Judas/projects/collision_lab/Scenes/flat.judas)
+World origin (m): 0.000, 0.000, 0.000
+PASS CPU collision asset published as real static mesh
+PASS dynamic hull resource sharing / geometry
+PASS normal compound independent rotations/types/keys
+PASS doorway opening stays open to ordinary audio/physics ray
+PASS doorway material obstructs ordinary audio/physics ray
+PASS JS + CharacterMotor moves in normal lab
+PASS normal prefab spawns cooked dynamic body
+PASS authored UI pause owns input/time
+PASS authored UI resumes
+PASS navigation routes through physical doorway opening
+PASS navigation is blocked by actual doorway material
+PASS actual spatial audio obstruction distinguishes opening from wall
+PASS current cloth drape remains healthy on curve
+PASS current soft body remains healthy on curve
+PASS M63 ordinary rigid fracture cells remain healthy on mesh
+PASS JS collider snapshot exposes real hull identity
+PASS JS closestPoint returns safe physical feature data
+PASS public JS releases an ordinary fracture interface on the mesh
+PASS actual GL collision lab screenshot
+PASS scene reload clears runtime hull prefab state
+PASS mesh is one body, not one body per triangle
+PASS normal M56 profiling export
+PASS ordinary application clean shutdown
+SUMMARY 23 checks 0 failures

@@ -1,0 +1,50 @@
+sequence	operation	asset	generation	thread	context_current	handle	bytes	path
+1	MeshCreated		0	132106863197888	1	0	2016	
+2	MeshCreated		0	132106863197888	1	1	129024	
+3	TextureCreated		0	132106863197888	1	0	4	
+4	FileReadBegin	000000000000000000000000f7200001	0	132106815801024	0	0	0	/home/conner/Documents/GitHub/Project-Judas/build/ftft2-fixtures/upload-budget/a/Assets/1.obj
+5	FileReadChunk	000000000000000000000000f7200001	0	132106815801024	0	0	1048576	/home/conner/Documents/GitHub/Project-Judas/build/ftft2-fixtures/upload-budget/a/Assets/1.obj
+6	FileReadChunk	000000000000000000000000f7200001	0	132106815801024	0	0	2097152	/home/conner/Documents/GitHub/Project-Judas/build/ftft2-fixtures/upload-budget/a/Assets/1.obj
+7	FileReadChunk	000000000000000000000000f7200001	0	132106815801024	0	0	2355232	/home/conner/Documents/GitHub/Project-Judas/build/ftft2-fixtures/upload-budget/a/Assets/1.obj
+8	FileReadEnd	000000000000000000000000f7200001	0	132106815801024	0	0	2355232	/home/conner/Documents/GitHub/Project-Judas/build/ftft2-fixtures/upload-budget/a/Assets/1.obj
+9	DecodeBegin	000000000000000000000000f7200001	0	132106815801024	0	0	2355232	/home/conner/Documents/GitHub/Project-Judas/build/ftft2-fixtures/upload-budget/a/Assets/1.obj
+10	DecodeEnd	000000000000000000000000f7200001	0	132106815801024	0	0	2355232	/home/conner/Documents/GitHub/Project-Judas/build/ftft2-fixtures/upload-budget/a/Assets/1.obj
+11	LoadComplete	000000000000000000000000f7200001	0	132106815801024	0	0	2355232	/home/conner/Documents/GitHub/Project-Judas/build/ftft2-fixtures/upload-budget/a/Assets/1.obj
+12	MeshCreated		0	132106863197888	1	2	180	
+13	FileReadBegin	000000000000000000000000f7200002	0	132106502039232	0	0	0	/home/conner/Documents/GitHub/Project-Judas/build/ftft2-fixtures/upload-budget/a/Assets/2.obj
+14	FileReadBegin	000000000000000000000000f720000b	0	132106832586432	0	0	0	/home/conner/Documents/GitHub/Project-Judas/build/ftft2-fixtures/upload-budget/a/Assets/11.obj
+15	FileReadBegin	000000000000000000000000f7200003	0	132106824193728	0	0	0	/home/conner/Documents/GitHub/Project-Judas/build/ftft2-fixtures/upload-budget/a/Assets/3.png
+16	FileReadChunk	000000000000000000000000f7200002	0	132106502039232	0	0	32	/home/conner/Documents/GitHub/Project-Judas/build/ftft2-fixtures/upload-budget/a/Assets/2.obj
+17	FileReadEnd	000000000000000000000000f7200002	0	132106502039232	0	0	32	/home/conner/Documents/GitHub/Project-Judas/build/ftft2-fixtures/upload-budget/a/Assets/2.obj
+18	DecodeBegin	000000000000000000000000f7200002	0	132106502039232	0	0	32	/home/conner/Documents/GitHub/Project-Judas/build/ftft2-fixtures/upload-budget/a/Assets/2.obj
+19	FileReadChunk	000000000000000000000000f720000b	0	132106832586432	0	0	32	/home/conner/Documents/GitHub/Project-Judas/build/ftft2-fixtures/upload-budget/a/Assets/11.obj
+20	FileReadEnd	000000000000000000000000f720000b	0	132106832586432	0	0	32	/home/conner/Documents/GitHub/Project-Judas/build/ftft2-fixtures/upload-budget/a/Assets/11.obj
+21	DecodeEnd	000000000000000000000000f7200002	0	132106502039232	0	0	32	/home/conner/Documents/GitHub/Project-Judas/build/ftft2-fixtures/upload-budget/a/Assets/2.obj
+22	LoadComplete	000000000000000000000000f7200002	0	132106502039232	0	0	32	/home/conner/Documents/GitHub/Project-Judas/build/ftft2-fixtures/upload-budget/a/Assets/2.obj
+23	DecodeBegin	000000000000000000000000f720000b	0	132106832586432	0	0	32	/home/conner/Documents/GitHub/Project-Judas/build/ftft2-fixtures/upload-budget/a/Assets/11.obj
+24	FileReadChunk	000000000000000000000000f7200003	0	132106824193728	0	0	77	/home/conner/Documents/GitHub/Project-Judas/build/ftft2-fixtures/upload-budget/a/Assets/3.png
+25	FileReadEnd	000000000000000000000000f7200003	0	132106824193728	0	0	77	/home/conner/Documents/GitHub/Project-Judas/build/ftft2-fixtures/upload-budget/a/Assets/3.png
+26	DecodeBegin	000000000000000000000000f7200003	0	132106824193728	0	0	77	/home/conner/Documents/GitHub/Project-Judas/build/ftft2-fixtures/upload-budget/a/Assets/3.png
+27	DecodeEnd	000000000000000000000000f720000b	0	132106832586432	0	0	32	/home/conner/Documents/GitHub/Project-Judas/build/ftft2-fixtures/upload-budget/a/Assets/11.obj
+28	DecodeEnd	000000000000000000000000f7200003	0	132106824193728	0	0	77	/home/conner/Documents/GitHub/Project-Judas/build/ftft2-fixtures/upload-budget/a/Assets/3.png
+29	LoadComplete	000000000000000000000000f7200003	0	132106824193728	0	0	77	/home/conner/Documents/GitHub/Project-Judas/build/ftft2-fixtures/upload-budget/a/Assets/3.png
+30	LoadComplete	000000000000000000000000f720000b	0	132106832586432	0	0	32	/home/conner/Documents/GitHub/Project-Judas/build/ftft2-fixtures/upload-budget/a/Assets/11.obj
+31	MeshCreated		0	132106863197888	1	3	180	
+32	TextureCreated		0	132106863197888	1	1	64	
+33	CpuReady	000000000000000000000000f720000b	0	132106863197888	0	0	0	/home/conner/Documents/GitHub/Project-Judas/build/ftft2-fixtures/upload-budget/a/Assets/11.obj
+34	TextureCreated		0	132106863197888	1	2	4194304	
+35	MeshCreated		0	132106863197888	1	4	180	
+36	ManagerShutdownBegin		0	132106863197888	0	0	0	
+37	MeshDestroyed		0	132106863197888	1	2	180	
+38	MeshDestroyed		0	132106863197888	1	3	180	
+39	TextureDestroyed		0	132106863197888	1	1	64	
+40	MeshDestroyed		0	132106863197888	1	4	180	
+41	ManagerShutdownEnd		0	132106863197888	0	0	0	
+42	WorkersJoined		0	132106863197888	1	0	0	
+43	TextureDestroyed		0	132106863197888	1	2	4194304	
+44	RendererShutdownBegin		0	132106863197888	1	0	0	
+45	MeshDestroyed		0	132106863197888	1	0	2016	
+46	MeshDestroyed		0	132106863197888	1	1	129024	
+47	TextureDestroyed		0	132106863197888	1	0	4	
+48	RendererShutdownEnd		0	132106863197888	1	0	0	
+49	ContextDestroyed		0	132106863197888	0	0	0	

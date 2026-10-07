@@ -1,0 +1,6 @@
+LOAD force=5 sub=4 iterations=4 demand=12.0053223 revision=1
+LOAD force=400 sub=4 iterations=4 demand=758.477658 revision=2
+LOAD force=400 sub=8 iterations=6 demand=973.529771 revision=2
+ROTATION deviation=1.82564052e-07 revision=1
+LOAD force=5 sub=4 iterations=4 demand=12.0053223 revision=1
+M63 core: 33 checks passed

@@ -61,6 +61,7 @@ enum class SceneShape { Box, Sphere, Compound, Mesh, Terrain, ConvexHull, Triang
 // Box/Sphere/Mesh are self-contained and need no body at all.
 struct SceneRenderComponent {
     std::vector<MaterialSlot> materials;
+    std::vector<std::string> hiddenParts;
     SceneShape shape = SceneShape::Box;
     glm::vec3 halfExtents{0.5f};   // Box
     float radius = 0.5f;           // Sphere

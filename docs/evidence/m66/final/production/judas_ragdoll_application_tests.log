@@ -1,0 +1,10 @@
+Renderer fragment texture units: 32 (material path uses 12)
+World state: /home/conner/Documents/GitHub/Project-Judas/docs/evidence/m66/final/fixture-details/judas_ragdoll_application_tests/project/Saves/main.judasstate (none saved)
+Project: Pose and articulated physics (/home/conner/Documents/GitHub/Project-Judas/docs/evidence/m66/final/fixture-details/judas_ragdoll_application_tests/project/ragdoll_demo.judasproj)
+Scene: M47 + M48 pose composition and ragdolls (/home/conner/Documents/GitHub/Project-Judas/docs/evidence/m66/final/fixture-details/judas_ragdoll_application_tests/project/Scenes/main.judas)
+World origin (m): 0.000, 0.000, 0.000
+PASS real JS ragdoll enter/return/impulse, prefab and stale handles
+PASS scene reload reconstructs fresh animation state
+PASS demo authored pause menu opens
+PASS normal Application ragdoll startup/reload/shutdown
+SUMMARY 4 checks 0 failures frames=34

@@ -1,0 +1,10 @@
+{
+  "clip": "Walking",
+  "fade": 0.30000001192092896,
+  "hidden": [
+    "__root/Ch42_Body1/material/Ch42_Body"
+  ],
+  "layers": 1,
+  "ragdoll": true,
+  "time": 0.30000001192092896
+}

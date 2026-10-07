@@ -1,0 +1,44 @@
+PASS generic map installs
+PASS digital pressed and held
+PASS press lasts one frame
+PASS overlapping bindings do not duplicate or prematurely release
+PASS last binding releases action
+PASS release lasts one frame
+PASS keyboard negative axis
+PASS opposed keyboard axis cancels
+PASS relative delta/wheel accumulate without joystick clamping
+PASS relative input resets each frame
+PASS configured deadzone removes small deflection
+PASS linear deadzone normalization
+PASS negative full stick endpoint
+PASS disconnect clears button and axis state
+PASS runtime binding replacement
+PASS old replaced binding inactive
+PASS new binding works
+PASS add/remove/query bindings
+PASS rename/delete logical entries
+PASS input map exact serialization round-trip
+PASS duplicate logical names reject atomically
+PASS short press survives zero-step frame into fixed snapshot
+PASS multiple fixed consumers see same edge
+PASS catch-up step does not repeat press
+PASS ownership transition discards stale edge
+PASS ordinary project round-trips input map
+PASS legacy projects use explicit default bindings
+PASS create real project
+PASS save project input
+PASS project reload restores rebinding
+PASS real SDL window backend starts
+PASS actual SDL short press feeds logical input and existing gameplay handoff
+PASS window consumers honor project rebind
+PASS raw release clears rebound axis
+PASS representative player consumes named look axis through normal frame input
+PASS editor-owned input does not create gameplay press
+PASS tiny SDL virtual pad exercises normal controller adapter
+PAD raw=16384 button=1 logical=0.411782652 held=1 focusFlags=298
+PASS actual SDL button/axis reaches named action and normalized deadzone
+PASS actual SDL negative axis endpoint normalizes exactly
+PASS actual SDL disconnect clears active-controller logical state
+PERFORMANCE bindings=46 update_query_mean_us=9.140670 checksum=5000
+PERFORMANCE bindings=100 update_query_mean_us=19.176945 checksum=5000
+SUMMARY checks=40 failures=0

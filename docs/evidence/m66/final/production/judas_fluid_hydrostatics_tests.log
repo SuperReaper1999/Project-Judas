@@ -1,0 +1,9 @@
+pool spacing=0.125 particles=23808 half_fraction=0.5 half_force=4905 neutral_net_force=0
+pool spacing=0.25 particles=2976 half_fraction=0.5 half_force=4905 neutral_net_force=0
+scale body_volume=0.00800000035763 neutral_mass=8.00000035763 force=39.2400016785
+scale body_volume=0.800000047933 neutral_mass=800.000047933 force=3924.00048828
+row_entry fraction_low=1 fraction_high=1 acceleration_low=-4.80264949799 acceleration_high=-4.80273151398 acceleration_jump=8.20159912109e-05 velocity_jump=8.34465026855e-06
+column_mean two_observed=0.75 two_expected=.75 three_observed=0.66666662693 three_expected=0.666666666667
+settled_snapshot particles=752 fraction=1 force_y=2116.07421875 bulk_acceleration_y=-0.0133610060439
+approximation_limit near_air_pocket_fraction=1 physical_point_occupancy=0 local_envelope_occupancy=1
+SUMMARY checks=93 failures=0 seconds=0.24297379

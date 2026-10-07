@@ -32,7 +32,7 @@ Offline deterministic Hammersley integration builds cosine-weighted diffuse irra
 
 ## Import and lifecycle
 
-Pinned cgltf handles self-contained GLB/glTF with embedded buffers/images, one mesh node, triangle primitives and up to one skin; existing 48 skin-joint/128 node limits remain. Core metallic/roughness factors/maps, sampler state, alpha, double-sided and KHR_materials_unlit import per primitive. TEXCOORD_0 only. Required unsupported extensions fail; optional unsupported extensions are reported. Texture transforms, external resource files, additional UV sets and material extension effects are unsupported. Embedded bytes survive package relocation; reimport replaces resources through their normal identity.
+**Historical M57 import restrictions, superseded by the M66 candidate** ([current model import](MODEL_IMPORT.md)): pinned cgltf handles self-contained GLB/glTF with embedded buffers/images, one mesh node, triangle primitives and up to one skin; existing 48 skin-joint/128 node limits remain. Core metallic/roughness factors/maps, sampler state, alpha, double-sided and KHR_materials_unlit import per primitive. TEXCOORD_0 only. Required unsupported extensions fail; optional unsupported extensions are reported. Texture transforms, external resource files, additional UV sets and material extension effects are unsupported. Embedded bytes survive package relocation; reimport replaces resources through their normal identity.
 
 Imported tangents retain their sign; missing tangents use pinned MikkTSpace (zlib license) on indexed corners, splitting seams and preserving skin influences. Degenerate UVs use a finite orthogonal tangent fallback. Normal matrices account for nonuniform instance/skin transforms; determinant sign preserves mirrored handedness. Normals and tangents consume the same resolved skin palette as vertex positions; entity transforms use presentation timing. There is no separate pose pipeline.
 
@@ -43,3 +43,8 @@ Shared material/mesh/environment CPU decoding uses ResourceManager workers; Rend
 Algorithms/contracts: [glTF 2.0](https://registry.khronos.org/glTF/specs/2.0/glTF-2.0.html), [Filament explanation](https://google.github.io/filament/main/filament.html), [MikkTSpace](https://github.com/mmikk/MikkTSpace). Implementation uses one documented Reinhard operator; no borrowed tone-mapping code. MikkTSpace pinned source and license are in `third_party/mikktspace`; notices accompany exports.
 
 Twelve fragment texture units cover base, three shadows, water, four material maps and three IBL textures; hardware limits are checked at startup. Modest environment sizes suit small GPUs. No bloom, GI, advanced glTF material extensions, refraction, dynamic probes or general shader scripting. Screenshots/readback are engineering evidence; human review decides visual/gameplay quality.
+
+M66 uses one additional vertex texture-buffer binding at unit 15 for size-aware
+skin palettes (GL3.3; checked against the hardware limit). Main/shadow/secondary
+passes share eight-weight geometry. Supported imported texture transforms/UV1
+are documented in [Model import](MODEL_IMPORT.md).

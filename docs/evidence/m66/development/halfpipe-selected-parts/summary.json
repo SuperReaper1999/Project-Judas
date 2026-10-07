@@ -1,0 +1,1598 @@
+{
+  "tested": 66,
+  "accepted": 64,
+  "parts": [
+    {
+      "ordinal": 0,
+      "success": false,
+      "diagnostic": {
+        "action": "Select the reported source location; use explicit collision cleanup or a separate physical source. Visual import remains valid.",
+        "code": "t-junction",
+        "face": 49,
+        "node": "__root/pCylinder1",
+        "point": [
+          0.6033869385719299,
+          0.13028910756111145,
+          -0.4388531446456909
+        ],
+        "vertices": [
+          96,
+          90,
+          43
+        ]
+      },
+      "cleanup": {
+        "flipped": 2,
+        "orientPatches": true,
+        "removeDegenerates": true,
+        "removed": 7,
+        "weldTolerance": 0.0,
+        "welded": 0
+      }
+    },
+    {
+      "ordinal": 1,
+      "success": false,
+      "diagnostic": {
+        "action": "Select the reported source location; use explicit collision cleanup or a separate physical source. Visual import remains valid.",
+        "code": "t-junction",
+        "face": 13,
+        "node": "__root/pCylinder2",
+        "point": [
+          0.6033869385719299,
+          0.13026319444179535,
+          -0.03985089063644409
+        ],
+        "vertices": [
+          43,
+          37,
+          95
+        ]
+      },
+      "cleanup": {
+        "flipped": 0,
+        "orientPatches": true,
+        "removeDegenerates": true,
+        "removed": 1,
+        "weldTolerance": 0.0,
+        "welded": 0
+      }
+    },
+    {
+      "ordinal": 2,
+      "success": true,
+      "diagnostic": {
+        "action": "",
+        "code": "",
+        "face": 4294967295,
+        "node": "",
+        "point": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "vertices": []
+      },
+      "cleanup": {
+        "flipped": 0,
+        "orientPatches": true,
+        "removeDegenerates": true,
+        "removed": 24,
+        "weldTolerance": 0.0,
+        "welded": 0
+      }
+    },
+    {
+      "ordinal": 3,
+      "success": true,
+      "diagnostic": {
+        "action": "",
+        "code": "",
+        "face": 4294967295,
+        "node": "",
+        "point": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "vertices": []
+      },
+      "cleanup": {
+        "flipped": 0,
+        "orientPatches": true,
+        "removeDegenerates": true,
+        "removed": 24,
+        "weldTolerance": 0.0,
+        "welded": 0
+      }
+    },
+    {
+      "ordinal": 4,
+      "success": true,
+      "diagnostic": {
+        "action": "",
+        "code": "",
+        "face": 4294967295,
+        "node": "",
+        "point": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "vertices": []
+      },
+      "cleanup": {
+        "flipped": 0,
+        "orientPatches": true,
+        "removeDegenerates": true,
+        "removed": 0,
+        "weldTolerance": 0.0,
+        "welded": 0
+      }
+    },
+    {
+      "ordinal": 5,
+      "success": true,
+      "diagnostic": {
+        "action": "",
+        "code": "",
+        "face": 4294967295,
+        "node": "",
+        "point": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "vertices": []
+      },
+      "cleanup": {
+        "flipped": 0,
+        "orientPatches": true,
+        "removeDegenerates": true,
+        "removed": 0,
+        "weldTolerance": 0.0,
+        "welded": 0
+      }
+    },
+    {
+      "ordinal": 6,
+      "success": true,
+      "diagnostic": {
+        "action": "",
+        "code": "",
+        "face": 4294967295,
+        "node": "",
+        "point": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "vertices": []
+      },
+      "cleanup": {
+        "flipped": 0,
+        "orientPatches": true,
+        "removeDegenerates": true,
+        "removed": 0,
+        "weldTolerance": 0.0,
+        "welded": 0
+      }
+    },
+    {
+      "ordinal": 7,
+      "success": true,
+      "diagnostic": {
+        "action": "",
+        "code": "",
+        "face": 4294967295,
+        "node": "",
+        "point": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "vertices": []
+      },
+      "cleanup": {
+        "flipped": 0,
+        "orientPatches": true,
+        "removeDegenerates": true,
+        "removed": 0,
+        "weldTolerance": 0.0,
+        "welded": 0
+      }
+    },
+    {
+      "ordinal": 8,
+      "success": true,
+      "diagnostic": {
+        "action": "",
+        "code": "",
+        "face": 4294967295,
+        "node": "",
+        "point": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "vertices": []
+      },
+      "cleanup": {
+        "flipped": 0,
+        "orientPatches": true,
+        "removeDegenerates": true,
+        "removed": 0,
+        "weldTolerance": 0.0,
+        "welded": 0
+      }
+    },
+    {
+      "ordinal": 9,
+      "success": true,
+      "diagnostic": {
+        "action": "",
+        "code": "",
+        "face": 4294967295,
+        "node": "",
+        "point": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "vertices": []
+      },
+      "cleanup": {
+        "flipped": 0,
+        "orientPatches": true,
+        "removeDegenerates": true,
+        "removed": 0,
+        "weldTolerance": 0.0,
+        "welded": 0
+      }
+    },
+    {
+      "ordinal": 10,
+      "success": true,
+      "diagnostic": {
+        "action": "",
+        "code": "",
+        "face": 4294967295,
+        "node": "",
+        "point": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "vertices": []
+      },
+      "cleanup": {
+        "flipped": 0,
+        "orientPatches": true,
+        "removeDegenerates": true,
+        "removed": 0,
+        "weldTolerance": 0.0,
+        "welded": 0
+      }
+    },
+    {
+      "ordinal": 11,
+      "success": true,
+      "diagnostic": {
+        "action": "",
+        "code": "",
+        "face": 4294967295,
+        "node": "",
+        "point": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "vertices": []
+      },
+      "cleanup": {
+        "flipped": 0,
+        "orientPatches": true,
+        "removeDegenerates": true,
+        "removed": 0,
+        "weldTolerance": 0.0,
+        "welded": 0
+      }
+    },
+    {
+      "ordinal": 12,
+      "success": true,
+      "diagnostic": {
+        "action": "",
+        "code": "",
+        "face": 4294967295,
+        "node": "",
+        "point": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "vertices": []
+      },
+      "cleanup": {
+        "flipped": 0,
+        "orientPatches": true,
+        "removeDegenerates": true,
+        "removed": 0,
+        "weldTolerance": 0.0,
+        "welded": 0
+      }
+    },
+    {
+      "ordinal": 13,
+      "success": true,
+      "diagnostic": {
+        "action": "",
+        "code": "",
+        "face": 4294967295,
+        "node": "",
+        "point": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "vertices": []
+      },
+      "cleanup": {
+        "flipped": 0,
+        "orientPatches": true,
+        "removeDegenerates": true,
+        "removed": 0,
+        "weldTolerance": 0.0,
+        "welded": 0
+      }
+    },
+    {
+      "ordinal": 14,
+      "success": true,
+      "diagnostic": {
+        "action": "",
+        "code": "",
+        "face": 4294967295,
+        "node": "",
+        "point": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "vertices": []
+      },
+      "cleanup": {
+        "flipped": 0,
+        "orientPatches": true,
+        "removeDegenerates": true,
+        "removed": 0,
+        "weldTolerance": 0.0,
+        "welded": 0
+      }
+    },
+    {
+      "ordinal": 15,
+      "success": true,
+      "diagnostic": {
+        "action": "",
+        "code": "",
+        "face": 4294967295,
+        "node": "",
+        "point": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "vertices": []
+      },
+      "cleanup": {
+        "flipped": 0,
+        "orientPatches": true,
+        "removeDegenerates": true,
+        "removed": 0,
+        "weldTolerance": 0.0,
+        "welded": 0
+      }
+    },
+    {
+      "ordinal": 16,
+      "success": true,
+      "diagnostic": {
+        "action": "",
+        "code": "",
+        "face": 4294967295,
+        "node": "",
+        "point": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "vertices": []
+      },
+      "cleanup": {
+        "flipped": 0,
+        "orientPatches": true,
+        "removeDegenerates": true,
+        "removed": 0,
+        "weldTolerance": 0.0,
+        "welded": 0
+      }
+    },
+    {
+      "ordinal": 17,
+      "success": true,
+      "diagnostic": {
+        "action": "",
+        "code": "",
+        "face": 4294967295,
+        "node": "",
+        "point": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "vertices": []
+      },
+      "cleanup": {
+        "flipped": 0,
+        "orientPatches": true,
+        "removeDegenerates": true,
+        "removed": 0,
+        "weldTolerance": 0.0,
+        "welded": 0
+      }
+    },
+    {
+      "ordinal": 18,
+      "success": true,
+      "diagnostic": {
+        "action": "",
+        "code": "",
+        "face": 4294967295,
+        "node": "",
+        "point": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "vertices": []
+      },
+      "cleanup": {
+        "flipped": 0,
+        "orientPatches": true,
+        "removeDegenerates": true,
+        "removed": 0,
+        "weldTolerance": 0.0,
+        "welded": 0
+      }
+    },
+    {
+      "ordinal": 19,
+      "success": true,
+      "diagnostic": {
+        "action": "",
+        "code": "",
+        "face": 4294967295,
+        "node": "",
+        "point": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "vertices": []
+      },
+      "cleanup": {
+        "flipped": 0,
+        "orientPatches": true,
+        "removeDegenerates": true,
+        "removed": 0,
+        "weldTolerance": 0.0,
+        "welded": 0
+      }
+    },
+    {
+      "ordinal": 20,
+      "success": true,
+      "diagnostic": {
+        "action": "",
+        "code": "",
+        "face": 4294967295,
+        "node": "",
+        "point": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "vertices": []
+      },
+      "cleanup": {
+        "flipped": 0,
+        "orientPatches": true,
+        "removeDegenerates": true,
+        "removed": 0,
+        "weldTolerance": 0.0,
+        "welded": 0
+      }
+    },
+    {
+      "ordinal": 21,
+      "success": true,
+      "diagnostic": {
+        "action": "",
+        "code": "",
+        "face": 4294967295,
+        "node": "",
+        "point": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "vertices": []
+      },
+      "cleanup": {
+        "flipped": 0,
+        "orientPatches": true,
+        "removeDegenerates": true,
+        "removed": 0,
+        "weldTolerance": 0.0,
+        "welded": 0
+      }
+    },
+    {
+      "ordinal": 22,
+      "success": true,
+      "diagnostic": {
+        "action": "",
+        "code": "",
+        "face": 4294967295,
+        "node": "",
+        "point": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "vertices": []
+      },
+      "cleanup": {
+        "flipped": 0,
+        "orientPatches": true,
+        "removeDegenerates": true,
+        "removed": 0,
+        "weldTolerance": 0.0,
+        "welded": 0
+      }
+    },
+    {
+      "ordinal": 23,
+      "success": true,
+      "diagnostic": {
+        "action": "",
+        "code": "",
+        "face": 4294967295,
+        "node": "",
+        "point": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "vertices": []
+      },
+      "cleanup": {
+        "flipped": 0,
+        "orientPatches": true,
+        "removeDegenerates": true,
+        "removed": 0,
+        "weldTolerance": 0.0,
+        "welded": 0
+      }
+    },
+    {
+      "ordinal": 24,
+      "success": true,
+      "diagnostic": {
+        "action": "",
+        "code": "",
+        "face": 4294967295,
+        "node": "",
+        "point": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "vertices": []
+      },
+      "cleanup": {
+        "flipped": 0,
+        "orientPatches": true,
+        "removeDegenerates": true,
+        "removed": 0,
+        "weldTolerance": 0.0,
+        "welded": 0
+      }
+    },
+    {
+      "ordinal": 25,
+      "success": true,
+      "diagnostic": {
+        "action": "",
+        "code": "",
+        "face": 4294967295,
+        "node": "",
+        "point": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "vertices": []
+      },
+      "cleanup": {
+        "flipped": 0,
+        "orientPatches": true,
+        "removeDegenerates": true,
+        "removed": 0,
+        "weldTolerance": 0.0,
+        "welded": 0
+      }
+    },
+    {
+      "ordinal": 26,
+      "success": true,
+      "diagnostic": {
+        "action": "",
+        "code": "",
+        "face": 4294967295,
+        "node": "",
+        "point": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "vertices": []
+      },
+      "cleanup": {
+        "flipped": 0,
+        "orientPatches": true,
+        "removeDegenerates": true,
+        "removed": 0,
+        "weldTolerance": 0.0,
+        "welded": 0
+      }
+    },
+    {
+      "ordinal": 27,
+      "success": true,
+      "diagnostic": {
+        "action": "",
+        "code": "",
+        "face": 4294967295,
+        "node": "",
+        "point": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "vertices": []
+      },
+      "cleanup": {
+        "flipped": 0,
+        "orientPatches": true,
+        "removeDegenerates": true,
+        "removed": 0,
+        "weldTolerance": 0.0,
+        "welded": 0
+      }
+    },
+    {
+      "ordinal": 28,
+      "success": true,
+      "diagnostic": {
+        "action": "",
+        "code": "",
+        "face": 4294967295,
+        "node": "",
+        "point": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "vertices": []
+      },
+      "cleanup": {
+        "flipped": 0,
+        "orientPatches": true,
+        "removeDegenerates": true,
+        "removed": 0,
+        "weldTolerance": 0.0,
+        "welded": 0
+      }
+    },
+    {
+      "ordinal": 29,
+      "success": true,
+      "diagnostic": {
+        "action": "",
+        "code": "",
+        "face": 4294967295,
+        "node": "",
+        "point": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "vertices": []
+      },
+      "cleanup": {
+        "flipped": 0,
+        "orientPatches": true,
+        "removeDegenerates": true,
+        "removed": 0,
+        "weldTolerance": 0.0,
+        "welded": 0
+      }
+    },
+    {
+      "ordinal": 30,
+      "success": true,
+      "diagnostic": {
+        "action": "",
+        "code": "",
+        "face": 4294967295,
+        "node": "",
+        "point": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "vertices": []
+      },
+      "cleanup": {
+        "flipped": 0,
+        "orientPatches": true,
+        "removeDegenerates": true,
+        "removed": 0,
+        "weldTolerance": 0.0,
+        "welded": 0
+      }
+    },
+    {
+      "ordinal": 31,
+      "success": true,
+      "diagnostic": {
+        "action": "",
+        "code": "",
+        "face": 4294967295,
+        "node": "",
+        "point": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "vertices": []
+      },
+      "cleanup": {
+        "flipped": 0,
+        "orientPatches": true,
+        "removeDegenerates": true,
+        "removed": 0,
+        "weldTolerance": 0.0,
+        "welded": 0
+      }
+    },
+    {
+      "ordinal": 32,
+      "success": true,
+      "diagnostic": {
+        "action": "",
+        "code": "",
+        "face": 4294967295,
+        "node": "",
+        "point": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "vertices": []
+      },
+      "cleanup": {
+        "flipped": 0,
+        "orientPatches": true,
+        "removeDegenerates": true,
+        "removed": 0,
+        "weldTolerance": 0.0,
+        "welded": 0
+      }
+    },
+    {
+      "ordinal": 33,
+      "success": true,
+      "diagnostic": {
+        "action": "",
+        "code": "",
+        "face": 4294967295,
+        "node": "",
+        "point": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "vertices": []
+      },
+      "cleanup": {
+        "flipped": 0,
+        "orientPatches": true,
+        "removeDegenerates": true,
+        "removed": 0,
+        "weldTolerance": 0.0,
+        "welded": 0
+      }
+    },
+    {
+      "ordinal": 34,
+      "success": true,
+      "diagnostic": {
+        "action": "",
+        "code": "",
+        "face": 4294967295,
+        "node": "",
+        "point": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "vertices": []
+      },
+      "cleanup": {
+        "flipped": 0,
+        "orientPatches": true,
+        "removeDegenerates": true,
+        "removed": 0,
+        "weldTolerance": 0.0,
+        "welded": 0
+      }
+    },
+    {
+      "ordinal": 35,
+      "success": true,
+      "diagnostic": {
+        "action": "",
+        "code": "",
+        "face": 4294967295,
+        "node": "",
+        "point": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "vertices": []
+      },
+      "cleanup": {
+        "flipped": 0,
+        "orientPatches": true,
+        "removeDegenerates": true,
+        "removed": 0,
+        "weldTolerance": 0.0,
+        "welded": 0
+      }
+    },
+    {
+      "ordinal": 36,
+      "success": true,
+      "diagnostic": {
+        "action": "",
+        "code": "",
+        "face": 4294967295,
+        "node": "",
+        "point": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "vertices": []
+      },
+      "cleanup": {
+        "flipped": 0,
+        "orientPatches": true,
+        "removeDegenerates": true,
+        "removed": 0,
+        "weldTolerance": 0.0,
+        "welded": 0
+      }
+    },
+    {
+      "ordinal": 37,
+      "success": true,
+      "diagnostic": {
+        "action": "",
+        "code": "",
+        "face": 4294967295,
+        "node": "",
+        "point": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "vertices": []
+      },
+      "cleanup": {
+        "flipped": 0,
+        "orientPatches": true,
+        "removeDegenerates": true,
+        "removed": 0,
+        "weldTolerance": 0.0,
+        "welded": 0
+      }
+    },
+    {
+      "ordinal": 38,
+      "success": true,
+      "diagnostic": {
+        "action": "",
+        "code": "",
+        "face": 4294967295,
+        "node": "",
+        "point": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "vertices": []
+      },
+      "cleanup": {
+        "flipped": 0,
+        "orientPatches": true,
+        "removeDegenerates": true,
+        "removed": 0,
+        "weldTolerance": 0.0,
+        "welded": 0
+      }
+    },
+    {
+      "ordinal": 39,
+      "success": true,
+      "diagnostic": {
+        "action": "",
+        "code": "",
+        "face": 4294967295,
+        "node": "",
+        "point": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "vertices": []
+      },
+      "cleanup": {
+        "flipped": 0,
+        "orientPatches": true,
+        "removeDegenerates": true,
+        "removed": 0,
+        "weldTolerance": 0.0,
+        "welded": 0
+      }
+    },
+    {
+      "ordinal": 40,
+      "success": true,
+      "diagnostic": {
+        "action": "",
+        "code": "",
+        "face": 4294967295,
+        "node": "",
+        "point": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "vertices": []
+      },
+      "cleanup": {
+        "flipped": 0,
+        "orientPatches": true,
+        "removeDegenerates": true,
+        "removed": 0,
+        "weldTolerance": 0.0,
+        "welded": 0
+      }
+    },
+    {
+      "ordinal": 41,
+      "success": true,
+      "diagnostic": {
+        "action": "",
+        "code": "",
+        "face": 4294967295,
+        "node": "",
+        "point": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "vertices": []
+      },
+      "cleanup": {
+        "flipped": 0,
+        "orientPatches": true,
+        "removeDegenerates": true,
+        "removed": 0,
+        "weldTolerance": 0.0,
+        "welded": 0
+      }
+    },
+    {
+      "ordinal": 42,
+      "success": true,
+      "diagnostic": {
+        "action": "",
+        "code": "",
+        "face": 4294967295,
+        "node": "",
+        "point": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "vertices": []
+      },
+      "cleanup": {
+        "flipped": 0,
+        "orientPatches": true,
+        "removeDegenerates": true,
+        "removed": 0,
+        "weldTolerance": 0.0,
+        "welded": 0
+      }
+    },
+    {
+      "ordinal": 43,
+      "success": true,
+      "diagnostic": {
+        "action": "",
+        "code": "",
+        "face": 4294967295,
+        "node": "",
+        "point": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "vertices": []
+      },
+      "cleanup": {
+        "flipped": 0,
+        "orientPatches": true,
+        "removeDegenerates": true,
+        "removed": 0,
+        "weldTolerance": 0.0,
+        "welded": 0
+      }
+    },
+    {
+      "ordinal": 44,
+      "success": true,
+      "diagnostic": {
+        "action": "",
+        "code": "",
+        "face": 4294967295,
+        "node": "",
+        "point": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "vertices": []
+      },
+      "cleanup": {
+        "flipped": 0,
+        "orientPatches": true,
+        "removeDegenerates": true,
+        "removed": 0,
+        "weldTolerance": 0.0,
+        "welded": 0
+      }
+    },
+    {
+      "ordinal": 45,
+      "success": true,
+      "diagnostic": {
+        "action": "",
+        "code": "",
+        "face": 4294967295,
+        "node": "",
+        "point": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "vertices": []
+      },
+      "cleanup": {
+        "flipped": 0,
+        "orientPatches": true,
+        "removeDegenerates": true,
+        "removed": 0,
+        "weldTolerance": 0.0,
+        "welded": 0
+      }
+    },
+    {
+      "ordinal": 46,
+      "success": true,
+      "diagnostic": {
+        "action": "",
+        "code": "",
+        "face": 4294967295,
+        "node": "",
+        "point": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "vertices": []
+      },
+      "cleanup": {
+        "flipped": 0,
+        "orientPatches": true,
+        "removeDegenerates": true,
+        "removed": 0,
+        "weldTolerance": 0.0,
+        "welded": 0
+      }
+    },
+    {
+      "ordinal": 47,
+      "success": true,
+      "diagnostic": {
+        "action": "",
+        "code": "",
+        "face": 4294967295,
+        "node": "",
+        "point": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "vertices": []
+      },
+      "cleanup": {
+        "flipped": 0,
+        "orientPatches": true,
+        "removeDegenerates": true,
+        "removed": 0,
+        "weldTolerance": 0.0,
+        "welded": 0
+      }
+    },
+    {
+      "ordinal": 48,
+      "success": true,
+      "diagnostic": {
+        "action": "",
+        "code": "",
+        "face": 4294967295,
+        "node": "",
+        "point": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "vertices": []
+      },
+      "cleanup": {
+        "flipped": 0,
+        "orientPatches": true,
+        "removeDegenerates": true,
+        "removed": 0,
+        "weldTolerance": 0.0,
+        "welded": 0
+      }
+    },
+    {
+      "ordinal": 49,
+      "success": true,
+      "diagnostic": {
+        "action": "",
+        "code": "",
+        "face": 4294967295,
+        "node": "",
+        "point": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "vertices": []
+      },
+      "cleanup": {
+        "flipped": 0,
+        "orientPatches": true,
+        "removeDegenerates": true,
+        "removed": 0,
+        "weldTolerance": 0.0,
+        "welded": 0
+      }
+    },
+    {
+      "ordinal": 50,
+      "success": true,
+      "diagnostic": {
+        "action": "",
+        "code": "",
+        "face": 4294967295,
+        "node": "",
+        "point": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "vertices": []
+      },
+      "cleanup": {
+        "flipped": 0,
+        "orientPatches": true,
+        "removeDegenerates": true,
+        "removed": 0,
+        "weldTolerance": 0.0,
+        "welded": 0
+      }
+    },
+    {
+      "ordinal": 51,
+      "success": true,
+      "diagnostic": {
+        "action": "",
+        "code": "",
+        "face": 4294967295,
+        "node": "",
+        "point": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "vertices": []
+      },
+      "cleanup": {
+        "flipped": 0,
+        "orientPatches": true,
+        "removeDegenerates": true,
+        "removed": 0,
+        "weldTolerance": 0.0,
+        "welded": 0
+      }
+    },
+    {
+      "ordinal": 52,
+      "success": true,
+      "diagnostic": {
+        "action": "",
+        "code": "",
+        "face": 4294967295,
+        "node": "",
+        "point": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "vertices": []
+      },
+      "cleanup": {
+        "flipped": 0,
+        "orientPatches": true,
+        "removeDegenerates": true,
+        "removed": 0,
+        "weldTolerance": 0.0,
+        "welded": 0
+      }
+    },
+    {
+      "ordinal": 53,
+      "success": true,
+      "diagnostic": {
+        "action": "",
+        "code": "",
+        "face": 4294967295,
+        "node": "",
+        "point": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "vertices": []
+      },
+      "cleanup": {
+        "flipped": 0,
+        "orientPatches": true,
+        "removeDegenerates": true,
+        "removed": 0,
+        "weldTolerance": 0.0,
+        "welded": 0
+      }
+    },
+    {
+      "ordinal": 54,
+      "success": true,
+      "diagnostic": {
+        "action": "",
+        "code": "",
+        "face": 4294967295,
+        "node": "",
+        "point": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "vertices": []
+      },
+      "cleanup": {
+        "flipped": 0,
+        "orientPatches": true,
+        "removeDegenerates": true,
+        "removed": 0,
+        "weldTolerance": 0.0,
+        "welded": 0
+      }
+    },
+    {
+      "ordinal": 55,
+      "success": true,
+      "diagnostic": {
+        "action": "",
+        "code": "",
+        "face": 4294967295,
+        "node": "",
+        "point": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "vertices": []
+      },
+      "cleanup": {
+        "flipped": 0,
+        "orientPatches": true,
+        "removeDegenerates": true,
+        "removed": 0,
+        "weldTolerance": 0.0,
+        "welded": 0
+      }
+    },
+    {
+      "ordinal": 56,
+      "success": true,
+      "diagnostic": {
+        "action": "",
+        "code": "",
+        "face": 4294967295,
+        "node": "",
+        "point": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "vertices": []
+      },
+      "cleanup": {
+        "flipped": 0,
+        "orientPatches": true,
+        "removeDegenerates": true,
+        "removed": 0,
+        "weldTolerance": 0.0,
+        "welded": 0
+      }
+    },
+    {
+      "ordinal": 57,
+      "success": true,
+      "diagnostic": {
+        "action": "",
+        "code": "",
+        "face": 4294967295,
+        "node": "",
+        "point": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "vertices": []
+      },
+      "cleanup": {
+        "flipped": 0,
+        "orientPatches": true,
+        "removeDegenerates": true,
+        "removed": 0,
+        "weldTolerance": 0.0,
+        "welded": 0
+      }
+    },
+    {
+      "ordinal": 58,
+      "success": true,
+      "diagnostic": {
+        "action": "",
+        "code": "",
+        "face": 4294967295,
+        "node": "",
+        "point": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "vertices": []
+      },
+      "cleanup": {
+        "flipped": 0,
+        "orientPatches": true,
+        "removeDegenerates": true,
+        "removed": 0,
+        "weldTolerance": 0.0,
+        "welded": 0
+      }
+    },
+    {
+      "ordinal": 59,
+      "success": true,
+      "diagnostic": {
+        "action": "",
+        "code": "",
+        "face": 4294967295,
+        "node": "",
+        "point": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "vertices": []
+      },
+      "cleanup": {
+        "flipped": 0,
+        "orientPatches": true,
+        "removeDegenerates": true,
+        "removed": 0,
+        "weldTolerance": 0.0,
+        "welded": 0
+      }
+    },
+    {
+      "ordinal": 60,
+      "success": true,
+      "diagnostic": {
+        "action": "",
+        "code": "",
+        "face": 4294967295,
+        "node": "",
+        "point": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "vertices": []
+      },
+      "cleanup": {
+        "flipped": 0,
+        "orientPatches": true,
+        "removeDegenerates": true,
+        "removed": 0,
+        "weldTolerance": 0.0,
+        "welded": 0
+      }
+    },
+    {
+      "ordinal": 61,
+      "success": true,
+      "diagnostic": {
+        "action": "",
+        "code": "",
+        "face": 4294967295,
+        "node": "",
+        "point": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "vertices": []
+      },
+      "cleanup": {
+        "flipped": 0,
+        "orientPatches": true,
+        "removeDegenerates": true,
+        "removed": 0,
+        "weldTolerance": 0.0,
+        "welded": 0
+      }
+    },
+    {
+      "ordinal": 62,
+      "success": true,
+      "diagnostic": {
+        "action": "",
+        "code": "",
+        "face": 4294967295,
+        "node": "",
+        "point": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "vertices": []
+      },
+      "cleanup": {
+        "flipped": 0,
+        "orientPatches": true,
+        "removeDegenerates": true,
+        "removed": 0,
+        "weldTolerance": 0.0,
+        "welded": 0
+      }
+    },
+    {
+      "ordinal": 63,
+      "success": true,
+      "diagnostic": {
+        "action": "",
+        "code": "",
+        "face": 4294967295,
+        "node": "",
+        "point": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "vertices": []
+      },
+      "cleanup": {
+        "flipped": 0,
+        "orientPatches": true,
+        "removeDegenerates": true,
+        "removed": 0,
+        "weldTolerance": 0.0,
+        "welded": 0
+      }
+    },
+    {
+      "ordinal": 64,
+      "success": true,
+      "diagnostic": {
+        "action": "",
+        "code": "",
+        "face": 4294967295,
+        "node": "",
+        "point": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "vertices": []
+      },
+      "cleanup": {
+        "flipped": 0,
+        "orientPatches": true,
+        "removeDegenerates": true,
+        "removed": 0,
+        "weldTolerance": 0.0,
+        "welded": 0
+      }
+    },
+    {
+      "ordinal": 65,
+      "success": true,
+      "diagnostic": {
+        "action": "",
+        "code": "",
+        "face": 4294967295,
+        "node": "",
+        "point": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "vertices": []
+      },
+      "cleanup": {
+        "flipped": 0,
+        "orientPatches": true,
+        "removeDegenerates": true,
+        "removed": 0,
+        "weldTolerance": 0.0,
+        "welded": 0
+      }
+    }
+  ]
+}

@@ -13,10 +13,15 @@ public:
  static bool PrepareAudio(RuntimeWorld&,std::string&);
  static bool Restore(RuntimeWorld&,const std::map<std::string,SaveChunk>&,std::string&);
  static void Published(RuntimeWorld&);
+ // Owner-thread instance records; no source parsing or whole-world capture.
+ static bool CanSuspendAnimation(RuntimeWorld&,uint64_t);
+ static bool CaptureAnimation(RuntimeWorld&,uint64_t,std::string&,std::string&);
+ static bool RestoreAnimation(RuntimeWorld&,uint64_t,const std::string&,std::string&);
 private:
  static void Entities(RuntimeWorld&,SaveArchive&);
  static void Motors(RuntimeWorld&,SaveArchive&);
  static void Animation(RuntimeWorld&,SaveArchive&);
+ static void InstanceAnimation(RuntimeWorld&,uint64_t,SaveArchive&);
  static void Articulation(RuntimeWorld&,SaveArchive&);
  static void ArticulationExtended(RuntimeWorld&,SaveArchive&,unsigned);
  static void Navigation(RuntimeWorld&,SaveArchive&);

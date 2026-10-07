@@ -1,0 +1,28 @@
+Renderer fragment texture units: 32 (material path uses 12)
+World state: /home/conner/Documents/GitHub/Project-Judas/projects/audio_lab/Saves/listening.judasstate (none saved)
+Project: Judas Audio Listening Lab (/home/conner/Documents/GitHub/Project-Judas/projects/audio_lab/audio_lab.judasproj)
+Scene: Audio listening lab (/home/conner/Documents/GitHub/Project-Judas/projects/audio_lab/Scenes/listening.judas)
+World origin (m): 0.000, 0.000, 0.000
+PASS production PCM graph without device
+PASS long original music starts incrementally in actual project
+PASS normal JS/UI/motor callbacks healthy
+PASS normal stream seek control
+PASS seek preserves independent live voice and advances
+PASS logical pause opens authored UI controls
+PASS effects pause while music keeps playing
+PASS persistent music is independent from effects pause
+PASS logical resume closes menu
+PASS authored source remains immutable under JS setting changes
+PASS Doppler/bypass/physical-door controls leave callbacks healthy
+PASS actual rendered listening lab screenshot
+PASS normal outer-boundary scene reload
+PASS reload invalidates old stream voice
+PASS replacement leaves no ghost callback or decoder retirement
+APPLICATION frame_work_median_ms=0.6585 p95_ms=1.8121 max_ms=7.7748 device=0 voices=5 streams=2 PCM=262144 underruns=0 rays=26 detach_max_ms=0.0020
+APPLICATION frame_work_median_ms=0.6563 p95_ms=1.8121 max_ms=7.7748 device=0 voices=5 streams=2 PCM=262144 underruns=0 rays=27 detach_max_ms=0.0020
+PASS runtime script destroy ordering has a live audio service
+PASS normal standalone exits and drains safely
+PASS export ordinary registered project
+PASS ordinary export includes streamed music/environment assets
+EXPORT assets=9 bytes=58391949 seconds=0.064 package=/home/conner/Documents/GitHub/Project-Judas/.cache/m60-exports/audio
+SUMMARY checks=19 failures=0

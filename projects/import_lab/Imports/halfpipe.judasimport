@@ -1,0 +1,14 @@
+{
+  "format": "JudasImport",
+  "version": 1,
+  "assetId": "a7d5bebfcae8a2eb725e67c512e3ac96",
+  "source": "Sources/artist-halfpipe/Skate Ramp Texture.fbx",
+  "output": "Assets/models/halfpipe.judasmodel",
+  "settings": {
+    "unitMeters": 0,
+    "sampleRate": 60,
+    "allowBaseMesh": false,
+    "dependencyRemaps": {}
+  },
+  "motions": []
+}

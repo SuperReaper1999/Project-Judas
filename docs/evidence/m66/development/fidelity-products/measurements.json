@@ -1,0 +1,56 @@
+{
+  "archiveBytes": 142027817,
+  "checks": 28,
+  "dimensionsMetres": [
+    1.7807620763778687,
+    1.80117928981781,
+    0.32478833198547363
+  ],
+  "embeddedMaps": 4,
+  "failures": 0,
+  "hierarchyNodes": 72,
+  "importMs": 1753.480105,
+  "parts": 6,
+  "restMatrixMaxError": 2.384185791015625e-07,
+  "samples": [
+    {
+      "clip": "Take 001",
+      "jointMatrixMaxError": 2.384185791015625e-07,
+      "time": 0.0,
+      "vertexPositionMaxErrorMetres": 3.6010283110954333e-07
+    },
+    {
+      "clip": "Take 001",
+      "jointMatrixMaxError": 4.76837158203125e-07,
+      "time": 0.12300000339746475,
+      "vertexPositionMaxErrorMetres": 3.674277024856565e-07
+    },
+    {
+      "clip": "Take 001",
+      "jointMatrixMaxError": 2.384185791015625e-07,
+      "time": 0.7129999995231628,
+      "vertexPositionMaxErrorMetres": 3.6010283110954333e-07
+    },
+    {
+      "clip": "mixamo.com",
+      "jointMatrixMaxError": 2.384185791015625e-07,
+      "time": 0.0,
+      "vertexPositionMaxErrorMetres": 4.768517101183534e-07
+    },
+    {
+      "clip": "mixamo.com",
+      "jointMatrixMaxError": 2.384185791015625e-07,
+      "time": 0.03333333507180214,
+      "vertexPositionMaxErrorMetres": 4.768517101183534e-07
+    },
+    {
+      "clip": "mixamo.com",
+      "jointMatrixMaxError": 2.384185791015625e-07,
+      "time": 0.03333333507180214,
+      "vertexPositionMaxErrorMetres": 4.768517101183534e-07
+    }
+  ],
+  "skinPaletteEntries": 109,
+  "sourceBones": 65,
+  "vertices": 150561
+}

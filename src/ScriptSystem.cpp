@@ -72,6 +72,8 @@ export class Entity {
  setAudioEnabled(enabled){return call('audioEnabled',this.id,enabled)}
  get camera(){return call('cameraInfo',this.id)}
  material(slot=0){return new Material(this.id,slot)}
+ get modelParts(){return call('modelParts',this.id)}
+ setPartVisible(identity,visible){return call('modelPartVisible',this.id,identity,visible)}
  scriptState(slot){return call('scriptState',this.id,slot)}
  applyForce(value){call('force',this.id,value)}
  applyImpulse(value){call('impulse',this.id,value)}
@@ -206,6 +208,7 @@ export class Animation {
  resume(){return this.play()}
  stop(){return call('animationStop',this.entityId)}
  seek(time){return call('animationSeek',this.entityId,time)}
+ rootMotion(clip,from,to,loop=false){return call('animationRootMotion',this.entityId,clip,from,to,loop)}
  crossFade(clip,seconds=.3){return call('animationFade',this.entityId,clip,seconds)}
  get layers(){return this.info.layers}
  layer(id,settings){return call('animationLayer',this.entityId,id,settings)}
@@ -802,6 +805,12 @@ JSValue ScriptSystem::Impl::Native(JSContext* c,JSValueConst,int argc,JSValueCon
     if(op=="valid")return JS_NewBool(c,definition!=nullptr);
     if(!definition)return JS_ThrowReferenceError(c,"stale or invalid entity %llu",(unsigned long long)id);
 
+    if(op=="modelParts"||op=="modelPartVisible"){
+        auto* parts=definition->render&&world.Resources()?world.Resources()->TryGetModelParts(definition->render->meshAsset):nullptr;
+        if(op=="modelPartVisible"){if(!JS_IsString(arg(2))||!JS_IsBool(arg(3)))return JS_ThrowTypeError(c,"part identity and boolean required");return JS_NewBool(c,world.SetModelPartVisible(id,String(c,arg(2)),JS_ToBool(c,arg(3))));}
+        if(!parts)return JS_NULL;
+        auto array=JS_NewArray(c);unsigned i=0;for(auto& p:*parts){auto item=JS_NewObject(c);JS_SetPropertyStr(c,item,"identity",JS_NewString(c,p.part.c_str()));JS_SetPropertyStr(c,item,"materialSlot",JS_NewUint32(c,i));JS_SetPropertyStr(c,item,"triangles",JS_NewUint32(c,p.count/3));bool visible=std::find(definition->render->hiddenParts.begin(),definition->render->hiddenParts.end(),p.part)==definition->render->hiddenParts.end();JS_SetPropertyStr(c,item,"visible",JS_NewBool(c,visible));JS_SetPropertyUint32(c,array,i++,item);}return array;
+    }
     if(op=="materialInfo"||op=="materialAssign"||op=="materialOverride"||op=="materialClear"){
         unsigned slot=0;double number;if(JS_ToFloat64(c,&number,arg(2))||!std::isfinite(number)||number<0||number>=64||std::floor(number)!=number)return JS_ThrowTypeError(c,"material slot must be integer 0..63");slot=unsigned(number);
         if(!definition->render)return JS_ThrowTypeError(c,"entity has no render component");
@@ -850,6 +859,13 @@ JSValue ScriptSystem::Impl::Native(JSContext* c,JSValueConst,int argc,JSValueCon
         if(op=="animationExists")return JS_NewBool(c,definition->animation.has_value());
         auto* instance=world.RuntimeAnimation(id);if(!instance)return JS_ThrowTypeError(c,"entity has no animated mesh");
         auto& player=instance->playback;
+        if(op=="animationRootMotion"){
+            if(!JS_IsString(arg(2))||!JS_IsBool(arg(5)))return JS_ThrowTypeError(c,"clip name and loop flag required");
+            double from=0,to=0;if(JS_ToFloat64(c,&from,arg(3))||JS_ToFloat64(c,&to,arg(4))||!std::isfinite(from)||!std::isfinite(to)||std::abs(from)>1e9||std::abs(to)>1e9)return JS_ThrowRangeError(c,"finite root-motion interval within +/-1e9 seconds required");
+            auto name=String(c,arg(2));auto it=std::find_if(instance->asset->clips.begin(),instance->asset->clips.end(),[&](auto& clip){return clip.name==name;});if(it==instance->asset->clips.end())return JS_NULL;
+            JointTransform pose;try{pose=RootMotionInterval(*it,from,to,JS_ToBool(c,arg(5)));}catch(const std::exception& e){return JS_ThrowRangeError(c,"%s",e.what());}auto result=JS_NewObject(c);JS_SetPropertyStr(c,result,"translation",Vec(c,pose.translation));auto q=Vec(c,{pose.rotation.x,pose.rotation.y,pose.rotation.z});JS_SetPropertyStr(c,q,"w",JS_NewFloat64(c,pose.rotation.w));JS_SetPropertyStr(c,result,"rotation",q);JS_SetPropertyStr(c,result,"extracted",JS_NewBool(c,!it->motion.empty()));return result;
+        }
+
         if(op=="animationJointPose"){
             const auto space=String(c,arg(3));if(space!="local"&&space!="model"&&space!="world")return JS_ThrowTypeError(c,"joint space must be local/model/world");
             SceneTransform pose;float alpha=JS_ToBool(c,arg(4))&&s->inPresentation?s->presentationAlpha:1;
@@ -895,7 +911,7 @@ JSValue ScriptSystem::Impl::Native(JSContext* c,JSValueConst,int argc,JSValueCon
                 for(auto field:{"clip","referenceClip"}){auto v=JS_GetPropertyStr(c,arg(3),field);if(!JS_IsUndefined(v)){if(!JS_IsString(v)){JS_FreeValue(c,v);return JS_ThrowTypeError(c,"invalid layer string");}(std::string(field)=="clip"?settings.clip:settings.referenceClip)=String(c,v);}JS_FreeValue(c,v);}
                 for(auto item:{std::pair<const char*,float*>{"weight",&settings.weight},{"speed",&settings.speed},{"time",&settings.time},{"referenceTime",&settings.referenceTime}}){auto v=JS_GetPropertyStr(c,arg(3),item.first);bool present=!JS_IsUndefined(v);JS_FreeValue(c,v);if(present&&!Number(c,arg(3),item.first,*item.second))return JS_ThrowTypeError(c,"invalid layer number");}
                 for(auto item:{std::pair<const char*,bool*>{"enabled",&settings.enabled},{"additive",&settings.additive}}){auto v=JS_GetPropertyStr(c,arg(3),item.first);if(!JS_IsUndefined(v)){if(!JS_IsBool(v)){JS_FreeValue(c,v);return JS_ThrowTypeError(c,"invalid layer flag");}*item.second=JS_ToBool(c,v);}JS_FreeValue(c,v);}
-                auto mask=JS_GetPropertyStr(c,arg(3),"mask");if(!JS_IsUndefined(mask)){if(!JS_IsArray(mask)){JS_FreeValue(c,mask);return JS_ThrowTypeError(c,"mask must be an array of joint keys");}auto len=JS_GetPropertyStr(c,mask,"length");uint32_t n=0;JS_ToUint32(c,&n,len);JS_FreeValue(c,len);if(n>128){JS_FreeValue(c,mask);return JS_ThrowRangeError(c,"too many joints");}settings.mask.clear();for(uint32_t i=0;i<n;++i){auto v=JS_GetPropertyUint32(c,mask,i);if(!JS_IsString(v)){JS_FreeValue(c,v);JS_FreeValue(c,mask);return JS_ThrowTypeError(c,"joint key must be a string");}settings.mask.push_back(String(c,v));JS_FreeValue(c,v);}}JS_FreeValue(c,mask);
+                auto mask=JS_GetPropertyStr(c,arg(3),"mask");if(!JS_IsUndefined(mask)){if(!JS_IsArray(mask)){JS_FreeValue(c,mask);return JS_ThrowTypeError(c,"mask must be an array of joint keys");}auto len=JS_GetPropertyStr(c,mask,"length");uint32_t n=0;JS_ToUint32(c,&n,len);JS_FreeValue(c,len);if(n>kModelNodeLimit){JS_FreeValue(c,mask);return JS_ThrowRangeError(c,"too many joints");}settings.mask.clear();for(uint32_t i=0;i<n;++i){auto v=JS_GetPropertyUint32(c,mask,i);if(!JS_IsString(v)){JS_FreeValue(c,v);JS_FreeValue(c,mask);return JS_ThrowTypeError(c,"joint key must be a string");}settings.mask.push_back(String(c,v));JS_FreeValue(c,v);}}JS_FreeValue(c,mask);
             }
             std::string error;if(!world.SetAnimationLayer(id,settings,op=="animationRemoveLayer",error))return JS_ThrowTypeError(c,"layer: %s",error.c_str());return JS_TRUE;
         }

@@ -33,7 +33,7 @@ command). Validity checks still apply. Unknown clips/masks/settings throw once
 ready. Up to 16 authored/runtime layers and 16 interrupted fade contributors.
 
 `AnimationLayerPatch`: `clip`, `referenceClip`, `weight` [0,1], `speed`, `time`,
-`referenceTime`, `enabled`, `additive`, `mask` (up to128 joint keys). Missing
+`referenceTime`, `enabled`, `additive`, `mask` (up to 4096 hierarchy keys). Missing
 fields retain existing settings, or defaults for a new layer. New layers need a
 valid clip; empty mask affects all joints. Masks affect local joints, not automatic
 subtree expansion; parents/children compose normally. Updating the same clip
@@ -47,6 +47,21 @@ not an arbitrary absolute clip treated as an offset. Stable joint keys aren't
 humanoid assumptions. C++ exposes validated external sources used by ragdolls;
 **no arbitrary external pose source/raw bone setter exists in JS**.
 [Pose implementation/authoring](../ANIMATION.md).
+
+## `Animation.rootMotion(clip, from, to, loop=false)`
+
+Queries a named clip's extracted track independently of current playback/mixer.
+Returns `{translation, rotation, extracted}` in model-local motion coordinates,
+relative to the motion frame at `from`. Seconds may be negative; non-loop queries
+clamp to the clip, loop queries compose whole cycles rather than teleporting back.
+Finite times are bounded to +/-1e9 seconds and one million cycles. Unknown clip
+returns null; unavailable animation or stale entity throws. A preserved/in-place
+clip returns identity motion with `extracted:false`.
+
+This does not sample a blended mixer's displacement and never moves an entity,
+rigid body or CharacterMotor. Rotate the returned local translation by the
+character's orientation before using it as motor intent. Collision resolution
+still belongs to the motor. [Import/root policies](../MODEL_IMPORT.md).
 
 ## Ragdoll
 

@@ -1,6 +1,6 @@
 # Current public JudasJS inventory
 
-Post-M65 corrective review of the registered virtual module based on starting checkpoint `26e6f089fde0f39d68659882f6204da3a453473e`.
+M66 import review of the registered virtual module based on starting checkpoint `3e5147a4ed97102200da91b4181c97b2a98942ba`.
 Each row is a runtime export/member (constructors and plain handle fields included).
 Native dispatcher operations are implementation details, not additional JS APIs.
 
@@ -23,6 +23,7 @@ Native dispatcher operations are implementation details, not additional JS APIs.
 | `Animation.removeLayer` | `animationRemoveLayer` | [declaration](../judas.d.ts) | [reference](animation-ragdolls.md) |
 | `Animation.removeLimb` | `animationRemoveLimb` | [declaration](../judas.d.ts) | [reference](animation-ragdolls.md) |
 | `Animation.resume` | JS wrapper/data | [declaration](../judas.d.ts) | [reference](animation-ragdolls.md) |
+| `Animation.rootMotion` | `animationRootMotion` | [declaration](../judas.d.ts) | [reference](animation-ragdolls.md) |
 | `Animation.seek` | `animationSeek` | [declaration](../judas.d.ts) | [reference](animation-ragdolls.md) |
 | `Animation.speed` | `animationSet` | [declaration](../judas.d.ts) | [reference](animation-ragdolls.md) |
 | `Animation.stop` | `animationStop` | [declaration](../judas.d.ts) | [reference](animation-ragdolls.md) |
@@ -83,6 +84,7 @@ Native dispatcher operations are implementation details, not additional JS APIs.
 | `Entity.liquid` | `liquidOwner` | [declaration](../judas.d.ts) | [reference](entities.md) |
 | `Entity.mass` | `mass` | [declaration](../judas.d.ts) | [reference](entities.md) |
 | `Entity.material` | JS wrapper/data | [declaration](../judas.d.ts) | [reference](materials.md) |
+| `Entity.modelParts` | `modelParts` | [declaration](../judas.d.ts) | [reference](entities.md) |
 | `Entity.navigation` | `navAgentExists` | [declaration](../judas.d.ts) | [reference](entities.md) |
 | `Entity.navigationLink` | `navLinkInfo` | [declaration](../judas.d.ts) | [reference](entities.md) |
 | `Entity.navigationObstacle` | `navObstacleInfo` | [declaration](../judas.d.ts) | [reference](entities.md) |
@@ -103,6 +105,7 @@ Native dispatcher operations are implementation details, not additional JS APIs.
 | `Entity.setCameraEnabled` | `camera` | [declaration](../judas.d.ts) | [reference](entities.md) |
 | `Entity.setColliderEnabled` | `colliderEnabled` | [declaration](../judas.d.ts) | [reference](entities.md) |
 | `Entity.setNavigationEnabled` | `navEnabled` | [declaration](../judas.d.ts) | [reference](entities.md) |
+| `Entity.setPartVisible` | `modelPartVisible` | [declaration](../judas.d.ts) | [reference](entities.md) |
 | `Entity.setParticles` | `particles` | [declaration](../judas.d.ts) | [reference](entities.md) |
 | `Entity.setPhysicalMaterial` | `physicalMaterialSet` | [declaration](../judas.d.ts) | [reference](entities.md) |
 | `Entity.setSocket` | `socketSet` | [declaration](../judas.d.ts) | [reference](entities.md) |

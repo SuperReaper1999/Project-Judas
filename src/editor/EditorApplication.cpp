@@ -1,4 +1,5 @@
 #include "Ragdoll.h"
+#include "ModelCook.h"
 #include <glm/gtc/matrix_transform.hpp>
 #include "WorldStreaming.h"
 #include "Prefab.h"
@@ -370,6 +371,7 @@ void EditorApplication::RefreshProjectLists() {
     m_panels.project = &m_project;
     m_panels.assets = m_host ? &m_host->Assets() : nullptr;
     m_panels.resources = m_host ? &m_host->Resources() : nullptr;
+    m_panels.importJobs=m_host?&m_host->Jobs():nullptr;
     if (!m_project.IsLoaded()) return;
     std::error_code ec;
     if (!fs::is_directory(m_project.ScenesDir(), ec)) return;
@@ -631,7 +633,9 @@ void EditorApplication::HandleRequests(EditorRequests& r) {
         m_panels.status = "Created " + r.createKind;
     }
     if (!r.dropMeshAssetId.empty()) {
-        CreateObjectOfKind(m_document, "mesh", r.createPosition, r.dropMeshAssetId);
+        std::optional<SceneAnimationComponent> animation;
+        if(auto rig=m_host->Resources().TryGetSkeletal(r.dropMeshAssetId)){animation.emplace();animation->clip=rig->clips.empty()?"":rig->clips.front().name;}
+        CreateObjectOfKind(m_document, "mesh", r.createPosition, r.dropMeshAssetId, animation?&*animation:nullptr);
         m_panels.status = "Placed mesh asset from the Asset Browser";
     }
     if (r.duplicateId != kInvalidSceneObjectId) {
@@ -875,6 +879,29 @@ void EditorApplication::FrameEditMode(float deltaSeconds) {
     renderer.EndFrame();
 }
 
+void EditorApplication::DrawModelImportPreview(float deltaSeconds) {
+ JUDAS_PROFILE_SCOPE("Model import preview");
+ if(!m_panels.showAssetBrowser||m_panels.mode!=EditorMode::Edit||!m_panels.importAccepted)return;
+ auto& task=*m_panels.importAccepted;auto& resources=m_host->Resources();auto& renderer=m_host->GetRenderer();
+ if(m_modelPreviewAsset!=task.assetId){if(!m_modelPreviewAsset.empty())resources.ReleaseRef(m_modelPreviewAsset);m_modelPreviewAsset=task.assetId;resources.AddRef(m_modelPreviewAsset);m_panels.modelPreviewTime=0;m_panels.modelPreviewHidden.clear();}
+ std::string error;auto mesh=resources.GetMesh(task.assetId,error);if(!mesh.IsValid()||!task.preview)return;
+ auto asset=resources.TryGetSkeletal(task.assetId);SkeletalPose pose;std::vector<glm::mat4> palette,global;
+ if(asset){pose=asset->skeleton.rest;if(!asset->clips.empty()){auto& clip=asset->clips[std::min(size_t(m_panels.modelPreviewClip),asset->clips.size()-1)];if(m_panels.modelPreviewPlaying&&clip.duration>0)m_panels.modelPreviewTime=std::fmod(m_panels.modelPreviewTime+deltaSeconds,clip.duration);pose=SampleClip(asset->skeleton,clip,m_panels.modelPreviewTime);}palette=ResolveSkinMatrices(asset->skeleton,pose);global=ResolveJointMatrices(asset->skeleton,pose);}
+ // Fit from the immutable rest mesh once per accepted generation, not by
+ // skinning every source vertex on the editor thread every preview frame.
+ if(m_modelPreviewData.lock()!=task.preview){auto& cpu=*task.preview;glm::vec3 lo(INFINITY),hi(-INFINITY);auto rest=cpu.skeletal?ResolveSkinMatrices(cpu.skeletal->skeleton,cpu.skeletal->skeleton.rest):std::vector<glm::mat4>{};for(size_t i=0;i<cpu.vertices.size();++i){auto p=cpu.vertices[i].position;if(!rest.empty()){auto& w=cpu.skinVertices[i];glm::mat4 m(0);for(int k=0;k<4;++k)m+=rest[w.joints[k]]*w.weights[k]+rest[w.joints1[k]]*w.weights1[k];p=glm::vec3(m*glm::vec4(p,1));}lo=glm::min(lo,p);hi=glm::max(hi,p);}m_modelPreviewMin=lo;m_modelPreviewMax=hi;m_modelPreviewData=task.preview;}
+ auto lo=m_modelPreviewMin,hi=m_modelPreviewMax;
+ auto center=(lo+hi)*.5f;float radius=std::max(glm::length(hi-lo)*.6f,.5f);glm::vec3 eye=center+glm::vec3(std::sin(m_panels.modelPreviewYaw)*radius,radius*.25f,std::cos(m_panels.modelPreviewYaw)*radius*1.5f);
+ if(!m_modelPreviewTarget.IsValid()){renderer.SetSceneAppearance(false,1,{},1,{1,0,0,0},false);m_modelPreviewTarget=renderer.CreateRenderTarget(600,360,error);}renderer.SetSceneAppearance(true,1,{},1,{1,0,0,0},false,{.035f,.045f,.065f});
+ if(!m_modelPreviewTarget.IsValid()||!renderer.BeginRenderTarget(m_modelPreviewTarget))return;
+ renderer.SetCamera(glm::lookAt(eye,center,glm::vec3(0,1,0)),glm::perspective(glm::radians(55.f),600.f/360,.01f,std::max(100.f,radius*10)));
+ renderer.SetLighting(glm::normalize(glm::vec3(1,2,3)),{1.8f,1.8f,1.8f},{.35f,.35f,.35f});renderer.SetSceneAppearance(true,1,{},1,{1,0,0,0},false,{.035f,.045f,.065f});renderer.SetDynamicLights({});renderer.SetMaterialBindings({});renderer.DrawMesh(mesh,{0,0,0},{1,0,0,0},{1,1,1},{},{1,1,1},1,palette.empty()?nullptr:&palette,&m_panels.modelPreviewHidden);
+ DebugLineList lines;if(m_panels.modelDiagnosticVisible&&m_panels.collisionDiagnosticAsset==task.assetId){auto p=glm::vec3(m_panels.collisionDiagnostic.point);float size=std::max(.05f,radius*.02f);lines.Line(p-glm::vec3(size,0,0),p+glm::vec3(size,0,0),{1,0,0});lines.Line(p-glm::vec3(0,size,0),p+glm::vec3(0,size,0),{1,0,0});lines.Line(p-glm::vec3(0,0,size),p+glm::vec3(0,0,size),{1,0,0});}lines.Line({lo.x,lo.y,lo.z},{lo.x+1,lo.y,lo.z},{1,1,1});lines.Axes({0,0,0},{1,0,0,0},.3f);
+ if(m_panels.modelPreviewSkeleton&&asset)for(size_t i=0;i<global.size();++i)if(asset->skeleton.parents[i]>=0)lines.Line(glm::vec3(global[i][3]),glm::vec3(global[asset->skeleton.parents[i]][3]),{.2f,1,.6f});
+ if(asset&&!asset->clips.empty()){auto& clip=asset->clips[std::min(size_t(m_panels.modelPreviewClip),asset->clips.size()-1)];glm::vec3 previous(0);for(unsigned i=0;i<=60;++i){auto p=SampleRootMotion(clip,double(clip.duration)*i/60,false).translation;if(i)lines.Line(previous,p,{1,.7f,.1f});previous=p;}}
+ renderer.DrawDebugLines(lines.Lines(),false);renderer.EndRenderTarget();m_panels.modelPreviewToken=renderer.EditorImageToken(renderer.RenderTargetTexture(m_modelPreviewTarget));
+}
+
 void EditorApplication::RefreshAssetDemand() {
     std::vector<std::string> wanted;
     if(!m_document.GetScene().Settings().environmentAsset.empty())wanted.push_back(m_document.GetScene().Settings().environmentAsset);
@@ -1039,6 +1066,9 @@ int EditorApplication::Run(int argc, char** argv) {
         std::fprintf(stderr,"[editor autotest] shared collision cook/assign: %s: %s\n",ok?"PASS":"FAIL",m_panels.status.c_str());
     }
     if (autotest) SaveSceneToString(m_document.GetScene(), autotestBaseline);
+    const char* importRecipe=autotest?std::getenv("JUDAS_EDITOR_AUTOTEST_IMPORT"):nullptr;
+    if(importRecipe){m_panels.showAssetBrowser=true;m_panels.modelRecipe=importRecipe;m_panels.importTask=QueueModelImport(host.Jobs(),importRecipe);m_panels.importPublished=false;}
+    unsigned importWaitFrames=0;
     const auto screenshot = [&](const std::string& path) {
         std::vector<unsigned char> pixels;
         renderer.CaptureFrame(window.Width(), window.Height(), pixels);
@@ -1169,11 +1199,13 @@ int EditorApplication::Run(int argc, char** argv) {
             m_panels.exportDestination = exportDestination;
             requests.exportProject = true;
         }
+        if(importRecipe&&autotestFrame==1)requests.dropMeshAssetId=m_panels.importAccepted->assetId;
         HandleRequests(requests);
         if (automatedExport)
             std::fprintf(stderr, "[editor autotest] export project: %s\n", m_panels.runProjectInfo.c_str());
         AdvanceStabilizationAutomation();
 
+        DrawModelImportPreview(deltaSeconds);
         editorBuildScope.End();
         ImGui::Render();
         // The 3D frame already sits in the default framebuffer; the UI
@@ -1191,7 +1223,14 @@ int EditorApplication::Run(int argc, char** argv) {
         }
 
         if (autotest) {
-            ++autotestFrame;
+            bool waiting=importRecipe&&!m_panels.modelPreviewToken;
+            if(waiting&&((m_panels.importTask->done&&!m_panels.importTask->success)||++importWaitFrames>4000)){std::fprintf(stderr,"[editor autotest] import FAIL: %s\n",m_panels.importTask->error.c_str());m_quit=true;}
+            if(!waiting)++autotestFrame;
+            if(importRecipe&&autotestFrame==1)std::fprintf(stderr,"[editor autotest] shared import + GPU preview PASS (%zu parts)\n",m_panels.importAccepted->preview->primitives.size());
+            if(importRecipe&&autotestFrame==2){auto* placed=m_document.SelectedObject();std::fprintf(stderr,"[editor autotest] ordinary imported placement %s\n",placed&&placed->render&&placed->animation?"PASS":"FAIL");m_document.Undo();std::string restored;SaveSceneToString(m_document.GetScene(),restored);std::fprintf(stderr,"[editor autotest] imported placement one undo %s\n",restored==autotestBaseline?"PASS":"FAIL");}
+            if(importRecipe&&autotestFrame==6){m_panels.modelPreviewPlaying=true;m_panels.modelPreviewTime=.5f;}
+            if(importRecipe&&autotestFrame==12){auto& parts=m_panels.importAccepted->preview->primitives;if(!parts.empty())m_panels.modelPreviewHidden={parts.front().part};}
+
             const std::string prefix = autotest;
             // Opt-in M56 diagnostic interaction; ordinary Play timing/state is unchanged.
             if (std::getenv("JUDAS_EDITOR_AUTOTEST_PROFILER")) {
@@ -1286,6 +1325,9 @@ int EditorApplication::Run(int argc, char** argv) {
     for (const std::string& id : m_heldAssets) host.Resources().ReleaseRef(id);
     m_heldAssets.clear();
     window.SetEventHook(nullptr);
+    if(m_modelPreviewTarget.IsValid())renderer.DestroyRenderTarget(m_modelPreviewTarget);
+    if(!m_modelPreviewAsset.empty())host.Resources().ReleaseRef(m_modelPreviewAsset);
+    m_panels.importTask.reset();
     ImGui_ImplOpenGL3_Shutdown();
     ImGui_ImplSDL2_Shutdown();
     ImGui::DestroyContext();

@@ -1,0 +1,27 @@
+{
+  "clips": [
+    {
+      "duration": 4.958333492279053,
+      "name": "Take 001",
+      "tracks": 3
+    }
+  ],
+  "diagnostics": [
+    {
+      "action": "Remap material slots for unsupported appearance",
+      "code": "fbx-material-approximation",
+      "face": -1,
+      "message": "FBX factors/maps converted to Judas metallic/roughness; source shader graphs are not reproduced",
+      "node": "",
+      "severity": "warning",
+      "source": ".cache/m66/halfpipe/Skate Ramp Texture.fbx",
+      "vertex": -1
+    }
+  ],
+  "hierarchyNodes": 84,
+  "paletteEntries": 66,
+  "parts": 66,
+  "sourceBones": 0,
+  "sourceUnitMeters": 0.01,
+  "vertices": 48318
+}

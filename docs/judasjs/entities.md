@@ -124,3 +124,14 @@ store null or `{entity:"decimal-stable-id"}`; scripts receive null or normal saf
 Entity wrappers. Existing primitives retain their meanings. References remap through
 prefab/duplication/region/save paths; a missing target is an invalid safe wrapper,
 not a guessed entity. Never store raw body handles in authoring data.
+
+## `Entity.modelParts` and `Entity.setPartVisible(identity, visible)`
+
+`modelParts` returns a detached array of `{identity,materialSlot,triangles,visible}`
+for a ready rendered model, otherwise null. Identity is the cooked stable part key;
+`materialSlot` selects the existing per-instance `entity.material(slot)` facade.
+`setPartVisible` changes this runtime instance only and returns false for a missing
+part/unready mesh. Stale entity handles throw through normal validity checks.
+Hidden parts are omitted from ordinary camera, secondary-camera and shadow draws;
+this does not disable physics or remove skeleton joints. Editor assignments serialize
+as render hidden-part keys. Stop restores authored visibility.

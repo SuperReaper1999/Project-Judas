@@ -1,0 +1,41 @@
+Renderer fragment texture units: 32 (material path uses 12)
+PASS ordinary registered shooter project
+PASS production engine host
+PASS project logical controls load
+PASS actual project scene and scripts build
+PASS JS motor and capture; no built-in gameplay
+PASS all real game scripts start without errors
+PASS twelve independently tagged plates
+PASS logical movement drives CharacterMotor
+PASS launch is project JS
+PASS third person preserves same controlled entity
+PASS third-person view uses separate camera boom
+PASS return to first person
+SHOT_STATE {"yaw":0,"pitch":0,"third":false,"score":100,"shots":1,"hits":1,"unique":1,"lastHit":"103","paused":false,"scored":true}
+PASS first-person real ray hit scores once
+PASS reticle ray hits intended physical plate, not shooter
+PASS target enters cooling state independently
+TARGET maximum_angle=0.423295 settled=0.021498
+PASS shot impulse physically swings hinge
+PASS authored hinge limits hold
+PASS spring/damping physically returns and rearms target
+PASS plate returns near rest without scripted pose reset
+PASS other targets retain independent state
+PASS third-person reticle and player-origin query hit same target; repeat rearm scores
+PASS third-person player-origin ray cannot shoot through cover visible beside the camera
+PASS non-target wall/miss does not score
+PASS non-target dynamic body receives real impulse without score
+PASS authored HUD reflects JS score
+PASS pause owns modal UI and releases requested pointer
+PASS pause blocks gameplay movement/fire
+PASS authored resume button calls JS and restores capture
+PASS resume click does not fire through menu
+PASS restart queues normal scene reload
+PASS round reconstructs through ordinary scene load
+PASS reload resets JS score/target state and rebuilds handles
+PASS complete real query/impulse round hits all independently authored targets
+PASS round completion is visible in authored HUD
+M52_FIXED_AVERAGE_MS 1.282786 bodies=52 targets=12
+PASS game remains fault-free during repeated authoritative steps
+PASS Stop clears VM, bodies and target state
+SUMMARY 36 checks 0 failures

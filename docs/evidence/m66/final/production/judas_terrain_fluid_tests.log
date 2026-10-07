@@ -1,0 +1,54 @@
+Rotated, translated and far-origin terrain/fluid contact
+    step 30 local/rotated position difference 0.000013 m
+    step 60 local/rotated position difference 0.000047 m
+    step 90 local/rotated position difference 0.000070 m
+    step 120 local/rotated position difference 0.000123 m
+    rotated 0.000123 m / 0.000166 m/s; far 0.000000 m / 0.000000 m/s
+  OK   fluid contact follows rotated/translated terrain and gravity
+  OK   billion-metre absolute translation preserves local fluid trajectory
+  OK   transformed states remain finite
+Moving terrain and zero gravity
+    moving terrain outward displacement 0.061117 m, speed 3.465767 m/s
+    new position -3.86777 77.58961 2.90667, start -3.87640 77.52792 2.90730, relative clearance 0.18015
+  OK   moving terrain geometry pushes water and imparts point velocity
+  OK   terrain does not invent world-down acceleration in zero gravity
+Rotated multi-particle pressure on terrain
+    pressure displacement 0.163584 m, maximum rotated errors 0.000217 m / 0.000222 m/s
+  OK   eight-particle scenario genuinely exercises fluid pressure
+  OK   terrain collision and liquid pressure rotate equivalently
+Ordinary moving solid disturbs terrain water
+    24 moving-box contacts; extra COM displacement 0.068 m, water momentum 6893.671 kg m/s along box travel; solid reaction -6902.895 kg m/s; min terrain clearance 0.180 m
+  OK   ordinary moving box displaces basin water and imparts momentum
+  OK   fluid returns opposite contact impulse to the actual solid owner
+  OK   disturbed water remains finite and outside terrain solid matter
+M25-scale water reaction on a dense Judas rigid body
+  OK   rigid world initializes for the coupled lake fixture
+    71 rigid contacts; water reaction -10500.44 kg m/s, body dv -5.250 m/s; momentum-transfer error 0.0013 kg m/s; max/final body speed 8.069/3.053 m/s; fluid/control KE 4687.9/1473.5 J, body rotational KE 925.9 J; excess mechanical energy -51923.0 J (-0.811 of box input); min terrain clearance 0.180 m
+  OK   lake water slows the moving ordinary rigid body through actual contact impulses
+  OK   Judas physics receives the measured fluid reaction without invalid state
+  OK   dense thrown prop does not gain a nonphysical kick or excess kinetic energy
+  OK   two-way lake contact leaves water outside the terrain solid
+Basin settlement and physical overflow
+    125 particles, 10 s: 11.762 ms/step; COM radius 78.974 -> 77.832 m; 106 on A side; min clearance 0.180 m; KE 472.4 J
+  OK   supplied radial gravity lowers water into the real depression
+  OK   most ordinary fluid mass concentrates in Basin A
+  OK   fluid remains outside terrain during ten seconds of settlement
+  OK   settled fluid conserves count/mass and remains finite
+    200 particles, 6 s: 16.760 ms/step; 43 settled in B, 43 tracked through low saddle; min clearance 0.180 m; mass 25000.0 kg
+  OK   surplus water crosses the low saddle and settles in Basin B
+  OK   overflow does not pass through terrain solid matter
+  OK   overflow carries the same finite 25,000 kg of fluid
+Live reset and B-key water emission schedule
+    B held t=2.00..3.25s: 75 added, 38 in B versus 11 without B (3 added particles reached B, 37 traversed saddle); clearance >=0.180 m; 14.655 ms/emitting-world step
+  OK   the live 75-step B hold adds exactly 75 real particles and 9,375 kg
+  OK   live source increases physical saddle flow into Basin B
+  OK   emitted water remains finite and outside terrain solid matter
+  OK   reset reconstructs the exact original fluid distribution and mass
+M26 light spacecraft remains a one-way lake collider
+  OK   one-way lake fixture initializes both rigid worlds
+    first contact step 30, 1353 ship-water contacts; ship peak 7.670 m/s, peak angular 1.057 rad/s, dry-trajectory error 0.000000; water displacement max/mean 1.015/0.310 m, clearance >=0.180 m, mass 15625.0 kg
+  OK   nose-down craft enters the lake from a genuinely clear initial pose
+  OK   one-way lake contact cannot launch or deflect the light spacecraft
+  OK   the same physical ship collider still displaces the lake water
+  OK   one-way encounter retains finite mass and keeps water outside terrain
+TerrainFluid: PASS (0 failures)

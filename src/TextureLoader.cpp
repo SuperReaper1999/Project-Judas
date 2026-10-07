@@ -12,6 +12,9 @@ bool DecodeTextureFromMemory(const std::uint8_t* data, std::size_t size, const s
                              TextureData& outTexture, std::string& outError) {
     // stb_image's flip flag is thread-local in this version (stbi__vertically_flip_on_load_local), so
     // setting it on a worker never affects another thread's decode.
+    if(!data||size==0||size>64*1024*1024){outError="encoded texture exceeds bounded input size";return false;}
+    int previewWidth=0,previewHeight=0,previewChannels=0;
+    if(!stbi_info_from_memory(data,static_cast<int>(size),&previewWidth,&previewHeight,&previewChannels)||previewWidth<=0||previewHeight<=0||uint64_t(previewWidth)*previewHeight*4>64*1024*1024){outError="texture dimensions exceed 64 MiB decoded RGBA bound";return false;}
     stbi_set_flip_vertically_on_load_thread(1);
     int width = 0, height = 0, sourceChannels = 0;
     unsigned char* decoded = stbi_load_from_memory(data, static_cast<int>(size), &width, &height, &sourceChannels,

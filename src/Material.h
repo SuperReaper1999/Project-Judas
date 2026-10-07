@@ -11,7 +11,9 @@
 enum class MaterialModel { Legacy, PBR, Unlit };
 enum class MaterialAlpha { Opaque, Mask, Blend };
 struct MaterialSampler {int wrapS=10497,wrapT=10497,minFilter=9987,magFilter=9729;};
-struct MaterialMap {std::string asset;TextureData embedded;MaterialSampler sampler;};
+struct MaterialMap {std::string asset;TextureData embedded;
+ std::vector<uint8_t> encodedImage; // retained encoded PNG/JPEG for self-contained cooking, not a source path
+ MaterialSampler sampler;int uvSet=0;glm::vec2 scale{1},offset{0};float rotation=0;};
 struct MaterialDefinition {
  MaterialModel model=MaterialModel::PBR;
  MaterialAlpha alpha=MaterialAlpha::Opaque;

@@ -34,7 +34,7 @@ ResourceManager::~ResourceManager() {
 
 std::uint64_t ResourceManager::EstimateMeshBytes(const MeshData& data) {
     uint64_t bytes=static_cast<uint64_t>(data.vertices.size())*sizeof(MeshVertex)+static_cast<uint64_t>(data.skinVertices.size())*sizeof(MeshSkinVertex)+static_cast<uint64_t>(data.indices.size())*sizeof(uint32_t);
-    for(auto& material:data.materials)for(auto& map:material.maps)bytes+=EstimateTextureBytes(map.embedded);
+    for(auto& material:data.materials)for(auto& map:material.maps)bytes+=EstimateTextureBytes(map.embedded)+map.encodedImage.size();
     if(data.skeletal){const auto& s=data.skeletal->skeleton;bytes+=s.rest.local.size()*sizeof(JointTransform)+(s.parents.size()+s.order.size()+s.skinNodes.size())*sizeof(int)+s.inverseBind.size()*sizeof(glm::mat4);for(const auto& name:s.names)bytes+=name.size();for(const auto& clip:data.skeletal->clips){bytes+=clip.name.size();for(const auto& track:clip.tracks)bytes+=track.times.size()*sizeof(float)+track.values.size()*sizeof(glm::vec4);}}
     return bytes;
 }
@@ -219,7 +219,7 @@ void ResourceManager::CompleteTask(Entry& entry, const std::shared_ptr<LoadTask>
         entry.skeletal=task->mesh.skeletal;entry.meshMaterials=task->mesh.materials;entry.meshPrimitives=task->mesh.primitives;for(auto& m:entry.meshMaterials)for(auto& map:m.maps)map.embedded=TextureData{};
     } else if(task->type==AssetType::Material){
         if(m_renderer)entry.material=m_renderer->CreateMaterial(*task->material);
-        entry.bytes=sizeof(MaterialDefinition);for(auto& map:task->material->maps){entry.bytes+=EstimateTextureBytes(map.embedded);map.embedded=TextureData{};}entry.materialDefinition=task->material;
+        entry.bytes=sizeof(MaterialDefinition);for(auto& map:task->material->maps){entry.bytes+=EstimateTextureBytes(map.embedded)+map.encodedImage.size();map.embedded=TextureData{};}entry.materialDefinition=task->material;
     } else if(task->type==AssetType::Environment){if(m_renderer)entry.environment=m_renderer->CreateEnvironment(task->environment);entry.bytes=0;for(auto& level:task->environment.specular)entry.bytes+=level.pixels.size()*6;entry.bytes+=task->environment.diffuse.pixels.size()*6+task->environment.brdf.size()*4;
     } else if(task->type==AssetType::PhysicalMaterial){entry.physicalMaterial=task->physicalMaterial;entry.bytes=sizeof(PhysicalMaterial);
     } else if(task->type==AssetType::Collision){entry.collision=task->collision;const auto& a=*entry.collision;entry.bytes=a.vertices.size()*sizeof(glm::dvec3)+a.faces.size()*sizeof(CollisionFace)+a.nodes.size()*sizeof(CollisionNode)+a.order.size()*sizeof(uint32_t);
@@ -648,3 +648,5 @@ std::shared_ptr<const PhysicalMaterial> ResourceManager::RequirePhysicalMaterial
  auto task=e.task;if(e.state!=ResourceState::Ready&&e.state!=ResourceState::Failed&&task){if(m_jobs&&task->job.IsValid())m_jobs->Wait(task->job);CompleteTask(e,task);if(m_jobs)m_jobs->Forget(task->job);m_inFlight.erase(std::remove(m_inFlight.begin(),m_inFlight.end(),task),m_inFlight.end());}
  error=e.state==ResourceState::Ready?"":e.error;return e.state==ResourceState::Ready?e.physicalMaterial:nullptr;
 }
+
+const std::vector<MeshPrimitive>* ResourceManager::TryGetModelParts(const AssetId& id)const{auto it=m_entries.find(id);return it!=m_entries.end()&&it->second.state==ResourceState::Ready?&it->second.meshPrimitives:nullptr;}

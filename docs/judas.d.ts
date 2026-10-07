@@ -75,7 +75,11 @@ declare module "judas" {
     normal:Vec3|null;distance:number;contains:boolean|null;
     primitiveIndex:number;childKey:number;feature:number|null;
   }
+  export interface ModelPart { readonly identity: string; readonly materialSlot: number; readonly triangles: number; readonly visible: boolean }
+  export interface RootMotion { readonly translation: Vec3; readonly rotation: Quat; readonly extracted: boolean }
   export class Entity {
+    readonly modelParts: readonly ModelPart[] | null;
+    setPartVisible(identity: string, visible: boolean): boolean;
     readonly collider:ColliderInfo|null;
     readonly sleeping:boolean;
     readonly physicalMaterial:{asset:AssetId|null;friction:number;restitution:number};
@@ -276,6 +280,8 @@ declare module "judas" {
   }
   export interface LimbIKPatch {root?:string;middle?:string;end?:string;target?:Vec3;pole?:Vec3;weight?:number;enabled?:boolean;order?:number}
   export class Animation {
+    /** Independent clip interval in model-local motion space; never moves physics implicitly. */
+    rootMotion(clip: string, from: number, to: number, loop?: boolean): RootMotion | null;
     constructor(entityId: EntityId);
     entityId: EntityId;
     readonly info: AnimationInfo;

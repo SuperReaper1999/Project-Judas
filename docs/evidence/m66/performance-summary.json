@@ -1,0 +1,84 @@
+{
+  "measurementContext": "Release, NVIDIA GTX 970 desktop GPU, 640x480 offscreen framebuffer; serial workload, OS file cache not flushed. CPU pose and GL finish-inclusive totals are distinct from asynchronous GPU timestamps.",
+  "delayedGPU": [
+    {
+      "instances": 1,
+      "samples": 34,
+      "gpuMedianMs": 0.199392,
+      "gpuP95Ms": 0.2152,
+      "gpuMaxMs": 0.228928,
+      "drawCalls": 6,
+      "paletteBytesPerInstance": 6976
+    },
+    {
+      "instances": 10,
+      "samples": 34,
+      "gpuMedianMs": 1.5979999999999999,
+      "gpuP95Ms": 2.847936,
+      "gpuMaxMs": 2.95456,
+      "drawCalls": 60,
+      "paletteBytesPerInstance": 6976
+    }
+  ],
+  "import": [
+    {
+      "label": "original-cold",
+      "wallMs": 13240.455818000555,
+      "peakRSSKiB": 1391872,
+      "unchanged": false,
+      "assetId": "d15b628722311f90a9146c4d51e12ce2"
+    },
+    {
+      "label": "original-unchanged",
+      "wallMs": 6642.039209000359,
+      "peakRSSKiB": 857540,
+      "unchanged": true,
+      "assetId": "d15b628722311f90a9146c4d51e12ce2"
+    },
+    {
+      "label": "small-cold",
+      "wallMs": 18.071083000904764,
+      "peakRSSKiB": 26684,
+      "unchanged": false,
+      "assetId": "c4486f87ac712c7d6501d3a57603178a"
+    },
+    {
+      "label": "small-unchanged",
+      "wallMs": 16.50371100004122,
+      "peakRSSKiB": 27160,
+      "unchanged": true,
+      "assetId": "c4486f87ac712c7d6501d3a57603178a"
+    },
+    {
+      "label": "small-changed-texture",
+      "wallMs": 23.856960000557592,
+      "peakRSSKiB": 27620,
+      "unchanged": false,
+      "assetId": "c4486f87ac712c7d6501d3a57603178a"
+    },
+    {
+      "label": "motion-baseline",
+      "wallMs": 68.79592600125761,
+      "peakRSSKiB": 31860,
+      "unchanged": false,
+      "assetId": "00f95bedb4129c33beab3ab1bc22dd34"
+    },
+    {
+      "label": "changed-compatible-motion",
+      "wallMs": 64.39943100122036,
+      "peakRSSKiB": 30832,
+      "unchanged": false,
+      "assetId": "00f95bedb4129c33beab3ab1bc22dd34"
+    }
+  ],
+  "editor": {
+    "firstOrReloadInstallationMaxMs": 559.389166,
+    "previewScopeMaxMs": 7.232754,
+    "warmRetainedFrameMedianMs": 9.955395,
+    "warmRetainedFrameP95Ms": 10.325547,
+    "warmRetainedFrameMaxMs": 56.030679,
+    "includesVsyncAndCapture": true,
+    "profilerWindowFrames": 120,
+    "coldSpikesRetained": 7
+  }
+}

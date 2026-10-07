@@ -1,0 +1,12 @@
+Renderer fragment texture units: 32 (material path uses 12)
+PASS real EngineHost
+PASS imported-model normal registered script
+PASS imported-model normal project
+PASS imported-model ordinary scene
+PASS imported-model runtime builds
+PASS imported-model ordinary fixed-step session
+PASS imported-model real VM callbacks without faults
+EXAMPLE imported-model {"ready":true,"parts":true,"motion":true,"missing":true}
+PASS imported-model documented outcome
+PASS imported-model teardown
+SUMMARY 9 checks 0 failures

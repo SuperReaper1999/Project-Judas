@@ -25,9 +25,7 @@ bool RagdollDefinitionsEqual(const RagdollDefinition& a,const RagdollDefinition&
     }return true;
 }
 std::vector<glm::mat4> PoseGlobalMatrices(const Skeleton& s,const SkeletalPose& pose){
-    std::vector<glm::mat4> result(pose.local.size());
-    for(int i:s.order){const auto& p=pose.local.at(i);auto local=glm::translate(glm::mat4(1),p.translation)*glm::mat4_cast(p.rotation)*glm::scale(glm::mat4(1),p.scale);result[i]=s.parents[i]<0?local:result[s.parents[i]]*local;}
-    return result;
+    return ResolveJointMatrices(s,pose);
 }
 bool DecomposeRigidPose(const glm::mat4& m,JointTransform& p,std::string& error){
     p.translation=glm::vec3(m[3]);glm::mat3 basis(m);

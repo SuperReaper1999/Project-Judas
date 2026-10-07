@@ -1,0 +1,38 @@
+Renderer fragment texture units: 32 (material path uses 12)
+PASS ordinary host
+PASS material lab project registered
+PASS material lab scene loads
+PASS scene/material/environment round trip
+PASS lab world uses normal resources
+PASS lab game begins
+PASS lab script uses public API without faults
+PASS JS edits one shared-material instance only
+PASS prefab-spawned material/skinned instance
+PASS runtime revert restores shared parameters
+PASS async material uploaded
+PASS material decode uses worker
+PASS derived environment uploaded
+PASS embedded static mesh retains two imported slots
+PASS lab screen retains camera feedback protection
+PASS main/secondary dimensions reuse HDR targets
+PASS actual M33 material screen rendered
+PASS lab skinned/static/secondary pass has no GL errors
+PASS in-flight material cancellation installs no stale resource
+PASS material source reload through normal resource workflow
+PASS Stop clears scripts and camera ownership
+PASS authored scene untouched by runtime edits
+PASS material fingerprint remains path independent
+PASS shared source readable
+PASS isolated shared-source edit
+PASS material source bytes change authored fingerprint
+PASS legacy-mode declared-material scene builds
+PASS runtime-assignable declared source is fingerprinted before assignment
+PASS M55 project loads unchanged
+PASS M55 scene loads
+PASS M55 world builds
+PASS actual above/below camera intersects liquid boundary paths
+PASS M55 optical composition and modern resolve agree
+PASS actual above/below camera intersects liquid boundary paths
+PASS M55 optical composition and modern resolve agree
+PASS M55 accounting/surface has no errors
+M57 integration 36 checks 0 failures

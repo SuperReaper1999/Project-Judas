@@ -1,0 +1,34 @@
+Renderer fragment texture units: 32 (material path uses 12)
+World state: disk saves disabled for additive compositions
+Project: M66 Import Lab (/home/conner/Documents/GitHub/Project-Judas/projects/import_lab/import_lab.judasproj)
+Scene: M66 original rig — G clips, J mask, K additive, I IK, F ragdoll, B root intent (/home/conner/Documents/GitHub/Project-Judas/projects/import_lab/Scenes/main.judas)
+World origin (m): 0.000, 0.000, 0.000
+PASS normal app loads complete original hierarchy plus root-track helper
+PASS normal app shares immutable asset with independent instances
+PASS real logical input drives masked/additive contributions and IK
+PASS real JS controls stable part identity
+PASS real JS spawned original multipart prefab
+ROOT MOTOR -0.01180 0.00228 -2.42497
+PASS extracted root intent moves through motor and stops at ordinary wall
+PASS real activation/deactivation returns through pose resolver
+PASS clean concave source raycast agrees with analytical visible ramp, not a hull
+PROXY motor -6.000000 0.672999 -8.000000 support=0 expected_y=0.277655 supported=0
+FAIL ordinary CharacterMotor stands on matching cooked concavity
+PASS normal stream request
+PASS streamed full rig uses ordinary mixer
+PASS capture exact streamed pose/mixer before retirement
+PASS complete imported dependency graph retires normally
+PASS retired instance exposes no stale animation pointer
+PASS stream revisit gets fresh entity and retains mixer state
+PASS stream revisit retains exact clip/layers/source/final pose payload
+PASS normal JS survives stream retirement/revisit
+PASS stream revisit sockets use retained full hierarchy
+PASS ordinary scene reload queued
+PASS reload reconstructs scene-owned instances and removes spawned state
+RELOAD bodies=3
+BODY 1
+BODY 13
+BODY 50
+FAIL reload leaves only authored floor, wall and motor proxy
+PASS ordinary project process startup/lifecycle/shutdown
+SUMMARY mode=probe checks=22 failures=2 frames=1026

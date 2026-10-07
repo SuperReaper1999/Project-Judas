@@ -1,0 +1,51 @@
+[
+  {
+    "label": "original-cold",
+    "wallMs": 13240.455818000555,
+    "peakRSSKiB": 1391872,
+    "unchanged": false,
+    "assetId": "d15b628722311f90a9146c4d51e12ce2"
+  },
+  {
+    "label": "original-unchanged",
+    "wallMs": 6642.039209000359,
+    "peakRSSKiB": 857540,
+    "unchanged": true,
+    "assetId": "d15b628722311f90a9146c4d51e12ce2"
+  },
+  {
+    "label": "small-cold",
+    "wallMs": 18.071083000904764,
+    "peakRSSKiB": 26684,
+    "unchanged": false,
+    "assetId": "c4486f87ac712c7d6501d3a57603178a"
+  },
+  {
+    "label": "small-unchanged",
+    "wallMs": 16.50371100004122,
+    "peakRSSKiB": 27160,
+    "unchanged": true,
+    "assetId": "c4486f87ac712c7d6501d3a57603178a"
+  },
+  {
+    "label": "small-changed-texture",
+    "wallMs": 23.856960000557592,
+    "peakRSSKiB": 27620,
+    "unchanged": false,
+    "assetId": "c4486f87ac712c7d6501d3a57603178a"
+  },
+  {
+    "label": "motion-baseline",
+    "wallMs": 68.79592600125761,
+    "peakRSSKiB": 31860,
+    "unchanged": false,
+    "assetId": "00f95bedb4129c33beab3ab1bc22dd34"
+  },
+  {
+    "label": "changed-compatible-motion",
+    "wallMs": 64.39943100122036,
+    "peakRSSKiB": 30832,
+    "unchanged": false,
+    "assetId": "00f95bedb4129c33beab3ab1bc22dd34"
+  }
+]

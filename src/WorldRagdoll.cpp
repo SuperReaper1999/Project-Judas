@@ -121,8 +121,9 @@ void RuntimeWorld::UpdateRagdolls(float dt){
                 auto body=m_physics.GetTransform(mapped->body);auto rotation=glm::normalize(body.rotation*glm::inverse(mapped->orientation));auto position=body.position-rotation*mapped->offset;
                 auto global=inverseModel*glm::translate(glm::mat4(1),position)*glm::mat4_cast(rotation)*glm::scale(glm::mat4(1),mapped->scale);
                 auto local=skeleton.parents[node]<0?global:glm::inverse(globals[skeleton.parents[node]])*global;std::string error;
+                if(!skeleton.affine.empty())local=glm::inverse(skeleton.affine.at(node))*local;
                 if(!DecomposeRigidPose(local,pose.local[node],error)){animation->error=error;valid=false;break;}globals[node]=global;mask.push_back(node);
-            }else {const auto& t=pose.local[node];auto local=glm::translate(glm::mat4(1),t.translation)*glm::mat4_cast(t.rotation)*glm::scale(glm::mat4(1),t.scale);globals[node]=skeleton.parents[node]<0?local:globals[skeleton.parents[node]]*local;}
+            }else {const auto& t=pose.local[node];auto local=glm::translate(glm::mat4(1),t.translation)*glm::mat4_cast(t.rotation)*glm::scale(glm::mat4(1),t.scale);if(!skeleton.affine.empty())local=skeleton.affine.at(node)*local;globals[node]=skeleton.parents[node]<0?local:globals[skeleton.parents[node]]*local;}
         }
         if(!valid){invalid.push_back(id);continue;}
         PoseContribution contribution;contribution.pose=std::move(pose);contribution.mask=std::move(mask);contribution.order=1000;std::string error;

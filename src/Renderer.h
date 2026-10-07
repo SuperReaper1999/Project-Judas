@@ -93,6 +93,7 @@ public:
     bool ResizeRenderTarget(RenderTargetHandle& target, int width, int height, std::string& error);
     void DestroyRenderTarget(RenderTargetHandle target);
     TextureHandle RenderTargetTexture(RenderTargetHandle target) const;
+    std::uintptr_t EditorImageToken(TextureHandle) const;
     glm::ivec2 RenderTargetSize(RenderTargetHandle target) const;
     void FinishForDiagnostics() const;
     bool BeginRenderTarget(RenderTargetHandle target);
@@ -188,7 +189,7 @@ public:
     // DrawSphere are now thin wrappers over.
     void DrawMesh(MeshHandle mesh, const glm::vec3& position, const glm::quat& rotation,
                   const glm::vec3& scale, TextureHandle texture, const glm::vec3& tintColor,
-                  float alpha = 1.0f,const std::vector<glm::mat4>* skin = nullptr);
+                  float alpha = 1.0f,const std::vector<glm::mat4>* skin = nullptr,const std::vector<std::string>* hiddenParts=nullptr);
 
     // Draws a box mesh: `halfExtents` sets its size along each axis (the
     // local unit cube is scaled by 2*halfExtents), `rotation` its
@@ -362,6 +363,7 @@ private:
         bool alive = false;
         VisualBounds bounds;
         std::vector<glm::mat4> restSkin;
+        std::vector<MeshSkinVertex> partOrientation;
         std::vector<MeshPrimitive> primitives;
         std::vector<MaterialHandle> materials;
     };
@@ -409,7 +411,7 @@ private:
     std::vector<LinearTarget> m_linearTargets;
     GLuint m_hdrFbo=0,m_hdrColor=0,m_hdrDepth=0,m_outputProgram=0,m_outputVao=0;
     GLint m_outputFramebuffer=0;int m_hdrWidth=0,m_hdrHeight=0;unsigned m_textureUnitLimit=0;
-    struct BlendDraw {MeshHandle mesh;glm::vec3 position,scale,tint;glm::quat rotation;TextureHandle texture;float alpha;std::vector<glm::mat4> skin;std::vector<MaterialBinding> materials;float depth;unsigned layer;};
+    struct BlendDraw {MeshHandle mesh;glm::vec3 position,scale,tint;glm::quat rotation;TextureHandle texture;float alpha;std::vector<glm::mat4> skin;std::vector<MaterialBinding> materials;float depth;unsigned layer;std::vector<std::string> hiddenParts;};
     std::vector<BlendDraw> m_blendDraws;bool m_flushingBlends=false;
     GLuint m_waterPathTexture=0;unsigned m_waterColumns=0,m_waterRows=0;
     GLuint m_shaderProgram = 0;
@@ -419,6 +421,8 @@ private:
     MeshHandle m_sphereMesh;
     TextureHandle m_whiteTexture;  // 1x1 white pixel — the "no real texture" fallback, see DrawMesh
 
+    GLuint m_poseBuffer=0,m_poseTexture=0;
+    void UploadPosePalette(const std::vector<glm::mat4>&);
     GLint m_uModel = -1,m_uSkinned=-1,m_uBones=-1;
     GLint m_uNormalMatrix = -1;
     GLint m_uView = -1;

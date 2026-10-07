@@ -21,3 +21,8 @@ projects/*/Saves/*.judasstate
 
 # Imported meshes are project content, not compiler object files.
 !projects/*/Assets/**/*.obj
+
+# M66 authored OBJ sources/fixtures are models, not compiler outputs.
+!projects/import_lab/Sources/**/*.obj
+!tests/fixtures/m66/**/*.obj
+!tests/fixtures/m66/*.obj

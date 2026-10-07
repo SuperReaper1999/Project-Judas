@@ -1,0 +1,27 @@
+PASS ordinary registered import project
+PASS import lab authored scene parses
+Renderer fragment texture units: 32 (material path uses 12)
+PASS normal GL 3.3 EngineHost
+PASS cold cooked async load and owner-thread GPU publication
+PASS 256-joint resource reaches same GPU architecture
+PASS actual high-index eight-influence GPU skinning moves image by analytic 0.5 metres
+PASS all original parts use sampled full-rig skinning
+PASS all six original material parts can be hidden independently in normal renderer
+PASS normal glTF UV1/mirrored/mask material fixture
+PASS actual GL samples opaque red UV1, not transparent blue UV0, on both reflected parts
+PASS UV1 Mikk tangent-space normal map changes actual lighting
+PASS ordinary RuntimeWorld full rig with socket IK ragdoll and motor
+PASS immutable asset shared, independent resolved poses
+PASS full source hierarchy resolved socket joint access
+PASS full rig masked pose contribution
+PASS full rig two-bone IK uses normalized metre hierarchy
+PASS full multipart character submitted through normal shadows and secondary camera
+PASS secondary camera contains actual rendered content
+PASS full original rig accepts existing explicit 13-body physical subset
+PASS articulation contributes pose to all per-skin bindings
+PASS ragdoll leaves through existing pose transition
+PASS full multipart prefab runtime lifetime
+PERF instances=1 cold_load_upload_ms=3509.8726 pose_median_ms=0.0135 pose_p95_ms=0.0355 GL_complete_median_ms=0.3713 GL_complete_p95_ms=1.4905 GL_max_ms=1.5100 parts_per_instance=6 palette_bytes_per_instance=6976
+PERF instances=10 cold_load_upload_ms=3509.8726 pose_median_ms=0.1449 pose_p95_ms=0.2367 GL_complete_median_ms=2.1681 GL_complete_p95_ms=3.3151 GL_max_ms=4.0445 parts_per_instance=6 palette_bytes_per_instance=6976
+PASS Stop and rebuild release runtime pose and consumer state
+SUMMARY checks=23 failures=0

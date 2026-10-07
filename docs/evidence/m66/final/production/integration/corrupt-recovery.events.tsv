@@ -1,0 +1,61 @@
+sequence	operation	asset	generation	thread	context_current	handle	bytes	path
+1	MeshCreated		0	132106863197888	1	0	2016	
+2	MeshCreated		0	132106863197888	1	1	129024	
+3	TextureCreated		0	132106863197888	1	0	4	
+4	FileReadBegin	000000000000000000000000f7200001	0	132106815801024	0	0	0	/home/conner/Documents/GitHub/Project-Judas/build/ftft2-fixtures/corrupt-recovery/a/Assets/1.obj
+5	FileReadChunk	000000000000000000000000f7200001	0	132106815801024	0	0	1048576	/home/conner/Documents/GitHub/Project-Judas/build/ftft2-fixtures/corrupt-recovery/a/Assets/1.obj
+6	FileReadChunk	000000000000000000000000f7200001	0	132106815801024	0	0	2097152	/home/conner/Documents/GitHub/Project-Judas/build/ftft2-fixtures/corrupt-recovery/a/Assets/1.obj
+7	FileReadChunk	000000000000000000000000f7200001	0	132106815801024	0	0	2355232	/home/conner/Documents/GitHub/Project-Judas/build/ftft2-fixtures/corrupt-recovery/a/Assets/1.obj
+8	FileReadEnd	000000000000000000000000f7200001	0	132106815801024	0	0	2355232	/home/conner/Documents/GitHub/Project-Judas/build/ftft2-fixtures/corrupt-recovery/a/Assets/1.obj
+9	DecodeBegin	000000000000000000000000f7200001	0	132106815801024	0	0	2355232	/home/conner/Documents/GitHub/Project-Judas/build/ftft2-fixtures/corrupt-recovery/a/Assets/1.obj
+10	DecodeEnd	000000000000000000000000f7200001	0	132106815801024	0	0	2355232	/home/conner/Documents/GitHub/Project-Judas/build/ftft2-fixtures/corrupt-recovery/a/Assets/1.obj
+11	LoadComplete	000000000000000000000000f7200001	0	132106815801024	0	0	2355232	/home/conner/Documents/GitHub/Project-Judas/build/ftft2-fixtures/corrupt-recovery/a/Assets/1.obj
+12	MeshCreated		0	132106863197888	1	2	180	
+13	FileReadBegin	000000000000000000000000f7200009	0	132106824193728	0	0	0	/home/conner/Documents/GitHub/Project-Judas/build/ftft2-fixtures/corrupt-recovery/a/Assets/9.obj
+14	FileReadBegin	000000000000000000000000f720000a	0	132106832586432	0	0	0	/home/conner/Documents/GitHub/Project-Judas/build/ftft2-fixtures/corrupt-recovery/a/Assets/10.png
+15	FileReadChunk	000000000000000000000000f7200009	0	132106824193728	0	0	10	/home/conner/Documents/GitHub/Project-Judas/build/ftft2-fixtures/corrupt-recovery/a/Assets/9.obj
+16	FileReadEnd	000000000000000000000000f7200009	0	132106824193728	0	0	10	/home/conner/Documents/GitHub/Project-Judas/build/ftft2-fixtures/corrupt-recovery/a/Assets/9.obj
+17	DecodeBegin	000000000000000000000000f7200009	0	132106824193728	0	0	10	/home/conner/Documents/GitHub/Project-Judas/build/ftft2-fixtures/corrupt-recovery/a/Assets/9.obj
+18	FileReadChunk	000000000000000000000000f720000a	0	132106832586432	0	0	9	/home/conner/Documents/GitHub/Project-Judas/build/ftft2-fixtures/corrupt-recovery/a/Assets/10.png
+19	FileReadEnd	000000000000000000000000f720000a	0	132106832586432	0	0	9	/home/conner/Documents/GitHub/Project-Judas/build/ftft2-fixtures/corrupt-recovery/a/Assets/10.png
+20	DecodeBegin	000000000000000000000000f720000a	0	132106832586432	0	0	9	/home/conner/Documents/GitHub/Project-Judas/build/ftft2-fixtures/corrupt-recovery/a/Assets/10.png
+21	DecodeEnd	000000000000000000000000f7200009	0	132106824193728	0	0	10	/home/conner/Documents/GitHub/Project-Judas/build/ftft2-fixtures/corrupt-recovery/a/Assets/9.obj
+22	LoadComplete	000000000000000000000000f7200009	0	132106824193728	0	0	10	/home/conner/Documents/GitHub/Project-Judas/build/ftft2-fixtures/corrupt-recovery/a/Assets/9.obj
+23	FileReadBegin	000000000000000000000000f720000b	0	132106824193728	0	0	0	/home/conner/Documents/GitHub/Project-Judas/build/ftft2-fixtures/corrupt-recovery/a/Assets/11.obj
+24	DecodeEnd	000000000000000000000000f720000a	0	132106832586432	0	0	9	/home/conner/Documents/GitHub/Project-Judas/build/ftft2-fixtures/corrupt-recovery/a/Assets/10.png
+25	LoadComplete	000000000000000000000000f720000a	0	132106832586432	0	0	9	/home/conner/Documents/GitHub/Project-Judas/build/ftft2-fixtures/corrupt-recovery/a/Assets/10.png
+26	FileReadChunk	000000000000000000000000f720000b	0	132106824193728	0	0	32	/home/conner/Documents/GitHub/Project-Judas/build/ftft2-fixtures/corrupt-recovery/a/Assets/11.obj
+27	FileReadEnd	000000000000000000000000f720000b	0	132106824193728	0	0	32	/home/conner/Documents/GitHub/Project-Judas/build/ftft2-fixtures/corrupt-recovery/a/Assets/11.obj
+28	DecodeBegin	000000000000000000000000f720000b	0	132106824193728	0	0	32	/home/conner/Documents/GitHub/Project-Judas/build/ftft2-fixtures/corrupt-recovery/a/Assets/11.obj
+29	DecodeEnd	000000000000000000000000f720000b	0	132106824193728	0	0	32	/home/conner/Documents/GitHub/Project-Judas/build/ftft2-fixtures/corrupt-recovery/a/Assets/11.obj
+30	LoadComplete	000000000000000000000000f720000b	0	132106824193728	0	0	32	/home/conner/Documents/GitHub/Project-Judas/build/ftft2-fixtures/corrupt-recovery/a/Assets/11.obj
+31	MeshCreated		0	132106863197888	1	3	180	
+32	TextureCreated		0	132106863197888	1	1	4194304	
+33	FileReadBegin	000000000000000000000000f7200009	1	132106766251712	0	0	0	/home/conner/Documents/GitHub/Project-Judas/build/ftft2-fixtures/corrupt-recovery/a/Assets/9.obj
+34	FileReadChunk	000000000000000000000000f7200009	1	132106766251712	0	0	32	/home/conner/Documents/GitHub/Project-Judas/build/ftft2-fixtures/corrupt-recovery/a/Assets/9.obj
+35	FileReadEnd	000000000000000000000000f7200009	1	132106766251712	0	0	32	/home/conner/Documents/GitHub/Project-Judas/build/ftft2-fixtures/corrupt-recovery/a/Assets/9.obj
+36	DecodeBegin	000000000000000000000000f7200009	1	132106766251712	0	0	32	/home/conner/Documents/GitHub/Project-Judas/build/ftft2-fixtures/corrupt-recovery/a/Assets/9.obj
+37	FileReadBegin	000000000000000000000000f720000a	1	132106757859008	0	0	0	/home/conner/Documents/GitHub/Project-Judas/build/ftft2-fixtures/corrupt-recovery/a/Assets/10.png
+38	DecodeEnd	000000000000000000000000f7200009	1	132106766251712	0	0	32	/home/conner/Documents/GitHub/Project-Judas/build/ftft2-fixtures/corrupt-recovery/a/Assets/9.obj
+39	LoadComplete	000000000000000000000000f7200009	1	132106766251712	0	0	32	/home/conner/Documents/GitHub/Project-Judas/build/ftft2-fixtures/corrupt-recovery/a/Assets/9.obj
+40	FileReadChunk	000000000000000000000000f720000a	1	132106757859008	0	0	77	/home/conner/Documents/GitHub/Project-Judas/build/ftft2-fixtures/corrupt-recovery/a/Assets/10.png
+41	FileReadEnd	000000000000000000000000f720000a	1	132106757859008	0	0	77	/home/conner/Documents/GitHub/Project-Judas/build/ftft2-fixtures/corrupt-recovery/a/Assets/10.png
+42	DecodeBegin	000000000000000000000000f720000a	1	132106757859008	0	0	77	/home/conner/Documents/GitHub/Project-Judas/build/ftft2-fixtures/corrupt-recovery/a/Assets/10.png
+43	DecodeEnd	000000000000000000000000f720000a	1	132106757859008	0	0	77	/home/conner/Documents/GitHub/Project-Judas/build/ftft2-fixtures/corrupt-recovery/a/Assets/10.png
+44	MeshCreated		0	132106863197888	1	4	180	
+45	LoadComplete	000000000000000000000000f720000a	1	132106757859008	0	0	77	/home/conner/Documents/GitHub/Project-Judas/build/ftft2-fixtures/corrupt-recovery/a/Assets/10.png
+46	TextureCreated		0	132106863197888	1	2	64	
+47	ManagerShutdownBegin		0	132106863197888	0	0	0	
+48	MeshDestroyed		0	132106863197888	1	2	180	
+49	MeshDestroyed		0	132106863197888	1	4	180	
+50	TextureDestroyed		0	132106863197888	1	2	64	
+51	MeshDestroyed		0	132106863197888	1	3	180	
+52	ManagerShutdownEnd		0	132106863197888	0	0	0	
+53	WorkersJoined		0	132106863197888	1	0	0	
+54	TextureDestroyed		0	132106863197888	1	1	4194304	
+55	RendererShutdownBegin		0	132106863197888	1	0	0	
+56	MeshDestroyed		0	132106863197888	1	0	2016	
+57	MeshDestroyed		0	132106863197888	1	1	129024	
+58	TextureDestroyed		0	132106863197888	1	0	4	
+59	RendererShutdownEnd		0	132106863197888	1	0	0	
+60	ContextDestroyed		0	132106863197888	0	0	0	

@@ -1,0 +1,29 @@
+=== Judas Asset Loading Tests ===
+
+Model: assets/models/beacon.obj loads with real geometry
+  OK   LoadObjMesh succeeds
+  OK   vertex count is non-zero
+  OK   index count is non-zero (imported models are indexed)
+  OK   index count is a whole number of triangles
+  OK   every vertex has a unit-length normal
+  OK   UV data is present (not all zero)
+  OK   vertex count matches beacon.obj's documented 18
+  OK   index count matches beacon.obj's documented 18 (6 triangles)
+Model: a missing file fails intelligibly, not silently
+  OK   LoadObjMesh returns false for a missing file
+  OK   an error message is produced
+  OK   the error message names the offending path
+  OK   no partial/garbage geometry is left in outMesh
+Texture: assets/textures/beacon.png loads with sensible dimensions
+  OK   LoadTextureFromFile succeeds
+  OK   width matches the authored 256px texture
+  OK   height matches the authored 256px texture
+  OK   pixel buffer size matches width * height * 4 channels (always decoded to RGBA)
+  OK   distinct quadrants decode to genuinely different colors
+Texture: a missing file fails intelligibly, not silently
+  OK   LoadTextureFromFile returns false for a missing file
+  OK   an error message is produced
+  OK   the error message names the offending path
+  OK   no partial/garbage pixel data is left in outTexture
+
+ALL TESTS PASSED

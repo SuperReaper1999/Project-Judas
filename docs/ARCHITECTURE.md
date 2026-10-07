@@ -8,8 +8,8 @@ milestones land, rather than kept as a per-milestone snapshot — see
 
 ## Current reference and historical capability overview
 
-Accepted baseline: M64 (`e452751ee98f6c1900a9f6b8dad3fe6bcdecb27b`).
-M64 is the latest completed, human-accepted milestone. M58 Unicode/localization
+Accepted baseline: M65 plus the accepted consumer repairs (`3e5147a4ed97102200da91b4181c97b2a98942ba`).
+M65 is the latest completed, human-accepted milestone. M58 Unicode/localization
 and the later milestones are checkpointed, not awaiting candidate review.
 The earlier M57-baseline/M58-pending wording recorded a previous review state.
 
@@ -29,11 +29,16 @@ deferred quality work are recorded in [FLUID_DEMO.md](FLUID_DEMO.md).
 
 Current implementation limits remain explicit in subsystem references: fixed
 M23 origin (no live rebasing), static-only concave collision, bounded geometric
-queries/solves, query-only motors and local navigation surfaces. Historical
+queries/solves and local navigation surfaces. Motor contact observations now use
+the normal M65 physics event path. Historical
 accounts below retain what was true at their checkpoints; their exclusions do
 not override later completed work. Current JS usage starts at [JUDASJS.md](JUDASJS.md).
 
-**M65 candidate (uncommitted, human review pending):** [developer integration](M65_INTEGRATION.md) adds motor contact events, resolved skeleton consumers/limb IK, island sleeping, runtime physics access and bulk/code-first authoring. The accepted checkpoint above remains the review baseline.
+**M65 accepted:** [developer integration](M65_INTEGRATION.md) adds motor contact events, resolved skeleton consumers/limb IK, island sleeping, runtime physics access and bulk/code-first authoring. See the accepted consumer repair record for the measured follow-ups.
+
+**M66 candidate (uncommitted, human review pending):** the shared
+[model import service](MODEL_IMPORT.md) adds original FBX/multipart content,
+stable reimport, source diagnostics and size-aware eight-weight skinning.
 
 ### Historical foundation through M43 and later legacy-fluid repair notes
 
@@ -9270,7 +9275,7 @@ hull/mixed/open-mesh fluid loading is rejected, not replaced with AABB buoyancy.
 See [M64 coverage, workflow and limitations](M64_COLLISION.md) and
 [JudasJS geometry queries](judasjs/physics.md).
 
-## M65 — developer integration (candidate; human review pending)
+## M65 — developer integration (accepted)
 
 CharacterMotor remains a massless sweep/slide motion primitive. Departure tests
 relative motion against current support separation, not an uphill gravity component.
@@ -9297,3 +9302,28 @@ presentation and UI, including paused captures. Canonical fingerprint schema sta
 new content is conditional, so unchanged legacy content retains its identity.
 See [M65 workflow/limits](M65_INTEGRATION.md), [authoring](CONTENT_AUTHORING.md),
 [harness](TEST_HARNESS.md) and [current proof/closure table](evidence/m65/REPORT.md).
+
+## M66 — source normalization and ordinary model resources (candidate)
+
+Editor and CLI share authoring-only pinned ufbx/cgltf/tinyobj ingestion and
+transactional named recipes. Sources/dependencies normalize once into version-1
+`.judasmodel` assets through the existing AssetDatabase/ResourceManager. The player
+loads cooked data without ufbx. Multiple mesh/skin/material parts retain separate
+bindings under a complete skeleton, with evaluated affine rest data and eight
+weights. Renderer alone owns GL3.3 texture-buffer palette delivery in all passes.
+No source parser, clip, preview or physics subsystem owns the final pose.
+
+Stable hierarchy/part/material keys and content hashes preserve identity on
+compatible reordering. Missing/ambiguous/deleted required bindings stop reimport;
+failed/cancelled staging keeps the accepted generation. Changed source forbids
+stale export; modern saved-world compatibility follows ordinary content identity.
+Selected clip root motion is queryable data, never automatic entity movement.
+Collision sources remain separate; diagnostics retain real source geometry, and
+explicit derived cleanup reruns strict validation.
+
+Streaming can suspend ordinary animated regions through the existing instance
+pose serializer; active articulations/return transitions remain pinned. Only
+retained animation records require streaming participant version 3; older records
+remain readable. Canonical fingerprint schema remains 5. See [model import](MODEL_IMPORT.md) for actual bounds, recipes, shader/material approximations,
+source rights and unsupported deformations, and [M66 evidence](evidence/m66/REPORT.md)
+for the candidate's numerical, actual-GL and lifecycle results.

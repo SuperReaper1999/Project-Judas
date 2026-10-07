@@ -1,0 +1,87 @@
+{
+  "format": "JudasImport",
+  "version": 1,
+  "assetId": "d15b628722311f90a9146c4d51e12ce2",
+  "source": "Sources/original/Skateboarder.fbx",
+  "output": "Assets/models/skate_original.judasmodel",
+  "settings": {
+    "unitMeters": 0,
+    "sampleRate": 60,
+    "allowBaseMesh": false,
+    "dependencyRemaps": {}
+  },
+  "motions": [
+    {
+      "source": "Sources/original/SkateboardingPush.fbx",
+      "take": "mixamo.com",
+      "name": "PushSource",
+      "jointRemaps": {}
+    },
+    {
+      "source": "Sources/original/SkateboardingCruise.fbx",
+      "take": "mixamo.com",
+      "name": "CruiseSource",
+      "jointRemaps": {}
+    },
+    {
+      "source": "Sources/original/Walking.fbx",
+      "take": "mixamo.com",
+      "name": "WalkingSource",
+      "jointRemaps": {}
+    }
+  ],
+  "clips": [
+    {
+      "sourceClip": "PushSource",
+      "name": "Push",
+      "loop": true,
+      "rootMotion": {
+        "policy": "preserve"
+      }
+    },
+    {
+      "sourceClip": "CruiseSource",
+      "name": "Cruise",
+      "loop": true,
+      "rootMotion": {
+        "policy": "preserve"
+      }
+    },
+    {
+      "sourceClip": "WalkingSource",
+      "name": "Walking",
+      "loop": true,
+      "rootMotion": {
+        "policy": "preserve"
+      }
+    },
+    {
+      "sourceClip": "WalkingSource",
+      "name": "WalkingExtract",
+      "loop": true,
+      "rootMotion": {
+        "policy": "extract",
+        "node": "__root/mixamorig:Hips",
+        "translation": [
+          true,
+          false,
+          true
+        ]
+      }
+    },
+    {
+      "sourceClip": "PushSource",
+      "name": "PushInPlace",
+      "loop": true,
+      "rootMotion": {
+        "policy": "inPlace",
+        "node": "__root/mixamorig:Hips",
+        "translation": [
+          true,
+          false,
+          true
+        ]
+      }
+    }
+  ]
+}

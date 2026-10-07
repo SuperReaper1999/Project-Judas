@@ -1,0 +1,20 @@
+First-person eye follows player-local up and look
+  OK   eye offset is transformed by the arbitrary player orientation
+  OK   camera eye and existing torch origin coincide
+  OK   camera look and existing torch direction coincide
+Third-person compatibility and presentation-only switching
+  OK   third-person camera retains its prior follow and height offsets
+  OK   gameplay view request selects first person
+  OK   first-person camera is at the player eye, without changing its pose input
+  OK   second gameplay request restores third person
+  OK   switching back restores the same camera transform from unchanged player inputs
+  OK   switching views does not alter look direction
+First-person camera rotate-the-universe equivalence
+  OK   rotating the universe rotates the eye position identically
+  OK   rotating the universe rotates the camera look direction identically
+  OK   rotating the universe rotates camera up identically
+View-toggle input ownership
+  OK   a view-toggle request while a menu owns input has no effect
+  OK   closing a menu without a fresh request cannot cause a stale toggle
+
+ALL TESTS PASSED

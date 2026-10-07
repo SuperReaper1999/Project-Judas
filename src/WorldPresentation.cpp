@@ -56,7 +56,7 @@ void DrawMeshOrPlaceholder(Renderer& r, ResourceManager* resources, const SceneR
     const MeshHandle mesh = resources ? resources->TryGetMesh(render.meshAsset) : MeshHandle{};
     if (mesh.IsValid()) {
         const TextureHandle texture = render.textureCamera ? generated : (resources ? resources->TryGetTexture(render.textureAsset) : TextureHandle{});
-        r.DrawMesh(mesh, position, rotation, scale, texture, render.color, alpha,skin);
+        r.DrawMesh(mesh, position, rotation, scale, texture, render.color, alpha,skin,&render.hiddenParts);
         return;
     }
     if (!resources) return;  // headless: nothing to draw

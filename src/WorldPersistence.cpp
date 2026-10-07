@@ -10,7 +10,7 @@
 namespace {
 void transform(SaveArchive& a,SceneTransform& t){a(t.position,t.rotation,t.scale);}
 void physical(SaveArchive& a,EntityPhysicalState& s){a(s.position,s.rotation,s.linearVelocity,s.angularVelocity);}
-void pose(SaveArchive& a,SkeletalPose& p){uint32_t n=uint32_t(p.local.size());a(n);a.Require(n<=1024,"saved pose joint limit");if(a.reading)p.local.resize(n);for(auto& t:p.local)a(t.translation,t.rotation,t.scale);}
+void pose(SaveArchive& a,SkeletalPose& p){uint32_t n=uint32_t(p.local.size());a(n);a.Require(n<=kModelNodeLimit,"saved pose joint limit");if(a.reading)p.local.resize(n);for(auto& t:p.local)a(t.translation,t.rotation,t.scale);}
 void playback(SaveArchive& a,AnimationPlayback& p){a(p.clip,p.playing,p.loop,p.stopped,p.speed,p.time);a.Require(p.time>=0,"negative saved animation time");}
 void contribution(SaveArchive& a,PoseContribution& c,const Skeleton& s){pose(a,c.pose);pose(a,c.reference);a(c.weight,c.enabled,c.additive,c.order);std::vector<std::string> keys;if(!a.reading)for(int n:c.mask)keys.push_back(SkeletonJointKey(s,n));a(keys);if(a.reading){std::string e;a.Require(ResolveJointMask(s,keys,c.mask,e),"saved joint mask invalid");a.Require(ValidPose(s,c.pose,e),"saved contribution pose invalid");if(!c.reference.local.empty())a.Require(ValidPose(s,c.reference,e),"saved reference pose invalid");}a.Require(c.weight>=0&&c.weight<=1,"saved pose weight invalid");}
 void layerSettings(SaveArchive& a,AnimationLayerSettings& s){a(s.id,s.clip,s.referenceClip,s.enabled,s.additive,s.weight,s.speed,s.time,s.referenceTime,s.mask);std::string error;a.Require(ValidAnimationLayers({s},error),"invalid saved animation layer");}
@@ -61,11 +61,10 @@ void WorldPersistence::Motors(RuntimeWorld& w,SaveArchive& a){
   if(a.reading){motor->result.support=support?w.RuntimeBody(support):BodyHandle{};a.Require(!support||motor->result.support.IsValid(),"missing required support body");motor->filter.ignoredBodies.clear();for(auto e:ignored){auto body=w.RuntimeBody(e);a.Require(body.IsValid(),"missing ignored body reference");motor->filter.ignoredBodies.push_back(body);}auto& p=w.m_characters.at(id).previous;p.position=motor->position;p.rotation=motor->orientation;}
  }
 }
-void WorldPersistence::Animation(RuntimeWorld& w,SaveArchive& a){
- auto n=count(a,w.m_animationInstances.size());a.Require(n==w.m_animationInstances.size(),"incomplete skeletal records");std::set<EntityId> seen;
- for(uint32_t i=0;i<n;++i){EntityId id=0;RuntimeWorld::AnimationInstance* instance=nullptr;
-  if(!a.reading){auto it=w.m_animationInstances.begin();std::advance(it,i);id=it->first;instance=&it->second;}
-  a(id);if(a.reading)instance=w.RuntimeAnimation(id);a.Require(instance&&instance->asset&&seen.insert(id).second,"missing/duplicate skeletal participant");auto& v=*instance;const auto& skeleton=v.asset->skeleton;auto validClip=[&](const std::string& clip){return clip.empty()||std::any_of(v.asset->clips.begin(),v.asset->clips.end(),[&](const auto& c){return c.name==clip;});};
+// Identical instance payload for durable saves and bounded region suspension.
+void WorldPersistence::InstanceAnimation(RuntimeWorld& w,EntityId id,SaveArchive& a){
+ auto* instance=w.RuntimeAnimation(id);a.Require(instance&&instance->asset,"animation asset not ready");
+ auto& v=*instance;const auto& skeleton=v.asset->skeleton;auto validClip=[&](const std::string& clip){return clip.empty()||std::any_of(v.asset->clips.begin(),v.asset->clips.end(),[&](const auto& c){return c.name==clip;});};
   playback(a,v.playback);a.Require(v.playback.clip.empty()||std::any_of(v.asset->clips.begin(),v.asset->clips.end(),[&](const auto& c){return c.name==v.playback.clip;}),"saved clip unavailable");a(v.mixer.elapsed,v.mixer.duration,v.mixer.paused);a.Require(v.mixer.elapsed>=0&&v.mixer.duration>=0,"invalid saved mixer time");auto sources=count(a,v.mixer.outgoing.size(),16);if(a.reading)v.mixer.outgoing.resize(sources);for(auto& source:v.mixer.outgoing){playback(a,source.playback);a.Require(validClip(source.playback.clip),"saved outgoing clip unavailable");a(source.weight);a.Require(source.weight>=0&&source.weight<=1,"invalid saved mixer weight");}
   auto layers=count(a,v.layers.size(),16);std::vector<RuntimeWorld::AnimationLayer> restored;
   for(uint32_t l=0;l<layers;++l){RuntimeWorld::AnimationLayer layer;if(!a.reading)layer=v.layers.at(l);layerSettings(a,layer.settings);playback(a,layer.playback);a.Require(validClip(layer.playback.clip)&&validClip(layer.settings.referenceClip),"saved layer clip unavailable");std::vector<std::string> mask;if(!a.reading)for(auto index:layer.mask)mask.push_back(SkeletonJointKey(skeleton,index));a(mask);if(a.reading){std::string e;a.Require(ResolveJointMask(skeleton,mask,layer.mask,e),"saved layer mask invalid");}pose(a,layer.reference);std::string e;a.Require(layer.reference.local.empty()||ValidPose(skeleton,layer.reference,e),"invalid saved layer reference pose");a.Require(std::none_of(restored.begin(),restored.end(),[&](const auto& v){return v.settings.id==layer.settings.id;}),"duplicate saved layer");restored.push_back(std::move(layer));}
@@ -74,6 +73,20 @@ void WorldPersistence::Animation(RuntimeWorld& w,SaveArchive& a){
   auto external=count(a,v.external.size(),16);std::map<std::string,PoseContribution> contributions;
   for(uint32_t j=0;j<external;++j){std::string key;PoseContribution c;if(!a.reading){auto it=v.external.begin();std::advance(it,j);key=it->first;c=it->second;}a(key);contribution(a,c,skeleton);a.Require(contributions.emplace(key,std::move(c)).second,"duplicate pose producer");}
   if(a.reading){v.external=std::move(contributions);v.skin=ResolveSkinMatrices(skeleton,v.finalPose);v.previousWorld.clear();v.recentWorld.clear();v.motionDt=0;}
+}
+bool WorldPersistence::CanSuspendAnimation(RuntimeWorld& w,EntityId id){return !w.RagdollActive(id)&&!w.m_ragdollReturns.count(id);}
+bool WorldPersistence::CaptureAnimation(RuntimeWorld& w,EntityId id,std::string& bytes,std::string& error){try{SaveArchive a;InstanceAnimation(w,id,a);a.Require(a.bytes.size()<=1024*1024,"region animation snapshot exceeds 1 MiB");bytes=std::move(a.bytes);return true;}catch(const std::exception& e){error=e.what();return false;}}
+bool WorldPersistence::RestoreAnimation(RuntimeWorld& w,EntityId id,const std::string& bytes,std::string& error){
+ // Private staged entities are exposed only to this owner-thread native fixup.
+ // No simulation, callback or publication occurs in this lookup scope.
+ bool pending=w.m_regionPending.erase(id)!=0;
+ try{SaveArchive a(bytes);InstanceAnimation(w,id,a);a.Finish();if(pending)w.m_regionPending.insert(id);return true;}catch(const std::exception& e){if(pending)w.m_regionPending.insert(id);error=e.what();return false;}
+}
+void WorldPersistence::Animation(RuntimeWorld& w,SaveArchive& a){
+ auto n=count(a,w.m_animationInstances.size());a.Require(n==w.m_animationInstances.size(),"incomplete skeletal records");std::set<EntityId> seen;
+ for(uint32_t i=0;i<n;++i){EntityId id=0;RuntimeWorld::AnimationInstance* instance=nullptr;
+  if(!a.reading){auto it=w.m_animationInstances.begin();std::advance(it,i);id=it->first;instance=&it->second;}
+  a(id);if(a.reading)instance=w.RuntimeAnimation(id);a.Require(instance&&instance->asset&&seen.insert(id).second,"missing/duplicate skeletal participant");InstanceAnimation(w,id,a);
  }
  a(w.m_ragdollAutostarted);auto returning=count(a,w.m_ragdollReturns.size());std::map<EntityId,RuntimeWorld::RagdollReturn> returns;
  for(uint32_t i=0;i<returning;++i){EntityId id=0;RuntimeWorld::RagdollReturn r;if(!a.reading){auto it=w.m_ragdollReturns.begin();std::advance(it,i);id=it->first;r=it->second;}a(id,r.elapsed,r.duration);a.Require(r.duration>0&&r.elapsed>=0&&r.elapsed<=r.duration,"invalid saved articulation transition");a.Require(w.RuntimeAnimation(id)&&returns.emplace(id,r).second,"missing/duplicate articulation return");}if(a.reading)w.m_ragdollReturns=std::move(returns);

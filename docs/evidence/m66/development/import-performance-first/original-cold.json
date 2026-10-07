@@ -1,0 +1,35 @@
+{
+  "assetId": "d15b628722311f90a9146c4d51e12ce2",
+  "diagnostics": [
+    {
+      "action": "Choose a project mask material if authored cutout is intended",
+      "code": "opacity-conversion",
+      "face": -1,
+      "message": "Source opacity is packed into base colour alpha; blend is the explicit approximation",
+      "node": "Ch42_Hair",
+      "severity": "warning",
+      "source": "/home/conner/Documents/GitHub/Project-Judas/.cache/m66-import-performance/Sources/original/Skateboarder.fbx",
+      "vertex": -1
+    },
+    {
+      "action": "Remap material slots for unsupported appearance",
+      "code": "fbx-material-approximation",
+      "face": -1,
+      "message": "FBX factors/maps converted to Judas metallic/roughness; source shader graphs are not reproduced",
+      "node": "",
+      "severity": "warning",
+      "source": "/home/conner/Documents/GitHub/Project-Judas/.cache/m66-import-performance/Sources/original/Skateboarder.fbx",
+      "vertex": -1
+    }
+  ],
+  "error": "",
+  "hierarchyNodes": 72,
+  "output": "/home/conner/Documents/GitHub/Project-Judas/.cache/m66-import-performance/Assets/models/skate_original.judasmodel",
+  "paletteEntries": 109,
+  "parts": 6,
+  "sourceBones": 65,
+  "sourceUnitMeters": 0.01,
+  "success": true,
+  "unchanged": false,
+  "vertices": 150561
+}

@@ -1,0 +1,16 @@
+Renderer fragment texture units: 32 (material path uses 12)
+World state: disk saves disabled for additive compositions
+Project: M66 Import Lab (/home/conner/Documents/GitHub/Project-Judas/projects/import_lab/import_lab.judasproj)
+Scene: M66 original rig — G clips, J mask, K additive, I IK, F ragdoll, B root intent (/home/conner/Documents/GitHub/Project-Judas/projects/import_lab/Scenes/main.judas)
+World origin (m): 0.000, 0.000, 0.000
+PASS normal app loads complete original hierarchy plus root-track helper
+PASS normal app shares immutable asset with independent instances
+PASS modern slot request
+PASS fresh process restores imported clip time at safe boundary
+PASS fresh process restores part visibility and mixer layers
+PASS fresh process restores full-rig physical subset
+PASS cold restored socket resolves stable original joint
+PASS fresh process reactivates retired full-rig pose/mixer snapshot exactly
+PASS restore lifecycle binds UI without resetting saved motor/mixer
+PASS ordinary project process startup/lifecycle/shutdown
+SUMMARY mode=stream-read checks=10 failures=0 frames=1510

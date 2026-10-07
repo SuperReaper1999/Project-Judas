@@ -1,0 +1,28 @@
+Renderer fragment texture units: 32 (material path uses 12)
+World state: /home/conner/Documents/GitHub/Project-Judas/projects/save_lab/Saves/lab.judasstate (none saved)
+Project: Judas Save / Load State Lab (/home/conner/Documents/GitHub/Project-Judas/projects/save_lab/save_lab.judasproj)
+Scene: Save Lab / waves, cup, poses and music (/home/conner/Documents/GitHub/Project-Judas/projects/save_lab/Scenes/lab.judas)
+World origin (m): 1000000000000.000, -2000000000000.000, 3000000000000.000
+IDLE service_ns=5.26700 entities=56 bodies=41 owners=0
+SAMPLE save capture=12.457237 worker=11.195109 restore=0.000000 frame=3.773207 bytes=82870 entities=56 bodies=42 owners=9 rss=0
+SAMPLE load capture=0.000000 worker=3.439852 restore=27.211782 frame=6.864098 bytes=82870 entities=56 bodies=42 owners=9 rss=0
+FIRST_RESUME frame_ms=36.855844 entities=56 bodies=42 owners=9 voices=1 jobs=1
+SAMPLE save capture=1.624256 worker=12.349817 restore=0.000000 frame=3.832573 bytes=89203 entities=56 bodies=42 owners=9 rss=0
+SAMPLE load capture=0.000000 worker=2.110588 restore=54.303807 frame=9.456856 bytes=89203 entities=56 bodies=42 owners=9 rss=0
+FIRST_RESUME frame_ms=7.192034 entities=56 bodies=42 owners=9 voices=1 jobs=1
+SAMPLE save capture=1.675796 worker=11.326020 restore=0.000000 frame=4.699020 bytes=89203 entities=56 bodies=42 owners=9 rss=0
+SAMPLE load capture=0.000000 worker=2.006329 restore=52.136547 frame=9.854872 bytes=89203 entities=56 bodies=42 owners=9 rss=0
+FIRST_RESUME frame_ms=7.735002 entities=56 bodies=42 owners=9 voices=1 jobs=1
+SAMPLE save capture=1.726365 worker=11.568665 restore=0.000000 frame=5.690181 bytes=89206 entities=56 bodies=42 owners=9 rss=0
+SAMPLE load capture=0.000000 worker=3.294523 restore=50.395261 frame=10.141358 bytes=89206 entities=56 bodies=42 owners=9 rss=0
+FIRST_RESUME frame_ms=7.259127 entities=56 bodies=42 owners=9 voices=1 jobs=1
+SAMPLE save capture=1.691885 worker=15.421911 restore=0.000000 frame=5.330628 bytes=89206 entities=56 bodies=42 owners=9 rss=0
+SAMPLE load capture=0.000000 worker=1.995952 restore=83.473836 frame=14.473991 bytes=89206 entities=56 bodies=42 owners=9 rss=0
+FIRST_RESUME frame_ms=10.174707 entities=56 bodies=42 owners=9 voices=1 jobs=1
+SAMPLE save capture=2.871043 worker=11.810176 restore=0.000000 frame=6.701101 bytes=89206 entities=56 bodies=42 owners=9 rss=0
+SAMPLE load capture=0.000000 worker=2.868937 restore=82.770235 frame=15.060381 bytes=89206 entities=56 bodies=42 owners=9 rss=0
+FIRST_RESUME frame_ms=11.013450 entities=56 bodies=42 owners=9 voices=1 jobs=1
+SAMPLE save capture=1.634735 worker=13.768865 restore=0.000000 frame=4.752961 bytes=89264 entities=56 bodies=42 owners=9 rss=0
+SAMPLE load capture=0.000000 worker=2.026121 restore=52.080221 frame=10.422637 bytes=89264 entities=56 bodies=42 owners=9 rss=0
+FIRST_RESUME frame_ms=7.943457 entities=56 bodies=42 owners=9 voices=1 jobs=1
+PASS seven save/load cycles complete with bounded native counts

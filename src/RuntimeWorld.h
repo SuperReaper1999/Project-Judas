@@ -307,6 +307,7 @@ public:
     const SceneObject* RuntimeDefinition(EntityId id) const;
     bool SetRuntimeTransform(EntityId id,const SceneTransform& transform);
     bool SetMaterialSlot(EntityId,unsigned,const MaterialSlot&);
+    bool SetModelPartVisible(EntityId,const std::string&,bool);
     bool SetAppearance(const SceneSettings&);
     BodyHandle RuntimeBody(EntityId id) const;
     JointHandle RuntimeJoint(EntityId owner);

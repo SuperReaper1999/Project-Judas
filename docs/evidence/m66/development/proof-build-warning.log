@@ -1,0 +1,23 @@
+[  5%] Built target judas_icu_build
+[ 11%] Built target judas_app_icon
+[ 11%] Built target judas_quickjs
+[ 27%] Built target freetype
+[ 27%] Built target judas_glad
+[ 33%] Built target judas_navigation_backend
+[ 33%] Built target judas_profiler
+[ 33%] Built target judas_audio_backend
+[ 33%] Built target judas_materials
+[ 33%] Built target judas_ufbx
+[ 33%] Built target harfbuzz
+[ 94%] Built target judas_engine
+[ 94%] Built target judas_model_import
+[100%] Building CXX object CMakeFiles/judas_model_reimport_tests.dir/tests/ModelReimportTests.cpp.o
+/home/conner/Documents/GitHub/Project-Judas/tests/ModelReimportTests.cpp: In function ‘int main(int, char**)’:
+/home/conner/Documents/GitHub/Project-Judas/tests/ModelReimportTests.cpp:64:2: warning: this ‘if’ clause does not guard... [-Wmisleading-indentation]
+   64 |  if(!Cook(turnRecipe,turnCook))throw std::runtime_error(turnCook.error);MeshData turning;if(!LoadModelMesh(turnCook.output,turning,error))throw std::runtime_error(error);
+      |  ^~
+/home/conner/Documents/GitHub/Project-Judas/tests/ModelReimportTests.cpp:64:73: note: ...this statement, but the latter is misleadingly indented as if it were guarded by the ‘if’
+   64 |  if(!Cook(turnRecipe,turnCook))throw std::runtime_error(turnCook.error);MeshData turning;if(!LoadModelMesh(turnCook.output,turning,error))throw std::runtime_error(error);
+      |                                                                         ^~~~~~~~
+[100%] Linking CXX executable judas_model_reimport_tests
+[100%] Built target judas_model_reimport_tests

@@ -22,11 +22,15 @@ SkeletalPose SampleClip(const Skeleton& skeleton,const AnimationClip& clip,float
  }
  return pose;
 }
-std::vector<glm::mat4> ResolveSkinMatrices(const Skeleton& s,const SkeletalPose& pose){
+std::vector<glm::mat4> ResolveJointMatrices(const Skeleton& s,const SkeletalPose& pose){
  JUDAS_PROFILE_SCOPE("Pose skin matrices");
  if(pose.local.size()!=s.parents.size())throw std::invalid_argument("pose does not match skeleton");
  std::vector<glm::mat4> global(pose.local.size());
- for(int i:s.order){const auto& p=pose.local[i];auto local=glm::translate(glm::mat4(1),p.translation)*glm::mat4_cast(p.rotation)*glm::scale(glm::mat4(1),p.scale);global[i]=s.parents[i]<0?local:global[s.parents[i]]*local;}
+ for(int i:s.order){const auto& p=pose.local[i];auto local=glm::translate(glm::mat4(1),p.translation)*glm::mat4_cast(p.rotation)*glm::scale(glm::mat4(1),p.scale);if(!s.affine.empty())local=s.affine.at(i)*local;global[i]=s.parents[i]<0?local:global[s.parents[i]]*local;}
+ return global;
+}
+std::vector<glm::mat4> ResolveSkinMatrices(const Skeleton& s,const SkeletalPose& pose){
+ auto global=ResolveJointMatrices(s,pose);
  std::vector<glm::mat4> skin;skin.reserve(s.skinNodes.size());for(size_t i=0;i<s.skinNodes.size();++i)skin.push_back(global[s.skinNodes[i]]*s.inverseBind[i]);return skin;
 }
 SkeletalPose AnimationPlayback::Evaluate(const SkeletalAsset& asset,float dt){
@@ -40,3 +44,20 @@ SkeletalPose AnimationPlayback::Evaluate(const SkeletalAsset& asset,float dt){
 }
 SkeletalPose AnimationPlayback::Seek(const SkeletalAsset& a,float seconds){stopped=false;time=seconds;return Evaluate(a,0);}
 SkeletalPose AnimationPlayback::Stop(const SkeletalAsset& a){playing=false;stopped=true;time=0;return a.skeleton.rest;}
+
+namespace {
+JointTransform ComposeMotion(const JointTransform& a,const JointTransform& b){JointTransform c;c.translation=a.translation+a.rotation*b.translation;c.rotation=glm::normalize(a.rotation*b.rotation);return c;}
+JointTransform InvertMotion(const JointTransform& a){JointTransform b;b.rotation=glm::inverse(a.rotation);b.translation=-(b.rotation*a.translation);return b;}
+JointTransform PowerMotion(JointTransform base,long long n){if(n<0){base=InvertMotion(base);n=-n;}JointTransform result;while(n){if(n&1)result=ComposeMotion(result,base);base=ComposeMotion(base,base);n>>=1;}return result;}
+}
+JointTransform SampleRootMotion(const AnimationClip& c,double time,bool loop){
+ if(!std::isfinite(time)||std::abs(time)>1e9)throw std::invalid_argument("root motion time must be finite and bounded");
+ if(c.motion.empty())return {};
+ double cycle=loop&&c.duration>0?std::floor(time/c.duration):0;
+ if(std::abs(cycle)>1000000)throw std::invalid_argument("root motion cycle bound");
+ double phase=loop?time-cycle*c.duration:std::clamp(time,0.0,double(c.duration));
+ auto upper=std::upper_bound(c.motionTimes.begin(),c.motionTimes.end(),float(phase));size_t a=upper==c.motionTimes.begin()?0:size_t(upper-c.motionTimes.begin()-1),b=std::min(a+1,c.motion.size()-1);
+ float span=c.motionTimes[b]-c.motionTimes[a];float t=span>0?std::clamp(float((phase-c.motionTimes[a])/span),0.f,1.f):0;
+ JointTransform sampled;sampled.translation=glm::mix(c.motion[a].translation,c.motion[b].translation,t);sampled.rotation=glm::normalize(glm::slerp(c.motion[a].rotation,c.motion[b].rotation,t));return ComposeMotion(PowerMotion(c.motion.back(),static_cast<long long>(cycle)),sampled);
+}
+JointTransform RootMotionInterval(const AnimationClip& c,double from,double to,bool loop){return ComposeMotion(InvertMotion(SampleRootMotion(c,from,loop)),SampleRootMotion(c,to,loop));}

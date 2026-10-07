@@ -1,0 +1,45 @@
+Renderer fragment texture units: 32 (material path uses 12)
+PASS material round trip
+PASS invalid parameter rejected
+PASS isolated instance override
+PASS revert returns source
+PASS slot overrides round trip
+PASS actual OpenGL host
+GPU Mesa / llvmpipe (LLVM 21.1.8, 256 bits)
+FAIL linear .214 -> Reinhard -> sRGB known output
+PASS mirrored nonuniform instance keeps correct face orientation
+PASS exposure changes world output
+PASS sRGB image decoded exactly once
+FAIL sRGB filtering/mipmaps average in linear light
+PIXEL masked 77 81 89
+PASS alpha cutout discards actual fragments
+PIXEL metal 77 die 77
+FAIL metallic changes actual GPU response at controlled roughness
+FAIL roughness changes GPU specular response
+FAIL tangent normal map affects actual direct light
+PASS baked HDR environment loads
+PASS invalid environment write preserves existing asset
+FAIL roughness selects prefiltered environment mip
+FAIL environment authored orientation changes reflection
+FAIL ordinary Render texture slot also filters sRGB in linear light
+FAIL maximum material emission stays finite in HDR and output
+PASS MR G/B channels sample raw linear values, not sRGB
+PASS occlusion does not darken direct light or emission
+PASS display UI remains independent of world exposure
+FAIL cutout shadow silhouette uses actual alpha discard
+PASS blended material has no depth writes
+PASS scene-linear secondary target allocates
+FAIL secondary readback is linear and excludes exposure
+FAIL camera material screen receives one tone/output conversion
+PASS modern camera self-feedback is rejected
+PASS modern target resize retains ordinary API
+FAIL missing material uses explicit magenta GPU fallback
+FAIL pending material uses neutral GPU fallback
+PASS Mikk tangents follow actual UV basis
+PASS mirrored UV changes tangent handedness
+PASS degenerate UV fallback remains finite
+PASS normal-map skinned fixture import
+PASS actual rotated/nonuniform skinned normal-map path changes lighting
+PASS moving skin palette deforms normal-mapped geometry
+FAIL normal GL3.3 material path produces no GL errors
+M57 40 checks 15 failures

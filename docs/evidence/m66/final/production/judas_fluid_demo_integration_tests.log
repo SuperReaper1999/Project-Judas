@@ -1,0 +1,29 @@
+pool cup_solid_partitions=5 cup_volume_samples=320
+pool entry immersion=0.0690818 position=0.867199
+pool exit immersion=0 z=5.32657
+pool prop heights float=1.64578 sink=0.399975
+pool acquired=6
+pool carried=6 same=6
+pool transient_peak phase=pour step=1689 speed=40.412 distance=86.992 physical_escape=0
+pool transient_peak phase=pour step=1692 speed=40.9022 distance=88.9626 physical_escape=0
+pool transient_peak phase=pour step=1695 speed=41.3924 distance=90.9597 physical_escape=0
+pool transient_peak phase=pour step=1698 speed=41.8825 distance=92.9832 physical_escape=0
+pool transient_peak phase=pour step=1701 speed=42.3727 distance=95.033 physical_escape=0
+pool transient_peak phase=pour step=1704 speed=42.863 distance=97.109 physical_escape=0
+pool transient_peak phase=pour step=1707 speed=43.3532 distance=99.2112 physical_escape=0
+pool transient_peak phase=pour step=1710 speed=43.68 distance=101.337 physical_escape=0
+pool remaining=0
+pool final_farthest_from_basin=152.889 final_max_particle_speed=43.68
+pool maximum_particle_speed=43.68 initial_mass=104357 final_mass=104357
+planet cup_solid_partitions=5 cup_volume_samples=320
+planet entry immersion=0.0445344 position=0.758579
+planet exit immersion=0 z=4.33293
+planet prop heights float=1.43894 sink=0.419109
+planet transient_peak phase=dip step=726 speed=42.1157 distance=1.06146 physical_escape=0
+planet transient_peak phase=dip step=726 speed=52.6708 distance=1.75738 physical_escape=0
+planet acquired=7
+planet carried=7 same=7
+planet remaining=0
+planet final_farthest_from_basin=4.52774 final_max_particle_speed=16.2829
+planet maximum_particle_speed=52.6708 initial_mass=104357 final_mass=104357
+SUMMARY checks=49 failures=0

@@ -154,6 +154,7 @@ add_library(judas_engine STATIC
     src/CollisionAuthoring.cpp
     src/CollisionSource.cpp
     src/ModelLoader.cpp
+    src/ModelArchive.cpp
     src/FontLoader.cpp
     src/UIWidgets.cpp
     src/PauseMenu.cpp
@@ -265,7 +266,7 @@ add_executable(judas_editor
     src/editor/ComponentEditors.cpp
     src/editor/GizmoMath.cpp
 )
-target_link_libraries(judas_editor PRIVATE judas_engine judas_imgui judas_navigation_baker)
+target_link_libraries(judas_editor PRIVATE judas_engine judas_imgui judas_navigation_baker judas_model_import)
 target_compile_options(judas_editor PRIVATE -Wall -Wextra)
 
 # Milestone 30: the scene authoring tool that writes the shipped demonstration
@@ -1305,3 +1306,26 @@ add_executable(judas_post_consumer_metadata_tests tests/PostConsumerMetadataTest
 target_link_libraries(judas_post_consumer_metadata_tests PRIVATE judas_engine)
 add_executable(judas_post_consumer_ragdoll_tests tests/PostConsumerRagdollTests.cpp)
 target_link_libraries(judas_post_consumer_ragdoll_tests PRIVATE judas_engine)
+
+# M66 source import is authoring-only; shipped runtime reads normalized models.
+add_library(judas_ufbx STATIC third_party/ufbx/ufbx.c)
+target_include_directories(judas_ufbx PUBLIC third_party/ufbx)
+add_library(judas_model_import STATIC src/FbxImport.cpp src/ObjImport.cpp src/ModelCook.cpp src/ModelCollision.cpp)
+target_link_libraries(judas_model_import PUBLIC judas_engine judas_ufbx)
+target_compile_options(judas_model_import PRIVATE -Wall -Wextra)
+add_executable(judas_model_import_cli tools/ModelImportCli.cpp)
+target_link_libraries(judas_model_import_cli PRIVATE judas_model_import)
+add_executable(judas_model_import_tests tests/ModelImportTests.cpp)
+target_link_libraries(judas_model_import_tests PRIVATE judas_model_import)
+target_compile_options(judas_model_import_tests PRIVATE -Wall -Wextra)
+
+add_executable(judas_model_reimport_tests tests/ModelReimportTests.cpp)
+target_link_libraries(judas_model_reimport_tests PRIVATE judas_model_import)
+target_compile_options(judas_model_reimport_tests PRIVATE -Wall -Wextra)
+
+add_executable(judas_model_runtime_tests tests/ModelRuntimeTests.cpp)
+target_link_libraries(judas_model_runtime_tests PRIVATE judas_engine)
+
+add_executable(judas_model_application_tests tests/ModelApplicationTests.cpp src/Application.cpp src/RuntimeOptions.cpp src/RuntimeDiagnostics.cpp src/TestHarness.cpp)
+target_link_libraries(judas_model_application_tests PRIVATE judas_engine)
+target_compile_options(judas_model_application_tests PRIVATE -Wall -Wextra)

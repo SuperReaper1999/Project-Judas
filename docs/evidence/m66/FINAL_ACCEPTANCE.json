@@ -1,0 +1,143 @@
+{
+  "startingHead": "3e5147a4ed97102200da91b4181c97b2a98942ba",
+  "candidateHumanAcceptance": "PENDING",
+  "broadGate": {
+    "discoveredProductionTargets": 143,
+    "passedFirstRun": 141,
+    "nonpassingFirstRun": [
+      "judas_save_storage_tests",
+      "judas_model_import_tests"
+    ],
+    "rawOverallPassPreserved": false,
+    "cleanReleaseWarnings": 0,
+    "actualAsyncCases": 12,
+    "actualAsyncChecks": 246,
+    "actualAsyncFailures": 0,
+    "checks": {
+      "integration_all_12_cases": true,
+      "editor_play_stop_async": true,
+      "blocking_reference_three_steps": true,
+      "tested_sources_unchanged_during_run": true,
+      "protected_paths_unchanged": true
+    },
+    "evidence": "final/production/results.json"
+  },
+  "lateCorrectionScope": [
+    "orthogonal degenerate-UV tangent and derived cook revision 9",
+    "glTF explicit dependency remaps and missing-input retry, matching FBX/OBJ authoring semantics",
+    "source-identity alias and selected twist/pivot proofs",
+    "export diagnostic evaluation order",
+    "test adapter m61-storage basename",
+    "new lab-only pause focus/opening-edge handling",
+    "test-only explicit metre/radian motion tolerances; final 30-check numerical rerun, no runtime/package changes"
+  ],
+  "affectedFinalChecks": {
+    "numerical": {
+      "checks": 30,
+      "failures": 0,
+      "evidence": "followup/numerical-units.log"
+    },
+    "reimport": {
+      "checks": 37,
+      "failures": 0,
+      "evidence": "followup/reimport-final9.log"
+    },
+    "actualGL": {
+      "checks": 23,
+      "failures": 0,
+      "evidence": "followup/runtime-final9.log"
+    },
+    "application": {
+      "checks": 22,
+      "failures": 0,
+      "evidence": "followup/application.log"
+    },
+    "saveWrite": {
+      "checks": 11,
+      "failures": 0,
+      "evidence": "followup/save-stream-handoff-write.log"
+    },
+    "saveRead": {
+      "checks": 10,
+      "failures": 0,
+      "evidence": "followup/save-stream-handoff-read.log"
+    },
+    "changedSave": {
+      "checks": 5,
+      "failures": 0,
+      "evidence": "followup/changed-save-handoff.log"
+    },
+    "materials": {
+      "checks": 40,
+      "failures": 0,
+      "evidence": "followup/materials-desktop.log"
+    },
+    "materialsApplication": {
+      "checks": 36,
+      "failures": 0,
+      "evidence": "followup/material-application.log"
+    },
+    "saveStorage": {
+      "checks": 28,
+      "failures": 0,
+      "evidence": "followup/storage.log"
+    },
+    "cookbook": {
+      "checks": 252,
+      "failures": 0,
+      "evidence": "development/cookbook-final.log"
+    },
+    "editor": {
+      "pass": true,
+      "evidence": "followup/editor-final9.log"
+    },
+    "labOffline": {
+      "pass": true,
+      "evidence": "export/lab-offline.log"
+    },
+    "threeGamesOffline": {
+      "pass": true,
+      "evidence": "export/three-games-offline.log"
+    },
+    "api": {
+      "publicSymbols": 292,
+      "topLevelExports": 27,
+      "nativeOperations": 198,
+      "callbacks": 15,
+      "typeChecker": "5.9.3",
+      "examples": 30,
+      "negativeDriftChecks": 3,
+      "runtimeEnumeration": true,
+      "pass": true
+    },
+    "staleExport": {
+      "pass": true,
+      "expectedFailure": true,
+      "evidence": "export/stale-final9.log"
+    }
+  },
+  "broadSuiteRepeated": false,
+  "implementationFrozen": true,
+  "packages": [
+    {
+      "project": "/home/conner/Documents/GitHub/Project-Judas/projects/import_lab/import_lab.judasproj",
+      "output": "/home/conner/Documents/GitHub/Project-Judas/.cache/m66/packages/lab",
+      "wallMs": 7377.136854998753,
+      "bytes": 209773313,
+      "files": 38,
+      "exit": 0
+    },
+    {
+      "project": "/home/conner/Documents/GitHub/Project-Judas/.cache/m66/three-games-import-review/post_m65_consumers.judasproj",
+      "output": "/home/conner/Documents/GitHub/Project-Judas/.cache/m66/packages/three-games",
+      "wallMs": 8178.01087800035,
+      "bytes": 229805879,
+      "files": 308,
+      "exit": 0
+    }
+  ],
+  "protectedTrackedPathsUnchanged": true,
+  "noCommitPushTag": true,
+  "M67Started": false,
+  "roadmapCreated": false
+}

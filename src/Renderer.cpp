@@ -30,12 +30,16 @@ const char* kVertexShaderSource = R"(#version 330 core
 layout(location = 0) in vec3 aLocalPos;
 layout(location = 1) in vec3 aLocalNormal;
 layout(location = 2) in vec2 aUV;
+layout(location = 8) in vec2 aUV1;
 layout(location = 5) in vec4 aTangent;
 
 layout(location = 3) in uvec4 aJoints;
 layout(location = 4) in vec4 aWeights;
 uniform bool uSkinned;
-uniform mat4 uBones[48];
+layout(location = 6) in uvec4 aJoints1;
+layout(location = 7) in vec4 aWeights1;
+uniform samplerBuffer uBones;
+mat4 bone(uint joint) { int b=int(joint)*4;return mat4(texelFetch(uBones,b),texelFetch(uBones,b+1),texelFetch(uBones,b+2),texelFetch(uBones,b+3)); }
 uniform mat4 uModel;
 uniform mat4 uView;
 uniform mat4 uProjection;
@@ -57,6 +61,7 @@ out vec3 vWorldNormal;
 out vec4 vWorldTangent;
 out vec3 vWorldPos;
 out vec2 vUV;
+out vec2 vUV1;
 out vec4 vDirLightSpacePos;
 out vec4 vTorchLightSpacePos;
 out vec4 vShipLightSpacePos;
@@ -67,7 +72,7 @@ void main() {
     // normals stay perpendicular to their surface under non-uniform scale
     // (DrawBox's halfExtents are rarely a uniform scale), not just rotation.
     mat4 skin=mat4(1.0);
-    if(uSkinned)skin=uBones[aJoints.x]*aWeights.x+uBones[aJoints.y]*aWeights.y+uBones[aJoints.z]*aWeights.z+uBones[aJoints.w]*aWeights.w;
+    if(uSkinned)skin=bone(aJoints.x)*aWeights.x+bone(aJoints.y)*aWeights.y+bone(aJoints.z)*aWeights.z+bone(aJoints.w)*aWeights.w+bone(aJoints1.x)*aWeights1.x+bone(aJoints1.y)*aWeights1.y+bone(aJoints1.z)*aWeights1.z+bone(aJoints1.w)*aWeights1.w;
     vec4 localPosition=skin*vec4(aLocalPos,1.0);
     mat3 linear=mat3(skin);
     vec3 normal=abs(determinant(linear))>1e-8?transpose(inverse(linear))*aLocalNormal:linear*aLocalNormal;
@@ -80,7 +85,7 @@ void main() {
     // Milestone 9 directional light never needed this, since a directional
     // light's contribution doesn't depend on fragment position at all.
     vWorldPos = vec3(uModel * localPosition);
-    vUV = aUV;
+    vUV = aUV;vUV1=aUV1;
     vDirLightSpacePos = uLightSpaceMatrix[0] * vec4(vWorldPos, 1.0);
     vTorchLightSpacePos = uLightSpaceMatrix[1] * vec4(vWorldPos, 1.0);
     vShipLightSpacePos = uLightSpaceMatrix[2] * vec4(vWorldPos, 1.0);
@@ -93,6 +98,7 @@ in vec3 vWorldNormal;
 in vec4 vWorldTangent;
 in vec3 vWorldPos;
 in vec2 vUV;
+in vec2 vUV1;
 in vec4 vDirLightSpacePos;
 in vec4 vTorchLightSpacePos;
 in vec4 vShipLightSpacePos;
@@ -181,6 +187,8 @@ uniform int uMaterialModel,uAlphaMode;
 uniform float uAlphaCutoff,uMetallic,uRoughness,uNormalStrength,uOcclusionStrength,uEmissionIntensity;
 uniform bool uFlipV,uModern,uEnvironmentEnabled,uBaseLinear;
 uniform vec4 uBaseFactor,uUVTransform;
+uniform int uMapUVSet[5];uniform vec4 uMapUVTransform[5];uniform float uMapUVRotation[5];
+vec2 mapUV(int i){vec2 p=(uMapUVSet[i]==1?vUV1:vUV)*uMapUVTransform[i].xy;float c=cos(uMapUVRotation[i]),s=sin(uMapUVRotation[i]);p=mat2(c,s,-s,c)*p+uMapUVTransform[i].zw;p=p*uUVTransform.xy+uUVTransform.zw;if(uFlipV)p.y=1.0-p.y;return p;}
 uniform vec3 uEmission,uCameraPosition;
 uniform sampler2D uMR,uNormal,uOcclusion,uEmissive,uEnvDiffuse,uEnvSpecular,uBRDF;
 uniform bool uHasMR,uHasNormal,uHasOcclusion,uHasEmissive,uEmissiveLinear;
@@ -201,7 +209,7 @@ vec3 BRDF(vec3 base,float metal,float rough,vec3 n,vec3 v,vec3 l){
 vec3 pbrLight(vec3 base,float metal,float rough,vec3 n,vec3 v,vec2 uv){
  vec3 result=BRDF(base,metal,rough,n,v,uLightDirection)*uLightColor*ComputeShadowFactor(vDirLightSpacePos,uShadowMapDir,max(dot(n,uLightDirection),0.0));
  for(int i=0;i<uLightCount;++i){vec3 to=uDynamicLightPosition[i]-vWorldPos;float distance=length(to);vec3 l=distance>0.00001?to/distance:n;float f=clamp(distance/max(uDynamicLightRange[i],0.0001),0.0,1.0),w=clamp(1.0-f*f*f*f,0.0,1.0);float attenuation=w*w/(distance*distance+1.0);float spot=uDynamicLightIsSpot[i]!=0?smoothstep(uDynamicLightOuterCos[i],uDynamicLightInnerCos[i],dot(-l,uDynamicLightDirection[i])):1.0;float shadow=1.0;if(uDynamicLightShadowIndex[i]==1)shadow=ComputeShadowFactor(vTorchLightSpacePos,uShadowMapTorch,max(dot(n,l),0.0));else if(uDynamicLightShadowIndex[i]==2)shadow=ComputeShadowFactor(vShipLightSpacePos,uShadowMapShip,max(dot(n,l),0.0));result+=BRDF(base,metal,rough,n,v,l)*uDynamicLightColor[i]*attenuation*spot*shadow;}
- float ao=uHasOcclusion?mix(1.0,texture(uOcclusion,uv).r,uOcclusionStrength):1.0;
+ float ao=uHasOcclusion?mix(1.0,texture(uOcclusion,mapUV(3)).r,uOcclusionStrength):1.0;
  vec3 f0=mix(vec3(0.04),base,metal);
  if(uEnvironmentEnabled){float nv=max(dot(n,v),0.0);vec3 f=f0+(max(vec3(1.0-rough),f0)-f0)*pow(1.0-nv,5.0);vec3 diffuse=texture(uEnvDiffuse,envUV(uEnvironmentInverse*n)).rgb*base*(vec3(1.0)-f)*(1.0-metal);vec3 reflection=reflect(-v,n);vec3 spec=textureLod(uEnvSpecular,envUV(uEnvironmentInverse*reflection),rough*(uEnvLevels-1.0)).rgb;vec2 brdf=texture(uBRDF,vec2(nv,rough)).rg;result+=(diffuse+spec*(f0*brdf.x+brdf.y))*uEnvironmentIntensity*ao;
  }else result+=uAmbientColor*base*(1.0-metal)*ao;
@@ -209,9 +217,9 @@ vec3 pbrLight(vec3 base,float metal,float rough,vec3 n,vec3 v,vec2 uv){
 }
 
 void main() {
-    vec2 materialUV=vUV*uUVTransform.xy+uUVTransform.zw;if(uFlipV)materialUV.y=1.0-materialUV.y;
+    vec2 materialUV=mapUV(0);
     vec3 normal = normalize(vWorldNormal);if(uMaterialModel!=0&&!gl_FrontFacing)normal=-normal;
-    if(uMaterialModel!=0&&uHasNormal){vec3 t=vWorldTangent.xyz-normal*dot(normal,vWorldTangent.xyz);if(dot(t,t)>0.000001){t=normalize(t);vec3 b=cross(normal,t)*vWorldTangent.w;t*=uUVTransform.x<0.0?-1.0:1.0;b*=uUVTransform.y<0.0?-1.0:1.0;vec3 map=texture(uNormal,materialUV).xyz*2.0-1.0;map.xy*=uNormalStrength;normal=normalize(mat3(t,b,normal)*map);}}
+    if(uMaterialModel!=0&&uHasNormal){vec3 t=vWorldTangent.xyz-normal*dot(normal,vWorldTangent.xyz);if(dot(t,t)>0.000001){t=normalize(t);vec3 b=cross(normal,t)*vWorldTangent.w;t*=uUVTransform.x<0.0?-1.0:1.0;b*=uUVTransform.y<0.0?-1.0:1.0;vec3 map=texture(uNormal,mapUV(2)).xyz*2.0-1.0;map.xy*=uNormalStrength;normal=normalize(mat3(t,b,normal)*map);}}
 
 
     float diffuseFactor = max(dot(normal, uLightDirection), 0.0);
@@ -256,7 +264,7 @@ void main() {
     vec4 base=vec4((uMaterialModel==0||uBaseLinear)?texColor.rgb:decodeSRGB(texColor.rgb),texColor.a)*uBaseFactor*uColor;
     if(uAlphaMode==1&&base.a<uAlphaCutoff)discard;
     if(uMaterialModel==0){FragColor=vec4(lighting*base.rgb,base.a);if(uModern)FragColor.rgb=decodeSRGB(FragColor.rgb);}
-    else {vec3 emission=uEmission*(uHasEmissive?(uEmissiveLinear?texture(uEmissive,materialUV).rgb:decodeSRGB(texture(uEmissive,materialUV).rgb)):vec3(1.0))*uEmissionIntensity;float metal=uMetallic,rough=uRoughness;if(uHasMR){vec4 mr=texture(uMR,materialUV);rough*=mr.g;metal*=mr.b;}vec3 v=normalize(uCameraPosition-vWorldPos);FragColor=vec4((uMaterialModel==2?base.rgb:pbrLight(base.rgb,metal,clamp(rough,0.05,1.0),normal,v,materialUV))+emission,uAlphaMode==0?1.0:base.a);}
+    else {vec3 emission=uEmission*(uHasEmissive?(uEmissiveLinear?texture(uEmissive,mapUV(4)).rgb:decodeSRGB(texture(uEmissive,mapUV(4)).rgb)):vec3(1.0))*uEmissionIntensity;float metal=uMetallic,rough=uRoughness;if(uHasMR){vec4 mr=texture(uMR,mapUV(1));rough*=mr.g;metal*=mr.b;}vec3 v=normalize(uCameraPosition-vWorldPos);FragColor=vec4((uMaterialModel==2?base.rgb:pbrLight(base.rgb,metal,clamp(rough,0.05,1.0),normal,v,materialUV))+emission,uAlphaMode==0?1.0:base.a);}
 
     if (uWaterEnabled) {
         vec4 clip = uWaterViewProjection * vec4(vWorldPos,1.0);
@@ -284,26 +292,30 @@ void main() {
 const char* kShadowVertexShaderSource = R"(#version 330 core
 layout(location = 0) in vec3 aLocalPos;
 layout(location = 2) in vec2 aUV;
-out vec2 shadowUV;
+layout(location = 8) in vec2 aUV1;
+out vec2 shadowUV;out vec2 shadowUV1;
 
 layout(location = 3) in uvec4 aJoints;
 layout(location = 4) in vec4 aWeights;
 uniform bool uSkinned;
-uniform mat4 uBones[48];
+layout(location = 6) in uvec4 aJoints1;
+layout(location = 7) in vec4 aWeights1;
+uniform samplerBuffer uBones;
+mat4 bone(uint joint) { int b=int(joint)*4;return mat4(texelFetch(uBones,b),texelFetch(uBones,b+1),texelFetch(uBones,b+2),texelFetch(uBones,b+3)); }
 uniform mat4 uModel;
 uniform mat4 uLightViewProj;
 
 void main() {
     mat4 skin=mat4(1.0);
-    if(uSkinned)skin=uBones[aJoints.x]*aWeights.x+uBones[aJoints.y]*aWeights.y+uBones[aJoints.z]*aWeights.z+uBones[aJoints.w]*aWeights.w;
-    shadowUV=aUV;gl_Position = uLightViewProj * uModel * skin * vec4(aLocalPos, 1.0);
+    if(uSkinned)skin=bone(aJoints.x)*aWeights.x+bone(aJoints.y)*aWeights.y+bone(aJoints.z)*aWeights.z+bone(aJoints.w)*aWeights.w+bone(aJoints1.x)*aWeights1.x+bone(aJoints1.y)*aWeights1.y+bone(aJoints1.z)*aWeights1.z+bone(aJoints1.w)*aWeights1.w;
+    shadowUV=aUV;shadowUV1=aUV1;gl_Position = uLightViewProj * uModel * skin * vec4(aLocalPos, 1.0);
 }
 )";
 
 const char* kShadowFragmentShaderSource = R"(#version 330 core
-in vec2 shadowUV;uniform sampler2D uTexture;uniform int uAlphaMode;uniform float uAlphaCutoff,uAlphaFactor;uniform bool uFlipV;uniform vec4 uUVTransform;
+in vec2 shadowUV;in vec2 shadowUV1;uniform sampler2D uTexture;uniform int uAlphaMode;uniform float uAlphaCutoff,uAlphaFactor;uniform bool uFlipV;uniform vec4 uUVTransform;uniform int uMapUVSet[5];uniform vec4 uMapUVTransform[5];uniform float uMapUVRotation[5];
 void main() {
-    vec2 uv=shadowUV*uUVTransform.xy+uUVTransform.zw;if(uFlipV)uv.y=1.0-uv.y;
+    vec2 uv=(uMapUVSet[0]==1?shadowUV1:shadowUV)*uMapUVTransform[0].xy;float c=cos(uMapUVRotation[0]),s=sin(uMapUVRotation[0]);uv=mat2(c,s,-s,c)*uv+uMapUVTransform[0].zw;uv=uv*uUVTransform.xy+uUVTransform.zw;if(uFlipV)uv.y=1.0-uv.y;
     if(uAlphaMode==1&&texture(uTexture,uv).a*uAlphaFactor<uAlphaCutoff)discard;
     // This FBO has no color attachment (see
     // Renderer::Init's glDrawBuffer(GL_NONE)) — only gl_FragDepth's
@@ -568,7 +580,7 @@ bool Renderer::Init() {
     }
 
     m_uModel = glGetUniformLocation(m_shaderProgram, "uModel");
-    m_uSkinned=glGetUniformLocation(m_shaderProgram,"uSkinned");m_uBones=glGetUniformLocation(m_shaderProgram,"uBones[0]");
+    m_uSkinned=glGetUniformLocation(m_shaderProgram,"uSkinned");m_uBones=glGetUniformLocation(m_shaderProgram,"uBones");
     m_uNormalMatrix = glGetUniformLocation(m_shaderProgram, "uNormalMatrix");
     m_uView = glGetUniformLocation(m_shaderProgram, "uView");
     m_uProjection = glGetUniformLocation(m_shaderProgram, "uProjection");
@@ -668,7 +680,7 @@ bool Renderer::Init() {
         return false;
     }
     m_uShadowModel = glGetUniformLocation(m_shadowShaderProgram, "uModel");
-    m_uShadowSkinned=glGetUniformLocation(m_shadowShaderProgram,"uSkinned");m_uShadowBones=glGetUniformLocation(m_shadowShaderProgram,"uBones[0]");
+    m_uShadowSkinned=glGetUniformLocation(m_shadowShaderProgram,"uSkinned");m_uShadowBones=glGetUniformLocation(m_shadowShaderProgram,"uBones");
     m_uShadowLightViewProj = glGetUniformLocation(m_shadowShaderProgram, "uLightViewProj");
 
     // One depth-texture/FBO pair per shadow slot (src/Light.h), created
@@ -826,7 +838,17 @@ void Renderer::TraceResourceOperation(ResourceTracePoint point, unsigned int han
     m_resourceTrace(event);
 }
 
+void Renderer::UploadPosePalette(const std::vector<glm::mat4>& pose) {
+    if(!m_poseBuffer)glGenBuffers(1,&m_poseBuffer);
+    if(!m_poseTexture)glGenTextures(1,&m_poseTexture);
+    glBindBuffer(GL_TEXTURE_BUFFER,m_poseBuffer);
+    glBufferData(GL_TEXTURE_BUFFER,GLsizeiptr(pose.size()*sizeof(glm::mat4)),pose.data(),GL_STREAM_DRAW);
+    glActiveTexture(GL_TEXTURE15);glBindTexture(GL_TEXTURE_BUFFER,m_poseTexture);
+    glTexBuffer(GL_TEXTURE_BUFFER,GL_RGBA32F,m_poseBuffer);glActiveTexture(GL_TEXTURE0);
+}
 void Renderer::Shutdown() {
+    if(m_poseTexture){glDeleteTextures(1,&m_poseTexture);m_poseTexture=0;}
+    if(m_poseBuffer){glDeleteBuffers(1,&m_poseBuffer);m_poseBuffer=0;}
     ResetProjectText();
     for(auto& q:m_profileQueries){if(q.begin)glDeleteQueries(1,&q.begin);if(q.end)glDeleteQueries(1,&q.end);q={};}
     m_profileQueriesReady=false;
@@ -1017,16 +1039,17 @@ void Renderer::EndShadowPass() {
 MeshHandle Renderer::CreateMesh(const MeshData& data) {
     if (data.skeletal) {
         const auto count=data.skeletal->skeleton.skinNodes.size();
-        if(count==0||count>48||data.skinVertices.size()!=data.vertices.size())return {};
+        GLint texels=0;glGetIntegerv(GL_MAX_TEXTURE_BUFFER_SIZE,&texels);
+        if(count==0||count>size_t(texels/4)||count>kModelPaletteLimit||data.skinVertices.size()!=data.vertices.size())return {};
         for(const auto& v:data.skinVertices){float sum=0;
-            for(int i=0;i<4;++i){if(v.joints[i]>=count||!std::isfinite(v.weights[i])||v.weights[i]<0)return {};sum+=v.weights[i];}
+            for(int i=0;i<4;++i){if(v.joints[i]>=count||!std::isfinite(v.weights[i])||v.weights[i]<0)return {};sum+=v.weights[i];if(v.joints1[i]>=count||!std::isfinite(v.weights1[i])||v.weights1[i]<0)return {};sum+=v.weights1[i];}
             if(std::abs(sum-1.f)>1e-4f)return {};
         }
     }else if(!data.skinVertices.empty())return {};
     GpuMesh mesh;
     mesh.primitives=data.primitives;for(const auto& material:data.materials)mesh.materials.push_back(CreateMaterial(material));
     mesh.alive = true;
-    if(data.skeletal)mesh.restSkin=ResolveSkinMatrices(data.skeletal->skeleton,data.skeletal->skeleton.rest);
+    if(data.skeletal){mesh.restSkin=ResolveSkinMatrices(data.skeletal->skeleton,data.skeletal->skeleton.rest);for(auto& part:data.primitives)if(part.count)mesh.partOrientation.push_back(data.skinVertices.at(data.indices.empty()?part.first:data.indices.at(part.first)));else mesh.partOrientation.emplace_back();}
     for(const auto& v:data.vertices)mesh.bounds.Include(v.position);
     mesh.vertexCount = static_cast<GLsizei>(data.vertices.size());
 
@@ -1048,12 +1071,15 @@ MeshHandle Renderer::CreateMesh(const MeshData& data) {
     glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(MeshVertex),
                            reinterpret_cast<const void*>(offsetof(MeshVertex, uv)));
     glEnableVertexAttribArray(2);
+    glVertexAttribPointer(8,2,GL_FLOAT,GL_FALSE,sizeof(MeshVertex),reinterpret_cast<void*>(offsetof(MeshVertex,uv1)));glEnableVertexAttribArray(8);
     glVertexAttribPointer(5,4,GL_FLOAT,GL_FALSE,sizeof(MeshVertex),reinterpret_cast<void*>(offsetof(MeshVertex,tangent)));glEnableVertexAttribArray(5);
     if(!data.skinVertices.empty()){
         glGenBuffers(1,&mesh.skinVbo);glBindBuffer(GL_ARRAY_BUFFER,mesh.skinVbo);
         glBufferData(GL_ARRAY_BUFFER,GLsizeiptr(data.skinVertices.size()*sizeof(MeshSkinVertex)),data.skinVertices.data(),GL_STATIC_DRAW);
         glVertexAttribIPointer(3,4,GL_UNSIGNED_INT,sizeof(MeshSkinVertex),reinterpret_cast<void*>(offsetof(MeshSkinVertex,joints)));glEnableVertexAttribArray(3);
         glVertexAttribPointer(4,4,GL_FLOAT,GL_FALSE,sizeof(MeshSkinVertex),reinterpret_cast<void*>(offsetof(MeshSkinVertex,weights)));glEnableVertexAttribArray(4);
+        glVertexAttribIPointer(6,4,GL_UNSIGNED_INT,sizeof(MeshSkinVertex),reinterpret_cast<void*>(offsetof(MeshSkinVertex,joints1)));glEnableVertexAttribArray(6);
+        glVertexAttribPointer(7,4,GL_FLOAT,GL_FALSE,sizeof(MeshSkinVertex),reinterpret_cast<void*>(offsetof(MeshSkinVertex,weights1)));glEnableVertexAttribArray(7);
     }
 
     if (!data.indices.empty()) {
@@ -1223,6 +1249,8 @@ bool Renderer::ReadTextureForDiagnostics(TextureHandle handle, TextureData& outD
     return true;
 }
 
+std::uintptr_t Renderer::EditorImageToken(TextureHandle texture) const {return static_cast<std::uintptr_t>(ResolveTexture(texture));}
+
 GLuint Renderer::ResolveTexture(TextureHandle handle) const {
     if (handle.IsValid() && handle.id < m_textures.size() && m_textures[handle.id].alive) {
         return m_textures[handle.id].textureId;
@@ -1240,7 +1268,7 @@ GLuint Renderer::ResolveTexture(TextureHandle handle) const {
 
 void Renderer::DrawMesh(MeshHandle mesh, const glm::vec3& position, const glm::quat& rotation,
                          const glm::vec3& scale, TextureHandle texture,
-                         const glm::vec3& tintColor, float alpha,const std::vector<glm::mat4>* skin) {
+                         const glm::vec3& tintColor, float alpha,const std::vector<glm::mat4>* skin,const std::vector<std::string>* hiddenParts) {
     GpuMesh* gpuMesh = GetMesh(mesh);
     if (!gpuMesh) return;
     if(!m_shadowPassActive&&!AllowsLayer(m_renderLayer)){++m_stats.layerRejectedDraws;return;}
@@ -1249,11 +1277,11 @@ void Renderer::DrawMesh(MeshHandle mesh, const glm::vec3& position, const glm::q
     static const GpuMaterial pending=[](){GpuMaterial m;m.definition.model=MaterialModel::Unlit;m.definition.baseColor={.25f,.25f,.28f,1};return m;}();
     auto materialAt=[&](size_t slot)->const GpuMaterial* {MaterialHandle handle;if(slot<m_materialBindings.size())handle=m_materialBindings[slot].handle;if(!handle.IsValid()&&slot<m_materialBindings.size()&&m_materialBindings[slot].explicitAsset)return m_materialBindings[slot].failed?&failed:&pending;if(!handle.IsValid()&&slot<gpuMesh->primitives.size()&&m_linearRendering){int index=gpuMesh->primitives[slot].material;if(index>=0&&size_t(index)<gpuMesh->materials.size())handle=gpuMesh->materials[index];}return handle.IsValid()&&handle.id<m_materials.size()&&m_materials[handle.id].alive?&m_materials[handle.id]:nullptr;};
     size_t parts=std::max(size_t(1),gpuMesh->primitives.size());bool blended=false;for(size_t i=0;i<parts;++i)if(auto* m=materialAt(i))blended|=m->definition.alpha==MaterialAlpha::Blend;
-    if(blended&&!m_shadowPassActive&&!m_flushingBlends){BlendDraw draw{mesh,position,scale,tintColor,rotation,texture,alpha,skin?*skin:std::vector<glm::mat4>{},m_materialBindings,-(m_view*glm::vec4(position,1)).z,m_renderLayer};m_blendDraws.push_back(std::move(draw));}
+    if(blended&&!m_shadowPassActive&&!m_flushingBlends){BlendDraw draw{mesh,position,scale,tintColor,rotation,texture,alpha,skin?*skin:std::vector<glm::mat4>{},m_materialBindings,-(m_view*glm::vec4(position,1)).z,m_renderLayer,hiddenParts?*hiddenParts:std::vector<std::string>{}};m_blendDraws.push_back(std::move(draw));}
     const glm::mat4 model = glm::translate(glm::mat4(1.0f), position) * glm::mat4_cast(rotation) * glm::scale(glm::mat4(1.0f), scale);
-    auto submit=[&](bool shadow){for(size_t i=0;i<parts;++i){auto* m=materialAt(i);bool isBlend=m&&m->definition.alpha==MaterialAlpha::Blend;if((shadow&&isBlend)||(!shadow&&isBlend!=m_flushingBlends))continue;MaterialOverride overrides;if(i<m_materialBindings.size())overrides=m_materialBindings[i].overrides;BindMaterial(m,overrides,texture,tintColor,alpha,shadow);glFrontFace(glm::determinant(glm::mat3(model))<0?GL_CW:GL_CCW);unsigned first=0,count=unsigned(gpuMesh->ebo?gpuMesh->indexCount:gpuMesh->vertexCount);if(!gpuMesh->primitives.empty()){first=gpuMesh->primitives[i].first;count=gpuMesh->primitives[i].count;}glBindVertexArray(gpuMesh->vao);if(gpuMesh->ebo)glDrawElements(GL_TRIANGLES,GLsizei(count),GL_UNSIGNED_INT,reinterpret_cast<void*>(size_t(first)*4));else glDrawArrays(GL_TRIANGLES,GLint(first),GLsizei(count));++m_stats.drawCalls;m_stats.triangles+=count/3;}glFrontFace(GL_CCW);};
     const auto* palette=skin&&!skin->empty()?skin:&gpuMesh->restSkin;
-    if(palette->size()>48||palette->size()!=gpuMesh->restSkin.size())return;
+    auto submit=[&](bool shadow){for(size_t i=0;i<parts;++i){if(hiddenParts&&!gpuMesh->primitives.empty()&&std::find(hiddenParts->begin(),hiddenParts->end(),gpuMesh->primitives[i].part)!=hiddenParts->end())continue;auto* m=materialAt(i);bool isBlend=m&&m->definition.alpha==MaterialAlpha::Blend;if((shadow&&isBlend)||(!shadow&&isBlend!=m_flushingBlends))continue;MaterialOverride overrides;if(i<m_materialBindings.size())overrides=m_materialBindings[i].overrides;BindMaterial(m,overrides,texture,tintColor,alpha,shadow);glm::mat4 orientation(1);if(i<gpuMesh->partOrientation.size()&&!palette->empty()){orientation=glm::mat4(0);auto& w=gpuMesh->partOrientation[i];for(int k=0;k<4;++k)orientation+=palette->at(w.joints[k])*w.weights[k]+palette->at(w.joints1[k])*w.weights1[k];}glFrontFace(glm::determinant(glm::mat3(model*orientation))<0?GL_CW:GL_CCW);unsigned first=0,count=unsigned(gpuMesh->ebo?gpuMesh->indexCount:gpuMesh->vertexCount);if(!gpuMesh->primitives.empty()){first=gpuMesh->primitives[i].first;count=gpuMesh->primitives[i].count;}glBindVertexArray(gpuMesh->vao);if(gpuMesh->ebo)glDrawElements(GL_TRIANGLES,GLsizei(count),GL_UNSIGNED_INT,reinterpret_cast<void*>(size_t(first)*4));else glDrawArrays(GL_TRIANGLES,GLint(first),GLsizei(count));++m_stats.drawCalls;m_stats.triangles+=count/3;}glFrontFace(GL_CCW);};
+    if(palette->size()>kModelPaletteLimit||palette->size()!=gpuMesh->restSkin.size())return;
     VisualBounds bounds=gpuMesh->bounds;
     if(!palette->empty()){bounds={};for(const auto& matrix:*palette){auto b=TransformBounds(gpuMesh->bounds,matrix);bounds.Include(b.min);bounds.Include(b.max);}}
     ++m_stats.renderablesConsidered;
@@ -1269,7 +1297,7 @@ void Renderer::DrawMesh(MeshHandle mesh, const glm::vec3& position, const glm::q
 
     if (m_shadowPassActive) {
         glUseProgram(m_shadowShaderProgram);
-        glUniform1i(m_uShadowSkinned,!palette->empty());if(!palette->empty())glUniformMatrix4fv(m_uShadowBones,GLsizei(palette->size()),GL_FALSE,glm::value_ptr(palette->front()));
+        glUniform1i(m_uShadowSkinned,!palette->empty());if(!palette->empty()){UploadPosePalette(*palette);glUniform1i(m_uShadowBones,15);}
         glUniformMatrix4fv(m_uShadowModel, 1, GL_FALSE, glm::value_ptr(model));
         submit(true);
         return;
@@ -1281,7 +1309,7 @@ void Renderer::DrawMesh(MeshHandle mesh, const glm::vec3& position, const glm::q
     const glm::mat3 normalMatrix = glm::inverseTranspose(glm::mat3(model));
 
     glUseProgram(m_shaderProgram);
-    glUniform1i(m_uSkinned,!palette->empty());if(!palette->empty())glUniformMatrix4fv(m_uBones,GLsizei(palette->size()),GL_FALSE,glm::value_ptr(palette->front()));
+    glUniform1i(m_uSkinned,!palette->empty());if(!palette->empty()){UploadPosePalette(*palette);glUniform1i(m_uBones,15);}
     glUniformMatrix4fv(m_uModel, 1, GL_FALSE, glm::value_ptr(model));
     glUniformMatrix3fv(m_uNormalMatrix, 1, GL_FALSE, glm::value_ptr(normalMatrix));
     glUniformMatrix4fv(m_uView, 1, GL_FALSE, glm::value_ptr(m_view));

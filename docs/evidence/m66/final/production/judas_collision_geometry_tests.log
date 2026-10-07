@@ -1,0 +1,28 @@
+SEAM shape=1 minimum_speed=4 max_impulse=0.16372 penetration=1.30596e-05
+SEAM shape=0 minimum_speed=4 max_impulse=0.1635 penetration=0
+SEAM shape=5 minimum_speed=4 max_impulse=0.163547 penetration=3.08962e-06
+CURVE unassisted resolution=16 kind=0 max_progress=3.16683 max_impulse=4.40372 penetration=0.0506939 initial_energy=33.4813 final_energy=14.3261
+CURVE unassisted resolution=16 kind=1 max_progress=5.11103 max_impulse=0.399223 penetration=0.0164877 initial_energy=33.9718 final_energy=29.9586
+CURVE unassisted resolution=16 kind=2 max_progress=3.44813 max_impulse=3.2654 penetration=0.0675769 initial_energy=41.8198 final_energy=15.5716
+CURVE unassisted resolution=32 kind=0 max_progress=3.15617 max_impulse=4.40372 penetration=0.0736165 initial_energy=33.4813 final_energy=5.77247
+CURVE unassisted resolution=32 kind=1 max_progress=5.16141 max_impulse=0.498108 penetration=0.0111335 initial_energy=33.9718 final_energy=31.809
+CURVE unassisted resolution=32 kind=2 max_progress=1.87957 max_impulse=3.2654 penetration=0.0635753 initial_energy=41.8198 final_energy=15.396
+CURVE unassisted resolution=64 kind=0 max_progress=2.36645 max_impulse=4.40372 penetration=0.0506939 initial_energy=33.4813 final_energy=7.56265
+CURVE unassisted resolution=64 kind=1 max_progress=5.19183 max_impulse=0.359606 penetration=0.00902423 initial_energy=33.9718 final_energy=32.8028
+CURVE unassisted resolution=64 kind=2 max_progress=3.49511 max_impulse=3.26043 penetration=0.0445931 initial_energy=41.8198 final_energy=15.3087
+COOK triangles=12800 nodes=4095 ms=22.8489 cold_load_ms=21.3337 bytes=856301
+QUERY mesh=0 kind=0 count=200 us=68.077 nodes=0 triangles=0
+QUERY mesh=0 kind=1 count=200 us=75.352 nodes=0 triangles=0
+QUERY mesh=0 kind=2 count=200 us=87.863 nodes=0 triangles=0
+QUERY mesh=0 kind=3 count=200 us=1488.81 nodes=0 triangles=0
+QUERY mesh=0 kind=4 count=200 us=33.21 nodes=0 triangles=0
+QUERY mesh=1 kind=0 count=200 us=278.682 nodes=6110 triangles=4000
+QUERY mesh=1 kind=1 count=200 us=1222.23 nodes=5910 triangles=6420
+QUERY mesh=1 kind=2 count=200 us=1725.02 nodes=5910 triangles=6420
+QUERY mesh=1 kind=3 count=200 us=27968.8 nodes=5910 triangles=8000
+QUERY mesh=1 kind=4 count=200 us=2712.6 nodes=24290 triangles=50400
+CONTACT_PERF variant=0 bodies=12 median_us=9.741 p95_us=100.882 max_us=158.522
+CONTACT_PERF variant=1 bodies=12 median_us=8.166 p95_us=657.524 max_us=866.826
+CONTACT_PERF variant=2 bodies=12 median_us=842.623 p95_us=2659.62 max_us=57469.7
+PERF 1000 rays us=542.11 BVH_nodes=2000 triangles=2000
+137 collision geometry checks passed

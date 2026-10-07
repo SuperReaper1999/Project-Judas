@@ -16,6 +16,10 @@ MaterialHandle Renderer::CreateMaterial(const MaterialDefinition& definition){
  std::string error;if(!ValidateMaterial(definition,error))return {};
  GpuMaterial m;m.alive=true;m.definition=definition;
  for(size_t i=0;i<5;++i){const auto& image=definition.maps[i];if(!image.embedded.pixels.empty()){m.textures[i]=CreateTexture(image.embedded,(i==0||i==4)&&definition.model!=MaterialModel::Legacy);glGenSamplers(1,&m.samplers[i]);auto& s=image.sampler;glSamplerParameteri(m.samplers[i],GL_TEXTURE_WRAP_S,s.wrapS);glSamplerParameteri(m.samplers[i],GL_TEXTURE_WRAP_T,s.wrapT);glSamplerParameteri(m.samplers[i],GL_TEXTURE_MIN_FILTER,s.minFilter);glSamplerParameteri(m.samplers[i],GL_TEXTURE_MAG_FILTER,s.magFilter);}m.definition.maps[i].embedded=TextureData{};}
+ // Encoded source images belong to the immutable CPU resource/cooked archive.
+ // Retaining them here would copy megabytes in ApplyMaterialOverride on every
+ // draw. The GPU material only needs uploaded handles and lightweight settings.
+ for(auto& map:m.definition.maps)std::vector<uint8_t>().swap(map.encodedImage);
  MaterialHandle handle{unsigned(m_materials.size())};m_materials.push_back(std::move(m));return handle;
 }
 void Renderer::DestroyMaterial(MaterialHandle handle){if(!handle.IsValid()||handle.id>=m_materials.size())return;auto& m=m_materials[handle.id];if(!m.alive)return;for(auto t:m.textures)DestroyTexture(t);for(auto s:m.samplers)if(s)glDeleteSamplers(1,&s);m={};}
@@ -36,6 +40,7 @@ void Renderer::BindMaterial(const GpuMaterial* gpu,const MaterialOverride& overr
  auto program=shadow?m_shadowShaderProgram:m_shaderProgram;
  auto location=[&](const char* n){return shadow?glGetUniformLocation(program,n):MaterialUniform(n);};
  glUniform1i(location("uAlphaMode"),int(m.alpha));glUniform1f(location("uAlphaCutoff"),m.alphaCutoff);glUniform1i(location("uFlipV"),m.flipV);glUniform4f(location("uUVTransform"),m.uvScale.x,m.uvScale.y,m.uvOffset.x,m.uvOffset.y);
+ for(int i=0;i<5;++i){auto& map=m.maps[i];std::string index="["+std::to_string(i)+"]";glUniform1i(location(("uMapUVSet"+index).c_str()),map.uvSet);glUniform4f(location(("uMapUVTransform"+index).c_str()),map.scale.x,map.scale.y,map.offset.x,map.offset.y);glUniform1f(location(("uMapUVRotation"+index).c_str()),map.rotation);}
  TextureHandle base=generated;if(!generated.IsValid()&&gpu)base=gpu->textures[0];
  if(!shadow&&m.model!=MaterialModel::Legacy)base=ColourTexture(base);
  if(m_activeTarget.IsValid()&&base.IsValid()&&base.id==RenderTargetTexture(m_activeTarget).id){base={};++m_stats.feedbackFallbacks;}
@@ -59,7 +64,7 @@ void Renderer::FlushMaterialBlends(){
  if(m_blendDraws.empty())return;
  JUDAS_PROFILE_SCOPE("Material transparency");RendererProfileScope gpu(*this,"Material transparency");
  std::stable_sort(m_blendDraws.begin(),m_blendDraws.end(),[](const auto& a,const auto& b){return a.depth>b.depth;});auto bindings=m_materialBindings;auto layer=m_renderLayer;
- m_flushingBlends=true;BeginTransparentPass();for(auto& d:m_blendDraws){m_renderLayer=d.layer;m_materialBindings=d.materials;DrawMesh(d.mesh,d.position,d.rotation,d.scale,d.texture,d.tint,d.alpha,d.skin.empty()?nullptr:&d.skin);}EndTransparentPass();m_flushingBlends=false;m_materialBindings=std::move(bindings);m_renderLayer=layer;m_blendDraws.clear();
+ m_flushingBlends=true;BeginTransparentPass();for(auto& d:m_blendDraws){m_renderLayer=d.layer;m_materialBindings=d.materials;DrawMesh(d.mesh,d.position,d.rotation,d.scale,d.texture,d.tint,d.alpha,d.skin.empty()?nullptr:&d.skin,&d.hiddenParts);}EndTransparentPass();m_flushingBlends=false;m_materialBindings=std::move(bindings);m_renderLayer=layer;m_blendDraws.clear();
 }
 void Renderer::BeginLinearPass(int width,int height){
  if(m_linearPass)return;

@@ -10,6 +10,7 @@
 #include "GizmoMath.h"
 #include "JobSystem.h"
 #include "PhysicsWorld.h"
+#include "ModelCollision.h"
 #include "ResourceManager.h"
 #include "RuntimeUI.h"
 #include "WorldDebugView.h"
@@ -88,7 +89,18 @@ struct ProfilerData {
     bool playing = false;
 };
 
+struct ModelCookTask;
 struct EditorPanelState {
+    JobSystem* importJobs=nullptr;
+    std::shared_ptr<ModelCookTask> importTask,importAccepted;
+    bool importPublished=false;
+    unsigned modelPreviewClip=0;float modelPreviewTime=0,modelPreviewYaw=.45f;bool modelPreviewPlaying=false,modelPreviewSkeleton=true;
+    ModelCollisionCleanup collisionCleanup;CollisionDiagnostic collisionDiagnostic;std::string collisionDiagnosticAsset;bool modelDiagnosticVisible=false;
+    std::uintptr_t modelPreviewToken=0;std::vector<std::string> modelPreviewHidden;
+    std::string modelMapSource,modelMapTarget;
+    CollisionDiagnostic modelCollisionDiagnostic;
+    ModelCollisionCleanup modelCollisionCleanup;
+    std::string modelSource,modelOutput="Assets/models/model.judasmodel",modelRecipe,modelMotionSource,modelMotionTake,modelMotionName="Motion";
     EditorMode mode = EditorMode::Edit;
     // Milestone 29: the live world while playing (null in edit mode) so the
     // inspector can show persistent identity, lifecycle and fidelity and
@@ -157,7 +169,7 @@ void DrawStatusBar(EditorDocument& doc, EditorPanelState& state);
 // "door", "gravity-region") at `position`, recording one undo step.
 // Returns its id. `meshAssetId` is used by "mesh".
 SceneObjectId CreateObjectOfKind(EditorDocument& doc, const std::string& kind, const glm::vec3& position,
-                                 const std::string& meshAssetId);
+                                 const std::string& meshAssetId, const SceneAnimationComponent* animation = nullptr);
 
 // Duplicates an object under a new id (name suffixed " copy"), inserted
 // right after the original, recording one undo step. Returns the new id.

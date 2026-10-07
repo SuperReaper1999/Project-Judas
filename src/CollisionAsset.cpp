@@ -26,16 +26,26 @@ void build(CollisionAsset& a){
   }a.nodes[index]=node;return index;
  };recurse(recurse,0,a.faces.size());
 }
-void topology(CollisionAsset& a){
+void topology(CollisionAsset& a,const MeshData* source=nullptr,CollisionDiagnostic* diagnostic=nullptr,const glm::dmat4& transform=glm::dmat4(1)){
+ auto fail=[&](const char* code,const char* message,unsigned face,unsigned first,unsigned second,unsigned third=UINT32_MAX){
+  CollisionDiagnostic d;d.code=code;d.sourceFace=a.faces.at(face).source;d.action="Select the reported source location; use explicit collision cleanup or a separate physical source. Visual import remains valid.";d.point=(a.vertices.at(first)+a.vertices.at(second))*.5;d.minimum=glm::min(a.vertices.at(first),a.vertices.at(second));d.maximum=glm::max(a.vertices.at(first),a.vertices.at(second));
+  if(third!=UINT32_MAX){d.point=a.vertices.at(third);d.minimum=glm::min(d.minimum,d.point);d.maximum=glm::max(d.maximum,d.point);}
+  if(source){unsigned triangle=d.sourceFace;if(triangle<source->faceLocations.size()){auto location=source->faceLocations[triangle];d.sourceFace=location.element;d.node=source->sourceNodes.at(location.node);}
+   for(unsigned k=0;k<3;++k){unsigned corner=triangle*3+k;if(corner>= (source->indices.empty()?source->vertices.size():source->indices.size()))break;unsigned vertex=source->indices.empty()?corner:source->indices[corner];auto position=glm::dvec3(transform*glm::dvec4(source->vertices.at(vertex).position,1));if(position!=a.vertices.at(first)&&position!=a.vertices.at(second))continue;if(vertex<source->vertexLocations.size())d.sourceVertices.push_back(source->vertexLocations[vertex].element);else if(vertex<source->sourceVertexIds.size())d.sourceVertices.push_back(source->sourceVertexIds[vertex]);else d.sourceVertices.push_back(vertex);}
+   if(third!=UINT32_MAX)for(unsigned v=0;v<source->vertices.size();++v)if(glm::dvec3(transform*glm::dvec4(source->vertices[v].position,1))==a.vertices.at(third)){d.sourceVertices.push_back(v<source->vertexLocations.size()?source->vertexLocations[v].element:v);break;}
+  }
+  if(diagnostic)*diagnostic=d;
+  std::ostringstream text;text<<message<<" [node="<<d.node<<", original face="<<d.sourceFace<<", location=("<<d.point.x<<", "<<d.point.y<<", "<<d.point.z<<")]";throw std::runtime_error(text.str());
+ };
  std::map<std::pair<unsigned,unsigned>,std::vector<std::pair<unsigned,unsigned>>> edges;
  for(unsigned f=0;f<a.faces.size();++f){auto& t=a.faces[f];auto x=a.vertices[t.vertices[0]],y=a.vertices[t.vertices[1]],z=a.vertices[t.vertices[2]];t.normal=glm::normalize(glm::cross(y-x,z-x));for(unsigned e=0;e<3;++e)edges[std::minmax(t.vertices[e],t.vertices[(e+1)%3])].push_back({f,e});}
- for(auto& [key,uses]:edges){(void)key;if(uses.size()>2)throw std::runtime_error("nonmanifold collision edge; split/correct source topology");if(uses.size()==2){auto [f,e]=uses[0];auto [g,j]=uses[1];auto& x=a.faces[f];auto& y=a.faces[g];if(x.vertices[e]==y.vertices[j])throw std::runtime_error("inconsistent adjacent winding");x.adjacent[e]=g;y.adjacent[j]=f;
+ for(auto& [key,uses]:edges){(void)key;if(uses.size()>2)fail("nonmanifold-edge","nonmanifold collision edge; split/correct source topology",uses.front().first,key.first,key.second);if(uses.size()==2){auto [f,e]=uses[0];auto [g,j]=uses[1];auto& x=a.faces[f];auto& y=a.faces[g];if(x.vertices[e]==y.vertices[j])fail("inconsistent-winding","inconsistent adjacent winding",f,key.first,key.second);x.adjacent[e]=g;y.adjacent[j]=f;
   // Convex crease is active; a coplanar/concave shared edge is not a barrier.
   auto third=a.vertices[y.vertices[(j+2)%3]];double side=glm::dot(x.normal,third-a.vertices[x.vertices[0]]);bool active=side< -1e-9 && glm::dot(x.normal,y.normal)<1-1e-10;x.active[e]=y.active[j]=active;
  }}
  // Report T junctions rather than pretending that ambiguous edge adjacency is welded.
  // O(V*boundary edges), cook only, bounded input. No proximity welding of sheets.
- for(auto& [edge,uses]:edges)if(uses.size()==1){auto p=a.vertices[edge.first],q=a.vertices[edge.second],v=q-p;double l=glm::dot(v,v);for(unsigned i=0;i<a.vertices.size();++i){if(i==edge.first||i==edge.second)continue;double t=glm::dot(a.vertices[i]-p,v)/l;if(t>1e-9&&t<1-1e-9&&glm::length(a.vertices[i]-p-t*v)<1e-9)throw std::runtime_error("T-junction in collision source; triangulate connected topology before cooking");}}
+ for(auto& [edge,uses]:edges)if(uses.size()==1){auto p=a.vertices[edge.first],q=a.vertices[edge.second],v=q-p;double l=glm::dot(v,v);for(unsigned i=0;i<a.vertices.size();++i){if(i==edge.first||i==edge.second)continue;double t=glm::dot(a.vertices[i]-p,v)/l;if(t>1e-9&&t<1-1e-9&&glm::length(a.vertices[i]-p-t*v)<1e-9)fail("t-junction","T-junction in collision source; triangulate connected topology before cooking",uses.front().first,edge.first,edge.second,i);}}
 }
 // Coplanar convex triangles become one physical face. Store the ordered polygon
 // and crease edges in the cook so contact clipping never selects half a cube face.
@@ -66,7 +76,8 @@ void CollisionAsset::Candidates(V lo,V hi,std::vector<uint32_t>& out,uint64_t* t
  while(count){auto& n=nodes[stack[--count]];if(tested)++*tested;if(glm::any(glm::lessThan(n.maximum,lo))||glm::any(glm::greaterThan(n.minimum,hi)))continue;if(n.count){for(unsigned i=n.first;i<n.first+n.count;++i)out.push_back(order[i]);}else{if(count+2>stack.size())throw std::runtime_error("collision BVH traversal depth overflow");stack[count++]=n.right;stack[count++]=n.left;}}
  std::sort(out.begin(),out.end());
 }
-bool CookCollision(const MeshData& mesh,const CollisionCookSettings& settings,CollisionAsset& out,std::string& error){
+bool CookCollision(const MeshData& mesh,const CollisionCookSettings& settings,CollisionAsset& out,std::string& error,CollisionDiagnostic* diagnostic){
+ if(diagnostic)*diagnostic={};
  try{CollisionAsset a;a.convex=settings.convex;a.twoSided=settings.twoSided;a.selectedPrimitive=settings.primitive;a.sourceTransform=settings.transform;
   for(int c=0;c<4;++c)for(int r=0;r<4;++r)if(!std::isfinite(settings.transform[c][r]))throw std::runtime_error("nonfinite source transform");
   if(settings.transform[0][3]!=0||settings.transform[1][3]!=0||settings.transform[2][3]!=0||settings.transform[3][3]!=1)throw std::runtime_error("collision source requires affine transform");
@@ -87,7 +98,7 @@ bool CookCollision(const MeshData& mesh,const CollisionCookSettings& settings,Co
    V interior(0);for(auto p:a.vertices)interior+=p;interior/=double(a.vertices.size());
    for(auto& f:a.faces){auto p=a.vertices[f.vertices[0]],q=a.vertices[f.vertices[1]],r=a.vertices[f.vertices[2]];if(glm::dot(glm::cross(q-p,r-p),p-interior)<0)std::swap(f.vertices[1],f.vertices[2]);}
   }
-  topology(a);if(a.convex){for(auto& f:a.faces)for(auto n:f.adjacent)if(n<0)throw std::runtime_error("convex cook not closed");mass(a);convexFaces(a);}build(a);out=std::move(a);error.clear();return true;
+  topology(a,&mesh,diagnostic,settings.transform);if(a.convex){for(auto& f:a.faces)for(auto n:f.adjacent)if(n<0)throw std::runtime_error("convex cook not closed");mass(a);convexFaces(a);}build(a);out=std::move(a);error.clear();return true;
  }catch(const std::exception& e){error=e.what();return false;}
 }
 // Versioned cooked file stores acceleration/adjacency, never rebuilds it at runtime.

@@ -1,0 +1,50 @@
+Renderer fragment texture units: 32 (material path uses 12)
+PASS real engine host
+PASS registered project copy loads
+PASS probe uses normal registered JS asset
+PASS actual project scene loads
+PASS ordinary runtime builds
+POSE shooter_game baseline=0 alpha=0.25 camera_error_m=0.000000000 avatar_error_m=0.000000000 camera_rotation_error=0.000000000
+PASS script camera matches render-interpolated world position
+PASS script camera matches interpolated orientation
+PASS cosmetic model shares camera/motor presentation timeline
+PASS presentation callback receives alpha in non-authoritative mode
+PASS public getter uses engine presentation pose
+PASS transform stays authoritative inside presentation callback
+PASS presentation cannot submit fixed motor velocity intent
+POSE shooter_game baseline=0 alpha=0.75 camera_error_m=0.000000000 avatar_error_m=0.000000000 camera_rotation_error=0.000000000
+PASS script camera matches render-interpolated world position
+PASS script camera matches interpolated orientation
+PASS cosmetic model shares camera/motor presentation timeline
+PASS presentation callback receives alpha in non-authoritative mode
+PASS public getter uses engine presentation pose
+PASS transform stays authoritative inside presentation callback
+PASS presentation cannot submit fixed motor velocity intent
+PASS presentation does not modify authoritative motion
+PASS presented getter outside presentation is authoritative
+PASS mouse look updates even without a new physics step
+PASS project and probe callbacks are fault-free
+PASS Stop removes presentation callbacks and view state
+PASS registered project copy loads
+PASS probe uses normal registered JS asset
+PASS actual project scene loads
+PASS ordinary runtime builds
+POSE boundary_demo baseline=0 alpha=0.25 camera_error_m=0.000000000 avatar_error_m=0.000000000 camera_rotation_error=-0.000000119
+PASS script camera matches render-interpolated world position
+PASS script camera matches interpolated orientation
+PASS presentation callback receives alpha in non-authoritative mode
+PASS public getter uses engine presentation pose
+PASS transform stays authoritative inside presentation callback
+PASS presentation cannot submit fixed motor velocity intent
+POSE boundary_demo baseline=0 alpha=0.75 camera_error_m=0.000000337 avatar_error_m=0.000000000 camera_rotation_error=-0.000000119
+PASS script camera matches render-interpolated world position
+PASS script camera matches interpolated orientation
+PASS presentation callback receives alpha in non-authoritative mode
+PASS public getter uses engine presentation pose
+PASS transform stays authoritative inside presentation callback
+PASS presentation cannot submit fixed motor velocity intent
+PASS presentation does not modify authoritative motion
+PASS presented getter outside presentation is authoritative
+PASS project and probe callbacks are fault-free
+PASS Stop removes presentation callbacks and view state
+SUMMARY 44 checks 0 failures
