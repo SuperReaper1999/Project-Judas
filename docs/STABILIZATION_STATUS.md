@@ -100,6 +100,6 @@ is claimed. Prior failed candidates and raw outputs remain unchanged.
 Live origin rebasing, deformable structures, high-fidelity cut-cell fluids,
 animation/AI/networking and render-to-texture/portals remain roadmap features.
 The P1-C/P1-C-M/P1-PF research prototypes are preserved and are not integrated
-into production. See [ROADMAP.md](ROADMAP.md).
+into production.
 
 **JUDAS STATUS: READY FOR NEW FEATURE DEVELOPMENT**

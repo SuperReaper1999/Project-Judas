@@ -35,12 +35,14 @@ export default class {
 }
 ```
 
-`properties` is an exported plain schema; only `number`, `boolean`, `string` are
-supported. Supply matching defaults: a default is required whenever the authored
+`properties` is an exported plain schema; supported types are `number`, `boolean`,
+`string` and (M65) `entity`, declared as `{type:'entity', default:null}`; scripts
+receive null or a safe Entity wrapper (see [entity references](entities.md#m65-references-and-physicalpresentation-consumers)).
+Supply matching defaults: a default is required whenever the authored
 values omit that field. Authored values may override declared fields;
 unknown fields/type mismatches fault the slot. The inspector edits those values,
 not JS source. Asset references may be string properties. There is no exported
-`Behaviour`, decorators, inspector entity-reference type or component scripting DSL.
+`Behaviour`, decorators or component scripting DSL.
 
 Inspector metadata evaluation runs top-level module code in a no-world VM. Keep
 top-level code declarative; importing `judas` is fine, calling its world API there

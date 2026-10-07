@@ -21,7 +21,7 @@ Frames are body-local quaternions. There is no universal world-up. Set the frame
 
 Hinge coordinate is the signed angle of frame B relative to frame A about A's X axis, in radians, wrapped to `[-pi, pi]`. Slider coordinate is B's anchor relative to A's anchor along A's X axis, in metres. Thus positive speed with A dynamic and B fixed moves A in the negative coordinate direction.
 
-Hinge and slider support lower/upper limits, bounded speed motors and implicit springs/damping. Motor `maxForce` is torque (N m) for hinges and force (N) for sliders. Accumulated motor impulse is bounded by `maxForce * fixedDelta`. Springs target `rest` in coordinate units; stiffness/damping use the corresponding linear/angular units. Limits take priority in row order. This is an iterative real-time solver, not an exact articulated dynamics solution.
+Hinge and slider support lower/upper limits, bounded speed motors and implicit springs/damping. Motor `maxForce` is torque (N m) for hinges and force (N) for sliders. Accumulated motor impulse is bounded by `maxForce * fixedDelta`. Springs target `rest` in coordinate units; stiffness/damping use the corresponding linear/angular units. Limits take priority in row order. A limit that is already violated (for example one enabled while the coordinate is outside its range) is corrected at no more than 0.5 m/s for sliders or 0.5 rad/s for hinges, rather than rebounding with a speed proportional to the violation. This is an iterative real-time solver, not an exact articulated dynamics solution.
 
 ## Authoring and lifetime
 
@@ -53,7 +53,7 @@ Handles have monotonically assigned runtime identities. `valid` returns false af
 
 Open `projects/joint_demo/joint_demo.judasproj`. From left to right: fixed dynamic pair with support, free hinge pendulum, limited motor-driven physical door, ball pendulum, motor/spring slider. Rear: oblique hinge. **G** reverses motors; **P** spawns an independent fixed prefab assembly; **Esc** pauses. The door is an ordinary dynamic body + hinge + project JS. Historical M16 kinematic doors and evidence remain untouched.
 
-Limitations: hinge limits must stay within the wrapped angle range; initially opposed hinge axes and very large joint errors are not suitable authoring configurations. Extreme mass ratios, large articulated stacks and stiff motors may require smaller steps or future solver improvements. No breakable joints, gear trains, ropes, ragdolls or kinematic trajectory redesign. Visual/physical acceptance belongs to the human operator.
+Limitations: hinge limits must stay within the wrapped angle range; initially opposed hinge axes and very large joint errors are not suitable authoring configurations. Extreme mass ratios, large articulated stacks and stiff motors may require smaller steps or future solver improvements. No breakable joints, gear trains, ropes or kinematic trajectory redesign (M45 scope; articulated ragdolls arrived in M48, see [RAGDOLLS.md](RAGDOLLS.md)). Visual/physical acceptance belongs to the human operator.
 
 ## Explicit passive rotational resistance
 

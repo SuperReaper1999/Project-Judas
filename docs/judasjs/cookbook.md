@@ -82,7 +82,7 @@ application proof executes committed saves and fresh-process restores. Never tre
 socket, gravity sample, physical coefficients and generation-safe runtime joints.
 Fixture is the original rig in [current integration project](../../projects/m65_integration/m65_integration.judasproj).
 
-- [Imported parts and extracted clip interval](examples/imported-model.js)
+- [Imported parts and extracted clip interval](examples/imported-model.js) (needs the local-only original character used by `import_lab`; fails on a clean checkout, see [model import](../MODEL_IMPORT.md#import-inspect-place))
   ([model workflow](../MODEL_IMPORT.md)): attach to the original import-lab model.
 
 ## Authoring-to-runtime seams (M67 candidate)
