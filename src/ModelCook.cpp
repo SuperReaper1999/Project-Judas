@@ -83,8 +83,10 @@ AnimationClip TrimClip(const Skeleton& skeleton,const AnimationClip& original,fl
   Require(times.size()<=kRetargetMaxKeys-keys,"clip trim output exceeds four million keys");keys+=times.size();
   size_t scheduled=0;for(float time:times){if((scheduled++&1023)==0)CheckCancelled(task);unionTimes.insert(time);Require(unionTimes.size()<=maximumSamples,"clip trim exceeds bounded pose-evaluation work");}
   AnimationTrack track;track.node=source.node;track.path=source.path;track.interpolation=source.interpolation==TrackInterpolation::Step?TrackInterpolation::Step:TrackInterpolation::Linear;
-  track.times.reserve(times.size());track.values.reserve(times.size());for(float time:times)track.times.push_back(time-begin);
-  schedules.emplace_back(times.begin(),times.end());cursor.push_back(0);clip.tracks.push_back(std::move(track));
+  // Rebase in float can collapse neighbours or overshoot the duration; keep keys strictly increasing within [0,duration].
+  std::vector<float> schedule;schedule.reserve(times.size());track.times.reserve(times.size());track.values.reserve(times.size());
+  float last=-1;for(float time:times){float local=time==end?clip.duration:time-begin;if(time!=end&&(local<=last+1e-6f||local>=clip.duration-1e-6f))continue;last=local;schedule.push_back(time);track.times.push_back(local);}
+  schedules.push_back(std::move(schedule));cursor.push_back(0);clip.tracks.push_back(std::move(track));
  }
  for(float time:unionTimes){
   CheckCancelled(task);auto pose=SampleClip(skeleton,original,time);++task.trimPoseSamples;task.trimNodeEvaluations+=skeleton.names.size();
