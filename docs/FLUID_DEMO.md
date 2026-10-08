@@ -1,4 +1,9 @@
-# Current production fluid demonstration
+# Retained legacy particle-fluid demonstration
+
+For current conserved reservoirs/containers and dynamic surfaces, see
+[Liquid reservoirs](LIQUID_RESERVOIRS.md) and [Liquid surfaces](LIQUID_SURFACES.md).
+This project preserves the accepted legacy PBF/cavity repair; its 20 Hz cadence
+and deferred quality limitations do not define the M54/M55 path.
 
 Open `projects/fluid_demo/fluid_demo.judasproj` in the editor, or run:
 

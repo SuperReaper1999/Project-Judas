@@ -1,5 +1,10 @@
 # M63 — structural fracture and physical fragments
 
+**Status through M69:** M63 is operator-accepted and checkpointed. Candidate/pending
+statements and measurements below record the original milestone review state,
+not a current outstanding acceptance gate. Later contracts take precedence;
+start with [Architecture](ARCHITECTURE.md) and [JudasJS](JUDASJS.md).
+
 Current candidate from M62 checkpoint
 `29845bbdb911d2129a2d2b995fed22a1448594e7`. Human acceptance is pending.
 

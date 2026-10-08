@@ -1,5 +1,10 @@
 # M64 — Mesh, convex and compound collision
 
+**Status through M69:** M64 is operator-accepted and checkpointed. Candidate/pending
+statements and measurements below record the original milestone review state,
+not a current outstanding acceptance gate. Later contracts take precedence;
+start with [Architecture](ARCHITECTURE.md) and [JudasJS](JUDASJS.md).
+
 Current candidate on M63 checkpoint `b5676438ed12d9cb3d05c634eaf5f578d7216ada`.
 Human review is pending. Judas owns geometry/contacts; JavaScript owns skating and
 other gameplay. No new dynamics engine, gravity implementation or skate component.

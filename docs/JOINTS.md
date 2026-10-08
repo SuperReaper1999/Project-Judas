@@ -31,7 +31,7 @@ Body participants remain Full fidelity while active. Disabling a participating c
 
 Prefab source IDs remap through the normal stable instance mapping. Joint settings use generic serialized-property overrides. Runtime `SpawnPrefab` creates ordinary bodies and joints after the complete hierarchy exists.
 
-Canonical fingerprint schema remains **5**: a tagged `Judas.RigidJoints.1` extension includes all joint settings and references only for scenes containing joints. Existing no-joint fingerprints remain unchanged. Created runtime joint definitions use ordinary world-state entity serialization; references are preflighted before mutation. Runtime motor configuration/warm impulses are transient; scripts can restore motor intent through their normal persisted script state.
+Canonical fingerprint schema remains **5**: a tagged `Judas.RigidJoints.1` extension includes all joint settings and references only for scenes containing joints. Existing no-joint fingerprints remain unchanged. Created runtime joint definitions use ordinary world-state entity serialization; references are preflighted before mutation. Under the original M45 legacy-save contract, runtime motor configuration and warm impulses were transient. Modern M61 slots preserve runtime enabled/limits/motor/spring settings and references; numerical solver caches are rebuilt. See [current save contracts](M61_SAVES.md).
 
 ## JavaScript
 

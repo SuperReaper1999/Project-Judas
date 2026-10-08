@@ -1,5 +1,10 @@
 # M42 collision and sensor events
 
+**Status through M69:** M42 is operator-accepted and checkpointed. Candidate/pending
+statements and measurements below record the original milestone review state,
+not a current outstanding acceptance gate. Later contracts take precedence;
+start with [Architecture](ARCHITECTURE.md) and [JudasJS](JUDASJS.md).
+
 Current public JavaScript signatures, examples and lifetime rules: [JudasJS reference](JUDASJS.md). This document retains milestone architecture and evidence context.
 
 Judas reports contact; project JavaScript decides what it means. Scene body

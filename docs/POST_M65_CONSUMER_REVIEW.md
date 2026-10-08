@@ -1,5 +1,9 @@
 # Post-M65 real-game consumer review
 
+**Historical accepted review/repair record:** the original observations, findings
+and pending-review statements below retain their recorded scope. Later engine
+changes can supersede them; use [Architecture](ARCHITECTURE.md) for current status.
+
 ## Scope and result
 
 Reviewed accepted engine `51c18c249432e09910dabc41e670bf960db8050c`.

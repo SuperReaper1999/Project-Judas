@@ -1,5 +1,10 @@
 # M48 — articulated physics as a pose producer
 
+**Status through M69:** M48 is operator-accepted and checkpointed. Candidate/pending
+statements and measurements below record the original milestone review state,
+not a current outstanding acceptance gate. Later contracts take precedence;
+start with [Architecture](ARCHITECTURE.md) and [JudasJS](JUDASJS.md).
+
 Current public JavaScript signatures, examples and lifetime rules: [JudasJS reference](JUDASJS.md). This document retains milestone architecture and evidence context.
 
 A Ragdoll component is an ordered, parent-first mapping from imported skeleton

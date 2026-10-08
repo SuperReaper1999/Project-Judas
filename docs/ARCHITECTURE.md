@@ -8,11 +8,11 @@ milestones land, rather than kept as a per-milestone snapshot — see
 
 ## Current reference and historical capability overview
 
-Accepted baseline: M66 (`b9a8cf3b8d8cd3786272480a8abe6cbe9fffe859`).
-M66 is the latest completed, human-accepted milestone. M67 is provisionally
-checkpointed by operator authorization; proper human validation is deferred.
-M58 through M66 are checkpointed, not awaiting candidate review.
-The earlier M57-baseline/M58-pending wording recorded a previous review state.
+Accepted baseline: M69 (`8ddec3b97d66815de4174d6e103be77e74b7eb0f`).
+M69 is the latest completed, operator-accepted milestone. M67 remains provisionally
+checkpointed; proper human authoring validation is deferred. M68 and M69 are
+checkpointed, not awaiting review. M69 controller acceptance uses synthetic SDL
+and real-VM evidence because the operator has no controller; hardware feel is untested.
 
 M66 supplies the [commodity multipart import/cook pipeline](MODEL_IMPORT.md).
 The provisional M67 candidate joins editor commands, persistent recipes and schema-1 named
@@ -46,7 +46,7 @@ not override later completed work. Current JS usage starts at [JUDASJS.md](JUDAS
 
 **M65 accepted:** [developer integration](M65_INTEGRATION.md) adds motor contact events, resolved skeleton consumers/limb IK, island sleeping, runtime physics access and bulk/code-first authoring. See the accepted consumer repair record for the measured follow-ups.
 
-**M66 candidate (uncommitted, human review pending):** the shared
+**M66 accepted:** the shared
 [model import service](MODEL_IMPORT.md) adds original FBX/multipart content,
 stable reimport, source diagnostics and size-aware eight-weight skinning.
 
@@ -9313,7 +9313,7 @@ new content is conditional, so unchanged legacy content retains its identity.
 See [M65 workflow/limits](M65_INTEGRATION.md), [authoring](CONTENT_AUTHORING.md),
 [harness](TEST_HARNESS.md) and [current proof/closure table](evidence/m65/REPORT.md).
 
-## M66 — source normalization and ordinary model resources (candidate)
+## M66 — source normalization and ordinary model resources (accepted)
 
 Editor and CLI share authoring-only pinned ufbx/cgltf/tinyobj ingestion and
 transactional named recipes. Sources/dependencies normalize once into version-1
@@ -9337,3 +9337,19 @@ retained animation records require streaming participant version 3; older record
 remain readable. Canonical fingerprint schema remains 5. See [model import](MODEL_IMPORT.md) for actual bounds, recipes, shader/material approximations,
 source rights and unsupported deformations, and [M66 evidence](evidence/m66/REPORT.md)
 for the candidate's numerical, actual-GL and lifecycle results.
+
+## M68–M69 — bounded work and input/query composition (accepted)
+
+M68 reduces measured runtime/authoring/import overhead, bounds resource admission
+and stages GPU publication under a soft budget. Export supports conservative all-assets
+or explicit dependency closure and emits an inclusion report. Cache receipts remain
+content-verified; indivisible work can exceed soft budgets. See [Scalability](SCALABILITY.md).
+
+M69 adds paired raw/controller input, named circular vector bindings and bounded
+ordered observations. Ray, sphere and capsule query batches share one filter and
+return ordered ordinary hits/nulls using existing authoritative geometry. They do
+not add gameplay recognition or a new query solver. See [M69](M69.md),
+[input](judasjs/input.md) and [physics](judasjs/physics.md).
+
+Documentation alignment needs a better repeatable maintenance process; the
+[current follow-up and checkpoint checklist](DOCUMENTATION_MAINTENANCE.md) records it.

@@ -1,9 +1,9 @@
-# JudasJS — current API reference (M69 candidate)
+# JudasJS — current API reference (accepted M69)
 
 JUDAS PROVIDES ENGINE PRIMITIVES. JAVASCRIPT PROVIDES GAME BEHAVIOUR.
 
-This reference describes the M69 paired-input/query candidate on accepted M68,
-checkpoint `c042797c755df68b45e36aa917c4ca72818b9bcd`. It is not an eternal
+This reference describes accepted M69,
+checkpoint `8ddec3b97d66815de4174d6e103be77e74b7eb0f`. It is not an eternal
 compatibility/semantic-version promise. Source authority is `src/ScriptSystem.cpp`
 and the runtime systems it calls; demos do not define API.
 M67 is checkpointed provisionally by operator authorization; proper human validation
@@ -118,4 +118,4 @@ M65 adds resolved joints/limb IK/visual sockets, gravity samples, shared physica
 materials/runtime joints and ordinary motor touch events. [Integration](M65_INTEGRATION.md)
 and [named authoring](CONTENT_AUTHORING.md) provide current examples.
 
-M66 candidate: [model import workflow](MODEL_IMPORT.md), [imported model cookbook](judasjs/examples/imported-model.js), exact part visibility and clip root-motion queries use ordinary entity/animation handles.
+Accepted M66: [model import workflow](MODEL_IMPORT.md), [imported model cookbook](judasjs/examples/imported-model.js), exact part visibility and clip root-motion queries use ordinary entity/animation handles.

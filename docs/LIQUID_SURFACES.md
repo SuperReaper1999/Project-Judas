@@ -1,5 +1,10 @@
 # Dynamic liquid surfaces — M55
 
+**Status through M69:** M55 is operator-accepted and checkpointed. Candidate/pending
+statements and measurements below record the original milestone review state,
+not a current outstanding acceptance gate. Later contracts take precedence;
+start with [Architecture](ARCHITECTURE.md) and [JudasJS](JUDASJS.md).
+
 Starting checkpoint: `d9ebc8c7a987047b1d4175ed5d5de7da8dea472d` (accepted M54).
 Current candidate; operator visual/interactive acceptance is pending.
 

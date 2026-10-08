@@ -2,7 +2,7 @@
 
 Introduced against M66 starting checkpoint
 `3e5147a4ed97102200da91b4181c97b2a98942ba`. The accepted content contract remains.
-M68 candidate cache/readiness changes are described in [Scalability](SCALABILITY.md).
+accepted M68 cache/readiness changes are described in [Scalability](SCALABILITY.md).
 Judas normalizes content; scripts decide what the content means.
 [Animation](ANIMATION.md) · [Materials](MATERIALS.md) · [Collision](M64_COLLISION.md)
 · [JudasJS](JUDASJS.md) · [M66 results](evidence/m66/REPORT.md)

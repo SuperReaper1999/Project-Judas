@@ -5,7 +5,7 @@ This document records current work; historical consumer reports remain unchanged
 The operator authorized a provisional checkpoint on 7 October 2026. Proper human
 authoring, visual and interactive validation remains deferred and unaccepted.
 
-M68 candidate responsiveness follow-through: [Scalability](SCALABILITY.md).
+accepted M68 responsiveness follow-through: [Scalability](SCALABILITY.md).
 This does not change M67's deferred human acceptance.
 
 ## Starting coverage

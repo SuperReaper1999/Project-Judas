@@ -1,5 +1,9 @@
 # Post-M65 consumer corrections
 
+**Historical accepted review/repair record:** the original observations, findings
+and pending-review statements below retain their recorded scope. Later engine
+changes can supersede them; use [Architecture](ARCHITECTURE.md) for current status.
+
 Current candidate based on `26e6f089fde0f39d68659882f6204da3a453473e`. This is the corrective pass following the [accepted consumer review](POST_M65_CONSUMER_REVIEW.md), not M66. The historical review and original games remain unchanged. Automated results below do not replace human gameplay acceptance.
 
 ## Six closures

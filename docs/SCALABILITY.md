@@ -1,6 +1,7 @@
-# Scalability and content-pipeline contracts (M68 candidate)
+# Scalability and content-pipeline contracts (accepted M68)
 
-This describes the candidate based on `52828779993843d9c8b0060f5e30e49e61d0466f`.
+M68 is accepted at `c042797c755df68b45e36aa917c4ca72818b9bcd`; its original
+starting checkpoint was `52828779993843d9c8b0060f5e30e49e61d0466f`.
 M67 human acceptance remains provisional/deferred. Automated checks here do not
 supply that acceptance. Measurements and exact commands are in
 [evidence/m68](evidence/m68/REPORT.md).

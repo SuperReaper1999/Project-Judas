@@ -1,5 +1,10 @@
 # M62 — Cloth and volumetric deformables
 
+**Status through M69:** M62 is operator-accepted and checkpointed. Candidate/pending
+statements and measurements below record the original milestone review state,
+not a current outstanding acceptance gate. Later contracts take precedence;
+start with [Architecture](ARCHITECTURE.md) and [JudasJS](JUDASJS.md).
+
 Combined cloth/solid candidate is implemented and ready for operator review.
 Automated validation is complete; human visual/physical acceptance is pending.
 Starting accepted checkpoint: `9e281d6ed57a7f88bc0a8fa48cd9c3cec6984961`.

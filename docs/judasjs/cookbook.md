@@ -94,7 +94,9 @@ example for configured projection/behind points, layout snapshots/atomic mutatio
 independent prefab initial properties/state/world velocity and stale handles. It
 uses registered assets from [World Workshop](../../projects/world_workshop/README.md).
 
-## Paired input and batched queries (M69 candidate)
+<a id="paired-input-and-batched-queries-m69-candidate"></a>
+
+## Paired input and batched queries (accepted M69)
 
 [paired-stick.js](examples/paired-stick.js) keeps render-frame reads separate from
 authoritative fixed-step observation processing. Its `state` exposes raw and

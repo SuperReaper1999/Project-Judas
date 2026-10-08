@@ -1,6 +1,6 @@
 # Current public JudasJS inventory
 
-M69 paired input and batch-query review of the registered virtual module based on starting checkpoint `c042797c755df68b45e36aa917c4ca72818b9bcd`. M67 human authoring review remains deferred.
+Current accepted surface: M69 (`8ddec3b97d66815de4174d6e103be77e74b7eb0f`). The paired-input/batch-query review originally used M68 starting checkpoint `c042797c755df68b45e36aa917c4ca72818b9bcd`. M67 human authoring review remains deferred.
 Each row is a runtime export/member (constructors and plain handle fields included).
 Native dispatcher operations are implementation details, not additional JS APIs.
 

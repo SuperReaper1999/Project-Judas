@@ -1,8 +1,9 @@
 # Conserved liquid reservoirs — M54
 
-Current candidate based on `16f7d59fa3289e7e7c43aaeb7e88471be6fe348f`.
-This foundation is separate from the accepted PBF production fluid and protected
-P1 research. It has no waves or dynamic free-surface solver.
+Accepted M54 foundation, originally based on `16f7d59fa3289e7e7c43aaeb7e88471be6fe348f`.
+It is separate from retained legacy PBF and protected P1 research. M54 itself
+had no waves; [M55](LIQUID_SURFACES.md) adds optional dynamic surfaces while
+M54 quantity ownership remains authoritative.
 
 ## Ownership and units
 

@@ -1,5 +1,10 @@
 # M49 — Scriptable character motor (candidate)
 
+**Status through M69:** M49 is operator-accepted and checkpointed. Candidate/pending
+statements and measurements below record the original milestone review state,
+not a current outstanding acceptance gate. Later contracts take precedence;
+start with [Architecture](ARCHITECTURE.md) and [JudasJS](JUDASJS.md).
+
 Current public JavaScript signatures, examples and lifetime rules: [JudasJS reference](JUDASJS.md). This document retains milestone architecture and evidence context.
 
 Judas owns collision-aware motion primitives. JavaScript owns character behaviour.
@@ -10,8 +15,11 @@ Judas owns collision-aware motion primitives. JavaScript owns character behaviou
 rigid body, camera, input consumer or animation state machine. Its capsule queries
 use the authoritative PhysicsWorld tree, collider geometry and resolved motion
 segments. Each instance has independent state. A world with no motors does no
-motor work. Character-to-character blocking/events are not implemented: these
-query-only capsules are not registered rigid colliders.
+motor work. **Historical M49 scope:** character blocking/events were not implemented.
+M65 adds queryable motor observation capsules and collision/sensor callbacks through
+the normal physics event path, without making motors dynamic rigid bodies.
+See [current motor contracts](judasjs/character.md); motor-to-motor blocking
+remains a separate limitation.
 
 `SweepCapsuleMotion` generalizes the proven historical player query to explicit
 per-instance radius and cylinder half-height. The legacy query is its wrapper.
@@ -99,7 +107,9 @@ be one; author capsule dimensions explicitly. Children remain ordinary hierarchy
 A conditional `Judas.CharacterMotor.1` fingerprint extension includes every
 motor-authored setting; canonical schema remains 5 and motor-free hashes are
 unchanged. Existing entity-state persistence carries motor position/velocity.
-Support/camera/one-step acceleration are transient and reacquired, not serialized.
+Under the legacy persistence contract, support/camera/one-step acceleration were
+transient. Modern M61 slots preserve motor motion/support identity; presentation
+is reinitialized and camera/input remain project policy. See [save contracts](M61_SAVES.md).
 Disable clears support; destruction, reset, Stop and transitions invalidate state.
 Script removal leaves an enabled component's last resolved velocity/normal gravity
 active; games may explicitly disable it. No script owns the component's lifetime.

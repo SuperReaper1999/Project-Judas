@@ -27,10 +27,10 @@ M45 rigid joints are distinct from skeleton nodes.
 
 ## Historical M46 import and limits
 
-**Superseded by M66 candidate:** [Model import](MODEL_IMPORT.md) documents the
+**Superseded by accepted M66:** [Model import](MODEL_IMPORT.md) documents the
 current multipart/affine/eight-weight import path and size-aware palette. The
 following retains the original M46 scope; its 48-joint/one-mesh restrictions
-do not describe the M66 candidate.
+do not describe accepted M66.
 
 Import `.glb` or `.gltf` as an ordinary Mesh asset. cgltf is pinned to 1.15
 (MIT, Johannes Kuhlmann); source/header/license/provenance are under

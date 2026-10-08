@@ -1,5 +1,3 @@
-M34 audio candidate: [authoring, ownership and listening checklist](docs/M34.md). Operator listening acceptance is pending.
-
 # Project Judas
 
 **Judas is a game engine.** It is purpose-built for one class of game —
@@ -19,14 +17,19 @@ SDL-created context; generation and license provenance are recorded in
 
 ## JUDAS STATUS: READY FOR NEW FEATURE DEVELOPMENT
 
-**M38 standalone export candidate:** Project settings can export a movable Linux
-Release game package with its project input, scenes and registered runtime assets.
-See [export workflow and platform requirements](docs/M38.md). Operator validation
-is pending.
+Current accepted engine checkpoint: M69 (`8ddec3b97d66815de4174d6e103be77e74b7eb0f`).
+M67 authoring review remains provisional/deferred. M69 controller behaviour was
+accepted using synthetic delivery/VM checks; physical controller feel is untested.
+Start with [Architecture](docs/ARCHITECTURE.md), [JudasJS](docs/JUDASJS.md) and
+[documentation maintenance](docs/DOCUMENTATION_MAINTENANCE.md).
 
-**M33 feature candidate:** authored cameras can render into generated textures
+**M38 standalone export (accepted):** Project settings can export a movable Linux
+Release game package with its project input, scenes and registered runtime assets.
+See [export workflow and platform requirements](docs/M38.md).
+
+**M33 secondary cameras (accepted):** authored cameras can render into generated textures
 consumed by ordinary scene materials. See [camera authoring and demo](docs/M33.md).
-Operator visual acceptance/checkpointing is pending; portals are not implemented.
+Operator acceptance is recorded; portals are not implemented.
 
 FTFT1–9 are checkpointed, and the final clean Release validation passed; see
 [`docs/STABILIZATION_STATUS.md`](docs/STABILIZATION_STATUS.md). See
@@ -34,7 +37,7 @@ FTFT1–9 are checkpointed, and the final clean Release validation passed; see
 milestone tag is implied. Full high-fidelity M32 liquid/solid coupling remains
 future research, separate from the approximate production model.
 
-FTFT9's production path uses particle/PBF liquid motion with sampled
+**Historical FTFT9 foundation / retained legacy PBF path:** it uses particle/PBF liquid motion with sampled
 approximate hydrostatics/drag, explicit geometric container cavities, and custom
 player swimming. Exterior collision and analytic support have distinct ownership;
 exact exterior liquid/body momentum conservation is not claimed. The historical
@@ -42,7 +45,10 @@ M24–M26 results below retain their original scope and do not describe this new
 coupling. Current behavioural evidence and accepted numerical limits are recorded
 in the ledger and the [final gate](docs/evidence/stabilization/final-gate/README.md).
 
-The [current production fluid demo](docs/FLUID_DEMO.md) is an ordinary registered
+Current conserved liquid uses [M54 reservoirs/containers](docs/LIQUID_RESERVOIRS.md)
+and [M55 dynamic surfaces](docs/LIQUID_SURFACES.md). Quantity and surface evolution
+have separate ownership; neither claims final fluid fidelity. Protected P1 research
+remains separate. The [legacy particle-fluid demo](docs/FLUID_DEMO.md) is an ordinary registered
 project with a flat swimming pool, a radial-gravity planetary basin, thrown
 bodies and empty geometric containers that can carry actual liquid particles:
 
@@ -53,7 +59,7 @@ bodies and empty geometric containers that can carry actual liquid particles:
 Use F1/F2 to select the two scenes. Historical FTFT/P1 fixtures remain evidence,
 not current demonstration launchers.
 
-Current rigid physics provides:
+Historical FTFT4 rigid-physics results (the numerical costs below describe that gate):
 
 1. A dynamic AABB-tree broadphase with exhaustive-oracle coverage, including
    player sweeps. **1,500 resting crates: 14.266 ms median whole physics step**
@@ -1352,7 +1358,7 @@ the reduced-work measurement. (This list stops at M29; later milestones added ma
 more suites, 147 `judas_*_tests` at M67.) Because the harness now steps the full
 played scene (fluid, combustion, doors, celestial gravity included), it
 is an M1–M28 regression of the real loop rather than a reduced one.
-M27 and M28 operator acceptance passed; M29 operator acceptance is pending.
+M27–M29 operator acceptance passed. These results describe their historical gates.
 Run them with:
 
 ```bash
@@ -1403,10 +1409,10 @@ retained voluntarily; no in-game credit screen is required by that license.
 
 MIT — see [`LICENSE`](LICENSE). Do what you like with it.
 
-## M35 — Project input candidate
+## M35 — Project input (accepted)
 
 Named actions/axes, keyboard/mouse/controller input, project bindings and rebinding.
-See [M35 workflow and scope](docs/M35.md). Human input validation is pending.
+See [M35 workflow and scope](docs/M35.md); M69 extends paired input.
 
 M36 adds linked prefab assets, stable hierarchy IDs, property overrides and runtime spawning. See [M36](docs/M36.md); demo: `judas assets/scenes/prefab_demo.judas`.
 
@@ -1417,20 +1423,20 @@ M39 adds project-defined tags, collision layers/masks, independent query filters
 and per-camera render masks. See [docs/M39.md](docs/M39.md). Demo:
 `./build/judas_editor projects/classification_demo/Classification_and_filtering.judasproj`.
 
-### M40 scripting candidate
+### M40 scripting (accepted)
 
 Projects can author ordered JavaScript behaviours, typed inspector properties,
 controlled saved state, and normal prefab-spawned instances. The embedded
 QuickJS-NG runtime exposes engine primitives instead of game-specific C++ rules.
 See [scripting](docs/SCRIPTING.md) and `projects/script_demo/script_demo.judasproj`.
-Human gameplay/visual/listening validation is pending operator review.
+Operator acceptance is recorded in the milestone history.
 
-### M41 candidate — authored runtime UI
+### M41 — authored runtime UI (accepted)
 
 Projects can author menus/HUDs as UI assets and control them through JavaScript.
 Canvas/panels, text/images, buttons/sliders/toggles share reference-resolution
 layout, clipping and M35 focus/input ownership. See [runtime UI](docs/RUNTIME_UI.md)
-and `projects/ui_demo/ui_demo.judasproj`. Operator visual acceptance is pending.
+and `projects/ui_demo/ui_demo.judasproj`. M58 adds Unicode/localization.
 
 M42: [authored collision/sensor events](docs/COLLISION_EVENTS.md), with a scripted [demo project](projects/touch_demo/touch_demo.judasproj).
 
@@ -1438,7 +1444,7 @@ M43 adds queued runtime scene transitions and bounded JavaScript session data.
 See [scene transitions](docs/SCENE_TRANSITIONS.md). The two-scene demonstration is
 `projects/scene_demo/scene_demo.judasproj` (E send/return, P spawn, R reload).
 
-## Scriptable character motor (M49 candidate)
+## Scriptable character motor (M49, accepted)
 
 Open `projects/character_demo/character_demo.judasproj`: F1 flat course, F2 radial
 planet, F3 JS swimming on the existing pool content. Generic capsule motion and
@@ -1451,7 +1457,7 @@ Start with [JUDASJS.md](docs/JUDASJS.md) for the current API, lifecycle, safe ha
 copyable executed examples and offline editor setup. [judas.d.ts](docs/judas.d.ts)
 provides completion/type information without a TypeScript runtime dependency.
 
-## Engine/game boundary (M51 candidate)
+## Engine/game boundary (M51, accepted)
 
 New projects default to script-owned gameplay. Existing projects without the
 optional `legacy-gameplay` setting retain historical controls for compatibility.
@@ -1470,9 +1476,9 @@ project JavaScript. See [M51 workflow/controls](docs/M51_ENGINE_BOUNDARY.md) and
 ## Spring Range (M52)
 
 A small ordinary JudasJS shooting-range game: [project and controls](projects/shooter_game/README.md), [architecture and candidate results](docs/M52_SHOOTER_GAME.md).
-All movement/camera/shooting/score/menu policy is project JavaScript; the only native addition exposes the existing generic impulse-at-point operation.
+All movement/camera/shooting/score/menu policy is project JavaScript. Generic native additions expose impulse-at-point and interpolated presentation poses; authoritative gameplay remains separate.
 
-## Later milestones (M53–M67)
+## Later milestones (M53–M69)
 
 Each document below is that milestone's architecture/workflow record. The
 current scripting API for all of them is [JUDASJS.md](docs/JUDASJS.md).
@@ -1494,3 +1500,5 @@ current scripting API for all of them is [JUDASJS.md](docs/JUDASJS.md).
 | M65 | Developer integration: joint reads, IK, sockets, runtime joints, physical materials | [M65_INTEGRATION.md](docs/M65_INTEGRATION.md), [post-M65 review](docs/POST_M65_CONSUMER_REVIEW.md) | `projects/m65_integration`, `projects/post_m65_consumers` |
 | M66 | Model import (FBX/glTF/OBJ) and reimport | [MODEL_IMPORT.md](docs/MODEL_IMPORT.md) | `projects/import_lab` (needs local-only originals) |
 | M67 (provisional) | World building recipes and named authoring documents | [M67_WORLD_BUILDING.md](docs/M67_WORLD_BUILDING.md), [NAMED_AUTHORING.md](docs/NAMED_AUTHORING.md) | `projects/world_workshop` |
+| M68 | Measured scalability, bounded resource handoff, import caches and export closure | [SCALABILITY.md](docs/SCALABILITY.md) | `projects/world_workshop` |
+| M69 | Paired controller input and batched physics queries | [M69.md](docs/M69.md), [input](docs/judasjs/input.md), [physics](docs/judasjs/physics.md) | [cookbook examples](docs/judasjs/cookbook.md) |

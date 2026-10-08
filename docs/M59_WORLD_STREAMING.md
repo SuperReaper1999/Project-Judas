@@ -1,5 +1,10 @@
 # M59 — additive worlds and asynchronous region streaming
 
+**Status through M69:** M59 is operator-accepted and checkpointed. Candidate/pending
+statements and measurements below record the original milestone review state,
+not a current outstanding acceptance gate. Later contracts take precedence;
+start with [Architecture](ARCHITECTURE.md) and [JudasJS](JUDASJS.md).
+
 Candidate based on `6fb90d56562651d027a8740cc8d17bb655d9b8b0` (accepted M58).
 Human acceptance is pending. [JudasJS API](judasjs/streaming.md).
 
@@ -186,7 +191,7 @@ across process exit, including pinned liquid/articulation families. This replace
 the prior absence of composed-world disk persistence; it does not relax eviction
 policy or turn a pin into a save.
 
-## M66 candidate: imported animation suspension
+## accepted M66: imported animation suspension
 
 Ordinary animated snapshot regions now reuse the M61 per-instance pose record
 when retiring/revisiting. Shared cooked dependencies load before publication;

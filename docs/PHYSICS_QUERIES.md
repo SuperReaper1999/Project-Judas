@@ -6,7 +6,11 @@ Judas answers geometric questions; project JavaScript gives the answers meaning.
 These are **read-only queries of resolved colliders**, separate from M42 events,
 player locomotion sweeps and the impact solver.
 
-## Current extension through M64
+## Current extensions through M69
+
+M69 adds `physics.raycastMany`, `sphereCastMany` and `capsuleCastMany`: at most
+256 requests, one shared normal filter and ordered scalar-style hit/null results.
+See [current batch contracts](judasjs/physics.md). Existing geometry is unchanged.
 
 M64 extends these existing queries to actual cooked hulls, static triangle surfaces
 and oriented compound children. It adds `physics.closestPoint` and read-only

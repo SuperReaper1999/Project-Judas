@@ -1,5 +1,10 @@
 # M65 — Developer integration
 
+**Status through M69:** M65 is operator-accepted and checkpointed. Candidate/pending
+statements and measurements below record the original milestone review state,
+not a current outstanding acceptance gate. Later contracts take precedence;
+start with [Architecture](ARCHITECTURE.md) and [JudasJS](JUDASJS.md).
+
 Current candidate from `19a53a42a9b363818e67c07d8b63e9fddcea2845`. Human review pending.
 
 Judas provides reusable geometry, pose and ownership mechanisms. Parkour, skating,

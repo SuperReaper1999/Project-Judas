@@ -1,5 +1,5 @@
-/** Current JudasJS through the M69 candidate; reviewed against ScriptSystem.cpp
- * based on accepted M68 c042797c755df68b45e36aa917c4ca72818b9bcd. Tooling only, no TS runtime.
+/** Current JudasJS through accepted M69; reviewed against ScriptSystem.cpp.
+ * API checkpoint 8ddec3b97d66815de4174d6e103be77e74b7eb0f. Tooling only, no TS runtime.
  * See JUDASJS.md. Ordinary returned objects are detached snapshots.
  */
 declare module "judas" {

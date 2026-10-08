@@ -1,5 +1,10 @@
 # M51 — engine primitives, project behaviour
 
+**Status through M69:** M51 is operator-accepted and checkpointed. Candidate/pending
+statements and measurements below record the original milestone review state,
+not a current outstanding acceptance gate. Later contracts take precedence;
+start with [Architecture](ARCHITECTURE.md) and [JudasJS](JUDASJS.md).
+
 Candidate based on M50 checkpoint `74da7b534831d7cb7043ed1c02970283f7078daf`.
 No milestone beyond M51 is implemented here. Human review is pending.
 

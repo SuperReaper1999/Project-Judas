@@ -1,5 +1,10 @@
 # M61 game persistence — implementation contract
 
+**Status through M69:** M61 is operator-accepted and checkpointed. Candidate/pending
+statements and measurements below record the original milestone review state,
+not a current outstanding acceptance gate. Later contracts take precedence;
+start with [Architecture](ARCHITECTURE.md) and [JudasJS](JUDASJS.md).
+
 M61 candidate built on accepted M60 checkpoint
 `a9c6cd780b8c93db6355b791c6fdb34afec7cf53`. Human review is pending.
 See [measured evidence](evidence/m61/RESULTS.md),

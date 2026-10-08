@@ -1,5 +1,10 @@
 # M52 — Spring Range
 
+**Status through M69:** M52 is operator-accepted and checkpointed. Candidate/pending
+statements and measurements below record the original milestone review state,
+not a current outstanding acceptance gate. Later contracts take precedence;
+start with [Architecture](ARCHITECTURE.md) and [JudasJS](JUDASJS.md).
+
 Starting checkpoint: `73698d1a1f928c7210679e58fdb5259d2a196c7b`.
 Candidate awaiting operator gameplay/visual/listening acceptance; no checkpoint made.
 
@@ -117,8 +122,10 @@ narrow follow-ups. [Exact changed files](evidence/m52/CHANGED_FILES.txt) and
 
 Basic shoulder-camera sphere cast, without smoothing/full camera collision solving.
 Semi-automatic hitscan; no recoil, ballistics, AI or enemies. Shared emitter voices
-are simple retriggered effects, not a polyphonic mixer. ASCII UI and existing
-motor/query/joint approximations apply. Exports retain normal Linux system-library
+were simple retriggered effects at M52, not a polyphonic mixer. Its original
+ASCII-only UI restriction was superseded by M58 Unicode/localization. M53 later
+adds navigating enemies to Spring Range; this section records the M52 game scope.
+Use current subsystem references for motor/query/joint and audio limits. Exports retain normal Linux system-library
 requirements. Automated screenshots/state cannot establish game feel or sound.
 
 1. Move/jump; aim and shoot in first person.
