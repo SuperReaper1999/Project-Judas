@@ -1,0 +1,27 @@
+[
+  {
+    "name": "ik",
+    "command": [
+      "build/judas_multi_target_ik_tests"
+    ],
+    "seconds": 0.06462113499947009,
+    "exit": 0
+  },
+  {
+    "name": "physical",
+    "command": [
+      "build/judas_physical_animation_tests"
+    ],
+    "seconds": 0.016482819999509957,
+    "exit": 1
+  },
+  {
+    "name": "lab",
+    "command": [
+      "build/judas_character_lab_tests",
+      ".cache/m70-review/lab-final"
+    ],
+    "seconds": 2.1180790649996197,
+    "exit": 1
+  }
+]

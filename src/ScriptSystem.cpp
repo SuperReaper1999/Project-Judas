@@ -15,6 +15,7 @@
 #include "ResourceManager.h"
 #include "ProductionFluidCoupling.h"
 #include "quickjs.h"
+#include "../third_party/nlohmann/json.hpp"
 #include <algorithm>
 #include <cmath>
 #include <cstdio>
@@ -202,7 +203,12 @@ export class Ragdoll {
  enter(){return call('ragdollEnter',this.id)}
  leave(seconds=.4){return call('ragdollLeave',this.id,seconds)}
  set enabled(value){call('ragdollEnabled',this.id,value)}
+ get receiveContactEvents(){return call('ragdollContactEvents',this.id)}
+ set receiveContactEvents(value){call('ragdollContactEvents',this.id,value)}
  body(joint){return entity(call('ragdollBody',this.id,joint))}
+ configurePhysical(settings){return call('ragdollPhysicalConfigure',this.id,settings)}
+ setMode(mode,options={}){return call('ragdollMode',this.id,mode,options)}
+ get physicalState(){return call('ragdollPhysicalState',this.id)}
 }
 export class Animation {
  constructor(entityId){this.entityId=entityId}
@@ -227,6 +233,9 @@ export class Animation {
  jointTransform(key,space='world',presented=false){return call('animationJointPose',this.entityId,key,space,presented)}
  limb(id,settings){return call('animationLimb',this.entityId,id,settings)}
  removeLimb(id){return call('animationRemoveLimb',this.entityId,id)}
+ configureIK(settings){return call('animationIKConfigure',this.entityId,settings)}
+ ikTargets(targets){return call('animationIKTargets',this.entityId,targets)}
+ get ikStatus(){return call('animationIKStatus',this.entityId)}
 }
 export class Joint {
  constructor(id){this.id=String(id)}
@@ -937,6 +946,29 @@ JSValue ScriptSystem::Impl::Native(JSContext* c,JSValueConst,int argc,JSValueCon
     if(op.rfind("ragdoll",0)==0){
         if(op=="ragdollExists")return JS_NewBool(c,definition->ragdoll.has_value());
         if(!definition->ragdoll)return JS_ThrowTypeError(c,"entity has no ragdoll mapping");
+        if(op=="ragdollContactEvents"){
+            if(argc<3)return JS_NewBool(c,definition->ragdoll->receiveContactEvents);
+            if(!JS_IsBool(arg(2)))return JS_ThrowTypeError(c,"boolean required");
+            return JS_NewBool(c,world.SetRagdollContactEvents(id,JS_ToBool(c,arg(2))));
+        }
+        if(op=="ragdollPhysicalConfigure"){
+            std::optional<PhysicalAnimationSettings> settings;std::string error,json;
+            if(!JS_IsNull(arg(2))){PhysicalAnimationSettings parsed;if(!s->Json(arg(2),json,error)||!ParsePhysicalAnimationSettings(json,parsed,error))return JS_ThrowTypeError(c,"physical settings: %s",error.c_str());settings=std::move(parsed);}
+            return world.ConfigurePhysicalAnimation(id,settings,error)?JS_TRUE:JS_ThrowTypeError(c,"%s",error.c_str());
+        }
+        if(op=="ragdollMode"){
+            PhysicalAnimationRequest request;std::string error,json;if(!JS_IsString(arg(2))||!ParsePhysicalAnimationMode(String(c,arg(2)),request.mode))return JS_ThrowTypeError(c,"mode must be animation/partial/active/passive");
+            if(!s->Json(arg(3),json,error))return JS_ThrowTypeError(c,"%s",error.c_str());
+            try{auto options=nlohmann::json::parse(json);if(!options.is_object())throw std::runtime_error("mode options must be an object");for(auto it=options.begin();it!=options.end();++it)if(it.key()!="fade"&&it.key()!="motorHandoff"&&it.key()!="resumeMotor"&&it.key()!="placement")throw std::runtime_error("unknown mode option: "+it.key());
+                request.fade=options.value("fade",request.fade);request.motorHandoff=options.value("motorHandoff",false);request.resumeMotor=options.value("resumeMotor",false);
+                if(options.contains("placement")){auto place=options.at("placement");if(!place.is_object()||place.size()!=2)throw std::runtime_error("placement needs position and rotation");auto p=place.at("position"),q=place.at("rotation");if(!p.is_array()||p.size()!=3||!q.is_array()||q.size()!=4)throw std::runtime_error("placement arrays have lengths 3/4");PhysicalAnimationPlacement value;value.position={p[0].get<float>(),p[1].get<float>(),p[2].get<float>()};value.rotation={q[3].get<float>(),q[0].get<float>(),q[1].get<float>(),q[2].get<float>()};request.placement=value;}
+            }catch(const std::exception& e){return JS_ThrowTypeError(c,"%s",e.what());}
+            return world.RequestPhysicalAnimation(id,request,error)?JS_TRUE:JS_ThrowTypeError(c,"%s",error.c_str());
+        }
+        if(op=="ragdollPhysicalState"){
+            auto state=world.PhysicalAnimationSnapshot(id);auto o=JS_NewObject(c);JS_SetPropertyStr(c,o,"mode",JS_NewString(c,PhysicalAnimationModeName(state.mode)));JS_SetPropertyStr(c,o,"pending",state.pending?JS_NewString(c,PhysicalAnimationModeName(state.pending->mode)):JS_NULL);JS_SetPropertyStr(c,o,"diagnostic",JS_NewString(c,state.diagnostic.c_str()));auto observations=JS_NewArray(c);unsigned index=0;
+            for(const auto& drive:state.observations){auto v=JS_NewObject(c);JS_SetPropertyStr(c,v,"joint",JS_NewString(c,drive.joint.c_str()));JS_SetPropertyStr(c,v,"region",JS_NewString(c,drive.region.c_str()));JS_SetPropertyStr(c,v,"angleError",JS_NewFloat64(c,drive.angleError));JS_SetPropertyStr(c,v,"torque",JS_NewFloat64(c,drive.torque));JS_SetPropertyStr(c,v,"saturated",JS_NewBool(c,drive.saturated));JS_SetPropertyStr(c,v,"sleeping",JS_NewBool(c,drive.sleeping));JS_SetPropertyUint32(c,observations,index++,v);}JS_SetPropertyStr(c,o,"drives",observations);return o;
+        }
         if(op=="ragdollActive")return JS_NewBool(c,world.RagdollActive(id));
         if(op=="ragdollBody"){if(!JS_IsString(arg(2)))return JS_ThrowTypeError(c,"joint key required");auto body=world.RagdollBody(id,String(c,arg(2)));return JS_NewString(c,std::to_string(body).c_str());}
         std::string error;bool ok=false;
@@ -949,6 +981,23 @@ JSValue ScriptSystem::Impl::Native(JSContext* c,JSValueConst,int argc,JSValueCon
     if(op.rfind("animation",0)==0){
         if(op=="animationExists")return JS_NewBool(c,definition->animation.has_value());
         auto* instance=world.RuntimeAnimation(id);if(!instance)return JS_ThrowTypeError(c,"entity has no animated mesh");
+        if(op=="animationIKConfigure"||op=="animationIKTargets"){
+            std::string error,json;std::optional<FullBodyIKSettings> settings;
+            if(op=="animationIKConfigure"){
+                if(!JS_IsNull(arg(2))){FullBodyIKSettings parsed;if(!s->Json(arg(2),json,error)||!ParseFullBodyIKSettings(json,parsed,error))return JS_ThrowTypeError(c,"%s",error.c_str());settings=std::move(parsed);}
+                return world.ConfigureFullBodyIK(id,settings,error)?JS_TRUE:JS_ThrowTypeError(c,"%s",error.c_str());
+            }
+            if(!definition->animation->fullBodyIK)return JS_ThrowTypeError(c,"configureIK first");
+            auto copy=*definition->animation->fullBodyIK;
+            if(!s->Json(arg(2),json,error))return JS_ThrowTypeError(c,"%s",error.c_str());
+            try{auto config=nlohmann::json::parse(SerializeFullBodyIKSettings(copy));config["targets"]=nlohmann::json::parse(json);if(!ParseFullBodyIKSettings(config.dump(),copy,error))return JS_ThrowTypeError(c,"%s",error.c_str());}catch(const std::exception& e){return JS_ThrowTypeError(c,"%s",e.what());}
+            return world.SetFullBodyIKTargets(id,copy.targets,error)?JS_TRUE:JS_ThrowTypeError(c,"%s",error.c_str());
+        }
+        if(op=="animationIKStatus"){
+            auto o=JS_NewObject(c);JS_SetPropertyStr(c,o,"ready",JS_NewBool(c,bool(instance->asset)));JS_SetPropertyStr(c,o,"enabled",JS_NewBool(c,definition->animation->fullBodyIK&&definition->animation->fullBodyIK->enabled));JS_SetPropertyStr(c,o,"diagnostic",JS_NewString(c,instance->error.c_str()));auto targets=JS_NewArray(c);
+            if(instance->fullBodyIK){const auto& result=instance->fullBodyIK->result;JS_SetPropertyStr(c,o,"converged",JS_NewBool(c,result.converged));JS_SetPropertyStr(c,o,"iterations",JS_NewInt32(c,result.iterations));JS_SetPropertyStr(c,o,"solveMicroseconds",JS_NewFloat64(c,result.solveMicroseconds));JS_SetPropertyStr(c,o,"rootCorrection",Vec(c,result.rootCorrection));unsigned i=0;for(const auto& target:result.targets){auto v=JS_NewObject(c);JS_SetPropertyStr(c,v,"id",JS_NewString(c,target.id.c_str()));JS_SetPropertyStr(c,v,"status",JS_NewString(c,target.status.c_str()));JS_SetPropertyStr(c,v,"positionError",JS_NewFloat64(c,target.positionError));JS_SetPropertyStr(c,v,"orientationError",JS_NewFloat64(c,target.orientationError));JS_SetPropertyStr(c,v,"actualPosition",Vec(c,target.actualPosition));auto q=Vec(c,{target.actualOrientation.x,target.actualOrientation.y,target.actualOrientation.z});JS_SetPropertyStr(c,q,"w",JS_NewFloat64(c,target.actualOrientation.w));JS_SetPropertyStr(c,v,"actualOrientation",q);JS_SetPropertyUint32(c,targets,i++,v);}}
+            else{JS_SetPropertyStr(c,o,"converged",JS_FALSE);JS_SetPropertyStr(c,o,"iterations",JS_NewInt32(c,0));JS_SetPropertyStr(c,o,"solveMicroseconds",JS_NewFloat64(c,0));JS_SetPropertyStr(c,o,"rootCorrection",Vec(c,glm::vec3(0)));}JS_SetPropertyStr(c,o,"targets",targets);return o;
+        }
         auto& player=instance->playback;
         if(op=="animationRootMotion"){
             if(!JS_IsString(arg(2))||!JS_IsBool(arg(5)))return JS_ThrowTypeError(c,"clip name and loop flag required");
@@ -1248,7 +1297,7 @@ void ScriptSystem::UIEvents(const InputSystem* input,float dt){
     }
 }
 
-void ScriptSystem::PhysicsEvent(SceneObjectId self,SceneObjectId other,const PhysicsWorld::TouchEvent& event,bool reverse){
+void ScriptSystem::PhysicsEvent(SceneObjectId self,SceneObjectId other,const PhysicsWorld::TouchEvent& event,bool reverse,SceneObjectId selfBody,const std::string& selfJoint,SceneObjectId otherArticulation,const std::string& otherJoint){
  JUDAS_PROFILE_SCOPE("JavaScript contact events");
     m->CheckThread();m->fixed=true;
     auto* definition=m->world->RuntimeDefinition(self);if(!definition)return;
@@ -1257,7 +1306,7 @@ void ScriptSystem::PhysicsEvent(SceneObjectId self,SceneObjectId other,const Phy
     const char* name=names[event.sensor?1:0][static_cast<int>(event.phase)];
     for(const auto& slot:slots){
         auto* live=m->world->RuntimeDefinition(self);if(!live)return;
-        if(event.phase!=PhysicsWorld::TouchPhase::Exit&&!m->world->Physics().IsBodyEnabled(m->world->RuntimeBody(self)))return;
+        if(event.phase!=PhysicsWorld::TouchPhase::Exit&&!m->world->Physics().IsBodyEnabled(reverse?event.b:event.a))return;
         if(std::none_of(live->scripts.begin(),live->scripts.end(),[&](const auto& s){return s.id==slot.id&&s.enabled;}))continue;
         auto it=m->instances.find({self,slot.id});if(it==m->instances.end()||it->second.fault)continue;
         auto& i=it->second;if(!i.started){i.started=true;m->Callback(i,i.loaded?"restore":"start");}
@@ -1271,6 +1320,11 @@ void ScriptSystem::PhysicsEvent(SceneObjectId self,SceneObjectId other,const Phy
             auto handle=JS_Call(m->ctx,entityFn,JS_UNDEFINED,1,&id);
             JS_FreeValue(m->ctx,id);JS_FreeValue(m->ctx,entityFn);JS_FreeValue(m->ctx,ns);
             JS_SetPropertyStr(m->ctx,e,"other",handle);
+            auto makeEntity=[&](SceneObjectId value){auto lib=m->NamespaceLibrary();auto fn=JS_GetPropertyStr(m->ctx,lib,"entity");auto key=JS_NewString(m->ctx,std::to_string(value).c_str());auto result=JS_Call(m->ctx,fn,JS_UNDEFINED,1,&key);JS_FreeValue(m->ctx,key);JS_FreeValue(m->ctx,fn);JS_FreeValue(m->ctx,lib);return result;};
+            JS_SetPropertyStr(m->ctx,e,"selfBody",makeEntity(selfBody?selfBody:self));
+            JS_SetPropertyStr(m->ctx,e,"selfJoint",selfJoint.empty()?JS_NULL:JS_NewString(m->ctx,selfJoint.c_str()));
+            JS_SetPropertyStr(m->ctx,e,"otherArticulation",makeEntity(otherArticulation));
+            JS_SetPropertyStr(m->ctx,e,"otherJoint",otherJoint.empty()?JS_NULL:JS_NewString(m->ctx,otherJoint.c_str()));
             JS_SetPropertyStr(m->ctx,e,"point",Vec(m->ctx,event.point));
             JS_SetPropertyStr(m->ctx,e,"normal",Vec(m->ctx,reverse?-event.normal:event.normal));
             JS_SetPropertyStr(m->ctx,e,"relativeVelocity",Vec(m->ctx,reverse?-event.relativeVelocity:event.relativeVelocity));

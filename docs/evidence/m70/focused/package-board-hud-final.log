@@ -1,0 +1,17 @@
+Renderer fragment texture units: 32 (material path uses 12)
+World state: /tmp/judas-m70-package-board-state/judas/games/c81cc201a8f5277315776a87cba85c747fdda6dd9e2ccb375b6938c7fd2d0372/Saves/wall.judasstate (none saved)
+Project: Character Lab (/tmp/judas-m70-character-lab-20261008/game.judasproj)
+Scene: M70 / wall (/tmp/judas-m70-character-lab-20261008/Scenes/wall.judas)
+World origin (m): 0.000, 0.000, 0.000
+step,time,posX,posY,posZ,upX,upY,upZ,grounded,velX,velY,velZ,gravX,gravY,gravZ,controlled,frame,steps,paused
+0,0.00000,0.000000,1.010594,6.016187,0.000000,0.998201,-0.059964,0,0.000000,0.000000,0.000000,0.000000,-9.810000,0.000000,0,0,1,0
+[TestHarness] service scene ready after 0 wait frames at frame 18
+60,1.00000,0.000000,1.010594,6.016187,0.000000,0.998201,-0.059964,0,0.000000,0.000000,0.000000,0.000000,-9.810000,0.000000,0,60,1,0
+120,2.00000,0.000000,1.010594,6.016187,0.000000,0.998201,-0.059964,0,0.000000,0.000000,0.000000,0.000000,-9.810000,0.000000,0,120,1,0
+180,3.00000,0.000000,1.010594,6.016187,0.000000,0.998201,-0.059964,0,0.000000,0.000000,0.000000,0.000000,-9.810000,0.000000,0,180,1,0
+[TestHarness] service save ready after 4 wait frames at frame 193
+240,4.00000,0.000000,1.010594,6.016187,0.000000,0.998201,-0.059964,0,0.000000,0.000000,0.000000,0.000000,-9.810000,0.000000,0,240,1,0
+[TestHarness] service save ready after 4 wait frames at frame 243
+300,5.00000,0.000000,0.000000,0.000000,0.000000,1.000000,0.000000,0,0.000000,0.000000,0.000000,0.000000,-9.810000,0.000000,0,300,1,0
+[TestHarness] service scene ready after 0 wait frames at frame 303
+[TestHarness] Wrote screenshot: /tmp/judas-m70-unrelated-working-directory/board.png

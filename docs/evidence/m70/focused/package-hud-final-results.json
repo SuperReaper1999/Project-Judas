@@ -1,0 +1,35 @@
+[
+  {
+    "scene": "wall",
+    "command": [
+      "/tmp/judas-m70-character-lab-20261008/judas"
+    ],
+    "cwd": "/tmp/judas-m70-unrelated-working-directory",
+    "testScript": "/tmp/judas-m70-steps/wall.steps",
+    "xdgDataHome": "/tmp/judas-m70-package-wall-state",
+    "exit": 0,
+    "seconds": 1.6214651040008903
+  },
+  {
+    "scene": "board",
+    "command": [
+      "/tmp/judas-m70-character-lab-20261008/judas"
+    ],
+    "cwd": "/tmp/judas-m70-unrelated-working-directory",
+    "testScript": "/tmp/judas-m70-steps/board.steps",
+    "xdgDataHome": "/tmp/judas-m70-package-board-state",
+    "exit": 0,
+    "seconds": 1.0663057290003053
+  },
+  {
+    "scene": "physical",
+    "command": [
+      "/tmp/judas-m70-character-lab-20261008/judas"
+    ],
+    "cwd": "/tmp/judas-m70-unrelated-working-directory",
+    "testScript": "/tmp/judas-m70-steps/physical.steps",
+    "xdgDataHome": "/tmp/judas-m70-package-physical-state",
+    "exit": 0,
+    "seconds": 2.1201788029993622
+  }
+]

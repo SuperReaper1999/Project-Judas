@@ -1,0 +1,141 @@
+PASS SHA-256 empty known vector
+PASS SHA-256 abc known vector
+PASS SHA-256 multiple-block padding known vector
+PASS SHA-256 million-a known vector
+PASS schema 5 default Scene independent binary/hash golden vector
+PASS all-component scene serializes/reloads: 
+PASS all-component scene keeps canonical identity
+PASS signed zero is canonical
+PASS inactive unserialized settings do not change identity
+PASS inactive-field scene serializes/reloads: 
+PASS inactive-field scene keeps canonical identity
+PASS inactive sphere radius excluded for box gravity region
+PASS box-region scene serializes/reloads: 
+PASS box-region scene keeps canonical identity
+PASS fingerprint covers settings.name
+PASS fingerprint covers settings.worldOrigin.x
+PASS fingerprint covers settings.sunDirection.y
+PASS fingerprint covers settings.sunColor.z
+PASS fingerprint covers settings.ambientColor.x
+PASS fingerprint covers settings.fluidScale
+PASS fingerprint covers settings.fluidUpdateRateHz
+PASS fingerprint covers settings.fluidHydrostaticDragRate
+PASS fingerprint covers settings.fidelityPolicy
+PASS fingerprint covers settings.fidelityFullRadius
+PASS fingerprint covers settings.fidelityCoarseRadius
+PASS fingerprint covers NextId
+PASS fingerprint covers stable ID
+PASS fingerprint covers added object
+PASS fingerprint covers removed object
+PASS fingerprint covers authored object order
+PASS fingerprint covers name
+PASS fingerprint covers transform.position.x
+PASS fingerprint covers transform.rotation.w
+PASS fingerprint covers transform.scale.z
+PASS fingerprint covers render->shape
+PASS fingerprint covers render->halfExtents.x
+PASS fingerprint covers render->radius
+PASS fingerprint covers render->color.y
+PASS fingerprint covers render->alpha
+PASS fingerprint covers render->secondaryColor.y
+PASS fingerprint covers render->secondaryAlpha
+PASS fingerprint covers render->meshAsset
+PASS fingerprint covers render->textureAsset
+PASS fingerprint covers body->motion
+PASS fingerprint covers body->shape
+PASS fingerprint covers body->halfExtents.z
+PASS fingerprint covers body->radius
+PASS fingerprint covers body->terrainSurface
+PASS fingerprint covers body->mass
+PASS fingerprint covers body->friction
+PASS fingerprint covers body->restitution
+PASS fingerprint covers body->initialLinearVelocity.x
+PASS fingerprint covers body->pickable
+PASS fingerprint covers body->managed
+PASS fingerprint covers body->compoundBoxes[0].localCenter.y
+PASS fingerprint covers body->compoundBoxes[0].halfExtents.z
+PASS fingerprint covers compound count
+PASS fingerprint covers gravity->kind
+PASS fingerprint covers gravity->magnitude
+PASS fingerprint covers gravity->regionShape
+PASS fingerprint covers gravity->regionRadius
+PASS fingerprint covers box gravity extents
+PASS fingerprint covers light->kind
+PASS fingerprint covers light->color.x
+PASS fingerprint covers light->range
+PASS fingerprint covers light->innerConeDegrees
+PASS fingerprint covers light->outerConeDegrees
+PASS fingerprint covers door->localHingeAxis.z
+PASS fingerprint covers door->openAngleDegrees
+PASS fingerprint covers door->angularSpeedDegreesPerSecond
+PASS fingerprint covers lightSwitch->localHingeAxis.x
+PASS fingerprint covers lightSwitch->toggleAngleDegrees
+PASS fingerprint covers lightSwitch->angularSpeedDegreesPerSecond
+PASS fingerprint covers lightSwitch->lampLocalOffset.z
+PASS fingerprint covers lightSwitch->lampColor.z
+PASS fingerprint covers lightSwitch->lampRange
+PASS fingerprint covers vehicle->gravity
+PASS fingerprint covers vehicle->headlight
+PASS fingerprint covers vehicle->navigationLights
+PASS fingerprint covers vehicle->dragCoefficient
+PASS fingerprint covers vehicle->initialPilotAttached
+PASS fingerprint covers celestial->gravitationalParameter
+PASS fingerprint covers celestial->operatorThrustForce
+PASS fingerprint covers atmosphere->referenceRadius
+PASS fingerprint covers atmosphere->topRadius
+PASS fingerprint covers atmosphere->referenceDensity
+PASS fingerprint covers atmosphere->polytropicExponent
+PASS fingerprint covers atmosphere->oxidizerMassFraction
+PASS fingerprint covers atmosphere->referenceTemperatureKelvin
+PASS fingerprint covers combustible->heatCapacityJPerK
+PASS fingerprint covers combustible->initialFuelMassKg
+PASS fingerprint covers combustible->ignitionTemperatureK
+PASS fingerprint covers combustible->maximumFuelRateKgPerSecond
+PASS fingerprint covers combustible->radiativeAreaSquareMeters
+PASS fingerprint covers combustible->retainedCombustionHeatFraction
+PASS fingerprint covers fluidVolume->spacing
+PASS fingerprint covers fluidVolume->countX
+PASS fingerprint covers fluidVolume->countY
+PASS fingerprint covers fluidVolume->countZ
+PASS fingerprint covers fluidVolume->emitter
+PASS fingerprint covers fluidVolume->emitterLocalOffset.z
+PASS fingerprint covers fluidVolume->maxParticles
+PASS fingerprint covers playerStart->view
+PASS fingerprint covers playerStart->yawDegrees
+PASS fingerprint covers playerStart->density
+PASS fingerprint covers playerStart->fluidDrag
+PASS fingerprint covers playerStart->swimAcceleration
+PASS fingerprint covers body->fluidCavities[0].localCenter.x
+PASS fingerprint covers body->fluidCavities[0].halfExtents.z
+PASS fingerprint covers fluid cavity presence/count
+PASS fingerprint covers render presence
+PASS fingerprint covers body presence
+PASS fingerprint covers gravity presence
+PASS fingerprint covers light presence
+PASS fingerprint covers door presence
+PASS fingerprint covers lightSwitch presence
+PASS fingerprint covers vehicle presence
+PASS fingerprint covers celestial presence
+PASS fingerprint covers atmosphere presence
+PASS fingerprint covers combustible presence
+PASS fingerprint covers fluidVolume presence
+PASS fingerprint covers playerStart presence
+PASS duplicate IDs rejected without output mutation
+PASS zero ID rejected
+PASS ID at/above NextId rejected
+PASS non-finite component rejected
+PASS non-finite setting rejected
+PASS invalid enum rejected
+PASS load authored fixture assets/scenes/classic.judas: 
+PASS assets/scenes/classic.judas serializes/reloads: 
+PASS assets/scenes/classic.judas keeps canonical identity
+PASS load authored fixture assets/scenes/terrain.judas: 
+PASS assets/scenes/terrain.judas serializes/reloads: 
+PASS assets/scenes/terrain.judas keeps canonical identity
+PASS load authored fixture assets/scenes/flat_playground.judas: 
+PASS assets/scenes/flat_playground.judas serializes/reloads: 
+PASS assets/scenes/flat_playground.judas keeps canonical identity
+PASS load authored fixture assets/scenes/fidelity_demo.judas: 
+PASS assets/scenes/fidelity_demo.judas serializes/reloads: 
+PASS assets/scenes/fidelity_demo.judas keeps canonical identity
+Scene fingerprint: 140 checks, 0 failures

@@ -1,0 +1,62 @@
+{
+  "kind": "scene",
+  "schema": 1,
+  "data": {
+    "settings": {
+      "name": "",
+      "world-origin": [
+        0,
+        0,
+        0
+      ],
+      "sun-direction": [
+        0.4,
+        0.7,
+        0.35
+      ],
+      "sun-color": [
+        1,
+        0.98,
+        0.92
+      ],
+      "ambient": [
+        0.16,
+        0.17,
+        0.19
+      ],
+      "fluid-scale": 1,
+      "fluid-update-rate-hz": 30,
+      "fluid-hydrostatic-drag-rate": 2,
+      "fidelity-policy": {
+        "mode": {
+          "symbol": "none"
+        }
+      },
+      "next-id": 2
+    },
+    "objects": [
+      {
+        "id": 1,
+        "name": "Project JS controls",
+        "fields": {
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ]
+        }
+      }
+    ]
+  }
+}

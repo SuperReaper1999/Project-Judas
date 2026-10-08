@@ -1,5 +1,7 @@
 #pragma once
 #include "RigidBody.h"
+#include <algorithm>
+#include <cstring>
 #include <vector>
 #include <stdexcept>
 
@@ -19,9 +21,21 @@ struct RigidMotionSegment {
         result.inverseMass = inverseMass;
         result.position = position; result.orientation = orientation;
         result.linearVelocity = linearVelocity; result.angularVelocity = angularVelocity;
-        // Call the original arithmetic from a fixed anchor: full no-impact dt
-        // has exactly the original binary32 representation and arithmetic order.
-        IntegrateRigidBodyPosition(result, static_cast<float>(time - begin));
+        // Keep the integrator's arithmetic for represented movement, but an
+        // unchanged angular sample must preserve its anchor. Re-normalizing a
+        // binary32 quaternion at zero/sub-ULP drift can alternate between two
+        // values and fabricate repeated detach/impact events in a contact island.
+        // This is an exact bit test, not an angular tolerance or a CCD time cap.
+        if (!result.IsStatic()) {
+            const float elapsed = static_cast<float>(time - begin);
+            result.position += result.linearVelocity * elapsed;
+            const glm::quat omega(0.0f, angularVelocity.x, angularVelocity.y, angularVelocity.z);
+            const glm::quat advanced = orientation + (omega * orientation) * (0.5f * elapsed);
+            const auto same = [](float a, float b) { return std::memcmp(&a, &b, sizeof(float)) == 0; };
+            if (!same(advanced.w, orientation.w) || !same(advanced.x, orientation.x) ||
+                !same(advanced.y, orientation.y) || !same(advanced.z, orientation.z))
+                result.orientation = glm::normalize(advanced);
+        }
         return result;
     }
 };
@@ -31,8 +45,14 @@ public:
         segments.clear(); Append(owner, body, 0, duration);
     }
     RigidBody Evaluate(double time) const {
-        for (const auto& segment : segments)
-            if (time >= segment.begin && time <= segment.end) return segment.Evaluate(time);
+        // ChangeVelocity only splits the last segment, so end times stay
+        // ordered. Find the earliest segment whose end includes the query:
+        // at a shared boundary this preserves the original ledger's choice
+        // of the pre-change velocity, including zero-length segments.
+        const auto segment = std::lower_bound(segments.begin(), segments.end(), time,
+            [](const RigidMotionSegment& value, double query) { return value.end < query; });
+        if (segment != segments.end() && time >= segment->begin && time <= segment->end)
+            return segment->Evaluate(time);
         throw std::out_of_range("motion ledger time");
     }
     void ChangeVelocity(const RigidBody& body, double time) {

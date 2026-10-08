@@ -1,0 +1,97 @@
+{
+  "before": {
+    "path": ".cache/m70-review/passive-original-all-bodies/passive-repro.json",
+    "bytes": 28524893,
+    "sha256": "eb8e056d3e75602aadaf484d79be643774600307c774ce9237fb989d080a69ee"
+  },
+  "after": {
+    "path": ".cache/m70-review/passive-frozen-final/passive-repro.json",
+    "bytes": 28525242,
+    "sha256": "965f1a20d33ee4da6a08ad19f421c09d513b747b1f7c8638431f3593485f9a3f"
+  },
+  "steps": 600,
+  "afterSteps": 600,
+  "comparedFields": [
+    "bodies",
+    "dynamic",
+    "awake",
+    "sleeping",
+    "candidatePairs",
+    "contactPoints",
+    "impactEvents",
+    "impactSafetyFallback",
+    "impactEventCapFallback",
+    "impactQueries",
+    "mode10",
+    "mode11",
+    "allBodiesCount",
+    "allBodiesFloat32SHA256",
+    "mappedBodiesCount",
+    "mappedBodiesFloat32SHA256"
+  ],
+  "mismatches": [],
+  "beforeWindows": {
+    "prePassive": {
+      "median": 0.545085,
+      "p95": 1.107984,
+      "maximum": 8.469046
+    },
+    "firstSecond": {
+      "median": 7.855228,
+      "p95": 35.083968,
+      "maximum": 44.030643
+    },
+    "secondSecond": {
+      "median": 4.663938,
+      "p95": 24.853333,
+      "maximum": 31.844278
+    },
+    "settled": {
+      "median": 1.147436,
+      "p95": 1.327627,
+      "maximum": 2.022299
+    },
+    "allPassive": {
+      "median": 1.174806,
+      "p95": 14.716186,
+      "maximum": 44.030643
+    }
+  },
+  "afterWindows": {
+    "prePassive": {
+      "median": 0.534997,
+      "p95": 0.859518,
+      "maximum": 8.350626
+    },
+    "firstSecond": {
+      "median": 4.461636,
+      "p95": 19.939098,
+      "maximum": 25.823582
+    },
+    "secondSecond": {
+      "median": 2.925418,
+      "p95": 13.791407,
+      "maximum": 19.26021
+    },
+    "settled": {
+      "median": 1.126733,
+      "p95": 1.27781,
+      "maximum": 1.513556
+    },
+    "allPassive": {
+      "median": 1.148275,
+      "p95": 8.34446,
+      "maximum": 25.823582
+    }
+  },
+  "beforePeak": 111,
+  "afterPeak": 111,
+  "finitePoses": [
+    true,
+    true
+  ],
+  "scriptDiagnostics": [
+    [],
+    []
+  ]
+}

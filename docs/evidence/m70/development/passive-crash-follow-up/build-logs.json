@@ -1,0 +1,12 @@
+[
+  {
+    "log": "docs/evidence/m70/development/passive-crash-follow-up/crash-follow-up-build.log",
+    "compilerWarnings": 0,
+    "note": "first log ends after valid targets because of nonexistent API target; relink uses existing target"
+  },
+  {
+    "log": "docs/evidence/m70/development/passive-crash-follow-up/crash-follow-up-relink.log",
+    "compilerWarnings": 0,
+    "note": "first log ends after valid targets because of nonexistent API target; relink uses existing target"
+  }
+]

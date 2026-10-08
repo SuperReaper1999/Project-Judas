@@ -1,0 +1,2407 @@
+{
+  "result": {
+    "retainedFrames": 120,
+    "fixedSteps": 119,
+    "fixedMs": {
+      "median": 1.183876,
+      "p95": 1.448733,
+      "maximum": 1.596902
+    },
+    "capFrames": 0,
+    "discardedSeconds": 0,
+    "qualification": "Synthetic fixed-frame application automation, not a desktop FPS or real-time catch-up measurement."
+  },
+  "frames": [
+    {
+      "frame": 383,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 382,
+            "start_ns": 10715207293715,
+            "end_ns": 10715208403786,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Rigid physics": 0.773539
+      }
+    },
+    {
+      "frame": 384,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 383,
+            "start_ns": 10715208631892,
+            "end_ns": 10715209938246,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Rigid physics": 0.955691
+      }
+    },
+    {
+      "frame": 385,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 384,
+            "start_ns": 10715210319386,
+            "end_ns": 10715211515066,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Rigid physics": 0.814547
+      }
+    },
+    {
+      "frame": 386,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 385,
+            "start_ns": 10715211744825,
+            "end_ns": 10715212856223,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Rigid physics": 0.774933
+      }
+    },
+    {
+      "frame": 387,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 386,
+            "start_ns": 10715213091415,
+            "end_ns": 10715214201533,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Rigid physics": 0.773696
+      }
+    },
+    {
+      "frame": 388,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 387,
+            "start_ns": 10715214448872,
+            "end_ns": 10715215660845,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Rigid physics": 0.796215
+      }
+    },
+    {
+      "frame": 389,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 388,
+            "start_ns": 10715215910390,
+            "end_ns": 10715217179913,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Rigid physics": 0.824413
+      }
+    },
+    {
+      "frame": 390,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 389,
+            "start_ns": 10715217414600,
+            "end_ns": 10715218717570,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Rigid physics": 0.908998
+      }
+    },
+    {
+      "frame": 391,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 390,
+            "start_ns": 10715218951085,
+            "end_ns": 10715220246212,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Rigid physics": 0.893342
+      }
+    },
+    {
+      "frame": 392,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 391,
+            "start_ns": 10715220549205,
+            "end_ns": 10715221798317,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Rigid physics": 0.89416
+      }
+    },
+    {
+      "frame": 393,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 392,
+            "start_ns": 10715222051773,
+            "end_ns": 10715223169426,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Rigid physics": 0.7649
+      }
+    },
+    {
+      "frame": 394,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 393,
+            "start_ns": 10715223397617,
+            "end_ns": 10715224533059,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Rigid physics": 0.780521
+      }
+    },
+    {
+      "frame": 395,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 394,
+            "start_ns": 10715224785004,
+            "end_ns": 10715226047817,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Rigid physics": 0.873192
+      }
+    },
+    {
+      "frame": 396,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 395,
+            "start_ns": 10715226277670,
+            "end_ns": 10715227385689,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Rigid physics": 0.772894
+      }
+    },
+    {
+      "frame": 397,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 396,
+            "start_ns": 10715227612950,
+            "end_ns": 10715228754201,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Rigid physics": 0.792146
+      }
+    },
+    {
+      "frame": 398,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 397,
+            "start_ns": 10715229050079,
+            "end_ns": 10715230503595,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Rigid physics": 0.955933
+      }
+    },
+    {
+      "frame": 399,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 398,
+            "start_ns": 10715230761825,
+            "end_ns": 10715231881263,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Rigid physics": 0.779046
+      }
+    },
+    {
+      "frame": 400,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 399,
+            "start_ns": 10715232116630,
+            "end_ns": 10715233226947,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Rigid physics": 0.774289
+      }
+    },
+    {
+      "frame": 401,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 400,
+            "start_ns": 10715233455784,
+            "end_ns": 10715234612330,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Rigid physics": 0.820689
+      }
+    },
+    {
+      "frame": 402,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 401,
+            "start_ns": 10715234839663,
+            "end_ns": 10715236164012,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Rigid physics": 0.961393
+      }
+    },
+    {
+      "frame": 403,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 402,
+            "start_ns": 10715236396340,
+            "end_ns": 10715237575114,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Rigid physics": 0.842204
+      }
+    },
+    {
+      "frame": 404,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 403,
+            "start_ns": 10715237803031,
+            "end_ns": 10715238911365,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Rigid physics": 0.774012
+      }
+    },
+    {
+      "frame": 405,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 404,
+            "start_ns": 10715239246282,
+            "end_ns": 10715240609255,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Rigid physics": 0.913357
+      }
+    },
+    {
+      "frame": 406,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 405,
+            "start_ns": 10715240867814,
+            "end_ns": 10715242021980,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Rigid physics": 0.770947
+      }
+    },
+    {
+      "frame": 407,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 406,
+            "start_ns": 10715242251416,
+            "end_ns": 10715243359427,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Rigid physics": 0.771278
+      }
+    },
+    {
+      "frame": 408,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 407,
+            "start_ns": 10715243587712,
+            "end_ns": 10715244713137,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Rigid physics": 0.790202
+      }
+    },
+    {
+      "frame": 409,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 408,
+            "start_ns": 10715244941168,
+            "end_ns": 10715246223884,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Rigid physics": 0.853667
+      }
+    },
+    {
+      "frame": 410,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 409,
+            "start_ns": 10715246478524,
+            "end_ns": 10715247754714,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Rigid physics": 0.82553
+      }
+    },
+    {
+      "frame": 411,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 410,
+            "start_ns": 10715248046029,
+            "end_ns": 10715249257669,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Rigid physics": 0.836514
+      }
+    },
+    {
+      "frame": 412,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 411,
+            "start_ns": 10715249487395,
+            "end_ns": 10715250814101,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Rigid physics": 0.960696
+      }
+    },
+    {
+      "frame": 413,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 412,
+            "start_ns": 10715251158451,
+            "end_ns": 10715252354132,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Rigid physics": 0.843361
+      }
+    },
+    {
+      "frame": 414,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 413,
+            "start_ns": 10715252589771,
+            "end_ns": 10715253698255,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Rigid physics": 0.772399
+      }
+    },
+    {
+      "frame": 415,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 414,
+            "start_ns": 10715253926790,
+            "end_ns": 10715255127953,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Rigid physics": 0.785988
+      }
+    },
+    {
+      "frame": 416,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 415,
+            "start_ns": 10715255403967,
+            "end_ns": 10715256594535,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Rigid physics": 0.777928
+      }
+    },
+    {
+      "frame": 417,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 416,
+            "start_ns": 10715256823614,
+            "end_ns": 10715257945182,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Rigid physics": 0.778515
+      }
+    },
+    {
+      "frame": 418,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 417,
+            "start_ns": 10715258197919,
+            "end_ns": 10715259468134,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Rigid physics": 0.836045
+      }
+    },
+    {
+      "frame": 419,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 418,
+            "start_ns": 10715259768287,
+            "end_ns": 10715261073869,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Rigid physics": 0.93241
+      }
+    },
+    {
+      "frame": 420,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 419,
+            "start_ns": 10715261368105,
+            "end_ns": 10715262512991,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Rigid physics": 0.8054
+      }
+    },
+    {
+      "frame": 421,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 420,
+            "start_ns": 10715262740366,
+            "end_ns": 10715263855218,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Rigid physics": 0.778494
+      }
+    },
+    {
+      "frame": 422,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 421,
+            "start_ns": 10715264089383,
+            "end_ns": 10715265218044,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Rigid physics": 0.793346
+      }
+    },
+    {
+      "frame": 423,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 422,
+            "start_ns": 10715265675957,
+            "end_ns": 10715266878803,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Rigid physics": 0.838772
+      }
+    },
+    {
+      "frame": 424,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 423,
+            "start_ns": 10715267116242,
+            "end_ns": 10715268225312,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Rigid physics": 0.772817
+      }
+    },
+    {
+      "frame": 425,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 424,
+            "start_ns": 10715268450533,
+            "end_ns": 10715269913039,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Rigid physics": 1.089502
+      }
+    },
+    {
+      "frame": 426,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 425,
+            "start_ns": 10715270331669,
+            "end_ns": 10715271597356,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Rigid physics": 0.783593
+      }
+    },
+    {
+      "frame": 427,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 426,
+            "start_ns": 10715271830161,
+            "end_ns": 10715272937219,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Rigid physics": 0.770844
+      }
+    },
+    {
+      "frame": 428,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 427,
+            "start_ns": 10715273180885,
+            "end_ns": 10715274293436,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Rigid physics": 0.768913
+      }
+    },
+    {
+      "frame": 429,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 428,
+            "start_ns": 10715274541710,
+            "end_ns": 10715275849063,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Rigid physics": 0.87923
+      }
+    },
+    {
+      "frame": 430,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 429,
+            "start_ns": 10715276111333,
+            "end_ns": 10715277323976,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Rigid physics": 0.848019
+      }
+    },
+    {
+      "frame": 431,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 430,
+            "start_ns": 10715277625322,
+            "end_ns": 10715278790341,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Rigid physics": 0.815332
+      }
+    },
+    {
+      "frame": 432,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 431,
+            "start_ns": 10715279077806,
+            "end_ns": 10715280539778,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Rigid physics": 0.979883
+      }
+    },
+    {
+      "frame": 433,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 432,
+            "start_ns": 10715280967595,
+            "end_ns": 10715282161162,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Rigid physics": 0.773502
+      }
+    },
+    {
+      "frame": 434,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 433,
+            "start_ns": 10715282389997,
+            "end_ns": 10715283505784,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Rigid physics": 0.773751
+      }
+    },
+    {
+      "frame": 435,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 434,
+            "start_ns": 10715283751819,
+            "end_ns": 10715284894800,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Rigid physics": 0.796188
+      }
+    },
+    {
+      "frame": 436,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 435,
+            "start_ns": 10715285210112,
+            "end_ns": 10715286526947,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Rigid physics": 0.944785
+      }
+    },
+    {
+      "frame": 437,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 436,
+            "start_ns": 10715286766255,
+            "end_ns": 10715287950131,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Rigid physics": 0.842678
+      }
+    },
+    {
+      "frame": 438,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 437,
+            "start_ns": 10715288192908,
+            "end_ns": 10715289476493,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Rigid physics": 0.841805
+      }
+    },
+    {
+      "frame": 439,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 438,
+            "start_ns": 10715289789071,
+            "end_ns": 10715291178686,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Rigid physics": 0.999154
+      }
+    },
+    {
+      "frame": 440,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 439,
+            "start_ns": 10715291421298,
+            "end_ns": 10715292557305,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Rigid physics": 0.781585
+      }
+    },
+    {
+      "frame": 441,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 440,
+            "start_ns": 10715292787592,
+            "end_ns": 10715293892450,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Rigid physics": 0.768981
+      }
+    },
+    {
+      "frame": 442,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 441,
+            "start_ns": 10715294131669,
+            "end_ns": 10715295277844,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Rigid physics": 0.790359
+      }
+    },
+    {
+      "frame": 443,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 442,
+            "start_ns": 10715295563328,
+            "end_ns": 10715296853117,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Rigid physics": 0.844948
+      }
+    },
+    {
+      "frame": 444,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 443,
+            "start_ns": 10715297091323,
+            "end_ns": 10715298194621,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Rigid physics": 0.765478
+      }
+    },
+    {
+      "frame": 445,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 444,
+            "start_ns": 10715298421789,
+            "end_ns": 10715299775949,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Rigid physics": 0.940825
+      }
+    },
+    {
+      "frame": 446,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 445,
+            "start_ns": 10715300095382,
+            "end_ns": 10715301441586,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Rigid physics": 0.812524
+      }
+    },
+    {
+      "frame": 447,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 446,
+            "start_ns": 10715301676765,
+            "end_ns": 10715302790296,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Rigid physics": 0.776373
+      }
+    },
+    {
+      "frame": 448,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 447,
+            "start_ns": 10715303025754,
+            "end_ns": 10715304150332,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Rigid physics": 0.764916
+      }
+    },
+    {
+      "frame": 449,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 448,
+            "start_ns": 10715304408935,
+            "end_ns": 10715305693141,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Rigid physics": 0.831144
+      }
+    },
+    {
+      "frame": 450,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 449,
+            "start_ns": 10715305924094,
+            "end_ns": 10715307037567,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Rigid physics": 0.761984
+      }
+    },
+    {
+      "frame": 451,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 450,
+            "start_ns": 10715307266689,
+            "end_ns": 10715308405382,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Rigid physics": 0.803733
+      }
+    },
+    {
+      "frame": 452,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 451,
+            "start_ns": 10715308632944,
+            "end_ns": 10715310032205,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Rigid physics": 1.004261
+      }
+    },
+    {
+      "frame": 453,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 452,
+            "start_ns": 10715310301913,
+            "end_ns": 10715311584202,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Rigid physics": 0.926426
+      }
+    },
+    {
+      "frame": 454,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 453,
+            "start_ns": 10715311818724,
+            "end_ns": 10715312923576,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Rigid physics": 0.768215
+      }
+    },
+    {
+      "frame": 455,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 454,
+            "start_ns": 10715313157973,
+            "end_ns": 10715314263496,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Rigid physics": 0.770423
+      }
+    },
+    {
+      "frame": 456,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 455,
+            "start_ns": 10715314511768,
+            "end_ns": 10715315750527,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Rigid physics": 0.818867
+      }
+    },
+    {
+      "frame": 457,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 456,
+            "start_ns": 10715315992532,
+            "end_ns": 10715317279735,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Rigid physics": 0.897652
+      }
+    },
+    {
+      "frame": 458,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 457,
+            "start_ns": 10715317523914,
+            "end_ns": 10715318796324,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Rigid physics": 0.869431
+      }
+    },
+    {
+      "frame": 459,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 458,
+            "start_ns": 10715319057755,
+            "end_ns": 10715320332937,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Rigid physics": 0.864126
+      }
+    },
+    {
+      "frame": 460,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 459,
+            "start_ns": 10715320656943,
+            "end_ns": 10715322050469,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Rigid physics": 1.021664
+      }
+    },
+    {
+      "frame": 461,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 460,
+            "start_ns": 10715322297802,
+            "end_ns": 10715323422316,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Rigid physics": 0.770672
+      }
+    },
+    {
+      "frame": 462,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 461,
+            "start_ns": 10715323649899,
+            "end_ns": 10715324768674,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Rigid physics": 0.783496
+      }
+    },
+    {
+      "frame": 463,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 462,
+            "start_ns": 10715325084349,
+            "end_ns": 10715326335028,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Rigid physics": 0.891063
+      }
+    },
+    {
+      "frame": 464,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 463,
+            "start_ns": 10715326564609,
+            "end_ns": 10715327675649,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Rigid physics": 0.772814
+      }
+    },
+    {
+      "frame": 465,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 464,
+            "start_ns": 10715327903400,
+            "end_ns": 10715329068231,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Rigid physics": 0.76007
+      }
+    },
+    {
+      "frame": 466,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 465,
+            "start_ns": 10715329403332,
+            "end_ns": 10715330803657,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Rigid physics": 0.953993
+      }
+    },
+    {
+      "frame": 467,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 466,
+            "start_ns": 10715331097613,
+            "end_ns": 10715332225232,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Rigid physics": 0.786303
+      }
+    },
+    {
+      "frame": 468,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 467,
+            "start_ns": 10715332454782,
+            "end_ns": 10715333570014,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Rigid physics": 0.777569
+      }
+    },
+    {
+      "frame": 469,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 468,
+            "start_ns": 10715333800555,
+            "end_ns": 10715334957199,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Rigid physics": 0.817076
+      }
+    },
+    {
+      "frame": 470,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 469,
+            "start_ns": 10715335224543,
+            "end_ns": 10715336519803,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Rigid physics": 0.93649
+      }
+    },
+    {
+      "frame": 471,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 470,
+            "start_ns": 10715336822918,
+            "end_ns": 10715337929410,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Rigid physics": 0.770337
+      }
+    },
+    {
+      "frame": 472,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 471,
+            "start_ns": 10715338161960,
+            "end_ns": 10715339441974,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Rigid physics": 0.867914
+      }
+    },
+    {
+      "frame": 473,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 472,
+            "start_ns": 10715339731445,
+            "end_ns": 10715341147007,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Rigid physics": 1.009598
+      }
+    },
+    {
+      "frame": 474,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 473,
+            "start_ns": 10715341390786,
+            "end_ns": 10715342518969,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Rigid physics": 0.788344
+      }
+    },
+    {
+      "frame": 475,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 474,
+            "start_ns": 10715342745715,
+            "end_ns": 10715343850754,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Rigid physics": 0.76932
+      }
+    },
+    {
+      "frame": 476,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 475,
+            "start_ns": 10715344085643,
+            "end_ns": 10715345209986,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Rigid physics": 0.788903
+      }
+    },
+    {
+      "frame": 477,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 476,
+            "start_ns": 10715345465882,
+            "end_ns": 10715346801095,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Rigid physics": 0.852649
+      }
+    },
+    {
+      "frame": 478,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 477,
+            "start_ns": 10715347065834,
+            "end_ns": 10715348280674,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Rigid physics": 0.848781
+      }
+    },
+    {
+      "frame": 479,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 478,
+            "start_ns": 10715348575870,
+            "end_ns": 10715349739373,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Rigid physics": 0.820609
+      }
+    },
+    {
+      "frame": 480,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 479,
+            "start_ns": 10715350036727,
+            "end_ns": 10715351580327,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Rigid physics": 1.011984
+      }
+    },
+    {
+      "frame": 481,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 480,
+            "start_ns": 10715351843159,
+            "end_ns": 10715352967186,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Rigid physics": 0.767662
+      }
+    },
+    {
+      "frame": 482,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 481,
+            "start_ns": 10715353202204,
+            "end_ns": 10715354325388,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Rigid physics": 0.767258
+      }
+    },
+    {
+      "frame": 483,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 482,
+            "start_ns": 10715354603864,
+            "end_ns": 10715355893600,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Rigid physics": 0.949533
+      }
+    },
+    {
+      "frame": 484,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 483,
+            "start_ns": 10715356136966,
+            "end_ns": 10715357272547,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Rigid physics": 0.797493
+      }
+    },
+    {
+      "frame": 485,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 484,
+            "start_ns": 10715357500311,
+            "end_ns": 10715358602760,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Rigid physics": 0.767705
+      }
+    },
+    {
+      "frame": 486,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 485,
+            "start_ns": 10715358830945,
+            "end_ns": 10715360427847,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Rigid physics": 1.008255
+      }
+    },
+    {
+      "frame": 487,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 486,
+            "start_ns": 10715360690335,
+            "end_ns": 10715361862913,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Rigid physics": 0.828612
+      }
+    },
+    {
+      "frame": 488,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 487,
+            "start_ns": 10715362123444,
+            "end_ns": 10715363280278,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Rigid physics": 0.770596
+      }
+    },
+    {
+      "frame": 489,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 488,
+            "start_ns": 10715363594116,
+            "end_ns": 10715364846299,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Rigid physics": 0.846157
+      }
+    },
+    {
+      "frame": 490,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 489,
+            "start_ns": 10715365088468,
+            "end_ns": 10715366471864,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Rigid physics": 0.997231
+      }
+    },
+    {
+      "frame": 491,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 490,
+            "start_ns": 10715366716502,
+            "end_ns": 10715367822380,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Rigid physics": 0.768753
+      }
+    },
+    {
+      "frame": 492,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 491,
+            "start_ns": 10715368063128,
+            "end_ns": 10715369298709,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Rigid physics": 0.835621
+      }
+    },
+    {
+      "frame": 493,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 492,
+            "start_ns": 10715451698545,
+            "end_ns": 10715452945045,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Rigid physics": 0.806391
+      }
+    },
+    {
+      "frame": 494,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 493,
+            "start_ns": 10715453210597,
+            "end_ns": 10715454337929,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Rigid physics": 0.768367
+      }
+    },
+    {
+      "frame": 495,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 494,
+            "start_ns": 10715454628208,
+            "end_ns": 10715456022638,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Rigid physics": 1.000486
+      }
+    },
+    {
+      "frame": 496,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 495,
+            "start_ns": 10715456255825,
+            "end_ns": 10715457361210,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Rigid physics": 0.768013
+      }
+    },
+    {
+      "frame": 497,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 496,
+            "start_ns": 10715457589191,
+            "end_ns": 10715458705168,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Rigid physics": 0.779361
+      }
+    },
+    {
+      "frame": 498,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 497,
+            "start_ns": 10715458935133,
+            "end_ns": 10715460359977,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Rigid physics": 0.970969
+      }
+    },
+    {
+      "frame": 499,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 498,
+            "start_ns": 10715460692264,
+            "end_ns": 10715462140997,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Rigid physics": 1.062396
+      }
+    },
+    {
+      "frame": 500,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 499,
+            "start_ns": 10715462379405,
+            "end_ns": 10715463493393,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Rigid physics": 0.773783
+      }
+    },
+    {
+      "frame": 501,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 500,
+            "start_ns": 10715463722424,
+            "end_ns": 10715464949017,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Rigid physics": 0.863638
+      }
+    },
+    {
+      "frame": 502,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": []
+      },
+      "scopeMs": {}
+    }
+  ]
+}

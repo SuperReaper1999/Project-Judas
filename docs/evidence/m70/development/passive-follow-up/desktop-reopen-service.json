@@ -1,0 +1,14 @@
+{
+  "command": [
+    "/tmp/judas-m70-character-lab-20261008/judas"
+  ],
+  "cwd": "/tmp",
+  "launch": "transient user desktop service",
+  "unit": "judas-m70-passive-retest-20261008.service",
+  "startup": "Running as unit: judas-m70-passive-retest-20261008.service; invocation ID: acd1cd0278cb49fb822a6f69f9a70928",
+  "serviceState": "ActiveState=active\nSubState=running\nMainPID=116230",
+  "log": "/tmp/judas-m70-passive-human-retest-service.log",
+  "mode": "normal visible desktop; no automated input/headless/software override",
+  "humanPassiveAcceptance": "pending re-test",
+  "profileOutput": "/home/conner/Documents/GitHub/Project-Judas/.cache/m70-review/passive-human-desktop-m56.json"
+}

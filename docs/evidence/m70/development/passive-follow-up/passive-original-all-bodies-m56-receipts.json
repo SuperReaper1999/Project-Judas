@@ -1,0 +1,37 @@
+[
+  {
+    "path": ".cache/m70-review/passive-original-all-bodies/m56-passive-repro-0.json",
+    "bytes": 2698738,
+    "sha256": "8635ac51990312ef8521aa9f7aba411832274c8b3977a7cc7f49f5505bb7554e",
+    "frameCount": 120,
+    "schema": 1
+  },
+  {
+    "path": ".cache/m70-review/passive-original-all-bodies/m56-passive-repro-1.json",
+    "bytes": 4474828,
+    "sha256": "7077ed8518258f1b06b53ca0a7c9a246314e47bf1f0e96a21a110a67ccc30943",
+    "frameCount": 120,
+    "schema": 1
+  },
+  {
+    "path": ".cache/m70-review/passive-original-all-bodies/m56-passive-repro-2.json",
+    "bytes": 4546637,
+    "sha256": "f31e85370fc73d62f44ebd637fbd22e1e9ecca149ac15fda87a0b3a1a5790248",
+    "frameCount": 120,
+    "schema": 1
+  },
+  {
+    "path": ".cache/m70-review/passive-original-all-bodies/m56-passive-repro-3.json",
+    "bytes": 4604528,
+    "sha256": "f86acb1b71f6f638aa26bdb0496c803ec8a46b69121f9e645f71ffaa98bef9ed",
+    "frameCount": 120,
+    "schema": 1
+  },
+  {
+    "path": ".cache/m70-review/passive-original-all-bodies/m56-passive-repro-4.json",
+    "bytes": 4560171,
+    "sha256": "7d0724228f16eebf01eb2cbbb1deb46b04be35a9c480fb133be4e2ea84ef960f",
+    "frameCount": 120,
+    "schema": 1
+  }
+]

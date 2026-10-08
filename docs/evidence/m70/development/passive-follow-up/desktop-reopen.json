@@ -1,0 +1,16 @@
+{
+  "command": [
+    "/tmp/judas-m70-character-lab-20261008/judas"
+  ],
+  "cwd": "/tmp",
+  "pid": 115424,
+  "aliveAfterSeconds": 2,
+  "poll": null,
+  "log": "/tmp/judas-m70-passive-human-retest.log",
+  "mode": "normal visible desktop, no test-input/headless/software-renderer overrides",
+  "profiling": "normal M56 capture only; no cadence/settings change",
+  "profileOutput": "/home/conner/Documents/GitHub/Project-Judas/.cache/m70-review/passive-human-desktop-m56.json",
+  "humanPassiveAcceptance": "pending re-test",
+  "laterHostVerificationAlive": false,
+  "replacementPersistentLaunch": "desktop-reopen-service.json"
+}

@@ -1,0 +1,49 @@
+{
+  "baseline": {
+    "retainedFrames": 120,
+    "fixedSteps": 119,
+    "capFrames": 0,
+    "discardedSeconds": 0,
+    "qualification": "Last 120-frame history plus independently retained spike frames from scripted software-GL application startup/switch. Not a controlled paired trajectory benchmark, desktop FPS or real-time catch-up test.",
+    "retainedSettledFrameWindow": {
+      "median": 1.183876,
+      "p95": 1.448733,
+      "maximum": 1.596902
+    },
+    "maximumIncludingRetainedSpikeFramesMs": 53.267983,
+    "peakFrameId": 109,
+    "peakScopesMs": {
+      "Physics broadphase": 0.01916,
+      "Physics contacts": 0.575981,
+      "Physics contact and joint solver": 52.017373,
+      "Physics proxy refresh": 0.023064,
+      "Rigid physics": 52.669049
+    }
+  },
+  "final": {
+    "retainedFrames": 120,
+    "fixedSteps": 119,
+    "capFrames": 0,
+    "discardedSeconds": 0,
+    "qualification": "Last 120-frame history plus independently retained spike frames from scripted software-GL application startup/switch. Not a controlled paired trajectory benchmark, desktop FPS or real-time catch-up test.",
+    "retainedSettledFrameWindow": {
+      "median": 1.222076,
+      "p95": 1.882583,
+      "maximum": 2.292515
+    },
+    "maximumIncludingRetainedSpikeFramesMs": 44.106877,
+    "peakFrameId": 83,
+    "peakScopesMs": {
+      "Physics broadphase": 0.018352,
+      "Physics contacts": 0.615917,
+      "Physics initial impacts": 0.031956,
+      "Physics velocity constraints": 0.07135,
+      "Physics continuous impacts": 42.897091,
+      "Physics position constraints": 0.026644,
+      "Physics sleeping assessment": 0.010703,
+      "Physics contact and joint solver": 43.039288,
+      "Physics proxy refresh": 0.013431,
+      "Rigid physics": 43.716635
+    }
+  }
+}

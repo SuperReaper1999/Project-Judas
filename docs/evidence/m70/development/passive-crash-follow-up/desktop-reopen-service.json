@@ -1,0 +1,20 @@
+{
+  "package": "/tmp/judas-m70-character-lab-corrected-20261008",
+  "binarySha256": "0b8638813bdd0a52896d46f73786dee6c368fe70572814e89e97cd69004351b5",
+  "launch": "ordinary desktop transient user service",
+  "unit": "judas-m70-landing-corrected-20261008.service",
+  "workingDirectory": "/tmp",
+  "dataHome": "/tmp/judas-m70-landing-corrected-desktop-state",
+  "log": "/tmp/judas-m70-landing-corrected-desktop.log",
+  "testScript": false,
+  "headlessOrSoftwareRendering": false,
+  "exit": 0,
+  "startup": "Running as unit: judas-m70-landing-corrected-20261008.service; invocation ID: 2f1e25a612714385aacc37e85dcf8b85",
+  "humanAcceptance": "pending",
+  "postLaunchObservation": {
+    "ActiveState": "active",
+    "SubState": "running",
+    "MainPID": 173316,
+    "ExecMainStatus": 0
+  }
+}

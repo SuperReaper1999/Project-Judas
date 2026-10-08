@@ -30,6 +30,11 @@ void StepPlayedWorld(GameSession& session, const Window& window, float fixedDelt
     world.UpdateNavigation(fixedDeltaTime);
     world.Liquids().BeginStep();
     world.FixedScripts(&window.Input(),fixedDeltaTime);
+    // Only opted-in M70 instances advance references before dynamics. Legacy
+    // animation stays in its established post-physics phase.
+    world.UpdateCharacters(fixedDeltaTime,true,false);
+    world.PrepareAnimationReferences(fixedDeltaTime);
+    world.PreparePhysicalAnimations(fixedDeltaTime);
     world.UpdateLiquids(fixedDeltaTime);
     PhysicsWorld& physics = world.Physics();
     const GravityField& gravity = world.Gravity();
@@ -169,7 +174,7 @@ void StepPlayedWorld(GameSession& session, const Window& window, float fixedDelt
         player.ObserveExternalView(pose.position-pose.rotation*glm::vec3(0,.7f,0),pose.rotation);
     }else if (legacy) AdvancePlayerForPiloting(vehicleControl, session.Attachment(), player, physics, window, gravity,
                              fixedDeltaTime);
-    world.UpdateCharacters(fixedDeltaTime);
+    world.UpdateCharacters(fixedDeltaTime,false,true);
     SyncDynamicBodiesFromPhysics(world.DynamicBodies(), physics);
     world.UpdateAnimations(fixedDeltaTime);
     world.UpdateRagdolls(fixedDeltaTime);

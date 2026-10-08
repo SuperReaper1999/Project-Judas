@@ -28,7 +28,7 @@ public:
     void UIFrame(const InputSystem* input,float dt);
     void Presentation(const InputSystem* input,float dt,float alpha);
     void FractureEvent(SceneObjectId,uint64_t,const std::vector<std::string>&,const std::vector<unsigned>&);
-    void PhysicsEvent(SceneObjectId self,SceneObjectId other,const PhysicsWorld::TouchEvent& event,bool reverse);
+    void PhysicsEvent(SceneObjectId self,SceneObjectId other,const PhysicsWorld::TouchEvent& event,bool reverse,SceneObjectId selfBody=0,const std::string& selfJoint="",SceneObjectId otherArticulation=0,const std::string& otherJoint="");
     void UIEvents(const InputSystem* input,float dt);
     void Stop();
     void RemoveEntities(const std::vector<SceneObjectId>&);

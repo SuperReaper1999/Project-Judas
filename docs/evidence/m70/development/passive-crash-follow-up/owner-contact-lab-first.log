@@ -1,0 +1,118 @@
+libEGL warning: Not allowed to force software rendering when API explicitly selects a hardware device.
+Renderer fragment texture units: 32 (material path uses 12)
+PASS actual GL host: 
+PASS ordinary registered project: 
+PASS approved fixture is a full 65-joint six-part two-skin source
+PASS variation has different names and proportions
+PASS registered wall scene loads: 
+PASS ordinary wall world: loading
+PASS async multipart resources published: 
+IMPORT actor=10 hierarchy=72 palette=130
+IMPORT actor=11 hierarchy=72 palette=130
+PASS 71 source hierarchy nodes plus normal motion root and both palettes retained
+PASS resource publication retains all imported mesh parts
+PASS normal fixed-step session: 
+PASS lab script executes using public APIs
+PASS four contacts resolved independently on both imported rig variations
+CONTACT wall actor=10 target=palmA position_m=0.000325815 orientation_rad=0.00111256 status=reached
+CONTACT wall actor=10 target=palmB position_m=0.000818418 orientation_rad=0.00139818 status=reached
+CONTACT wall actor=10 target=soleA position_m=0.000324686 orientation_rad=0.000240186 status=reached
+CONTACT wall actor=10 target=soleB position_m=0.000337711 orientation_rad=0.000251349 status=reached
+CONTACT wall actor=11 target=palmA position_m=2.99339e-05 orientation_rad=0.000127938 status=reached
+CONTACT wall actor=11 target=palmB position_m=1.47368e-05 orientation_rad=0.00015529 status=reached
+CONTACT wall actor=11 target=soleA position_m=2.79096e-05 orientation_rad=4.9249e-05 status=reached
+CONTACT wall actor=11 target=soleB position_m=3.1993e-05 orientation_rad=5.24104e-05 status=reached
+PASS ordinary feasible wall contact residuals within 1 cm / 2 degrees
+PASS mapping uses each instance's actual skeleton identity
+PASS unreachable target remains a bounded finite compromise
+PASS IK root correction does not move the entity or motor root
+PASS existing head-hidden layer remains safe beside shared IK
+PASS Carry and hidden-head masks remain per-instance with crossfade playback
+PASS resolved joint world pose remains available
+PASS socket follows final resolved hierarchy
+PASS extra presentation queries do not advance the authoritative clip
+PASS atomic targets plus frame-side existing-layer update: 
+PASS frame-side layer update cannot pull pending targets into the fixed sample
+PASS next fixed reference boundary publishes the submitted target batch
+PASS restore ordinary authored four-target intent before save checks
+PASS lab uses ordinary script-owned projection range
+PASS save captures IK, layers, clip, sockets and script state: 
+PASS cold normal participant restoration: 
+PASS restored targets/layers preserved without fresh activation
+PASS cold restore callback is safe
+PASS nonphysical shared IK can suspend through normal streaming participant
+PASS stream suspension keeps durable target/layer configuration: 
+PASS reimport publication rebuilds mapping against replacement immutable asset
+PASS Stop/transition cleans the current lab world
+PASS ordinary registered board scene loads
+PASS board async resources and world ready: 
+PASS board targets and separate visual samples use public APIs
+CONTACT board actor=10 target=soleA position_m=0.00351243 orientation_rad=0.0023831 status=reached
+CONTACT board actor=10 target=soleB position_m=0.00294766 orientation_rad=0.00146811 status=reached
+CONTACT board actor=11 target=soleA position_m=0.00353226 orientation_rad=0.00240061 status=reached
+CONTACT board actor=11 target=soleB position_m=0.00298006 orientation_rad=0.00151322 status=reached
+PASS tilting support foot contacts within 1 cm / 2 degrees
+PASS visible board samples fixed history without moving the real collider
+CONTACT board-step actor=10 target=soleA position_m=0.000112969 orientation_rad=0.000100296 status=reached
+CONTACT board-step actor=10 target=soleB position_m=3.87609e-05 orientation_rad=6.40921e-05 status=reached
+CONTACT board-step actor=11 target=soleA position_m=5.8004e-05 orientation_rad=7.42722e-05 status=reached
+CONTACT board-step actor=11 target=soleB position_m=1.4855e-05 orientation_rad=4.12992e-05 status=reached
+PASS same shared solver handles board stepping variant
+PASS multi-target-ik registered example
+PASS multi-target-ik normal fixture world: 
+PASS multi-target-ik unmodified example executes
+PASS copyable shared-target configuration/update/clear outcomes
+PASS physical-animation registered example
+PASS physical-animation normal fixture world: 
+PASS physical-animation unmodified example executes
+PASS copyable partial/impact/full/passive/animation transition outcomes
+PASS ordinary articulated-owner callback probe registered
+PASS physical scene ordinary startup: 
+PASS partial scene public API startup
+PASS two independent complete mappings enter partial mode
+PASS partial keeps explicit anchors while selected physical region is dynamic
+PASS active articulation is not silently demoted by streaming
+PASS public prefab spawn is included in lab controller state
+PASS public ordinary hit reaches the actual arm body
+PASS ordinary owner contact callbacks safe after full release
+PASS actual M42 contact reaches articulated owner with safe selfBody/selfJoint/other
+PASS queued authority transition remains pinned for streaming
+PASS save captures passive articulation, pending transition and spawned owner: 
+PASS partial/full-body participant cold restoration: 
+PASS restored actual authority and queued request remain distinct
+PASS destroy removes owned bodies, constraints and physical state
+PASS destroyed mapped generation cannot alias a surviving body
+PASS remaining independent owner queues normal retirement
+PASS completed return retires physics/pose contributor and restores stream eligibility
+PASS owner-contact script is a normal registered asset
+PASS owner-contact fixture reads the ordinary imported rig
+PASS opt-in owner contact authoring round-trips
+PASS owner contact subscription affects authored compatibility without changing legacy defaults
+PASS default false emits no legacy authored extension
+PASS ordinary unscripted mapped body/contact world: 
+PASS both actual collision participants are unscripted
+PASS unscripted bone/ground enter-stay-exit reaches owner once per pair
+PASS owner callback reports safe body, stable joint identity and actual fixed contact data
+PASS unscripted owner contact sequence has no VM faults
+PASS ordinary unscripted mapped body/contact world: 
+PASS legacy default leaves owner callbacks unsubscribed
+PASS ordinary unscripted mapped body/contact world: 
+PASS JudasJS explicitly opts into owner contact delivery
+PASS unsubscription prevents subsequent owner callbacks
+PASS ordinary unscripted mapped body/contact world: 
+PASS owner subscription preserves M39 rejection
+PASS ordinary unscripted mapped body/contact world: 
+PASS normal sensor observations use the same opted-in owner path
+PASS ordinary unscripted mapped body/contact world: 
+FAIL destroyed counterpart slot can be reused before exit
+PASS callback destruction/disable produces one attributed exit
+PASS destroyed counterpart cannot alias the replacement entity handle
+PASS destroyOther owner callback preserves VM lifetime
+PASS ordinary unscripted mapped body/contact world: 
+PASS callback destruction/disable produces one attributed exit
+PASS disableBody owner callback preserves VM lifetime
+PASS ordinary unscripted mapped body/contact world: 
+PASS owner destruction inside contact callback retires the articulation safely
+PASS destroySelf owner callback preserves VM lifetime
+PASS ordinary prefab property overrides include owner contact subscription
+SUMMARY 97 checks 1 failures

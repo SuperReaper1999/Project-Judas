@@ -1,0 +1,32 @@
+{
+  "review": "Independent read-only geometric cache/lifetime review plus root independent binary32 comparison. No implementation changes from reviewer.",
+  "sourceSHA256": "d6cfcdd3d6c01a4699fbefdb1e6e47f56160543593fba3cc0cef095b5fc6624b",
+  "frames": 600,
+  "allBodiesPerFrame": 37,
+  "mappedBodiesPerFrame": 32,
+  "allBodyFloat32ValuesCompared": 288600,
+  "stateMismatches": 0,
+  "samplingAndFallbackMismatches": [],
+  "samplingAndFallbackFields": [
+    "impactSamplingFallbacks",
+    "impactSamplingTests",
+    "impactSamplingResolutionCaps",
+    "impactSamplingMaxInterval",
+    "impactSearchLimit",
+    "impactUncertifiedAdvances"
+  ],
+  "changedDiagnostics": [
+    "search iteration counts (earlier certified rejection/empty future interval)",
+    "geometry predicate/cache work counts"
+  ],
+  "preservedPolicy": [
+    "60 Hz cadence",
+    "collision geometry",
+    "filters and self collision",
+    "all time-bracket updates",
+    "sampling/iteration/event limits",
+    "impulses",
+    "sleep thresholds",
+    "drive effort"
+  ]
+}

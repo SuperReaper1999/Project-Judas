@@ -1,0 +1,103 @@
+[
+  {
+    "name": "legacy-pose",
+    "command": [
+      "build/judas_pose_composition_tests"
+    ],
+    "seconds": 0.0642653610002526,
+    "exit": 0
+  },
+  {
+    "name": "legacy-ragdoll",
+    "command": [
+      "build/judas_ragdoll_tests",
+      "--out",
+      ".cache/m70-review/legacy-ragdoll"
+    ],
+    "seconds": 0.26470564100054617,
+    "exit": 0
+  },
+  {
+    "name": "joints",
+    "command": [
+      "build/judas_joint_tests"
+    ],
+    "seconds": 0.06427351500042278,
+    "exit": 0
+  },
+  {
+    "name": "motor",
+    "command": [
+      "build/judas_character_motor_tests"
+    ],
+    "seconds": 0.5151718859997345,
+    "exit": 0
+  },
+  {
+    "name": "persistence",
+    "command": [
+      "build/judas_world_persistence_tests"
+    ],
+    "seconds": 0.032278964000397536,
+    "exit": 0
+  },
+  {
+    "name": "authoring",
+    "command": [
+      "build/judas_world_authoring_runtime_tests",
+      ".cache/m70-review/authoring-final"
+    ],
+    "seconds": 0.36478148399964994,
+    "exit": 1
+  },
+  {
+    "name": "model-runtime",
+    "command": [
+      "build/judas_model_runtime_tests",
+      ".cache/m70-review/model-final"
+    ],
+    "seconds": 19.521406384999864,
+    "exit": 0
+  },
+  {
+    "name": "sleep-resistance",
+    "command": [
+      "build/judas_post_consumer_ragdoll_tests"
+    ],
+    "seconds": 63.56787335900026,
+    "exit": 0
+  },
+  {
+    "name": "presentation",
+    "command": [
+      "build/judas_script_presentation_tests"
+    ],
+    "seconds": 0.5652795030000561,
+    "exit": 0
+  },
+  {
+    "name": "fingerprints",
+    "command": [
+      "build/judas_scene_fingerprint_tests"
+    ],
+    "seconds": 0.03205706599965197,
+    "exit": 0
+  },
+  {
+    "name": "platform-services",
+    "command": [
+      "build/judas_windows_readiness_tests"
+    ],
+    "seconds": 0.015972797000358696,
+    "exit": 0
+  },
+  {
+    "name": "cookbook",
+    "command": [
+      "build/judasjs_examples_tests",
+      ".cache/m70-review/cookbook-final"
+    ],
+    "seconds": 18.459943628000474,
+    "exit": 0
+  }
+]

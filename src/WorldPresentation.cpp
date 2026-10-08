@@ -100,7 +100,7 @@ void DrawWorldGeometry(Renderer& r, const RuntimeWorld& world, const GameSession
         if(!world.IsPublished(s.id)||world.RuntimeDefinition(s.id)->deformable)continue;
         r.SetRenderLayer(world.RenderLayerOf(s.id));
         const auto t=world.PresentedTransform(s.id,SceneTransform{s.position,s.rotation,s.scale},alpha);
-        DrawRenderable(r, world.Resources(), s.render, t.position, t.rotation, t.scale, 1.0f, world.CameraTexture(s.render.textureCamera),world.AnimationSkin(s.id));
+        DrawRenderable(r, world.Resources(), s.render, t.position, t.rotation, t.scale, 1.0f, world.CameraTexture(s.render.textureCamera),world.AnimationSkin(s.id,alpha));
     }
     world.DrawDeformables(r,alpha);
     r.SetMaterialBindings({});
@@ -156,7 +156,7 @@ void DrawWorldGeometry(Renderer& r, const RuntimeWorld& world, const GameSession
             }
             continue;
         }
-        DrawRenderable(r, world.Resources(), v.render, position, rotation, v.scale, 1.0f, world.CameraTexture(v.render.textureCamera),world.AnimationSkin(v.id));
+        DrawRenderable(r, world.Resources(), v.render, position, rotation, v.scale, 1.0f, world.CameraTexture(v.render.textureCamera),world.AnimationSkin(v.id,alpha));
     }
 
     r.SetMaterialBindings({});

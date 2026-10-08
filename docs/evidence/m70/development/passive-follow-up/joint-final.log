@@ -1,0 +1,31 @@
+PASS joint creation
+PASS fixed relative pose
+PASS joint creation
+PASS hinge only local X rotation
+PASS joint creation
+PASS ball anchors / free rotation
+PASS joint creation
+PASS slider local axis only
+PASS slider limit / bounded motor
+PASS motor impulse force bound
+PASS implicit spring/damping settles
+PASS disabled body deactivates joint
+PASS reenabled body activates joint
+PASS destroy and body slot reuse cannot revive joint
+PASS unequal-mass dynamic pair conserves linear impulse
+PASS fixed dynamic pair stays connected
+PASS arbitrary rotated joint covariance
+PASS hinge angular limits and bounded torque
+PASS joint assembly interacts with actual impact/contact path
+PERF 100 joints mean whole-step 0.209700 ms
+PASS long-travel slider stable at 0 m separation (deviation 0.0000 m)
+PASS long-travel slider stable at 1 m separation (deviation 0.0000 m)
+PASS long-travel slider stable at 2 m separation (deviation 0.0000 m)
+PASS long-travel slider stable at 3 m separation (deviation 0.0000 m)
+PASS long-travel slider stable at 6 m separation (deviation 0.0000 m)
+PASS long-travel slider stable at 12 m separation (deviation 0.0000 m)
+PASS slider carries a moving body 12 m along its axis
+PASS long dynamic slider pair conserves momentum, stays on axis and bounded
+PASS violated limit engaged at 0.067 m: rebound 0.500 m/s, recovered 1
+PASS violated limit engaged at 0.300 m: rebound 0.500 m/s, recovered 1
+SUMMARY 29 checks 0 failures

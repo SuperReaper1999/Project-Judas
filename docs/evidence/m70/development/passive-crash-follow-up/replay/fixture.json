@@ -1,0 +1,6422 @@
+{
+  "origin": "Exact human-reproduced wall-scene G/full-active floor freeze, numerical CCD replay; M70 post-velocity-solve anchors",
+  "stepDuration": 0.01666666753590107,
+  "bodies": [
+    {
+      "slot": 0,
+      "generation": 0,
+      "handle": 0,
+      "current": {
+        "position": [
+          0.0,
+          -0.25,
+          0.0
+        ],
+        "rotation": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "linearVelocity": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "angularVelocity": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "inverseMass": 0.0,
+        "inverseInertiaLocal": [
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0
+          ]
+        ],
+        "forceAccumulator": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "torqueAccumulator": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "shape": {
+        "type": 1,
+        "typeName": "ShapeType::Box",
+        "radius": 0.0,
+        "halfHeight": 0.0,
+        "halfExtents": [
+          12.0,
+          0.25,
+          12.0
+        ],
+        "pivotOffset": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "assetId": "",
+        "children": []
+      },
+      "collisionLayer": 0,
+      "collisionMask": 18446744073709551615,
+      "tags": 0,
+      "friction": 0.6000000238418579,
+      "restitution": 0.10000000149011612,
+      "sensor": false,
+      "enabled": true,
+      "queryOnly": false,
+      "queriesEnabled": true,
+      "isDynamic": false,
+      "sleeping": false,
+      "deferredAcceleration": false,
+      "lastAcceleration": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "slot": 1,
+      "generation": 0,
+      "handle": 1,
+      "current": {
+        "position": [
+          -1.7999999523162842,
+          0.949999988079071,
+          -0.41999998688697815
+        ],
+        "rotation": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "linearVelocity": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "angularVelocity": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "inverseMass": 0.0,
+        "inverseInertiaLocal": [
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0
+          ]
+        ],
+        "forceAccumulator": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "torqueAccumulator": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "shape": {
+        "type": 1,
+        "typeName": "ShapeType::Box",
+        "radius": 0.0,
+        "halfHeight": 0.0,
+        "halfExtents": [
+          0.8999999761581421,
+          0.949999988079071,
+          0.07999999821186066
+        ],
+        "pivotOffset": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "assetId": "",
+        "children": []
+      },
+      "collisionLayer": 0,
+      "collisionMask": 18446744073709551615,
+      "tags": 0,
+      "friction": 0.6000000238418579,
+      "restitution": 0.10000000149011612,
+      "sensor": false,
+      "enabled": true,
+      "queryOnly": false,
+      "queriesEnabled": true,
+      "isDynamic": false,
+      "sleeping": false,
+      "deferredAcceleration": false,
+      "lastAcceleration": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "slot": 2,
+      "generation": 0,
+      "handle": 2,
+      "current": {
+        "position": [
+          -1.7999999523162842,
+          1.600000023841858,
+          -0.38999998569488525
+        ],
+        "rotation": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "linearVelocity": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "angularVelocity": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "inverseMass": 0.0,
+        "inverseInertiaLocal": [
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0
+          ]
+        ],
+        "forceAccumulator": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "torqueAccumulator": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "shape": {
+        "type": 1,
+        "typeName": "ShapeType::Box",
+        "radius": 0.0,
+        "halfHeight": 0.0,
+        "halfExtents": [
+          0.8999999761581421,
+          0.03999999910593033,
+          0.17000000178813934
+        ],
+        "pivotOffset": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "assetId": "",
+        "children": []
+      },
+      "collisionLayer": 0,
+      "collisionMask": 18446744073709551615,
+      "tags": 0,
+      "friction": 0.6000000238418579,
+      "restitution": 0.10000000149011612,
+      "sensor": false,
+      "enabled": true,
+      "queryOnly": false,
+      "queriesEnabled": true,
+      "isDynamic": false,
+      "sleeping": false,
+      "deferredAcceleration": false,
+      "lastAcceleration": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "slot": 3,
+      "generation": 0,
+      "handle": 3,
+      "current": {
+        "position": [
+          1.7999999523162842,
+          0.949999988079071,
+          -0.41999998688697815
+        ],
+        "rotation": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "linearVelocity": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "angularVelocity": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "inverseMass": 0.0,
+        "inverseInertiaLocal": [
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0
+          ]
+        ],
+        "forceAccumulator": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "torqueAccumulator": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "shape": {
+        "type": 1,
+        "typeName": "ShapeType::Box",
+        "radius": 0.0,
+        "halfHeight": 0.0,
+        "halfExtents": [
+          0.8999999761581421,
+          0.949999988079071,
+          0.07999999821186066
+        ],
+        "pivotOffset": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "assetId": "",
+        "children": []
+      },
+      "collisionLayer": 0,
+      "collisionMask": 18446744073709551615,
+      "tags": 0,
+      "friction": 0.6000000238418579,
+      "restitution": 0.10000000149011612,
+      "sensor": false,
+      "enabled": true,
+      "queryOnly": false,
+      "queriesEnabled": true,
+      "isDynamic": false,
+      "sleeping": false,
+      "deferredAcceleration": false,
+      "lastAcceleration": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "slot": 4,
+      "generation": 0,
+      "handle": 4,
+      "current": {
+        "position": [
+          1.7999999523162842,
+          1.600000023841858,
+          -0.38999998569488525
+        ],
+        "rotation": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "linearVelocity": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "angularVelocity": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "inverseMass": 0.0,
+        "inverseInertiaLocal": [
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0
+          ]
+        ],
+        "forceAccumulator": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "torqueAccumulator": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "shape": {
+        "type": 1,
+        "typeName": "ShapeType::Box",
+        "radius": 0.0,
+        "halfHeight": 0.0,
+        "halfExtents": [
+          0.8999999761581421,
+          0.03999999910593033,
+          0.17000000178813934
+        ],
+        "pivotOffset": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "assetId": "",
+        "children": []
+      },
+      "collisionLayer": 0,
+      "collisionMask": 18446744073709551615,
+      "tags": 0,
+      "friction": 0.6000000238418579,
+      "restitution": 0.10000000149011612,
+      "sensor": false,
+      "enabled": true,
+      "queryOnly": false,
+      "queriesEnabled": true,
+      "isDynamic": false,
+      "sleeping": false,
+      "deferredAcceleration": false,
+      "lastAcceleration": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "slot": 5,
+      "generation": 0,
+      "handle": 5,
+      "current": {
+        "position": [
+          -1.8989280462265015,
+          -0.020882129669189453,
+          -0.19381852447986603
+        ],
+        "rotation": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "linearVelocity": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "angularVelocity": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "inverseMass": 0.0,
+        "inverseInertiaLocal": [
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0
+          ]
+        ],
+        "forceAccumulator": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "torqueAccumulator": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "shape": {
+        "type": 2,
+        "typeName": "ShapeType::Capsule",
+        "radius": 0.23000000417232513,
+        "halfHeight": 0.6499999761581421,
+        "halfExtents": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "pivotOffset": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "assetId": "",
+        "children": []
+      },
+      "collisionLayer": 1,
+      "collisionMask": 1,
+      "tags": 0,
+      "friction": 0.0,
+      "restitution": 0.0,
+      "sensor": false,
+      "enabled": false,
+      "queryOnly": true,
+      "queriesEnabled": true,
+      "isDynamic": false,
+      "sleeping": false,
+      "deferredAcceleration": false,
+      "lastAcceleration": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "slot": 6,
+      "generation": 0,
+      "handle": 6,
+      "current": {
+        "position": [
+          1.5820071697235107,
+          0.030354678630828857,
+          -0.19883838295936584
+        ],
+        "rotation": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "linearVelocity": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "angularVelocity": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "inverseMass": 0.0,
+        "inverseInertiaLocal": [
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0
+          ]
+        ],
+        "forceAccumulator": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "torqueAccumulator": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "shape": {
+        "type": 2,
+        "typeName": "ShapeType::Capsule",
+        "radius": 0.23000000417232513,
+        "halfHeight": 0.6499999761581421,
+        "halfExtents": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "pivotOffset": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "assetId": "",
+        "children": []
+      },
+      "collisionLayer": 1,
+      "collisionMask": 1,
+      "tags": 0,
+      "friction": 0.0,
+      "restitution": 0.0,
+      "sensor": false,
+      "enabled": false,
+      "queryOnly": true,
+      "queriesEnabled": true,
+      "isDynamic": false,
+      "sleeping": false,
+      "deferredAcceleration": false,
+      "lastAcceleration": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "slot": 7,
+      "generation": 0,
+      "handle": 7,
+      "current": {
+        "position": [
+          -1.90412175655365,
+          0.1282193958759308,
+          -0.09347356855869293
+        ],
+        "rotation": [
+          0.612816333770752,
+          0.7828626036643982,
+          -0.08645196259021759,
+          -0.06409823149442673
+        ],
+        "linearVelocity": [
+          0.007973064668476582,
+          -0.016040457412600517,
+          -0.008749590255320072
+        ],
+        "angularVelocity": [
+          -0.5688035488128662,
+          -0.1605166643857956,
+          0.6813870072364807
+        ],
+        "inverseMass": 0.25,
+        "inverseInertiaLocal": [
+          [
+            75.7097396850586,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            207.61244201660156,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            75.7097396850586
+          ]
+        ],
+        "forceAccumulator": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "torqueAccumulator": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "startAnchor": {
+        "owner": 7,
+        "begin": 0.0,
+        "end": 9.147122455044849e-06,
+        "inverseMass": 0.25,
+        "position": [
+          -1.90412175655365,
+          0.12822018563747406,
+          -0.09347344934940338
+        ],
+        "rotation": [
+          0.612814724445343,
+          0.7828633189201355,
+          -0.08645368367433548,
+          -0.06410133838653564
+        ],
+        "linearVelocity": [
+          0.0008295155712403357,
+          -0.07880640029907227,
+          -0.008672221563756466
+        ],
+        "angularVelocity": [
+          -0.28162530064582825,
+          -0.20384950935840607,
+          0.5457020998001099
+        ],
+        "endPosition": [
+          -1.90412175655365,
+          0.12821947038173676,
+          -0.09347353130578995
+        ],
+        "endRotation": [
+          0.612815797328949,
+          0.7828627824783325,
+          -0.08645238727331161,
+          -0.06409896910190582
+        ]
+      },
+      "shape": {
+        "type": 1,
+        "typeName": "ShapeType::Box",
+        "radius": 0.0,
+        "halfHeight": 0.0,
+        "halfExtents": [
+          0.042500000447034836,
+          0.09000003337860107,
+          0.042500000447034836
+        ],
+        "pivotOffset": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "assetId": "",
+        "children": []
+      },
+      "collisionLayer": 2,
+      "collisionMask": 5,
+      "tags": 0,
+      "friction": 0.6000000238418579,
+      "restitution": 0.0,
+      "sensor": false,
+      "enabled": true,
+      "queryOnly": false,
+      "queriesEnabled": true,
+      "isDynamic": true,
+      "sleeping": false,
+      "deferredAcceleration": false,
+      "lastAcceleration": [
+        0.0,
+        -9.8100004196167,
+        0.0
+      ]
+    },
+    {
+      "slot": 8,
+      "generation": 0,
+      "handle": 8,
+      "current": {
+        "position": [
+          -1.9028714895248413,
+          0.08336064964532852,
+          0.11364123970270157
+        ],
+        "rotation": [
+          0.5715874433517456,
+          0.7232151627540588,
+          0.26651814579963684,
+          0.28145313262939453
+        ],
+        "linearVelocity": [
+          -0.011926607228815556,
+          0.01341835968196392,
+          0.00015367304149549454
+        ],
+        "angularVelocity": [
+          0.1652124971151352,
+          -0.26390501856803894,
+          0.4781077206134796
+        ],
+        "inverseMass": 0.25,
+        "inverseInertiaLocal": [
+          [
+            46.27843475341797,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            207.61244201660156,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            46.27843475341797
+          ]
+        ],
+        "forceAccumulator": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "torqueAccumulator": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "startAnchor": {
+        "owner": 8,
+        "begin": 0.0,
+        "end": 9.147122455044849e-06,
+        "inverseMass": 0.25,
+        "position": [
+          -1.9028714895248413,
+          0.0833609402179718,
+          0.11364147812128067
+        ],
+        "rotation": [
+          0.5715867280960083,
+          0.7232159972190857,
+          0.266517698764801,
+          0.28145256638526917
+        ],
+        "linearVelocity": [
+          0.0036444817669689655,
+          -0.03230176493525505,
+          -0.025062572211027145
+        ],
+        "angularVelocity": [
+          -0.22429527342319489,
+          -0.056717053055763245,
+          0.02313479408621788
+        ],
+        "endPosition": [
+          -1.9028714895248413,
+          0.08336064219474792,
+          0.11364124715328217
+        ],
+        "endRotation": [
+          0.5715875029563904,
+          0.7232152819633484,
+          0.26651790738105774,
+          0.2814525365829468
+        ]
+      },
+      "shape": {
+        "type": 1,
+        "typeName": "ShapeType::Box",
+        "radius": 0.0,
+        "halfHeight": 0.0,
+        "halfExtents": [
+          0.042500000447034836,
+          0.12000000476837158,
+          0.042500000447034836
+        ],
+        "pivotOffset": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "assetId": "",
+        "children": []
+      },
+      "collisionLayer": 2,
+      "collisionMask": 5,
+      "tags": 0,
+      "friction": 0.6000000238418579,
+      "restitution": 0.0,
+      "sensor": false,
+      "enabled": true,
+      "queryOnly": false,
+      "queriesEnabled": true,
+      "isDynamic": true,
+      "sleeping": false,
+      "deferredAcceleration": false,
+      "lastAcceleration": [
+        0.0,
+        -9.8100004196167,
+        0.0
+      ]
+    },
+    {
+      "slot": 9,
+      "generation": 0,
+      "handle": 9,
+      "current": {
+        "position": [
+          -1.8190819025039673,
+          0.10434766858816147,
+          0.30951690673828125
+        ],
+        "rotation": [
+          0.7383013367652893,
+          0.533231258392334,
+          0.38154616951942444,
+          -0.15810823440551758
+        ],
+        "linearVelocity": [
+          -0.026080744341015816,
+          -0.003080128924921155,
+          -0.006308442912995815
+        ],
+        "angularVelocity": [
+          0.4020210802555084,
+          0.298528254032135,
+          0.40495073795318604
+        ],
+        "inverseMass": 0.25,
+        "inverseInertiaLocal": [
+          [
+            49.89604949951172,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            207.6124725341797,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            49.89604949951172
+          ]
+        ],
+        "forceAccumulator": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "torqueAccumulator": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "startAnchor": {
+        "owner": 9,
+        "begin": 0.0,
+        "end": 9.147122455044849e-06,
+        "inverseMass": 0.25,
+        "position": [
+          -1.8190815448760986,
+          0.1043480709195137,
+          0.30951717495918274
+        ],
+        "rotation": [
+          0.7383031845092773,
+          0.5332300066947937,
+          0.3815431594848633,
+          -0.15811075270175934
+        ],
+        "linearVelocity": [
+          -0.037039004266262054,
+          -0.04349581524729729,
+          -0.026778195053339005
+        ],
+        "angularVelocity": [
+          0.624783992767334,
+          0.2304077297449112,
+          0.48059386014938354
+        ],
+        "endPosition": [
+          -1.8190819025039673,
+          0.10434767603874207,
+          0.30951693654060364
+        ],
+        "endRotation": [
+          0.7383016347885132,
+          0.5332311391830444,
+          0.3815455734729767,
+          -0.15810860693454742
+        ]
+      },
+      "shape": {
+        "type": 1,
+        "typeName": "ShapeType::Box",
+        "radius": 0.0,
+        "halfHeight": 0.0,
+        "halfExtents": [
+          0.04249999672174454,
+          0.11500000208616257,
+          0.04249999672174454
+        ],
+        "pivotOffset": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "assetId": "",
+        "children": []
+      },
+      "collisionLayer": 2,
+      "collisionMask": 5,
+      "tags": 0,
+      "friction": 0.6000000238418579,
+      "restitution": 0.0,
+      "sensor": false,
+      "enabled": true,
+      "queryOnly": false,
+      "queriesEnabled": true,
+      "isDynamic": true,
+      "sleeping": false,
+      "deferredAcceleration": false,
+      "lastAcceleration": [
+        0.0,
+        -9.8100004196167,
+        0.0
+      ]
+    },
+    {
+      "slot": 10,
+      "generation": 0,
+      "handle": 10,
+      "current": {
+        "position": [
+          -1.7519810199737549,
+          0.08041581511497498,
+          0.36680686473846436
+        ],
+        "rotation": [
+          -0.16000215709209442,
+          0.9729601740837097,
+          -0.03308498114347458,
+          -0.1632581353187561
+        ],
+        "linearVelocity": [
+          -0.013088633306324482,
+          -0.007162655238062143,
+          -0.0025448142550885677
+        ],
+        "angularVelocity": [
+          -0.10637566447257996,
+          0.13870257139205933,
+          0.15563853085041046
+        ],
+        "inverseMass": 1.0,
+        "inverseInertiaLocal": [
+          [
+            447.34405517578125,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            830.4498901367188,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            447.34405517578125
+          ]
+        ],
+        "forceAccumulator": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "torqueAccumulator": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "startAnchor": {
+        "owner": 10,
+        "begin": 0.0,
+        "end": 9.147122455044849e-06,
+        "inverseMass": 1.0,
+        "position": [
+          -1.7519806623458862,
+          0.0804162472486496,
+          0.3668070435523987
+        ],
+        "rotation": [
+          -0.16000348329544067,
+          0.9729599952697754,
+          -0.03308660909533501,
+          -0.16325770318508148
+        ],
+        "linearVelocity": [
+          -0.03858188912272453,
+          -0.04492855817079544,
+          -0.01872745156288147
+        ],
+        "angularVelocity": [
+          -0.19692270457744598,
+          -0.0012067421339452267,
+          0.36968791484832764
+        ],
+        "endPosition": [
+          -1.7519810199737549,
+          0.08041583746671677,
+          0.36680686473846436
+        ],
+        "endRotation": [
+          -0.16000233590602875,
+          0.9729601740837097,
+          -0.033085111528635025,
+          -0.16325794160366058
+        ]
+      },
+      "shape": {
+        "type": 1,
+        "typeName": "ShapeType::Box",
+        "radius": 0.0,
+        "halfHeight": 0.0,
+        "halfExtents": [
+          0.04249999672174454,
+          0.06999998539686203,
+          0.04249999672174454
+        ],
+        "pivotOffset": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "assetId": "",
+        "children": []
+      },
+      "collisionLayer": 2,
+      "collisionMask": 5,
+      "tags": 0,
+      "friction": 0.6000000238418579,
+      "restitution": 0.0,
+      "sensor": false,
+      "enabled": true,
+      "queryOnly": false,
+      "queriesEnabled": true,
+      "isDynamic": true,
+      "sleeping": false,
+      "deferredAcceleration": false,
+      "lastAcceleration": [
+        0.0,
+        -9.8100004196167,
+        0.0
+      ]
+    },
+    {
+      "slot": 11,
+      "generation": 0,
+      "handle": 11,
+      "current": {
+        "position": [
+          -1.9502146244049072,
+          0.11656484007835388,
+          0.35017552971839905
+        ],
+        "rotation": [
+          0.4247001111507416,
+          -0.4813174903392792,
+          -0.7114203572273254,
+          0.2860848307609558
+        ],
+        "linearVelocity": [
+          -0.02709764987230301,
+          -0.10982576012611389,
+          0.016829313710331917
+        ],
+        "angularVelocity": [
+          0.22749435901641846,
+          0.3853873908519745,
+          0.31856468319892883
+        ],
+        "inverseMass": 1.0,
+        "inverseInertiaLocal": [
+          [
+            67.71047973632812,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            830.4493408203125,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            67.71047973632812
+          ]
+        ],
+        "forceAccumulator": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "torqueAccumulator": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "startAnchor": {
+        "owner": 11,
+        "begin": 0.0,
+        "end": 9.147122455044849e-06,
+        "inverseMass": 1.0,
+        "position": [
+          -1.95021390914917,
+          0.11656679213047028,
+          0.35017573833465576
+        ],
+        "rotation": [
+          0.4246971905231476,
+          -0.4813210666179657,
+          -0.7114201784133911,
+          0.28608331084251404
+        ],
+        "linearVelocity": [
+          -0.0751975029706955,
+          -0.18463701009750366,
+          -0.02657465450465679
+        ],
+        "angularVelocity": [
+          0.34724873304367065,
+          0.7176821231842041,
+          0.45637020468711853
+        ],
+        "endPosition": [
+          -1.9502146244049072,
+          0.11656510084867477,
+          0.35017549991607666
+        ],
+        "endRotation": [
+          0.42469969391822815,
+          -0.4813179671764374,
+          -0.7114202380180359,
+          0.2860846519470215
+        ]
+      },
+      "shape": {
+        "type": 1,
+        "typeName": "ShapeType::Box",
+        "radius": 0.0,
+        "halfHeight": 0.0,
+        "halfExtents": [
+          0.04250001162290573,
+          0.20615535974502563,
+          0.04250001162290573
+        ],
+        "pivotOffset": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "assetId": "",
+        "children": []
+      },
+      "collisionLayer": 2,
+      "collisionMask": 5,
+      "tags": 0,
+      "friction": 0.6000000238418579,
+      "restitution": 0.0,
+      "sensor": false,
+      "enabled": true,
+      "queryOnly": false,
+      "queriesEnabled": true,
+      "isDynamic": true,
+      "sleeping": false,
+      "deferredAcceleration": false,
+      "lastAcceleration": [
+        0.0,
+        -9.8100004196167,
+        0.0
+      ]
+    },
+    {
+      "slot": 12,
+      "generation": 0,
+      "handle": 12,
+      "current": {
+        "position": [
+          -2.0318946838378906,
+          0.1413370966911316,
+          0.2406807243824005
+        ],
+        "rotation": [
+          0.6061418652534485,
+          0.25942757725715637,
+          0.005194163415580988,
+          0.751839280128479
+        ],
+        "linearVelocity": [
+          -0.1298447996377945,
+          -0.053842946887016296,
+          -0.050339728593826294
+        ],
+        "angularVelocity": [
+          -0.9205920696258545,
+          -0.5645646452903748,
+          0.3782026171684265
+        ],
+        "inverseMass": 1.0,
+        "inverseInertiaLocal": [
+          [
+            86.37753295898438,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            830.4496459960938,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            86.37753295898438
+          ]
+        ],
+        "forceAccumulator": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "torqueAccumulator": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "startAnchor": {
+        "owner": 12,
+        "begin": 0.0,
+        "end": 9.147122455044849e-06,
+        "inverseMass": 1.0,
+        "position": [
+          -2.031893730163574,
+          0.14133881032466888,
+          0.24068127572536469
+        ],
+        "rotation": [
+          0.6061446666717529,
+          0.2594268321990967,
+          0.005193594377487898,
+          0.7518373131752014
+        ],
+        "linearVelocity": [
+          -0.09063269942998886,
+          -0.17252427339553833,
+          -0.04936021566390991
+        ],
+        "angularVelocity": [
+          0.38081228733062744,
+          0.2131858915090561,
+          0.6533929705619812
+        ],
+        "endPosition": [
+          -2.0318944454193115,
+          0.14133723080158234,
+          0.24068082869052887
+        ],
+        "endRotation": [
+          0.606141984462738,
+          0.25942862033843994,
+          0.005193651188164949,
+          0.7518388628959656
+        ]
+      },
+      "shape": {
+        "type": 1,
+        "typeName": "ShapeType::Box",
+        "radius": 0.0,
+        "halfHeight": 0.0,
+        "halfExtents": [
+          0.042500004172325134,
+          0.18145248293876648,
+          0.042500004172325134
+        ],
+        "pivotOffset": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "assetId": "",
+        "children": []
+      },
+      "collisionLayer": 2,
+      "collisionMask": 5,
+      "tags": 0,
+      "friction": 0.6000000238418579,
+      "restitution": 0.0,
+      "sensor": false,
+      "enabled": true,
+      "queryOnly": false,
+      "queriesEnabled": true,
+      "isDynamic": true,
+      "sleeping": false,
+      "deferredAcceleration": false,
+      "lastAcceleration": [
+        0.0,
+        -9.8100004196167,
+        0.0
+      ]
+    },
+    {
+      "slot": 13,
+      "generation": 0,
+      "handle": 13,
+      "current": {
+        "position": [
+          -2.210839033126831,
+          0.0590687021613121,
+          0.3044576644897461
+        ],
+        "rotation": [
+          0.1630997210741043,
+          -0.5381445288658142,
+          0.23553527891635895,
+          0.7926676869392395
+        ],
+        "linearVelocity": [
+          -0.10172304511070251,
+          -0.07126758992671967,
+          -0.04259643703699112
+        ],
+        "angularVelocity": [
+          -1.2115470170974731,
+          1.0791840553283691,
+          1.0899564027786255
+        ],
+        "inverseMass": 1.0,
+        "inverseInertiaLocal": [
+          [
+            830.4496459960938,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            830.4496459960938,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            830.4496459960938
+          ]
+        ],
+        "forceAccumulator": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "torqueAccumulator": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "startAnchor": {
+        "owner": 13,
+        "begin": 0.0,
+        "end": 9.147122455044849e-06,
+        "inverseMass": 1.0,
+        "position": [
+          -2.2108380794525146,
+          0.059070102870464325,
+          0.30445778369903564
+        ],
+        "rotation": [
+          0.16310034692287445,
+          -0.5381462574005127,
+          0.23552891612052917,
+          0.7926682829856873
+        ],
+        "linearVelocity": [
+          -0.06683120131492615,
+          -0.13034260272979736,
+          -0.0032405215315520763
+        ],
+        "angularVelocity": [
+          -0.8516963124275208,
+          0.23757117986679077,
+          -0.9633902907371521
+        ],
+        "endPosition": [
+          -2.210838794708252,
+          0.05906891077756882,
+          0.30445775389671326
+        ],
+        "endRotation": [
+          0.16310149431228638,
+          -0.5381450057029724,
+          0.23553454875946045,
+          0.7926672101020813
+        ]
+      },
+      "shape": {
+        "type": 1,
+        "typeName": "ShapeType::Box",
+        "radius": 0.0,
+        "halfHeight": 0.0,
+        "halfExtents": [
+          0.042500004172325134,
+          0.042500004172325134,
+          0.042500004172325134
+        ],
+        "pivotOffset": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "assetId": "",
+        "children": []
+      },
+      "collisionLayer": 2,
+      "collisionMask": 5,
+      "tags": 0,
+      "friction": 0.6000000238418579,
+      "restitution": 0.0,
+      "sensor": false,
+      "enabled": true,
+      "queryOnly": false,
+      "queriesEnabled": true,
+      "isDynamic": true,
+      "sleeping": false,
+      "deferredAcceleration": false,
+      "lastAcceleration": [
+        0.0,
+        -9.8100004196167,
+        0.0
+      ]
+    },
+    {
+      "slot": 14,
+      "generation": 0,
+      "handle": 14,
+      "current": {
+        "position": [
+          -2.0514509677886963,
+          0.12294283509254456,
+          -0.013725337572395802
+        ],
+        "rotation": [
+          0.5690723657608032,
+          0.7894811630249023,
+          0.11827682703733444,
+          0.19719764590263367
+        ],
+        "linearVelocity": [
+          -0.003747353097423911,
+          -0.08424124866724014,
+          -0.03381515294313431
+        ],
+        "angularVelocity": [
+          -0.4799351990222931,
+          0.03555731847882271,
+          0.0461576022207737
+        ],
+        "inverseMass": 1.0,
+        "inverseInertiaLocal": [
+          [
+            61.491153717041016,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            830.4497680664062,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            61.491153717041016
+          ]
+        ],
+        "forceAccumulator": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "torqueAccumulator": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "startAnchor": {
+        "owner": 14,
+        "begin": 0.0,
+        "end": 9.147122455044849e-06,
+        "inverseMass": 1.0,
+        "position": [
+          -2.0514509677886963,
+          0.12294399738311768,
+          -0.013724843971431255
+        ],
+        "rotation": [
+          0.5690702795982361,
+          0.7894828915596008,
+          0.11827573925256729,
+          0.19719669222831726
+        ],
+        "linearVelocity": [
+          -0.003173931036144495,
+          -0.10443486273288727,
+          -0.04419804364442825
+        ],
+        "angularVelocity": [
+          -0.47630923986434937,
+          -0.16011904180049896,
+          0.24799683690071106
+        ],
+        "endPosition": [
+          -2.0514509677886963,
+          0.12294304370880127,
+          -0.013725248165428638
+        ],
+        "endRotation": [
+          0.569071888923645,
+          0.7894814014434814,
+          0.11827664822340012,
+          0.19719766080379486
+        ]
+      },
+      "shape": {
+        "type": 1,
+        "typeName": "ShapeType::Box",
+        "radius": 0.0,
+        "halfHeight": 0.0,
+        "halfExtents": [
+          0.042500000447034836,
+          0.2167515903711319,
+          0.042500000447034836
+        ],
+        "pivotOffset": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "assetId": "",
+        "children": []
+      },
+      "collisionLayer": 2,
+      "collisionMask": 5,
+      "tags": 0,
+      "friction": 0.6000000238418579,
+      "restitution": 0.0,
+      "sensor": false,
+      "enabled": true,
+      "queryOnly": false,
+      "queriesEnabled": true,
+      "isDynamic": true,
+      "sleeping": false,
+      "deferredAcceleration": false,
+      "lastAcceleration": [
+        0.0,
+        -9.8100004196167,
+        0.0
+      ]
+    },
+    {
+      "slot": 15,
+      "generation": 0,
+      "handle": 15,
+      "current": {
+        "position": [
+          -2.0047831535339355,
+          0.05081013962626457,
+          -0.023413969203829765
+        ],
+        "rotation": [
+          0.7035360336303711,
+          -0.6834823489189148,
+          0.016032272949814796,
+          -0.193989560008049
+        ],
+        "linearVelocity": [
+          0.016025260090827942,
+          0.014101870357990265,
+          0.002573637990280986
+        ],
+        "angularVelocity": [
+          0.12609010934829712,
+          -0.047231607139110565,
+          -0.4861575663089752
+        ],
+        "inverseMass": 1.0,
+        "inverseInertiaLocal": [
+          [
+            58.8668098449707,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            830.4497680664062,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            58.8668098449707
+          ]
+        ],
+        "forceAccumulator": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "torqueAccumulator": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "startAnchor": {
+        "owner": 15,
+        "begin": 0.0,
+        "end": 9.147122455044849e-06,
+        "inverseMass": 1.0,
+        "position": [
+          -2.0047831535339355,
+          0.05081043392419815,
+          -0.023413896560668945
+        ],
+        "rotation": [
+          0.7035364508628845,
+          -0.6834825873374939,
+          0.01602986641228199,
+          -0.19398730993270874
+        ],
+        "linearVelocity": [
+          -0.008407847955822945,
+          -0.03354258835315704,
+          -0.007573444861918688
+        ],
+        "angularVelocity": [
+          0.05410626158118248,
+          0.0312667153775692,
+          -0.6771541237831116
+        ],
+        "endPosition": [
+          -2.0047831535339355,
+          0.05081012845039368,
+          -0.023413965478539467
+        ],
+        "endRotation": [
+          0.7035360336303711,
+          -0.6834824085235596,
+          0.016032131388783455,
+          -0.19398938119411469
+        ]
+      },
+      "shape": {
+        "type": 1,
+        "typeName": "ShapeType::Box",
+        "radius": 0.0,
+        "halfHeight": 0.0,
+        "halfExtents": [
+          0.042500000447034836,
+          0.22171208262443542,
+          0.042500000447034836
+        ],
+        "pivotOffset": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "assetId": "",
+        "children": []
+      },
+      "collisionLayer": 2,
+      "collisionMask": 5,
+      "tags": 0,
+      "friction": 0.6000000238418579,
+      "restitution": 0.0,
+      "sensor": false,
+      "enabled": true,
+      "queryOnly": false,
+      "queriesEnabled": true,
+      "isDynamic": true,
+      "sleeping": false,
+      "deferredAcceleration": false,
+      "lastAcceleration": [
+        0.0,
+        -9.8100004196167,
+        0.0
+      ]
+    },
+    {
+      "slot": 16,
+      "generation": 0,
+      "handle": 16,
+      "current": {
+        "position": [
+          -1.9862639904022217,
+          0.07291105389595032,
+          -0.1920030117034912
+        ],
+        "rotation": [
+          0.8086005449295044,
+          0.5052892565727234,
+          -0.15407660603523254,
+          0.25905275344848633
+        ],
+        "linearVelocity": [
+          -0.01418632548302412,
+          -0.09105397760868073,
+          0.028552232310175896
+        ],
+        "angularVelocity": [
+          1.4958958625793457,
+          -0.3396380841732025,
+          0.978087842464447
+        ],
+        "inverseMass": 1.0,
+        "inverseInertiaLocal": [
+          [
+            484.8484802246094,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            830.4497680664062,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            484.8484802246094
+          ]
+        ],
+        "forceAccumulator": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "torqueAccumulator": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "startAnchor": {
+        "owner": 16,
+        "begin": 0.0,
+        "end": 9.147122455044849e-06,
+        "inverseMass": 1.0,
+        "position": [
+          -1.986263632774353,
+          0.07291235029697418,
+          -0.1920035034418106
+        ],
+        "rotation": [
+          0.8086041212081909,
+          0.5052844882011414,
+          -0.15407511591911316,
+          0.2590521574020386
+        ],
+        "linearVelocity": [
+          -0.037480223923921585,
+          -0.11612812429666519,
+          0.04561923071742058
+        ],
+        "angularVelocity": [
+          0.8954533338546753,
+          -0.10654652118682861,
+          0.11149237304925919
+        ],
+        "endPosition": [
+          -1.9862639904022217,
+          0.07291128486394882,
+          -0.19200308620929718
+        ],
+        "endRotation": [
+          0.8086017370223999,
+          0.5052877068519592,
+          -0.15407629311084747,
+          0.2590521574020386
+        ]
+      },
+      "shape": {
+        "type": 1,
+        "typeName": "ShapeType::Box",
+        "radius": 0.0,
+        "halfHeight": 0.0,
+        "halfExtents": [
+          0.042500000447034836,
+          0.06619101017713547,
+          0.042500000447034836
+        ],
+        "pivotOffset": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "assetId": "",
+        "children": []
+      },
+      "collisionLayer": 2,
+      "collisionMask": 5,
+      "tags": 0,
+      "friction": 0.6000000238418579,
+      "restitution": 0.0,
+      "sensor": false,
+      "enabled": true,
+      "queryOnly": false,
+      "queriesEnabled": true,
+      "isDynamic": true,
+      "sleeping": false,
+      "deferredAcceleration": false,
+      "lastAcceleration": [
+        0.0,
+        -9.8100004196167,
+        0.0
+      ]
+    },
+    {
+      "slot": 17,
+      "generation": 0,
+      "handle": 17,
+      "current": {
+        "position": [
+          -1.695163369178772,
+          0.20039144158363342,
+          0.25962215662002563
+        ],
+        "rotation": [
+          0.4426494836807251,
+          0.15559455752372742,
+          0.6516938209533691,
+          0.5959420800209045
+        ],
+        "linearVelocity": [
+          -0.06719134002923965,
+          0.026691608130931854,
+          0.01034385897219181
+        ],
+        "angularVelocity": [
+          0.2726902365684509,
+          0.6364648938179016,
+          1.4236607551574707
+        ],
+        "inverseMass": 1.0,
+        "inverseInertiaLocal": [
+          [
+            67.71049499511719,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            830.4496459960938,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            67.71049499511719
+          ]
+        ],
+        "forceAccumulator": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "torqueAccumulator": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "startAnchor": {
+        "owner": 17,
+        "begin": 0.0,
+        "end": 9.147122455044849e-06,
+        "inverseMass": 1.0,
+        "position": [
+          -1.6951627731323242,
+          0.20039139688014984,
+          0.25962233543395996
+        ],
+        "rotation": [
+          0.4426578879356384,
+          0.15559595823287964,
+          0.6516919136047363,
+          0.5959375500679016
+        ],
+        "linearVelocity": [
+          -0.05431247875094414,
+          -0.0030890656635165215,
+          -0.024046974256634712
+        ],
+        "angularVelocity": [
+          0.47490963339805603,
+          0.8860969543457031,
+          1.4329739809036255
+        ],
+        "endPosition": [
+          -1.6951632499694824,
+          0.20039136707782745,
+          0.25962212681770325
+        ],
+        "endRotation": [
+          0.44265100359916687,
+          0.155595064163208,
+          0.6516934037208557,
+          0.5959412455558777
+        ]
+      },
+      "shape": {
+        "type": 1,
+        "typeName": "ShapeType::Box",
+        "radius": 0.0,
+        "halfHeight": 0.0,
+        "halfExtents": [
+          0.042500004172325134,
+          0.20615534484386444,
+          0.042500004172325134
+        ],
+        "pivotOffset": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "assetId": "",
+        "children": []
+      },
+      "collisionLayer": 2,
+      "collisionMask": 5,
+      "tags": 0,
+      "friction": 0.6000000238418579,
+      "restitution": 0.0,
+      "sensor": false,
+      "enabled": true,
+      "queryOnly": false,
+      "queriesEnabled": true,
+      "isDynamic": true,
+      "sleeping": false,
+      "deferredAcceleration": false,
+      "lastAcceleration": [
+        0.0,
+        -9.8100004196167,
+        0.0
+      ]
+    },
+    {
+      "slot": 18,
+      "generation": 0,
+      "handle": 18,
+      "current": {
+        "position": [
+          -1.6071491241455078,
+          0.14337977766990662,
+          0.44926899671554565
+        ],
+        "rotation": [
+          -0.2826818525791168,
+          0.6975737810134888,
+          0.3824830949306488,
+          0.535899817943573
+        ],
+        "linearVelocity": [
+          0.008119798265397549,
+          -0.0824325904250145,
+          0.03480885922908783
+        ],
+        "angularVelocity": [
+          -0.4118902385234833,
+          0.4883873164653778,
+          0.23970749974250793
+        ],
+        "inverseMass": 1.0,
+        "inverseInertiaLocal": [
+          [
+            86.3775405883789,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            830.4497680664062,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            86.3775405883789
+          ]
+        ],
+        "forceAccumulator": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "torqueAccumulator": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "startAnchor": {
+        "owner": 18,
+        "begin": 0.0,
+        "end": 9.147122455044849e-06,
+        "inverseMass": 1.0,
+        "position": [
+          -1.6071492433547974,
+          0.14338064193725586,
+          0.44926902651786804
+        ],
+        "rotation": [
+          -0.2826809883117676,
+          0.6975713968276978,
+          0.3824825584888458,
+          0.5359037518501282
+        ],
+        "linearVelocity": [
+          0.01913353241980076,
+          -0.0735573023557663,
+          -0.010568484663963318
+        ],
+        "angularVelocity": [
+          -0.28966355323791504,
+          0.7821035385131836,
+          0.161554753780365
+        ],
+        "endPosition": [
+          -1.6071491241455078,
+          0.14337997138500214,
+          0.4492689371109009
+        ],
+        "endRotation": [
+          -0.28268179297447205,
+          0.6975733637809753,
+          0.38248270750045776,
+          0.5359004735946655
+        ]
+      },
+      "shape": {
+        "type": 1,
+        "typeName": "ShapeType::Box",
+        "radius": 0.0,
+        "halfHeight": 0.0,
+        "halfExtents": [
+          0.042500000447034836,
+          0.18145246803760529,
+          0.042500000447034836
+        ],
+        "pivotOffset": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "assetId": "",
+        "children": []
+      },
+      "collisionLayer": 2,
+      "collisionMask": 5,
+      "tags": 0,
+      "friction": 0.6000000238418579,
+      "restitution": 0.0,
+      "sensor": false,
+      "enabled": true,
+      "queryOnly": false,
+      "queriesEnabled": true,
+      "isDynamic": true,
+      "sleeping": false,
+      "deferredAcceleration": false,
+      "lastAcceleration": [
+        0.0,
+        -9.8100004196167,
+        0.0
+      ]
+    },
+    {
+      "slot": 19,
+      "generation": 0,
+      "handle": 19,
+      "current": {
+        "position": [
+          -1.4470216035842896,
+          0.04269485920667648,
+          0.416274756193161
+        ],
+        "rotation": [
+          -0.43915778398513794,
+          0.5550393462181091,
+          0.5509327054023743,
+          -0.44220465421676636
+        ],
+        "linearVelocity": [
+          0.022030124440789223,
+          -0.021813800558447838,
+          -0.001878093695268035
+        ],
+        "angularVelocity": [
+          0.6324241757392883,
+          0.31695452332496643,
+          0.04986991360783577
+        ],
+        "inverseMass": 1.0,
+        "inverseInertiaLocal": [
+          [
+            830.4497680664062,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            830.4497680664062,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            830.4497680664062
+          ]
+        ],
+        "forceAccumulator": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "torqueAccumulator": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "startAnchor": {
+        "owner": 19,
+        "begin": 0.0,
+        "end": 9.147122455044849e-06,
+        "inverseMass": 1.0,
+        "position": [
+          -1.4470216035842896,
+          0.0426950566470623,
+          0.4162744879722595
+        ],
+        "rotation": [
+          -0.4391559064388275,
+          0.5550409555435181,
+          0.5509315729141235,
+          -0.44220590591430664
+        ],
+        "linearVelocity": [
+          0.005004374776035547,
+          -0.015772467479109764,
+          0.030843395739793777
+        ],
+        "angularVelocity": [
+          0.48865705728530884,
+          0.03673935681581497,
+          0.02680143155157566
+        ],
+        "endPosition": [
+          -1.4470216035842896,
+          0.04269491136074066,
+          0.416274756193161
+        ],
+        "endRotation": [
+          -0.4391571879386902,
+          0.5550398230552673,
+          0.5509325265884399,
+          -0.4422048330307007
+        ]
+      },
+      "shape": {
+        "type": 1,
+        "typeName": "ShapeType::Box",
+        "radius": 0.0,
+        "halfHeight": 0.0,
+        "halfExtents": [
+          0.042500000447034836,
+          0.042500000447034836,
+          0.042500000447034836
+        ],
+        "pivotOffset": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "assetId": "",
+        "children": []
+      },
+      "collisionLayer": 2,
+      "collisionMask": 5,
+      "tags": 0,
+      "friction": 0.6000000238418579,
+      "restitution": 0.0,
+      "sensor": false,
+      "enabled": true,
+      "queryOnly": false,
+      "queriesEnabled": true,
+      "isDynamic": true,
+      "sleeping": false,
+      "deferredAcceleration": false,
+      "lastAcceleration": [
+        0.0,
+        -9.8100004196167,
+        0.0
+      ]
+    },
+    {
+      "slot": 20,
+      "generation": 0,
+      "handle": 20,
+      "current": {
+        "position": [
+          -1.7350367307662964,
+          0.09077359735965729,
+          -0.006041137035936117
+        ],
+        "rotation": [
+          0.6270077228546143,
+          0.752203106880188,
+          0.15820735692977905,
+          0.12657985091209412
+        ],
+        "linearVelocity": [
+          0.010175039991736412,
+          -0.08622955530881882,
+          0.0008192090899683535
+        ],
+        "angularVelocity": [
+          0.48894065618515015,
+          -0.09247111529111862,
+          0.01729273982346058
+        ],
+        "inverseMass": 1.0,
+        "inverseInertiaLocal": [
+          [
+            61.49116897583008,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            830.4498901367188,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            61.49116897583008
+          ]
+        ],
+        "forceAccumulator": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "torqueAccumulator": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "startAnchor": {
+        "owner": 20,
+        "begin": 0.0,
+        "end": 9.147122455044849e-06,
+        "inverseMass": 1.0,
+        "position": [
+          -1.7350369691848755,
+          0.09077497571706772,
+          -0.006041283719241619
+        ],
+        "rotation": [
+          0.6270095705986023,
+          0.752201497554779,
+          0.15820783376693726,
+          0.12657931447029114
+        ],
+        "linearVelocity": [
+          0.02646390162408352,
+          -0.1263268142938614,
+          0.014287129044532776
+        ],
+        "angularVelocity": [
+          0.4301217198371887,
+          -0.021105539053678513,
+          -0.02165508083999157
+        ],
+        "endPosition": [
+          -1.7350367307662964,
+          0.0907738208770752,
+          -0.006041152868419886
+        ],
+        "endRotation": [
+          0.6270081400871277,
+          0.7522027492523193,
+          0.15820744633674622,
+          0.1265796422958374
+        ]
+      },
+      "shape": {
+        "type": 1,
+        "typeName": "ShapeType::Box",
+        "radius": 0.0,
+        "halfHeight": 0.0,
+        "halfExtents": [
+          0.04249999672174454,
+          0.2167515754699707,
+          0.04249999672174454
+        ],
+        "pivotOffset": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "assetId": "",
+        "children": []
+      },
+      "collisionLayer": 2,
+      "collisionMask": 5,
+      "tags": 0,
+      "friction": 0.6000000238418579,
+      "restitution": 0.0,
+      "sensor": false,
+      "enabled": true,
+      "queryOnly": false,
+      "queriesEnabled": true,
+      "isDynamic": true,
+      "sleeping": false,
+      "deferredAcceleration": false,
+      "lastAcceleration": [
+        0.0,
+        -9.8100004196167,
+        0.0
+      ]
+    },
+    {
+      "slot": 21,
+      "generation": 0,
+      "handle": 21,
+      "current": {
+        "position": [
+          -1.6606242656707764,
+          0.04896359145641327,
+          -0.007532957009971142
+        ],
+        "rotation": [
+          0.6954177618026733,
+          -0.7069312334060669,
+          -0.0752757266163826,
+          -0.10476584732532501
+        ],
+        "linearVelocity": [
+          0.006279603578150272,
+          -0.09935315698385239,
+          -0.013563749380409718
+        ],
+        "angularVelocity": [
+          0.41499507427215576,
+          -0.06993303447961807,
+          0.030067626386880875
+        ],
+        "inverseMass": 1.0,
+        "inverseInertiaLocal": [
+          [
+            58.8668098449707,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            830.4497680664062,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            58.8668098449707
+          ]
+        ],
+        "forceAccumulator": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "torqueAccumulator": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "startAnchor": {
+        "owner": 21,
+        "begin": 0.0,
+        "end": 9.147122455044849e-06,
+        "inverseMass": 1.0,
+        "position": [
+          -1.6606245040893555,
+          0.048964861780405045,
+          -0.007532944902777672
+        ],
+        "rotation": [
+          0.6954161524772644,
+          -0.7069329619407654,
+          -0.0752754807472229,
+          -0.10476534068584442
+        ],
+        "linearVelocity": [
+          0.02955717034637928,
+          -0.11196774989366531,
+          0.0006964371423237026
+        ],
+        "angularVelocity": [
+          0.403492271900177,
+          -0.11593403667211533,
+          0.01916491612792015
+        ],
+        "endPosition": [
+          -1.6606242656707764,
+          0.04896383732557297,
+          -0.0075329383835196495
+        ],
+        "endRotation": [
+          0.6954174041748047,
+          -0.7069315910339355,
+          -0.075275719165802,
+          -0.10476579517126083
+        ]
+      },
+      "shape": {
+        "type": 1,
+        "typeName": "ShapeType::Box",
+        "radius": 0.0,
+        "halfHeight": 0.0,
+        "halfExtents": [
+          0.042500000447034836,
+          0.22171208262443542,
+          0.042500000447034836
+        ],
+        "pivotOffset": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "assetId": "",
+        "children": []
+      },
+      "collisionLayer": 2,
+      "collisionMask": 5,
+      "tags": 0,
+      "friction": 0.6000000238418579,
+      "restitution": 0.0,
+      "sensor": false,
+      "enabled": true,
+      "queryOnly": false,
+      "queriesEnabled": true,
+      "isDynamic": true,
+      "sleeping": false,
+      "deferredAcceleration": false,
+      "lastAcceleration": [
+        0.0,
+        -9.8100004196167,
+        0.0
+      ]
+    },
+    {
+      "slot": 22,
+      "generation": 0,
+      "handle": 22,
+      "current": {
+        "position": [
+          -1.6559544801712036,
+          0.042562052607536316,
+          -0.18540941178798676
+        ],
+        "rotation": [
+          0.6292181015014648,
+          0.6270005106925964,
+          -0.32291683554649353,
+          0.32661861181259155
+        ],
+        "linearVelocity": [
+          0.021846666932106018,
+          -0.008712180890142918,
+          -0.011038031429052353
+        ],
+        "angularVelocity": [
+          0.16831064224243164,
+          0.01692538894712925,
+          -0.11923576891422272
+        ],
+        "inverseMass": 1.0,
+        "inverseInertiaLocal": [
+          [
+            484.8484802246094,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            830.4497680664062,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            484.8484802246094
+          ]
+        ],
+        "forceAccumulator": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "torqueAccumulator": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "startAnchor": {
+        "owner": 22,
+        "begin": 0.0,
+        "end": 9.147122455044849e-06,
+        "inverseMass": 1.0,
+        "position": [
+          -1.6559545993804932,
+          0.04256223142147064,
+          -0.1854095160961151
+        ],
+        "rotation": [
+          0.6292192935943604,
+          0.6269997358322144,
+          -0.3229159116744995,
+          0.3266187310218811
+        ],
+        "linearVelocity": [
+          0.01340735424309969,
+          -0.016611143946647644,
+          0.013389295898377895
+        ],
+        "angularVelocity": [
+          0.2920644283294678,
+          -0.15388572216033936,
+          0.04684499278664589
+        ],
+        "endPosition": [
+          -1.6559544801712036,
+          0.042562078684568405,
+          -0.18540939688682556
+        ],
+        "endRotation": [
+          0.6292181611061096,
+          0.6270003914833069,
+          -0.3229166567325592,
+          0.32661888003349304
+        ]
+      },
+      "shape": {
+        "type": 1,
+        "typeName": "ShapeType::Box",
+        "radius": 0.0,
+        "halfHeight": 0.0,
+        "halfExtents": [
+          0.042500000447034836,
+          0.06619101017713547,
+          0.042500000447034836
+        ],
+        "pivotOffset": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "assetId": "",
+        "children": []
+      },
+      "collisionLayer": 2,
+      "collisionMask": 5,
+      "tags": 0,
+      "friction": 0.6000000238418579,
+      "restitution": 0.0,
+      "sensor": false,
+      "enabled": true,
+      "queryOnly": false,
+      "queriesEnabled": true,
+      "isDynamic": true,
+      "sleeping": false,
+      "deferredAcceleration": false,
+      "lastAcceleration": [
+        0.0,
+        -9.8100004196167,
+        0.0
+      ]
+    },
+    {
+      "slot": 23,
+      "generation": 0,
+      "handle": 23,
+      "current": {
+        "position": [
+          1.5997899770736694,
+          0.15165306627750397,
+          -0.10244940966367722
+        ],
+        "rotation": [
+          0.8016185164451599,
+          0.5896132588386536,
+          0.08514835685491562,
+          -0.05013664811849594
+        ],
+        "linearVelocity": [
+          -0.013167362660169601,
+          -0.0031983850058168173,
+          0.005516511388123035
+        ],
+        "angularVelocity": [
+          -0.194819837808609,
+          -0.05182412639260292,
+          0.029373399913311005
+        ],
+        "inverseMass": 0.25,
+        "inverseInertiaLocal": [
+          [
+            75.70980834960938,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            207.61244201660156,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            75.70980834960938
+          ]
+        ],
+        "forceAccumulator": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "torqueAccumulator": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "startAnchor": {
+        "owner": 23,
+        "begin": 0.0,
+        "end": 0.01666666753590107,
+        "inverseMass": 0.25,
+        "position": [
+          1.5997899770736694,
+          0.15165306627750397,
+          -0.10244940966367722
+        ],
+        "rotation": [
+          0.8016185164451599,
+          0.5896132588386536,
+          0.08514835685491562,
+          -0.05013664811849594
+        ],
+        "linearVelocity": [
+          -0.013167362660169601,
+          -0.0031983850058168173,
+          0.005516511388123035
+        ],
+        "angularVelocity": [
+          -0.194819837808609,
+          -0.05182412639260292,
+          0.029373399913311005
+        ],
+        "endPosition": [
+          1.5995705127716064,
+          0.15159976482391357,
+          -0.10235746949911118
+        ],
+        "endRotation": [
+          0.8026236891746521,
+          0.5883117914199829,
+          0.08486497402191162,
+          -0.04982396215200424
+        ]
+      },
+      "shape": {
+        "type": 1,
+        "typeName": "ShapeType::Box",
+        "radius": 0.0,
+        "halfHeight": 0.0,
+        "halfExtents": [
+          0.042500000447034836,
+          0.0899999737739563,
+          0.042500000447034836
+        ],
+        "pivotOffset": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "assetId": "",
+        "children": []
+      },
+      "collisionLayer": 2,
+      "collisionMask": 5,
+      "tags": 0,
+      "friction": 0.6000000238418579,
+      "restitution": 0.0,
+      "sensor": false,
+      "enabled": true,
+      "queryOnly": false,
+      "queriesEnabled": true,
+      "isDynamic": true,
+      "sleeping": false,
+      "deferredAcceleration": false,
+      "lastAcceleration": [
+        0.0,
+        -9.8100004196167,
+        0.0
+      ]
+    },
+    {
+      "slot": 24,
+      "generation": 0,
+      "handle": 24,
+      "current": {
+        "position": [
+          1.6670018434524536,
+          0.19376231729984283,
+          0.09055858105421066
+        ],
+        "rotation": [
+          0.6596967577934265,
+          0.6650018095970154,
+          0.34933632612228394,
+          0.023170575499534607
+        ],
+        "linearVelocity": [
+          0.0071195089258253574,
+          -0.07213609665632248,
+          -0.01316612958908081
+        ],
+        "angularVelocity": [
+          0.6992087960243225,
+          0.15572117269039154,
+          0.10288666188716888
+        ],
+        "inverseMass": 0.25,
+        "inverseInertiaLocal": [
+          [
+            46.27843475341797,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            207.61244201660156,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            46.27843475341797
+          ]
+        ],
+        "forceAccumulator": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "torqueAccumulator": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "startAnchor": {
+        "owner": 24,
+        "begin": 0.0,
+        "end": 0.01666666753590107,
+        "inverseMass": 0.25,
+        "position": [
+          1.6670018434524536,
+          0.19376231729984283,
+          0.09055858105421066
+        ],
+        "rotation": [
+          0.6596967577934265,
+          0.6650018095970154,
+          0.34933632612228394,
+          0.023170575499534607
+        ],
+        "linearVelocity": [
+          0.0071195089258253574,
+          -0.07213609665632248,
+          -0.01316612958908081
+        ],
+        "angularVelocity": [
+          0.6992087960243225,
+          0.15572117269039154,
+          0.10288666188716888
+        ],
+        "endPosition": [
+          1.6671204566955566,
+          0.19256004691123962,
+          0.09033914655447006
+        ],
+        "endRotation": [
+          0.6553369164466858,
+          0.6685641407966614,
+          0.35062119364738464,
+          0.0249082762748003
+        ]
+      },
+      "shape": {
+        "type": 1,
+        "typeName": "ShapeType::Box",
+        "radius": 0.0,
+        "halfHeight": 0.0,
+        "halfExtents": [
+          0.042500000447034836,
+          0.12000000476837158,
+          0.042500000447034836
+        ],
+        "pivotOffset": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "assetId": "",
+        "children": []
+      },
+      "collisionLayer": 2,
+      "collisionMask": 5,
+      "tags": 0,
+      "friction": 0.6000000238418579,
+      "restitution": 0.0,
+      "sensor": false,
+      "enabled": true,
+      "queryOnly": false,
+      "queriesEnabled": true,
+      "isDynamic": true,
+      "sleeping": false,
+      "deferredAcceleration": false,
+      "lastAcceleration": [
+        0.0,
+        -9.8100004196167,
+        0.0
+      ]
+    },
+    {
+      "slot": 25,
+      "generation": 0,
+      "handle": 25,
+      "current": {
+        "position": [
+          1.7378307580947876,
+          0.12199355661869049,
+          0.1202472373843193
+        ],
+        "rotation": [
+          -0.35106515884399414,
+          0.9253788590431213,
+          0.11663457006216049,
+          -0.08260514587163925
+        ],
+        "linearVelocity": [
+          0.049313511699438095,
+          -0.07990170270204544,
+          -0.032797303050756454
+        ],
+        "angularVelocity": [
+          0.43591365218162537,
+          -0.16789719462394714,
+          0.2947537302970886
+        ],
+        "inverseMass": 0.25,
+        "inverseInertiaLocal": [
+          [
+            49.89604949951172,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            207.6124725341797,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            49.89604949951172
+          ]
+        ],
+        "forceAccumulator": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "torqueAccumulator": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "startAnchor": {
+        "owner": 25,
+        "begin": 0.0,
+        "end": 0.01666666753590107,
+        "inverseMass": 0.25,
+        "position": [
+          1.7378307580947876,
+          0.12199355661869049,
+          0.1202472373843193
+        ],
+        "rotation": [
+          -0.35106515884399414,
+          0.9253788590431213,
+          0.11663457006216049,
+          -0.08260514587163925
+        ],
+        "linearVelocity": [
+          0.049313511699438095,
+          -0.07990170270204544,
+          -0.032797303050756454
+        ],
+        "angularVelocity": [
+          0.43591365218162537,
+          -0.16789719462394714,
+          0.2947537302970886
+        ],
+        "endPosition": [
+          1.7386527061462402,
+          0.12066186219453812,
+          0.11970061808824539
+        ],
+        "endRotation": [
+          -0.35405686497688293,
+          0.9239228963851929,
+          0.11969755589962006,
+          -0.08174817264080048
+        ]
+      },
+      "shape": {
+        "type": 1,
+        "typeName": "ShapeType::Box",
+        "radius": 0.0,
+        "halfHeight": 0.0,
+        "halfExtents": [
+          0.04249999672174454,
+          0.11500000208616257,
+          0.04249999672174454
+        ],
+        "pivotOffset": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "assetId": "",
+        "children": []
+      },
+      "collisionLayer": 2,
+      "collisionMask": 5,
+      "tags": 0,
+      "friction": 0.6000000238418579,
+      "restitution": 0.0,
+      "sensor": false,
+      "enabled": true,
+      "queryOnly": false,
+      "queriesEnabled": true,
+      "isDynamic": true,
+      "sleeping": false,
+      "deferredAcceleration": false,
+      "lastAcceleration": [
+        0.0,
+        -9.8100004196167,
+        0.0
+      ]
+    },
+    {
+      "slot": 26,
+      "generation": 0,
+      "handle": 26,
+      "current": {
+        "position": [
+          1.731021523475647,
+          0.09054110199213028,
+          0.08021552860736847
+        ],
+        "rotation": [
+          0.9300355315208435,
+          0.28894558548927307,
+          0.07992645353078842,
+          0.21250003576278687
+        ],
+        "linearVelocity": [
+          0.05535415560007095,
+          -0.047127608209848404,
+          -0.04278414323925972
+        ],
+        "angularVelocity": [
+          -0.31468716263771057,
+          0.0321662612259388,
+          0.6421123743057251
+        ],
+        "inverseMass": 1.0,
+        "inverseInertiaLocal": [
+          [
+            447.34405517578125,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            830.4498901367188,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            447.34405517578125
+          ]
+        ],
+        "forceAccumulator": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "torqueAccumulator": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "startAnchor": {
+        "owner": 26,
+        "begin": 0.0,
+        "end": 0.01666666753590107,
+        "inverseMass": 1.0,
+        "position": [
+          1.731021523475647,
+          0.09054110199213028,
+          0.08021552860736847
+        ],
+        "rotation": [
+          0.9300355315208435,
+          0.28894558548927307,
+          0.07992645353078842,
+          0.21250003576278687
+        ],
+        "linearVelocity": [
+          0.05535415560007095,
+          -0.047127608209848404,
+          -0.04278414323925972
+        ],
+        "angularVelocity": [
+          -0.31468716263771057,
+          0.0321662612259388,
+          0.6421123743057251
+        ],
+        "endPosition": [
+          1.7319440841674805,
+          0.08975563943386078,
+          0.07950245589017868
+        ],
+        "endRotation": [
+          0.929618239402771,
+          0.2861308455467224,
+          0.08227767795324326,
+          0.21718569099903107
+        ]
+      },
+      "shape": {
+        "type": 1,
+        "typeName": "ShapeType::Box",
+        "radius": 0.0,
+        "halfHeight": 0.0,
+        "halfExtents": [
+          0.04249999672174454,
+          0.06999998539686203,
+          0.04249999672174454
+        ],
+        "pivotOffset": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "assetId": "",
+        "children": []
+      },
+      "collisionLayer": 2,
+      "collisionMask": 5,
+      "tags": 0,
+      "friction": 0.6000000238418579,
+      "restitution": 0.0,
+      "sensor": false,
+      "enabled": true,
+      "queryOnly": false,
+      "queriesEnabled": true,
+      "isDynamic": true,
+      "sleeping": false,
+      "deferredAcceleration": false,
+      "lastAcceleration": [
+        0.0,
+        -9.8100004196167,
+        0.0
+      ]
+    },
+    {
+      "slot": 27,
+      "generation": 0,
+      "handle": 27,
+      "current": {
+        "position": [
+          1.5057891607284546,
+          0.043183643370866776,
+          0.33318766951560974
+        ],
+        "rotation": [
+          0.6281230449676514,
+          0.32344841957092285,
+          -0.32584860920906067,
+          -0.6282238364219666
+        ],
+        "linearVelocity": [
+          0.04580658674240112,
+          -0.15883420407772064,
+          0.002999934833496809
+        ],
+        "angularVelocity": [
+          -0.4742797017097473,
+          -0.33604195713996887,
+          0.44794896245002747
+        ],
+        "inverseMass": 1.0,
+        "inverseInertiaLocal": [
+          [
+            61.80304718017578,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            830.4497680664062,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            61.80304718017578
+          ]
+        ],
+        "forceAccumulator": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "torqueAccumulator": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "startAnchor": {
+        "owner": 27,
+        "begin": 0.0,
+        "end": 0.01666666753590107,
+        "inverseMass": 1.0,
+        "position": [
+          1.5057891607284546,
+          0.043183643370866776,
+          0.33318766951560974
+        ],
+        "rotation": [
+          0.6281230449676514,
+          0.32344841957092285,
+          -0.32584860920906067,
+          -0.6282238364219666
+        ],
+        "linearVelocity": [
+          0.04580658674240112,
+          -0.15883420407772064,
+          0.002999934833496809
+        ],
+        "angularVelocity": [
+          -0.4742797017097473,
+          -0.33604195713996887,
+          0.44794896245002747
+        ],
+        "endPosition": [
+          1.5065525770187378,
+          0.04053640738129616,
+          0.3332376778125763
+        ],
+        "endRotation": [
+          0.6308222413063049,
+          0.3239354193210602,
+          -0.32887694239616394,
+          -0.6236737966537476
+        ]
+      },
+      "shape": {
+        "type": 1,
+        "typeName": "ShapeType::Box",
+        "radius": 0.0,
+        "halfHeight": 0.0,
+        "halfExtents": [
+          0.042500000447034836,
+          0.2161828875541687,
+          0.042500000447034836
+        ],
+        "pivotOffset": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "assetId": "",
+        "children": []
+      },
+      "collisionLayer": 2,
+      "collisionMask": 5,
+      "tags": 0,
+      "friction": 0.6000000238418579,
+      "restitution": 0.0,
+      "sensor": false,
+      "enabled": true,
+      "queryOnly": false,
+      "queriesEnabled": true,
+      "isDynamic": true,
+      "sleeping": false,
+      "deferredAcceleration": false,
+      "lastAcceleration": [
+        0.0,
+        -9.8100004196167,
+        0.0
+      ]
+    },
+    {
+      "slot": 28,
+      "generation": 0,
+      "handle": 28,
+      "current": {
+        "position": [
+          1.4433170557022095,
+          0.04246807470917702,
+          0.4743811786174774
+        ],
+        "rotation": [
+          -0.0718236118555069,
+          0.7026771903038025,
+          -0.7041274309158325,
+          0.07273761928081512
+        ],
+        "linearVelocity": [
+          -0.014419523999094963,
+          -0.008794319815933704,
+          0.004625458270311356
+        ],
+        "angularVelocity": [
+          0.11024514585733414,
+          0.028578627854585648,
+          0.04283669590950012
+        ],
+        "inverseMass": 1.0,
+        "inverseInertiaLocal": [
+          [
+            78.39724731445312,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            830.4497680664062,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            78.39724731445312
+          ]
+        ],
+        "forceAccumulator": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "torqueAccumulator": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "startAnchor": {
+        "owner": 28,
+        "begin": 0.0,
+        "end": 0.01666666753590107,
+        "inverseMass": 1.0,
+        "position": [
+          1.4433170557022095,
+          0.04246807470917702,
+          0.4743811786174774
+        ],
+        "rotation": [
+          -0.0718236118555069,
+          0.7026771903038025,
+          -0.7041274309158325,
+          0.07273761928081512
+        ],
+        "linearVelocity": [
+          -0.014419523999094963,
+          -0.008794319815933704,
+          0.004625458270311356
+        ],
+        "angularVelocity": [
+          0.11024514585733414,
+          0.028578627854585648,
+          0.04283669590950012
+        ],
+        "endPosition": [
+          1.443076729774475,
+          0.04232150316238403,
+          0.4744582772254944
+        ],
+        "endRotation": [
+          -0.0723273977637291,
+          0.7028794884681702,
+          -0.703960120677948,
+          0.07189770042896271
+        ]
+      },
+      "shape": {
+        "type": 1,
+        "typeName": "ShapeType::Box",
+        "radius": 0.0,
+        "halfHeight": 0.0,
+        "halfExtents": [
+          0.042500000447034836,
+          0.1909460574388504,
+          0.042500000447034836
+        ],
+        "pivotOffset": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "assetId": "",
+        "children": []
+      },
+      "collisionLayer": 2,
+      "collisionMask": 5,
+      "tags": 0,
+      "friction": 0.6000000238418579,
+      "restitution": 0.0,
+      "sensor": false,
+      "enabled": true,
+      "queryOnly": false,
+      "queriesEnabled": true,
+      "isDynamic": true,
+      "sleeping": false,
+      "deferredAcceleration": false,
+      "lastAcceleration": [
+        0.0,
+        -9.8100004196167,
+        0.0
+      ]
+    },
+    {
+      "slot": 29,
+      "generation": 0,
+      "handle": 29,
+      "current": {
+        "position": [
+          1.2313576936721802,
+          0.04185973107814789,
+          0.4257616102695465
+        ],
+        "rotation": [
+          0.3787057399749756,
+          0.38764166831970215,
+          -0.597439706325531,
+          0.5910852551460266
+        ],
+        "linearVelocity": [
+          0.00462312763556838,
+          0.00024052124354057014,
+          0.004800924099981785
+        ],
+        "angularVelocity": [
+          0.04450827091932297,
+          0.018731167539954185,
+          -0.016309337690472603
+        ],
+        "inverseMass": 1.0,
+        "inverseInertiaLocal": [
+          [
+            830.4497680664062,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            830.4497680664062,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            830.4497680664062
+          ]
+        ],
+        "forceAccumulator": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "torqueAccumulator": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "startAnchor": {
+        "owner": 29,
+        "begin": 0.0,
+        "end": 0.01666666753590107,
+        "inverseMass": 1.0,
+        "position": [
+          1.2313576936721802,
+          0.04185973107814789,
+          0.4257616102695465
+        ],
+        "rotation": [
+          0.3787057399749756,
+          0.38764166831970215,
+          -0.597439706325531,
+          0.5910852551460266
+        ],
+        "linearVelocity": [
+          0.00462312763556838,
+          0.00024052124354057014,
+          0.004800924099981785
+        ],
+        "angularVelocity": [
+          0.04450827091932297,
+          0.018731167539954185,
+          -0.016309337690472603
+        ],
+        "endPosition": [
+          1.23143470287323,
+          0.04186373949050903,
+          0.42584162950515747
+        ],
+        "endRotation": [
+          0.3787354826927185,
+          0.3877931237220764,
+          -0.5976524353027344,
+          0.5907516479492188
+        ]
+      },
+      "shape": {
+        "type": 1,
+        "typeName": "ShapeType::Box",
+        "radius": 0.0,
+        "halfHeight": 0.0,
+        "halfExtents": [
+          0.042500000447034836,
+          0.042500000447034836,
+          0.042500000447034836
+        ],
+        "pivotOffset": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "assetId": "",
+        "children": []
+      },
+      "collisionLayer": 2,
+      "collisionMask": 5,
+      "tags": 0,
+      "friction": 0.6000000238418579,
+      "restitution": 0.0,
+      "sensor": false,
+      "enabled": true,
+      "queryOnly": false,
+      "queriesEnabled": true,
+      "isDynamic": true,
+      "sleeping": false,
+      "deferredAcceleration": false,
+      "lastAcceleration": [
+        0.0,
+        -9.8100004196167,
+        0.0
+      ]
+    },
+    {
+      "slot": 30,
+      "generation": 0,
+      "handle": 30,
+      "current": {
+        "position": [
+          1.4765607118606567,
+          0.0759822353720665,
+          -0.005989832803606987
+        ],
+        "rotation": [
+          0.3738650679588318,
+          0.6343385577201843,
+          0.5315963625907898,
+          0.41862255334854126
+        ],
+        "linearVelocity": [
+          -0.01177050732076168,
+          -0.009546861052513123,
+          0.008265010081231594
+        ],
+        "angularVelocity": [
+          0.06672336161136627,
+          0.06587103009223938,
+          -0.01376063097268343
+        ],
+        "inverseMass": 1.0,
+        "inverseInertiaLocal": [
+          [
+            71.96429443359375,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            830.4497680664062,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            71.96429443359375
+          ]
+        ],
+        "forceAccumulator": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "torqueAccumulator": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "startAnchor": {
+        "owner": 30,
+        "begin": 0.0,
+        "end": 0.01666666753590107,
+        "inverseMass": 1.0,
+        "position": [
+          1.4765607118606567,
+          0.0759822353720665,
+          -0.005989832803606987
+        ],
+        "rotation": [
+          0.3738650679588318,
+          0.6343385577201843,
+          0.5315963625907898,
+          0.41862255334854126
+        ],
+        "linearVelocity": [
+          -0.01177050732076168,
+          -0.009546861052513123,
+          0.008265010081231594
+        ],
+        "angularVelocity": [
+          0.06672336161136627,
+          0.06587103009223938,
+          -0.01376063097268343
+        ],
+        "endPosition": [
+          1.4763644933700562,
+          0.07582312077283859,
+          -0.005852082744240761
+        ],
+        "endRotation": [
+          0.3732684254646301,
+          0.6348369717597961,
+          0.5314959287643433,
+          0.41852691769599915
+        ]
+      },
+      "shape": {
+        "type": 1,
+        "typeName": "ShapeType::Box",
+        "radius": 0.0,
+        "halfHeight": 0.0,
+        "halfExtents": [
+          0.042500000447034836,
+          0.19970250129699707,
+          0.042500000447034836
+        ],
+        "pivotOffset": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "assetId": "",
+        "children": []
+      },
+      "collisionLayer": 2,
+      "collisionMask": 5,
+      "tags": 0,
+      "friction": 0.6000000238418579,
+      "restitution": 0.0,
+      "sensor": false,
+      "enabled": true,
+      "queryOnly": false,
+      "queriesEnabled": true,
+      "isDynamic": true,
+      "sleeping": false,
+      "deferredAcceleration": false,
+      "lastAcceleration": [
+        0.0,
+        -9.8100004196167,
+        0.0
+      ]
+    },
+    {
+      "slot": 31,
+      "generation": 0,
+      "handle": 31,
+      "current": {
+        "position": [
+          1.5700421333312988,
+          0.04219271242618561,
+          -0.025537574663758278
+        ],
+        "rotation": [
+          0.7043564319610596,
+          -0.7080403566360474,
+          -0.041941218078136444,
+          -0.028318893164396286
+        ],
+        "linearVelocity": [
+          -0.0014813998714089394,
+          -0.0033495479729026556,
+          -0.00052663404494524
+        ],
+        "angularVelocity": [
+          -0.0037561485078185797,
+          -0.031839266419410706,
+          0.08489832282066345
+        ],
+        "inverseMass": 1.0,
+        "inverseInertiaLocal": [
+          [
+            68.92074584960938,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            830.4497680664062,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            68.92074584960938
+          ]
+        ],
+        "forceAccumulator": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "torqueAccumulator": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "startAnchor": {
+        "owner": 31,
+        "begin": 0.0,
+        "end": 0.01666666753590107,
+        "inverseMass": 1.0,
+        "position": [
+          1.5700421333312988,
+          0.04219271242618561,
+          -0.025537574663758278
+        ],
+        "rotation": [
+          0.7043564319610596,
+          -0.7080403566360474,
+          -0.041941218078136444,
+          -0.028318893164396286
+        ],
+        "linearVelocity": [
+          -0.0014813998714089394,
+          -0.0033495479729026556,
+          -0.00052663404494524
+        ],
+        "angularVelocity": [
+          -0.0037561485078185797,
+          -0.031839266419410706,
+          0.08489832282066345
+        ],
+        "endPosition": [
+          1.5700174570083618,
+          0.04213688522577286,
+          -0.025546351447701454
+        ],
+        "endRotation": [
+          0.7043429613113403,
+          -0.7080249786376953,
+          -0.0426299050450325,
+          -0.028007110580801964
+        ]
+      },
+      "shape": {
+        "type": 1,
+        "typeName": "ShapeType::Box",
+        "radius": 0.0,
+        "halfHeight": 0.0,
+        "halfExtents": [
+          0.042500000447034836,
+          0.20425964891910553,
+          0.042500000447034836
+        ],
+        "pivotOffset": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "assetId": "",
+        "children": []
+      },
+      "collisionLayer": 2,
+      "collisionMask": 5,
+      "tags": 0,
+      "friction": 0.6000000238418579,
+      "restitution": 0.0,
+      "sensor": false,
+      "enabled": true,
+      "queryOnly": false,
+      "queriesEnabled": true,
+      "isDynamic": true,
+      "sleeping": false,
+      "deferredAcceleration": false,
+      "lastAcceleration": [
+        0.0,
+        -9.8100004196167,
+        0.0
+      ]
+    },
+    {
+      "slot": 32,
+      "generation": 0,
+      "handle": 32,
+      "current": {
+        "position": [
+          1.5374964475631714,
+          0.0424707867205143,
+          -0.18997210264205933
+        ],
+        "rotation": [
+          0.6702104210853577,
+          0.2227495312690735,
+          0.22145511209964752,
+          0.6724271774291992
+        ],
+        "linearVelocity": [
+          -0.0002154962858185172,
+          -0.011310219764709473,
+          0.0032862829975783825
+        ],
+        "angularVelocity": [
+          0.028131995350122452,
+          -0.08807511627674103,
+          -0.17700430750846863
+        ],
+        "inverseMass": 1.0,
+        "inverseInertiaLocal": [
+          [
+            484.848388671875,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            830.4496459960938,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            484.848388671875
+          ]
+        ],
+        "forceAccumulator": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "torqueAccumulator": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "startAnchor": {
+        "owner": 32,
+        "begin": 0.0,
+        "end": 0.01666666753590107,
+        "inverseMass": 1.0,
+        "position": [
+          1.5374964475631714,
+          0.0424707867205143,
+          -0.18997210264205933
+        ],
+        "rotation": [
+          0.6702104210853577,
+          0.2227495312690735,
+          0.22145511209964752,
+          0.6724271774291992
+        ],
+        "linearVelocity": [
+          -0.0002154962858185172,
+          -0.011310219764709473,
+          0.0032862829975783825
+        ],
+        "angularVelocity": [
+          0.028131995350122452,
+          -0.08807511627674103,
+          -0.17700430750846863
+        ],
+        "endPosition": [
+          1.5374928712844849,
+          0.042282283306121826,
+          -0.18991732597351074
+        ],
+        "endRotation": [
+          0.6713116765022278,
+          0.22273947298526764,
+          0.22047671675682068,
+          0.6716530919075012
+        ]
+      },
+      "shape": {
+        "type": 1,
+        "typeName": "ShapeType::Box",
+        "radius": 0.0,
+        "halfHeight": 0.0,
+        "halfExtents": [
+          0.042500004172325134,
+          0.06619101762771606,
+          0.042500004172325134
+        ],
+        "pivotOffset": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "assetId": "",
+        "children": []
+      },
+      "collisionLayer": 2,
+      "collisionMask": 5,
+      "tags": 0,
+      "friction": 0.6000000238418579,
+      "restitution": 0.0,
+      "sensor": false,
+      "enabled": true,
+      "queryOnly": false,
+      "queriesEnabled": true,
+      "isDynamic": true,
+      "sleeping": false,
+      "deferredAcceleration": false,
+      "lastAcceleration": [
+        0.0,
+        -9.8100004196167,
+        0.0
+      ]
+    },
+    {
+      "slot": 33,
+      "generation": 0,
+      "handle": 33,
+      "current": {
+        "position": [
+          2.032564163208008,
+          0.14071983098983765,
+          0.3001731038093567
+        ],
+        "rotation": [
+          0.37989193201065063,
+          0.415134459733963,
+          0.3724747896194458,
+          0.7379756569862366
+        ],
+        "linearVelocity": [
+          0.003875269088894129,
+          0.03912164643406868,
+          0.026760384440422058
+        ],
+        "angularVelocity": [
+          0.4240361154079437,
+          0.1632293313741684,
+          -0.1280665397644043
+        ],
+        "inverseMass": 1.0,
+        "inverseInertiaLocal": [
+          [
+            61.80304718017578,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            830.4497680664062,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            61.80304718017578
+          ]
+        ],
+        "forceAccumulator": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "torqueAccumulator": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "startAnchor": {
+        "owner": 33,
+        "begin": 0.0,
+        "end": 0.01666666753590107,
+        "inverseMass": 1.0,
+        "position": [
+          2.032564163208008,
+          0.14071983098983765,
+          0.3001731038093567
+        ],
+        "rotation": [
+          0.37989193201065063,
+          0.415134459733963,
+          0.3724747896194458,
+          0.7379756569862366
+        ],
+        "linearVelocity": [
+          0.003875269088894129,
+          0.03912164643406868,
+          0.026760384440422058
+        ],
+        "angularVelocity": [
+          0.4240361154079437,
+          0.1632293313741684,
+          -0.1280665397644043
+        ],
+        "endPosition": [
+          2.0326287746429443,
+          0.14137186110019684,
+          0.30061909556388855
+        ],
+        "endRotation": [
+          0.3787029981613159,
+          0.4178749620914459,
+          0.3699378967285156,
+          0.738315999507904
+        ]
+      },
+      "shape": {
+        "type": 1,
+        "typeName": "ShapeType::Box",
+        "radius": 0.0,
+        "halfHeight": 0.0,
+        "halfExtents": [
+          0.042500000447034836,
+          0.2161828875541687,
+          0.042500000447034836
+        ],
+        "pivotOffset": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "assetId": "",
+        "children": []
+      },
+      "collisionLayer": 2,
+      "collisionMask": 5,
+      "tags": 0,
+      "friction": 0.6000000238418579,
+      "restitution": 0.0,
+      "sensor": false,
+      "enabled": true,
+      "queryOnly": false,
+      "queriesEnabled": true,
+      "isDynamic": true,
+      "sleeping": false,
+      "deferredAcceleration": false,
+      "lastAcceleration": [
+        0.0,
+        -9.8100004196167,
+        0.0
+      ]
+    },
+    {
+      "slot": 34,
+      "generation": 0,
+      "handle": 34,
+      "current": {
+        "position": [
+          2.1633613109588623,
+          0.04317917674779892,
+          0.4396530091762543
+        ],
+        "rotation": [
+          -0.5600136518478394,
+          0.5571799874305725,
+          0.43405094742774963,
+          0.4330531656742096
+        ],
+        "linearVelocity": [
+          0.02022143453359604,
+          0.005821711849421263,
+          0.0016770015936344862
+        ],
+        "angularVelocity": [
+          0.04900995269417763,
+          0.015938391909003258,
+          -0.12262164056301117
+        ],
+        "inverseMass": 1.0,
+        "inverseInertiaLocal": [
+          [
+            78.39722442626953,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            830.4496459960938,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            78.39722442626953
+          ]
+        ],
+        "forceAccumulator": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "torqueAccumulator": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "startAnchor": {
+        "owner": 34,
+        "begin": 0.0,
+        "end": 0.01666666753590107,
+        "inverseMass": 1.0,
+        "position": [
+          2.1633613109588623,
+          0.04317917674779892,
+          0.4396530091762543
+        ],
+        "rotation": [
+          -0.5600136518478394,
+          0.5571799874305725,
+          0.43405094742774963,
+          0.4330531656742096
+        ],
+        "linearVelocity": [
+          0.02022143453359604,
+          0.005821711849421263,
+          0.0016770015936344862
+        ],
+        "angularVelocity": [
+          0.04900995269417763,
+          0.015938391909003258,
+          -0.12262164056301117
+        ],
+        "endPosition": [
+          2.163698434829712,
+          0.04327620565891266,
+          0.43968096375465393
+        ],
+        "endRotation": [
+          -0.5598559975624084,
+          0.5574519634246826,
+          0.43323007225990295,
+          0.43372842669487
+        ]
+      },
+      "shape": {
+        "type": 1,
+        "typeName": "ShapeType::Box",
+        "radius": 0.0,
+        "halfHeight": 0.0,
+        "halfExtents": [
+          0.042500004172325134,
+          0.1909460872411728,
+          0.042500004172325134
+        ],
+        "pivotOffset": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "assetId": "",
+        "children": []
+      },
+      "collisionLayer": 2,
+      "collisionMask": 5,
+      "tags": 0,
+      "friction": 0.6000000238418579,
+      "restitution": 0.0,
+      "sensor": false,
+      "enabled": true,
+      "queryOnly": false,
+      "queriesEnabled": true,
+      "isDynamic": true,
+      "sleeping": false,
+      "deferredAcceleration": false,
+      "lastAcceleration": [
+        0.0,
+        -9.8100004196167,
+        0.0
+      ]
+    },
+    {
+      "slot": 35,
+      "generation": 0,
+      "handle": 35,
+      "current": {
+        "position": [
+          2.373730421066284,
+          0.042487338185310364,
+          0.38254261016845703
+        ],
+        "rotation": [
+          -0.13032884895801544,
+          0.6949998140335083,
+          0.6951360702514648,
+          -0.12952065467834473
+        ],
+        "linearVelocity": [
+          -0.0014142694417387247,
+          0.0026047679129987955,
+          0.004138704389333725
+        ],
+        "angularVelocity": [
+          0.052642256021499634,
+          0.051983144134283066,
+          -0.028570761904120445
+        ],
+        "inverseMass": 1.0,
+        "inverseInertiaLocal": [
+          [
+            830.4497680664062,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            830.4497680664062,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            830.4497680664062
+          ]
+        ],
+        "forceAccumulator": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "torqueAccumulator": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "startAnchor": {
+        "owner": 35,
+        "begin": 0.0,
+        "end": 0.01666666753590107,
+        "inverseMass": 1.0,
+        "position": [
+          2.373730421066284,
+          0.042487338185310364,
+          0.38254261016845703
+        ],
+        "rotation": [
+          -0.13032884895801544,
+          0.6949998140335083,
+          0.6951360702514648,
+          -0.12952065467834473
+        ],
+        "linearVelocity": [
+          -0.0014142694417387247,
+          0.0026047679129987955,
+          0.004138704389333725
+        ],
+        "angularVelocity": [
+          0.052642256021499634,
+          0.051983144134283066,
+          -0.028570761904120445
+        ],
+        "endPosition": [
+          2.373706817626953,
+          0.04253075271844864,
+          0.38261160254478455
+        ],
+        "endRotation": [
+          -0.13096566498279572,
+          0.6950518488883972,
+          0.6949707865715027,
+          -0.12948571145534515
+        ]
+      },
+      "shape": {
+        "type": 1,
+        "typeName": "ShapeType::Box",
+        "radius": 0.0,
+        "halfHeight": 0.0,
+        "halfExtents": [
+          0.042500000447034836,
+          0.042500000447034836,
+          0.042500000447034836
+        ],
+        "pivotOffset": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "assetId": "",
+        "children": []
+      },
+      "collisionLayer": 2,
+      "collisionMask": 5,
+      "tags": 0,
+      "friction": 0.6000000238418579,
+      "restitution": 0.0,
+      "sensor": false,
+      "enabled": true,
+      "queryOnly": false,
+      "queriesEnabled": true,
+      "isDynamic": true,
+      "sleeping": false,
+      "deferredAcceleration": false,
+      "lastAcceleration": [
+        0.0,
+        -9.8100004196167,
+        0.0
+      ]
+    },
+    {
+      "slot": 36,
+      "generation": 0,
+      "handle": 36,
+      "current": {
+        "position": [
+          1.8089529275894165,
+          0.07849759608507156,
+          -0.06967931240797043
+        ],
+        "rotation": [
+          0.3814317584037781,
+          0.6174734234809875,
+          0.5134618878364563,
+          0.4578136205673218
+        ],
+        "linearVelocity": [
+          -0.012643150985240936,
+          -0.005136825144290924,
+          0.003966515883803368
+        ],
+        "angularVelocity": [
+          -0.023768575862050056,
+          0.09400398284196854,
+          0.000604528293479234
+        ],
+        "inverseMass": 1.0,
+        "inverseInertiaLocal": [
+          [
+            71.96429443359375,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            830.4497680664062,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            71.96429443359375
+          ]
+        ],
+        "forceAccumulator": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "torqueAccumulator": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "startAnchor": {
+        "owner": 36,
+        "begin": 0.0,
+        "end": 0.01666666753590107,
+        "inverseMass": 1.0,
+        "position": [
+          1.8089529275894165,
+          0.07849759608507156,
+          -0.06967931240797043
+        ],
+        "rotation": [
+          0.3814317584037781,
+          0.6174734234809875,
+          0.5134618878364563,
+          0.4578136205673218
+        ],
+        "linearVelocity": [
+          -0.012643150985240936,
+          -0.005136825144290924,
+          0.003966515883803368
+        ],
+        "angularVelocity": [
+          -0.023768575862050056,
+          0.09400398284196854,
+          0.000604528293479234
+        ],
+        "endPosition": [
+          1.8087421655654907,
+          0.07841198146343231,
+          -0.06961320340633392
+        ],
+        "endRotation": [
+          0.38114938139915466,
+          0.6177536845207214,
+          0.5138543248176575,
+          0.45722997188568115
+        ]
+      },
+      "shape": {
+        "type": 1,
+        "typeName": "ShapeType::Box",
+        "radius": 0.0,
+        "halfHeight": 0.0,
+        "halfExtents": [
+          0.042500000447034836,
+          0.19970250129699707,
+          0.042500000447034836
+        ],
+        "pivotOffset": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "assetId": "",
+        "children": []
+      },
+      "collisionLayer": 2,
+      "collisionMask": 5,
+      "tags": 0,
+      "friction": 0.6000000238418579,
+      "restitution": 0.0,
+      "sensor": false,
+      "enabled": true,
+      "queryOnly": false,
+      "queriesEnabled": true,
+      "isDynamic": true,
+      "sleeping": false,
+      "deferredAcceleration": false,
+      "lastAcceleration": [
+        0.0,
+        -9.8100004196167,
+        0.0
+      ]
+    },
+    {
+      "slot": 37,
+      "generation": 0,
+      "handle": 37,
+      "current": {
+        "position": [
+          1.9364845752716064,
+          0.04235153645277023,
+          -0.07272694259881973
+        ],
+        "rotation": [
+          0.6968986392021179,
+          -0.6959696412086487,
+          -0.121674545109272,
+          -0.123101606965065
+        ],
+        "linearVelocity": [
+          -0.001202155719511211,
+          -0.0014004155527800322,
+          -0.008837567642331123
+        ],
+        "angularVelocity": [
+          -0.027875538915395737,
+          -0.02633664570748806,
+          0.05470815673470497
+        ],
+        "inverseMass": 1.0,
+        "inverseInertiaLocal": [
+          [
+            68.92076110839844,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            830.4498901367188,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            68.92076110839844
+          ]
+        ],
+        "forceAccumulator": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "torqueAccumulator": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "startAnchor": {
+        "owner": 37,
+        "begin": 0.0,
+        "end": 0.01666666753590107,
+        "inverseMass": 1.0,
+        "position": [
+          1.9364845752716064,
+          0.04235153645277023,
+          -0.07272694259881973
+        ],
+        "rotation": [
+          0.6968986392021179,
+          -0.6959696412086487,
+          -0.121674545109272,
+          -0.123101606965065
+        ],
+        "linearVelocity": [
+          -0.001202155719511211,
+          -0.0014004155527800322,
+          -0.008837567642331123
+        ],
+        "angularVelocity": [
+          -0.027875538915395737,
+          -0.02633664570748806,
+          0.05470815673470497
+        ],
+        "endPosition": [
+          1.936464548110962,
+          0.04232819750905037,
+          -0.07287423312664032
+        ],
+        "endRotation": [
+          0.6967663168907166,
+          -0.6960489749908447,
+          -0.12217336893081665,
+          -0.12290835380554199
+        ]
+      },
+      "shape": {
+        "type": 1,
+        "typeName": "ShapeType::Box",
+        "radius": 0.0,
+        "halfHeight": 0.0,
+        "halfExtents": [
+          0.04249999672174454,
+          0.20425963401794434,
+          0.04249999672174454
+        ],
+        "pivotOffset": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "assetId": "",
+        "children": []
+      },
+      "collisionLayer": 2,
+      "collisionMask": 5,
+      "tags": 0,
+      "friction": 0.6000000238418579,
+      "restitution": 0.0,
+      "sensor": false,
+      "enabled": true,
+      "queryOnly": false,
+      "queriesEnabled": true,
+      "isDynamic": true,
+      "sleeping": false,
+      "deferredAcceleration": false,
+      "lastAcceleration": [
+        0.0,
+        -9.8100004196167,
+        0.0
+      ]
+    },
+    {
+      "slot": 38,
+      "generation": 0,
+      "handle": 38,
+      "current": {
+        "position": [
+          1.9925025701522827,
+          0.04252214729785919,
+          -0.2003791481256485
+        ],
+        "rotation": [
+          0.7029960751533508,
+          0.7034551501274109,
+          -0.0739680826663971,
+          0.07400080561637878
+        ],
+        "linearVelocity": [
+          0.0013536137994378805,
+          -0.0011466974392533302,
+          -0.0026772397104650736
+        ],
+        "angularVelocity": [
+          -0.023332512006163597,
+          -0.001087928656488657,
+          -0.00808468833565712
+        ],
+        "inverseMass": 1.0,
+        "inverseInertiaLocal": [
+          [
+            484.8486022949219,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            830.4498901367188,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            484.8486022949219
+          ]
+        ],
+        "forceAccumulator": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "torqueAccumulator": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "startAnchor": {
+        "owner": 38,
+        "begin": 0.0,
+        "end": 0.01666666753590107,
+        "inverseMass": 1.0,
+        "position": [
+          1.9925025701522827,
+          0.04252214729785919,
+          -0.2003791481256485
+        ],
+        "rotation": [
+          0.7029960751533508,
+          0.7034551501274109,
+          -0.0739680826663971,
+          0.07400080561637878
+        ],
+        "linearVelocity": [
+          0.0013536137994378805,
+          -0.0011466974392533302,
+          -0.0026772397104650736
+        ],
+        "angularVelocity": [
+          -0.023332512006163597,
+          -0.001087928656488657,
+          -0.00808468833565712
+        ],
+        "endPosition": [
+          1.9925251007080078,
+          0.04250303655862808,
+          -0.20042376220226288
+        ],
+        "endRotation": [
+          0.7031371593475342,
+          0.7033128142356873,
+          -0.07400745898485184,
+          0.07397419959306717
+        ]
+      },
+      "shape": {
+        "type": 1,
+        "typeName": "ShapeType::Box",
+        "radius": 0.0,
+        "halfHeight": 0.0,
+        "halfExtents": [
+          0.04249999672174454,
+          0.06619100272655487,
+          0.04249999672174454
+        ],
+        "pivotOffset": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "assetId": "",
+        "children": []
+      },
+      "collisionLayer": 2,
+      "collisionMask": 5,
+      "tags": 0,
+      "friction": 0.6000000238418579,
+      "restitution": 0.0,
+      "sensor": false,
+      "enabled": true,
+      "queryOnly": false,
+      "queriesEnabled": true,
+      "isDynamic": true,
+      "sleeping": false,
+      "deferredAcceleration": false,
+      "lastAcceleration": [
+        0.0,
+        -9.8100004196167,
+        0.0
+      ]
+    }
+  ],
+  "joints": [
+    {
+      "settings": {
+        "type": 2,
+        "bodyA": 8,
+        "bodyB": 7,
+        "anchorA": [
+          2.6309862732887268e-08,
+          -0.12000000476837158,
+          -2.2351741790771484e-08
+        ],
+        "anchorB": [
+          -6.004120223224163e-08,
+          0.08999994397163391,
+          1.0244548320770264e-08
+        ],
+        "frameA": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "frameB": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "enabled": true,
+        "limits": true,
+        "motor": false,
+        "spring": false,
+        "lower": -1.600000023841858,
+        "upper": 1.600000023841858,
+        "speed": 0.0,
+        "maxForce": 10.0,
+        "rest": 0.0,
+        "stiffness": 10.0,
+        "damping": 1.0,
+        "rotationalResistance": 0.11999999731779099
+      }
+    },
+    {
+      "settings": {
+        "type": 2,
+        "bodyA": 9,
+        "bodyB": 8,
+        "anchorA": [
+          1.607986632734537e-08,
+          -0.11500001698732376,
+          2.9802322387695312e-08
+        ],
+        "anchorB": [
+          -2.6542693376541138e-08,
+          0.11999998986721039,
+          7.450580596923828e-09
+        ],
+        "frameA": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "frameB": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "enabled": true,
+        "limits": true,
+        "motor": false,
+        "spring": false,
+        "lower": -1.600000023841858,
+        "upper": 1.600000023841858,
+        "speed": 0.0,
+        "maxForce": 10.0,
+        "rest": 0.0,
+        "stiffness": 10.0,
+        "damping": 1.0,
+        "rotationalResistance": 0.11999999731779099
+      }
+    },
+    {
+      "settings": {
+        "type": 2,
+        "bodyA": 10,
+        "bodyB": 9,
+        "anchorA": [
+          3.553577698767185e-08,
+          -0.06999998539686203,
+          -3.725290298461914e-08
+        ],
+        "anchorB": [
+          -1.6050762496888638e-08,
+          0.11500003933906555,
+          -1.4901161193847656e-08
+        ],
+        "frameA": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "frameB": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "enabled": true,
+        "limits": true,
+        "motor": false,
+        "spring": false,
+        "lower": -1.600000023841858,
+        "upper": 1.600000023841858,
+        "speed": 0.0,
+        "maxForce": 10.0,
+        "rest": 0.0,
+        "stiffness": 10.0,
+        "damping": 1.0,
+        "rotationalResistance": 0.11999999731779099
+      }
+    },
+    {
+      "settings": {
+        "type": 2,
+        "bodyA": 11,
+        "bodyB": 9,
+        "anchorA": [
+          -2.2351741790771484e-08,
+          -0.206155464053154,
+          5.960464477539063e-08
+        ],
+        "anchorB": [
+          -0.30999991297721863,
+          -0.024999991059303284,
+          -4.842877388000488e-08
+        ],
+        "frameA": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "frameB": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "enabled": true,
+        "limits": true,
+        "motor": false,
+        "spring": false,
+        "lower": -1.600000023841858,
+        "upper": 1.600000023841858,
+        "speed": 0.0,
+        "maxForce": 10.0,
+        "rest": 0.0,
+        "stiffness": 10.0,
+        "damping": 1.0,
+        "rotationalResistance": 0.11999999731779099
+      }
+    },
+    {
+      "settings": {
+        "type": 2,
+        "bodyA": 12,
+        "bodyB": 11,
+        "anchorA": [
+          -7.450580596923828e-08,
+          -0.18145251274108887,
+          0.0
+        ],
+        "anchorB": [
+          1.0058283805847168e-07,
+          0.20615516602993011,
+          1.043081283569336e-07
+        ],
+        "frameA": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "frameB": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "enabled": true,
+        "limits": true,
+        "motor": false,
+        "spring": false,
+        "lower": -1.600000023841858,
+        "upper": 1.600000023841858,
+        "speed": 0.0,
+        "maxForce": 10.0,
+        "rest": 0.0,
+        "stiffness": 10.0,
+        "damping": 1.0,
+        "rotationalResistance": 0.11999999731779099
+      }
+    },
+    {
+      "settings": {
+        "type": 2,
+        "bodyA": 13,
+        "bodyB": 12,
+        "anchorA": [
+          -1.6763806343078613e-08,
+          -0.025455808266997337,
+          2.60770320892334e-08
+        ],
+        "anchorB": [
+          -1.564621925354004e-07,
+          0.1814524531364441,
+          -8.940696716308594e-08
+        ],
+        "frameA": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "frameB": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "enabled": true,
+        "limits": true,
+        "motor": false,
+        "spring": false,
+        "lower": -1.600000023841858,
+        "upper": 1.600000023841858,
+        "speed": 0.0,
+        "maxForce": 10.0,
+        "rest": 0.0,
+        "stiffness": 10.0,
+        "damping": 1.0,
+        "rotationalResistance": 0.11999999731779099
+      }
+    },
+    {
+      "settings": {
+        "type": 2,
+        "bodyA": 14,
+        "bodyB": 7,
+        "anchorA": [
+          -8.498318493366241e-09,
+          -0.21675151586532593,
+          -3.725290298461914e-08
+        ],
+        "anchorB": [
+          -0.15000009536743164,
+          -0.1300000548362732,
+          0.0
+        ],
+        "frameA": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "frameB": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "enabled": true,
+        "limits": true,
+        "motor": false,
+        "spring": false,
+        "lower": -1.600000023841858,
+        "upper": 1.600000023841858,
+        "speed": 0.0,
+        "maxForce": 10.0,
+        "rest": 0.0,
+        "stiffness": 10.0,
+        "damping": 1.0,
+        "rotationalResistance": 0.11999999731779099
+      }
+    },
+    {
+      "settings": {
+        "type": 2,
+        "bodyA": 15,
+        "bodyB": 14,
+        "anchorA": [
+          -2.584420144557953e-08,
+          -0.22171208262443542,
+          -1.7136335372924805e-07
+        ],
+        "anchorB": [
+          8.149072527885437e-09,
+          0.2167515754699707,
+          1.4901161193847656e-08
+        ],
+        "frameA": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "frameB": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "enabled": true,
+        "limits": true,
+        "motor": false,
+        "spring": false,
+        "lower": -1.600000023841858,
+        "upper": 1.600000023841858,
+        "speed": 0.0,
+        "maxForce": 10.0,
+        "rest": 0.0,
+        "stiffness": 10.0,
+        "damping": 1.0,
+        "rotationalResistance": 0.11999999731779099
+      }
+    },
+    {
+      "settings": {
+        "type": 2,
+        "bodyA": 16,
+        "bodyB": 15,
+        "anchorA": [
+          -7.923205203042016e-09,
+          -0.06619101762771606,
+          -2.0489096641540527e-08
+        ],
+        "anchorB": [
+          -9.301584213972092e-08,
+          0.22171208262443542,
+          1.9371509552001953e-07
+        ],
+        "frameA": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "frameB": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "enabled": true,
+        "limits": true,
+        "motor": false,
+        "spring": false,
+        "lower": -1.600000023841858,
+        "upper": 1.600000023841858,
+        "speed": 0.0,
+        "maxForce": 10.0,
+        "rest": 0.0,
+        "stiffness": 10.0,
+        "damping": 1.0,
+        "rotationalResistance": 0.11999999731779099
+      }
+    },
+    {
+      "settings": {
+        "type": 2,
+        "bodyA": 17,
+        "bodyB": 9,
+        "anchorA": [
+          -2.9802322387695312e-08,
+          -0.20615532994270325,
+          -2.2351741790771484e-08
+        ],
+        "anchorB": [
+          0.3100000321865082,
+          -0.02499997429549694,
+          -1.30385160446167e-08
+        ],
+        "frameA": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "frameB": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "enabled": true,
+        "limits": true,
+        "motor": false,
+        "spring": false,
+        "lower": -1.600000023841858,
+        "upper": 1.600000023841858,
+        "speed": 0.0,
+        "maxForce": 10.0,
+        "rest": 0.0,
+        "stiffness": 10.0,
+        "damping": 1.0,
+        "rotationalResistance": 0.11999999731779099
+      }
+    },
+    {
+      "settings": {
+        "type": 2,
+        "bodyA": 18,
+        "bodyB": 17,
+        "anchorA": [
+          2.2351741790771484e-08,
+          -0.1814524531364441,
+          2.9802322387695312e-08
+        ],
+        "anchorB": [
+          -7.450580596923828e-08,
+          0.20615537464618683,
+          -5.960464477539063e-08
+        ],
+        "frameA": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "frameB": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "enabled": true,
+        "limits": true,
+        "motor": false,
+        "spring": false,
+        "lower": -1.600000023841858,
+        "upper": 1.600000023841858,
+        "speed": 0.0,
+        "maxForce": 10.0,
+        "rest": 0.0,
+        "stiffness": 10.0,
+        "damping": 1.0,
+        "rotationalResistance": 0.11999999731779099
+      }
+    },
+    {
+      "settings": {
+        "type": 2,
+        "bodyA": 19,
+        "bodyB": 18,
+        "anchorA": [
+          4.0978193283081055e-08,
+          -0.025455819442868233,
+          -7.450580596923828e-09
+        ],
+        "anchorB": [
+          3.725290298461914e-08,
+          0.18145254254341125,
+          5.960464477539063e-08
+        ],
+        "frameA": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "frameB": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "enabled": true,
+        "limits": true,
+        "motor": false,
+        "spring": false,
+        "lower": -1.600000023841858,
+        "upper": 1.600000023841858,
+        "speed": 0.0,
+        "maxForce": 10.0,
+        "rest": 0.0,
+        "stiffness": 10.0,
+        "damping": 1.0,
+        "rotationalResistance": 0.11999999731779099
+      }
+    },
+    {
+      "settings": {
+        "type": 2,
+        "bodyA": 20,
+        "bodyB": 7,
+        "anchorA": [
+          2.7241185307502747e-08,
+          -0.21675151586532593,
+          -2.60770320892334e-08
+        ],
+        "anchorB": [
+          0.14999982714653015,
+          -0.13000008463859558,
+          5.587935447692871e-09
+        ],
+        "frameA": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "frameB": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "enabled": true,
+        "limits": true,
+        "motor": false,
+        "spring": false,
+        "lower": -1.600000023841858,
+        "upper": 1.600000023841858,
+        "speed": 0.0,
+        "maxForce": 10.0,
+        "rest": 0.0,
+        "stiffness": 10.0,
+        "damping": 1.0,
+        "rotationalResistance": 0.11999999731779099
+      }
+    },
+    {
+      "settings": {
+        "type": 2,
+        "bodyA": 21,
+        "bodyB": 20,
+        "anchorA": [
+          -2.1478626877069473e-08,
+          -0.22171205282211304,
+          -1.4156103134155273e-07
+        ],
+        "anchorB": [
+          9.12696123123169e-08,
+          0.2167516052722931,
+          -2.60770320892334e-08
+        ],
+        "frameA": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "frameB": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "enabled": true,
+        "limits": true,
+        "motor": false,
+        "spring": false,
+        "lower": -1.600000023841858,
+        "upper": 1.600000023841858,
+        "speed": 0.0,
+        "maxForce": 10.0,
+        "rest": 0.0,
+        "stiffness": 10.0,
+        "damping": 1.0,
+        "rotationalResistance": 0.11999999731779099
+      }
+    },
+    {
+      "settings": {
+        "type": 2,
+        "bodyA": 22,
+        "bodyB": 21,
+        "anchorA": [
+          -9.660880095907487e-09,
+          -0.06619101762771606,
+          -1.5832483768463135e-08
+        ],
+        "anchorB": [
+          2.10711732506752e-08,
+          0.22171208262443542,
+          9.685754776000977e-08
+        ],
+        "frameA": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "frameB": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "enabled": true,
+        "limits": true,
+        "motor": false,
+        "spring": false,
+        "lower": -1.600000023841858,
+        "upper": 1.600000023841858,
+        "speed": 0.0,
+        "maxForce": 10.0,
+        "rest": 0.0,
+        "stiffness": 10.0,
+        "damping": 1.0,
+        "rotationalResistance": 0.11999999731779099
+      }
+    },
+    {
+      "settings": {
+        "type": 2,
+        "bodyA": 24,
+        "bodyB": 23,
+        "anchorA": [
+          2.444721758365631e-08,
+          -0.12000005692243576,
+          2.2351741790771484e-08
+        ],
+        "anchorB": [
+          2.463639248162508e-08,
+          0.08999991416931152,
+          1.6763806343078613e-08
+        ],
+        "frameA": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "frameB": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "enabled": true,
+        "limits": true,
+        "motor": false,
+        "spring": false,
+        "lower": -1.600000023841858,
+        "upper": 1.600000023841858,
+        "speed": 0.0,
+        "maxForce": 10.0,
+        "rest": 0.0,
+        "stiffness": 10.0,
+        "damping": 1.0,
+        "rotationalResistance": 0.11999999731779099
+      }
+    },
+    {
+      "settings": {
+        "type": 2,
+        "bodyA": 25,
+        "bodyB": 24,
+        "anchorA": [
+          4.016328603029251e-08,
+          -0.11499997228384018,
+          3.725290298461914e-08
+        ],
+        "anchorB": [
+          -2.537854015827179e-08,
+          0.11999993771314621,
+          1.4901161193847656e-08
+        ],
+        "frameA": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "frameB": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "enabled": true,
+        "limits": true,
+        "motor": false,
+        "spring": false,
+        "lower": -1.600000023841858,
+        "upper": 1.600000023841858,
+        "speed": 0.0,
+        "maxForce": 10.0,
+        "rest": 0.0,
+        "stiffness": 10.0,
+        "damping": 1.0,
+        "rotationalResistance": 0.11999999731779099
+      }
+    },
+    {
+      "settings": {
+        "type": 2,
+        "bodyA": 26,
+        "bodyB": 25,
+        "anchorA": [
+          -1.5643308870494366e-09,
+          -0.06999999284744263,
+          -6.705522537231445e-08
+        ],
+        "anchorB": [
+          7.922062650322914e-08,
+          0.11500003188848495,
+          6.705522537231445e-08
+        ],
+        "frameA": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "frameB": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "enabled": true,
+        "limits": true,
+        "motor": false,
+        "spring": false,
+        "lower": -1.600000023841858,
+        "upper": 1.600000023841858,
+        "speed": 0.0,
+        "maxForce": 10.0,
+        "rest": 0.0,
+        "stiffness": 10.0,
+        "damping": 1.0,
+        "rotationalResistance": 0.11999999731779099
+      }
+    },
+    {
+      "settings": {
+        "type": 2,
+        "bodyA": 27,
+        "bodyB": 25,
+        "anchorA": [
+          -1.4901161193847656e-08,
+          -0.21618284285068512,
+          -1.4901161193847656e-08
+        ],
+        "anchorB": [
+          -0.3657998740673065,
+          -0.024999981746077538,
+          -5.587935447692871e-08
+        ],
+        "frameA": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "frameB": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "enabled": true,
+        "limits": true,
+        "motor": false,
+        "spring": false,
+        "lower": -1.600000023841858,
+        "upper": 1.600000023841858,
+        "speed": 0.0,
+        "maxForce": 10.0,
+        "rest": 0.0,
+        "stiffness": 10.0,
+        "damping": 1.0,
+        "rotationalResistance": 0.11999999731779099
+      }
+    },
+    {
+      "settings": {
+        "type": 2,
+        "bodyA": 28,
+        "bodyB": 27,
+        "anchorA": [
+          -5.21540641784668e-08,
+          -0.1909460723400116,
+          1.4901161193847656e-08
+        ],
+        "anchorB": [
+          -2.2351741790771484e-08,
+          0.21618299186229706,
+          -5.960464477539063e-08
+        ],
+        "frameA": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "frameB": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "enabled": true,
+        "limits": true,
+        "motor": false,
+        "spring": false,
+        "lower": -1.600000023841858,
+        "upper": 1.600000023841858,
+        "speed": 0.0,
+        "maxForce": 10.0,
+        "rest": 0.0,
+        "stiffness": 10.0,
+        "damping": 1.0,
+        "rotationalResistance": 0.11999999731779099
+      }
+    },
+    {
+      "settings": {
+        "type": 2,
+        "bodyA": 29,
+        "bodyB": 28,
+        "anchorA": [
+          -9.313225746154785e-09,
+          -0.025455811992287636,
+          3.166496753692627e-08
+        ],
+        "anchorB": [
+          0.0,
+          0.19094614684581757,
+          -2.9802322387695312e-08
+        ],
+        "frameA": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "frameB": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "enabled": true,
+        "limits": true,
+        "motor": false,
+        "spring": false,
+        "lower": -1.600000023841858,
+        "upper": 1.600000023841858,
+        "speed": 0.0,
+        "maxForce": 10.0,
+        "rest": 0.0,
+        "stiffness": 10.0,
+        "damping": 1.0,
+        "rotationalResistance": 0.11999999731779099
+      }
+    },
+    {
+      "settings": {
+        "type": 2,
+        "bodyA": 30,
+        "bodyB": 23,
+        "anchorA": [
+          4.487810656428337e-08,
+          -0.1997024416923523,
+          5.960464477539063e-08
+        ],
+        "anchorB": [
+          -0.1770000010728836,
+          -0.1300000101327896,
+          0.0
+        ],
+        "frameA": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "frameB": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "enabled": true,
+        "limits": true,
+        "motor": false,
+        "spring": false,
+        "lower": -1.600000023841858,
+        "upper": 1.600000023841858,
+        "speed": 0.0,
+        "maxForce": 10.0,
+        "rest": 0.0,
+        "stiffness": 10.0,
+        "damping": 1.0,
+        "rotationalResistance": 0.11999999731779099
+      }
+    },
+    {
+      "settings": {
+        "type": 2,
+        "bodyA": 31,
+        "bodyB": 30,
+        "anchorA": [
+          -5.9371814131736755e-09,
+          -0.2042596936225891,
+          -1.341104507446289e-07
+        ],
+        "anchorB": [
+          7.433118298649788e-08,
+          0.1997024416923523,
+          -7.078051567077637e-08
+        ],
+        "frameA": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "frameB": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "enabled": true,
+        "limits": true,
+        "motor": false,
+        "spring": false,
+        "lower": -1.600000023841858,
+        "upper": 1.600000023841858,
+        "speed": 0.0,
+        "maxForce": 10.0,
+        "rest": 0.0,
+        "stiffness": 10.0,
+        "damping": 1.0,
+        "rotationalResistance": 0.11999999731779099
+      }
+    },
+    {
+      "settings": {
+        "type": 2,
+        "bodyA": 32,
+        "bodyB": 31,
+        "anchorA": [
+          -1.6433235217050424e-08,
+          -0.06619101762771606,
+          -1.862645149230957e-09
+        ],
+        "anchorB": [
+          5.471520125865936e-09,
+          0.2042597234249115,
+          7.450580596923828e-08
+        ],
+        "frameA": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "frameB": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "enabled": true,
+        "limits": true,
+        "motor": false,
+        "spring": false,
+        "lower": -1.600000023841858,
+        "upper": 1.600000023841858,
+        "speed": 0.0,
+        "maxForce": 10.0,
+        "rest": 0.0,
+        "stiffness": 10.0,
+        "damping": 1.0,
+        "rotationalResistance": 0.11999999731779099
+      }
+    },
+    {
+      "settings": {
+        "type": 2,
+        "bodyA": 33,
+        "bodyB": 25,
+        "anchorA": [
+          -1.862645149230957e-08,
+          -0.2161828726530075,
+          2.2351741790771484e-08
+        ],
+        "anchorB": [
+          0.36580002307891846,
+          -0.024999957531690598,
+          1.5087425708770752e-07
+        ],
+        "frameA": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "frameB": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "enabled": true,
+        "limits": true,
+        "motor": false,
+        "spring": false,
+        "lower": -1.600000023841858,
+        "upper": 1.600000023841858,
+        "speed": 0.0,
+        "maxForce": 10.0,
+        "rest": 0.0,
+        "stiffness": 10.0,
+        "damping": 1.0,
+        "rotationalResistance": 0.11999999731779099
+      }
+    },
+    {
+      "settings": {
+        "type": 2,
+        "bodyA": 34,
+        "bodyB": 33,
+        "anchorA": [
+          -5.21540641784668e-08,
+          -0.1909460425376892,
+          7.450580596923828e-08
+        ],
+        "anchorB": [
+          -2.60770320892334e-08,
+          0.21618297696113586,
+          -2.2351741790771484e-08
+        ],
+        "frameA": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "frameB": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "enabled": true,
+        "limits": true,
+        "motor": false,
+        "spring": false,
+        "lower": -1.600000023841858,
+        "upper": 1.600000023841858,
+        "speed": 0.0,
+        "maxForce": 10.0,
+        "rest": 0.0,
+        "stiffness": 10.0,
+        "damping": 1.0,
+        "rotationalResistance": 0.11999999731779099
+      }
+    },
+    {
+      "settings": {
+        "type": 2,
+        "bodyA": 35,
+        "bodyB": 34,
+        "anchorA": [
+          -3.725290298461914e-09,
+          -0.025455860421061516,
+          -7.450580596923828e-09
+        ],
+        "anchorB": [
+          -2.2351741790771484e-08,
+          0.19094622135162354,
+          8.940696716308594e-08
+        ],
+        "frameA": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "frameB": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "enabled": true,
+        "limits": true,
+        "motor": false,
+        "spring": false,
+        "lower": -1.600000023841858,
+        "upper": 1.600000023841858,
+        "speed": 0.0,
+        "maxForce": 10.0,
+        "rest": 0.0,
+        "stiffness": 10.0,
+        "damping": 1.0,
+        "rotationalResistance": 0.11999999731779099
+      }
+    },
+    {
+      "settings": {
+        "type": 2,
+        "bodyA": 36,
+        "bodyB": 23,
+        "anchorA": [
+          4.237517714500427e-08,
+          -0.19970247149467468,
+          5.21540641784668e-08
+        ],
+        "anchorB": [
+          0.17699995636940002,
+          -0.1300000548362732,
+          9.313225746154785e-09
+        ],
+        "frameA": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "frameB": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "enabled": true,
+        "limits": true,
+        "motor": false,
+        "spring": false,
+        "lower": -1.600000023841858,
+        "upper": 1.600000023841858,
+        "speed": 0.0,
+        "maxForce": 10.0,
+        "rest": 0.0,
+        "stiffness": 10.0,
+        "damping": 1.0,
+        "rotationalResistance": 0.11999999731779099
+      }
+    },
+    {
+      "settings": {
+        "type": 2,
+        "bodyA": 37,
+        "bodyB": 36,
+        "anchorA": [
+          4.330649971961975e-08,
+          -0.20425960421562195,
+          -9.685754776000977e-08
+        ],
+        "anchorB": [
+          7.683411240577698e-08,
+          0.19970247149467468,
+          -4.842877388000488e-08
+        ],
+        "frameA": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "frameB": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "enabled": true,
+        "limits": true,
+        "motor": false,
+        "spring": false,
+        "lower": -1.600000023841858,
+        "upper": 1.600000023841858,
+        "speed": 0.0,
+        "maxForce": 10.0,
+        "rest": 0.0,
+        "stiffness": 10.0,
+        "damping": 1.0,
+        "rotationalResistance": 0.11999999731779099
+      }
+    },
+    {
+      "settings": {
+        "type": 2,
+        "bodyA": 38,
+        "bodyB": 37,
+        "anchorA": [
+          -1.5283662335718873e-08,
+          -0.06619100272655487,
+          -1.3969838619232178e-08
+        ],
+        "anchorB": [
+          7.648486644029617e-08,
+          0.20425966382026672,
+          8.195638656616211e-08
+        ],
+        "frameA": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "frameB": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "enabled": true,
+        "limits": true,
+        "motor": false,
+        "spring": false,
+        "lower": -1.600000023841858,
+        "upper": 1.600000023841858,
+        "speed": 0.0,
+        "maxForce": 10.0,
+        "rest": 0.0,
+        "stiffness": 10.0,
+        "damping": 1.0,
+        "rotationalResistance": 0.11999999731779099
+      }
+    }
+  ],
+  "suppressedPairs": [
+    {
+      "a": 7,
+      "b": 8
+    },
+    {
+      "a": 7,
+      "b": 14
+    },
+    {
+      "a": 7,
+      "b": 20
+    },
+    {
+      "a": 8,
+      "b": 9
+    },
+    {
+      "a": 9,
+      "b": 10
+    },
+    {
+      "a": 9,
+      "b": 11
+    },
+    {
+      "a": 9,
+      "b": 17
+    },
+    {
+      "a": 11,
+      "b": 12
+    },
+    {
+      "a": 12,
+      "b": 13
+    },
+    {
+      "a": 14,
+      "b": 15
+    },
+    {
+      "a": 15,
+      "b": 16
+    },
+    {
+      "a": 17,
+      "b": 18
+    },
+    {
+      "a": 18,
+      "b": 19
+    },
+    {
+      "a": 20,
+      "b": 21
+    },
+    {
+      "a": 21,
+      "b": 22
+    },
+    {
+      "a": 23,
+      "b": 24
+    },
+    {
+      "a": 23,
+      "b": 30
+    },
+    {
+      "a": 23,
+      "b": 36
+    },
+    {
+      "a": 24,
+      "b": 25
+    },
+    {
+      "a": 25,
+      "b": 26
+    },
+    {
+      "a": 25,
+      "b": 27
+    },
+    {
+      "a": 25,
+      "b": 33
+    },
+    {
+      "a": 27,
+      "b": 28
+    },
+    {
+      "a": 28,
+      "b": 29
+    },
+    {
+      "a": 30,
+      "b": 31
+    },
+    {
+      "a": 31,
+      "b": 32
+    },
+    {
+      "a": 33,
+      "b": 34
+    },
+    {
+      "a": 34,
+      "b": 35
+    },
+    {
+      "a": 36,
+      "b": 37
+    },
+    {
+      "a": 37,
+      "b": 38
+    }
+  ],
+  "startContacts": [
+    {
+      "a": 0,
+      "b": 8,
+      "newImpact": false
+    },
+    {
+      "a": 0,
+      "b": 10,
+      "newImpact": false
+    },
+    {
+      "a": 0,
+      "b": 10,
+      "newImpact": false
+    },
+    {
+      "a": 0,
+      "b": 14,
+      "newImpact": false
+    },
+    {
+      "a": 0,
+      "b": 15,
+      "newImpact": false
+    },
+    {
+      "a": 0,
+      "b": 15,
+      "newImpact": false
+    },
+    {
+      "a": 0,
+      "b": 19,
+      "newImpact": false
+    },
+    {
+      "a": 0,
+      "b": 19,
+      "newImpact": false
+    },
+    {
+      "a": 0,
+      "b": 19,
+      "newImpact": false
+    },
+    {
+      "a": 0,
+      "b": 19,
+      "newImpact": false
+    },
+    {
+      "a": 0,
+      "b": 22,
+      "newImpact": false
+    },
+    {
+      "a": 0,
+      "b": 22,
+      "newImpact": false
+    },
+    {
+      "a": 0,
+      "b": 22,
+      "newImpact": false
+    },
+    {
+      "a": 0,
+      "b": 22,
+      "newImpact": false
+    },
+    {
+      "a": 0,
+      "b": 26,
+      "newImpact": false
+    },
+    {
+      "a": 0,
+      "b": 28,
+      "newImpact": false
+    },
+    {
+      "a": 0,
+      "b": 28,
+      "newImpact": false
+    },
+    {
+      "a": 0,
+      "b": 28,
+      "newImpact": false
+    },
+    {
+      "a": 0,
+      "b": 28,
+      "newImpact": false
+    },
+    {
+      "a": 0,
+      "b": 29,
+      "newImpact": false
+    },
+    {
+      "a": 0,
+      "b": 29,
+      "newImpact": false
+    },
+    {
+      "a": 0,
+      "b": 29,
+      "newImpact": false
+    },
+    {
+      "a": 0,
+      "b": 29,
+      "newImpact": false
+    },
+    {
+      "a": 0,
+      "b": 31,
+      "newImpact": false
+    },
+    {
+      "a": 0,
+      "b": 31,
+      "newImpact": false
+    },
+    {
+      "a": 0,
+      "b": 31,
+      "newImpact": false
+    },
+    {
+      "a": 0,
+      "b": 31,
+      "newImpact": false
+    },
+    {
+      "a": 0,
+      "b": 32,
+      "newImpact": false
+    },
+    {
+      "a": 0,
+      "b": 32,
+      "newImpact": false
+    },
+    {
+      "a": 0,
+      "b": 32,
+      "newImpact": false
+    },
+    {
+      "a": 0,
+      "b": 32,
+      "newImpact": false
+    },
+    {
+      "a": 0,
+      "b": 33,
+      "newImpact": false
+    },
+    {
+      "a": 0,
+      "b": 34,
+      "newImpact": false
+    },
+    {
+      "a": 0,
+      "b": 34,
+      "newImpact": false
+    },
+    {
+      "a": 0,
+      "b": 34,
+      "newImpact": false
+    },
+    {
+      "a": 0,
+      "b": 34,
+      "newImpact": false
+    },
+    {
+      "a": 0,
+      "b": 35,
+      "newImpact": false
+    },
+    {
+      "a": 0,
+      "b": 35,
+      "newImpact": false
+    },
+    {
+      "a": 0,
+      "b": 35,
+      "newImpact": false
+    },
+    {
+      "a": 0,
+      "b": 35,
+      "newImpact": false
+    },
+    {
+      "a": 0,
+      "b": 37,
+      "newImpact": false
+    },
+    {
+      "a": 0,
+      "b": 37,
+      "newImpact": false
+    },
+    {
+      "a": 0,
+      "b": 37,
+      "newImpact": false
+    },
+    {
+      "a": 0,
+      "b": 37,
+      "newImpact": false
+    },
+    {
+      "a": 0,
+      "b": 38,
+      "newImpact": false
+    },
+    {
+      "a": 0,
+      "b": 38,
+      "newImpact": false
+    },
+    {
+      "a": 0,
+      "b": 38,
+      "newImpact": false
+    },
+    {
+      "a": 0,
+      "b": 38,
+      "newImpact": false
+    },
+    {
+      "a": 7,
+      "b": 15,
+      "newImpact": false
+    },
+    {
+      "a": 7,
+      "b": 15,
+      "newImpact": false
+    },
+    {
+      "a": 20,
+      "b": 22,
+      "newImpact": false
+    },
+    {
+      "a": 20,
+      "b": 22,
+      "newImpact": false
+    },
+    {
+      "a": 23,
+      "b": 31,
+      "newImpact": false
+    },
+    {
+      "a": 23,
+      "b": 31,
+      "newImpact": false
+    },
+    {
+      "a": 23,
+      "b": 32,
+      "newImpact": false
+    },
+    {
+      "a": 23,
+      "b": 32,
+      "newImpact": false
+    },
+    {
+      "a": 24,
+      "b": 26,
+      "newImpact": false
+    },
+    {
+      "a": 24,
+      "b": 26,
+      "newImpact": false
+    },
+    {
+      "a": 24,
+      "b": 26,
+      "newImpact": false
+    }
+  ]
+}

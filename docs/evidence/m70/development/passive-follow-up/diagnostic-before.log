@@ -1,0 +1,3 @@
+libEGL warning: Not allowed to force software rendering when API explicitly selects a hardware device.
+Renderer fragment texture units: 32 (material path uses 12)
+M70 passive real scene before={"maximum":8.247883,"median":0.537984,"p95":1.104313} after={"maximum":58.50252,"median":1.13506,"p95":14.749265} finite=1 diagnostics=0

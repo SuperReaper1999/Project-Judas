@@ -1,0 +1,367 @@
+{
+  "passive": {
+    "path": ".cache/m70-review/passive-anchor-corrected-repro/passive-repro.json",
+    "finitePoses": true,
+    "scriptDiagnostics": [],
+    "allSummary": {
+      "afterPassiveFixedMs": {
+        "maximum": 34.538853,
+        "median": 1.316515,
+        "p95": 8.643467
+      },
+      "beforePassiveFixedMs": {
+        "maximum": 8.020545,
+        "median": 0.540973,
+        "p95": 0.864496
+      },
+      "finitePoses": true,
+      "fixedDeltaSeconds": 0.01666666753590107,
+      "fixture": "unmodified character_lab/Scenes/physical.judas: both original actors and ordinary objects, actual public JS passive control",
+      "passivePressStep": 60,
+      "rendering": "not measured; fixed motion plus normal frame/presentation scripts execute"
+    },
+    "windowsSinceControlMs": {
+      "0_to_1s": {
+        "count": 60,
+        "median": 4.061516,
+        "p95": 18.229374,
+        "maximum": 31.652446
+      },
+      "1_to_2s": {
+        "count": 60,
+        "median": 3.590903,
+        "p95": 17.818761,
+        "maximum": 34.538853
+      },
+      "after_2s": {
+        "count": 420,
+        "median": 1.245477,
+        "p95": 3.682384,
+        "maximum": 5.213012
+      }
+    },
+    "peak": {
+      "awake": 32,
+      "bodies": 37,
+      "broadphaseMs": 0.032838,
+      "candidatePairs": 211,
+      "contactPoints": 63,
+      "dynamic": 33,
+      "fixedStepMs": 34.538853,
+      "geometry": {
+        "exactFallbacks": 0,
+        "numericGapFallbacks": 0,
+        "orientationCacheHits": 453,
+        "orientationCacheRebuilds": 320,
+        "predicates": 106882,
+        "unresolved": 0
+      },
+      "impactEventCapFallback": 16,
+      "impactEvents": 18,
+      "impactPeakIterations": 64,
+      "impactQueries": 1819,
+      "impactSafetyFallback": 0,
+      "impactSamplingFallbacks": 3,
+      "impactSamplingMaxInterval": 0.0009112228181120475,
+      "impactSamplingResolutionCaps": 0,
+      "impactSamplingTests": 21,
+      "impactSearchIterations": 2018,
+      "impactSearchLimit": 3,
+      "impactUncertifiedAdvances": 0,
+      "mode10": "passive",
+      "mode11": "passive",
+      "motionSegments": 320,
+      "motionStorageBytes": 86016,
+      "narrowphaseMs": 0.660951,
+      "scopesMs": {
+        "Physics broadphase": 0.020997,
+        "Physics contact and joint solver": 33.381248,
+        "Physics contacts": 0.660695,
+        "Physics continuous impacts": 33.211091,
+        "Physics initial impacts": 0.000168,
+        "Physics position constraints": 0.028071,
+        "Physics proxy refresh": 0.012987,
+        "Physics sleeping assessment": 0.013428,
+        "Physics velocity constraints": 0.126702
+      },
+      "sleeping": 1,
+      "solverMs": 33.381518,
+      "step": 125,
+      "totalPhysicsMs": 34.107995
+    }
+  },
+  "active_wall": {
+    "path": ".cache/m70-review/active-wall-corrected-repro/active-repro.json",
+    "finitePoses": true,
+    "scriptDiagnostics": [],
+    "allSummary": {
+      "activePressStep": 60,
+      "afterActiveFixedMs": {
+        "maximum": 65.979143,
+        "median": 16.120101,
+        "p95": 39.000608
+      },
+      "beforeActiveFixedMs": {
+        "maximum": 5.172939,
+        "median": 1.809091,
+        "p95": 2.387652
+      },
+      "finitePoses": true,
+      "fixedDeltaSeconds": 0.01666666753590107,
+      "fixture": "unmodified character_lab/Scenes/wall.judas: both original actors and ordinary objects, actual public JS active control",
+      "rendering": "not measured; fixed motion plus normal frame/presentation scripts execute"
+    },
+    "windowsSinceControlMs": {
+      "0_to_1s": {
+        "count": 60,
+        "median": 7.620963,
+        "p95": 25.456938,
+        "maximum": 37.918552
+      },
+      "1_to_2s": {
+        "count": 60,
+        "median": 14.026183,
+        "p95": 28.084139,
+        "maximum": 37.962965
+      },
+      "after_2s": {
+        "count": 420,
+        "median": 17.390436,
+        "p95": 40.518272,
+        "maximum": 65.979143
+      }
+    },
+    "peak": {
+      "awake": 32,
+      "bodies": 39,
+      "broadphaseMs": 0.034158,
+      "candidatePairs": 220,
+      "contactPoints": 74,
+      "dynamic": 32,
+      "fixedStepMs": 65.979143,
+      "geometry": {
+        "exactFallbacks": 0,
+        "numericGapFallbacks": 0,
+        "orientationCacheHits": 483,
+        "orientationCacheRebuilds": 620,
+        "predicates": 207613,
+        "unresolved": 0
+      },
+      "impactEventCapFallback": 16,
+      "impactEvents": 39,
+      "impactPeakIterations": 64,
+      "impactQueries": 3851,
+      "impactSafetyFallback": 0,
+      "impactSamplingFallbacks": 2,
+      "impactSamplingMaxInterval": 0.00047659093762754065,
+      "impactSamplingResolutionCaps": 0,
+      "impactSamplingTests": 4,
+      "impactSearchIterations": 4159,
+      "impactSearchLimit": 2,
+      "impactUncertifiedAdvances": 0,
+      "mode10": "active",
+      "mode11": "active",
+      "motionSegments": 656,
+      "motionStorageBytes": 172032,
+      "narrowphaseMs": 0.72647,
+      "scopesMs": {
+        "Physics broadphase": 0.019783,
+        "Physics contact and joint solver": 63.243355,
+        "Physics contacts": 0.72626,
+        "Physics continuous impacts": 63.070592,
+        "Physics initial impacts": 0.000208,
+        "Physics position constraints": 0.028689,
+        "Physics proxy refresh": 0.015455,
+        "Physics sleeping assessment": 0.015445,
+        "Physics velocity constraints": 0.126717
+      },
+      "sleeping": 0,
+      "solverMs": 63.243534,
+      "step": 463,
+      "totalPhysicsMs": 64.039314
+    }
+  },
+  "active_physical": {
+    "path": ".cache/m70-review/active-physical-corrected-repro/active-repro.json",
+    "finitePoses": true,
+    "scriptDiagnostics": [],
+    "allSummary": {
+      "activePressStep": 60,
+      "afterActiveFixedMs": {
+        "maximum": 24.184918,
+        "median": 1.06859,
+        "p95": 5.266604
+      },
+      "beforeActiveFixedMs": {
+        "maximum": 8.653123,
+        "median": 0.544042,
+        "p95": 0.863214
+      },
+      "finitePoses": true,
+      "fixedDeltaSeconds": 0.01666666753590107,
+      "fixture": "unmodified character_lab/Scenes/physical.judas: both original actors and ordinary objects, actual public JS active control",
+      "rendering": "not measured; fixed motion plus normal frame/presentation scripts execute"
+    },
+    "windowsSinceControlMs": {
+      "0_to_1s": {
+        "count": 60,
+        "median": 3.067409,
+        "p95": 17.88754,
+        "maximum": 24.184918
+      },
+      "1_to_2s": {
+        "count": 60,
+        "median": 2.415665,
+        "p95": 7.580566,
+        "maximum": 9.971008
+      },
+      "after_2s": {
+        "count": 420,
+        "median": 1.040471,
+        "p95": 1.443427,
+        "maximum": 2.119338
+      }
+    },
+    "peak": {
+      "awake": 32,
+      "bodies": 37,
+      "broadphaseMs": 0.031193000000000002,
+      "candidatePairs": 168,
+      "contactPoints": 33,
+      "dynamic": 33,
+      "fixedStepMs": 24.184918,
+      "geometry": {
+        "exactFallbacks": 0,
+        "numericGapFallbacks": 0,
+        "orientationCacheHits": 433,
+        "orientationCacheRebuilds": 496,
+        "predicates": 67240,
+        "unresolved": 0
+      },
+      "impactEventCapFallback": 16,
+      "impactEvents": 30,
+      "impactPeakIterations": 64,
+      "impactQueries": 2373,
+      "impactSafetyFallback": 0,
+      "impactSamplingFallbacks": 1,
+      "impactSamplingMaxInterval": 0.0003789894523477164,
+      "impactSamplingResolutionCaps": 0,
+      "impactSamplingTests": 2,
+      "impactSearchIterations": 1601,
+      "impactSearchLimit": 1,
+      "impactUncertifiedAdvances": 0,
+      "mode10": "active",
+      "mode11": "active",
+      "motionSegments": 496,
+      "motionStorageBytes": 71680,
+      "narrowphaseMs": 0.528843,
+      "scopesMs": {
+        "Physics broadphase": 0.018952,
+        "Physics contact and joint solver": 23.188364,
+        "Physics contacts": 0.528651,
+        "Physics continuous impacts": 23.028648,
+        "Physics initial impacts": 0.040638,
+        "Physics position constraints": 0.025546,
+        "Physics proxy refresh": 0.013025,
+        "Physics sleeping assessment": 0.009268,
+        "Physics velocity constraints": 0.083105
+      },
+      "sleeping": 1,
+      "solverMs": 23.188494,
+      "step": 86,
+      "totalPhysicsMs": 23.77619
+    }
+  },
+  "passive_to_active": {
+    "path": ".cache/m70-review/passive-to-active-corrected-repro/active-repro.json",
+    "finitePoses": true,
+    "scriptDiagnostics": [],
+    "allSummary": {
+      "activePressStep": 300,
+      "afterActiveFixedMs": {
+        "maximum": 69.272013,
+        "median": 10.587314,
+        "p95": 32.136498
+      },
+      "beforeActiveFixedMs": {
+        "maximum": 32.876883,
+        "median": 3.000606,
+        "p95": 12.721356
+      },
+      "finitePoses": true,
+      "fixedDeltaSeconds": 0.01666666753590107,
+      "fixture": "unmodified character_lab/Scenes/physical.judas: both original actors and ordinary objects, actual public JS active control",
+      "passivePressStep": 60,
+      "rendering": "not measured; fixed motion plus normal frame/presentation scripts execute"
+    },
+    "windowsSinceControlMs": {
+      "0_to_1s": {
+        "count": 60,
+        "median": 15.151354,
+        "p95": 50.981641,
+        "maximum": 69.272013
+      },
+      "1_to_2s": {
+        "count": 60,
+        "median": 16.900744,
+        "p95": 29.913641,
+        "maximum": 33.840749
+      },
+      "after_2s": {
+        "count": 180,
+        "median": 7.947763,
+        "p95": 21.783623,
+        "maximum": 38.878315
+      }
+    },
+    "peak": {
+      "awake": 32,
+      "bodies": 37,
+      "broadphaseMs": 0.034894,
+      "candidatePairs": 204,
+      "contactPoints": 74,
+      "dynamic": 33,
+      "fixedStepMs": 69.272013,
+      "geometry": {
+        "exactFallbacks": 0,
+        "numericGapFallbacks": 0,
+        "orientationCacheHits": 594,
+        "orientationCacheRebuilds": 497,
+        "predicates": 229464,
+        "unresolved": 0
+      },
+      "impactEventCapFallback": 16,
+      "impactEvents": 31,
+      "impactPeakIterations": 64,
+      "impactQueries": 3312,
+      "impactSafetyFallback": 0,
+      "impactSamplingFallbacks": 27,
+      "impactSamplingMaxInterval": 0.0009533283131708918,
+      "impactSamplingResolutionCaps": 0,
+      "impactSamplingTests": 401,
+      "impactSearchIterations": 4500,
+      "impactSearchLimit": 27,
+      "impactUncertifiedAdvances": 0,
+      "mode10": "active",
+      "mode11": "active",
+      "motionSegments": 512,
+      "motionStorageBytes": 86016,
+      "narrowphaseMs": 0.587687,
+      "scopesMs": {
+        "Physics broadphase": 0.020707,
+        "Physics contact and joint solver": 68.11436,
+        "Physics contacts": 0.587554,
+        "Physics continuous impacts": 67.902849,
+        "Physics initial impacts": 0.038604,
+        "Physics position constraints": 0.03047,
+        "Physics proxy refresh": 0.015219,
+        "Physics sleeping assessment": 0.015792,
+        "Physics velocity constraints": 0.125075
+      },
+      "sleeping": 1,
+      "solverMs": 68.114685,
+      "step": 332,
+      "totalPhysicsMs": 68.770102
+    }
+  }
+}

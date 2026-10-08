@@ -802,6 +802,23 @@ void EditorApplication::DrawEditOverlay(Renderer& renderer, const Scene& scene) 
         const auto* owner=selected->socket?scene.Find(selected->socket->target):selected;
         if(owner&&owner->render){auto asset=m_host->Resources().TryGetSkeletal(owner->render->meshAsset);if(asset){auto global=PoseGlobalMatrices(asset->skeleton,asset->skeleton.rest);auto t=owner->transform;auto model=glm::translate(glm::mat4(1),t.position)*glm::mat4_cast(t.rotation)*glm::scale(glm::mat4(1),t.scale);for(auto& matrix:global){JointTransform joint;std::string error;if(DecomposeRigidPose(model*matrix,joint,error))m_debugLines.Axes(joint.translation,joint.rotation,.18f);}}}
     }
+    // M70 authored preview uses the same CPU resolver as runtime. It never
+    // mutates imported poses, and all lines remain renderer-owned debug draws.
+    if(const auto* o=scene.Find(m_document.Selected());o&&o->animation&&o->render){
+        auto asset=m_host->Resources().TryGetSkeletal(o->render->meshAsset);
+        if(asset){auto root=o->transform;auto model=glm::translate(glm::mat4(1),root.position)*glm::mat4_cast(root.rotation)*glm::scale(glm::mat4(1),root.scale);auto pose=asset->skeleton.rest;
+            if(o->animation->fullBodyIK){const auto& k=*o->animation->fullBodyIK;FullBodyIKMapping mapping;FullBodyIKResult result;std::vector<FullBodyIKTarget> targets;std::string error;
+                if(PrepareFullBodyIK(asset->skeleton,k,mapping,error)&&FullBodyIKTargetsToModel(k.targets,glm::dvec3(root.position),root.rotation,root.scale,targets,error)&&SolveFullBodyIK(asset->skeleton,pose,mapping,targets,result,error)){
+                    pose=result.pose;auto global=PoseGlobalMatrices(asset->skeleton,pose);
+                    for(const auto& target:targets){auto chain=std::find_if(mapping.chains.begin(),mapping.chains.end(),[&](const auto& c){return c.id==target.chain;});if(chain==mapping.chains.end())continue;JointTransform actual;std::string diagnostic;if(!DecomposeRigidPose(model*global[chain->end],actual,diagnostic))continue;
+                        auto desired=glm::vec3(model*glm::vec4(glm::vec3(target.position),1));auto point=actual.translation+actual.rotation*(actual.scale*target.offset);m_debugLines.Axes(desired,root.rotation*target.orientation,.13f);m_debugLines.Axes(point,actual.rotation*target.frame,.1f);m_debugLines.Line(desired,point,{1,.3f,.1f});}
+                    auto reference=PoseGlobalMatrices(asset->skeleton,asset->skeleton.rest);auto center=glm::vec3(model*glm::vec4(glm::vec3(reference[mapping.root][3])+(k.rootMin+k.rootMax)*.5f,1));m_debugLines.Box(center,root.rotation,(k.rootMax-k.rootMin)*.5f*root.scale,{.2f,.8f,1});
+                    for(const auto& limit:k.limits){int joint=FindSkeletonJoint(asset->skeleton,limit.joint);JointTransform frame;std::string diagnostic;if(joint>=0&&DecomposeRigidPose(model*global[joint],frame,diagnostic))m_debugLines.Axes(frame.translation,frame.rotation*limit.frame,.15f);}
+                }
+            }
+            if(o->ragdoll&&o->ragdoll->physicalAnimation){auto global=PoseGlobalMatrices(asset->skeleton,pose);for(const auto& region:o->ragdoll->physicalAnimation->regions)if(region.enabled)for(const auto& key:region.joints){int joint=FindSkeletonJoint(asset->skeleton,key);if(joint>=0){auto point=glm::vec3(model*global[joint][3]);int parent=asset->skeleton.parents[joint];if(parent>=0)m_debugLines.Line(point,glm::vec3(model*global[parent][3]),{1,.5f,.1f});}}}
+        }
+    }
     if(m_panels.skeletonFitPreview&&m_panels.skeletonFitGeneration==m_document.Generation()) {
         if(const auto* o=scene.Find(m_panels.skeletonFitOwner);o&&o->render) {
             if(auto asset=m_host->Resources().TryGetSkeletal(o->render->meshAsset)) {

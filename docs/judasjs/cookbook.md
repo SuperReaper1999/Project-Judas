@@ -25,6 +25,8 @@ physics or VM. Example names/IDs are content, not engine-owned semantics.
 | [joint.js](examples/joint.js) | Owner of authored hinge/slider joint; bounded motor. |
 | [animation.js](examples/animation.js) | Skinned asset with Wave/Stretch clips and Root/Elbow/Tip keys (change properties/content for your skeleton). |
 | [ragdoll.js](examples/ragdoll.js) | Authored animation + mapping; physical entry, impulse, visual return. |
+| [multi-target-ik.js](examples/multi-target-ik.js) | Original multipart `character_lab` rig; explicit shared four-contact mapping, last-solve residuals, atomic target replacement and clear. |
+| [physical-animation.js](examples/physical-animation.js) | Same full rig with ordinary mapped bodies and CharacterMotor; partial impulse, explicit full handoff, passive release and collision-validated animation return. |
 | [character.js](examples/character.js) | CharacterMotor, `move_x/move_y/jump` map; generic JS acceleration/launch. No camera ownership. |
 | [stale-handle.js](examples/stale-handle.js) | Prefab ID; validates stale Entity and retained Character behaviour. UI/Joint lifetime differences are documented separately. |
 | [surface.js](examples/surface.js) | Any entity; reflects actual module/class surface for drift verification, not game behaviour. |

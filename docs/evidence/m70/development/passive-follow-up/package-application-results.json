@@ -1,0 +1,24 @@
+[
+  {
+    "name": "passive",
+    "command": [
+      "/tmp/judas-m70-character-lab-20261008/judas"
+    ],
+    "cwd": "/tmp/judas-m70-unrelated-working-directory",
+    "testScript": "/home/conner/Documents/GitHub/Project-Judas/.cache/m70-review/passive-final-application.steps",
+    "sourceHiddenCopy": "/home/conner/Documents/GitHub/Project-Judas/.cache/m70-review/owned-export-passive-source/character_lab",
+    "exit": 0,
+    "seconds": 2.4405644680009573
+  },
+  {
+    "name": "physical-lifetime",
+    "command": [
+      "/tmp/judas-m70-character-lab-20261008/judas"
+    ],
+    "cwd": "/tmp/judas-m70-unrelated-working-directory",
+    "testScript": "/home/conner/Documents/GitHub/Project-Judas/.cache/m70-review/physical.steps",
+    "sourceHiddenCopy": "/home/conner/Documents/GitHub/Project-Judas/.cache/m70-review/owned-export-passive-source/character_lab",
+    "exit": 0,
+    "seconds": 2.1272481080013677
+  }
+]

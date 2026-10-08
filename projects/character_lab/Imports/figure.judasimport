@@ -1,0 +1,14 @@
+{
+  "assetId": "5d4fe060b94398efc188e440c03ab97e",
+  "format": "JudasImport",
+  "motions": [],
+  "output": "Assets/models/figure.judasmodel",
+  "settings": {
+    "allowBaseMesh": false,
+    "dependencyRemaps": {},
+    "sampleRate": 60,
+    "unitMeters": 0
+  },
+  "source": "Sources/5d4fe060b94398efc188e440c03ab97e/figure.gltf",
+  "version": 1
+}

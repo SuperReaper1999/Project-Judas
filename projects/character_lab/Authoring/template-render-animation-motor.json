@@ -1,0 +1,111 @@
+{
+  "kind": "scene",
+  "schema": 1,
+  "data": {
+    "settings": {
+      "name": "",
+      "world-origin": [
+        0,
+        0,
+        0
+      ],
+      "sun-direction": [
+        0.4,
+        0.7,
+        0.35
+      ],
+      "sun-color": [
+        1,
+        0.98,
+        0.92
+      ],
+      "ambient": [
+        0.16,
+        0.17,
+        0.19
+      ],
+      "fluid-scale": 1,
+      "fluid-update-rate-hz": 30,
+      "fluid-hydrostatic-drag-rate": 2,
+      "fidelity-policy": {
+        "mode": {
+          "symbol": "none"
+        }
+      },
+      "next-id": 2
+    },
+    "objects": [
+      {
+        "id": 1,
+        "name": "Renamed/proportioned independent instance",
+        "fields": {
+          "motor.enabled": true,
+          "motor.radius": 0.3,
+          "motor.halfHeight": 0.6,
+          "motor.offset": [
+            0,
+            0,
+            0
+          ],
+          "motor.stepHeight": 0.55,
+          "motor.supportDistance": 0.15,
+          "motor.skin": 0.02,
+          "motor.maxSlopeDegrees": 50,
+          "motor.gravityScale": 1,
+          "motor.reorientationDegreesPerSecond": 120,
+          "motor.interactionMass": 80,
+          "motor.maxPushImpulse": 20,
+          "motor.collisionLayer": 0,
+          "motor.collisionMask": 18446744073709551615,
+          "motor.requiredTags": 0,
+          "motor.excludedTags": 0,
+          "animation.enabled": true,
+          "animation.play-on-start": true,
+          "animation.loop": true,
+          "animation.clip": "",
+          "animation.speed": 1,
+          "animation.time": 0,
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.half-extents": [
+            0.5,
+            0.5,
+            0.5
+          ],
+          "render.radius": 0.5,
+          "render.color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": ""
+        }
+      }
+    ]
+  }
+}

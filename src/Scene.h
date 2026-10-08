@@ -7,6 +7,7 @@
 #include "AudioTypes.h"
 #include "JointTypes.h"
 #include "PoseComposition.h"
+#include "FullBodyIK.h"
 #include "Ragdoll.h"
 
 #include <cstdint>
@@ -288,7 +289,7 @@ struct SceneScriptSlot {
     }
 };
 
-struct SceneAnimationComponent {bool enabled=true,playOnStart=true,loop=true;std::string clip;float speed=1,time=0;std::vector<AnimationLayerSettings> layers;std::vector<LimbIKSettings> limbs;};
+struct SceneAnimationComponent {bool enabled=true,playOnStart=true,loop=true;std::string clip;float speed=1,time=0;std::vector<AnimationLayerSettings> layers;std::vector<LimbIKSettings> limbs;std::optional<FullBodyIKSettings> fullBodyIK;};
 
 struct SceneSocketComponent {SceneObjectId target=0;std::string joint;SceneTransform offset;bool enabled=true;};
 

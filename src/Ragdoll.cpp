@@ -3,6 +3,7 @@
 #include <set>
 #include <cmath>
 bool ValidRagdollDefinition(const RagdollDefinition& d,std::string& error){
+    if(d.physicalAnimation&&!ValidPhysicalAnimationSettings(*d.physicalAnimation,error))return false;
     if(d.bones.empty()||d.bones.size()>32){error="ragdoll needs 1..32 mapped bones";return false;}
     std::set<std::string> keys;unsigned roots=0;
     for(const auto& b:d.bones){
@@ -19,7 +20,8 @@ bool ValidRagdollDefinition(const RagdollDefinition& d,std::string& error){
     return true;
 }
 bool RagdollDefinitionsEqual(const RagdollDefinition& a,const RagdollDefinition& b){
-    if(a.enabled!=b.enabled||a.playOnStart!=b.playOnStart||a.selfCollision!=b.selfCollision||a.bones.size()!=b.bones.size())return false;
+    if(bool(a.physicalAnimation)!=bool(b.physicalAnimation)||(a.physicalAnimation&&!PhysicalAnimationSettingsEqual(*a.physicalAnimation,*b.physicalAnimation)))return false;
+    if(a.enabled!=b.enabled||a.playOnStart!=b.playOnStart||a.selfCollision!=b.selfCollision||a.receiveContactEvents!=b.receiveContactEvents||a.bones.size()!=b.bones.size())return false;
     for(size_t i=0;i<a.bones.size();++i){const auto& x=a.bones[i];const auto& y=b.bones[i];
         if(x.joint!=y.joint||x.parent!=y.parent||x.shape!=y.shape||x.offset!=y.offset||x.halfExtents!=y.halfExtents||x.orientation!=y.orientation||x.radius!=y.radius||x.mass!=y.mass||x.friction!=y.friction||x.restitution!=y.restitution||x.collisionLayer!=y.collisionLayer||x.collisionMask!=y.collisionMask||x.suppressParentCollision!=y.suppressParentCollision||x.autoAnchors!=y.autoAnchors||!JointSettingsEqual(x.constraint,y.constraint))return false;
     }return true;

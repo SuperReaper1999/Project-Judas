@@ -1,5 +1,5 @@
-/** Current JudasJS through accepted M69; reviewed against ScriptSystem.cpp.
- * API checkpoint 8ddec3b97d66815de4174d6e103be77e74b7eb0f. Tooling only, no TS runtime.
+/** Current JudasJS through the M70 candidate; reviewed against ScriptSystem.cpp.
+ * Based on accepted checkpoint 934c5d3f0556c920cc7cae8b80dc4677d8cbf87b. Tooling only, no TS runtime.
  * See JUDASJS.md. Ordinary returned objects are detached snapshots.
  */
 declare module "judas" {
@@ -269,6 +269,36 @@ declare module "judas" {
     accelerate(value: Vec3): boolean;
     ignore(entities: Entity[]): boolean;
   }
+  /**
+   * M70 serializable configuration tuple, not an ordinary object Vec3.
+   * configureIK/ikTargets and physical-mode placement require exactly three finite components.
+   * Live transforms, physics/motor vectors and returned snapshots still use Vec3 objects.
+   */
+  export type PoseVector = [x: number, y: number, z: number];
+  /** M70 configuration quaternion tuple in x,y,z,w order, not an object Quat. */
+  export type PoseQuaternion = [x: number, y: number, z: number, w: number];
+  export type PhysicalAnimationMode = "animation" | "partial" | "active" | "passive";
+  export interface PhysicalAnimationRegion {
+    id: string; joints: string[]; enabled?: boolean;
+    /** N m / rad, default 30. */ stiffness?: number;
+    /** N m s / rad, default 4. */ damping?: number;
+    /** Magnitude cap in N m, default 20. */ maxTorque?: number;
+    effortWeight?: number; poseWeight?: number;
+  }
+  export interface PhysicalAnimationSettings { enabled?: boolean; regions: PhysicalAnimationRegion[] }
+  export interface PhysicalAnimationModeOptions {
+    fade?: number; motorHandoff?: boolean; resumeMotor?: boolean;
+    /** Explicit world placement uses M70 array tuples, not object TransformPatch fields. */
+    placement?: {position: PoseVector; rotation: PoseQuaternion};
+  }
+  export interface PhysicalAnimationDrive {
+    joint: string; region: string; angleError: number; torque: number;
+    saturated: boolean; sleeping: boolean;
+  }
+  export interface PhysicalAnimationState {
+    mode: PhysicalAnimationMode; pending: PhysicalAnimationMode | null;
+    diagnostic: string; drives: PhysicalAnimationDrive[];
+  }
   export class Ragdoll {
     constructor(id: EntityId);
     id: EntityId;
@@ -277,7 +307,12 @@ declare module "judas" {
     leave(seconds?: number): boolean;
     /** Setter only; read is undefined. */
     set enabled(value: boolean);
+    /** Opt in to external mapped-body M42 callbacks on owner scripts. Default false; not aggregate events. */
+    receiveContactEvents: boolean;
     body(joint: string): Entity | null;
+    configurePhysical(settings: PhysicalAnimationSettings | null): boolean;
+    setMode(mode: PhysicalAnimationMode, options?: PhysicalAnimationModeOptions): boolean;
+    readonly physicalState: PhysicalAnimationState;
   }
   export interface ClipInfo { name: string; duration: number }
   export interface AnimationLayerInfo { id: string; clip: string; weight: number; enabled: boolean; additive: boolean }
@@ -290,7 +325,42 @@ declare module "judas" {
     clip?: string; referenceClip?: string; weight?: number; speed?: number; time?: number;
     referenceTime?: number; enabled?: boolean; additive?: boolean; mask?: string[];
   }
+  /** Legacy position-only two-bone IK. World target/pole are object Vec3; no orientation field. */
   export interface LimbIKPatch {root?:string;middle?:string;end?:string;target?:Vec3;pole?:Vec3;weight?:number;enabled?:boolean;order?:number}
+  export interface FullBodyIKChain { id: string; joints: string[] }
+  export interface FullBodyIKJointLimit {
+    joint: string; frame?: PoseQuaternion;
+    /** Radians in the declared local rotation-vector frame. */
+    min?: PoseVector; max?: PoseVector; preferred?: PoseVector;
+    preferenceWeight?: number;
+  }
+  export interface FullBodyIKTarget {
+    id: string; chain: string; enabled?: boolean; space?: "model" | "world";
+    /** M70 array tuples in the selected space; orientation participates only when weighted. */
+    position?: PoseVector; orientation?: PoseQuaternion;
+    positionWeight?: number; orientationWeight?: number;
+    /** Effector-local contact frame. */ offset?: PoseVector; frame?: PoseQuaternion;
+  }
+  export interface FullBodyIKSettings {
+    bodyRoot: string; chains: FullBodyIKChain[]; enabled?: boolean; rootRotation?: boolean;
+    rootMin?: PoseVector; rootMax?: PoseVector; spine?: string[];
+    limits?: FullBodyIKJointLimit[]; targets?: FullBodyIKTarget[];
+    iterations?: number; damping?: number;
+    positionTolerance?: number; orientationTolerance?: number; orientationScale?: number;
+    maxAngularStep?: number; maxTranslationStep?: number;
+  }
+  export interface FullBodyIKResidual {
+    id: string; status: "disabled" | "reached" | "limited";
+    positionError: number; orientationError: number;
+    /** Model-space contact frame, not a body/collision result. */
+    actualPosition: Vec3; actualOrientation: Quat;
+  }
+  export interface FullBodyIKStatus {
+    ready: boolean; enabled: boolean; diagnostic: string;
+    converged: boolean; iterations: number; solveMicroseconds: number;
+    /** Detached snapshot objects; convert explicitly to tuples when resubmitting configuration. */
+    rootCorrection: Vec3; targets: FullBodyIKResidual[];
+  }
   export class Animation {
     /** Independent clip interval in model-local motion space; never moves physics implicitly. */
     rootMotion(clip: string, from: number, to: number, loop?: boolean): RootMotion | null;
@@ -314,6 +384,9 @@ declare module "judas" {
     jointTransform(key:string,space?:"local"|"model"|"world",presented?:boolean):Transform|null;
     limb(id:string,settings:LimbIKPatch):boolean;
     removeLimb(id:string):boolean;
+    configureIK(settings: FullBodyIKSettings | null): boolean;
+    ikTargets(targets: FullBodyIKTarget[]): boolean;
+    readonly ikStatus: FullBodyIKStatus;
   }
   export interface JointState { active: boolean; enabled: boolean; coordinate: number; motorImpulse: number; type: 0 | 1 | 2 | 3 }
   export interface JointConfiguration {type?:"fixed"|"hinge"|"ball"|"slider";anchorA?:Vec3;anchorB?:Vec3;frameA?:Quat;frameB?:Quat;enabled?:boolean;limits?:boolean;motor?:boolean;spring?:boolean;lower?:number;upper?:number;speed?:number;maxForce?:number;rest?:number;stiffness?:number;damping?:number;rotationalResistance?:number}
@@ -444,7 +517,7 @@ declare module "judas" {
     debugOverlayVisible: boolean;
   };
   export interface UIEvent { document: string; element: string; type: "click" | "change" | "focus" | "back"; value: number }
-  export interface ContactEvent { other: Entity | null; point: Vec3; normal: Vec3; relativeVelocity: Vec3; physicalMaterial:AssetId|null; normalImpulse: number | null }
+  export interface ContactEvent { other: Entity | null; point: Vec3; normal: Vec3; relativeVelocity: Vec3; physicalMaterial:AssetId|null; normalImpulse: number | null; selfBody: Entity | null; selfJoint: string | null; otherArticulation: Entity | null; otherJoint: string | null }
   export type ScriptProperties = Record<string, number | boolean | string | Entity | null>;
   export type PropertySchema = Record<string,
     { type: "number"; default?: number } | { type: "boolean"; default?: boolean } | { type: "string"; default?: string }>;

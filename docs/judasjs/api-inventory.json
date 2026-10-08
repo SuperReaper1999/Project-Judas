@@ -1,5 +1,5 @@
 {
-  "checkpoint": "c042797c755df68b45e36aa917c4ca72818b9bcd",
+  "checkpoint": "934c5d3f0556c920cc7cae8b80dc4677d8cbf87b",
   "authority": "src/ScriptSystem.cpp::library + Impl::Native",
   "symbols": [
     {
@@ -18,6 +18,17 @@
       ],
       "native": [],
       "type": "docs/judas.d.ts:Animation.clips",
+      "reference": "docs/judasjs/animation-ragdolls.md"
+    },
+    {
+      "symbol": "Animation.configureIK",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "animationIKConfigure"
+      ],
+      "type": "docs/judas.d.ts:Animation.configureIK",
       "reference": "docs/judasjs/animation-ragdolls.md"
     },
     {
@@ -47,6 +58,28 @@
       ],
       "native": [],
       "type": "docs/judas.d.ts:Animation.entityId",
+      "reference": "docs/judasjs/animation-ragdolls.md"
+    },
+    {
+      "symbol": "Animation.ikStatus",
+      "kinds": [
+        "get"
+      ],
+      "native": [
+        "animationIKStatus"
+      ],
+      "type": "docs/judas.d.ts:Animation.ikStatus",
+      "reference": "docs/judasjs/animation-ragdolls.md"
+    },
+    {
+      "symbol": "Animation.ikTargets",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "animationIKTargets"
+      ],
+      "type": "docs/judas.d.ts:Animation.ikTargets",
       "reference": "docs/judasjs/animation-ragdolls.md"
     },
     {
@@ -1706,6 +1739,17 @@
       "reference": "docs/judasjs/animation-ragdolls.md"
     },
     {
+      "symbol": "Ragdoll.configurePhysical",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "ragdollPhysicalConfigure"
+      ],
+      "type": "docs/judas.d.ts:Ragdoll.configurePhysical",
+      "reference": "docs/judasjs/animation-ragdolls.md"
+    },
+    {
       "symbol": "Ragdoll.constructor",
       "kinds": [
         "call"
@@ -1754,6 +1798,40 @@
         "ragdollLeave"
       ],
       "type": "docs/judas.d.ts:Ragdoll.leave",
+      "reference": "docs/judasjs/animation-ragdolls.md"
+    },
+    {
+      "symbol": "Ragdoll.physicalState",
+      "kinds": [
+        "get"
+      ],
+      "native": [
+        "ragdollPhysicalState"
+      ],
+      "type": "docs/judas.d.ts:Ragdoll.physicalState",
+      "reference": "docs/judasjs/animation-ragdolls.md"
+    },
+    {
+      "symbol": "Ragdoll.receiveContactEvents",
+      "kinds": [
+        "get",
+        "set"
+      ],
+      "native": [
+        "ragdollContactEvents"
+      ],
+      "type": "docs/judas.d.ts:Ragdoll.receiveContactEvents",
+      "reference": "docs/judasjs/animation-ragdolls.md"
+    },
+    {
+      "symbol": "Ragdoll.setMode",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "ragdollMode"
+      ],
+      "type": "docs/judas.d.ts:Ragdoll.setMode",
       "reference": "docs/judasjs/animation-ragdolls.md"
     },
     {
@@ -3246,6 +3324,9 @@
     "angularVelocity",
     "animationExists",
     "animationFade",
+    "animationIKConfigure",
+    "animationIKStatus",
+    "animationIKTargets",
     "animationInfo",
     "animationJointPose",
     "animationLayer",
@@ -3385,10 +3466,14 @@
     "queryTags",
     "ragdollActive",
     "ragdollBody",
+    "ragdollContactEvents",
     "ragdollEnabled",
     "ragdollEnter",
     "ragdollExists",
     "ragdollLeave",
+    "ragdollMode",
+    "ragdollPhysicalConfigure",
+    "ragdollPhysicalState",
     "regionActivate",
     "regionAdopt",
     "regionInterest",

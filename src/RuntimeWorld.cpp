@@ -764,8 +764,8 @@ void RuntimeWorld::RestoreAuthoredState() {
     // Destroy callbacks may still inspect lazy runtime components. Retire
     // scripts before clearing them so callbacks cannot recreate reset state.
     m_scripts.reset();spawnStates.clear();
-    m_ragdollReturns.clear();m_ragdollAutostarted.clear();ClearDeformables();ClearCharacters();m_animationInstances.clear();
-    m_ui.reset();m_localization.reset();pointerCapture=false;m_touchEntityHistory.clear();m_physics.ClearTouchHistory();
+    m_ragdollReturns.clear();m_ragdollAutostarted.clear();ClearDeformables();ClearCharacters();m_animationInstances.clear();m_physicalAnimations.clear();
+    m_ui.reset();m_localization.reset();pointerCapture=false;m_touchEntityHistory.clear();m_touchArticulationHistory.clear();m_physics.ClearTouchHistory();
     if (!m_built) return;
     for(const auto& o:ScriptObjects())if(o.ui&&o.ui->enabled){std::string error;UI().Load(o.ui->asset,o.ui->name,o.id,error);}
     for(auto& [id,info]:m_entityCategories){(void)id;info.tags=info.authoredTags;m_physics.SetBodyTags(info.body,info.tags);}
@@ -988,7 +988,7 @@ bool RuntimeWorld::DestroyEntity(EntityId id, std::string* outError) {
     for(auto it=spawnStates.begin();it!=spawnStates.end();)if(it->first.first==id)it=spawnStates.erase(it);else++it;
     RemoveDeformable(id);m_deformableOwners.erase(id);
     m_liquid->Remove(m_liquid->Handle(id));
-    LeaveRagdoll(id,0,error);
+    LeaveRagdoll(id,0,error);m_physicalAnimations.erase(id);
     EntityRecord* e = FindEntity(id);
     if (e->lifecycle == EntityLifecycle::Destroyed) return true;
     const bool extra=e->slot==std::numeric_limits<std::size_t>::max();
@@ -1197,10 +1197,16 @@ SceneTransform RuntimeWorld::PresentedTransform(SceneObjectId id,const SceneTran
         const auto& socket=*d->socket;auto it=m_animationInstances.find(socket.target);
         if(it!=m_animationInstances.end()&&it->second.asset){const auto& s=it->second.asset->skeleton;int n=FindSkeletonJoint(s,socket.joint);
             if(n>=0&&size_t(n)<it->second.finalPose.local.size())if(const auto* target=RuntimeDefinition(socket.target)){
-                auto root=PresentedTransform(socket.target,target->transform,alpha);auto model=glm::translate(glm::mat4(1),root.position)*glm::mat4_cast(root.rotation)*glm::scale(glm::mat4(1),root.scale);auto matrix=model*PoseGlobalMatrices(s,it->second.finalPose)[n];JointTransform joint;std::string error;
+                auto root=PresentedTransform(socket.target,target->transform,alpha);auto model=glm::translate(glm::mat4(1),root.position)*glm::mat4_cast(root.rotation)*glm::scale(glm::mat4(1),root.scale);auto matrix=model*PoseGlobalMatrices(s,PresentedAnimationPose(socket.target,alpha))[n];JointTransform joint;std::string error;
                 if(DecomposeRigidPose(matrix,joint,error)){SceneTransform t;t.position=joint.translation+joint.rotation*(joint.scale*socket.offset.position);t.rotation=glm::normalize(joint.rotation*socket.offset.rotation);t.scale=joint.scale*socket.offset.scale;return t;}
             }
         }
+    }
+    if(auto physical=m_ragdolls.find(id);physical!=m_ragdolls.end()&&physical->second.physicalControlled&&!physical->second.partial&&physical->second.presentationReady){
+        const auto& instance=physical->second;auto transform=instance.currentPresentation;const float fraction=std::clamp(alpha,0.f,1.f);
+        transform.position=glm::mix(instance.previousPresentation.position,transform.position,fraction);
+        transform.rotation=glm::normalize(glm::slerp(instance.previousPresentation.rotation,transform.rotation,fraction));
+        transform.scale=glm::mix(instance.previousPresentation.scale,transform.scale,fraction);return transform;
     }
     auto character=m_characters.find(id);
     if(character!=m_characters.end()){
@@ -1296,9 +1302,9 @@ void RuntimeWorld::Destroy() {
     m_ragdolls.clear();m_ragdollReturns.clear();m_ragdollAutostarted.clear();
     ClearDeformables();m_deformableOwners.clear();
     ClearCharacters();
-    m_animationInstances.clear();m_animationOwners.clear();
+    m_animationInstances.clear();m_physicalAnimations.clear();m_animationOwners.clear();
     m_jointOwners.clear();m_jointParticipants.clear();m_runtimeJoints.clear();
-    m_liquid=std::make_unique<LiquidSystem>();m_hasLiquid=false;m_navigation.reset();m_ui.reset();m_localization.reset();pointerCapture=false;m_scriptDefinitions.clear();m_scriptOwners.clear();m_characterOwners.clear();m_touchEntityHistory.clear();m_hasScripts=false;m_hasNavigation=false;
+    m_liquid=std::make_unique<LiquidSystem>();m_hasLiquid=false;m_navigation.reset();m_ui.reset();m_localization.reset();pointerCapture=false;m_scriptDefinitions.clear();m_scriptOwners.clear();m_characterOwners.clear();m_touchEntityHistory.clear();m_touchArticulationHistory.clear();m_hasScripts=false;m_hasNavigation=false;
     EndAudio();
     m_particleEmitters.clear();
     m_audioEmitters.clear();m_audioZones.clear();m_audioIdentities.clear();m_audioListener.reset();m_audioSystem=nullptr;

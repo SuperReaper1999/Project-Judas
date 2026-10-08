@@ -1,0 +1,17 @@
+libEGL warning: Not allowed to force software rendering when API explicitly selects a hardware device.
+Renderer fragment texture units: 32 (material path uses 12)
+PASS actual GL host: 
+PASS ordinary registered project: 
+PASS approved fixture is a full 65-joint six-part two-skin source
+PASS variation has different names and proportions
+PASS new process reads committed M61 slot: 
+PASS fresh process gets ordinary captured scene: 
+PASS new process constructs ordinary participants: loading
+PASS new process restores complete native records: 
+PASS fresh process restores multi-target mapping, crossfade and masked layers
+PASS fresh process restores actual partial authority without previous drive observations
+FAIL loaded JS instance keeps durable state before callback publication
+PASS fresh restore advances without replaying default initialization or hidden/layer toggles
+PASS first resumed steps preserve physical authority and finite final pose
+PASS fresh process restore callbacks safe
+SUMMARY 14 checks 1 failures

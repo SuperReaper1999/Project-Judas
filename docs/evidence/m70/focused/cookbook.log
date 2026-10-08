@@ -1,0 +1,317 @@
+libEGL warning: Not allowed to force software rendering when API explicitly selects a hardware device.
+Renderer fragment texture units: 32 (material path uses 12)
+PASS real EngineHost
+PASS paired-stick normal registered script
+PASS paired-stick normal project
+PASS paired-stick ordinary scene
+PASS paired-stick runtime builds
+PASS paired-stick ordinary paired binding
+PASS paired-stick ordinary fixed-step session
+PASS paired-stick real VM callbacks without faults
+EXAMPLE paired-stick {"raw":{"x":0,"y":0},"circular":{"x":0,"y":0},"frameDelta":{"x":0,"y":0},"samples":[{"x":0.75,"y":0.75,"sequence":3,"time":0.181511807},{"x":0,"y":0,"sequence":4,"time":0.181516265}],"observations":2,"resets":1,"overflows":0,"capacity":128,"sequence":4,"frameReads":100,"fixedReads":100}
+PASS paired-stick documented outcome
+PASS paired-stick teardown
+PASS ray-fan normal registered script
+PASS ray-fan normal project
+PASS ray-fan ordinary scene
+PASS ray-fan runtime builds
+PASS ray-fan ordinary compare action
+PASS ray-fan ordinary fixed-step session
+PASS ray-fan real VM callbacks without faults
+EXAMPLE ray-fan {"count":100,"hits":100,"matched":true,"comparisons":1,"results":[{"entity":"1","distance":6.375975608825684,"point":{"x":-2,"y":0,"z":-5.7142863273620605},"normal":{"x":0,"y":1,"z":0}},{"entity":"1","distance":6.250824928283691,"point":{"x":-1.5555555820465088,"y":0,"z":-5.714285373687744},"normal":{"x":0,"y":1,"z":0}},{"entity":"1","distance":6.155292987823486,"point":{"x":-1.1111111640930176,"y":0,"z":-5.714285850524902},"normal":{"x":0,"y":1,"z":0}},{"entity":"1","distance":6.0907721519470215,"point":{"x":-0.6666666865348816,"y":0,"z":-5.714285850524902},"normal":{"x":0,"y":1,"z":0}},{"entity":"1","distance":6.058254241943359,"point":{"x":-0.222222238779068,"y":0,"z":-5.714285850524902},"normal":{"x":0,"y":1,"z":0}},{"entity":"1","distance":6.058254241943359,"point":{"x":0.222222238779068,"y":0,"z":-5.714285850524902},"normal":{"x":0,"y":1,"z":0}},{"entity":"1","distance":6.0907721519470215,"point":{"x":0.6666666865348816,"y":0,"z":-5.714285850524902},"normal":{"x":0,"y":1,"z":0}},{"entity":"1","distance":6.155292987823486,"point":{"x":1.1111111640930176,"y":0,"z":-5.714285850524902},"normal":{"x":0,"y":1,"z":0}},{"entity":"1","distance":6.250824928283691,"point":{"x":1.5555555820465088,"y":0,"z":-5.714285373687744},"normal":{"x":0,"y":1,"z":0}},{"entity":"1","distance":6.375975608825684,"point":{"x":2,"y":0,"z":-5.7142863273620605},"normal":{"x":0,"y":1,"z":0}},{"entity":"1","distance":8.036774635314941,"point":{"x":-2.5714285373687744,"y":0,"z":-7.346938610076904},"normal":{"x":0,"y":1,"z":0}},{"entity":"26","distance":6.214964389801025,"point":{"x":-1.5788888931274414,"y":0.42111116647720337,"z":-5.800000190734863},"normal":{"x":0,"y":0,"z":1}},{"entity":"26","distance":6.115943908691406,"point":{"x":-1.1277778148651123,"y":0.42111116647720337,"z":-5.800000190734863},"normal":{"x":0,"y":0,"z":1}},{"entity":"26","distance":6.049030303955078,"point":{"x":-0.6766666769981384,"y":0.4211111068725586,"z":-5.800000190734863},"normal":{"x":0,"y":0,"z":1}},{"entity":"26","distance":6.015294075012207,"point":{"x":-0.22555556893348694,"y":0.42111116647720337,"z":-5.800000190734863},"normal":{"x":0,"y":0,"z":1}},{"entity":"26","distance":6.015294075012207,"point":{"x":0.22555556893348694,"y":0.42111116647720337,"z":-5.800000190734863},"normal":{"x":0,"y":0,"z":1}},{"entity":"26","distance":6.049030303955078,"point":{"x":0.6766666769981384,"y":0.4211111068725586,"z":-5.800000190734863},"normal":{"x":0,"y":0,"z":1}},{"entity":"26","distance":6.115943908691406,"point":{"x":1.1277778148651123,"y":0.42111116647720337,"z":-5.800000190734863},"normal":{"x":0,"y":0,"z":1}},{"entity":"26","distance":6.214964389801025,"point":{"x":1.5788888931274414,"y":0.42111116647720337,"z":-5.800000190734863},"normal":{"x":0,"y":0,"z":1}},{"entity":"26","distance":6.344587326049805,"point":{"x":2.0299999713897705,"y":0.4211110770702362,"z":-5.800000190734863},"normal":{"x":0,"y":0,"z":1}},{"entity":"50","distance":10.50246810913086,"point":{"x":-3.4124999046325684,"y":0.10416658222675323,"z":-9.75},"normal":{"x":0,"y":0,"z":1}},{"entity":"26","distance":6.115943908691406,"point":{"x":-1.5788888931274414,"y":0.8722221851348877,"z":-5.800000190734863},"normal":{"x":0,"y":0,"z":1}},{"entity":"26","distance":6.015294075012207,"point":{"x":-1.1277778148651123,"y":0.8722221851348877,"z":-5.800000190734863},"normal":{"x":0,"y":0,"z":1}},{"entity":"26","distance":5.9472479820251465,"point":{"x":-0.6766666769981384,"y":0.8722221255302429,"z":-5.800000190734863},"normal":{"x":0,"y":0,"z":1}},{"entity":"26","distance":5.912931442260742,"point":{"x":-0.22555556893348694,"y":0.8722222447395325,"z":-5.800000190734863},"normal":{"x":0,"y":0,"z":1}},{"entity":"26","distance":5.912931442260742,"point":{"x":0.22555556893348694,"y":0.8722222447395325,"z":-5.800000190734863},"normal":{"x":0,"y":0,"z":1}},{"entity":"26","distance":5.9472479820251465,"point":{"x":0.6766666769981384,"y":0.8722221255302429,"z":-5.800000190734863},"normal":{"x":0,"y":0,"z":1}},{"entity":"26","distance":6.015294075012207,"point":{"x":1.1277778148651123,"y":0.8722221851348877,"z":-5.800000190734863},"normal":{"x":0,"y":0,"z":1}},{"entity":"26","distance":6.115943908691406,"point":{"x":1.5788888931274414,"y":0.8722221851348877,"z":-5.800000190734863},"normal":{"x":0,"y":0,"z":1}},{"entity":"26","distance":6.247622013092041,"point":{"x":2.0299999713897705,"y":0.8722221851348877,"z":-5.800000190734863},"normal":{"x":0,"y":0,"z":1}},{"entity":"50","distance":10.392379760742188,"point":{"x":-3.4124999046325684,"y":0.862500011920929,"z":-9.75},"normal":{"x":0,"y":0,"z":1}},{"entity":"26","distance":6.049030303955078,"point":{"x":-1.5788888931274414,"y":1.3233333826065063,"z":-5.800000190734863},"normal":{"x":0,"y":0,"z":1}},{"entity":"26","distance":5.9472479820251465,"point":{"x":-1.1277778148651123,"y":1.3233332633972168,"z":-5.800000190734863},"normal":{"x":0,"y":0,"z":1}},{"entity":"26","distance":5.878414154052734,"point":{"x":-0.6766666769981384,"y":1.3233333826065063,"z":-5.800000190734863},"normal":{"x":0,"y":0,"z":1}},{"entity":"26","distance":5.843693256378174,"point":{"x":-0.22555556893348694,"y":1.3233333826065063,"z":-5.800000190734863},"normal":{"x":0,"y":0,"z":1}},{"entity":"26","distance":5.843693256378174,"point":{"x":0.22555556893348694,"y":1.3233333826065063,"z":-5.800000190734863},"normal":{"x":0,"y":0,"z":1}},{"entity":"26","distance":5.878414154052734,"point":{"x":0.6766666769981384,"y":1.3233333826065063,"z":-5.800000190734863},"normal":{"x":0,"y":0,"z":1}},{"entity":"26","distance":5.9472479820251465,"point":{"x":1.1277778148651123,"y":1.3233332633972168,"z":-5.800000190734863},"normal":{"x":0,"y":0,"z":1}},{"entity":"26","distance":6.049030303955078,"point":{"x":1.5788888931274414,"y":1.3233333826065063,"z":-5.800000190734863},"normal":{"x":0,"y":0,"z":1}},{"entity":"26","distance":6.182133674621582,"point":{"x":2.0299999713897705,"y":1.3233333826065063,"z":-5.800000190734863},"normal":{"x":0,"y":0,"z":1}},{"entity":"50","distance":10.336895942687988,"point":{"x":-3.4124999046325684,"y":1.6208332777023315,"z":-9.75},"normal":{"x":0,"y":0,"z":1}},{"entity":"26","distance":6.015294075012207,"point":{"x":-1.5788888931274414,"y":1.7744444608688354,"z":-5.800000190734863},"normal":{"x":0,"y":0,"z":1}},{"entity":"26","distance":5.912931442260742,"point":{"x":-1.1277778148651123,"y":1.7744444608688354,"z":-5.800000190734863},"normal":{"x":0,"y":0,"z":1}},{"entity":"26","distance":5.843693256378174,"point":{"x":-0.6766666769981384,"y":1.7744444608688354,"z":-5.800000190734863},"normal":{"x":0,"y":0,"z":1}},{"entity":"26","distance":5.808764934539795,"point":{"x":-0.22555556893348694,"y":1.7744444608688354,"z":-5.800000190734863},"normal":{"x":0,"y":0,"z":1}},{"entity":"26","distance":5.808764934539795,"point":{"x":0.22555556893348694,"y":1.7744444608688354,"z":-5.800000190734863},"normal":{"x":0,"y":0,"z":1}},{"entity":"26","distance":5.843693256378174,"point":{"x":0.6766666769981384,"y":1.7744444608688354,"z":-5.800000190734863},"normal":{"x":0,"y":0,"z":1}},{"entity":"26","distance":5.912931442260742,"point":{"x":1.1277778148651123,"y":1.7744444608688354,"z":-5.800000190734863},"normal":{"x":0,"y":0,"z":1}},{"entity":"26","distance":6.015294075012207,"point":{"x":1.5788888931274414,"y":1.7744444608688354,"z":-5.800000190734863},"normal":{"x":0,"y":0,"z":1}},{"entity":"26","distance":6.149127960205078,"point":{"x":2.0299999713897705,"y":1.7744444608688354,"z":-5.800000190734863},"normal":{"x":0,"y":0,"z":1}},{"entity":"50","distance":10.336895942687988,"point":{"x":-3.4124999046325684,"y":2.379166603088379,"z":-9.75},"normal":{"x":0,"y":0,"z":1}},{"entity":"26","distance":6.015294075012207,"point":{"x":-1.5788888931274414,"y":2.225555658340454,"z":-5.800000190734863},"normal":{"x":0,"y":0,"z":1}},{"entity":"26","distance":5.912931442260742,"point":{"x":-1.1277778148651123,"y":2.225555658340454,"z":-5.800000190734863},"normal":{"x":0,"y":0,"z":1}},{"entity":"26","distance":5.843693256378174,"point":{"x":-0.6766666769981384,"y":2.225555658340454,"z":-5.800000190734863},"normal":{"x":0,"y":0,"z":1}},{"entity":"26","distance":5.808764934539795,"point":{"x":-0.22555556893348694,"y":2.225555658340454,"z":-5.800000190734863},"normal":{"x":0,"y":0,"z":1}},{"entity":"26","distance":5.808764934539795,"point":{"x":0.22555556893348694,"y":2.225555658340454,"z":-5.800000190734863},"normal":{"x":0,"y":0,"z":1}},{"entity":"26","distance":5.843693256378174,"point":{"x":0.6766666769981384,"y":2.225555658340454,"z":-5.800000190734863},"normal":{"x":0,"y":0,"z":1}},{"entity":"26","distance":5.912931442260742,"point":{"x":1.1277778148651123,"y":2.225555658340454,"z":-5.800000190734863},"normal":{"x":0,"y":0,"z":1}},{"entity":"26","distance":6.015294075012207,"point":{"x":1.5788888931274414,"y":2.225555658340454,"z":-5.800000190734863},"normal":{"x":0,"y":0,"z":1}},{"entity":"26","distance":6.149127960205078,"point":{"x":2.0299999713897705,"y":2.225555658340454,"z":-5.800000190734863},"normal":{"x":0,"y":0,"z":1}},{"entity":"50","distance":10.392379760742188,"point":{"x":-3.4124999046325684,"y":3.137500047683716,"z":-9.75},"normal":{"x":0,"y":0,"z":1}},{"entity":"26","distance":6.049030303955078,"point":{"x":-1.5788888931274414,"y":2.676666736602783,"z":-5.800000190734863},"normal":{"x":0,"y":0,"z":1}},{"entity":"26","distance":5.9472479820251465,"point":{"x":-1.1277778148651123,"y":2.676666736602783,"z":-5.800000190734863},"normal":{"x":0,"y":0,"z":1}},{"entity":"26","distance":5.878414154052734,"point":{"x":-0.6766666769981384,"y":2.676666736602783,"z":-5.800000190734863},"normal":{"x":0,"y":0,"z":1}},{"entity":"26","distance":5.843693256378174,"point":{"x":-0.22555556893348694,"y":2.676666736602783,"z":-5.800000190734863},"normal":{"x":0,"y":0,"z":1}},{"entity":"26","distance":5.843693256378174,"point":{"x":0.22555556893348694,"y":2.676666736602783,"z":-5.800000190734863},"normal":{"x":0,"y":0,"z":1}},{"entity":"26","distance":5.878414154052734,"point":{"x":0.6766666769981384,"y":2.676666736602783,"z":-5.800000190734863},"normal":{"x":0,"y":0,"z":1}},{"entity":"26","distance":5.9472479820251465,"point":{"x":1.1277778148651123,"y":2.676666736602783,"z":-5.800000190734863},"normal":{"x":0,"y":0,"z":1}},{"entity":"26","distance":6.049030303955078,"point":{"x":1.5788888931274414,"y":2.676666736602783,"z":-5.800000190734863},"normal":{"x":0,"y":0,"z":1}},{"entity":"26","distance":6.182133674621582,"point":{"x":2.0299999713897705,"y":2.676666736602783,"z":-5.800000190734863},"normal":{"x":0,"y":0,"z":1}},{"entity":"50","distance":10.50246810913086,"point":{"x":-3.4124999046325684,"y":3.8958334922790527,"z":-9.75},"normal":{"x":0,"y":0,"z":1}},{"entity":"26","distance":6.115943908691406,"point":{"x":-1.5788888931274414,"y":3.1277778148651123,"z":-5.800000190734863},"normal":{"x":0,"y":0,"z":1}},{"entity":"26","distance":6.015294075012207,"point":{"x":-1.1277778148651123,"y":3.1277778148651123,"z":-5.800000190734863},"normal":{"x":0,"y":0,"z":1}},{"entity":"26","distance":5.9472479820251465,"point":{"x":-0.6766666769981384,"y":3.1277778148651123,"z":-5.800000190734863},"normal":{"x":0,"y":0,"z":1}},{"entity":"26","distance":5.912931442260742,"point":{"x":-0.22555556893348694,"y":3.1277778148651123,"z":-5.800000190734863},"normal":{"x":0,"y":0,"z":1}},{"entity":"26","distance":5.912931442260742,"point":{"x":0.22555556893348694,"y":3.1277778148651123,"z":-5.800000190734863},"normal":{"x":0,"y":0,"z":1}},{"entity":"26","distance":5.9472479820251465,"point":{"x":0.6766666769981384,"y":3.1277778148651123,"z":-5.800000190734863},"normal":{"x":0,"y":0,"z":1}},{"entity":"26","distance":6.015294075012207,"point":{"x":1.1277778148651123,"y":3.1277778148651123,"z":-5.800000190734863},"normal":{"x":0,"y":0,"z":1}},{"entity":"26","distance":6.115943908691406,"point":{"x":1.5788888931274414,"y":3.1277778148651123,"z":-5.800000190734863},"normal":{"x":0,"y":0,"z":1}},{"entity":"26","distance":6.247622013092041,"point":{"x":2.0299999713897705,"y":3.1277778148651123,"z":-5.800000190734863},"normal":{"x":0,"y":0,"z":1}},{"entity":"50","distance":10.665470123291016,"point":{"x":-3.4125001430511475,"y":4.6541666984558105,"z":-9.75},"normal":{"x":0,"y":0,"z":1}},{"entity":"26","distance":6.214964389801025,"point":{"x":-1.5788888931274414,"y":3.5788888931274414,"z":-5.800000190734863},"normal":{"x":0,"y":0,"z":1}},{"entity":"26","distance":6.115943908691406,"point":{"x":-1.1277778148651123,"y":3.5788888931274414,"z":-5.800000190734863},"normal":{"x":0,"y":0,"z":1}},{"entity":"26","distance":6.049030303955078,"point":{"x":-0.6766666769981384,"y":3.5788888931274414,"z":-5.800000190734863},"normal":{"x":0,"y":0,"z":1}},{"entity":"26","distance":6.015294075012207,"point":{"x":-0.22555556893348694,"y":3.5788888931274414,"z":-5.800000190734863},"normal":{"x":0,"y":0,"z":1}},{"entity":"26","distance":6.015294075012207,"point":{"x":0.22555556893348694,"y":3.5788888931274414,"z":-5.800000190734863},"normal":{"x":0,"y":0,"z":1}},{"entity":"26","distance":6.049030303955078,"point":{"x":0.6766666769981384,"y":3.5788888931274414,"z":-5.800000190734863},"normal":{"x":0,"y":0,"z":1}},{"entity":"26","distance":6.115943908691406,"point":{"x":1.1277778148651123,"y":3.5788888931274414,"z":-5.800000190734863},"normal":{"x":0,"y":0,"z":1}},{"entity":"26","distance":6.214964389801025,"point":{"x":1.5788888931274414,"y":3.5788888931274414,"z":-5.800000190734863},"normal":{"x":0,"y":0,"z":1}},{"entity":"26","distance":6.344587326049805,"point":{"x":2.0299999713897705,"y":3.5788888931274414,"z":-5.800000190734863},"normal":{"x":0,"y":0,"z":1}},{"entity":"50","distance":10.879007339477539,"point":{"x":-3.4124996662139893,"y":5.412499904632568,"z":-9.75},"normal":{"x":0,"y":0,"z":1}},{"entity":"50","distance":10.665470123291016,"point":{"x":-2.6541666984558105,"y":5.412499904632568,"z":-9.75},"normal":{"x":0,"y":0,"z":1}},{"entity":"50","distance":10.50246810913086,"point":{"x":-1.8958333730697632,"y":5.412499904632568,"z":-9.75},"normal":{"x":0,"y":0,"z":1}},{"entity":"50","distance":10.392379760742188,"point":{"x":-1.1375000476837158,"y":5.412499904632568,"z":-9.75},"normal":{"x":0,"y":0,"z":1}},{"entity":"50","distance":10.336895942687988,"point":{"x":-0.37916669249534607,"y":5.412499904632568,"z":-9.75},"normal":{"x":0,"y":0,"z":1}},{"entity":"50","distance":10.336895942687988,"point":{"x":0.37916669249534607,"y":5.412499904632568,"z":-9.75},"normal":{"x":0,"y":0,"z":1}},{"entity":"50","distance":10.392379760742188,"point":{"x":1.1375000476837158,"y":5.412499904632568,"z":-9.75},"normal":{"x":0,"y":0,"z":1}},{"entity":"50","distance":10.50246810913086,"point":{"x":1.8958333730697632,"y":5.412499904632568,"z":-9.75},"normal":{"x":0,"y":0,"z":1}},{"entity":"50","distance":10.665470123291016,"point":{"x":2.6541666984558105,"y":5.412499904632568,"z":-9.75},"normal":{"x":0,"y":0,"z":1}},{"entity":"50","distance":10.879007339477539,"point":{"x":3.4124996662139893,"y":5.412499904632568,"z":-9.75},"normal":{"x":0,"y":0,"z":1}}]}
+PASS ray-fan documented outcome
+PASS ray-fan teardown
+PASS authoring-runtime normal registered script
+PASS authoring-runtime normal project
+PASS authoring-runtime ordinary scene
+PASS authoring-runtime runtime builds
+PASS authoring-runtime ordinary fixed-step session
+PASS authoring-runtime real VM callbacks without faults
+EXAMPLE authoring-runtime {"projected":true,"behind":true,"viewRay":true,"layout":true,"invalidLayout":true,"spawned":true,"invalidInit":true,"invalidRange":true,"camera":true,"stale":true,"first":"4611686018427387904","second":"4611686018427387905"}
+PASS authoring-runtime documented outcome
+PASS authoring-runtime teardown
+PASS imported-model normal registered script
+PASS imported-model normal project
+PASS imported-model ordinary scene
+PASS imported-model runtime builds
+PASS imported-model ordinary fixed-step session
+PASS imported-model real VM callbacks without faults
+EXAMPLE imported-model {"ready":true,"parts":true,"motion":true,"missing":true}
+PASS imported-model documented outcome
+PASS imported-model teardown
+PASS developer-integration normal registered script
+PASS developer-integration normal project
+PASS developer-integration ordinary scene
+PASS developer-integration runtime builds
+PASS developer-integration ordinary fixed-step session
+PASS developer-integration real VM callbacks without faults
+EXAMPLE developer-integration {"pose":true,"ik":true,"socket":true,"gravity":true,"material":true,"joint":true,"stale":true}
+PASS developer-integration documented outcome
+PASS developer-integration teardown
+PASS fracture normal registered script
+PASS fracture normal project
+PASS fracture ordinary scene
+PASS fracture runtime builds
+PASS fracture ordinary fixed-step session
+PASS fracture real VM callbacks without faults
+EXAMPLE fracture {"submitted":true,"notifications":3,"staleRevision":true,"queued":true,"loaded":true,"ordinary":true,"invalid":true,"staleThrows":true,"complete":true}
+PASS fracture documented outcome
+PASS fracture teardown
+PASS deformable relative module registered through normal assets
+PASS deformable normal registered script
+PASS deformable normal project
+PASS deformable ordinary scene
+PASS deformable runtime builds
+PASS deformable ordinary fixed-step session
+PASS deformable real VM callbacks without faults
+EXAMPLE deformable {"submitted":true,"massGuard":true,"materialAtomic":true,"disabled":true,"attached":true,"reset":true,"tested":true,"invalid":true,"staleThrows":true,"phaseGuard":true}
+PASS deformable documented outcome
+PASS Stop destroy callback sees existing deformable before cleanup
+PASS authored reset creates a fresh rest instance after callbacks
+PASS deformable teardown
+PASS saves normal registered script
+PASS saves normal project
+PASS saves ordinary scene
+PASS saves runtime builds
+PASS saves ordinary fixed-step session
+PASS saves real VM callbacks without faults
+EXAMPLE saves {"key":"entity:40","resolved":true,"queued":true,"cancelled":true,"invalidTokens":true,"score":10}
+PASS saves documented outcome
+PASS saves teardown
+PASS streaming normal registered script
+PASS streaming normal project
+PASS streaming ordinary scene
+PASS streaming runtime builds
+PASS streaming ordinary fixed-step session
+PASS streaming real VM callbacks without faults
+EXAMPLE streaming {"active":true}
+PASS streaming documented outcome
+PASS streaming teardown
+PASS localization normal registered script
+PASS localization normal project
+PASS localization ordinary scene
+PASS localization runtime builds
+PASS localization ordinary fixed-step session
+PASS localization real VM callbacks without faults
+EXAMPLE localization {"supplementary":true,"plural":true,"named":true,"invalid":true,"nul":true,"keyLimit":true,"textWins":true}
+PASS localization documented outcome
+PASS localization teardown
+PASS materials normal registered script
+PASS materials normal project
+PASS materials ordinary scene
+PASS materials runtime builds
+PASS materials ordinary fixed-step session
+PASS materials real VM callbacks without faults
+EXAMPLE materials {"changed":true,"reverted":true,"appearance":true,"stale":true}
+PASS materials documented outcome
+PASS materials teardown
+PASS profiling normal registered script
+PASS profiling normal project
+PASS profiling ordinary scene
+PASS profiling runtime builds
+PASS profiling ordinary fixed-step session
+PASS profiling real VM callbacks without faults
+EXAMPLE profiling {"calls":102,"error":true,"value":42,"invalid":true}
+PASS profiling documented outcome
+PASS profiling teardown
+PASS liquid-surface normal registered script
+PASS liquid-surface normal project
+PASS liquid-surface ordinary scene
+PASS liquid-surface runtime builds
+PASS liquid-surface ordinary fixed-step session
+PASS liquid-surface real VM callbacks without faults
+EXAMPLE liquid-surface {"ready":true,"conserved":true,"impulse":true,"presented":true}
+PASS liquid-surface documented outcome
+PASS liquid-surface teardown
+PASS liquid normal registered script
+PASS liquid normal project
+PASS liquid ordinary scene
+PASS liquid runtime builds
+PASS liquid ordinary fixed-step session
+PASS liquid real VM callbacks without faults
+EXAMPLE liquid {"ready":true,"transferred":true,"conserved":true,"sample":true}
+PASS liquid documented outcome
+PASS liquid teardown
+PASS navigation normal registered script
+PASS navigation normal project
+PASS navigation ordinary scene
+PASS navigation runtime builds
+PASS navigation ordinary fixed-step session
+PASS navigation real VM callbacks without faults
+EXAMPLE navigation {"sample":true,"path":true,"controlled":true}
+PASS navigation documented outcome
+PASS navigation teardown
+PASS surface normal registered script
+PASS surface normal project
+PASS surface ordinary scene
+PASS surface runtime builds
+PASS surface ordinary fixed-step session
+PASS surface real VM callbacks without faults
+EXAMPLE surface {"surface":["Animation","Animation.clips","Animation.configureIK","Animation.constructor","Animation.crossFade","Animation.entityId","Animation.ikStatus","Animation.ikTargets","Animation.info","Animation.jointTransform","Animation.layer","Animation.layers","Animation.limb","Animation.loop","Animation.pause","Animation.play","Animation.playing","Animation.removeLayer","Animation.removeLimb","Animation.resume","Animation.rootMotion","Animation.seek","Animation.speed","Animation.stop","Animation.time","Character","Character.accelerate","Character.actualDisplacement","Character.configure","Character.constructor","Character.enabled","Character.gravity","Character.id","Character.ignore","Character.state","Character.supportNormal","Character.supportVelocity","Character.supported","Character.up","Character.velocity","Deformable","Deformable.attach","Deformable.constructor","Deformable.enabled","Deformable.epoch","Deformable.force","Deformable.id","Deformable.impulse","Deformable.impulseAt","Deformable.raycast","Deformable.release","Deformable.reset","Deformable.setMaterial","Deformable.state","Deformable.valid","Entity","Entity.addTag","Entity.angularVelocity","Entity.animation","Entity.applyForce","Entity.applyImpulse","Entity.applyImpulseAtPoint","Entity.applyTorque","Entity.audio","Entity.burst","Entity.camera","Entity.character","Entity.children","Entity.classification","Entity.clearSocket","Entity.collider","Entity.constructor","Entity.deformable","Entity.destroy","Entity.fracture","Entity.hasTag","Entity.id","Entity.inertiaWorld","Entity.liquid","Entity.mass","Entity.material","Entity.modelParts","Entity.navigation","Entity.navigationLink","Entity.navigationObstacle","Entity.parent","Entity.pauseAudio","Entity.physicalMaterial","Entity.playAudio","Entity.playAudioOneShot","Entity.presentedTransform","Entity.ragdoll","Entity.removeTag","Entity.resumeAudio","Entity.scriptState","Entity.seekAudio","Entity.setAudio","Entity.setAudioEnabled","Entity.setAudioVelocity","Entity.setCameraEnabled","Entity.setCameraProjection","Entity.setColliderEnabled","Entity.setNavigationEnabled","Entity.setPartVisible","Entity.setParticles","Entity.setPhysicalMaterial","Entity.setSocket","Entity.sleeping","Entity.stopAudio","Entity.transform","Entity.valid","Entity.velocity","Fracture","Fracture.constructor","Fracture.epoch","Fracture.force","Fracture.id","Fracture.impulse","Fracture.release","Fracture.remove","Fracture.state","Fracture.valid","Joint","Joint.configure","Joint.constructor","Joint.destroy","Joint.id","Joint.setEnabled","Joint.setLimits","Joint.setMotor","Joint.setSpring","Joint.state","Joint.valid","LiquidVolume","LiquidVolume.applyImpulse","LiquidVolume.constructor","LiquidVolume.enabled","LiquidVolume.handle","LiquidVolume.state","LiquidVolume.surfaceEnabled","LiquidVolume.transferTo","LiquidVolume.valid","Material","Material.assign","Material.clearOverrides","Material.constructor","Material.entityId","Material.set","Material.slot","Material.state","NavigationAgent","NavigationAgent.clear","NavigationAgent.completeLink","NavigationAgent.configure","NavigationAgent.constructor","NavigationAgent.enabled","NavigationAgent.id","NavigationAgent.remainingDistance","NavigationAgent.setDestination","NavigationAgent.state","NavigationAgent.steering","NavigationAgent.stopped","Ragdoll","Ragdoll.active","Ragdoll.body","Ragdoll.configurePhysical","Ragdoll.constructor","Ragdoll.enabled","Ragdoll.enter","Ragdoll.id","Ragdoll.leave","Ragdoll.physicalState","Ragdoll.setMode","UIDocument","UIDocument.constructor","UIDocument.enabled","UIDocument.get","UIDocument.handle","UIDocument.hide","UIDocument.modal","UIDocument.show","UIDocument.unload","UIDocument.visible","UIElement","UIElement.constructor","UIElement.direction","UIElement.enabled","UIElement.font","UIElement.handle","UIElement.id","UIElement.layout","UIElement.setLayout","UIElement.text","UIElement.textAlignment","UIElement.textKey","UIElement.texture","UIElement.value","UIElement.visible","audio","audio.diagnostics","audio.group","audio.setGroup","console","console.log","entity","input","input.axis","input.held","input.pointerCapture","input.pressed","input.released","input.stick","input.stickDelta","input.stickSamples","input.vector","liquid","liquid.accounting","liquid.connections","liquid.errors","liquid.sample","liquid.samplePresented","liquid.submerged","localization","localization.available","localization.direction","localization.format","localization.locale","localization.number","localization.reload","localization.revision","localization.setLocale","navigation","navigation.areas","navigation.errors","navigation.path","navigation.profiles","navigation.raycast","navigation.sample","physics","physics.boxCast","physics.capsuleCast","physics.capsuleCastMany","physics.closestPoint","physics.createJoint","physics.gravity","physics.joint","physics.raycast","physics.raycastMany","physics.sphereCast","physics.sphereCastMany","profiler","profiler.counter","profiler.scope","saves","saves.cancel","saves.delete","saves.exclude","saves.exists","saves.list","saves.load","saves.reference","saves.refresh","saves.resolve","saves.save","saves.status","scenes","scenes.activateRegion","scenes.adopt","scenes.current","scenes.load","scenes.owner","scenes.pinRegion","scenes.regionStatus","scenes.regions","scenes.registered","scenes.releaseRegion","scenes.reload","scenes.removeInterest","scenes.requestRegion","scenes.resolveRegionEntity","scenes.setInterest","scenes.streamingStats","scenes.unloadRegion","session","session.delete","session.get","session.set","time","time.delta","time.elapsed","time.fixed","ui","ui.debugOverlayVisible","ui.get","ui.load","ui.quit","world","world.appearance","world.clearView","world.entity","world.fluidSample","world.overlap","world.project","world.queryTags","world.setAppearance","world.setView","world.spawnPrefab","world.sweepCapsule","world.viewRay","world.viewport"]}
+PASS surface documented outcome
+PASS surface teardown
+PASS presentation normal registered script
+PASS presentation normal project
+PASS presentation ordinary scene
+PASS presentation runtime builds
+PASS presentation ordinary fixed-step session
+PASS presentation real VM callbacks without faults
+EXAMPLE presentation {"calls":100,"synchronized":true,"frameMode":true}
+PASS presentation documented outcome
+PASS presentation teardown
+PASS impulse-point normal registered script
+PASS impulse-point normal project
+PASS impulse-point ordinary scene
+PASS impulse-point runtime builds
+PASS impulse-point ordinary fixed-step session
+PASS impulse-point real VM callbacks without faults
+EXAMPLE impulse-point {"angular":true,"rejectsInvalid":true,"linear":true,"unchanged":true}
+PASS impulse-point documented outcome
+PASS impulse-point teardown
+PASS physical-control normal registered script
+PASS physical-control normal project
+PASS physical-control ordinary scene
+PASS physical-control runtime builds
+PASS physical-control ordinary fixed-step session
+PASS physical-control real VM callbacks without faults
+EXAMPLE physical-control {"mass":40,"capture":true}
+PASS physical-control documented outcome
+PASS physical-control teardown
+PASS minimal normal registered script
+PASS minimal normal project
+PASS minimal ordinary scene
+PASS minimal runtime builds
+PASS minimal ordinary fixed-step session
+JS: Example
+PASS minimal real VM callbacks without faults
+EXAMPLE minimal {"started":1,"frames":100,"steps":100}
+PASS minimal documented outcome
+JS: Ending 40
+PASS minimal teardown
+PASS input-motion normal registered script
+PASS input-motion normal project
+PASS input-motion ordinary scene
+PASS input-motion runtime builds
+PASS input-motion ordinary fixed-step session
+PASS input-motion real VM callbacks without faults
+EXAMPLE input-motion {"moved":true}
+PASS input-motion documented outcome
+PASS input-motion teardown
+PASS spawn normal registered script
+PASS spawn normal project
+PASS spawn ordinary scene
+PASS spawn runtime builds
+PASS spawn ordinary fixed-step session
+PASS spawn real VM callbacks without faults
+EXAMPLE spawn {"spawned":true}
+PASS spawn documented outcome
+PASS spawn teardown
+PASS queries normal registered script
+PASS queries normal project
+PASS queries ordinary scene
+PASS queries runtime builds
+PASS queries ordinary fixed-step session
+PASS queries real VM callbacks without faults
+EXAMPLE queries {"ray":true,"shape":true,"closest":true,"collider":true,"point":{"x":0,"y":0.6000000238418579,"z":0},"normal":{"x":0,"y":1,"z":0}}
+PASS queries documented outcome
+PASS queries teardown
+PASS contacts normal registered script
+PASS contacts normal project
+PASS contacts ordinary scene
+PASS contacts runtime builds
+PASS contacts ordinary fixed-step session
+PASS contacts real VM callbacks without faults
+EXAMPLE contacts {"enters":1,"stays":59,"exits":1,"triggers":0,"otherValid":true,"normal":{"x":0,"y":1,"z":0}}
+PASS contacts documented outcome
+PASS contacts teardown
+PASS trigger normal registered script
+PASS trigger normal project
+PASS trigger ordinary scene
+PASS trigger runtime builds
+PASS trigger ordinary fixed-step session
+PASS trigger real VM callbacks without faults
+EXAMPLE trigger {"enters":1,"stays":34,"exits":1,"triggers":1,"otherValid":false,"normal":{"x":0,"y":0,"z":0}}
+PASS trigger documented outcome
+PASS trigger teardown
+PASS audio normal registered script
+PASS audio normal project
+PASS audio ordinary scene
+PASS audio runtime builds
+PASS audio ordinary fixed-step session
+PASS audio real VM callbacks without faults
+EXAMPLE audio {"requested":true,"stopped":true,"settings":true,"seek":true,"oneShot":true,"group":true,"pausedDrop":true}
+PASS audio documented outcome
+PASS audio teardown
+PASS particles normal registered script
+PASS particles normal project
+PASS particles ordinary scene
+PASS particles runtime builds
+PASS particles ordinary fixed-step session
+PASS particles real VM callbacks without faults
+EXAMPLE particles {"configured":true,"burst":true}
+PASS particles documented outcome
+PASS particles teardown
+PASS ui normal registered script
+PASS ui normal project
+PASS ui ordinary scene
+PASS ui runtime builds
+PASS ui ordinary fixed-step session
+PASS ui real VM callbacks without faults
+EXAMPLE ui {"clicked":true}
+PASS ui documented outcome
+PASS ui teardown
+PASS scene-session normal registered script
+PASS scene-session normal project
+PASS scene-session ordinary scene
+PASS scene-session runtime builds
+PASS scene-session ordinary fixed-step session
+PASS scene-session real VM callbacks without faults
+EXAMPLE scene-session {"queued":true}
+PASS scene-session documented outcome
+PASS scene-session teardown
+PASS joint normal registered script
+PASS joint normal project
+PASS joint ordinary scene
+PASS joint runtime builds
+PASS joint ordinary fixed-step session
+PASS joint real VM callbacks without faults
+EXAMPLE joint {"controlled":true}
+PASS joint documented outcome
+PASS joint teardown
+PASS animation normal registered script
+PASS animation normal project
+PASS animation ordinary scene
+PASS animation runtime builds
+PASS animation ordinary fixed-step session
+PASS animation real VM callbacks without faults
+EXAMPLE animation {"ready":true,"fade":true,"layers":true}
+PASS animation documented outcome
+PASS animation teardown
+PASS ragdoll normal registered script
+PASS ragdoll normal project
+PASS ragdoll ordinary scene
+PASS ragdoll runtime builds
+PASS ragdoll ordinary fixed-step session
+PASS ragdoll real VM callbacks without faults
+EXAMPLE ragdoll {"entered":true,"left":true}
+PASS ragdoll documented outcome
+PASS ragdoll teardown
+PASS character normal registered script
+PASS character normal project
+PASS character ordinary scene
+PASS character runtime builds
+PASS character ordinary fixed-step session
+PASS character real VM callbacks without faults
+EXAMPLE character {"controlled":true,"launched":true}
+PASS character documented outcome
+PASS character teardown
+PASS stale-handle normal registered script
+PASS stale-handle normal project
+PASS stale-handle ordinary scene
+PASS stale-handle runtime builds
+PASS stale-handle ordinary fixed-step session
+PASS stale-handle real VM callbacks without faults
+EXAMPLE stale-handle {"invalid":true,"throws":true,"characterThrows":true,"lookupNull":true,"staleLookup":true}
+PASS stale-handle documented outcome
+PASS stale-handle teardown
+SUMMARY 278 checks 0 failures

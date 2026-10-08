@@ -1,0 +1,65 @@
+PASS full helper-preserving mapping validates without inverting hidden subtree
+PASS four contacts solve in one bounded system
+IK_RESULT human-scale iterations=4 cost_us=127.916 root=0.138708,-0.085585,0.093657
+IK_CONTACT human-scale id=contact0 status=reached position_m=0.00035192 orientation_deg=0.02296554
+IK_CONTACT human-scale id=contact1 status=reached position_m=0.00036238 orientation_deg=0.01989248
+IK_CONTACT human-scale id=contact2 status=reached position_m=0.00000312 orientation_deg=0.00071460
+IK_CONTACT human-scale id=contact3 status=reached position_m=0.00000312 orientation_deg=0.00071460
+PASS each independently specified contact within 1 cm and 2 degrees
+PASS shared root and spine participate
+PASS all non-root translations and bone lengths remain unchanged
+PASS unmapped hidden/helper branch remains unchanged
+PASS negative control cannot replace required root/spine participation with stretch
+IK_RESULT participation-disabled iterations=75 cost_us=3590.884 root=0.000000,0.000000,0.000000
+IK_CONTACT participation-disabled id=contact0 status=reached position_m=0.00000017 orientation_deg=0.00000946
+IK_CONTACT participation-disabled id=contact1 status=limited position_m=0.14332166 orientation_deg=8.06534290
+IK_CONTACT participation-disabled id=contact2 status=limited position_m=0.09265918 orientation_deg=4.49604940
+IK_CONTACT participation-disabled id=contact3 status=limited position_m=0.09265917 orientation_deg=4.49604940
+PASS repeated reference sampling has no cumulative correction drift
+PASS target identity defines deterministic order independent of update order
+PASS renamed/proportioned skeleton uses explicit mapping
+PASS renamed 1.65 scale fixture meets scaled contact tolerance
+IK_RESULT renamed-proportioned iterations=5 cost_us=129.083 root=0.196645,-0.142251,0.122201
+IK_CONTACT renamed-proportioned id=contact0 status=reached position_m=0.00032692 orientation_deg=0.03317568
+IK_CONTACT renamed-proportioned id=contact1 status=reached position_m=0.00034499 orientation_deg=0.03175270
+IK_CONTACT renamed-proportioned id=contact2 status=reached position_m=0.00000794 orientation_deg=0.00102769
+IK_CONTACT renamed-proportioned id=contact3 status=reached position_m=0.00000794 orientation_deg=0.00102769
+PASS position-only targets
+PASS orientation-only targets do not drag root toward unused position
+PASS unreachable target returns finite bounded compromise and residual
+PASS competing same-effector constraints give explicit residuals
+PASS disabled/zero influences preserve reference exactly
+PASS target removal restores reference without stale state
+PASS invalid quaternion diagnosed by target index without publication
+PASS missing chain rejected safely
+PASS skeleton replacement invalidates prepared identities
+PASS arbitrarily rotated large-coordinate world converts relative offsets before float solving
+PASS translated/rotated contact support solved with same primitive
+PASS authored joint frame range participates
+PASS declared joint range is not exceeded
+PASS mapping numerical policy and frames round trip exactly
+PASS target positions/frames/weights round trip
+PASS unbounded iteration request rejected
+PASS current full imported multipart resource loads unreduced
+PASS full imported hierarchy/helpers and multipart bindings remain intact in shared solve
+PASS actual CC0 full multipart rig imports with all source joints and bindings
+PASS full imported four-contact solve retains singular head-hiding and helper nodes
+IK_RESULT full-import iterations=3 cost_us=86.450 root=0.108606,-0.035160,0.089501
+IK_CONTACT full-import id=fullFrame0 status=reached position_m=0.00009269 orientation_deg=0.00710942
+IK_CONTACT full-import id=fullFrame1 status=reached position_m=0.00009699 orientation_deg=0.00742655
+IK_CONTACT full-import id=fullFrame2 status=reached position_m=0.00006057 orientation_deg=0.00640220
+IK_CONTACT full-import id=fullFrame3 status=reached position_m=0.00006057 orientation_deg=0.00640208
+PASS each actual full imported contact within 1 cm and 2 degrees
+PASS both complete skin palettes preserve final pose identity
+PASS actual CC0 full multipart rig imports with all source joints and bindings
+PASS full imported four-contact solve retains singular head-hiding and helper nodes
+IK_RESULT full-import-renamed iterations=3 cost_us=87.018 root=0.109663,-0.034961,0.089467
+IK_CONTACT full-import-renamed id=fullFrame0 status=reached position_m=0.00013630 orientation_deg=0.01036049
+IK_CONTACT full-import-renamed id=fullFrame1 status=reached position_m=0.00014048 orientation_deg=0.01063862
+IK_CONTACT full-import-renamed id=fullFrame2 status=reached position_m=0.00007570 orientation_deg=0.00789440
+IK_CONTACT full-import-renamed id=fullFrame3 status=reached position_m=0.00007570 orientation_deg=0.00789454
+PASS each actual full imported contact within 1 cm and 2 degrees
+PASS both complete skin palettes preserve final pose identity
+PASS two instances sharing a skeleton keep independent target/solve state
+IK_PERFORMANCE nodes=66 contacts=4 median_us=103.665 p95_us=130.685 max_us=139.912 iterations=4 allocations_per_solve=160
+SUMMARY 38 checks 0 failures

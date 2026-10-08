@@ -2,6 +2,7 @@
 #include "PoseComposition.h"
 #include "JointTypes.h"
 #include "Classification.h"
+#include "PhysicalAnimation.h"
 
 // Authored geometry in joint-local metres. Skeleton joints and physical joints
 // have separate identities: each mapping explicitly names both relationships.
@@ -19,7 +20,11 @@ struct RagdollBone {
 };
 struct RagdollDefinition {
     bool enabled=true,playOnStart=false,selfCollision=true;
+    // Ordinary M42 body events remain unchanged. An owner may explicitly
+    // subscribe to its mapped bodies' external contacts through the same path.
+    bool receiveContactEvents=false;
     std::vector<RagdollBone> bones;
+    std::optional<PhysicalAnimationSettings> physicalAnimation;
 };
 bool ValidRagdollDefinition(const RagdollDefinition&,std::string& error);
 bool RagdollDefinitionsEqual(const RagdollDefinition&,const RagdollDefinition&);

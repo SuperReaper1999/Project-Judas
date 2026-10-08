@@ -14,13 +14,16 @@ CharacterMotor* RuntimeWorld::RuntimeCharacter(EntityId id){
     return &c.motor;
 }
 void RuntimeWorld::ClearCharacters(){for(auto& [_,c]:m_characters)m_physics.DestroyBody(c.motor.observationBody);m_characters.clear();view.reset();}
-void RuntimeWorld::UpdateCharacters(float dt){
+void RuntimeWorld::UpdateCharacters(float dt,bool onlyM70,bool skipM70){
     JUDAS_PROFILE_SCOPE("Character motors");
  JUDAS_PROFILE_COUNTER("Character motor instances",double(m_characters.size()),ProfileCounterMode::Latest);
+    if(onlyM70)m_physics.BeginPreStepQueryContacts();
     // Stable entity ordering, independent state; no input/camera/clip ownership.
     for(auto id:m_characterOwners)RuntimeCharacter(id);
     for(auto it=m_characters.begin();it!=m_characters.end();){auto id=it->first;auto* d=RuntimeDefinition(id);
         if(!d||!d->characterMotor){m_physics.DestroyBody(it->second.motor.observationBody);it=m_characters.erase(it);continue;}
+        const bool m70=(d->animation&&d->animation->fullBodyIK&&d->animation->fullBodyIK->enabled)||(d->ragdoll&&d->ragdoll->physicalAnimation&&d->ragdoll->physicalAnimation->enabled);
+        if((onlyM70&&!m70)||(skipM70&&m70)){++it;continue;}
         auto& c=it->second;auto& motor=c.motor;c.previous=d->transform;
         motor.settings=*d->characterMotor;
         m_physics.SetBodyEnabled(motor.observationBody,motor.settings.enabled);

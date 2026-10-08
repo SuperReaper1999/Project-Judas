@@ -1,0 +1,28 @@
+{
+  "acceptedBase": "934c5d3f0556c920cc7cae8b80dc4677d8cbf87b",
+  "localRefs": {
+    "HEAD": "934c5d3f0556c920cc7cae8b80dc4677d8cbf87b",
+    "main": "934c5d3f0556c920cc7cae8b80dc4677d8cbf87b",
+    "origin/main": "934c5d3f0556c920cc7cae8b80dc4677d8cbf87b"
+  },
+  "remoteMainVerifiedReadOnly": "934c5d3f0556c920cc7cae8b80dc4677d8cbf87b",
+  "stagedFiles": [],
+  "trackedChangedFiles": 40,
+  "protectedHistoricalEvidenceChanges": [],
+  "unrelatedProjectChanges": [],
+  "fluidSourceChanges": [],
+  "rendererSourceChanges": [],
+  "roadmapPresent": false,
+  "committed": false,
+  "pushed": false,
+  "tagged": false,
+  "laterMilestoneWorkStarted": false,
+  "qualification": "Source inspection plus current focused numerical/contact/API/editor/Linux package checks; corrected landing human re-test and Windows moved-package validation pending.",
+  "humanReview": {
+    "otherLabBehaviors": "accepted",
+    "passivePerformanceAndGFloorLanding": "corrected candidate awaiting operator re-test"
+  },
+  "passiveFollowUp": "development/passive-follow-up/REPORT.md",
+  "candidateFileCount": 291,
+  "landingFreezeFollowUp": "development/passive-crash-follow-up/REPORT.md"
+}

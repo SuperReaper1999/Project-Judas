@@ -1,0 +1,395 @@
+{
+  "acceptedBase": "934c5d3f0556c920cc7cae8b80dc4677d8cbf87b",
+  "branch": "main",
+  "main": "934c5d3f0556c920cc7cae8b80dc4677d8cbf87b",
+  "originMainLocalRef": "934c5d3f0556c920cc7cae8b80dc4677d8cbf87b",
+  "platform": {
+    "system": "Linux-7.0.0-38-generic-x86_64-with-glibc2.43",
+    "compiler": "c++ (Ubuntu 15.2.0-16ubuntu1) 15.2.0",
+    "cmake": "cmake version 4.2.3",
+    "node": "v20.20.2",
+    "cpu": "Intel(R) Core(TM) i7-4790 CPU @ 3.60GHz",
+    "memoryKiB": 16314724,
+    "build": "Release / Unix Makefiles"
+  },
+  "buildWarningCounts": {
+    "configure": {
+      "compilerWarnings": 0,
+      "cmakeDeprecationWarnings": 1,
+      "cmakeWarnings": 0
+    },
+    "release-build": {
+      "compilerWarnings": 37,
+      "cmakeDeprecationWarnings": 0,
+      "cmakeWarnings": 0
+    },
+    "affected-rebuild": {
+      "compilerWarnings": 2,
+      "cmakeDeprecationWarnings": 0,
+      "cmakeWarnings": 0
+    },
+    "final-relink": {
+      "compilerWarnings": 0,
+      "cmakeDeprecationWarnings": 0,
+      "cmakeWarnings": 0
+    },
+    "narrow-render-fixture-rebuild": {
+      "compilerWarnings": 0,
+      "cmakeDeprecationWarnings": 0,
+      "cmakeWarnings": 0
+    },
+    "final-freeze-build": {
+      "compilerWarnings": 0,
+      "cmakeDeprecationWarnings": 0,
+      "cmakeWarnings": 0
+    },
+    "test-fixture-rebuild": {
+      "compilerWarnings": 0,
+      "cmakeDeprecationWarnings": 0,
+      "cmakeWarnings": 0
+    },
+    "test-fixture-final-rebuild": {
+      "compilerWarnings": 0,
+      "cmakeDeprecationWarnings": 0,
+      "cmakeWarnings": 0
+    },
+    "save-lifetime-rebuild": {
+      "compilerWarnings": 0,
+      "cmakeDeprecationWarnings": 0,
+      "cmakeWarnings": 0
+    },
+    "return-capture-rebuild": {
+      "compilerWarnings": 0,
+      "cmakeDeprecationWarnings": 0,
+      "cmakeWarnings": 0
+    },
+    "drive-tensor-rebuild": {
+      "compilerWarnings": 0,
+      "cmakeDeprecationWarnings": 0,
+      "cmakeWarnings": 0
+    },
+    "mapping-final-build": {
+      "compilerWarnings": 0,
+      "cmakeDeprecationWarnings": 0,
+      "cmakeWarnings": 0
+    }
+  },
+  "finalExecutablesNotCommitted": [
+    {
+      "path": "build/judas",
+      "bytes": 50369760,
+      "sha256": "52f954191766e51a9777787bfcd3ec3e15b3fb165dc9538f3d4b44b4f31d1403"
+    },
+    {
+      "path": "build/judas_editor",
+      "bytes": 53935208,
+      "sha256": "6914c1e8623897b0cd94286c60959a21fa9319facd0e7bfafaa34eb4801ab40a"
+    },
+    {
+      "path": "build/judas_export",
+      "bytes": 50313096,
+      "sha256": "42acba55daea423aba15061b618ee0b60a8d889c9f59d68cb2720bd9e752b8ea"
+    },
+    {
+      "path": "build/judas_scene_author",
+      "bytes": 52108456,
+      "sha256": "45f28a5d5b6f0dcfb7d8dc3b080dabb917914279c93999e7fc8c2d51093ed15d"
+    },
+    {
+      "path": "build/judas_multi_target_ik_tests",
+      "bytes": 50227368,
+      "sha256": "701f57eddedbbec9f1988e782aeaa435be6d53253ffd62a6e3f51e621db38671"
+    },
+    {
+      "path": "build/judas_physical_animation_tests",
+      "bytes": 50285136,
+      "sha256": "a265b6cfd2ca0f71b220b9029654f906df78fb9b290f1f8c360374e4370b986c"
+    },
+    {
+      "path": "build/judas_character_lab_tests",
+      "bytes": 50320480,
+      "sha256": "8310cb22368751888b00fbbd47b5e8bedf6b3ac776856429e0f004dc7b54060c"
+    },
+    {
+      "path": "build/judas_character_lab_performance",
+      "bytes": 50294968,
+      "sha256": "065acd64ea9d308fc6cf513fdfba3fcb3202e3e1ee5e2cbe2962a51c3749a4c2"
+    }
+  ],
+  "package": {
+    "path": "/tmp/judas-m70-character-lab-20261008",
+    "files": 31,
+    "fileBytes": 53029658,
+    "directoryInclusiveBytes": 53029658,
+    "packagedAssets": 8,
+    "registeredScenes": [
+      "Scenes/wall.judas",
+      "Scenes/board.judas",
+      "Scenes/physical.judas"
+    ],
+    "unrelatedWorkingDirectory": "/tmp/judas-m70-unrelated-working-directory",
+    "sourceHiddenCopy": ".cache/m70-review/owned-export-hud-source/character_lab",
+    "launchExitCodes": {
+      "wall": 0,
+      "board": 0,
+      "physical": 0
+    },
+    "fileHashes": [
+      {
+        "path": "Assets/LICENSE.txt",
+        "bytes": 274,
+        "sha256": "ea9c9bcd2a01ef484b1c5b34b35fe0baef08c01334232cbc2d66d6039ca5b2e1"
+      },
+      {
+        "path": "Assets/fonts/DejaVuSans.ttf",
+        "bytes": 759720,
+        "sha256": "b4c632e3cdf9acc7f28758fb5a323c8524d7fc6660d46904d9b6cbe2809c419c"
+      },
+      {
+        "path": "Assets/fonts/DejaVuSans.ttf.judasmeta",
+        "bytes": 102,
+        "sha256": "687462a237ec9b162f72c30fc9d86ca3fe5238c1934c8e93803112a145964d18"
+      },
+      {
+        "path": "Assets/fonts/LICENSE.txt",
+        "bytes": 3859,
+        "sha256": "63d3ba759d12804c5b31a9d5940d855c1820d1f5999e6b0872eb1c7ff045fbc9"
+      },
+      {
+        "path": "Assets/models/alternate.judasmodel",
+        "bytes": 111070,
+        "sha256": "c760d854b8cad7749d99ee817e6685f369f65c54ae7fbbc3b8fecb8e785e4c57"
+      },
+      {
+        "path": "Assets/models/alternate.judasmodel.judasmeta",
+        "bytes": 109,
+        "sha256": "3a5505e84cebc7cc6b6b6eb7e69072dc8f392a3c35795a4edd81ba9c83d68296"
+      },
+      {
+        "path": "Assets/models/figure.judasmodel",
+        "bytes": 116282,
+        "sha256": "472e7c930db3037d6184d0bb68e8c952204083ee9b1d882cb806f803f77d4c24"
+      },
+      {
+        "path": "Assets/models/figure.judasmodel.judasmeta",
+        "bytes": 106,
+        "sha256": "368cbfb875ffe32f5889e8ae6dfaf8adb79225dbf136c8fbfe40819a6f73861f"
+      },
+      {
+        "path": "Assets/prefabs/figure.judasprefab",
+        "bytes": 26846,
+        "sha256": "f5daaa36ba38d4ab4bf84bb246e91d0c0f3ec78f11b6bbbfe00f3838e07efe60"
+      },
+      {
+        "path": "Assets/prefabs/figure.judasprefab.judasmeta",
+        "bytes": 110,
+        "sha256": "44d94b1058b3de55ce636c93fc9ccf4837b137b47fe0c69e477d8424da6b23e5"
+      },
+      {
+        "path": "Assets/scripts/lab.js",
+        "bytes": 10295,
+        "sha256": "46a7315a36628f442108b751086462c63af8fb54445576853ea5ced2c3731ade"
+      },
+      {
+        "path": "Assets/scripts/lab.js.judasmeta",
+        "bytes": 98,
+        "sha256": "879f5145212ec33426f080b4e6d5e556f6af150213e26d0ab1a0fa95cfb10162"
+      },
+      {
+        "path": "Assets/scripts/mapping.js",
+        "bytes": 1409,
+        "sha256": "4db1947b17d4ee7aaf7fdffcf02fb0e21f0a2e38bd58908a2a3d81e544b70e4d"
+      },
+      {
+        "path": "Assets/scripts/mapping.js.judasmeta",
+        "bytes": 102,
+        "sha256": "6d92c34f5ad732e03949c7e4c04f428e9f028d261497af875edfd395d7a1733e"
+      },
+      {
+        "path": "Assets/scripts/math.js",
+        "bytes": 1382,
+        "sha256": "3976300eb5aaf6323585b263ec601a3b095185ca3c3e284476155ce37fc69d9d"
+      },
+      {
+        "path": "Assets/scripts/math.js.judasmeta",
+        "bytes": 99,
+        "sha256": "c856a4992773a0c63c032684bdfb8c19483d39df66a8fd4e1f567a460adcbabc"
+      },
+      {
+        "path": "Assets/ui/lab.judasui",
+        "bytes": 9763,
+        "sha256": "ff255162ab5022648d4a0fd955370860c46778d4bfd301700fa105629fba870e"
+      },
+      {
+        "path": "Assets/ui/lab.judasui.judasmeta",
+        "bytes": 94,
+        "sha256": "f54f300f5d12411bd96a8b72e449efc0705ad7ebd955f00794445718d2b502e1"
+      },
+      {
+        "path": "DEPENDENCIES.json",
+        "bytes": 3883,
+        "sha256": "40246da77006992581d9f07dc98e01ae8f7f832f723fa5cb744b218036b0f8e9"
+      },
+      {
+        "path": "RUNTIME_REQUIREMENTS.txt",
+        "bytes": 747,
+        "sha256": "38115f78d705547426735a24c6c65de6e1261c6f623a78bee2b875463b684416"
+      },
+      {
+        "path": "Scenes/board.judas",
+        "bytes": 70970,
+        "sha256": "1d4bad2c9362ef7ef250548a777e37a9a91e2737ad84972529d723c3d9ab193a"
+      },
+      {
+        "path": "Scenes/physical.judas",
+        "bytes": 65005,
+        "sha256": "163e2812ef44c7f1e56a87fbbbe9001bdd5ddfaa34156906798325055ff1ba90"
+      },
+      {
+        "path": "Scenes/wall.judas",
+        "bytes": 73346,
+        "sha256": "7d12eaeac91576d3d87118d50c261ff88d0024844b1a6f2e527deab3a1a8738b"
+      },
+      {
+        "path": "engine/assets/fonts/DejaVuSans.ttf",
+        "bytes": 759720,
+        "sha256": "b4c632e3cdf9acc7f28758fb5a323c8524d7fc6660d46904d9b6cbe2809c419c"
+      },
+      {
+        "path": "engine/licenses/DejaVuSans.txt",
+        "bytes": 3859,
+        "sha256": "63d3ba759d12804c5b31a9d5940d855c1820d1f5999e6b0872eb1c7ff045fbc9"
+      },
+      {
+        "path": "engine/licenses/Judas.txt",
+        "bytes": 1063,
+        "sha256": "26682b82940cdcaf8293c0f52c6948bafa77ae8365f9be7389e4422e447a44c3"
+      },
+      {
+        "path": "engine/third_party/RUNTIME_NOTICES.txt",
+        "bytes": 59157,
+        "sha256": "298b2be9c04894dddf24b6c337b7c31e110ec0b99a2f59b74967b9835d3f2536"
+      },
+      {
+        "path": "game-icon.png",
+        "bytes": 577211,
+        "sha256": "0b34f9003de857542f6263d2add8eda0f0143cc02cc8843d285764795cf40e14"
+      },
+      {
+        "path": "game.judasproj",
+        "bytes": 3102,
+        "sha256": "763b27bb81fd16d73c264d3a8f92a4c97fdee5480cd66109d0df25d3ae39c753"
+      },
+      {
+        "path": "judas",
+        "bytes": 50369760,
+        "sha256": "52f954191766e51a9777787bfcd3ec3e15b3fb165dc9538f3d4b44b4f31d1403"
+      },
+      {
+        "path": "judas-package.txt",
+        "bytes": 115,
+        "sha256": "f6b7570eccf37e0d02e958f954f2ebfca577af286218018788191a8f297e3f2e"
+      }
+    ]
+  },
+  "finalFocusedResults": {
+    "ik": {
+      "checks": 38,
+      "failures": 0,
+      "exit": 0
+    },
+    "physical": {
+      "checks": 64,
+      "failures": 0,
+      "exit": 0
+    },
+    "lab": {
+      "checks": 66,
+      "failures": 0,
+      "exit": 0
+    },
+    "coldWriter": {
+      "checks": 10,
+      "failures": 0,
+      "exit": 0
+    },
+    "freshProcessReader": {
+      "checks": 14,
+      "failures": 0,
+      "exit": 0
+    },
+    "cookbook": {
+      "checks": 278,
+      "failures": 0,
+      "exit": 0
+    },
+    "apiTypesLive": {
+      "symbols": 310,
+      "exports": 27,
+      "nativeOperations": 213,
+      "callbacks": 15,
+      "exampleFiles": 35,
+      "negativeControls": 3,
+      "typescript": "6.0.3",
+      "exit": 0
+    },
+    "authoringDesktopPermissions": {
+      "checks": 34,
+      "failures": 0,
+      "exit": 0
+    }
+  },
+  "applicationExitCodes": {
+    "wallCorrected": 0,
+    "board": 0,
+    "physicalFinal": 0,
+    "editorExportFinal": 0
+  },
+  "qualification": "Derived from retained logs and completed tool exit results. Linux automated/offscreen only; no Windows or human interactive acceptance. Executables/packages are local artifacts, not candidate repository files.",
+  "remoteMainVerifiedReadOnly": "934c5d3f0556c920cc7cae8b80dc4677d8cbf87b",
+  "hudOnlyFollowUp": {
+    "scope": "project lab.js diagnostics only; no engine, motion, targets or quality/cadence changes",
+    "lab": {
+      "checks": 66,
+      "failures": 0,
+      "exit": 0
+    },
+    "physicalApplicationExit": 0,
+    "editorExportExit": 0,
+    "packageCases": [
+      {
+        "scene": "wall",
+        "command": [
+          "/tmp/judas-m70-character-lab-20261008/judas"
+        ],
+        "cwd": "/tmp/judas-m70-unrelated-working-directory",
+        "testScript": "/tmp/judas-m70-steps/wall.steps",
+        "xdgDataHome": "/tmp/judas-m70-package-wall-state",
+        "exit": 0,
+        "seconds": 1.6214651040008903
+      },
+      {
+        "scene": "board",
+        "command": [
+          "/tmp/judas-m70-character-lab-20261008/judas"
+        ],
+        "cwd": "/tmp/judas-m70-unrelated-working-directory",
+        "testScript": "/tmp/judas-m70-steps/board.steps",
+        "xdgDataHome": "/tmp/judas-m70-package-board-state",
+        "exit": 0,
+        "seconds": 1.0663057290003053
+      },
+      {
+        "scene": "physical",
+        "command": [
+          "/tmp/judas-m70-character-lab-20261008/judas"
+        ],
+        "cwd": "/tmp/judas-m70-unrelated-working-directory",
+        "testScript": "/tmp/judas-m70-steps/physical.steps",
+        "xdgDataHome": "/tmp/judas-m70-package-physical-state",
+        "exit": 0,
+        "seconds": 2.1201788029993622
+      }
+    ]
+  }
+}

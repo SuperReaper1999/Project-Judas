@@ -1,0 +1,9 @@
+PASS independent bounded implicit-PD torque expectation
+PASS physical effort saturates at declared N m limit
+PASS quaternion signs use identical shortest-path rotational error
+PASS zero drive retains actual error and applies no restoring torque
+PASS declarative region configuration round trip
+PASS nonfinite drive configuration rejected before publication
+FAIL M70 opt-in motor contact fixture builds through ordinary scene bodies
+FAIL headless ordinary entity and immutable skeleton ready
+authored scene fingerprint: object 10 render: invalid animation component

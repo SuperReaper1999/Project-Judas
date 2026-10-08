@@ -1,6 +1,6 @@
 # Current public JudasJS inventory
 
-Current accepted surface: M69 (`8ddec3b97d66815de4174d6e103be77e74b7eb0f`). The paired-input/batch-query review originally used M68 starting checkpoint `c042797c755df68b45e36aa917c4ca72818b9bcd`. M67 human authoring review remains deferred.
+M70 candidate multi-target IK and partial physical animation review of the registered virtual module based on accepted starting checkpoint `934c5d3f0556c920cc7cae8b80dc4677d8cbf87b`. M67 human authoring review remains deferred.
 Each row is a runtime export/member (constructors and plain handle fields included).
 Native dispatcher operations are implementation details, not additional JS APIs.
 
@@ -8,9 +8,12 @@ Native dispatcher operations are implementation details, not additional JS APIs.
 |---|---|---|---|
 | `Animation` | JS wrapper/data | [declaration](../judas.d.ts) | [reference](animation-ragdolls.md) |
 | `Animation.clips` | JS wrapper/data | [declaration](../judas.d.ts) | [reference](animation-ragdolls.md) |
+| `Animation.configureIK` | `animationIKConfigure` | [declaration](../judas.d.ts) | [reference](animation-ragdolls.md) |
 | `Animation.constructor` | JS wrapper/data | [declaration](../judas.d.ts) | [reference](animation-ragdolls.md) |
 | `Animation.crossFade` | `animationFade` | [declaration](../judas.d.ts) | [reference](animation-ragdolls.md) |
 | `Animation.entityId` | JS wrapper/data | [declaration](../judas.d.ts) | [reference](animation-ragdolls.md) |
+| `Animation.ikStatus` | `animationIKStatus` | [declaration](../judas.d.ts) | [reference](animation-ragdolls.md) |
+| `Animation.ikTargets` | `animationIKTargets` | [declaration](../judas.d.ts) | [reference](animation-ragdolls.md) |
 | `Animation.info` | `animationInfo` | [declaration](../judas.d.ts) | [reference](animation-ragdolls.md) |
 | `Animation.jointTransform` | `animationJointPose` | [declaration](../judas.d.ts) | [reference](animation-ragdolls.md) |
 | `Animation.layer` | `animationLayer` | [declaration](../judas.d.ts) | [reference](animation-ragdolls.md) |
@@ -168,11 +171,15 @@ Native dispatcher operations are implementation details, not additional JS APIs.
 | `Ragdoll` | JS wrapper/data | [declaration](../judas.d.ts) | [reference](animation-ragdolls.md) |
 | `Ragdoll.active` | `ragdollActive` | [declaration](../judas.d.ts) | [reference](animation-ragdolls.md) |
 | `Ragdoll.body` | `ragdollBody` | [declaration](../judas.d.ts) | [reference](animation-ragdolls.md) |
+| `Ragdoll.configurePhysical` | `ragdollPhysicalConfigure` | [declaration](../judas.d.ts) | [reference](animation-ragdolls.md) |
 | `Ragdoll.constructor` | JS wrapper/data | [declaration](../judas.d.ts) | [reference](animation-ragdolls.md) |
 | `Ragdoll.enabled` | `ragdollEnabled` | [declaration](../judas.d.ts) | [reference](animation-ragdolls.md) |
 | `Ragdoll.enter` | `ragdollEnter` | [declaration](../judas.d.ts) | [reference](animation-ragdolls.md) |
 | `Ragdoll.id` | JS wrapper/data | [declaration](../judas.d.ts) | [reference](animation-ragdolls.md) |
 | `Ragdoll.leave` | `ragdollLeave` | [declaration](../judas.d.ts) | [reference](animation-ragdolls.md) |
+| `Ragdoll.physicalState` | `ragdollPhysicalState` | [declaration](../judas.d.ts) | [reference](animation-ragdolls.md) |
+| `Ragdoll.receiveContactEvents` | `ragdollContactEvents` | [declaration](../judas.d.ts) | [reference](animation-ragdolls.md) |
+| `Ragdoll.setMode` | `ragdollMode` | [declaration](../judas.d.ts) | [reference](animation-ragdolls.md) |
 | `UIDocument` | JS wrapper/data | [declaration](../judas.d.ts) | [reference](ui.md) |
 | `UIDocument.constructor` | JS wrapper/data | [declaration](../judas.d.ts) | [reference](ui.md) |
 | `UIDocument.enabled` | `uiGet`, `uiSet` | [declaration](../judas.d.ts) | [reference](ui.md) |

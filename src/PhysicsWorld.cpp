@@ -168,7 +168,7 @@ struct PhysicsWorld::Impl {
         std::string physicalMaterial;
         float friction = 0.5f;
         float restitution = 0.0f;
-        bool sensor = false, enabled = true, queryOnly=false;
+        bool sensor = false, enabled = true, queryOnly=false, queriesEnabled=true;
         bool isDynamic = false;
         bool sleeping=false,deferredAcceleration=false;
         float quietSeconds=0;
@@ -194,14 +194,14 @@ struct PhysicsWorld::Impl {
     std::vector<unsigned int> aliveSlots;
     std::vector<PhysicsWorld::DebugContact> lastStepContacts;
     using TouchKey=std::pair<unsigned,unsigned>;
-    std::map<TouchKey,PhysicsWorld::TouchEvent> previousTouches,stepTouches;
-    bool queryTouchesPending=false;
+    std::map<TouchKey,PhysicsWorld::TouchEvent> previousTouches,stepTouches,preStepQueryTouches;
+    bool queryTouchesPending=false,collectingPreStepQueries=false;
     std::vector<PhysicsWorld::TouchEvent> touchEvents;
-    void Observe(unsigned a,unsigned b,const Contact& c,float impulse=0) {
+    void Observe(unsigned a,unsigned b,const Contact& c,float impulse=0,bool preStep=false) {
         auto ha=MakeHandle(a),hb=MakeHandle(b);
         bool flip=ha.id>hb.id;if(flip)std::swap(ha,hb);
         auto key=std::make_pair(ha.id,hb.id);
-        auto& e=stepTouches[key];
+        auto& e=(preStep?preStepQueryTouches:stepTouches)[key];
         e.a=ha;e.b=hb;e.sensor=bodies[a].sensor||bodies[b].sensor;
         e.point=c.point;e.normal=flip?-c.normal:c.normal;
         const auto va=bodies[a].rigidBody.linearVelocity+glm::cross(bodies[a].rigidBody.angularVelocity,c.point-bodies[a].rigidBody.position);
@@ -345,6 +345,29 @@ struct PhysicsWorld::Impl {
     std::vector<unsigned char> impactCapped;
     double stepDuration = 0;
 
+    // A derived CCD sample, never an integration anchor. Many incident pairs
+    // ask for the same body's pose at the same event time. Keep its exact
+    // represented pose/orientation preparation once until that trajectory
+    // changes. Time and generation are part of the key; every step and every
+    // Begin/ChangeVelocity invalidates samples explicitly.
+    struct ImpactPoseSample {
+        RigidBody pose;
+        std::optional<ContactPreparedOrientation> orientation;
+        double time=std::numeric_limits<double>::quiet_NaN();
+        unsigned generation=0;
+        Aabb remainingBound;
+        double boundStart=std::numeric_limits<double>::quiet_NaN(),boundFinish=0;
+        unsigned boundGeneration=0;
+    };
+    std::vector<ImpactPoseSample> impactPoseSamples;
+    std::size_t impactPoseEvaluations=0,impactPoseReuses=0,impactOrientationBuilds=0,impactTruthRequests=0,impactTruthReuses=0,impactBoundsRejected=0;
+    void InvalidateImpactPose(unsigned slot){
+        if(slot<impactPoseSamples.size()){
+            impactPoseSamples[slot].time=std::numeric_limits<double>::quiet_NaN();
+            impactPoseSamples[slot].boundStart=std::numeric_limits<double>::quiet_NaN();
+        }
+    }
+
     RigidBody PoseAt(unsigned slot, double time) const {
         const Body& b=bodies[slot];
         RigidBody pose=b.rigidBody;
@@ -362,24 +385,51 @@ struct PhysicsWorld::Impl {
         return glm::dot(glm::dvec3(c.normal),glm::dvec3(a.linearVelocity-b.linearVelocity)+
             glm::cross(glm::dvec3(a.angularVelocity),ra)-glm::cross(glm::dvec3(b.angularVelocity),rb));
     }
-    ContactManifold PairAt(unsigned a,unsigned b,int pa,int pb,double time,float margin) const {
-        const auto aa=PoseAt(a,time),bb=PoseAt(b,time);
-        const ContactPreparedOrientation oa(aa.orientation),ob(bb.orientation);
-        return ComputeContacts(PrimitiveAt(bodies[a].shape,aa,pa,&oa),
-            PrimitiveAt(bodies[b].shape,bb,pb,&ob),margin,&oa,&ob);
+    const ImpactPoseSample& ImpactPoseAt(unsigned slot,double time){
+        EnsureImpactPoseStorage();
+        auto& sample=impactPoseSamples[slot];
+        if(sample.time==time&&sample.generation==bodies[slot].generation){++impactPoseReuses;return sample;}
+        sample.pose=PoseAt(slot,time);sample.time=time;sample.generation=bodies[slot].generation;++impactPoseEvaluations;
+        if(!sample.orientation||!sample.orientation->Matches(sample.pose.orientation)){
+            sample.orientation.emplace(sample.pose.orientation);++impactOrientationBuilds;
+        }
+        return sample;
+    }
+    const Aabb& RemainingImpactBound(unsigned slot,double start,double finish){
+        EnsureImpactPoseStorage();
+        auto& sample=impactPoseSamples[slot];const auto& body=bodies[slot];
+        if(sample.boundStart==start&&sample.boundFinish==finish&&sample.boundGeneration==body.generation)return sample.remainingBound;
+        if(body.rigidBody.IsStatic())sample.remainingBound=CurrentBound(bodies[slot]);
+        else {
+            // The remaining motion is one anchored segment. Each represented
+            // center component stays between its sampled endpoints. An outward
+            // enclosing sphere at both endpoints therefore bounds every shape
+            // orientation, including a full turn with equal endpoint rotations.
+            // Only centers are needed: do not evict the prepared start pose or
+            // prepare an unused endpoint orientation for this sphere enclosure.
+            const auto from=PoseAt(slot,start).position,to=PoseAt(slot,finish).position;
+            const auto sphere=Shape::Sphere(body.boundingRadius);const glm::quat identity(1,0,0,0);
+            sample.remainingBound=ShapeAabb(sphere,from,identity).Union(ShapeAabb(sphere,to,identity));
+        }
+        sample.boundStart=start;sample.boundFinish=finish;sample.boundGeneration=body.generation;return sample.remainingBound;
+    }
+    ContactManifold PairAt(unsigned a,unsigned b,int pa,int pb,double time,float margin) {
+        const auto& aa=ImpactPoseAt(a,time);const auto& bb=ImpactPoseAt(b,time);
+        return ComputeContacts(PrimitiveAt(bodies[a].shape,aa.pose,pa,&*aa.orientation),
+            PrimitiveAt(bodies[b].shape,bb.pose,pb,&*bb.orientation),margin,&*aa.orientation,&*bb.orientation);
     }
     // Lower bound on a fixed separating-plane gap along the anchored drift.
     // For q(t)=normalize(q0+t*Omega*q0/2), instantaneous angular speed is
     // |omega|/(1+(|omega|t/2)^2). Every rotated vertex has |r''|<=|omega|^2|r_perp|.
     // Evaluate ALL support vertices, including those not currently extremal.
-    double PlaneDrift(unsigned a,unsigned b,int pa,int pb,double time,const glm::dvec3& n) const {
+    double PlaneDrift(unsigned a,unsigned b,int pa,int pb,double time,const glm::dvec3& n) {
         struct Vertex {glm::dvec3 r,velocity;double curvature;};
         struct Support {std::array<Vertex,128> vertices;int count=0;double radius=0;};
         auto support=[&](unsigned slot,int part) {
-            Support result;const auto& body=bodies[slot];const auto pose=PoseAt(slot,time);
-            const auto child=PrimitiveAt(body.shape,pose,part);
+            Support result;const auto& body=bodies[slot];const auto& sample=ImpactPoseAt(slot,time);const auto& pose=sample.pose;
+            const auto child=PrimitiveAt(body.shape,pose,part,&*sample.orientation);
             if(child.shape.type!=ShapeType::Box && child.shape.type!=ShapeType::Sphere&&child.shape.type!=ShapeType::ConvexHull) return result;
-            const auto rotation=ContactRotation(pose.orientation);
+            const auto& rotation=sample.orientation->rotation;
             const glm::dvec3 omega(body.rigidBody.IsStatic()?glm::vec3(0):body.rigidBody.angularVelocity);
             const double w2=glm::dot(omega,omega);
             const double elapsed=body.isDynamic && !body.motion.Segments().empty() ? time-body.motion.Segments().back().begin : 0;
@@ -392,13 +442,13 @@ struct PhysicsWorld::Impl {
             };
             if(child.shape.type==ShapeType::Sphere) {vertex(glm::dvec3(child.parentLocalCenter));result.radius=child.shape.radius;}
             else if(child.shape.type==ShapeType::ConvexHull){const auto r=ContactRotation(child.childRotation);for(auto p:child.shape.asset->vertices)vertex(glm::dvec3(child.parentLocalCenter)+r*p);}
-            else for(int k=0;k<8;++k) vertex(glm::dvec3(child.parentLocalCenter)+ContactRotation(child.childRotation)*glm::dvec3(child.shape.halfExtents)*
-                glm::dvec3(k&1?1:-1,k&2?1:-1,k&4?1:-1));
+            else {const auto childRotation=ContactRotation(child.childRotation);for(int k=0;k<8;++k) vertex(glm::dvec3(child.parentLocalCenter)+childRotation*glm::dvec3(child.shape.halfExtents)*
+                glm::dvec3(k&1?1:-1,k&2?1:-1,k&4?1:-1));}
             return result;
         };
         const auto sa=support(a,pa),sb=support(b,pb);
         if(!sa.count || !sb.count) return 0;
-        const glm::dvec3 delta=glm::dvec3(PoseAt(a,time).position)-glm::dvec3(PoseAt(b,time).position);
+        const glm::dvec3 delta=glm::dvec3(ImpactPoseAt(a,time).pose.position)-glm::dvec3(ImpactPoseAt(b,time).pose.position);
         double advance=std::numeric_limits<double>::infinity();
         for(int i=0;i<sa.count;++i) for(int j=0;j<sb.count;++j) {
             const auto& va=sa.vertices[i];const auto& vb=sb.vertices[j];
@@ -426,6 +476,34 @@ struct PhysicsWorld::Impl {
                              (bb.rigidBody.IsStatic()?0:glm::length(glm::dvec3(bb.rigidBody.angularVelocity))*bb.boundingRadius);
         const double speed=glm::length(relative)+angular;
         if (!(speed>0)) return finish+1;
+        const auto simpleRadius=[](const Body& body){
+            return (body.shape.type==ShapeType::Box||body.shape.type==ShapeType::Sphere)&&body.shape.pivotOffset==glm::vec3(0)&&std::isfinite(body.boundingRadius)&&body.boundingRadius>0;
+        };
+        // Restrict this rejection to the existing outward-proven primitive
+        // radius/bounds. Compound, cooked and terrain shapes retain the full
+        // old query until their radius enclosure is independently established.
+        if(simpleRadius(ba)&&simpleRadius(bb)){
+            const auto& boundA=RemainingImpactBound(a,start,finish);const auto& boundB=RemainingImpactBound(b,start,finish);
+            const auto finite=[](const Aabb& bound){for(int k=0;k<3;++k)if(!std::isfinite(bound.min[k])||!std::isfinite(bound.max[k]))return false;return true;};
+            // An arithmetic-range failure is not a geometric rejection. Keep
+            // the established query path whenever the enclosure is uncertain.
+            if(finite(boundA)&&finite(boundB)&&!boundA.Overlaps(boundB)){++impactBoundsRejected;return finish+1;}
+        }
+        // Bisection still performs all 32 represented-time bracket updates.
+        // Binary32 pose integration can map several of those times to exactly
+        // the same pair of poses. Contact truth for that identical geometry is
+        // reusable; no margin contact, tolerance or earlier stopping is used.
+        struct ActualTruth {std::array<float,14> pose{};bool valid=false,touching=false;};
+        std::array<ActualTruth,3> actualTruth{};std::size_t nextTruth=0;
+        auto touchingAt=[&](double at){
+            ++impactTruthRequests;
+            const auto& aa=ImpactPoseAt(a,at).pose;const auto& bb=ImpactPoseAt(b,at).pose;
+            const std::array<float,14> represented={aa.position.x,aa.position.y,aa.position.z,aa.orientation.w,aa.orientation.x,aa.orientation.y,aa.orientation.z,
+                bb.position.x,bb.position.y,bb.position.z,bb.orientation.w,bb.orientation.x,bb.orientation.y,bb.orientation.z};
+            for(const auto& old:actualTruth)if(old.valid&&std::memcmp(old.pose.data(),represented.data(),sizeof(represented))==0){++impactTruthReuses;return old.touching;}
+            const bool touching=PairAt(a,b,pa,pb,at,0).count>0;
+            actualTruth[nextTruth]={represented,true,touching};nextTruth=(nextTruth+1)%actualTruth.size();return touching;
+        };
         double time=start, previous=start;
         bool uncertifiedAdvance=false;
         for (int iteration=0;iteration<64;++iteration) {
@@ -434,16 +512,18 @@ struct PhysicsWorld::Impl {
                                              std::numeric_limits<float>::infinity());
             // Margin manifolds contain proximity features, not necessarily the
             // zero-margin contact set. Contact truth must use the latter.
-            const auto actual=PairAt(a,b,pa,pb,time,0);
-            if(actual.count) {
+            if(touchingAt(time)) {
                 if(time==start) return finish+1;
                 double lo=previous,hi=time;
                 for(int k=0;k<32;++k) {
                     const double mid=(lo+hi)*.5;
-                    if(PairAt(a,b,pa,pb,mid,0).count) hi=mid;else lo=mid;
+                    if(touchingAt(mid)) hi=mid;else lo=mid;
                 }
                 return hi;
             }
+            // The exact endpoint has already been checked. There is no future
+            // interval left from which a proximity reach could reveal a hit.
+            if(time==finish)return finish+1;
             const auto manifold=PairAt(a,b,pa,pb,time,reach);
             if (!manifold.count) return finish+1;
             const Contact* nearest=&manifold.points[0];
@@ -480,12 +560,12 @@ struct PhysicsWorld::Impl {
         auto firstContact=[&](double lo,double hi) {
             for(int k=0;k<32;++k) {
                 const double mid=(lo+hi)*.5;
-                if(PairAt(a,b,pa,pb,mid,0).count) hi=mid;else lo=mid;
+                if(touchingAt(mid)) hi=mid;else lo=mid;
             }
             return hi;
         };
         ++stats.impactSamplingTests;
-        if(PairAt(a,b,pa,pb,time,0).count) return firstContact(previous,time);
+        if(touchingAt(time)) return firstContact(previous,time);
         const double remaining=finish-time;
         if(!(remaining>0)) return finish+1;
         auto primitiveFeature=[&](unsigned slot,int part) {
@@ -515,7 +595,7 @@ struct PhysicsWorld::Impl {
         for(unsigned sample=1;sample<=samples;++sample) {
             const double hi=sample==samples ? finish : time+remaining*(double(sample)/double(samples));
             ++stats.impactSamplingTests;
-            if(PairAt(a,b,pa,pb,hi,0).count) return firstContact(lo,hi);
+            if(touchingAt(hi)) return firstContact(lo,hi);
             lo=hi;
         }
         return finish+1;
@@ -586,11 +666,14 @@ struct PhysicsWorld::Impl {
 
     void AdvanceImpacts(float dt) {
         stepDuration=dt;
+        impactPoseEvaluations=impactPoseReuses=impactOrientationBuilds=impactTruthRequests=impactTruthReuses=impactBoundsRejected=0;
+        for(auto slot:aliveSlots)InvalidateImpactPose(slot);
         impactCounts.assign(bodies.size(),0); impactCapped.assign(bodies.size(),0);
         // A sleeping body still needs its stationary pre-impact trajectory.
         // An actual TOI may wake it and append a new segment during this step.
-        for (const auto slot:aliveSlots) if (bodies[slot].isDynamic)
-            bodies[slot].motion.Begin(MakeHandle(slot).id,bodies[slot].rigidBody,dt);
+        for (const auto slot:aliveSlots) if (bodies[slot].isDynamic){
+            bodies[slot].motion.Begin(MakeHandle(slot).id,bodies[slot].rigidBody,dt);InvalidateImpactPose(slot);
+        }
         // Initial touching impacts can launch a previously stationary body.
         // Refresh those trajectories before searching for a separated event.
         if(stats.impactEvents) {
@@ -708,6 +791,7 @@ struct PhysicsWorld::Impl {
                    SamePosition(oldVelocities[i].second,b.rigidBody.angularVelocity)) continue;
                 changed.push_back(slot);
                 b.motion.ChangeVelocity(b.rigidBody,now);
+                InvalidateImpactPose(slot);
                 CoverStepReach(b,static_cast<float>(dt-now));
                 supportPairs.erase(std::remove_if(supportPairs.begin(),supportPairs.end(),[&](const auto& pair) {
                     return (pair[0]==slot || pair[1]==slot) &&
@@ -819,7 +903,12 @@ struct PhysicsWorld::Impl {
             sizeof(std::optional<PreparedShapeBounds>)+sizeof(bool)+2*sizeof(PoseBound));
         for (const Body& body:bodies) if (body.boundPreparation)
             bytes+=body.boundPreparation->children.capacity()*sizeof(PreparedBoxBound);
-        return bytes+solver.FrameStorageBytes();
+        return bytes+impactPoseSamples.capacity()*sizeof(ImpactPoseSample)+solver.FrameStorageBytes();
+    }
+    void EnsureImpactPoseStorage(){
+        if(impactPoseSamples.size()>=bodies.size())return;
+        const auto capacity=impactPoseSamples.capacity();impactPoseSamples.resize(bodies.size());
+        if(impactPoseSamples.capacity()!=capacity){++cacheCounters.allocations;cacheCounters.allocatedBytes+=impactPoseSamples.capacity()*sizeof(ImpactPoseSample);}
     }
 
     // The tight broadphase bound a body must stay inside. For a dynamic
@@ -890,7 +979,7 @@ struct PhysicsWorld::Impl {
     }
     bool CanRespond(unsigned a,unsigned b) const {return CanCollide(a,b)&&!bodies[a].sensor&&!bodies[b].sensor&&!bodies[a].queryOnly&&!bodies[b].queryOnly&&!( (bodies[a].sleeping||bodies[a].rigidBody.IsStatic())&&(bodies[b].sleeping||bodies[b].rigidBody.IsStatic()) );}
     bool MatchesQuery(unsigned slot,const PhysicsQueryFilter& filter) const {
-        const auto& b=bodies[slot]; if(!b.enabled||(b.sensor&&!filter.includeSensors))return false; const auto bit=CategoryBit(b.collisionLayer);
+        const auto& b=bodies[slot]; if(!b.enabled||!b.queriesEnabled||(b.sensor&&!filter.includeSensors))return false; const auto bit=CategoryBit(b.collisionLayer);
         if(!(filter.includeLayers&bit)||(filter.excludeLayers&bit)||
            (b.tags&filter.requiredTags)!=filter.requiredTags||(b.tags&filter.excludedTags))return false;
         for(const auto handle:filter.ignoredBodies)if(Get(handle)&&handle.id==MakeHandle(slot).id)return false;
@@ -1204,10 +1293,12 @@ void PhysicsWorld::ApplyForce(BodyHandle handle, const glm::vec3& force) {
     body->rigidBody.ApplyForce(force);
 }
 
-void PhysicsWorld::ApplyTorque(BodyHandle handle, const glm::vec3& torque) {
+void PhysicsWorld::ApplyTorque(BodyHandle handle, const glm::vec3& torque,bool wake) {
     Impl::Body* body = m_impl->Get(handle);
     if (!body || body->rigidBody.IsStatic()) return;
-    if(glm::length(torque)>1e-8f)m_impl->Wake(handle.id&Impl::kSlotMask);
+    // Unchanged pose drives retain the normal quiet-time clock at equilibrium.
+    // Existing callers keep their normal explicit wake behaviour.
+    if(wake&&glm::length(torque)>1e-8f)m_impl->Wake(handle.id&Impl::kSlotMask);
     body->rigidBody.ApplyTorque(torque);
 }
 
@@ -1695,7 +1786,12 @@ void PhysicsWorld::Step(float fixedDeltaTime) {
     Impl& w = *m_impl;
     const Clock::time_point stepStart = Clock::now();
     w.stats = StepStats{};
-    w.stepTouches.clear();
+    if(w.collectingPreStepQueries){
+        w.stepTouches=std::move(w.preStepQueryTouches);w.preStepQueryTouches.clear();w.collectingPreStepQueries=false;
+        // A safe authority handoff may disable an observer after its motor move.
+        for(auto it=w.stepTouches.begin();it!=w.stepTouches.end();){auto* a=w.Get(it->second.a);auto* b=w.Get(it->second.b);
+            if(!a||!b||!a->enabled||!b->enabled)it=w.stepTouches.erase(it);else ++it;}
+    }else w.stepTouches.clear();
     const auto cachesBefore = w.cacheCounters;
     const ContactGeometryDiagnostics geometryBefore = GetContactGeometryDiagnostics();
 
@@ -1858,7 +1954,11 @@ void PhysicsWorld::Step(float fixedDeltaTime) {
             body.deferredAcceleration=false;
         }
     }
+    static ProfileLabel initialImpactsLabel("Physics initial impacts"), velocityLabel("Physics velocity constraints"), continuousImpactsLabel("Physics continuous impacts"), positionsLabel("Physics position constraints"), settleLabel("Physics sleeping assessment");
+    ProfileScope initialImpactsScope(initialImpactsLabel);
     w.ResolveInitialImpacts(fixedDeltaTime);
+    initialImpactsScope.End();
+    ProfileScope velocityScope(velocityLabel);
     w.supportPairs.clear();
     for(const auto& c:w.startContacts) if(!c.newImpact) {
         const auto& key=w.pendingCache[c.constraint].key;
@@ -1883,13 +1983,20 @@ void PhysicsWorld::Step(float fixedDeltaTime) {
     std::stable_sort(w.pendingCache.begin(), w.pendingCache.end(),
                      [](const CachedContact& x, const CachedContact& y) { return x.key < y.key; });
     std::swap(w.contactCache, w.pendingCache);
+    velocityScope.End();
+    ProfileScope continuousImpactsScope(continuousImpactsLabel);
     w.AdvanceImpacts(fixedDeltaTime);
+    continuousImpactsScope.End();
+    ProfileScope positionsScope(positionsLabel);
     for (const unsigned int slot:w.aliveSlots) {
         auto& body=w.bodies[slot];
         if(body.isDynamic) w.solver.UpdatePreparedRotation(body.rigidBody,w.Orientation(body).rotation);
     }
     w.solver.SolvePositions();
+    positionsScope.End();
+    ProfileScope settleScope(settleLabel);
     w.Settle(fixedDeltaTime);
+    settleScope.End();
     solverScope.End(); ProfileScope proxyScope(proxiesLabel);
     const Clock::time_point solverEnd = Clock::now();
 
@@ -1924,6 +2031,19 @@ void PhysicsWorld::Step(float fixedDeltaTime) {
     JUDAS_PROFILE_COUNTER("Physics candidate pairs last step",double(w.stats.candidatePairs),ProfileCounterMode::Latest);
     JUDAS_PROFILE_COUNTER("Physics contacts last step",double(w.stats.contactPoints),ProfileCounterMode::Latest);
     JUDAS_PROFILE_COUNTER("Physics joints",double(w.joints.size()),ProfileCounterMode::Latest);
+    JUDAS_PROFILE_COUNTER("Physics impact events",double(w.stats.impactEvents),ProfileCounterMode::Latest);
+    JUDAS_PROFILE_COUNTER("Physics impact queries",double(w.stats.impactQueries),ProfileCounterMode::Latest);
+    JUDAS_PROFILE_COUNTER("Physics impact search iterations",double(w.stats.impactSearchIterations),ProfileCounterMode::Latest);
+    JUDAS_PROFILE_COUNTER("Physics impact sampling fallbacks",double(w.stats.impactSamplingFallbacks),ProfileCounterMode::Latest);
+    JUDAS_PROFILE_COUNTER("Physics impact sampling tests",double(w.stats.impactSamplingTests),ProfileCounterMode::Latest);
+    JUDAS_PROFILE_COUNTER("Physics impact search limits",double(w.stats.impactSearchLimit),ProfileCounterMode::Latest);
+    JUDAS_PROFILE_COUNTER("Physics impact sampling resolution caps",double(w.stats.impactSamplingResolutionCaps),ProfileCounterMode::Latest);
+    JUDAS_PROFILE_COUNTER("Physics impact pose evaluations",double(w.impactPoseEvaluations),ProfileCounterMode::Latest);
+    JUDAS_PROFILE_COUNTER("Physics impact pose reuses",double(w.impactPoseReuses),ProfileCounterMode::Latest);
+    JUDAS_PROFILE_COUNTER("Physics impact orientation preparations",double(w.impactOrientationBuilds),ProfileCounterMode::Latest);
+    JUDAS_PROFILE_COUNTER("Physics impact actual-contact requests",double(w.impactTruthRequests),ProfileCounterMode::Latest);
+    JUDAS_PROFILE_COUNTER("Physics impact actual-contact reuses",double(w.impactTruthReuses),ProfileCounterMode::Latest);
+    JUDAS_PROFILE_COUNTER("Physics impact remaining-bound rejections",double(w.impactBoundsRejected),ProfileCounterMode::Latest);
     w.stats.solverMilliseconds = MillisecondsBetween(solverStart, solverEnd);
     w.stats.totalMilliseconds = MillisecondsBetween(stepStart, stepEnd);
     const ContactGeometryDiagnostics geometryAfter = GetContactGeometryDiagnostics();
@@ -2243,10 +2363,12 @@ void PhysicsWorld::SetPlayerCollisionFilter(unsigned layer,CategoryMask mask){if
 const std::vector<PhysicsWorld::TouchEvent>& PhysicsWorld::LastStepTouchEvents() const {return m_impl->touchEvents;}
 bool PhysicsWorld::SetBodySensor(BodyHandle h,bool value){auto* b=m_impl->Get(h);if(!b|| (value&&b->shape.type==ShapeType::TriangleMesh))return false;if(b->sensor!=value)m_impl->Wake(h.id&Impl::kSlotMask);b->sensor=value;return true;}
 bool PhysicsWorld::IsBodySensor(BodyHandle h) const {auto* b=m_impl->Get(h);return b&&b->sensor;}
+bool PhysicsWorld::SetBodyQueriesEnabled(BodyHandle h,bool enabled){auto* body=m_impl->Get(h);if(!body)return false;body->queriesEnabled=enabled;return true;}
+
 bool PhysicsWorld::SetBodyEnabled(BodyHandle h,bool value){auto* b=m_impl->Get(h);if(!b)return false;if(b->enabled==value)return true;m_impl->Wake(h.id&Impl::kSlotMask);b->enabled=value;for(auto& j:m_impl->joints)if(j.state.settings.bodyA.id==h.id||j.state.settings.bodyB.id==h.id)j.warm.fill(0);return true;}
 bool PhysicsWorld::IsBodyEnabled(BodyHandle h) const {auto* b=m_impl->Get(h);return b&&b->enabled;}
 
-void PhysicsWorld::ClearTouchHistory(){m_impl->previousTouches.clear();m_impl->stepTouches.clear();m_impl->touchEvents.clear();}
+void PhysicsWorld::ClearTouchHistory(){m_impl->previousTouches.clear();m_impl->stepTouches.clear();m_impl->preStepQueryTouches.clear();m_impl->collectingPreStepQueries=false;m_impl->queryTouchesPending=false;m_impl->touchEvents.clear();}
 
 PhysicsCastHit PhysicsWorld::Cast(const Shape& shape,const BodyTransform& pose,const glm::vec3& direction,float maximum,
     const PhysicsQueryFilter& filter,PhysicsCastStats* stats) const {
@@ -2338,12 +2460,13 @@ void PhysicsWorld::PersistJointSolverState(SaveArchive& a,JointHandle h){for(aut
 BodyHandle PhysicsWorld::CreateQueryCapsule(float radius,float halfHeight,const BodyTransform& pose){
  auto h=m_impl->AddBody(Shape::Capsule(radius,halfHeight),pose.position,pose.rotation,false,0,0,0);m_impl->Get(h)->queryOnly=true;return h;
 }
+void PhysicsWorld::BeginPreStepQueryContacts(){m_impl->preStepQueryTouches.clear();m_impl->collectingPreStepQueries=true;}
 void PhysicsWorld::ObserveQueryContact(BodyHandle h,const ShapeSweepHit& hit,const glm::vec3& velocity){
  auto* a=m_impl->Get(h);auto* b=m_impl->Get(hit.hitBody);if(!a||!b||!a->enabled||!a->queryOnly||!m_impl->CanCollide(h.id&Impl::kSlotMask,hit.hitBody.id&Impl::kSlotMask))return;
  a->rigidBody.linearVelocity=velocity;Contact c;c.point=hit.point;c.normal=hit.normal;
- m_impl->Observe(h.id&Impl::kSlotMask,hit.hitBody.id&Impl::kSlotMask,c);
+ m_impl->Observe(h.id&Impl::kSlotMask,hit.hitBody.id&Impl::kSlotMask,c,0,m_impl->collectingPreStepQueries);
 }
-void PhysicsWorld::FinishQueryTouches(){if(m_impl->queryTouchesPending){m_impl->FinishTouches();m_impl->queryTouchesPending=false;}}
+void PhysicsWorld::FinishQueryTouches(){if(!m_impl->collectingPreStepQueries&&m_impl->queryTouchesPending){m_impl->FinishTouches();m_impl->queryTouchesPending=false;}}
 
 bool PhysicsWorld::IsSleeping(BodyHandle h)const{auto* b=m_impl?m_impl->Get(h):nullptr;return b&&b->sleeping;}
 void PhysicsWorld::Wake(BodyHandle h){if(m_impl&&m_impl->Get(h))m_impl->Wake(h.id&Impl::kSlotMask);}

@@ -149,6 +149,8 @@ add_library(judas_engine STATIC
     src/NavigationSystem.cpp
     src/NavigationTypes.cpp
     src/NavigationAsset.cpp
+    src/FullBodyIK.cpp
+    src/PhysicalAnimation.cpp
     src/WorldAnimation.cpp
     src/PoseComposition.cpp
     src/WorldRagdoll.cpp
@@ -1421,3 +1423,17 @@ if(WIN32)
     target_link_libraries(judas_profiler PUBLIC psapi)
     include(cmake/JudasWindowsSdk.cmake)
 endif()
+
+# M70 focused pose/physical authority checks; no extra runtime dependency.
+add_executable(judas_multi_target_ik_tests tests/MultiTargetIKTests.cpp)
+target_link_libraries(judas_multi_target_ik_tests PRIVATE judas_engine)
+judas_warnings(judas_multi_target_ik_tests)
+add_executable(judas_physical_animation_tests tests/PhysicalAnimationTests.cpp)
+target_link_libraries(judas_physical_animation_tests PRIVATE judas_engine)
+judas_warnings(judas_physical_animation_tests)
+add_executable(judas_character_lab_tests tests/CharacterLabTests.cpp)
+target_link_libraries(judas_character_lab_tests PRIVATE judas_engine)
+judas_warnings(judas_character_lab_tests)
+add_executable(judas_character_lab_performance tests/CharacterLabPerformance.cpp)
+target_link_libraries(judas_character_lab_performance PRIVATE judas_engine)
+judas_warnings(judas_character_lab_performance)

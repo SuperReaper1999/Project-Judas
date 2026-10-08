@@ -1,0 +1,19 @@
+Traceback (most recent call last):
+  File "/home/conner/Documents/GitHub/Project-Judas/scripts/create_m70_lab.py", line 214, in <module>
+    if __name__ == "__main__": main()
+                               ~~~~^^
+  File "/home/conner/Documents/GitHub/Project-Judas/scripts/create_m70_lab.py", line 203, in main
+    paths=[scene(label) for label in ["wall","board","physical"]]
+           ~~~~~^^^^^^^
+  File "/home/conner/Documents/GitHub/Project-Judas/scripts/create_m70_lab.py", line 187, in scene
+    patch("scene",path,data)
+    ~~~~~^^^^^^^^^^^^^^^^^^^
+  File "/home/conner/Documents/GitHub/Project-Judas/scripts/create_m70_lab.py", line 134, in patch
+    edits=project/"Authoring/edit.json";write(edits,[{"op":"replace","path":"/data","value":data}]);run("--patch",kind,path,path,edits,"--overwrite")
+                                                                                                    ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/conner/Documents/GitHub/Project-Judas/scripts/create_m70_lab.py", line 130, in run
+    if result.returncode: raise RuntimeError(" ".join(map(str,cmd))+"\n"+result.stdout+result.stderr)
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: --patch scene /home/conner/Documents/GitHub/Project-Judas/projects/character_lab/Scenes/wall.judas /home/conner/Documents/GitHub/Project-Judas/projects/character_lab/Scenes/wall.judas /home/conner/Documents/GitHub/Project-Judas/projects/character_lab/Authoring/edit.json --overwrite
+authoring: /home/conner/Documents/GitHub/Project-Judas/projects/character_lab/Scenes/wall.judas: scene line 149: invalid visual socket
+

@@ -155,20 +155,32 @@ cone limiter. Motors do not imply a gameplay state. Use fixedUpdate for control.
 ## Collision and trigger callbacks
 
 `onCollisionEnter/Stay/Exit(event)` and `onTriggerEnter/Stay/Exit(event)` receive
-`{other,point,normal,relativeVelocity,normalImpulse,physicalMaterial}` at the fixed boundary.
+`{other,point,normal,relativeVelocity,normalImpulse,physicalMaterial,selfBody,
+selfJoint,otherArticulation,otherJoint}` at the fixed boundary.
 Normal points from other toward the recipient. Relative velocity is OTHER minus
 SELF point velocity (including angular contribution), observed when contact was
 recorded, not a fabricated post-solve measurement. `normalImpulse` is a reported
 solved normal impulse where available, otherwise null (especially sensors/exits).
 Exit retains historical contact observations, not a new geometric query.
 
-One event per body pair/phase, deterministic body-handle ordering, then recipient
-A/B and authored slots. Sensors share normal geometry/M39 physical filtering but
+One event per body pair/phase, deterministic body-handle ordering, then ordinary
+recipient A/B and authored slots followed by opted-in articulation owners.
+Sensors share normal geometry/M39 physical filtering but
 produce no response; overlaps are discrete endpoint observations, not continuous
 trigger trajectories. Disabled/destroyed recipients are rechecked; destroyed `other`
 may still be an Entity wrapper with `valid=false`. Check validity before use.
-Mapped ragdoll bodies have per-body events; owner scripts do not receive automatic
-aggregate articulation events. Motors now participate through massless query capsules and coalesced sweep/support
+Mapped ragdoll bodies retain per-body events. An owner script receives their external
+observations only when it explicitly opts in with
+[`ragdoll.receiveContactEvents = true`](animation-ragdolls.md#ragdollreceivecontactevents)
+(default false, or authored `ragdoll.receive-contact-events true`). Unscripted bone
+entities and ground do not prevent delivery to that subscribed owner script.
+`selfBody` is the actual receiving body; `selfJoint` is its mapped stable key or null.
+`otherArticulation`/`otherJoint` identify the other mapped owner/key or are null.
+These wrappers may become stale: check `valid`. Same-articulation contacts are not
+forwarded to its owner; individual body callbacks remain unchanged. Forwarding is
+still per body pair/phase, with no aggregate articulation or injury semantics.
+Toggling the subscription generates no synthetic enter/exit callbacks.
+Motors now participate through massless query capsules and coalesced sweep/support
 observations; endpoint sensor overlap is discrete and supplies no solved impulse. JS decides game meaning.
 
 ## Gravity, physical materials and runtime joint configuration (M65)

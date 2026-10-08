@@ -1,0 +1,26 @@
+{
+  "allExitZero": true,
+  "checks": {
+    "rigid-motion": 8398,
+    "impact-timing": 3197,
+    "contact-lifecycle": 1050,
+    "joints": 29,
+    "ordinary-touch-events": 26,
+    "physical-animation": 64,
+    "actual-project-and-owner-contacts": 98,
+    "live-api-surface": 9
+  },
+  "apiTypesAndLiveDrift": {
+    "publicSymbols": 311,
+    "topLevelExports": 27,
+    "nativeOperations": 214,
+    "callbacks": 15,
+    "typeChecker": "6.0.3",
+    "examples": 35,
+    "negativeDriftChecks": 3,
+    "runtimeEnumeration": true,
+    "pass": true
+  },
+  "fullProductionRerun": false,
+  "sourceCohort": "rotation sampling identity + owner opt-in final source"
+}

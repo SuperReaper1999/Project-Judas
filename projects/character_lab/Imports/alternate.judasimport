@@ -1,0 +1,14 @@
+{
+  "assetId": "fa0e0b57d96a452e42b333e98b1ba00f",
+  "format": "JudasImport",
+  "motions": [],
+  "output": "Assets/models/alternate.judasmodel",
+  "settings": {
+    "allowBaseMesh": false,
+    "dependencyRemaps": {},
+    "sampleRate": 60,
+    "unitMeters": 0
+  },
+  "source": "Sources/fa0e0b57d96a452e42b333e98b1ba00f/alternate.gltf",
+  "version": 1
+}

@@ -1,0 +1,22 @@
+[  5%] Built target judas_icu_build
+[  5%] Built target judas_quickjs
+[  5%] Built target judas_app_icon
+[ 11%] Built target judas_glad
+[ 11%] Built target judas_profiler
+[ 22%] Built target freetype
+[ 33%] Built target judas_navigation_backend
+[ 38%] Built target judas_materials
+[ 38%] Built target judas_audio_backend
+[ 38%] Built target harfbuzz
+[ 38%] Building CXX object CMakeFiles/judas_engine.dir/src/PhysicsWorld.cpp.o
+[ 38%] Linking CXX static library libjudas_engine.a
+[100%] Built target judas_engine
+[100%] Building CXX object CMakeFiles/judas_character_lab_performance.dir/tests/CharacterLabPerformance.cpp.o
+/home/conner/Documents/GitHub/Project-Judas/tests/CharacterLabPerformance.cpp: In function ‘int {anonymous}::PassiveRepro(const std::filesystem::__cxx11::path&, EngineHost&, Project&, const Scene&)’:
+/home/conner/Documents/GitHub/Project-Judas/tests/CharacterLabPerformance.cpp:72:102: error: ‘using std::string_view = class std::basic_string_view<char>’ {aka ‘class std::basic_string_view<char>’} has no member named ‘starts_with’
+   72 |   for(const auto& scope:profiler.Snapshot(profiler.FrameId()).scopes)if(std::string_view(scope.name).starts_with("Physics "))row["scopesMs"][scope.name.c_str()]=double(scope.end-scope.start)/1e6;
+      |                                                                                                      ^~~~~~~~~~~
+gmake[3]: *** [CMakeFiles/judas_character_lab_performance.dir/build.make:79: CMakeFiles/judas_character_lab_performance.dir/tests/CharacterLabPerformance.cpp.o] Error 1
+gmake[2]: *** [CMakeFiles/Makefile2:8551: CMakeFiles/judas_character_lab_performance.dir/all] Error 2
+gmake[1]: *** [CMakeFiles/Makefile2:8558: CMakeFiles/judas_character_lab_performance.dir/rule] Error 2
+gmake: *** [Makefile:2711: judas_character_lab_performance] Error 2

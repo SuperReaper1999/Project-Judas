@@ -1,0 +1,157 @@
+{
+  "assetId": "5d4fe060b94398efc188e440c03ab97e",
+  "clips": [
+    {
+      "duration": 2.0,
+      "loop": false,
+      "motionExtracted": false,
+      "name": "Idle"
+    },
+    {
+      "duration": 2.0,
+      "loop": false,
+      "motionExtracted": false,
+      "name": "Carry"
+    },
+    {
+      "duration": 2.0,
+      "loop": false,
+      "motionExtracted": false,
+      "name": "Wave"
+    },
+    {
+      "duration": 2.0,
+      "loop": false,
+      "motionExtracted": false,
+      "name": "HeadHidden"
+    }
+  ],
+  "diagnostics": [],
+  "hierarchyNodes": 71,
+  "importRecord": "{\"digest\":\"5e714fdd5525f3debdf825c92a94457b465e6eba16bcf51b16b3324fa8822434\",\"inputs\":{\"Sources/5d4fe060b94398efc188e440c03ab97e/figure.gltf\":\"a61cdf321c67f4b76e960315c049feaa1def76917d5bfce14b211b7494dd2815\"},\"manifest\":{\"assetId\":\"5d4fe060b94398efc188e440c03ab97e\",\"clips\":[{\"duration\":2.0,\"loop\":false,\"motionExtracted\":false,\"name\":\"Idle\"},{\"duration\":2.0,\"loop\":false,\"motionExtracted\":false,\"name\":\"Carry\"},{\"duration\":2.0,\"loop\":false,\"motionExtracted\":false,\"name\":\"Wave\"},{\"duration\":2.0,\"loop\":false,\"motionExtracted\":false,\"name\":\"HeadHidden\"}],\"diagnostics\":[],\"hierarchyNodes\":71,\"inputs\":{\"Sources/5d4fe060b94398efc188e440c03ab97e/figure.gltf\":\"a61cdf321c67f4b76e960315c049feaa1def76917d5bfce14b211b7494dd2815\"},\"joints\":[\"OriginHelper\",\"OriginHelper/Pivot\",\"OriginHelper/Pivot/Vertebra0\",\"OriginHelper/Pivot/Vertebra0/Vertebra1\",\"OriginHelper/Pivot/Vertebra0/Vertebra1/NeckConnector\",\"OriginHelper/Pivot/Vertebra0/Vertebra1/NeckConnector/Cranial\",\"OriginHelper/Pivot/Vertebra0/Vertebra1/CollarA\",\"OriginHelper/Pivot/Vertebra0/Vertebra1/CollarA/ShoulderA\",\"OriginHelper/Pivot/Vertebra0/Vertebra1/CollarA/ShoulderA/ElbowA\",\"OriginHelper/Pivot/Vertebra0/Vertebra1/CollarA/ShoulderA/ElbowA/PalmA\",\"OriginHelper/Pivot/Vertebra0/Vertebra1/CollarA/ShoulderA/ElbowA/PalmA/DigitA00\",\"OriginHelper/Pivot/Vertebra0/Vertebra1/CollarA/ShoulderA/ElbowA/PalmA/DigitA00/DigitA01\",\"OriginHelper/Pivot/Vertebra0/Vertebra1/CollarA/ShoulderA/ElbowA/PalmA/DigitA00/DigitA01/DigitA02\",\"OriginHelper/Pivot/Vertebra0/Vertebra1/CollarA/ShoulderA/ElbowA/PalmA/DigitA10\",\"OriginHelper/Pivot/Vertebra0/Vertebra1/CollarA/ShoulderA/ElbowA/PalmA/DigitA10/DigitA11\",\"OriginHelper/Pivot/Vertebra0/Vertebra1/CollarA/ShoulderA/ElbowA/PalmA/DigitA10/DigitA11/DigitA12\",\"OriginHelper/Pivot/Vertebra0/Vertebra1/CollarA/ShoulderA/ElbowA/PalmA/DigitA20\",\"OriginHelper/Pivot/Vertebra0/Vertebra1/CollarA/ShoulderA/ElbowA/PalmA/DigitA20/DigitA21\",\"OriginHelper/Pivot/Vertebra0/Vertebra1/CollarA/ShoulderA/ElbowA/PalmA/DigitA20/DigitA21/DigitA22\",\"OriginHelper/Pivot/Vertebra0/Vertebra1/CollarA/ShoulderA/ElbowA/PalmA/DigitA30\",\"OriginHelper/Pivot/Vertebra0/Vertebra1/CollarA/ShoulderA/ElbowA/PalmA/DigitA30/DigitA31\",\"OriginHelper/Pivot/Vertebra0/Vertebra1/CollarA/ShoulderA/ElbowA/PalmA/DigitA30/DigitA31/DigitA32\",\"OriginHelper/Pivot/Vertebra0/Vertebra1/CollarA/ShoulderA/ElbowA/PalmA/DigitA40\",\"OriginHelper/Pivot/Vertebra0/Vertebra1/CollarA/ShoulderA/ElbowA/PalmA/DigitA40/DigitA41\",\"OriginHelper/Pivot/Vertebra0/Vertebra1/CollarA/ShoulderA/ElbowA/PalmA/DigitA40/DigitA41/DigitA42\",\"OriginHelper/Pivot/ThighA\",\"OriginHelper/Pivot/ThighA/ShinA\",\"OriginHelper/Pivot/ThighA/ShinA/SoleA\",\"OriginHelper/Pivot/ThighA/ShinA/SoleA/ToeHelperA\",\"OriginHelper/Pivot/Vertebra0/Vertebra1/CollarB\",\"OriginHelper/Pivot/Vertebra0/Vertebra1/CollarB/ShoulderB\",\"OriginHelper/Pivot/Vertebra0/Vertebra1/CollarB/ShoulderB/ElbowB\",\"OriginHelper/Pivot/Vertebra0/Vertebra1/CollarB/ShoulderB/ElbowB/PalmB\",\"OriginHelper/Pivot/Vertebra0/Vertebra1/CollarB/ShoulderB/ElbowB/PalmB/DigitB00\",\"OriginHelper/Pivot/Vertebra0/Vertebra1/CollarB/ShoulderB/ElbowB/PalmB/DigitB00/DigitB01\",\"OriginHelper/Pivot/Vertebra0/Vertebra1/CollarB/ShoulderB/ElbowB/PalmB/DigitB00/DigitB01/DigitB02\",\"OriginHelper/Pivot/Vertebra0/Vertebra1/CollarB/ShoulderB/ElbowB/PalmB/DigitB10\",\"OriginHelper/Pivot/Vertebra0/Vertebra1/CollarB/ShoulderB/ElbowB/PalmB/DigitB10/DigitB11\",\"OriginHelper/Pivot/Vertebra0/Vertebra1/CollarB/ShoulderB/ElbowB/PalmB/DigitB10/DigitB11/DigitB12\",\"OriginHelper/Pivot/Vertebra0/Vertebra1/CollarB/ShoulderB/ElbowB/PalmB/DigitB20\",\"OriginHelper/Pivot/Vertebra0/Vertebra1/CollarB/ShoulderB/ElbowB/PalmB/DigitB20/DigitB21\",\"OriginHelper/Pivot/Vertebra0/Vertebra1/CollarB/ShoulderB/ElbowB/PalmB/DigitB20/DigitB21/DigitB22\",\"OriginHelper/Pivot/Vertebra0/Vertebra1/CollarB/ShoulderB/ElbowB/PalmB/DigitB30\",\"OriginHelper/Pivot/Vertebra0/Vertebra1/CollarB/ShoulderB/ElbowB/PalmB/DigitB30/DigitB31\",\"OriginHelper/Pivot/Vertebra0/Vertebra1/CollarB/ShoulderB/ElbowB/PalmB/DigitB30/DigitB31/DigitB32\",\"OriginHelper/Pivot/Vertebra0/Vertebra1/CollarB/ShoulderB/ElbowB/PalmB/DigitB40\",\"OriginHelper/Pivot/Vertebra0/Vertebra1/CollarB/ShoulderB/ElbowB/PalmB/DigitB40/DigitB41\",\"OriginHelper/Pivot/Vertebra0/Vertebra1/CollarB/ShoulderB/ElbowB/PalmB/DigitB40/DigitB41/DigitB42\",\"OriginHelper/Pivot/ThighB\",\"OriginHelper/Pivot/ThighB/ShinB\",\"OriginHelper/Pivot/ThighB/ShinB/SoleB\",\"OriginHelper/Pivot/ThighB/ShinB/SoleB/ToeHelperB\",\"OriginHelper/Pivot/Vertebra0/Vertebra1/Auxiliary52\",\"OriginHelper/Pivot/Vertebra0/Vertebra1/NeckConnector/Auxiliary53\",\"OriginHelper/Pivot/Vertebra0/Vertebra1/NeckConnector/Cranial/Auxiliary54\",\"OriginHelper/Pivot/Auxiliary55\",\"OriginHelper/Pivot/Vertebra0/Auxiliary56\",\"OriginHelper/Pivot/Vertebra0/Vertebra1/Auxiliary57\",\"OriginHelper/Pivot/Vertebra0/Vertebra1/NeckConnector/Auxiliary58\",\"OriginHelper/Pivot/Vertebra0/Vertebra1/NeckConnector/Cranial/Auxiliary59\",\"OriginHelper/Pivot/Auxiliary60\",\"OriginHelper/Pivot/Vertebra0/Auxiliary61\",\"OriginHelper/Pivot/Vertebra0/Vertebra1/Auxiliary62\",\"OriginHelper/Pivot/Vertebra0/Vertebra1/NeckConnector/Auxiliary63\",\"OriginHelper/Pivot/Vertebra0/Vertebra1/NeckConnector/Cranial/Auxiliary64\",\"VisualPart0\",\"VisualPart1\",\"VisualPart2\",\"VisualPart3\",\"VisualPart4\",\"VisualPart5\",\"__JudasMotionRoot\"],\"materialKeys\":[\"Original part 0\",\"Original part 1\",\"Original part 2\",\"Original part 3\",\"Original part 4\",\"Original part 5\"],\"parts\":[{\"identity\":\"VisualPart0/material/Original part 0\",\"node\":65,\"triangles\":36},{\"identity\":\"VisualPart1/material/Original part 1\",\"node\":66,\"triangles\":24},{\"identity\":\"VisualPart2/material/Original part 2\",\"node\":67,\"triangles\":36},{\"identity\":\"VisualPart3/material/Original part 3\",\"node\":68,\"triangles\":36},{\"identity\":\"VisualPart4/material/Original part 4\",\"node\":69,\"triangles\":36},{\"identity\":\"VisualPart5/material/Original part 5\",\"node\":70,\"triangles\":36}],\"recipeDigest\":\"5e714fdd5525f3debdf825c92a94457b465e6eba16bcf51b16b3324fa8822434\",\"revision\":\"M66-ufbx-0.23.1-cgltf-1.15-cook-9-model-1\",\"skinPaletteEntries\":130,\"sourceBones\":0,\"sourceUnitMeters\":1.0,\"vertices\":612},\"recipe\":\"Imports/figure.judasimport\",\"revision\":\"M66-ufbx-0.23.1-cgltf-1.15-cook-9-model-1\"}",
+  "inputs": {
+    "Sources/5d4fe060b94398efc188e440c03ab97e/figure.gltf": "a61cdf321c67f4b76e960315c049feaa1def76917d5bfce14b211b7494dd2815"
+  },
+  "joints": [
+    "OriginHelper",
+    "OriginHelper/Pivot",
+    "OriginHelper/Pivot/Vertebra0",
+    "OriginHelper/Pivot/Vertebra0/Vertebra1",
+    "OriginHelper/Pivot/Vertebra0/Vertebra1/NeckConnector",
+    "OriginHelper/Pivot/Vertebra0/Vertebra1/NeckConnector/Cranial",
+    "OriginHelper/Pivot/Vertebra0/Vertebra1/CollarA",
+    "OriginHelper/Pivot/Vertebra0/Vertebra1/CollarA/ShoulderA",
+    "OriginHelper/Pivot/Vertebra0/Vertebra1/CollarA/ShoulderA/ElbowA",
+    "OriginHelper/Pivot/Vertebra0/Vertebra1/CollarA/ShoulderA/ElbowA/PalmA",
+    "OriginHelper/Pivot/Vertebra0/Vertebra1/CollarA/ShoulderA/ElbowA/PalmA/DigitA00",
+    "OriginHelper/Pivot/Vertebra0/Vertebra1/CollarA/ShoulderA/ElbowA/PalmA/DigitA00/DigitA01",
+    "OriginHelper/Pivot/Vertebra0/Vertebra1/CollarA/ShoulderA/ElbowA/PalmA/DigitA00/DigitA01/DigitA02",
+    "OriginHelper/Pivot/Vertebra0/Vertebra1/CollarA/ShoulderA/ElbowA/PalmA/DigitA10",
+    "OriginHelper/Pivot/Vertebra0/Vertebra1/CollarA/ShoulderA/ElbowA/PalmA/DigitA10/DigitA11",
+    "OriginHelper/Pivot/Vertebra0/Vertebra1/CollarA/ShoulderA/ElbowA/PalmA/DigitA10/DigitA11/DigitA12",
+    "OriginHelper/Pivot/Vertebra0/Vertebra1/CollarA/ShoulderA/ElbowA/PalmA/DigitA20",
+    "OriginHelper/Pivot/Vertebra0/Vertebra1/CollarA/ShoulderA/ElbowA/PalmA/DigitA20/DigitA21",
+    "OriginHelper/Pivot/Vertebra0/Vertebra1/CollarA/ShoulderA/ElbowA/PalmA/DigitA20/DigitA21/DigitA22",
+    "OriginHelper/Pivot/Vertebra0/Vertebra1/CollarA/ShoulderA/ElbowA/PalmA/DigitA30",
+    "OriginHelper/Pivot/Vertebra0/Vertebra1/CollarA/ShoulderA/ElbowA/PalmA/DigitA30/DigitA31",
+    "OriginHelper/Pivot/Vertebra0/Vertebra1/CollarA/ShoulderA/ElbowA/PalmA/DigitA30/DigitA31/DigitA32",
+    "OriginHelper/Pivot/Vertebra0/Vertebra1/CollarA/ShoulderA/ElbowA/PalmA/DigitA40",
+    "OriginHelper/Pivot/Vertebra0/Vertebra1/CollarA/ShoulderA/ElbowA/PalmA/DigitA40/DigitA41",
+    "OriginHelper/Pivot/Vertebra0/Vertebra1/CollarA/ShoulderA/ElbowA/PalmA/DigitA40/DigitA41/DigitA42",
+    "OriginHelper/Pivot/ThighA",
+    "OriginHelper/Pivot/ThighA/ShinA",
+    "OriginHelper/Pivot/ThighA/ShinA/SoleA",
+    "OriginHelper/Pivot/ThighA/ShinA/SoleA/ToeHelperA",
+    "OriginHelper/Pivot/Vertebra0/Vertebra1/CollarB",
+    "OriginHelper/Pivot/Vertebra0/Vertebra1/CollarB/ShoulderB",
+    "OriginHelper/Pivot/Vertebra0/Vertebra1/CollarB/ShoulderB/ElbowB",
+    "OriginHelper/Pivot/Vertebra0/Vertebra1/CollarB/ShoulderB/ElbowB/PalmB",
+    "OriginHelper/Pivot/Vertebra0/Vertebra1/CollarB/ShoulderB/ElbowB/PalmB/DigitB00",
+    "OriginHelper/Pivot/Vertebra0/Vertebra1/CollarB/ShoulderB/ElbowB/PalmB/DigitB00/DigitB01",
+    "OriginHelper/Pivot/Vertebra0/Vertebra1/CollarB/ShoulderB/ElbowB/PalmB/DigitB00/DigitB01/DigitB02",
+    "OriginHelper/Pivot/Vertebra0/Vertebra1/CollarB/ShoulderB/ElbowB/PalmB/DigitB10",
+    "OriginHelper/Pivot/Vertebra0/Vertebra1/CollarB/ShoulderB/ElbowB/PalmB/DigitB10/DigitB11",
+    "OriginHelper/Pivot/Vertebra0/Vertebra1/CollarB/ShoulderB/ElbowB/PalmB/DigitB10/DigitB11/DigitB12",
+    "OriginHelper/Pivot/Vertebra0/Vertebra1/CollarB/ShoulderB/ElbowB/PalmB/DigitB20",
+    "OriginHelper/Pivot/Vertebra0/Vertebra1/CollarB/ShoulderB/ElbowB/PalmB/DigitB20/DigitB21",
+    "OriginHelper/Pivot/Vertebra0/Vertebra1/CollarB/ShoulderB/ElbowB/PalmB/DigitB20/DigitB21/DigitB22",
+    "OriginHelper/Pivot/Vertebra0/Vertebra1/CollarB/ShoulderB/ElbowB/PalmB/DigitB30",
+    "OriginHelper/Pivot/Vertebra0/Vertebra1/CollarB/ShoulderB/ElbowB/PalmB/DigitB30/DigitB31",
+    "OriginHelper/Pivot/Vertebra0/Vertebra1/CollarB/ShoulderB/ElbowB/PalmB/DigitB30/DigitB31/DigitB32",
+    "OriginHelper/Pivot/Vertebra0/Vertebra1/CollarB/ShoulderB/ElbowB/PalmB/DigitB40",
+    "OriginHelper/Pivot/Vertebra0/Vertebra1/CollarB/ShoulderB/ElbowB/PalmB/DigitB40/DigitB41",
+    "OriginHelper/Pivot/Vertebra0/Vertebra1/CollarB/ShoulderB/ElbowB/PalmB/DigitB40/DigitB41/DigitB42",
+    "OriginHelper/Pivot/ThighB",
+    "OriginHelper/Pivot/ThighB/ShinB",
+    "OriginHelper/Pivot/ThighB/ShinB/SoleB",
+    "OriginHelper/Pivot/ThighB/ShinB/SoleB/ToeHelperB",
+    "OriginHelper/Pivot/Vertebra0/Vertebra1/Auxiliary52",
+    "OriginHelper/Pivot/Vertebra0/Vertebra1/NeckConnector/Auxiliary53",
+    "OriginHelper/Pivot/Vertebra0/Vertebra1/NeckConnector/Cranial/Auxiliary54",
+    "OriginHelper/Pivot/Auxiliary55",
+    "OriginHelper/Pivot/Vertebra0/Auxiliary56",
+    "OriginHelper/Pivot/Vertebra0/Vertebra1/Auxiliary57",
+    "OriginHelper/Pivot/Vertebra0/Vertebra1/NeckConnector/Auxiliary58",
+    "OriginHelper/Pivot/Vertebra0/Vertebra1/NeckConnector/Cranial/Auxiliary59",
+    "OriginHelper/Pivot/Auxiliary60",
+    "OriginHelper/Pivot/Vertebra0/Auxiliary61",
+    "OriginHelper/Pivot/Vertebra0/Vertebra1/Auxiliary62",
+    "OriginHelper/Pivot/Vertebra0/Vertebra1/NeckConnector/Auxiliary63",
+    "OriginHelper/Pivot/Vertebra0/Vertebra1/NeckConnector/Cranial/Auxiliary64",
+    "VisualPart0",
+    "VisualPart1",
+    "VisualPart2",
+    "VisualPart3",
+    "VisualPart4",
+    "VisualPart5",
+    "__JudasMotionRoot"
+  ],
+  "materialKeys": [
+    "Original part 0",
+    "Original part 1",
+    "Original part 2",
+    "Original part 3",
+    "Original part 4",
+    "Original part 5"
+  ],
+  "outputHash": "472e7c930db3037d6184d0bb68e8c952204083ee9b1d882cb806f803f77d4c24",
+  "parts": [
+    {
+      "identity": "VisualPart0/material/Original part 0",
+      "node": 65,
+      "triangles": 36
+    },
+    {
+      "identity": "VisualPart1/material/Original part 1",
+      "node": 66,
+      "triangles": 24
+    },
+    {
+      "identity": "VisualPart2/material/Original part 2",
+      "node": 67,
+      "triangles": 36
+    },
+    {
+      "identity": "VisualPart3/material/Original part 3",
+      "node": 68,
+      "triangles": 36
+    },
+    {
+      "identity": "VisualPart4/material/Original part 4",
+      "node": 69,
+      "triangles": 36
+    },
+    {
+      "identity": "VisualPart5/material/Original part 5",
+      "node": 70,
+      "triangles": 36
+    }
+  ],
+  "recipeDigest": "5e714fdd5525f3debdf825c92a94457b465e6eba16bcf51b16b3324fa8822434",
+  "recordHash": "2ae1b0d6e73402caa7e8cc70903ed1dd25b8bbe19e6beb7db668becec7ccef33",
+  "revision": "M66-ufbx-0.23.1-cgltf-1.15-cook-9-model-1",
+  "skinPaletteEntries": 130,
+  "sourceBones": 0,
+  "sourceUnitMeters": 1.0,
+  "vertices": 612
+}

@@ -1,0 +1,53 @@
+[
+  {
+    "name": "impact-timing",
+    "command": [
+      "build/judas_impact_timing_tests"
+    ],
+    "exit": 0,
+    "seconds": 0.017284941999605508
+  },
+  {
+    "name": "joint",
+    "command": [
+      "build/judas_joint_tests"
+    ],
+    "exit": 0,
+    "seconds": 0.04255412000020442
+  },
+  {
+    "name": "touch-event",
+    "command": [
+      "build/judas_touch_event_tests",
+      "--output",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/m70-review/passive-touch-final"
+    ],
+    "exit": 0,
+    "seconds": 0.031240020000041113
+  },
+  {
+    "name": "contact-lifecycle",
+    "command": [
+      "build/judas_contact_lifecycle_tests"
+    ],
+    "exit": 0,
+    "seconds": 0.02752419600074063
+  },
+  {
+    "name": "physical-animation",
+    "command": [
+      "build/judas_physical_animation_tests"
+    ],
+    "exit": 0,
+    "seconds": 0.10255644099925121
+  },
+  {
+    "name": "character-lab",
+    "command": [
+      "build/judas_character_lab_tests",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/m70-review/passive-lab-final"
+    ],
+    "exit": 0,
+    "seconds": 3.2000206890006666
+  }
+]

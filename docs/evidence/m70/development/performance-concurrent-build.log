@@ -1,0 +1,10 @@
+libEGL warning: Not allowed to force software rendering when API explicitly selects a hardware device.
+Renderer fragment texture units: 32 (material path uses 12)
+M70 disabled instances=1 fixed_ms median=0.064280 p95=0.076620 max=0.104399 dynamic=0 awake=0 allocations_median=18
+M70 ik       instances=1 fixed_ms median=0.114625 p95=0.134359 max=0.191350 dynamic=0 awake=0 allocations_median=119
+M70 partial  instances=1 fixed_ms median=2.868783 p95=7.247298 max=9.603001 dynamic=8 awake=8 allocations_median=22088
+M70 passive  instances=1 fixed_ms median=2.971479 p95=7.843947 max=19.547856 dynamic=16 awake=16 allocations_median=22106
+M70 disabled instances=10 fixed_ms median=0.567347 p95=0.680801 max=1.233773 dynamic=0 awake=0 allocations_median=153
+M70 ik       instances=10 fixed_ms median=1.127508 p95=1.380250 max=1.470657 dynamic=0 awake=0 allocations_median=1163
+M70 partial  instances=10 fixed_ms median=24.788792 p95=27.034827 max=32.508271 dynamic=80 awake=80 allocations_median=220821
+M70 passive  instances=10 fixed_ms median=37.919236 p95=61.059887 max=103.134005 dynamic=160 awake=160 allocations_median=221827

@@ -319,7 +319,7 @@ public:
     bool SetRuntimeJoint(EntityId owner,const SceneJointComponent&,bool remove,std::string& error);
     bool SetBodyMaterial(EntityId,const std::string&,const PhysicalMaterial*,std::string& error);
     CharacterMotor* RuntimeCharacter(EntityId id);
-    void UpdateCharacters(float dt);
+    void UpdateCharacters(float dt,bool onlyM70=false,bool skipM70=false);
     LiquidSystem& Liquids(){return *m_liquid;}
     const LiquidSystem& Liquids()const{return *m_liquid;}
     void UpdateLiquids(double dt){if(m_liquid&&m_hasLiquid)m_liquid->Update(*this,dt);}
@@ -337,13 +337,17 @@ public:
     std::map<std::pair<EntityId,uint64_t>,std::string> spawnStates; // consumed once by script construction; never restore defaults
     bool SetRuntimeView(const SceneTransform& pose,float fov,float nearPlane=.1f,float farPlane=500);
     struct AnimationLayer {AnimationLayerSettings settings;AnimationPlayback playback;std::vector<int> mask;SkeletalPose reference;};
-    struct AnimationInstance {EntityId owner=0;std::shared_ptr<const SkeletalAsset> asset;AnimationPlayback playback;PoseMixer mixer;SkeletalPose sourcePose,finalPose;std::vector<glm::mat4> skin;std::vector<AnimationLayer> layers;std::map<std::string,PoseContribution> external;std::string error;std::vector<glm::mat4> previousWorld,recentWorld;float motionDt=0;};
+    struct AnimationInstance {EntityId owner=0;std::shared_ptr<const SkeletalAsset> asset;AnimationPlayback playback;PoseMixer mixer;SkeletalPose sourcePose,referencePose,solvedReferencePose,finalPose,previousFinalPose;std::optional<FullBodyIKRuntime> fullBodyIK;bool preparedM70=false;mutable std::vector<glm::mat4> presentedSkin;std::vector<glm::mat4> skin;std::vector<AnimationLayer> layers;std::map<std::string,PoseContribution> external;std::string error;std::vector<glm::mat4> previousWorld,recentWorld;float motionDt=0;};
     AnimationInstance* RuntimeAnimation(EntityId);
     bool JointPose(EntityId,const std::string& key,const std::string& space,float alpha,SceneTransform&);
     bool SetLimbIK(EntityId,const LimbIKSettings&,bool remove,std::string&);
+    bool ConfigureFullBodyIK(EntityId,const std::optional<FullBodyIKSettings>&,std::string&);
+    bool SetFullBodyIKTargets(EntityId,const std::vector<FullBodyIKTarget>&,std::string&);
+    void PrepareAnimationReferences(float dt);
+    SkeletalPose PresentedAnimationPose(EntityId,float alpha) const;
     void UpdateSockets();
     bool SetSocket(EntityId,const SceneSocketComponent&,bool remove,std::string&);
-    const std::vector<glm::mat4>* AnimationSkin(EntityId) const;
+    const std::vector<glm::mat4>* AnimationSkin(EntityId,float alpha=1) const;
     void UpdateAnimations(float dt);
     struct FractureRigidState {std::vector<EntityId> parts;std::vector<JointHandle> bonds,supports;bool initialized=false;};
     struct DeformableRecord {FractureRigidState rigid;mutable uint64_t meshTopology=0;DeformableInstance simulation;std::vector<DeformableTarget> targets;mutable MeshData presentation;mutable MeshHandle mesh;uint64_t revision=0;mutable uint64_t mappedRevision=~uint64_t(0);mutable float mappedAlpha=-1;};
@@ -370,13 +374,19 @@ public:
     void ResolveAnimationPose(AnimationInstance&,float dt);
 
     struct RagdollMappedBody {int node=-1,parent=-1;EntityId entity=0;BodyHandle body;glm::vec3 offset{0},scale{1};glm::quat orientation{1,0,0,0};};
-    struct RagdollInstance {std::shared_ptr<const SkeletalAsset> asset;std::vector<RagdollMappedBody> bodies;std::vector<JointHandle> joints;SceneTransform reference;glm::vec3 rootLocalPosition{0};};
+    struct RagdollInstance {std::shared_ptr<const SkeletalAsset> asset;std::vector<RagdollMappedBody> bodies;std::vector<JointHandle> joints;SceneTransform reference;glm::vec3 rootLocalPosition{0};bool physicalControlled=false,partial=false;std::vector<bool> dynamic;SceneTransform previousPresentation,currentPresentation;bool presentationReady=false;};
     bool EnterRagdoll(EntityId,std::string& error);
     bool LeaveRagdoll(EntityId,float fadeSeconds,std::string& error);
     bool SetRagdollEnabled(EntityId,bool enabled,std::string& error);
+    bool SetRagdollContactEvents(EntityId,bool enabled);
     bool RagdollActive(EntityId)const;
     EntityId RagdollBody(EntityId,const std::string& key)const;
     void UpdateRagdolls(float dt);
+    bool ConfigurePhysicalAnimation(EntityId,const std::optional<PhysicalAnimationSettings>&,std::string&);
+    bool RequestPhysicalAnimation(EntityId,const PhysicalAnimationRequest&,std::string&);
+    void PreparePhysicalAnimations(float dt);
+    PhysicalAnimationState PhysicalAnimationSnapshot(EntityId) const;
+    std::pair<EntityId,std::string> ArticulatedIdentity(EntityId) const;
     bool SetTransientEntity(EntityId id,bool transient,std::string& error);
     bool IsTransientEntity(EntityId id)const {const auto* e=FindEntity(id);return e&&e->transient;}
 
@@ -500,6 +510,7 @@ private:
     std::map<EntityId,std::vector<AssetId>> m_regionAssets;
     std::shared_ptr<SceneSession> m_sceneControl;
     std::map<unsigned,EntityId> m_touchEntityHistory;
+    std::map<unsigned,std::pair<EntityId,std::string>> m_touchArticulationHistory;
     struct FluidVolumeSetup;
     void PopulateFluid();
     // Creates the PhysicsWorld body for a record's definition at `state`,
@@ -530,6 +541,7 @@ private:
     std::map<EntityId,CharacterInstance> m_characters;
     std::map<EntityId,AnimationInstance> m_animationInstances;
     std::map<EntityId,RagdollInstance> m_ragdolls;
+    std::map<EntityId,PhysicalAnimationState> m_physicalAnimations;
     struct RagdollReturn {float elapsed=0,duration=0;};
     std::map<EntityId,RagdollReturn> m_ragdollReturns;
     std::set<EntityId> m_ragdollAutostarted;

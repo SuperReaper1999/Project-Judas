@@ -1,0 +1,11 @@
+{
+  "host": "Linux",
+  "windowsRuntimeTools": {
+    "wine": null,
+    "wine64": null,
+    "powershell": null,
+    "pwsh": null
+  },
+  "windowsM70MovedPackageSmoke": "OUTSTANDING",
+  "qualification": "Current callable host is Linux. No native Windows host was provided; presence of a PowerShell shell alone would not establish Windows runtime validation."
+}

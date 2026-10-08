@@ -1,9 +1,9 @@
-# JudasJS — current API reference (accepted M69)
+# JudasJS — current API reference (M70 candidate)
 
 JUDAS PROVIDES ENGINE PRIMITIVES. JAVASCRIPT PROVIDES GAME BEHAVIOUR.
 
-This reference describes accepted M69,
-checkpoint `8ddec3b97d66815de4174d6e103be77e74b7eb0f`. It is not an eternal
+This reference includes the M70 candidate built on accepted checkpoint
+`934c5d3f0556c920cc7cae8b80dc4677d8cbf87b`. M70 human review remains pending. It is not an eternal
 compatibility/semantic-version promise. Source authority is `src/ScriptSystem.cpp`
 and the runtime systems it calls; demos do not define API.
 M67 is checkpointed provisionally by operator authorization; proper human validation
@@ -35,7 +35,7 @@ M59 added optional additive residency through [scenes streaming](judasjs/streami
 | localization, Unicode layout, catalogs/fonts | [Localization/text](judasjs/localization.md) |
 | scenes, session, script state, safe handles | [Lifetime/state](judasjs/scenes-state.md) |
 | saves, durable references, restore lifecycle | [Project save slots](judasjs/saves.md) |
-| Animation.crossFade/layers, Ragdoll | [Animation/ragdolls](judasjs/animation-ragdolls.md) |
+| Animation.crossFade/layers, configureIK/ikTargets/ikStatus, Ragdoll.configurePhysical/setMode/physicalState | [Animation/ragdolls](judasjs/animation-ragdolls.md) |
 | entity.character / CharacterMotor | [Character](judasjs/character.md) |
 | navigation / NavigationAgent | [Navigation](judasjs/navigation.md) |
 | liquid / LiquidVolume / conserved reservoirs | [Liquid](judasjs/liquid.md) |
@@ -119,3 +119,11 @@ materials/runtime joints and ordinary motor touch events. [Integration](M65_INTE
 and [named authoring](CONTENT_AUTHORING.md) provide current examples.
 
 Accepted M66: [model import workflow](MODEL_IMPORT.md), [imported model cookbook](judasjs/examples/imported-model.js), exact part visibility and clip root-motion queries use ordinary entity/animation handles.
+
+## M70 pose targets and partial physical animation
+
+[Animation/IK/physical reference](judasjs/animation-ragdolls.md#multi-target-full-body-ik-m70)
+| [Character Lab](M70.md). IK solves skeletal pose without moving the entity/motor;
+physical drives consume that reference before ordinary physics resolves the actual
+body pose. Scripts select targets, regions and authority transitions. No balance,
+automatic recovery or procedural gait is supplied.

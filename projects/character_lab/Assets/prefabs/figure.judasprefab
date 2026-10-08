@@ -1,0 +1,996 @@
+{
+  "kind": "prefab",
+  "schema": 1,
+  "data": {
+    "settings": {
+      "name": "New document",
+      "world-origin": [
+        0,
+        0,
+        0
+      ],
+      "sun-direction": [
+        0.4,
+        0.7,
+        0.35
+      ],
+      "sun-color": [
+        1,
+        0.98,
+        0.92
+      ],
+      "ambient": [
+        0.16,
+        0.17,
+        0.19
+      ],
+      "fluid-scale": 1,
+      "fluid-update-rate-hz": 30,
+      "fluid-hydrostatic-drag-rate": 2,
+      "fidelity-policy": {
+        "mode": {
+          "symbol": "none"
+        }
+      },
+      "next-id": 2
+    },
+    "objects": [
+      {
+        "id": 1,
+        "name": "Original multipart instance",
+        "fields": {
+          "motor.enabled": true,
+          "motor.radius": 0.23,
+          "motor.halfHeight": 0.65,
+          "motor.offset": [
+            0,
+            0.9,
+            0
+          ],
+          "motor.stepHeight": 0.55,
+          "motor.supportDistance": 0.15,
+          "motor.skin": 0.02,
+          "motor.maxSlopeDegrees": 50,
+          "motor.gravityScale": 1,
+          "motor.reorientationDegreesPerSecond": 120,
+          "motor.interactionMass": 80,
+          "motor.maxPushImpulse": 20,
+          "motor.collisionLayer": 1,
+          "motor.collisionMask": 1,
+          "motor.requiredTags": 0,
+          "motor.excludedTags": 0,
+          "animation.enabled": true,
+          "animation.play-on-start": true,
+          "animation.loop": true,
+          "animation.clip": "Idle",
+          "animation.speed": 1,
+          "animation.time": 0,
+          "ragdoll.enabled": true,
+          "ragdoll.play-on-start": false,
+          "ragdoll.self-collision": true,
+          "ragdoll.bones": 16,
+          "ragdoll.bone.0.joint": "Pivot",
+          "ragdoll.bone.0.parent": "",
+          "ragdoll.bone.0.shape": 0,
+          "ragdoll.bone.0.offset": [
+            0,
+            0.09000003,
+            0
+          ],
+          "ragdoll.bone.0.orientation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "ragdoll.bone.0.half-extents": [
+            0.0425,
+            0.09000003,
+            0.0425
+          ],
+          "ragdoll.bone.0.radius": 0.0425,
+          "ragdoll.bone.0.mass": 4,
+          "ragdoll.bone.0.friction": 0.6,
+          "ragdoll.bone.0.restitution": 0,
+          "ragdoll.bone.0.layer": 2,
+          "ragdoll.bone.0.mask": 5,
+          "ragdoll.bone.0.suppress-parent": true,
+          "ragdoll.bone.0.auto-anchors": true,
+          "ragdoll.bone.0.constraint": 2,
+          "ragdoll.bone.0.enabled": true,
+          "ragdoll.bone.0.anchor-a": [
+            0,
+            0,
+            0
+          ],
+          "ragdoll.bone.0.anchor-b": [
+            0,
+            0,
+            0
+          ],
+          "ragdoll.bone.0.frame-a": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "ragdoll.bone.0.frame-b": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "ragdoll.bone.0.limits": true,
+          "ragdoll.bone.0.lower": -1.6,
+          "ragdoll.bone.0.upper": 1.6,
+          "ragdoll.bone.1.joint": "Vertebra0",
+          "ragdoll.bone.1.parent": "Pivot",
+          "ragdoll.bone.1.shape": 0,
+          "ragdoll.bone.1.offset": [
+            0,
+            0.120000005,
+            0
+          ],
+          "ragdoll.bone.1.orientation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "ragdoll.bone.1.half-extents": [
+            0.0425,
+            0.120000005,
+            0.0425
+          ],
+          "ragdoll.bone.1.radius": 0.0425,
+          "ragdoll.bone.1.mass": 4,
+          "ragdoll.bone.1.friction": 0.6,
+          "ragdoll.bone.1.restitution": 0,
+          "ragdoll.bone.1.layer": 2,
+          "ragdoll.bone.1.mask": 5,
+          "ragdoll.bone.1.suppress-parent": true,
+          "ragdoll.bone.1.auto-anchors": true,
+          "ragdoll.bone.1.constraint": 2,
+          "ragdoll.bone.1.enabled": true,
+          "ragdoll.bone.1.anchor-a": [
+            0,
+            0,
+            0
+          ],
+          "ragdoll.bone.1.anchor-b": [
+            0,
+            0,
+            0
+          ],
+          "ragdoll.bone.1.frame-a": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "ragdoll.bone.1.frame-b": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "ragdoll.bone.1.limits": true,
+          "ragdoll.bone.1.lower": -1.6,
+          "ragdoll.bone.1.upper": 1.6,
+          "ragdoll.bone.2.joint": "Vertebra1",
+          "ragdoll.bone.2.parent": "Vertebra0",
+          "ragdoll.bone.2.shape": 0,
+          "ragdoll.bone.2.offset": [
+            0,
+            0.11500001,
+            0
+          ],
+          "ragdoll.bone.2.orientation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "ragdoll.bone.2.half-extents": [
+            0.0425,
+            0.11500001,
+            0.0425
+          ],
+          "ragdoll.bone.2.radius": 0.0425,
+          "ragdoll.bone.2.mass": 4,
+          "ragdoll.bone.2.friction": 0.6,
+          "ragdoll.bone.2.restitution": 0,
+          "ragdoll.bone.2.layer": 2,
+          "ragdoll.bone.2.mask": 5,
+          "ragdoll.bone.2.suppress-parent": true,
+          "ragdoll.bone.2.auto-anchors": true,
+          "ragdoll.bone.2.constraint": 2,
+          "ragdoll.bone.2.enabled": true,
+          "ragdoll.bone.2.anchor-a": [
+            0,
+            0,
+            0
+          ],
+          "ragdoll.bone.2.anchor-b": [
+            0,
+            0,
+            0
+          ],
+          "ragdoll.bone.2.frame-a": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "ragdoll.bone.2.frame-b": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "ragdoll.bone.2.limits": true,
+          "ragdoll.bone.2.lower": -1.6,
+          "ragdoll.bone.2.upper": 1.6,
+          "ragdoll.bone.3.joint": "NeckConnector",
+          "ragdoll.bone.3.parent": "Vertebra1",
+          "ragdoll.bone.3.shape": 0,
+          "ragdoll.bone.3.offset": [
+            0,
+            0.06999999,
+            0
+          ],
+          "ragdoll.bone.3.orientation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "ragdoll.bone.3.half-extents": [
+            0.0425,
+            0.06999999,
+            0.0425
+          ],
+          "ragdoll.bone.3.radius": 0.0425,
+          "ragdoll.bone.3.mass": 1,
+          "ragdoll.bone.3.friction": 0.6,
+          "ragdoll.bone.3.restitution": 0,
+          "ragdoll.bone.3.layer": 2,
+          "ragdoll.bone.3.mask": 5,
+          "ragdoll.bone.3.suppress-parent": true,
+          "ragdoll.bone.3.auto-anchors": true,
+          "ragdoll.bone.3.constraint": 2,
+          "ragdoll.bone.3.enabled": true,
+          "ragdoll.bone.3.anchor-a": [
+            0,
+            0,
+            0
+          ],
+          "ragdoll.bone.3.anchor-b": [
+            0,
+            0,
+            0
+          ],
+          "ragdoll.bone.3.frame-a": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "ragdoll.bone.3.frame-b": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "ragdoll.bone.3.limits": true,
+          "ragdoll.bone.3.lower": -1.6,
+          "ragdoll.bone.3.upper": 1.6,
+          "ragdoll.bone.4.joint": "ShoulderA",
+          "ragdoll.bone.4.parent": "Vertebra1",
+          "ragdoll.bone.4.shape": 0,
+          "ragdoll.bone.4.offset": [
+            -0.14000002,
+            -0.15000004,
+            -0.02
+          ],
+          "ragdoll.bone.4.orientation": [
+            0.36904812,
+            -0.13143845,
+            0,
+            0.92006934
+          ],
+          "ragdoll.bone.4.half-extents": [
+            0.0425,
+            0.20615532,
+            0.0425
+          ],
+          "ragdoll.bone.4.radius": 0.0425,
+          "ragdoll.bone.4.mass": 1,
+          "ragdoll.bone.4.friction": 0.6,
+          "ragdoll.bone.4.restitution": 0,
+          "ragdoll.bone.4.layer": 2,
+          "ragdoll.bone.4.mask": 5,
+          "ragdoll.bone.4.suppress-parent": true,
+          "ragdoll.bone.4.auto-anchors": true,
+          "ragdoll.bone.4.constraint": 2,
+          "ragdoll.bone.4.enabled": true,
+          "ragdoll.bone.4.anchor-a": [
+            0,
+            0,
+            0
+          ],
+          "ragdoll.bone.4.anchor-b": [
+            0,
+            0,
+            0
+          ],
+          "ragdoll.bone.4.frame-a": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "ragdoll.bone.4.frame-b": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "ragdoll.bone.4.limits": true,
+          "ragdoll.bone.4.lower": -1.6,
+          "ragdoll.bone.4.upper": 1.6,
+          "ragdoll.bone.5.joint": "ElbowA",
+          "ragdoll.bone.5.parent": "ShoulderA",
+          "ragdoll.bone.5.shape": 0,
+          "ragdoll.bone.5.offset": [
+            -0.125,
+            -0.13,
+            0.02
+          ],
+          "ragdoll.bone.5.orientation": [
+            0.37653616,
+            0.1463627,
+            -0.0,
+            0.9147669
+          ],
+          "ragdoll.bone.5.half-extents": [
+            0.0425,
+            0.18145247,
+            0.0425
+          ],
+          "ragdoll.bone.5.radius": 0.0425,
+          "ragdoll.bone.5.mass": 1,
+          "ragdoll.bone.5.friction": 0.6,
+          "ragdoll.bone.5.restitution": 0,
+          "ragdoll.bone.5.layer": 2,
+          "ragdoll.bone.5.mask": 5,
+          "ragdoll.bone.5.suppress-parent": true,
+          "ragdoll.bone.5.auto-anchors": true,
+          "ragdoll.bone.5.constraint": 2,
+          "ragdoll.bone.5.enabled": true,
+          "ragdoll.bone.5.anchor-a": [
+            0,
+            0,
+            0
+          ],
+          "ragdoll.bone.5.anchor-b": [
+            0,
+            0,
+            0
+          ],
+          "ragdoll.bone.5.frame-a": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "ragdoll.bone.5.frame-b": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "ragdoll.bone.5.limits": true,
+          "ragdoll.bone.5.lower": -1.6,
+          "ragdoll.bone.5.upper": 1.6,
+          "ragdoll.bone.6.joint": "PalmA",
+          "ragdoll.bone.6.parent": "ElbowA",
+          "ragdoll.bone.6.shape": 0,
+          "ragdoll.bone.6.offset": [
+            -0.018000007,
+            0,
+            -0.018
+          ],
+          "ragdoll.bone.6.orientation": [
+            0.70710677,
+            -0.4999999,
+            0,
+            0.5000001
+          ],
+          "ragdoll.bone.6.half-extents": [
+            0.0425,
+            0.0425,
+            0.0425
+          ],
+          "ragdoll.bone.6.radius": 0.0425,
+          "ragdoll.bone.6.mass": 1,
+          "ragdoll.bone.6.friction": 0.6,
+          "ragdoll.bone.6.restitution": 0,
+          "ragdoll.bone.6.layer": 2,
+          "ragdoll.bone.6.mask": 5,
+          "ragdoll.bone.6.suppress-parent": true,
+          "ragdoll.bone.6.auto-anchors": true,
+          "ragdoll.bone.6.constraint": 2,
+          "ragdoll.bone.6.enabled": true,
+          "ragdoll.bone.6.anchor-a": [
+            0,
+            0,
+            0
+          ],
+          "ragdoll.bone.6.anchor-b": [
+            0,
+            0,
+            0
+          ],
+          "ragdoll.bone.6.frame-a": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "ragdoll.bone.6.frame-b": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "ragdoll.bone.6.limits": true,
+          "ragdoll.bone.6.lower": -1.6,
+          "ragdoll.bone.6.upper": 1.6,
+          "ragdoll.bone.7.joint": "ThighA",
+          "ragdoll.bone.7.parent": "Pivot",
+          "ragdoll.bone.7.shape": 0,
+          "ragdoll.bone.7.offset": [
+            0,
+            -0.215,
+            0.0275
+          ],
+          "ragdoll.bone.7.orientation": [
+            0.06356526,
+            0.99797773,
+            0,
+            -0.0
+          ],
+          "ragdoll.bone.7.half-extents": [
+            0.0425,
+            0.21675159,
+            0.0425
+          ],
+          "ragdoll.bone.7.radius": 0.0425,
+          "ragdoll.bone.7.mass": 1,
+          "ragdoll.bone.7.friction": 0.6,
+          "ragdoll.bone.7.restitution": 0,
+          "ragdoll.bone.7.layer": 2,
+          "ragdoll.bone.7.mask": 5,
+          "ragdoll.bone.7.suppress-parent": true,
+          "ragdoll.bone.7.auto-anchors": true,
+          "ragdoll.bone.7.constraint": 2,
+          "ragdoll.bone.7.enabled": true,
+          "ragdoll.bone.7.anchor-a": [
+            0,
+            0,
+            0
+          ],
+          "ragdoll.bone.7.anchor-b": [
+            0,
+            0,
+            0
+          ],
+          "ragdoll.bone.7.frame-a": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "ragdoll.bone.7.frame-b": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "ragdoll.bone.7.limits": true,
+          "ragdoll.bone.7.lower": -1.6,
+          "ragdoll.bone.7.upper": 1.6,
+          "ragdoll.bone.8.joint": "ShinA",
+          "ragdoll.bone.8.parent": "ThighA",
+          "ragdoll.bone.8.shape": 0,
+          "ragdoll.bone.8.offset": [
+            0,
+            -0.22,
+            -0.0275
+          ],
+          "ragdoll.bone.8.orientation": [
+            0.062137086,
+            -0.9980677,
+            0,
+            -0.0
+          ],
+          "ragdoll.bone.8.half-extents": [
+            0.0425,
+            0.22171208,
+            0.0425
+          ],
+          "ragdoll.bone.8.radius": 0.0425,
+          "ragdoll.bone.8.mass": 1,
+          "ragdoll.bone.8.friction": 0.6,
+          "ragdoll.bone.8.restitution": 0,
+          "ragdoll.bone.8.layer": 2,
+          "ragdoll.bone.8.mask": 5,
+          "ragdoll.bone.8.suppress-parent": true,
+          "ragdoll.bone.8.auto-anchors": true,
+          "ragdoll.bone.8.constraint": 2,
+          "ragdoll.bone.8.enabled": true,
+          "ragdoll.bone.8.anchor-a": [
+            0,
+            0,
+            0
+          ],
+          "ragdoll.bone.8.anchor-b": [
+            0,
+            0,
+            0
+          ],
+          "ragdoll.bone.8.frame-a": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "ragdoll.bone.8.frame-b": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "ragdoll.bone.8.limits": true,
+          "ragdoll.bone.8.lower": -1.6,
+          "ragdoll.bone.8.upper": 1.6,
+          "ragdoll.bone.9.joint": "SoleA",
+          "ragdoll.bone.9.parent": "ShinA",
+          "ragdoll.bone.9.shape": 0,
+          "ragdoll.bone.9.offset": [
+            0,
+            -0.012499999,
+            -0.065
+          ],
+          "ragdoll.bone.9.orientation": [
+            0.6368487,
+            -0.7709888,
+            0,
+            -0.0
+          ],
+          "ragdoll.bone.9.half-extents": [
+            0.0425,
+            0.06619101,
+            0.0425
+          ],
+          "ragdoll.bone.9.radius": 0.0425,
+          "ragdoll.bone.9.mass": 1,
+          "ragdoll.bone.9.friction": 0.6,
+          "ragdoll.bone.9.restitution": 0,
+          "ragdoll.bone.9.layer": 2,
+          "ragdoll.bone.9.mask": 5,
+          "ragdoll.bone.9.suppress-parent": true,
+          "ragdoll.bone.9.auto-anchors": true,
+          "ragdoll.bone.9.constraint": 2,
+          "ragdoll.bone.9.enabled": true,
+          "ragdoll.bone.9.anchor-a": [
+            0,
+            0,
+            0
+          ],
+          "ragdoll.bone.9.anchor-b": [
+            0,
+            0,
+            0
+          ],
+          "ragdoll.bone.9.frame-a": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "ragdoll.bone.9.frame-b": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "ragdoll.bone.9.limits": true,
+          "ragdoll.bone.9.lower": -1.6,
+          "ragdoll.bone.9.upper": 1.6,
+          "ragdoll.bone.10.joint": "ShoulderB",
+          "ragdoll.bone.10.parent": "Vertebra1",
+          "ragdoll.bone.10.shape": 0,
+          "ragdoll.bone.10.offset": [
+            0.14000002,
+            -0.15000004,
+            -0.02
+          ],
+          "ragdoll.bone.10.orientation": [
+            0.36904812,
+            -0.13143845,
+            0,
+            -0.92006934
+          ],
+          "ragdoll.bone.10.half-extents": [
+            0.0425,
+            0.20615532,
+            0.0425
+          ],
+          "ragdoll.bone.10.radius": 0.0425,
+          "ragdoll.bone.10.mass": 1,
+          "ragdoll.bone.10.friction": 0.6,
+          "ragdoll.bone.10.restitution": 0,
+          "ragdoll.bone.10.layer": 2,
+          "ragdoll.bone.10.mask": 5,
+          "ragdoll.bone.10.suppress-parent": true,
+          "ragdoll.bone.10.auto-anchors": true,
+          "ragdoll.bone.10.constraint": 2,
+          "ragdoll.bone.10.enabled": true,
+          "ragdoll.bone.10.anchor-a": [
+            0,
+            0,
+            0
+          ],
+          "ragdoll.bone.10.anchor-b": [
+            0,
+            0,
+            0
+          ],
+          "ragdoll.bone.10.frame-a": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "ragdoll.bone.10.frame-b": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "ragdoll.bone.10.limits": true,
+          "ragdoll.bone.10.lower": -1.6,
+          "ragdoll.bone.10.upper": 1.6,
+          "ragdoll.bone.11.joint": "ElbowB",
+          "ragdoll.bone.11.parent": "ShoulderB",
+          "ragdoll.bone.11.shape": 0,
+          "ragdoll.bone.11.offset": [
+            0.125,
+            -0.13,
+            0.02
+          ],
+          "ragdoll.bone.11.orientation": [
+            0.37653616,
+            0.1463627,
+            0,
+            -0.9147669
+          ],
+          "ragdoll.bone.11.half-extents": [
+            0.0425,
+            0.18145247,
+            0.0425
+          ],
+          "ragdoll.bone.11.radius": 0.0425,
+          "ragdoll.bone.11.mass": 1,
+          "ragdoll.bone.11.friction": 0.6,
+          "ragdoll.bone.11.restitution": 0,
+          "ragdoll.bone.11.layer": 2,
+          "ragdoll.bone.11.mask": 5,
+          "ragdoll.bone.11.suppress-parent": true,
+          "ragdoll.bone.11.auto-anchors": true,
+          "ragdoll.bone.11.constraint": 2,
+          "ragdoll.bone.11.enabled": true,
+          "ragdoll.bone.11.anchor-a": [
+            0,
+            0,
+            0
+          ],
+          "ragdoll.bone.11.anchor-b": [
+            0,
+            0,
+            0
+          ],
+          "ragdoll.bone.11.frame-a": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "ragdoll.bone.11.frame-b": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "ragdoll.bone.11.limits": true,
+          "ragdoll.bone.11.lower": -1.6,
+          "ragdoll.bone.11.upper": 1.6,
+          "ragdoll.bone.12.joint": "PalmB",
+          "ragdoll.bone.12.parent": "ElbowB",
+          "ragdoll.bone.12.shape": 0,
+          "ragdoll.bone.12.offset": [
+            0.018000007,
+            0,
+            -0.018
+          ],
+          "ragdoll.bone.12.orientation": [
+            0.70710677,
+            -0.4999999,
+            0,
+            -0.5000001
+          ],
+          "ragdoll.bone.12.half-extents": [
+            0.0425,
+            0.0425,
+            0.0425
+          ],
+          "ragdoll.bone.12.radius": 0.0425,
+          "ragdoll.bone.12.mass": 1,
+          "ragdoll.bone.12.friction": 0.6,
+          "ragdoll.bone.12.restitution": 0,
+          "ragdoll.bone.12.layer": 2,
+          "ragdoll.bone.12.mask": 5,
+          "ragdoll.bone.12.suppress-parent": true,
+          "ragdoll.bone.12.auto-anchors": true,
+          "ragdoll.bone.12.constraint": 2,
+          "ragdoll.bone.12.enabled": true,
+          "ragdoll.bone.12.anchor-a": [
+            0,
+            0,
+            0
+          ],
+          "ragdoll.bone.12.anchor-b": [
+            0,
+            0,
+            0
+          ],
+          "ragdoll.bone.12.frame-a": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "ragdoll.bone.12.frame-b": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "ragdoll.bone.12.limits": true,
+          "ragdoll.bone.12.lower": -1.6,
+          "ragdoll.bone.12.upper": 1.6,
+          "ragdoll.bone.13.joint": "ThighB",
+          "ragdoll.bone.13.parent": "Pivot",
+          "ragdoll.bone.13.shape": 0,
+          "ragdoll.bone.13.offset": [
+            0,
+            -0.215,
+            0.0275
+          ],
+          "ragdoll.bone.13.orientation": [
+            0.06356526,
+            0.99797773,
+            0,
+            -0.0
+          ],
+          "ragdoll.bone.13.half-extents": [
+            0.0425,
+            0.21675159,
+            0.0425
+          ],
+          "ragdoll.bone.13.radius": 0.0425,
+          "ragdoll.bone.13.mass": 1,
+          "ragdoll.bone.13.friction": 0.6,
+          "ragdoll.bone.13.restitution": 0,
+          "ragdoll.bone.13.layer": 2,
+          "ragdoll.bone.13.mask": 5,
+          "ragdoll.bone.13.suppress-parent": true,
+          "ragdoll.bone.13.auto-anchors": true,
+          "ragdoll.bone.13.constraint": 2,
+          "ragdoll.bone.13.enabled": true,
+          "ragdoll.bone.13.anchor-a": [
+            0,
+            0,
+            0
+          ],
+          "ragdoll.bone.13.anchor-b": [
+            0,
+            0,
+            0
+          ],
+          "ragdoll.bone.13.frame-a": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "ragdoll.bone.13.frame-b": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "ragdoll.bone.13.limits": true,
+          "ragdoll.bone.13.lower": -1.6,
+          "ragdoll.bone.13.upper": 1.6,
+          "ragdoll.bone.14.joint": "ShinB",
+          "ragdoll.bone.14.parent": "ThighB",
+          "ragdoll.bone.14.shape": 0,
+          "ragdoll.bone.14.offset": [
+            0,
+            -0.22,
+            -0.0275
+          ],
+          "ragdoll.bone.14.orientation": [
+            0.062137086,
+            -0.9980677,
+            0,
+            -0.0
+          ],
+          "ragdoll.bone.14.half-extents": [
+            0.0425,
+            0.22171208,
+            0.0425
+          ],
+          "ragdoll.bone.14.radius": 0.0425,
+          "ragdoll.bone.14.mass": 1,
+          "ragdoll.bone.14.friction": 0.6,
+          "ragdoll.bone.14.restitution": 0,
+          "ragdoll.bone.14.layer": 2,
+          "ragdoll.bone.14.mask": 5,
+          "ragdoll.bone.14.suppress-parent": true,
+          "ragdoll.bone.14.auto-anchors": true,
+          "ragdoll.bone.14.constraint": 2,
+          "ragdoll.bone.14.enabled": true,
+          "ragdoll.bone.14.anchor-a": [
+            0,
+            0,
+            0
+          ],
+          "ragdoll.bone.14.anchor-b": [
+            0,
+            0,
+            0
+          ],
+          "ragdoll.bone.14.frame-a": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "ragdoll.bone.14.frame-b": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "ragdoll.bone.14.limits": true,
+          "ragdoll.bone.14.lower": -1.6,
+          "ragdoll.bone.14.upper": 1.6,
+          "ragdoll.bone.15.joint": "SoleB",
+          "ragdoll.bone.15.parent": "ShinB",
+          "ragdoll.bone.15.shape": 0,
+          "ragdoll.bone.15.offset": [
+            0,
+            -0.012499999,
+            -0.065
+          ],
+          "ragdoll.bone.15.orientation": [
+            0.6368487,
+            -0.7709888,
+            0,
+            -0.0
+          ],
+          "ragdoll.bone.15.half-extents": [
+            0.0425,
+            0.06619101,
+            0.0425
+          ],
+          "ragdoll.bone.15.radius": 0.0425,
+          "ragdoll.bone.15.mass": 1,
+          "ragdoll.bone.15.friction": 0.6,
+          "ragdoll.bone.15.restitution": 0,
+          "ragdoll.bone.15.layer": 2,
+          "ragdoll.bone.15.mask": 5,
+          "ragdoll.bone.15.suppress-parent": true,
+          "ragdoll.bone.15.auto-anchors": true,
+          "ragdoll.bone.15.constraint": 2,
+          "ragdoll.bone.15.enabled": true,
+          "ragdoll.bone.15.anchor-a": [
+            0,
+            0,
+            0
+          ],
+          "ragdoll.bone.15.anchor-b": [
+            0,
+            0,
+            0
+          ],
+          "ragdoll.bone.15.frame-a": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "ragdoll.bone.15.frame-b": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "ragdoll.bone.15.limits": true,
+          "ragdoll.bone.15.lower": -1.6,
+          "ragdoll.bone.15.upper": 1.6,
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.half-extents": [
+            0.5,
+            0.5,
+            0.5
+          ],
+          "render.radius": 0.5,
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "5d4fe060b94398efc188e440c03ab97e",
+          "render.texture-asset": "",
+          "ragdoll.physical-animation": "{\"enabled\":true,\"regions\":[{\"id\":\"upper\",\"joints\":[\"Vertebra0\",\"Vertebra1\",\"ShoulderA\",\"ElbowA\",\"PalmA\",\"ShoulderB\",\"ElbowB\",\"PalmB\"],\"enabled\":true,\"stiffness\":32,\"damping\":5,\"maxTorque\":24,\"effortWeight\":1,\"poseWeight\":1}]}",
+          "ragdoll.bone.0.rotational-resistance": 0.12,
+          "ragdoll.bone.1.rotational-resistance": 0.12,
+          "ragdoll.bone.2.rotational-resistance": 0.12,
+          "ragdoll.bone.3.rotational-resistance": 0.12,
+          "ragdoll.bone.4.rotational-resistance": 0.12,
+          "ragdoll.bone.5.rotational-resistance": 0.12,
+          "ragdoll.bone.6.rotational-resistance": 0.12,
+          "ragdoll.bone.7.rotational-resistance": 0.12,
+          "ragdoll.bone.8.rotational-resistance": 0.12,
+          "ragdoll.bone.9.rotational-resistance": 0.12,
+          "ragdoll.bone.10.rotational-resistance": 0.12,
+          "ragdoll.bone.11.rotational-resistance": 0.12,
+          "ragdoll.bone.12.rotational-resistance": 0.12,
+          "ragdoll.bone.13.rotational-resistance": 0.12,
+          "ragdoll.bone.14.rotational-resistance": 0.12,
+          "ragdoll.bone.15.rotational-resistance": 0.12
+        }
+      }
+    ]
+  }
+}

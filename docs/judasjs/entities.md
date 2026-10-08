@@ -39,6 +39,9 @@ nonzero rotations normalize on write. Supplied position/scale must have all xyz
 components; scale is positive. Pose writes teleport, not collision-aware movement.
 Visual scale does not resize authored collider dimensions. Parent-local authoring
 is resolved before these world-space reads; scripts do not set a parent through this API.
+The [M70 batch-configuration tuple format](animation-ragdolls.md#configuration-tuples-versus-live-vector-objects)
+is an explicit exception: its `PoseVector`/`PoseQuaternion` arrays are not a replacement
+for these ordinary object `Vec3`/`Quat` transform fields.
 Disabling a collider does not invalidate its entity/body identity: these dynamic-body
 operations remain callable while disabled, although physics participation stops.
 

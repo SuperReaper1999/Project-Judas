@@ -1,0 +1,81 @@
+PASS independent bounded implicit-PD torque expectation
+PASS physical effort saturates at declared N m limit
+PASS quaternion signs use identical shortest-path rotational error
+PASS zero drive retains actual error and applies no restoring torque
+ROTATION_TORQUE difference_Nm=5.33120158e-07 error_difference_rad=0
+PASS independent anisotropic-inertia drive law is equivariant under world rotation
+TENSOR_RESPONSE linear_residual_Nm=9.53674316e-07
+PASS anisotropic implicit torque satisfies the independent complete linear system
+PASS declarative region configuration round trip
+PASS nonfinite drive configuration rejected before publication
+PASS M70 opt-in motor contact fixture builds through ordinary scene bodies
+PASS pre-physics motor floor enter survives Step in animation authority
+PASS pre-physics motor floor contact publishes one stay
+PASS leaving floor publishes one exit across M70 phase ordering
+PASS pre-physics floor exit does not repeat
+PASS pre-physics sweep wall enter survives Step
+PASS continued wall intent publishes one wall stay
+PASS moving away publishes one wall exit
+PASS wall exit does not repeat while floor contact continues
+ROTATION_DRIVEN step=1 position_difference_m=1.6134895e-07 angular_difference_rad_s=5.64437414e-06 orientation_difference_rad=0 error_a=0 error_b=1.5359765e-08 torque_a=6.57533598 torque_b=6.57534266
+ROTATION_DRIVEN step=3 position_difference_m=4.92009917e-07 angular_difference_rad_s=3.4534969e-06 orientation_difference_rad=0 error_a=0.00668400107 error_b=0.00668399036 torque_a=0.188847721 torque_b=0.188845903
+ROTATION_DRIVEN step=10 position_difference_m=1.64844096e-07 angular_difference_rad_s=3.1264899e-06 orientation_difference_rad=0 error_a=0.0277470518 error_b=0.0277468227 torque_a=0.269608527 torque_b=0.269604832
+ROTATION_DRIVEN step=30 position_difference_m=9.65245704e-07 angular_difference_rad_s=6.06354831e-07 orientation_difference_rad=0 error_a=0.0747891665 error_b=0.0747889355 torque_a=0.441350281 torque_b=0.441351533
+ROTATION_DRIVEN step=60 position_difference_m=6.70552254e-08 angular_difference_rad_s=1.55041698e-06 orientation_difference_rad=0 error_a=0.0946308374 error_b=0.094630681 torque_a=0.432894021 torque_b=0.432892084
+ROTATION_DRIVEN step=120 position_difference_m=6.36880486e-07 angular_difference_rad_s=5.5800524e-07 orientation_difference_rad=0 error_a=0.00578737585 error_b=0.00578701124 torque_a=0.124316171 torque_b=0.124317154
+ROTATION_PASSIVE step=1 position_difference_m=5.2410212e-07 angular_difference_rad_s=1.23524987e-05 orientation_difference_rad=0
+ROTATION_PASSIVE step=3 position_difference_m=6.73731904e-07 angular_difference_rad_s=9.74959949e-06 orientation_difference_rad=0
+ROTATION_PASSIVE step=10 position_difference_m=3.59350537e-07 angular_difference_rad_s=9.50389858e-06 orientation_difference_rad=0
+ROTATION_PASSIVE step=30 position_difference_m=6.59407931e-07 angular_difference_rad_s=9.88309057e-06 orientation_difference_rad=0
+ROTATION_PASSIVE step=60 position_difference_m=6.2584877e-07 angular_difference_rad_s=8.18243552e-06 orientation_difference_rad=0
+ROTATION_PASSIVE step=120 position_difference_m=4.77069932e-07 angular_difference_rad_s=8.34382627e-06 orientation_difference_rad=0
+DRIVE_SLEEP error_at_ordinary_sleep_rad=0.0153903291 error_after_awake_continuation_rad=0.000948883127 angular_speed_rad_s=0.00101264333
+PASS headless ordinary entity and immutable skeleton ready
+PASS legacy activation cannot bypass explicit motor authority handoff
+PASS authority request queues without immediate physics mutation
+PASS selected region dynamic with explicit static boundary anchor
+PASS partial physical response preserves CharacterMotor authority
+PASS unselected boundary anchors do not become invisible query colliders
+PASS ordinary mapped body has stable owner/joint attribution
+PASS one articulation without duplicate physical root population
+DRIVE fixture_gravity_m_s2=0 baseline_bodies=1 active_bodies=4 first_error_rad=0.00668400107 first_angular_speed_rad_s=0.189848557 first_torque_Nm=0.188847721
+DRIVE step=180 error_rad=0.0600351505 angular_speed_rad_s=0.0272290334 torque_Nm=0.266539395 sleeping=0
+DRIVE step=420 error_rad=0.0233757496 angular_speed_rad_s=0.0188946854 torque_Nm=0.0971439704 sleeping=0
+DRIVE step=723 error_rad=0.0153903291 angular_speed_rad_s=0 torque_Nm=0 sleeping=1
+PASS external hit causes actual dynamic departure, not only rendered deformation
+FAIL bounded relative drives decay an observed impact peak toward their reference
+PASS unchanged settled reference permits ordinary island sleeping
+PASS ordinary external impact wakes a driven region
+PASS observed effort never exceeds authored cap
+PASS translating motor and boundary preserve independent root locomotion
+PASS full authority refuses an implicit competing motor root
+PASS explicit motor-to-full articulation handoff accepted
+PASS full physical root dynamic and motor explicitly disabled
+PASS partial-to-full uses current root instead of a parked inactive anchor
+PASS full physical motor root preserves previous/mid/current presentation samples
+PASS socket and solved joint share identical interpolated physical root sample
+PASS active to passive request accepted
+PASS passive release preserves body identity and velocity without another kick
+PASS passive mode removes active effort without changing passive constraints
+PASS penetrating resume placement refuses and retains coherent physical authority
+PASS clear destination behind a wall does not authorize root tunnelling
+PASS safe explicit motor placement and visual return accepted
+PASS return retires physics and preserves a captured transition pose
+PASS old body generations cannot alias later articulation state
+PASS visual transition retires through the existing M47 resolver
+PASS invalid mapped batch does not partially replace authored settings
+PASS partial reactivation accepted
+PASS mapped body removal tears down articulation safely
+PASS repeated activation has no stale collider ghosts
+PASS component disable retires mode and constraints
+PASS additional presentation evaluations do not change fixed physical trajectory
+PASS shared immutable rig retains independent authority and mixer state
+PASS partial return captures actual bones in the current moving motor root frame
+PASS uninvolved hidden mapped branch requires no singular-transform inversion
+PASS hidden unselected child stays hidden and cannot kinematically pin its dynamic parent
+ROTATION original_endpoint=(-0.00194923847,4.24999523,0) rotated_back=(-0.00194883347,4.24999475,1.1920929e-07) difference_m=6.36880486e-07 gravity_m_s2=0
+PASS rotating the whole articulation preserves bounded physical response
+PASS unreachable reference saturates at ordinary authored hinge limit
+PASS collider-free non-motor physical root uses the same authoritative presentation seam
+OBSERVATIONS impact_error_rad=0.0958873853 returned_error_rad=0.0153903291 presentation_difference_m=0
+SUMMARY 59 checks 1 failures

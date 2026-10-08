@@ -106,18 +106,32 @@ void RuntimeWorld::DispatchPhysicsEvents(const InputSystem* input,float dt){
     auto resolve=[&](BodyHandle h){auto found=m_touchEntityHistory.find(h.id);
         if(found!=m_touchEntityHistory.end())return found->second;
         ++m_metadataWork.touchBodyResolutions;return EntityIdOfBody(h);};
-    struct Delivery {EntityId a,b;PhysicsWorld::TouchEvent event;};
+    struct Delivery {EntityId a,b;PhysicsWorld::TouchEvent event;std::pair<EntityId,std::string> aa,bb;};
     std::vector<Delivery> deliveries;
     std::map<unsigned,EntityId> next;
+    std::map<unsigned,std::pair<EntityId,std::string>> nextArticulation;
+    auto articulation=[&](BodyHandle h,EntityId entity){auto found=m_touchArticulationHistory.find(h.id);return found==m_touchArticulationHistory.end()?ArticulatedIdentity(entity):found->second;};
     for(const auto& event:m_physics.LastStepTouchEvents()){
         auto a=resolve(event.a),b=resolve(event.b);
         if(!a||!b)continue;
-        deliveries.push_back({a,b,event});
+        auto aa=articulation(event.a,a),bb=articulation(event.b,b);deliveries.push_back({a,b,event,aa,bb});
+        if(event.phase!=PhysicsWorld::TouchPhase::Exit){if(aa.first)nextArticulation[event.a.id]=aa;if(bb.first)nextArticulation[event.b.id]=bb;}
         if(event.phase!=PhysicsWorld::TouchPhase::Exit){next[event.a.id]=a;next[event.b.id]=b;}
     }
     if(m_scripts){m_scripts->Synchronize(ScriptSlots());
-        for(const auto& d:deliveries){m_scripts->PhysicsEvent(d.a,d.b,d.event,false);m_scripts->PhysicsEvent(d.b,d.a,d.event,true);}}
-    m_touchEntityHistory=std::move(next);(void)input;(void)dt;
+        for(const auto& d:deliveries){m_scripts->PhysicsEvent(d.a,d.b,d.event,false,d.a,d.aa.second,d.bb.first,d.bb.second);m_scripts->PhysicsEvent(d.b,d.a,d.event,true,d.b,d.bb.second,d.aa.first,d.aa.second);
+            // Forward the existing per-body-pair observation only on explicit
+            // owner subscription. Internal self contacts do not call the same
+            // owner twice or flood it with articulation constraint contacts;
+            // scripts placed on individual bodies retain ordinary M42 delivery.
+            auto subscribed=[&](EntityId owner){const auto* definition=RuntimeDefinition(owner);
+                return definition&&definition->ragdoll&&definition->ragdoll->receiveContactEvents;};
+            if(d.aa.first!=d.bb.first){
+                if(d.aa.first&&d.aa.first!=d.a&&subscribed(d.aa.first))m_scripts->PhysicsEvent(d.aa.first,d.b,d.event,false,d.a,d.aa.second,d.bb.first,d.bb.second);
+                if(d.bb.first&&d.bb.first!=d.b&&subscribed(d.bb.first))m_scripts->PhysicsEvent(d.bb.first,d.a,d.event,true,d.b,d.bb.second,d.aa.first,d.aa.second);
+            }
+        }}
+    m_touchEntityHistory=std::move(next);m_touchArticulationHistory=std::move(nextArticulation);(void)input;(void)dt;
 }
 bool RuntimeWorld::SetColliderEnabled(EntityId id,bool enabled){
     if(const auto* d=RuntimeDefinition(id);d&&d->characterMotor){auto settings=*d->characterMotor;settings.enabled=enabled;SetCharacterSettings(id,settings);return true;}

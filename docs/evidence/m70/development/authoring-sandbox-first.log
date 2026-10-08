@@ -1,0 +1,37 @@
+libEGL warning: Not allowed to force software rendering when API explicitly selects a hardware device.
+Renderer fragment texture units: 32 (material path uses 12)
+PASS actual GL EngineHost: 
+PASS registered copyable example
+PASS normal named project loader
+PASS normal named scene loader
+PASS substantial generated ordinary scene
+PASS normal resource/physics build: 
+PASS ordinary fixed-step session
+PASS materialize existing lazy participants before count: 
+PASS real JS example callbacks: no faults
+PASS JS projected
+PASS JS behind
+PASS JS viewRay
+PASS JS layout
+PASS JS invalidLayout
+PASS JS spawned
+PASS JS invalidInit
+PASS JS invalidRange
+PASS JS camera
+PASS JS stale
+PASS independent typed construction properties
+PASS independent constructor initial state
+PASS initial motion visible before first simulation
+PASS start once after successful construction
+PASS invalid initialization publishes no partial body
+FAIL actual distant geometry survives render/culling beyond old 500 m cap
+PASS resize uses actual aspect in viewport projection
+PASS invalid range preserved last-good view
+PASS normal save participants capture new runtime state: 
+PASS cold runtime construction and participant restore: 
+PASS cold restoration callbacks safe
+PASS projection range participant survives cold restore
+PASS restore does not replay fresh prefab start/init
+PASS restore does not replay fresh prefab start/init
+PASS runtime fixture leaves authored project untouched
+SUMMARY 34 checks 1 failures

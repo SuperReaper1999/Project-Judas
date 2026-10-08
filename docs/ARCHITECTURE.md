@@ -9362,3 +9362,33 @@ not add gameplay recognition or a new query solver. See [M69](M69.md),
 
 Documentation alignment needs a better repeatable maintenance process; the
 [current follow-up and checkpoint checklist](DOCUMENTATION_MAINTENANCE.md) records it.
+
+
+## M70 — shared target posing and partial physical animation (candidate)
+
+An opted-in instance has distinct clip/layer reference, IK-resolved reference and
+final physical pose. A bounded simultaneous damped least-squares solve reconciles
+explicit contact frames through declared skeletal root translation and mapped
+joint rotations. Bone lengths, immutable resources, entity/motor motion and
+root-motion tracks remain separate. Existing limb IK precedes the shared solve;
+physical contributions resolve last. Unreachable targets report individual
+residuals rather than stretching bones or moving the entity.
+
+Partial physical regions use ordinary ragdoll bodies and M45 constraints, with
+non-colliding/query-excluded prescribed boundaries. The CharacterMotor may retain
+root authority. Bounded implicit proportional/damping torques act on dynamic
+bodies, with opposite reaction on dynamic parents. Full active/passive modes
+require explicit motor handoff and do not pin the root. Physics remains the
+actual collision-pose authority; optional visual influence is an approximation.
+
+New targets, references and drives are sampled at fixed boundaries. Opted-in
+motors move before this phase; legacy consumers retain their existing timing.
+Final/presented joint reads, sockets and skinning share the same pose sample.
+M61 saves retain mode/pending requests and fresh mapped body references, using an
+articulation version-3 extension only where needed. Disposable numerical/motion
+history is rebuilt without inventing a preceding step. Old schema-5 content
+fingerprints remain unchanged when the optional new settings are absent.
+
+See [M70 ownership, bounds and human review](M70.md) and the
+[public IK/physical-animation reference](judasjs/animation-ragdolls.md).
+Human visual/physical acceptance remains pending for this uncommitted candidate.

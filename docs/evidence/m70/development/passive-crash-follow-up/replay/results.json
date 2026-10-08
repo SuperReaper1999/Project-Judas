@@ -1,0 +1,73 @@
+{
+  "capturedCore": {
+    "fixedDeltaSeconds": 0.01666666753590107,
+    "bodies": 39,
+    "joints": 30,
+    "eventsAtExternalAbort": 6638,
+    "queriesAtExternalAbort": 723397,
+    "samplingFallbacksAtExternalAbort": 6628,
+    "selectedRepeatedPair": [
+      8,
+      12,
+      0,
+      0
+    ],
+    "firstEventSeconds": 9.147122455044849e-06,
+    "lastEventSeconds": 1.1499676178406896e-05,
+    "minimumTimeIncrementSeconds": 3.3881317890172014e-21,
+    "chatteringSlotRangeInclusive": [
+      7,
+      22
+    ]
+  },
+  "baselineReplay": {
+    "timeoutSeconds": 35,
+    "exitCode": 124,
+    "runtimeCompleted": false,
+    "lastLoggedEvents": 5376,
+    "lastLoggedQueries": 473097,
+    "lastLoggedSamplingFallbacks": 5366,
+    "lastLoggedTimeSeconds": 1.1499676178088347e-05,
+    "selectedPair": [
+      8,
+      12,
+      0,
+      0
+    ],
+    "headerSha256": "578ad71b44571fbb21d4fdd8cf83c148e4ad3f528b2177520210e48b40860b01"
+  },
+  "correctedReplay": {
+    "exitCode": 0,
+    "elapsedMs": 29.34307,
+    "events": 18,
+    "queries": 1684,
+    "motionSegments": 320,
+    "samplingFallbacks": 0,
+    "caps": 0,
+    "headerSha256": "c9b873cc854e2da81f2081a1f19bfc1da5febf296ad4beffffa711cdf8cd967c"
+  },
+  "notes": [
+    "Baseline elapsed time is a lower bound from a bounded timeout, not a completed runtime.",
+    "No fixture gravity/drive forces are added: those are already represented in the captured post-velocity-solve velocities.",
+    "Joint warm values are not restored: the CCD event solver resets its impulses.",
+    "The 39-body core was wall-scene geometry; the 37-body ordinary physical scene is a separate performance fixture.",
+    "Diagnostic scope progress is inserted only into a generated PhysicsWorld.cpp copy; no runtime source hook is added."
+  ],
+  "correctedRecipeVerification": {
+    "variant": "corrected",
+    "baselineCheckpoint": "934c5d3f0556c920cc7cae8b80dc4677d8cbf87b",
+    "headerSha256": "c9b873cc854e2da81f2081a1f19bfc1da5febf296ad4beffffa711cdf8cd967c",
+    "shippingPhysicsSourceSha256": "d6cfcdd3d6c01a4699fbefdb1e6e47f56160543593fba3cc0cef095b5fc6624b",
+    "fixtureSha256": "340df9444e8a59a45048c05df6040daeb46aae3f8fb348d6e6023c31a3b59a9f",
+    "timeoutSeconds": 35,
+    "engineSourceModified": false,
+    "exitCode": 0,
+    "timedOut": false,
+    "elapsedMs": 29.936805,
+    "events": 18,
+    "queries": 1684,
+    "motionSegments": 320,
+    "samplingFallbacks": 0,
+    "caps": 0
+  }
+}

@@ -1,0 +1,2645 @@
+{
+  "result": {
+    "retainedFrames": 120,
+    "fixedSteps": 119,
+    "fixedMs": {
+      "median": 1.222076,
+      "p95": 1.882583,
+      "maximum": 2.292515
+    },
+    "capFrames": 0,
+    "discardedSeconds": 0,
+    "qualification": "Synthetic fixed-frame application automation, not a desktop FPS or real-time catch-up measurement."
+  },
+  "frames": [
+    {
+      "frame": 383,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 382,
+            "start_ns": 13412856193051,
+            "end_ns": 13412858270058,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Physics initial impacts": 0.000219,
+        "Physics continuous impacts": 0.016048,
+        "Rigid physics": 1.443424
+      }
+    },
+    {
+      "frame": 384,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 383,
+            "start_ns": 13412858687048,
+            "end_ns": 13412860594022,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Physics initial impacts": 0.000154,
+        "Physics continuous impacts": 0.013878,
+        "Rigid physics": 1.287792
+      }
+    },
+    {
+      "frame": 385,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 384,
+            "start_ns": 13412861074477,
+            "end_ns": 13412862788358,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Physics initial impacts": 0.000162,
+        "Physics continuous impacts": 0.0128,
+        "Rigid physics": 1.204096
+      }
+    },
+    {
+      "frame": 386,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 385,
+            "start_ns": 13412863144024,
+            "end_ns": 13412864897604,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Physics initial impacts": 0.000197,
+        "Physics continuous impacts": 0.012087,
+        "Rigid physics": 1.122928
+      }
+    },
+    {
+      "frame": 387,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 386,
+            "start_ns": 13412865248530,
+            "end_ns": 13412866941508,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Physics initial impacts": 0.000176,
+        "Physics continuous impacts": 0.01154,
+        "Rigid physics": 1.195415
+      }
+    },
+    {
+      "frame": 388,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 387,
+            "start_ns": 13412867300095,
+            "end_ns": 13412868971013,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Physics initial impacts": 0.000171,
+        "Physics continuous impacts": 0.011593,
+        "Rigid physics": 1.169763
+      }
+    },
+    {
+      "frame": 389,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 388,
+            "start_ns": 13412869314688,
+            "end_ns": 13412871197271,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Physics initial impacts": 0.000157,
+        "Physics continuous impacts": 0.012934,
+        "Rigid physics": 1.323617
+      }
+    },
+    {
+      "frame": 390,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 389,
+            "start_ns": 13412871569682,
+            "end_ns": 13412872979601,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Physics initial impacts": 0.000118,
+        "Physics continuous impacts": 0.010901,
+        "Rigid physics": 0.958945
+      }
+    },
+    {
+      "frame": 391,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 390,
+            "start_ns": 13412873275795,
+            "end_ns": 13412874462201,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Physics initial impacts": 0.000143,
+        "Physics continuous impacts": 0.00944,
+        "Rigid physics": 0.80612
+      }
+    },
+    {
+      "frame": 392,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 391,
+            "start_ns": 13412874722528,
+            "end_ns": 13412875990333,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Physics initial impacts": 0.000101,
+        "Physics continuous impacts": 0.011308,
+        "Rigid physics": 0.846182
+      }
+    },
+    {
+      "frame": 393,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 392,
+            "start_ns": 13412876299548,
+            "end_ns": 13412877543982,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Physics initial impacts": 0.000101,
+        "Physics continuous impacts": 0.010136,
+        "Rigid physics": 0.878791
+      }
+    },
+    {
+      "frame": 394,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 393,
+            "start_ns": 13412877785593,
+            "end_ns": 13412878944225,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Physics initial impacts": 0.0001,
+        "Physics continuous impacts": 0.009244,
+        "Rigid physics": 0.818086
+      }
+    },
+    {
+      "frame": 395,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 394,
+            "start_ns": 13412879219525,
+            "end_ns": 13412880417028,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Physics initial impacts": 0.000102,
+        "Physics continuous impacts": 0.010655,
+        "Rigid physics": 0.84721
+      }
+    },
+    {
+      "frame": 396,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 395,
+            "start_ns": 13412880723830,
+            "end_ns": 13412882036195,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Physics initial impacts": 0.000111,
+        "Physics continuous impacts": 0.012334,
+        "Rigid physics": 0.852827
+      }
+    },
+    {
+      "frame": 397,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 396,
+            "start_ns": 13412882326384,
+            "end_ns": 13412883523677,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Physics initial impacts": 0.00014,
+        "Physics continuous impacts": 0.011027,
+        "Rigid physics": 0.838104
+      }
+    },
+    {
+      "frame": 398,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 397,
+            "start_ns": 13412883769131,
+            "end_ns": 13412886061646,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Physics initial impacts": 0.000177,
+        "Physics continuous impacts": 0.01817,
+        "Rigid physics": 1.638516
+      }
+    },
+    {
+      "frame": 399,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 398,
+            "start_ns": 13412886613770,
+            "end_ns": 13412887810113,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Physics initial impacts": 0.000119,
+        "Physics continuous impacts": 0.010767,
+        "Rigid physics": 0.832627
+      }
+    },
+    {
+      "frame": 400,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 399,
+            "start_ns": 13412888078960,
+            "end_ns": 13412889228225,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Physics initial impacts": 0.00011,
+        "Physics continuous impacts": 0.00889,
+        "Rigid physics": 0.788129
+      }
+    },
+    {
+      "frame": 401,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 400,
+            "start_ns": 13412889461314,
+            "end_ns": 13412890697692,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Physics initial impacts": 9.3e-05,
+        "Physics continuous impacts": 0.009619,
+        "Rigid physics": 0.871557
+      }
+    },
+    {
+      "frame": 402,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 401,
+            "start_ns": 13412891030668,
+            "end_ns": 13412892243615,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Physics initial impacts": 0.000118,
+        "Physics continuous impacts": 0.010789,
+        "Rigid physics": 0.823602
+      }
+    },
+    {
+      "frame": 403,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 402,
+            "start_ns": 13412892505382,
+            "end_ns": 13412893642215,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Physics initial impacts": 9.7e-05,
+        "Physics continuous impacts": 0.009525,
+        "Rigid physics": 0.796172
+      }
+    },
+    {
+      "frame": 404,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 403,
+            "start_ns": 13412893876106,
+            "end_ns": 13412895253329,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Physics initial impacts": 0.000116,
+        "Physics continuous impacts": 0.009442,
+        "Rigid physics": 1.011808
+      }
+    },
+    {
+      "frame": 405,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 404,
+            "start_ns": 13412895490695,
+            "end_ns": 13412896768810,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Physics initial impacts": 9.7e-05,
+        "Physics continuous impacts": 0.008764,
+        "Rigid physics": 0.860291
+      }
+    },
+    {
+      "frame": 406,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 405,
+            "start_ns": 13412897016760,
+            "end_ns": 13412898159322,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Physics initial impacts": 0.000108,
+        "Physics continuous impacts": 0.019297,
+        "Rigid physics": 0.785692
+      }
+    },
+    {
+      "frame": 407,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 406,
+            "start_ns": 13412898403668,
+            "end_ns": 13412899578269,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Physics initial impacts": 0.000103,
+        "Physics continuous impacts": 0.009288,
+        "Rigid physics": 0.815048
+      }
+    },
+    {
+      "frame": 408,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 407,
+            "start_ns": 13412899831438,
+            "end_ns": 13412901117161,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Physics initial impacts": 0.000101,
+        "Physics continuous impacts": 0.009872,
+        "Rigid physics": 0.915464
+      }
+    },
+    {
+      "frame": 409,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 408,
+            "start_ns": 13412901377030,
+            "end_ns": 13412902511183,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Physics initial impacts": 9.1e-05,
+        "Physics continuous impacts": 0.008931,
+        "Rigid physics": 0.796735
+      }
+    },
+    {
+      "frame": 410,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 409,
+            "start_ns": 13412902744279,
+            "end_ns": 13412903877377,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Physics initial impacts": 9.7e-05,
+        "Physics continuous impacts": 0.008669,
+        "Rigid physics": 0.794835
+      }
+    },
+    {
+      "frame": 411,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 410,
+            "start_ns": 13412904140954,
+            "end_ns": 13412905413038,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Physics initial impacts": 0.00012,
+        "Physics continuous impacts": 0.008989,
+        "Rigid physics": 0.926072
+      }
+    },
+    {
+      "frame": 412,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 411,
+            "start_ns": 13412905647685,
+            "end_ns": 13412906840065,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Physics initial impacts": 9.7e-05,
+        "Physics continuous impacts": 0.008802,
+        "Rigid physics": 0.854433
+      }
+    },
+    {
+      "frame": 413,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 412,
+            "start_ns": 13412907099214,
+            "end_ns": 13412908421409,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Physics initial impacts": 0.000108,
+        "Physics continuous impacts": 0.023425,
+        "Rigid physics": 0.872661
+      }
+    },
+    {
+      "frame": 414,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 413,
+            "start_ns": 13412908801714,
+            "end_ns": 13412910282920,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Physics initial impacts": 0.00011,
+        "Physics continuous impacts": 0.010038,
+        "Rigid physics": 0.943234
+      }
+    },
+    {
+      "frame": 415,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 414,
+            "start_ns": 13412910553989,
+            "end_ns": 13412911774035,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Physics initial impacts": 0.000107,
+        "Physics continuous impacts": 0.009653,
+        "Rigid physics": 0.845143
+      }
+    },
+    {
+      "frame": 416,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 415,
+            "start_ns": 13412912039258,
+            "end_ns": 13412913195937,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Physics initial impacts": 0.000101,
+        "Physics continuous impacts": 0.009158,
+        "Rigid physics": 0.774516
+      }
+    },
+    {
+      "frame": 417,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 416,
+            "start_ns": 13412913432454,
+            "end_ns": 13412914610854,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Physics initial impacts": 9.6e-05,
+        "Physics continuous impacts": 0.009259,
+        "Rigid physics": 0.8317
+      }
+    },
+    {
+      "frame": 418,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 417,
+            "start_ns": 13412914915263,
+            "end_ns": 13412916567253,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Physics initial impacts": 0.000118,
+        "Physics continuous impacts": 0.009825,
+        "Rigid physics": 1.142369
+      }
+    },
+    {
+      "frame": 419,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 418,
+            "start_ns": 13412916852126,
+            "end_ns": 13412918035217,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Physics initial impacts": 0.0001,
+        "Physics continuous impacts": 0.00887,
+        "Rigid physics": 0.791694
+      }
+    },
+    {
+      "frame": 420,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 419,
+            "start_ns": 13412918278074,
+            "end_ns": 13412919410794,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Physics initial impacts": 0.00011,
+        "Physics continuous impacts": 0.008833,
+        "Rigid physics": 0.796094
+      }
+    },
+    {
+      "frame": 421,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 420,
+            "start_ns": 13412919644025,
+            "end_ns": 13412920897538,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Physics initial impacts": 0.000102,
+        "Physics continuous impacts": 0.009383,
+        "Rigid physics": 0.889275
+      }
+    },
+    {
+      "frame": 422,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 421,
+            "start_ns": 13412921163078,
+            "end_ns": 13412923114403,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Physics initial impacts": 0.000171,
+        "Physics continuous impacts": 0.015097,
+        "Rigid physics": 1.311
+      }
+    },
+    {
+      "frame": 423,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 422,
+            "start_ns": 13412923731124,
+            "end_ns": 13412925741463,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Physics initial impacts": 0.000163,
+        "Physics continuous impacts": 0.012737,
+        "Rigid physics": 1.419021
+      }
+    },
+    {
+      "frame": 424,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 423,
+            "start_ns": 13412926188797,
+            "end_ns": 13412927898736,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Physics initial impacts": 0.000157,
+        "Physics continuous impacts": 0.012957,
+        "Rigid physics": 1.199397
+      }
+    },
+    {
+      "frame": 425,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 424,
+            "start_ns": 13412928279598,
+            "end_ns": 13412929923570,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Physics initial impacts": 0.000148,
+        "Physics continuous impacts": 0.01161,
+        "Rigid physics": 1.14132
+      }
+    },
+    {
+      "frame": 426,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 425,
+            "start_ns": 13412930297517,
+            "end_ns": 13412931999633,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Physics initial impacts": 0.000178,
+        "Physics continuous impacts": 0.012207,
+        "Rigid physics": 1.179655
+      }
+    },
+    {
+      "frame": 427,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 426,
+            "start_ns": 13412932426913,
+            "end_ns": 13412934182455,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Physics initial impacts": 0.000146,
+        "Physics continuous impacts": 0.012625,
+        "Rigid physics": 1.186882
+      }
+    },
+    {
+      "frame": 428,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 427,
+            "start_ns": 13412934547008,
+            "end_ns": 13412936358929,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Physics initial impacts": 0.000171,
+        "Physics continuous impacts": 0.012646,
+        "Rigid physics": 1.263593
+      }
+    },
+    {
+      "frame": 429,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 428,
+            "start_ns": 13412936721862,
+            "end_ns": 13412938212594,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Physics initial impacts": 0.000115,
+        "Physics continuous impacts": 0.009165,
+        "Rigid physics": 1.043903
+      }
+    },
+    {
+      "frame": 430,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 429,
+            "start_ns": 13412938460683,
+            "end_ns": 13412939614506,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Physics initial impacts": 0.000126,
+        "Physics continuous impacts": 0.008967,
+        "Rigid physics": 0.813417
+      }
+    },
+    {
+      "frame": 431,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 430,
+            "start_ns": 13412939852733,
+            "end_ns": 13412941082391,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Physics initial impacts": 0.000107,
+        "Physics continuous impacts": 0.009623,
+        "Rigid physics": 0.832132
+      }
+    },
+    {
+      "frame": 432,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 431,
+            "start_ns": 13412941366700,
+            "end_ns": 13412942565929,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Physics initial impacts": 9.5e-05,
+        "Physics continuous impacts": 0.010264,
+        "Rigid physics": 0.835976
+      }
+    },
+    {
+      "frame": 433,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 432,
+            "start_ns": 13412942822804,
+            "end_ns": 13412943998114,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Physics initial impacts": 8.9e-05,
+        "Physics continuous impacts": 0.00931,
+        "Rigid physics": 0.790219
+      }
+    },
+    {
+      "frame": 434,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 433,
+            "start_ns": 13412944268969,
+            "end_ns": 13412945636637,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Physics initial impacts": 0.000128,
+        "Physics continuous impacts": 0.009597,
+        "Rigid physics": 1.023691
+      }
+    },
+    {
+      "frame": 435,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 434,
+            "start_ns": 13412945911628,
+            "end_ns": 13412947128412,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Physics initial impacts": 0.000104,
+        "Physics continuous impacts": 0.008815,
+        "Rigid physics": 0.816013
+      }
+    },
+    {
+      "frame": 436,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 435,
+            "start_ns": 13412947405849,
+            "end_ns": 13412948555860,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Physics initial impacts": 9.4e-05,
+        "Physics continuous impacts": 0.009236,
+        "Rigid physics": 0.811639
+      }
+    },
+    {
+      "frame": 437,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 436,
+            "start_ns": 13412948793303,
+            "end_ns": 13412950601878,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Physics initial impacts": 0.00014,
+        "Physics continuous impacts": 0.018083,
+        "Rigid physics": 1.278786
+      }
+    },
+    {
+      "frame": 438,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 437,
+            "start_ns": 13412951187085,
+            "end_ns": 13412952816464,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Physics initial impacts": 0.000206,
+        "Physics continuous impacts": 0.018945,
+        "Rigid physics": 0.91802
+      }
+    },
+    {
+      "frame": 439,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 438,
+            "start_ns": 13412953382935,
+            "end_ns": 13412955071431,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Physics initial impacts": 0.000118,
+        "Physics continuous impacts": 0.013017,
+        "Rigid physics": 1.131545
+      }
+    },
+    {
+      "frame": 440,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 439,
+            "start_ns": 13412955376631,
+            "end_ns": 13412956572376,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Physics initial impacts": 0.000107,
+        "Physics continuous impacts": 0.00938,
+        "Rigid physics": 0.845936
+      }
+    },
+    {
+      "frame": 441,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 440,
+            "start_ns": 13412956808841,
+            "end_ns": 13412957969220,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Physics initial impacts": 9.3e-05,
+        "Physics continuous impacts": 0.009178,
+        "Rigid physics": 0.807092
+      }
+    },
+    {
+      "frame": 442,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 441,
+            "start_ns": 13412958243942,
+            "end_ns": 13412959388377,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Physics initial impacts": 0.000109,
+        "Physics continuous impacts": 0.009059,
+        "Rigid physics": 0.806971
+      }
+    },
+    {
+      "frame": 443,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 442,
+            "start_ns": 13412959620958,
+            "end_ns": 13412960877914,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Physics initial impacts": 0.000104,
+        "Physics continuous impacts": 0.009315,
+        "Rigid physics": 0.897174
+      }
+    },
+    {
+      "frame": 444,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 443,
+            "start_ns": 13412961163542,
+            "end_ns": 13412962322113,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Physics initial impacts": 0.000115,
+        "Physics continuous impacts": 0.008976,
+        "Rigid physics": 0.821317
+      }
+    },
+    {
+      "frame": 445,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 444,
+            "start_ns": 13412962555021,
+            "end_ns": 13412963694313,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Physics initial impacts": 9.9e-05,
+        "Physics continuous impacts": 0.008901,
+        "Rigid physics": 0.802678
+      }
+    },
+    {
+      "frame": 446,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 445,
+            "start_ns": 13412963932990,
+            "end_ns": 13412965310812,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Physics initial impacts": 0.000108,
+        "Physics continuous impacts": 0.009195,
+        "Rigid physics": 0.994864
+      }
+    },
+    {
+      "frame": 447,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 446,
+            "start_ns": 13412965551394,
+            "end_ns": 13412966708053,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Physics initial impacts": 0.000109,
+        "Physics continuous impacts": 0.008682,
+        "Rigid physics": 0.819431
+      }
+    },
+    {
+      "frame": 448,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 447,
+            "start_ns": 13412966942409,
+            "end_ns": 13412968105248,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Physics initial impacts": 9.5e-05,
+        "Physics continuous impacts": 0.008911,
+        "Rigid physics": 0.764882
+      }
+    },
+    {
+      "frame": 449,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 448,
+            "start_ns": 13412968339965,
+            "end_ns": 13412969473506,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Physics initial impacts": 9.5e-05,
+        "Physics continuous impacts": 0.008809,
+        "Rigid physics": 0.797301
+      }
+    },
+    {
+      "frame": 450,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 449,
+            "start_ns": 13412969708208,
+            "end_ns": 13412970868888,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Physics initial impacts": 0.000115,
+        "Physics continuous impacts": 0.009131,
+        "Rigid physics": 0.806464
+      }
+    },
+    {
+      "frame": 451,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 450,
+            "start_ns": 13412971180038,
+            "end_ns": 13412972402114,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Physics initial impacts": 0.000104,
+        "Physics continuous impacts": 0.011795,
+        "Rigid physics": 0.836783
+      }
+    },
+    {
+      "frame": 452,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 451,
+            "start_ns": 13412972685060,
+            "end_ns": 13412973892618,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Physics initial impacts": 0.000103,
+        "Physics continuous impacts": 0.010336,
+        "Rigid physics": 0.814464
+      }
+    },
+    {
+      "frame": 453,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 452,
+            "start_ns": 13412974188071,
+            "end_ns": 13412975474608,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Physics initial impacts": 0.000147,
+        "Physics continuous impacts": 0.01038,
+        "Rigid physics": 0.860254
+      }
+    },
+    {
+      "frame": 454,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 453,
+            "start_ns": 13412975752974,
+            "end_ns": 13412977074373,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Physics initial impacts": 0.000108,
+        "Physics continuous impacts": 0.011056,
+        "Rigid physics": 0.920603
+      }
+    },
+    {
+      "frame": 455,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 454,
+            "start_ns": 13412977349246,
+            "end_ns": 13412978517195,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Physics initial impacts": 0.0001,
+        "Physics continuous impacts": 0.009733,
+        "Rigid physics": 0.815958
+      }
+    },
+    {
+      "frame": 456,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 455,
+            "start_ns": 13412978758173,
+            "end_ns": 13412979910065,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Physics initial impacts": 9.5e-05,
+        "Physics continuous impacts": 0.008724,
+        "Rigid physics": 0.810257
+      }
+    },
+    {
+      "frame": 457,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 456,
+            "start_ns": 13412980186386,
+            "end_ns": 13412981414094,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Physics initial impacts": 0.000103,
+        "Physics continuous impacts": 0.009771,
+        "Rigid physics": 0.851923
+      }
+    },
+    {
+      "frame": 458,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 457,
+            "start_ns": 13412981686306,
+            "end_ns": 13412982873084,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Physics initial impacts": 0.000103,
+        "Physics continuous impacts": 0.010207,
+        "Rigid physics": 0.819672
+      }
+    },
+    {
+      "frame": 459,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 458,
+            "start_ns": 13412983161351,
+            "end_ns": 13412984310281,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Physics initial impacts": 9.6e-05,
+        "Physics continuous impacts": 0.00969,
+        "Rigid physics": 0.797968
+      }
+    },
+    {
+      "frame": 460,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 459,
+            "start_ns": 13412984702335,
+            "end_ns": 13412985914926,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Physics initial impacts": 0.000123,
+        "Physics continuous impacts": 0.009506,
+        "Rigid physics": 0.839105
+      }
+    },
+    {
+      "frame": 461,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 460,
+            "start_ns": 13412986169340,
+            "end_ns": 13412987346847,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Physics initial impacts": 0.000125,
+        "Physics continuous impacts": 0.009298,
+        "Rigid physics": 0.795973
+      }
+    },
+    {
+      "frame": 462,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 461,
+            "start_ns": 13412987585533,
+            "end_ns": 13412988719449,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Physics initial impacts": 0.000113,
+        "Physics continuous impacts": 0.009072,
+        "Rigid physics": 0.790204
+      }
+    },
+    {
+      "frame": 463,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 462,
+            "start_ns": 13412988958303,
+            "end_ns": 13412990119376,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Physics initial impacts": 0.000113,
+        "Physics continuous impacts": 0.009092,
+        "Rigid physics": 0.787184
+      }
+    },
+    {
+      "frame": 464,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 463,
+            "start_ns": 13412990369055,
+            "end_ns": 13412991601759,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Physics initial impacts": 0.000119,
+        "Physics continuous impacts": 0.010402,
+        "Rigid physics": 0.865643
+      }
+    },
+    {
+      "frame": 465,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 464,
+            "start_ns": 13412991883014,
+            "end_ns": 13412993128215,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Physics initial impacts": 0.000101,
+        "Physics continuous impacts": 0.009573,
+        "Rigid physics": 0.81276
+      }
+    },
+    {
+      "frame": 466,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 465,
+            "start_ns": 13412993366405,
+            "end_ns": 13412994690758,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Physics initial impacts": 0.000102,
+        "Physics continuous impacts": 0.008827,
+        "Rigid physics": 0.793197
+      }
+    },
+    {
+      "frame": 467,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 466,
+            "start_ns": 13412994978136,
+            "end_ns": 13412996165528,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Physics initial impacts": 0.000124,
+        "Physics continuous impacts": 0.009506,
+        "Rigid physics": 0.774233
+      }
+    },
+    {
+      "frame": 468,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 467,
+            "start_ns": 13412996403245,
+            "end_ns": 13412997600308,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Physics initial impacts": 0.000106,
+        "Physics continuous impacts": 0.008955,
+        "Rigid physics": 0.855897
+      }
+    },
+    {
+      "frame": 469,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 468,
+            "start_ns": 13412997833401,
+            "end_ns": 13412998960954,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Physics initial impacts": 9.9e-05,
+        "Physics continuous impacts": 0.008869,
+        "Rigid physics": 0.792305
+      }
+    },
+    {
+      "frame": 470,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 469,
+            "start_ns": 13412999207905,
+            "end_ns": 13413000434238,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Physics initial impacts": 0.000122,
+        "Physics continuous impacts": 0.010317,
+        "Rigid physics": 0.832966
+      }
+    },
+    {
+      "frame": 471,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 470,
+            "start_ns": 13413000704955,
+            "end_ns": 13413001945193,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Physics initial impacts": 0.000127,
+        "Physics continuous impacts": 0.010674,
+        "Rigid physics": 0.872507
+      }
+    },
+    {
+      "frame": 472,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 471,
+            "start_ns": 13413002231902,
+            "end_ns": 13413003407395,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Physics initial impacts": 0.000118,
+        "Physics continuous impacts": 0.009297,
+        "Rigid physics": 0.795854
+      }
+    },
+    {
+      "frame": 473,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 472,
+            "start_ns": 13413003683560,
+            "end_ns": 13413005221650,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Physics initial impacts": 0.000122,
+        "Physics continuous impacts": 0.011481,
+        "Rigid physics": 1.088599
+      }
+    },
+    {
+      "frame": 474,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 473,
+            "start_ns": 13413005517684,
+            "end_ns": 13413006717588,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Physics initial impacts": 0.000138,
+        "Physics continuous impacts": 0.01191,
+        "Rigid physics": 0.830932
+      }
+    },
+    {
+      "frame": 475,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 474,
+            "start_ns": 13413006974657,
+            "end_ns": 13413008197317,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Physics initial impacts": 0.0001,
+        "Physics continuous impacts": 0.009252,
+        "Rigid physics": 0.805068
+      }
+    },
+    {
+      "frame": 476,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 475,
+            "start_ns": 13413008440873,
+            "end_ns": 13413009609121,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Physics initial impacts": 0.000103,
+        "Physics continuous impacts": 0.009232,
+        "Rigid physics": 0.818492
+      }
+    },
+    {
+      "frame": 477,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 476,
+            "start_ns": 13413009854101,
+            "end_ns": 13413011343934,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Physics initial impacts": 0.000122,
+        "Physics continuous impacts": 0.010632,
+        "Rigid physics": 0.915393
+      }
+    },
+    {
+      "frame": 478,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 477,
+            "start_ns": 13413011931020,
+            "end_ns": 13413013419908,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Physics initial impacts": 0.000177,
+        "Physics continuous impacts": 0.012474,
+        "Rigid physics": 0.894261
+      }
+    },
+    {
+      "frame": 479,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 478,
+            "start_ns": 13413013705769,
+            "end_ns": 13413014884628,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Physics initial impacts": 0.000127,
+        "Physics continuous impacts": 0.00917,
+        "Rigid physics": 0.826698
+      }
+    },
+    {
+      "frame": 480,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 479,
+            "start_ns": 13413015158106,
+            "end_ns": 13413016348772,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Physics initial impacts": 9.5e-05,
+        "Physics continuous impacts": 0.009482,
+        "Rigid physics": 0.842187
+      }
+    },
+    {
+      "frame": 481,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 480,
+            "start_ns": 13413016589644,
+            "end_ns": 13413017823064,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Physics initial impacts": 9.7e-05,
+        "Physics continuous impacts": 0.00921,
+        "Rigid physics": 0.885471
+      }
+    },
+    {
+      "frame": 482,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 481,
+            "start_ns": 13413018143772,
+            "end_ns": 13413019307728,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Physics initial impacts": 0.000126,
+        "Physics continuous impacts": 0.009466,
+        "Rigid physics": 0.811709
+      }
+    },
+    {
+      "frame": 483,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 482,
+            "start_ns": 13413019624656,
+            "end_ns": 13413020893201,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Physics initial impacts": 0.000107,
+        "Physics continuous impacts": 0.01349,
+        "Rigid physics": 0.883274
+      }
+    },
+    {
+      "frame": 484,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 483,
+            "start_ns": 13413021170082,
+            "end_ns": 13413022597390,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Physics initial impacts": 0.00012,
+        "Physics continuous impacts": 0.025988,
+        "Rigid physics": 0.916067
+      }
+    },
+    {
+      "frame": 485,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 484,
+            "start_ns": 13413022990268,
+            "end_ns": 13413024220452,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Physics initial impacts": 0.000117,
+        "Physics continuous impacts": 0.009003,
+        "Rigid physics": 0.80214
+      }
+    },
+    {
+      "frame": 486,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 485,
+            "start_ns": 13413024469470,
+            "end_ns": 13413025815893,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Physics initial impacts": 0.000122,
+        "Physics continuous impacts": 0.011087,
+        "Rigid physics": 0.82793
+      }
+    },
+    {
+      "frame": 487,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 486,
+            "start_ns": 13413026105469,
+            "end_ns": 13413027284563,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Physics initial impacts": 0.00012,
+        "Physics continuous impacts": 0.022636,
+        "Rigid physics": 0.826004
+      }
+    },
+    {
+      "frame": 488,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 487,
+            "start_ns": 13413027519749,
+            "end_ns": 13413028722420,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Physics initial impacts": 0.000117,
+        "Physics continuous impacts": 0.008931,
+        "Rigid physics": 0.844346
+      }
+    },
+    {
+      "frame": 489,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 488,
+            "start_ns": 13413028958118,
+            "end_ns": 13413030211761,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Physics initial impacts": 0.000119,
+        "Physics continuous impacts": 0.013164,
+        "Rigid physics": 0.828118
+      }
+    },
+    {
+      "frame": 490,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 489,
+            "start_ns": 13413030453849,
+            "end_ns": 13413032169106,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Physics initial impacts": 0.000118,
+        "Physics continuous impacts": 0.010788,
+        "Rigid physics": 1.243018
+      }
+    },
+    {
+      "frame": 491,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 490,
+            "start_ns": 13413032470194,
+            "end_ns": 13413033809329,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Physics initial impacts": 0.000108,
+        "Physics continuous impacts": 0.009292,
+        "Rigid physics": 0.825413
+      }
+    },
+    {
+      "frame": 492,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 491,
+            "start_ns": 13413034148972,
+            "end_ns": 13413035319048,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Physics initial impacts": 0.000121,
+        "Physics continuous impacts": 0.009939,
+        "Rigid physics": 0.81631
+      }
+    },
+    {
+      "frame": 493,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 492,
+            "start_ns": 13413892344056,
+            "end_ns": 13413893635034,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Physics initial impacts": 0.000183,
+        "Physics continuous impacts": 0.013224,
+        "Rigid physics": 0.830422
+      }
+    },
+    {
+      "frame": 494,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 493,
+            "start_ns": 13413893896594,
+            "end_ns": 13413895258077,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Physics initial impacts": 0.000124,
+        "Physics continuous impacts": 0.008977,
+        "Rigid physics": 0.808217
+      }
+    },
+    {
+      "frame": 495,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 494,
+            "start_ns": 13413895536563,
+            "end_ns": 13413896706932,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Physics initial impacts": 0.000112,
+        "Physics continuous impacts": 0.009039,
+        "Rigid physics": 0.826233
+      }
+    },
+    {
+      "frame": 496,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 495,
+            "start_ns": 13413896946024,
+            "end_ns": 13413898158916,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Physics initial impacts": 0.000105,
+        "Physics continuous impacts": 0.008836,
+        "Rigid physics": 0.766339
+      }
+    },
+    {
+      "frame": 497,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 496,
+            "start_ns": 13413898406495,
+            "end_ns": 13413899569992,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Physics initial impacts": 0.000112,
+        "Physics continuous impacts": 0.009286,
+        "Rigid physics": 0.812823
+      }
+    },
+    {
+      "frame": 498,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 497,
+            "start_ns": 13413899806637,
+            "end_ns": 13413900961812,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Physics initial impacts": 0.000108,
+        "Physics continuous impacts": 0.008829,
+        "Rigid physics": 0.814235
+      }
+    },
+    {
+      "frame": 499,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 498,
+            "start_ns": 13413901242454,
+            "end_ns": 13413902514162,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Physics initial impacts": 0.000126,
+        "Physics continuous impacts": 0.009242,
+        "Rigid physics": 0.90031
+      }
+    },
+    {
+      "frame": 500,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 499,
+            "start_ns": 13413902758516,
+            "end_ns": 13413903919034,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Physics initial impacts": 0.000102,
+        "Physics continuous impacts": 0.009354,
+        "Rigid physics": 0.816381
+      }
+    },
+    {
+      "frame": 501,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": [
+          {
+            "id": 500,
+            "start_ns": 13413904193486,
+            "end_ns": 13413905390324,
+            "simulation_seconds": 0.01666666753590107
+          }
+        ]
+      },
+      "scopeMs": {
+        "Physics initial impacts": 0.000113,
+        "Physics continuous impacts": 0.009381,
+        "Rigid physics": 0.839744
+      }
+    },
+    {
+      "frame": 502,
+      "fixed": {
+        "accumulator_seconds": 0,
+        "discarded_seconds": 0,
+        "cap_reached": false,
+        "paused": false,
+        "steps": []
+      },
+      "scopeMs": {}
+    }
+  ]
+}

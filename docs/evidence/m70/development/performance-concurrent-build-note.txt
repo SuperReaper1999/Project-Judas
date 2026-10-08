@@ -1,0 +1,1 @@
+This first performance observation overlapped the final editor compilation. It is not the accepted timing capture. Repeat the identical frozen workload after build completion; retain this raw observation rather than presenting it as isolated performance.

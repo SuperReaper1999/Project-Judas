@@ -1,0 +1,10 @@
+{
+  "command": [
+    "/home/conner/Documents/GitHub/Project-Judas/build/judas_editor",
+    "/home/conner/Documents/GitHub/Project-Judas/.cache/m70-review/owned-editor-crash-corrected-source/character_lab/character_lab.judasproj"
+  ],
+  "ownedProjectCopy": "/home/conner/Documents/GitHub/Project-Judas/.cache/m70-review/owned-editor-crash-corrected-source/character_lab",
+  "exit": 0,
+  "elapsedSeconds": 5.77838298700226,
+  "mode": "offscreen correctness check, no visual acceptance"
+}

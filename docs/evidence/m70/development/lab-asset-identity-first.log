@@ -1,0 +1,16 @@
+Traceback (most recent call last):
+  File "/home/conner/Documents/GitHub/Project-Judas/scripts/create_m70_lab.py", line 210, in <module>
+    if __name__ == "__main__": main()
+                               ~~~~^^
+  File "/home/conner/Documents/GitHub/Project-Judas/scripts/create_m70_lab.py", line 149, in main
+    model_ids[name]=track(project/"Assets/models"/(name+".judasmodel"))
+                    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/conner/Documents/GitHub/Project-Judas/scripts/create_m70_lab.py", line 138, in track
+    identity=hashlib.md5(("M70 Character Lab:"+str(path.relative_to(project))).encode()).hexdigest();run("--track-asset",config,path,identity);return identity
+                                                                                                     ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/conner/Documents/GitHub/Project-Judas/scripts/create_m70_lab.py", line 130, in run
+    if result.returncode: raise RuntimeError(" ".join(map(str,cmd))+"\n"+result.stdout+result.stderr)
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: --track-asset /home/conner/Documents/GitHub/Project-Judas/projects/character_lab/character_lab.judasproj /home/conner/Documents/GitHub/Project-Judas/projects/character_lab/Assets/models/figure.judasmodel 7c9f17b1dbbd902eee18b850573eb8ba
+content service: Existing asset identity differs; no reminting
+

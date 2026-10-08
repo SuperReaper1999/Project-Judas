@@ -180,12 +180,17 @@ public:
     void ClearTouchHistory();
     // Massless character geometry participates in queries/events, never rigid response.
     BodyHandle CreateQueryCapsule(float radius,float halfHeight,const BodyTransform&);
+    // Owner-thread fixed-step prephase: retain motor observations until the
+    // normal post-physics contact publication. No query geometry is rerun.
+    void BeginPreStepQueryContacts();
     void ObserveQueryContact(BodyHandle,const ShapeSweepHit&,const glm::vec3& velocity);
     void FinishQueryTouches();
     void PersistTouches(class SaveArchive&,const std::function<uint64_t(BodyHandle)>&,const std::function<BodyHandle(uint64_t)>&,const std::function<bool(BodyHandle)>& include = {});
     void PersistBodyForces(class SaveArchive&,BodyHandle);
     bool SetBodySensor(BodyHandle handle,bool sensor);
     bool IsBodySensor(BodyHandle handle) const;
+    // Internal articulation boundaries drive joints without appearing in casts.
+    bool SetBodyQueriesEnabled(BodyHandle,bool);
     bool SetBodyEnabled(BodyHandle handle,bool enabled);
     bool IsBodyEnabled(BodyHandle handle) const;
 
@@ -390,7 +395,7 @@ public:
     // contribution this step — see law #22/#32 in Project_Persistent_Memory.md).
     // A no-op on a static or unknown handle.
     void ApplyForce(BodyHandle handle, const glm::vec3& force);
-    void ApplyTorque(BodyHandle handle, const glm::vec3& torque);
+    void ApplyTorque(BodyHandle handle, const glm::vec3& torque,bool wake=true);
 
     // Advances the simulation by exactly one fixed step. The caller owns
     // the accumulator that decides how many times to call this per frame.

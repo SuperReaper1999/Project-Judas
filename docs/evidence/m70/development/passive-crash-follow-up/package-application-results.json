@@ -1,0 +1,26 @@
+[
+  {
+    "name": "wall-active",
+    "command": [
+      "/tmp/judas-m70-character-lab-corrected-20261008/judas"
+    ],
+    "cwd": "/tmp/judas-m70-corrected-unrelated-working-directory",
+    "testScript": "/home/conner/Documents/GitHub/Project-Judas/docs/evidence/m70/development/passive-crash-follow-up/wall-active.steps",
+    "sourceHiddenCopy": "/home/conner/Documents/GitHub/Project-Judas/.cache/m70-review/owned-export-crash-corrected-source/character_lab",
+    "exit": 0,
+    "elapsedSeconds": 12.041719583001395,
+    "timingQualification": "startup correctness smoke, not FPS benchmark"
+  },
+  {
+    "name": "physical-lifetime",
+    "command": [
+      "/tmp/judas-m70-character-lab-corrected-20261008/judas"
+    ],
+    "cwd": "/tmp/judas-m70-corrected-unrelated-working-directory",
+    "testScript": "/home/conner/Documents/GitHub/Project-Judas/docs/evidence/m70/development/passive-crash-follow-up/physical-lifetime.steps",
+    "sourceHiddenCopy": "/home/conner/Documents/GitHub/Project-Judas/.cache/m70-review/owned-export-crash-corrected-source/character_lab",
+    "exit": 0,
+    "elapsedSeconds": 2.2186669219991018,
+    "timingQualification": "startup correctness smoke, not FPS benchmark"
+  }
+]

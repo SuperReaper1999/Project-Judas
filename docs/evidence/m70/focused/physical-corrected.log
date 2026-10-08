@@ -1,0 +1,58 @@
+PASS independent bounded implicit-PD torque expectation
+PASS physical effort saturates at declared N m limit
+PASS quaternion signs use identical shortest-path rotational error
+PASS zero drive retains actual error and applies no restoring torque
+PASS declarative region configuration round trip
+PASS nonfinite drive configuration rejected before publication
+PASS M70 opt-in motor contact fixture builds through ordinary scene bodies
+PASS pre-physics motor floor enter survives Step in animation authority
+PASS pre-physics motor floor contact publishes one stay
+PASS leaving floor publishes one exit across M70 phase ordering
+PASS pre-physics floor exit does not repeat
+PASS pre-physics sweep wall enter survives Step
+PASS continued wall intent publishes one wall stay
+PASS moving away publishes one wall exit
+PASS wall exit does not repeat while floor contact continues
+PASS headless ordinary entity and immutable skeleton ready
+PASS legacy activation cannot bypass explicit motor authority handoff
+PASS authority request queues without immediate physics mutation
+PASS selected region dynamic with explicit static boundary anchor
+PASS partial physical response preserves CharacterMotor authority
+PASS unselected boundary anchors do not become invisible query colliders
+PASS ordinary mapped body has stable owner/joint attribution
+FAIL one articulation without duplicate physical root population
+FAIL external hit causes actual dynamic departure, not only rendered deformation
+FAIL bounded relative drives return a disturbed region toward its reference
+FAIL unchanged settled reference permits ordinary island sleeping
+PASS ordinary external impact wakes a driven region
+PASS observed effort never exceeds authored cap
+PASS translating motor and boundary preserve independent root locomotion
+PASS full authority refuses an implicit competing motor root
+PASS explicit motor-to-full articulation handoff accepted
+PASS full physical root dynamic and motor explicitly disabled
+PASS partial-to-full uses current root instead of a parked inactive anchor
+PASS full physical motor root preserves previous/mid/current presentation samples
+PASS socket and solved joint share identical interpolated physical root sample
+PASS active to passive request accepted
+PASS passive release preserves body identity and velocity without another kick
+PASS passive mode removes active effort without changing passive constraints
+PASS penetrating resume placement refuses and retains coherent physical authority
+PASS clear destination behind a wall does not authorize root tunnelling
+PASS safe explicit motor placement and visual return accepted
+PASS return retires physics and preserves a captured transition pose
+FAIL old body generations cannot alias later articulation state
+PASS visual transition retires through the existing M47 resolver
+PASS invalid mapped batch does not partially replace authored settings
+PASS partial reactivation accepted
+FAIL mapped body removal tears down articulation safely
+PASS repeated activation has no stale collider ghosts
+PASS component disable retires mode and constraints
+PASS additional presentation evaluations do not change fixed physical trajectory
+PASS shared immutable rig retains independent authority and mixer state
+PASS uninvolved hidden mapped branch requires no singular-transform inversion
+PASS hidden unselected child stays hidden and cannot kinematically pin its dynamic parent
+FAIL rotating the whole articulation preserves bounded physical response
+PASS unreachable reference saturates at ordinary authored hinge limit
+PASS collider-free non-motor physical root uses the same authoritative presentation seam
+OBSERVATIONS impact_error_rad=0.00668400107 returned_error_rad=0.0585517623 presentation_difference_m=0
+SUMMARY 56 checks 7 failures

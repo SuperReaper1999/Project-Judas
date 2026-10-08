@@ -1,0 +1,426 @@
+{
+  "allocationScope": "ordinary C++ new/new[] calls inside StepPlayedWorld; excludes C malloc/QuickJS, aligned new, startup, collection and rendering",
+  "cases": [
+    {
+      "awakeBodiesMax": 0,
+      "awakeBodiesMin": 0,
+      "convergedInstanceSamples": 0,
+      "cppNewCallsPerStep": {
+        "maximum": 18.0,
+        "median": 18.0,
+        "p95": 18.0
+      },
+      "dynamicBodiesMax": 0,
+      "dynamicBodiesMin": 0,
+      "finiteFinalPoses": true,
+      "fixedStepMs": {
+        "maximum": 0.104399,
+        "median": 0.06428,
+        "p95": 0.07662
+      },
+      "instances": 1,
+      "m56Capture": "m56-disabled-1.json",
+      "mode": "disabled",
+      "physicalDrivesMs": {
+        "maximum": 0.018365,
+        "median": 0.008815,
+        "p95": 0.011672
+      },
+      "physicsToPoseMs": {
+        "maximum": 0.000174,
+        "median": 8.1e-05,
+        "p95": 0.000107
+      },
+      "poseResolutionInclusiveMs": {
+        "maximum": 0.025472,
+        "median": 0.011691,
+        "p95": 0.016449
+      },
+      "rigidPhysicsMs": {
+        "maximum": 0.003429,
+        "median": 0.001442,
+        "p95": 0.001979
+      },
+      "sharedIKIterationsSummedPerStep": {
+        "maximum": 0.0,
+        "median": 0.0,
+        "p95": 0.0
+      },
+      "sharedIKSolveMicroseconds": {
+        "maximum": 0.0,
+        "median": 0.0,
+        "p95": 0.0
+      },
+      "totalBodies": 2
+    },
+    {
+      "awakeBodiesMax": 0,
+      "awakeBodiesMin": 0,
+      "convergedInstanceSamples": 120,
+      "cppNewCallsPerStep": {
+        "maximum": 119.0,
+        "median": 119.0,
+        "p95": 119.0
+      },
+      "dynamicBodiesMax": 0,
+      "dynamicBodiesMin": 0,
+      "finiteFinalPoses": true,
+      "fixedStepMs": {
+        "maximum": 0.19135,
+        "median": 0.114625,
+        "p95": 0.134359
+      },
+      "instances": 1,
+      "m56Capture": "m56-ik-1.json",
+      "mode": "ik",
+      "physicalDrivesMs": {
+        "maximum": 0.01264,
+        "median": 0.007442,
+        "p95": 0.007778
+      },
+      "physicsToPoseMs": {
+        "maximum": 0.000147,
+        "median": 6.3e-05,
+        "p95": 0.000102
+      },
+      "poseResolutionInclusiveMs": {
+        "maximum": 0.13021,
+        "median": 0.063495,
+        "p95": 0.072631
+      },
+      "rigidPhysicsMs": {
+        "maximum": 0.004956,
+        "median": 0.001254,
+        "p95": 0.001955
+      },
+      "sharedIKIterationsSummedPerStep": {
+        "maximum": 1.0,
+        "median": 1.0,
+        "p95": 1.0
+      },
+      "sharedIKSolveMicroseconds": {
+        "maximum": 67.651,
+        "median": 46.357,
+        "p95": 53.163
+      },
+      "totalBodies": 2
+    },
+    {
+      "awakeBodiesMax": 8,
+      "awakeBodiesMin": 8,
+      "convergedInstanceSamples": 0,
+      "cppNewCallsPerStep": {
+        "maximum": 22142.0,
+        "median": 22088.0,
+        "p95": 22090.0
+      },
+      "dynamicBodiesMax": 8,
+      "dynamicBodiesMin": 8,
+      "finiteFinalPoses": true,
+      "fixedStepMs": {
+        "maximum": 9.603001,
+        "median": 2.868783,
+        "p95": 7.247298
+      },
+      "instances": 1,
+      "m56Capture": "m56-partial-1.json",
+      "mode": "partial",
+      "physicalDrivesMs": {
+        "maximum": 5.299211,
+        "median": 1.29793,
+        "p95": 3.257478
+      },
+      "physicsToPoseMs": {
+        "maximum": 4.666963,
+        "median": 1.343207,
+        "p95": 3.571946
+      },
+      "poseResolutionInclusiveMs": {
+        "maximum": 0.156343,
+        "median": 0.052110000000000004,
+        "p95": 0.08721899999999999
+      },
+      "rigidPhysicsMs": {
+        "maximum": 0.770568,
+        "median": 0.083762,
+        "p95": 0.232225
+      },
+      "sharedIKIterationsSummedPerStep": {
+        "maximum": 0.0,
+        "median": 0.0,
+        "p95": 0.0
+      },
+      "sharedIKSolveMicroseconds": {
+        "maximum": 0.0,
+        "median": 0.0,
+        "p95": 0.0
+      },
+      "totalBodies": 18
+    },
+    {
+      "awakeBodiesMax": 16,
+      "awakeBodiesMin": 0,
+      "convergedInstanceSamples": 0,
+      "cppNewCallsPerStep": {
+        "maximum": 22801.0,
+        "median": 22106.0,
+        "p95": 22347.0
+      },
+      "dynamicBodiesMax": 16,
+      "dynamicBodiesMin": 16,
+      "finiteFinalPoses": true,
+      "fixedStepMs": {
+        "maximum": 19.547856,
+        "median": 2.971479,
+        "p95": 7.843947
+      },
+      "instances": 1,
+      "m56Capture": "m56-passive-1.json",
+      "mode": "passive",
+      "physicalDrivesMs": {
+        "maximum": 3.057293,
+        "median": 1.150376,
+        "p95": 1.916947
+      },
+      "physicsToPoseMs": {
+        "maximum": 3.62594,
+        "median": 1.186884,
+        "p95": 1.950294
+      },
+      "poseResolutionInclusiveMs": {
+        "maximum": 0.075695,
+        "median": 0.042556000000000004,
+        "p95": 0.062721
+      },
+      "rigidPhysicsMs": {
+        "maximum": 16.309705,
+        "median": 0.471271,
+        "p95": 3.777701
+      },
+      "sharedIKIterationsSummedPerStep": {
+        "maximum": 0.0,
+        "median": 0.0,
+        "p95": 0.0
+      },
+      "sharedIKSolveMicroseconds": {
+        "maximum": 0.0,
+        "median": 0.0,
+        "p95": 0.0
+      },
+      "totalBodies": 18
+    },
+    {
+      "awakeBodiesMax": 0,
+      "awakeBodiesMin": 0,
+      "convergedInstanceSamples": 0,
+      "cppNewCallsPerStep": {
+        "maximum": 153.0,
+        "median": 153.0,
+        "p95": 153.0
+      },
+      "dynamicBodiesMax": 0,
+      "dynamicBodiesMin": 0,
+      "finiteFinalPoses": true,
+      "fixedStepMs": {
+        "maximum": 1.233773,
+        "median": 0.567347,
+        "p95": 0.680801
+      },
+      "instances": 10,
+      "m56Capture": "m56-disabled-10.json",
+      "mode": "disabled",
+      "physicalDrivesMs": {
+        "maximum": 0.131885,
+        "median": 0.072375,
+        "p95": 0.092487
+      },
+      "physicsToPoseMs": {
+        "maximum": 0.000784,
+        "median": 0.000351,
+        "p95": 0.000539
+      },
+      "poseResolutionInclusiveMs": {
+        "maximum": 0.189255,
+        "median": 0.08036899999999998,
+        "p95": 0.100685
+      },
+      "rigidPhysicsMs": {
+        "maximum": 0.006745,
+        "median": 0.002838,
+        "p95": 0.004577
+      },
+      "sharedIKIterationsSummedPerStep": {
+        "maximum": 0.0,
+        "median": 0.0,
+        "p95": 0.0
+      },
+      "sharedIKSolveMicroseconds": {
+        "maximum": 0.0,
+        "median": 0.0,
+        "p95": 0.0
+      },
+      "totalBodies": 11
+    },
+    {
+      "awakeBodiesMax": 0,
+      "awakeBodiesMin": 0,
+      "convergedInstanceSamples": 1200,
+      "cppNewCallsPerStep": {
+        "maximum": 1163.0,
+        "median": 1163.0,
+        "p95": 1163.0
+      },
+      "dynamicBodiesMax": 0,
+      "dynamicBodiesMin": 0,
+      "finiteFinalPoses": true,
+      "fixedStepMs": {
+        "maximum": 1.470657,
+        "median": 1.127508,
+        "p95": 1.38025
+      },
+      "instances": 10,
+      "m56Capture": "m56-ik-10.json",
+      "mode": "ik",
+      "physicalDrivesMs": {
+        "maximum": 0.197349,
+        "median": 0.074671,
+        "p95": 0.104221
+      },
+      "physicsToPoseMs": {
+        "maximum": 0.00105,
+        "median": 0.000429,
+        "p95": 0.000627
+      },
+      "poseResolutionInclusiveMs": {
+        "maximum": 0.914843,
+        "median": 0.627362,
+        "p95": 0.8039430000000001
+      },
+      "rigidPhysicsMs": {
+        "maximum": 0.010518,
+        "median": 0.004226,
+        "p95": 0.008041
+      },
+      "sharedIKIterationsSummedPerStep": {
+        "maximum": 10.0,
+        "median": 10.0,
+        "p95": 10.0
+      },
+      "sharedIKSolveMicroseconds": {
+        "maximum": 685.1980000000001,
+        "median": 456.01800000000003,
+        "p95": 585.5360000000001
+      },
+      "totalBodies": 11
+    },
+    {
+      "awakeBodiesMax": 80,
+      "awakeBodiesMin": 80,
+      "convergedInstanceSamples": 0,
+      "cppNewCallsPerStep": {
+        "maximum": 221351.0,
+        "median": 220821.0,
+        "p95": 220832.0
+      },
+      "dynamicBodiesMax": 80,
+      "dynamicBodiesMin": 80,
+      "finiteFinalPoses": true,
+      "fixedStepMs": {
+        "maximum": 32.508271,
+        "median": 24.788792,
+        "p95": 27.034827
+      },
+      "instances": 10,
+      "m56Capture": "m56-partial-10.json",
+      "mode": "partial",
+      "physicalDrivesMs": {
+        "maximum": 16.43094,
+        "median": 11.444086,
+        "p95": 12.739092
+      },
+      "physicsToPoseMs": {
+        "maximum": 18.393337,
+        "median": 11.61098,
+        "p95": 13.173728
+      },
+      "poseResolutionInclusiveMs": {
+        "maximum": 0.552005,
+        "median": 0.36293200000000003,
+        "p95": 0.45172300000000004
+      },
+      "rigidPhysicsMs": {
+        "maximum": 3.882782,
+        "median": 0.676213,
+        "p95": 0.991879
+      },
+      "sharedIKIterationsSummedPerStep": {
+        "maximum": 0.0,
+        "median": 0.0,
+        "p95": 0.0
+      },
+      "sharedIKSolveMicroseconds": {
+        "maximum": 0.0,
+        "median": 0.0,
+        "p95": 0.0
+      },
+      "totalBodies": 171
+    },
+    {
+      "awakeBodiesMax": 160,
+      "awakeBodiesMin": 96,
+      "convergedInstanceSamples": 0,
+      "cppNewCallsPerStep": {
+        "maximum": 225048.0,
+        "median": 221827.0,
+        "p95": 223275.0
+      },
+      "dynamicBodiesMax": 160,
+      "dynamicBodiesMin": 160,
+      "finiteFinalPoses": true,
+      "fixedStepMs": {
+        "maximum": 103.134005,
+        "median": 37.919236,
+        "p95": 61.059887
+      },
+      "instances": 10,
+      "m56Capture": "m56-passive-10.json",
+      "mode": "passive",
+      "physicalDrivesMs": {
+        "maximum": 14.478758,
+        "median": 10.863547,
+        "p95": 12.048811
+      },
+      "physicsToPoseMs": {
+        "maximum": 13.447006,
+        "median": 11.200227,
+        "p95": 12.685375
+      },
+      "poseResolutionInclusiveMs": {
+        "maximum": 0.4419409999999999,
+        "median": 0.31332699999999997,
+        "p95": 0.37235299999999993
+      },
+      "rigidPhysicsMs": {
+        "maximum": 78.914952,
+        "median": 14.877185,
+        "p95": 38.597821
+      },
+      "sharedIKIterationsSummedPerStep": {
+        "maximum": 0.0,
+        "median": 0.0,
+        "p95": 0.0
+      },
+      "sharedIKSolveMicroseconds": {
+        "maximum": 0.0,
+        "median": 0.0,
+        "p95": 0.0
+      },
+      "totalBodies": 171
+    }
+  ],
+  "fixedDeltaSeconds": 0.01666666753590107,
+  "fixture": "character_lab/figure: 65 source joints, 71 source hierarchy nodes, 72 normalized runtime nodes, 6 parts, 130 palette entries",
+  "rendering": "not measured: this bounded workload evaluates authoritative fixed-step pose/physics and palette generation",
+  "sampleSteps": 120,
+  "warmupSteps": 60
+}

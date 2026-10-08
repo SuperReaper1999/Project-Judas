@@ -1,0 +1,360 @@
+{
+  "origin": "human G floor freeze core; binary32 represented pose analysis",
+  "stepDuration": 0.01666666753590107,
+  "stats": {
+    "bodies": 39,
+    "dynamicBodies": 32,
+    "sleepingBodies": 0,
+    "sleepingIslands": 0,
+    "awakeBodies": 0,
+    "possiblePairs": 720,
+    "candidatePairs": 228,
+    "layerRejectedPairs": 60,
+    "collidingPairs": 21,
+    "contactPoints": 59,
+    "proxyReinsertions": 0,
+    "geometryPredicates": 0,
+    "geometryExactFallbacks": 0,
+    "geometryUnresolved": 0,
+    "geometryNumericGapFallbacks": 0,
+    "orientationCacheHits": 0,
+    "orientationCacheRebuilds": 0,
+    "boundCacheHits": 0,
+    "boundCacheRebuilds": 0,
+    "shapeCacheRebuilds": 0,
+    "solverFrameBuilds": 0,
+    "geometryCacheBytes": 0,
+    "geometryCacheAllocations": 0,
+    "geometryCacheAllocatedBytes": 0,
+    "solverFrameNodeRequests": 0,
+    "impactEvents": 6638,
+    "impactSafetyFallback": 0,
+    "impactEventCapFallback": 16,
+    "impactQueries": 723397,
+    "impactSearchIterations": 1203912,
+    "impactPeakIterations": 64,
+    "impactSearchLimit": 6628,
+    "impactUncertifiedAdvances": 0,
+    "impactSamplingFallbacks": 6628,
+    "impactSamplingTests": 13256,
+    "impactSamplingResolutionCaps": 0,
+    "impactSamplingMaxInterval": 0.0010239582391144391,
+    "motionSegments": 0,
+    "motionStorageBytes": 0,
+    "treeHeight": 0,
+    "broadphaseMilliseconds": 0.0,
+    "narrowphaseMilliseconds": 0.0,
+    "solverMilliseconds": 0.0,
+    "totalMilliseconds": 0.0
+  },
+  "bodies": [
+    {
+      "slot": 7,
+      "segments": 6639,
+      "tailSamples": 64,
+      "firstEventTime": 9.147122455044849e-06,
+      "currentEventTime": 1.1499676178406896e-05,
+      "positionChanges": 0,
+      "orientationChanges": 63,
+      "uniqueOrientationsWXYZ": [
+        [
+          0.6128162741661072,
+          0.7828624844551086,
+          -0.086451955139637,
+          -0.06409822404384613
+        ],
+        [
+          0.612816333770752,
+          0.7828626036643982,
+          -0.08645196259021759,
+          -0.06409823149442673
+        ]
+      ]
+    },
+    {
+      "slot": 8,
+      "segments": 6639,
+      "tailSamples": 64,
+      "firstEventTime": 9.147122455044849e-06,
+      "currentEventTime": 1.1499676178406896e-05,
+      "positionChanges": 0,
+      "orientationChanges": 0,
+      "uniqueOrientationsWXYZ": [
+        [
+          0.5715874433517456,
+          0.7232151627540588,
+          0.26651814579963684,
+          0.28145313262939453
+        ]
+      ]
+    },
+    {
+      "slot": 9,
+      "segments": 6639,
+      "tailSamples": 64,
+      "firstEventTime": 9.147122455044849e-06,
+      "currentEventTime": 1.1499676178406896e-05,
+      "positionChanges": 0,
+      "orientationChanges": 63,
+      "uniqueOrientationsWXYZ": [
+        [
+          0.7383012771606445,
+          0.5332311987876892,
+          0.38154610991477966,
+          -0.15810821950435638
+        ],
+        [
+          0.7383013367652893,
+          0.533231258392334,
+          0.38154616951942444,
+          -0.15810823440551758
+        ]
+      ]
+    },
+    {
+      "slot": 10,
+      "segments": 6639,
+      "tailSamples": 64,
+      "firstEventTime": 9.147122455044849e-06,
+      "currentEventTime": 1.1499676178406896e-05,
+      "positionChanges": 0,
+      "orientationChanges": 0,
+      "uniqueOrientationsWXYZ": [
+        [
+          -0.16000215709209442,
+          0.9729601740837097,
+          -0.03308498114347458,
+          -0.1632581353187561
+        ]
+      ]
+    },
+    {
+      "slot": 11,
+      "segments": 6638,
+      "tailSamples": 64,
+      "firstEventTime": 9.147122455044849e-06,
+      "currentEventTime": 1.1499676178406896e-05,
+      "positionChanges": 0,
+      "orientationChanges": 63,
+      "uniqueOrientationsWXYZ": [
+        [
+          0.4247000515460968,
+          -0.4813174307346344,
+          -0.7114202976226807,
+          0.2860848009586334
+        ],
+        [
+          0.4247001111507416,
+          -0.4813174903392792,
+          -0.7114203572273254,
+          0.2860848307609558
+        ]
+      ]
+    },
+    {
+      "slot": 12,
+      "segments": 6639,
+      "tailSamples": 64,
+      "firstEventTime": 9.147122455044849e-06,
+      "currentEventTime": 1.1499676178406896e-05,
+      "positionChanges": 0,
+      "orientationChanges": 63,
+      "uniqueOrientationsWXYZ": [
+        [
+          0.6061419248580933,
+          0.25942760705947876,
+          0.005194163881242275,
+          0.7518393993377686
+        ],
+        [
+          0.6061418652534485,
+          0.25942757725715637,
+          0.005194163415580988,
+          0.751839280128479
+        ]
+      ]
+    },
+    {
+      "slot": 13,
+      "segments": 6639,
+      "tailSamples": 64,
+      "firstEventTime": 9.147122455044849e-06,
+      "currentEventTime": 1.1499676178406896e-05,
+      "positionChanges": 0,
+      "orientationChanges": 0,
+      "uniqueOrientationsWXYZ": [
+        [
+          0.1630997210741043,
+          -0.5381445288658142,
+          0.23553527891635895,
+          0.7926676869392395
+        ]
+      ]
+    },
+    {
+      "slot": 14,
+      "segments": 6639,
+      "tailSamples": 64,
+      "firstEventTime": 9.147122455044849e-06,
+      "currentEventTime": 1.1499676178406896e-05,
+      "positionChanges": 0,
+      "orientationChanges": 63,
+      "uniqueOrientationsWXYZ": [
+        [
+          0.5690723061561584,
+          0.7894810438156128,
+          0.11827681213617325,
+          0.19719761610031128
+        ],
+        [
+          0.5690723657608032,
+          0.7894811630249023,
+          0.11827682703733444,
+          0.19719764590263367
+        ]
+      ]
+    },
+    {
+      "slot": 15,
+      "segments": 6639,
+      "tailSamples": 64,
+      "firstEventTime": 9.147122455044849e-06,
+      "currentEventTime": 1.1499676178406896e-05,
+      "positionChanges": 0,
+      "orientationChanges": 0,
+      "uniqueOrientationsWXYZ": [
+        [
+          0.7035360336303711,
+          -0.6834823489189148,
+          0.016032272949814796,
+          -0.193989560008049
+        ]
+      ]
+    },
+    {
+      "slot": 16,
+      "segments": 6639,
+      "tailSamples": 64,
+      "firstEventTime": 9.147122455044849e-06,
+      "currentEventTime": 1.1499676178406896e-05,
+      "positionChanges": 0,
+      "orientationChanges": 63,
+      "uniqueOrientationsWXYZ": [
+        [
+          0.808600664138794,
+          0.5052893161773682,
+          -0.15407662093639374,
+          0.2590527832508087
+        ],
+        [
+          0.8086005449295044,
+          0.5052892565727234,
+          -0.15407660603523254,
+          0.25905275344848633
+        ]
+      ]
+    },
+    {
+      "slot": 17,
+      "segments": 6639,
+      "tailSamples": 64,
+      "firstEventTime": 9.147122455044849e-06,
+      "currentEventTime": 1.1499676178406896e-05,
+      "positionChanges": 0,
+      "orientationChanges": 0,
+      "uniqueOrientationsWXYZ": [
+        [
+          0.4426494836807251,
+          0.15559455752372742,
+          0.6516938209533691,
+          0.5959420800209045
+        ]
+      ]
+    },
+    {
+      "slot": 18,
+      "segments": 6573,
+      "tailSamples": 64,
+      "firstEventTime": 9.147122455044849e-06,
+      "currentEventTime": 1.1499676178406896e-05,
+      "positionChanges": 0,
+      "orientationChanges": 0,
+      "uniqueOrientationsWXYZ": [
+        [
+          -0.2826818525791168,
+          0.6975737810134888,
+          0.3824830949306488,
+          0.535899817943573
+        ]
+      ]
+    },
+    {
+      "slot": 19,
+      "segments": 6607,
+      "tailSamples": 64,
+      "firstEventTime": 9.147122455044849e-06,
+      "currentEventTime": 1.1499676178406896e-05,
+      "positionChanges": 0,
+      "orientationChanges": 0,
+      "uniqueOrientationsWXYZ": [
+        [
+          -0.43915778398513794,
+          0.5550393462181091,
+          0.5509327054023743,
+          -0.44220465421676636
+        ]
+      ]
+    },
+    {
+      "slot": 20,
+      "segments": 6639,
+      "tailSamples": 64,
+      "firstEventTime": 9.147122455044849e-06,
+      "currentEventTime": 1.1499676178406896e-05,
+      "positionChanges": 0,
+      "orientationChanges": 0,
+      "uniqueOrientationsWXYZ": [
+        [
+          0.6270077228546143,
+          0.752203106880188,
+          0.15820735692977905,
+          0.12657985091209412
+        ]
+      ]
+    },
+    {
+      "slot": 21,
+      "segments": 6639,
+      "tailSamples": 64,
+      "firstEventTime": 9.147122455044849e-06,
+      "currentEventTime": 1.1499676178406896e-05,
+      "positionChanges": 0,
+      "orientationChanges": 0,
+      "uniqueOrientationsWXYZ": [
+        [
+          0.6954177618026733,
+          -0.7069312334060669,
+          -0.0752757266163826,
+          -0.10476584732532501
+        ]
+      ]
+    },
+    {
+      "slot": 22,
+      "segments": 6639,
+      "tailSamples": 64,
+      "firstEventTime": 9.147122455044849e-06,
+      "currentEventTime": 1.1499676178406896e-05,
+      "positionChanges": 0,
+      "orientationChanges": 0,
+      "uniqueOrientationsWXYZ": [
+        [
+          0.6292181015014648,
+          0.6270005106925964,
+          -0.32291683554649353,
+          0.32661861181259155
+        ]
+      ]
+    }
+  ]
+}

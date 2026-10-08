@@ -24,6 +24,7 @@ private:
  static void InstanceAnimation(RuntimeWorld&,uint64_t,SaveArchive&);
  static void Articulation(RuntimeWorld&,SaveArchive&);
  static void ArticulationExtended(RuntimeWorld&,SaveArchive&,unsigned);
+ static void PhysicalAnimation(RuntimeWorld&,SaveArchive&);
  static void Navigation(RuntimeWorld&,SaveArchive&);
  static void Deformables(RuntimeWorld&,SaveArchive&);
  static void Audio(RuntimeWorld&,SaveArchive&);

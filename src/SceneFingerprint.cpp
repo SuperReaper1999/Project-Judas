@@ -381,7 +381,7 @@ bool ComputeSceneFingerprint(const Scene& scene, std::string& outFingerprint,
     if(navigation){w.Text("Judas.Navigation.1");w.U64(navigation);for(const auto& o:scene.Objects()){auto properties=NavigationProperties(o);if(properties.empty())continue;w.U64(o.id);w.U64(properties.size());for(auto [k,v]:properties){w.Text(k);w.Text(v);}}}
     size_t motors=0;for(const auto& o:scene.Objects())motors+=o.characterMotor.has_value();
     if(motors){w.Text("Judas.CharacterMotor.1");w.U64(motors);for(const auto& o:scene.Objects())if(o.characterMotor){const auto& m=*o.characterMotor;
-        std::string error;if(!ValidCharacterMotor(m,error))w.Fail(error);if(o.body||o.ragdoll)w.Fail("character motor cannot also own a root body/ragdoll");
+        std::string error;if(!ValidCharacterMotor(m,error))w.Fail(error);if(o.body||(o.ragdoll&&!o.ragdoll->physicalAnimation))w.Fail("character motor cannot also own a root body/legacy ragdoll; an explicit physical-animation authority policy is required");
         if(o.transform.scale!=glm::vec3(1))w.Fail("character motor dimensions are in simulation metres; entity scale must be one");
         w.U64(o.id);
         w.Boolean(m.enabled);
@@ -406,6 +406,12 @@ bool ComputeSceneFingerprint(const Scene& scene, std::string& outFingerprint,
     for(const auto& o:scene.Objects()){
         if(o.socket){const auto& k=*o.socket;w.Text("Judas.Socket.1");w.U64(o.id);w.U64(k.target);w.Text(k.joint);w.Boolean(k.enabled);w.Vector(k.offset.position);w.Quaternion(k.offset.rotation);w.Vector(k.offset.scale);}
         if(o.animation&&!o.animation->limbs.empty()){w.Text("Judas.LimbIK.1");w.U64(o.id);w.U64(o.animation->limbs.size());for(const auto& k:o.animation->limbs){w.Text(k.id);w.Text(k.root);w.Text(k.middle);w.Text(k.end);w.Vector(k.target);w.Vector(k.pole);w.Number(k.weight);w.Boolean(k.enabled);w.Integer(k.order);}}
+    }
+    // Optional extensions preserve canonical schema-5 fingerprints for older content.
+    for(const auto& o:scene.Objects()){
+        if(o.animation&&o.animation->fullBodyIK){w.Text("Judas.FullBodyIK.1");w.U64(o.id);w.Text(SerializeFullBodyIKSettings(*o.animation->fullBodyIK));}
+        if(o.ragdoll&&o.ragdoll->physicalAnimation){w.Text("Judas.PhysicalAnimation.1");w.U64(o.id);w.Text(SerializePhysicalAnimationSettings(*o.ragdoll->physicalAnimation));}
+        if(o.ragdoll&&o.ragdoll->receiveContactEvents){w.Text("Judas.RagdollContactEvents.1");w.U64(o.id);w.Boolean(true);}
     }
     bool layered=false;for(const auto& o:scene.Objects())layered|=o.animation&&!o.animation->layers.empty();
     size_t ragdolls=0;for(const auto& o:scene.Objects())ragdolls+=o.ragdoll.has_value();
