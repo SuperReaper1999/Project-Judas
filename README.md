@@ -954,7 +954,13 @@ piloted, and the selected player view returns on release. See
 
 ## Building
 
-### Requirements
+### Windows candidate
+
+Native Windows preparation is **unvalidated, not final**. See
+[Windows build, SDK and export testing](docs/WINDOWS.md). Linux remains the
+accepted platform; Windows acceptance requires native testing.
+
+### Linux requirements
 
 - Linux (developed and tested on Ubuntu)
 - CMake 3.20+

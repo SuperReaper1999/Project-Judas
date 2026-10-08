@@ -1,0 +1,42 @@
+libEGL warning: Not allowed to force software rendering when API explicitly selects a hardware device.
+Renderer fragment texture units: 32 (material path uses 12)
+World state: /home/conner/Documents/GitHub/Project-Judas/projects/shooter_game/Saves/range.judasstate (none saved)
+Project: Spring Range (/home/conner/Documents/GitHub/Project-Judas/projects/shooter_game/shooter_game.judasproj)
+Scene: Spring Range (/home/conner/Documents/GitHub/Project-Judas/projects/shooter_game/Scenes/range.judas)
+World origin (m): 0.000, 0.000, 0.000
+ALSA lib confmisc.c:855:(parse_card) [error.core] cannot find card '0'
+ALSA lib conf.c:5211:(_snd_config_evaluate) [error.core] function snd_func_card_id returned error: No such file or directory
+ALSA lib confmisc.c:422:(snd_func_concat) [error.core] error evaluating strings
+ALSA lib conf.c:5211:(_snd_config_evaluate) [error.core] function snd_func_concat returned error: No such file or directory
+ALSA lib confmisc.c:1342:(snd_func_refer) [error.core] error evaluating name
+ALSA lib conf.c:5211:(_snd_config_evaluate) [error.core] function snd_func_refer returned error: No such file or directory
+ALSA lib conf.c:5734:(snd_config_expand) [error.core] Evaluate error: No such file or directory
+ALSA lib pcm.c:2722:(snd_pcm_open_noupdate) [error.pcm] Unknown PCM dmix
+ALSA lib confmisc.c:855:(parse_card) [error.core] cannot find card '0'
+ALSA lib conf.c:5211:(_snd_config_evaluate) [error.core] function snd_func_card_id returned error: No such file or directory
+ALSA lib confmisc.c:422:(snd_func_concat) [error.core] error evaluating strings
+ALSA lib conf.c:5211:(_snd_config_evaluate) [error.core] function snd_func_concat returned error: No such file or directory
+ALSA lib confmisc.c:1342:(snd_func_refer) [error.core] error evaluating name
+ALSA lib conf.c:5211:(_snd_config_evaluate) [error.core] function snd_func_refer returned error: No such file or directory
+ALSA lib conf.c:5734:(snd_config_expand) [error.core] Evaluate error: No such file or directory
+ALSA lib pcm.c:2722:(snd_pcm_open_noupdate) [error.pcm] Unknown PCM dmix:0
+ALSA lib confmisc.c:855:(parse_card) [error.core] cannot find card '0'
+ALSA lib conf.c:5211:(_snd_config_evaluate) [error.core] function snd_func_card_id returned error: No such file or directory
+ALSA lib confmisc.c:422:(snd_func_concat) [error.core] error evaluating strings
+ALSA lib conf.c:5211:(_snd_config_evaluate) [error.core] function snd_func_concat returned error: No such file or directory
+ALSA lib confmisc.c:1342:(snd_func_refer) [error.core] error evaluating name
+ALSA lib conf.c:5211:(_snd_config_evaluate) [error.core] function snd_func_refer returned error: No such file or directory
+ALSA lib conf.c:5734:(snd_config_expand) [error.core] Evaluate error: No such file or directory
+ALSA lib pcm.c:2722:(snd_pcm_open_noupdate) [error.pcm] Unknown PCM dmix:0,0
+ALSA lib confmisc.c:165:(snd_config_get_card) [error.core] Cannot get card index for 0
+ALSA lib confmisc.c:165:(snd_config_get_card) [error.core] Cannot get card index for 0
+ALSA lib confmisc.c:165:(snd_config_get_card) [error.core] Cannot get card index for 0
+Cannot connect to server socket err = Operation not permitted
+Cannot connect to server request channel
+jack server is not running or cannot be started
+JackShmReadWritePtr::~JackShmReadWritePtr - Init not done for -1, skipping unlock
+JackShmReadWritePtr::~JackShmReadWritePtr - Init not done for -1, skipping unlock
+step,time,posX,posY,posZ,upX,upY,upZ,grounded,velX,velY,velZ,gravX,gravY,gravZ,controlled,frame,steps,paused,obj0PosX,obj0PosY,obj0PosZ,obj0VelX,obj0VelY,obj0VelZ,obj1PosX,obj1PosY,obj1PosZ,obj1VelX,obj1VelY,obj1VelZ,obj2PosX,obj2PosY,obj2PosZ,obj2VelX,obj2VelY,obj2VelZ,obj3PosX,obj3PosY,obj3PosZ,obj3VelX,obj3VelY,obj3VelZ,obj4PosX,obj4PosY,obj4PosZ,obj4VelX,obj4VelY,obj4VelZ,obj5PosX,obj5PosY,obj5PosZ,obj5VelX,obj5VelY,obj5VelZ,obj6PosX,obj6PosY,obj6PosZ,obj6VelX,obj6VelY,obj6VelZ,obj7PosX,obj7PosY,obj7PosZ,obj7VelX,obj7VelY,obj7VelZ,obj8PosX,obj8PosY,obj8PosZ,obj8VelX,obj8VelY,obj8VelZ,obj9PosX,obj9PosY,obj9PosZ,obj9VelX,obj9VelY,obj9VelZ,obj10PosX,obj10PosY,obj10PosZ,obj10VelX,obj10VelY,obj10VelZ,obj11PosX,obj11PosY,obj11PosZ,obj11VelX,obj11VelY,obj11VelZ,obj12PosX,obj12PosY,obj12PosZ,obj12VelX,obj12VelY,obj12VelZ
+0,0.00000,-2.000000,1.000000,8.000000,0.000000,1.000000,0.000000,0,0.000000,0.000000,0.000000,0.000000,-9.810000,0.000000,0,0,1,0,3.000000,0.647275,4.000000,0.000000,-0.163500,0.000000,-6.000000,1.450000,-3.000000,0.000000,-0.000001,0.000000,-2.000000,1.450000,-3.000000,0.000000,-0.000001,0.000000,2.000000,1.450000,-3.000000,0.000000,-0.000001,0.000000,6.000000,1.450000,-3.000000,0.000000,-0.000001,0.000000,-6.000000,1.450000,-10.000000,0.000000,-0.000001,0.000000,-2.000000,1.450000,-10.000000,0.000000,-0.000001,0.000000,2.000000,1.450000,-10.000000,0.000000,-0.000001,0.000000,6.000000,1.450000,-10.000000,0.000000,-0.000001,0.000000,-6.000000,1.450000,-18.000000,0.000000,-0.000001,0.000000,-2.000000,1.450000,-18.000000,0.000000,-0.000001,0.000000,2.000000,1.450000,-18.000000,0.000000,-0.000001,0.000000,6.000000,1.450000,-18.000000,0.000000,-0.000001,0.000000
+4,0.06667,-2.000000,0.917275,8.000000,0.000000,1.000000,0.000000,0,0.000000,0.000000,0.000000,0.000000,-9.810000,0.000000,0,4,1,0,3.000000,0.609125,4.000000,0.000000,-0.817500,0.000000,-6.000000,1.450000,-3.000000,0.000000,-0.000001,0.000000,-2.000000,1.450000,-3.000000,0.000000,-0.000001,0.000000,2.000000,1.450000,-3.000000,0.000000,-0.000001,0.000000,6.000000,1.450000,-3.000000,0.000000,-0.000001,0.000000,-6.000000,1.450000,-10.000000,0.000000,-0.000001,0.000000,-2.000000,1.450000,-10.000000,0.000000,-0.000001,0.000000,2.000000,1.450000,-10.000000,0.000000,-0.000001,0.000000,6.000000,1.450000,-10.000000,0.000000,-0.000001,0.000000,-6.000000,1.450000,-18.000000,0.000000,-0.000001,0.000000,-2.000000,1.450000,-18.000000,0.000000,-0.000001,0.000000,2.000000,1.450000,-18.000000,0.000000,-0.000001,0.000000,6.000000,1.450000,-18.000000,0.000000,-0.000001,0.000000
+8,0.13333,-2.000000,0.917275,8.000000,0.000000,1.000000,0.000000,0,0.000000,0.000000,0.000000,0.000000,-9.810000,0.000000,0,8,1,0,3.000000,0.600000,4.000000,0.000001,-0.000001,-0.000001,-6.000000,1.450000,-3.000000,0.000000,-0.000001,0.000000,-2.000000,1.450000,-3.000000,0.000000,-0.000001,0.000000,2.000000,1.450000,-3.000000,0.000000,-0.000001,0.000000,6.000000,1.450000,-3.000000,0.000000,-0.000001,0.000000,-6.000000,1.450000,-10.000000,0.000000,-0.000001,0.000000,-2.000000,1.450000,-10.000000,0.000000,-0.000001,0.000000,2.000000,1.450000,-10.000000,0.000000,-0.000001,0.000000,6.000000,1.450000,-10.000000,0.000000,-0.000001,0.000000,-6.000000,1.450000,-18.000000,0.000000,-0.000001,0.000000,-2.000000,1.450000,-18.000000,0.000000,-0.000001,0.000000,2.000000,1.450000,-18.000000,0.000000,-0.000001,0.000000,6.000000,1.450000,-18.000000,0.000000,-0.000001,0.000000

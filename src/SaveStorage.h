@@ -1,4 +1,5 @@
 #pragma once
+#include <vector>
 #include "SaveArchive.h"
 #include <functional>
 #include <memory>
@@ -11,7 +12,8 @@ struct GameSnapshot {
  void Save(SaveArchive& a){a(project,scene,content,displayName,metadata,timestamp,gameVersion,diagnosticBuild,participants);}
 };
 struct SaveSlotInfo {std::string id,name,scene,metadata,status,error;uint64_t timestamp=0;bool recovered=false;};
-// One scoped directory; descriptor-relative operations never follow slot symlinks.
+// One scoped directory; POSIX descriptor-relative operations and Windows pinned
+// directory handles reject symlinks/reparse points.
 // A worker can own this storage independently of the requesting scene.
 class SaveStorage {
 public:
@@ -28,6 +30,9 @@ public:
  std::function<void(const char*)> boundary;
 private:
  std::string m_root;int m_directory=-1;
+#ifdef _WIN32
+ std::vector<void*> m_directoryHandles; // Held without delete-sharing to prevent root replacement.
+#endif
  bool Open(std::string&);bool ReadFile(const std::string&,GameSnapshot&,std::string&,bool metadataOnly=false);
  bool Publish(const std::string&,const std::string&,std::string&);
 };

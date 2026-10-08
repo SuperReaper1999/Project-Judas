@@ -35,3 +35,12 @@ Library responsibilities: [HarfBuzz boundaries](https://harfbuzz.github.io/what-
 [break boundaries](https://unicode-org.github.io/icu/userguide/boundaryanalysis/),
 [MessageFormat](https://unicode-org.github.io/icu/userguide/format_parse/messages/).
 Implementation is checked against headers/source in these pinned archives.
+
+## Windows candidate (unvalidated v1)
+
+The same pinned source archives and hashes are retained. FreeType/HarfBuzz use
+their CMake builds; ICU 76.1 uses its upstream Visual Studio solution's makedata
+target, real data DLL and import libraries. Windows SDKs/packages distribute
+icuuc76.dll, icuin76.dll and icudt76.dll rather than Linux static ICU archives.
+Native compilation and text-rendering validation remain pending; see
+[Windows instructions](../../docs/WINDOWS.md). No upstream source is patched.

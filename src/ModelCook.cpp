@@ -12,8 +12,7 @@
 #include <fstream>
 #include <set>
 #include <algorithm>
-#include <sys/stat.h>
-#include <unistd.h>
+#include "PlatformServices.h"
 namespace fs=std::filesystem;using Json=nlohmann::json;
 namespace {
 constexpr const char* Revision="M66-ufbx-0.23.1-cgltf-1.15-cook-9-model-1";
@@ -23,12 +22,13 @@ void Write(const fs::path& p,const void* data,size_t size){fs::create_directorie
 void WriteJson(const fs::path& p,const Json& j){auto text=j.dump(2)+'\n';Write(p,text.data(),text.size());}
 fs::path Relative(const fs::path& root,const std::string& path){auto p=fs::weakly_canonical(root/path);auto relative=p.lexically_relative(root);Require(!relative.empty()&&!relative.is_absolute()&&*relative.begin()!="..","recipe path outside approved project: "+path);return p;}
 std::string Hash(const fs::path& p){JUDAS_PROFILE_SCOPE("Model content hashing");std::string h,e;Require(SceneFingerprintSha256File(p.string(),h,e),e);return h;}
-std::string Stamp(const fs::path& p){struct stat s{};Require(::stat(p.c_str(),&s)==0,"cannot stat import input: "+p.string());return std::to_string(s.st_dev)+":"+std::to_string(s.st_ino)+":"+std::to_string(s.st_size)+":"+std::to_string(s.st_mtim.tv_sec)+":"+std::to_string(s.st_mtim.tv_nsec)+":"+std::to_string(s.st_ctim.tv_sec)+":"+std::to_string(s.st_ctim.tv_nsec);}
+std::string Stamp(const fs::path& p){return ImportFileStamp(p);}
+
 void VerifyInputs(ModelCookTask& t,const fs::path& root,const Json& record){
  for(auto it=record.at("inputs").begin();it!=record.at("inputs").end();++it){auto path=Relative(root,it.key());auto before=Stamp(path);Require(Hash(path)==it.value()&&Stamp(path)==before,"input changed during import; retry: "+it.key());t.verifiedInputStamps[it.key()]=before;}
 }
-std::string StagePath(const std::string& output){fs::create_directories(fs::path(output).parent_path());std::string p=output+".import-staging-XXXXXX";int fd=mkstemp(p.data());Require(fd>=0,"cannot create owned import staging file");close(fd);return p;}
-std::string AtomicCache(const fs::path& p,const void* data,size_t size){auto staged=StagePath(p.string());try{Write(staged,data,size);auto hash=Hash(staged);fs::rename(staged,p);return hash;}catch(...){fs::remove(staged);throw;}}
+std::string StagePath(const std::string& output){return CreateImportStagingFile(fs::u8path(output));}
+std::string AtomicCache(const fs::path& p,const void* data,size_t size){auto staged=StagePath(p.string());try{Write(staged,data,size);auto hash=Hash(staged);ReplaceStagedFile(staged,p);return hash;}catch(...){fs::remove(staged);throw;}}
 void AtomicCacheJson(const fs::path& p,const Json& j){auto bytes=j.dump(2)+'\n';AtomicCache(p,bytes.data(),bytes.size());}
 
 std::string Key(const Skeleton& s,int i){return SkeletonJointKey(s,i);}
@@ -144,13 +144,12 @@ bool PublishModelImport(ModelCookTask& t,std::string& error){JUDAS_PROFILE_SCOPE
    auto meta=t.output+".judasmeta";bool newMeta=!fs::exists(meta);
    if(!newMeta){std::string id,source;AssetType type;Require(AssetDatabase::ReadMeta(meta,id,type,source,error)&&id==t.assetId&&type==AssetType::Mesh,"existing output identity differs from recipe");}
    else Require(AssetDatabase::WriteMeta(t.temporary+".meta",t.assetId,AssetType::Mesh,"import recipe",error),error);
-   if(newMeta)fs::rename(t.temporary+".meta",meta);
-   try {fs::rename(t.temporary,t.output);}catch(...){if(newMeta)fs::remove(meta);throw;}
+   if(newMeta)ReplaceStagedFile(t.temporary+".meta",meta);
+   try {ReplaceStagedFile(t.temporary,t.output);}catch(...){if(newMeta)fs::remove(meta);throw;}
    // A sidecar report is inspectable telemetry, never required for runtime validity.
-   std::error_code ec;fs::rename(t.temporary+".report",t.output+".import-report.json",ec);
-   if(ec)t.report.diagnostics.push_back({"warning","report-promotion",t.recipe,"","Retry report publication",ec.message()});
+   try {ReplaceStagedFile(t.temporary+".report",t.output+".import-report.json");} catch (const std::exception& e) {t.report.diagnostics.push_back({"warning","report-promotion",t.recipe,"","Retry report publication",e.what()});}
   }
-  if(t.unchanged){Require(Stamp(t.output)==t.verifiedOutputStamp||Hash(t.output)==t.outputHash,"accepted model changed before publication; retry");auto receipt=Json::parse(t.importRecord).at("manifest");receipt["outputHash"]=t.outputHash;receipt["importRecord"]=t.importRecord;receipt["recordHash"]=SceneFingerprintSha256(t.importRecord);auto temp=StagePath(t.output);try{WriteJson(temp,receipt);fs::rename(temp,t.output+".import-report.json");}catch(...){fs::remove(temp);throw;}}
+  if(t.unchanged){Require(Stamp(t.output)==t.verifiedOutputStamp||Hash(t.output)==t.outputHash,"accepted model changed before publication; retry");auto receipt=Json::parse(t.importRecord).at("manifest");receipt["outputHash"]=t.outputHash;receipt["importRecord"]=t.importRecord;receipt["recordHash"]=SceneFingerprintSha256(t.importRecord);auto temp=StagePath(t.output);try{WriteJson(temp,receipt);ReplaceStagedFile(temp,t.output+".import-report.json");}catch(...){fs::remove(temp);throw;}}
   t.progress=100;error.clear();return true;
  }catch(const std::exception& e){error=e.what();return false;}
 }

@@ -6,6 +6,15 @@ someone with no prior context on this project. It is updated in place as
 milestones land, rather than kept as a per-milestone snapshot — see
 "Milestone history" below for how to recover an earlier milestone exactly.
 
+## Windows preparation status
+
+A native Windows x64 candidate is being prepared separately from accepted M69
+platform evidence. It adds native desktop paths/processes/save storage and SDK
+DLL packaging around the shared editor/runtime. **Windows remains unvalidated,
+not final**; Linux remains the accepted platform. See [WINDOWS.md](WINDOWS.md)
+for build instructions and required native acceptance. Historical platform
+statements below describe their original milestones.
+
 ## Current reference and historical capability overview
 
 Accepted baseline: M69 (`8ddec3b97d66815de4174d6e103be77e74b7eb0f`).

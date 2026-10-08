@@ -1,7 +1,11 @@
 Judas runtime third-party credits and license notices
 
 Editor-only Dear ImGui is not part of the exported runtime.
-SDL2 and platform graphics/audio libraries are system dependencies.
+SDL2 is a system dependency on Linux and statically linked in the Windows candidate.
+Windows SDK/packages include its license in windows-licenses/SDL2.txt or
+engine/licenses/SDL2.txt, alongside GLM.txt. Platform graphics/audio libraries
+remain system dependencies. Windows ICU 76.1 DLLs carry the ICU notice below;
+Visual C++ runtime redistribution is governed by the Visual Studio license.
 
 miniaudio
 ========================================

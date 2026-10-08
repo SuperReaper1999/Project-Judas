@@ -30,6 +30,7 @@ extern char** environ;
 
 #include "EngineHost.h"
 #include "EnginePaths.h"
+#include "PlatformServices.h"
 #include "ProjectExporter.h"
 #include "InteractivePlay.h"
 #include "RuntimeWorld.h"
@@ -439,7 +440,12 @@ bool EditorApplication::RunProject(std::string& outMessage) {
     if (m_project.Settings().startupScene.empty()) { outMessage = "the project has no startup scene (Project settings)"; return false; }
     std::string saveError;
     if (!m_project.Save(saveError)) { outMessage = "could not save the project before running: " + saveError; return false; }
-#if defined(__unix__) || defined(__APPLE__)
+#ifdef _WIN32
+    const auto runtime = fs::u8path(EngineExecutableDir()) / RuntimeExecutableName();
+    if (!fs::is_regular_file(runtime)) { outMessage = "runtime not found beside editor: " + runtime.u8string(); return false; }
+    if (!WindowsLaunchProcess(runtime, {m_project.ProjectFile()}, outMessage)) return false;
+    outMessage = "Launched " + runtime.u8string(); return true;
+#elif defined(__unix__) || defined(__APPLE__)
     // The runtime binary sits beside the editor binary in every build tree.
     const std::string runtime = EngineExecutableDir() + "/judas";
     std::error_code ec;

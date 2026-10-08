@@ -1,0 +1,15 @@
+PASS executable root independent of cwd
+PASS executable root after unrelated cwd
+PASS absolute user save location
+PASS import replacement changes race stamp
+PASS replace existing staged destination
+PASS exclusive export staging directory
+PASS save first generation
+PASS save replacement and backup
+PASS save metadata/payload round trip
+PASS previous generation recovery
+PASS path traversal rejected
+PASS failed publication not advertised
+PASS slot listing excludes temporary files
+PASS delete current and previous generation
+SUMMARY checks=14 failures=0

@@ -11,7 +11,12 @@
 #include <mutex>
 #include <numeric>
 #include <thread>
+#ifdef _WIN32
+#include <windows.h>
+#include <psapi.h>
+#else
 #include <unistd.h>
+#endif
 
 namespace {
 struct Event {unsigned kind=0,node=0,parent=0,depth=0,mode=0;std::uint64_t thread=0,frame=0,start=0,end=0,exclusive=0;double value=0;bool wait=false;};
@@ -99,7 +104,14 @@ void PerformanceProfiler::EndFrame(std::uint64_t stamp){if(!m->inFrame)return;au
     std::vector<std::pair<std::uint64_t,std::uint64_t>> covered,waits;
     for(auto& s:f.scopes)if(s.thread==f.mainThread){auto a=std::max(f.start,s.start),b=std::min(f.end,s.end);if(b>a){if(!s.parent)covered.push_back({a,b});if(s.wait)waits.push_back({a,b});}}
     f.coverage=coverage(std::move(covered));f.waiting=coverage(std::move(waits));f.unattributed=(f.end-f.start)>f.coverage?f.end-f.start-f.coverage:0;f.gpuAvailable=m->gpuAvailable;f.gpuStatus=m->gpuStatus;f.diagnostics=Diagnostics();
-    if(!m->lastMemory||f.end-m->lastMemory>=1'000'000'000ull){std::ifstream in("/proc/self/statm");std::uint64_t pages=0,resident=0;if(in>>pages>>resident){auto size=std::uint64_t(sysconf(_SC_PAGESIZE));m->virtualBytes=pages*size;m->rss=resident*size;}m->lastMemory=f.end;}
+    if(!m->lastMemory||f.end-m->lastMemory>=1'000'000'000ull){
+#ifdef _WIN32
+PROCESS_MEMORY_COUNTERS_EX memory{}; memory.cb=sizeof(memory);
+if(GetProcessMemoryInfo(GetCurrentProcess(),reinterpret_cast<PROCESS_MEMORY_COUNTERS*>(&memory),sizeof(memory))){m->virtualBytes=memory.PrivateUsage;m->rss=memory.WorkingSetSize;}
+#else
+std::ifstream in("/proc/self/statm");std::uint64_t pages=0,resident=0;if(in>>pages>>resident){auto size=std::uint64_t(sysconf(_SC_PAGESIZE));m->virtualBytes=pages*size;m->rss=resident*size;}
+#endif
+m->lastMemory=f.end;}
     f.processResidentBytes=m->rss;f.processVirtualBytes=m->virtualBytes;f.profilerReservedBytes=ReservedBytes();
     if(f.startup)m->startup=f;
     if(f.end-f.start>=m->spikeThreshold){m->spikes[m->spikeNext]=f;m->spikeNext=(m->spikeNext+1)%ProfileLimits::Spikes;m->spikeSize=std::min(m->spikeSize+1,ProfileLimits::Spikes);}

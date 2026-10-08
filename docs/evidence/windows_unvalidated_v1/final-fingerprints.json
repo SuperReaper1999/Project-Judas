@@ -1,0 +1,33 @@
+{
+  "startingHead": "eadc7ca3f6ea521285bcb3d86161feaec7e13c35",
+  "nativeWindowsValidation": "not run",
+  "files": {
+    "CMakeLists.txt": "1b7d0dffe07be80e94c9f93987ad586794bdf93f30ca1e164137f970c4ef9a33",
+    "README.md": "05b86034738fcac2d7ce796f50efe19cff085024b1b09ada13eee3a34503c2ad",
+    "cmake/JudasTextDependencies.cmake": "668c43d078622460b878f9eefd82f94b7a761d53af6355feb524d7a71d4d138b",
+    "cmake/JudasWindowsICU.cmake": "5c80c5b72f0efdfec222a09291e8770fb7df4aeda01382dbe69af62d217e5ac9",
+    "cmake/JudasWindowsSdk.cmake": "a2cfd020026609305967865eff98c82bb141a857cd069b51e4fa7bdd6cef11de",
+    "docs/ARCHITECTURE.md": "9ec3c8398a65063b10aa0c97ea8b971c4832c6a85b8c7c4f730bfe35e814e818",
+    "docs/WINDOWS.md": "9e91cff476f16d1c3b2b5a8e6d87398030b5bbd8861f7a2fddac85cb7f0b2bc5",
+    "packaging/windows/Build-Windows.ps1": "4eb3fff92282d06072ca7c14fa13fb235cf3abbe275a09036ba09d373a0e5474",
+    "packaging/windows/README.md": "2e46bee724f89601acac7c565b023608b0859a07bc76e82a425f104baaa99b12",
+    "packaging/windows/judas.manifest": "28b5b8f354b910101fd7517da72e3dcce0a078b5083e0b1c119227154373db58",
+    "packaging/windows/vcpkg.json": "593508a0f4c62a550b9944bb18084dab479c6b50d4448a1ddd76f0518940776f",
+    "src/EnginePaths.cpp": "5aa0a01dc44e985ee8f01ff2a8b6e1e771991c1d47cab07311e5c3cf4bfcdbc9",
+    "src/GamePackage.cpp": "1ea986d7527c4d18a7d4112fcec20840e4a358f6954652e67e8edba732ea3b33",
+    "src/ModelCook.cpp": "5b0174426989f27ac0407916d2148e76e3aa37e5289fc2c53b66423a53a1a009",
+    "src/PerformanceProfiler.cpp": "216e0ed8341281037c9e0cf9ac1a83a65f83b3d957f0f7fb1f732744569b805b",
+    "src/PlatformServices.cpp": "5bac4aac48b676f09b7d7a5dcf6f5b01bca945a0ce2e87400af81f7a9e47bad0",
+    "src/PlatformServices.h": "a545e1ff29ac085f2499268810a314daf74147735624ef30a1d81c037fa893df",
+    "src/ProjectExporter.cpp": "3f1574602ed6654245eed733b6434347174bd897ddb52f85b045fc072e411e26",
+    "src/SaveStorage.cpp": "9dba0b981344be9f57112d00d6c5016e10d4ee1f4d83e2802d7d8ad6ecb3b606",
+    "src/SaveStorage.h": "5879075bbaf9d6ce53eb4b43c7d4ffc698c96d45877ae913d691a68903ca67ea",
+    "src/SaveStorageWindows.cpp": "997847bdb617c3a0b55dcf03bcf24dff321a5ffffab7bedaa972f0e6102c58c2",
+    "src/Window.cpp": "a76cb235b82a41dc49057c3899c312d8363d082e2369a71eb718d48f829f4059",
+    "src/editor/EditorApplication.cpp": "d67b665381a51003304f074e54277014306e3bb40332224695b92ed07939d644",
+    "src/main.cpp": "47ad5c1f79c4f3e022e4d1d2c8741a3251e3ce9d2a31e33b1cae4dfbad8352ce",
+    "tests/WindowsReadinessTests.cpp": "8e38f7421d5da19cc080e742a54efc7f01de64818fb881c0edea594fdc9c39b5",
+    "third_party/RUNTIME_NOTICES.txt": "298b2be9c04894dddf24b6c337b7c31e110ec0b99a2f59b74967b9835d3f2536",
+    "third_party/text/PROVENANCE.md": "a17fb0937bd2f7449234fdcfe06300c933b9cefa2f60ce542fc084dc6a020b5f"
+  }
+}

@@ -6,22 +6,27 @@
 #include <algorithm>
 #include <atomic>
 #include <cerrno>
+#ifndef _WIN32
 #include <fcntl.h>
 #include <sys/file.h>
 #include <sys/stat.h>
 #include <unistd.h>
 #include <dirent.h>
+#endif
 #include <limits>
 
 namespace {
+#ifndef _WIN32
 struct FD {int fd=-1;explicit FD(int value):fd(value){}~FD(){if(fd>=0)close(fd);}operator int()const{return fd;}};
 struct Lock {FD fd;explicit Lock(int dir):fd(openat(dir,".lock",O_RDWR|O_CREAT|O_NOFOLLOW|O_CLOEXEC,0600)){struct stat st{};if(fd.fd<0||fstat(fd,&st)||!S_ISREG(st.st_mode)||flock(fd,LOCK_EX|LOCK_NB))throw std::runtime_error("save storage busy or lock unavailable");}~Lock(){if(fd.fd>=0)flock(fd,LOCK_UN);}};
 std::atomic<uint64_t> nextTemporary{1};
 void Error(std::string& e,const char* operation){e=std::string(operation)+": "+std::strerror(errno);}
+#endif
 void Validate(GameSnapshot& s){std::string error;if(s.project.empty()||s.scene.empty()||s.content.size()!=64||s.diagnosticBuild.size()>256||s.displayName.size()>1024||s.participants.size()>16||s.gameVersion==0||!ScriptSystem::ValidateJson(s.metadata,error))throw std::runtime_error("invalid save metadata: "+error);}
 }
 std::string EncodeGameSnapshot(const GameSnapshot& source){JUDAS_PROFILE_SCOPE("Save encode");auto s=source;Validate(s);SaveArchive payload;payload(s.participants);SaveArchive header;uint32_t version=2;std::string hash=SceneFingerprintSha256(payload.bytes);header(version,s.project,s.scene,s.content,s.displayName,s.metadata,s.timestamp,s.gameVersion,hash,s.diagnosticBuild);SaveArchive envelope;std::string magic="JudasGameSave";envelope(magic,header.bytes,payload.bytes);return envelope.bytes;}
 bool DecodeGameSnapshot(const std::string& bytes,GameSnapshot& result,std::string& error,bool metadataOnly){try{JUDAS_PROFILE_SCOPE("Save decode");SaveArchive in(bytes);std::string magic,head,data;in(magic,head,data);in.Finish();if(magic!="JudasGameSave")throw std::runtime_error("invalid save signature");SaveArchive header(head);uint32_t version=0;GameSnapshot s;std::string hash;header(version,s.project,s.scene,s.content,s.displayName,s.metadata,s.timestamp,s.gameVersion,hash);if(header.position<header.bytes.size())header(s.diagnosticBuild);header.Finish();if(version!=1&&version!=2)throw std::runtime_error("unsupported newer save container version");if(version==1){if(s.timestamp>std::numeric_limits<uint64_t>::max()/1000)throw std::runtime_error("legacy timestamp overflow");s.timestamp*=1000;}if(SceneFingerprintSha256(data)!=hash)throw std::runtime_error("save checksum mismatch");if(!metadataOnly){SaveArchive payload(data);payload(s.participants);payload.Finish();}Validate(s);result=std::move(s);return true;}catch(const std::exception& e){error=e.what();return false;}}
+#ifndef _WIN32
 SaveStorage::SaveStorage(std::string root):m_root(std::move(root)){}
 SaveStorage::~SaveStorage(){if(m_directory>=0)close(m_directory);}
 bool SaveStorage::ValidSlot(const std::string& s){return !s.empty()&&s.size()<=64&&std::all_of(s.begin(),s.end(),[](char c){return (c>='a'&&c<='z')||(c>='A'&&c<='Z')||(c>='0'&&c<='9')||c=='_'||c=='-';});}
@@ -32,3 +37,5 @@ bool SaveStorage::Write(const std::string& id,const GameSnapshot& s,std::string&
 bool SaveStorage::Read(const std::string& id,GameSnapshot& s,bool& recovered,std::string& error){error.clear();recovered=false;if(!ValidSlot(id)){error="invalid slot ID";return false;}if(!Open(error))return false;try{Lock lock(m_directory);if(ReadFile(id+".save",s,error))return true;std::string original=error;if(ReadFile(id+".previous",s,error)){recovered=true;error.clear();return true;}error=original;return false;}catch(const std::exception& e){error=e.what();return false;}}
 bool SaveStorage::Delete(const std::string& id,std::string& error){error.clear();if(!ValidSlot(id)){error="invalid slot ID";return false;}if(!Open(error))return false;try{Lock lock(m_directory);for(auto suffix:{".save",".previous"}){auto file=id+suffix;struct stat st{};if(fstatat(m_directory,file.c_str(),&st,AT_SYMLINK_NOFOLLOW)==0&&!S_ISREG(st.st_mode)){error="refusing nonregular slot";return false;}}for(auto suffix:{".save",".previous"})if(unlinkat(m_directory,(id+suffix).c_str(),0)&&errno!=ENOENT){Error(error,"delete slot");return false;}if(([&]{JUDAS_PROFILE_SCOPE("Save directory sync");return fsync(m_directory);})()){Error(error,"delete published; durability uncertain");return false;}return true;}catch(const std::exception& e){error=e.what();return false;}}
 std::vector<SaveSlotInfo> SaveStorage::List(const std::string& project,const std::string& content,std::string& error){error.clear();std::vector<SaveSlotInfo> result;if(!Open(error))return result;try{Lock lock(m_directory);FD scan(openat(m_directory,".",O_RDONLY|O_DIRECTORY|O_CLOEXEC));DIR* dir=fdopendir(dup(scan));if(!dir)throw std::runtime_error("cannot list slots");std::set<std::string> names;unsigned entries=0;while(auto* entry=readdir(dir)){if(++entries>4096){closedir(dir);throw std::runtime_error("save directory entry bound exceeded");}std::string name=entry->d_name;auto dot=name.rfind('.');if(dot!=std::string::npos&&(name.substr(dot)==".save"||name.substr(dot)==".previous")&&ValidSlot(name.substr(0,dot)))names.insert(name.substr(0,dot));if(names.size()>128){closedir(dir);throw std::runtime_error("slot listing exceeds 128");}}closedir(dir);for(auto& id:names){SaveSlotInfo info;info.id=id;GameSnapshot s;if(!ReadFile(id+".save",s,info.error,true)){if(ReadFile(id+".previous",s,info.error,true))info.recovered=true;else {info.status=info.error.find("unsupported")!=std::string::npos?"incompatible":"corrupt";result.push_back(info);continue;}}info.error.clear();info.name=s.displayName;info.scene=s.scene;info.metadata=s.metadata;info.timestamp=s.timestamp;info.status=s.gameVersion!=1||s.project!=project||(!content.empty()&&s.content!=content)?"incompatible":"compatible";result.push_back(info);}}catch(const std::exception& e){error=e.what();}return result;}
+
+#endif

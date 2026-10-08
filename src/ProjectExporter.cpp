@@ -15,19 +15,24 @@
 #include "ScriptSystem.h"
 #include "AssetDatabase.h"
 #include "EnginePaths.h"
+#include "PlatformServices.h"
 #include "GamePackage.h"
 #include "Prefab.h"
 #include "RuntimeUI.h"
 #include "SceneFingerprint.h"
 #include "SceneSerialization.h"
 #include <chrono>
+#include <algorithm>
+#include <cctype>
 #include <filesystem>
 #include <fstream>
 #include <iomanip>
 #include <set>
 #include <stdexcept>
+#ifndef _WIN32
 #include <sys/wait.h>
 #include <unistd.h>
+#endif
 
 namespace fs = std::filesystem;
 namespace {
@@ -45,6 +50,10 @@ void Copy(const fs::path& from, const fs::path& to) {
 // Query the executable itself, rather than trusting a possibly stale adjacent
 // build file. No shell, renderer, application initialization or asset loading.
 bool ReleaseRuntime(const fs::path& executable) {
+#ifdef _WIN32
+    std::string text;
+    return WindowsCaptureBuildInfo(executable, text) && text == "Judas runtime Windows Release\n";
+#else
     int pipefd[2];
     if (pipe(pipefd) != 0) return false;
     const pid_t pid = fork();
@@ -63,6 +72,7 @@ bool ReleaseRuntime(const fs::path& executable) {
     close(pipefd[0]); int status = 0;
     while (waitpid(pid, &status, 0) < 0 && errno == EINTR) {}
     return WIFEXITED(status) && WEXITSTATUS(status) == 0 && text == "Judas runtime Linux Release\n";
+#endif
 }
 void References(const Scene& scene, const AssetDatabase& assets, const ProjectClassification& categories,const ProjectNavigation& navigation) {
     const auto checkUI=[&](const SceneObject& o){if(!o.ui)return;auto* r=assets.Find(o.ui->asset);UIDocument d;std::string error;Require(r&&!r->missing&&r->type==AssetType::UI,"Missing UI document "+o.ui->asset);Require(LoadUIDocument(r->path,d,error)&&ValidateUIAssets(d,assets,error),"UI: "+error);};
@@ -127,7 +137,7 @@ bool ExportProject(const Project& project, const ProjectExportOptions& options,
         Require(!Inside(destination, root) && !Inside(root, destination) && destination != root,
                 "Export destination must be outside the source project and must not contain it");
         const auto executable = fs::absolute(options.runtimeExecutable.empty()
-            ? fs::path(EngineExecutableDir()) / "judas" : fs::path(options.runtimeExecutable));
+            ? fs::u8path(EngineExecutableDir()) / RuntimeExecutableName() : fs::path(options.runtimeExecutable));
         Require(fs::is_regular_file(executable) && ReleaseRuntime(executable),
                 "A runnable Release judas executable is required: " + executable.string());
         const auto engineRoot = options.engineDataRoot.empty()
@@ -170,6 +180,15 @@ bool ExportProject(const Project& project, const ProjectExportOptions& options,
         const auto safeContentPath = [&](const fs::path& relative) {
             Require(!relative.empty() && !relative.is_absolute() && Inside((root / relative).lexically_normal(), root), "Unsafe package content path: " + relative.string());
             const auto first = relative.begin()->string();
+#ifdef _WIN32
+            std::string windowsFirst = first;
+            std::transform(windowsFirst.begin(), windowsFirst.end(), windowsFirst.begin(), [](unsigned char c){ return char(std::tolower(c)); });
+            Require(windowsFirst != "judas.exe" && windowsFirst != "engine" &&
+                    windowsFirst != "game.judasproj" && windowsFirst != "runtime_requirements.txt" &&
+                    windowsFirst != "game-icon.png" && windowsFirst != "dependencies.json" &&
+                    windowsFirst != kGamePackageMarker && fs::path(windowsFirst).extension() != ".dll",
+                    "Project content collides with Windows package path: " + relative.string());
+#endif
             Require(first != "engine" && first != "judas" && first != "game.judasproj" &&
                     first != kGamePackageMarker && first != "RUNTIME_REQUIREMENTS.txt" && first != "game-icon.png" && first != "DEPENDENCIES.json",
                     "Project content collides with reserved package path: " + relative.string());
@@ -236,15 +255,36 @@ bool ExportProject(const Project& project, const ProjectExportOptions& options,
                     "Refusing to replace a directory that is not a Judas package: " + destination.string());
         }
         // Unique sibling directory, no deletion of guessed temporary names.
-        std::string pattern = (destination.parent_path() / ".judas-export-XXXXXX").string();
-        Require(mkdtemp(pattern.data()) != nullptr, "Cannot create export staging directory");
-        staging = pattern;
-        Copy(executable, staging / "judas");
+        staging = fs::u8path(CreateExportStagingDirectory(destination.parent_path()));
+        Copy(executable, staging / RuntimeExecutableName());
+#ifdef _WIN32
+        const auto libraries = executable.parent_path() / "windows-runtime";
+        Require(fs::is_directory(libraries), "Windows runtime library directory missing; build the Windows SDK first");
+        std::ifstream manifest(libraries / "required-dlls.txt");
+        Require(bool(manifest), "Windows runtime DLL manifest missing; rebuild the Windows SDK");
+        std::string required; size_t libraryCount = 0;
+        while (std::getline(manifest, required)) {
+            if (!required.empty() && required.back() == '\r') required.pop_back();
+            Require(!required.empty() && fs::path(required).filename() == required && fs::path(required).extension() == ".dll",
+                    "Invalid Windows runtime DLL manifest entry");
+            Require(fs::is_regular_file(libraries / required), "Missing Windows runtime library: " + required);
+            Copy(libraries / required, staging / required); ++libraryCount;
+        }
+        Require(libraryCount >= 3 && manifest.eof(), "Incomplete Windows runtime DLL manifest");
+        const auto licenses = executable.parent_path() / "windows-licenses";
+        Require(fs::is_regular_file(licenses / "SDL2.txt") && fs::is_regular_file(licenses / "GLM.txt"),
+                "Windows dependency licenses missing; rebuild the Windows SDK");
+        for(const auto& entry:fs::directory_iterator(licenses))
+            if(entry.is_regular_file()) Copy(entry.path(), staging / "engine/licenses" / entry.path().filename());
+
+#endif
         if (iconPath.empty()) {
             const bool iconWritten = WriteDefaultAppIcon((staging / "game-icon.png").string(), error);
             Require(iconWritten, error);
         } else Copy(iconPath, staging / "game-icon.png");
+#ifndef _WIN32
         fs::permissions(staging / "judas", fs::perms::owner_exec | fs::perms::group_exec | fs::perms::others_exec, fs::perm_options::add);
+#endif
         fs::create_directories(staging / project.Settings().assetsDir);
         fs::create_directories(staging / project.Settings().scenesDir);
         for (const auto& path : scenes) Copy(path, staging / path.lexically_relative(root));
@@ -298,7 +338,11 @@ bool ExportProject(const Project& project, const ProjectExportOptions& options,
         Copy(engineRoot / "assets/fonts/DejaVuSans-LICENSE.txt", staging / "engine/licenses/DejaVuSans.txt");
         Copy(engineRoot / "third_party/RUNTIME_NOTICES.txt", staging / "engine/third_party/RUNTIME_NOTICES.txt");
         Copy(engineRoot / "LICENSE", staging / "engine/licenses/Judas.txt");
+#ifdef _WIN32
+        write("RUNTIME_REQUIREMENTS.txt", "Judas Windows x64 Release package — UNVALIDATED candidate. Run judas.exe.\nRequires Windows 10/11 x64 and an OpenGL 3.3 graphics driver.\nICU 76.1 data/common/internationalization DLLs and Visual C++ runtime files are bundled. SDL2 and other engine dependencies are statically linked.\nNo editor, source tree or build directory is required. Saves use LocalAppData/judas/games/<save-id>/Saves.\nAsset policy/inclusion: DEPENDENCIES.json. Licenses: engine/licenses and engine/third_party/RUNTIME_NOTICES.txt.\n");
+#else
         write("RUNTIME_REQUIREMENTS.txt", "Judas Linux desktop Release package. Run ./judas (no arguments).\nRequires compatible glibc/libstdc++, SDL2 and its system dependencies, OpenGL 3.3 drivers.\nNo editor or development tree is required. Platform libraries are system provided; not bundled.\nUnicode text libraries and ICU locale/boundary data are statically linked.\nProject fonts/catalogs are packaged assets; no desktop font or ICU_DATA lookup.\nAsset policy and inclusion reasons: DEPENDENCIES.json. All is conservative; closure requires explicit dynamic/runtime roots. Scenes follow project inclusion/exclusion policy.\nSaves: $XDG_DATA_HOME/judas/games/<save-id>/Saves, otherwise $HOME/.local/share/...\nThird-party notices: engine/third_party/RUNTIME_NOTICES.txt and engine/licenses.\n");
+#endif
         ProjectExportResult completed; completed.packageDirectory = destination.string();
         completed.assetCount = included.size();completed.assetBytes=assetBytes;completed.deduplicatedBytes=deduplicated;completed.excludedAssetBytes=excluded; completed.sceneCount = scenes.size();
         for (const auto& entry : fs::recursive_directory_iterator(staging))

@@ -1,5 +1,8 @@
 #include "EnginePaths.h"
 #include "GamePackage.h"
+#ifdef _WIN32
+#include <windows.h>
+#endif
 
 #include <cstdlib>
 #include <filesystem>
@@ -18,6 +21,14 @@ std::string EngineExecutableDir() {
     if (length > 0) {
         buffer[length] = '\0';
         return fs::path(buffer).parent_path().generic_string();
+    }
+#elif defined(_WIN32)
+    std::vector<wchar_t> buffer(512);
+    while (buffer.size() <= 32768) {
+        DWORD length = GetModuleFileNameW(nullptr, buffer.data(), DWORD(buffer.size()));
+        if (!length) return {};
+        if (length < buffer.size()) return fs::path(std::wstring(buffer.data(), length)).parent_path().generic_u8string();
+        buffer.resize(buffer.size() * 2);
     }
 #endif
     return std::string();

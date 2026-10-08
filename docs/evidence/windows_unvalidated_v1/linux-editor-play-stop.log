@@ -1,0 +1,163 @@
+libEGL warning: Not allowed to force software rendering when API explicitly selects a hardware device.
+Renderer fragment texture units: 32 (material path uses 12)
+[editor autotest] duplicate created id 2000: scene CHANGED; undo restores: IDENTICAL
+[editor autotest] wrote: /tmp/judas-windows-editor.edit.png
+[editor autotest] edit frame: 51 draw calls, 588 triangles, 848 debug lines
+Mouse capture failed: No relative mode implementation available
+ALSA lib confmisc.c:855:(parse_card) [error.core] cannot find card '0'
+ALSA lib conf.c:5211:(_snd_config_evaluate) [error.core] function snd_func_card_id returned error: No such file or directory
+ALSA lib confmisc.c:422:(snd_func_concat) [error.core] error evaluating strings
+ALSA lib conf.c:5211:(_snd_config_evaluate) [error.core] function snd_func_concat returned error: No such file or directory
+ALSA lib confmisc.c:1342:(snd_func_refer) [error.core] error evaluating name
+ALSA lib conf.c:5211:(_snd_config_evaluate) [error.core] function snd_func_refer returned error: No such file or directory
+ALSA lib conf.c:5734:(snd_config_expand) [error.core] Evaluate error: No such file or directory
+ALSA lib pcm.c:2722:(snd_pcm_open_noupdate) [error.pcm] Unknown PCM dmix
+ALSA lib confmisc.c:855:(parse_card) [error.core] cannot find card '0'
+ALSA lib conf.c:5211:(_snd_config_evaluate) [error.core] function snd_func_card_id returned error: No such file or directory
+ALSA lib confmisc.c:422:(snd_func_concat) [error.core] error evaluating strings
+ALSA lib conf.c:5211:(_snd_config_evaluate) [error.core] function snd_func_concat returned error: No such file or directory
+ALSA lib confmisc.c:1342:(snd_func_refer) [error.core] error evaluating name
+ALSA lib conf.c:5211:(_snd_config_evaluate) [error.core] function snd_func_refer returned error: No such file or directory
+ALSA lib conf.c:5734:(snd_config_expand) [error.core] Evaluate error: No such file or directory
+ALSA lib pcm.c:2722:(snd_pcm_open_noupdate) [error.pcm] Unknown PCM dmix:0
+ALSA lib confmisc.c:855:(parse_card) [error.core] cannot find card '0'
+ALSA lib conf.c:5211:(_snd_config_evaluate) [error.core] function snd_func_card_id returned error: No such file or directory
+ALSA lib confmisc.c:422:(snd_func_concat) [error.core] error evaluating strings
+ALSA lib conf.c:5211:(_snd_config_evaluate) [error.core] function snd_func_concat returned error: No such file or directory
+ALSA lib confmisc.c:1342:(snd_func_refer) [error.core] error evaluating name
+ALSA lib conf.c:5211:(_snd_config_evaluate) [error.core] function snd_func_refer returned error: No such file or directory
+ALSA lib conf.c:5734:(snd_config_expand) [error.core] Evaluate error: No such file or directory
+ALSA lib pcm.c:2722:(snd_pcm_open_noupdate) [error.pcm] Unknown PCM dmix:0,0
+ALSA lib confmisc.c:165:(snd_config_get_card) [error.core] Cannot get card index for 0
+ALSA lib confmisc.c:165:(snd_config_get_card) [error.core] Cannot get card index for 0
+ALSA lib confmisc.c:165:(snd_config_get_card) [error.core] Cannot get card index for 0
+Cannot connect to server socket err = Operation not permitted
+Cannot connect to server request channel
+jack server is not running or cannot be started
+JackShmReadWritePtr::~JackShmReadWritePtr - Init not done for -1, skipping unlock
+JackShmReadWritePtr::~JackShmReadWritePtr - Init not done for -1, skipping unlock
+Mouse capture failed: No relative mode implementation available
+Mouse capture failed: No relative mode implementation available
+Mouse capture failed: No relative mode implementation available
+Mouse capture failed: No relative mode implementation available
+Mouse capture failed: No relative mode implementation available
+Mouse capture failed: No relative mode implementation available
+Mouse capture failed: No relative mode implementation available
+Mouse capture failed: No relative mode implementation available
+Mouse capture failed: No relative mode implementation available
+Mouse capture failed: No relative mode implementation available
+Mouse capture failed: No relative mode implementation available
+Mouse capture failed: No relative mode implementation available
+Mouse capture failed: No relative mode implementation available
+Mouse capture failed: No relative mode implementation available
+Mouse capture failed: No relative mode implementation available
+Mouse capture failed: No relative mode implementation available
+Mouse capture failed: No relative mode implementation available
+Mouse capture failed: No relative mode implementation available
+Mouse capture failed: No relative mode implementation available
+Mouse capture failed: No relative mode implementation available
+Mouse capture failed: No relative mode implementation available
+Mouse capture failed: No relative mode implementation available
+Mouse capture failed: No relative mode implementation available
+Mouse capture failed: No relative mode implementation available
+Mouse capture failed: No relative mode implementation available
+Mouse capture failed: No relative mode implementation available
+Mouse capture failed: No relative mode implementation available
+Mouse capture failed: No relative mode implementation available
+Mouse capture failed: No relative mode implementation available
+Mouse capture failed: No relative mode implementation available
+Mouse capture failed: No relative mode implementation available
+Mouse capture failed: No relative mode implementation available
+Mouse capture failed: No relative mode implementation available
+Mouse capture failed: No relative mode implementation available
+Mouse capture failed: No relative mode implementation available
+Mouse capture failed: No relative mode implementation available
+Mouse capture failed: No relative mode implementation available
+Mouse capture failed: No relative mode implementation available
+Mouse capture failed: No relative mode implementation available
+Mouse capture failed: No relative mode implementation available
+Mouse capture failed: No relative mode implementation available
+Mouse capture failed: No relative mode implementation available
+Mouse capture failed: No relative mode implementation available
+Mouse capture failed: No relative mode implementation available
+Mouse capture failed: No relative mode implementation available
+Mouse capture failed: No relative mode implementation available
+Mouse capture failed: No relative mode implementation available
+Mouse capture failed: No relative mode implementation available
+Mouse capture failed: No relative mode implementation available
+Mouse capture failed: No relative mode implementation available
+Mouse capture failed: No relative mode implementation available
+Mouse capture failed: No relative mode implementation available
+Mouse capture failed: No relative mode implementation available
+Mouse capture failed: No relative mode implementation available
+Mouse capture failed: No relative mode implementation available
+Mouse capture failed: No relative mode implementation available
+Mouse capture failed: No relative mode implementation available
+Mouse capture failed: No relative mode implementation available
+Mouse capture failed: No relative mode implementation available
+Mouse capture failed: No relative mode implementation available
+Mouse capture failed: No relative mode implementation available
+Mouse capture failed: No relative mode implementation available
+Mouse capture failed: No relative mode implementation available
+Mouse capture failed: No relative mode implementation available
+Mouse capture failed: No relative mode implementation available
+Mouse capture failed: No relative mode implementation available
+Mouse capture failed: No relative mode implementation available
+Mouse capture failed: No relative mode implementation available
+Mouse capture failed: No relative mode implementation available
+Mouse capture failed: No relative mode implementation available
+Mouse capture failed: No relative mode implementation available
+Mouse capture failed: No relative mode implementation available
+Mouse capture failed: No relative mode implementation available
+Mouse capture failed: No relative mode implementation available
+Mouse capture failed: No relative mode implementation available
+Mouse capture failed: No relative mode implementation available
+Mouse capture failed: No relative mode implementation available
+Mouse capture failed: No relative mode implementation available
+Mouse capture failed: No relative mode implementation available
+Mouse capture failed: No relative mode implementation available
+Mouse capture failed: No relative mode implementation available
+Mouse capture failed: No relative mode implementation available
+Mouse capture failed: No relative mode implementation available
+Mouse capture failed: No relative mode implementation available
+Mouse capture failed: No relative mode implementation available
+Mouse capture failed: No relative mode implementation available
+Mouse capture failed: No relative mode implementation available
+Mouse capture failed: No relative mode implementation available
+Mouse capture failed: No relative mode implementation available
+Mouse capture failed: No relative mode implementation available
+Mouse capture failed: No relative mode implementation available
+Mouse capture failed: No relative mode implementation available
+Mouse capture failed: No relative mode implementation available
+Mouse capture failed: No relative mode implementation available
+Mouse capture failed: No relative mode implementation available
+Mouse capture failed: No relative mode implementation available
+Mouse capture failed: No relative mode implementation available
+Mouse capture failed: No relative mode implementation available
+Mouse capture failed: No relative mode implementation available
+Mouse capture failed: No relative mode implementation available
+Mouse capture failed: No relative mode implementation available
+Mouse capture failed: No relative mode implementation available
+Mouse capture failed: No relative mode implementation available
+Mouse capture failed: No relative mode implementation available
+Mouse capture failed: No relative mode implementation available
+Mouse capture failed: No relative mode implementation available
+Mouse capture failed: No relative mode implementation available
+Mouse capture failed: No relative mode implementation available
+Mouse capture failed: No relative mode implementation available
+Mouse capture failed: No relative mode implementation available
+Mouse capture failed: No relative mode implementation available
+Mouse capture failed: No relative mode implementation available
+Mouse capture failed: No relative mode implementation available
+Mouse capture failed: No relative mode implementation available
+Mouse capture failed: No relative mode implementation available
+Mouse capture failed: No relative mode implementation available
+Mouse capture failed: No relative mode implementation available
+Mouse capture failed: No relative mode implementation available
+[editor autotest] wrote: /tmp/judas-windows-editor.play.png
+[editor autotest] play frame: 1 steps, step 1.633 ms, 52 bodies, 0 contacts, 91 draw calls, 1080 triangles, 1 shadow passes, 0 lights, 1020 debug lines, 0 particles
+[editor autotest] resources: 2 meshes, 2 textures, 0 terrain meshes, hits 25021, misses 17, failed 0, uploads 13, resident 1358617 bytes
+[editor autotest] jobs: 7 workers, 17 completed, 0 failed, 0 cancelled
+Mouse capture failed: No relative mode implementation available
+[editor autotest] authored scene after play/stop is IDENTICAL
+[editor autotest] save ok
