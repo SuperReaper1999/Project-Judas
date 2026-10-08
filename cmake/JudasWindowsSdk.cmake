@@ -14,17 +14,22 @@ endforeach()
 file(WRITE "${CMAKE_BINARY_DIR}/required-dlls.txt" "${judas_dll_manifest}")
 set(judas_sdl_license "${VCPKG_INSTALLED_DIR}/${VCPKG_TARGET_TRIPLET}/share/sdl2/copyright")
 set(judas_glm_license "${VCPKG_INSTALLED_DIR}/${VCPKG_TARGET_TRIPLET}/share/glm/copyright")
+# All these executables share a configuration output directory. Stage the common
+# runtime once before linking, so parallel post-build copies cannot race.
+# CMP0112 NEW ensures TARGET_FILE_DIR does not introduce a dependency on judas.
+cmake_policy(SET CMP0112 NEW)
+add_custom_target(judas_windows_runtime
+ COMMAND ${CMAKE_COMMAND} -E make_directory "$<TARGET_FILE_DIR:judas>" "$<TARGET_FILE_DIR:judas>/windows-runtime" "$<TARGET_FILE_DIR:judas>/windows-licenses"
+ COMMAND ${CMAKE_COMMAND} -E copy_if_different ${JUDAS_WINDOWS_DLLS} "$<TARGET_FILE_DIR:judas>"
+ COMMAND ${CMAKE_COMMAND} -E copy_if_different ${JUDAS_WINDOWS_DLLS} "$<TARGET_FILE_DIR:judas>/windows-runtime"
+ COMMAND ${CMAKE_COMMAND} -E copy_if_different "${CMAKE_BINARY_DIR}/required-dlls.txt" "$<TARGET_FILE_DIR:judas>/windows-runtime/required-dlls.txt"
+ COMMAND ${CMAKE_COMMAND} -E copy_if_different "${judas_sdl_license}" "$<TARGET_FILE_DIR:judas>/windows-licenses/SDL2.txt"
+ COMMAND ${CMAKE_COMMAND} -E copy_if_different "${judas_glm_license}" "$<TARGET_FILE_DIR:judas>/windows-licenses/GLM.txt"
+ DEPENDS judas_icu_build
+ VERBATIM)
 foreach(target judas judas_editor judas_export judas_model_import_cli judas_scene_author judas_windows_readiness_tests)
  target_link_options(${target} PRIVATE "/MANIFEST:EMBED" "/MANIFESTINPUT:${CMAKE_SOURCE_DIR}/packaging/windows/judas.manifest")
- add_custom_command(TARGET ${target} POST_BUILD
-  COMMAND ${CMAKE_COMMAND} -E copy_if_different ${JUDAS_WINDOWS_DLLS} "$<TARGET_FILE_DIR:${target}>"
-  COMMAND ${CMAKE_COMMAND} -E make_directory "$<TARGET_FILE_DIR:${target}>/windows-runtime"
-  COMMAND ${CMAKE_COMMAND} -E copy_if_different ${JUDAS_WINDOWS_DLLS} "$<TARGET_FILE_DIR:${target}>/windows-runtime"
-  COMMAND ${CMAKE_COMMAND} -E copy_if_different "${CMAKE_BINARY_DIR}/required-dlls.txt" "$<TARGET_FILE_DIR:${target}>/windows-runtime/required-dlls.txt"
-  COMMAND ${CMAKE_COMMAND} -E make_directory "$<TARGET_FILE_DIR:${target}>/windows-licenses"
-  COMMAND ${CMAKE_COMMAND} -E copy_if_different "${judas_sdl_license}" "$<TARGET_FILE_DIR:${target}>/windows-licenses/SDL2.txt"
-  COMMAND ${CMAKE_COMMAND} -E copy_if_different "${judas_glm_license}" "$<TARGET_FILE_DIR:${target}>/windows-licenses/GLM.txt"
-  VERBATIM)
+ add_dependencies(${target} judas_windows_runtime)
 endforeach()
 set(JUDAS_WINDOWS_SDK "${CMAKE_BINARY_DIR}/windows-sdk")
 add_custom_target(judas_windows_sdk

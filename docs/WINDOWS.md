@@ -27,6 +27,15 @@ The script creates a dedicated vcpkg checkout under
 using `x64-windows-static-md`. It refuses to alter an existing checkout at another
 revision. An alternative dedicated path can be passed as `-VcpkgRoot`.
 ExecutionPolicy Bypass applies to this invocation; it does not alter system policy.
+The pinned baseline's MSYS helper downloads may return HTTP 404 as mirrors retire
+old packages. In that case install native pkgconf and pass its executable explicitly;
+this keeps the pinned SDL2/GLM versions unchanged. For a D-drive tooling checkout:
+
+```powershell
+winget install --id pkgconf.pkgconf --exact --source winget --location D:\BuildTools\pkgconf
+powershell -ExecutionPolicy Bypass -File .\packaging\windows\Build-Windows.ps1 -VcpkgRoot D:\BuildTools\Judas\vcpkg -PkgConfig D:\BuildTools\pkgconf\pkg-config.exe
+```
+
 If a build fails, retain the first error and the build logs; do not treat the
 candidate label as a guarantee that Windows compilation has already passed.
 

@@ -9,7 +9,7 @@ struct LiquidBasinSettings {LiquidSurfaceSettings surface;bool enabled=true;std:
 struct LiquidContainerSettings {bool enabled=true;std::string geometry;LiquidMaterial material;double initialVolume=0;std::vector<glm::dvec3> opening{{-.2,.3,-.2},{.2,.3,-.2},{.2,.3,.2},{-.2,.3,.2}};double openingArea=.01,discharge=.6;};
 struct LiquidConnectionSettings {bool enabled=true,bidirectional=true;std::uint64_t source=0,destination=0;double openingArea=.01,discharge=.6;};
 struct LiquidInteractionSettings {bool enabled=true;double drag=1;};
-struct SceneObject;struct Scene;class AssetDatabase;
+struct SceneObject;class Scene;class AssetDatabase;
 std::map<std::string,std::string> LiquidProperties(const SceneObject&);
 bool ApplyLiquidProperties(const std::map<std::string,std::string>&,SceneObject&,std::string&);
 bool ValidateLiquidComponents(const SceneObject&,std::string&);

@@ -1,4 +1,7 @@
-param([string]$VcpkgRoot = "$env:LOCALAPPDATA\JudasBuildTools\vcpkg")
+param(
+    [string]$VcpkgRoot = "$env:LOCALAPPDATA\JudasBuildTools\vcpkg",
+    [string]$PkgConfig = ""
+)
 $ErrorActionPreference = 'Stop'
 $repo = (Resolve-Path "$PSScriptRoot\..\..").Path
 $pin = 'd5ec528843d29e3a52d745a64b469f810b2cedbf'
@@ -7,6 +10,11 @@ function Run-Native([string]$Program, [string[]]$Arguments) {
     if ($LASTEXITCODE -ne 0) { throw "$Program failed with exit $LASTEXITCODE" }
 }
 if (!(Get-Command cmake -ErrorAction SilentlyContinue)) { throw 'Install Visual Studio 2022 Desktop development with C++, including CMake, then use Developer PowerShell.' }
+if ($PkgConfig) {
+    $env:PKG_CONFIG = (Resolve-Path -LiteralPath $PkgConfig).Path
+    # vcpkg sanitizes the environment before executing ports.
+    $env:VCPKG_KEEP_ENV_VARS = (@($env:VCPKG_KEEP_ENV_VARS -split ';' | Where-Object { $_ }) + 'PKG_CONFIG' | Select-Object -Unique) -join ';'
+}
 if (!(Test-Path "$VcpkgRoot\.git")) {
     if (Test-Path $VcpkgRoot) { throw "Existing non-Git directory: $VcpkgRoot" }
     Run-Native git @('clone', 'https://github.com/microsoft/vcpkg.git', $VcpkgRoot)

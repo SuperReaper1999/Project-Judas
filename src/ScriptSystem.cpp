@@ -167,7 +167,7 @@ export class LiquidVolume {
  applyImpulse(point,impulse){return call('liquidImpulse',this.handle,point,impulse)}
  set surfaceEnabled(value){call('liquidSurfaceEnabled',this.handle,value)}
 }
-export const liquid={
+)JS" R"JS(export const liquid={
  sample:point=>{const v=call('liquidSample',point);return v?{...v,entity:entity(v.entityId)}:null},
  samplePresented:point=>{const v=call('liquidPresentedSample',point);return v?{...v,entity:entity(v.entityId)}:null},
  accounting:(material='water')=>call('liquidAccounting',material),

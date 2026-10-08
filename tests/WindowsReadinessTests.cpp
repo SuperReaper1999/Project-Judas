@@ -3,6 +3,9 @@
 #include "GamePackage.h"
 #include "SaveStorage.h"
 #include "SceneFingerprint.h"
+#include "AuthoringNumeric.h"
+#include <cstdlib>
+#include <cstring>
 #include <filesystem>
 #include <fstream>
 #include <cstdio>
@@ -16,6 +19,27 @@ int main(int argc,char** argv){
  if(argc==3&&std::string(argv[1])=="--quoted-child"){std::ofstream(fs::u8path(argv[2]))<<"child";return 0;}
  if(argc==2&&std::string(argv[1])=="--build-info"){std::printf("Judas runtime %s Release\n",RuntimePlatformName());return 0;}
  int checks=0,failures=0;auto check=[&](bool ok,const char* label){++checks;failures+=!ok;std::printf("%s %s\n",ok?"PASS":"FAIL",label);};
+#ifdef _WIN32
+ bool numericLocale=false,numericRestore=false,numericNested=false;
+ std::thread localeThread([&]{
+  _configthreadlocale(_ENABLE_PER_THREAD_LOCALE);
+  if(!::setlocale(LC_NUMERIC,"German"))return;
+  const std::string original=::setlocale(LC_NUMERIC,nullptr);
+  {
+   AuthoringNumericLocale outer;
+   char* end=nullptr;char buffer[32];
+   std::snprintf(buffer,sizeof(buffer),"%.1f",1.5);
+   numericLocale=std::strtod("1.5",&end)==1.5&&end&&!*end&&std::strcmp(buffer,"1.5")==0;
+   {AuthoringNumericLocale inner;}
+   numericNested=std::strcmp(::setlocale(LC_NUMERIC,nullptr),"C")==0;
+  }
+  numericRestore=original==::setlocale(LC_NUMERIC,nullptr);
+ });
+ localeThread.join();
+ check(numericLocale,"authoring numeric locale uses decimal point");
+ check(numericNested,"nested authoring numeric locale remains C");
+ check(numericRestore,"authoring numeric locale restores caller locale");
+#endif
  const auto root=fs::temp_directory_path()/("judas-port-"+std::to_string(std::chrono::steady_clock::now().time_since_epoch().count()));fs::create_directories(root);
  std::string error;check(!EngineExecutableDir().empty()&&fs::is_directory(fs::u8path(EngineExecutableDir())),"executable root independent of cwd");
  fs::current_path(root);check(fs::is_directory(fs::u8path(EngineExecutableDir())),"executable root after unrelated cwd");

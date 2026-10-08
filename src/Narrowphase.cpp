@@ -186,7 +186,7 @@ namespace {
         Rotation<Iv> r(orientation);
         std::array<Iv,3> lo,hi;
         for (int k=0;k<3;++k){
-            Iv center(double(position[k])),extent(0);
+            Iv center{double(position[k])},extent(0);
             for (int j=0;j<3;++j){
                 const Iv entry=r.n[j][k]/r.d;
                 center=center+entry*Iv(double(offset[j]));
@@ -285,7 +285,7 @@ Aabb ShapeAabb(const PreparedShapeBounds& prepared,const glm::vec3& position) {
     const auto translatedBox=[&](const PreparedBoxBound& box) {
         std::array<Iv,3> lo,hi;
         for (int k=0;k<3;++k) {
-            Iv center(double(position[k]));
+            Iv center{double(position[k])};
             for (int j=0;j<3;++j) center=center+box.offsetTerms[k][j];
             lo[k]=center-box.extent[k];
             hi[k]=center+box.extent[k];
