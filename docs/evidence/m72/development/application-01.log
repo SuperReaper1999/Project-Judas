@@ -1,0 +1,5 @@
+libEGL warning: Not allowed to force software rendering when API explicitly selects a hardware device.
+Renderer fragment texture units: 32 (material path uses 12)
+PASS ordinary host: 
+PASS ordinary project: 
+FAIL registered scene: 

@@ -1,6 +1,16 @@
-# Materials and environment lighting — M57
+# Materials and environment lighting — M57 foundation, M72 candidate
 
-Current optional OpenGL 3.3 material pipeline. Judas owns rendering primitives; projects own appearance, scripts own its meaning. [JudasJS API](judasjs/materials.md), [material lab](../projects/material_lab/material_lab.judasproj), [Spring Range](../projects/shooter_game/shooter_game.judasproj).
+Current optional OpenGL 3.3 material pipeline. Judas owns rendering primitives; projects own appearance, scripts own its meaning. [JudasJS API](judasjs/materials.md), [M72 ownership/review](M72.md), [material lab](../projects/material_lab/material_lab.judasproj), [Spring Range](../projects/shooter_game/shooter_game.judasproj).
+
+M72 extends the existing pipeline with validated runtime sun/ambient/environment
+controls, local entity/component visibility and isolated whole/slot/stable-part
+material patches. Sun direction points toward the source in world coordinates;
+linear radiance multipliers are not certified photometric units. Reset removes
+runtime values and restores authored defaults, including material assignment.
+Explicit opacity uses the alpha modes described below. Shared source assets remain
+immutable; resource replacement and durable state use ordinary IDs/generations.
+The [API reference](judasjs/materials.md) defines ranges, timing, resource readback
+and reset precedence. M72 remains an uncommitted candidate awaiting human review.
 
 ## Authoring
 
@@ -21,6 +31,9 @@ Legacy scenes without new authored appearance remain on the original presentatio
 Modern world lighting accumulates in RGBA16F, then manual exposure, luminance-preserving Reinhard (`rgb / (1 + dot(rgb, [.2126,.7152,.0722]))`), clamp for SDR gamut, then exact piecewise sRGB transfer, once. The representable lighting ceiling is 60000 per channel (below binary16 overflow); over-bright material output saturates there before resolve. HDR input outside finite 0–60000 fails with an import diagnostic. This is internal HDR, not HDR-monitor output. UI/debug authored colours remain display-referred and render after world resolve, independent of exposure. Particle authored tint and colour-texture RGB are decoded separately before multiplication into modern linear lighting; alpha is unchanged.
 
 Modern M33 targets are RGBA16F **scene-linear** images: environment background and water optics included, exposure/tone mapping excluded. Their resource carries its interpretation; ordinary material sampling skips sRGB decoding. The final main camera applies exposure/output conversion once. Legacy targets stay RGBA8 display-referred. Camera masks, cadence and self-feedback fallback remain intact. Target resize caches are bounded; main/secondary sizes do not allocate every frame.
+Auxiliary views use the ordinary geometry/material/transparency paths and reuse
+the main-focused directional/legacy spot shadow maps. Their resolution/cadence
+remain authored; independent shadow focus and pixel-quality parity are not promised.
 
 M55 optical boundary paths still come from the accepted liquid system at interpolated presentation time. World fragments apply Beer-Lambert attenuation and existing in-scattering **before** HDR display resolve. Liquid surface/particles follow opaque world rendering, then resolve, then UI. No changes to liquid quantity, surface solver, geometry or gravity are part of M57.
 
@@ -36,7 +49,7 @@ Offline deterministic Hammersley integration builds cosine-weighted diffuse irra
 
 Imported tangents retain their sign; missing tangents use pinned MikkTSpace (zlib license) on indexed corners, splitting seams and preserving skin influences. Degenerate UVs use a finite orthogonal tangent fallback. Normal matrices account for nonuniform instance/skin transforms; determinant sign preserves mirrored handedness. Normals and tangents consume the same resolved skin palette as vertex positions; entity transforms use presentation timing. There is no separate pose pipeline.
 
-Shared material/mesh/environment CPU decoding uses ResourceManager workers; Renderer owns all GL upload/delete. Registered IDs are serialized in scenes/prefabs with generic override support. Runtime overrides are per instance and do not persist to disk. Optional authored fingerprint extension retains canonical schema 5; worlds opting into appearance or declaring registered material/environment assets include registered material/environment/mesh/texture bytes in content identity, independent of absolute path. Absent new appearance and registered M57 assets preserves old fingerprint data. M38 packages all registered assets (including dynamically assigned materials and derived environments) and validates map references. Source HDR and import/bake tooling are not required by shipped runtime.
+Shared material/mesh/environment CPU decoding uses ResourceManager workers; Renderer owns all GL upload/delete. Registered IDs are serialized in scenes/prefabs with generic override support. Runtime overrides do not rewrite authored source files; explicit modern M61 saves and M59 retention preserve supported live values/IDs and rebuild disposable resources. Optional authored fingerprint extension retains canonical schema 5; worlds opting into appearance or declaring registered material/environment assets include registered material/environment/mesh/texture bytes in content identity, independent of absolute path. Absent new appearance and registered M57 assets preserves old fingerprint data. M38's conservative all-assets export remains default; M68 also supports opt-in selected-scene dependency closure plus explicit runtime assets. With closure selected, script-selected material/texture/environment IDs must be reachable or declared runtime assets. Export validates map references. Source HDR and import/bake tooling are not required by shipped runtime.
 
 ## References and limits
 

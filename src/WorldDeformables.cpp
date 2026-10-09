@@ -4,6 +4,7 @@
 #include "SaveArchive.h"
 #include "SceneFingerprint.h"
 #include "PerformanceProfiler.h"
+#include "WorldPresentation.h"
 #include <atomic>
 #include <fstream>
 #include <glm/gtc/matrix_transform.hpp>
@@ -104,7 +105,7 @@ void RuntimeWorld::UpdateDeformables(double dt){
 }
 void RuntimeWorld::DrawDeformables(Renderer& renderer,float alpha)const{
     for(auto& [id,record]:m_deformables){const auto* d=RuntimeDefinition(id);
-        if(!d||!d->deformable||!IsPublished(id)||!record.simulation.settings.enabled)continue;
+        if(!d||!d->deformable||!IsPublished(id)||!RenderVisible(id)||!record.simulation.settings.enabled)continue;
         auto& sim=record.simulation;
         if(record.mappedRevision!=record.revision||record.mappedAlpha!=alpha){
             sim.MapRender(alpha,record.presentation);
@@ -115,12 +116,9 @@ void RuntimeWorld::DrawDeformables(Renderer& renderer,float alpha)const{
             record.mappedRevision=record.revision;record.mappedAlpha=alpha;
         }
         renderer.SetRenderLayer(RenderLayerOf(id));
-        std::vector<MaterialBinding> slots;
-        if(d->render)for(const auto& slot:d->render->materials){if(m_assets)m_assets->RequestMaterial(slot.asset);
-            slots.push_back({m_assets?m_assets->TryGetMaterial(slot.asset):MaterialHandle{},slot.overrides,!slot.asset.empty(),m_assets&&m_assets->StateOf(slot.asset)==ResourceState::Failed});
-            }renderer.SetMaterialBindings(slots);
+        renderer.SetMaterialBindings(d->render?BuildRenderMaterialBindings(m_assets,*d->render):std::vector<MaterialBinding>{});
         auto texture=d->render&&m_assets?m_assets->TryGetTexture(d->render->textureAsset):TextureHandle{};
-        renderer.DrawMesh(record.mesh,glm::vec3(0),glm::quat(1,0,0,0),glm::vec3(1),texture,d->render?d->render->color:glm::vec3(.5f,.6f,.8f));
+        renderer.DrawMesh(record.mesh,glm::vec3(0),glm::quat(1,0,0,0),glm::vec3(1),texture,d->render?d->render->color:glm::vec3(.5f,.6f,.8f),d->render?d->render->alpha:1.f,nullptr,d->render?&d->render->hiddenParts:nullptr);
     }
 }
 void RuntimeWorld::RemoveDeformable(EntityId id){auto it=m_deformables.find(id);

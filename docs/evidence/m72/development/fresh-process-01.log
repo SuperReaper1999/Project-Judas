@@ -1,0 +1,16 @@
+libEGL warning: Not allowed to force software rendering when API explicitly selects a hardware device.
+Renderer fragment texture units: 32 (material path uses 12)
+PASS ordinary host: 
+PASS ordinary project: 
+PASS registered scene: 
+PASS fresh process snapshot decoded
+PASS durable engine participant decodes
+PASS fresh world from saved rendering intent: 
+PASS fresh resources and script state restored: 
+PASS fresh process restores visibility and instance material
+PASS fresh process restores actual sun controls
+FAIL plain JS clock restored without replaying start
+PASS fresh process reset restores original authored light
+PASS fresh saved empty environment resets to pinned authored resource
+FAIL fresh clear restores original shared model binding
+M72 fresh 13 checks 2 failures

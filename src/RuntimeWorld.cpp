@@ -225,6 +225,7 @@ bool RuntimeWorld::AppendEntitySlot(const SceneObject& o, bool authored, const E
 }
 
 bool RuntimeWorld::Build(const Scene& authored, ResourceManager* resources, std::string& outError, const ProjectClassification* categories,const ProjectNavigation* navigation,bool runtimeSnapshot) {
+    if(!ValidateAppearance(authored.Settings(),outError))return false;
  JUDAS_PROFILE_SCOPE("World build"); PerformanceProfiler::Get().Boundary("World build");
     Scene resolved, scene;
     if(runtimeSnapshot){resolved=scene=authored;} // already resolved world-space definitions, source content validated by save service
@@ -304,6 +305,14 @@ bool RuntimeWorld::Build(const Scene& authored, ResourceManager* resources, std:
     m_assets = resources;
     m_audioSystem=resources?resources->GetAudioSystem():nullptr;
     m_settings = scene.Settings();
+    // Fresh save restoration retains the authored reset dependency as well as the selected environment.
+    if(m_assets&&!m_settings.appearanceResetState.empty()){
+        SceneSettings baseline;std::string error;
+        if(!DecodeAppearanceState(m_settings.appearanceResetState,baseline,error)){outError=error;Destroy();return false;}
+        if(!baseline.environmentAsset.empty()&&baseline.environmentAsset!=m_settings.environmentAsset){
+            m_assets->AddRef(baseline.environmentAsset);m_referencedAssets.push_back(baseline.environmentAsset);m_assets->RequestEnvironment(baseline.environmentAsset,JobPriority::High);
+        }
+    }
     if(m_assets&&!m_settings.environmentAsset.empty()){m_assets->AddRef(m_settings.environmentAsset);m_referencedAssets.push_back(m_settings.environmentAsset);m_assets->RequestEnvironment(m_settings.environmentAsset,JobPriority::High);}
     if(std::any_of(resolved.Objects().begin(),resolved.Objects().end(),[](const auto& o){return o.parent!=0;})){
         m_hierarchy=resolved;
@@ -686,6 +695,7 @@ bool RuntimeWorld::AppendSceneObjects(const Scene& scene, bool authored,
     if (m_assets && !m_fluidVolumes.empty() && m_assets->GetRenderer() && !m_fluidMesh.IsValid()) {
         m_fluidMesh = m_assets->GetRenderer()->CreateMesh(MeshData{});
     }
+    for(const auto& o:scene.Objects())ReconcileRenderResources(o.id);
     if (authored) PopulateFluid();
     return true;
 }
@@ -1016,6 +1026,7 @@ bool RuntimeWorld::DestroyEntity(EntityId id, std::string* outError) {
     m_particleEmitters.erase(std::remove_if(m_particleEmitters.begin(),m_particleEmitters.end(),[&](const auto& e){return e.id==id;}),m_particleEmitters.end());
     ReleaseEntityAudio(id);
     if(m_ui)m_ui->RemoveOwner(id);
+    ReleaseRenderResources(id);
     e->lifecycle = EntityLifecycle::Destroyed;
     if (m_cameraRenderer) for (auto& camera : m_renderCameras) {
         if (camera.id == id) { m_cameraRenderer->DestroyRenderTarget(camera.target); camera.target = {}; }
@@ -1381,6 +1392,8 @@ void RuntimeWorld::Destroy() {
         for (const AssetId& id : m_referencedAssets) m_assets->ReleaseRef(id);
     }
     m_referencedAssets.clear();
+    if(m_assets){for(const auto& [id,assets]:m_renderAssetDemand)for(const auto& a:assets)m_assets->ReleaseRef(a);if(!m_runtimeEnvironmentAsset.empty())m_assets->ReleaseRef(m_runtimeEnvironmentAsset);}
+    m_renderAssetDemand.clear();m_runtimeEnvironmentAsset.clear();
     m_assets = nullptr;
     m_hierarchy.Clear();
     m_extraEntities.clear();
@@ -1439,17 +1452,142 @@ bool RuntimeWorld::SetNavigationAgentSettings(EntityId id,const NavigationAgentS
 
 bool RuntimeWorld::SetNavigationEnabled(EntityId id,const std::string& kind,bool enabled){auto it=m_scriptDefinitions.find(id);if(it==m_scriptDefinitions.end())return false;auto& o=it->second;if(kind=="agent"&&o.navigationAgent)o.navigationAgent->enabled=enabled;else if(kind=="obstacle"&&o.navigationObstacle)o.navigationObstacle->enabled=enabled;else if(kind=="link"&&o.navigationLink)o.navigationLink->enabled=enabled;else return false;return true;}
 
-bool RuntimeWorld::SetMaterialSlot(EntityId id,unsigned slot,const MaterialSlot& value){auto* entity=FindEntity(id);if(!entity||entity->lifecycle==EntityLifecycle::Destroyed||!entity->definition.render||slot>=64)return false;std::string error;if(!ValidateMaterial(ApplyMaterialOverride(MaterialDefinition{},value.overrides),error))return false;if(!value.asset.empty()){auto* record=m_assets&&m_assets->Assets()?m_assets->Assets()->Find(value.asset):nullptr;if(!record||record->missing||record->type!=AssetType::Material)return false;if(std::find(m_referencedAssets.begin(),m_referencedAssets.end(),value.asset)==m_referencedAssets.end()){m_assets->AddRef(value.asset);m_referencedAssets.push_back(value.asset);}m_assets->RequestMaterial(value.asset);}auto& slots=entity->definition.render->materials;if(slots.size()<=slot)slots.resize(slot+1);slots[slot]=value;if(auto it=m_scriptDefinitions.find(id);it!=m_scriptDefinitions.end()&&it->second.render)it->second.render->materials=slots;for(auto& render:m_staticRenderables)if(render.id==id)render.render.materials=slots;for(auto& render:m_dynamicVisuals)if(render.id==id)render.render.materials=slots;return true;}
-bool RuntimeWorld::SetAppearance(const SceneSettings& s){for(int k=0;k<3;++k)if(!std::isfinite(s.backgroundColor[k])||s.backgroundColor[k]<0||s.backgroundColor[k]>10000)return false;if(!std::isfinite(s.exposure)||s.exposure<=0||s.exposure>10000||!std::isfinite(s.environmentIntensity)||s.environmentIntensity<0||s.environmentIntensity>10000||!std::isfinite(s.environmentRotation.w)||!std::isfinite(s.environmentRotation.x)||!std::isfinite(s.environmentRotation.y)||!std::isfinite(s.environmentRotation.z)||glm::length(s.environmentRotation)<1e-6f)return false;if(!s.environmentAsset.empty()){auto* r=m_assets&&m_assets->Assets()?m_assets->Assets()->Find(s.environmentAsset):nullptr;if(!r||r->missing||r->type!=AssetType::Environment)return false;if(std::find(m_referencedAssets.begin(),m_referencedAssets.end(),s.environmentAsset)==m_referencedAssets.end()){m_assets->AddRef(s.environmentAsset);m_referencedAssets.push_back(s.environmentAsset);}m_assets->RequestEnvironment(s.environmentAsset);}m_settings.backgroundColor=s.backgroundColor;m_settings.linearRendering=s.linearRendering;m_settings.exposure=s.exposure;m_settings.environmentAsset=s.environmentAsset;m_settings.environmentIntensity=s.environmentIntensity;m_settings.environmentRotation=glm::normalize(s.environmentRotation);m_settings.environmentBackground=s.environmentBackground;return true;}
-
-bool RuntimeWorld::SetModelPartVisible(EntityId id,const std::string& key,bool visible){
- auto* e=FindEntity(id);if(!e||e->lifecycle==EntityLifecycle::Destroyed||!e->definition.render||!m_assets)return false;
- auto* parts=m_assets->TryGetModelParts(e->definition.render->meshAsset);if(!parts||std::none_of(parts->begin(),parts->end(),[&](auto& p){return p.part==key;}))return false;
- auto& hidden=e->definition.render->hiddenParts;hidden.erase(std::remove(hidden.begin(),hidden.end(),key),hidden.end());if(!visible)hidden.push_back(key);
- if(auto it=m_scriptDefinitions.find(id);it!=m_scriptDefinitions.end()&&it->second.render)it->second.render->hiddenParts=hidden;
- for(auto& r:m_staticRenderables)if(r.id==id)r.render.hiddenParts=hidden;
- for(auto& r:m_dynamicVisuals)if(r.id==id)r.render.hiddenParts=hidden;
+namespace {
+bool ValidRenderAsset(ResourceManager* resources,const std::string& id,AssetType type){
+ if(id.empty())return true;
+ auto* a=resources&&resources->Assets()?resources->Assets()->Find(id):nullptr;
+ return a&&!a->missing&&a->type==type;
+}
+bool ValidRenderSlot(ResourceManager* resources,const MaterialSlot& value){
+ std::string error;
+ if(!ValidateMaterial(ApplyMaterialOverride(MaterialDefinition{},value.overrides),error)||!ValidRenderAsset(resources,value.asset,AssetType::Material))return false;
+ for(const auto& t:value.overrides.textures)if(t&&!ValidRenderAsset(resources,*t,AssetType::Texture))return false;
+ return true;
+}
+}
+void RuntimeWorld::ReleaseRenderResources(EntityId id){if(auto it=m_renderAssetDemand.find(id);it!=m_renderAssetDemand.end()){if(m_assets)for(const auto& asset:it->second)m_assets->ReleaseRef(asset);
+ m_renderAssetDemand.erase(it);}}
+void RuntimeWorld::ReconcileRenderResources(EntityId id){
+ std::set<AssetId> demand;
+ auto it=m_scriptDefinitions.find(id);
+ auto* e=FindEntity(id);
+ const auto* d=it==m_scriptDefinitions.end()||(e&&e->lifecycle==EntityLifecycle::Destroyed)?nullptr:&it->second;
+ if(d&&d->render){
+ auto textures=[&](const MaterialOverride& o){for(const auto& t:o.textures)if(t&&!t->empty())demand.insert(*t);};
+ textures(d->render->instanceOverrides);
+ for(const auto& v:d->render->materials){if(!v.asset.empty())demand.insert(v.asset);textures(v.overrides);}
+ for(auto* map:{&d->render->partMaterials,&d->render->runtimeMaterials})for(const auto& [key,v]:*map){if(!v.asset.empty())demand.insert(v.asset);textures(v.overrides);}
+ }
+ if(!m_assets)return;
+ auto& previous=m_renderAssetDemand[id];
+ for(const auto& a:demand)if(!previous.count(a)){m_assets->AddRef(a);
+ auto* record=m_assets->Assets()->Find(a);
+ if(record&&record->type==AssetType::Material)m_assets->RequestMaterial(a);else m_assets->RequestTexture(a);}
+ for(const auto& a:previous)if(!demand.count(a))m_assets->ReleaseRef(a);
+ previous=std::move(demand);
+ if(previous.empty())m_renderAssetDemand.erase(id);
+}
+bool RuntimeWorld::RenderVisible(EntityId id) const{auto* d=RuntimeDefinition(id);
+ return d&&d->renderVisible&&(!d->render||d->render->visible);}
+bool RuntimeWorld::SetRenderVisible(EntityId id,bool entityScope,bool visible){
+ if(!RuntimeDefinition(id))return false;
+ auto& d=m_scriptDefinitions.at(id);
+ if(!entityScope&&!d.render)return false;
+ if(entityScope)d.renderVisible=visible;else d.render->visible=visible;
+ if(auto* e=FindEntity(id)){e->definition.renderVisible=d.renderVisible;
+ if(d.render)e->definition.render=d.render;}
+ for(auto& r:m_staticRenderables)if(r.id==id&&d.render)r.render=*d.render;
+ for(auto& r:m_dynamicVisuals)if(r.id==id&&d.render)r.render=*d.render;
+ return true;
+}
+bool RuntimeWorld::SetMaterialSlot(EntityId id,unsigned slot,const MaterialSlot& value){
+ if(!RuntimeDefinition(id)||!m_scriptDefinitions.at(id).render||slot>=64||!ValidRenderSlot(m_assets,value))return false;
+ auto& r=*m_scriptDefinitions.at(id).render;
+ if(r.materials.size()<=slot)r.materials.resize(slot+1);r.materials[slot]=value;
+ if(auto* e=FindEntity(id))e->definition.render=r;
+ for(auto& v:m_staticRenderables)if(v.id==id)v.render=r;
+ for(auto& v:m_dynamicVisuals)if(v.id==id)v.render=r;
+ ReconcileRenderResources(id);
+ return true;
+}
+bool RuntimeWorld::SetRuntimeMaterial(EntityId id,const std::string& key,const MaterialSlot& value){
+ auto* d=RuntimeDefinition(id);
+ if(!d||!d->render||!ValidRenderSlot(m_assets,value))return false;
+ if(key!="*"){
+ if(key.size()>1&&key[0]=='#'){try{size_t n=0;
+ auto index=std::stoul(key.substr(1),&n);
+ if(n!=key.size()-1||index>=64||key!="#"+std::to_string(index))return false;}catch(...){return false;}}
+ else{auto* parts=m_assets?m_assets->TryGetModelParts(d->render->meshAsset):nullptr;
+ if(!parts||std::none_of(parts->begin(),parts->end(),[&](auto& p){return p.part==key;}))return false;}}
+ auto& r=*m_scriptDefinitions.at(id).render;
+ if(r.runtimeMaterials.size()>=64&&!r.runtimeMaterials.count(key))return false;r.runtimeMaterials[key]=value;
+ if(auto* e=FindEntity(id))e->definition.render=r;
+ for(auto& v:m_staticRenderables)if(v.id==id)v.render=r;
+ for(auto& v:m_dynamicVisuals)if(v.id==id)v.render=r;
+ ReconcileRenderResources(id);
+ return true;
+}
+bool RuntimeWorld::ClearRuntimeMaterial(EntityId id,const std::string& key){
+ auto* d=RuntimeDefinition(id);
+ if(!d||!d->render)return false;
+ auto& r=*m_scriptDefinitions.at(id).render;r.runtimeMaterials.erase(key);
+ if(auto* e=FindEntity(id))e->definition.render=r;
+ for(auto& v:m_staticRenderables)if(v.id==id)v.render=r;
+ for(auto& v:m_dynamicVisuals)if(v.id==id)v.render=r;
+ ReconcileRenderResources(id);
  return true;
 }
 
-std::string RuntimeWorld::TakeSpawnState(EntityId id,uint64_t slot){auto it=spawnStates.find({id,slot});if(it==spawnStates.end())return "null";auto state=std::move(it->second);spawnStates.erase(it);return state;}
+bool RuntimeWorld::SetModelPartVisible(EntityId id,const std::string& key,bool visible){
+ const auto* d=RuntimeDefinition(id);
+ if(!d||!d->render||!m_assets)return false;
+ auto* parts=m_assets->TryGetModelParts(d->render->meshAsset);
+ if(!parts||std::none_of(parts->begin(),parts->end(),[&](auto& p){return p.part==key;}))return false;
+ auto& r=*m_scriptDefinitions.at(id).render;
+ auto& hidden=r.hiddenParts;hidden.erase(std::remove(hidden.begin(),hidden.end(),key),hidden.end());
+ if(!visible)hidden.push_back(key);
+ if(auto* e=FindEntity(id))e->definition.render=r;
+ for(auto& v:m_staticRenderables)if(v.id==id)v.render=r;
+ for(auto& v:m_dynamicVisuals)if(v.id==id)v.render=r;
+ return true;
+}
+
+std::string RuntimeWorld::TakeSpawnState(EntityId id,uint64_t slot){auto it=spawnStates.find({id,slot});
+ if(it==spawnStates.end())return "null";
+ auto state=std::move(it->second);spawnStates.erase(it);
+ return state;}
+
+bool RuntimeWorld::SetAppearance(const SceneSettings& s){
+ std::string error;
+ if(!ValidateAppearance(s,error)||!ValidRenderAsset(m_assets,s.environmentAsset,AssetType::Environment))return false;
+ // Hold only the selected runtime environment; the authored default retains its normal scene demand.
+ if(m_assets&&s.environmentAsset!=m_runtimeEnvironmentAsset){if(!s.environmentAsset.empty()){m_assets->AddRef(s.environmentAsset);
+ m_assets->RequestEnvironment(s.environmentAsset);}if(!m_runtimeEnvironmentAsset.empty())m_assets->ReleaseRef(m_runtimeEnvironmentAsset);
+ m_runtimeEnvironmentAsset=s.environmentAsset;}
+ auto baseline=m_settings.appearanceResetState;
+ if(baseline.empty())baseline=EncodeAppearanceState(m_settings);
+ m_settings.backgroundColor=s.backgroundColor;
+ m_settings.linearRendering=s.linearRendering;
+ m_settings.exposure=s.exposure;
+ m_settings.environmentAsset=s.environmentAsset;
+ m_settings.environmentIntensity=s.environmentIntensity;
+ m_settings.environmentRotation=glm::normalize(s.environmentRotation);
+ m_settings.environmentBackground=s.environmentBackground;
+ m_settings.sunEnabled=s.sunEnabled;
+ m_settings.sunIntensity=s.sunIntensity;
+ m_settings.sunDirection=glm::normalize(s.sunDirection);
+ m_settings.sunColor=s.sunColor;
+ m_settings.ambientColor=s.ambientColor;
+ m_settings.appearanceResetState=std::move(baseline);
+ return true;
+}
+bool RuntimeWorld::ResetAppearance(){
+ if(m_settings.appearanceResetState.empty())return true;
+ auto s=m_settings;
+ std::string error;
+ if(!DecodeAppearanceState(m_settings.appearanceResetState,s,error)||!SetAppearance(s))return false;
+ m_settings.appearanceResetState.clear();
+ if(m_assets&&!m_runtimeEnvironmentAsset.empty())m_assets->ReleaseRef(m_runtimeEnvironmentAsset);
+ m_runtimeEnvironmentAsset.clear();
+ return true;
+}

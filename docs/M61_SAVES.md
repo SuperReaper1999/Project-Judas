@@ -28,7 +28,7 @@ chooses when to save and contributes bounded data. A save is not a VM/process du
 | Audio | Persistent source settings/cursor/play state, group routing/fade control | Ordinary bounded prefill/seek; one-shots and reverb tails deliberately clear |
 | Scripts/session | Independent slot `state`, bounded session data, selected locale | Modules/closures/globals not persisted; restore-aware callbacks reacquire handles |
 | Streaming | Active/suspended qualified identities, adopted hierarchies, saved changes and tombstones | Unvisited baseline regions remain unloaded; requests/pins reacquired or derived |
-| Presentation/UI | Persistent material/light/environment/view settings | UI from assets and game data; transient particles, GPU handles, focus and input edges clear |
+| Presentation/UI | Persistent material/light/environment/view settings; M72 local entity/Render visibility, whole/slot/stable-part patches and texture IDs, root appearance/reset baseline | UI from assets and game data; transient particles, GPU handles, loading caches, focus and input edges clear |
 | Legacy simulation | Existing `.judasstate` remains separate | Modern slots must reject unimplemented required legacy fluid/atmosphere/combustion/vehicle state explicitly rather than silently reset it |
 
 Required participants have explicit versions. Missing, unknown or malformed records

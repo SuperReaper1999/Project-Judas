@@ -28,8 +28,13 @@ struct MaterialOverride {
  std::optional<float> metallic,roughness,emissiveIntensity;
  std::optional<glm::vec3> emissive;
  std::optional<glm::vec2> uvScale,uvOffset;
+ std::optional<MaterialAlpha> alpha;
+ std::optional<float> alphaCutoff,normalStrength,occlusionStrength;
+ std::optional<bool> doubleSided;
+ // Absent inherits; empty explicitly removes. GPU handles never enter durable state.
+ std::array<std::optional<std::string>,5> textures;
 };
-struct MaterialSlot {std::string asset;MaterialOverride overrides;};
+struct MaterialSlot {std::string asset;MaterialOverride overrides;bool useSource=false;};
 bool ValidateMaterial(const MaterialDefinition&,std::string& error);
 bool ParseMaterial(const std::string&,MaterialDefinition&,std::string& error);
 std::string SerializeMaterial(const MaterialDefinition&);
@@ -41,3 +46,9 @@ bool DecodeMaterialSlots(const std::string&,std::vector<MaterialSlot>&,std::stri
 
 // Copies factors/samplers/asset IDs without transient decoded or encoded images.
 MaterialDefinition MaterialSettings(const MaterialDefinition&);
+
+MaterialOverride ComposeMaterialOverrides(const MaterialOverride&,const MaterialOverride&);
+bool MaterialOverrideEmpty(const MaterialOverride&);
+std::string EncodeMaterialOverrides(const MaterialOverride&);
+bool DecodeMaterialOverrides(const std::string&,MaterialOverride&,std::string&);
+bool PatchMaterialOverrides(const std::string&,MaterialOverride&,std::string&);

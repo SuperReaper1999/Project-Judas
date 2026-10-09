@@ -1,0 +1,19 @@
+libEGL warning: Not allowed to force software rendering when API explicitly selects a hardware device.
+Renderer fragment texture units: 32 (material path uses 12)
+World state: /tmp/judas-m72-package-data/judas/games/afff9fcc563491d6422df5ad9883c805229b9f330b6630d208a9415075fdb2e7/Saves/lab.judasstate (none saved)
+Project: Render Control Lab (/tmp/judas-m72-moved-render-lab-20261009/game.judasproj)
+Scene: M72 Render Control Lab (/tmp/judas-m72-moved-render-lab-20261009/Scenes/lab.judas)
+World origin (m): 0.000, 0.000, 0.000
+step,time,posX,posY,posZ,upX,upY,upZ,grounded,velX,velY,velZ,gravX,gravY,gravZ,controlled,frame,steps,paused
+0,0.00000,0.000000,0.000000,0.000000,0.000000,1.000000,0.000000,0,0.000000,0.000000,0.000000,0.000000,0.000000,0.000000,0,0,1,0
+[TestHarness] service scene ready after 0 wait frames at frame 2
+[TestHarness] Wrote screenshot: /home/conner/Documents/GitHub/Project-Judas/docs/evidence/m72/package/authored.png
+60,1.00000,0.000000,3.305034,15.083798,0.000000,0.992809,-0.119712,0,0.000000,0.000000,0.000000,0.000000,0.000000,0.000000,0,60,1,0
+[TestHarness] Wrote screenshot: /home/conner/Documents/GitHub/Project-Judas/docs/evidence/m72/package/hidden-socket.png
+120,2.00000,0.000000,3.305034,15.083798,0.000000,0.992809,-0.119712,0,0.000000,0.000000,0.000000,0.000000,0.000000,0.000000,0,120,1,0
+[TestHarness] Wrote screenshot: /home/conner/Documents/GitHub/Project-Judas/docs/evidence/m72/package/changed.png
+180,3.00000,0.000000,3.305034,15.083798,0.000000,0.992809,-0.119712,0,0.000000,0.000000,0.000000,0.000000,0.000000,0.000000,0,180,1,0
+[TestHarness] service save ready after 5 wait frames at frame 200
+240,4.00000,0.000000,3.305034,15.083798,0.000000,0.992809,-0.119712,0,0.000000,0.000000,0.000000,0.000000,0.000000,0.000000,0,240,1,0
+[TestHarness] service save ready after 5 wait frames at frame 245
+[TestHarness] Wrote screenshot: /home/conner/Documents/GitHub/Project-Judas/docs/evidence/m72/package/loaded.png

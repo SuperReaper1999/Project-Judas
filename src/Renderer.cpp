@@ -1042,6 +1042,12 @@ void Renderer::EndShadowPass() {
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }
 
+void Renderer::InvalidateShadowSlot(int shadowSlot) {
+    if(shadowSlot<0||shadowSlot>=kShadowMapCount)return;
+    glm::mat4 outside(0.0f);outside[3][2]=2.0f;outside[3][3]=1.0f;
+    m_shadowLightSpaceMatrix[shadowSlot]=outside;
+}
+
 MeshHandle Renderer::CreateMesh(const MeshData& data) {
     auto handle=BeginMeshUpload(data);
     if(!handle.IsValid())return {};
@@ -1292,17 +1298,20 @@ void Renderer::DrawMesh(MeshHandle mesh, const glm::vec3& position, const glm::q
     static const GpuMaterial failed=[](){GpuMaterial m;m.definition.model=MaterialModel::Unlit;m.definition.baseColor={.8f,.02f,.65f,1};return m;}();
     static const GpuMaterial pending=[](){GpuMaterial m;m.definition.model=MaterialModel::Unlit;m.definition.baseColor={.25f,.25f,.28f,1};return m;}();
     auto materialAt=[&](size_t slot)->const GpuMaterial* {MaterialHandle handle;if(slot<m_materialBindings.size())handle=m_materialBindings[slot].handle;if(!handle.IsValid()&&slot<m_materialBindings.size()&&m_materialBindings[slot].explicitAsset)return m_materialBindings[slot].failed?&failed:&pending;if(!handle.IsValid()&&slot<gpuMesh->primitives.size()&&m_linearRendering){int index=gpuMesh->primitives[slot].material;if(index>=0&&size_t(index)<gpuMesh->materials.size())handle=gpuMesh->materials[index];}return handle.IsValid()&&handle.id<m_materials.size()&&m_materials[handle.id].alive?&m_materials[handle.id]:nullptr;};
-    size_t parts=std::max(size_t(1),gpuMesh->primitives.size());bool blended=false;for(size_t i=0;i<parts;++i)if(auto* m=materialAt(i))blended|=m->definition.alpha==MaterialAlpha::Blend;
-    if(blended&&!m_shadowPassActive&&!m_flushingBlends){BlendDraw draw{mesh,position,scale,tintColor,rotation,texture,alpha,skin?*skin:std::vector<glm::mat4>{},m_materialBindings,-(m_view*glm::vec4(position,1)).z,m_renderLayer,hiddenParts?*hiddenParts:std::vector<std::string>{}};m_blendDraws.push_back(std::move(draw));}
+    size_t parts=std::max(size_t(1),gpuMesh->primitives.size());
+    auto bindingAt=[&](size_t slot){return slot<m_materialBindings.size()?m_materialBindings[slot]:MaterialBinding{};};
+    auto alphaAt=[&](size_t slot,const GpuMaterial* material){auto binding=bindingAt(slot);return binding.overrides.alpha.value_or(material?material->definition.alpha:MaterialAlpha::Opaque);};
     const glm::mat4 model = glm::translate(glm::mat4(1.0f), position) * glm::mat4_cast(rotation) * glm::scale(glm::mat4(1.0f), scale);
     const auto* palette=skin&&!skin->empty()?skin:&gpuMesh->restSkin;
-    auto submit=[&](bool shadow){for(size_t i=0;i<parts;++i){if(hiddenParts&&!gpuMesh->primitives.empty()&&std::find(hiddenParts->begin(),hiddenParts->end(),gpuMesh->primitives[i].part)!=hiddenParts->end())continue;auto* m=materialAt(i);bool isBlend=m&&m->definition.alpha==MaterialAlpha::Blend;if((shadow&&isBlend)||(!shadow&&isBlend!=m_flushingBlends))continue;MaterialOverride overrides;if(i<m_materialBindings.size())overrides=m_materialBindings[i].overrides;BindMaterial(m,overrides,texture,tintColor,alpha,shadow);glm::mat4 orientation(1);if(i<gpuMesh->partOrientation.size()&&!palette->empty()){orientation=glm::mat4(0);auto& w=gpuMesh->partOrientation[i];for(int k=0;k<4;++k)orientation+=palette->at(w.joints[k])*w.weights[k]+palette->at(w.joints1[k])*w.weights1[k];}glFrontFace(glm::determinant(glm::mat3(model*orientation))<0?GL_CW:GL_CCW);unsigned first=0,count=unsigned(gpuMesh->ebo?gpuMesh->indexCount:gpuMesh->vertexCount);if(!gpuMesh->primitives.empty()){first=gpuMesh->primitives[i].first;count=gpuMesh->primitives[i].count;}glBindVertexArray(gpuMesh->vao);if(gpuMesh->ebo)glDrawElements(GL_TRIANGLES,GLsizei(count),GL_UNSIGNED_INT,reinterpret_cast<void*>(size_t(first)*4));else glDrawArrays(GL_TRIANGLES,GLint(first),GLsizei(count));++m_stats.drawCalls;m_stats.triangles+=count/3;}glFrontFace(GL_CCW);};
+    auto submit=[&](bool shadow){for(size_t i=0;i<parts;++i){if(hiddenParts&&!gpuMesh->primitives.empty()&&std::find(hiddenParts->begin(),hiddenParts->end(),gpuMesh->primitives[i].part)!=hiddenParts->end())continue;auto* m=materialAt(i);bool isBlend=alphaAt(i,m)==MaterialAlpha::Blend;if((shadow&&isBlend)||(!shadow&&isBlend!=m_flushingBlends))continue;BindMaterial(m,bindingAt(i),texture,tintColor,alpha,shadow);glm::mat4 orientation(1);if(i<gpuMesh->partOrientation.size()&&!palette->empty()){orientation=glm::mat4(0);auto& w=gpuMesh->partOrientation[i];for(int k=0;k<4;++k)orientation+=palette->at(w.joints[k])*w.weights[k]+palette->at(w.joints1[k])*w.weights1[k];}glFrontFace(glm::determinant(glm::mat3(model*orientation))<0?GL_CW:GL_CCW);unsigned first=0,count=unsigned(gpuMesh->ebo?gpuMesh->indexCount:gpuMesh->vertexCount);if(!gpuMesh->primitives.empty()){first=gpuMesh->primitives[i].first;count=gpuMesh->primitives[i].count;}glBindVertexArray(gpuMesh->vao);if(gpuMesh->ebo)glDrawElements(GL_TRIANGLES,GLsizei(count),GL_UNSIGNED_INT,reinterpret_cast<void*>(size_t(first)*4));else glDrawArrays(GL_TRIANGLES,GLint(first),GLsizei(count));++m_stats.drawCalls;m_stats.triangles+=count/3;}glFrontFace(GL_CCW);};
     if(palette->size()>kModelPaletteLimit||palette->size()!=gpuMesh->restSkin.size())return;
     VisualBounds bounds=gpuMesh->bounds;
     if(!palette->empty()){bounds={};for(const auto& matrix:*palette){auto b=TransformBounds(gpuMesh->bounds,matrix);bounds.Include(b.min);bounds.Include(b.max);}}
     ++m_stats.renderablesConsidered;
     if(!IsVisible(TransformBounds(bounds,model))){++m_stats.renderablesCulled;return;}
     ++m_stats.renderablesVisible;
+    bool blended=false;for(size_t i=0;i<parts;++i)blended|=alphaAt(i,materialAt(i))==MaterialAlpha::Blend;
+    if(blended&&!m_shadowPassActive&&!m_flushingBlends){BlendDraw draw{mesh,position,scale,tintColor,rotation,texture,alpha,skin?*skin:std::vector<glm::mat4>{},m_materialBindings,-(m_view*glm::vec4(position,1)).z,m_renderLayer,hiddenParts?*hiddenParts:std::vector<std::string>{}};m_blendDraws.push_back(std::move(draw));}
 
     // Milestone 15: while a shadow pass is active (see BeginShadowPass),
     // every DrawMesh call writes depth only, from that light's own view/

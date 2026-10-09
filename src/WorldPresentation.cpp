@@ -19,6 +19,28 @@
 #include "ShadowTransforms.h"
 #include "TerrainLibrary.h"
 
+std::vector<MaterialBinding> BuildRenderMaterialBindings(ResourceManager* resources,const SceneRenderComponent& render) {
+    const auto* parts=resources?resources->TryGetModelParts(render.meshAsset):nullptr;
+    const size_t count=parts&&!parts->empty()?parts->size():1;
+    std::vector<MaterialBinding> bindings;bindings.reserve(count);
+    for(size_t i=0;i<count;++i){
+        auto slot=ResolveRenderMaterial(render,unsigned(i),parts&&!parts->empty()?(*parts)[i].part:std::string{});
+        if(resources&&!slot.asset.empty())resources->RequestMaterial(slot.asset);
+        MaterialBinding binding{resources?resources->TryGetMaterial(slot.asset):MaterialHandle{},slot.overrides,!slot.asset.empty(),resources&&resources->StateOf(slot.asset)==ResourceState::Failed};
+        for(unsigned map=0;map<5;++map)if(slot.overrides.textures[map]){
+            const auto& asset=*slot.overrides.textures[map];
+            if(asset.empty())binding.textureOverrides[map]=true;
+            else if(resources){
+                resources->RequestTexture(asset);
+                binding.textures[map]=resources->TryGetTexture(asset);
+                binding.textureOverrides[map]=binding.textures[map].IsValid();
+            }
+        }
+        bindings.push_back(std::move(binding));
+    }
+    return bindings;
+}
+
 namespace {
 const glm::vec3 kPlayerColor(0.2f, 0.6f, 0.9f);
 
@@ -50,13 +72,20 @@ constexpr float kDirShadowDistance = 40.0f;
 const glm::vec3 kLoadingPlaceholderColor(0.55f, 0.55f, 0.58f);
 const glm::vec3 kFailedPlaceholderColor(0.95f, 0.15f, 0.85f);
 
+// The primary Render component and particles/fire/haze are distinct visual
+// components. An entity gate affects all of them; the primary gate affects only
+// its own geometry, leaving the other components' existing settings intact.
+bool EntityRenderVisible(const RuntimeWorld& world,EntityId id){
+    const auto* definition=world.RuntimeDefinition(id);return definition&&definition->renderVisible;
+}
+
 void DrawMeshOrPlaceholder(Renderer& r, ResourceManager* resources, const SceneRenderComponent& render,
                            const glm::vec3& position, const glm::quat& rotation, const glm::vec3& scale, float alpha, TextureHandle generated = {},const std::vector<glm::mat4>* skin = nullptr) {
-    std::vector<MaterialBinding> slots;for(const auto& slot:render.materials){if(resources)resources->RequestMaterial(slot.asset);slots.push_back({resources?resources->TryGetMaterial(slot.asset):MaterialHandle{},slot.overrides,!slot.asset.empty(),resources&&resources->StateOf(slot.asset)==ResourceState::Failed});}r.SetMaterialBindings(slots);
+    r.SetMaterialBindings(BuildRenderMaterialBindings(resources,render));
     const MeshHandle mesh = resources ? resources->TryGetMesh(render.meshAsset) : MeshHandle{};
     if (mesh.IsValid()) {
         const TextureHandle texture = render.textureCamera ? generated : (resources ? resources->TryGetTexture(render.textureAsset) : TextureHandle{});
-        r.DrawMesh(mesh, position, rotation, scale, texture, render.color, alpha,skin,&render.hiddenParts);
+        r.DrawMesh(mesh, position, rotation, scale, texture, render.color, alpha*render.alpha,skin,&render.hiddenParts);
         return;
     }
     if (!resources) return;  // headless: nothing to draw
@@ -73,13 +102,14 @@ void DrawCompoundChild(Renderer& renderer,ResourceManager* resources,const Compo
 
 void DrawRenderable(Renderer& r, ResourceManager* resources, const SceneRenderComponent& render,
                     const glm::vec3& position, const glm::quat& rotation, const glm::vec3& scale, float alpha, TextureHandle generated = {},const std::vector<glm::mat4>* skin = nullptr) {
-    std::vector<MaterialBinding> slots;for(const auto& slot:render.materials){if(resources)resources->RequestMaterial(slot.asset);slots.push_back({resources?resources->TryGetMaterial(slot.asset):MaterialHandle{},slot.overrides,!slot.asset.empty(),resources&&resources->StateOf(slot.asset)==ResourceState::Failed});}r.SetMaterialBindings(slots);
+    if(!render.visible)return;
+    if(render.shape!=SceneShape::Mesh)r.SetMaterialBindings(BuildRenderMaterialBindings(resources,render));
     switch (render.shape) {
         case SceneShape::Box:
-            r.DrawBox(position, rotation, render.halfExtents*scale, render.color, alpha, generated);
+            r.DrawBox(position, rotation, render.halfExtents*scale, render.color, alpha*render.alpha, generated);
             break;
         case SceneShape::Sphere:
-            r.DrawSphereTransformed(position,rotation,scale,render.radius,render.color,alpha,generated);
+            r.DrawSphereTransformed(position,rotation,scale,render.radius,render.color,alpha*render.alpha,generated);
             break;
         case SceneShape::Mesh:
             DrawMeshOrPlaceholder(r, resources, render, position, rotation, scale, alpha, generated,skin);
@@ -97,7 +127,7 @@ void DrawWorldGeometry(Renderer& r, const RuntimeWorld& world, const GameSession
                        float alpha, const WorldDrawOptions& options) {
     JUDAS_PROFILE_SCOPE("World culling and opaque submission");
     for (const RuntimeWorld::StaticRenderable& s : world.StaticRenderables()) {
-        if(!world.IsPublished(s.id)||world.RuntimeDefinition(s.id)->deformable)continue;
+        if(!world.IsPublished(s.id)||!world.RenderVisible(s.id)||world.RuntimeDefinition(s.id)->deformable)continue;
         r.SetRenderLayer(world.RenderLayerOf(s.id));
         const auto t=world.PresentedTransform(s.id,SceneTransform{s.position,s.rotation,s.scale},alpha);
         DrawRenderable(r, world.Resources(), s.render, t.position, t.rotation, t.scale, 1.0f, world.CameraTexture(s.render.textureCamera),world.AnimationSkin(s.id,alpha));
@@ -106,15 +136,19 @@ void DrawWorldGeometry(Renderer& r, const RuntimeWorld& world, const GameSession
     r.SetMaterialBindings({});
     if (options.includeTerrain) {
         for (const RuntimeWorld::Terrain& t : world.Terrains()) {
+            if(!world.RenderVisible(t.id))continue;
             r.SetRenderLayer(world.RenderLayerOf(t.id));
+            const auto* definition=world.RuntimeDefinition(t.id);
+            r.SetMaterialBindings(definition&&definition->render?BuildRenderMaterialBindings(world.Resources(),*definition->render):std::vector<MaterialBinding>{});
             if (t.mesh.IsValid()) {
                 r.DrawMesh(t.mesh, t.position, t.rotation, glm::vec3(1.0f), TextureHandle{}, t.color);
             }
         }
     }
     r.SetMaterialBindings({});
-    for(size_t i=0;i<world.Doors().size();++i){r.SetRenderLayer(world.RenderLayerOf(world.DoorIds()[i]));world.Doors()[i].Draw(r,alpha);}
-    for(size_t i=0;i<world.LightSwitches().size();++i){r.SetRenderLayer(world.RenderLayerOf(world.LightSwitchIds()[i]));world.LightSwitches()[i].Draw(r,alpha);}
+    for(size_t i=0;i<world.Doors().size();++i){auto id=world.DoorIds()[i];if(!world.RenderVisible(id))continue;r.SetRenderLayer(world.RenderLayerOf(id));const auto* d=world.RuntimeDefinition(id);r.SetMaterialBindings(d&&d->render?BuildRenderMaterialBindings(world.Resources(),*d->render):std::vector<MaterialBinding>{});world.Doors()[i].Draw(r,alpha);}
+    for(size_t i=0;i<world.LightSwitches().size();++i){auto id=world.LightSwitchIds()[i];if(!world.RenderVisible(id))continue;r.SetRenderLayer(world.RenderLayerOf(id));const auto* d=world.RuntimeDefinition(id);r.SetMaterialBindings(d&&d->render?BuildRenderMaterialBindings(world.Resources(),*d->render):std::vector<MaterialBinding>{});world.LightSwitches()[i].Draw(r,alpha);}
+    r.SetMaterialBindings({});
     r.SetRenderLayer(0);
 
     if (session && session->UsesLegacyGameplay() && !world.view) {
@@ -142,17 +176,17 @@ void DrawWorldGeometry(Renderer& r, const RuntimeWorld& world, const GameSession
     for (std::size_t i = 0; i < bodies.size(); ++i) {
         const RuntimeWorld::DynamicVisual& v = visuals[i];
         r.SetRenderLayer(world.RenderLayerOf(v.id));
-        if (!v.hasRender||!world.IsPublished(v.id)) continue;
+        if (!v.hasRender||!world.IsPublished(v.id)||!world.RenderVisible(v.id)) continue;
         const glm::vec3 position = bodies[i].GetPresentedPosition(alpha);
         const glm::quat rotation = bodies[i].GetPresentedOrientation(alpha);
         if (v.render.shape == SceneShape::Compound) {
-            r.SetMaterialBindings({});
+            r.SetMaterialBindings(BuildRenderMaterialBindings(world.Resources(),v.render));
             // Opaque base in the colour pass; every part in a shadow pass
             // so translucent walls still cast shadows (M24).
             for (std::size_t part = 0; part < v.compoundBoxes.size(); ++part) {
                 if (part != 0 && !r.IsShadowPass()) continue;
                 const CompoundBox& box = v.compoundBoxes[part];
-                DrawCompoundChild(r,world.Resources(),box,position,rotation,part==0?v.render.color:v.render.secondaryColor);
+                DrawCompoundChild(r,world.Resources(),box,position,rotation,part==0?v.render.color:v.render.secondaryColor,v.render.alpha);
             }
             continue;
         }
@@ -177,7 +211,7 @@ void DrawWorldTransparents(Renderer& r, const RuntimeWorld& world, const GameSes
     const std::vector<RuntimeWorld::DynamicVisual>& visuals = world.DynamicVisuals();
     if(!world.Liquids().States().empty()){
       r.BeginTransparentPass();
-      for(const auto& [id,s]:world.Liquids().States())if(s.enabled&&s.equilibriumValid&&s.volume>0){
+      for(const auto& [id,s]:world.Liquids().States())if(s.enabled&&s.equilibriumValid&&s.volume>0&&(!s.entity||EntityRenderVisible(world,s.entity))){
         auto pose=s.pose;if(s.container)if(auto* o=world.RuntimeDefinition(s.entity))pose=world.PresentedTransform(s.entity,o->transform,alpha);
         VisualBounds localBounds;localBounds.Include(glm::vec3(s.minimum));localBounds.Include(glm::vec3(s.maximum));
         if(!r.AllowsLayer(world.RenderLayerOf(s.entity))||!r.IsVisible(TransformBounds(localBounds,glm::translate(glm::mat4(1),pose.position)*glm::mat4_cast(pose.rotation))))continue;
@@ -188,14 +222,15 @@ void DrawWorldTransparents(Renderer& r, const RuntimeWorld& world, const GameSes
 
     bool anyCompound = false;
     for (const RuntimeWorld::DynamicVisual& v : visuals) {
-        if (v.hasRender && v.render.shape == SceneShape::Compound && v.compoundBoxes.size() > 1) anyCompound = true;
+        if (v.hasRender && world.RenderVisible(v.id)&&v.render.shape == SceneShape::Compound && v.compoundBoxes.size() > 1) anyCompound = true;
     }
     if (anyCompound) {
         r.BeginTransparentPass();
         for (std::size_t i = 0; i < bodies.size(); ++i) {
             const RuntimeWorld::DynamicVisual& v = visuals[i];
         r.SetRenderLayer(world.RenderLayerOf(v.id));
-            if (!world.IsPublished(v.id)||!v.hasRender || v.render.shape != SceneShape::Compound) continue;
+            if (!world.IsPublished(v.id)||!world.RenderVisible(v.id)||!v.hasRender || v.render.shape != SceneShape::Compound) continue;
+            r.SetMaterialBindings(BuildRenderMaterialBindings(world.Resources(),v.render));
             const glm::vec3 position = bodies[i].GetPresentedPosition(alpha);
             const glm::quat rotation = bodies[i].GetPresentedOrientation(alpha);
             for (std::size_t part = 1; part < v.compoundBoxes.size(); ++part) {
@@ -205,8 +240,9 @@ void DrawWorldTransparents(Renderer& r, const RuntimeWorld& world, const GameSes
         }
         r.EndTransparentPass();
     }
+    r.SetMaterialBindings({});
 
-    if (world.GetAtmosphere()) {
+    if (world.GetAtmosphere()&&EntityRenderVisible(world,world.GetAtmosphere()->id)) {
         r.SetRenderLayer(world.RenderLayerOf(world.GetAtmosphere()->id));
         // Two faint shells mark the extent of the gas field; they are not
         // density, pressure or a collision boundary.
@@ -224,6 +260,7 @@ void DrawWorldTransparents(Renderer& r, const RuntimeWorld& world, const GameSes
         const RuntimeWorld::Atmosphere& atmosphere = *world.GetAtmosphere();
         r.BeginTransparentPass();
         for (const RuntimeWorld::Combustible& c : world.Combustibles()) {
+            if(!EntityRenderVisible(world,c.id))continue;
             r.SetRenderLayer(world.RenderLayerOf(c.id));
             const ThermalBodyState* state = world.Combustion().State(c.handle);
             if (!state || state->burnRateKgPerSecond <= 0.0f) continue;
@@ -250,7 +287,7 @@ void DrawWorldTransparents(Renderer& r, const RuntimeWorld& world, const GameSes
 
     // Runtime visual state is updated once in Simulation, never per camera.
     for(auto& emitter:world.VisualEmitters()){
-        if(!world.IsPublished(emitter.id))continue;
+        if(!world.IsPublished(emitter.id)||!EntityRenderVisible(world,emitter.id))continue;
         r.SetRenderLayer(world.RenderLayerOf(emitter.id));
         if(!emitter.pool.settings.enabled)continue;
         if(const auto* entity=world.FindEntity(emitter.id))if(entity->lifecycle==EntityLifecycle::Destroyed)continue;
@@ -374,21 +411,25 @@ void RenderWorldFrame(Renderer& renderer, int width, int height, const RuntimeWo
     // Existing runtime statistics may accumulate across frames. Observe this
     // submission's delta without resetting the engine's diagnostic state.
     const auto beforeStats = renderer.Stats();
-    const SceneSettings& settings = world.Settings();
+    // One sample owns one immutable lighting/environment decision. Auxiliary
+    // cameras never run scripts or advance an animation/fade between passes.
+    const SceneSettings settings = world.Settings();
     if(world.Resources())world.Resources()->RequestEnvironment(settings.environmentAsset);
     renderer.SetSceneAppearance(settings.linearRendering,settings.exposure,world.Resources()?world.Resources()->TryGetEnvironment(settings.environmentAsset):EnvironmentHandle{},settings.environmentIntensity,settings.environmentRotation,settings.environmentBackground,settings.backgroundColor);
-    renderer.SetLighting(glm::normalize(settings.sunDirection), settings.sunColor, settings.ambientColor);
+    renderer.SetLighting(settings.sunDirection, settings.sunEnabled?settings.sunColor*settings.sunIntensity:glm::vec3(0), settings.ambientColor);
     const std::vector<DynamicLight> lights = BuildWorldLights(world, session, alpha);
 
     // Milestone 15 shadow passes: the directional sun always, then each
     // shadow-casting spot light in the frame's list.
     const glm::mat4 dirShadow = ComputeDirectionalShadowMatrix(
-        world.view ? world.view->pose.position : shadowFocus, glm::normalize(settings.sunDirection), kDirShadowHalfExtent, kDirShadowDistance);
+        world.view ? world.view->pose.position : shadowFocus, settings.sunDirection, kDirShadowHalfExtent, kDirShadowDistance);
     static ProfileLabel shadowLabel("Shadow pass submission");
     ProfileScope shadowScope(shadowLabel);
-    renderer.BeginShadowPass(kDirectionalShadowSlot, dirShadow);
-    DrawWorldGeometry(renderer, world, session, alpha, WorldDrawOptions{});
-    renderer.EndShadowPass(); shadowScope.End();
+    if(settings.sunEnabled){renderer.BeginShadowPass(kDirectionalShadowSlot, dirShadow);
+        DrawWorldGeometry(renderer, world, session, alpha, WorldDrawOptions{});
+        renderer.EndShadowPass();
+    }else renderer.InvalidateShadowSlot(kDirectionalShadowSlot);
+    shadowScope.End();
     for (const DynamicLight& light : lights) {
         if (light.shadowMapIndex != kTorchShadowSlot && light.shadowMapIndex != kShipHeadlightShadowSlot) continue;
         ProfileScope spotlightScope(shadowLabel);
@@ -461,7 +502,7 @@ void RenderWorldFrame(Renderer& renderer, int width, int height, const RuntimeWo
     if(world.view){const auto& v=*world.view;auto q=v.pose.rotation;
         renderer.SetCamera(glm::lookAt(v.pose.position,v.pose.position+q*glm::vec3(0,0,-1),q*glm::vec3(0,1,0)),glm::perspective(glm::radians(v.fov),float(width)/height,v.nearPlane,v.farPlane));
     }else renderer.SetCamera(view, projection);
-    renderer.SetRenderMask(world.Settings().mainCameraRenderMask);
+    renderer.SetRenderMask(settings.mainCameraRenderMask);
     renderer.SetDynamicLights(lights);
     renderer.SetWaterPaths(32,18,world.Liquids().OpticalPaths(renderer.ViewMatrix(),renderer.ProjectionMatrix(),32,18,alpha));
     DrawWorldGeometry(renderer, world, session, alpha, WorldDrawOptions{});
@@ -479,15 +520,18 @@ void RenderWorldFrame(Renderer& renderer, int width, int height, const RuntimeWo
 
 void DrawAuthoredScene(Renderer& r, const Scene& scene, ResourceManager& assets) {
     JUDAS_PROFILE_SCOPE("Editor authored submission");
-    const auto& settings=scene.Settings();assets.RequestEnvironment(settings.environmentAsset);
+    const auto settings=scene.Settings();assets.RequestEnvironment(settings.environmentAsset);
+    r.SetLighting(settings.sunDirection,settings.sunEnabled?settings.sunColor*settings.sunIntensity:glm::vec3(0),settings.ambientColor);
     r.SetSceneAppearance(settings.linearRendering,settings.exposure,assets.TryGetEnvironment(settings.environmentAsset),settings.environmentIntensity,settings.environmentRotation,settings.environmentBackground,settings.backgroundColor);
     r.SetRenderMask(scene.Settings().mainCameraRenderMask);
     for (const SceneObject& o : scene.Objects()) {
+        if(!o.renderVisible)continue;
         r.SetRenderLayer(o.renderLayer);
         const glm::vec3 position = o.transform.position;
         const glm::quat rotation = glm::normalize(o.transform.rotation);
-        if (o.render) {
+        if (o.render&&o.render->visible) {
             const SceneRenderComponent& render = *o.render;
+            if(render.shape!=SceneShape::Mesh)r.SetMaterialBindings(BuildRenderMaterialBindings(&assets,render));
             if (render.shape == SceneShape::Mesh) {
                 // Edit mode expresses demand by requesting each frame (a
                 // hit once loaded); the editor holds the references.
@@ -497,7 +541,7 @@ void DrawAuthoredScene(Renderer& r, const Scene& scene, ResourceManager& assets)
             } else if (render.shape == SceneShape::Compound && o.body) {
                 for (std::size_t part = 0; part < o.body->compoundBoxes.size(); ++part) {
                     const CompoundBox& box = o.body->compoundBoxes[part];
-                    DrawCompoundChild(r,&assets,box,position,rotation,part==0?render.color:render.secondaryColor);
+                    DrawCompoundChild(r,&assets,box,position,rotation,part==0?render.color:render.secondaryColor,render.alpha);
                 }
             } else if (render.shape == SceneShape::Terrain && o.body) {
                 const std::shared_ptr<const RadialTerrain> surface = CreateTerrainSurface(o.body->terrainSurface);
@@ -520,6 +564,7 @@ void DrawAuthoredScene(Renderer& r, const Scene& scene, ResourceManager& assets)
         }
         // Authored liquid is shown as its particle lattice bounds.
         if (o.fluidVolume && !r.IsShadowPass()) {
+            r.SetMaterialBindings({});
             const SceneFluidVolumeComponent& f = *o.fluidVolume;
             const glm::vec3 half(0.5f * f.spacing * static_cast<float>(f.countX),
                                  0.5f * f.spacing * static_cast<float>(f.countY),
@@ -529,6 +574,7 @@ void DrawAuthoredScene(Renderer& r, const Scene& scene, ResourceManager& assets)
         }
     }
     r.SetRenderLayer(0);
+    r.SetMaterialBindings({});
 }
 
 std::vector<DynamicLight> BuildAuthoredLights(const Scene& scene) {

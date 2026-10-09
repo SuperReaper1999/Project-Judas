@@ -316,6 +316,13 @@ public:
     bool SetMaterialSlot(EntityId,unsigned,const MaterialSlot&);
     bool SetModelPartVisible(EntityId,const std::string&,bool);
     bool SetAppearance(const SceneSettings&);
+    bool ResetAppearance();
+    bool SetRenderVisible(EntityId,bool entityScope,bool visible);
+    bool RenderVisible(EntityId) const;
+    bool SetRuntimeMaterial(EntityId,const std::string&,const MaterialSlot&);
+    bool ClearRuntimeMaterial(EntityId,const std::string&);
+    void ReconcileRenderResources(EntityId);
+    void ReleaseRenderResources(EntityId);
     BodyHandle RuntimeBody(EntityId id) const;
     JointHandle RuntimeJoint(EntityId owner);
     bool SetRuntimeJoint(EntityId owner,const SceneJointComponent&,bool remove,std::string& error);
@@ -620,6 +627,8 @@ private:
 
     std::optional<PlayerStart> m_playerStart;
     std::vector<BodyHandle> m_pickableBodies;
+    std::map<EntityId,std::set<AssetId>> m_renderAssetDemand;
+    AssetId m_runtimeEnvironmentAsset;
     std::vector<AssetId> m_referencedAssets;  // released on Destroy
 
     std::vector<EntityRecord> m_entities;

@@ -18,6 +18,7 @@ physics or VM. Example names/IDs are content, not engine-owned semantics.
 | [paired-stick.js](examples/paired-stick.js) | `flick_stick` paired right-stick binding; frame raw/circular/delta display and fixed-step ordered observations without stealing another reader's samples. |
 | [ray-fan.js](examples/ray-fan.js) | Owner facing a wall/ledge (local -Z), `compare_rays` action; 100 ordered batch hit/miss results and an optional same-world scalar comparison. |
 | [kinematic.js](examples/kinematic.js) | Ordinary box, sphere, convex or compound rigid body; velocity, complete target, stop and point velocity through public Entity commands. Executed by the focused `judas_kinematic_lab_tests` target. |
+| [materials.js](examples/materials.js) | Existing Render component and registered fixture prefab; numeric/whole material patches, alpha/texture removal, independent visibility, sun/ambient writes and reset. Stable-part targeting runs when a ready imported model supplies parts. M72 candidate execution status is in [the handoff](../M72.md#validation-status). |
 | [contacts.js](examples/contacts.js) | Dynamic collider resting on floor; enter/stay/exit reactions. Use same script on authored sensor for triggers. |
 | [audio.js](examples/audio.js) | Authored AudioEmitter; play/pause/resume/stop requests. |
 | [particles.js](examples/particles.js) | Authored visual ParticleEmitter. |

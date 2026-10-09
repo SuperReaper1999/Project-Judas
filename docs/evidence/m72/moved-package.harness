@@ -1,0 +1,20 @@
+FRAMES 260
+LOG_EVERY 60
+WAIT_SERVICES scene 30000 2
+SCREENSHOT 30 /home/conner/Documents/GitHub/Project-Judas/docs/evidence/m72/package/authored.png
+ACTION cycle 1 40 41
+ACTION hide_entity 1 70 71
+SCREENSHOT 90 /home/conner/Documents/GitHub/Project-Judas/docs/evidence/m72/package/hidden-socket.png
+ACTION hide_entity 1 100 101
+ACTION color 1 110 111
+ACTION alpha 1 120 121
+ACTION texture 1 125 126
+ACTION alpha 1 140 141
+ACTION failed_texture 1 145 146
+SCREENSHOT 160 /home/conner/Documents/GitHub/Project-Judas/docs/evidence/m72/package/changed.png
+ACTION save 1 180 181
+WAIT_SERVICES save 30000 200
+ACTION clear 1 210 211
+ACTION load 1 230 231
+WAIT_SERVICES save 30000 245
+SCREENSHOT 255 /home/conner/Documents/GitHub/Project-Judas/docs/evidence/m72/package/loaded.png

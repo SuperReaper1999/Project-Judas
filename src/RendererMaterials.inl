@@ -46,25 +46,29 @@ EnvironmentHandle Renderer::CreateEnvironment(const EnvironmentData& data){
 }
 void Renderer::DestroyEnvironment(EnvironmentHandle handle){if(!handle.IsValid()||handle.id>=m_environments.size())return;auto& e=m_environments[handle.id];if(!e.alive)return;glDeleteTextures(1,&e.specular);glDeleteTextures(1,&e.diffuse);glDeleteTextures(1,&e.brdf);e={};}
 void Renderer::SetSceneAppearance(bool linear,float exposure,EnvironmentHandle environment,float intensity,const glm::quat& rotation,bool background,const glm::vec3& colour){glClearColor(colour.x,colour.y,colour.z,1);m_linearRendering=linear;m_exposure=exposure;m_environment=environment;m_environmentIntensity=intensity;m_environmentRotation=glm::normalize(rotation);m_environmentBackground=background;}
-void Renderer::BindMaterial(const GpuMaterial* gpu,const MaterialOverride& overrides,TextureHandle generated,const glm::vec3&,float alpha,bool shadow){
+void Renderer::BindMaterial(const GpuMaterial* gpu,const MaterialBinding& binding,TextureHandle generated,const glm::vec3&,float alpha,bool shadow){
  MaterialDefinition legacy;legacy.model=MaterialModel::Legacy;
- auto m=ApplyMaterialOverride(gpu?gpu->definition:legacy,overrides);
+ auto m=ApplyMaterialOverride(gpu?gpu->definition:legacy,binding.overrides);
  auto program=shadow?m_shadowShaderProgram:m_shaderProgram;
  auto location=[&](const char* n){return shadow?glGetUniformLocation(program,n):MaterialUniform(n);};
  glUniform1i(location("uAlphaMode"),int(m.alpha));glUniform1f(location("uAlphaCutoff"),m.alphaCutoff);glUniform1i(location("uFlipV"),m.flipV);glUniform4f(location("uUVTransform"),m.uvScale.x,m.uvScale.y,m.uvOffset.x,m.uvOffset.y);
  for(int i=0;i<5;++i){auto& map=m.maps[i];std::string index="["+std::to_string(i)+"]";glUniform1i(location(("uMapUVSet"+index).c_str()),map.uvSet);glUniform4f(location(("uMapUVTransform"+index).c_str()),map.scale.x,map.scale.y,map.offset.x,map.offset.y);glUniform1f(location(("uMapUVRotation"+index).c_str()),map.rotation);}
- TextureHandle base=generated;if(!generated.IsValid()&&gpu)base=gpu->textures[0];
+ auto mapTexture=[&](unsigned index){return binding.textureOverrides[index]?binding.textures[index]:(gpu?gpu->textures[index]:TextureHandle{});};
+ TextureHandle base=binding.textureOverrides[0]?binding.textures[0]:(generated.IsValid()?generated:mapTexture(0));
  if(!shadow&&m.model!=MaterialModel::Legacy)base=ColourTexture(base);
+ // First use may create a cached colour view. Resolve every colour role before
+ // binding unit zero, since that owner-thread upload temporarily binds a texture.
+ auto emissionTexture=mapTexture(4);if(!shadow&&m.model!=MaterialModel::Legacy)emissionTexture=ColourTexture(emissionTexture);
  if(m_activeTarget.IsValid()&&base.IsValid()&&base.id==RenderTargetTexture(m_activeTarget).id){base={};++m_stats.feedbackFallbacks;}
- glActiveTexture(GL_TEXTURE0);glBindTexture(GL_TEXTURE_2D,ResolveTexture(base));glBindSampler(0,gpu&&!generated.IsValid()?gpu->samplers[0]:0);
+ glActiveTexture(GL_TEXTURE0);glBindTexture(GL_TEXTURE_2D,ResolveTexture(base));glBindSampler(0,gpu&&(binding.textureOverrides[0]||!generated.IsValid())?gpu->samplers[0]:0);
  if(shadow){glUniform1i(location("uTexture"),0);glUniform1f(location("uAlphaFactor"),m.baseColor.a*alpha);}
  else{
   glUniform1i(location("uMaterialModel"),int(m.model));glUniform1i(location("uModern"),m_linearRendering);glUniform1i(location("uBaseLinear"),base.IsValid()&&base.id<m_textures.size()&&(m_textures[base.id].sceneLinear||m_textures[base.id].srgb));
   glUniform4fv(location("uBaseFactor"),1,glm::value_ptr(m.baseColor));glUniform1f(location("uMetallic"),m.metallic);glUniform1f(location("uRoughness"),m.roughness);glUniform1f(location("uNormalStrength"),m.normalStrength);glUniform1f(location("uOcclusionStrength"),m.occlusionStrength);glUniform3fv(location("uEmission"),1,glm::value_ptr(m.emissive));glUniform1f(location("uEmissionIntensity"),m.emissiveIntensity);
   auto eye=glm::vec3(glm::inverse(m_view)[3]);glUniform3fv(location("uCameraPosition"),1,glm::value_ptr(eye));
-  glUniform1i(location("uEmissiveLinear"),gpu&&gpu->textures[4].IsValid()&&m_textures[gpu->textures[4].id].srgb);
+  glUniform1i(location("uEmissiveLinear"),emissionTexture.IsValid()&&emissionTexture.id<m_textures.size()&&(m_textures[emissionTexture.id].srgb||m_textures[emissionTexture.id].sceneLinear));
   const char* names[]={"uMR","uNormal","uOcclusion","uEmissive"};const char* present[]={"uHasMR","uHasNormal","uHasOcclusion","uHasEmissive"};
-  for(unsigned i=1;i<5;++i){glActiveTexture(GL_TEXTURE0+4+i);auto texture=gpu?gpu->textures[i]:TextureHandle{};glBindTexture(GL_TEXTURE_2D,ResolveTexture(texture));glBindSampler(4+i,gpu?gpu->samplers[i]:0);glUniform1i(location(names[i-1]),int(4+i));glUniform1i(location(present[i-1]),texture.IsValid());}
+  for(unsigned i=1;i<5;++i){glActiveTexture(GL_TEXTURE0+4+i);auto texture=i==4?emissionTexture:mapTexture(i);glBindTexture(GL_TEXTURE_2D,ResolveTexture(texture));glBindSampler(4+i,gpu?gpu->samplers[i]:0);glUniform1i(location(names[i-1]),int(4+i));glUniform1i(location(present[i-1]),texture.IsValid());}
   const GpuEnvironment* env=m_environment.IsValid()&&m_environment.id<m_environments.size()&&m_environments[m_environment.id].alive?&m_environments[m_environment.id]:nullptr;
   glUniform1i(location("uEnvironmentEnabled"),env!=nullptr);glUniform1f(location("uEnvironmentIntensity"),m_environmentIntensity);glUniform1f(location("uEnvLevels"),env?float(env->levels):1);auto inverse=glm::mat3_cast(glm::conjugate(m_environmentRotation));glUniformMatrix3fv(location("uEnvironmentInverse"),1,GL_FALSE,glm::value_ptr(inverse));
   const char* envNames[]={"uEnvDiffuse","uEnvSpecular","uBRDF"};GLuint tex[]={env?env->diffuse:0,env?env->specular:0,env?env->brdf:0};for(int i=0;i<3;++i){glActiveTexture(GL_TEXTURE0+9+i);glBindTexture(GL_TEXTURE_2D,tex[i]);glBindSampler(9+i,0);glUniform1i(location(envNames[i]),9+i);}

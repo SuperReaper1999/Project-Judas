@@ -1,0 +1,40 @@
+[  6%] Built target judas_icu_build
+[  6%] Built target judas_quickjs
+[  6%] Built target judas_app_icon
+[ 13%] Built target judas_navigation_backend
+[ 33%] Built target freetype
+[ 33%] Built target judas_glad
+[ 33%] Built target judas_profiler
+[ 33%] Built target judas_audio_backend
+[ 33%] Built target harfbuzz
+[ 33%] Built target judas_materials
+[100%] Built target judas_engine
+[100%] Building CXX object CMakeFiles/judas_export_tests.dir/tests/ExportTests.cpp.o
+[100%] Linking CXX executable judas_export_tests
+[100%] Built target judas_export_tests
+[  0%] Built target judas_app_icon
+[  6%] Built target judas_icu_build
+[  6%] Built target judas_quickjs
+[ 13%] Built target judas_navigation_backend
+[ 33%] Built target freetype
+[ 33%] Built target judas_audio_backend
+[ 33%] Built target judas_profiler
+[ 33%] Built target judas_glad
+[ 33%] Built target harfbuzz
+[ 33%] Built target judas_materials
+[100%] Built target judas_engine
+[100%] Linking CXX executable judas_export
+[100%] Built target judas_export
+[  0%] Built target judas_app_icon
+[  6%] Built target judas_icu_build
+[  6%] Built target judas_quickjs
+[ 13%] Built target judas_navigation_backend
+[ 33%] Built target freetype
+[ 33%] Built target judas_glad
+[ 33%] Built target judas_profiler
+[ 33%] Built target judas_audio_backend
+[ 33%] Built target harfbuzz
+[ 33%] Built target judas_materials
+[100%] Built target judas_engine
+[100%] Linking CXX executable judas_resource_handoff_tests
+[100%] Built target judas_resource_handoff_tests

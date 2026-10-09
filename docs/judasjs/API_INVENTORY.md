@@ -1,6 +1,6 @@
 # Current public JudasJS inventory
 
-M71 candidate kinematic rigid body review of the registered virtual module based on accepted starting checkpoint `fb31f0244c9f41f74c439afd99855e3707937edd`. M67 human authoring review remains deferred.
+M72 candidate lighting, visibility and instance-material review of the registered virtual module based on accepted M71 checkpoint `02b540f083bcf3d99b0dc6eb9aa70e63c91a31c3`. M67 human authoring review remains deferred.
 Each row is a runtime export/member (constructors and plain handle fields included).
 Native dispatcher operations are implementation details, not additional JS APIs.
 
@@ -103,6 +103,8 @@ Native dispatcher operations are implementation details, not additional JS APIs.
 | `Entity.presentedTransform` | `presentedTransform` | [declaration](../judas.d.ts) | [reference](entities.md) |
 | `Entity.ragdoll` | `ragdollExists` | [declaration](../judas.d.ts) | [reference](entities.md) |
 | `Entity.removeTag` | `removeTag` | [declaration](../judas.d.ts) | [reference](entities.md) |
+| `Entity.renderVisible` | `renderVisible` | [declaration](../judas.d.ts) | [reference](entities.md) |
+| `Entity.rendererVisible` | `rendererVisible` | [declaration](../judas.d.ts) | [reference](entities.md) |
 | `Entity.resumeAudio` | `resumeAudio` | [declaration](../judas.d.ts) | [reference](audio.md) |
 | `Entity.scriptState` | `scriptState` | [declaration](../judas.d.ts) | [reference](entities.md) |
 | `Entity.seekAudio` | `audioSeek` | [declaration](../judas.d.ts) | [reference](audio.md) |
@@ -318,6 +320,7 @@ Native dispatcher operations are implementation details, not additional JS APIs.
 | `world.overlap` | `overlap` | [declaration](../judas.d.ts) | [reference](entities.md) |
 | `world.project` | `projectViewport` | [declaration](../judas.d.ts) | [reference](effects-camera.md) |
 | `world.queryTags` | `queryTags` | [declaration](../judas.d.ts) | [reference](entities.md) |
+| `world.resetAppearance` | `appearanceReset` | [declaration](../judas.d.ts) | [reference](materials.md) |
 | `world.setAppearance` | `appearanceSet` | [declaration](../judas.d.ts) | [reference](materials.md) |
 | `world.setView` | `setView` | [declaration](../judas.d.ts) | [reference](effects-camera.md) |
 | `world.spawnPrefab` | `spawn` | [declaration](../judas.d.ts) | [reference](entities.md) |

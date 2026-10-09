@@ -1,9 +1,11 @@
-# Windows editor and exported games — unvalidated candidate v1
+# Windows editor and exported games
 
-This is a native Windows preparation branch/state, **not accepted Windows support**.
-The accepted development platform remains Linux. Native MSVC compilation, Windows
-OpenGL/audio/input, editor authoring, packaging and save durability require testing
-on Windows. No Wine result is being substituted for that acceptance.
+The operator reports that the earlier Windows update was validated and pushed.
+That historical acceptance does not certify later M70/M71 changes or the current
+[M72 checkpoint awaiting human validation](M72.md). Native Windows M72 compilation,
+OpenGL/audio/input, editor authoring, packaging and save durability remain pending.
+The instructions and checklist below support native verification; no Wine result
+is being substituted for it. Earlier evidence retains its original platform scope.
 
 ## Build on your Windows install
 

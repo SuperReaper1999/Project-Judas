@@ -1,0 +1,18 @@
+[  0%] Built target judas_icu_build
+[  0%] Built target judas_app_icon
+[  6%] Built target judas_quickjs
+[ 12%] Built target judas_navigation_backend
+[ 12%] Built target judas_glad
+[ 31%] Built target freetype
+[ 37%] Built target judas_profiler
+[ 37%] Built target judas_audio_backend
+[ 37%] Built target harfbuzz
+[ 37%] Built target judas_materials
+[100%] Built target judas_engine
+[100%] Building CXX object CMakeFiles/judas_runtime_render_application_tests.dir/src/RuntimeDiagnostics.cpp.o
+[100%] Building CXX object CMakeFiles/judas_runtime_render_application_tests.dir/src/Application.cpp.o
+[100%] Building CXX object CMakeFiles/judas_runtime_render_application_tests.dir/tests/RuntimeRenderApplicationTests.cpp.o
+[100%] Building CXX object CMakeFiles/judas_runtime_render_application_tests.dir/src/RuntimeOptions.cpp.o
+[100%] Building CXX object CMakeFiles/judas_runtime_render_application_tests.dir/src/TestHarness.cpp.o
+[100%] Linking CXX executable judas_runtime_render_application_tests
+[100%] Built target judas_runtime_render_application_tests

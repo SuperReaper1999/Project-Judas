@@ -72,12 +72,34 @@ declare module "judas" {
   export interface LegacySweepHit { hit: boolean; distance: number; normal: Vec3; entityId: EntityId }
   export interface FluidSample { immersion: number; density: number; velocity: Vec3; acceleration: Vec3 }
   /** Plain wrappers reacquire native state. Treat the writable ID as opaque. */
-  export interface Appearance {backgroundColor:Vec3;linearRendering:boolean;exposure:number;environmentAsset:AssetId;environmentIntensity:number;environmentRotation:Quat;environmentBackground:boolean}
-  export interface MaterialParameters {uvScale?:{x:number;y:number};uvOffset?:{x:number;y:number};baseColor?:Vec3 & {a:number};metallic?:number;roughness?:number;emissive?:Vec3;emissiveIntensity?:number}
-  export interface MaterialState {uvScale:{x:number;y:number};uvOffset:{x:number;y:number};asset:AssetId;ready:boolean;model:"legacy"|"pbr"|"unlit";alphaMode:"opaque"|"mask"|"blend";baseColor:Vec3 & {a:number};metallic:number;roughness:number;emissive:Vec3;emissiveIntensity:number;overridden:boolean}
+  export type ResourceStatus = "unloaded"|"queued"|"loading"|"cpu-ready"|"ready"|"failed"|"cancelled";
+  export interface AppearanceSettings {
+    backgroundColor:Vec3;linearRendering:boolean;exposure:number;
+    sunEnabled:boolean;sunIntensity:number;
+    /** Finite nonzero world-space direction toward the light; normalized on write. */
+    sunDirection:Vec3;sunColor:Vec3;ambientColor:Vec3;
+    environmentAsset:AssetId;environmentIntensity:number;environmentRotation:Quat;environmentBackground:boolean;
+  }
+  export interface Appearance extends AppearanceSettings {readonly environmentStatus:ResourceStatus;readonly environmentError:string}
+  export type MaterialTarget = number|string;
+  export interface MaterialTextures {baseColor:AssetId;metallicRoughness:AssetId;normal:AssetId;occlusion:AssetId;emissive:AssetId}
+  export interface MaterialParameters {
+    uvScale?:{x:number;y:number};uvOffset?:{x:number;y:number};baseColor?:Vec3 & {a:number};
+    metallic?:number;roughness?:number;emissive?:Vec3;emissiveIntensity?:number;
+    alphaMode?:"opaque"|"mask"|"blend";alphaCutoff?:number;normalStrength?:number;occlusionStrength?:number;doubleSided?:boolean;
+    /** Registered image IDs; an empty string explicitly removes that map. */
+    textures?:Partial<MaterialTextures>;
+  }
+  export interface MaterialState {
+    uvScale:{x:number;y:number};uvOffset:{x:number;y:number};asset:AssetId;ready:boolean;
+    status:"ready"|"pending"|"failed";error:string;model:"legacy"|"pbr"|"unlit";
+    alphaMode:"opaque"|"mask"|"blend";alphaCutoff:number;normalStrength:number;occlusionStrength:number;doubleSided:boolean;
+    baseColor:Vec3 & {a:number};metallic:number;roughness:number;emissive:Vec3;emissiveIntensity:number;
+    textures:MaterialTextures;overridden:boolean;
+  }
   export class Material {
-    constructor(entityId:EntityId,slot?:number);
-    entityId:EntityId;slot:number;
+    constructor(entityId:EntityId,slot?:MaterialTarget);
+    entityId:EntityId;slot:MaterialTarget;
     readonly state:MaterialState;
     assign(asset:AssetId):boolean;
     set(parameters:MaterialParameters):boolean;
@@ -99,6 +121,10 @@ declare module "judas" {
   export interface ModelPart { readonly identity: string; readonly materialSlot: number; readonly triangles: number; readonly visible: boolean }
   export interface RootMotion { readonly translation: Vec3; readonly rotation: Quat; readonly extracted: boolean }
   export class Entity {
+    /** Local entity render gate; does not hide children or change simulation. */
+    renderVisible:boolean;
+    /** Independent Render component gate; throws when that component is absent. */
+    rendererVisible:boolean;
     readonly modelParts: readonly ModelPart[] | null;
     setPartVisible(identity: string, visible: boolean): boolean;
     readonly collider:ColliderInfo|null;
@@ -107,7 +133,7 @@ declare module "judas" {
     setPhysicalMaterial(asset?:AssetId|null,parameters?:{friction?:number;restitution?:number}):boolean;
     setSocket(target:Entity,joint:string,offset?:TransformPatch):boolean;
     clearSocket():boolean;
-    material(slot?:number):Material;
+    material(slot?:MaterialTarget):Material;
     readonly liquid:LiquidVolume|null;
     constructor(id: string | number | bigint);
     id: EntityId;
@@ -174,7 +200,8 @@ declare module "judas" {
   export const world: {
     entity: typeof entity;
     readonly appearance:Appearance;
-    setAppearance(settings:Partial<Appearance>):boolean;
+    setAppearance(settings:Partial<AppearanceSettings>):boolean;
+    resetAppearance():boolean;
     setView(pose: TransformPatch, fov?: number, range?: CameraRange): boolean;
     project(point:Vec3):ViewportPoint|null;
     readonly viewport:{width:number;height:number};

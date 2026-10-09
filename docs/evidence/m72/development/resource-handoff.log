@@ -1,0 +1,13 @@
+libEGL warning: Not allowed to force software rendering when API explicitly selects a hardware device.
+Renderer fragment texture units: 32 (material path uses 12)
+PASS fresh owned output required
+PASS ordinary import lab project
+PASS authored original multipart scene
+PASS actual owner-thread GL context
+GL renderer: llvmpipe (LLVM 21.1.8, 256 bits) vendor: Mesa
+PASS cancelled private upload cannot publish
+PASS complete full-quality original asset publishes normally
+PASS bounded admission and private publication throughout all pumps
+PASS real staged cancellation exercised
+PASS retirement returns CPU/GPU residency to zero
+SUMMARY 9 checks

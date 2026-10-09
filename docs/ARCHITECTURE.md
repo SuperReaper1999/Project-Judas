@@ -6,22 +6,24 @@ someone with no prior context on this project. It is updated in place as
 milestones land, rather than kept as a per-milestone snapshot — see
 "Milestone history" below for how to recover an earlier milestone exactly.
 
-## Windows preparation status
+## Platform acceptance boundaries
 
-A native Windows x64 candidate is being prepared separately from accepted M69
-platform evidence. It adds native desktop paths/processes/save storage and SDK
-DLL packaging around the shared editor/runtime. **Windows remains unvalidated,
-not final**; Linux remains the accepted platform. See [WINDOWS.md](WINDOWS.md)
-for build instructions and required native acceptance. Historical platform
-statements below describe their original milestones.
+The operator reports that the earlier Windows update was validated and pushed.
+That historical acceptance is distinct from native Windows evidence for later
+M70/M71 changes and this M72 checkpoint awaiting human validation. The current M72 work has no
+native Windows acceptance yet. [WINDOWS.md](WINDOWS.md) retains native build,
+package and acceptance instructions. Historical platform statements below
+describe the evidence available at their original milestones.
 
 ## Current reference and historical capability overview
 
-Accepted baseline: M69 (`8ddec3b97d66815de4174d6e103be77e74b7eb0f`).
-M69 is the latest completed, operator-accepted milestone. M67 remains provisionally
-checkpointed; proper human authoring validation is deferred. M68 and M69 are
-checkpointed, not awaiting review. M69 controller acceptance uses synthetic SDL
-and real-VM evidence because the operator has no controller; hardware feel is untested.
+Accepted baseline: M71 (`02b540f083bcf3d99b0dc6eb9aa70e63c91a31c3`).
+M71 is the latest operator-accepted engine checkpoint; [M72](M72.md) is the current
+checkpoint authorized without human validation; desktop review remains pending. M70's accepted Linux checkpoint is
+`fb31f0244c9f41f74c439afd99855e3707937edd`. M67 remains provisionally checkpointed;
+proper human authoring validation is deferred. M68 and M69 are checkpointed,
+not awaiting review. M69 controller acceptance uses synthetic SDL and real-VM
+evidence because the operator has no controller; hardware feel is untested.
 
 M66 supplies the [commodity multipart import/cook pipeline](MODEL_IMPORT.md).
 The provisional M67 candidate joins editor commands, persistent recipes and schema-1 named
@@ -58,6 +60,25 @@ not override later completed work. Current JS usage starts at [JUDASJS.md](JUDAS
 **M66 accepted:** the shared
 [model import service](MODEL_IMPORT.md) adds original FBX/multipart content,
 stable reimport, source diagnostics and size-aware eight-weight skinning.
+
+### Current ownership and timing guide
+
+| Responsibility | Current owner / contract |
+| --- | --- |
+| Authored identity and defaults | Project/AssetDatabase and normal scene/prefab/named serializers; canonical fingerprint schema remains 5 with conditional extensions. M68 export retains default all-assets inclusion and optionally computes selected-scene closure plus explicit runtime assets. |
+| World instances and lifecycle | RuntimeWorld owns live entity/component state; SceneSession replaces a world, M59 residency adds/removes regions, and M61 stages coherent durable restoration. Root-world settings retain appearance ownership across additive publication. |
+| Game policy | Trusted project QuickJS owns logical input interpretation, trajectories, transitions and game rules. Safe public handles reacquire native state; no raw ECS/GL/physics pointer API is implied. |
+| Authoritative fixed work | Simulation runs navigation, script intent, opted-in M70 motor/reference/physical-drive preparation, ordinary physics and final pose consumers once per fixed interval. M71 prescribed rigid motion publishes inside that ordinary rigid step. See the current fixed ordering below. |
+| Pose consumers | Clip/layer and IK reference resolve before physical contribution. Final joints, sockets, skinning and presented reads share resolved samples; M66 skin palettes are size-aware and use eight influences. |
+| Resource work | Shared ResourceManager/job workers decode immutable CPU content; Renderer owns graphics upload/delete and context-thread use. IDs/generations and durable selections are separate from disposable GPU caches. |
+| Presentation | After fixed catch-up, presentationUpdate samples interpolation, then audio and render submission consume that world. Cameras do not integrate simulation. Auxiliary cameras retain authored size/cadence/mask and reuse main-focused shadow maps. |
+| M72 visual state | Validated root appearance and isolated entity/material runtime patches feed one rendered sample. Render hiding preserves simulation. Modern saves/region state retain values and IDs, then rebuild resources. |
+
+Current authoring starts at [Editor guide](EDITOR_GUIDE.md),
+[named documents](NAMED_AUTHORING.md), [model import](MODEL_IMPORT.md),
+[JudasJS](JUDASJS.md) and [M72 design/review](M72.md). The sections below retain the
+original reasoning, measured failures and evidence; later accepted sections and
+this current guide determine modern capability and ownership.
 
 ### Historical foundation through M43 and later legacy-fluid repair notes
 
@@ -441,6 +462,10 @@ smooth; motion that randomly alternates between "nothing happened" and
 operator's judgment on whether this reads as smooth in practice.
 
 ## Language: C++
+
+**Historical initial language rationale.** The middleware possibilities below
+were considered at project start. Current rigid physics and rendering are Judas
+implementations; this is not a claim that Jolt/PhysX/Vulkan are integrated.
 
 The long-term engine needs tight control over large-world coordinate math,
 and integrates physics middleware (rigidbody dynamics, collision detection)
@@ -4401,6 +4426,10 @@ just takes the fixed `kSphereCenter`/`kSphereRadius` it always has.
 
 ## 3D rendering pipeline
 
+**Historical M3–M9 pipeline description.** Matrix conventions remain useful;
+the single-shader account below predates current materials/HDR, imported skin
+palettes and auxiliary targets. See M57/M66/M72 and [Materials](MATERIALS.md).
+
 `Renderer::DrawBox`/`Renderer::DrawSphere`/`Renderer::DrawMesh` implement
 the conventional model → world → view → clip-space pipeline via matrices,
 computed with GLM and uploaded as uniforms to one shader (`src/Renderer.cpp`)
@@ -4821,6 +4850,11 @@ milestone so far calls for).
 
 ## Main loop structure
 
+**Historical native demonstration loop.** The pseudocode below describes its
+original checkpoint. Current project lifecycle, fixed work and presentation use
+SceneSession/RuntimeWorld, Simulation and WorldPresentation as described in the
+current ownership guide and fixed-step ordering.
+
 `Application::Run()` (`src/Application.cpp`) owns the loop:
 
 ```
@@ -5037,6 +5071,11 @@ files, reported honestly rather than selectively:
   equivalence check against an arbitrary, unaligned quaternion.
 
 ## Automated testing
+
+**Historical M5 validation circumstances.** This retained account describes the
+tools and evidence available then. Current milestone records include focused
+native, real-VM, editor, resource, package and rendered checks; their exact scope
+does not imply full-suite, human visual or cross-platform acceptance.
 
 Claude Code (the AI agent developing this engine alongside its human
 maintainer) has no way to see Judas's real window or send it keyboard/mouse
@@ -7466,10 +7505,12 @@ energy conservation. See [executed FTFT7 evidence](evidence/stabilization/ftft7/
 
 ### Fixed-step ordering (`src/Simulation.h`)
 
-**Current ordering:** navigation → liquid BeginStep → JS fixedUpdate → conserved
-liquid update/loading → ordinary gravity/forces and enabled legacy adapters →
-rigid physics/legacy fluid coupling → combustion/coarse integration → legacy
-observer/player → CharacterMotors → animation → ragdolls → deformables/fracture →
+**Current ordering:** navigation → liquid BeginStep → JS fixedUpdate → opted-in
+M70 CharacterMotors/reference pose/physical-drive preparation → conserved liquid
+update/loading → ordinary gravity/forces and enabled legacy adapters → rigid
+physics/legacy fluid coupling → combustion/coarse integration → legacy
+observer/player → remaining CharacterMotors → dynamic-body sync → animation →
+ragdolls → sockets → deformables/fracture →
 visual particles → simulation clock/contact and fracture events → fidelity policy.
 The world advances once;
 render cameras do not step it. M52's presentationUpdate runs after catch-up.
@@ -8794,6 +8835,11 @@ presentation alpha; simulation is never stepped per camera. Targets are lazy,
 render-frame cadence is authored, and active-target feedback uses a counted safe
 fallback. Play/Stop releases generated resources and retains authored state.
 This is nonrecursive render-to-texture, not portals or reflected clipping.
+Current auxiliary rendering shares the main-focused directional/legacy spot shadow
+maps rather than building a shadow set around each camera. Resolution, cadence,
+render mask and target feedback remain independently authored. Modern M57 targets
+store scene-linear radiance without exposure/output conversion. Shared draw paths
+do not promise identical pixel quality or independent auxiliary shadow coverage.
 
 ## M34 audio boundary
 
@@ -8853,8 +8899,11 @@ then replaces a complete package. AssetDatabase remains the runtime manifest;
 Packaged startup/engine data resolution is executable-relative and independent of
 CWD/development overrides. The runtime-only Project save-directory override points
 at Linux user data; authored serialization and baseline fingerprints are unchanged.
-All registered assets are included to support runtime ID loading, with no editor
-runtime dependency. System SDL2/graphics/audio/C++ libraries remain platform
+The original M38 policy included all registered assets for runtime ID loading,
+which remains the conservative default. Accepted M68 also supports opt-in
+selected-scene dependency closure plus explicit project runtime assets;
+[M68 packaging](SCALABILITY.md#export-policy-and-inclusion-report) defines current inclusion.
+There is no editor runtime dependency. System SDL2/graphics/audio/C++ libraries remain platform
 requirements. See `docs/M38.md` for layout, replacement guarantees and limits.
 
 ## M39 classification
@@ -9109,7 +9158,7 @@ without changing M54/M55 behaviour. See [profiler guide](PROFILER.md) and M56 ev
 
 ## M57 optional materials and environment lighting
 
-Current reusable `.judasmat` definitions and isolated instance overrides, core glTF primitive slots, PBR/unlit/legacy models and baked `.judasenv` resources use AssetDatabase/async ResourceManager and Renderer-owned GL3.3 lifetime. Opted-in scenes accumulate linear HDR, apply exposure/Reinhard/sRGB once, then display-stage UI. Modern secondary targets carry scene-linear radiance. Physics, liquid simulation and resolved skeletal poses remain independent of material policy. See [Materials](MATERIALS.md) for exact shading, colour/import/pass contracts and [JudasJS material API](judasjs/materials.md). M57 is human-accepted and checkpointed at `ba16c2c`; historical milestone evidence is preserved.
+Reusable `.judasmat` definitions and isolated instance overrides, core glTF primitive slots, PBR/unlit/legacy models and baked `.judasenv` resources use AssetDatabase/async ResourceManager and Renderer-owned GL3.3 lifetime. Opted-in scenes accumulate linear HDR, apply exposure/Reinhard/sRGB once, then display-stage UI. Modern secondary targets carry scene-linear radiance. Physics, liquid simulation and resolved skeletal poses remain independent of material policy. M66 supersedes the original import restrictions; the M72 candidate extends public sun/environment controls, render gates and whole/slot/stable-part material patches through these existing owners. See [Materials](MATERIALS.md) for exact shading, colour/import/pass contracts and [JudasJS material API](judasjs/materials.md). M57 is human-accepted and checkpointed at `ba16c2c`; historical milestone evidence is preserved.
 
 ## M58 — shared Unicode text and project localization
 
@@ -9397,7 +9446,7 @@ See [M70 ownership, bounds and human review](M70.md) and the
 Linux human review was accepted at checkpoint
 `fb31f0244c9f41f74c439afd99855e3707937edd`; Windows M70 validation remains outstanding.
 
-## M71 — prescribed rigid-body authority and scene-view panning (candidate)
+## M71 — prescribed rigid-body authority and scene-view panning (accepted)
 
 Ordinary rigid bodies explicitly select static, dynamic or kinematic authority.
 Kinematic target/velocity commands publish at the next rigid fixed step and use
@@ -9436,4 +9485,45 @@ handler. See the current [editor guide](EDITOR_GUIDE.md) and
 
 See [M71 phases, commands and validation](M71.md) and
 [public prescribed-motion API](judasjs/entities.md#kinematic-motion-m71).
-This combined candidate remains uncommitted pending operator review.
+The combined engine/editor work is accepted at
+`02b540f083bcf3d99b0dc6eb9aa70e63c91a31c3`. Original candidate receipts remain
+preserved in the M71 evidence record; they do not certify later M72 changes.
+
+## M72 — runtime lighting, render visibility and instance materials (candidate)
+
+Authored root settings → validated RuntimeWorld appearance → one render-sample
+snapshot → normal direct lighting, supported shadows and environment resolve is
+the lighting path. Sun direction is world-space toward the light, independent of
+gravity; enabled/intensity/linear colour and ambient/environment/background controls
+extend the existing appearance API. Exposure remains a separate display operation.
+Reset restores root authored settings, including after durable restoration;
+additive regions do not replace the root's lighting owner.
+
+Each entity has a local render gate; its optional Render component and imported
+parts retain independent gates. Supported geometry/depth/shadow submissions combine
+them without changing physics, scripts, audio or resolved skeletal work. Children
+do not inherit the entity gate. Authored and runtime material state are separate:
+whole-instance/numeric/stable-part authoring resolves first, then isolated runtime
+patches resolve whole → numeric → stable part. Reset removes the selected runtime
+patch including assignment. Shared material/model/texture source data stays immutable.
+
+Material batches validate factors, alpha mode/cutoff, normal/AO strength,
+double-sided state and registered texture selections before publication. Ordinary
+opaque/mask/blend submission determines real opacity, depth and shadow behaviour;
+object-origin transparency sorting retains its existing intersection limits.
+ResourceManager resolves selected IDs asynchronously with source-map fallback and
+generation-safe retirement; Renderer owns graphics lifetime. Durable state stores
+values/IDs rather than GL handles, and obsolete requests cannot replace newer state.
+
+M33 auxiliary views retain resolution/cadence/mask, target ownership and feedback
+protection, share ordinary supported draw paths and main-focused shadow maps, and
+store modern radiance without display resolve. M72 adds no independent auxiliary
+shadow coverage or feature-parity requirement. Project JS owns transition timing,
+sun trajectories and hiding/material policy; no native day/night system is introduced.
+
+See [M72 ownership, authoring, lifecycle and review](M72.md),
+[appearance/material API](judasjs/materials.md) and
+[render-visibility API](judasjs/entities.md#render-visibility-m72).
+M72 is checkpointed by operator instruction without human validation. Executed
+evidence and remaining human/platform acceptance are reported in its handoff;
+checkpointing does not imply visual acceptance.

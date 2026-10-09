@@ -79,12 +79,14 @@ bool RuntimeWorld::RestoreRegionObject(EntityId id,const SceneTransform& transfo
 bool RuntimeWorld::RegionVisualReady(const std::vector<EntityId>& ids)const {
     if(!m_assets)return true;
     for(auto id:ids)if(auto it=m_regionAssets.find(id);it!=m_regionAssets.end())for(auto& asset:it->second){auto* r=m_assets->Assets()->Find(asset);if(r&&(r->type==AssetType::Audio||r->type==AssetType::AudioEffect))continue;if(m_assets->StateOf(asset)!=ResourceState::Ready)return false;}
+    for(auto id:ids)if(auto it=m_renderAssetDemand.find(id);it!=m_renderAssetDemand.end())for(const auto& asset:it->second)if(m_assets->StateOf(asset)!=ResourceState::Ready)return false;
     return true;
 }
 void RuntimeWorld::EndRegionScripts(const std::vector<EntityId>& ids){if(m_scripts)m_scripts->RemoveEntities(ids);}
 void RuntimeWorld::RemoveRegionObject(EntityId id) {
     // Suspension is preflighted by the residency coordinator. In particular,
     // conserved liquids are pinned; destruction's parked-parcel path is not used.
+    ReleaseRenderResources(id);
     m_regionPending.insert(id);m_regionKinematicCommands.erase(id);if(m_scripts)m_scripts->RemoveEntities({id});
     if(m_navigation)m_navigation->RemoveSurface(id);
     if(auto it=m_runtimeJoints.find(id);it!=m_runtimeJoints.end()){m_physics.DestroyJoint(it->second);m_runtimeJoints.erase(it);}

@@ -1,0 +1,42 @@
+libEGL warning: Not allowed to force software rendering when API explicitly selects a hardware device.
+Renderer fragment texture units: 32 (material path uses 12)
+PASS ordinary host: 
+PASS ordinary project: 
+PASS registered scene: 
+PASS normal runtime build: 
+PASS actual public VM operations have no faults
+PASS VM independent
+PASS VM atomic
+PASS VM componentPreserved
+PASS VM partPreserved
+PASS VM stable
+PASS VM sunAtomic
+PASS VM hiddenJoint
+PASS VM hiddenSocket
+PASS invalid grouped material updates rejected atomically
+PASS hidden solid retains authoritative collision/query geometry
+PASS hidden animated figure retains pose producer
+PASS hidden animated socket resolves through the ordinary world pose path
+PASS render-hidden solid script continues through ordinary frame callbacks
+PASS authored + durable overrides + visibility + sun round trip: 
+PASS prefab extraction
+PASS prefab retains per-instance and stable part bindings: 
+PASS editor document loads
+PASS visibility/parts/background changes record ordinary undo
+PASS authored undo restores render-only state
+PASS authored redo restores accepted changes
+PASS shared imported source bytes untouched
+PASS texture replacement accepted through ordinary manager
+PASS one bounded instance demand acquired
+PASS clear retires superseded demand before upload
+PASS late completion cannot restore reset intent
+PASS ordinary additive entity stages: 
+PASS additive publication preserves shared world environment
+PASS staged override demand rebuilt
+PASS region removal retires instance demand and handles
+PASS ordinary save participants capture rendering state: 
+PASS live auxiliary screen remains allocated
+PASS main/shadow/live-screen state remains coherent
+PERF 10000 grouped lighting/material/visibility writes 7.003 ms 0.000700 ms/update, no shader/model rebuild
+PASS world teardown retires authored and instance references
+M72 application 38 checks 0 failures

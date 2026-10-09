@@ -1,0 +1,10 @@
+libEGL warning: Not allowed to force software rendering when API explicitly selects a hardware device.
+Renderer fragment texture units: 32 (material path uses 12)
+PASS ordinary public request installs copied multipart region with independent override resources: 
+PASS runtime visibility/part and full material texture changes acquire one bounded demand each
+RETAINED bytes=12236 old_id=4611686018427387904 mesh_refs=0 material_refs=0 cutout_refs=0 grid_refs=0
+PASS real retained snapshot unload retires old identity and all region/override resource refs
+REVISIT new_id=4611686018427387905 retained=12236 material_refs=1 cutout_refs=1 grid_refs=1
+PASS actual revisit reconstructs fresh identity, full retained M72 intent and resource demands
+PASS region install, retained unload and revisit preserve the persistent root sun/environment
+SUMMARY 5 checks 0 failures

@@ -12,6 +12,12 @@ class RuntimeWorld;
 class Scene;
 class ResourceManager;
 struct AerodynamicDragResult;
+struct SceneRenderComponent;
+struct MaterialBinding;
+
+// Resolves durable instance intent to borrowed immutable GPU resources. Pending
+// or failed texture replacements keep the inherited map until a valid publish.
+std::vector<MaterialBinding> BuildRenderMaterialBindings(ResourceManager*,const SceneRenderComponent&);
 
 // Milestone 28: everything that turns a RuntimeWorld (and, optionally, the
 // GameSession playing it) into Renderer calls. The presentation-side

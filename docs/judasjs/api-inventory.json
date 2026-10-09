@@ -1,5 +1,5 @@
 {
-  "checkpoint": "fb31f0244c9f41f74c439afd99855e3707937edd",
+  "checkpoint": "02b540f083bcf3d99b0dc6eb9aa70e63c91a31c3",
   "authority": "src/ScriptSystem.cpp::library + Impl::Native",
   "symbols": [
     {
@@ -1023,6 +1023,30 @@
         "removeTag"
       ],
       "type": "docs/judas.d.ts:Entity.removeTag",
+      "reference": "docs/judasjs/entities.md"
+    },
+    {
+      "symbol": "Entity.renderVisible",
+      "kinds": [
+        "get",
+        "set"
+      ],
+      "native": [
+        "renderVisible"
+      ],
+      "type": "docs/judas.d.ts:Entity.renderVisible",
+      "reference": "docs/judasjs/entities.md"
+    },
+    {
+      "symbol": "Entity.rendererVisible",
+      "kinds": [
+        "get",
+        "set"
+      ],
+      "native": [
+        "rendererVisible"
+      ],
+      "type": "docs/judas.d.ts:Entity.rendererVisible",
       "reference": "docs/judasjs/entities.md"
     },
     {
@@ -3330,6 +3354,17 @@
       "reference": "docs/judasjs/entities.md"
     },
     {
+      "symbol": "world.resetAppearance",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "appearanceReset"
+      ],
+      "type": "docs/judas.d.ts:world.resetAppearance",
+      "reference": "docs/judasjs/materials.md"
+    },
+    {
       "symbol": "world.setAppearance",
       "kinds": [
         "call"
@@ -3417,6 +3452,7 @@
     "animationSet",
     "animationStop",
     "appearanceInfo",
+    "appearanceReset",
     "appearanceSet",
     "audioDiagnostics",
     "audioEnabled",
@@ -3573,6 +3609,8 @@
     "regionUnload",
     "released",
     "removeTag",
+    "renderVisible",
+    "rendererVisible",
     "resumeAudio",
     "saveCancel",
     "saveExclude",

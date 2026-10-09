@@ -82,15 +82,21 @@ void References(const Scene& scene, const AssetDatabase& assets, const ProjectCl
         Require(record && !record->missing && record->type == type,
                 "Missing or wrong-type required " + std::string(AssetTypeName(type)) + " asset " + id);
     };
+    const auto checkRender=[&](const SceneRenderComponent& render){
+        check(render.meshAsset,AssetType::Mesh);check(render.textureAsset,AssetType::Texture);
+        auto overrides=[&](const MaterialOverride& value){for(const auto& texture:value.textures)if(texture)check(*texture,AssetType::Texture);};
+        overrides(render.instanceOverrides);
+        for(const auto& slot:render.materials){check(slot.asset,AssetType::Material);overrides(slot.overrides);}
+        for(const auto* bindings:{&render.partMaterials,&render.runtimeMaterials})for(const auto& [_,slot]:*bindings){check(slot.asset,AssetType::Material);overrides(slot.overrides);}
+    };
     check(scene.Settings().environmentAsset,AssetType::Environment);
+    if(!scene.Settings().appearanceResetState.empty()){auto baseline=scene.Settings();std::string error;Require(DecodeAppearanceState(baseline.appearanceResetState,baseline,error),"Appearance baseline: "+error);check(baseline.environmentAsset,AssetType::Environment);}
     for (const auto& object : scene.Objects()) {
         if(object.audioZone)check(object.audioZone->asset,AssetType::AudioEffect);
         checkUI(object);
         check(object.prefabAsset, AssetType::Prefab);
         if (object.render) {
-            check(object.render->meshAsset, AssetType::Mesh);
-            check(object.render->textureAsset, AssetType::Texture);
-            for(auto& slot:object.render->materials)check(slot.asset,AssetType::Material);
+            checkRender(*object.render);
         }
         for(const auto& slot:object.scripts)check(slot.asset,AssetType::Script);
         if (object.audioEmitter) check(object.audioEmitter->asset, AssetType::Audio);
@@ -111,9 +117,7 @@ void References(const Scene& scene, const AssetDatabase& assets, const ProjectCl
         checkUI(object);
         if(object.audioZone)check(object.audioZone->asset,AssetType::AudioEffect);
         if (object.render) {
-            check(object.render->meshAsset, AssetType::Mesh);
-            check(object.render->textureAsset, AssetType::Texture);
-            for(auto& slot:object.render->materials)check(slot.asset,AssetType::Material);
+            checkRender(*object.render);
         }
         for(const auto& slot:object.scripts)check(slot.asset,AssetType::Script);
         if (object.audioEmitter) check(object.audioEmitter->asset, AssetType::Audio);

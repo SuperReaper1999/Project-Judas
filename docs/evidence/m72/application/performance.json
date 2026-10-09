@@ -1,0 +1,58 @@
+{
+  "outer": {
+    "samples": 119,
+    "mean_ms": 32.54351545378151,
+    "median_ms": 31.735887,
+    "p95_ms": 35.827725,
+    "max_ms": 62.486379
+  },
+  "fixed": {
+    "samples": 119,
+    "mean_ms": 0.05964575630252101,
+    "median_ms": 0.059712,
+    "p95_ms": 0.071895,
+    "max_ms": 0.142365
+  },
+  "JS": {
+    "samples": 119,
+    "mean_ms": 0.34797888235294117,
+    "median_ms": 0.352806,
+    "p95_ms": 0.403519,
+    "max_ms": 0.476463
+  },
+  "GPU Main camera": {
+    "samples": 118,
+    "mean_ms": 24.30592022881356,
+    "median_ms": 23.914,
+    "p95_ms": 25.964859,
+    "max_ms": 40.080585
+  },
+  "GPU Shadow": {
+    "samples": 118,
+    "mean_ms": 1.108437220338983,
+    "median_ms": 1.023207,
+    "p95_ms": 1.687192,
+    "max_ms": 2.169403
+  },
+  "GPU Secondary camera": {
+    "samples": 118,
+    "mean_ms": 5.127359838983051,
+    "median_ms": 5.0712025,
+    "p95_ms": 5.832532,
+    "max_ms": 8.018201
+  },
+  "startup_ms": 320.937001,
+  "description": "180 ordinary application frames, latest120 captured, 1024x768 main +384x216 camera everyframe, Mesa llvmpipe, synthetic1/60 simulationclock, realwall render measurements, onebody. Cycle/color/hide logical actions changeworkload.",
+  "diagnostics": {
+    "dropped_events": 0,
+    "exhausted_labels": 0,
+    "exhausted_nodes": 0,
+    "exhausted_threads": 0,
+    "incomplete_scopes": 0,
+    "open_scopes": 0,
+    "truncated_records": 0,
+    "gpu_dropped": 0,
+    "nested_frames": 0
+  },
+  "pending_GPU": 8
+}

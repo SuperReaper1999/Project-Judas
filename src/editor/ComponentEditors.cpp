@@ -11,6 +11,7 @@
 #include "ModelLoader.h"
 #include "SceneFingerprint.h"
 #include "ScriptSystem.h"
+#include "ResourceManager.h"
 
 #include <glm/gtc/quaternion.hpp>
 
@@ -22,6 +23,42 @@
 #include "EditorPanels.h"
 #include "CollisionAsset.h"
 #include "EditorWidgets.h"
+
+bool DrawMaterialOverrideControls(MaterialOverride& candidate,const MaterialDefinition& base,EditorPanelState& state) {
+    auto resolved=ApplyMaterialOverride(base,candidate);bool changed=false;
+    auto colour=resolved.baseColor;if(ImGui::ColorEdit4("Base colour / opacity (linear)",&colour.x)){candidate.baseColor=colour;changed=true;}
+    int alpha=int(resolved.alpha);if(ImGui::Combo("Alpha mode",&alpha,"Opaque\0Cutout\0Alpha blend\0")){candidate.alpha=MaterialAlpha(alpha);changed=true;}
+    float cutoff=resolved.alphaCutoff;if(ImGui::SliderFloat("Cutout threshold",&cutoff,0,1)){candidate.alphaCutoff=cutoff;changed=true;}
+    float rough=resolved.roughness;if(ImGui::SliderFloat("Roughness",&rough,0,1)){candidate.roughness=rough;changed=true;}
+    float metal=resolved.metallic;if(ImGui::SliderFloat("Metallic",&metal,0,1)){candidate.metallic=metal;changed=true;}
+    auto emission=resolved.emissive;if(ImGui::ColorEdit3("Emission (linear)",&emission.x,ImGuiColorEditFlags_HDR)){candidate.emissive=emission;changed=true;}
+    float intensity=resolved.emissiveIntensity;if(ImGui::DragFloat("Emission intensity",&intensity,.05f,0,100000)){candidate.emissiveIntensity=intensity;changed=true;}
+    float normal=resolved.normalStrength;if(ImGui::SliderFloat("Normal strength",&normal,0,8)){candidate.normalStrength=normal;changed=true;}
+    float occlusion=resolved.occlusionStrength;if(ImGui::SliderFloat("Occlusion strength",&occlusion,0,1)){candidate.occlusionStrength=occlusion;changed=true;}
+    bool sided=resolved.doubleSided;if(ImGui::Checkbox("Double sided",&sided)){candidate.doubleSided=sided;changed=true;}
+    auto uvScale=resolved.uvScale;if(ImGui::DragFloat2("UV scale",&uvScale.x,.05f)){candidate.uvScale=uvScale;changed=true;}
+    auto uvOffset=resolved.uvOffset;if(ImGui::DragFloat2("UV offset",&uvOffset.x,.01f)){candidate.uvOffset=uvOffset;changed=true;}
+    const char* labels[]={"Base colour texture","Metallic / roughness texture","Normal texture","Occlusion texture","Emission texture"};
+    for(size_t i=0;i<5;++i) {
+        ImGui::PushID(int(i));auto& override=candidate.textures[i];const auto* asset=override&&state.assets?state.assets->Find(*override):nullptr;
+        std::string label=!override?"Inherit source":override->empty()?"Remove texture":asset?asset->relativePath:*override;
+        if(ImGui::BeginCombo(labels[i],label.c_str())) {
+            if(ImGui::Selectable("Inherit source",!override)){override.reset();changed=true;}
+            if(ImGui::Selectable("Remove texture",override&&override->empty())){override=std::string{};changed=true;}
+            if(state.assets)for(const auto& [id,record]:state.assets->Records())if(record.type==AssetType::Texture&&!record.missing&&ImGui::Selectable(record.relativePath.c_str(),override&&*override==id)){override=id;changed=true;}
+            ImGui::EndCombo();
+        }
+        if(override&&!override->empty()&&state.resources) {
+            auto resourceState=state.resources->StateOf(*override);ImGui::TextDisabled("%s",ResourceStateName(resourceState));
+            if(resourceState==ResourceState::Failed)ImGui::TextWrapped("%s",state.resources->ErrorOf(*override).c_str());
+        }
+        ImGui::PopID();
+    }
+    if(!MaterialOverrideEmpty(candidate))ImGui::TextColored(ImVec4(1,.8f,.3f,1),"INSTANCE OVERRIDE (source asset unchanged)");
+    if(ImGui::Button("Clear parameter and texture overrides")){candidate={};changed=true;}
+    ImGui::TextWrapped("Opaque ignores opacity; cutout tests colour × texture alpha; alpha blend uses opacity. The camera screen uses cheaper rendering.");
+    return changed;
+}
 
 namespace {
 const char* const kShapeNames[] = {"box", "sphere", "compound", "mesh", "terrain", "convex hull", "static triangle mesh"};
@@ -202,18 +239,63 @@ void DrawRenderCamera(EditorDocument& doc, SceneObject& o, EditorPanelState& sta
 
 void DrawRender(EditorDocument& doc, SceneObject& o, EditorPanelState& state) {
     SceneRenderComponent& r = *o.render;
+    Checkbox(doc,"Render component visible",r.visible);
     Combo(doc, "Shape", r.shape, kShapeNames, 5);
+    auto publish=[&](MaterialOverride& destination,const MaterialDefinition& source){
+        auto candidate=destination;
+        if(DrawMaterialOverrideControls(candidate,source,state)){
+            std::string error;if(!ValidateMaterial(ApplyMaterialOverride(MaterialDefinition{},candidate),error)){state.status=error;return;}
+            doc.BeginEdit();destination=std::move(candidate);doc.CommitEdit();
+        }
+    };
+    MaterialDefinition wholeBase;wholeBase.model=MaterialModel::Legacy;wholeBase.baseColor=glm::vec4(r.color,r.alpha);
+    if(ImGui::CollapsingHeader("Whole renderable material"))publish(r.instanceOverrides,wholeBase);
+    if(!r.runtimeMaterials.empty()&&ImGui::Button("Clear saved runtime material bindings")){doc.BeginEdit();r.runtimeMaterials.clear();doc.CommitEdit();}
     if(ImGui::Button("Add material slot")){doc.BeginEdit();if(r.materials.size()<64)r.materials.push_back({});doc.CommitEdit();}
-    for(size_t i=0;i<r.materials.size();++i){ImGui::PushID(int(i));auto& slot=r.materials[i];ImGui::Text("Material slot %zu (shared asset)",i);AssetField(doc,"Shared material",slot.asset,AssetType::Material,true,state);
-        MaterialDefinition source;source.model=MaterialModel::Legacy;if(state.assets){if(auto* record=state.assets->Find(slot.asset)){std::string error;LoadMaterial(record->path,source,error);}}
-        auto resolved=ApplyMaterialOverride(source,slot.overrides);
-        auto set=[&](bool changed,auto apply){if(changed){doc.BeginEdit();apply();doc.CommitEdit();}};
-        auto colour=resolved.baseColor;set(ImGui::ColorEdit4("Instance base colour (linear)",&colour.x),[&]{slot.overrides.baseColor=colour;});
-        float rough=resolved.roughness;set(ImGui::SliderFloat("Instance roughness",&rough,0,1),[&]{slot.overrides.roughness=rough;});float metal=resolved.metallic;set(ImGui::SliderFloat("Instance metallic",&metal,0,1),[&]{slot.overrides.metallic=metal;});
-        auto emission=resolved.emissive;set(ImGui::ColorEdit3("Instance emission (linear)",&emission.x),[&]{slot.overrides.emissive=emission;});float intensity=resolved.emissiveIntensity;set(ImGui::DragFloat("Instance emission intensity",&intensity,.05f,0,100000),[&]{slot.overrides.emissiveIntensity=intensity;});
-        auto uvScale=resolved.uvScale;set(ImGui::DragFloat2("Instance UV scale",&uvScale.x,.05f),[&]{slot.overrides.uvScale=uvScale;});auto uvOffset=resolved.uvOffset;set(ImGui::DragFloat2("Instance UV offset",&uvOffset.x,.01f),[&]{slot.overrides.uvOffset=uvOffset;});
-        if(slot.overrides.baseColor||slot.overrides.roughness||slot.overrides.metallic||slot.overrides.emissive||slot.overrides.emissiveIntensity)ImGui::TextColored(ImVec4(1,.8f,.3f,1),"INSTANCE OVERRIDE (does not edit source)");
-        if(ImGui::Button("Revert all slot overrides")){doc.BeginEdit();slot.overrides={};doc.CommitEdit();}ImGui::PopID();
+    for(size_t i=0;i<r.materials.size();++i){
+        ImGui::PushID(int(i));auto& slot=r.materials[i];
+        if(ImGui::TreeNode("Material slot","Material slot %zu (legacy numeric binding)",i)){
+            AssetField(doc,"Shared material",slot.asset,AssetType::Material,true,state);
+            MaterialDefinition source=wholeBase;
+            if(slot.asset.empty()&&state.resources){if(auto imported=state.resources->TryGetMeshMaterial(r.meshAsset,unsigned(i)))source=MaterialSettings(*imported);}
+            else if(state.assets){if(auto* record=state.assets->Find(slot.asset)){std::string error;LoadMaterial(record->path,source,error);}}
+            publish(slot.overrides,ApplyMaterialOverride(source,r.instanceOverrides));
+            ImGui::TreePop();
+        }
+        ImGui::PopID();
+    }
+    if(r.shape==SceneShape::Mesh&&state.resources) {
+        state.resources->RequestMesh(r.meshAsset);
+        if(const auto* parts=state.resources->TryGetModelParts(r.meshAsset)) {
+            ImGui::TextWrapped("Imported render parts (stable identities)");
+            for(size_t index=0;index<parts->size();++index) {
+                const auto& part=parts->at(index);ImGui::PushID(part.part.c_str());
+                bool visible=std::find(r.hiddenParts.begin(),r.hiddenParts.end(),part.part)==r.hiddenParts.end();
+                if(ImGui::Checkbox("Part visible",&visible)) {
+                    doc.BeginEdit();r.hiddenParts.erase(std::remove(r.hiddenParts.begin(),r.hiddenParts.end(),part.part),r.hiddenParts.end());
+                    if(!visible)r.hiddenParts.push_back(part.part);
+                    doc.CommitEdit();
+                }
+                ImGui::TextWrapped("%s",part.part.c_str());
+                if(ImGui::TreeNode("Part material")) {
+                    auto found=r.partMaterials.find(part.part);
+                    if(found==r.partMaterials.end()) {
+                        if(ImGui::Button("Add part material override")&&r.partMaterials.size()<64){doc.BeginEdit();r.partMaterials[part.part]={};doc.CommitEdit();}
+                    } else {
+                        auto& slot=found->second;AssetField(doc,"Shared material",slot.asset,AssetType::Material,true,state);
+                        MaterialDefinition source=wholeBase;
+                        if(slot.asset.empty()){if(auto imported=state.resources->TryGetMeshMaterial(r.meshAsset,unsigned(index)))source=MaterialSettings(*imported);}
+                        else if(state.assets){if(auto* record=state.assets->Find(slot.asset)){std::string error;LoadMaterial(record->path,source,error);}}
+                        publish(slot.overrides,ApplyMaterialOverride(source,r.instanceOverrides));
+                        if(ImGui::Button("Remove part material binding")){doc.BeginEdit();r.partMaterials.erase(part.part);doc.CommitEdit();}
+                    }
+                    ImGui::TreePop();
+                }
+                ImGui::PopID();
+            }
+            for(const auto& [key,_]:r.partMaterials)if(std::none_of(parts->begin(),parts->end(),[&](const auto& part){return part.part==key;}))ImGui::TextColored(ImVec4(1,.4f,.2f,1),"Missing imported part: %s",key.c_str());
+            for(const auto& key:r.hiddenParts)if(std::none_of(parts->begin(),parts->end(),[&](const auto& part){return part.part==key;}))ImGui::TextColored(ImVec4(1,.4f,.2f,1),"Missing hidden part: %s",key.c_str());
+        } else ImGui::TextDisabled("Imported parts become available when the mesh is ready.");
     }
 
     if (r.shape == SceneShape::Box) DragVec3(doc, "Half extents", r.halfExtents, 0.01f);

@@ -13,9 +13,16 @@
 namespace {void add(std::set<AssetId>& ids,const AssetId& id){if(!id.empty())ids.insert(id);}}
 void CollectSceneAssetReferences(const Scene& scene,std::set<AssetId>& ids){
  add(ids,scene.Settings().environmentAsset);
+ if(!scene.Settings().appearanceResetState.empty()){auto baseline=scene.Settings();std::string error;if(DecodeAppearanceState(baseline.appearanceResetState,baseline,error))add(ids,baseline.environmentAsset);}
  for(const auto& o:scene.Objects()){
   add(ids,o.prefabAsset);
-  if(o.render){add(ids,o.render->meshAsset);add(ids,o.render->textureAsset);for(auto& m:o.render->materials)add(ids,m.asset);}
+ if(o.render){
+   add(ids,o.render->meshAsset);add(ids,o.render->textureAsset);
+   auto overrides=[&](const MaterialOverride& value){for(const auto& texture:value.textures)if(texture)add(ids,*texture);};
+   overrides(o.render->instanceOverrides);
+   for(const auto& slot:o.render->materials){add(ids,slot.asset);overrides(slot.overrides);}
+   for(const auto* bindings:{&o.render->partMaterials,&o.render->runtimeMaterials})for(const auto& [_,slot]:*bindings){add(ids,slot.asset);overrides(slot.overrides);}
+ }
   if(o.body){add(ids,o.body->collisionAsset);add(ids,o.body->physicalMaterial);for(auto& b:o.body->compoundBoxes)add(ids,b.assetId);}
   for(auto& s:o.scripts)add(ids,s.asset);
   if(o.ui)add(ids,o.ui->asset);

@@ -1,6 +1,7 @@
 # Using the Judas editor
 
-Current M71 candidate; human review and Windows validation remain pending.
+Accepted M71 editor foundation; the current [M72 candidate](M72.md) adds runtime
+render controls. M72 human review and native Windows validation remain pending.
 [JudasJS reference](JUDASJS.md) · [Make a game by hand](judasjs/getting-started.md) · [Named authoring](NAMED_AUTHORING.md)
 
 ## Workspace
@@ -77,11 +78,41 @@ OS default handler, which must be configured to open Markdown/scripts usefully.
 Use **View → JudasJS reference** or **Making your first project** for the offline
 reference and [hand-authoring guide](judasjs/getting-started.md).
 
+## Lighting, visibility and materials (M72 candidate)
+
+In the ordinary object inspector, **Entity render visible** is a local render
+gate. Under Render, **Render component visible** and imported **Part visible**
+remain independent. Hiding geometry leaves hierarchy/inspector access available
+and preserves physics/scripts/audio/animation. Children keep their own gates.
+
+**Whole renderable material** edits authored whole-instance factor/map overrides.
+Numeric material slots and each imported **Part material** select shared material
+assets and more specific overrides. Factor controls include **Base colour / opacity (linear)**, **Alpha mode**
+(Opaque/Cutout/Alpha blend), **Cutout threshold**, PBR/emission/normal/occlusion/UV
+settings and the five texture roles. Texture selectors offer inheritance, explicit
+removal or a registered asset. **Clear parameter and texture overrides** restores
+the inherited factors/maps. Shared material-source saves remain deliberate disk
+operations; instance authoring uses normal scene Undo/Redo.
+
+Scene settings expose authored sun enable/intensity/direction/colour, ambient and
+the existing environment/background/exposure controls. Direction points toward
+the source in world coordinates. Exposure is independent of lighting. There is
+no native day/night clock; project scripts choose transitions.
+
+During Play, **Runtime render preview** exposes live visibility and whole/numeric/
+stable-part material targets, source selection, factors/maps and **Clear runtime
+material binding**. The scene settings runtime section includes sun/environment
+controls and **Reset runtime environment**. **Undo preview / Redo preview** use
+a separate bounded history; they do not change authored Ctrl+Z history or silently
+save runtime values to the scene. Start/Stop clears this preview history and Stop
+reconstructs authored state. See [exact API/reset contracts](judasjs/materials.md)
+and the [Render Control Lab](../projects/render_control_lab/README.md).
+
 ## Play, stop and ship
 
 **F5 / Play** instantiates the authored scene. Running Play uses the normal
 full-window runtime view; authoring rails collapse. A paused game can expose
-read-only inspection. Project scripts own modern input, camera and pause meaning;
+runtime inspection and render previews. Project scripts own modern input, camera and pause meaning;
 historical projects can retain legacy controls. **Stop / F5** discards runtime
 state and returns to the authored scene.
 
@@ -91,7 +122,7 @@ creates a movable runtime package; see [export](M38.md) and [Windows](WINDOWS.md
 Save scenes, settings and source before exporting. JavaScript completion comes
 from [judas.d.ts](judas.d.ts), with setup in [practices](judasjs/practices.md).
 
-## Review this candidate
+## Review the current editor
 
 1. Resize the editor and its dividers; confirm labels, scene and assets remain usable.
 2. Select, frame, pan, fly and transform objects; Undo/Redo the complete gesture.
@@ -101,4 +132,6 @@ from [judas.d.ts](judas.d.ts), with setup in [practices](judasjs/practices.md).
 
 Automated evidence is in [M71 editor polish](evidence/m71/editor-polish/README.md)
 and [wheel/picking follow-up](evidence/m71/editor-picking-zoom/README.md).
+Those receipts describe accepted M71 work. [M72 review](M72.md#human-review)
+adds lighting, hiding and material checks; current results are reported there.
 Offscreen checks do not establish physical desktop capture or human usability.

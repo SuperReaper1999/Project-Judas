@@ -1,0 +1,15 @@
+[  0%] Built target judas_app_icon
+[ 18%] Built target freetype
+[ 25%] Built target judas_icu_build
+[ 25%] Built target judas_quickjs
+[ 31%] Built target judas_navigation_backend
+[ 31%] Built target judas_glad
+[ 31%] Built target judas_profiler
+[ 31%] Built target judas_audio_backend
+[ 31%] Built target harfbuzz
+[ 31%] Built target judas_materials
+[ 31%] Building CXX object CMakeFiles/judas_engine.dir/src/Material.cpp.o
+[ 31%] Linking CXX static library libjudas_engine.a
+[ 93%] Built target judas_engine
+[100%] Linking CXX executable judas_runtime_render_authoring_tests
+[100%] Built target judas_runtime_render_authoring_tests

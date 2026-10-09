@@ -8,6 +8,7 @@
 #include "AssetDatabase.h"
 
 #include <cmath>
+#include <algorithm>
 #include <cstdio>
 #include <cstdlib>
 #include <cstring>
@@ -84,6 +85,46 @@ private:
     std::string m_out;
 };
 
+bool ExtendedMaterialOverride(const MaterialOverride& o) {
+    if(o.alpha||o.alphaCutoff||o.normalStrength||o.occlusionStrength||o.doubleSided)return true;
+    return std::any_of(o.textures.begin(),o.textures.end(),[](const auto& value){return value.has_value();});
+}
+
+// M72 extensions are separate from the original slot bytes. Older scenes
+// therefore keep their exact serialization and canonical fingerprint.
+std::string EncodeRenderBindings(const std::map<std::string,MaterialSlot>& bindings) {
+    nlohmann::ordered_json value={{"version",1},{"bindings",nlohmann::ordered_json::array()}};
+    for(const auto& [key,slot]:bindings){nlohmann::ordered_json entry={{"key",key},{"asset",slot.asset},{"overrides",EncodeMaterialOverrides(slot.overrides)}};if(slot.useSource)entry["source"]=true;value["bindings"].push_back(std::move(entry));}
+    return value.dump();
+}
+
+bool DecodeRenderBindings(const std::string& text,std::map<std::string,MaterialSlot>& out,bool runtime,std::string& error) {
+    try {
+        if(text.size()>1024*1024)throw std::runtime_error("render binding extension exceeds 1 MiB");
+        auto value=nlohmann::ordered_json::parse(text);
+        if(!value.is_object()||value.size()!=2||value.at("version")!=1||!value.at("bindings").is_array()||value.at("bindings").size()>64)
+            throw std::runtime_error("expected render bindings version 1 with at most 64 bindings");
+        std::map<std::string,MaterialSlot> result;
+        for(const auto& entry:value.at("bindings")) {
+            if(!entry.is_object()||entry.size()!=size_t(3+entry.contains("source")))throw std::runtime_error("invalid render binding fields");
+            auto key=entry.at("key").get<std::string>();MaterialSlot slot;
+            slot.asset=entry.at("asset").get<std::string>();
+            if(entry.contains("source"))slot.useSource=entry.at("source").get<bool>();
+            if(key.empty()||key.size()>1024||key.find_first_of("\r\n")!=std::string::npos||(!slot.asset.empty()&&!IsValidAssetId(slot.asset)))
+                throw std::runtime_error("invalid render binding identity or material asset");
+            if(key=="*"&&!runtime)throw std::runtime_error("authored part bindings require an imported part identity");
+            if(key.front()=='#') {
+                unsigned index=0;auto converted=std::from_chars(key.data()+1,key.data()+key.size(),index);
+                if(!runtime||converted.ec!=std::errc{}||converted.ptr!=key.data()+key.size()||index>=64||key!="#"+std::to_string(index))
+                    throw std::runtime_error("runtime numeric material key must be #0 through #63");
+            }
+            if(!DecodeMaterialOverrides(entry.at("overrides").get<std::string>(),slot.overrides,error))return false;
+            if(!result.emplace(key,std::move(slot)).second)throw std::runtime_error("duplicate render binding identity: "+key);
+        }
+        out=std::move(result);return true;
+    } catch(const std::exception& e) {error=std::string("invalid M72 render bindings: ")+e.what();return false;}
+}
+
 void WriteObject(Writer& w, const SceneObject& o) {
     w.Raw("object " + std::to_string(o.id) + " " + Quote(o.name) + "\n");
     if (!o.authoringFolder.empty()) w.Line("authoring-folder",Quote(o.authoringFolder));
@@ -152,6 +193,7 @@ void WriteObject(Writer& w, const SceneObject& o) {
     }
     if(o.tags) w.Line("tags", std::to_string(o.tags));
     if(o.renderLayer) w.Line("render-layer", std::to_string(o.renderLayer));
+    if(!o.renderVisible)w.Line("render-visible","false");
     w.Line("position", V(o.transform.position));
     w.Line("rotation", Q(o.transform.rotation));
     w.Line("scale", V(o.transform.scale));
@@ -168,6 +210,15 @@ void WriteObject(Writer& w, const SceneObject& o) {
         w.Line("render.texture-asset", Quote(r.textureAsset));
         if(!r.hiddenParts.empty()){w.Line("render.hidden-part-count",std::to_string(r.hiddenParts.size()));for(size_t i=0;i<r.hiddenParts.size();++i)w.Line("render.hidden-part-"+std::to_string(i),Quote(r.hiddenParts[i]));}
         if(!r.materials.empty())w.Line("render.materials",Quote(EncodeMaterialSlots(r.materials)));
+        if(!r.visible)w.Line("render.visible","false");
+        if(!MaterialOverrideEmpty(r.instanceOverrides))w.Line("render.instance-overrides-v1",Quote(EncodeMaterialOverrides(r.instanceOverrides)));
+        if(!r.partMaterials.empty())w.Line("render.part-materials-v1",Quote(EncodeRenderBindings(r.partMaterials)));
+        if(!r.runtimeMaterials.empty())w.Line("render.runtime-materials-v1",Quote(EncodeRenderBindings(r.runtimeMaterials)));
+        if(std::any_of(r.materials.begin(),r.materials.end(),[](const auto& slot){return slot.useSource||ExtendedMaterialOverride(slot.overrides);})) {
+            nlohmann::ordered_json value={{"version",1},{"overrides",nlohmann::ordered_json::array()}};
+            for(const auto& slot:r.materials)value["overrides"].push_back({{"overrides",EncodeMaterialOverrides(slot.overrides)},{"source",slot.useSource}});
+            w.Line("render.material-overrides-v1",Quote(value.dump()));
+        }
         if (r.textureCamera) w.Line("render.texture-camera", std::to_string(r.textureCamera));
     }
     if(o.particleEmitter){const auto& e=*o.particleEmitter;w.Line("particle-emitter", "");
@@ -618,9 +669,20 @@ bool ParseSettings(Reader& reader, const Block& block, Scene& scene) {
     if (!p.Vec3("sun-direction", s.sunDirection)) return false;
     if (!p.Vec3("sun-color", s.sunColor)) return false;
     if (!p.Vec3("ambient", s.ambientColor)) return false;
+    if((p.Has("sun-enabled")&&!p.Bool("sun-enabled",s.sunEnabled))||(p.Has("sun-intensity")&&!p.Float("sun-intensity",s.sunIntensity)))return false;
+    if(!std::isfinite(glm::dot(s.sunDirection,s.sunDirection))||glm::dot(s.sunDirection,s.sunDirection)<1e-12f||s.sunIntensity<0||s.sunIntensity>10000)
+        return reader.Fail("sun requires a finite nonzero world direction and intensity 0..10000");
+    for(int k=0;k<3;++k)if(s.sunColor[k]<0||s.sunColor[k]>10000||s.ambientColor[k]<0||s.ambientColor[k]>10000)
+        return reader.Fail("sun and ambient colours must be finite scene-linear values 0..10000");
     if(p.Has("background-color")&&(!p.Vec3("background-color",s.backgroundColor)||glm::any(glm::lessThan(s.backgroundColor,glm::vec3(0)))||glm::any(glm::greaterThan(s.backgroundColor,glm::vec3(10000)))))return reader.Fail("background colour must be finite 0..10000");
     if((p.Has("linear-rendering")&&!p.Bool("linear-rendering",s.linearRendering))||(p.Has("exposure")&&!p.Float("exposure",s.exposure))||(p.Has("environment")&&!p.String("environment",s.environmentAsset))||(p.Has("environment-intensity")&&!p.Float("environment-intensity",s.environmentIntensity))||(p.Has("environment-rotation")&&!p.Quat("environment-rotation",s.environmentRotation))||(p.Has("environment-background")&&!p.Bool("environment-background",s.environmentBackground)))return false;
     if(!(s.exposure>0)||s.exposure>10000||s.environmentIntensity<0||s.environmentIntensity>10000||(!s.environmentAsset.empty()&&!IsValidAssetId(s.environmentAsset)))return reader.Fail("invalid display/environment settings");
+    if(p.Has("appearance-reset-v1")) {
+        if(!p.String("appearance-reset-v1",s.appearanceResetState))return false;
+        auto baseline=s;std::string error;
+        if(s.appearanceResetState.size()>65536||!DecodeAppearanceState(s.appearanceResetState,baseline,error))return reader.Fail("invalid appearance reset baseline: "+error);
+    }
+    {std::string error;if(!ValidateAppearance(s,error))return reader.Fail(error);}
     if (!p.Float("fluid-scale", s.fluidScale)) return false;
     // New authored fields are optional when reading existing version-3 scenes; their
     // declared defaults are always serialized and fingerprinted on output.
@@ -667,6 +729,7 @@ bool ParseObject(Reader& reader, const std::vector<Token>& header, const Block& 
     if(p.Has("authoring-folder")&&!p.String("authoring-folder",o.authoringFolder))return false;
     if(p.Has("tags")&&!p.Mask("tags",o.tags))return false;
     if(p.Has("render-layer")&&!p.Layer("render-layer",o.renderLayer))return false;
+    if(p.Has("render-visible")&&!p.Bool("render-visible",o.renderVisible))return false;
     if (p.Has("parent") && !p.Id("parent", o.parent)) return false;
     if (p.Has("prefab.root")) {
         std::string ids, overrides;
@@ -756,6 +819,22 @@ bool ParseObject(Reader& reader, const std::vector<Token>& header, const Block& 
         if (!p.String("render.texture-asset", r.textureAsset)) return false;
         if(p.Has("render.hidden-part-count")){int count=0;if(!p.Int("render.hidden-part-count",count)||count<0||count>16384)return false;for(int i=0;i<count;++i){std::string key;if(!p.String("render.hidden-part-"+std::to_string(i),key)||key.empty())return false;r.hiddenParts.push_back(key);}}
         if(p.Has("render.materials")){std::string text;if(!p.String("render.materials",text))return false;std::string error;if(!DecodeMaterialSlots(text,r.materials,error))return reader.Fail(error);}
+        if(p.Has("render.visible")&&!p.Bool("render.visible",r.visible))return false;
+        for(const auto& key:{"render.instance-overrides-v1","render.part-materials-v1","render.runtime-materials-v1","render.material-overrides-v1"})if(p.Has(key)) {
+            std::string text,error;if(!p.String(key,text))return false;
+            if(std::string(key)=="render.instance-overrides-v1") {
+                if(!DecodeMaterialOverrides(text,r.instanceOverrides,error))return reader.Fail(error);
+            } else if(std::string(key)=="render.part-materials-v1"||std::string(key)=="render.runtime-materials-v1") {
+                bool runtime=std::string(key)=="render.runtime-materials-v1";
+                if(!DecodeRenderBindings(text,runtime?r.runtimeMaterials:r.partMaterials,runtime,error))return reader.Fail(error);
+            } else try {
+                if(text.size()>1024*1024)return reader.Fail("material overrides exceed 1 MiB");
+                auto value=nlohmann::ordered_json::parse(text);
+                if(!value.is_object()||value.size()!=2||value.at("version")!=1||!value.at("overrides").is_array()||value.at("overrides").size()!=r.materials.size())
+                    return reader.Fail("material override version/count must match authored material slots");
+                for(size_t i=0;i<r.materials.size();++i){const auto& entry=value.at("overrides").at(i);if(!entry.is_object()||entry.size()!=2)return reader.Fail("invalid numeric material override entry");r.materials[i].useSource=entry.at("source").get<bool>();if(!DecodeMaterialOverrides(entry.at("overrides").get<std::string>(),r.materials[i].overrides,error))return reader.Fail(error);}
+            } catch(const std::exception& e) {return reader.Fail(std::string("invalid material override extension: ")+e.what());}
+        }
         if (p.Has("render.texture-camera") && !p.Id("render.texture-camera", r.textureCamera)) return false;
         o.render = r;
     }
@@ -1129,8 +1208,11 @@ bool SaveSceneToString(const Scene& scene, std::string& outText) {
     w.Line("sun-direction", V(s.sunDirection));
     w.Line("sun-color", V(s.sunColor));
     w.Line("ambient", V(s.ambientColor));
+    if(!s.sunEnabled)w.Line("sun-enabled","false");
+    if(s.sunIntensity!=1)w.Line("sun-intensity",F(s.sunIntensity));
+    if(!s.appearanceResetState.empty())w.Line("appearance-reset-v1",Quote(s.appearanceResetState));
     if(s.backgroundColor!=glm::vec3(.08f,.09f,.11f))w.Line("background-color",V(s.backgroundColor));
-    if(s.linearRendering||!s.environmentAsset.empty()){w.Line("linear-rendering",B(s.linearRendering));w.Line("exposure",F(s.exposure));w.Line("environment",Quote(s.environmentAsset));w.Line("environment-intensity",F(s.environmentIntensity));w.Line("environment-rotation",Q(s.environmentRotation));w.Line("environment-background",B(s.environmentBackground));}
+    if(s.linearRendering||!s.environmentAsset.empty()||s.exposure!=1||s.environmentIntensity!=1||s.environmentRotation!=glm::quat(1,0,0,0)||s.environmentBackground){w.Line("linear-rendering",B(s.linearRendering));w.Line("exposure",F(s.exposure));w.Line("environment",Quote(s.environmentAsset));w.Line("environment-intensity",F(s.environmentIntensity));w.Line("environment-rotation",Q(s.environmentRotation));w.Line("environment-background",B(s.environmentBackground));}
     w.Line("fluid-scale", F(s.fluidScale));
     w.Line("fluid-update-rate-hz", F(s.fluidUpdateRateHz));
     w.Line("fluid-hydrostatic-drag-rate", F(s.fluidHydrostaticDragRate));

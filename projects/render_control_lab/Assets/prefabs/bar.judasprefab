@@ -1,0 +1,32 @@
+JudasScene 3
+settings
+ name "Material skinned prefab"
+ world-origin 0 0 0
+ sun-direction 0 1 0
+ sun-color 1 1 1
+ ambient .3 .3 .3
+ fluid-scale 1
+ fidelity-policy none
+ next-id 2
+end
+object 1 "Skinned normal map"
+ position 0 0 0
+ rotation 1 0 0 0
+ scale 1 1 1
+ render mesh
+ render.half-extents 0.75 0.75 0.75
+ render.radius 0.75
+ render.color 1 1 1
+ render.alpha 1
+ render.secondary-color 1 1 1
+ render.secondary-alpha 1
+ render.texture-asset ""
+ render.materials "1 \"44a6e287d1c0ba963130ebde61975aee\" 0"
+ render.mesh-asset "46464646464646464646464646464601"
+ animation.enabled true
+ animation.play-on-start true
+ animation.loop true
+ animation.clip "Wave"
+ animation.speed 1
+ animation.time 0
+end

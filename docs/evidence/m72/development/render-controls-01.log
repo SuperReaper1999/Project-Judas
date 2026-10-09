@@ -1,0 +1,65 @@
+libEGL warning: Not allowed to force software rendering when API explicitly selects a hardware device.
+Renderer fragment texture units: 32 (material path uses 12)
+PASS normal GL host starts without warming skin or material paths
+GPU Mesa / llvmpipe (LLVM 21.1.8, 256 bits)
+PASS instance alpha mode blends separated surfaces despite reversed submission order
+PASS blended instance writes no depth over its opaque neighbour
+PASS runtime Blend override removes source Opaque shadow submission
+PASS runtime cutout factor alpha visibly discards main fragments
+PASS runtime cutout factor alpha also discards shadow depth
+PASS cutout includes borrowed texture alpha
+PASS cleared binding restores unchanged shared Opaque source and depth
+PASS first emissive-map colour view preserves separately bound source base texture
+PASS ordinary solid world builds
+PASS direct sun illuminates front surface at fixed exposure
+PASS runtime sun intensity publishes
+PASS sun intensity scales actual direct contribution with exposure unchanged
+PASS sun colour changes lit channels
+PASS sun direction changes actual surface lighting
+PASS disabled sun removes direct lighting and shadows while retaining ambient
+PASS appearance reset publishes authored defaults
+PASS sun reset restores rendered authored output
+PASS visible solid writes actual shadow depth
+PASS component visibility publishes
+PASS hidden component contributes no colour, main depth or shadow depth
+PASS entity hide/show preserves intentionally hidden component
+PASS restored renderer keeps original enabled collision body
+PASS independent receiver/caster world builds
+SHADOW probes east sun 8.0 236.0 west sun 236.0 8.0
+PASS moving sun moves real floor shadow to independently expected opposite side
+PASS immutable shared material fixture saves
+PASS multipart model uses normal immutable cooked representation
+PASS shared primitive/camera world builds through resources
+PASS both material instances inherit identical source texture pixels
+PASS instance-local texture request publishes durable intent
+PASS pending replacement retains inherited rendered map
+PASS Ready texture changes only selected shared-material instance
+PASS live auxiliary target contains actual pixels
+PASS auxiliary observes coherent supported texture state without advancing time
+PASS entity visibility governs main and cheaper camera while simulation time holds
+PASS failed replacement keeps documented inherited map without corrupting neighbour
+PASS explicit empty texture removes only instance map
+PASS clear restores authored source texture
+PASS steady material/visibility updates allocate no textures or appearance cache entries
+PASS texture retirement rejects borrowed stale GPU handle
+PASS normal reload resolves replacement without main-view GPU state leakage
+PASS world retirement releases live camera target
+PASS shared multipart world builds
+FAIL imported default material renders in both instances
+PASS stable part material override publishes
+FAIL targeted imported part changes without recolouring another part or shared instance
+FAIL part-hidden setting survives entity hide/show in actual imported draws
+FAIL part reset restores imported shared default pixels
+PASS bounded 128-instance observation builds through shared source references
+PERF cold_world_and_shared_source_prepare_ms=1.4586 instances=128 new_texture_uploads=1 new_mesh_uploads=0 shared_material_handles=1 disk_cache=uncontrolled
+PERF shared_defaults_cpu_submission frames=20 mean_ms=3.7948 median_ms=3.7194 p95_ms=4.2548 max_ms=4.8041
+PERF frequent_factor_sun_visibility_cpu_submission frames=60 mean_ms=3.0288 median_ms=3.0150 p95_ms=3.6208 max_ms=4.0621
+PASS 128-instance steady controls create no source GPU uploads or appearance cache entries
+PERF steady new_texture_uploads=0 new_mesh_uploads=0 appearance_bytes_before=540672 after=540672 shared_material_handle_before=4 after=4
+PASS bounded workload exports existing M56 scope collection
+PERF replacement_prepare_submit_retire frames=8 mean_ms=3.7219 median_ms=3.7334 p95_ms=4.2040 max_ms=4.2040
+PERF repeated_retirement cycles=8 texture_creates=2 texture_destroys=2
+FAIL repeated replacement resources retire with balanced actual GPU texture operations
+PASS focused static/material/shadow/secondary paths retain cold GL coverage
+PASS all observed texture resources retire before context teardown
+M72 rendered controls 54 checks 5 failures

@@ -332,6 +332,28 @@ bool ComputeSceneFingerprint(const Scene& scene, std::string& outFingerprint,
     size_t materialCount=0;for(const auto& o:scene.Objects())materialCount+=o.render&&!o.render->materials.empty();
     if(s.backgroundColor!=glm::vec3(.08f,.09f,.11f)){w.Text("Judas.Background.1");w.Vector(s.backgroundColor);}
     if(materialCount||s.linearRendering||!s.environmentAsset.empty()){w.Text("Judas.Materials.1");w.Boolean(s.linearRendering);w.Number(s.exposure);w.Text(s.environmentAsset);w.Number(s.environmentIntensity);w.Quaternion(s.environmentRotation);w.Boolean(s.environmentBackground);w.U64(materialCount);for(const auto& o:scene.Objects())if(o.render&&!o.render->materials.empty()){w.U64(o.id);w.Text(EncodeMaterialSlots(o.render->materials));}}
+    // Versioned optional M72 records preserve schema-5 bytes for every scene
+    // whose visibility, sunlight and material bindings retain their defaults.
+    if(!s.sunEnabled||s.sunIntensity!=1){w.Text("Judas.SunControls.1");w.Boolean(s.sunEnabled);w.Number(s.sunIntensity);if(s.sunIntensity<0||s.sunIntensity>10000)w.Fail("sun intensity must be 0..10000");}
+    if(!s.appearanceResetState.empty()){auto baseline=s;std::string error;if(s.appearanceResetState.size()>65536||!DecodeAppearanceState(s.appearanceResetState,baseline,error))w.Fail("invalid appearance reset baseline: "+error);w.Text("Judas.AppearanceReset.1");w.Text(s.appearanceResetState);}
+    if(!materialCount&&!s.linearRendering&&s.environmentAsset.empty()&&(s.exposure!=1||s.environmentIntensity!=1||s.environmentRotation!=glm::quat(1,0,0,0)||s.environmentBackground)) {
+        std::string error;if(!ValidateAppearance(s,error))w.Fail(error);
+        w.Text("Judas.AppearanceControls.1");w.Number(s.exposure);w.Number(s.environmentIntensity);w.Quaternion(s.environmentRotation);w.Boolean(s.environmentBackground);
+    }
+    auto extended=[](const MaterialOverride& v){return v.alpha||v.alphaCutoff||v.normalStrength||v.occlusionStrength||v.doubleSided||std::any_of(v.textures.begin(),v.textures.end(),[](const auto& texture){return texture.has_value();});};
+    auto altered=[&](const SceneObject& o){return !o.renderVisible||(o.render&&(!o.render->visible||!MaterialOverrideEmpty(o.render->instanceOverrides)||!o.render->partMaterials.empty()||!o.render->runtimeMaterials.empty()||std::any_of(o.render->materials.begin(),o.render->materials.end(),[&](const auto& slot){return slot.useSource||extended(slot.overrides);})));};
+    size_t renderControlCount=std::count_if(scene.Objects().begin(),scene.Objects().end(),altered);
+    if(renderControlCount) {
+        w.Text("Judas.RenderControls.1");w.U64(renderControlCount);
+        auto overrideRecord=[&](const MaterialOverride& value){std::string error;if(!ValidateMaterial(ApplyMaterialOverride(MaterialDefinition{},value),error))w.Fail(error);w.Text(EncodeMaterialOverrides(value));};
+        auto bindings=[&](const std::map<std::string,MaterialSlot>& values){if(values.size()>64)w.Fail("render binding limit is 64");w.U64(values.size());for(const auto& [key,slot]:values){if(key.empty()||key.size()>1024||(!slot.asset.empty()&&!IsValidAssetId(slot.asset)))w.Fail("invalid render binding identity/material asset");w.Text(key);w.Text(slot.asset);w.Boolean(slot.useSource);overrideRecord(slot.overrides);}};
+        for(const auto& o:scene.Objects())if(altered(o)) {
+            w.U64(o.id);w.Boolean(o.renderVisible);w.Boolean(bool(o.render));if(!o.render)continue;
+            const auto& r=*o.render;w.Boolean(r.visible);overrideRecord(r.instanceOverrides);bindings(r.partMaterials);bindings(r.runtimeMaterials);
+            bool extra=std::any_of(r.materials.begin(),r.materials.end(),[&](const auto& slot){return slot.useSource||extended(slot.overrides);});w.Boolean(extra);
+            if(extra){w.U64(r.materials.size());for(const auto& slot:r.materials){w.Boolean(slot.useSource);overrideRecord(slot.overrides);}}
+        }
+    }
     // Optional tagged extension: old scenes retain identical schema-5 bytes.
     // No pre-M37 baseline could contain this component; new configurations are
     // covered completely without invalidating unrelated existing saves.

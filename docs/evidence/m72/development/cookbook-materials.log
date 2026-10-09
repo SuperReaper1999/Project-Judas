@@ -1,0 +1,13 @@
+libEGL warning: Not allowed to force software rendering when API explicitly selects a hardware device.
+Renderer fragment texture units: 32 (material path uses 12)
+PASS real EngineHost
+PASS materials normal registered script
+PASS materials normal project
+PASS materials ordinary scene
+PASS materials runtime builds
+PASS materials ordinary fixed-step session
+PASS materials real VM callbacks without faults
+EXAMPLE materials {"changed":true,"reverted":true,"appearance":true,"stale":true,"visibility":true,"whole":true,"textureRemoval":true,"lighting":true,"partAvailable":false,"part":false}
+PASS materials documented outcome
+PASS materials teardown
+SUMMARY 9 checks 0 failures

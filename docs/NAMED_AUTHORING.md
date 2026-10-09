@@ -75,6 +75,16 @@ build/export even when its document parses; complete validation happens at build
 
 ## Actual CLI
 
+The M72 candidate uses this same scene/prefab field path for authored and durable
+render state. Optional fields include object `render-visible`; `render.visible`,
+`render.instance-overrides-v1`, `render.part-materials-v1`,
+`render.runtime-materials-v1`, `render.material-overrides-v1`; and settings
+`sun-enabled`, `sun-intensity`, `appearance-reset-v1`. Versioned values are bounded
+encoded strings validated by the ordinary material/appearance codecs, not a new
+document format. Default omissions preserve historical schema-5 fingerprints.
+Use normal editor/converter output for these encodings. Runtime calls remain
+isolated from authored files; [M72](M72.md) describes reset/save/retention ownership.
+
 Build the existing `judas_scene_author` target. Paths below are examples; keep
 experiments in a copied project. Commands reject invalid data with nonzero status.
 

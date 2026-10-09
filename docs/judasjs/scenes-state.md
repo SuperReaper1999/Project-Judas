@@ -59,6 +59,7 @@ save compatibility after changing source. [Persistence architecture](../SCRIPTIN
 | `entity.character` | Null if stale/missing motor; retained Character operations ReferenceError. |
 | `entity.animation` / `.ragdoll` | Null if valid owner lacks component; stale owner throws. Retained facades throw. |
 | `entity.material(slot)` | Constructs a facade; methods validate owner/render/slot. Stale owner ReferenceError; absent component/invalid slot TypeError. |
+| `entity.renderVisible` / `rendererVisible` | Local render-only booleans. Stale owner ReferenceError; renderer gate additionally requires an existing Render component. |
 | `entity.deformable` / `.fracture` | Null until ready or absent; `.valid` false for stale retained epoch handles, other stale operations ReferenceError. |
 | `entity.liquid` | Null until registered or absent; retained `.valid` false when stale, state/control ReferenceError. |
 | `entity.navigation` | Null without agent; facade exists while disabled. Disabled/unregistered state/control ReferenceError; enabled setter can restore it. |

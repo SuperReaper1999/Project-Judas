@@ -61,6 +61,12 @@ enum class SceneShape { Box, Sphere, Compound, Mesh, Terrain, ConvexHull, Triang
 // component's geometry (there is nothing sensible to draw otherwise);
 // Box/Sphere/Mesh are self-contained and need no body at all.
 struct SceneRenderComponent {
+    bool visible=true;
+    MaterialOverride instanceOverrides; // authored whole-renderable factors
+    std::map<std::string,MaterialSlot> partMaterials; // stable imported part identity
+    // Runtime intent is separate from authored defaults; clear restores the authored state.
+    // Keys: * (whole), #<legacy primitive slot>, or stable imported part identity.
+    std::map<std::string,MaterialSlot> runtimeMaterials;
     std::vector<MaterialSlot> materials;
     std::vector<std::string> hiddenParts;
     SceneShape shape = SceneShape::Box;
@@ -297,6 +303,7 @@ struct SceneSocketComponent {SceneObjectId target=0;std::string joint;SceneTrans
 struct SceneJointComponent {SceneObjectId bodyA=0,bodyB=0;JointSettings settings;};
 
 struct SceneObject {
+    bool renderVisible=true; // local entity scope; does not deactivate children or simulation
     std::optional<DeformableSettings> deformable;
     std::optional<LiquidBasinSettings> liquidBasin;
     std::optional<LiquidContainerSettings> liquidContainer;
@@ -361,6 +368,9 @@ struct SceneSettings {
     std::string name;
     // M23 absolute world origin of this local scene, metres.
     glm::dvec3 worldOrigin{0.0};
+    std::string appearanceResetState; // durable authored reset baseline; empty until a runtime write
+    bool sunEnabled=true;
+    float sunIntensity=1.0f;
     glm::vec3 sunDirection{0.4f, 0.7f, 0.35f};
     glm::vec3 sunColor{1.0f, 0.98f, 0.92f};
     glm::vec3 ambientColor{0.16f, 0.17f, 0.19f};
@@ -416,3 +426,9 @@ private:
 // "unsaved changes" tracking. Floats compare exactly.
 bool SceneObjectsEqual(const SceneObject& a, const SceneObject& b);
 bool ScenesEqual(const Scene& a, const Scene& b);
+
+// Effective bindings are resolved once per logical draw, shared by all passes.
+MaterialSlot ResolveRenderMaterial(const SceneRenderComponent&,unsigned,const std::string& part);
+bool ValidateAppearance(const SceneSettings&,std::string&);
+std::string EncodeAppearanceState(const SceneSettings&);
+bool DecodeAppearanceState(const std::string&,SceneSettings&,std::string&);

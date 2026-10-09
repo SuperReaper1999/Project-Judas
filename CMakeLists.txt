@@ -1465,3 +1465,22 @@ add_executable(judas_editor_widget_tests tests/EditorWidgetTests.cpp
     src/editor/EditorWidgets.cpp src/editor/EditorHistory.cpp)
 target_link_libraries(judas_editor_widget_tests PRIVATE judas_engine judas_imgui)
 judas_warnings(judas_editor_widget_tests)
+
+# M72 actual pixel/depth/shadow and immutable resource-control observations.
+add_executable(judas_runtime_render_tests tests/RuntimeRenderTests.cpp)
+target_link_libraries(judas_runtime_render_tests PRIVATE judas_engine)
+judas_warnings(judas_runtime_render_tests)
+
+add_executable(judas_runtime_render_application_tests tests/RuntimeRenderApplicationTests.cpp src/editor/EditorHistory.cpp
+    src/Application.cpp src/RuntimeOptions.cpp src/RuntimeDiagnostics.cpp src/TestHarness.cpp)
+target_link_libraries(judas_runtime_render_application_tests PRIVATE judas_engine)
+judas_warnings(judas_runtime_render_application_tests)
+
+# M72 named/prefab durability, ordinary editor history and default compatibility.
+add_executable(judas_runtime_render_authoring_tests tests/RuntimeRenderAuthoringTests.cpp src/editor/EditorHistory.cpp)
+target_link_libraries(judas_runtime_render_authoring_tests PRIVATE judas_engine)
+judas_warnings(judas_runtime_render_authoring_tests)
+
+add_executable(judas_runtime_render_retained_region_tests tests/RuntimeRenderRetainedRegionTests.cpp)
+target_link_libraries(judas_runtime_render_retained_region_tests PRIVATE judas_engine)
+judas_warnings(judas_runtime_render_retained_region_tests)

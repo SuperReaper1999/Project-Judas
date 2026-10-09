@@ -1,0 +1,29 @@
+PASS first slot durably commits
+PASS Unicode metadata round trip
+PASS independent second slot
+PASS bounded metadata listing
+PASS slot path traversal rejected
+PASS overwrite publishes previous-good first
+PASS corruption recovers previous committed generation explicitly
+PASS corrupt current repaired without destroying previous good
+PASS controlled prepublication failure reported
+PASS failed overwrite leaves current valid
+PASS payload checksum detects corruption
+PASS truncation rejected
+PASS oversized string rejected before allocation
+PASS concurrent process lock conflict explicit
+PASS controlled child termination retains recoverable committed generation
+PASS controlled child termination retains recoverable committed generation
+PASS controlled child termination retains recoverable committed generation
+PASS controlled child termination retains recoverable committed generation
+PASS controlled child termination retains recoverable committed generation
+PASS delete selected slot includes recovery generation
+PASS delete preserves other slot
+PASS abandoned temporary not advertised as slot
+PASS unknown/newer container rejects
+PASS explicit seconds-to-milliseconds envelope migration retains semantic records
+PASS intermediate directory symlink rejected
+PASS slot symlink rejected for write/delete
+PASS post-rename uncertainty reported honestly
+PASS late publication remains validated readable state
+SUMMARY checks=28 failures=0

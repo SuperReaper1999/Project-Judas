@@ -6,6 +6,10 @@
 
 struct EditorPanelState;
 
+// Edits a detached candidate; its caller publishes through authored undo or the
+// runtime setter. Shared controls never mutate an imported material asset.
+bool DrawMaterialOverrideControls(MaterialOverride&,const MaterialDefinition&,EditorPanelState&);
+
 // Milestone 30: the inspector's component editor registry.
 //
 // Adding a component type to the editor means adding ONE entry to the

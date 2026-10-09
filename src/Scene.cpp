@@ -76,6 +76,20 @@ bool Eq(const glm::quat& a, const glm::quat& b) {
     return a.w == b.w && a.x == b.x && a.y == b.y && a.z == b.z;
 }
 
+bool RenderSlotsEqual(const std::vector<MaterialSlot>& a,const std::vector<MaterialSlot>& b) {
+    if(a.size()!=b.size())return false;
+    for(size_t i=0;i<a.size();++i)if(a[i].asset!=b[i].asset||a[i].useSource!=b[i].useSource||EncodeMaterialOverrides(a[i].overrides)!=EncodeMaterialOverrides(b[i].overrides))return false;
+    return true;
+}
+bool RenderBindingsEqual(const std::map<std::string,MaterialSlot>& a,const std::map<std::string,MaterialSlot>& b) {
+    if(a.size()!=b.size())return false;
+    auto other=b.begin();for(const auto& [key,slot]:a) {
+        if(key!=other->first||slot.asset!=other->second.asset||slot.useSource!=other->second.useSource||EncodeMaterialOverrides(slot.overrides)!=EncodeMaterialOverrides(other->second.overrides))return false;
+        ++other;
+    }
+    return true;
+}
+
 template <typename T, typename F>
 bool OptEq(const std::optional<T>& a, const std::optional<T>& b, F&& equal) {
     if (a.has_value() != b.has_value()) return false;
@@ -84,6 +98,7 @@ bool OptEq(const std::optional<T>& a, const std::optional<T>& b, F&& equal) {
 }  // namespace
 
 bool SceneObjectsEqual(const SceneObject& a, const SceneObject& b) {
+    if(a.renderVisible!=b.renderVisible)return false;
     if(a.authoringFolder!=b.authoringFolder)return false;
     if(DeformableProperties(a)!=DeformableProperties(b))return false;
     if(NavigationProperties(a)!=NavigationProperties(b))return false;
@@ -108,7 +123,10 @@ bool SceneObjectsEqual(const SceneObject& a, const SceneObject& b) {
             return x.shape == y.shape && Eq(x.halfExtents, y.halfExtents) && x.radius == y.radius &&
                    Eq(x.color, y.color) && x.alpha == y.alpha &&
                    Eq(x.secondaryColor, y.secondaryColor) && x.secondaryAlpha == y.secondaryAlpha &&
-                   x.meshAsset == y.meshAsset && x.textureAsset == y.textureAsset && x.textureCamera == y.textureCamera && EncodeMaterialSlots(x.materials)==EncodeMaterialSlots(y.materials);
+                   x.meshAsset == y.meshAsset && x.textureAsset == y.textureAsset && x.textureCamera == y.textureCamera &&
+                   x.visible==y.visible&&x.hiddenParts==y.hiddenParts&&RenderSlotsEqual(x.materials,y.materials)&&
+                   EncodeMaterialOverrides(x.instanceOverrides)==EncodeMaterialOverrides(y.instanceOverrides)&&
+                   RenderBindingsEqual(x.partMaterials,y.partMaterials)&&RenderBindingsEqual(x.runtimeMaterials,y.runtimeMaterials);
         })) {
         return false;
     }
@@ -236,7 +254,7 @@ bool ScenesEqual(const Scene& a, const Scene& b) {
     if(sa.mainCameraRenderMask!=sb.mainCameraRenderMask)return false;
     if(sa.authoringRecipes!=sb.authoringRecipes)return false;
     if (sa.name != sb.name || !Eq(sa.worldOrigin, sb.worldOrigin) ||
-        !Eq(sa.sunDirection, sb.sunDirection) || !Eq(sa.sunColor, sb.sunColor) ||
+        !Eq(sa.sunDirection, sb.sunDirection) || !Eq(sa.sunColor, sb.sunColor) ||sa.sunEnabled!=sb.sunEnabled||sa.sunIntensity!=sb.sunIntensity||
         !Eq(sa.ambientColor, sb.ambientColor) || sa.fluidScale != sb.fluidScale ||
         sa.fluidUpdateRateHz != sb.fluidUpdateRateHz ||
         sa.fluidHydrostaticDragRate != sb.fluidHydrostaticDragRate ||
@@ -244,7 +262,7 @@ bool ScenesEqual(const Scene& a, const Scene& b) {
         sa.fidelityCoarseRadius != sb.fidelityCoarseRadius) {
         return false;
     }
-    if(sa.linearRendering!=sb.linearRendering||sa.exposure!=sb.exposure||sa.environmentAsset!=sb.environmentAsset||sa.environmentIntensity!=sb.environmentIntensity||sa.environmentRotation!=sb.environmentRotation||sa.environmentBackground!=sb.environmentBackground)return false;
+    if(sa.linearRendering!=sb.linearRendering||sa.exposure!=sb.exposure||sa.environmentAsset!=sb.environmentAsset||sa.environmentIntensity!=sb.environmentIntensity||sa.environmentRotation!=sb.environmentRotation||sa.environmentBackground!=sb.environmentBackground||!Eq(sa.backgroundColor,sb.backgroundColor)||sa.appearanceResetState!=sb.appearanceResetState)return false;
     if (a.Objects().size() != b.Objects().size()) return false;
     for (std::size_t i = 0; i < a.Objects().size(); ++i) {
         if (!SceneObjectsEqual(a.Objects()[i], b.Objects()[i])) return false;

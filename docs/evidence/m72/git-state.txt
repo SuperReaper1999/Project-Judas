@@ -1,0 +1,121 @@
+HEAD:
+02b540f083bcf3d99b0dc6eb9aa70e63c91a31c3
+
+main:
+02b540f083bcf3d99b0dc6eb9aa70e63c91a31c3
+
+origin/main (locally recorded; no fetch):
+02b540f083bcf3d99b0dc6eb9aa70e63c91a31c3
+
+branch:
+main
+
+status:
+ M CMakeLists.txt
+ M README.md
+ M docs/ARCHITECTURE.md
+ M docs/DOCUMENTATION_MAINTENANCE.md
+ M docs/EDITOR_GUIDE.md
+ M docs/JUDASJS.md
+ M docs/M61_SAVES.md
+ M docs/M71.md
+ M docs/MATERIALS.md
+ M docs/NAMED_AUTHORING.md
+ M docs/WINDOWS.md
+ M docs/judas.d.ts
+ M docs/judasjs/API_INVENTORY.md
+ M docs/judasjs/api-inventory.json
+ M docs/judasjs/cookbook.md
+ M docs/judasjs/entities.md
+ M docs/judasjs/examples/materials.js
+ M docs/judasjs/materials.md
+ M docs/judasjs/scenes-state.md
+ M scripts/check_judasjs_api.mjs
+ M src/AssetDependencies.cpp
+ M src/Material.cpp
+ M src/Material.h
+ M src/ProjectExporter.cpp
+ M src/Renderer.cpp
+ M src/Renderer.h
+ M src/RendererMaterials.inl
+ M src/RuntimeWorld.cpp
+ M src/RuntimeWorld.h
+ M src/Scene.cpp
+ M src/Scene.h
+ M src/SceneFingerprint.cpp
+ M src/SceneSerialization.cpp
+ M src/ScriptSystem.cpp
+ M src/WorldDeformables.cpp
+ M src/WorldPresentation.cpp
+ M src/WorldPresentation.h
+ M src/WorldRegions.cpp
+ M src/editor/ComponentEditors.cpp
+ M src/editor/ComponentEditors.h
+ M src/editor/EditorApplication.cpp
+ M src/editor/EditorPanels.cpp
+ M src/editor/EditorPanels.h
+ M tests/JudasJSExamplesTests.cpp
+ M tests/MaterialApplicationTests.cpp
+?? asset_packs/
+?? docs/M72.md
+?? docs/evidence/m72/
+?? projects/render_control_lab/
+?? tests/RuntimeRenderApplicationTests.cpp
+?? tests/RuntimeRenderAuthoringTests.cpp
+?? tests/RuntimeRenderRetainedRegionTests.cpp
+?? tests/RuntimeRenderTests.cpp
+
+staged paths:
+
+
+tracked diff summary:
+ CMakeLists.txt                     |  19 +++++
+ README.md                          |   8 +-
+ docs/ARCHITECTURE.md               | 131 +++++++++++++++++++++++++-----
+ docs/DOCUMENTATION_MAINTENANCE.md  |   3 +-
+ docs/EDITOR_GUIDE.md               |  39 ++++++++-
+ docs/JUDASJS.md                    |  20 +++--
+ docs/M61_SAVES.md                  |   2 +-
+ docs/M71.md                        |   6 +-
+ docs/MATERIALS.md                  |  19 ++++-
+ docs/NAMED_AUTHORING.md            |  10 +++
+ docs/WINDOWS.md                    |  14 ++--
+ docs/judas.d.ts                    |  41 ++++++++--
+ docs/judasjs/API_INVENTORY.md      |   5 +-
+ docs/judasjs/api-inventory.json    |  40 ++++++++-
+ docs/judasjs/cookbook.md           |   1 +
+ docs/judasjs/entities.md           |  34 +++++++-
+ docs/judasjs/examples/materials.js |  63 ++++++++++++++-
+ docs/judasjs/materials.md          | 162 +++++++++++++++++++++++++++++++------
+ docs/judasjs/scenes-state.md       |   1 +
+ scripts/check_judasjs_api.mjs      |   6 +-
+ src/AssetDependencies.cpp          |   9 ++-
+ src/Material.cpp                   |  98 +++++++++++++++++++++-
+ src/Material.h                     |  13 ++-
+ src/ProjectExporter.cpp            |  16 ++--
+ src/Renderer.cpp                   |  15 +++-
+ src/Renderer.h                     |  13 ++-
+ src/RendererMaterials.inl          |  16 ++--
+ src/RuntimeWorld.cpp               | 156 ++++++++++++++++++++++++++++++++---
+ src/RuntimeWorld.h                 |   9 +++
+ src/Scene.cpp                      |  24 +++++-
+ src/Scene.h                        |  16 ++++
+ src/SceneFingerprint.cpp           |  22 +++++
+ src/SceneSerialization.cpp         |  84 ++++++++++++++++++-
+ src/ScriptSystem.cpp               |  55 ++++++++-----
+ src/WorldDeformables.cpp           |  10 +--
+ src/WorldPresentation.cpp          |  98 ++++++++++++++++------
+ src/WorldPresentation.h            |   6 ++
+ src/WorldRegions.cpp               |   2 +
+ src/editor/ComponentEditors.cpp    | 102 ++++++++++++++++++++---
+ src/editor/ComponentEditors.h      |   4 +
+ src/editor/EditorApplication.cpp   |  10 ++-
+ src/editor/EditorPanels.cpp        | 118 +++++++++++++++++++++++++++
+ src/editor/EditorPanels.h          |   3 +
+ tests/JudasJSExamplesTests.cpp     |   2 +-
+ tests/MaterialApplicationTests.cpp |   4 +-
+ 45 files changed, 1344 insertions(+), 185 deletions(-)
+
+M72 human acceptance: pending.
+No commits, pushes or tags. No later milestone work.
+Pre-existing asset_packs/ remains separate; locally ignored LowPolyAssets/ unchanged.

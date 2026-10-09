@@ -16,6 +16,8 @@ can exceed safe JS integers. `new Entity(id)` also exists but does not test vali
 | `presentedTransform` | Readonly detached world transform: render interpolation during `presentationUpdate`, authoritative current pose in other callbacks. Same validity/coordinate rules as `transform`. |
 | `transform` | Read authoritative detached `{position,rotation,scale}`; assign a partial object to update selected fields. World transforms in fixed-origin local simulation coordinates. |
 | `parent`, `children` | Safe wrapper/null; immediate authored/runtime children, ascending entity ID. |
+| `renderVisible` | Read/write boolean render gate on this entity only; children retain their own gates. Physics and other simulation continue. |
+| `rendererVisible` | Read/write boolean gate on the existing Render component; absent component throws TypeError. Entity visibility does not overwrite this setting. |
 | `destroy()` | Destroy hierarchy, true or throws on failure. Stale owner throws, not an idempotent no-op. |
 | `setColliderEnabled(bool)` | Enable/disable existing body; boolean success, false when absent. |
 | `hasTag(name)`, `addTag(name)`, `removeTag(name)` | Registered project tag; boolean result, unknown name throws. |
@@ -54,6 +56,7 @@ operations remain callable while disabled, although physics participation stops.
 | `spawnPrefab(assetID, transform)` | Partial placement defaults to identity; normal hierarchy/components, independent runtime IDs. Returns root Entity or throws; no half-valid success. |
 | `overlap(min,max,filter={})`, `sweepCapsule(...)` | Read-only existing queries; [physics reference](physics.md). |
 | `viewRay`, `setView`, `clearView`, `fluidSample` | [Camera/liquid reference](effects-camera.md). |
+| `appearance`, `setAppearance`, `resetAppearance` | Root-world sun, ambient, background and environment state; [lighting/material reference](materials.md). |
 
 Use stable asset IDs, not filenames, for prefab/resource APIs. Runtime prefab
 support is the existing ordinary component subset, not every imaginable engine
@@ -129,11 +132,40 @@ Entity wrappers. Existing primitives retain their meanings. References remap thr
 prefab/duplication/region/save paths; a missing target is an invalid safe wrapper,
 not a guessed entity. Never store raw body handles in authoring data.
 
+## Render visibility (M72)
+
+`entity.renderVisible` hides renderables owned by this entity. Its scope is local:
+it does not recursively hide children, disable the entity, move it, change scale
+or remove a collider. `entity.rendererVisible` independently hides its ordinary
+Render component. Both require booleans; stale owners throw `ReferenceError`, and
+reading/writing `rendererVisible` without a Render component throws `TypeError`.
+
+The component gate controls its primary Render surface. Other owned visuals such
+as particles, fire and conserved-liquid surfaces use the entity gate. The legacy
+M25 fluid surface is one globally merged mesh without individual volume ownership;
+these switches do not invent per-volume granularity or alter accepted fluid ownership.
+
+An ordinary imported part submits only when the entity gate, Render component
+gate and that part's existing visibility are all true. Showing an entity again
+preserves intentionally hidden components/parts. Applicable main, auxiliary,
+depth and shadow submissions use the same gates; no new shadow-only mode is
+introduced. An authored combined mesh remains addressable only at its actual
+imported-part granularity.
+
+Bodies, queries, scripts, audio, animation, resolved joint reads and sockets keep
+running while render-hidden. Editor hierarchy/inspector selection remains available
+to find and restore an object; editor overlays are distinct from world geometry.
+Authored visibility uses normal scene/prefab/undo paths. Play/Stop and reload restore
+authored values; modern slots and region retention preserve supported live gates.
+See [M72 ownership and limits](../M72.md).
+
 ## `Entity.modelParts` and `Entity.setPartVisible(identity, visible)`
 
 `modelParts` returns a detached array of `{identity,materialSlot,triangles,visible}`
 for a ready rendered model, otherwise null. Identity is the cooked stable part key;
-`materialSlot` selects the existing per-instance `entity.material(slot)` facade.
+`materialSlot` selects the existing per-instance `entity.material(slot)` facade;
+M72 also accepts the stable `identity` itself as a material target. `visible`
+reports this part's own flag, not the effective entity/component gate combination.
 `setPartVisible` changes this runtime instance only and returns false for a missing
 part/unready mesh. Stale entity handles throw through normal validity checks.
 Hidden parts are omitted from ordinary camera, secondary-camera and shadow draws;

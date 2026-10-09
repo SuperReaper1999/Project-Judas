@@ -17,11 +17,13 @@ SDL-created context; generation and license provenance are recorded in
 
 ## JUDAS STATUS: READY FOR NEW FEATURE DEVELOPMENT
 
-Current accepted engine checkpoint: M70 (`fb31f0244c9f41f74c439afd99855e3707937edd`).
-M71 kinematics/editor improvements are an uncommitted candidate awaiting review.
+Current accepted engine checkpoint: M71 (`02b540f083bcf3d99b0dc6eb9aa70e63c91a31c3`).
+[M72 lighting, render visibility and instance materials](docs/M72.md) is an
+checkpoint authorized without human validation; desktop review remains pending.
 M67 authoring review remains provisional/deferred. M69 controller behaviour was
 accepted using synthetic delivery/VM checks; physical controller feel and Windows
-M70 validation remain outstanding.
+validation for the later M70/M71/M72 changes remain outstanding. The operator's
+earlier Windows-update acceptance retains its historical scope.
 Start with [Architecture](docs/ARCHITECTURE.md), [JudasJS](docs/JUDASJS.md) and
 [documentation maintenance](docs/DOCUMENTATION_MAINTENANCE.md).
 

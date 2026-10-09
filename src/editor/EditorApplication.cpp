@@ -505,6 +505,7 @@ bool EditorApplication::StartPlay(std::string& outError) {
         renderer.DrawDebugLines(m_debugLines.Lines());
     });
     m_panels.runtime = m_world.get();
+    m_panels.renderPreviewHistory.reset();
     m_panels.mode = EditorMode::Play;
     m_panels.status = m_world->legacyGameplay
         ? "Playing historical controls: Escape pauses; Stop restores authored state"
@@ -526,6 +527,7 @@ void EditorApplication::StopPlay() {
     m_play.reset();
     m_world.reset();  // the authored Scene was never written; nothing to revert
     m_panels.runtime = nullptr;
+    m_panels.renderPreviewHistory.reset();
     m_panels.mode = EditorMode::Edit;
     m_panels.runtimeInfo.clear();
     m_panels.status = "Stopped: authored scene restored";
@@ -1031,7 +1033,7 @@ void EditorApplication::FrameEditMode(float deltaSeconds) {
     const int width = std::max(1, static_cast<int>(viewport.size.x));
     const int height = std::max(1, static_cast<int>(viewport.size.y));
     const float aspect = static_cast<float>(width) / static_cast<float>(height);
-    renderer.SetLighting(glm::normalize(scene.Settings().sunDirection), scene.Settings().sunColor,
+    renderer.SetLighting(glm::normalize(scene.Settings().sunDirection), scene.Settings().sunEnabled?scene.Settings().sunColor*scene.Settings().sunIntensity:glm::vec3(0),
                          scene.Settings().ambientColor);
     const auto& appearance=scene.Settings();m_host->Resources().RequestEnvironment(appearance.environmentAsset);
     renderer.SetSceneAppearance(appearance.linearRendering,appearance.exposure,m_host->Resources().TryGetEnvironment(appearance.environmentAsset),appearance.environmentIntensity,appearance.environmentRotation,appearance.environmentBackground,appearance.backgroundColor);
@@ -1106,9 +1108,13 @@ void EditorApplication::DrawModelImportPreview(float deltaSeconds) {
 void EditorApplication::RefreshAssetDemand() {
     std::vector<std::string> wanted;
     if(!m_document.GetScene().Settings().environmentAsset.empty())wanted.push_back(m_document.GetScene().Settings().environmentAsset);
+    if(!m_document.GetScene().Settings().appearanceResetState.empty()){auto baseline=m_document.GetScene().Settings();std::string error;if(DecodeAppearanceState(baseline.appearanceResetState,baseline,error)&&!baseline.environmentAsset.empty())wanted.push_back(baseline.environmentAsset);}
     for (const SceneObject& o : m_document.GetScene().Objects()) {
         if (!o.render) continue;
-        for(const auto& slot:o.render->materials)if(!slot.asset.empty())wanted.push_back(slot.asset);
+        auto overrides=[&](const MaterialOverride& value){for(const auto& texture:value.textures)if(texture&&!texture->empty())wanted.push_back(*texture);};
+        overrides(o.render->instanceOverrides);
+        for(const auto& slot:o.render->materials){if(!slot.asset.empty())wanted.push_back(slot.asset);overrides(slot.overrides);}
+        for(const auto* bindings:{&o.render->partMaterials,&o.render->runtimeMaterials})for(const auto& [_,slot]:*bindings){if(!slot.asset.empty())wanted.push_back(slot.asset);overrides(slot.overrides);}
         if (!o.render->meshAsset.empty()) wanted.push_back(o.render->meshAsset);
         if (!o.render->textureAsset.empty()) wanted.push_back(o.render->textureAsset);
     }

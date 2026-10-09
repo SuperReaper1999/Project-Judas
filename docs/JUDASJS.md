@@ -1,9 +1,9 @@
-# JudasJS — current API reference (M71 candidate)
+# JudasJS — current API reference (M72 candidate)
 
 JUDAS PROVIDES ENGINE PRIMITIVES. JAVASCRIPT PROVIDES GAME BEHAVIOUR.
 
-This reference includes the M71 candidate built on accepted checkpoint
-`fb31f0244c9f41f74c439afd99855e3707937edd`. M71 human review remains pending. It is not an eternal
+This reference includes M72, checkpointed without human validation, built on M71 checkpoint
+`02b540f083bcf3d99b0dc6eb9aa70e63c91a31c3`. M72 human review remains pending. It is not an eternal
 compatibility/semantic-version promise. Source authority is `src/ScriptSystem.cpp`
 and the runtime systems it calls; demos do not define API.
 M67 is checkpointed provisionally by operator authorization; proper human validation
@@ -37,6 +37,7 @@ calling an API does not silently construct missing gameplay machinery.
 | Fracture, physical parts, interface failure and explicit removal | [Fracture](judasjs/fracture.md) |
 | Deformable, cloth/solid forces, attachments and current-surface picking | [Deformables](judasjs/deformables.md) |
 | Entity, transform, tags, spawnPrefab | [Entities/prefabs](judasjs/entities.md) |
+| Entity.renderVisible, rendererVisible and imported-part visibility | [Render visibility](judasjs/entities.md#render-visibility-m72) |
 | Entity.motionType, kinematic target/velocity commands and point velocity | [Kinematic bodies](judasjs/entities.md#kinematic-motion-m71) · [Executed example](judasjs/examples/kinematic.js) |
 | profiler.scope / profiler.counter | [Custom diagnostics](judasjs/profiling.md) |
 | input, time, console | [Input/time](judasjs/input.md) |
@@ -50,7 +51,7 @@ calling an API does not silently construct missing gameplay machinery.
 | entity.character / CharacterMotor | [Character](judasjs/character.md) |
 | navigation / NavigationAgent | [Navigation](judasjs/navigation.md) |
 | liquid / LiquidVolume / conserved reservoirs | [Liquid](judasjs/liquid.md) |
-| entity.material, scene lighting/environment overrides | [Materials](judasjs/materials.md) |
+| Entity.material whole/slot/part patches; world sun, ambient and environment controls | [Materials and appearance](judasjs/materials.md) |
 | Executed scripts | [Cookbook](judasjs/cookbook.md) |
 | JSDoc, editor setup, practical conventions | [Practices](judasjs/practices.md) |
 
@@ -101,7 +102,7 @@ remains authoritative.
 
 [profiler.scope / profiler.counter](judasjs/profiling.md) and [integrated profiler controls](PROFILER.md).
 
-- [M57 materials, overrides and scene appearance](judasjs/materials.md)
+- [Current materials, overrides and scene appearance](judasjs/materials.md) · [M57 foundation](MATERIALS.md) · [M72 candidate](M72.md)
 
 ## M58 Unicode text and localization
 
@@ -148,3 +149,12 @@ world COM/angular velocity commands and actual point velocity. The
 the [kinematic lab](../projects/kinematic_lab/) supplies ordinary authored content.
 Modern saves and additive streaming preserve current authority, physical state
 and remaining commands. [Cookbook setup](judasjs/cookbook.md#kinematic-bodies-m71).
+
+## M72 lighting, visibility and instance materials
+
+[Appearance and material controls](judasjs/materials.md) extend the existing world
+and Material handles; [local render visibility](judasjs/entities.md#render-visibility-m72)
+keeps simulation alive while hiding supported submissions. Grouped updates validate
+before publication. Authored defaults, runtime patches, resource status and reset
+semantics are explicit. No new runtime exports or native day/night policy are added.
+See [M72 design, lifecycle and review status](M72.md).

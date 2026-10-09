@@ -2,6 +2,7 @@
 
 #include <string>
 #include <vector>
+#include <memory>
 
 #include <glm/glm.hpp>
 
@@ -94,6 +95,7 @@ struct ProfilerData {
 };
 
 struct ModelCookTask;
+struct RuntimeRenderHistory;
 struct EditorPanelState {
     EditorWorkspaceLayout workspace;
     float hierarchyWidth = 250.0f;
@@ -125,6 +127,7 @@ struct EditorPanelState {
     // offer the debug override; and the world-state path for the World menu.
     bool worldPreview=false;unsigned worldPreviewRevision=0;
     RuntimeWorld* runtime = nullptr;
+    std::shared_ptr<RuntimeRenderHistory> renderPreviewHistory; // discarded on Play/Stop or world replacement
     std::string worldStatePath;
     bool playPaused = false;
     bool showWorldBuilding=false;

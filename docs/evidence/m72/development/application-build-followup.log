@@ -1,0 +1,45 @@
+[  6%] Built target judas_icu_build
+[  6%] Built target judas_quickjs
+[  6%] Built target judas_app_icon
+[ 13%] Built target judas_navigation_backend
+[ 13%] Built target judas_glad
+[ 13%] Built target judas_profiler
+[ 33%] Built target freetype
+[ 33%] Built target judas_audio_backend
+[ 33%] Built target harfbuzz
+[ 33%] Built target judas_materials
+[100%] Built target judas_engine
+[100%] Building CXX object CMakeFiles/judas_runtime_render_application_tests.dir/tests/RuntimeRenderApplicationTests.cpp.o
+[100%] Linking CXX executable judas_runtime_render_application_tests
+[100%] Built target judas_runtime_render_application_tests
+[  0%] Built target judas_app_icon
+[  0%] Built target judas_quickjs
+[  6%] Built target judas_icu_build
+[ 12%] Built target judas_navigation_backend
+[ 31%] Built target freetype
+[ 31%] Built target judas_glad
+[ 31%] Built target judas_profiler
+[ 31%] Built target judas_audio_backend
+[ 31%] Built target harfbuzz
+[ 31%] Built target judas_materials
+[ 93%] Built target judas_engine
+[ 93%] Linking CXX executable judas
+[100%] Built target judas
+[  5%] Built target judas_app_icon
+[  5%] Built target judas_icu_build
+[ 11%] Built target judas_quickjs
+[ 11%] Built target judas_navigation_backend
+[ 29%] Built target freetype
+[ 29%] Built target judas_glad
+[ 29%] Built target judas_profiler
+[ 29%] Built target judas_audio_backend
+[ 29%] Built target harfbuzz
+[ 29%] Built target judas_imgui
+[ 29%] Built target judas_ufbx
+[ 29%] Built target judas_materials
+[ 88%] Built target judas_engine
+[ 94%] Built target judas_model_import
+[ 94%] Built target judas_world_authoring
+[ 94%] Built target judas_navigation_baker
+[ 94%] Linking CXX executable judas_editor
+[100%] Built target judas_editor

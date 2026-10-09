@@ -1,0 +1,29 @@
+PASS default scene keeps independently established schema 5 fingerprint golden
+PASS default scene keeps pre-M72 file bytes without extension records
+PASS legacy authored numeric slot flags and bytes remain unchanged
+PASS full material factors and all five maps round-trip with explicit removal distinct from inheritance
+PASS positional scene preserves visibility, stable parts, full authored/runtime bindings and appearance baseline: 
+PASS named scene codec preserves every M72 field through the ordinary loader: 
+PASS new numeric overrides and stable/runtime maps use separate versioned records
+PASS named file save/load durably preserves original reset appearance: 
+PASS reset baseline decodes only appearance while preserving unrelated scene settings
+PASS saved empty selected environment still preserves and demands the original environment reset asset
+PASS normal dependency collection includes all instance maps and active/reset environments
+PASS editor history records entity/component visibility and restores both on undo/redo
+PASS editor history records imported part visibility and restores hidden identities on undo/redo
+PASS editor history records background colour and restores it on undo/redo
+PASS editor history records whole/numeric/part alpha/maps and saved runtime bindings on undo/redo
+PASS invalid editor material edit restores the complete document without adding history
+PASS prefab capture and named source load retain stable part material identities: 
+PASS two independent prefab instances retain imported part binding keys: 
+PASS ordinary prefab edit captures the stable material binding as an override property
+PASS source edit propagates to untouched instance while local stable binding override survives: 
+PASS revert restores the current prefab source binding without changing imported part identity: 
+PASS duplicate stable binding rejects atomically with a useful error
+PASS authored numeric part keys and noncanonical/out-of-range runtime keys reject atomically
+PASS malformed texture IDs and unknown map roles reject without mutating the destination
+PASS reset baseline version, zero direction and malformed vector reject transactionally
+PASS reset baseline rejects unknown fields without mutating the destination scene
+PASS numeric override extension count must match the original authored material slots
+PASS optional M72 canonical tags cover sun/reset/visibility/full factors/source selection and binding maps
+SUMMARY 28 checks 0 failures

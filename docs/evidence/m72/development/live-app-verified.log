@@ -1,0 +1,13 @@
+libEGL warning: Not allowed to force software rendering when API explicitly selects a hardware device.
+Renderer fragment texture units: 32 (material path uses 12)
+World state: /home/conner/Documents/GitHub/Project-Judas/projects/render_control_lab/Saves/lab.judasstate (none saved)
+Project: Render Control Lab (/home/conner/Documents/GitHub/Project-Judas/projects/render_control_lab/render_control_lab.judasproj)
+Scene: M72 Render Control Lab (/home/conner/Documents/GitHub/Project-Judas/projects/render_control_lab/Scenes/lab.judas)
+World origin (m): 0.000, 0.000, 0.000
+LIVE renderer=llvmpipe (LLVM 21.1.8, 256 bits) size=1024x768
+LIVE bodies=1 draws=58 triangles=20172 fixed_ms=0.087917 appearance_bytes=9648134
+PASS normal application lab JS is fault-free
+PASS normal logical controls change visibility and animate light
+PASS ordinary startup, every-frame presentation and shutdown
+PASS normal application complete-frame M56 profile exported
+M72 live 4 checks 0 failures

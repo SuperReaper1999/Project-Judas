@@ -1,0 +1,670 @@
+[  0%] Building CXX object CMakeFiles/judas_app_icon.dir/src/AppIcon.cpp.o
+[  0%] Building C object CMakeFiles/judas_quickjs.dir/third_party/quickjs/quickjs.c.o
+[  5%] Building CXX object CMakeFiles/judas_navigation_backend.dir/third_party/recastnavigation/Detour/Source/DetourAlloc.cpp.o
+[  5%] Creating directories for 'judas_icu_build'
+[  5%] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/autofit/autofit.c.o
+[  5%] Performing download step (verify and extract) for 'judas_icu_build'
+-- verifying file...
+     file='/home/conner/Documents/GitHub/Project-Judas/third_party/text/icu4c-76_1-src.tgz'
+[  5%] Building CXX object CMakeFiles/judas_navigation_backend.dir/third_party/recastnavigation/Detour/Source/DetourAssert.cpp.o
+[  5%] Building CXX object CMakeFiles/judas_navigation_backend.dir/third_party/recastnavigation/Detour/Source/DetourCommon.cpp.o
+-- verifying file... done
+-- extracting...
+     src='/home/conner/Documents/GitHub/Project-Judas/third_party/text/icu4c-76_1-src.tgz'
+     dst='/home/conner/Documents/GitHub/Project-Judas/.cache/m72-release/unicode/build/src/judas_icu_build'
+-- extracting... [tar xf]
+[  5%] Building CXX object CMakeFiles/judas_navigation_backend.dir/third_party/recastnavigation/Detour/Source/DetourNavMesh.cpp.o
+-- extracting... [analysis]
+-- extracting... [rename]
+-- extracting... [clean up]
+-- extracting... done
+[  5%] No update step for 'judas_icu_build'
+[  5%] No patch step for 'judas_icu_build'
+[  5%] Performing configure step for 'judas_icu_build'
+[  5%] Building CXX object CMakeFiles/judas_navigation_backend.dir/third_party/recastnavigation/Detour/Source/DetourNavMeshBuilder.cpp.o
+[  5%] Building CXX object CMakeFiles/judas_navigation_backend.dir/third_party/recastnavigation/Detour/Source/DetourNavMeshQuery.cpp.o
+[  5%] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/base/ftbase.c.o
+[  5%] Building CXX object CMakeFiles/judas_app_icon.dir/src/TextureLoader.cpp.o
+[ 11%] Building CXX object CMakeFiles/judas_navigation_backend.dir/third_party/recastnavigation/Detour/Source/DetourNode.cpp.o
+[ 11%] Building CXX object CMakeFiles/judas_navigation_backend.dir/third_party/recastnavigation/DetourCrowd/Source/DetourCrowd.cpp.o
+[ 11%] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/base/ftbbox.c.o
+[ 11%] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/base/ftbdf.c.o
+[ 11%] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/base/ftbitmap.c.o
+[ 11%] Building CXX object CMakeFiles/judas_navigation_backend.dir/third_party/recastnavigation/DetourCrowd/Source/DetourLocalBoundary.cpp.o
+[ 11%] Building CXX object CMakeFiles/judas_navigation_backend.dir/third_party/recastnavigation/DetourCrowd/Source/DetourObstacleAvoidance.cpp.o
+-- judas_icu_build configure command succeeded.  See also /home/conner/Documents/GitHub/Project-Judas/.cache/m72-release/unicode/build/src/judas_icu_build-stamp/judas_icu_build-configure-*.log
+[ 11%] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/base/ftcid.c.o
+[ 11%] Performing build step for 'judas_icu_build'
+[ 11%] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/base/ftfstype.c.o
+[ 11%] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/base/ftgasp.c.o
+[ 11%] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/base/ftglyph.c.o
+[ 11%] Building CXX object CMakeFiles/judas_navigation_backend.dir/third_party/recastnavigation/DetourCrowd/Source/DetourPathCorridor.cpp.o
+[ 11%] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/base/ftgxval.c.o
+[ 11%] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/base/ftinit.c.o
+[ 11%] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/base/ftmm.c.o
+[ 17%] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/base/ftotval.c.o
+[ 17%] Building CXX object CMakeFiles/judas_navigation_backend.dir/third_party/recastnavigation/DetourCrowd/Source/DetourPathQueue.cpp.o
+[ 17%] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/base/ftpatent.c.o
+[ 17%] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/base/ftpfr.c.o
+[ 17%] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/base/ftstroke.c.o
+[ 17%] Building CXX object CMakeFiles/judas_navigation_backend.dir/third_party/recastnavigation/DetourCrowd/Source/DetourProximityGrid.cpp.o
+[ 17%] Building CXX object CMakeFiles/judas_navigation_backend.dir/third_party/recastnavigation/DetourTileCache/Source/DetourTileCache.cpp.o
+[ 17%] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/base/ftsynth.c.o
+[ 17%] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/base/fttype1.c.o
+[ 17%] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/base/ftwinfnt.c.o
+[ 17%] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/bdf/bdf.c.o
+[ 17%] Building CXX object CMakeFiles/judas_navigation_backend.dir/third_party/recastnavigation/DetourTileCache/Source/DetourTileCacheBuilder.cpp.o
+[ 17%] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/bzip2/ftbzip2.c.o
+[ 17%] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/cache/ftcache.c.o
+[ 17%] Linking CXX static library libjudas_app_icon.a
+[ 17%] Built target judas_app_icon
+[ 17%] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/cff/cff.c.o
+[ 17%] Building C object CMakeFiles/judas_quickjs.dir/third_party/quickjs/dtoa.c.o
+[ 17%] Linking CXX static library libjudas_navigation_backend.a
+[ 17%] Built target judas_navigation_backend
+[ 17%] Building C object CMakeFiles/judas_glad.dir/third_party/glad/src/gl.c.o
+[ 17%] Linking C static library libjudas_glad.a
+[ 17%] Built target judas_glad
+[ 17%] Building C object CMakeFiles/judas_quickjs.dir/third_party/quickjs/libregexp.c.o
+[ 17%] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/cid/type1cid.c.o
+[ 23%] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/gzip/ftgzip.c.o
+[ 23%] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/lzw/ftlzw.c.o
+[ 23%] Building C object CMakeFiles/judas_quickjs.dir/third_party/quickjs/libunicode.c.o
+[ 23%] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/pcf/pcf.c.o
+[ 23%] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/pfr/pfr.c.o
+[ 23%] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/psaux/psaux.c.o
+[ 23%] Building CXX object CMakeFiles/judas_profiler.dir/src/PerformanceProfiler.cpp.o
+[ 23%] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/pshinter/pshinter.c.o
+[ 23%] Building C object CMakeFiles/judas_audio_backend.dir/src/AudioBackend.c.o
+[ 23%] Linking CXX static library libjudas_profiler.a
+[ 23%] Built target judas_profiler
+[ 23%] Building C object CMakeFiles/judas_audio_backend.dir/src/ReverbBackend.c.o
+[ 23%] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/psnames/psnames.c.o
+[ 23%] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/raster/raster.c.o
+[ 23%] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/sdf/sdf.c.o
+[ 23%] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/sfnt/sfnt.c.o
+[ 23%] Building CXX object _deps/judas_harfbuzz-build/CMakeFiles/harfbuzz.dir/src/harfbuzz.cc.o
+[ 23%] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/smooth/smooth.c.o
+[ 23%] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/svg/svg.c.o
+[ 29%] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/truetype/truetype.c.o
+[ 29%] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/type1/type1.c.o
+[ 29%] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/type42/type42.c.o
+[ 29%] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/winfonts/winfnt.c.o
+[ 29%] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/builds/unix/ftsystem.c.o
+[ 29%] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/base/ftdebug.c.o
+[ 29%] Linking C static library libfreetype.a
+[ 29%] Built target freetype
+[ 29%] Building C object CMakeFiles/judas_materials.dir/third_party/mikktspace/mikktspace.c.o
+[ 29%] Linking CXX static library libjudas_materials.a
+[ 29%] Built target judas_materials
+[ 29%] Linking C static library libjudas_quickjs.a
+[ 29%] Built target judas_quickjs
+[ 35%] Linking C static library libjudas_audio_backend.a
+[ 35%] Built target judas_audio_backend
+[ 35%] Linking C static library libharfbuzz.a
+[ 35%] Built target harfbuzz
+-- judas_icu_build build command succeeded.  See also /home/conner/Documents/GitHub/Project-Judas/.cache/m72-release/unicode/build/src/judas_icu_build-stamp/judas_icu_build-build-*.log
+[ 35%] Performing install step for 'judas_icu_build'
+-- judas_icu_build install command succeeded.  See also /home/conner/Documents/GitHub/Project-Judas/.cache/m72-release/unicode/build/src/judas_icu_build-stamp/judas_icu_build-install-*.log
+[ 35%] Completed 'judas_icu_build'
+[ 35%] Built target judas_icu_build
+[ 35%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldFracture.cpp.o
+[ 35%] Building CXX object CMakeFiles/judas_engine.dir/src/Fracture.cpp.o
+[ 35%] Building CXX object CMakeFiles/judas_engine.dir/src/DeformableAsset.cpp.o
+[ 35%] Building CXX object CMakeFiles/judas_engine.dir/src/Deformable.cpp.o
+[ 35%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldDeformables.cpp.o
+[ 35%] Building CXX object CMakeFiles/judas_engine.dir/src/TextLayout.cpp.o
+[ 35%] Building CXX object CMakeFiles/judas_engine.dir/src/Localization.cpp.o
+[ 35%] Building CXX object CMakeFiles/judas_engine.dir/src/Material.cpp.o
+[ 35%] Building CXX object CMakeFiles/judas_engine.dir/src/Environment.cpp.o
+/home/conner/Documents/GitHub/Project-Judas/src/Material.cpp: In function ‘MaterialOverride ComposeMaterialOverrides(const MaterialOverride&, const MaterialOverride&)’:
+/home/conner/Documents/GitHub/Project-Judas/src/Material.cpp:50:2: warning: this ‘for’ clause does not guard... [-Wmisleading-indentation]
+   50 |  for(size_t i=0;i<5;++i)if(b.textures[i])r.textures[i]=b.textures[i];return r;
+      |  ^~~
+/home/conner/Documents/GitHub/Project-Judas/src/Material.cpp:50:70: note: ...this statement, but the latter is misleadingly indented as if it were guarded by the ‘for’
+   50 |  for(size_t i=0;i<5;++i)if(b.textures[i])r.textures[i]=b.textures[i];return r;
+      |                                                                      ^~~~~~
+/home/conner/Documents/GitHub/Project-Judas/src/Material.cpp: In function ‘std::string EncodeMaterialOverrides(const MaterialOverride&)’:
+/home/conner/Documents/GitHub/Project-Judas/src/Material.cpp:58:2: warning: this ‘if’ clause does not guard... [-Wmisleading-indentation]
+   58 |  if(o.alpha)j["alphaMode"]=std::array<const char*,3>{"opaque","mask","blend"}.at(int(*o.alpha));if(o.doubleSided)j["doubleSided"]=*o.doubleSided;
+      |  ^~
+/home/conner/Documents/GitHub/Project-Judas/src/Material.cpp:58:97: note: ...this statement, but the latter is misleadingly indented as if it were guarded by the ‘if’
+   58 |  if(o.alpha)j["alphaMode"]=std::array<const char*,3>{"opaque","mask","blend"}.at(int(*o.alpha));if(o.doubleSided)j["doubleSided"]=*o.doubleSided;
+      |                                                                                                 ^~
+/home/conner/Documents/GitHub/Project-Judas/src/Material.cpp:60:2: warning: this ‘for’ clause does not guard... [-Wmisleading-indentation]
+   60 |  for(size_t i=0;i<5;++i)if(o.textures[i])j["textures"][kMaterialMaps[i]]=*o.textures[i];return j.dump();
+      |  ^~~
+/home/conner/Documents/GitHub/Project-Judas/src/Material.cpp:60:89: note: ...this statement, but the latter is misleadingly indented as if it were guarded by the ‘for’
+   60 |  for(size_t i=0;i<5;++i)if(o.textures[i])j["textures"][kMaterialMaps[i]]=*o.textures[i];return j.dump();
+      |                                                                                         ^~~~~~
+[ 41%] Building CXX object CMakeFiles/judas_engine.dir/src/Tangents.cpp.o
+/home/conner/Documents/GitHub/Project-Judas/src/Material.cpp: In function ‘bool PatchMaterialOverrides(const std::string&, MaterialOverride&, std::string&)’:
+/home/conner/Documents/GitHub/Project-Judas/src/Material.cpp:73:2: warning: this ‘if’ clause does not guard... [-Wmisleading-indentation]
+   73 |  if(!ValidateMaterial(ApplyMaterialOverride(MaterialDefinition{},o),error))return false;out=std::move(o);error.clear();return true;
+      |  ^~
+/home/conner/Documents/GitHub/Project-Judas/src/Material.cpp:73:89: note: ...this statement, but the latter is misleadingly indented as if it were guarded by the ‘if’
+   73 |  if(!ValidateMaterial(ApplyMaterialOverride(MaterialDefinition{},o),error))return false;out=std::move(o);error.clear();return true;
+      |                                                                                         ^~~
+/home/conner/Documents/GitHub/Project-Judas/src/Material.cpp: In function ‘MaterialSlot ResolveRenderMaterial(const SceneRenderComponent&, unsigned int, const std::string&)’:
+/home/conner/Documents/GitHub/Project-Judas/src/Material.cpp:80:2: warning: this ‘if’ clause does not guard... [-Wmisleading-indentation]
+   80 |  if(slot<render.materials.size())apply(render.materials[slot]);if(auto it=render.partMaterials.find(part);it!=render.partMaterials.end())apply(it->second);
+      |  ^~
+/home/conner/Documents/GitHub/Project-Judas/src/Material.cpp:80:64: note: ...this statement, but the latter is misleadingly indented as if it were guarded by the ‘if’
+   80 |  if(slot<render.materials.size())apply(render.materials[slot]);if(auto it=render.partMaterials.find(part);it!=render.partMaterials.end())apply(it->second);
+      |                                                                ^~
+/home/conner/Documents/GitHub/Project-Judas/src/Material.cpp: In function ‘bool DecodeAppearanceState(const std::string&, SceneSettings&, std::string&)’:
+/home/conner/Documents/GitHub/Project-Judas/src/Material.cpp:98:2: warning: this ‘if’ clause does not guard... [-Wmisleading-indentation]
+   98 |  if(!s.environmentAsset.empty()&&!IsValidAssetId(s.environmentAsset))throw std::runtime_error("invalid environment identity");if(!ValidateAppearance(s,error))return false;out=std::move(s);return true;
+      |  ^~
+/home/conner/Documents/GitHub/Project-Judas/src/Material.cpp:98:127: note: ...this statement, but the latter is misleadingly indented as if it were guarded by the ‘if’
+   98 |  if(!s.environmentAsset.empty()&&!IsValidAssetId(s.environmentAsset))throw std::runtime_error("invalid environment identity");if(!ValidateAppearance(s,error))return false;out=std::move(s);return true;
+      |                                                                                                                               ^~
+[ 41%] Building CXX object CMakeFiles/judas_engine.dir/src/LiquidGeometry.cpp.o
+[ 41%] Building CXX object CMakeFiles/judas_engine.dir/src/LiquidTypes.cpp.o
+[ 41%] Building CXX object CMakeFiles/judas_engine.dir/src/LiquidSystem.cpp.o
+[ 41%] Building CXX object CMakeFiles/judas_engine.dir/src/LiquidSurface.cpp.o
+[ 41%] Building CXX object CMakeFiles/judas_engine.dir/src/NavigationSystem.cpp.o
+[ 41%] Building CXX object CMakeFiles/judas_engine.dir/src/NavigationTypes.cpp.o
+[ 41%] Building CXX object CMakeFiles/judas_engine.dir/src/NavigationAsset.cpp.o
+[ 41%] Building CXX object CMakeFiles/judas_engine.dir/src/FullBodyIK.cpp.o
+[ 41%] Building CXX object CMakeFiles/judas_engine.dir/src/PhysicalAnimation.cpp.o
+[ 41%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldAnimation.cpp.o
+[ 41%] Building CXX object CMakeFiles/judas_engine.dir/src/PoseComposition.cpp.o
+[ 47%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldRagdoll.cpp.o
+[ 47%] Building CXX object CMakeFiles/judas_engine.dir/src/GltfLoader.cpp.o
+[ 47%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldCharacter.cpp.o
+[ 47%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldStreaming.cpp.o
+[ 47%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldRegions.cpp.o
+[ 47%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldScripts.cpp.o
+[ 47%] Building CXX object CMakeFiles/judas_engine.dir/src/RuntimeUI.cpp.o
+[ 47%] Building CXX object CMakeFiles/judas_engine.dir/src/ScriptSystem.cpp.o
+/home/conner/Documents/GitHub/Project-Judas/src/ScriptSystem.cpp: In static member function ‘static JSValue ScriptSystem::Impl::Native(JSContext*, JSValue, int, JSValue*)’:
+/home/conner/Documents/GitHub/Project-Judas/src/ScriptSystem.cpp:935:9: warning: this ‘if’ clause does not guard... [-Wmisleading-indentation]
+  935 |         if(!definition->render)return JS_ThrowTypeError(c,"entity has no render component");auto& render=*definition->render;
+      |         ^~
+/home/conner/Documents/GitHub/Project-Judas/src/ScriptSystem.cpp:935:93: note: ...this statement, but the latter is misleadingly indented as if it were guarded by the ‘if’
+  935 |         if(!definition->render)return JS_ThrowTypeError(c,"entity has no render component");auto& render=*definition->render;
+      |                                                                                             ^~~~
+/home/conner/Documents/GitHub/Project-Judas/src/ScriptSystem.cpp:948:9: warning: this ‘for’ clause does not guard... [-Wmisleading-indentation]
+  948 |         for(auto p:{std::pair<const char*,float>{"metallic",m.metallic},{"roughness",m.roughness},{"emissiveIntensity",m.emissiveIntensity},{"alphaCutoff",m.alphaCutoff},{"normalStrength",m.normalStrength},{"occlusionStrength",m.occlusionStrength}})JS_SetPropertyStr(c,result,p.first,JS_NewFloat64(c,p.second));JS_SetPropertyStr(c,result,"doubleSided",JS_NewBool(c,m.doubleSided));
+      |         ^~~
+/home/conner/Documents/GitHub/Project-Judas/src/ScriptSystem.cpp:948:312: note: ...this statement, but the latter is misleadingly indented as if it were guarded by the ‘for’
+  948 |         for(auto p:{std::pair<const char*,float>{"metallic",m.metallic},{"roughness",m.roughness},{"emissiveIntensity",m.emissiveIntensity},{"alphaCutoff",m.alphaCutoff},{"normalStrength",m.normalStrength},{"occlusionStrength",m.occlusionStrength}})JS_SetPropertyStr(c,result,p.first,JS_NewFloat64(c,p.second));JS_SetPropertyStr(c,result,"doubleSided",JS_NewBool(c,m.doubleSided));
+      |                                                                                                                                                                                                                                                                                                                        ^~~~~~~~~~~~~~~~~
+[ 47%] Building CXX object CMakeFiles/judas_engine.dir/src/Classification.cpp.o
+[ 47%] Building CXX object CMakeFiles/judas_engine.dir/src/GamePackage.cpp.o
+[ 47%] Building CXX object CMakeFiles/judas_engine.dir/src/ProjectExporter.cpp.o
+[ 47%] Building CXX object CMakeFiles/judas_engine.dir/src/AssetDependencies.cpp.o
+[ 47%] Building CXX object CMakeFiles/judas_engine.dir/src/AudioStream.cpp.o
+[ 52%] Building CXX object CMakeFiles/judas_engine.dir/src/AudioEnvironment.cpp.o
+[ 52%] Building CXX object CMakeFiles/judas_engine.dir/src/AudioData.cpp.o
+[ 52%] Building CXX object CMakeFiles/judas_engine.dir/src/AudioSystem.cpp.o
+[ 52%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldAudio.cpp.o
+[ 52%] Building CXX object CMakeFiles/judas_engine.dir/src/Window.cpp.o
+[ 52%] Building CXX object CMakeFiles/judas_engine.dir/src/InputSystem.cpp.o
+[ 52%] Building CXX object CMakeFiles/judas_engine.dir/src/Renderer.cpp.o
+[ 52%] Building CXX object CMakeFiles/judas_engine.dir/src/SkeletalAnimation.cpp.o
+[ 52%] Building CXX object CMakeFiles/judas_engine.dir/src/CharacterMotor.cpp.o
+[ 52%] Building CXX object CMakeFiles/judas_engine.dir/src/PlayerController.cpp.o
+[ 52%] Building CXX object CMakeFiles/judas_engine.dir/src/PlayerView.cpp.o
+[ 52%] Building CXX object CMakeFiles/judas_engine.dir/src/StepClimb.cpp.o
+[ 58%] Building CXX object CMakeFiles/judas_engine.dir/src/DynamicBody.cpp.o
+[ 58%] Building CXX object CMakeFiles/judas_engine.dir/src/FlyingPrimitiveControl.cpp.o
+[ 58%] Building CXX object CMakeFiles/judas_engine.dir/src/PilotAttachment.cpp.o
+[ 58%] Building CXX object CMakeFiles/judas_engine.dir/src/PilotControl.cpp.o
+[ 58%] Building CXX object CMakeFiles/judas_engine.dir/src/ReferenceFrame.cpp.o
+[ 58%] Building CXX object CMakeFiles/judas_engine.dir/src/CollisionAuthoring.cpp.o
+[ 58%] Building CXX object CMakeFiles/judas_engine.dir/src/CollisionSource.cpp.o
+[ 58%] Building CXX object CMakeFiles/judas_engine.dir/src/ModelLoader.cpp.o
+[ 58%] Building CXX object CMakeFiles/judas_engine.dir/src/ModelArchive.cpp.o
+[ 58%] Building CXX object CMakeFiles/judas_engine.dir/src/FontLoader.cpp.o
+[ 58%] Building CXX object CMakeFiles/judas_engine.dir/src/UIWidgets.cpp.o
+[ 58%] Building CXX object CMakeFiles/judas_engine.dir/src/PauseMenu.cpp.o
+[ 64%] Building CXX object CMakeFiles/judas_engine.dir/src/HUD.cpp.o
+[ 64%] Building CXX object CMakeFiles/judas_engine.dir/src/LightTransforms.cpp.o
+[ 64%] Building CXX object CMakeFiles/judas_engine.dir/src/LightAttenuation.cpp.o
+[ 64%] Building CXX object CMakeFiles/judas_engine.dir/src/ShadowTransforms.cpp.o
+[ 64%] Building CXX object CMakeFiles/judas_engine.dir/src/HingeTransform.cpp.o
+[ 64%] Building CXX object CMakeFiles/judas_engine.dir/src/InteractionSystem.cpp.o
+[ 64%] Building CXX object CMakeFiles/judas_engine.dir/src/ObjectManipulation.cpp.o
+[ 64%] Building CXX object CMakeFiles/judas_engine.dir/src/FluidWorld.cpp.o
+[ 64%] Building CXX object CMakeFiles/judas_engine.dir/src/ProductionFluidCoupling.cpp.o
+[ 64%] Building CXX object CMakeFiles/judas_engine.dir/src/FluidHydrostatics.cpp.o
+[ 64%] Building CXX object CMakeFiles/judas_engine.dir/src/FluidSurface.cpp.o
+[ 64%] Building CXX object CMakeFiles/judas_engine.dir/src/CombustionWorld.cpp.o
+[ 64%] Building CXX object CMakeFiles/judas_engine.dir/src/FirePresentation.cpp.o
+[ 70%] Building CXX object CMakeFiles/judas_engine.dir/src/TerrainDemo.cpp.o
+[ 70%] Building CXX object CMakeFiles/judas_engine.dir/src/TerrainLibrary.cpp.o
+[ 70%] Building CXX object CMakeFiles/judas_engine.dir/src/Door.cpp.o
+[ 70%] Building CXX object CMakeFiles/judas_engine.dir/src/LightSwitch.cpp.o
+[ 70%] Building CXX object CMakeFiles/judas_engine.dir/src/FaithfulGravity.cpp.o
+[ 70%] Building CXX object CMakeFiles/judas_engine.dir/src/RadicalGravity.cpp.o
+[ 70%] Building CXX object CMakeFiles/judas_engine.dir/src/SphericalVolume.cpp.o
+[ 70%] Building CXX object CMakeFiles/judas_engine.dir/src/BoxVolume.cpp.o
+[ 70%] Building CXX object CMakeFiles/judas_engine.dir/src/GravityContextMap.cpp.o
+[ 70%] Building CXX object CMakeFiles/judas_engine.dir/src/CelestialGravity.cpp.o
+[ 70%] Building CXX object CMakeFiles/judas_engine.dir/src/AtmosphereField.cpp.o
+[ 70%] Building CXX object CMakeFiles/judas_engine.dir/src/AerodynamicDrag.cpp.o
+[ 76%] Building CXX object CMakeFiles/judas_engine.dir/src/VisualParticles.cpp.o
+[ 76%] Building CXX object CMakeFiles/judas_engine.dir/src/Prefab.cpp.o
+[ 76%] Building CXX object CMakeFiles/judas_engine.dir/src/Scene.cpp.o
+[ 76%] Building CXX object CMakeFiles/judas_engine.dir/src/Ragdoll.cpp.o
+[ 76%] Building CXX object CMakeFiles/judas_engine.dir/src/SceneSerialization.cpp.o
+[ 76%] Building CXX object CMakeFiles/judas_engine.dir/src/NamedAuthoring.cpp.o
+[ 76%] Building CXX object CMakeFiles/judas_engine.dir/src/SceneFingerprint.cpp.o
+[ 76%] Building CXX object CMakeFiles/judas_engine.dir/src/Project.cpp.o
+[ 76%] Building CXX object CMakeFiles/judas_engine.dir/src/AssetDatabase.cpp.o
+[ 76%] Building CXX object CMakeFiles/judas_engine.dir/src/JobSystem.cpp.o
+[ 76%] Building CXX object CMakeFiles/judas_engine.dir/src/AsyncFile.cpp.o
+[ 76%] Building CXX object CMakeFiles/judas_engine.dir/src/ResourceManager.cpp.o
+[ 82%] Building CXX object CMakeFiles/judas_engine.dir/src/EnginePaths.cpp.o
+[ 82%] Building CXX object CMakeFiles/judas_engine.dir/src/DebugDraw.cpp.o
+[ 82%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldDebugView.cpp.o
+[ 82%] Building CXX object CMakeFiles/judas_engine.dir/src/SceneSession.cpp.o
+[ 82%] Building CXX object CMakeFiles/judas_engine.dir/src/RuntimeWorld.cpp.o
+[ 82%] Building CXX object CMakeFiles/judas_engine.dir/src/GameSession.cpp.o
+[ 82%] Building CXX object CMakeFiles/judas_engine.dir/src/Simulation.cpp.o
+/home/conner/Documents/GitHub/Project-Judas/src/RuntimeWorld.cpp: In function ‘bool {anonymous}::ValidRenderAsset(ResourceManager*, const std::string&, AssetType)’:
+/home/conner/Documents/GitHub/Project-Judas/src/RuntimeWorld.cpp:1449:2: warning: this ‘if’ clause does not guard... [-Wmisleading-indentation]
+ 1449 |  if(id.empty())return true;auto* a=resources&&resources->Assets()?resources->Assets()->Find(id):nullptr;return a&&!a->missing&&a->type==type;
+      |  ^~
+/home/conner/Documents/GitHub/Project-Judas/src/RuntimeWorld.cpp:1449:28: note: ...this statement, but the latter is misleadingly indented as if it were guarded by the ‘if’
+ 1449 |  if(id.empty())return true;auto* a=resources&&resources->Assets()?resources->Assets()->Find(id):nullptr;return a&&!a->missing&&a->type==type;
+      |                            ^~~~
+/home/conner/Documents/GitHub/Project-Judas/src/RuntimeWorld.cpp: In function ‘bool {anonymous}::ValidRenderSlot(ResourceManager*, const MaterialSlot&)’:
+/home/conner/Documents/GitHub/Project-Judas/src/RuntimeWorld.cpp:1453:2: warning: this ‘for’ clause does not guard... [-Wmisleading-indentation]
+ 1453 |  for(const auto& t:value.overrides.textures)if(t&&!ValidRenderAsset(resources,*t,AssetType::Texture))return false;return true;
+      |  ^~~
+/home/conner/Documents/GitHub/Project-Judas/src/RuntimeWorld.cpp:1453:115: note: ...this statement, but the latter is misleadingly indented as if it were guarded by the ‘for’
+ 1453 |  for(const auto& t:value.overrides.textures)if(t&&!ValidRenderAsset(resources,*t,AssetType::Texture))return false;return true;
+      |                                                                                                                   ^~~~~~
+/home/conner/Documents/GitHub/Project-Judas/src/RuntimeWorld.cpp: In member function ‘void RuntimeWorld::ReconcileRenderResources(EntityId)’:
+/home/conner/Documents/GitHub/Project-Judas/src/RuntimeWorld.cpp:1463:2: warning: this ‘if’ clause does not guard... [-Wmisleading-indentation]
+ 1463 |  if(!m_assets)return;auto& previous=m_renderAssetDemand[id];
+      |  ^~
+/home/conner/Documents/GitHub/Project-Judas/src/RuntimeWorld.cpp:1463:22: note: ...this statement, but the latter is misleadingly indented as if it were guarded by the ‘if’
+ 1463 |  if(!m_assets)return;auto& previous=m_renderAssetDemand[id];
+      |                      ^~~~
+/home/conner/Documents/GitHub/Project-Judas/src/RuntimeWorld.cpp:1465:2: warning: this ‘for’ clause does not guard... [-Wmisleading-indentation]
+ 1465 |  for(const auto& a:previous)if(!demand.count(a))m_assets->ReleaseRef(a);previous=std::move(demand);if(previous.empty())m_renderAssetDemand.erase(id);
+      |  ^~~
+/home/conner/Documents/GitHub/Project-Judas/src/RuntimeWorld.cpp:1465:73: note: ...this statement, but the latter is misleadingly indented as if it were guarded by the ‘for’
+ 1465 |  for(const auto& a:previous)if(!demand.count(a))m_assets->ReleaseRef(a);previous=std::move(demand);if(previous.empty())m_renderAssetDemand.erase(id);
+      |                                                                         ^~~~~~~~
+/home/conner/Documents/GitHub/Project-Judas/src/RuntimeWorld.cpp: In member function ‘bool RuntimeWorld::SetRenderVisible(EntityId, bool, bool)’:
+/home/conner/Documents/GitHub/Project-Judas/src/RuntimeWorld.cpp:1469:2: warning: this ‘if’ clause does not guard... [-Wmisleading-indentation]
+ 1469 |  if(!RuntimeDefinition(id))return false;auto& d=m_scriptDefinitions.at(id);if(!entityScope&&!d.render)return false;
+      |  ^~
+/home/conner/Documents/GitHub/Project-Judas/src/RuntimeWorld.cpp:1469:41: note: ...this statement, but the latter is misleadingly indented as if it were guarded by the ‘if’
+ 1469 |  if(!RuntimeDefinition(id))return false;auto& d=m_scriptDefinitions.at(id);if(!entityScope&&!d.render)return false;
+      |                                         ^~~~
+/home/conner/Documents/GitHub/Project-Judas/src/RuntimeWorld.cpp:1473:2: warning: this ‘for’ clause does not guard... [-Wmisleading-indentation]
+ 1473 |  for(auto& r:m_dynamicVisuals)if(r.id==id&&d.render)r.render=*d.render;return true;
+      |  ^~~
+/home/conner/Documents/GitHub/Project-Judas/src/RuntimeWorld.cpp:1473:72: note: ...this statement, but the latter is misleadingly indented as if it were guarded by the ‘for’
+ 1473 |  for(auto& r:m_dynamicVisuals)if(r.id==id&&d.render)r.render=*d.render;return true;
+      |                                                                        ^~~~~~
+/home/conner/Documents/GitHub/Project-Judas/src/RuntimeWorld.cpp: In member function ‘bool RuntimeWorld::SetMaterialSlot(EntityId, unsigned int, const MaterialSlot&)’:
+/home/conner/Documents/GitHub/Project-Judas/src/RuntimeWorld.cpp:1478:2: warning: this ‘if’ clause does not guard... [-Wmisleading-indentation]
+ 1478 |  if(auto* e=FindEntity(id))e->definition.render=r;for(auto& v:m_staticRenderables)if(v.id==id)v.render=r;for(auto& v:m_dynamicVisuals)if(v.id==id)v.render=r;
+      |  ^~
+/home/conner/Documents/GitHub/Project-Judas/src/RuntimeWorld.cpp:1478:51: note: ...this statement, but the latter is misleadingly indented as if it were guarded by the ‘if’
+ 1478 |  if(auto* e=FindEntity(id))e->definition.render=r;for(auto& v:m_staticRenderables)if(v.id==id)v.render=r;for(auto& v:m_dynamicVisuals)if(v.id==id)v.render=r;
+      |                                                   ^~~
+/home/conner/Documents/GitHub/Project-Judas/src/RuntimeWorld.cpp: In member function ‘bool RuntimeWorld::SetRuntimeMaterial(EntityId, const std::string&, const MaterialSlot&)’:
+/home/conner/Documents/GitHub/Project-Judas/src/RuntimeWorld.cpp:1487:2: warning: this ‘if’ clause does not guard... [-Wmisleading-indentation]
+ 1487 |  if(auto* e=FindEntity(id))e->definition.render=r;for(auto& v:m_staticRenderables)if(v.id==id)v.render=r;for(auto& v:m_dynamicVisuals)if(v.id==id)v.render=r;
+      |  ^~
+/home/conner/Documents/GitHub/Project-Judas/src/RuntimeWorld.cpp:1487:51: note: ...this statement, but the latter is misleadingly indented as if it were guarded by the ‘if’
+ 1487 |  if(auto* e=FindEntity(id))e->definition.render=r;for(auto& v:m_staticRenderables)if(v.id==id)v.render=r;for(auto& v:m_dynamicVisuals)if(v.id==id)v.render=r;
+      |                                                   ^~~
+/home/conner/Documents/GitHub/Project-Judas/src/RuntimeWorld.cpp: In member function ‘bool RuntimeWorld::ClearRuntimeMaterial(EntityId, const std::string&)’:
+/home/conner/Documents/GitHub/Project-Judas/src/RuntimeWorld.cpp:1492:2: warning: this ‘if’ clause does not guard... [-Wmisleading-indentation]
+ 1492 |  if(auto* e=FindEntity(id))e->definition.render=r;for(auto& v:m_staticRenderables)if(v.id==id)v.render=r;for(auto& v:m_dynamicVisuals)if(v.id==id)v.render=r;ReconcileRenderResources(id);return true;
+      |  ^~
+/home/conner/Documents/GitHub/Project-Judas/src/RuntimeWorld.cpp:1492:51: note: ...this statement, but the latter is misleadingly indented as if it were guarded by the ‘if’
+ 1492 |  if(auto* e=FindEntity(id))e->definition.render=r;for(auto& v:m_staticRenderables)if(v.id==id)v.render=r;for(auto& v:m_dynamicVisuals)if(v.id==id)v.render=r;ReconcileRenderResources(id);return true;
+      |                                                   ^~~
+/home/conner/Documents/GitHub/Project-Judas/src/RuntimeWorld.cpp: In member function ‘bool RuntimeWorld::SetModelPartVisible(EntityId, const std::string&, bool)’:
+/home/conner/Documents/GitHub/Project-Judas/src/RuntimeWorld.cpp:1499:2: warning: this ‘if’ clause does not guard... [-Wmisleading-indentation]
+ 1499 |  if(auto* e=FindEntity(id))e->definition.render=r;for(auto& v:m_staticRenderables)if(v.id==id)v.render=r;for(auto& v:m_dynamicVisuals)if(v.id==id)v.render=r;return true;
+      |  ^~
+/home/conner/Documents/GitHub/Project-Judas/src/RuntimeWorld.cpp:1499:51: note: ...this statement, but the latter is misleadingly indented as if it were guarded by the ‘if’
+ 1499 |  if(auto* e=FindEntity(id))e->definition.render=r;for(auto& v:m_staticRenderables)if(v.id==id)v.render=r;for(auto& v:m_dynamicVisuals)if(v.id==id)v.render=r;return true;
+      |                                                   ^~~
+/home/conner/Documents/GitHub/Project-Judas/src/RuntimeWorld.cpp: In member function ‘bool RuntimeWorld::ResetAppearance()’:
+/home/conner/Documents/GitHub/Project-Judas/src/RuntimeWorld.cpp:1513:2: warning: this ‘if’ clause does not guard... [-Wmisleading-indentation]
+ 1513 |  if(m_settings.appearanceResetState.empty())return true;auto s=m_settings;std::string error;if(!DecodeAppearanceState(m_settings.appearanceResetState,s,error)||!SetAppearance(s))return false;m_settings.appearanceResetState.clear();
+      |  ^~
+/home/conner/Documents/GitHub/Project-Judas/src/RuntimeWorld.cpp:1513:57: note: ...this statement, but the latter is misleadingly indented as if it were guarded by the ‘if’
+ 1513 |  if(m_settings.appearanceResetState.empty())return true;auto s=m_settings;std::string error;if(!DecodeAppearanceState(m_settings.appearanceResetState,s,error)||!SetAppearance(s))return false;m_settings.appearanceResetState.clear();
+      |                                                         ^~~~
+/home/conner/Documents/GitHub/Project-Judas/src/RuntimeWorld.cpp:1514:2: warning: this ‘if’ clause does not guard... [-Wmisleading-indentation]
+ 1514 |  if(m_assets&&!m_runtimeEnvironmentAsset.empty())m_assets->ReleaseRef(m_runtimeEnvironmentAsset);m_runtimeEnvironmentAsset.clear();return true;
+      |  ^~
+/home/conner/Documents/GitHub/Project-Judas/src/RuntimeWorld.cpp:1514:98: note: ...this statement, but the latter is misleadingly indented as if it were guarded by the ‘if’
+ 1514 |  if(m_assets&&!m_runtimeEnvironmentAsset.empty())m_assets->ReleaseRef(m_runtimeEnvironmentAsset);m_runtimeEnvironmentAsset.clear();return true;
+      |                                                                                                  ^~~~~~~~~~~~~~~~~~~~~~~~~
+[ 82%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldPresentation.cpp.o
+[ 82%] Building CXX object CMakeFiles/judas_engine.dir/src/GameplayHud.cpp.o
+[ 82%] Building CXX object CMakeFiles/judas_engine.dir/src/EngineHost.cpp.o
+[ 82%] Building CXX object CMakeFiles/judas_engine.dir/src/InteractivePlay.cpp.o
+[ 82%] Building CXX object CMakeFiles/judas_engine.dir/src/ScreenshotWriter.cpp.o
+[ 82%] Building CXX object CMakeFiles/judas_engine.dir/src/FidelityPolicy.cpp.o
+[ 88%] Building CXX object CMakeFiles/judas_engine.dir/src/CoarseSimulation.cpp.o
+[ 88%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldState.cpp.o
+[ 88%] Building CXX object CMakeFiles/judas_engine.dir/src/SaveStorage.cpp.o
+[ 88%] Building CXX object CMakeFiles/judas_engine.dir/src/SaveStorageWindows.cpp.o
+[ 88%] Building CXX object CMakeFiles/judas_engine.dir/src/PlatformServices.cpp.o
+[ 88%] Building CXX object CMakeFiles/judas_engine.dir/src/SaveService.cpp.o
+[ 88%] Building CXX object CMakeFiles/judas_engine.dir/src/MotorPersistence.cpp.o
+[ 88%] Building CXX object CMakeFiles/judas_engine.dir/src/LiquidPersistence.cpp.o
+[ 88%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldPersistence.cpp.o
+[ 88%] Building CXX object CMakeFiles/judas_engine.dir/src/CollisionAsset.cpp.o
+[ 88%] Building CXX object CMakeFiles/judas_engine.dir/src/CollisionGeometry.cpp.o
+[ 88%] Building CXX object CMakeFiles/judas_engine.dir/third_party/quickhull/QuickHull.cpp.o
+[ 94%] Building CXX object CMakeFiles/judas_engine.dir/src/JointSolver.cpp.o
+[ 94%] Building CXX object CMakeFiles/judas_engine.dir/src/PhysicsCastGeometry.cpp.o
+[ 94%] Building CXX object CMakeFiles/judas_engine.dir/src/ImpactSolver.cpp.o
+[ 94%] Building CXX object CMakeFiles/judas_engine.dir/src/RigidBody.cpp.o
+[ 94%] Building CXX object CMakeFiles/judas_engine.dir/src/RigidBodyGravity.cpp.o
+[ 94%] Building CXX object CMakeFiles/judas_engine.dir/src/Contacts.cpp.o
+[ 94%] Building CXX object CMakeFiles/judas_engine.dir/src/ContactSolver.cpp.o
+[ 94%] Building CXX object CMakeFiles/judas_engine.dir/src/RadialTerrain.cpp.o
+[ 94%] Building CXX object CMakeFiles/judas_engine.dir/src/Broadphase.cpp.o
+[ 94%] Building CXX object CMakeFiles/judas_engine.dir/src/Narrowphase.cpp.o
+[ 94%] Building CXX object CMakeFiles/judas_engine.dir/src/PhysicsWorld.cpp.o
+[ 94%] Linking CXX static library libjudas_engine.a
+[ 94%] Built target judas_engine
+[ 94%] Building CXX object CMakeFiles/judas.dir/src/RuntimeDiagnostics.cpp.o
+[ 94%] Building CXX object CMakeFiles/judas.dir/src/RuntimeOptions.cpp.o
+[ 94%] Building CXX object CMakeFiles/judas.dir/src/main.cpp.o
+[ 94%] Building CXX object CMakeFiles/judas.dir/src/Application.cpp.o
+[100%] Building CXX object CMakeFiles/judas.dir/src/TestHarness.cpp.o
+[100%] Linking CXX executable judas
+[100%] Built target judas
+[  0%] Built target judas_quickjs
+[  5%] Built target judas_icu_build
+[  5%] Built target judas_app_icon
+[ 11%] Built target judas_navigation_backend
+[ 11%] Built target judas_profiler
+[ 16%] Built target judas_audio_backend
+[ 16%] Built target judas_glad
+[ 16%] Built target harfbuzz
+[ 33%] Built target freetype
+[ 33%] Building CXX object CMakeFiles/judas_imgui.dir/third_party/imgui/imgui_draw.cpp.o
+[ 33%] Building CXX object CMakeFiles/judas_imgui.dir/third_party/imgui/imgui_tables.cpp.o
+[ 33%] Built target judas_materials
+[ 33%] Building C object CMakeFiles/judas_ufbx.dir/third_party/ufbx/ufbx.c.o
+[ 33%] Building CXX object CMakeFiles/judas_imgui.dir/third_party/imgui/imgui.cpp.o
+[ 33%] Building CXX object CMakeFiles/judas_engine.dir/src/Material.cpp.o
+/home/conner/Documents/GitHub/Project-Judas/src/Material.cpp: In function ‘bool PatchMaterialOverrides(const std::string&, MaterialOverride&, std::string&)’:
+/home/conner/Documents/GitHub/Project-Judas/src/Material.cpp:78:2: warning: this ‘if’ clause does not guard... [-Wmisleading-indentation]
+   78 |  if(map<0)throw std::runtime_error("unsupported texture slot: "+t.key());o.textures[map]=t.value().get<std::string>();}}
+      |  ^~
+/home/conner/Documents/GitHub/Project-Judas/src/Material.cpp:78:74: note: ...this statement, but the latter is misleadingly indented as if it were guarded by the ‘if’
+   78 |  if(map<0)throw std::runtime_error("unsupported texture slot: "+t.key());o.textures[map]=t.value().get<std::string>();}}
+      |                                                                          ^
+/home/conner/Documents/GitHub/Project-Judas/src/Material.cpp:81:2: warning: this ‘if’ clause does not guard... [-Wmisleading-indentation]
+   81 |  if(!field)throw std::runtime_error("unknown material parameter: "+k);*field=v.get<float>();}
+      |  ^~
+/home/conner/Documents/GitHub/Project-Judas/src/Material.cpp:81:71: note: ...this statement, but the latter is misleadingly indented as if it were guarded by the ‘if’
+   81 |  if(!field)throw std::runtime_error("unknown material parameter: "+k);*field=v.get<float>();}
+      |                                                                       ^
+/home/conner/Documents/GitHub/Project-Judas/src/Material.cpp: In function ‘bool DecodeAppearanceState(const std::string&, SceneSettings&, std::string&)’:
+/home/conner/Documents/GitHub/Project-Judas/src/Material.cpp:122:2: warning: this ‘if’ clause does not guard... [-Wmisleading-indentation]
+  122 |  if(!q.is_array()||q.size()!=4)throw std::runtime_error("appearance quaternion requires four components");s.environmentRotation={q.at(0).get<float>(),q.at(1).get<float>(),q.at(2).get<float>(),q.at(3).get<float>()};
+      |  ^~
+/home/conner/Documents/GitHub/Project-Judas/src/Material.cpp:122:107: note: ...this statement, but the latter is misleadingly indented as if it were guarded by the ‘if’
+  122 |  if(!q.is_array()||q.size()!=4)throw std::runtime_error("appearance quaternion requires four components");s.environmentRotation={q.at(0).get<float>(),q.at(1).get<float>(),q.at(2).get<float>(),q.at(3).get<float>()};
+      |                                                                                                           ^
+[ 33%] Building CXX object CMakeFiles/judas_imgui.dir/third_party/imgui/imgui_widgets.cpp.o
+[ 33%] Building CXX object CMakeFiles/judas_imgui.dir/third_party/imgui/backends/imgui_impl_sdl2.cpp.o
+[ 33%] Building CXX object CMakeFiles/judas_imgui.dir/third_party/imgui/backends/imgui_impl_opengl3.cpp.o
+[ 33%] Building CXX object CMakeFiles/judas_engine.dir/src/ScriptSystem.cpp.o
+[ 33%] Building CXX object CMakeFiles/judas_engine.dir/src/RuntimeWorld.cpp.o
+/home/conner/Documents/GitHub/Project-Judas/src/RuntimeWorld.cpp: In function ‘bool {anonymous}::ValidRenderAsset(ResourceManager*, const std::string&, AssetType)’:
+/home/conner/Documents/GitHub/Project-Judas/src/RuntimeWorld.cpp:1457:2: warning: this ‘if’ clause does not guard... [-Wmisleading-indentation]
+ 1457 |  if(id.empty())return true;auto* a=resources&&resources->Assets()?resources->Assets()->Find(id):nullptr;
+      |  ^~
+/home/conner/Documents/GitHub/Project-Judas/src/RuntimeWorld.cpp:1457:28: note: ...this statement, but the latter is misleadingly indented as if it were guarded by the ‘if’
+ 1457 |  if(id.empty())return true;auto* a=resources&&resources->Assets()?resources->Assets()->Find(id):nullptr;
+      |                            ^~~~
+/home/conner/Documents/GitHub/Project-Judas/src/RuntimeWorld.cpp: In member function ‘void RuntimeWorld::ReconcileRenderResources(EntityId)’:
+/home/conner/Documents/GitHub/Project-Judas/src/RuntimeWorld.cpp:1479:2: warning: this ‘if’ clause does not guard... [-Wmisleading-indentation]
+ 1479 |  if(!m_assets)return;auto& previous=m_renderAssetDemand[id];
+      |  ^~
+/home/conner/Documents/GitHub/Project-Judas/src/RuntimeWorld.cpp:1479:22: note: ...this statement, but the latter is misleadingly indented as if it were guarded by the ‘if’
+ 1479 |  if(!m_assets)return;auto& previous=m_renderAssetDemand[id];
+      |                      ^~~~
+/home/conner/Documents/GitHub/Project-Judas/src/RuntimeWorld.cpp: In member function ‘bool RuntimeWorld::SetRenderVisible(EntityId, bool, bool)’:
+/home/conner/Documents/GitHub/Project-Judas/src/RuntimeWorld.cpp:1489:2: warning: this ‘if’ clause does not guard... [-Wmisleading-indentation]
+ 1489 |  if(!RuntimeDefinition(id))return false;auto& d=m_scriptDefinitions.at(id);
+      |  ^~
+/home/conner/Documents/GitHub/Project-Judas/src/RuntimeWorld.cpp:1489:41: note: ...this statement, but the latter is misleadingly indented as if it were guarded by the ‘if’
+ 1489 |  if(!RuntimeDefinition(id))return false;auto& d=m_scriptDefinitions.at(id);
+      |                                         ^~~~
+/home/conner/Documents/GitHub/Project-Judas/src/RuntimeWorld.cpp: In member function ‘bool RuntimeWorld::SetMaterialSlot(EntityId, unsigned int, const MaterialSlot&)’:
+/home/conner/Documents/GitHub/Project-Judas/src/RuntimeWorld.cpp:1501:2: warning: this ‘if’ clause does not guard... [-Wmisleading-indentation]
+ 1501 |  if(r.materials.size()<=slot)r.materials.resize(slot+1);r.materials[slot]=value;
+      |  ^~
+/home/conner/Documents/GitHub/Project-Judas/src/RuntimeWorld.cpp:1501:57: note: ...this statement, but the latter is misleadingly indented as if it were guarded by the ‘if’
+ 1501 |  if(r.materials.size()<=slot)r.materials.resize(slot+1);r.materials[slot]=value;
+      |                                                         ^
+/home/conner/Documents/GitHub/Project-Judas/src/RuntimeWorld.cpp: In member function ‘bool RuntimeWorld::SetRuntimeMaterial(EntityId, const std::string&, const MaterialSlot&)’:
+/home/conner/Documents/GitHub/Project-Judas/src/RuntimeWorld.cpp:1518:2: warning: this ‘if’ clause does not guard... [-Wmisleading-indentation]
+ 1518 |  if(r.runtimeMaterials.size()>=64&&!r.runtimeMaterials.count(key))return false;r.runtimeMaterials[key]=value;
+      |  ^~
+/home/conner/Documents/GitHub/Project-Judas/src/RuntimeWorld.cpp:1518:80: note: ...this statement, but the latter is misleadingly indented as if it were guarded by the ‘if’
+ 1518 |  if(r.runtimeMaterials.size()>=64&&!r.runtimeMaterials.count(key))return false;r.runtimeMaterials[key]=value;
+      |                                                                                ^
+/home/conner/Documents/GitHub/Project-Judas/src/RuntimeWorld.cpp: In member function ‘bool RuntimeWorld::ClearRuntimeMaterial(EntityId, const std::string&)’:
+/home/conner/Documents/GitHub/Project-Judas/src/RuntimeWorld.cpp:1527:2: warning: this ‘if’ clause does not guard... [-Wmisleading-indentation]
+ 1527 |  if(!d||!d->render)return false;auto& r=*m_scriptDefinitions.at(id).render;r.runtimeMaterials.erase(key);
+      |  ^~
+/home/conner/Documents/GitHub/Project-Judas/src/RuntimeWorld.cpp:1527:33: note: ...this statement, but the latter is misleadingly indented as if it were guarded by the ‘if’
+ 1527 |  if(!d||!d->render)return false;auto& r=*m_scriptDefinitions.at(id).render;r.runtimeMaterials.erase(key);
+      |                                 ^~~~
+[ 33%] Linking CXX static library libjudas_imgui.a
+[ 33%] Built target judas_imgui
+[ 33%] Linking C static library libjudas_ufbx.a
+[ 33%] Built target judas_ufbx
+[ 33%] Linking CXX static library libjudas_engine.a
+[ 88%] Built target judas_engine
+[ 94%] Building CXX object CMakeFiles/judas_world_authoring.dir/src/authoring/WorldBuilder.cpp.o
+[ 94%] Building CXX object CMakeFiles/judas_navigation_baker.dir/third_party/recastnavigation/Recast/Source/Recast.cpp.o
+[ 94%] Building CXX object CMakeFiles/judas_navigation_baker.dir/src/NavigationBake.cpp.o
+[ 94%] Building CXX object CMakeFiles/judas_world_authoring.dir/src/authoring/ContentReferences.cpp.o
+[ 94%] Building CXX object CMakeFiles/judas_model_import.dir/src/FbxImport.cpp.o
+[ 94%] Building CXX object CMakeFiles/judas_navigation_baker.dir/third_party/recastnavigation/Recast/Source/RecastAlloc.cpp.o
+[ 94%] Building CXX object CMakeFiles/judas_navigation_baker.dir/third_party/recastnavigation/Recast/Source/RecastArea.cpp.o
+[ 94%] Building CXX object CMakeFiles/judas_model_import.dir/src/ObjImport.cpp.o
+[ 94%] Building CXX object CMakeFiles/judas_navigation_baker.dir/third_party/recastnavigation/Recast/Source/RecastAssert.cpp.o
+[ 94%] Building CXX object CMakeFiles/judas_navigation_baker.dir/third_party/recastnavigation/Recast/Source/RecastContour.cpp.o
+[ 94%] Building CXX object CMakeFiles/judas_navigation_baker.dir/third_party/recastnavigation/Recast/Source/RecastFilter.cpp.o
+[ 94%] Building CXX object CMakeFiles/judas_navigation_baker.dir/third_party/recastnavigation/Recast/Source/RecastLayers.cpp.o
+[ 94%] Building CXX object CMakeFiles/judas_world_authoring.dir/src/authoring/AuthoringDocument.cpp.o
+[ 94%] Building CXX object CMakeFiles/judas_navigation_baker.dir/third_party/recastnavigation/Recast/Source/RecastMesh.cpp.o
+[ 94%] Building CXX object CMakeFiles/judas_navigation_baker.dir/third_party/recastnavigation/Recast/Source/RecastMeshDetail.cpp.o
+[ 94%] Building CXX object CMakeFiles/judas_model_import.dir/src/ModelCook.cpp.o
+[ 94%] Building CXX object CMakeFiles/judas_model_import.dir/src/ModelCollision.cpp.o
+[ 94%] Building CXX object CMakeFiles/judas_navigation_baker.dir/third_party/recastnavigation/Recast/Source/RecastRasterization.cpp.o
+[ 94%] Building CXX object CMakeFiles/judas_navigation_baker.dir/third_party/recastnavigation/Recast/Source/RecastRegion.cpp.o
+[ 94%] Building CXX object CMakeFiles/judas_world_authoring.dir/src/authoring/SkeletonAuthoring.cpp.o
+[ 94%] Building CXX object CMakeFiles/judas_world_authoring.dir/src/authoring/RecipePreview.cpp.o
+[ 94%] Linking CXX static library libjudas_navigation_baker.a
+[ 94%] Built target judas_navigation_baker
+[ 94%] Linking CXX static library libjudas_world_authoring.a
+[ 94%] Built target judas_world_authoring
+[ 94%] Linking CXX static library libjudas_model_import.a
+[ 94%] Built target judas_model_import
+[ 94%] Building CXX object CMakeFiles/judas_editor.dir/src/editor/EditorPicking.cpp.o
+[ 94%] Building CXX object CMakeFiles/judas_editor.dir/src/editor/EditorMain.cpp.o
+[ 94%] Building CXX object CMakeFiles/judas_editor.dir/src/editor/EditorHistory.cpp.o
+[ 94%] Building CXX object CMakeFiles/judas_editor.dir/src/editor/EditorCamera.cpp.o
+[ 94%] Building CXX object CMakeFiles/judas_editor.dir/src/editor/EditorApplication.cpp.o
+[ 94%] Building CXX object CMakeFiles/judas_editor.dir/src/editor/EditorPanels.cpp.o
+[ 94%] Building CXX object CMakeFiles/judas_editor.dir/src/editor/WorldTools.cpp.o
+[ 94%] Building CXX object CMakeFiles/judas_editor.dir/src/editor/ProfilerView.cpp.o
+/home/conner/Documents/GitHub/Project-Judas/src/editor/EditorPanels.cpp: In function ‘void {anonymous}::DrawRuntimeRenderPreview(EditorDocument&, SceneObjectId, EditorPanelState&)’:
+/home/conner/Documents/GitHub/Project-Judas/src/editor/EditorPanels.cpp:108:5: warning: this ‘if’ clause does not guard... [-Wmisleading-indentation]
+  108 |     if(!state.runtime)return;const auto* definition=state.runtime->RuntimeDefinition(id);if(!definition)return;
+      |     ^~
+/home/conner/Documents/GitHub/Project-Judas/src/editor/EditorPanels.cpp:108:30: note: ...this statement, but the latter is misleadingly indented as if it were guarded by the ‘if’
+  108 |     if(!state.runtime)return;const auto* definition=state.runtime->RuntimeDefinition(id);if(!definition)return;
+      |                              ^~~~~
+[100%] Building CXX object CMakeFiles/judas_editor.dir/src/editor/EditorWidgets.cpp.o
+[100%] Building CXX object CMakeFiles/judas_editor.dir/src/editor/ComponentEditors.cpp.o
+[100%] Building CXX object CMakeFiles/judas_editor.dir/src/editor/GizmoMath.cpp.o
+/home/conner/Documents/GitHub/Project-Judas/src/editor/ComponentEditors.cpp: In function ‘void {anonymous}::DrawRender(EditorDocument&, SceneObject&, EditorPanelState&)’:
+/home/conner/Documents/GitHub/Project-Judas/src/editor/ComponentEditors.cpp:276:21: warning: this ‘if’ clause does not guard... [-Wmisleading-indentation]
+  276 |                     if(!visible)r.hiddenParts.push_back(part.part);doc.CommitEdit();
+      |                     ^~
+/home/conner/Documents/GitHub/Project-Judas/src/editor/ComponentEditors.cpp:276:68: note: ...this statement, but the latter is misleadingly indented as if it were guarded by the ‘if’
+  276 |                     if(!visible)r.hiddenParts.push_back(part.part);doc.CommitEdit();
+      |                                                                    ^~~
+[100%] Linking CXX executable judas_editor
+[100%] Built target judas_editor
+[  0%] Built target judas_app_icon
+[  0%] Built target judas_quickjs
+[ 11%] Built target judas_icu_build
+[ 11%] Built target judas_navigation_backend
+[ 11%] Built target judas_glad
+[ 11%] Built target judas_profiler
+[ 29%] Built target freetype
+[ 29%] Built target harfbuzz
+[ 35%] Built target judas_audio_backend
+[ 35%] Built target judas_materials
+[ 35%] Building CXX object CMakeFiles/judas_engine.dir/src/Material.cpp.o
+[ 35%] Building CXX object CMakeFiles/judas_engine.dir/src/RuntimeWorld.cpp.o
+/home/conner/Documents/GitHub/Project-Judas/src/RuntimeWorld.cpp: In member function ‘bool RuntimeWorld::SetMaterialSlot(EntityId, unsigned int, const MaterialSlot&)’:
+/home/conner/Documents/GitHub/Project-Judas/src/RuntimeWorld.cpp:1506:2: warning: this ‘if’ clause does not guard... [-Wmisleading-indentation]
+ 1506 |  if(r.materials.size()<=slot)r.materials.resize(slot+1);r.materials[slot]=value;
+      |  ^~
+/home/conner/Documents/GitHub/Project-Judas/src/RuntimeWorld.cpp:1506:57: note: ...this statement, but the latter is misleadingly indented as if it were guarded by the ‘if’
+ 1506 |  if(r.materials.size()<=slot)r.materials.resize(slot+1);r.materials[slot]=value;
+      |                                                         ^
+/home/conner/Documents/GitHub/Project-Judas/src/RuntimeWorld.cpp: In member function ‘bool RuntimeWorld::SetRuntimeMaterial(EntityId, const std::string&, const MaterialSlot&)’:
+/home/conner/Documents/GitHub/Project-Judas/src/RuntimeWorld.cpp:1523:2: warning: this ‘if’ clause does not guard... [-Wmisleading-indentation]
+ 1523 |  if(r.runtimeMaterials.size()>=64&&!r.runtimeMaterials.count(key))return false;r.runtimeMaterials[key]=value;
+      |  ^~
+/home/conner/Documents/GitHub/Project-Judas/src/RuntimeWorld.cpp:1523:80: note: ...this statement, but the latter is misleadingly indented as if it were guarded by the ‘if’
+ 1523 |  if(r.runtimeMaterials.size()>=64&&!r.runtimeMaterials.count(key))return false;r.runtimeMaterials[key]=value;
+      |                                                                                ^
+[ 35%] Linking CXX static library libjudas_engine.a
+[ 94%] Built target judas_engine
+[100%] Building CXX object CMakeFiles/judas_runtime_render_tests.dir/tests/RuntimeRenderTests.cpp.o
+[100%] Linking CXX executable judas_runtime_render_tests
+[100%] Built target judas_runtime_render_tests
+[  6%] Built target judas_icu_build
+[  6%] Built target judas_quickjs
+[  6%] Built target judas_app_icon
+[ 12%] Built target judas_navigation_backend
+[ 31%] Built target freetype
+[ 31%] Built target judas_glad
+[ 37%] Built target judas_profiler
+[ 37%] Built target judas_audio_backend
+[ 37%] Built target harfbuzz
+[ 37%] Built target judas_materials
+[100%] Built target judas_engine
+[100%] Building CXX object CMakeFiles/judas_runtime_render_application_tests.dir/src/editor/EditorHistory.cpp.o
+[100%] Building CXX object CMakeFiles/judas_runtime_render_application_tests.dir/tests/RuntimeRenderApplicationTests.cpp.o
+[100%] Linking CXX executable judas_runtime_render_application_tests
+[100%] Built target judas_runtime_render_application_tests
+[  6%] Built target judas_quickjs
+[  6%] Built target judas_icu_build
+[ 12%] Built target judas_navigation_backend
+[ 12%] Built target judas_app_icon
+[ 31%] Built target freetype
+[ 31%] Built target judas_glad
+[ 31%] Built target judas_profiler
+[ 37%] Built target judas_audio_backend
+[ 37%] Built target harfbuzz
+[ 37%] Built target judas_materials
+[100%] Built target judas_engine
+[100%] Building CXX object CMakeFiles/judas_material_tests.dir/tests/MaterialTests.cpp.o
+[100%] Linking CXX executable judas_material_tests
+[100%] Built target judas_material_tests
+[  5%] Built target judas_icu_build
+[  5%] Built target judas_quickjs
+[  5%] Built target judas_app_icon
+[ 11%] Built target judas_navigation_backend
+[ 29%] Built target freetype
+[ 29%] Built target judas_glad
+[ 29%] Built target judas_profiler
+[ 35%] Built target judas_audio_backend
+[ 35%] Built target harfbuzz
+[ 35%] Built target judas_materials
+[ 94%] Built target judas_engine
+[100%] Building CXX object CMakeFiles/judas_material_application_tests.dir/src/RuntimeOptions.cpp.o
+[100%] Building CXX object CMakeFiles/judas_material_application_tests.dir/src/TestHarness.cpp.o
+[100%] Building CXX object CMakeFiles/judas_material_application_tests.dir/tests/MaterialApplicationTests.cpp.o
+[100%] Building CXX object CMakeFiles/judas_material_application_tests.dir/src/Application.cpp.o
+[100%] Building CXX object CMakeFiles/judas_material_application_tests.dir/src/RuntimeDiagnostics.cpp.o
+[100%] Linking CXX executable judas_material_application_tests
+[100%] Built target judas_material_application_tests
+[  6%] Built target judas_icu_build
+[  6%] Built target judas_app_icon
+[  6%] Built target judas_quickjs
+[ 12%] Built target judas_navigation_backend
+[ 31%] Built target freetype
+[ 37%] Built target judas_glad
+[ 37%] Built target judas_profiler
+[ 37%] Built target judas_audio_backend
+[ 37%] Built target harfbuzz
+[ 37%] Built target judas_materials
+[100%] Built target judas_engine
+[100%] Building CXX object CMakeFiles/judas_render_camera_tests.dir/src/editor/EditorHistory.cpp.o
+[100%] Building CXX object CMakeFiles/judas_render_camera_tests.dir/tests/RenderCameraTests.cpp.o
+[100%] Linking CXX executable judas_render_camera_tests
+[100%] Built target judas_render_camera_tests
+[  6%] Built target judas_icu_build
+[  6%] Built target judas_app_icon
+[  6%] Built target judas_quickjs
+[ 12%] Built target judas_navigation_backend
+[ 31%] Built target freetype
+[ 31%] Built target judas_glad
+[ 37%] Built target judas_profiler
+[ 37%] Built target judas_audio_backend
+[ 37%] Built target harfbuzz
+[ 37%] Built target judas_materials
+[100%] Built target judas_engine
+[100%] Building CXX object CMakeFiles/judas_scene_fingerprint_tests.dir/tests/SceneFingerprintTests.cpp.o
+[100%] Linking CXX executable judas_scene_fingerprint_tests
+[100%] Built target judas_scene_fingerprint_tests
+[  5%] Built target judas_quickjs
+[  5%] Built target judas_icu_build
+[  5%] Built target judas_app_icon
+[ 11%] Built target judas_navigation_backend
+[ 29%] Built target freetype
+[ 35%] Built target judas_audio_backend
+[ 35%] Built target judas_profiler
+[ 35%] Built target judas_glad
+[ 35%] Built target harfbuzz
+[ 35%] Built target judas_ufbx
+[ 35%] Built target judas_materials
+[ 94%] Built target judas_engine
+[ 94%] Built target judas_model_import
+[ 94%] Built target judas_world_authoring
+[ 94%] Building CXX object CMakeFiles/judas_scene_author.dir/tools/StructuredAuthor.cpp.o
+[ 94%] Building CXX object CMakeFiles/judas_scene_author.dir/tools/RecipeCLI.cpp.o
+[ 94%] Building CXX object CMakeFiles/judas_scene_author.dir/tools/SceneAuthor.cpp.o
+[100%] Building CXX object CMakeFiles/judas_scene_author.dir/tools/AuthoringCLI.cpp.o
+[100%] Building CXX object CMakeFiles/judas_scene_author.dir/tools/ContentServicesCLI.cpp.o
+[100%] Linking CXX executable judas_scene_author
+[100%] Built target judas_scene_author
+[  6%] Built target judas_icu_build
+[  6%] Built target judas_quickjs
+[  6%] Built target judas_app_icon
+[ 12%] Built target judas_navigation_backend
+[ 12%] Built target judas_glad
+[ 31%] Built target freetype
+[ 31%] Built target judas_profiler
+[ 37%] Built target judas_audio_backend
+[ 37%] Built target harfbuzz
+[ 37%] Built target judas_materials
+[100%] Built target judas_engine
+[100%] Building CXX object CMakeFiles/judas_export.dir/src/ExportMain.cpp.o
+[100%] Linking CXX executable judas_export
+[100%] Built target judas_export
+gmake: *** No rule to make target 'judas_resource_tests'.  Stop.

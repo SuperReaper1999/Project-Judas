@@ -39,11 +39,18 @@ struct RenderTargetHandle {
 
 struct MaterialHandle {unsigned id=0xFFFFFFFFu;bool IsValid()const{return id!=0xFFFFFFFFu;}};
 struct EnvironmentHandle {unsigned id=0xFFFFFFFFu;bool IsValid()const{return id!=0xFFFFFFFFu;}};
-struct MaterialBinding {MaterialHandle handle;MaterialOverride overrides;bool explicitAsset=false,failed=false;};
 struct TextureHandle {
     static constexpr unsigned int kInvalidId = 0xFFFFFFFFu;
     unsigned int id = kInvalidId;
     bool IsValid() const { return id != kInvalidId; }
+};
+// Borrowed immutable resources resolved for one render sample. A map replacement
+// is active only once Ready; an active invalid handle explicitly removes the map.
+// These handles are never serialized or owned by the instance.
+struct MaterialBinding {
+    MaterialHandle handle;MaterialOverride overrides;bool explicitAsset=false,failed=false;
+    std::array<TextureHandle,5> textures{};
+    std::array<bool,5> textureOverrides{};
 };
 
 // Milestone 30: what Renderer actually submitted since the last
@@ -263,6 +270,8 @@ public:
     // BeginFrame call resets the viewport back to the window's own size —
     // this does not need to do so itself.
     void EndShadowPass();
+    // Makes an omitted light's old map unreachable without a GPU allocation.
+    void InvalidateShadowSlot(int shadowSlot);
 
     // --- Milestone 13: UI overlay rendering ---
     //
@@ -405,7 +414,7 @@ private:
     std::map<std::string,GLint> m_materialUniforms;
     GLint MaterialUniform(const char* name);
     TextureHandle ColourTexture(TextureHandle);
-    void BindMaterial(const GpuMaterial*,const MaterialOverride&,TextureHandle,const glm::vec3&,float,bool shadow);
+    void BindMaterial(const GpuMaterial*,const MaterialBinding&,TextureHandle,const glm::vec3&,float,bool shadow);
     void BeginLinearPass(int width,int height);
     void ResolveLinearPass(bool sceneLinear=false);
     void ShutdownAppearance();

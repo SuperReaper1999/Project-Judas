@@ -1,0 +1,384 @@
+JudasScene 3
+settings
+ name "M72 Render Control Lab"
+ world-origin 0 0 0
+ sun-direction .4 .7 1
+ sun-color 2 1.9 1.8
+ ambient .1 .1 .1
+ fluid-scale 1
+ fidelity-policy none
+ next-id 100
+ linear-rendering true
+ exposure 1
+ environment "f7cb1f66fa37defe9cdc0cf455a31be1"
+ environment-intensity 1
+ environment-rotation 1 0 0 0
+ environment-background false
+end
+
+object 1 "Floor"
+ position 0 -0.25 0
+ rotation 1 0 0 0
+ scale 1 1 1
+ render box
+ render.half-extents 12 0.25 9
+ render.radius 0.75
+ render.color 1 1 1
+ render.alpha 1
+ render.secondary-color 1 1 1
+ render.secondary-alpha 1
+ render.mesh-asset ""
+ render.texture-asset ""
+ render.materials "1 \"660beba47936b2e5f45b8891284a0c11\" 0"
+end
+
+object 10 "Metal roughness 0.08"
+ position -5 3 -3
+ rotation 1 0 0 0
+ scale 1 1 1
+ render sphere
+ render.half-extents 0.75 0.75 0.75
+ render.radius 0.75
+ render.color 1 1 1
+ render.alpha 1
+ render.secondary-color 1 1 1
+ render.secondary-alpha 1
+ render.mesh-asset ""
+ render.texture-asset ""
+ render.materials "1 \"94ad484b2367a78eeaad39a02cef5716\" 0"
+end
+
+object 20 "Dielectric roughness 0.08"
+ position -5 1 -3
+ rotation 1 0 0 0
+ scale 1 1 1
+ render sphere
+ render.half-extents 0.75 0.75 0.75
+ render.radius 0.75
+ render.color 1 1 1
+ render.alpha 1
+ render.secondary-color 1 1 1
+ render.secondary-alpha 1
+ render.mesh-asset ""
+ render.texture-asset ""
+ render.materials "1 \"e95be2e7bce26a18a355fc902a5d190a\" 0"
+end
+
+object 11 "Metal roughness 0.3"
+ position -2 3 -3
+ rotation 1 0 0 0
+ scale 1 1 1
+ render sphere
+ render.half-extents 0.75 0.75 0.75
+ render.radius 0.75
+ render.color 1 1 1
+ render.alpha 1
+ render.secondary-color 1 1 1
+ render.secondary-alpha 1
+ render.mesh-asset ""
+ render.texture-asset ""
+ render.materials "1 \"9186ad542df9aaedabd70760bb790cb2\" 0"
+end
+
+object 21 "Dielectric roughness 0.3"
+ position -2 1 -3
+ rotation 1 0 0 0
+ scale 1 1 1
+ render sphere
+ render.half-extents 0.75 0.75 0.75
+ render.radius 0.75
+ render.color 1 1 1
+ render.alpha 1
+ render.secondary-color 1 1 1
+ render.secondary-alpha 1
+ render.mesh-asset ""
+ render.texture-asset ""
+ render.materials "1 \"e673a7650e6300a7a849a7fc0b973ead\" 0"
+end
+
+object 12 "Metal roughness 0.6"
+ position 1 3 -3
+ rotation 1 0 0 0
+ scale 1 1 1
+ render sphere
+ render.half-extents 0.75 0.75 0.75
+ render.radius 0.75
+ render.color 1 1 1
+ render.alpha 1
+ render.secondary-color 1 1 1
+ render.secondary-alpha 1
+ render.mesh-asset ""
+ render.texture-asset ""
+ render.materials "1 \"13815612430b28f514af04a7b4d0729d\" 0"
+end
+
+object 22 "Dielectric roughness 0.6"
+ position 1 1 -3
+ rotation 1 0 0 0
+ scale 1 1 1
+ render sphere
+ render.half-extents 0.75 0.75 0.75
+ render.radius 0.75
+ render.color 1 1 1
+ render.alpha 1
+ render.secondary-color 1 1 1
+ render.secondary-alpha 1
+ render.mesh-asset ""
+ render.texture-asset ""
+ render.materials "1 \"abcd724383dcc6eadb7a415415d0f878\" 0"
+end
+
+object 13 "Metal roughness 0.95"
+ position 4 3 -3
+ rotation 1 0 0 0
+ scale 1 1 1
+ render sphere
+ render.half-extents 0.75 0.75 0.75
+ render.radius 0.75
+ render.color 1 1 1
+ render.alpha 1
+ render.secondary-color 1 1 1
+ render.secondary-alpha 1
+ render.mesh-asset ""
+ render.texture-asset ""
+ render.materials "1 \"223237732db3a4951084cdc918abd826\" 0"
+end
+
+object 23 "Dielectric roughness 0.95"
+ position 4 1 -3
+ rotation 1 0 0 0
+ scale 1 1 1
+ render sphere
+ render.half-extents 0.75 0.75 0.75
+ render.radius 0.75
+ render.color 1 1 1
+ render.alpha 1
+ render.secondary-color 1 1 1
+ render.secondary-alpha 1
+ render.mesh-asset ""
+ render.texture-asset ""
+ render.materials "1 \"9dbf8835e81982778c5bd65d66344b11\" 0"
+end
+
+object 30 "Rotated nonuniform ribbed mesh"
+ position -5 1 1
+ rotation .9238795 .12 .3 .2
+ scale 1 .8 .5
+ render mesh
+ render.half-extents 0.75 0.75 0.75
+ render.radius 0.75
+ render.color 1 1 1
+ render.alpha 1
+ render.secondary-color 1 1 1
+ render.secondary-alpha 1
+ render.texture-asset ""
+ render.materials "1 \"44a6e287d1c0ba963130ebde61975aee\" 0"
+ render.mesh-asset "94a79277519baddab36eb74fdad4c53b"
+end
+
+object 31 "Emissive bars"
+ position -2 1 1
+ rotation 1 0 0 0
+ scale 1 1 1
+ render box
+ render.half-extents 0.9 1 0.2
+ render.radius 0.75
+ render.color 1 1 1
+ render.alpha 1
+ render.secondary-color 1 1 1
+ render.secondary-alpha 1
+ render.mesh-asset ""
+ render.texture-asset ""
+ render.materials "1 \"63ea6eea9edb6991ad8a074ed3ed7d4f\" 0"
+end
+
+object 32 "Cutout with shadow"
+ position 1 1.2 1
+ rotation 1 0 0 0
+ scale 1 1 1
+ render box
+ render.half-extents 1 1.2 0.03
+ render.radius 0.75
+ render.color 1 1 1
+ render.alpha 1
+ render.secondary-color 1 1 1
+ render.secondary-alpha 1
+ render.mesh-asset ""
+ render.texture-asset ""
+ render.materials "1 \"eaa5f7c31f68e0af427c982780cd2ede\" 0"
+end
+
+object 33 "Transparent panel"
+ position 4 1.2 1
+ rotation 1 0 0 0
+ scale 1 1 1
+ render box
+ render.half-extents 1 1.2 0.03
+ render.radius 0.75
+ render.color 1 1 1
+ render.alpha 1
+ render.secondary-color 1 1 1
+ render.secondary-alpha 1
+ render.mesh-asset ""
+ render.texture-asset ""
+ render.materials "1 \"591772eaa2b5590f6fb47f6880940eb1\" 0"
+end
+
+object 34 "Imported multi material"
+ position -5 1.5 5
+ rotation 1 0 0 0
+ scale 1 1 1
+ render mesh
+ render.half-extents 0.75 0.75 0.75
+ render.radius 0.75
+ render.color 1 1 1
+ render.alpha 1
+ render.secondary-color 1 1 1
+ render.secondary-alpha 1
+ render.texture-asset ""
+ render.mesh-asset "94a79277519baddab36eb74fdad4c53b"
+end
+
+object 35 "Skinned normal map"
+ position -1 0 5
+ rotation 1 0 0 0
+ scale 1 1 1
+ render mesh
+ render.half-extents 0.75 0.75 0.75
+ render.radius 0.75
+ render.color 1 1 1
+ render.alpha 1
+ render.secondary-color 1 1 1
+ render.secondary-alpha 1
+ render.texture-asset ""
+ render.materials "1 \"44a6e287d1c0ba963130ebde61975aee\" 0"
+ render.mesh-asset "46464646464646464646464646464601"
+ animation.enabled true
+ animation.play-on-start true
+ animation.loop true
+ animation.clip "Wave"
+ animation.speed 1
+ animation.time 0
+end
+
+object 40 "Runtime multipart instance"
+ position -2 1 5
+ rotation 1 0 0 0
+ scale 1 1 1
+ render mesh
+ render.half-extents 0.75 0.75 0.75
+ render.radius 0.75
+ render.color 1 1 1
+ render.alpha 1
+ render.secondary-color 1 1 1
+ render.secondary-alpha 1
+ render.mesh-asset "94a79277519baddab36eb74fdad4c53b"
+ render.texture-asset ""
+end
+
+object 41 "Unmodified shared instance"
+ position 2 1 5
+ rotation 1 0 0 0
+ scale 1 1 1
+ render mesh
+ render.half-extents 0.75 0.75 0.75
+ render.radius 0.75
+ render.color 1 1 1
+ render.alpha 1
+ render.secondary-color 1 1 1
+ render.secondary-alpha 1
+ render.mesh-asset "94a79277519baddab36eb74fdad4c53b"
+ render.texture-asset ""
+end
+
+object 50 "Secondary camera"
+ position 0 5 12
+ rotation 1 0 0 0
+ scale 1 1 1
+ render-camera
+ camera.enabled true
+ camera.width 384
+ camera.height 216
+ camera.fov 60
+ camera.near .1
+ camera.far 100
+ camera.cadence 1
+end
+
+object 51 "Unlit camera display"
+ position 8 2 1
+ rotation 1 0 0 0
+ scale 1 1 1
+ render box
+ render.half-extents 2 1.125 0.03
+ render.radius 0.75
+ render.color 1 1 1
+ render.alpha 1
+ render.secondary-color 1 1 1
+ render.secondary-alpha 1
+ render.mesh-asset ""
+ render.texture-asset ""
+ render.materials "1 \"2ffe98d071ee30b7d2c55545e3e6f1c3\" 0"
+ render.texture-camera 50
+end
+
+object 60 "Solid visibility probe"
+ position 0 1 8
+ rotation 1 0 0 0
+ scale 1 1 1
+ render box
+ render.half-extents 0.6 1 0.6
+ render.radius 0.5
+ render.color 0.8 0.3 0.08
+ render.alpha 1
+ render.secondary-color 1 1 1
+ render.secondary-alpha 1
+ render.mesh-asset ""
+ render.texture-asset ""
+ body static box
+ body.half-extents 0.6 1 0.6
+ body.radius 0.5
+ body.terrain ""
+ body.mass 1
+ body.friction 0.5
+ body.restitution 0
+ body.initial-velocity 0 0 0
+ body.pickable true
+ body.managed false
+ body.compound-count 0
+ body.fluid-cavity-count 0
+ scripts 1
+ script.0.id 1
+ script.0.asset "72727272727272727272727272727260"
+ script.0.enabled true
+ script.0.properties "{}"
+end
+
+object 61 "Resolved socket marker (stays visible when figure hidden)"
+ position -1 3 5
+ rotation 1 0 0 0
+ scale 1 1 1
+ render sphere
+ render.half-extents .13 .13 .13
+ render.radius 0.13
+ render.color 1 0.3 0.04
+ render.alpha 1
+ render.secondary-color 1 1 1
+ render.secondary-alpha 1
+ render.mesh-asset ""
+ render.texture-asset ""
+end
+
+object 90 "Lab UI and script"
+ position 0 0 0
+ rotation 1 0 0 0
+ scale 1 1 1
+ ui.asset "3316ad760a784d036fb4c52e6f083686"
+ ui.name "lab_ui"
+ ui.enabled true
+ scripts 1
+ script.0.id 1
+ script.0.asset "d7e59848a707c46ff07161231eed5d6f"
+ script.0.enabled true
+ script.0.properties "{}"
+end

@@ -1,6 +1,7 @@
 # Documentation alignment follow-up
 
-Current reference checkpoint: accepted M69, 8 October 2026.
+Current reference checkpoint: accepted M71, 9 October 2026;
+the uncommitted [M72 candidate](M72.md) extends the current API reference.
 
 We need a better repeatable way to keep documentation aligned as Judas changes.
 The October audit found accepted milestones still labelled pending and older
