@@ -1,0 +1,158 @@
+﻿[
+    {
+        "expected":  "cd70d5ff9d7f8edea07beeadda374ae2b77cd4745268690d568078a14cd70f30",
+        "path":  "CMakeLists.txt",
+        "actual":  "cd70d5ff9d7f8edea07beeadda374ae2b77cd4745268690d568078a14cd70f30",
+        "matches":  true
+    },
+    {
+        "expected":  "ec0caa86ddbd3ee578849ee01827e8dbb3ec7cb2a11291f96c0ae03c6f7b00b1",
+        "path":  "src/ScriptSystem.cpp",
+        "actual":  "ec0caa86ddbd3ee578849ee01827e8dbb3ec7cb2a11291f96c0ae03c6f7b00b1",
+        "matches":  true
+    },
+    {
+        "expected":  "7a556e498bca9f6805cf18894e4936d9760daa46ba7fe4307841c849752c3294",
+        "path":  "src/ScriptSystem.h",
+        "actual":  "7a556e498bca9f6805cf18894e4936d9760daa46ba7fe4307841c849752c3294",
+        "matches":  true
+    },
+    {
+        "expected":  "fc85c3c8cf09618f910c11bc7519c36a85d074fe1ff84d56ee208769e85e2947",
+        "path":  "src/ScriptSignals.inc",
+        "actual":  "fc85c3c8cf09618f910c11bc7519c36a85d074fe1ff84d56ee208769e85e2947",
+        "matches":  true
+    },
+    {
+        "expected":  "767554e32609e30a8b822755a6bf4a5cc660f8958aa1dedc4d16cad944e159ac",
+        "path":  "src/Simulation.cpp",
+        "actual":  "767554e32609e30a8b822755a6bf4a5cc660f8958aa1dedc4d16cad944e159ac",
+        "matches":  true
+    },
+    {
+        "expected":  "e870bd3149bd62c7038b8336af5498278e87accdec573c12092c7d8e40264fe4",
+        "path":  "src/InteractivePlay.cpp",
+        "actual":  "e870bd3149bd62c7038b8336af5498278e87accdec573c12092c7d8e40264fe4",
+        "matches":  true
+    },
+    {
+        "expected":  "0ba7d41cdb161a3c8c41f7b448cde8558e09fafe4408a7a042df227f863da3e3",
+        "path":  "tests/SignalTests.cpp",
+        "actual":  "0ba7d41cdb161a3c8c41f7b448cde8558e09fafe4408a7a042df227f863da3e3",
+        "matches":  true
+    },
+    {
+        "expected":  "bab545d278de1e60b71329245aab8cb1f1750de23291aa0f89bb309e89a22d0a",
+        "path":  "tests/SignalApplicationTests.cpp",
+        "actual":  "bab545d278de1e60b71329245aab8cb1f1750de23291aa0f89bb309e89a22d0a",
+        "matches":  true
+    },
+    {
+        "expected":  "76eef56106331942e0238f8c574b8ba9406e789ae438e800809ccfb52cad305e",
+        "path":  "docs/judasjs/examples/signals.js",
+        "actual":  "76eef56106331942e0238f8c574b8ba9406e789ae438e800809ccfb52cad305e",
+        "matches":  true
+    },
+    {
+        "expected":  "faaf76794b743f701e0d6760dd73a96e2cdceee29cec021f1d6534b8e1a93cd5",
+        "path":  "projects/signals_lab/README.md",
+        "actual":  "faaf76794b743f701e0d6760dd73a96e2cdceee29cec021f1d6534b8e1a93cd5",
+        "matches":  true
+    },
+    {
+        "expected":  "b3f78082b3eabd773f71e6cd1a98f078946a38e4ff8434a65c738d6bf8df6b51",
+        "path":  "projects/signals_lab/signals_lab.judasproj",
+        "actual":  "b3f78082b3eabd773f71e6cd1a98f078946a38e4ff8434a65c738d6bf8df6b51",
+        "matches":  true
+    },
+    {
+        "expected":  "ffd055b6a1b74e3b44cbeea005a1a307c68e1d338a9165d757ec0b9e98dca588",
+        "path":  "projects/signals_lab/Scenes/lab.judas",
+        "actual":  "ffd055b6a1b74e3b44cbeea005a1a307c68e1d338a9165d757ec0b9e98dca588",
+        "matches":  true
+    },
+    {
+        "expected":  "e6e329bfd66b90ebeb1c85db0472d687336cd136cd6a632ee03fadd3320b9530",
+        "path":  "projects/signals_lab/Scenes/annex.judas",
+        "actual":  "e6e329bfd66b90ebeb1c85db0472d687336cd136cd6a632ee03fadd3320b9530",
+        "matches":  true
+    },
+    {
+        "expected":  "11fc822d8daf77d3f325ff4bf3629395e630c786b6d2c23dc111dd23b1d5e15a",
+        "path":  "projects/signals_lab/Assets/ui/lab.judasui.judasmeta",
+        "actual":  "11fc822d8daf77d3f325ff4bf3629395e630c786b6d2c23dc111dd23b1d5e15a",
+        "matches":  true
+    },
+    {
+        "expected":  "6503fc2d95fc2260f29c0249f50902642442cebd7074b71804c9246510ed93ef",
+        "path":  "projects/signals_lab/Assets/ui/lab.judasui",
+        "actual":  "6503fc2d95fc2260f29c0249f50902642442cebd7074b71804c9246510ed93ef",
+        "matches":  true
+    },
+    {
+        "expected":  "e8a996137103f367961c500cb37e903d879e1d7b94d1be852988b8941fc668bc",
+        "path":  "projects/signals_lab/Assets/scripts/counter.js.judasmeta",
+        "actual":  "e8a996137103f367961c500cb37e903d879e1d7b94d1be852988b8941fc668bc",
+        "matches":  true
+    },
+    {
+        "expected":  "73b6c6880d2e091e555b920d15c030a139da83688d8bb1f4f64aefed2b53d546",
+        "path":  "projects/signals_lab/Assets/scripts/lab.js.judasmeta",
+        "actual":  "73b6c6880d2e091e555b920d15c030a139da83688d8bb1f4f64aefed2b53d546",
+        "matches":  true
+    },
+    {
+        "expected":  "baacc8be0249c6fa91740c6e3bdd3cea040eecc4c0090b0af6e2212586eb642f",
+        "path":  "projects/signals_lab/Assets/scripts/lab.js",
+        "actual":  "baacc8be0249c6fa91740c6e3bdd3cea040eecc4c0090b0af6e2212586eb642f",
+        "matches":  true
+    },
+    {
+        "expected":  "d0ab75c7ec46a9eab1afcdaac598a3c878b2a5a2ae385fd4367f2506384304cc",
+        "path":  "projects/signals_lab/Assets/scripts/counter.js",
+        "actual":  "d0ab75c7ec46a9eab1afcdaac598a3c878b2a5a2ae385fd4367f2506384304cc",
+        "matches":  true
+    },
+    {
+        "expected":  "278852ae04104ba619846602678da8309a13b6dc8099a33a100075095cf239e8",
+        "path":  "projects/signals_lab/Assets/world/lab.judasworld.judasmeta",
+        "actual":  "278852ae04104ba619846602678da8309a13b6dc8099a33a100075095cf239e8",
+        "matches":  true
+    },
+    {
+        "expected":  "982071e348f978185ec094a3e114d0776354d9f9964a330ddf6016b1f44f82d5",
+        "path":  "projects/signals_lab/Assets/world/lab.judasworld",
+        "actual":  "982071e348f978185ec094a3e114d0776354d9f9964a330ddf6016b1f44f82d5",
+        "matches":  true
+    },
+    {
+        "expected":  "49244e72fac277656523ae93650a49183f6da315e3453b1355b2b2208161e2b4",
+        "path":  "projects/signals_lab/Assets/fonts/DejaVuSans.ttf.judasmeta",
+        "actual":  "49244e72fac277656523ae93650a49183f6da315e3453b1355b2b2208161e2b4",
+        "matches":  true
+    },
+    {
+        "expected":  "63d3ba759d12804c5b31a9d5940d855c1820d1f5999e6b0872eb1c7ff045fbc9",
+        "path":  "projects/signals_lab/Assets/fonts/LICENSE.txt",
+        "actual":  "63d3ba759d12804c5b31a9d5940d855c1820d1f5999e6b0872eb1c7ff045fbc9",
+        "matches":  true
+    },
+    {
+        "expected":  "b4c632e3cdf9acc7f28758fb5a323c8524d7fc6660d46904d9b6cbe2809c419c",
+        "path":  "projects/signals_lab/Assets/fonts/DejaVuSans.ttf",
+        "actual":  "b4c632e3cdf9acc7f28758fb5a323c8524d7fc6660d46904d9b6cbe2809c419c",
+        "matches":  true
+    },
+    {
+        "expected":  "0870dc8279b4debd0a8c057a2212277dfb9d5626296ddae028a53af8eddb8a1a",
+        "path":  "projects/signals_lab/Assets/prefabs/receiver.judasprefab.judasmeta",
+        "actual":  "0870dc8279b4debd0a8c057a2212277dfb9d5626296ddae028a53af8eddb8a1a",
+        "matches":  true
+    },
+    {
+        "expected":  "79d06526e1008163327792e240cef82d0752c58f009cd469e3e3dc23d681ca36",
+        "path":  "projects/signals_lab/Assets/prefabs/receiver.judasprefab",
+        "actual":  "79d06526e1008163327792e240cef82d0752c58f009cd469e3e3dc23d681ca36",
+        "matches":  true
+    }
+]

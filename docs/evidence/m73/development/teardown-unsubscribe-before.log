@@ -1,0 +1,30 @@
+Renderer fragment texture units: 32 (material path uses 12)
+World state: legacy .judasstate (F6/F7) saves disabled for additive compositions; save slots remain available
+Project: Signals Lab (/home/conner/Documents/GitHub/Project-Judas/.cache/m73/teardown-before-source/signals_lab.judasproj)
+Scene: Signals Lab (/home/conner/Documents/GitHub/Project-Judas/.cache/m73/teardown-before-source/Scenes/lab.judas)
+World origin (m): 0.000, 0.000, 0.000
+script asset=3021292823303b9bed28520dc36d42e2 entity=30 slot=1 destroy: TypeError: signals require a live behaviour invocation; teardown permits only unsubscribe
+    at __judas (native)
+    at call (judas:2:51)
+    at unsubscribe (judas:5:46)
+    at destroy (Assets/scripts/counter.js:11:32)
+
+PASS actual fixed boundary broadcasts to independent slots
+PASS signal receiver changes real M72 material override
+PASS actual targeted send only changes left entity slots
+PASS authored modal pauses gameplay
+PASS fixed lane waits while paused
+PASS UI lane onUI signal drains while paused, including zero-step frame
+PASS resume fixed messages after UI closure without gameplay leak
+PASS unsubscribe leaves other receivers active
+FAIL receiver destruction cleans script and reservations
+PASS ordinary registered world streaming service
+PASS compatible region adoption uses existing live instance
+PASS compatible adoption preserves subscriptions exactly once
+PASS normal region unload accepted after demand release
+FAIL region revisit reconstructs independent subscriptions
+PASS normal modern save request accepted
+SAVED {"count":4,"listening":false,"restores":0}
+FAIL final application has no script faults
+PASS normal application exit
+SUMMARY 17 checks 3 failures

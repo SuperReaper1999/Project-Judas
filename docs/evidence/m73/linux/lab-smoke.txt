@@ -1,0 +1,13 @@
+FRAMES 150
+FRAME_SECONDS 0.016666667
+TAP B 10
+TAP T 20
+SCREENSHOT 25 /home/conner/Documents/GitHub/Project-Judas/.cache/m73/lab-playing.png
+TAP Escape 30
+EXPECT_PAUSED 1 34
+TAP Return 40
+SCREENSHOT 50 /home/conner/Documents/GitHub/Project-Judas/.cache/m73/lab-paused.png
+TAP Escape 60
+EXPECT_PAUSED 0 65
+TAP L 80
+TAP R 120

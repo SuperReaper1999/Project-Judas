@@ -1,0 +1,32 @@
+JudasScene 3
+settings
+ name "Signals Lab"
+ world-origin 0 0 0
+ sun-direction .4 .8 1
+ sun-color 1.1 1.1 1.1
+ ambient .2 .2 .2
+ fluid-scale 1
+ fidelity-policy none
+ next-id 100
+end
+
+object 1 "Independent receiver"
+ position 0 1 0
+ rotation 1 0 0 0
+ scale 1 1 1
+ render box
+ render.half-extents .7 1 .7
+ render.color .18 .4 .7
+ scripts 1
+ script.0.id 1
+ script.0.asset "3021292823303b9bed28520dc36d42e2"
+ script.0.enabled true
+ script.0.properties "{\"label\": \"Prefab\"}"
+ render.radius .75
+ render.alpha 1
+ render.secondary-color 1 1 1
+ render.secondary-alpha 1
+ render.mesh-asset ""
+ render.texture-asset ""
+end
+

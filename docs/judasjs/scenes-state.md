@@ -95,3 +95,7 @@ For additive region requests, ownership, pins and suspension see [Streaming](str
 ## Project slots (M61)
 
 The reusable [`saves`](saves.md) service persists the bounded session map and supported world state. It stages a coherent replacement and never overlays a legacy delta afterward. Session-only data remains distinct from durable disk state.
+
+M73 [signals](signals.md) are world-local transient delivery, not session/save facts.
+World replacement discards subscriptions/queues. Re-register in restore; persist
+required intent explicitly rather than relying on replay of accepted notifications.

@@ -70,6 +70,7 @@ Promise. No async callback/top-level-await scheduler exists.
 | `onCollisionEnter/Stay/Exit(event)` | Fixed-step authoritative contact delivery after physics/motor/pose publication. |
 | `onTriggerEnter/Stay/Exit(event)` | Same event boundary; sensors generate no physical response. |
 | `onFracture(event)` | Logical owner's scripts after fixed-step fracture topology publication, outside solver loops; see [event data](fracture.md#onfractureevent). |
+| `onSignal(event)` | Explicit subscribed lane: fixed after contact/fracture publication, or UI after UI input before gameplay. Queued and bounded; see [signals](signals.md). |
 | `destroy(dt)` | Slot removal/disable or ending the VM; last callback delta is passed, not a teardown timestep. Faulted instances skip this callback. |
 
 Order within normal callback phases is ascending entity ID, then authored slot
@@ -139,3 +140,13 @@ native dispatch function; `globalThis.console` aliases the public logging object
 
 The constructor context includes `restored`; restored construction has
 `initialState:null`. Loaded script state is installed before `restore(dt)`, which replaces `start(dt)` for modern slots. Reacquire handles and UI in restore; do not replay new-game side effects. [Save contract](saves.md). Legacy delta restoration retains its historical lifecycle.
+
+## Owned signals (M73 candidate)
+
+[Signals](signals.md) are transient slot-generation-owned subscriptions and queues.
+Register in both start and restore through a shared helper, preserving restored facts.
+Constructor/module evaluation cannot publish; teardown only permits unsubscribe.
+Retirement/fault cleans ownership without relying on destroy. Signal handlers emitted
+during a drain wait for a later eligible lane boundary. Fixed signals wait while
+paused; explicit UI signals run while modal input owns gameplay. Save capture does
+not flush/persist signals. Existing observation callbacks retain their ordering.

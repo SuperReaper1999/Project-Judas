@@ -1,0 +1,14 @@
+[  0%] Built target judas_app_icon
+[ 18%] Built target freetype
+[ 18%] Built target judas_icu_build
+[ 18%] Built target judas_quickjs
+[ 31%] Built target judas_navigation_backend
+[ 31%] Built target judas_glad
+[ 31%] Built target judas_profiler
+[ 31%] Built target judas_audio_backend
+[ 31%] Built target harfbuzz
+[ 31%] Built target judas_materials
+[100%] Built target judas_engine
+[100%] Building CXX object CMakeFiles/judas_signal_application_tests.dir/tests/SignalApplicationTests.cpp.o
+[100%] Linking CXX executable judas_signal_application_tests
+[100%] Built target judas_signal_application_tests

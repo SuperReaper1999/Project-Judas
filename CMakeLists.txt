@@ -1488,3 +1488,12 @@ judas_warnings(judas_runtime_render_authoring_tests)
 add_executable(judas_runtime_render_retained_region_tests tests/RuntimeRenderRetainedRegionTests.cpp)
 target_link_libraries(judas_runtime_render_retained_region_tests PRIVATE judas_engine)
 judas_warnings(judas_runtime_render_retained_region_tests)
+
+# M73: actual QuickJS slot ownership, transient signals, lanes and limits.
+add_executable(judas_signal_tests tests/SignalTests.cpp)
+target_link_libraries(judas_signal_tests PRIVATE judas_engine)
+judas_warnings(judas_signal_tests)
+
+add_executable(judas_signal_application_tests tests/SignalApplicationTests.cpp src/Application.cpp src/RuntimeOptions.cpp src/RuntimeDiagnostics.cpp src/TestHarness.cpp)
+target_link_libraries(judas_signal_application_tests PRIVATE judas_engine)
+judas_warnings(judas_signal_application_tests)

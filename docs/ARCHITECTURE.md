@@ -10,8 +10,8 @@ milestones land, rather than kept as a per-milestone snapshot — see
 
 The operator reports that the earlier Windows update was validated and pushed.
 That historical acceptance is distinct from native Windows evidence for later
-M70/M71 changes and the human-accepted Linux M72 checkpoint. The current M72 work has no
-native Windows acceptance yet. [WINDOWS.md](WINDOWS.md) retains native build,
+M70/M71 changes and the human-accepted Linux M72 checkpoint. M72 has native Windows 10 VM execution evidence recorded on 2026-10-09;
+Windows hardware and operator acceptance remain outstanding. [WINDOWS.md](WINDOWS.md) retains native build,
 package and acceptance instructions. Historical platform statements below
 describe the evidence available at their original milestones.
 
@@ -20,7 +20,9 @@ describe the evidence available at their original milestones.
 Accepted baseline: M72 (`0f3694bb7142dc38a59abbd7365a113b673bae5e`).
 [M72](M72.md) received operator desktop acceptance on 2026-10-09 after its initial
 checkpoint without human validation. The optional gravity-selection follow-up is
-operator-authorized for checkpointing. Native Windows acceptance remains separate.
+checkpointed at `df0c301f688e62e4baa59a837beb05d42aa75e3c`. Windows VM
+results are checkpointed at `f1609af0dac863257a0f200cb74ea8a504f9e644`; hardware
+acceptance remains separate. M73 owned signals are a new uncommitted candidate.
 M70's accepted Linux checkpoint is
 `fb31f0244c9f41f74c439afd99855e3707937edd`. M67 remains provisionally checkpointed;
 proper human authoring validation is deferred. M68 and M69 are checkpointed,
@@ -9538,5 +9540,29 @@ See [M72 ownership, authoring, lifecycle and review](M72.md),
 [render-visibility API](judasjs/entities.md#render-visibility-m72).
 M72 was initially checkpointed without human validation. The operator accepted
 the desktop Render Control Lab on 2026-10-09; M72 is now human validated on Linux.
-Original automated evidence retains its scope. Native Windows M72 validation
-remains outstanding.
+Original automated evidence retains its scope. At this initial handoff native Windows
+M72 validation was outstanding; the later Windows 10 VM follow-up is recorded in
+[WINDOWS.md](WINDOWS.md). Windows hardware/operator acceptance remains outstanding.
+
+## M73 candidate — owned JudasJS signals
+
+Optional `signals` and `onSignal` add project-named world-local broadcasts and
+entity-targeted messages. This is routing/lifetime infrastructure; JS defines
+meaning. One lazy ScriptSystem store indexes subscriptions by exact channel and
+target, binds tokens to script-instance generations, snapshots bounded plain-data
+payloads, captures recipient identities on acceptance and revalidates at delivery.
+No unused-feature per-entity scan, retained behaviour closure, extra world or save
+participant is introduced.
+
+Fixed messages drain after completed contact/fracture publication. Explicit UI
+messages drain after UI input before gameplay, also while paused/zero-step. Each
+lane freezes FIFO work and bounds delivery; handlers cannot recursively extend the
+batch. Retiring/faulting slots release subscriptions without relying on destroy.
+Streaming shares the VM; compatible adoption preserves instances, suspension retires
+reservations and revisit registers fresh subscriptions. Save capture never flushes
+or persists queues/tokens; modern restore registers through restore while preserving
+saved facts. Existing observations retain their ordering and are not rebroadcast.
+
+See [M73](M73.md) and [signals reference](judasjs/signals.md) for exact limits,
+returns/errors, ownership and execution evidence. This is an uncommitted candidate,
+not operator acceptance or a networking/durable delivery promise.

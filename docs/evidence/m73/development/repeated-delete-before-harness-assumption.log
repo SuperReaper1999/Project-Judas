@@ -1,0 +1,13 @@
+Renderer fragment texture units: 32 (material path uses 12)
+World state: legacy .judasstate (F6/F7) saves disabled for additive compositions; save slots remain available
+Project: Signals Lab (/home/conner/Documents/GitHub/Project-Judas/.cache/m73/human-delete-source/signals_lab.judasproj)
+Scene: Signals Lab (/home/conner/Documents/GitHub/Project-Judas/.cache/m73/human-delete-source/Scenes/lab.judas)
+World origin (m): 0.000, 0.000, 0.000
+script asset=b965f16e11e30c20891b4ea3a0fa5354 entity=90 slot=1 uiUpdate: ReferenceError: stale or invalid entity 30
+    at __judas (native)
+    at call (judas:2:51)
+    at destroy (judas:19:19)
+    at uiUpdate (Assets/scripts/lab.js:24:59)
+
+terminate called after throwing an instance of 'nlohmann::json_abi_v3_11_3::detail::type_error'
+  what():  [json.exception.type_error.302] type must be number, but is null

@@ -1,0 +1,13 @@
+﻿{
+    "export":  0,
+    "save":  0,
+    "vmOnlyExtraDlls":  [
+                            "opengl32.dll",
+                            "libgallium_wgl.dll"
+                        ],
+    "moved":  0,
+    "package":  "C:\\JudasValidation\\Packages\\Moved Signals Lab M73 é α",
+    "load":  0,
+    "finished":  "2026-10-09T22:32:28.8363780+01:00",
+    "editor":  0
+}

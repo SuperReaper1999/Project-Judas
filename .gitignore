@@ -26,3 +26,6 @@ projects/*/Saves/*.judasstate
 !projects/import_lab/Sources/**/*.obj
 !tests/fixtures/m66/**/*.obj
 !tests/fixtures/m66/*.obj
+
+# Showcase production files are independent of engine milestones.
+/video_work/

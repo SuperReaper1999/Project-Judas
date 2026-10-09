@@ -1,0 +1,9 @@
+﻿{
+    "admin":  false,
+    "label":  "m73-app-save",
+    "stderr":  "Renderer fragment texture units: 32 (material path uses 12)\r\nWorld state: legacy .judasstate (F6/F7) saves disabled for additive compositions; save slots remain available\r\nProject: Signals Lab (C:/JudasValidation/Source/projects/signals_lab/signals_lab.judasproj)\r\nScene: Signals Lab (C:/JudasValidation/Source/projects/signals_lab/Scenes/lab.judas)\r\nWorld origin (m): 0.000, 0.000, 0.000\r\n",
+    "session":  1,
+    "exit":  0,
+    "stdout":  "PASS actual fixed boundary broadcasts to independent slots\r\nPASS signal receiver changes real M72 material override\r\nPASS actual targeted send only changes left entity slots\r\nPASS authored modal pauses gameplay\r\nPASS fixed lane waits while paused\r\nPASS UI lane onUI signal drains while paused, including zero-step frame\r\nPASS resume fixed messages after UI closure without gameplay leak\r\nPASS unsubscribe leaves other receivers active\r\nPASS receiver destruction cleans script and reservations\r\nPASS ordinary registered world streaming service\r\nPASS compatible region adoption uses existing live instance\r\nPASS compatible adoption preserves subscriptions exactly once\r\nPASS normal region unload accepted after demand release\r\nPASS region revisit reconstructs independent subscriptions\r\nPASS normal modern save request accepted\r\nSAVED {\"count\":4,\"listening\":false,\"restores\":0}\r\nPASS final application has no script faults\r\nPASS normal application exit\r\nSUMMARY 17 checks 0 failures\r\n",
+    "seconds":  6.2245924
+}

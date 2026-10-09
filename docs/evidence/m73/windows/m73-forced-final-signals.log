@@ -1,0 +1,117 @@
+judas_signal_tests.exe : script asset=78432da7cfd160ae6e0306e25645e6c3 entity=1 slot=1 onSignal:pulse:fixed: Error: 
+intentional signal fault
+At line:20 char:1
++ & "$root\Build\Release\judas_signal_tests.exe" 2>&1|Tee-Object "$root ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (script asset=78...al signal fault:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+    at onSignal (Assets/faultReceiver.js:1:134)
+
+script asset=dd714a8003d44ea8b8b689c032e9b794 entity=1 slot=1 onSignal:x:fixed: InternalError: interrupted
+    at onSignal (Assets/runawaySignal.js:1:1)
+
+PASS register fixture script
+PASS register fixture script
+PASS build ordinary scripted world
+PASS deterministic entity/authored-slot recipient ordering and FIFO messages
+PASS duplicate subscription idempotent per slot
+PASS broadcast versus entity-targeted slots
+PASS publisher/listener payload mutation isolated
+PASS fixed envelope and ordinary fixed interval
+PASS no listener accepts zero recipients without queued history
+PASS full precision engine-derived sender identities
+PASS legacy delta script state rehydrates normally
+PASS modern restore installs saved script state before restore
+PASS restore helper rebuilds subscriptions without replay/reset
+PASS register fixture script
+PASS one slot cannot cancel another slot token
+PASS register fixture script
+PASS build ordinary scripted world
+PASS UI lane drains independently on a zero-fixed-step frame
+PASS self-publishing handler cannot extend frozen drain
+PASS later eligible fixed boundary delivers queued chain
+PASS bounded self-publishing loop has no recursive stack growth
+PASS Stop discards transient queues and subscriptions
+PASS register fixture script
+PASS build ordinary scripted world
+PASS cancel and re-subscribe cannot receive old accepted reservation
+PASS region retirement/revisit uses new generation without old queue
+PASS register fixture script
+PASS register fixture script
+PASS build ordinary scripted world
+PASS destroyed publisher does not erase accepted event; sender wrapper null
+PASS register fixture script
+PASS register fixture script
+PASS register fixture script
+PASS build ordinary scripted world
+PASS handler fault retires subscriptions while other listeners continue
+PASS fault cleanup does not depend on destroy callback
+PASS register fixture script
+PASS build ordinary scripted world
+PASS reject cycles/accessors/proxies/nonfinite/functions/wrappers/prototypes/holes/oversize/deep data without hooks
+PASS constructor, raw target and overlong names rejected
+PASS nested plain array/object payload retained
+PASS signals namespace can be imported by metadata VM
+PASS register fixture script
+PASS build ordinary scripted world
+PASS subscription/event capacities reject atomically and preserve FIFO
+PASS bounded retained queue counts exposed
+PASS register fixture script
+PASS build ordinary scripted world
+PASS fan-out over capacity rejects whole emission rather than delivering prefix
+PASS register fixture script
+PASS build ordinary scripted world
+PASS delivery cap defers accepted FIFO batch after 256 recipients
+PASS remaining accepted work completes next eligible drain
+PASS register fixture script
+PASS build ordinary scripted world
+PASS subscription and queued storage released over 500 publish/cancel cycles without drain
+SIGNAL_CHURN cycles=500 stats={"accepted":500,"delivered":0,"queuedBytes":0,"queuedEvents":0,"queuedRecipients":0,"rejected":0,"skipped":500,"subscriptions":0}
+PASS register fixture script
+PASS build ordinary scripted world
+PASS queue byte cap bounds large payload retention atomically
+SIGNAL_STORAGE stats={"accepted":65,"delivered":0,"queuedBytes":1044875,"queuedEvents":65,"queuedRecipients":65,"rejected":1,"skipped":0,"subscriptions":1}
+PASS all accepted large payloads delivered once
+PASS register fixture script
+PASS build ordinary scripted world
+PASS signal handler uses existing runaway interrupt and fault path
+PASS register fixture script
+PASS build ordinary scripted world
+PASS copyable broadcast/target/UI example executes through actual VM
+PASS register fixture script
+PASS register fixture script
+PASS register fixture script
+PASS build ordinary scripted world
+PASS listener destroys later frozen recipient safely
+PASS destroyed frozen recipient is skipped without callback fault
+PASS register fixture script
+PASS build ordinary scripted world
+PASS disabled slot rejects accepted recipient before synchronization
+PASS re-enabled replacement instance receives only its new emission
+PASS register fixture script
+PASS build ordinary scripted world
+PASS UI signal retains fixed-only CharacterMotor setter guard
+PASS register fixture script
+PASS build ordinary scripted world
+PASS save capture does not flush pending signal
+PASS new VM restore has no undelivered notification replay
+PASS register fixture script
+PASS build ordinary scripted world
+PASS world-local service neither delivers history nor accepts foreign-world token
+PASS register fixture script
+PASS build ordinary scripted world
+PASS self destruction permits safe retired-token unsubscribe; teardown emission still rejected
+PASS register fixture script
+PASS build ordinary scripted world
+SIGNAL_PERF subscriptions=0 empty_drain_us=0.0006 initial_fanout_plus_callbacks_us=0.300
+SIGNAL_PROFILE subscriptions=0 samples=50 acceptance_us=0.000 routing_excluding_handlers_us=0.000 handlers_us=0.000
+PASS register fixture script
+PASS build ordinary scripted world
+SIGNAL_PERF subscriptions=32 empty_drain_us=0.0091 initial_fanout_plus_callbacks_us=185.500
+SIGNAL_PROFILE subscriptions=32 samples=50 acceptance_us=19.322 routing_excluding_handlers_us=115.498 handlers_us=7.040
+PASS register fixture script
+PASS build ordinary scripted world
+SIGNAL_PERF subscriptions=128 empty_drain_us=0.0104 initial_fanout_plus_callbacks_us=934.500
+SIGNAL_PROFILE subscriptions=128 samples=50 acceptance_us=121.152 routing_excluding_handlers_us=468.232 handlers_us=28.324
+SUMMARY 95 checks 0 failures

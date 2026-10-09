@@ -1,5 +1,5 @@
 {
-  "checkpoint": "0f3694bb7142dc38a59abbd7365a113b673bae5e",
+  "checkpoint": "f1609af0dac863257a0f200cb74ea8a504f9e644",
   "authority": "src/ScriptSystem.cpp::library + Impl::Native",
   "symbols": [
     {
@@ -3263,6 +3263,70 @@
       "reference": "docs/judasjs/scenes-state.md"
     },
     {
+      "symbol": "signals",
+      "kinds": [
+        "namespace"
+      ],
+      "native": [],
+      "type": "docs/judas.d.ts:signals",
+      "reference": "docs/judasjs/signals.md"
+    },
+    {
+      "symbol": "signals.emit",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "signalEmit"
+      ],
+      "type": "docs/judas.d.ts:signals.emit",
+      "reference": "docs/judasjs/signals.md"
+    },
+    {
+      "symbol": "signals.send",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "signalSend"
+      ],
+      "type": "docs/judas.d.ts:signals.send",
+      "reference": "docs/judasjs/signals.md"
+    },
+    {
+      "symbol": "signals.stats",
+      "kinds": [
+        "get"
+      ],
+      "native": [
+        "signalStats"
+      ],
+      "type": "docs/judas.d.ts:signals.stats",
+      "reference": "docs/judasjs/signals.md"
+    },
+    {
+      "symbol": "signals.subscribe",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "signalSubscribe"
+      ],
+      "type": "docs/judas.d.ts:signals.subscribe",
+      "reference": "docs/judasjs/signals.md"
+    },
+    {
+      "symbol": "signals.unsubscribe",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "signalUnsubscribe"
+      ],
+      "type": "docs/judas.d.ts:signals.unsubscribe",
+      "reference": "docs/judasjs/signals.md"
+    },
+    {
       "symbol": "time",
       "kinds": [
         "namespace"
@@ -3725,6 +3789,11 @@
     "setTransform",
     "setVelocity",
     "setView",
+    "signalEmit",
+    "signalSend",
+    "signalStats",
+    "signalSubscribe",
+    "signalUnsubscribe",
     "sleeping",
     "socketClear",
     "socketSet",
@@ -3751,6 +3820,7 @@
     "viewportSize"
   ],
   "callbacks": [
+    "onSignal",
     "onFracture",
     "start",
     "restore",

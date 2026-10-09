@@ -1,0 +1,18 @@
+Renderer fragment texture units: 32 (material path uses 12)
+World state: legacy .judasstate (F6/F7) saves disabled for additive compositions; save slots remain available
+Project: Signals Lab (/home/conner/Documents/GitHub/Project-Judas/.cache/m73/application-source/signals_lab.judasproj)
+Scene: Signals Lab (/home/conner/Documents/GitHub/Project-Judas/.cache/m73/application-source/Scenes/lab.judas)
+World origin (m): 0.000, 0.000, 0.000
+PASS fresh-process M61 load restores counts and removed receiver
+PASS fresh-process load restores independent prefab receiver state
+FAIL restore registers exactly once with empty transient queues
+PASS restore helper reconstructs owned subscriptions without faults
+LOADED {"diag":{"accepted":0,"delivered":0,"queuedBytes":0,"queuedEvents":0,"queuedRecipients":0,"rejected":0,"skipped":0,"subscriptions":4},"menuCount":1,"receipts":{"Left A":{"count":4,"label":"Left A","listening":false,"restores":0},"Left B":{"count":4,"label":"Left B","listening":false,"restores":0},"Prefab":{"count":1,"label":"Prefab","listening":true,"restores":0},"Right":{"count":4,"label":"Right","listening":true,"restores":0}}}
+PASS fresh-process M61 load restores counts and removed receiver
+PASS fresh-process load restores independent prefab receiver state
+PASS restore registers exactly once with empty transient queues
+PASS restore helper reconstructs owned subscriptions without faults
+LOADED {"diag":{"accepted":0,"delivered":0,"queuedBytes":0,"queuedEvents":0,"queuedRecipients":0,"rejected":0,"skipped":0,"subscriptions":8},"menuCount":1,"receipts":{"Left A":{"count":4,"label":"Left A","listening":false,"restores":0},"Left B":{"count":4,"label":"Left B","listening":false,"restores":0},"Prefab":{"count":1,"label":"Prefab","listening":true,"restores":0},"Right":{"count":4,"label":"Right","listening":true,"restores":0}}}
+PASS normal application exit
+PASS fresh-process restore observed
+SUMMARY 10 checks 1 failures

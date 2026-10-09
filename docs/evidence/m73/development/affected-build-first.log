@@ -1,0 +1,68 @@
+WARNHarfBuzz has a Meson port and tries to migrate all the other build systems to it, please consider using it as we might remove our cmake port soon.
+CMake Deprecation Warning at .cache/m72-release/_deps/judas_freetype-src/CMakeLists.txt:113 (cmake_minimum_required):
+  Compatibility with CMake < 3.10 will be removed from a future version of
+  CMake.
+
+  Update the VERSION argument <min> value.  Or, use the <min>...<max> syntax
+  to tell CMake that the project requires at least <min> but has been updated
+  to work with policies introduced by <max> or earlier.
+
+
+-- Configuring done (1.1s)
+-- Generating done (0.7s)
+-- Build files have been written to: /home/conner/Documents/GitHub/Project-Judas/.cache/m72-release
+[  0%] Built target judas_icu_build
+[  0%] Built target judas_quickjs
+[  0%] Built target judas_app_icon
+[  0%] Built target judas_glad
+[  0%] Built target judas_profiler
+[ 17%] Built target freetype
+[ 29%] Built target judas_navigation_backend
+[ 29%] Built target judas_materials
+[ 29%] Built target judas_audio_backend
+[ 29%] Built target harfbuzz
+[ 29%] Building CXX object CMakeFiles/judas_engine.dir/src/ScriptSystem.cpp.o
+[ 29%] Linking CXX static library libjudas_engine.a
+[ 94%] Built target judas_engine
+[100%] Linking CXX executable judas
+[100%] Built target judas
+[  0%] Built target judas_icu_build
+[  0%] Built target judas_quickjs
+[  0%] Built target judas_app_icon
+[ 15%] Built target freetype
+[ 15%] Built target judas_glad
+[ 25%] Built target judas_navigation_backend
+[ 25%] Built target judas_profiler
+[ 25%] Built target judas_audio_backend
+[ 25%] Built target harfbuzz
+[ 30%] Built target judas_imgui
+[ 30%] Built target judas_materials
+[ 30%] Built target judas_ufbx
+[ 85%] Built target judas_engine
+[ 85%] Built target judas_world_authoring
+[ 90%] Built target judas_model_import
+[ 95%] Built target judas_navigation_baker
+[ 95%] Linking CXX executable judas_editor
+[100%] Built target judas_editor
+[  0%] Built target judas_icu_build
+[  0%] Built target judas_quickjs
+[  0%] Built target judas_app_icon
+[ 17%] Built target freetype
+[ 17%] Built target judas_glad
+[ 29%] Built target judas_navigation_backend
+[ 29%] Built target judas_profiler
+[ 29%] Built target judas_audio_backend
+[ 29%] Built target harfbuzz
+[ 29%] Built target judas_materials
+[ 94%] Built target judas_engine
+[100%] Building CXX object CMakeFiles/judas_signal_tests.dir/tests/SignalTests.cpp.o
+/home/conner/Documents/GitHub/Project-Judas/tests/SignalTests.cpp: In function ‘int main()’:
+/home/conner/Documents/GitHub/Project-Judas/tests/SignalTests.cpp:58:9: warning: this ‘for’ clause does not guard... [-Wmisleading-indentation]
+   58 |         for(int i=0;i<100;++i)f.Drain();Check(f.State(id)["n"]==102,"bounded self-publishing loop has no recursive stack growth");
+      |         ^~~
+/home/conner/Documents/GitHub/Project-Judas/tests/SignalTests.cpp:58:41: note: ...this statement, but the latter is misleadingly indented as if it were guarded by the ‘for’
+   58 |         for(int i=0;i<100;++i)f.Drain();Check(f.State(id)["n"]==102,"bounded self-publishing loop has no recursive stack growth");
+      |                                         ^~~~~
+[100%] Linking CXX executable judas_signal_tests
+[100%] Built target judas_signal_tests
+gmake: *** No rule to make target 'judas_signal_application_tests'.  Stop.

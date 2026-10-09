@@ -160,3 +160,10 @@ The focused `judas_kinematic_lab_tests` target executes this file through normal
 asset registration and RuntimeWorld/QuickJS callbacks. The ordinary
 [kinematic lab](../../projects/kinematic_lab/) composes similar public APIs for
 interactive content. See [command semantics and lifecycle](entities.md#kinematic-motion-m71).
+
+## Owned signals (M73 candidate)
+
+[Copyable broadcast/target/UI script](examples/signals.js) is executed by
+`judas_signal_tests` through the ordinary VM. Its shared registration helper supports
+start and modern restore without resetting counters; see [signals](signals.md) for
+bounds, transient-save semantics and paused-lane delivery.

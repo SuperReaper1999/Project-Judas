@@ -110,6 +110,8 @@ float InteractivePlay::Frame(Window& window, Renderer& renderer, float frameDelt
     const bool authoredUI=world.UIIfLoaded()&&!world.UIIfLoaded()->Empty();
     bool uiOwned=false;
     if(authoredUI){auto& ui=world.UI();uiOwned=ui.OwnsInput();int x,y;window.GetMousePosition(x,y);ui.Input(window.Input(),{x,y},!window.IsMouseCaptured(),window.Width(),window.Height());world.DispatchUIEvents(&window.Input(),frameDeltaTime);uiOwned|=ui.OwnsInput();}
+    if(world.Scripts())world.Scripts()->DrainSignals(&window.Input(),frameDeltaTime,true);
+    uiOwned|=world.UIIfLoaded()&&world.UIIfLoaded()->OwnsInput();
     if (window.ConsumeUIBackRequest()&&!authoredUI&&world.legacyGameplay) m_pauseMenu.HandleBackRequest();
     const bool uiUp = window.ConsumeUINavigateUpRequest();
     const bool uiDown = window.ConsumeUINavigateDownRequest();

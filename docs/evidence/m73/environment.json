@@ -1,0 +1,9 @@
+{
+  "host": "Linux-7.0.0-38-generic-x86_64-with-glibc2.43",
+  "machine": "x86_64",
+  "compiler": "c++ (Ubuntu 15.2.0-16ubuntu1) 15.2.0",
+  "base": "f1609af0dac863257a0f200cb74ea8a504f9e644",
+  "type_checker": "TypeScript 5.9.3",
+  "linux_render": "desktop OpenGL",
+  "windows_render": "VM Mesa llvmpipe; native Win10 binaries; not hardware acceptance"
+}

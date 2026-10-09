@@ -1,0 +1,19 @@
+PASS actual fixed boundary broadcasts to independent slots
+PASS signal receiver changes real M72 material override
+PASS actual targeted send only changes left entity slots
+PASS authored modal pauses gameplay
+PASS fixed lane waits while paused
+PASS UI lane onUI signal drains while paused, including zero-step frame
+PASS resume fixed messages after UI closure without gameplay leak
+PASS unsubscribe leaves other receivers active
+PASS receiver destruction cleans script and reservations
+PASS ordinary registered world streaming service
+PASS compatible region adoption uses existing live instance
+PASS compatible adoption preserves subscriptions exactly once
+PASS normal region unload accepted after demand release
+PASS region revisit reconstructs independent subscriptions
+PASS normal modern save request accepted
+SAVED {"count":4,"listening":false,"restores":0}
+PASS final application has no script faults
+PASS normal application exit
+SUMMARY 17 checks 0 failures

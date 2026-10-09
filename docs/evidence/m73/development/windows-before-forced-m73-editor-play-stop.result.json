@@ -1,0 +1,9 @@
+﻿{
+    "admin":  false,
+    "label":  "m73-editor-play-stop",
+    "stderr":  "Renderer fragment texture units: 32 (material path uses 12)\r\n[editor autotest] shared authoring batch + undo PASS: \r\n[editor autotest] duplicate created id 100: scene CHANGED; undo restores: IDENTICAL\r\n[editor autotest] wrote: C:\\JudasValidation\\Receipts\\m73-editor.edit.png\r\n[editor autotest] edit frame: 5 draw calls, 36 triangles, 42 debug lines\r\n[editor autotest] wrote: C:\\JudasValidation\\Receipts\\m73-editor.play.png\r\n[editor autotest] play frame: 2 steps, step 0.012 ms, 0 bodies, 0 contacts, 7 draw calls, 72 triangles, 1 shadow passes, 0 lights, 138 debug lines, 0 particles\r\n[editor autotest] resources: 0 meshes, 0 textures, 0 terrain meshes, hits 594, misses 1, failed 0, uploads 0, resident 759720 bytes\r\n[editor autotest] jobs: 3 workers, 2 completed, 0 failed, 0 cancelled\r\n[editor autotest] authored scene after play/stop is IDENTICAL\r\n[editor autotest] save ok\r\n",
+    "session":  1,
+    "exit":  0,
+    "stdout":  "",
+    "seconds":  8.3088737999999989
+}

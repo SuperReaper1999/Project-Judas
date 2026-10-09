@@ -1,0 +1,11 @@
+Oct 09 22:37:30 conner-ms7850 systemd[1658]: Started judas-m73-human-demo.service - [systemd-run] /tmp/judas-m73-signals-moved/judas.
+Oct 09 22:37:31 conner-ms7850 judas[60576]: Renderer fragment texture units: 32 (material path uses 12)
+Oct 09 22:37:31 conner-ms7850 judas[60576]: World state: legacy .judasstate (F6/F7) saves disabled for additive compositions; save slots remain available
+Oct 09 22:37:31 conner-ms7850 judas[60576]: Project: Signals Lab (/tmp/judas-m73-signals-moved/game.judasproj)
+Oct 09 22:37:31 conner-ms7850 judas[60576]: Scene: Signals Lab (/tmp/judas-m73-signals-moved/Scenes/lab.judas)
+Oct 09 22:37:31 conner-ms7850 judas[60576]: World origin (m): 0.000, 0.000, 0.000
+Oct 09 22:38:12 conner-ms7850 judas[60576]: script asset=b965f16e11e30c20891b4ea3a0fa5354 entity=90 slot=1 uiUpdate: ReferenceError: stale or invalid entity 30
+Oct 09 22:38:12 conner-ms7850 judas[60576]:     at __judas (native)
+Oct 09 22:38:12 conner-ms7850 judas[60576]:     at call (judas:2:51)
+Oct 09 22:38:12 conner-ms7850 judas[60576]:     at destroy (judas:19:19)
+Oct 09 22:38:12 conner-ms7850 judas[60576]:     at uiUpdate (Assets/scripts/lab.js:24:59)

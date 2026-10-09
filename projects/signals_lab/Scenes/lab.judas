@@ -1,0 +1,85 @@
+JudasScene 3
+settings
+ name "Signals Lab"
+ world-origin 0 0 0
+ sun-direction .4 .8 1
+ sun-color 1.1 1.1 1.1
+ ambient .2 .2 .2
+ fluid-scale 1
+ fidelity-policy none
+ next-id 100
+end
+
+object 1 "Ground"
+ position 0 -.4 0
+ rotation 1 0 0 0
+ scale 1 1 1
+ render box
+ render.half-extents 9 .4 7
+ render.color .12 .15 .21
+ render.radius .75
+ render.alpha 1
+ render.secondary-color 1 1 1
+ render.secondary-alpha 1
+ render.mesh-asset ""
+ render.texture-asset ""
+end
+
+object 20 "Left indicators"
+ position -2 1 0
+ rotation 1 0 0 0
+ scale 1 1 1
+ render box
+ render.half-extents .7 1 .7
+ render.color .18 .4 .7
+ scripts 2
+ script.0.id 1
+ script.0.asset "3021292823303b9bed28520dc36d42e2"
+ script.0.enabled true
+ script.0.properties "{\"label\": \"Left A\"}"
+ script.1.id 2
+ script.1.asset "3021292823303b9bed28520dc36d42e2"
+ script.1.enabled true
+ script.1.properties "{\"label\": \"Left B\"}"
+ render.radius .75
+ render.alpha 1
+ render.secondary-color 1 1 1
+ render.secondary-alpha 1
+ render.mesh-asset ""
+ render.texture-asset ""
+end
+
+object 30 "Right indicator"
+ position 2 1 0
+ rotation 1 0 0 0
+ scale 1 1 1
+ render box
+ render.half-extents .7 1 .7
+ render.color .18 .4 .7
+ scripts 1
+ script.0.id 1
+ script.0.asset "3021292823303b9bed28520dc36d42e2"
+ script.0.enabled true
+ script.0.properties "{\"label\": \"Right\"}"
+ render.radius .75
+ render.alpha 1
+ render.secondary-color 1 1 1
+ render.secondary-alpha 1
+ render.mesh-asset ""
+ render.texture-asset ""
+end
+
+object 90 "Publisher and UI"
+ position 0 0 0
+ rotation 1 0 0 0
+ scale 1 1 1
+ ui.asset "14b8154bb3a9658aee8a36c0689af1bf"
+ ui.name "signals_ui"
+ ui.enabled true
+ scripts 1
+ script.0.id 1
+ script.0.asset "b965f16e11e30c20891b4ea3a0fa5354"
+ script.0.enabled true
+ script.0.properties "{\"prefab\": \"099cdad8a78557e89508763f493fc5b4\"}"
+end
+

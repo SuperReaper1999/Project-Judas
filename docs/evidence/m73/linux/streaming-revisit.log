@@ -1,0 +1,18 @@
+Renderer fragment texture units: 32 (material path uses 12)
+World state: legacy .judasstate (F6/F7) saves disabled for additive compositions; save slots remain available
+Project: Streamed Spring Range (/home/conner/Documents/GitHub/Project-Judas/projects/streamed_range/streamed_range.judasproj)
+Scene: Streamed Spring Range (/home/conner/Documents/GitHub/Project-Judas/projects/streamed_range/Scenes/bootstrap.judas)
+World origin (m): 0.000, 0.000, 0.000
+PASS actual JS motor reaches final gallery
+LEG 1 frame=464 retained=199110 integration=0.615888
+PASS actual JS motor returns through unloaded galleries to bootstrap
+LEG 2 frame=930 retained=904983 integration=0.189238
+PASS actual JS motor reaches final gallery
+LEG 3 frame=1396 retained=905057 integration=0.618124
+PASS actual JS motor returns through unloaded galleries to bootstrap
+LEG 4 frame=1862 retained=905260 integration=0.258268
+PASS two complete forward/backward traversals
+PASS target and player callbacks remain valid across suspension/revisit
+M59_REVISIT frames=1862 leg=4 peak_retained=905260 peak_integration_ms=4.709065
+PASS ordinary application shutdown
+SUMMARY 7 checks 0 failures

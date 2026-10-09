@@ -1,0 +1,22 @@
+Renderer fragment texture units: 32 (material path uses 12)
+World state: legacy .judasstate (F6/F7) saves disabled for additive compositions; save slots remain available
+Project: Signals Lab (/home/conner/Documents/GitHub/Project-Judas/.cache/m73/application-source/signals_lab.judasproj)
+Scene: Signals Lab (/home/conner/Documents/GitHub/Project-Judas/.cache/m73/application-source/Scenes/lab.judas)
+World origin (m): 0.000, 0.000, 0.000
+PASS actual fixed boundary broadcasts to independent slots
+FAIL signal receiver changes real M72 material override
+PASS actual targeted send only changes left entity slots
+PASS authored modal pauses gameplay
+PASS fixed lane waits while paused
+PASS UI lane onUI signal drains while paused, including zero-step frame
+PASS resume fixed messages after UI closure without gameplay leak
+PASS unsubscribe leaves other receivers active
+PASS receiver destruction cleans script and reservations
+PASS ordinary registered world streaming service
+PASS compatible region adoption uses existing live instance
+FAIL compatible adoption preserves subscriptions exactly once
+PASS receiver returns to region ownership
+FAIL stream/save application proof completed
+FAIL stream/save application proof completed
+PASS normal application exit
+SUMMARY 16 checks 4 failures

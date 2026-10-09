@@ -1,10 +1,23 @@
-/** Current JudasJS through M72 and the optional gravity-selection follow-up.
- * Based on checkpoint 0f3694bb7142dc38a59abbd7365a113b673bae5e.
- * M72 remains not human validated; this follow-up is awaiting review.
+/** Current JudasJS through M73 candidate. M72 has Linux human acceptance.
+ * Windows VM checks are bounded evidence; hardware acceptance remains outstanding.
  * Tooling only, no TS runtime. See JUDASJS.md.
  * Ordinary returned objects are detached snapshots.
  */
 declare module "judas" {
+  export type SignalPhase = 'fixed' | 'ui';
+  /** Disposable world/slot-generation token. Never save for reuse after restore. */
+  export type SignalSubscription = string;
+  export interface SignalAcceptance {recipients:number;sequence:string|null}
+  export interface SignalEvent {name:string;payload:JSONValue;phase:SignalPhase;sequence:string;senderId:EntityId;senderSlot:string;sender:Entity|null}
+  export interface SignalStats {subscriptions:number;queuedEvents:number;queuedBytes:number;queuedRecipients:number;accepted:number;delivered:number;skipped:number;rejected:number}
+  export const signals: {
+    subscribe(name:string,phase?:SignalPhase):SignalSubscription;
+    unsubscribe(token:SignalSubscription):boolean;
+    emit(name:string,payload?:JSONValue,phase?:SignalPhase):SignalAcceptance;
+    send(target:Entity,name:string,payload?:JSONValue,phase?:SignalPhase):SignalAcceptance;
+    readonly stats:SignalStats;
+  };
+
   export interface LiquidState {entityId:EntityId;entity:Entity|null;enabled:boolean;equilibriumValid:boolean;container:boolean;material:string;density:number;volume:number;capacity:number;stableCapacity:number;coordinate:number;surface:LiquidSurfaceState|null}
   export interface LiquidSurfaceState {enabled:boolean;cells:number;faces:number;volume:number;iterations:number;retries:number;limitedFaces:number;residual:number;partitionError:number;stepSeconds:number}
   export interface LiquidAccounting {reservoirs:number;containers:number;detached:number;total:number;expected:number;error:number;tolerance:number}
@@ -636,6 +649,7 @@ declare module "judas" {
     /** After fixed steps, before camera/audio/render; alpha is the renderer interpolation fraction. */
     presentationUpdate?(dt: number, alpha: number): void;
     destroy?(dt: number): void;
+    onSignal?(event:SignalEvent):void;
     onUI?(event: UIEvent): void;
     onFracture?(event:FractureEvent):void;
     onCollisionEnter?(event: ContactEvent): void;

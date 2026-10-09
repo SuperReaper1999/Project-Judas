@@ -1,6 +1,6 @@
 # Current public JudasJS inventory
 
-Current M72 and optional gravity-selection follow-up public module based on checkpoint `0f3694bb7142dc38a59abbd7365a113b673bae5e`. M67 human authoring review remains deferred.
+Current M73 candidate public module based on checkpoint `f1609af0dac863257a0f200cb74ea8a504f9e644`. M67 human authoring review remains deferred.
 Each row is a runtime export/member (constructors and plain handle fields included).
 Native dispatcher operations are implementation details, not additional JS APIs.
 
@@ -312,6 +312,12 @@ Native dispatcher operations are implementation details, not additional JS APIs.
 | `session.delete` | `sessionDelete` | [declaration](../judas.d.ts) | [reference](scenes-state.md) |
 | `session.get` | `sessionGet` | [declaration](../judas.d.ts) | [reference](scenes-state.md) |
 | `session.set` | `sessionSet` | [declaration](../judas.d.ts) | [reference](scenes-state.md) |
+| `signals` | JS wrapper/data | [declaration](../judas.d.ts) | [reference](signals.md) |
+| `signals.emit` | `signalEmit` | [declaration](../judas.d.ts) | [reference](signals.md) |
+| `signals.send` | `signalSend` | [declaration](../judas.d.ts) | [reference](signals.md) |
+| `signals.stats` | `signalStats` | [declaration](../judas.d.ts) | [reference](signals.md) |
+| `signals.subscribe` | `signalSubscribe` | [declaration](../judas.d.ts) | [reference](signals.md) |
+| `signals.unsubscribe` | `signalUnsubscribe` | [declaration](../judas.d.ts) | [reference](signals.md) |
 | `time` | JS wrapper/data | [declaration](../judas.d.ts) | [reference](input.md) |
 | `time.delta` | `delta` | [declaration](../judas.d.ts) | [reference](input.md) |
 | `time.elapsed` | `elapsed` | [declaration](../judas.d.ts) | [reference](input.md) |
@@ -339,7 +345,7 @@ Native dispatcher operations are implementation details, not additional JS APIs.
 
 ## Lifecycle and dynamic exceptions
 
-`onFracture`, `start`, `restore`, `update`, `fixedUpdate`, `uiUpdate`, `presentationUpdate`, `destroy`, `onUI`, `onCollisionEnter`, `onCollisionStay`, `onCollisionExit`, `onTriggerEnter`, `onTriggerStay`, `onTriggerExit` are structural ScriptBehaviour callbacks, not module exports.
+`onSignal`, `onFracture`, `start`, `restore`, `update`, `fixedUpdate`, `uiUpdate`, `presentationUpdate`, `destroy`, `onUI`, `onCollisionEnter`, `onCollisionStay`, `onCollisionExit`, `onTriggerEnter`, `onTriggerStay`, `onTriggerExit` are structural ScriptBehaviour callbacks, not module exports.
 
 - **globalThis.__judas**: Internal native dispatcher; unsupported, not a public API declaration.
 - **globalThis.console**: Alias of exported console; no extra API.

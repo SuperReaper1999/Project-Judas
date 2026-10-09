@@ -1,0 +1,9 @@
+﻿{
+    "admin":  false,
+    "label":  "m73-app-load",
+    "stderr":  "Renderer fragment texture units: 32 (material path uses 12)\r\nWorld state: legacy .judasstate (F6/F7) saves disabled for additive compositions; save slots remain available\r\nProject: Signals Lab (C:/JudasValidation/Source/projects/signals_lab/signals_lab.judasproj)\r\nScene: Signals Lab (C:/JudasValidation/Source/projects/signals_lab/Scenes/lab.judas)\r\nWorld origin (m): 0.000, 0.000, 0.000\r\n",
+    "session":  1,
+    "exit":  0,
+    "stdout":  "PASS fresh-process M61 load restores counts and removed receiver\r\nPASS fresh-process load restores independent prefab receiver state\r\nPASS restore registers exactly once with empty transient queues\r\nPASS restore helper reconstructs owned subscriptions without faults\r\nLOADED {\"diag\":{\"accepted\":0,\"delivered\":0,\"queuedBytes\":0,\"queuedEvents\":0,\"queuedRecipients\":0,\"rejected\":0,\"skipped\":0,\"subscriptions\":8},\"menuCount\":1,\"receipts\":{\"Left A\":{\"count\":4,\"label\":\"Left A\",\"listening\":false,\"restores\":0},\"Left B\":{\"count\":4,\"label\":\"Left B\",\"listening\":false,\"restores\":0},\"Prefab\":{\"count\":1,\"label\":\"Prefab\",\"listening\":true,\"restores\":0},\"Right\":{\"count\":4,\"label\":\"Right\",\"listening\":true,\"restores\":0}}}\r\nPASS normal application exit\r\nPASS fresh-process restore observed\r\nSUMMARY 6 checks 0 failures\r\n",
+    "seconds":  1.9777391
+}

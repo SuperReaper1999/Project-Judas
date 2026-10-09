@@ -1,10 +1,11 @@
-# JudasJS — current API reference (M72 + gravity-selection follow-up)
+# JudasJS — current API reference (M73 candidate)
 
 JUDAS PROVIDES ENGINE PRIMITIVES. JAVASCRIPT PROVIDES GAME BEHAVIOUR.
 
 This reference includes M72, human validated on Linux on 2026-10-09, and the
-operator-approved gravity-selection follow-up. Native Windows M72 validation
-remains outstanding. It is not an eternal compatibility/semantic-version promise. Source authority is `src/ScriptSystem.cpp`
+operator-approved gravity-selection follow-up. Native Windows M72 VM verification is recorded in [Windows](WINDOWS.md); hardware
+acceptance remains outstanding. M73 adds optional [owned signals](judasjs/signals.md),
+currently awaiting operator review. It is not an eternal compatibility/semantic-version promise. Source authority is `src/ScriptSystem.cpp`
 and the runtime systems it calls; demos do not define API.
 The follow-up adds optional [per-entity gravity selection](GRAVITY_SELECTION.md),
 with spatial gravity still the default.
@@ -34,6 +35,7 @@ calling an API does not silently construct missing gameplay machinery.
 
 | Topic | Reference |
 |---|---|
+| Owned queued messages | [signals](judasjs/signals.md) |
 | Create a project, attach JS, edit properties, set up completion, export | [Making a game by hand](judasjs/getting-started.md) |
 | Imports, properties, start/restore/update/fixedUpdate/presentationUpdate/uiUpdate/destroy | [Lifecycle](judasjs/lifecycle.md) |
 | Fracture, physical parts, interface failure and explicit removal | [Fracture](judasjs/fracture.md) |

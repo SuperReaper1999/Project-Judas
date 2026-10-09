@@ -1,0 +1,9 @@
+﻿{
+    "admin":  false,
+    "label":  "m73-export",
+    "stderr":  "",
+    "session":  1,
+    "exit":  0,
+    "stdout":  "Exported C:\\JudasValidation\\Packages\\Signals Lab M73: 6 assets, 2 scenes, 51381437 bytes, 0.840 seconds\r\n",
+    "seconds":  1.7968925
+}

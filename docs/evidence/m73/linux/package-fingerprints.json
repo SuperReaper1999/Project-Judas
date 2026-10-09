@@ -1,0 +1,31 @@
+{
+  "package": "/tmp/judas-m73-signals-moved",
+  "excluded": "runtime Saves",
+  "files": {
+    "Assets/fonts/DejaVuSans.ttf": "b4c632e3cdf9acc7f28758fb5a323c8524d7fc6660d46904d9b6cbe2809c419c",
+    "Assets/fonts/DejaVuSans.ttf.judasmeta": "9bde3e77288044e49e8f47bb127a2ef49520a55e741c7b7c2e970e9450a9100d",
+    "Assets/fonts/LICENSE.txt": "63d3ba759d12804c5b31a9d5940d855c1820d1f5999e6b0872eb1c7ff045fbc9",
+    "Assets/prefabs/receiver.judasprefab": "79d06526e1008163327792e240cef82d0752c58f009cd469e3e3dc23d681ca36",
+    "Assets/prefabs/receiver.judasprefab.judasmeta": "22e38ddd7a6e79a3a1d753b2d65bc4310d5e9b16dc275a858151fa769f5357c1",
+    "Assets/scripts/counter.js": "d0ab75c7ec46a9eab1afcdaac598a3c878b2a5a2ae385fd4367f2506384304cc",
+    "Assets/scripts/counter.js.judasmeta": "12c4fbc351198bc08eedf0d0469a3da319f30994dca42d362488dd7ee8c21c8b",
+    "Assets/scripts/lab.js": "2dd4516e6b56b20f0ed9a433c9cfe4fad2757a72aa1ea54f8591d513d2ceacc2",
+    "Assets/scripts/lab.js.judasmeta": "6899267ffe06f958d403de8b681d96521bf7db89edb5ae300af76aa463fcc61a",
+    "Assets/ui/lab.judasui": "6503fc2d95fc2260f29c0249f50902642442cebd7074b71804c9246510ed93ef",
+    "Assets/ui/lab.judasui.judasmeta": "82a6dfa638de9d38e6f96adca3a672e4f7fa434c9f5c8886fd5d3d84cdcee47e",
+    "Assets/world/lab.judasworld": "982071e348f978185ec094a3e114d0776354d9f9964a330ddf6016b1f44f82d5",
+    "Assets/world/lab.judasworld.judasmeta": "d348f5b65bd47f59a0adc830965a91955cc54fbf340702c212116d2d6cee0d6c",
+    "DEPENDENCIES.json": "8a122e1017fed0f961d9a32d348df7ae63dcbc4f5ae84a497238af77ceadbafe",
+    "RUNTIME_REQUIREMENTS.txt": "38115f78d705547426735a24c6c65de6e1261c6f623a78bee2b875463b684416",
+    "Scenes/annex.judas": "e6e329bfd66b90ebeb1c85db0472d687336cd136cd6a632ee03fadd3320b9530",
+    "Scenes/lab.judas": "ffd055b6a1b74e3b44cbeea005a1a307c68e1d338a9165d757ec0b9e98dca588",
+    "engine/assets/fonts/DejaVuSans.ttf": "b4c632e3cdf9acc7f28758fb5a323c8524d7fc6660d46904d9b6cbe2809c419c",
+    "engine/licenses/DejaVuSans.txt": "63d3ba759d12804c5b31a9d5940d855c1820d1f5999e6b0872eb1c7ff045fbc9",
+    "engine/licenses/Judas.txt": "26682b82940cdcaf8293c0f52c6948bafa77ae8365f9be7389e4422e447a44c3",
+    "engine/third_party/RUNTIME_NOTICES.txt": "298b2be9c04894dddf24b6c337b7c31e110ec0b99a2f59b74967b9835d3f2536",
+    "game-icon.png": "0b34f9003de857542f6263d2add8eda0f0143cc02cc8843d285764795cf40e14",
+    "game.judasproj": "d706428cc7bdbae67d86ad87ea68525024b953233c9a923b7b8453efdcbf48de",
+    "judas": "3e0e691197cdcd4ac22d07bb5ca61f580b2dc710fc043181b89c30f616e0fba8",
+    "judas-package.txt": "0ae9656f9ee97a0d2b67f135b65a445289b4b26627d13b5578aa1a8b2ed41f63"
+  }
+}

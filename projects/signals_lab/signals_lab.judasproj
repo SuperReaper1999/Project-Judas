@@ -1,0 +1,11 @@
+JudasProject 1
+name "Signals Lab"
+startup-scene "Scenes/lab.judas"
+assets-dir "Assets"
+scenes-dir "Scenes"
+saves-dir "Saves"
+legacy-gameplay "false"
+input-map "1 14 \"broadcast\" 0 1 \"key:B\" 1 0 \"target\" 0 1 \"key:T\" 1 0 \"toggle\" 0 1 \"key:U\" 1 0 \"delete_receiver\" 0 1 \"key:D\" 1 0 \"spawn_receiver\" 0 1 \"key:P\" 1 0 \"region\" 0 1 \"key:L\" 1 0 \"pause\" 0 1 \"key:Escape\" 1 0 \"reset\" 0 1 \"key:R\" 1 0 \"save\" 0 1 \"key:F6\" 1 0 \"load\" 0 1 \"key:F7\" 1 0 \"ui_activate\" 0 1 \"key:Return\" 1 0 \"ui_up\" 0 1 \"key:Up\" 1 0 \"ui_down\" 0 1 \"key:Down\" 1 0 \"ui_click\" 0 1 \"mouse:Left\" 1 0"
+world-manifest "0f9debc7b677b358610ee35ac257df27"
+save-identity "c8c01f780430553f0a099f259cb556e7998aad815f1731efce6bf7c170105c17"
+runtime-assets "\"099cdad8a78557e89508763f493fc5b4\" \"3021292823303b9bed28520dc36d42e2\" \"b965f16e11e30c20891b4ea3a0fa5354\" \"14b8154bb3a9658aee8a36c0689af1bf\" \"0be8a69e34f6418a5a44b6559bdc061d\" \"0f9debc7b677b358610ee35ac257df27\""
