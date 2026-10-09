@@ -1,0 +1,871 @@
+{
+  "kind": "project",
+  "schema": 1,
+  "data": {
+    "name": "Kinematic Lab",
+    "legacyGameplay": false,
+    "saveIdentity": "8ac90177554b18a6cb3760a186acfefd67cd341820d796abd443b69859190bcc",
+    "iconAsset": "",
+    "worldManifest": "",
+    "startupScene": "Scenes/main.judas",
+    "assetsDir": "Assets",
+    "scenesDir": "Scenes",
+    "savesDir": "Saves",
+    "exportAssetPolicy": "all",
+    "runtimeAssets": [],
+    "exportScenes": [
+      "Scenes/main.judas"
+    ],
+    "excludeScenes": [],
+    "input": [
+      {
+        "name": "move_forward",
+        "axis": false,
+        "bindings": [
+          {
+            "control": "key:W",
+            "scale": 1.0,
+            "deadzone": 0.0
+          },
+          {
+            "control": "key:Up",
+            "scale": 1.0,
+            "deadzone": 0.0
+          }
+        ]
+      },
+      {
+        "name": "move_backward",
+        "axis": false,
+        "bindings": [
+          {
+            "control": "key:S",
+            "scale": 1.0,
+            "deadzone": 0.0
+          },
+          {
+            "control": "key:Down",
+            "scale": 1.0,
+            "deadzone": 0.0
+          }
+        ]
+      },
+      {
+        "name": "strafe_left",
+        "axis": false,
+        "bindings": [
+          {
+            "control": "key:A",
+            "scale": 1.0,
+            "deadzone": 0.0
+          },
+          {
+            "control": "key:Left",
+            "scale": 1.0,
+            "deadzone": 0.0
+          }
+        ]
+      },
+      {
+        "name": "strafe_right",
+        "axis": false,
+        "bindings": [
+          {
+            "control": "key:D",
+            "scale": 1.0,
+            "deadzone": 0.0
+          },
+          {
+            "control": "key:Right",
+            "scale": 1.0,
+            "deadzone": 0.0
+          }
+        ]
+      },
+      {
+        "name": "move_up",
+        "axis": false,
+        "bindings": [
+          {
+            "control": "key:E",
+            "scale": 1.0,
+            "deadzone": 0.0
+          }
+        ]
+      },
+      {
+        "name": "move_down",
+        "axis": false,
+        "bindings": [
+          {
+            "control": "key:Q",
+            "scale": 1.0,
+            "deadzone": 0.0
+          }
+        ]
+      },
+      {
+        "name": "pitch_up",
+        "axis": false,
+        "bindings": [
+          {
+            "control": "key:I",
+            "scale": 1.0,
+            "deadzone": 0.0
+          }
+        ]
+      },
+      {
+        "name": "pitch_down",
+        "axis": false,
+        "bindings": [
+          {
+            "control": "key:K",
+            "scale": 1.0,
+            "deadzone": 0.0
+          }
+        ]
+      },
+      {
+        "name": "yaw_left",
+        "axis": false,
+        "bindings": [
+          {
+            "control": "key:J",
+            "scale": 1.0,
+            "deadzone": 0.0
+          }
+        ]
+      },
+      {
+        "name": "yaw_right",
+        "axis": false,
+        "bindings": [
+          {
+            "control": "key:L",
+            "scale": 1.0,
+            "deadzone": 0.0
+          }
+        ]
+      },
+      {
+        "name": "roll_left",
+        "axis": false,
+        "bindings": [
+          {
+            "control": "key:U",
+            "scale": 1.0,
+            "deadzone": 0.0
+          }
+        ]
+      },
+      {
+        "name": "roll_right",
+        "axis": false,
+        "bindings": [
+          {
+            "control": "key:O",
+            "scale": 1.0,
+            "deadzone": 0.0
+          }
+        ]
+      },
+      {
+        "name": "prograde",
+        "axis": false,
+        "bindings": [
+          {
+            "control": "key:P",
+            "scale": 1.0,
+            "deadzone": 0.0
+          }
+        ]
+      },
+      {
+        "name": "retrograde",
+        "axis": false,
+        "bindings": [
+          {
+            "control": "key:M",
+            "scale": 1.0,
+            "deadzone": 0.0
+          }
+        ]
+      },
+      {
+        "name": "radial",
+        "axis": false,
+        "bindings": [
+          {
+            "control": "key:N",
+            "scale": 1.0,
+            "deadzone": 0.0
+          }
+        ]
+      },
+      {
+        "name": "add_water",
+        "axis": false,
+        "bindings": [
+          {
+            "control": "key:B",
+            "scale": 1.0,
+            "deadzone": 0.0
+          }
+        ]
+      },
+      {
+        "name": "igniter",
+        "axis": false,
+        "bindings": [
+          {
+            "control": "key:C",
+            "scale": 1.0,
+            "deadzone": 0.0
+          }
+        ]
+      },
+      {
+        "name": "jump",
+        "axis": false,
+        "bindings": [
+          {
+            "control": "key:Space",
+            "scale": 1.0,
+            "deadzone": 0.0
+          },
+          {
+            "control": "pad:South",
+            "scale": 1.0,
+            "deadzone": 0.0
+          }
+        ]
+      },
+      {
+        "name": "control_toggle",
+        "axis": false,
+        "bindings": [
+          {
+            "control": "key:F",
+            "scale": 1.0,
+            "deadzone": 0.0
+          }
+        ]
+      },
+      {
+        "name": "torch_toggle",
+        "axis": false,
+        "bindings": [
+          {
+            "control": "key:T",
+            "scale": 1.0,
+            "deadzone": 0.0
+          }
+        ]
+      },
+      {
+        "name": "interact",
+        "axis": false,
+        "bindings": [
+          {
+            "control": "key:G",
+            "scale": 1.0,
+            "deadzone": 0.0
+          },
+          {
+            "control": "pad:West",
+            "scale": 1.0,
+            "deadzone": 0.0
+          }
+        ]
+      },
+      {
+        "name": "view_toggle",
+        "axis": false,
+        "bindings": [
+          {
+            "control": "key:V",
+            "scale": 1.0,
+            "deadzone": 0.0
+          }
+        ]
+      },
+      {
+        "name": "throw",
+        "axis": false,
+        "bindings": [
+          {
+            "control": "key:H",
+            "scale": 1.0,
+            "deadzone": 0.0
+          }
+        ]
+      },
+      {
+        "name": "sas_toggle",
+        "axis": false,
+        "bindings": [
+          {
+            "control": "key:X",
+            "scale": 1.0,
+            "deadzone": 0.0
+          }
+        ]
+      },
+      {
+        "name": "spawn",
+        "axis": false,
+        "bindings": [
+          {
+            "control": "key:Z",
+            "scale": 1.0,
+            "deadzone": 0.0
+          }
+        ]
+      },
+      {
+        "name": "destroy",
+        "axis": false,
+        "bindings": [
+          {
+            "control": "key:Y",
+            "scale": 1.0,
+            "deadzone": 0.0
+          }
+        ]
+      },
+      {
+        "name": "save_state",
+        "axis": false,
+        "bindings": [
+          {
+            "control": "key:F6",
+            "scale": 1.0,
+            "deadzone": 0.0
+          }
+        ]
+      },
+      {
+        "name": "delete_state",
+        "axis": false,
+        "bindings": [
+          {
+            "control": "key:F7",
+            "scale": 1.0,
+            "deadzone": 0.0
+          }
+        ]
+      },
+      {
+        "name": "pause",
+        "axis": false,
+        "bindings": [
+          {
+            "control": "key:Escape",
+            "scale": 1.0,
+            "deadzone": 0.0
+          },
+          {
+            "control": "pad:Start",
+            "scale": 1.0,
+            "deadzone": 0.0
+          }
+        ]
+      },
+      {
+        "name": "ui_up",
+        "axis": false,
+        "bindings": [
+          {
+            "control": "key:Up",
+            "scale": 1.0,
+            "deadzone": 0.0
+          },
+          {
+            "control": "pad:DpadUp",
+            "scale": 1.0,
+            "deadzone": 0.0
+          }
+        ]
+      },
+      {
+        "name": "ui_down",
+        "axis": false,
+        "bindings": [
+          {
+            "control": "key:Down",
+            "scale": 1.0,
+            "deadzone": 0.0
+          },
+          {
+            "control": "pad:DpadDown",
+            "scale": 1.0,
+            "deadzone": 0.0
+          }
+        ]
+      },
+      {
+        "name": "ui_activate",
+        "axis": false,
+        "bindings": [
+          {
+            "control": "key:Return",
+            "scale": 1.0,
+            "deadzone": 0.0
+          },
+          {
+            "control": "key:Keypad Enter",
+            "scale": 1.0,
+            "deadzone": 0.0
+          },
+          {
+            "control": "pad:South",
+            "scale": 1.0,
+            "deadzone": 0.0
+          }
+        ]
+      },
+      {
+        "name": "ui_left",
+        "axis": false,
+        "bindings": [
+          {
+            "control": "key:Left",
+            "scale": 1.0,
+            "deadzone": 0.0
+          },
+          {
+            "control": "pad:DpadLeft",
+            "scale": 1.0,
+            "deadzone": 0.0
+          }
+        ]
+      },
+      {
+        "name": "ui_right",
+        "axis": false,
+        "bindings": [
+          {
+            "control": "key:Right",
+            "scale": 1.0,
+            "deadzone": 0.0
+          },
+          {
+            "control": "pad:DpadRight",
+            "scale": 1.0,
+            "deadzone": 0.0
+          }
+        ]
+      },
+      {
+        "name": "ui_click",
+        "axis": false,
+        "bindings": [
+          {
+            "control": "mouse:Left",
+            "scale": 1.0,
+            "deadzone": 0.0
+          }
+        ]
+      },
+      {
+        "name": "move_x",
+        "axis": true,
+        "bindings": [
+          {
+            "control": "key:A",
+            "scale": -1.0,
+            "deadzone": 0.0
+          },
+          {
+            "control": "key:D",
+            "scale": 1.0,
+            "deadzone": 0.0
+          },
+          {
+            "control": "stick:LeftX",
+            "scale": 1.0,
+            "deadzone": 0.15000000596046448
+          },
+          {
+            "control": "key:Left",
+            "scale": -1.0,
+            "deadzone": 0.0
+          },
+          {
+            "control": "key:Right",
+            "scale": 1.0,
+            "deadzone": 0.0
+          }
+        ]
+      },
+      {
+        "name": "move_y",
+        "axis": true,
+        "bindings": [
+          {
+            "control": "key:S",
+            "scale": -1.0,
+            "deadzone": 0.0
+          },
+          {
+            "control": "key:W",
+            "scale": 1.0,
+            "deadzone": 0.0
+          },
+          {
+            "control": "stick:LeftY",
+            "scale": -1.0,
+            "deadzone": 0.15000000596046448
+          },
+          {
+            "control": "key:Down",
+            "scale": -1.0,
+            "deadzone": 0.0
+          },
+          {
+            "control": "key:Up",
+            "scale": 1.0,
+            "deadzone": 0.0
+          }
+        ]
+      },
+      {
+        "name": "move_z",
+        "axis": true,
+        "bindings": [
+          {
+            "control": "key:Q",
+            "scale": -1.0,
+            "deadzone": 0.0
+          },
+          {
+            "control": "key:E",
+            "scale": 1.0,
+            "deadzone": 0.0
+          }
+        ]
+      },
+      {
+        "name": "pitch",
+        "axis": true,
+        "bindings": [
+          {
+            "control": "key:K",
+            "scale": -1.0,
+            "deadzone": 0.0
+          },
+          {
+            "control": "key:I",
+            "scale": 1.0,
+            "deadzone": 0.0
+          }
+        ]
+      },
+      {
+        "name": "yaw",
+        "axis": true,
+        "bindings": [
+          {
+            "control": "key:L",
+            "scale": -1.0,
+            "deadzone": 0.0
+          },
+          {
+            "control": "key:J",
+            "scale": 1.0,
+            "deadzone": 0.0
+          }
+        ]
+      },
+      {
+        "name": "roll",
+        "axis": true,
+        "bindings": [
+          {
+            "control": "key:U",
+            "scale": -1.0,
+            "deadzone": 0.0
+          },
+          {
+            "control": "key:O",
+            "scale": 1.0,
+            "deadzone": 0.0
+          }
+        ]
+      },
+      {
+        "name": "look_x",
+        "axis": true,
+        "bindings": [
+          {
+            "control": "mouse:dx",
+            "scale": 1.0,
+            "deadzone": 0.0
+          }
+        ]
+      },
+      {
+        "name": "look_y",
+        "axis": true,
+        "bindings": [
+          {
+            "control": "mouse:dy",
+            "scale": 1.0,
+            "deadzone": 0.0
+          }
+        ]
+      },
+      {
+        "name": "wheel_x",
+        "axis": true,
+        "bindings": [
+          {
+            "control": "mouse:wheelX",
+            "scale": 1.0,
+            "deadzone": 0.0
+          }
+        ]
+      },
+      {
+        "name": "wheel_y",
+        "axis": true,
+        "bindings": [
+          {
+            "control": "mouse:wheelY",
+            "scale": 1.0,
+            "deadzone": 0.0
+          }
+        ]
+      },
+      {
+        "name": "look_stick_x",
+        "axis": true,
+        "bindings": [
+          {
+            "control": "stick:RightX",
+            "scale": 1.0,
+            "deadzone": 0.15000000596046448
+          }
+        ]
+      },
+      {
+        "name": "look_stick_y",
+        "axis": true,
+        "bindings": [
+          {
+            "control": "stick:RightY",
+            "scale": 1.0,
+            "deadzone": 0.15000000596046448
+          }
+        ]
+      },
+      {
+        "name": "throttle",
+        "axis": true,
+        "bindings": [
+          {
+            "control": "stick:RightTrigger",
+            "scale": 1.0,
+            "deadzone": 0.05000000074505806
+          }
+        ]
+      },
+      {
+        "name": "stop",
+        "axis": false,
+        "bindings": [
+          {
+            "control": "key:T",
+            "scale": 1.0,
+            "deadzone": 0.0
+          }
+        ]
+      },
+      {
+        "name": "reverse",
+        "axis": false,
+        "bindings": [
+          {
+            "control": "key:V",
+            "scale": 1.0,
+            "deadzone": 0.0
+          }
+        ]
+      },
+      {
+        "name": "spin",
+        "axis": false,
+        "bindings": [
+          {
+            "control": "key:O",
+            "scale": 1.0,
+            "deadzone": 0.0
+          }
+        ]
+      },
+      {
+        "name": "fast",
+        "axis": false,
+        "bindings": [
+          {
+            "control": "key:J",
+            "scale": 1.0,
+            "deadzone": 0.0
+          }
+        ]
+      },
+      {
+        "name": "dynamic",
+        "axis": false,
+        "bindings": [
+          {
+            "control": "key:G",
+            "scale": 1.0,
+            "deadzone": 0.0
+          }
+        ]
+      },
+      {
+        "name": "kinematic",
+        "axis": false,
+        "bindings": [
+          {
+            "control": "key:K",
+            "scale": 1.0,
+            "deadzone": 0.0
+          }
+        ]
+      },
+      {
+        "name": "remove",
+        "axis": false,
+        "bindings": [
+          {
+            "control": "key:X",
+            "scale": 1.0,
+            "deadzone": 0.0
+          }
+        ]
+      },
+      {
+        "name": "rider_one",
+        "axis": false,
+        "bindings": [
+          {
+            "control": "key:F1",
+            "scale": 1.0,
+            "deadzone": 0.0
+          }
+        ]
+      },
+      {
+        "name": "rider_two",
+        "axis": false,
+        "bindings": [
+          {
+            "control": "key:F2",
+            "scale": 1.0,
+            "deadzone": 0.0
+          }
+        ]
+      },
+      {
+        "name": "rider_rotated",
+        "axis": false,
+        "bindings": [
+          {
+            "control": "key:F3",
+            "scale": 1.0,
+            "deadzone": 0.0
+          }
+        ]
+      },
+      {
+        "name": "save",
+        "axis": false,
+        "bindings": [
+          {
+            "control": "key:F6",
+            "scale": 1.0,
+            "deadzone": 0.0
+          }
+        ]
+      },
+      {
+        "name": "load",
+        "axis": false,
+        "bindings": [
+          {
+            "control": "key:F7",
+            "scale": 1.0,
+            "deadzone": 0.0
+          }
+        ]
+      },
+      {
+        "name": "reset",
+        "axis": false,
+        "bindings": [
+          {
+            "control": "key:R",
+            "scale": 1.0,
+            "deadzone": 0.0
+          }
+        ]
+      }
+    ],
+    "classification": {
+      "tags": {
+        "nextId": 0,
+        "entries": []
+      },
+      "collision": {
+        "nextId": 1,
+        "entries": [
+          {
+            "id": 0,
+            "name": "Default"
+          }
+        ]
+      },
+      "render": {
+        "nextId": 1,
+        "entries": [
+          {
+            "id": 0,
+            "name": "Default"
+          }
+        ]
+      }
+    },
+    "navigation": {
+      "areas": {
+        "nextId": 1,
+        "entries": [
+          {
+            "id": 0,
+            "name": "Default"
+          }
+        ]
+      },
+      "nextProfile": 1,
+      "profiles": [
+        {
+          "id": 0,
+          "name": "Default",
+          "radius": 0.30000001192092896,
+          "height": 1.7999999523162842,
+          "slope": 50.0,
+          "climb": 0.3499999940395355
+        }
+      ]
+    },
+    "localization": {
+      "defaultLocale": "en",
+      "fonts": [],
+      "locales": {}
+    },
+    "audio": {}
+  }
+}

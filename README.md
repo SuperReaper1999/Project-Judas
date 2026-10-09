@@ -17,9 +17,11 @@ SDL-created context; generation and license provenance are recorded in
 
 ## JUDAS STATUS: READY FOR NEW FEATURE DEVELOPMENT
 
-Current accepted engine checkpoint: M69 (`8ddec3b97d66815de4174d6e103be77e74b7eb0f`).
+Current accepted engine checkpoint: M70 (`fb31f0244c9f41f74c439afd99855e3707937edd`).
+M71 kinematics/editor improvements are an uncommitted candidate awaiting review.
 M67 authoring review remains provisional/deferred. M69 controller behaviour was
-accepted using synthetic delivery/VM checks; physical controller feel is untested.
+accepted using synthetic delivery/VM checks; physical controller feel and Windows
+M70 validation remain outstanding.
 Start with [Architecture](docs/ARCHITECTURE.md), [JudasJS](docs/JUDASJS.md) and
 [documentation maintenance](docs/DOCUMENTATION_MAINTENANCE.md).
 
@@ -388,30 +390,35 @@ nothing.
 ## The editor
 
 `./build/judas_editor [project.judasproj | scene.judas]` opens a project
-(and its startup scene) or a scene inside its enclosing project. The
-window is the viewport; panels sit over it.
+(and its startup scene) or a scene inside its enclosing project. Edit mode has a
+dedicated central scene view, resizable hierarchy/inspector rails and a bottom
+asset browser. Running Play retains the normal full-window runtime view.
+See the [editor guide](docs/EDITOR_GUIDE.md) and
+[making a game by hand](docs/judasjs/getting-started.md).
 
 | Editor action | How |
 |---------------|-----|
 | Look around | hold the **right mouse button** and move the mouse |
+| Pan the scene view | press the **middle mouse button** in the viewport and drag; movement follows the view plane and the most recent focus depth; release or `Escape` ends the drag |
+| Zoom the scene view | scroll the **mouse wheel** in the viewport; wheel up moves closer, down moves away from the current focus; panel scrolling leaves the camera still |
 | Fly | with the right button held: `W`/`A`/`S`/`D`, `E` up, `Q` down, `Shift` faster |
-| Select | **left-click** an object in the viewport (a bounding-sphere pick — approximate for long thin objects), or click it in **Hierarchy** |
+| Select | **left-click** visible primitive/mesh geometry in the viewport, including nested objects, or click it in **Hierarchy** |
 | Focus the selection | `F`, or Hierarchy → Focus |
 | **Move / rotate / scale** | `W` / `E` / `R` pick the gizmo; drag a red/green/blue handle (arrow, ring, box); `X` toggles local/world space; hold `Ctrl` (or Edit → Snap) to snap 0.5 m / 15° / 0.25; a drag is one undo step |
 | Create objects | **Create** menu: empty, static/dynamic box or sphere, mesh, point/spot light, door, gravity region, player start (placed 8 m ahead of the camera); or drag a mesh from the **Asset Browser** onto the viewport |
 | Rename / duplicate | double-click a Hierarchy row (or right-click → Rename); `Ctrl+D`, Hierarchy → Duplicate, or right-click → Duplicate (a new id, placed after the original) |
 | Delete / reorder | `Delete`, Hierarchy → Delete, or the right-click menu (Move up / Move down — order is authored data: earlier gravity regions win) |
-| Hierarchy indicators | `[RB]` letters name the components an object has (R render, B body, G gravity, L light, D door, S switch, V vehicle, C celestial, A atmosphere, F combustible, W fluid, P player start); `(!)` marks a mesh whose asset is missing or unknown; while playing, `[Full]`/`[Coarse]`/`[Dormant]`/`[destroyed]` show M29 state |
+| Hierarchy indicators | Hover a row for component letters and stable identity; `(!)` marks a missing or unknown mesh; paused runtime inspection shows `[Full]`/`[Coarse]`/`[Dormant]`/`[destroyed]` state |
 | Edit | **Inspector**: name, transform, every component's fields (one editor per component type from a registry; Add component… / Remove), asset fields as combos or drop targets with an honest status line (unknown id, file missing) |
-| Scene-wide values | **Scene** panel: name, world origin, sun, ambient, fluid scale, fidelity policy |
+| Scene-wide values | Toolbar **Scene** or View → **Scene settings**: name, world origin, sun, ambient, fluid scale, fidelity policy |
 | Assets | **Asset Browser** (View menu): every tracked asset with type, path, state and id; **Import** a file by path into the assets directory (validated by the engine's own loader); select → **Rename / move**, **Remove**; **Track** untracked files; problems listed; drag rows onto the viewport or an inspector field |
 | Project | File → **New project…**, **Open project…**, **Project settings** (name, startup scene, scene list — double-click opens), **Run project** |
 | Debug view | **Debug** menu toggles: collision shapes, player capsule + support, contacts, gravity vectors + regions, frame axes, lights, interaction ranges, lifecycle/fidelity, sampled terrain normals, fluid particles, atmosphere radii — drawn in Edit (authored) and Play (live) |
 | Profiler | View → **Profiler**: frame ms / FPS (rolling), fixed steps per frame, last step ms, live/dynamic bodies, contacts, entity counts, draw calls, triangles, shadow passes, dynamic lights, debug lines, fluid particles and surface/solve times, resource counts and hit/miss/failed |
-| Undo / redo | `Ctrl+Z` / `Ctrl+Y` (Edit menu) — every panel edit, gizmo drag, create, duplicate, delete and reorder is one step |
-| Save / open | `Ctrl+S`, File → Save scene / Save scene as… / Open scene… (path fields relative to the project root; no OS dialog) |
-| **Play scene** | **Play scene** or `F5`: the authored scene is instantiated and played with the normal Judas controls below; edge-triggered keys pressed while editing are cleared first |
-| While playing | `Escape` opens the M13 pause menu and frees the mouse so the editor panels are usable again; the inspector is read-only and shows the M29 runtime entity |
+| Undo / redo | `Ctrl+Z` / `Ctrl+Y` (Edit menu) — gizmo/shared field gestures and create/duplicate/delete/reorder are grouped; some specialized inspector controls commit each change |
+| Save / open | `Ctrl+S`, File → Save scene / Save scene as… / Open scene… (path fields relative to the project root; no OS dialog); unsaved scene replacement/close offers Save, Discard or Cancel |
+| **Play scene** | Toolbar **Play** or `F5`: the authored scene is instantiated with its project scripts/legacy compatibility policy; edit input edges are cleared first |
+| While playing | Modern projects supply their own pause/input policy; historical compatibility can retain the M13 menu. Paused inspection is read-only. |
 | **Stop** | **Stop** or `F5`: the runtime world is discarded and the authored scene is exactly what it was |
 | **Run project** | launches `./build/judas <project>` beside the editor binary as a separate process on the startup scene |
 

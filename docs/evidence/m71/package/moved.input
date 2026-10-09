@@ -1,0 +1,25 @@
+FRAMES 440
+FRAME_SECONDS 0.0166666667
+LOG_EVERY 30
+ENTITY 40
+SCREENSHOT 40 /home/conner/Documents/GitHub/Project-Judas/docs/evidence/m71/package/moved-initial.png
+AXIS move_x 0.4 50 75
+ACTION rider_two 1 80 81
+ACTION stop 1 120 121
+ACTION stop 1 140 141
+ACTION spin 1 150 151
+ACTION reverse 1 180 181
+ACTION jump 1 200 201
+ACTION rider_rotated 1 220 221
+AXIS move_x 0.4 240 255
+ACTION dynamic 1 260 261
+ACTION kinematic 1 280 281
+ACTION save 1 300 301
+WAIT_SERVICES save 300 310
+ACTION load 1 340 341
+WAIT_SERVICES save 300 350
+SCREENSHOT 375 /home/conner/Documents/GitHub/Project-Judas/docs/evidence/m71/package/moved-restored.png
+ACTION fast 1 380 381
+ACTION reset 1 390 391
+ACTION remove 1 430 431
+SCREENSHOT 420 /home/conner/Documents/GitHub/Project-Judas/docs/evidence/m71/package/moved-reloaded.png

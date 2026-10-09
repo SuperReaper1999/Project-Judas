@@ -150,7 +150,8 @@ Authored/runtime settings persist; solver caches do not.
 ### Visual sockets
 
 `entity.setSocket(target, joint, offset={}) → true` assigns a visual-only attachment.
-Target is a safe animated Entity; null removes the socket. Offset is partial local
+Target is a safe animated Entity. Use `entity.clearSocket() → true` to remove the
+attachment; `setSocket(null, ...)` is invalid and throws TypeError. Offset is partial local
 position/rotation/scale relative to that joint. Reads are ordinary transform /
 presentedTransform. Missing joints/invalid cycles/conflicting physics ownership
 throw; no fallback to guessed clip or bind transforms. Target-first evaluation
@@ -231,6 +232,7 @@ this.actor.animation.ikTargets([{id:'palm',chain:'contact',space:'world',
 
 | Configuration | Meaning/default |
 |---|---|
+| `enabled` | Enable this shared pose solve, default true; disabled targets report disabled status. |
 | `bodyRoot` | Required stable joint key; all chains descend from this skeletal root. |
 | `rootMin`, `rootMax` | Model-space root correction bounds, metres; default ±0.2 on each axis. Must contain zero; each bound is at most 10 m. |
 | `rootRotation` | Allow body-root rotation participation, default true. False disables it even when a chain names the root. |

@@ -1,6 +1,6 @@
 # Deformable
 
-M62 deformation API, current through M64. Judas owns deformation and contact; project JavaScript chooses
+Current deformation API (introduced in M62). Judas owns deformation and contact; project JavaScript chooses
 forces, attachments and game meaning. Obtain `entity.deformable`; it returns null
 until the normal immutable resource is ready, or if the component is absent.
 Failed/stale baked resources throw a diagnostic `TypeError`; they are not a successful empty simulation.

@@ -1,5 +1,6 @@
-/** Current JudasJS through the M70 candidate; reviewed against ScriptSystem.cpp.
- * Based on accepted checkpoint 934c5d3f0556c920cc7cae8b80dc4677d8cbf87b. Tooling only, no TS runtime.
+/** Current JudasJS through the M71 candidate; reviewed against ScriptSystem.cpp.
+ * Based on accepted checkpoint fb31f0244c9f41f74c439afd99855e3707937edd. M71 human review is pending.
+ * Tooling only, no TS runtime.
  * See JUDASJS.md. Ordinary returned objects are detached snapshots.
  */
 declare module "judas" {
@@ -16,6 +17,17 @@ declare module "judas" {
   export interface Quat extends Vec3 { w: number }
   export interface Transform { position: Vec3; rotation: Quat; scale: Vec3 }
   export interface TransformPatch { position?: Vec3; rotation?: Quat; scale?: Vec3 }
+  export type BodyMotionType = "static" | "dynamic" | "kinematic";
+  /** Complete world authored-pivot pose; COM follows a linear segment. */
+  export interface KinematicTarget {position:Vec3;rotation:Quat}
+  export interface MotionTypeOptions {preserveVelocity?:boolean}
+  /** Durable command snapshot; actual interval velocities are on Entity. */
+  export interface KinematicMotion {
+    control:"stopped"|"target"|"velocity";
+    target:KinematicTarget;
+    linearVelocity:Vec3;angularVelocity:Vec3;
+    remainingSeconds:number;targetNextStep:boolean;
+  }
   export interface CastPose { position: Vec3; rotation?: Quat }
   export interface Ray { origin: Vec3; direction: Vec3 }
   /** One nearest-hit request, using the scalar cast's coordinates and units. */
@@ -138,6 +150,16 @@ declare module "judas" {
     readonly inertiaWorld: {x: Vec3; y: Vec3; z: Vec3};
     velocity: Vec3;
     angularVelocity: Vec3;
+    readonly motionType: BodyMotionType | null;
+    setMotionType(type:BodyMotionType,options?:MotionTypeOptions):boolean;
+    /** 0 advances over the next physics interval; positive duration <=60 seconds. */
+    moveKinematic(target:KinematicTarget,seconds?:number):boolean;
+    /** Persistent world COM m/s and world rad/s; angular defaults to zero. */
+    setKinematicVelocity(linear:Vec3,angular?:Vec3):boolean;
+    stopKinematic():boolean;
+    readonly kinematicMotion:KinematicMotion|null;
+    /** Actual world contact-point velocity, including rotation about COM. */
+    pointVelocity(point:Vec3):Vec3;
     playAudio(): boolean;
     stopAudio(): boolean;
     pauseAudio(): boolean;
@@ -519,8 +541,10 @@ declare module "judas" {
   export interface UIEvent { document: string; element: string; type: "click" | "change" | "focus" | "back"; value: number }
   export interface ContactEvent { other: Entity | null; point: Vec3; normal: Vec3; relativeVelocity: Vec3; physicalMaterial:AssetId|null; normalImpulse: number | null; selfBody: Entity | null; selfJoint: string | null; otherArticulation: Entity | null; otherJoint: string | null }
   export type ScriptProperties = Record<string, number | boolean | string | Entity | null>;
+  /** Authored defaults; entity references become Entity|null in ScriptContext.properties. */
   export type PropertySchema = Record<string,
-    { type: "number"; default?: number } | { type: "boolean"; default?: boolean } | { type: "string"; default?: string }>;
+    { type: "number"; default?: number } | { type: "boolean"; default?: boolean } |
+    { type: "string"; default?: string } | { type: "entity"; default?: {entity:EntityId} | null }>;
   export interface SaveOptions { name?: string; metadata?: { [key: string]: JSONValue } | JSONValue[] }
   export interface SaveSlot {
     readonly id: string; readonly name: string; readonly scene: string; readonly timestamp: number;
@@ -547,7 +571,13 @@ declare module "judas" {
     reference(entity: Entity): string | null;
     resolve(key: string): Entity | null;
   };
-  export interface ScriptContext<P extends ScriptProperties = ScriptProperties> { entity: Entity; properties: P; readonly restored: boolean; readonly initialState:JSONValue }
+  export interface ScriptContext<P extends ScriptProperties = ScriptProperties> {
+    entity: Entity; properties: P;
+    /** Modern save-load construction; saved state is installed after the constructor. */
+    readonly restored: boolean;
+    /** Prefab construction data, otherwise null; not automatically assigned to this.state. */
+    readonly initialState:JSONValue;
+  }
   /** Structural tooling interface, not a runtime-exported base class. */
   export interface ScriptBehaviour {
     state?: JSONValue;

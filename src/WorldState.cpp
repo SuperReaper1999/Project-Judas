@@ -187,6 +187,20 @@ bool ValidateStructure(const WorldState& state, std::string& error) {
 }
 }  // namespace
 
+bool CanCaptureLegacyWorldState(const RuntimeWorld& world,std::string& error){
+    for(const auto& definition:world.ScriptObjects()){
+        if(!definition.body||world.IsTransientEntity(definition.id))continue;
+        const auto handle=world.RuntimeBody(definition.id);if(!handle.IsValid())continue;
+        const auto current=world.Physics().GetMotionType(handle);const auto* record=world.FindEntity(definition.id);
+        const auto baseline=record&&record->definition.body?record->definition.body->motion:definition.body->motion;
+        const auto expected=baseline==SceneBodyMotion::Static?BodyMotionType::Static:baseline==SceneBodyMotion::Dynamic?BodyMotionType::Dynamic:BodyMotionType::Kinematic;
+        if(current==BodyMotionType::Kinematic||current!=expected){
+            error="entity "+std::to_string(definition.id)+": legacy world-state deltas cannot preserve body authority or kinematic commands; use modern save slots";return false;
+        }
+    }
+    return true;
+}
+
 WorldState CaptureWorldState(const RuntimeWorld& world) {
     WorldState out;
     out.baselineName = world.Settings().name;
@@ -221,6 +235,7 @@ WorldState CaptureWorldState(const RuntimeWorld& world) {
         authored.position = e.definition.transform.position;
         authored.rotation = glm::normalize(e.definition.transform.rotation);
         authored.linearVelocity = e.definition.body ? e.definition.body->initialLinearVelocity : glm::vec3(0.0f);
+        authored.angularVelocity = e.definition.body ? e.definition.body->initialAngularVelocity : glm::vec3(0.0f);
         if (StateDiffers(state, authored)) {
             change.state = state;
             out.entities.push_back(change);

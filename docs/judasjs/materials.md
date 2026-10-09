@@ -6,7 +6,7 @@ Judas provides material/rendering primitives. Project assets own appearance; Jav
 
 Returns a wrapper, with public opaque `entityId` and integer `slot` (0–63). Operations reacquire a live render component. Stale entities throw `ReferenceError`; absent render components and invalid arguments throw `TypeError`. Slot index is primitive order, not glTF's material-table index. Primitives have slot 0. Imported slots use their imported source unless assigned a registered material asset.
 
-- `state`: copied `{asset, ready, model, alphaMode, baseColor, metallic, roughness, emissive, emissiveIntensity, overridden}`. Empty asset means imported/default source. `ready` is false while an assigned asset is pending/failed; inspect resource/editor diagnostics. Model is `legacy | pbr | unlit`; alpha mode is `opaque | mask | blend`.
+- `state`: copied `{asset, ready, model, alphaMode, baseColor, metallic, roughness, emissive, emissiveIntensity, uvScale, uvOffset, overridden}`. Empty asset means imported/default source. `ready` is false while an assigned asset is pending/failed; inspect resource/editor diagnostics. Model is `legacy | pbr | unlit`; alpha mode is `opaque | mask | blend`.
 - `assign(asset)`: registered `.judasmat` ID, or empty string to restore imported/default source; returns true. Existing overrides remain.
 - `set(parameters)`: merges instance overrides, returns true. Supports `baseColor: {x,y,z,a}` (linear RGB and unencoded alpha, each 0–1), `metallic` / `roughness` (0–1), `emissive: {x,y,z}` (linear, nonnegative ≤100000), `emissiveIntensity` (0–100000). No per-frame shader compilation or resource recreation.
 - `clearOverrides()`: removes all parameter overrides on this slot, returns boolean. Keeps assigned asset. Shared definitions remain immutable.
@@ -22,7 +22,7 @@ surface.clearOverrides();
 ## `world.appearance` / `world.setAppearance(settings)`
 
 Read a copied scene configuration or merge a patch and return `true`:
-`linearRendering`, `exposure`, `environmentAsset`, `environmentIntensity`, `environmentRotation: {w,x,y,z}`, `environmentBackground`.
+`backgroundColor`, `linearRendering`, `exposure`, `environmentAsset`, `environmentIntensity`, `environmentRotation: {w,x,y,z}`, `environmentBackground`.
 Exposure is a linear multiplier (strictly positive ≤10000); environment intensity is 0–10000. Environment is an empty ID (no IBL) or a registered baked `.judasenv` asset. Rotation is a finite nonzero quaternion, normalized by Judas, independent of gravity/camera orientation. Boolean fields require booleans. Invalid configuration throws `TypeError`.
 
 `linearRendering` opts into floating-point lighting and display resolve; it does not change physics. Environment background visibility is independent of IBL. Settings are transient; reload restores authored settings. UI renders after display resolve and ignores exposure. Use `presentationUpdate` for camera pose, not material state persistence. Example: `world.setAppearance({exposure: 1.5})`.

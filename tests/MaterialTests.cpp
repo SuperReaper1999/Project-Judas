@@ -13,6 +13,21 @@
 int main(int argc,char** argv){std::string error;unsigned checks=0,failures=0;auto check=[&](bool ok,const char* message){++checks;failures+=!ok;std::printf("%s %s\n",ok?"PASS":"FAIL",message);};std::filesystem::path out=argc>1?argv[1]:"build/m57-tests";std::filesystem::create_directories(out);
  MaterialDefinition m,round;m.metallic=.3;m.maps[0].asset="57575757575757575757575757575701";check(ParseMaterial(SerializeMaterial(m),round,error)&&SerializeMaterial(round)==SerializeMaterial(m),"material round trip");check(!ParseMaterial("JudasMaterial 1 roughness -1",round,error),"invalid parameter rejected");MaterialOverride o;o.roughness=.9;check(ApplyMaterialOverride(m,o).roughness==.9f&&m.roughness==.5f,"isolated instance override");check(ApplyMaterialOverride(m,{}).roughness==m.roughness,"revert returns source");std::vector<MaterialSlot> slots{{m.maps[0].asset,o}},back;check(DecodeMaterialSlots(EncodeMaterialSlots(slots),back,error)&&EncodeMaterialSlots(back)==EncodeMaterialSlots(slots),"slot overrides round trip");
  EngineHost host;check(host.Init("M57 GL material checks",256,256,false,error),"actual OpenGL host");if(failures){std::puts(error.c_str());return 1;}auto& r=host.GetRenderer();std::printf("GPU %s / %s\n",glGetString(GL_VENDOR),glGetString(GL_RENDERER));auto view=glm::lookAt(glm::vec3(0,0,4),glm::vec3(0),glm::vec3(0,1,0));auto projection=glm::perspective(glm::radians(45.f),1.f,.1f,20.f);r.SetCamera(view,projection);r.SetLighting({0,0,1},{1,1,1},{0,0,0});
+ // M71's ordinary primitive-only lab exposed a sampler-type conflict that
+ // rendering a skinned asset earlier accidentally hid. Prove a cold first
+ // draw and shadow without warming either shader with a skin palette.
+ check(glGetError()==GL_NO_ERROR,"cold Renderer initialization has no GL errors");
+ r.BeginFrame(256,256);r.SetCamera(view,projection);r.SetMaterialBindings({});
+ r.DrawBox({0,0,0},{1,0,0,0},{1,1,.25f},{1,0,0});r.EndFrame();
+ std::vector<unsigned char> firstPixels;r.CaptureFrame(256,256,firstPixels);
+ const auto firstPixel=(128*256+128)*3;
+ check(firstPixels[firstPixel]>150&&firstPixels[firstPixel+1]<30,"first unskinned primitive renders before any skeleton");
+ check(glGetError()==GL_NO_ERROR,"first unskinned color draw has no sampler conflict");
+ r.BeginShadowPass(0,glm::ortho(-2.f,2.f,-2.f,2.f,.1f,10.f)*view);
+ r.DrawBox({0,0,0},{1,0,0,0},{1,1,.25f},{1,1,1});
+ GLint firstViewport[4];glGetIntegerv(GL_VIEWPORT,firstViewport);float firstDepth=1;
+ glReadPixels(firstViewport[2]/2,firstViewport[3]/2,1,1,GL_DEPTH_COMPONENT,GL_FLOAT,&firstDepth);
+ r.EndShadowPass();check(firstDepth<.9f&&glGetError()==GL_NO_ERROR,"first unskinned shadow writes actual depth without sampler conflict");
  auto render=[&](MaterialDefinition material,bool modern=true,float exposure=1,EnvironmentHandle env=EnvironmentHandle{},glm::quat rotation=glm::quat(1,0,0,0),glm::vec3 scale=glm::vec3(1)){
  auto handle=r.CreateMaterial(material);r.SetSceneAppearance(modern,exposure,env,1,rotation,false);r.BeginFrame(256,256);r.SetCamera(view,projection);r.SetMaterialBindings({{handle,{}}});r.DrawBox({0,0,0},{1,0,0,0},glm::vec3(1,1,.25)*scale,{1,1,1});r.EndFrame();std::vector<unsigned char> image;r.CaptureFrame(256,256,image);auto value=glm::vec3(image[(128*256+128)*3],image[(128*256+128)*3+1],image[(128*256+128)*3+2]);r.DestroyMaterial(handle);return value;};
  m=MaterialDefinition{};m.model=MaterialModel::Unlit;m.baseColor={.21404114f,.21404114f,.21404114f,1};auto value=render(m);check(std::abs(value.x-116)<4,"linear .214 -> Reinhard -> sRGB known output");auto mirror=render(m,true,1,{},glm::quat(1,0,0,0),{-1,.8f,1});check(glm::length(mirror-value)<3,"mirrored nonuniform instance keeps correct face orientation");auto bright=render(m,true,2);check(bright.x>value.x+25,"exposure changes world output");m.maps[0].embedded={1,1,{128,128,128,255}};m.baseColor={1,1,1,1};auto tex=render(m);check(std::abs(tex.x-value.x)<3,"sRGB image decoded exactly once");m.maps[0].embedded={2,1,{0,0,0,255,255,255,255,255}};auto filtered=render(m);check(std::abs(filtered.x-156)<5,"sRGB filtering/mipmaps average in linear light");m.maps[0].embedded={1,1,{255,0,0,0}};m.alpha=MaterialAlpha::Mask;auto masked=render(m);std::printf("PIXEL masked %.0f %.0f %.0f\n",masked.x,masked.y,masked.z);check(std::abs(masked.x-77)<4&&masked.y>75,"alpha cutout discards actual fragments");

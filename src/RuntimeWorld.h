@@ -311,6 +311,8 @@ public:
     std::vector<EntityId> DefinitionIds() const;
     const SceneObject* RuntimeDefinition(EntityId id) const;
     bool SetRuntimeTransform(EntityId id,const SceneTransform& transform);
+    // Authority changes retain the physical handle and retire the old command.
+    bool SetRuntimeMotionType(EntityId id,SceneBodyMotion motion,bool preserveVelocity,std::string& error);
     bool SetMaterialSlot(EntityId,unsigned,const MaterialSlot&);
     bool SetModelPartVisible(EntityId,const std::string&,bool);
     bool SetAppearance(const SceneSettings&);
@@ -507,6 +509,9 @@ private:
     bool m_restoreConstruction=false;
     bool m_composed=false;
     std::set<EntityId> m_regionPending;
+    // Native commands wait with disabled private actors until the region's
+    // existing publication boundary. Retained state replaces initial intent.
+    std::map<EntityId,std::string> m_regionKinematicCommands;
     std::map<EntityId,std::vector<AssetId>> m_regionAssets;
     std::shared_ptr<SceneSession> m_sceneControl;
     std::map<unsigned,EntityId> m_touchEntityHistory;

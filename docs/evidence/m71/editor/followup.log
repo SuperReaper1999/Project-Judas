@@ -1,0 +1,29 @@
+libEGL warning: Not allowed to force software rendering when API explicitly selects a hardware device.
+Renderer fragment texture units: 32 (material path uses 12)
+Mouse capture failed: No relative mode implementation available
+[editor navigation] SDL middle press captures only viewport camera: PASS
+Mouse capture failed: No relative mode implementation available
+[editor navigation] SDL drag translates camera and placement focus equally in view plane: PASS
+[editor navigation] pan preserves authored objects and gizmo undo state: PASS
+Mouse capture failed: No relative mode implementation available
+[editor navigation] SDL middle release frees capture: PASS
+Mouse capture failed: No relative mode implementation available
+[editor navigation] fresh middle press restarts pan: PASS
+[editor navigation] SDL window focus loss cancels and releases capture: PASS
+[editor navigation] SDL focus regain cannot resume the old drag: PASS
+[editor autotest] duplicate created id 1000: scene CHANGED; undo restores: IDENTICAL
+[editor autotest] export project: Exported /tmp/judas-m71-editor-followup-export (5 assets)
+Mouse capture failed: No relative mode implementation available
+[editor navigation] pan active before ordinary Play request: PASS
+Mouse capture failed: No relative mode implementation available
+[editor autotest] wrote: docs/evidence/m71/editor/followup.edit.png
+[editor autotest] edit frame: 16 draw calls, 2436 triangles, 241 debug lines
+Mouse capture failed: No relative mode implementation available
+[editor navigation] ordinary Play retires editor pan ownership: PASS
+[editor autotest] wrote: docs/evidence/m71/editor/followup.play.png
+[editor autotest] play frame: 1 steps, step 0.411 ms, 14 bodies, 12 contacts, 29 draw calls, 4872 triangles, 1 shadow passes, 0 lights, 507 debug lines, 0 particles
+[editor autotest] resources: 0 meshes, 0 textures, 0 terrain meshes, hits 356, misses 1, failed 0, uploads 0, resident 759720 bytes
+[editor autotest] jobs: 7 workers, 1 completed, 0 failed, 0 cancelled
+[editor navigation] ordinary Stop returns an uncaptured scene camera: PASS
+[editor autotest] authored scene after play/stop is IDENTICAL
+[editor autotest] save ok

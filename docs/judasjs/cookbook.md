@@ -1,6 +1,6 @@
 # Copyable, executed examples
 
-[Index](../JUDASJS.md) · [Practices](practices.md)
+[Index](../JUDASJS.md) · [Making a game by hand](getting-started.md) · [Practices](practices.md)
 
 These are ordinary default-exported scripts, not pseudocode or hidden test paths.
 Import/track a script in Assets, attach an enabled slot to an appropriate entity,
@@ -17,6 +17,7 @@ physics or VM. Example names/IDs are content, not engine-owned semantics.
 | [queries.js](examples/queries.js) | Floor below origin, colliders; ray and sphere cast, ignore owner. |
 | [paired-stick.js](examples/paired-stick.js) | `flick_stick` paired right-stick binding; frame raw/circular/delta display and fixed-step ordered observations without stealing another reader's samples. |
 | [ray-fan.js](examples/ray-fan.js) | Owner facing a wall/ledge (local -Z), `compare_rays` action; 100 ordered batch hit/miss results and an optional same-world scalar comparison. |
+| [kinematic.js](examples/kinematic.js) | Ordinary box, sphere, convex or compound rigid body; velocity, complete target, stop and point velocity through public Entity commands. Executed by the focused `judas_kinematic_lab_tests` target. |
 | [contacts.js](examples/contacts.js) | Dynamic collider resting on floor; enter/stay/exit reactions. Use same script on authored sensor for triggers. |
 | [audio.js](examples/audio.js) | Authored AudioEmitter; play/pause/resume/stop requests. |
 | [particles.js](examples/particles.js) | Authored visual ParticleEmitter. |
@@ -31,10 +32,16 @@ physics or VM. Example names/IDs are content, not engine-owned semantics.
 | [stale-handle.js](examples/stale-handle.js) | Prefab ID; validates stale Entity and retained Character behaviour. UI/Joint lifetime differences are documented separately. |
 | [surface.js](examples/surface.js) | Any entity; reflects actual module/class surface for drift verification, not game behaviour. |
 
-Development command: `python3 scripts/m50_validation.py --typescript /path/to/typescript/lib/typescript.js`.
+Focused documentation/type check:
+`node scripts/check_judasjs_api.mjs --typescript /path/to/typescript/lib/typescript.js`.
+It checks the current declarations and all cookbook files without running the engine.
+Add `--runtime /path/to/current/surface.json` when comparing a fresh actual-VM
+enumeration. This verifies surface/types, not visual behaviour or every runtime branch.
+
+**Historical M50 validation command:** `python3 scripts/m50_validation.py --typescript /path/to/typescript/lib/typescript.js`.
 Supply `--node /path/to/node` if Node is not on PATH; choose a fresh `--output`
 directory for a later run. An installed TypeScript package can replace the explicit path.
-It builds only the new focused test target against the existing Release engine,
+At M50 it built the focused test target against the existing Release engine,
 checks declaration/example types and source/runtime coverage, then runs one current
 character-project startup and real outer-frame scene/session reload smoke.
 No production-suite rerun for documentation.
@@ -138,3 +145,17 @@ out-and-back movement exercise observations; C compares the 100-ray batch with
 No device is substituted for human controller feel: an absent controller reads
 neutral. The source [generator](../../scripts/create_m69_example.py) and its small
 JS display subclasses use only ordinary authoring and public APIs.
+
+## Kinematic bodies (M71)
+
+[kinematic.js](examples/kinematic.js) attaches to an ordinary supported rigid
+body. `start` chooses kinematic authority; `fixedUpdate` replaces a persistent
+world COM/angular velocity command with stop and a bounded complete pose target,
+then reads actual point velocity and checks invalid quaternion rejection.
+The example state reports queued commands, last resolved pose/velocities and
+completion. It supplies no route, character or camera policy.
+
+The focused `judas_kinematic_lab_tests` target executes this file through normal
+asset registration and RuntimeWorld/QuickJS callbacks. The ordinary
+[kinematic lab](../../projects/kinematic_lab/) composes similar public APIs for
+interactive content. See [command semantics and lifecycle](entities.md#kinematic-motion-m71).

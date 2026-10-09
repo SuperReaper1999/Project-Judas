@@ -20,7 +20,8 @@ emitters continue ageing; rendering uses normal per-camera culling.
 
 ## Cameras
 
-`camera` on Entity returns authored render-target camera `{enabled,width,height}`
+`camera` on Entity returns the runtime render-target camera snapshot
+`{enabled,width,height,near,far}`
 or null. `setCameraEnabled(bool)` returns success. No JS target resize/cadence,
 render-layer-mask setter or generated texture resource handle is exposed. Author
 those settings through normal M33/M39 scene/editor data.
@@ -36,10 +37,13 @@ For a moving-body/motor camera, publish in `presentationUpdate` from
 interpolated timeline. Read look input in `update` and preserve authoritative
 `transform` for physics queries. See [lifecycle](lifecycle.md).
 
-`world.viewRay` is `{origin,direction}` from the latest view passed to ScriptSystem,
-or null before any. It can lag rendered/input state; it is not a recomputed ray
-from the current assignment. Prefer explicitly supplied geometry for authoritative
-queries. Main view feeds normal presentation/audio; secondary cameras stay separate.
+`world.viewRay` is `{origin,direction}` from the current script-owned main view,
+using its world origin and rotated local `-Z`. It immediately reflects a successful
+`world.setView` call. Without a script-owned view, it falls back to the last main
+view passed to ScriptSystem, or null before any; that compatibility sample can lag
+the next draw. A view submitted from an interpolated presentation pose is still a
+presentation sample, not an authoritative body pose. Choose query geometry/timing
+deliberately. Main view feeds normal presentation/audio; secondary cameras stay separate.
 
 ## world.fluidSample
 

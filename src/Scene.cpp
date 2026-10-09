@@ -133,7 +133,8 @@ bool SceneObjectsEqual(const SceneObject& a, const SceneObject& b) {
                    x.radius == y.radius && x.terrainSurface == y.terrainSurface &&
                    x.mass == y.mass && x.friction == y.friction &&
                    x.restitution == y.restitution &&
-                   Eq(x.initialLinearVelocity, y.initialLinearVelocity) && x.pickable == y.pickable &&
+                   Eq(x.initialLinearVelocity, y.initialLinearVelocity) &&
+                   Eq(x.initialAngularVelocity, y.initialAngularVelocity) && x.pickable == y.pickable &&
                    x.managed == y.managed;
         })) {
         return false;

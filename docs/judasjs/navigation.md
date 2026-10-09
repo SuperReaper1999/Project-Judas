@@ -1,6 +1,6 @@
 # Navigation
 
-M53 navigation API, current through M64. Navigation proposes traversable routes and steering;
+Current navigation API (introduced in M53). Navigation proposes traversable routes and steering;
 [CharacterMotor](character.md) resolves authoritative collision-aware movement.
 Destination choice, chase, link traversal, animation and combat belong to project JS.
 Navigation does not read input, gravity or player state, and never writes entity transforms.

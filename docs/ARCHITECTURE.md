@@ -8246,6 +8246,9 @@ Other remaining limits are not claimed fixed by those milestones.
   a large ball; overlapping spheres pick the nearer centre. Precise
   mesh/box picking is not implemented; the gizmo handles themselves are
   picked exactly.
+  **Historical M30 limitation; superseded by the M71 editor follow-up:**
+  current viewport picking uses visible primitive geometry and mesh triangles
+  after hierarchy resolution, with secondary pivot proxies for empty objects.
 - **No OS file dialog.** Open/Save/Import/New project take path fields.
 - **No object parenting.** `SceneObject` transforms are world-space and
   the runtime's gravity-region priority, entity ids and deltas all key on
@@ -9364,7 +9367,7 @@ Documentation alignment needs a better repeatable maintenance process; the
 [current follow-up and checkpoint checklist](DOCUMENTATION_MAINTENANCE.md) records it.
 
 
-## M70 — shared target posing and partial physical animation (candidate)
+## M70 — shared target posing and partial physical animation
 
 An opted-in instance has distinct clip/layer reference, IK-resolved reference and
 final physical pose. A bounded simultaneous damped least-squares solve reconciles
@@ -9391,4 +9394,46 @@ fingerprints remain unchanged when the optional new settings are absent.
 
 See [M70 ownership, bounds and human review](M70.md) and the
 [public IK/physical-animation reference](judasjs/animation-ragdolls.md).
-Human visual/physical acceptance remains pending for this uncommitted candidate.
+Linux human review was accepted at checkpoint
+`fb31f0244c9f41f74c439afd99855e3707937edd`; Windows M70 validation remains outstanding.
+
+## M71 — prescribed rigid-body authority and scene-view panning (candidate)
+
+Ordinary rigid bodies explicitly select static, dynamic or kinematic authority.
+Kinematic target/velocity commands publish at the next rigid fixed step and use
+the existing step-local motion ledger, broadphase, narrowphase, continuous impacts
+and contact solver. Infinite response mass does not prevent prescribed motion;
+it means contacts cannot change that trajectory. Dynamic neighbours receive
+ordinary impulses and friction, with externally supplied work. Static/kinematic
+obstacles do not automatically stop the commanded path. Concave meshes and terrain
+remain static-only. Transform placement remains a teleport that retires motion.
+
+Target motion uses linear COM translation and a shortest quaternion arc; continuous
+angular-velocity commands support full turns. Rotational point/support velocity is
+measured about the physical COM. Ordinary CharacterMotor support carry and departure
+use that same contract. Legacy M70 animated-boundary placement is not reinterpreted.
+Runtime authority changes preserve safe body identity and reject incompatible owners
+or active joint participation. Modern saves and region snapshots retain physical
+state and durable commands while reconstructing disposable history. Default content
+keeps schema-5 fingerprints; optional angular initial state is an explicit extension.
+
+The existing scene camera had RMB look/fly and F framing but no pan. MMB drag now
+translates camera and focus together in its view plane, scaled by focus distance
+and viewport height. Viewport ownership, cancellation and Play/Stop preserve editing
+gestures. No new orbit/projection controller is added.
+The human-review follow-up adds viewport-only mouse-wheel dolly around a stable
+focus point and replaces oversized sphere selection proxies with visible
+primitive/mesh intersections. Nested transforms and original child IDs are
+preserved. Editor CPU mesh picking is cached and separate from runtime physics.
+
+The subsequent operator-requested editor polish gives Edit mode its own central
+render target/projection, resizable hierarchy/inspector/assets layout, per-user
+preferences and unsaved-scene replacement/close confirmation. It retains the normal
+full-window runtime path for Play. Shared inspector controls use readable stacked
+labels and gesture-level Undo. Local reference/file links use the OS default
+handler. See the current [editor guide](EDITOR_GUIDE.md) and
+[hand-authoring guide](judasjs/getting-started.md); no game policy is added.
+
+See [M71 phases, commands and validation](M71.md) and
+[public prescribed-motion API](judasjs/entities.md#kinematic-motion-m71).
+This combined candidate remains uncommitted pending operator review.

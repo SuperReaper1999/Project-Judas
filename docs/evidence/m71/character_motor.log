@@ -1,0 +1,39 @@
+PASS flat support / true geometry normal
+PASS arbitrarily rotated equivalent support
+PASS wall sweep and slide resolves inward velocity
+PASS corner remains outside both walls
+PASS signed-depth penetration recovery
+STEP 1.499543 1.317275 0.000000 support=1
+PASS step up reuses proven up-forward-down sweeps
+DOWN x=2.74954 y=0.917275 supported=1
+PASS step down/support following
+PASS steep contact is not accepted as support
+PASS translating/rotating actual support carry
+PASS support point velocity includes angular motion
+PASS departing retains support world momentum
+PASS destroyed support generation never aliases reused slot
+PASS zero-gravity airborne motion retains explicit orientation
+RADIAL -1.988827 10.734749 0.000000 support=1 r=10.917429
+PASS radial gravity tangent movement follows real sphere
+PASS dynamic push is finite bounded impulse, not velocity seeding
+PASS M39 bilateral mask excludes body
+PASS generation-aware ignored body
+PASS project tag exclusion uses same authoritative body tags
+PASS motor component serialization round-trip
+PASS motor authored settings change strict baseline fingerprint
+PASS headless motor world needs no PlayerController/input/camera
+PASS ordinary runtime entity publishes resolved motion
+PASS disable retains pose and clears support
+PASS authored reset discards stale motor state
+PASS world destruction invalidates character access
+PASS registered script asset
+PASS scriptable world build
+PASS JS fixedUpdate reads logical input and drives motor
+PASS prefab runtime spawn contains normal motor
+PASS independent motor/script instances
+PASS destroy hierarchy safely retires motor entity
+PASS reload starts fresh runtime state
+PERF 1 motors whole_motor_batch_us 50.493 samples=120
+PERF 10 motors whole_motor_batch_us 378.950 samples=120
+PERF 100 motors whole_motor_batch_us 3550.014 samples=120
+SUMMARY 32 checks 0 failures

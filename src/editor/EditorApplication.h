@@ -8,6 +8,7 @@
 #include "EditorCamera.h"
 #include "EditorDocument.h"
 #include "EditorPanels.h"
+#include "EditorPicking.h"
 #include "GizmoMath.h"
 #include "Project.h"
 
@@ -57,6 +58,18 @@ private:
     std::string ResolveScenePath(const std::string& input) const;
     std::string WorldStatePathFor(const std::string& scenePath) const;
     void FrameEditMode(float deltaSeconds);
+    void UpdateCameraNavigation(const EditorCameraGestureInput& input, int mouseDeltaX, int mouseDeltaY,
+                                float deltaSeconds, bool fast);
+    void CancelCameraNavigation();
+    void LoadEditorPreferences();
+    void SaveEditorPreferences();
+    void ViewportRay(int x, int y, glm::vec3& origin, glm::vec3& direction) const;
+    RenderTargetHandle m_sceneViewTarget;
+    std::string m_editorPreferencesPath, m_editorIniPath;
+    EditorRequests m_pendingDocumentAction;
+    bool m_documentActionPending = false;
+    bool m_documentActionApproved = false;
+    bool m_documentActionSaveAs = false;
     void DrawModelImportPreview(float deltaSeconds);
     RenderTargetHandle m_modelPreviewTarget,m_uiPreviewTarget;
     std::unique_ptr<RuntimeUI> m_uiPreview;uint64_t m_uiPreviewRevision=0;
@@ -80,9 +93,13 @@ private:
     EditorDocument m_document;
     EditorPanelState m_panels;
     EditorCamera m_camera;
+    EditorScenePicker m_scenePicker;
     std::unique_ptr<RuntimeWorld> m_world;
     std::unique_ptr<InteractivePlay> m_play;
-    bool m_lookActive = false;
+    EditorCameraGestureState m_cameraGesture;
+    bool m_viewportFocused = true;
+    int m_viewportMouseDeltaX = 0;
+    int m_viewportMouseDeltaY = 0;
     bool m_quit = false;
 
     // Milestone 30: viewport gizmo interaction state.

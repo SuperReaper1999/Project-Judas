@@ -58,8 +58,14 @@ save compatibility after changing source. [Persistence architecture](../SCRIPTIN
 | Entity operations | Stale generally ReferenceError; dynamic-body methods TypeError if no dynamic body. |
 | `entity.character` | Null if stale/missing motor; retained Character operations ReferenceError. |
 | `entity.animation` / `.ragdoll` | Null if valid owner lacks component; stale owner throws. Retained facades throw. |
+| `entity.material(slot)` | Constructs a facade; methods validate owner/render/slot. Stale owner ReferenceError; absent component/invalid slot TypeError. |
+| `entity.deformable` / `.fracture` | Null until ready or absent; `.valid` false for stale retained epoch handles, other stale operations ReferenceError. |
+| `entity.liquid` | Null until registered or absent; retained `.valid` false when stale, state/control ReferenceError. |
+| `entity.navigation` | Null without agent; facade exists while disabled. Disabled/unregistered state/control ReferenceError; enabled setter can restore it. |
 | `physics.joint(owner)` | Null if no live joint; `.valid` false on stale Joint; state/mutations throw. |
 | `ui.get(name)` | Null if absent. Document/element stale accesses throw; no valid flag. |
+| Region request tokens | `regionStatus` null / activation and release false for retired or old-world tokens. |
+| Save tokens / durable references | Request status can retire to null; request IDs are not persisted. `saves.resolve` returns a fresh wrapper/null without loading missing regions. |
 | Query hits/support/collision other | Historical data and wrappers can go stale; test `entity && entity.valid`. |
 | Component commands | Valid owner but absent audio/particles/camera often false/null; see reference. |
 
@@ -69,6 +75,11 @@ cross-scene handles: new VM/new scene means reacquire even if authored ID text i
 identical. Constructor/handle fields are ordinary JS data, not immutable native
 capabilities; treating IDs as opaque is a usage convention. The internal `__judas`
 bridge is unsupported. There is no independent public Body class.
+Modern disk references are opaque qualified identities, not retained wrappers;
+store `saves.reference(entity)` in bounded state and call `saves.resolve` again.
+Scene replacement ends native ownership; additive region suspension can also
+invalidate wrappers while the one VM stays live. Reacquire region entities after
+publication instead of assuming identical local IDs preserve runtime identity.
 
 Destroy invalidates entity lookup immediately; destroying script slots itself is
 retired at synchronization, not a promise that `destroy()` runs recursively before

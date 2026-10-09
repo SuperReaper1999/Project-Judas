@@ -59,7 +59,7 @@ void PrepareDynamicBodiesForStep(std::vector<DynamicBody>& bodies, const Gravity
         body.SnapshotPrevious();
         // A slot without a live body (Coarse/Dormant/destroyed entity) has
         // nothing to hand gravity to; CoarseSimulation owns its motion.
-        if (!body.IsLive() || body.Handle().id == excludedFromLocalGravity.id) continue;
+        if (!body.IsLive() || body.Handle().id == excludedFromLocalGravity.id || !physics.IsDynamicBody(body.Handle())) continue;
         const glm::vec3 acceleration = gravity.Sample(body.GetPosition());
         physics.ApplyLinearAcceleration(body.Handle(), acceleration, fixedDeltaTime);
     }

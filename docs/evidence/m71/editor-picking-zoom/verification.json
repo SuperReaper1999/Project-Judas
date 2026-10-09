@@ -1,0 +1,61 @@
+{
+  "utc": "2026-10-09T02:47:07.191598+00:00",
+  "acceptedBase": "fb31f0244c9f41f74c439afd99855e3707937edd",
+  "refs": {
+    "HEAD": "fb31f0244c9f41f74c439afd99855e3707937edd",
+    "main": "fb31f0244c9f41f74c439afd99855e3707937edd",
+    "origin/main": "fb31f0244c9f41f74c439afd99855e3707937edd"
+  },
+  "stagedFiles": [],
+  "sourceFingerprintCount": 94,
+  "allSourceFingerprintsMatch": true,
+  "previousSnapshot": "docs/evidence/m71/editor-polish/final-source.sha256",
+  "deliberateEditorFollowupDifferences": [
+    "CMakeLists.txt",
+    "README.md",
+    "docs/ARCHITECTURE.md",
+    "docs/EDITOR_GUIDE.md",
+    "docs/M71.md",
+    "src/editor/EditorApplication.cpp",
+    "src/editor/EditorApplication.h",
+    "src/editor/EditorCamera.cpp",
+    "src/editor/EditorCamera.h",
+    "src/editor/EditorPanels.cpp",
+    "tests/EditorNavigationTests.cpp"
+  ],
+  "newEditorFiles": [
+    "src/editor/EditorPicking.cpp",
+    "src/editor/EditorPicking.h",
+    "tests/EditorPickingTests.cpp"
+  ],
+  "apiSourceHashMismatches": [],
+  "previousCoreRuntimeProjectHashMismatches": [],
+  "changedProtectedHistoricalFiles": [],
+  "buildCompilerWarnings": {
+    "build-first.log": 0,
+    "build-final.log": 0,
+    "build-guard-final.log": 0,
+    "build-session-final.log": 0
+  },
+  "focusedChecks": {
+    "camera": 59,
+    "geometryPicking": 36,
+    "actualEditor": 8
+  },
+  "actualEditorFailures": [],
+  "actualEditorExitCode": 0,
+  "runtimeSHA256": "ae42790e00cf28b1aed4f5dd9b07153c623fc6dfd85a8c045359bf33fb42adf8",
+  "editorSHA256": "3c19e3da32b6e0f346db76a5da1df082e402dd01efe9603963237e4533ecbfc9",
+  "standaloneRerun": false,
+  "reason": "Editor-only correction; runtime binary and accepted project unchanged.",
+  "desktop": {
+    "unit": "judas-m71-editor-wheel-pick-20261009.service",
+    "pid": 1559077,
+    "active": "active/running",
+    "window": "Project Judas Editor",
+    "project": "projects/kinematic_lab/kinematic_lab.judasproj"
+  },
+  "humanValidation": "Wheel feel and small/nested picking handed back for operator review; Windows remains outstanding.",
+  "commitPushTag": "None; accepted HEAD unchanged.",
+  "changedFiles": 257
+}

@@ -1,0 +1,43 @@
+{
+  "sourceCopy": "/tmp/judas-m71-owned-source-0hoq0h4t/kinematic_lab",
+  "hiddenSource": "/tmp/judas-m71-owned-source-0hoq0h4t/source-hidden",
+  "movedPackage": "/tmp/judas-m71-kinematic-moved-final",
+  "exportCommand": [
+    "/home/conner/Documents/GitHub/Project-Judas/build/judas_export",
+    "/tmp/judas-m71-owned-source-0hoq0h4t/kinematic_lab/kinematic_lab.judasproj",
+    "/tmp/judas-m71-owned-source-0hoq0h4t/exported-game",
+    "/home/conner/Documents/GitHub/Project-Judas/build/judas"
+  ],
+  "moveAndHide": "Export directory moved; entire owned project/assets directory renamed and original export source path confirmed absent. Repository itself remains present.",
+  "sourcePathAbsent": true,
+  "oldPackagePathAbsent": true,
+  "bytesOnDisk": 52662061,
+  "files": 23,
+  "exportMoveSeconds": 0.050935011997353286,
+  "runtimeSha256": "ae42790e00cf28b1aed4f5dd9b07153c623fc6dfd85a8c045359bf33fb42adf8",
+  "filesSha256": {
+    "Assets/LICENSE.txt": "f04dc689b2ce9234216cde6cad58d702896c3a2a234b70e5b70db20ddd0e9d93",
+    "Assets/fonts/DejaVuSans.ttf": "b4c632e3cdf9acc7f28758fb5a323c8524d7fc6660d46904d9b6cbe2809c419c",
+    "Assets/fonts/DejaVuSans.ttf.judasmeta": "5fc1b4357648fc84d00d35a56d904d7cfbf3891267a40a0f4265ecc9c3ee6725",
+    "Assets/fonts/LICENSE.txt": "63d3ba759d12804c5b31a9d5940d855c1820d1f5999e6b0872eb1c7ff045fbc9",
+    "Assets/prefabs/platform.judasprefab": "fee2341e8d62bcfc9d5158ed2796c48f708765cf08d68a5db5592bcd1485ef35",
+    "Assets/prefabs/platform.judasprefab.judasmeta": "e9f8293faa0b194f4f2dec26f3abd31e8058d4542e265520d6f11d7270d3025f",
+    "Assets/scripts/contact.js": "5102bbaaff3244c9c33350550859ec81b2e20155065af853e079e24f5f58103e",
+    "Assets/scripts/contact.js.judasmeta": "987092eccaba9b5d35e091c44cf5a661fbcb105be5a9be8ffb321ce28ac63000",
+    "Assets/scripts/lab.js": "d43504de05c6db74833ed23622262c0ba271b636496273540b7e3090bb728383",
+    "Assets/scripts/lab.js.judasmeta": "64207da20ad4b6045dfc2fca6e9598e3711574a81c539fba02707830951dc34e",
+    "Assets/ui/lab.judasui": "7865042faf2ef18f03260c838fad2d4630026322365bef05059ff80906ccbb1f",
+    "Assets/ui/lab.judasui.judasmeta": "4341f4bc26e5bdaf6e49164bf2a93b81f4b072910446753a5bda676fc340ca2a",
+    "DEPENDENCIES.json": "4f098cf1898144c137909df3572236a54fbe08ecfd4992aefda4c36e53fefe50",
+    "RUNTIME_REQUIREMENTS.txt": "38115f78d705547426735a24c6c65de6e1261c6f623a78bee2b875463b684416",
+    "Scenes/main.judas": "39fa4840f360ad3d6bbfc0cb936278d7e0bf15f1707bc3450f9c1b43ba82441c",
+    "engine/assets/fonts/DejaVuSans.ttf": "b4c632e3cdf9acc7f28758fb5a323c8524d7fc6660d46904d9b6cbe2809c419c",
+    "engine/licenses/DejaVuSans.txt": "63d3ba759d12804c5b31a9d5940d855c1820d1f5999e6b0872eb1c7ff045fbc9",
+    "engine/licenses/Judas.txt": "26682b82940cdcaf8293c0f52c6948bafa77ae8365f9be7389e4422e447a44c3",
+    "engine/third_party/RUNTIME_NOTICES.txt": "298b2be9c04894dddf24b6c337b7c31e110ec0b99a2f59b74967b9835d3f2536",
+    "game-icon.png": "0b34f9003de857542f6263d2add8eda0f0143cc02cc8843d285764795cf40e14",
+    "game.judasproj": "9789d8af03e1d2e8399e16e8a4cf555ba0ff3a48618d5388c5f73c7ad517d787",
+    "judas": "ae42790e00cf28b1aed4f5dd9b07153c623fc6dfd85a8c045359bf33fb42adf8",
+    "judas-package.txt": "507b3a93888c07632cb146ce0a61033e23dcb764cf11e8e4015d87f2e2b435c3"
+  }
+}

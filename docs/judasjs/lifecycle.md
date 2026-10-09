@@ -12,8 +12,10 @@ once per world's VM; module globals are shared between instances in that world.
 A new scene/reload/Play creates a fresh VM, not a retained module heap.
 
 Default-export a constructible class. Each enabled authored slot creates its own
-instance with `{entity, properties, restored}`. `restored` is true for modern
-save restoration. Slot IDs are stable identities, distinct
+instance with `{entity, properties, restored, initialState}`. `restored` is true for modern
+save restoration. `initialState` is bounded prefab construction data or null;
+it is not automatically copied into `this.state`. See [spawn construction](entities.md#worldspawnprefab-construction-options-m67).
+Slot IDs are stable identities, distinct
 from order. The constructor runs before restored `state` is installed. Do not
 make constructor side effects depend on saved state.
 
@@ -36,8 +38,11 @@ export default class {
 ```
 
 `properties` is an exported plain schema; supported types are `number`, `boolean`,
-`string` and (M65) `entity`, declared as `{type:'entity', default:null}`; scripts
+`string` and (M65) `entity`, usually declared as `{type:'entity', default:null}`; scripts
 receive null or a safe Entity wrapper (see [entity references](entities.md#m65-references-and-physicalpresentation-consumers)).
+Non-null authored entity values/defaults use `{entity:'decimal-stable-id'}`,
+not an Entity instance or display name. `PropertySchema` describes these authored
+values; `ScriptContext.properties` contains the resolved wrappers.
 Supply matching defaults: a default is required whenever the authored
 values omit that field. Authored values may override declared fields;
 unknown fields/type mismatches fault the slot. The inspector edits those values,
@@ -68,7 +73,8 @@ Promise. No async callback/top-level-await scheduler exists.
 | `destroy(dt)` | Slot removal/disable or ending the VM; last callback delta is passed, not a teardown timestep. Faulted instances skip this callback. |
 
 Order within normal callback phases is ascending entity ID, then authored slot
-vector order. `start` (or modern-load `restore`) precedes the first phase reaching
+vector order. This is callback scheduling order, not a guarantee that the physics
+world has already consumed another script's intent. `start` (or modern-load `restore`) precedes the first phase reaching
 an instance, not a global start-all-before-any-update barrier. Callback lists are snapshots: destroying an
 entity invalidates its wrappers immediately; synchronization later retires its
 slot and calls `destroy` if not faulted. Spawned script instances enter at the next
@@ -77,8 +83,12 @@ Do not promise one-render-frame delayed spawning.
 
 UI runs before gameplay, consumes logical actions sharing physical bindings, and
 visible enabled modal documents pause gameplay/fixed accumulation. The frame
-closing a modal is also withheld from gameplay. Physics steps call `fixedUpdate`,
-advance the normal world once, then publish motors/poses and dispatch contacts.
+closing a modal is also withheld from gameplay. Physics steps call `fixedUpdate`
+and advance the authoritative world once. Ordinary motors/poses publish after
+physics. [M70 opted-in pose/physical owners](animation-ragdolls.md#referencefinal-phase-and-composition)
+prepare motor/reference/IK and drives before physics, then resolve physical pose
+afterward. Contacts dispatch after the completed fixed state; a joint read inside
+`fixedUpdate` cannot observe a future solve from that same step.
 Transitions are requested during callbacks and applied only after the outer
 application frame returns. No world teardown occurs inside `scenes.load()`.
 
@@ -99,6 +109,8 @@ a model copied before its motor moves. Interpolation intentionally presents up t
 one fixed step behind simulation, as the renderer already does. Cosmetic followers
 should have no physical body; pose writes on bodies are teleports, not rendering.
 Only presentation reads use alpha; fixed queries/forces must use actual physics.
+M71 authority/kinematic-command writes explicitly reject presentation callbacks;
+they advance through PhysicsWorld, not a render-following transform assignment.
 
 The scripted screenshot harness calls presentation with `dt=0` and its draw alpha;
 standalone and editor Play use the ordinary interactive phase. This callback is
@@ -125,4 +137,5 @@ native dispatch function; `globalThis.console` aliases the public logging object
 
 ## Modern save restoration (M61)
 
-The constructor context includes `restored`. Loaded script state is installed before `restore(dt)`, which replaces `start(dt)` for modern slots. Reacquire handles and UI in restore; do not replay new-game side effects. [Save contract](saves.md). Legacy delta restoration retains its historical lifecycle.
+The constructor context includes `restored`; restored construction has
+`initialState:null`. Loaded script state is installed before `restore(dt)`, which replaces `start(dt)` for modern slots. Reacquire handles and UI in restore; do not replay new-game side effects. [Save contract](saves.md). Legacy delta restoration retains its historical lifecycle.

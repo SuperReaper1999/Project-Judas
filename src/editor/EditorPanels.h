@@ -7,6 +7,7 @@
 
 #include "AssetDatabase.h"
 #include "EditorDocument.h"
+#include "EditorWorkspaceLayout.h"
 #include "GizmoMath.h"
 #include "JobSystem.h"
 #include "PhysicsWorld.h"
@@ -47,6 +48,9 @@ struct EditorRequests {
     bool exportProject = false;
     bool runProject = false;
     bool rescanAssets = false;
+    bool openJudasJS = false;
+    bool openQuickStart = false;
+    std::string openExternalPath;
     std::string openSceneRelative;  // open this project-relative scene
     std::string importSource;       // Asset Browser: import this file
     std::string importDestination;  //   into <assets>/<this> ("" keeps the name)
@@ -91,6 +95,16 @@ struct ProfilerData {
 
 struct ModelCookTask;
 struct EditorPanelState {
+    EditorWorkspaceLayout workspace;
+    float hierarchyWidth = 250.0f;
+    float inspectorWidth = 340.0f;
+    float assetBrowserHeight = 200.0f;
+    bool showSceneSettings = false;
+    bool showNavigationHelp = false;
+    std::string assetSearch;
+    int assetTypeFilter = -1;
+    bool assetMissingOnly = false;
+    bool selectAssetDetails = false;
     JobSystem* importJobs=nullptr;
     std::shared_ptr<ModelCookTask> importTask,importAccepted;
     bool importPublished=false;
@@ -166,6 +180,8 @@ struct EditorPanelState {
 };
 
 void DrawEditorMainMenu(EditorDocument& doc, EditorPanelState& state, EditorRequests& requests);
+void UpdateEditorWorkspaceLayout(EditorPanelState& state, glm::vec2 displaySize);
+void DrawEditorWorkspaceChrome(EditorDocument& doc, EditorPanelState& state, EditorRequests& requests);
 void DrawHierarchyPanel(EditorDocument& doc, EditorPanelState& state, EditorRequests& requests);
 void DrawInspectorPanel(EditorDocument& doc, EditorPanelState& state);
 void DrawSceneSettingsPanel(EditorDocument& doc, EditorPanelState& state);

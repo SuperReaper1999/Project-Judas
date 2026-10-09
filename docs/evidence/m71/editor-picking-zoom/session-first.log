@@ -1,0 +1,19 @@
+libEGL warning: Not allowed to force software rendering when API explicitly selects a hardware device.
+Renderer fragment texture units: 32 (material path uses 12)
+[editor navigation] SDL wheel zooms toward fixed focus in central viewport: PASS
+[editor navigation] SDL inverse wheel restores camera position: PASS
+[editor navigation] SDL wheel over hierarchy does not move scene camera: PASS
+[editor navigation] SDL viewport selects tiny nested box above large floor: FAIL
+[editor autotest] wrote: /home/conner/Documents/GitHub/Project-Judas/docs/evidence/m71/editor-picking-zoom/session.nested.png
+[editor navigation] SDL viewport selects second child independently of parent proxy: FAIL
+[editor navigation] wheel and selection preserve authored scene and Undo state: PASS
+[editor autotest] wrote: /home/conner/Documents/GitHub/Project-Judas/docs/evidence/m71/editor-picking-zoom/session.edit.png
+[editor autotest] edit frame: 0 draw calls, 0 triangles, 0 debug lines
+Save service: /tmp/judas-m71-wheel-pick-owned/kinematic_lab/Scenes/main.judas: scene line 450: missing required key 'render.radius'
+[editor autotest] wrote: /home/conner/Documents/GitHub/Project-Judas/docs/evidence/m71/editor-picking-zoom/session.play.png
+[editor autotest] play frame: 0 steps, step 0.016 ms, 0 bodies, 0 contacts, 0 draw calls, 0 triangles, 1 shadow passes, 0 lights, 0 debug lines, 0 particles
+[editor autotest] resources: 0 meshes, 0 textures, 0 terrain meshes, hits 0, misses 0, failed 0, uploads 0, resident 0 bytes
+[editor autotest] jobs: 7 workers, 0 completed, 0 failed, 0 cancelled
+[editor navigation] Play/Stop restores uncaptured editor after wheel and picking: PASS
+[editor autotest] authored scene after play/stop is IDENTICAL
+[editor autotest] save ok

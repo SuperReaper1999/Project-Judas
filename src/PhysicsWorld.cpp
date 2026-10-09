@@ -52,6 +52,19 @@ double MillisecondsBetween(Clock::time_point a, Clock::time_point b) {
     return std::chrono::duration<double, std::milli>(b - a).count();
 }
 
+bool FiniteVector(glm::vec3 v) {return std::isfinite(v.x)&&std::isfinite(v.y)&&std::isfinite(v.z);}
+bool UsableVelocity(glm::vec3 v) {return FiniteVector(v)&&std::isfinite(glm::length(v));}
+bool UsableKinematicPose(const BodyTransform& pose) {
+    const double norm=glm::dot(glm::dquat(pose.rotation),glm::dquat(pose.rotation));
+    return FiniteVector(pose.position)&&std::isfinite(norm)&&norm>1e-12&&norm<1e12;
+}
+bool KinematicShape(const Shape& shape) {
+    if(shape.type==ShapeType::Box||shape.type==ShapeType::Sphere||shape.type==ShapeType::ConvexHull)return true;
+    if(shape.type!=ShapeType::CompoundBoxes||shape.boxes.empty())return false;
+    return std::all_of(shape.boxes.begin(),shape.boxes.end(),[](const auto& c){
+        return c.type==ShapeType::Box||c.type==ShapeType::Sphere||c.type==ShapeType::ConvexHull;});
+}
+
 // Milestone 32: how far a proxy's fat bound extends past its tight bound.
 // A body that moves less than this within its fat box costs the tree
 // nothing; one that escapes is reinserted. Static bodies use the same
@@ -169,7 +182,10 @@ struct PhysicsWorld::Impl {
         float friction = 0.5f;
         float restitution = 0.0f;
         bool sensor = false, enabled = true, queryOnly=false, queriesEnabled=true;
-        bool isDynamic = false;
+        bool isDynamic = false, isKinematic=false;
+        KinematicMotionState kinematic;
+        double kinematicActiveDuration=0;
+        bool HasMotion() const {return isDynamic||isKinematic;}
         bool sleeping=false,deferredAcceleration=false;
         float quietSeconds=0;
         glm::vec3 lastAcceleration{0};
@@ -212,9 +228,10 @@ struct PhysicsWorld::Impl {
         touchEvents.clear();
         // Sensor overlap is discrete endpoint geometry, never speculative skin
         // or TOI response. Reuse the same tree, layer policy and narrowphase.
-        if(std::any_of(aliveSlots.begin(),aliveSlots.end(),[&](unsigned i){return bodies[i].sensor&&bodies[i].enabled;})) {
+        if(std::any_of(aliveSlots.begin(),aliveSlots.end(),[&](unsigned i){return (bodies[i].sensor||bodies[i].isKinematic)&&bodies[i].enabled;})) {
             GenerateCandidatePairs();
-            for(auto [a,b]:candidatePairs) if(bodies[a].sensor||bodies[b].sensor) {
+            for(auto [a,b]:candidatePairs) if(bodies[a].sensor||bodies[b].sensor||
+                ((bodies[a].isKinematic||bodies[b].isKinematic)&&bodies[a].rigidBody.IsStatic()&&bodies[b].rigidBody.IsStatic())) {
                 const auto& oa=Orientation(bodies[a]);const auto& ob=Orientation(bodies[b]);
                 for(int pa=0;pa<PrimitiveCount(bodies[a].shape);++pa)
                     for(int pb=0;pb<PrimitiveCount(bodies[b].shape);++pb) {
@@ -371,9 +388,10 @@ struct PhysicsWorld::Impl {
     RigidBody PoseAt(unsigned slot, double time) const {
         const Body& b=bodies[slot];
         RigidBody pose=b.rigidBody;
-        if (b.isDynamic && !b.motion.Segments().empty()) {
+        if (b.HasMotion() && !b.motion.Segments().empty()) {
             const auto sampled=b.motion.Evaluate(time);
             pose.position=sampled.position; pose.orientation=sampled.orientation;
+            if(b.isKinematic){pose.linearVelocity=sampled.linearVelocity;pose.angularVelocity=sampled.angularVelocity;}
         }
         return pose;
     }
@@ -399,7 +417,7 @@ struct PhysicsWorld::Impl {
         EnsureImpactPoseStorage();
         auto& sample=impactPoseSamples[slot];const auto& body=bodies[slot];
         if(sample.boundStart==start&&sample.boundFinish==finish&&sample.boundGeneration==body.generation)return sample.remainingBound;
-        if(body.rigidBody.IsStatic())sample.remainingBound=CurrentBound(bodies[slot]);
+        if(!body.HasMotion())sample.remainingBound=CurrentBound(bodies[slot]);
         else {
             // The remaining motion is one anchored segment. Each represented
             // center component stays between its sampled endpoints. An outward
@@ -430,14 +448,14 @@ struct PhysicsWorld::Impl {
             const auto child=PrimitiveAt(body.shape,pose,part,&*sample.orientation);
             if(child.shape.type!=ShapeType::Box && child.shape.type!=ShapeType::Sphere&&child.shape.type!=ShapeType::ConvexHull) return result;
             const auto& rotation=sample.orientation->rotation;
-            const glm::dvec3 omega(body.rigidBody.IsStatic()?glm::vec3(0):body.rigidBody.angularVelocity);
+            const glm::dvec3 omega(body.HasMotion()?pose.angularVelocity:glm::vec3(0));
             const double w2=glm::dot(omega,omega);
             const double elapsed=body.isDynamic && !body.motion.Segments().empty() ? time-body.motion.Segments().back().begin : 0;
-            const glm::dvec3 instantaneous=omega/(1+.25*w2*elapsed*elapsed);
+            const glm::dvec3 instantaneous=body.isKinematic?omega:omega/(1+.25*w2*elapsed*elapsed);
             auto vertex=[&](glm::dvec3 local) {
                 const glm::dvec3 r=rotation*local;
                 const glm::dvec3 perpendicular=w2>0 ? r-omega*(glm::dot(omega,r)/w2) : glm::dvec3(0);
-                result.vertices[result.count++]={r,glm::dvec3(body.rigidBody.IsStatic()?glm::vec3(0):body.rigidBody.linearVelocity)+glm::cross(instantaneous,r),
+                result.vertices[result.count++]={r,glm::dvec3(body.HasMotion()?pose.linearVelocity:glm::vec3(0))+glm::cross(instantaneous,r),
                                                   w2*glm::length(perpendicular)};
             };
             if(child.shape.type==ShapeType::Sphere) {vertex(glm::dvec3(child.parentLocalCenter));result.radius=child.shape.radius;}
@@ -469,11 +487,17 @@ struct PhysicsWorld::Impl {
     // onto that plane plus |omega|*radius bounds its possible closing speed.
     // Anchored quaternion interpolation turns no faster than |omega|.
     double ImpactTime(unsigned a,unsigned b,int pa,int pb,double start,double finish) {
+        // A target can finish inside the step. Never certify a plane across
+        // its velocity discontinuity; search the two real ledger intervals.
+        for(auto slot:{a,b})if(bodies[slot].isKinematic)for(const auto& s:bodies[slot].motion.Segments())
+            if(s.end>start&&s.end<finish){auto first=ImpactTime(a,b,pa,pb,start,s.end);
+                return first<=s.end?first:ImpactTime(a,b,pa,pb,s.end,finish);}
         ++stats.impactQueries;
         const auto& ba=bodies[a]; const auto& bb=bodies[b];
-        const glm::dvec3 relative=glm::dvec3(ba.rigidBody.IsStatic()?glm::vec3(0):ba.rigidBody.linearVelocity)-glm::dvec3(bb.rigidBody.IsStatic()?glm::vec3(0):bb.rigidBody.linearVelocity);
-        const double angular=(ba.rigidBody.IsStatic()?0:glm::length(glm::dvec3(ba.rigidBody.angularVelocity))*ba.boundingRadius)+
-                             (bb.rigidBody.IsStatic()?0:glm::length(glm::dvec3(bb.rigidBody.angularVelocity))*bb.boundingRadius);
+        const auto posa=PoseAt(a,start),posb=PoseAt(b,start);
+        const glm::dvec3 relative=glm::dvec3(ba.HasMotion()?posa.linearVelocity:glm::vec3(0))-glm::dvec3(bb.HasMotion()?posb.linearVelocity:glm::vec3(0));
+        const double angular=(ba.HasMotion()?glm::length(glm::dvec3(posa.angularVelocity))*ba.boundingRadius:0)+
+                             (bb.HasMotion()?glm::length(glm::dvec3(posb.angularVelocity))*bb.boundingRadius:0);
         const double speed=glm::length(relative)+angular;
         if (!(speed>0)) return finish+1;
         const auto simpleRadius=[](const Body& body){
@@ -582,8 +606,8 @@ struct PhysicsWorld::Impl {
         };
         const double feature=std::min(primitiveFeature(a,pa),primitiveFeature(b,pb));
         if(!(feature>0)) throw std::runtime_error("invalid primitive feature in impact sampling");
-        const double angularSpeed=(ba.rigidBody.IsStatic()?0:glm::length(glm::dvec3(ba.rigidBody.angularVelocity)))+
-                                  (bb.rigidBody.IsStatic()?0:glm::length(glm::dvec3(bb.rigidBody.angularVelocity)));
+        const double angularSpeed=(ba.HasMotion()?glm::length(glm::dvec3(posa.angularVelocity)):0)+
+                                  (bb.HasMotion()?glm::length(glm::dvec3(posb.angularVelocity)):0);
         const double requested=std::max({16.0,std::ceil(16.0*speed*remaining/feature),
                                               std::ceil(256.0*angularSpeed*remaining)});
         constexpr unsigned kMaxSamples=65536;
@@ -706,6 +730,12 @@ struct PhysicsWorld::Impl {
             }
             if (earliest>dt) break;
             now=earliest;
+            // Infinite-mass boundaries do not join the velocity-changing
+            // island, but solver lever arms and observed point velocities
+            // must use their actual event-time COM/orientation.
+            for(auto slot:aliveSlots)if(bodies[slot].isKinematic){auto& b=bodies[slot];auto p=PoseAt(slot,now);
+                b.rigidBody.position=p.position;b.rigidBody.orientation=p.orientation;
+                b.rigidBody.linearVelocity=p.linearVelocity;b.rigidBody.angularVelocity=p.angularVelocity;}
             std::vector<unsigned> island;
             std::vector<unsigned char> included(bodies.size(),0);
             auto include=[&](unsigned slot){if(!included[slot] && !bodies[slot].rigidBody.IsStatic()) {
@@ -819,10 +849,44 @@ struct PhysicsWorld::Impl {
             for(const auto& key:dirty) schedule(key);
             if(now>=dt) break;
         }
-        for(const auto slot:aliveSlots) if(bodies[slot].isDynamic&&!bodies[slot].sleeping) {
+        for(const auto slot:aliveSlots) if(bodies[slot].HasMotion()&&!bodies[slot].sleeping) {
             auto& body=bodies[slot];const auto pose=body.motion.Evaluate(dt);
             stats.motionSegments+=body.motion.Segments().size();stats.motionStorageBytes+=body.motion.StorageBytes();
             body.rigidBody.position=pose.position;body.rigidBody.orientation=pose.orientation;
+            if(body.isKinematic){body.rigidBody.linearVelocity=pose.linearVelocity;body.rigidBody.angularVelocity=pose.angularVelocity;
+                if(body.kinematic.control==KinematicControl::Target){body.kinematic.remainingSeconds=std::max(0.f,body.kinematic.remainingSeconds-float(body.kinematicActiveDuration));
+                    if(body.kinematic.remainingSeconds==0)body.kinematic.control=KinematicControl::Stopped;}}
+        }
+    }
+
+    void PublishKinematics(float dt) {
+        for(auto slot:aliveSlots){auto& body=bodies[slot];if(!body.isKinematic)continue;
+            auto& rigid=body.rigidBody;auto& command=body.kinematic;
+            body.previousPosition=rigid.position;body.previousOrientation=rigid.orientation;
+            CurrentBound(body);body.previousBound=body.currentBound;
+            rigid.linearVelocity=rigid.angularVelocity=glm::vec3(0);
+            body.kinematicActiveDuration=0;
+            if(body.enabled&&command.control==KinematicControl::Velocity){
+                rigid.linearVelocity=command.linearVelocity;rigid.angularVelocity=command.angularVelocity;
+                body.kinematicActiveDuration=dt;
+            }else if(body.enabled&&command.control==KinematicControl::Target){
+                if(command.targetNextStep){command.remainingSeconds=dt;command.targetNextStep=false;}
+                if(command.remainingSeconds>0){
+                    const auto targetCenter=command.target.position+command.target.rotation*body.shape.pivotOffset;
+                    rigid.linearVelocity=(targetCenter-rigid.position)/command.remainingSeconds;
+                    // World-relative shortest arc. Equivalent quaternion signs
+                    // are the same target; full spins use velocity control.
+                    glm::quat delta=command.target.rotation*glm::conjugate(rigid.orientation);
+                    if(delta.w<0)delta=-delta;
+                    const double sine=glm::length(glm::dvec3(delta.x,delta.y,delta.z));
+                    if(sine>0&&!SameRotation(command.target.rotation,rigid.orientation)){const double angle=2*std::atan2(sine,double(delta.w));
+                        rigid.angularVelocity=glm::vec3(glm::dvec3(delta.x,delta.y,delta.z)*(angle/(sine*command.remainingSeconds)));}
+                    body.kinematicActiveDuration=std::min(double(dt),double(command.remainingSeconds));
+                }
+            }
+            rigid.ClearAccumulators();body.deferredAcceleration=false;
+            body.motion.BeginPrescribed(MakeHandle(slot).id,rigid,dt,body.kinematicActiveDuration);
+            InvalidateImpactPose(slot);
         }
     }
 
@@ -919,7 +983,7 @@ struct PhysicsWorld::Impl {
     // endpoint boxes; it can never leave the swept sphere).
     Aabb TightBound(Body& body) {
         const Aabb current = CurrentBound(body);
-        if (!body.isDynamic) { body.previousBound=body.currentBound; return current; }
+        if (!body.HasMotion()) { body.previousBound=body.currentBound; return current; }
         Aabb bound = current.Union(PreviousBound(body));
         const float turn = std::abs(glm::dot(body.previousOrientation, body.rigidBody.orientation));
         if (turn < 1.0f - 1.0e-7f) {
@@ -989,14 +1053,14 @@ struct PhysicsWorld::Impl {
         candidatePairs.clear();
         for (const unsigned int slot : aliveSlots) {
             const Body& a = bodies[slot];
-            if (!a.enabled || (a.rigidBody.IsStatic()&&!a.sensor&&!a.queryOnly)) continue;
+            if (!a.enabled || (!a.HasMotion()&&!a.sensor&&!a.queryOnly)) continue;
             tree.Query(tree.FatAabb(a.proxy), [&](int proxy) {
                 const unsigned int other = tree.UserData(proxy);
                 if (other == slot) return;
                 const Body& b = bodies[other];
                 // A pair of two movable bodies is found by both queries;
                 // keep it from the lower slot's query only.
-                if ((!b.rigidBody.IsStatic()||b.sensor||b.queryOnly) && other < slot) return;
+                if ((b.HasMotion()||b.sensor||b.queryOnly) && other < slot) return;
                 if(!CanCollide(slot,other)){++stats.layerRejectedPairs;return;}
                 candidatePairs.emplace_back(std::min(slot, other), std::max(slot, other));
             });
@@ -1030,7 +1094,7 @@ struct PhysicsWorld::Impl {
         for (const unsigned int i : candidates) {
             const Body& body = bodies[i];
             if(!body.enabled||body.sensor||body.queryOnly)continue;
-            const bool interpolateBody = interpolateDynamicBodyMotion && body.isDynamic;
+            const bool interpolateBody = interpolateDynamicBodyMotion && body.HasMotion();
             const bool ledger=interpolateBody && bodyMotionAlpha<1.0f && !body.motion.Segments().empty();
             const auto observed=ledger ? body.motion.Evaluate(std::clamp(double(bodyMotionAlpha),0.0,1.0)*stepDuration) : body.rigidBody;
             const glm::vec3 bodyPosition = ledger ? observed.position : interpolateBody
@@ -1305,6 +1369,95 @@ void PhysicsWorld::ApplyTorque(BodyHandle handle, const glm::vec3& torque,bool w
 bool PhysicsWorld::IsDynamicBody(BodyHandle handle) const {
     const Impl::Body* body = m_impl->Get(handle);
     return body && body->isDynamic;
+}
+
+bool PhysicsWorld::IsKinematicBody(BodyHandle handle) const {
+    const auto* body=m_impl->Get(handle);return body&&body->isKinematic;
+}
+BodyMotionType PhysicsWorld::GetMotionType(BodyHandle handle) const {
+    const auto* body=m_impl->Get(handle);
+    return body&&body->isKinematic?BodyMotionType::Kinematic:body&&body->isDynamic?BodyMotionType::Dynamic:BodyMotionType::Static;
+}
+bool PhysicsWorld::SetMotionType(BodyHandle handle,BodyMotionType mode,float mass,bool preserveVelocity) {
+    auto* body=m_impl->Get(handle);
+    if(!body||body->queryOnly||(mode!=BodyMotionType::Static&&mode!=BodyMotionType::Dynamic&&mode!=BodyMotionType::Kinematic))return false;
+    if(GetMotionType(handle)==mode)return true;
+    if(mode!=BodyMotionType::Static&&(!KinematicShape(body->shape)||!std::isfinite(mass)||mass<=0))return false;
+    // A joint's anchors are COM-local. Changing mass authority/COM while it
+    // participates would silently reinterpret the connection; reject atomically.
+    for(const auto& j:m_impl->joints)if(j.state.settings.bodyA.id==handle.id||j.state.settings.bodyB.id==handle.id)return false;
+    Shape shape=body->shape;glm::mat3 inverseInertia(0);float inverseMass=0;
+    try{
+        if(mode!=BodyMotionType::Static){const auto properties=ShapeMassProperties(shape);
+            shape.pivotOffset=glm::vec3(properties.center);
+            if(mode==BodyMotionType::Dynamic){inverseMass=1/mass;
+                inverseInertia=glm::mat3(glm::inverse(properties.inertia*(double(mass)/properties.volume)));}
+        }
+    }catch(const std::exception&){return false;}
+    if(!std::isfinite(inverseMass)||!FiniteVector(shape.pivotOffset))return false;
+    for(int column=0;column<3;++column)if(!FiniteVector(inverseInertia[column]))return false;
+    const auto pivot=GetTransform(handle);const auto oldLinear=body->rigidBody.linearVelocity;
+    const auto oldAngular=body->rigidBody.angularVelocity;
+    if(!FiniteVector(pivot.position+pivot.rotation*shape.pivotOffset)||
+       (preserveVelocity&&(!UsableVelocity(oldLinear)||!UsableVelocity(oldAngular))))return false;
+    m_impl->Wake(handle.id&Impl::kSlotMask);
+    for(auto i:m_impl->QuerySlots(m_impl->CurrentBound(*body)))if(m_impl->bodies[i].sleeping)m_impl->Wake(i);
+    body->shape=std::move(shape);body->boundingRadius=ShapeBoundingRadius(body->shape);
+    body->isDynamic=mode==BodyMotionType::Dynamic;body->isKinematic=mode==BodyMotionType::Kinematic;
+    body->rigidBody.inverseMass=inverseMass;body->rigidBody.inverseInertiaLocal=inverseInertia;
+    body->rigidBody.position=pivot.position+pivot.rotation*body->shape.pivotOffset;
+    body->rigidBody.linearVelocity=preserveVelocity&&mode!=BodyMotionType::Static?oldLinear:glm::vec3(0);
+    body->rigidBody.angularVelocity=preserveVelocity&&mode!=BodyMotionType::Static?oldAngular:glm::vec3(0);
+    body->rigidBody.ClearAccumulators();body->lastAcceleration=glm::vec3(0);body->deferredAcceleration=false;
+    body->kinematic={};body->kinematicActiveDuration=0;
+    if(body->isKinematic&&preserveVelocity){body->kinematic.control=KinematicControl::Velocity;
+        body->kinematic.linearVelocity=oldLinear;body->kinematic.angularVelocity=oldAngular;}
+    body->motion.Clear();body->previousPosition=body->rigidBody.position;body->previousOrientation=body->rigidBody.orientation;
+    body->currentBound.valid=body->previousBound.valid=false;body->boundPreparationValid=false;
+    // Disposable solver history belongs to the old authority, never the handle
+    // itself. Contact-event identity remains continuous across a safe handoff.
+    const auto slot=handle.id&Impl::kSlotMask;
+    auto uses=[&](const auto& entry){return entry.key.slotA==slot||entry.key.slotB==slot;};
+    auto& cache=m_impl->contactCache;cache.erase(std::remove_if(cache.begin(),cache.end(),uses),cache.end());
+    m_impl->InvalidateImpactPose(slot);m_impl->RefreshProxy(*body);
+    return true;
+}
+bool PhysicsWorld::MoveKinematic(BodyHandle handle,const BodyTransform& target,float seconds) {
+    auto* body=m_impl->Get(handle);
+    if(!body||!body->enabled||!body->isKinematic||!KinematicShape(body->shape)||!UsableKinematicPose(target)||
+       !std::isfinite(seconds)||seconds<0||seconds>60)return false;
+    auto normalized=target;
+    const auto anchor=body->rigidBody.orientation;
+    normalized.rotation=Impl::SameRotation(target.rotation,anchor)||Impl::SameRotation(-target.rotation,anchor)?anchor:glm::normalize(target.rotation);
+    const auto center=normalized.position+normalized.rotation*body->shape.pivotOffset;
+    if(!FiniteVector(center)||!FiniteVector(center-body->rigidBody.position)||
+       !std::isfinite(glm::length(center-body->rigidBody.position))||
+       (seconds>0&&(!UsableVelocity((center-body->rigidBody.position)/seconds)||!std::isfinite(glm::pi<float>()/seconds))))return false;
+    KinematicMotionState command;command.control=KinematicControl::Target;command.target=normalized;
+    command.remainingSeconds=seconds;command.targetNextStep=seconds==0;
+    body->kinematic=command;return true;
+}
+bool PhysicsWorld::SetKinematicVelocity(BodyHandle handle,const glm::vec3& linear,const glm::vec3& angular) {
+    auto* body=m_impl->Get(handle);
+    if(!body||!body->enabled||!body->isKinematic||!KinematicShape(body->shape)||!UsableVelocity(linear)||!UsableVelocity(angular))return false;
+    KinematicMotionState command;command.control=KinematicControl::Velocity;
+    command.linearVelocity=linear;command.angularVelocity=angular;body->kinematic=command;return true;
+}
+bool PhysicsWorld::StopKinematic(BodyHandle handle) {
+    auto* body=m_impl->Get(handle);if(!body||!body->isKinematic)return false;
+    body->kinematic={};return true;
+}
+bool PhysicsWorld::GetKinematicMotion(BodyHandle handle,KinematicMotionState& state) const {
+    const auto* body=m_impl->Get(handle);if(!body||!body->isKinematic)return false;
+    state=body->kinematic;return true;
+}
+glm::vec3 PhysicsWorld::GetPointVelocity(BodyHandle handle,const glm::vec3& point) const {
+    const auto* body=m_impl->Get(handle);if(!body||!body->enabled||!FiniteVector(point))return glm::vec3(0);
+    return body->rigidBody.linearVelocity+glm::cross(body->rigidBody.angularVelocity,point-body->rigidBody.position);
+}
+glm::vec3 PhysicsWorld::GetPreviousPointVelocity(BodyHandle handle,const glm::vec3& point) const {
+    const auto* body=m_impl->Get(handle);if(!body||!body->enabled||!FiniteVector(point))return glm::vec3(0);
+    return body->rigidBody.linearVelocity+glm::cross(body->rigidBody.angularVelocity,point-(body->HasMotion()?body->previousPosition:body->rigidBody.position));
 }
 
 float PhysicsWorld::GetMass(BodyHandle handle) const {
@@ -1795,12 +1948,17 @@ void PhysicsWorld::Step(float fixedDeltaTime) {
     const auto cachesBefore = w.cacheCounters;
     const ContactGeometryDiagnostics geometryBefore = GetContactGeometryDiagnostics();
 
+    w.PublishKinematics(fixedDeltaTime);
+
     // Awaken connected state before velocity integration for predicted impacts.
-    for(auto i:w.aliveSlots)if(w.bodies[i].isDynamic&&!w.bodies[i].sleeping)w.CoverStepReach(w.bodies[i],fixedDeltaTime);
+    for(auto i:w.aliveSlots)if(w.bodies[i].HasMotion()&&!w.bodies[i].sleeping)w.CoverStepReach(w.bodies[i],fixedDeltaTime);
     w.GenerateCandidatePairs();
     for(auto [a,b]:w.candidatePairs){auto& aa=w.bodies[a];auto& bb=w.bodies[b];if(aa.sensor||bb.sensor||aa.queryOnly||bb.queryOnly)continue;
-        if(aa.sleeping&&!bb.sleeping&&!bb.rigidBody.IsStatic()&&(glm::length(bb.rigidBody.linearVelocity-bb.lastAcceleration*fixedDeltaTime)>.03f||glm::length(bb.rigidBody.angularVelocity)>.03f))w.Wake(a);
-        if(bb.sleeping&&!aa.sleeping&&!aa.rigidBody.IsStatic()&&(glm::length(aa.rigidBody.linearVelocity-aa.lastAcceleration*fixedDeltaTime)>.03f||glm::length(aa.rigidBody.angularVelocity)>.03f))w.Wake(b);
+        auto moving=[&](const auto& body){return body.isKinematic
+            ? body.rigidBody.linearVelocity!=glm::vec3(0)||body.rigidBody.angularVelocity!=glm::vec3(0)
+            : !body.sleeping&&!body.rigidBody.IsStatic()&&(glm::length(body.rigidBody.linearVelocity-body.lastAcceleration*fixedDeltaTime)>.03f||glm::length(body.rigidBody.angularVelocity)>.03f);};
+        if(aa.sleeping&&moving(bb))w.Wake(a);
+        if(bb.sleeping&&moving(aa))w.Wake(b);
     }
     // 1) Velocity from this step's force/torque accumulators (M12). Gravity
     // is already in linearVelocity via the caller's ApplyLinearAcceleration.
@@ -1990,7 +2148,7 @@ void PhysicsWorld::Step(float fixedDeltaTime) {
     ProfileScope positionsScope(positionsLabel);
     for (const unsigned int slot:w.aliveSlots) {
         auto& body=w.bodies[slot];
-        if(body.isDynamic) w.solver.UpdatePreparedRotation(body.rigidBody,w.Orientation(body).rotation);
+        if(body.HasMotion()) w.solver.UpdatePreparedRotation(body.rigidBody,w.Orientation(body).rotation);
     }
     w.solver.SolvePositions();
     positionsScope.End();
@@ -2004,7 +2162,7 @@ void PhysicsWorld::Step(float fixedDeltaTime) {
     // motion for the player's sweeps and the next step's candidates.
     for (const unsigned int slot : w.aliveSlots) {
         Impl::Body& body = w.bodies[slot];
-        if (body.isDynamic) w.RefreshProxy(body);
+        if (body.HasMotion()) w.RefreshProxy(body);
     }
     w.queryTouchesPending=std::any_of(w.aliveSlots.begin(),w.aliveSlots.end(),[&](unsigned i){return w.bodies[i].queryOnly;});
     if(!w.queryTouchesPending)w.FinishTouches();
@@ -2144,7 +2302,7 @@ BodyTransform PhysicsWorld::GetPreviousTransform(BodyHandle handle) const {
     BodyTransform result;
     const Impl::Body* body = m_impl->Get(handle);
     if (!body) return result;
-    if (body->isDynamic) {
+    if (body->HasMotion()) {
         result.position = body->previousPosition-body->previousOrientation*body->shape.pivotOffset;
         result.rotation = body->previousOrientation;
     } else {
@@ -2157,13 +2315,13 @@ BodyTransform PhysicsWorld::GetPreviousTransform(BodyHandle handle) const {
 std::vector<PhysicsWorld::BodyMotionSegment> PhysicsWorld::GetBodyMotionSegments(BodyHandle handle) const {
     std::vector<BodyMotionSegment> result;
     const Impl::Body* body = m_impl->Get(handle);
-    if (!body || !body->isDynamic) return result;
+    if (!body || !body->HasMotion()) return result;
     result.reserve(body->motion.Segments().size());
     for (const auto& source : body->motion.Segments()) {
         if (source.owner != handle.id) return {};
         result.push_back({source.begin, source.end,
             {source.position-source.orientation*body->shape.pivotOffset, source.orientation}, {source.endPosition-source.endOrientation*body->shape.pivotOffset, source.endOrientation},
-            source.linearVelocity, source.angularVelocity, source.inverseMass > 0,body->shape.pivotOffset});
+            source.linearVelocity, source.angularVelocity, source.inverseMass > 0||source.prescribed,body->shape.pivotOffset,source.prescribed});
     }
     if (!result.empty()) result.back().endPose = {body->rigidBody.position-body->rigidBody.orientation*body->shape.pivotOffset, body->rigidBody.orientation};
     return result;
@@ -2172,13 +2330,11 @@ std::vector<PhysicsWorld::BodyMotionSegment> PhysicsWorld::GetBodyMotionSegments
 BodyTransform PhysicsWorld::EvaluateBodyMotionSegment(const BodyMotionSegment& segment, double time) {
     if (!std::isfinite(time) || time < segment.begin || time > segment.end)
         throw std::out_of_range("body motion segment time");
-    RigidBody body;
-    body.position = segment.start.position+segment.start.rotation*segment.pivotOffset;
-    body.orientation = segment.start.rotation;
-    body.linearVelocity = segment.linearVelocity;
-    body.angularVelocity = segment.angularVelocity;
-    body.inverseMass = segment.movable ? 1.0f : 0.0f;
-    IntegrateRigidBodyPosition(body, static_cast<float>(time - segment.begin));
+    RigidMotionSegment source;
+    source.begin=segment.begin;source.end=segment.end;source.position=segment.start.position+segment.start.rotation*segment.pivotOffset;
+    source.orientation=segment.start.rotation;source.linearVelocity=segment.linearVelocity;source.angularVelocity=segment.angularVelocity;
+    source.inverseMass=segment.movable&&!segment.prescribed?1.f:0.f;source.prescribed=segment.prescribed;
+    const auto body=source.Evaluate(time);
     return {body.position-body.orientation*segment.pivotOffset, body.orientation};
 }
 
@@ -2192,8 +2348,8 @@ std::vector<BodyBox> PhysicsWorld::GetPreviousBodyBoxes(BodyHandle handle) const
     const Impl::Body* body = m_impl->Get(handle);
     if (!body) return {};
     return BoxesAt(body->shape,
-                   body->isDynamic ? body->previousPosition : body->rigidBody.position,
-                   body->isDynamic ? body->previousOrientation : body->rigidBody.orientation);
+                   body->HasMotion() ? body->previousPosition : body->rigidBody.position,
+                   body->HasMotion() ? body->previousOrientation : body->rigidBody.orientation);
 }
 
 void PhysicsWorld::ResetBody(BodyHandle handle, const glm::vec3& position,
@@ -2209,6 +2365,7 @@ void PhysicsWorld::ResetBody(BodyHandle handle, const glm::vec3& position,
     body->rigidBody.orientation = rotation;
     body->previousPosition = body->rigidBody.position;
     body->motion.Clear();
+    body->kinematic={};body->kinematicActiveDuration=0;
     body->previousOrientation = rotation;
     body->rigidBody.linearVelocity = glm::vec3(0.0f);
     body->rigidBody.angularVelocity = glm::vec3(0.0f);
@@ -2365,7 +2522,10 @@ bool PhysicsWorld::SetBodySensor(BodyHandle h,bool value){auto* b=m_impl->Get(h)
 bool PhysicsWorld::IsBodySensor(BodyHandle h) const {auto* b=m_impl->Get(h);return b&&b->sensor;}
 bool PhysicsWorld::SetBodyQueriesEnabled(BodyHandle h,bool enabled){auto* body=m_impl->Get(h);if(!body)return false;body->queriesEnabled=enabled;return true;}
 
-bool PhysicsWorld::SetBodyEnabled(BodyHandle h,bool value){auto* b=m_impl->Get(h);if(!b)return false;if(b->enabled==value)return true;m_impl->Wake(h.id&Impl::kSlotMask);b->enabled=value;for(auto& j:m_impl->joints)if(j.state.settings.bodyA.id==h.id||j.state.settings.bodyB.id==h.id)j.warm.fill(0);return true;}
+bool PhysicsWorld::SetBodyEnabled(BodyHandle h,bool value){auto* b=m_impl->Get(h);if(!b)return false;if(b->enabled==value)return true;m_impl->Wake(h.id&Impl::kSlotMask);b->enabled=value;
+ if(!value&&b->isKinematic){b->kinematic={};b->kinematicActiveDuration=0;b->motion.Clear();b->rigidBody.linearVelocity=b->rigidBody.angularVelocity=glm::vec3(0);b->previousPosition=b->rigidBody.position;b->previousOrientation=b->rigidBody.orientation;}
+ for(auto& j:m_impl->joints)if(j.state.settings.bodyA.id==h.id||j.state.settings.bodyB.id==h.id)j.warm.fill(0);
+ return true;}
 bool PhysicsWorld::IsBodyEnabled(BodyHandle h) const {auto* b=m_impl->Get(h);return b&&b->enabled;}
 
 void PhysicsWorld::ClearTouchHistory(){m_impl->previousTouches.clear();m_impl->stepTouches.clear();m_impl->preStepQueryTouches.clear();m_impl->collectingPreStepQueries=false;m_impl->queryTouchesPending=false;m_impl->touchEvents.clear();}
@@ -2452,6 +2612,24 @@ void PhysicsWorld::PersistTouches(SaveArchive& a,const std::function<uint64_t(Bo
 
 void PhysicsWorld::PersistBodyForces(SaveArchive& archive,BodyHandle handle){
  auto* body=m_impl->Get(handle);archive.Require(body!=nullptr,"saved force body unavailable");archive(body->rigidBody.forceAccumulator,body->rigidBody.torqueAccumulator);
+}
+
+void PhysicsWorld::PersistKinematic(SaveArchive& archive,BodyHandle handle) {
+ auto* body=m_impl->Get(handle);archive.Require(body&&body->isKinematic,"saved kinematic body unavailable");
+ auto state=body->kinematic;auto linear=body->rigidBody.linearVelocity,angular=body->rigidBody.angularVelocity;
+ archive(state.control,state.target.position,state.target.rotation,state.linearVelocity,state.angularVelocity,
+         state.remainingSeconds,state.targetNextStep,linear,angular);
+ archive.Require(state.control==KinematicControl::Stopped||state.control==KinematicControl::Target||state.control==KinematicControl::Velocity,"invalid kinematic control");
+ archive.Require(UsableKinematicPose(state.target)&&state.remainingSeconds>=0&&state.remainingSeconds<=60,
+                 "invalid kinematic target state");
+ archive.Require(state.control==KinematicControl::Target||(!state.targetNextStep&&state.remainingSeconds==0),"inconsistent kinematic interval");
+ archive.Require(UsableVelocity(state.linearVelocity)&&UsableVelocity(state.angularVelocity)&&UsableVelocity(linear)&&UsableVelocity(angular),"unusable saved kinematic velocity");
+ if(state.control==KinematicControl::Target){const auto delta=state.target.position+state.target.rotation*body->shape.pivotOffset-body->rigidBody.position;
+     archive.Require(UsableVelocity(delta)&&(state.targetNextStep||state.remainingSeconds==0||
+         (UsableVelocity(delta/state.remainingSeconds)&&std::isfinite(glm::pi<float>()/state.remainingSeconds))),"unusable saved kinematic target trajectory");}
+ if(archive.reading){body->kinematic=state;body->rigidBody.linearVelocity=linear;body->rigidBody.angularVelocity=angular;
+     body->kinematicActiveDuration=0;body->motion.Clear();body->previousPosition=body->rigidBody.position;body->previousOrientation=body->rigidBody.orientation;
+     m_impl->InvalidateImpactPose(handle.id&Impl::kSlotMask);m_impl->RefreshProxy(*body);}
 }
 
 bool PhysicsWorld::SetMassDistribution(BodyHandle h,float mass,const glm::mat3& inertia){auto* b=m_impl->Get(h);if(!b||!b->isDynamic||!std::isfinite(mass)||mass<=0)return false;for(int i=0;i<3;++i)for(int j=0;j<3;++j)if(!std::isfinite(inertia[i][j])||std::abs(inertia[i][j]-inertia[j][i])>1e-5f)return false;if(inertia[0][0]<=0||inertia[0][0]*inertia[1][1]-inertia[0][1]*inertia[0][1]<=0||glm::determinant(inertia)<=0)return false;Wake(h);b->rigidBody.inverseMass=1/mass;b->rigidBody.inverseInertiaLocal=glm::inverse(inertia);return true;}

@@ -45,7 +45,8 @@ sets `recovered`; corrupt/incompatible/missing/busy errors are not successful lo
 
 ## Load-aware lifecycle
 
-The constructor receives `{entity, properties, restored}`. It should establish
+The constructor receives `{entity, properties, restored, initialState}`; modern
+restoration has `initialState:null`. It should establish
 references/local helpers, not spawn new-game content unconditionally. Saved
 `state` replaces constructor defaults before callbacks. Modern loaded slots call
 `restore(dt)` **instead of** `start(dt)`, then normal phase callbacks. A missing
@@ -109,3 +110,19 @@ new slots include it, with conditional deformable state still checked separately
 The SaveApplication participant assertion changes from 11 to 12 for this additional
 chunk, rather than relaxing required participants. Cached GPU matrices/layouts are
 not save data. Current integration includes a separate-process save/load check.
+
+## Current pose and motion intent (M70–M71)
+
+Modern slots preserve full-body IK configuration/targets and physical-animation
+region settings in ordinary entity definitions. The skeletal participant preserves
+playback/mixer/layers and source/final poses. Physical authority, pending mode
+requests and the mapped articulation are separate participants. Load reconstructs
+joint/body mappings and safe handles; solve timings, saturation observations,
+previous motion samples and numerical caches are not serialized gameplay state.
+Use `restore` to reacquire wrappers and let the next fixed solve publish diagnostics.
+
+Kinematic bodies retain current motion authority/physical state plus durable target
+or velocity commands, including the target's remaining duration. Save/load does not
+reapply authored initial velocity over a captured command. The legacy pose-delta
+`.judasstate` save rejects changed authority/kinematic intent; use modern slots.
+[Kinematic reference](entities.md#kinematic-motion-m71) · [Pose/physical reference](animation-ragdolls.md).

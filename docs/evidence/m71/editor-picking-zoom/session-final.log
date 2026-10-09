@@ -1,0 +1,20 @@
+libEGL warning: Not allowed to force software rendering when API explicitly selects a hardware device.
+Renderer fragment texture units: 32 (material path uses 12)
+[editor navigation] SDL wheel zooms toward fixed focus in central viewport: PASS
+[editor navigation] SDL inverse wheel restores camera position: PASS
+[editor navigation] SDL wheel over hierarchy does not move scene camera: PASS
+[editor navigation] SDL viewport selects tiny nested box above large floor: PASS
+[editor autotest] wrote: /home/conner/Documents/GitHub/Project-Judas/docs/evidence/m71/editor-picking-zoom/final.nested.png
+[editor autotest] duplicate created id 9010: scene CHANGED; undo restores: IDENTICAL
+[editor navigation] SDL viewport selects second child independently of parent proxy: PASS
+[editor navigation] wheel and selection preserve authored scene and Undo state: PASS
+[editor autotest] wrote: /home/conner/Documents/GitHub/Project-Judas/docs/evidence/m71/editor-picking-zoom/final.edit.png
+[editor autotest] edit frame: 18 draw calls, 3216 triangles, 90 debug lines
+[editor navigation] ordinary Play instantiates the real authored lab bodies: PASS
+[editor autotest] wrote: /home/conner/Documents/GitHub/Project-Judas/docs/evidence/m71/editor-picking-zoom/final.play.png
+[editor autotest] play frame: 1 steps, step 0.817 ms, 14 bodies, 12 contacts, 32 draw calls, 6432 triangles, 1 shadow passes, 0 lights, 0 debug lines, 0 particles
+[editor autotest] resources: 0 meshes, 0 textures, 0 terrain meshes, hits 356, misses 1, failed 0, uploads 0, resident 759720 bytes
+[editor autotest] jobs: 7 workers, 1 completed, 0 failed, 0 cancelled
+[editor navigation] Play/Stop restores uncaptured editor after wheel and picking: PASS
+[editor autotest] authored scene after play/stop is IDENTICAL
+[editor autotest] save ok

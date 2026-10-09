@@ -1,0 +1,32 @@
+PASS frame selection retains target as focus anchor
+PASS frame selection preserves the established camera orientation
+PASS pan leaves camera orientation unchanged
+PASS pitched and yawed pan stays in the camera view plane
+PASS pan translates camera and focus anchor equally
+PASS perspective projection moves the scene by the requested horizontal and vertical pixels
+PASS reverse pan restores camera position without frame-time dependence
+PASS zero-height viewport does not move or divide by zero
+PASS unchanged pointer does not manufacture camera motion
+PASS pan scale follows framed depth
+PASS pan scale follows actual viewport pixel height
+PASS existing right-drag camera look still rotates
+PASS existing fly input still translates the camera
+PASS fresh middle press in viewport owns pan
+PASS captured pan remains owned when pointer crosses a panel
+PASS middle release ends pan capture
+PASS middle press begun over a panel cannot start pan
+PASS drag out of panel does not steal held middle press
+PASS window focus loss cancels an active pan
+PASS focus regain with middle held cannot reacquire capture
+PASS new press after focus loss restores pan normally
+PASS text-input claim or Escape cancellation releases pan
+PASS cancelled held press cannot restart after text input ends
+PASS left-button selection or gizmo drag excludes camera pan
+PASS active gizmo or text field denies a fresh camera press
+PASS fresh right press retains existing look binding
+PASS second button does not replace an active right-drag gesture
+PASS right release ends look without switching to already-held middle
+PASS already-held middle does not start on the following frame
+PASS Play or Stop cancellation retires viewport ownership
+PASS held press after Play or Stop cannot resume old navigation
+M71 editor navigation: 31 checks, 0 failures

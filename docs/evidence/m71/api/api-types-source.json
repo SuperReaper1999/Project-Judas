@@ -1,0 +1,29 @@
+{
+  "publicSymbols": 318,
+  "topLevelExports": 27,
+  "nativeOperations": 221,
+  "callbacks": 15,
+  "typeChecker": "6.0.3",
+  "examples": 35,
+  "negativeDriftChecks": 3,
+  "runtimeEnumeration": false,
+  "pass": true,
+  "command": [
+    "node",
+    "scripts/check_judasjs_api.mjs",
+    "--typescript",
+    "/tmp/judas-win-linux-ts/node_modules/typescript/lib/typescript.js",
+    "--write-inventory"
+  ],
+  "scope": "Pure source AST, declarations, reference paths, example types, manifest drift and negative controls; no compilation or VM execution",
+  "exit_code": 0,
+  "utc": "2026-10-09T00:46:37.531362+00:00",
+  "accepted_base": "fb31f0244c9f41f74c439afd99855e3707937edd",
+  "head": "fb31f0244c9f41f74c439afd99855e3707937edd",
+  "source_sha256": {
+    "src/ScriptSystem.cpp": "07932efe59aed9a8f303a6a4e6ebb7226a1fba3d0f4d6512fe5a31127b56ad56",
+    "docs/judas.d.ts": "9ddabbe0aac2e855503a5eef6f0428d29296a6b61548d13f769142e669ad622a",
+    "scripts/check_judasjs_api.mjs": "09a9010adb2e60c047473b4225757d88fdabb4f715d2538a4b35a39850a1b6ab",
+    "docs/judasjs/api-inventory.json": "7e02d1a34294832003ced277c4c068f14157312bc1ebcc162a6d6cb0aecac064"
+  }
+}

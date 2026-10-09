@@ -4,6 +4,7 @@
 #include "UniformGravity.h"
 #include "FaithfulGravity.h"
 #include "SphericalVolume.h"
+#include "SaveArchive.h"
 #include <algorithm>
 #include <limits>
 namespace {
@@ -19,10 +20,18 @@ bool RuntimeWorld::StageRegionObject(const SceneObject& definition,const SceneOb
     m_regionPending.insert(definition.id);
     if(definition.audioEmitter||definition.audioZone)m_audioIdentities[definition.id]=stableIdentity;
     auto stage=definition;stage.gravity.reset(); // globally routed only at publication
-    if(stage.body)stage.body->enabled=false;
+    // Kinematic initialization uses the public body's normal validation while
+    // this actor is private. Capture intent before the staging disable retires
+    // it; no callback, step or publication runs in this owner-thread scope.
+    if(stage.body)stage.body->enabled=stage.body->motion==SceneBodyMotion::Kinematic;
     Scene batch;batch.Settings()=m_settings;batch.Objects().push_back(stage);
     const auto before=m_referencedAssets.size();FidelityPolicyContext context;
     bool ok=AppendSceneObjects(batch,false,context,error);
+    if(ok&&stage.body&&stage.body->motion==SceneBodyMotion::Kinematic){
+        const auto body=m_entityCategories.at(definition.id).body;
+        if(definition.body->enabled){SaveArchive command;m_physics.PersistKinematic(command,body);m_regionKinematicCommands[definition.id]=std::move(command.bytes);}
+        m_physics.SetBodyEnabled(body,false);
+    }
     m_regionAssets[definition.id]={m_referencedAssets.begin()+before,m_referencedAssets.end()};
     if(!stage.body||stage.body->motion==SceneBodyMotion::Static){
         EntityRecord e;e.id=definition.id;e.name=definition.name;e.definition=definition;e.authored=false;e.requiresFull=true;
@@ -42,7 +51,17 @@ void RuntimeWorld::HideRegion(const std::vector<EntityId>& ids) {
     for(auto id:ids){auto body=RuntimeBody(id);m_physics.SetBodyEnabled(body,false);m_regionPending.insert(id);}
 }
 void RuntimeWorld::PublishRegion(const std::vector<EntityId>& ids) {
-    for(auto id:ids){m_regionPending.erase(id);if(auto* e=FindEntity(id))e->requiresFull|=EntityRequiresFull(e->definition)||m_jointParticipants.count(id);if(auto* d=RuntimeDefinition(id))if(d->body)m_physics.SetBodyEnabled(RuntimeBody(id),d->body->enabled);}
+    for(auto id:ids){
+        m_regionPending.erase(id);
+        if(auto* e=FindEntity(id))e->requiresFull|=EntityRequiresFull(e->definition)||m_jointParticipants.count(id);
+        if(auto* d=RuntimeDefinition(id))if(d->body){
+            const auto body=RuntimeBody(id);m_physics.SetBodyEnabled(body,d->body->enabled);
+            if(auto pending=m_regionKinematicCommands.find(id);pending!=m_regionKinematicCommands.end()){
+                if(d->body->enabled){SaveArchive command(pending->second);m_physics.PersistKinematic(command,body);command.Finish();}
+                m_regionKinematicCommands.erase(pending);
+            }
+        }
+    }
     for(auto& e:m_audioEmitters)if(std::find(ids.begin(),ids.end(),e.id)!=ids.end())e.wantPlay=e.settings.playOnStart;
     ++m_entityVersion;
 }
@@ -66,7 +85,7 @@ void RuntimeWorld::EndRegionScripts(const std::vector<EntityId>& ids){if(m_scrip
 void RuntimeWorld::RemoveRegionObject(EntityId id) {
     // Suspension is preflighted by the residency coordinator. In particular,
     // conserved liquids are pinned; destruction's parked-parcel path is not used.
-    m_regionPending.insert(id);if(m_scripts)m_scripts->RemoveEntities({id});
+    m_regionPending.insert(id);m_regionKinematicCommands.erase(id);if(m_scripts)m_scripts->RemoveEntities({id});
     if(m_navigation)m_navigation->RemoveSurface(id);
     if(auto it=m_runtimeJoints.find(id);it!=m_runtimeJoints.end()){m_physics.DestroyJoint(it->second);m_runtimeJoints.erase(it);}
     BodyHandle handle;

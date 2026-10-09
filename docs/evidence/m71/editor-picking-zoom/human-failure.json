@@ -1,0 +1,41 @@
+{
+  "humanReport": "Mouse wheel zoom absent; small/nested viewport objects cannot be selected reliably although hierarchy selection works.",
+  "source": "src/editor/EditorApplication.cpp: PickAtPixel / PickRadius",
+  "cause": "All object proxies are spheres. Floor half-extents become a large sphere extending far above its actual surface; minimum 0.75m and body/gravity extents can also mask child geometry. FlattenHierarchy is already used.",
+  "independentOldAlgorithmFixture": {
+    "rayOrigin": [
+      0,
+      15,
+      -25
+    ],
+    "rayDirection": [
+      0.0,
+      -0.48860336893184325,
+      0.8725060159497201
+    ],
+    "floorCenter": [
+      0,
+      -0.25,
+      0
+    ],
+    "floorHalfExtents": [
+      12,
+      0.25,
+      9
+    ],
+    "smallBoxCenter": [
+      0,
+      1,
+      0
+    ],
+    "smallBoxHalfExtents": [
+      0.1,
+      0.1,
+      0.1
+    ],
+    "oldFloorSphereEntry": 14.301464909668528,
+    "oldSmallSphereEntry": 27.903097563788734,
+    "oldIncorrectWinner": "floor"
+  },
+  "wheel": "Existing EditorCamera has pan and RMB fly/look; no wheel path exists."
+}

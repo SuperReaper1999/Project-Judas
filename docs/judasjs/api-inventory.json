@@ -1,5 +1,5 @@
 {
-  "checkpoint": "934c5d3f0556c920cc7cae8b80dc4677d8cbf87b",
+  "checkpoint": "fb31f0244c9f41f74c439afd99855e3707937edd",
   "authority": "src/ScriptSystem.cpp::library + Impl::Native",
   "symbols": [
     {
@@ -819,6 +819,17 @@
       "reference": "docs/judasjs/entities.md"
     },
     {
+      "symbol": "Entity.kinematicMotion",
+      "kinds": [
+        "get"
+      ],
+      "native": [
+        "kinematicMotion"
+      ],
+      "type": "docs/judas.d.ts:Entity.kinematicMotion",
+      "reference": "docs/judasjs/entities.md"
+    },
+    {
       "symbol": "Entity.liquid",
       "kinds": [
         "get"
@@ -858,6 +869,28 @@
         "modelParts"
       ],
       "type": "docs/judas.d.ts:Entity.modelParts",
+      "reference": "docs/judasjs/entities.md"
+    },
+    {
+      "symbol": "Entity.motionType",
+      "kinds": [
+        "get"
+      ],
+      "native": [
+        "motionType"
+      ],
+      "type": "docs/judas.d.ts:Entity.motionType",
+      "reference": "docs/judasjs/entities.md"
+    },
+    {
+      "symbol": "Entity.moveKinematic",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "kinematicTarget"
+      ],
+      "type": "docs/judas.d.ts:Entity.moveKinematic",
       "reference": "docs/judasjs/entities.md"
     },
     {
@@ -947,6 +980,17 @@
       ],
       "type": "docs/judas.d.ts:Entity.playAudioOneShot",
       "reference": "docs/judasjs/audio.md"
+    },
+    {
+      "symbol": "Entity.pointVelocity",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "pointVelocity"
+      ],
+      "type": "docs/judas.d.ts:Entity.pointVelocity",
+      "reference": "docs/judasjs/entities.md"
     },
     {
       "symbol": "Entity.presentedTransform",
@@ -1081,6 +1125,28 @@
       "reference": "docs/judasjs/entities.md"
     },
     {
+      "symbol": "Entity.setKinematicVelocity",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "kinematicVelocity"
+      ],
+      "type": "docs/judas.d.ts:Entity.setKinematicVelocity",
+      "reference": "docs/judasjs/entities.md"
+    },
+    {
+      "symbol": "Entity.setMotionType",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "motionTypeSet"
+      ],
+      "type": "docs/judas.d.ts:Entity.setMotionType",
+      "reference": "docs/judasjs/entities.md"
+    },
+    {
       "symbol": "Entity.setNavigationEnabled",
       "kinds": [
         "call"
@@ -1156,6 +1222,17 @@
       ],
       "type": "docs/judas.d.ts:Entity.stopAudio",
       "reference": "docs/judasjs/audio.md"
+    },
+    {
+      "symbol": "Entity.stopKinematic",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "kinematicStop"
+      ],
+      "type": "docs/judas.d.ts:Entity.stopKinematic",
+      "reference": "docs/judasjs/entities.md"
     },
     {
       "symbol": "Entity.transform",
@@ -3408,6 +3485,10 @@
     "jointSet",
     "jointState",
     "jointValid",
+    "kinematicMotion",
+    "kinematicStop",
+    "kinematicTarget",
+    "kinematicVelocity",
     "liquidAccounting",
     "liquidConnections",
     "liquidEnabled",
@@ -3434,6 +3515,8 @@
     "materialOverride",
     "modelPartVisible",
     "modelParts",
+    "motionType",
+    "motionTypeSet",
     "navAgentExists",
     "navAgentState",
     "navAreas",
@@ -3457,6 +3540,7 @@
     "physicalMaterialInfo",
     "physicalMaterialSet",
     "playAudio",
+    "pointVelocity",
     "pointerCapture",
     "presentedTransform",
     "pressed",

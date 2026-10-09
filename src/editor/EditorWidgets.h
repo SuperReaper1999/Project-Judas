@@ -4,6 +4,7 @@
 #include <vector>
 
 #include <glm/glm.hpp>
+#include <glm/gtc/quaternion.hpp>
 
 #include "EditorDocument.h"
 
@@ -12,8 +13,12 @@
 // step through EditorDocument::BeginEdit/CommitEdit: drag/input widgets
 // snapshot on activation and commit when they deactivate having changed
 // something; instant widgets (checkbox, combo, selectable) commit at once.
+// Value fields place wrapped labels above full-width controls, retaining
+// the IDs of their original labelled ImGui widgets.
 void TrackEdit(EditorDocument& doc);
 bool DragVec3(EditorDocument& doc, const char* label, glm::vec3& value, float speed = 0.05f);
+// Euler degrees in the inspector, quaternion in the authored scene.
+bool DragRotation(EditorDocument& doc, const char* label, glm::quat& value);
 bool DragScalar(EditorDocument& doc, const char* label, float& value, float speed = 0.01f, float min = 0.0f,
                 float max = 0.0f);
 bool DragInt(EditorDocument& doc, const char* label, int& value, int min = 0, int max = 100000);

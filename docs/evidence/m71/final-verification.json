@@ -1,0 +1,57 @@
+{
+  "utc": "2026-10-09T01:20:18.813167+00:00",
+  "scope": "Final read-only source/receipt/text/Git review; no build or test reruns in this review.",
+  "accepted_base": "fb31f0244c9f41f74c439afd99855e3707937edd",
+  "refs": {
+    "HEAD": "fb31f0244c9f41f74c439afd99855e3707937edd",
+    "main": "fb31f0244c9f41f74c439afd99855e3707937edd",
+    "origin/main": "fb31f0244c9f41f74c439afd99855e3707937edd"
+  },
+  "staged_changes": false,
+  "tracked_changes": 40,
+  "new_files": 119,
+  "changed_files_total": 159,
+  "candidate_source_fingerprints": 67,
+  "source_hashes_match": true,
+  "source_fingerprint_file_sha256": "b0ff2309a8c9889ebb16826001995465b2b1cea45221f71d9f82d04db91b4af6",
+  "changed_file_list_sha256": "956b38045195b53b7039732831c527f79687a0fb6fedb89a4634ee11290b11bc",
+  "existing_receipts": [
+    {
+      "receipt": "api/api-types-live-final.json",
+      "hashes_verified": 10,
+      "mismatches": []
+    },
+    {
+      "receipt": "streaming-after-guard.json",
+      "hashes_verified": 8,
+      "mismatches": []
+    },
+    {
+      "receipt": "editor/followup-fingerprints.sha256",
+      "hashes_verified": 22,
+      "mismatches": []
+    }
+  ],
+  "package_hashes_verified": 23,
+  "runtime_sha256": "ae42790e00cf28b1aed4f5dd9b07153c623fc6dfd85a8c045359bf33fb42adf8",
+  "protected_git_review": {
+    "basis": "Tracked worktree diff against accepted HEAD and empty staged diff. This is a Git change review, not hashing every historical file.",
+    "files_in_review": 35607,
+    "changed_protected_files": [],
+    "prior_evidence_files": 33899,
+    "existing_project_files": 1349,
+    "fluid_implementation_files_checked": 15,
+    "changed_fluid_implementation_files": []
+  },
+  "build_warning_counts": {
+    "build-first.log": 7,
+    "build-streaming-final.log": 0,
+    "rendering/build-followup.log": 0,
+    "streaming-build-after-guard.log": 0
+  },
+  "platform": "Linux Release/offscreen; Windows execution outstanding",
+  "human_validation": "Physical mouse/capture, visual feel, typing/gizmos, support gameplay and desktop usability await operator.",
+  "roadmap_absent": true,
+  "commit_push_tag": "No commit, push or tag performed. HEAD remains accepted base.",
+  "later_milestone_work": "None"
+}

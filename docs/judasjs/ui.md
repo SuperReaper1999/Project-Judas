@@ -39,8 +39,9 @@ Programmatic changes do not synthesize click/change events. Hidden/disabled cont
 reject input; setters still edit their stored state.
 
 Text-specific setters include `font`, `textKey`, `direction` and `textAlignment`
-(see below). No general layout/colour setter, manual focus setter/getter, hover
-event, per-widget callback registration or DOM exists. Author general layout/style
+(see below). `setLayout` patches the [supported layout fields](#uielementlayout--setlayout-m67);
+no arbitrary style/colour setter, manual focus setter/getter, hover event,
+per-widget callback registration or DOM exists. Author general layout/style
 and initial font selection in the asset.
 
 ## onUI and focus

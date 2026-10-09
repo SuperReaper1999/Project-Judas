@@ -6,11 +6,13 @@
 #include "PerformanceProfiler.h"
 #include "ComponentEditors.h"
 #include "EditorApplication.h"
+#include "EditorTheme.h"
 #include "Prefab.h"
 
 #include <SDL2/SDL.h>
 
 #include <algorithm>
+#include <cmath>
 #include <cstdio>
 #include <cstdlib>
 #include <cstring>
@@ -47,6 +49,7 @@ extern char** environ;
 #include "imgui.h"
 #include "imgui_impl_opengl3.h"
 #include "imgui_impl_sdl2.h"
+#include "../../third_party/nlohmann/json.hpp"
 
 namespace fs = std::filesystem;
 
@@ -55,10 +58,8 @@ constexpr int kWindowWidth = 1280;
 constexpr int kWindowHeight = 800;
 constexpr const char* kProjectFileHint = "Relative to the working directory or absolute, e.g. projects/tiny_game/tiny_game.judasproj";
 
-// Viewport picking uses a bounding SPHERE per object — generous for
-// empties and lights so they can still be clicked, and deliberately
-// approximate: a long thin plank picks as a big ball. Precise mesh/box
-// picking is a documented M30 limitation (docs/ARCHITECTURE.md).
+// Framing and non-geometric selection outlines use a generous size hint.
+// Actual viewport selection is handled by EditorScenePicker's geometry tests.
 float PickRadius(const SceneObject& o) {
     float radius = 0.75f;
     if (o.render) {
@@ -76,19 +77,6 @@ float PickRadius(const SceneObject& o) {
                                                                                     : glm::length(o.gravity->regionHalfExtents) * 0.1f);
     }
     return radius;
-}
-
-bool RaySphere(const glm::vec3& origin, const glm::vec3& direction, const glm::vec3& centre, float radius,
-               float& outDistance) {
-    const glm::vec3 oc = origin - centre;
-    const float b = glm::dot(oc, direction);
-    const float c = glm::dot(oc, oc) - radius * radius;
-    const float discriminant = b * b - c;
-    if (discriminant < 0.0f) return false;
-    const float t = -b - std::sqrt(discriminant);
-    if (t < 0.0f) return false;
-    outDistance = t;
-    return true;
 }
 
 // The selection outline: the object's own shape where it has one.
@@ -388,6 +376,7 @@ bool EditorApplication::OpenProject(const std::string& projectFile, std::string&
     Project project;
     if (!project.Load(projectFile, outError)) return false;
     m_project = project;
+    m_scenePicker.Clear();
     m_host->OpenProjectAssets(m_project.RootDir(), m_project.AssetsDir());
     if(!m_host->GetWindow().Input().SetMap(m_project.Settings().input,outError))return false;
     RefreshProjectLists();
@@ -481,6 +470,7 @@ bool EditorApplication::RunProject(std::string& outMessage) {
 }
 
 bool EditorApplication::StartPlay(std::string& outError) {
+    CancelCameraNavigation();
     m_world = std::make_unique<RuntimeWorld>();
     m_world->legacyGameplay = m_project.Settings().legacyGameplay;
     m_world->audioGroups=m_project.Settings().audio;
@@ -531,6 +521,7 @@ bool EditorApplication::StartPlay(std::string& outError) {
 }
 
 void EditorApplication::StopPlay() {
+    CancelCameraNavigation();
     if (m_play) m_play->End();
     m_play.reset();
     m_world.reset();  // the authored Scene was never written; nothing to revert
@@ -544,6 +535,33 @@ void EditorApplication::StopPlay() {
 
 void EditorApplication::HandleRequests(EditorRequests& r) {
     std::string error;
+    bool approvedDocumentAction = false;
+    if (m_documentActionApproved) {
+        r = m_pendingDocumentAction;
+        m_pendingDocumentAction = {};
+        m_documentActionApproved = m_documentActionPending = false;
+        approvedDocumentAction = true;
+    }
+    if (r.quit && m_document.IsDirty() && m_panels.mode == EditorMode::Play) StopPlay();
+    const bool replacesDocument = r.quit || r.newScene || r.open || r.newProject || r.openProject ||
+                                  !r.openSceneRelative.empty();
+    if (replacesDocument && m_document.IsDirty() && !approvedDocumentAction) {
+        // Preserve the requested action, not a document copy: the normal save
+        // path must finish successfully before a replacement can proceed.
+        m_pendingDocumentAction = {};
+        m_pendingDocumentAction.quit = r.quit;
+        m_pendingDocumentAction.newScene = r.newScene;
+        m_pendingDocumentAction.open = r.open;
+        m_pendingDocumentAction.newProject = r.newProject;
+        m_pendingDocumentAction.openProject = r.openProject;
+        m_pendingDocumentAction.openSceneRelative = r.openSceneRelative;
+        m_documentActionPending = true;
+        r.quit = r.newScene = r.open = r.newProject = r.openProject = false;
+        r.openSceneRelative.clear();
+        CancelCameraNavigation();
+        ImGui::OpenPopup("Unsaved scene");
+    }
+    if (m_documentActionSaveAs && !ImGui::IsPopupOpen("Save scene as")) r.saveAs = true;
     if (r.quit) m_quit = true;
     if (r.play && m_panels.mode == EditorMode::Edit) {
         if (!StartPlay(error)) m_panels.status = "Play failed: " + error;
@@ -553,6 +571,28 @@ void EditorApplication::HandleRequests(EditorRequests& r) {
         std::string message;
         if (r.saveWorldState) { m_play->SaveWorldStateNow(message); m_panels.status = message; }
         if (r.deleteWorldState) { m_play->DeleteWorldStateNow(message); m_panels.status = message; }
+    }
+    if (r.openJudasJS || r.openQuickStart)
+        r.openExternalPath = ResolveEngineDataPath(r.openQuickStart ? "docs/judasjs/getting-started.md" : "docs/JUDASJS.md");
+    if (!r.openExternalPath.empty()) {
+        std::error_code ec;
+        const auto path = fs::absolute(r.openExternalPath, ec);
+        if (ec || !fs::is_regular_file(path, ec)) m_panels.status = "File unavailable: " + r.openExternalPath;
+        else {
+            // SDL hands a local URI to the user's default application. Escape
+            // path bytes rather than interpolating a filename into shell code.
+            const auto generic = path.generic_string();
+            std::string uri = generic.empty() || generic.front() != '/' ? "file:///" : "file://";
+            constexpr char hex[] = "0123456789ABCDEF";
+            for (const unsigned char c : generic) {
+                if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || (c >= '0' && c <= '9') ||
+                    c == '/' || c == ':' || c == '-' || c == '_' || c == '.' || c == '~') uri += static_cast<char>(c);
+                else { uri += '%'; uri += hex[c >> 4]; uri += hex[c & 15]; }
+            }
+            CancelCameraNavigation();
+            m_panels.status = SDL_OpenURL(uri.c_str()) == 0 ? "Requested open: " + path.string() :
+                "Could not open file; copy its path instead: " + std::string(SDL_GetError());
+        }
     }
     if (m_panels.mode != EditorMode::Edit) return;
 
@@ -649,7 +689,9 @@ void EditorApplication::HandleRequests(EditorRequests& r) {
         if (DuplicateObject(m_document, r.duplicateId) != kInvalidSceneObjectId) m_panels.status = "Duplicated object";
     }
     if (r.focusSelection) {
-        if (const SceneObject* o = m_document.SelectedObject()) {
+        Scene flattened;
+        if (FlattenHierarchy(m_document.GetScene(), flattened, error))
+        if (const SceneObject* o = flattened.Find(m_document.Selected())) {
             m_camera.LookAt(o->transform.position, std::max(4.0f, PickRadius(*o) * 3.0f));
         }
     }
@@ -657,41 +699,61 @@ void EditorApplication::HandleRequests(EditorRequests& r) {
     // Path popups (the editor has no OS file dialog; a path field is enough
     // — see docs/ARCHITECTURE.md, "Milestone 30, Limitations").
     const auto pathPopup = [&](const char* title, const char* button, const char* label, const char* hint, auto&& action) {
+        ImGui::SetNextWindowSizeConstraints({440, 0}, {std::max(440.0f, ImGui::GetIO().DisplaySize.x - 48), 600});
         if (!ImGui::BeginPopupModal(title, nullptr, ImGuiWindowFlags_AlwaysAutoResize)) return;
         char buffer[512];
         std::strncpy(buffer, m_panels.pathInput.c_str(), sizeof(buffer) - 1);
         buffer[sizeof(buffer) - 1] = '\0';
-        if (ImGui::InputText(label, buffer, sizeof(buffer))) m_panels.pathInput = buffer;
-        ImGui::TextDisabled("%s", hint);
-        if (ImGui::Button(button) && !m_panels.pathInput.empty()) {
-            action(m_panels.pathInput);
-            ImGui::CloseCurrentPopup();
+        ImGui::TextUnformatted(label);
+        if (ImGui::IsWindowAppearing()) ImGui::SetKeyboardFocusHere();
+        ImGui::SetNextItemWidth(-1);
+        const bool enter = ImGui::InputText("##path", buffer, sizeof(buffer), ImGuiInputTextFlags_EnterReturnsTrue);
+        m_panels.pathInput = buffer;
+        ImGui::PushTextWrapPos(0); ImGui::TextDisabled("%s", hint); ImGui::PopTextWrapPos();
+        if ((ImGui::Button(button) || enter) && !m_panels.pathInput.empty()) {
+            if (action(m_panels.pathInput)) ImGui::CloseCurrentPopup();
         }
         ImGui::SameLine();
-        if (ImGui::Button("Cancel")) ImGui::CloseCurrentPopup();
+        if (ImGui::Button("Cancel") || ImGui::IsKeyPressed(ImGuiKey_Escape)) {
+            if (m_documentActionSaveAs && std::strcmp(title, "Save scene as") == 0) {
+                m_documentActionSaveAs = m_documentActionPending = false;
+                m_pendingDocumentAction = {};
+            }
+            ImGui::CloseCurrentPopup();
+        }
+        ImGui::PushTextWrapPos(0); ImGui::TextDisabled("%s", m_panels.status.c_str()); ImGui::PopTextWrapPos();
         ImGui::EndPopup();
     };
     pathPopup("Open scene", "Open", "Path (.judas)", "Relative to the project root, e.g. Scenes/main.judas",
               [&](const std::string& path) {
                   std::string e;
-                  m_panels.status = OpenScene(path, e) ? "Opened " + path : "Open failed: " + e;
+                  const bool opened = OpenScene(path, e);
+                  m_panels.status = opened ? "Opened " + path : "Open failed: " + e;
+                  return opened;
               });
     pathPopup("Save scene as", "Save", "Path (.judas)", "Relative to the project root, e.g. Scenes/level2.judas",
               [&](const std::string& path) {
                   std::string e;
                   const std::string resolved = m_project.IsLoaded() && !fs::path(path).is_absolute() ? m_project.Resolve(path) : path;
-                  m_panels.status = m_document.SaveAs(resolved, e) ? "Saved " + resolved : "Save failed: " + e;
+                  const bool saved = m_document.SaveAs(resolved, e);
+                  m_panels.status = saved ? "Saved " + resolved : "Save failed: " + e;
                   RefreshProjectLists();
+                  if (saved && m_documentActionSaveAs) {
+                      m_documentActionSaveAs = false;
+                      m_documentActionApproved = true;
+                  }
+                  return saved;
               });
     pathPopup("Open project", "Open", "Project file (.judasproj)", kProjectFileHint, [&](const std::string& path) {
         std::string e;
-        if (!OpenProject(path, e)) { m_panels.status = "Open project failed: " + e; return; }
+        if (!OpenProject(path, e)) { m_panels.status = "Open project failed: " + e; return false; }
         m_panels.status = "Opened project " + m_project.Settings().name;
         if (!m_project.Settings().startupScene.empty()) {
             if (!OpenScene(m_project.Settings().startupScene, e)) m_panels.status = "Project opened; startup scene failed: " + e;
         } else {
             m_document.NewScene();
         }
+        return true;
     });
     if (ImGui::BeginPopupModal("New project", nullptr, ImGuiWindowFlags_AlwaysAutoResize)) {
         static char directory[512] = "";
@@ -709,23 +771,57 @@ void EditorApplication::HandleRequests(EditorRequests& r) {
         if (ImGui::Button("Cancel")) ImGui::CloseCurrentPopup();
         ImGui::EndPopup();
     }
+    ImGui::SetNextWindowSize({460, 0}, ImGuiCond_Appearing);
+    if (ImGui::BeginPopupModal("Unsaved scene", nullptr, ImGuiWindowFlags_AlwaysAutoResize)) {
+        ImGui::TextUnformatted("Save your scene before continuing?");
+        ImGui::Spacing();
+        ImGui::PushTextWrapPos(0);
+        ImGui::TextDisabled("%s", m_document.Path().empty() ? "This scene has not been saved." : m_document.Path().c_str());
+        ImGui::PopTextWrapPos();
+        ImGui::Spacing();
+        if (ImGui::Button("Save and continue")) {
+            if (m_document.Path().empty()) {
+                m_documentActionSaveAs = true;
+                ImGui::CloseCurrentPopup();
+            } else if (m_document.Save(error)) {
+                RefreshProjectLists();
+                m_documentActionApproved = true;
+                ImGui::CloseCurrentPopup();
+            } else m_panels.status = "Save failed: " + error;
+        }
+        ImGui::SameLine();
+        if (ImGui::Button("Discard")) {
+            m_documentActionApproved = true;
+            ImGui::CloseCurrentPopup();
+        }
+        ImGui::SameLine();
+        if (ImGui::Button("Cancel") || ImGui::IsKeyPressed(ImGuiKey_Escape)) {
+            m_documentActionPending = m_documentActionApproved = m_documentActionSaveAs = false;
+            m_pendingDocumentAction = {};
+            ImGui::CloseCurrentPopup();
+        }
+        if (m_panels.status.rfind("Save failed:", 0) == 0) {
+            ImGui::PushTextWrapPos(0); ImGui::TextUnformatted(m_panels.status.c_str()); ImGui::PopTextWrapPos();
+        }
+        ImGui::EndPopup();
+    }
+}
+
+void EditorApplication::ViewportRay(int x, int y, glm::vec3& origin, glm::vec3& direction) const {
+    const auto& view = m_panels.workspace.viewport;
+    m_camera.PixelRay(x - static_cast<int>(view.position.x), y - static_cast<int>(view.position.y),
+                      std::max(1, static_cast<int>(view.size.x)), std::max(1, static_cast<int>(view.size.y)),
+                      origin, direction);
 }
 
 void EditorApplication::PickAtPixel(int x, int y) {
     glm::vec3 origin, direction;
-    m_camera.PixelRay(x, y, m_host->GetWindow().Width(), m_host->GetWindow().Height(), origin, direction);
-    SceneObjectId best = kInvalidSceneObjectId;
-    float bestDistance = 1.0e30f;
-    Scene pickScene;std::string error;
-    if(!FlattenHierarchy(m_document.GetScene(),pickScene,error))return;
-    for (const SceneObject& o : pickScene.Objects()) {
-        float distance = 0.0f;
-        if (RaySphere(origin, direction, o.transform.position, PickRadius(o), distance) && distance < bestDistance) {
-            bestDistance = distance;
-            best = o.id;
-        }
-    }
-    m_document.Select(best, ImGui::GetIO().KeyCtrl);
+    ViewportRay(x, y, origin, direction);
+    std::string error;
+    const auto hit = m_scenePicker.Pick(m_document.GetScene(), origin, direction,
+                                      &m_host->Assets(), &m_host->Resources(), &error);
+    if (!error.empty()) { m_panels.status = "Selection failed: " + error; return; }
+    m_document.Select(hit.id, ImGui::GetIO().KeyCtrl);
 }
 
 void EditorApplication::UpdateGizmo(bool allowInteraction) {
@@ -736,11 +832,10 @@ void EditorApplication::UpdateGizmo(bool allowInteraction) {
         m_hoverAxis = GizmoAxis::None;
         return;
     }
-    Window& window = m_host->GetWindow();
-    int mx = 0, my = 0;
-    window.GetMousePosition(mx, my);
+    const auto pointer = ImGui::GetIO().MousePos;
+    const int mx = static_cast<int>(pointer.x), my = static_cast<int>(pointer.y);
     glm::vec3 rayOrigin, rayDirection;
-    m_camera.PixelRay(mx, my, window.Width(), window.Height(), rayOrigin, rayDirection);
+    ViewportRay(mx, my, rayOrigin, rayDirection);
     Scene flattened;std::string error;
     if(!FlattenHierarchy(m_document.GetScene(),flattened,error))return;
     auto presented=flattened.Find(selected->id)->transform;
@@ -841,37 +936,68 @@ void EditorApplication::DrawEditOverlay(Renderer& renderer, const Scene& scene) 
     renderer.DrawDebugLines(m_gizmoLines.Lines(), /*depthTest=*/false);
 }
 
+void EditorApplication::CancelCameraNavigation() {
+    m_cameraGesture.Cancel();
+    if (m_host) m_host->GetWindow().SetMouseCaptured(false);
+}
+
+void EditorApplication::UpdateCameraNavigation(const EditorCameraGestureInput& input, int mouseDeltaX,
+                                              int mouseDeltaY, float deltaSeconds, bool fast) {
+    Window& window = m_host->GetWindow();
+    const auto previous = m_cameraGesture.Active();
+    m_cameraGesture.Update(input);
+    const auto active = m_cameraGesture.Active();
+    const bool captured = active != EditorCameraGesture::None;
+    if (window.IsMouseCaptured() != captured) window.SetMouseCaptured(captured);
+    // Starting capture may warp the cursor. Consume only subsequent drag
+    // samples so the initial press does not jump the view.
+    if (active != previous) mouseDeltaX = mouseDeltaY = 0;
+    if (active == EditorCameraGesture::Pan)
+        m_camera.Pan(mouseDeltaX, mouseDeltaY, std::max(1, static_cast<int>(m_panels.workspace.viewport.size.y)));
+    m_camera.Update(window, deltaSeconds, active == EditorCameraGesture::Look,
+                    mouseDeltaX, mouseDeltaY, fast);
+    // Keep the existing 8 m object-placement plane; the camera's separate
+    // focus depth only determines the pan scale after framing a selection.
+    m_panels.cameraFocus = m_camera.Position() + m_camera.Forward() * 8.0f;
+}
+
 void EditorApplication::FrameEditMode(float deltaSeconds) {
     JUDAS_PROFILE_SCOPE("Editor viewport");
     Window& window = m_host->GetWindow();
     Renderer& renderer = m_host->GetRenderer();
     const ImGuiIO& io = ImGui::GetIO();
+    const bool insideViewport = m_panels.workspace.viewport.Contains({io.MousePos.x, io.MousePos.y});
 
-    // Right mouse held over the viewport: capture the mouse and fly.
-    const bool rightHeld = (SDL_GetMouseState(nullptr, nullptr) & SDL_BUTTON(SDL_BUTTON_RIGHT)) != 0;
-    if (rightHeld && !m_lookActive && !io.WantCaptureMouse) {
-        m_lookActive = true;
-        window.SetMouseCaptured(true);
-    } else if (!rightHeld && m_lookActive) {
-        m_lookActive = false;
-        window.SetMouseCaptured(false);
-    }
+    EditorCameraGestureInput navigation;
+    navigation.focused = m_viewportFocused;
+    navigation.canStart = insideViewport && !io.WantCaptureMouse && !io.WantCaptureKeyboard && !m_drag.Active();
+    navigation.cancel = io.WantCaptureKeyboard || io.WantTextInput || ImGui::IsKeyPressed(ImGuiKey_Escape);
+    navigation.rightDown = io.MouseDown[ImGuiMouseButton_Right];
+    navigation.middleDown = io.MouseDown[ImGuiMouseButton_Middle];
+    navigation.leftDown = io.MouseDown[ImGuiMouseButton_Left];
     int dx = 0, dy = 0;
     window.GetMouseDelta(dx, dy);
+    // Pan consumes viewport SDL motion directly. Game projects may rename
+    // look axes; their logical input map does not redefine editor panning.
+    if (m_cameraGesture.Active() == EditorCameraGesture::Pan) {
+        dx = m_viewportMouseDeltaX; dy = m_viewportMouseDeltaY;
+    }
     const Uint8* keys = SDL_GetKeyboardState(nullptr);
     const bool fast = keys[SDL_SCANCODE_LSHIFT] || keys[SDL_SCANCODE_RSHIFT];
-    m_camera.Update(window, deltaSeconds, m_lookActive && !io.WantCaptureKeyboard, dx, dy, fast);
-    m_panels.cameraFocus = m_camera.Position() + m_camera.Forward() * 8.0f;
+    UpdateCameraNavigation(navigation, dx, dy, deltaSeconds, fast);
+    if (EditorCameraCanDolly(navigation, m_cameraGesture.Active(), true)) {
+        m_camera.Dolly(io.MouseWheel);
+        m_panels.cameraFocus = m_camera.Position() + m_camera.Forward() * 8.0f;
+    }
 
     // Gizmo first: a click on a handle is a drag, not a pick. The viewport
-    // owns the mouse only when no panel does and the camera is not flying.
-    const bool viewportOwnsMouse = !io.WantCaptureMouse && !m_lookActive;
+    // owns the mouse only when no panel does and no camera drag owns it.
+    const bool viewportOwnsMouse = insideViewport && !io.WantCaptureMouse &&
+        m_cameraGesture.Active() == EditorCameraGesture::None && !navigation.middleDown && !navigation.rightDown;
     UpdateGizmo(viewportOwnsMouse);
     if (viewportOwnsMouse && !m_drag.Active() && m_hoverAxis == GizmoAxis::None &&
         ImGui::IsMouseClicked(ImGuiMouseButton_Left)) {
-        int mx = 0, my = 0;
-        window.GetMousePosition(mx, my);
-        PickAtPixel(mx, my);
+        PickAtPixel(static_cast<int>(io.MousePos.x), static_cast<int>(io.MousePos.y));
     }
 
     // Asset Browser drag released over the viewport: place the mesh where
@@ -881,13 +1007,12 @@ void EditorApplication::FrameEditMode(float deltaSeconds) {
             m_pendingDropAsset.assign(static_cast<const char*>(payload->Data), payload->DataSize);
         }
     } else if (!m_pendingDropAsset.empty()) {
-        if (ImGui::IsMouseReleased(ImGuiMouseButton_Left) && !ImGui::IsWindowHovered(ImGuiHoveredFlags_AnyWindow)) {
+        if (insideViewport && ImGui::IsMouseReleased(ImGuiMouseButton_Left) && !ImGui::IsWindowHovered(ImGuiHoveredFlags_AnyWindow)) {
             const AssetRecord* record = m_host->Assets().Find(m_pendingDropAsset);
             if (record && record->type == AssetType::Mesh) {
-                int mx = 0, my = 0;
-                window.GetMousePosition(mx, my);
+                const int mx = static_cast<int>(io.MousePos.x), my = static_cast<int>(io.MousePos.y);
                 glm::vec3 rayOrigin, rayDirection;
-                m_camera.PixelRay(mx, my, window.Width(), window.Height(), rayOrigin, rayDirection);
+                ViewportRay(mx, my, rayOrigin, rayDirection);
                 glm::vec3 hit = m_panels.cameraFocus;
                 RayPlaneIntersection(rayOrigin, rayDirection, m_panels.cameraFocus, -m_camera.Forward(), hit);
                 CreateObjectOfKind(m_document, "mesh", hit, m_pendingDropAsset);
@@ -902,14 +1027,25 @@ void EditorApplication::FrameEditMode(float deltaSeconds) {
     Scene scene;std::string hierarchyError;
     if(!FlattenHierarchy(m_document.GetScene(),scene,hierarchyError)){m_panels.status=hierarchyError;return;}
     RefreshAssetDemand();
-    const int height = std::max(window.Height(), 1);
-    const float aspect = static_cast<float>(window.Width()) / static_cast<float>(height);
+    const auto& viewport = m_panels.workspace.viewport;
+    const int width = std::max(1, static_cast<int>(viewport.size.x));
+    const int height = std::max(1, static_cast<int>(viewport.size.y));
+    const float aspect = static_cast<float>(width) / static_cast<float>(height);
     renderer.SetLighting(glm::normalize(scene.Settings().sunDirection), scene.Settings().sunColor,
                          scene.Settings().ambientColor);
     const auto& appearance=scene.Settings();m_host->Resources().RequestEnvironment(appearance.environmentAsset);
     renderer.SetSceneAppearance(appearance.linearRendering,appearance.exposure,m_host->Resources().TryGetEnvironment(appearance.environmentAsset),appearance.environmentIntensity,appearance.environmentRotation,appearance.environmentBackground,appearance.backgroundColor);
     RendererProfileScope editorCameraGPU(renderer, "Editor camera");
-    renderer.BeginFrame(window.Width(), window.Height());
+    // The authoring scene has its own render target and aspect ratio. Panels
+    // never obscure or steal pixels from the scene's picking projection.
+    std::string targetError;
+    if (!renderer.ResizeRenderTarget(m_sceneViewTarget, width, height, targetError) ||
+        !renderer.BeginRenderTarget(m_sceneViewTarget)) {
+        m_panels.status = "Scene view unavailable: " + targetError;
+        renderer.BeginFrame(window.Width(), window.Height());
+        renderer.EndFrame();
+        return;
+    }
     renderer.SetCamera(m_camera.ViewMatrix(), m_camera.ProjectionMatrix(aspect));
     renderer.SetDynamicLights(BuildAuthoredLights(scene));
     DrawAuthoredScene(renderer, scene, m_host->Resources());
@@ -932,6 +1068,15 @@ void EditorApplication::FrameEditMode(float deltaSeconds) {
     }else {m_regionPreview.clear();m_regionPreviewKey.clear();}
     DrawEditOverlay(renderer, scene);
     renderer.EndFrame();
+    renderer.EndRenderTarget();
+    renderer.BeginFrame(window.Width(), window.Height());
+    renderer.EndFrame();
+    const auto texture = renderer.EditorImageToken(renderer.RenderTargetTexture(m_sceneViewTarget));
+    // Draw-list composition keeps the scene itself outside ImGui's input
+    // capture; viewport bounds decide whether a fresh camera/pick can start.
+    ImGui::GetBackgroundDrawList()->AddImage(static_cast<ImTextureID>(texture),
+        {viewport.position.x, viewport.position.y},
+        {viewport.position.x + viewport.size.x, viewport.position.y + viewport.size.y}, {0, 1}, {1, 0});
 }
 
 void EditorApplication::DrawModelImportPreview(float deltaSeconds) {
@@ -1023,6 +1168,51 @@ void EditorApplication::CollectProfilerData(float frameDeltaSeconds) {
     p.physics = m_world->Physics().LastStepStats();
 }
 
+void EditorApplication::LoadEditorPreferences() {
+    // Store editor preferences in the platform's user-data directory, never
+    // beside a scene or in the repository. Malformed preferences cannot block
+    // opening a project; layout clamps also protect smaller window sizes.
+    char* directory = SDL_GetPrefPath("Judas", "Editor");
+    if (!directory) return;
+    m_editorPreferencesPath = (fs::path(directory) / "workspace.json").string();
+    m_editorIniPath = (fs::path(directory) / "windows.ini").string();
+    SDL_free(directory);
+    ImGui::GetIO().IniFilename = m_editorIniPath.c_str();
+    std::ifstream file(m_editorPreferencesPath);
+    if (!file) return;
+    auto saved = nlohmann::json::parse(file, nullptr, false);
+    if (!saved.is_object()) return;
+    const auto width = [&](const char* key, float& value, float minimum, float maximum) {
+        const auto found = saved.find(key);
+        if (found == saved.end() || !found->is_number()) return;
+        const auto candidate = found->get<double>();
+        if (std::isfinite(candidate) && candidate >= minimum && candidate <= maximum)
+            value = static_cast<float>(candidate);
+    };
+    width("hierarchyWidth", m_panels.hierarchyWidth, 150, 800);
+    width("inspectorWidth", m_panels.inspectorWidth, 220, 900);
+    width("assetBrowserHeight", m_panels.assetBrowserHeight, 80, 700);
+    if (saved.contains("showAssets") && saved["showAssets"].is_boolean())
+        m_panels.showAssetBrowser = saved["showAssets"].get<bool>();
+}
+
+void EditorApplication::SaveEditorPreferences() {
+    if (m_editorPreferencesPath.empty()) return;
+    const nlohmann::json saved = {{"version", 1}, {"hierarchyWidth", m_panels.hierarchyWidth},
+        {"inspectorWidth", m_panels.inspectorWidth}, {"assetBrowserHeight", m_panels.assetBrowserHeight},
+        {"showAssets", m_panels.showAssetBrowser}};
+    const auto staged = m_editorPreferencesPath + ".tmp";
+    try {
+        std::ofstream file(staged, std::ios::trunc);
+        if (!file) return;
+        file << saved.dump(2) << '\n'; file.close();
+        if (!file) return;
+        ReplaceStagedFile(staged, m_editorPreferencesPath);
+    } catch (const std::exception& error) {
+        std::fprintf(stderr, "[editor] Layout preferences were not saved: %s\n", error.what());
+    }
+}
+
 int EditorApplication::Run(int argc, char** argv) {
     ProfileRun profileRun("editor");
     ProfileFrame startupProfile("editor startup",true);
@@ -1039,16 +1229,31 @@ int EditorApplication::Run(int argc, char** argv) {
     m_host = &host;
     Window& window = host.GetWindow();
     Renderer& renderer = host.GetRenderer();
+    SDL_SetWindowMinimumSize(window.NativeWindow(), 640, 480);
     window.SetMouseCaptured(false);
 
     IMGUI_CHECKVERSION();
     ImGui::CreateContext();
     ImGuiIO& io = ImGui::GetIO();
-    io.IniFilename = nullptr;  // fixed layout each launch; no files written beside the scene
-    ImGui::StyleColorsDark();
+    io.IniFilename = nullptr;
+    const auto editorFont = ResolveEngineDataPath("assets/fonts/DejaVuSans.ttf");
+    if (fs::is_regular_file(editorFont)) io.Fonts->AddFontFromFileTTF(editorFont.c_str(), 15.0f);
+    ApplyEditorTheme();
+    LoadEditorPreferences();
     ImGui_ImplSDL2_InitForOpenGL(window.NativeWindow(), window.NativeGLContext());
     ImGui_ImplOpenGL3_Init("#version 330 core");
-    window.SetEventHook([](const SDL_Event& event) { ImGui_ImplSDL2_ProcessEvent(&event); });
+    window.SetEventHook([this, editorWindowId = SDL_GetWindowID(window.NativeWindow())](const SDL_Event& event) {
+        ImGui_ImplSDL2_ProcessEvent(&event);
+        if (event.type == SDL_MOUSEMOTION && event.motion.windowID == editorWindowId) {
+            m_viewportMouseDeltaX += event.motion.xrel;
+            m_viewportMouseDeltaY += event.motion.yrel;
+        } else if (event.type == SDL_WINDOWEVENT && event.window.windowID == editorWindowId) {
+            if (event.window.event == SDL_WINDOWEVENT_FOCUS_LOST) {
+                m_viewportFocused = false;
+                if (m_panels.mode == EditorMode::Edit) CancelCameraNavigation();
+            } else if (event.window.event == SDL_WINDOWEVENT_FOCUS_GAINED) m_viewportFocused = true;
+        }
+    });
 
     // --- Milestone 30: open a project, then a scene ---
     std::string argument = argc == 2 ? argv[1] : std::string();
@@ -1080,11 +1285,11 @@ int EditorApplication::Run(int argc, char** argv) {
         else m_panels.status = "Opened project " + m_project.Settings().name + " at " + m_project.Settings().startupScene;
     } else {
         m_document.NewScene();
-        m_panels.status = m_project.IsLoaded() ? "Project has no startup scene; new scene. Create > objects; right-drag to look."
-                                               : "No project. File > New project or Open project. Right-drag to look, WASD/QE to fly.";
+        m_panels.status = m_project.IsLoaded() ? "Project has no startup scene; new scene. Create > objects; right-drag to look, middle-drag to pan."
+                                               : "No project. File > New project or Open project. Right-drag to look, middle-drag to pan, WASD/QE to fly.";
     }
     if (m_panels.status.rfind("Opened", 0) == 0) {
-        m_panels.status += ". Right-drag looks, WASD/QE fly; click selects; W/E/R move/rotate/scale; X local/world; Ctrl snaps.";
+        m_panels.status += ". Wheel zooms; right-drag looks; middle-drag pans; WASD/QE fly; click selects; W/E/R transform; X local/world; Ctrl snaps.";
     }
 
     // Developer/automation hook (see docs/ARCHITECTURE.md, "Milestone 30,
@@ -1095,6 +1300,47 @@ int EditorApplication::Run(int argc, char** argv) {
     // saves it, prints profiler and resource lines, and quits.
     const char* autotest = std::getenv("JUDAS_EDITOR_AUTOTEST");
     int autotestFrame = 0;
+    const bool navigationAutotest = autotest && std::getenv("JUDAS_EDITOR_AUTOTEST_PAN");
+    const bool polishAutotest = autotest && std::getenv("JUDAS_EDITOR_AUTOTEST_POLISH");
+    const bool pickingAutotest = autotest && std::getenv("JUDAS_EDITOR_AUTOTEST_PICKING");
+    glm::vec3 dollyStartPosition{0}, dollyAnchor{0};
+    float dollyStartDistance = 0;
+    int navigationFailures = 0;
+    glm::vec3 navigationStartPosition{0}, navigationStartFocus{0}, navigationStartForward{0};
+    glm::vec3 navigationExpectedPosition{0};
+    const auto navigationCheck = [&](bool ok, const char* label) {
+        if (!ok) ++navigationFailures;
+        std::fprintf(stderr, "[editor navigation] %s: %s\n", label, ok ? "PASS" : "FAIL");
+    };
+    if (polishAutotest && std::getenv("JUDAS_EDITOR_AUTOTEST_PREFS"))
+        navigationCheck(m_panels.assetBrowserHeight == 100.0f,
+                        "saved asset height below 120 pixels survives preference loading");
+    const auto navigationButton = [&](bool down) {
+        SDL_Event event{};
+        event.type = down ? SDL_MOUSEBUTTONDOWN : SDL_MOUSEBUTTONUP;
+        event.button.windowID = SDL_GetWindowID(window.NativeWindow());
+        event.button.button = SDL_BUTTON_MIDDLE;
+        event.button.state = down ? SDL_PRESSED : SDL_RELEASED;
+        event.button.x = static_cast<int>(m_panels.workspace.viewport.position.x + m_panels.workspace.viewport.size.x * .5f);
+        event.button.y = static_cast<int>(m_panels.workspace.viewport.position.y + m_panels.workspace.viewport.size.y * .5f);
+        SDL_PushEvent(&event);
+    };
+    const auto navigationMotion = [&](int dx, int dy) {
+        SDL_Event event{};
+        event.type = SDL_MOUSEMOTION;
+        event.motion.windowID = SDL_GetWindowID(window.NativeWindow());
+        event.motion.x = static_cast<int>(m_panels.workspace.viewport.position.x + m_panels.workspace.viewport.size.x * .5f);
+        event.motion.y = static_cast<int>(m_panels.workspace.viewport.position.y + m_panels.workspace.viewport.size.y * .5f);
+        event.motion.xrel = dx; event.motion.yrel = dy;
+        SDL_PushEvent(&event);
+    };
+    const auto navigationFocus = [&](bool focused) {
+        SDL_Event event{};
+        event.type = SDL_WINDOWEVENT;
+        event.window.windowID = SDL_GetWindowID(window.NativeWindow());
+        event.window.event = focused ? SDL_WINDOWEVENT_FOCUS_GAINED : SDL_WINDOWEVENT_FOCUS_LOST;
+        SDL_PushEvent(&event);
+    };
     std::uint64_t profilerFrozenFrame = 0;
     std::size_t profilerFrozenSteps = 0;
     std::string autotestBaseline;
@@ -1147,7 +1393,12 @@ int EditorApplication::Run(int argc, char** argv) {
         // reading is suppressed this frame (a text field must not walk the
         // player or fly the camera).
         window.SetInputClaimed(io.WantCaptureKeyboard, io.WantCaptureMouse && !window.IsMouseCaptured());
+        m_viewportMouseDeltaX = m_viewportMouseDeltaY = 0;
         { JUDAS_PROFILE_SCOPE("Input events"); window.PollEvents(); }
+        const bool closeRequested = window.ShouldClose();
+        // A desktop close is handled like File > Quit, including the document
+        // guard. The game runtime still exits on its own normal close request.
+        if (closeRequested) window.CancelCloseRequest();
         host.PumpResources();  // M31: GPU upload of finished loads, budget eviction
         const Uint64 currentCounter = SDL_GetPerformanceCounter();
         const float deltaSeconds = static_cast<float>(currentCounter - previousCounter) / static_cast<float>(frequency);
@@ -1157,8 +1408,10 @@ int EditorApplication::Run(int argc, char** argv) {
         ImGui_ImplOpenGL3_NewFrame();
         ImGui_ImplSDL2_NewFrame();
         ImGui::NewFrame();
+        UpdateEditorWorkspaceLayout(m_panels, {io.DisplaySize.x, io.DisplaySize.y});
 
         EditorRequests requests;
+        requests.quit = closeRequested;
         // Keyboard shortcuts (edit mode, no text field focused, not flying).
         if (m_panels.mode == EditorMode::Edit && !io.WantCaptureKeyboard) {
             const bool ctrl = io.KeyCtrl;
@@ -1171,7 +1424,7 @@ int EditorApplication::Run(int argc, char** argv) {
                 std::string error;
                 if(!m_document.DeleteSelection(error))m_panels.status=error;
             }
-            if (!m_lookActive && !ctrl) {
+            if (m_cameraGesture.Active() == EditorCameraGesture::None && !ctrl) {
                 if (ImGui::IsKeyPressed(ImGuiKey_F)) requests.focusSelection = true;
                 if (ImGui::IsKeyPressed(ImGuiKey_W)) m_panels.gizmoMode = GizmoMode::Translate;
                 if (ImGui::IsKeyPressed(ImGuiKey_E)) m_panels.gizmoMode = GizmoMode::Rotate;
@@ -1223,6 +1476,7 @@ int EditorApplication::Run(int argc, char** argv) {
         static ProfileLabel editorBuildLabel("Editor UI build");
         ProfileScope editorBuildScope(editorBuildLabel);
         DrawEditorMainMenu(m_document, m_panels, requests);
+        DrawEditorWorkspaceChrome(m_document, m_panels, requests);
         // While playing, the engine's own HUD occupies the top-left corner
         // and the authored panels are read-only anyway; only the menu bar
         // (Stop), the inspector, profiler and the status bar stay up.
@@ -1237,7 +1491,8 @@ int EditorApplication::Run(int argc, char** argv) {
             DrawAssetBrowserPanel(m_document, m_panels, requests);
             DrawProjectSettingsPanel(m_document, m_panels, requests);
         }
-        DrawInspectorPanel(m_document, m_panels);
+        if (m_panels.mode == EditorMode::Edit || m_panels.playPaused)
+            DrawInspectorPanel(m_document, m_panels);
         DrawStreamingPanel(m_document,m_panels,requests);
         { JUDAS_PROFILE_SCOPE("Profiler UI"); DrawProfilerPanel(m_panels); }
         DrawStatusBar(m_document, m_panels);
@@ -1256,7 +1511,37 @@ int EditorApplication::Run(int argc, char** argv) {
             requests.exportProject = true;
         }
         if(importRecipe&&autotestFrame==1)requests.dropMeshAssetId=m_panels.importAccepted->assetId;
+        if (polishAutotest && autotestFrame == 11) requests.newScene = true;
         HandleRequests(requests);
+        if (polishAutotest) {
+            if (autotestFrame == 11) {
+                std::string actual; SaveSceneToString(m_document.GetScene(), actual);
+                navigationCheck(m_documentActionPending && !m_documentActionApproved && actual == autotestBaseline,
+                                "new-scene request preserves unsaved document until a choice");
+            } else if (autotestFrame == 13) {
+                navigationCheck(ImGui::IsPopupOpen("Unsaved scene") && m_documentActionPending,
+                                "unsaved-document confirmation remains open across frames");
+            } else if (autotestFrame == 14) {
+                navigationCheck(!m_documentActionPending && !m_documentActionApproved && !m_documentActionSaveAs,
+                                "Escape cancels unsaved-document action");
+            } else if (autotestFrame == 15) {
+                const auto& viewport = m_panels.workspace.viewport;
+                const auto size = renderer.RenderTargetSize(m_sceneViewTarget);
+                navigationCheck(size == glm::ivec2(viewport.size), "resized scene target follows workspace dimensions");
+                glm::vec3 origin, direction;
+                ViewportRay(static_cast<int>(viewport.position.x + viewport.size.x * .5f),
+                            static_cast<int>(viewport.position.y + viewport.size.y * .5f), origin, direction);
+                navigationCheck(glm::dot(direction, m_camera.Forward()) > .99999f,
+                                "scene picking uses the central viewport projection after resize");
+            } else if (autotestFrame == 144) {
+                navigationCheck(m_documentActionPending && !m_quit && !window.ShouldClose(),
+                                "desktop close request waits for unsaved-document confirmation");
+            } else if (autotestFrame == 145) {
+                std::string actual; SaveSceneToString(m_document.GetScene(), actual);
+                navigationCheck(!m_documentActionPending && !m_quit && actual == autotestBaseline,
+                                "cancelled desktop close preserves authored state and editor session");
+            }
+        }
         if (automatedExport)
             std::fprintf(stderr, "[editor autotest] export project: %s\n", m_panels.runProjectInfo.c_str());
         AdvanceStabilizationAutomation();
@@ -1289,6 +1574,161 @@ int EditorApplication::Run(int argc, char** argv) {
             if(importRecipe&&autotestFrame==12){auto& parts=m_panels.importAccepted->preview->primitives;if(!parts.empty())m_panels.modelPreviewHidden={parts.front().part};}
 
             const std::string prefix = autotest;
+            if (pickingAutotest) {
+                // A private authored fixture supplies two tiny children under
+                // a rotated/scaled parent. Events use the real SDL/ImGui path.
+                const auto pointer = [&](glm::vec2 pixel, int buttonState = -1) {
+                    SDL_Event event{};
+                    event.type = SDL_MOUSEMOTION;
+                    event.motion.windowID = SDL_GetWindowID(window.NativeWindow());
+                    event.motion.x = static_cast<int>(pixel.x); event.motion.y = static_cast<int>(pixel.y);
+                    SDL_PushEvent(&event);
+                    if (buttonState >= 0) {
+                        event = SDL_Event{};
+                        event.type = buttonState ? SDL_MOUSEBUTTONDOWN : SDL_MOUSEBUTTONUP;
+                        event.button.windowID = SDL_GetWindowID(window.NativeWindow());
+                        event.button.button = SDL_BUTTON_LEFT;
+                        event.button.state = buttonState ? SDL_PRESSED : SDL_RELEASED;
+                        event.button.x = static_cast<int>(pixel.x); event.button.y = static_cast<int>(pixel.y);
+                        SDL_PushEvent(&event);
+                    }
+                };
+                const auto wheel = [&](float steps) {
+                    SDL_Event event{}; event.type = SDL_MOUSEWHEEL;
+                    event.wheel.windowID = SDL_GetWindowID(window.NativeWindow());
+                    event.wheel.y = static_cast<int>(steps);
+#if SDL_VERSION_ATLEAST(2, 0, 18)
+                    event.wheel.preciseY = steps;
+#endif
+                    SDL_PushEvent(&event);
+                };
+                const auto childPixel = [&](SceneObjectId id) {
+                    Scene flat; std::string error;
+                    if (!FlattenHierarchy(m_document.GetScene(), flat, error) || !flat.Find(id)) return glm::vec2(-1);
+                    const auto& view = m_panels.workspace.viewport;
+                    const auto clip = m_camera.ProjectionMatrix(view.size.x / view.size.y) * m_camera.ViewMatrix() *
+                        glm::vec4(flat.Find(id)->transform.position, 1);
+                    return glm::vec2(view.position.x + (clip.x / clip.w + 1) * .5f * view.size.x,
+                                     view.position.y + (1 - clip.y / clip.w) * .5f * view.size.y);
+                };
+                if (autotestFrame == 1) {
+                    navigationFocus(true); navigationMotion(0, 0);
+                    dollyStartPosition = m_camera.Position(); dollyStartDistance = m_camera.FocusDistance();
+                    dollyAnchor = dollyStartPosition + m_camera.Forward() * dollyStartDistance;
+                } else if (autotestFrame == 2) wheel(1);
+                else if (autotestFrame == 3) {
+                    navigationCheck(std::abs(m_camera.FocusDistance() - dollyStartDistance * .8f) < 1e-4f &&
+                        glm::length(m_camera.Position() + m_camera.Forward() * m_camera.FocusDistance() - dollyAnchor) < 1e-4f,
+                        "SDL wheel zooms toward fixed focus in central viewport");
+                    wheel(-1);
+                } else if (autotestFrame == 4) {
+                    navigationCheck(glm::length(m_camera.Position() - dollyStartPosition) < 1e-4f,
+                                    "SDL inverse wheel restores camera position");
+                    pointer({30, 150});
+                } else if (autotestFrame == 5) wheel(2);
+                else if (autotestFrame == 6) {
+                    navigationCheck(glm::length(m_camera.Position() - dollyStartPosition) < 1e-4f,
+                                    "SDL wheel over hierarchy does not move scene camera");
+                    m_document.Select(kInvalidSceneObjectId); pointer(childPixel(9001), 1);
+                } else if (autotestFrame == 7) pointer(childPixel(9001), 0);
+                else if (autotestFrame == 8) {
+                    navigationCheck(m_document.Selected() == 9001,
+                                    "SDL viewport selects tiny nested box above large floor");
+                    screenshot(prefix + ".nested.png");
+                    m_document.Select(kInvalidSceneObjectId); pointer(childPixel(9002));
+                } else if (autotestFrame == 9) pointer(childPixel(9002), 1);
+                else if (autotestFrame == 10) pointer(childPixel(9002), 0);
+                else if (autotestFrame == 11) {
+                    navigationCheck(m_document.Selected() == 9002,
+                                    "SDL viewport selects second child independently of parent proxy");
+                    std::string actual; SaveSceneToString(m_document.GetScene(), actual);
+                    navigationCheck(actual == autotestBaseline && !m_document.EditInProgress(),
+                                    "wheel and selection preserve authored scene and Undo state");
+                } else if (autotestFrame == 140)
+                    navigationCheck(m_panels.mode == EditorMode::Play && m_world &&
+                                    m_world->CountLifecycle().physicsBodies >= 14,
+                                    "ordinary Play instantiates the real authored lab bodies");
+                else if (autotestFrame == 150)
+                    navigationCheck(m_panels.mode == EditorMode::Edit && !window.IsMouseCaptured(),
+                                    "Play/Stop restores uncaptured editor after wheel and picking");
+            }
+            if (polishAutotest) {
+                // This counter has already advanced after rendering. Queue
+                // Escape for the frame after the dialog's pending check.
+                if (autotestFrame == 13) screenshot(prefix + ".unsaved.png");
+                if (autotestFrame == 14 || autotestFrame == 145) io.AddKeyEvent(ImGuiKey_Escape, true);
+                if (autotestFrame == 15 || autotestFrame == 146) io.AddKeyEvent(ImGuiKey_Escape, false);
+                if (autotestFrame == 13) SDL_SetWindowSize(window.NativeWindow(), 960, 640);
+                if (autotestFrame == 15) screenshot(prefix + ".resized.png");
+                if (autotestFrame == 16) {
+                    SDL_SetWindowSize(window.NativeWindow(), kWindowWidth, kWindowHeight);
+                    if (std::getenv("JUDAS_EDITOR_AUTOTEST_PREFS")) m_panels.assetBrowserHeight = 200;
+                }
+                if (autotestFrame == 143) { SDL_Event event{}; event.type = SDL_QUIT; SDL_PushEvent(&event); }
+                if (autotestFrame == 146) screenshot(prefix + ".restored.png");
+            }
+            // M71 input evidence goes through SDL -> ImGui -> FrameEditMode,
+            // using the ordinary scene camera and unchanged authored scene.
+            if (navigationAutotest) {
+                if (autotestFrame == 1) {
+                    navigationFocus(true);
+                    navigationMotion(0, 0);
+                } else if (autotestFrame == 2) {
+                    navigationStartPosition = m_camera.Position();
+                    navigationStartFocus = m_panels.cameraFocus;
+                    navigationStartForward = m_camera.Forward();
+                    const float scale = 2.0f * m_camera.FocusDistance() * std::tan(glm::radians(30.0f)) /
+                        m_panels.workspace.viewport.size.y;
+                    navigationExpectedPosition = navigationStartPosition + scale *
+                        (-m_camera.Right() * 80.0f - m_camera.Up() * 40.0f);
+                    navigationButton(true);
+                } else if (autotestFrame == 3) {
+                    navigationCheck(m_cameraGesture.Active() == EditorCameraGesture::Pan && window.IsMouseCaptured(),
+                                    "SDL middle press captures only viewport camera");
+                    navigationMotion(80, -40);
+                } else if (autotestFrame == 4) {
+                    navigationCheck(glm::length(m_camera.Position() - navigationExpectedPosition) < 2e-4f &&
+                                    glm::length(m_panels.cameraFocus - navigationStartFocus -
+                                                (m_camera.Position() - navigationStartPosition)) < 2e-4f &&
+                                    glm::length(m_camera.Forward() - navigationStartForward) < 1e-6f,
+                                    "SDL drag translates camera and placement focus equally in view plane");
+                    std::string afterPan; SaveSceneToString(m_document.GetScene(), afterPan);
+                    navigationCheck(afterPan == autotestBaseline && !m_document.EditInProgress() && !m_drag.Active(),
+                                    "pan preserves authored objects and gizmo undo state");
+                    navigationButton(false);
+                } else if (autotestFrame == 5) {
+                    navigationCheck(m_cameraGesture.Active() == EditorCameraGesture::None && !window.IsMouseCaptured(),
+                                    "SDL middle release frees capture");
+                } else if (autotestFrame == 6) {
+                    navigationButton(true);
+                } else if (autotestFrame == 7) {
+                    navigationCheck(m_cameraGesture.Active() == EditorCameraGesture::Pan, "fresh middle press restarts pan");
+                    navigationFocus(false);
+                } else if (autotestFrame == 8) {
+                    navigationCheck(m_cameraGesture.Active() == EditorCameraGesture::None && !window.IsMouseCaptured(),
+                                    "SDL window focus loss cancels and releases capture");
+                    navigationFocus(true);
+                } else if (autotestFrame == 9) {
+                    navigationCheck(m_cameraGesture.Active() == EditorCameraGesture::None && !window.IsMouseCaptured(),
+                                    "SDL focus regain cannot resume the old drag");
+                    navigationButton(false);
+                } else if (autotestFrame == 17) {
+                    navigationMotion(0, 0);
+                } else if (autotestFrame == 18) {
+                    navigationButton(true);
+                } else if (autotestFrame == 19) {
+                    navigationCheck(m_cameraGesture.Active() == EditorCameraGesture::Pan, "pan active before ordinary Play request");
+                } else if (autotestFrame == 21) {
+                    navigationCheck(m_panels.mode == EditorMode::Play &&
+                                    m_cameraGesture.Active() == EditorCameraGesture::None,
+                                    "ordinary Play retires editor pan ownership");
+                    navigationButton(false);
+                } else if (autotestFrame == 150) {
+                    navigationCheck(m_panels.mode == EditorMode::Edit && !window.IsMouseCaptured() &&
+                                    m_cameraGesture.Active() == EditorCameraGesture::None,
+                                    "ordinary Stop returns an uncaptured scene camera");
+                }
+            }
             // Opt-in M56 diagnostic interaction; ordinary Play timing/state is unchanged.
             if (std::getenv("JUDAS_EDITOR_AUTOTEST_PROFILER")) {
                 if (autotestFrame == 23) io.AddKeyEvent(ImGuiKey_F8, true);
@@ -1331,8 +1771,8 @@ int EditorApplication::Run(int argc, char** argv) {
                 DebugViewOptions all;
                 all.collisionShapes = all.playerCapsule = all.contacts = all.gravity = all.frameAxes = all.lights =
                     all.interactionRanges = all.lifecycle = all.terrainNormals = all.fluidParticles = all.atmosphere = true;
-                m_panels.debug = all;
-                m_panels.showProfiler = !std::getenv("JUDAS_EDITOR_AUTOTEST_AUTHORING");
+                m_panels.debug = polishAutotest || pickingAutotest ? DebugViewOptions{} : all;
+                m_panels.showProfiler = !std::getenv("JUDAS_EDITOR_AUTOTEST_AUTHORING") && !polishAutotest && !pickingAutotest;
             } else if (autotestFrame == 10) {
                 // Duplicate + undo must leave the scene exactly as authored.
                 const SceneObjectId selected = m_document.Selected();
@@ -1390,20 +1830,23 @@ int EditorApplication::Run(int argc, char** argv) {
     }
 
     if (m_panels.mode == EditorMode::Play) StopPlay();
+    else CancelCameraNavigation();
     for (const std::string& id : m_heldAssets) host.Resources().ReleaseRef(id);
     m_heldAssets.clear();
     window.SetEventHook(nullptr);
+    if (m_sceneViewTarget.IsValid()) renderer.DestroyRenderTarget(m_sceneViewTarget);
     if(m_uiPreviewTarget.IsValid())renderer.DestroyRenderTarget(m_uiPreviewTarget);
     m_uiPreview.reset();
     if(m_modelPreviewTarget.IsValid())renderer.DestroyRenderTarget(m_modelPreviewTarget);
     if(!m_modelPreviewAsset.empty())host.Resources().ReleaseRef(m_modelPreviewAsset);
     m_panels.importTask.reset();
+    SaveEditorPreferences();
     ImGui_ImplOpenGL3_Shutdown();
     ImGui_ImplSDL2_Shutdown();
     ImGui::DestroyContext();
     m_previewLocalization.reset();
     m_host = nullptr;
-    return m_stabilization && m_stabilization->failures ? 1 : 0;
+    return navigationFailures || (m_stabilization && m_stabilization->failures) ? 1 : 0;
 }
 
 void EditorApplication::DrawUIAuthoringPreview(){

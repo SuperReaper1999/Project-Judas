@@ -1,6 +1,6 @@
 # Current public JudasJS inventory
 
-M70 candidate multi-target IK and partial physical animation review of the registered virtual module based on accepted starting checkpoint `934c5d3f0556c920cc7cae8b80dc4677d8cbf87b`. M67 human authoring review remains deferred.
+M71 candidate kinematic rigid body review of the registered virtual module based on accepted starting checkpoint `fb31f0244c9f41f74c439afd99855e3707937edd`. M67 human authoring review remains deferred.
 Each row is a runtime export/member (constructors and plain handle fields included).
 Native dispatcher operations are implementation details, not additional JS APIs.
 
@@ -84,10 +84,13 @@ Native dispatcher operations are implementation details, not additional JS APIs.
 | `Entity.hasTag` | `hasTag` | [declaration](../judas.d.ts) | [reference](entities.md) |
 | `Entity.id` | JS wrapper/data | [declaration](../judas.d.ts) | [reference](entities.md) |
 | `Entity.inertiaWorld` | `inertiaWorld` | [declaration](../judas.d.ts) | [reference](entities.md) |
+| `Entity.kinematicMotion` | `kinematicMotion` | [declaration](../judas.d.ts) | [reference](entities.md) |
 | `Entity.liquid` | `liquidOwner` | [declaration](../judas.d.ts) | [reference](entities.md) |
 | `Entity.mass` | `mass` | [declaration](../judas.d.ts) | [reference](entities.md) |
 | `Entity.material` | JS wrapper/data | [declaration](../judas.d.ts) | [reference](materials.md) |
 | `Entity.modelParts` | `modelParts` | [declaration](../judas.d.ts) | [reference](entities.md) |
+| `Entity.motionType` | `motionType` | [declaration](../judas.d.ts) | [reference](entities.md) |
+| `Entity.moveKinematic` | `kinematicTarget` | [declaration](../judas.d.ts) | [reference](entities.md) |
 | `Entity.navigation` | `navAgentExists` | [declaration](../judas.d.ts) | [reference](entities.md) |
 | `Entity.navigationLink` | `navLinkInfo` | [declaration](../judas.d.ts) | [reference](entities.md) |
 | `Entity.navigationObstacle` | `navObstacleInfo` | [declaration](../judas.d.ts) | [reference](entities.md) |
@@ -96,6 +99,7 @@ Native dispatcher operations are implementation details, not additional JS APIs.
 | `Entity.physicalMaterial` | `physicalMaterialInfo` | [declaration](../judas.d.ts) | [reference](entities.md) |
 | `Entity.playAudio` | `playAudio` | [declaration](../judas.d.ts) | [reference](audio.md) |
 | `Entity.playAudioOneShot` | `audioOneShot` | [declaration](../judas.d.ts) | [reference](audio.md) |
+| `Entity.pointVelocity` | `pointVelocity` | [declaration](../judas.d.ts) | [reference](entities.md) |
 | `Entity.presentedTransform` | `presentedTransform` | [declaration](../judas.d.ts) | [reference](entities.md) |
 | `Entity.ragdoll` | `ragdollExists` | [declaration](../judas.d.ts) | [reference](entities.md) |
 | `Entity.removeTag` | `removeTag` | [declaration](../judas.d.ts) | [reference](entities.md) |
@@ -108,6 +112,8 @@ Native dispatcher operations are implementation details, not additional JS APIs.
 | `Entity.setCameraEnabled` | `camera` | [declaration](../judas.d.ts) | [reference](entities.md) |
 | `Entity.setCameraProjection` | `cameraProjection` | [declaration](../judas.d.ts) | [reference](effects-camera.md) |
 | `Entity.setColliderEnabled` | `colliderEnabled` | [declaration](../judas.d.ts) | [reference](entities.md) |
+| `Entity.setKinematicVelocity` | `kinematicVelocity` | [declaration](../judas.d.ts) | [reference](entities.md) |
+| `Entity.setMotionType` | `motionTypeSet` | [declaration](../judas.d.ts) | [reference](entities.md) |
 | `Entity.setNavigationEnabled` | `navEnabled` | [declaration](../judas.d.ts) | [reference](entities.md) |
 | `Entity.setPartVisible` | `modelPartVisible` | [declaration](../judas.d.ts) | [reference](entities.md) |
 | `Entity.setParticles` | `particles` | [declaration](../judas.d.ts) | [reference](entities.md) |
@@ -115,6 +121,7 @@ Native dispatcher operations are implementation details, not additional JS APIs.
 | `Entity.setSocket` | `socketSet` | [declaration](../judas.d.ts) | [reference](entities.md) |
 | `Entity.sleeping` | `sleeping` | [declaration](../judas.d.ts) | [reference](entities.md) |
 | `Entity.stopAudio` | `stopAudio` | [declaration](../judas.d.ts) | [reference](audio.md) |
+| `Entity.stopKinematic` | `kinematicStop` | [declaration](../judas.d.ts) | [reference](entities.md) |
 | `Entity.transform` | `setTransform`, `transform` | [declaration](../judas.d.ts) | [reference](entities.md) |
 | `Entity.valid` | `valid` | [declaration](../judas.d.ts) | [reference](entities.md) |
 | `Entity.velocity` | `setVelocity`, `velocity` | [declaration](../judas.d.ts) | [reference](entities.md) |

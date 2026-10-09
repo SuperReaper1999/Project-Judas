@@ -1,0 +1,18 @@
+{
+  "utc": "2026-10-09T01:06:24.149970+00:00",
+  "command": [
+    "build/judas_kinematic_lab_tests",
+    "--stream"
+  ],
+  "exit_code": 1,
+  "checks": 33,
+  "failures": 1,
+  "expected_failure": "incomplete v4 kinematic intent refuses before publication",
+  "normal_roundtrip_checks_passed": true,
+  "scope": "Actual WorldStreaming v4 snapshot/archive/root adoption/cold reconstruction/revisit; guard not yet applied; no GL/application or broad suite execution",
+  "source_sha256": {
+    "src/WorldStreaming.cpp": "4b92648cb226329edd60d89124f1e958da145f761fa269f8ac94c080c7592743",
+    "tests/KinematicLabTests.cpp": "d7bd3c01c15c3cdba637baaee10f2eabe06682cfdd13533fc7767fc88259a273",
+    "build/judas_kinematic_lab_tests": "7e7840358f39b8414a0834af11ec2203d0438eae31829a742cbb6f20cddb8e2c"
+  }
+}

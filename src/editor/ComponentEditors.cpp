@@ -15,6 +15,7 @@
 #include <glm/gtc/quaternion.hpp>
 
 #include "imgui.h"
+#include "imgui_internal.h"
 
 #include "AssetDatabase.h"
 #include "Project.h"
@@ -25,7 +26,7 @@
 namespace {
 const char* const kShapeNames[] = {"box", "sphere", "compound", "mesh", "terrain", "convex hull", "static triangle mesh"};
 const char* const kBodyShapeNames[] = {"box", "sphere", "compound", "(mesh: not a body shape)", "terrain", "convex hull", "static triangle mesh"};
-const char* const kMotionNames[] = {"static", "dynamic"};
+const char* const kMotionNames[] = {"static", "dynamic", "kinematic"};
 const char* const kGravityKindNames[] = {"radial", "uniform"};
 const char* const kRegionNames[] = {"sphere", "box"};
 const char* const kLightKindNames[] = {"point", "spot"};
@@ -34,7 +35,7 @@ const char* const kViewNames[] = {"third-person", "first-person"};
 
 // The inspector's asset fields: a combo over the project's assets of one
 // type (name shown, id stored), a drop target for the Asset Browser's
-// drag payload, and an honest status line for the stored id.
+// drag payload, full identity on hover, and explicit missing-file status.
 void AssetField(EditorDocument& doc, const char* label, std::string& assetId, AssetType type, bool allowNone,
                 EditorPanelState& state) {
     std::vector<std::string> labels, values;
@@ -45,7 +46,22 @@ void AssetField(EditorDocument& doc, const char* label, std::string& assetId, As
             values.push_back(id);
         }
     }
-    LabelledCombo(doc, label, assetId, labels, values, allowNone);
+    // A path needs the whole inspector row; keep its label above the selector.
+    // Override the hidden control's seed so it retains the original field ID.
+    // Popup state and existing automation still resolve the same asset field.
+    ImGui::TextWrapped("%s",label);
+    ImGui::SetNextItemWidth(-1);
+    ImGui::PushOverrideID(ImGui::GetID(label));
+    LabelledCombo(doc, "", assetId, labels, values, allowNone);
+    ImGui::PopID();
+    if(ImGui::BeginItemTooltip()){
+        ImGui::PushTextWrapPos(ImGui::GetFontSize()*35);
+        const AssetRecord* selected=state.assets?state.assets->Find(assetId):nullptr;
+        if(selected)ImGui::TextUnformatted(selected->relativePath.c_str());
+        if(!assetId.empty())ImGui::Text("Stored asset ID: %s",assetId.c_str());
+        ImGui::Text("Select a %s asset or drop one from Assets.",AssetTypeName(type));
+        ImGui::PopTextWrapPos();ImGui::EndTooltip();
+    }
     if (ImGui::BeginDragDropTarget()) {
         if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload(kAssetDragPayload)) {
             const std::string droppedId(static_cast<const char*>(payload->Data), payload->DataSize);
@@ -62,18 +78,18 @@ void AssetField(EditorDocument& doc, const char* label, std::string& assetId, As
     }
     if (assetId.empty()) return;
     const AssetRecord* record = state.assets ? state.assets->Find(assetId) : nullptr;
+    ImGui::PushTextWrapPos(0);
     if (!record) {
         ImGui::TextColored(ImVec4(1.0f, 0.4f, 0.3f, 1.0f), "  unknown asset id %s", assetId.c_str());
     } else if (record->missing) {
         ImGui::TextColored(ImVec4(1.0f, 0.6f, 0.2f, 1.0f), "  file missing: %s", record->relativePath.c_str());
-    } else {
-        ImGui::TextDisabled("  id %s", assetId.c_str());
     }
+    ImGui::PopTextWrapPos();
 }
 
 void DrawUIComponent(EditorDocument& doc,SceneObject& o,EditorPanelState& state){
     auto& u=*o.ui;AssetField(doc,"UI document",u.asset,AssetType::UI,false,state);Checkbox(doc,"Enabled",u.enabled);
-    char name[128];std::snprintf(name,sizeof(name),"%s",u.name.c_str());if(ImGui::InputText("Runtime document name",name,sizeof(name))){doc.BeginEdit();u.name=name;doc.CommitEdit();}
+    TextField(doc,"Runtime document name",u.name);
     ImGui::TextWrapped("Select the UI asset in the Asset Browser to edit its hierarchy. Runtime changes never edit this source.");
 }
 void DrawCharacter(EditorDocument& doc,SceneObject& object,EditorPanelState& state){
@@ -349,10 +365,13 @@ void DrawJoint(EditorDocument& doc, SceneObject& object, EditorPanelState&) {
 
 void DrawBody(EditorDocument& doc, SceneObject& o, EditorPanelState& state) {
     SceneBodyComponent& b = *o.body;
+    ImGui::SeparatorText("Collision and motion");
     Checkbox(doc,"Sensor (events, no response)",b.sensor);
     Checkbox(doc,"Collider enabled",b.enabled);
     if(state.project){DrawCategoryLayer(doc,"Collision layer",b.collisionLayer,state.project->Settings().classification.collision);DrawCategoryMask(doc,"Collision mask",b.collisionMask,state.project->Settings().classification.collision);}
-    Combo(doc, "Motion", b.motion, kMotionNames, 2);
+    Combo(doc, "Motion", b.motion, kMotionNames, 3);
+    ImGui::SetItemTooltip("Static holds its pose. Dynamic responds to forces and contacts. Kinematic follows explicit script targets or velocities.");
+    ImGui::SeparatorText("Collider shape");
     Combo(doc, "Collider", b.shape, kBodyShapeNames, 7);
     if(b.shape==SceneShape::ConvexHull||b.shape==SceneShape::TriangleMesh){
         AssetField(doc,"Cooked geometry",b.collisionAsset,AssetType::Collision,false,state);
@@ -370,6 +389,10 @@ void DrawBody(EditorDocument& doc, SceneObject& o, EditorPanelState& state) {
         ImGui::Text("%zu children (one body; summed mass volumes)", b.compoundBoxes.size());
         for (std::size_t i = 0; i < b.compoundBoxes.size(); ++i) {
             ImGui::PushID(static_cast<int>(i));
+            const auto key=b.compoundBoxes[i].key?b.compoundBoxes[i].key:unsigned(i+1);
+            if(!ImGui::TreeNodeEx("Child details",ImGuiTreeNodeFlags_DefaultOpen|ImGuiTreeNodeFlags_NoTreePushOnOpen,"Child %zu  (key %u)",i+1,key)){ImGui::PopID();continue;}
+            // Folding changes only layout: the child widgets keep their
+            // existing index scope and edit/undo identities.
             DragVec3(doc, "Center", b.compoundBoxes[i].localCenter, 0.005f);
             auto& child=b.compoundBoxes[i];int kind=child.type==ShapeType::Sphere?1:child.type==ShapeType::ConvexHull?2:0;const char* kinds[]={"Box","Sphere","Convex hull"};if(ImGui::Combo("Child type",&kind,kinds,3)){doc.BeginEdit();child.type=kind==1?ShapeType::Sphere:kind==2?ShapeType::ConvexHull:ShapeType::Box;if(kind==1&&child.radius<=0)child.radius=.1f;doc.CommitEdit();}
             glm::vec3 angles=glm::degrees(glm::eulerAngles(child.rotation));if(ImGui::DragFloat3("Local rotation (degrees)",&angles.x,.5f)){doc.BeginEdit();child.rotation=glm::normalize(glm::quat(glm::radians(angles)));doc.CommitEdit();}
@@ -387,38 +410,52 @@ void DrawBody(EditorDocument& doc, SceneObject& o, EditorPanelState& state) {
             doc.CommitEdit();
         }
     }
-    ImGui::Text("%zu fluid cavities (body-local boxes)", b.fluidCavities.size());
-    ImGui::PushID("fluid-cavities");
-    for (std::size_t i = 0; i < b.fluidCavities.size(); ++i) {
-        ImGui::PushID(static_cast<int>(i));
-        auto& cavity = b.fluidCavities[i];
-        DragVec3(doc, "Interior center", cavity.localCenter, 0.005f);
-        DragScalar(doc, "Interior half X", cavity.halfExtents.x, 0.005f, 0.001f, 100000.0f);
-        DragScalar(doc, "Interior half Y", cavity.halfExtents.y, 0.005f, 0.001f, 100000.0f);
-        DragScalar(doc, "Interior half Z", cavity.halfExtents.z, 0.005f, 0.001f, 100000.0f);
-        const bool remove = ImGui::SmallButton("Remove cavity");
-        ImGui::PopID();
-        if (remove) {
-            doc.BeginEdit();
-            b.fluidCavities.erase(b.fluidCavities.begin() + static_cast<std::ptrdiff_t>(i));
-            doc.CommitEdit();
-            break;
+    const bool cavitiesOpen=ImGui::TreeNodeEx("Fluid cavities",ImGuiTreeNodeFlags_NoTreePushOnOpen,"Fluid cavities (%zu)",b.fluidCavities.size());
+    if(cavitiesOpen){
+        ImGui::PushID("fluid-cavities");
+        for (std::size_t i = 0; i < b.fluidCavities.size(); ++i) {
+            ImGui::PushID(static_cast<int>(i));
+            auto& cavity = b.fluidCavities[i];
+            DragVec3(doc, "Interior center", cavity.localCenter, 0.005f);
+            DragScalar(doc, "Interior half X", cavity.halfExtents.x, 0.005f, 0.001f, 100000.0f);
+            DragScalar(doc, "Interior half Y", cavity.halfExtents.y, 0.005f, 0.001f, 100000.0f);
+            DragScalar(doc, "Interior half Z", cavity.halfExtents.z, 0.005f, 0.001f, 100000.0f);
+            const bool remove = ImGui::SmallButton("Remove cavity");
+            ImGui::PopID();
+            if (remove) {
+                doc.BeginEdit();
+                b.fluidCavities.erase(b.fluidCavities.begin() + static_cast<std::ptrdiff_t>(i));
+                doc.CommitEdit();
+                break;
+            }
         }
+        if (ImGui::SmallButton("Add fluid cavity")) {
+            doc.BeginEdit();
+            b.fluidCavities.emplace_back();
+            doc.CommitEdit();
+        }
+        ImGui::PopID();
+        if (!b.fluidCavities.empty()) ImGui::TextDisabled("Bounds must describe the resolved interior, up to its opening.");
     }
-    if (ImGui::SmallButton("Add fluid cavity")) {
-        doc.BeginEdit();
-        b.fluidCavities.emplace_back();
-        doc.CommitEdit();
-    }
-    ImGui::PopID();
-    if (!b.fluidCavities.empty()) ImGui::TextDisabled("Bounds must describe the resolved interior, up to its opening.");
+    if(b.motion!=SceneBodyMotion::Static)ImGui::SeparatorText("Mass and initial motion");
     if (b.motion == SceneBodyMotion::Dynamic) {
         DragScalar(doc, "Mass (kg)", b.mass, 0.1f, 0.001f, 1.0e30f);
         DragVec3(doc, "Initial velocity", b.initialLinearVelocity, 0.05f);
+        ImGui::SetItemTooltip("World COM velocity in metres per second at Play start.");
+        DragVec3(doc,"Initial angular velocity (world rad/s)",b.initialAngularVelocity,.05f);
         Checkbox(doc, "Pickable (G/H)", b.pickable);
         Checkbox(doc, "Managed by fidelity policy (M29)", b.managed);
         if (!b.managed) ImGui::TextDisabled("Unmanaged: always fully simulated; the policy never touches it.");
     }
+    if(b.motion==SceneBodyMotion::Kinematic){
+        DragScalar(doc,"Transition mass (kg)",b.mass,.1f,.001f,1e30f);
+        ImGui::SetItemTooltip("Mass used if this ordinary body changes to dynamic authority. Kinematic motion itself has zero inverse mass.");
+        DragVec3(doc,"Prescribed COM velocity (world m/s)",b.initialLinearVelocity,.05f);
+        DragVec3(doc,"Prescribed angular velocity (world rad/s)",b.initialAngularVelocity,.05f);
+        ImGui::TextWrapped("Scripts command this body's fixed-step motion. Targets and persistent velocities use the normal Entity API. Gravity and impulses do not move it; dynamic neighbours respond through contacts.");
+        if(b.shape==SceneShape::Terrain||b.shape==SceneShape::TriangleMesh)ImGui::TextColored(ImVec4(1,.3f,.2f,1),"Terrain and concave triangle surfaces must remain static.");
+    }
+    ImGui::SeparatorText("Surface response");
     AssetField(doc,"Physical material (empty = legacy)",b.physicalMaterial,AssetType::PhysicalMaterial,true,state);
     if(!b.physicalMaterial.empty())Checkbox(doc,"Override shared physical coefficients",b.physicalMaterialOverride);
     if(b.physicalMaterial.empty()||b.physicalMaterialOverride){
@@ -687,13 +724,7 @@ const std::vector<ComponentEditor>& ComponentEditorRegistry() {
 void DrawTransformEditor(EditorDocument& doc, SceneObject& o) {
     if (!ImGui::CollapsingHeader("Transform", ImGuiTreeNodeFlags_DefaultOpen)) return;
     DragVec3(doc, "Position", o.transform.position);
-    // Rotation is edited as yaw/pitch/roll degrees for humans; the
-    // authored value stays a quaternion.
-    glm::vec3 euler = glm::degrees(glm::eulerAngles(glm::normalize(o.transform.rotation)));
-    if (ImGui::DragFloat3("Rotation (deg)", &euler.x, 0.5f, 0.0f, 0.0f, "%.3g")) {
-        o.transform.rotation = glm::normalize(glm::quat(glm::radians(euler)));
-    }
-    TrackEdit(doc);
+    DragRotation(doc, "Rotation (deg)", o.transform.rotation);
     DragVec3(doc, "Scale", o.transform.scale, 0.01f);
     ImGui::TextDisabled("Scale applies to mesh rendering only.");
 }
@@ -708,10 +739,14 @@ std::string ComponentIndicators(const SceneObject& object) {
 
 void DrawCategoryLayer(EditorDocument& doc,const char* label,unsigned& value,const CategoryRegistry& registry){
     auto it=registry.names.find(value);const std::string preview=it==registry.names.end()?"[unregistered ID "+std::to_string(value)+"]":it->second;
-    if(ImGui::BeginCombo(label,preview.c_str())){
+    ImGui::TextWrapped("%s",label);
+    ImGui::SetNextItemWidth(-1);
+    ImGui::PushOverrideID(ImGui::GetID(label));
+    if(ImGui::BeginCombo("",preview.c_str())){
         for(const auto& [id,name]:registry.names)if(ImGui::Selectable(name.c_str(),id==value)){doc.BeginEdit();value=id;doc.CommitEdit();}
         ImGui::EndCombo();
     }
+    ImGui::PopID();
 }
 void DrawCategoryMask(EditorDocument& doc,const char* label,CategoryMask& mask,const CategoryRegistry& registry,bool allowAll){
     if(ImGui::TreeNode(label)){

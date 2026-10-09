@@ -1,0 +1,14 @@
+CMakeLists.txt
+README.md
+docs/ARCHITECTURE.md
+docs/EDITOR_GUIDE.md
+docs/M71.md
+src/editor/EditorApplication.cpp
+src/editor/EditorApplication.h
+src/editor/EditorCamera.cpp
+src/editor/EditorCamera.h
+src/editor/EditorPanels.cpp
+tests/EditorNavigationTests.cpp
+src/editor/EditorPicking.cpp
+src/editor/EditorPicking.h
+tests/EditorPickingTests.cpp

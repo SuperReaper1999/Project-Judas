@@ -38,7 +38,7 @@ void ResolveCharacterSlide(PhysicsWorld& physics,glm::vec3& center,const glm::qu
         auto leftover=remaining*(1-fraction);float inward=glm::dot(leftover,hit.normal);
         if(inward<0)leftover-=hit.normal*inward;
         remaining=leftover;
-        if(!legacyPush){auto surface=physics.GetLinearVelocity(hit.hitBody);float into=glm::dot(velocity-surface,hit.normal);if(into<0)velocity-=hit.normal*into;}
+        if(!legacyPush){auto surface=physics.GetPointVelocity(hit.hitBody,hit.point);float into=glm::dot(velocity-surface,hit.normal);if(into<0)velocity-=hit.normal*into;}
     }
 }
 void CharacterMotor::Reset(glm::vec3 p,glm::quat q){position=p;orientation=glm::normalize(q);velocity=acceleration=glm::vec3(0);result={};followingSupport=false;}
@@ -61,9 +61,8 @@ void CharacterMotor::Step(PhysicsWorld& physics,const GravityField& gravity,floa
     // Departure is separation from contact, not ascent against gravity. A
     // ramp tangent may have a large gravity-up component and still be supported.
     glm::vec3 supportMotion=previous.supportVelocity;
-    if(ground.hit&&physics.IsDynamicBody(ground.hitBody)){
-        const auto t=physics.GetPreviousTransform(ground.hitBody);
-        supportMotion=physics.GetLinearVelocity(ground.hitBody)+glm::cross(physics.GetAngularVelocity(ground.hitBody),ground.point-t.position);
+    if(ground.hit&&(physics.IsDynamicBody(ground.hitBody)||physics.IsKinematicBody(ground.hitBody))){
+        supportMotion=physics.GetPreviousPointVelocity(ground.hitBody,ground.point);
     }
     const auto departureNormal=ground.hit?ground.normal:(previous.supported?previous.supportNormal:up);
     const auto netAcceleration=result.gravity*settings.gravityScale+acceleration;
@@ -87,13 +86,13 @@ void CharacterMotor::Step(PhysicsWorld& physics,const GravityField& gravity,floa
             center=p;ground.hit=true;ground.hitBody=body;ground.normal=n;ground.distance=settings.skin;supported=true;result.stepped=true;}}
     glm::vec3 carryVelocity(0);
     if(supported){followingSupport=true;supportOrigin=center;center+=up*(settings.skin-ground.distance);
-        if(physics.IsDynamicBody(ground.hitBody)){
+        if(physics.IsDynamicBody(ground.hitBody)||physics.IsKinematicBody(ground.hitBody)){
             auto a=physics.GetPreviousTransform(ground.hitBody),b=physics.GetTransform(ground.hitBody);
             auto target=b.position+b.rotation*(glm::inverse(a.rotation)*(center-a.position));
             // Sweep carried motion too: support cannot carry the capsule through a wall.
             auto carryFilter=filter;carryFilter.ignoredBodies.push_back(ground.hitBody);bool blocked=false;auto cv=velocity;
             ResolveCharacterSlide(physics,center,orientation,target-center,cv,settings,&carryFilter,false,false,blocked);result.collided|=blocked;
-            carryVelocity=physics.GetLinearVelocity(ground.hitBody)+glm::cross(physics.GetAngularVelocity(ground.hitBody),center-b.position);
+            carryVelocity=physics.GetPointVelocity(ground.hitBody,center);
         }
         velocity+=carryVelocity-previous.supportVelocity;
         float inward=glm::dot(velocity-carryVelocity,ground.normal);if(inward<0)velocity-=ground.normal*inward;

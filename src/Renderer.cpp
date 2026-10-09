@@ -632,6 +632,10 @@ bool Renderer::Init() {
     // given uniform samples from.
     glUseProgram(m_shaderProgram);
     glUniform1i(m_uTexture, 0);
+    // Sampler types must use distinct units even when uSkinned is false.
+    // Initialize this before the first ordinary draw; a project need not
+    // render a skeleton first to make its boxes and spheres valid GL draws.
+    glUniform1i(m_uBones, 15);
     glUniform1i(m_uShadowMapSampler[0], 1);
     glUniform1i(m_uShadowMapSampler[1], 2);
     glUniform1i(m_uShadowMapSampler[2], 3);
@@ -682,6 +686,8 @@ bool Renderer::Init() {
     m_uShadowModel = glGetUniformLocation(m_shadowShaderProgram, "uModel");
     m_uShadowSkinned=glGetUniformLocation(m_shadowShaderProgram,"uSkinned");m_uShadowBones=glGetUniformLocation(m_shadowShaderProgram,"uBones");
     m_uShadowLightViewProj = glGetUniformLocation(m_shadowShaderProgram, "uLightViewProj");
+    glUseProgram(m_shadowShaderProgram);
+    glUniform1i(m_uShadowBones, 15);
 
     // One depth-texture/FBO pair per shadow slot (src/Light.h), created
     // once and reused every frame — never allocated/freed per-light or

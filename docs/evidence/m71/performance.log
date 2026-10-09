@@ -1,0 +1,10 @@
+PHASE commanded=0 step=60 whole_fixed_ms=0.112122 physics_ms=0.008678 contacts=0 impacts=0 queries=0 ccd_iterations=0
+PHASE commanded=0 step=180 whole_fixed_ms=0.184783 physics_ms=0.052854 contacts=8 impacts=0 queries=0 ccd_iterations=0
+PHASE commanded=0 step=181 whole_fixed_ms=0.157074 physics_ms=0.044644 contacts=8 impacts=0 queries=0 ccd_iterations=0
+PHASE commanded=0 step=240 whole_fixed_ms=0.115937 physics_ms=0.008723 contacts=0 impacts=0 queries=0 ccd_iterations=0
+PERF commanded=0 samples=360 bodies=14 motors=4 median_ms=0.117424 p95_ms=0.287661 max_ms=8.326478 first_impact_step=-1 contact_points_total=1848 impact_events_total=0 impact_queries_total=0
+PHASE commanded=1 step=60 whole_fixed_ms=0.335768 physics_ms=0.190606 contacts=32 impacts=1 queries=2 ccd_iterations=2
+PHASE commanded=1 step=180 whole_fixed_ms=0.28898 physics_ms=0.149008 contacts=32 impacts=0 queries=0 ccd_iterations=0
+PHASE commanded=1 step=181 whole_fixed_ms=0.321442 physics_ms=0.124447 contacts=32 impacts=0 queries=0 ccd_iterations=0
+PHASE commanded=1 step=240 whole_fixed_ms=0.392627 physics_ms=0.185785 contacts=32 impacts=0 queries=0 ccd_iterations=0
+PERF commanded=1 samples=360 bodies=14 motors=4 median_ms=0.282159 p95_ms=0.524624 max_ms=0.749339 first_impact_step=60 contact_points_total=8820 impact_events_total=1 impact_queries_total=3

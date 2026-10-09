@@ -4,11 +4,44 @@
 
 class Window;
 
+enum class EditorCameraGesture { None, Look, Pan };
+
+// Viewport press ownership is retained until release. A press begun over a
+// panel cannot become a camera drag by moving out of that panel while held.
+struct EditorCameraGestureInput {
+    bool focused = true;
+    bool canStart = true;
+    bool cancel = false;
+    bool rightDown = false;
+    bool middleDown = false;
+    bool leftDown = false;
+};
+
+class EditorCameraGestureState {
+public:
+    void Update(const EditorCameraGestureInput& input);
+    void Cancel();
+    EditorCameraGesture Active() const { return m_active; }
+
+private:
+    EditorCameraGesture m_active = EditorCameraGesture::None;
+    bool m_rightWasDown = false;
+    bool m_middleWasDown = false;
+    bool m_waitForRelease = false;
+};
+
+// Wheel motion is instantaneous rather than a captured gesture. Reuse the
+// viewport/UI eligibility from the drag controller, and leave wheel input
+// with a panel, text field, active drag or the running game.
+bool EditorCameraCanDolly(const EditorCameraGestureInput& input, EditorCameraGesture active, bool editing);
+
 // Milestone 28: the editor's free-flying viewport camera. Independent of
 // any player: it has no gravity, no collision and no "up" beyond its own
 // authored orientation, so it works the same over a flat floor or around
 // a planet. Right mouse button held: mouse look + WASD/QE fly (Shift for
-// speed). Left click is left for selection (see EditorApplication).
+// speed). Middle mouse drag pans in the camera's view plane; wheel motion
+// dollies toward/away from the focus. Left click is left for selection
+// (see EditorApplication).
 class EditorCamera {
 public:
     void Update(const Window& window, float deltaSeconds, bool lookActive, int mouseDeltaX, int mouseDeltaY,
@@ -20,6 +53,21 @@ public:
     glm::vec3 Forward() const;
     glm::vec3 Right() const;
     glm::vec3 Up() const;
+    glm::vec3 Focus() const { return m_position + Forward() * m_focusDistance; }
+    float FocusDistance() const { return m_focusDistance; }
+
+    // Drag the viewed scene with the pointer. The screen-space scale is
+    // derived from this perspective camera at its most recent focus depth;
+    // camera and focus translate equally, without changing orientation.
+    void Pan(int mouseDeltaX, int mouseDeltaY, int viewportHeight);
+
+    // Positive wheel steps approach the current focus; negative steps retreat.
+    // Fractional steps scale the remaining distance exponentially (0.8 per
+    // step), keeping the focus fixed and preserving orientation and lens.
+    // Normal distance is bounded to 0.1..5000; a farther existing frame may
+    // approach smoothly but cannot retreat farther. Zero/nonfinite input is
+    // ignored, and finite extremes saturate without crossing the focus.
+    void Dolly(float wheelSteps);
 
     // Moves the camera to look at `point` from `distance` away along its
     // current forward direction.
@@ -38,4 +86,5 @@ private:
     float m_yawDegrees = 0.0f;
     float m_pitchDegrees = -30.0f;
     float m_moveSpeed = 12.0f;
+    float m_focusDistance = 8.0f;
 };

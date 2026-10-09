@@ -134,7 +134,8 @@ void WriteObject(CanonicalWriter& w, const SceneObject& o) {
     if (o.body) {
         w.Context(object + " body");
         const auto& b = *o.body;
-        w.Enum(b.motion, 1, "body motion"); w.Enum(b.shape, 6, "body shape");
+        w.Enum(b.motion, 2, "body motion"); w.Enum(b.shape, 6, "body shape");
+        if(b.motion!=SceneBodyMotion::Static&&(b.shape==SceneShape::Terrain||b.shape==SceneShape::TriangleMesh))w.Fail("terrain and concave triangle surfaces must remain static");
         w.Vector(b.halfExtents); w.Number(b.radius); w.Text(b.terrainSurface);
         w.Number(b.mass); w.Number(b.friction); w.Number(b.restitution); w.Vector(b.initialLinearVelocity);
         w.Boolean(b.pickable); w.Boolean(b.managed); w.U64(b.compoundBoxes.size());
@@ -424,7 +425,7 @@ bool ComputeSceneFingerprint(const Scene& scene, std::string& outFingerprint,
     if(joints){w.Text("Judas.RigidJoints.1");w.U64(joints);for(const auto& o:scene.Objects())if(o.joint){const auto& j=*o.joint;const auto& s=j.settings;
         if(!ValidJointSettings(s))w.Fail("invalid joint settings");
         const auto* a=scene.Find(j.bodyA);const auto* b=scene.Find(j.bodyB);
-        if(!a||!a->body||(j.bodyB&&(!b||!b->body))||j.bodyA==j.bodyB||(a&&a->body&&a->body->motion==SceneBodyMotion::Static&&(!b||!b->body||b->body->motion==SceneBodyMotion::Static)))w.Fail("invalid joint body reference");
+        if(!a||!a->body||(j.bodyB&&(!b||!b->body))||j.bodyA==j.bodyB||(a&&a->body&&a->body->motion!=SceneBodyMotion::Dynamic&&(!b||!b->body||b->body->motion!=SceneBodyMotion::Dynamic)))w.Fail("invalid joint body reference");
         w.U64(o.id);w.U64(j.bodyA);w.U64(j.bodyB);w.U32(int(s.type));w.Boolean(s.enabled);w.Vector(s.anchorA);w.Vector(s.anchorB);
         w.Quaternion(s.frameA);w.Quaternion(s.frameB);w.Boolean(s.limits);w.Boolean(s.motor);w.Boolean(s.spring);
         w.Number(s.lower);w.Number(s.upper);w.Number(s.speed);w.Number(s.maxForce);w.Number(s.rest);w.Number(s.stiffness);w.Number(s.damping);
@@ -436,8 +437,10 @@ bool ComputeSceneFingerprint(const Scene& scene, std::string& outFingerprint,
     }
     for(const auto& o:scene.Objects())if(o.body&&!o.body->physicalMaterial.empty()){w.Text("Judas.PhysicalMaterial.1");w.U64(o.id);w.Text(o.body->physicalMaterial);}
     for(const auto& o:scene.Objects())if(o.body&&o.body->physicalMaterialOverride){w.Text("Judas.PhysicalMaterialOverride.1");w.U64(o.id);w.U64(1);}
+    // Optional authored angular motion does not rewrite legacy fingerprints.
+    for(const auto& o:scene.Objects())if(o.body&&o.body->initialAngularVelocity!=glm::vec3(0)){w.Text("Judas.BodyAngularVelocity.1");w.U64(o.id);w.Vector(o.body->initialAngularVelocity);}
     bool collisionExtension=false;for(const auto& o:scene.Objects())if(o.body){const auto& b=*o.body;collisionExtension|=!b.collisionAsset.empty()||b.shape==SceneShape::ConvexHull||b.shape==SceneShape::TriangleMesh;for(auto& c:b.compoundBoxes)collisionExtension|=c.rotation!=glm::quat(1,0,0,0)||c.type!=ShapeType::Box||!c.assetId.empty()||c.key;}
-    if(collisionExtension){w.Text("Judas.CookedCollision.1");for(const auto& o:scene.Objects())if(o.body){const auto& b=*o.body;w.U64(o.id);w.Text(b.collisionAsset);w.U64(b.compoundBoxes.size());for(const auto& c:b.compoundBoxes){w.Quaternion(c.rotation);w.Enum(c.type,5,"compound child type");w.Number(c.radius);w.Text(c.assetId);w.U32(c.key);if(c.type!=ShapeType::Box&&c.type!=ShapeType::Sphere&&c.type!=ShapeType::ConvexHull)w.Fail("unsupported compound child");if(c.type==ShapeType::Sphere&&!(c.radius>0))w.Fail("compound sphere radius must be positive");if(c.type==ShapeType::ConvexHull&&c.assetId.empty())w.Fail("compound hull requires cooked asset");}if((b.shape==SceneShape::ConvexHull||b.shape==SceneShape::TriangleMesh||!b.collisionAsset.empty()||std::any_of(b.compoundBoxes.begin(),b.compoundBoxes.end(),[](const CompoundBox& c){return c.rotation!=glm::quat(1,0,0,0)||c.type!=ShapeType::Box;}))&&o.transform.scale!=glm::vec3(1))w.Fail("cooked collision instance requires unit scale; bake source scale");if(b.shape==SceneShape::TriangleMesh&&(b.motion==SceneBodyMotion::Dynamic||b.sensor))w.Fail("concave triangle surface cannot be dynamic or volume sensor");}}
+    if(collisionExtension){w.Text("Judas.CookedCollision.1");for(const auto& o:scene.Objects())if(o.body){const auto& b=*o.body;w.U64(o.id);w.Text(b.collisionAsset);w.U64(b.compoundBoxes.size());for(const auto& c:b.compoundBoxes){w.Quaternion(c.rotation);w.Enum(c.type,5,"compound child type");w.Number(c.radius);w.Text(c.assetId);w.U32(c.key);if(c.type!=ShapeType::Box&&c.type!=ShapeType::Sphere&&c.type!=ShapeType::ConvexHull)w.Fail("unsupported compound child");if(c.type==ShapeType::Sphere&&!(c.radius>0))w.Fail("compound sphere radius must be positive");if(c.type==ShapeType::ConvexHull&&c.assetId.empty())w.Fail("compound hull requires cooked asset");}if((b.shape==SceneShape::ConvexHull||b.shape==SceneShape::TriangleMesh||!b.collisionAsset.empty()||std::any_of(b.compoundBoxes.begin(),b.compoundBoxes.end(),[](const CompoundBox& c){return c.rotation!=glm::quat(1,0,0,0)||c.type!=ShapeType::Box;}))&&o.transform.scale!=glm::vec3(1))w.Fail("cooked collision instance requires unit scale; bake source scale");if(b.shape==SceneShape::TriangleMesh&&(b.motion!=SceneBodyMotion::Static||b.sensor))w.Fail("concave triangle surface cannot be dynamic or volume sensor");}}
     if (!w.Error().empty()) { outError = w.Error(); return false; }
     outFingerprint = SceneFingerprintSha256(w.Bytes());
     return true;

@@ -54,8 +54,9 @@ bool InteractivePlay::SaveWorldStateNow(std::string& outMessage) {
         outMessage = "No world-state path for this scene (unsaved scene?)";
         return false;
     }
-    const WorldState state = CaptureWorldState(m_session.World());
     std::string error;
+    if(!CanCaptureLegacyWorldState(m_session.World(),error)){outMessage="Save failed: "+error;return false;}
+    const WorldState state = CaptureWorldState(m_session.World());
     if (!SaveWorldStateToFile(state, m_worldStatePath, error)) {
         outMessage = "Save failed: " + error;
         return false;

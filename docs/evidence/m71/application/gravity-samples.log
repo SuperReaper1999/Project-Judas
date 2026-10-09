@@ -1,0 +1,9 @@
+libEGL warning: Not allowed to force software rendering when API explicitly selects a hardware device.
+Renderer fragment texture units: 32 (material path uses 12)
+World state: /home/conner/Documents/GitHub/Project-Judas/projects/kinematic_lab/Saves/main.judasstate (none saved)
+Project: Kinematic Lab (/home/conner/Documents/GitHub/Project-Judas/projects/kinematic_lab/kinematic_lab.judasproj)
+Scene: M71 / ordinary kinematic lab (/home/conner/Documents/GitHub/Project-Judas/projects/kinematic_lab/Scenes/main.judas)
+World origin (m): 0.000, 0.000, 0.000
+sample,6.00000000,1.29999995,-5.00000000,0.00000000,-9.81000042,0.00000000
+sample,13.00000000,2.00000000,-4.00000000,-9.81000233,0.00000191,0.00000000
+step,time,posX,posY,posZ,upX,upY,upZ,grounded,velX,velY,velZ,gravX,gravY,gravZ,controlled,frame,steps,paused,obj0PosX,obj0PosY,obj0PosZ,obj0VelX,obj0VelY,obj0VelZ,obj1PosX,obj1PosY,obj1PosZ,obj1VelX,obj1VelY,obj1VelZ,obj2PosX,obj2PosY,obj2PosZ,obj2VelX,obj2VelY,obj2VelZ,obj3PosX,obj3PosY,obj3PosZ,obj3VelX,obj3VelY,obj3VelZ,obj4PosX,obj4PosY,obj4PosZ,obj4VelX,obj4VelY,obj4VelZ,obj5PosX,obj5PosY,obj5PosZ,obj5VelX,obj5VelY,obj5VelZ,obj6PosX,obj6PosY,obj6PosZ,obj6VelX,obj6VelY,obj6VelZ,obj7PosX,obj7PosY,obj7PosZ,obj7VelX,obj7VelY,obj7VelZ,obj8PosX,obj8PosY,obj8PosZ,obj8VelX,obj8VelY,obj8VelZ

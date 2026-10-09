@@ -94,6 +94,13 @@ export class Entity {
  set velocity(value){call('setVelocity',this.id,value)}
  get angularVelocity(){return call('angularVelocity',this.id)}
  set angularVelocity(value){call('setAngularVelocity',this.id,value)}
+ get motionType(){return call('motionType',this.id)}
+ setMotionType(type,options={}){return call('motionTypeSet',this.id,type,options)}
+ moveKinematic(target,seconds=0){return call('kinematicTarget',this.id,target,seconds)}
+ setKinematicVelocity(linear,angular={x:0,y:0,z:0}){return call('kinematicVelocity',this.id,linear,angular)}
+ stopKinematic(){return call('kinematicStop',this.id)}
+ get kinematicMotion(){return call('kinematicMotion',this.id)}
+ pointVelocity(point){return call('pointVelocity',this.id,point)}
  playAudio(){return call('playAudio',this.id)}
  stopAudio(){return call('stopAudio',this.id)}
  pauseAudio(){return call('pauseAudio',this.id)}
@@ -1139,7 +1146,54 @@ JSValue ScriptSystem::Impl::Native(JSContext* c,JSValueConst,int argc,JSValueCon
             e.pool.settings=settings;return JS_TRUE;}return JS_FALSE;}
     if(op=="camera"&&!JS_IsBool(arg(2)))return JS_ThrowTypeError(c,"camera enabled must be boolean");
     if(op=="camera"){for(auto& camera:world.PresentationCameras())if(camera.id==id){camera.settings.enabled=JS_ToBool(c,arg(2));return JS_TRUE;}return JS_FALSE;}
-    auto body=world.RuntimeBody(id);if(!body.IsValid()||!world.Physics().IsDynamicBody(body))return JS_ThrowTypeError(c,"entity has no active dynamic body");
+    auto body=world.RuntimeBody(id);
+    if(op=="motionType"){
+        if(!body.IsValid())return JS_NULL;
+        const auto mode=world.Physics().GetMotionType(body);
+        return JS_NewString(c,mode==BodyMotionType::Static?"static":mode==BodyMotionType::Dynamic?"dynamic":"kinematic");
+    }
+    if(op=="motionTypeSet"){
+        if(s->inPresentation)return JS_ThrowTypeError(c,"body authority cannot change during presentationUpdate");
+        const auto type=String(c,arg(2));SceneBodyMotion mode;
+        if(type=="static")mode=SceneBodyMotion::Static;else if(type=="dynamic")mode=SceneBodyMotion::Dynamic;else if(type=="kinematic")mode=SceneBodyMotion::Kinematic;
+        else return JS_ThrowTypeError(c,"motion type must be static, dynamic or kinematic");
+        auto options=arg(3);if(!KnownOptions(c,options,{"preserveVelocity"}))return JS_ThrowTypeError(c,"authority options accept preserveVelocity only");
+        auto preserve=JS_GetPropertyStr(c,options,"preserveVelocity");const bool valid=JS_IsUndefined(preserve)||JS_IsBool(preserve);const bool retain=JS_IsBool(preserve)&&JS_ToBool(c,preserve);JS_FreeValue(c,preserve);
+        if(!valid)return JS_ThrowTypeError(c,"preserveVelocity must be boolean");
+        std::string error;
+        if(!world.SetRuntimeMotionType(id,mode,retain,error))return JS_ThrowTypeError(c,"authority change: %s",error.c_str());
+        return JS_TRUE;
+    }
+    if(op=="pointVelocity"){
+        glm::vec3 point;if(!body.IsValid()||!ReadVec(c,arg(2),point))return JS_ThrowTypeError(c,"live body and finite world point required");
+        return Vec(c,world.Physics().GetPointVelocity(body,point));
+    }
+    if(op=="kinematicMotion"){
+        KinematicMotionState state;if(!world.Physics().GetKinematicMotion(body,state))return JS_NULL;
+        auto result=JS_NewObject(c);JS_SetPropertyStr(c,result,"control",JS_NewString(c,state.control==KinematicControl::Target?"target":state.control==KinematicControl::Velocity?"velocity":"stopped"));
+        auto target=JS_NewObject(c);JS_SetPropertyStr(c,target,"position",Vec(c,state.target.position));auto q=Vec(c,{state.target.rotation.x,state.target.rotation.y,state.target.rotation.z});JS_SetPropertyStr(c,q,"w",JS_NewFloat64(c,state.target.rotation.w));JS_SetPropertyStr(c,target,"rotation",q);JS_SetPropertyStr(c,result,"target",target);
+        JS_SetPropertyStr(c,result,"linearVelocity",Vec(c,state.linearVelocity));JS_SetPropertyStr(c,result,"angularVelocity",Vec(c,state.angularVelocity));
+        JS_SetPropertyStr(c,result,"remainingSeconds",JS_NewFloat64(c,state.remainingSeconds));JS_SetPropertyStr(c,result,"targetNextStep",JS_NewBool(c,state.targetNextStep));return result;
+    }
+    if(op=="kinematicTarget"||op=="kinematicVelocity"||op=="kinematicStop"){
+        if(s->inPresentation)return JS_ThrowTypeError(c,"kinematic commands cannot be published during presentationUpdate");
+        if(!world.Physics().IsKinematicBody(body))return JS_ThrowTypeError(c,"entity has no active kinematic body");
+        bool accepted=false;
+        if(op=="kinematicTarget"){
+            if(!KnownOptions(c,arg(2),{"position","rotation"}))return JS_ThrowTypeError(c,"kinematic target requires position/rotation only");
+            SceneTransform target;auto p=JS_GetPropertyStr(c,arg(2),"position"),q=JS_GetPropertyStr(c,arg(2),"rotation");const bool complete=!JS_IsUndefined(p)&&!JS_IsUndefined(q);JS_FreeValue(c,p);JS_FreeValue(c,q);
+            double seconds=0;if(!complete||!readTransform(arg(2),target)||JS_ToFloat64(c,&seconds,arg(3))||!std::isfinite(seconds)||seconds<0||seconds>60)return JS_ThrowTypeError(c,"complete finite target and seconds in [0,60] required");
+            accepted=world.Physics().MoveKinematic(body,{target.position,glm::normalize(target.rotation)},float(seconds));
+        }else if(op=="kinematicVelocity"){
+            glm::vec3 linear,angular;if(!ReadVec(c,arg(2),linear)||!ReadVec(c,arg(3),angular))return JS_ThrowTypeError(c,"finite world COM m/s and world angular rad/s required");
+            accepted=world.Physics().SetKinematicVelocity(body,linear,angular);
+        }else accepted=world.Physics().StopKinematic(body);
+        if(!accepted)return JS_ThrowTypeError(c,"unsupported or unusable kinematic command");
+        return JS_TRUE;
+    }
+    if((op=="velocity"||op=="angularVelocity")&&body.IsValid()&&(world.Physics().IsDynamicBody(body)||world.Physics().IsKinematicBody(body)))
+        return Vec(c,op=="velocity"?world.Physics().GetLinearVelocity(body):world.Physics().GetAngularVelocity(body));
+    if(!body.IsValid()||!world.Physics().IsDynamicBody(body))return JS_ThrowTypeError(c,"entity has no active dynamic body");
     if(op=="mass")return JS_NewFloat64(c,world.Physics().GetMass(body));
     if(op=="inertiaWorld"){const auto matrix=world.Physics().GetInertiaWorld(body);auto result=JS_NewObject(c);JS_SetPropertyStr(c,result,"x",Vec(c,matrix[0]));JS_SetPropertyStr(c,result,"y",Vec(c,matrix[1]));JS_SetPropertyStr(c,result,"z",Vec(c,matrix[2]));return result;}
     if(op=="velocity")return Vec(c,world.Physics().GetLinearVelocity(body));

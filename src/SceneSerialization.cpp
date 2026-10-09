@@ -223,7 +223,7 @@ void WriteObject(Writer& w, const SceneObject& o) {
     }
     if (o.body) {
         const SceneBodyComponent& b = *o.body;
-        w.Line("body", std::string(b.motion == SceneBodyMotion::Static ? "static" : "dynamic") +
+        w.Line("body", std::string(b.motion == SceneBodyMotion::Static ? "static" : b.motion == SceneBodyMotion::Kinematic ? "kinematic" : "dynamic") +
                            " " + ShapeName(b.shape));
         if(b.sensor) w.Line("body.sensor","true");
         if(!b.enabled) w.Line("body.enabled","false");
@@ -237,6 +237,7 @@ void WriteObject(Writer& w, const SceneObject& o) {
         w.Line("body.friction", F(b.friction));
         w.Line("body.restitution", F(b.restitution));
         w.Line("body.initial-velocity", V(b.initialLinearVelocity));
+        if(b.initialAngularVelocity!=glm::vec3(0))w.Line("body.initial-angular-velocity",V(b.initialAngularVelocity));
         w.Line("body.pickable", b.pickable ? "true" : "false");
         w.Line("body.managed", b.managed ? "true" : "false");
         w.Line("body.compound-count", std::to_string(b.compoundBoxes.size()));
@@ -836,7 +837,8 @@ bool ParseObject(Reader& reader, const std::vector<Token>& header, const Block& 
         if (!h) return false;
         if ((*h)[0].text == "static") b.motion = SceneBodyMotion::Static;
         else if ((*h)[0].text == "dynamic") b.motion = SceneBodyMotion::Dynamic;
-        else return reader.Fail("body motion must be static or dynamic");
+        else if ((*h)[0].text == "kinematic") b.motion = SceneBodyMotion::Kinematic;
+        else return reader.Fail("body motion must be static, dynamic or kinematic");
         if (!ParseShape((*h)[1], b.shape) || b.shape == SceneShape::Mesh) {
             return reader.Fail("body shape must be box, sphere, compound or terrain");
         }
@@ -848,6 +850,7 @@ bool ParseObject(Reader& reader, const std::vector<Token>& header, const Block& 
         if (!p.Float("body.friction", b.friction)) return false;
         if (!p.Float("body.restitution", b.restitution)) return false;
         if (!p.Vec3("body.initial-velocity", b.initialLinearVelocity)) return false;
+        if(p.Has("body.initial-angular-velocity")&&!p.Vec3("body.initial-angular-velocity",b.initialAngularVelocity))return false;
         if (!p.Bool("body.pickable", b.pickable)) return false;
         if (!p.Bool("body.managed", b.managed)) return false;
         int compoundCount = 0;
@@ -891,14 +894,14 @@ bool ParseObject(Reader& reader, const std::vector<Token>& header, const Block& 
         if (b.shape == SceneShape::Terrain && b.terrainSurface.empty()) {
             return reader.Fail("a terrain body needs a body.terrain surface identifier");
         }
-        if (b.motion == SceneBodyMotion::Dynamic && !(b.mass > 0.0f)) {
-            return reader.Fail("a dynamic body needs a positive body.mass");
+        if (b.motion != SceneBodyMotion::Static && !(b.mass > 0.0f)) {
+            return reader.Fail("a moving body needs a positive body.mass for authority changes");
         }
-        if (b.motion == SceneBodyMotion::Dynamic && b.shape == SceneShape::Terrain) {
+        if (b.motion != SceneBodyMotion::Static && b.shape == SceneShape::Terrain) {
             return reader.Fail("terrain bodies must be static");
         }
         if((b.shape==SceneShape::ConvexHull||b.shape==SceneShape::TriangleMesh)&&b.collisionAsset.empty())return reader.Fail("cooked body requires body.collision-asset");
-        if(b.shape==SceneShape::TriangleMesh&&(b.motion==SceneBodyMotion::Dynamic||b.sensor))return reader.Fail("triangle mesh is static surface, not dynamic body or volume sensor");
+        if(b.shape==SceneShape::TriangleMesh&&(b.motion!=SceneBodyMotion::Static||b.sensor))return reader.Fail("triangle mesh is static surface, not moving body or volume sensor");
         o.body = b;
     } else if (p.Has("body.compound-count") || !p.CompoundBoxes().empty() ||
                p.Has("body.fluid-cavity-count") || !p.FluidCavities().empty()) {
@@ -1220,7 +1223,7 @@ bool LoadSceneFromString(const std::string& text, Scene& outScene, std::string& 
             return reader.Fail("camera texture requires a box, sphere or mesh and no disk texture");
     }
     for(const auto& object:scene.Objects())if(object.joint){const auto& j=*object.joint;const auto* a=scene.Find(j.bodyA);const auto* b=scene.Find(j.bodyB);
-        if(!a||!a->body||(j.bodyB&&(!b||!b->body))||(a->body->motion==SceneBodyMotion::Static&&(!b||b->body->motion==SceneBodyMotion::Static)))return reader.Fail("joint requires existing bodies and at least one dynamic body");}
+        if(!a||!a->body||(j.bodyB&&(!b||!b->body))||(a->body->motion!=SceneBodyMotion::Dynamic&&(!b||b->body->motion!=SceneBodyMotion::Dynamic)))return reader.Fail("joint requires existing bodies and at least one dynamic body");}
     if (!ValidateHierarchy(scene, outError)) return false;
     outScene = std::move(scene);
     return true;

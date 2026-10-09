@@ -4,14 +4,16 @@
 
 - Keep top-level modules declarative. Store per-instance behaviour on `this`, not
   mutable module globals unless sharing is intentional.
-- Use `fixedUpdate` for authoritative intent/forces and `update` for frame-relative
-  look/presentation. Use `uiUpdate` for menus that must run while gameplay pauses.
+- Use `fixedUpdate` for authoritative intent/forces, `update` for frame-relative
+  look input, and `presentationUpdate` for interpolated camera/cosmetic placement.
+  Use `uiUpdate` for menus that must run while gameplay pauses.
 - Treat transforms/info as snapshots. Assign a modified transform back explicitly;
   use CharacterMotor for collision-aware motion instead of teleporting a prop.
 - Cache handles where useful, but validate Entity/Joint before later use and
   reacquire UI/scene handles after replacement. Don't serialize wrapper objects.
 - Store bounded game facts in `this.state`; use session for bounded cross-scene
-  facts. Neither is arbitrary VM persistence or an exposed disk-save API.
+  facts. Neither automatically writes to disk or preserves arbitrary VM memory.
+  Explicit [save slots](saves.md) capture supported state and the session map.
 - Avoid redundant per-frame tag scans/queries/logs and needless object churn in
   large loops. Prefer correct small scripts over premature pooling/frameworks.
 - Use project IDs/names and logical input. Display names and global world-Y are
@@ -23,7 +25,8 @@
 - Judas supplies engine primitives; JS supplies game meaning. No engine classes for
   inventory/quests/weapons, animation gameplay states or character locomotion modes.
 
-For VS Code or another TS-aware JS editor, copy `docs/judas.d.ts` into a project
+For the complete create/track/attach/Play/export workflow, start with
+[making a game by hand](getting-started.md). For VS Code or another TS-aware JS editor, copy `docs/judas.d.ts` into a project
 `Types/` directory and create a development-only `jsconfig.json`:
 
 ```json

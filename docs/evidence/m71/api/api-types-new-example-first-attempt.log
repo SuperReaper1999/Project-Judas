@@ -1,0 +1,25 @@
+[96mdocs/judasjs/examples/kinematic.js[0m:[93m4[0m:[93m16[0m - [91merror[0m[90m TS7031: [0mBinding element 'entity' implicitly has an 'any' type.
+
+[7m4[0m   constructor({entity}){this.entity=entity;this.state={steps:0,velocityQueued:false,targetQueued:false,pointIncludesRotation:false,invalidRejected:false};}
+[7m [0m [91m               ~~~~~~[0m
+[96mdocs/judasjs/examples/kinematic.js[0m:[93m6[0m:[93m15[0m - [91merror[0m[90m TS7006: [0mParameter 'dt' implicitly has an 'any' type.
+
+[7m6[0m   fixedUpdate(dt){
+[7m [0m [91m              ~~[0m
+[96mdocs/judasjs/examples/kinematic.js[0m:[93m28[0m:[93m18[0m - [91merror[0m[90m TS2339: [0mProperty 'completed' does not exist on type '{ steps: number; velocityQueued: boolean; targetQueued: boolean; pointIncludesRotation: boolean; invalidRejected: boolean; }'.
+
+[7m28[0m       this.state.completed=Math.abs(e.transform.position.x-1)<.0001&&e.kinematicMotion.control==='stopped';
+[7m  [0m [91m                 ~~~~~~~~~[0m
+[96mdocs/judasjs/examples/kinematic.js[0m:[93m32[0m:[93m16[0m - [91merror[0m[90m TS2339: [0mProperty 'actual' does not exist on type '{ steps: number; velocityQueued: boolean; targetQueued: boolean; pointIncludesRotation: boolean; invalidRejected: boolean; }'.
+
+[7m32[0m     this.state.actual=e.transform;this.state.velocity=e.velocity;this.state.angularVelocity=e.angularVelocity;
+[7m  [0m [91m               ~~~~~~[0m
+[96mdocs/judasjs/examples/kinematic.js[0m:[93m32[0m:[93m46[0m - [91merror[0m[90m TS2339: [0mProperty 'velocity' does not exist on type '{ steps: number; velocityQueued: boolean; targetQueued: boolean; pointIncludesRotation: boolean; invalidRejected: boolean; }'.
+
+[7m32[0m     this.state.actual=e.transform;this.state.velocity=e.velocity;this.state.angularVelocity=e.angularVelocity;
+[7m  [0m [91m                                             ~~~~~~~~[0m
+[96mdocs/judasjs/examples/kinematic.js[0m:[93m32[0m:[93m77[0m - [91merror[0m[90m TS2339: [0mProperty 'angularVelocity' does not exist on type '{ steps: number; velocityQueued: boolean; targetQueued: boolean; pointIncludesRotation: boolean; invalidRejected: boolean; }'.
+
+[7m32[0m     this.state.actual=e.transform;this.state.velocity=e.velocity;this.state.angularVelocity=e.angularVelocity;
+[7m  [0m [91m                                                                            ~~~~~~~~~~~~~~~[0m
+

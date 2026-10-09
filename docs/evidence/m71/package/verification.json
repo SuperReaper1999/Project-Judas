@@ -1,0 +1,346 @@
+{
+  "utc": "2026-10-09T01:20:17.851498+00:00",
+  "scope": "Read-only receipt and retained-log review; applications were not rerun.",
+  "accepted_base": "fb31f0244c9f41f74c439afd99855e3707937edd",
+  "package": "/tmp/judas-m71-kinematic-moved-final",
+  "packaged_file_hashes_verified": 23,
+  "runtime_matches_candidate": true,
+  "original_owned_source_absent": true,
+  "original_export_path_absent": true,
+  "repository_remains_present": true,
+  "application_runs": [
+    {
+      "cwd": "/tmp",
+      "command": [
+        "timeout",
+        "120",
+        "env",
+        "SDL_VIDEODRIVER=offscreen",
+        "LIBGL_ALWAYS_SOFTWARE=1",
+        "MESA_DEBUG=context",
+        "SDL_AUDIODRIVER=dummy",
+        "XDG_DATA_HOME=/tmp/judas-m71-package-data",
+        "JUDAS_TEST_SCRIPT=/home/conner/Documents/GitHub/Project-Judas/docs/evidence/m71/package/moved.input",
+        "/tmp/judas-m71-kinematic-moved-final/judas"
+      ],
+      "scripted_frames": 440,
+      "exit_code": 0,
+      "exit_code_basis": "Observed during execution; retained stdout/stderr and current hashes reviewed here.",
+      "log": "package/moved.log",
+      "log_sha256": "8c18867d203ddcd6a09b3570906222748f595ddc52786f6cbfbb01181ad3858f"
+    },
+    {
+      "cwd": "/tmp",
+      "command": [
+        "timeout",
+        "120",
+        "env",
+        "SDL_VIDEODRIVER=offscreen",
+        "LIBGL_ALWAYS_SOFTWARE=1",
+        "MESA_DEBUG=context",
+        "SDL_AUDIODRIVER=dummy",
+        "XDG_DATA_HOME=/tmp/judas-m71-package-data",
+        "JUDAS_TEST_SCRIPT=/home/conner/Documents/GitHub/Project-Judas/docs/evidence/m71/package/fresh-load.input",
+        "/tmp/judas-m71-kinematic-moved-final/judas"
+      ],
+      "scripted_frames": 90,
+      "exit_code": 0,
+      "exit_code_basis": "Observed during execution; retained stdout/stderr and current hashes reviewed here.",
+      "log": "package/fresh-load.log",
+      "log_sha256": "519a2ece3b529ae7d53429ea8c4a75a44d8aeef734c94966444b5a979e95c55b"
+    }
+  ],
+  "project_vs_package": {
+    "logged_samples_each": 15,
+    "printed_simulation_fields": [
+      "posX",
+      "posY",
+      "posZ",
+      "upX",
+      "upY",
+      "upZ",
+      "grounded",
+      "velX",
+      "velY",
+      "velZ",
+      "gravX",
+      "gravY",
+      "gravZ",
+      "controlled",
+      "paused",
+      "obj0PosX",
+      "obj0PosY",
+      "obj0PosZ",
+      "obj0VelX",
+      "obj0VelY",
+      "obj0VelZ",
+      "obj1PosX",
+      "obj1PosY",
+      "obj1PosZ",
+      "obj1VelX",
+      "obj1VelY",
+      "obj1VelZ",
+      "obj2PosX",
+      "obj2PosY",
+      "obj2PosZ",
+      "obj2VelX",
+      "obj2VelY",
+      "obj2VelZ",
+      "obj3PosX",
+      "obj3PosY",
+      "obj3PosZ",
+      "obj3VelX",
+      "obj3VelY",
+      "obj3VelZ",
+      "obj4PosX",
+      "obj4PosY",
+      "obj4PosZ",
+      "obj4VelX",
+      "obj4VelY",
+      "obj4VelZ",
+      "obj5PosX",
+      "obj5PosY",
+      "obj5PosZ",
+      "obj5VelX",
+      "obj5VelY",
+      "obj5VelZ",
+      "obj6PosX",
+      "obj6PosY",
+      "obj6PosZ",
+      "obj6VelX",
+      "obj6VelY",
+      "obj6VelZ",
+      "obj7PosX",
+      "obj7PosY",
+      "obj7PosZ",
+      "obj7VelX",
+      "obj7VelY",
+      "obj7VelZ",
+      "obj8PosX",
+      "obj8PosY",
+      "obj8PosZ",
+      "obj8VelX",
+      "obj8VelY",
+      "obj8VelZ"
+    ],
+    "equal_samples": 14,
+    "comparisons": [
+      {
+        "frame": 0,
+        "equal": true,
+        "different_fields": {}
+      },
+      {
+        "frame": 30,
+        "equal": true,
+        "different_fields": {}
+      },
+      {
+        "frame": 60,
+        "equal": true,
+        "different_fields": {}
+      },
+      {
+        "frame": 90,
+        "equal": true,
+        "different_fields": {}
+      },
+      {
+        "frame": 120,
+        "equal": true,
+        "different_fields": {}
+      },
+      {
+        "frame": 150,
+        "equal": true,
+        "different_fields": {}
+      },
+      {
+        "frame": 180,
+        "equal": true,
+        "different_fields": {}
+      },
+      {
+        "frame": 210,
+        "equal": true,
+        "different_fields": {}
+      },
+      {
+        "frame": 240,
+        "equal": true,
+        "different_fields": {}
+      },
+      {
+        "frame": 270,
+        "equal": true,
+        "different_fields": {}
+      },
+      {
+        "frame": 300,
+        "equal": true,
+        "different_fields": {}
+      },
+      {
+        "frame": 330,
+        "equal": true,
+        "different_fields": {}
+      },
+      {
+        "frame": 360,
+        "equal": false,
+        "different_fields": {
+          "posX": {
+            "project": "1.227882",
+            "package": "1.222148"
+          },
+          "posY": {
+            "project": "1.802484",
+            "package": "1.802287"
+          },
+          "posZ": {
+            "project": "-5.399590",
+            "package": "-5.399610"
+          },
+          "velX": {
+            "project": "-0.340312",
+            "package": "-0.344015"
+          },
+          "velY": {
+            "project": "-0.164409",
+            "package": "-0.175361"
+          },
+          "velZ": {
+            "project": "-0.001224",
+            "package": "-0.001165"
+          },
+          "obj0PosX": {
+            "project": "-5.761668",
+            "package": "-5.772501"
+          },
+          "obj3PosX": {
+            "project": "0.295168",
+            "package": "0.289405"
+          },
+          "obj3PosY": {
+            "project": "0.634572",
+            "package": "0.634405"
+          },
+          "obj3VelX": {
+            "project": "-0.342170",
+            "package": "-0.345784"
+          },
+          "obj3VelY": {
+            "project": "0.001003",
+            "package": "-0.010040"
+          },
+          "obj3VelZ": {
+            "project": "0.000040",
+            "package": "0.000038"
+          },
+          "obj4PosX": {
+            "project": "-0.395016",
+            "package": "-0.400764"
+          },
+          "obj4PosY": {
+            "project": "1.184009",
+            "package": "1.183867"
+          },
+          "obj4PosZ": {
+            "project": "-4.499303",
+            "package": "-4.499310"
+          },
+          "obj4VelX": {
+            "project": "-0.341208",
+            "package": "-0.344869"
+          },
+          "obj4VelY": {
+            "project": "0.002617",
+            "package": "-0.008503"
+          },
+          "obj4VelZ": {
+            "project": "-0.000406",
+            "package": "-0.000387"
+          },
+          "obj6PosX": {
+            "project": "5.385437",
+            "package": "5.381316"
+          },
+          "obj6PosZ": {
+            "project": "-4.381862",
+            "package": "-4.385960"
+          },
+          "obj6VelX": {
+            "project": "-0.248884",
+            "package": "-0.247256"
+          },
+          "obj6VelZ": {
+            "project": "-0.244166",
+            "package": "-0.245826"
+          },
+          "obj7PosX": {
+            "project": "12.963934",
+            "package": "12.959988"
+          },
+          "obj7PosY": {
+            "project": "2.789996",
+            "package": "2.784480"
+          },
+          "obj7VelX": {
+            "project": "-0.237083",
+            "package": "-0.236789"
+          },
+          "obj7VelY": {
+            "project": "-0.326654",
+            "package": "-0.331007"
+          },
+          "obj8PosX": {
+            "project": "13.513933",
+            "package": "13.509987"
+          },
+          "obj8PosY": {
+            "project": "3.497820",
+            "package": "3.492303"
+          },
+          "obj8VelX": {
+            "project": "-0.237083",
+            "package": "-0.236789"
+          },
+          "obj8VelY": {
+            "project": "-0.326654",
+            "package": "-0.331008"
+          },
+          "obj8VelZ": {
+            "project": "-0.000001",
+            "package": "-0.000000"
+          }
+        }
+      },
+      {
+        "frame": 390,
+        "equal": true,
+        "different_fields": {}
+      },
+      {
+        "frame": 420,
+        "equal": true,
+        "different_fields": {}
+      }
+    ],
+    "exception": "Frame 360 follows different asynchronous load waits: project 0 wait frames at 350; package 2. Equal render-frame labels are not an equal resumed fixed-step instant. No blanket bit-exact app/package claim."
+  },
+  "fresh_process_continuation": {
+    "fresh_frame": 30,
+    "moved_frame": 360,
+    "equal_fields": 69,
+    "all_printed_simulation_fields_equal": true,
+    "pusher_velocity_x": -0.65,
+    "precision": "Printed decimal log values; exact durable command/physical byte checks are separate native tests."
+  },
+  "runtime_diagnostics": {
+    "script_save_draw_error_lines": {
+      "moved": [],
+      "fresh-load": []
+    },
+    "known_backend_warning": "EGL software-rendering selection warning; physical capture not tested."
+  }
+}

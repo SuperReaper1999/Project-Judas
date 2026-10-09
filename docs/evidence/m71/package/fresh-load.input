@@ -1,0 +1,7 @@
+FRAMES 90
+FRAME_SECONDS 0.0166666667
+LOG_EVERY 10
+ENTITY 40
+ACTION load 1 10 11
+WAIT_SERVICES save 500 20
+SCREENSHOT 40 /home/conner/Documents/GitHub/Project-Judas/docs/evidence/m71/package/fresh-loaded.png

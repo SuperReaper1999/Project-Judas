@@ -1,9 +1,9 @@
-# JudasJS — current API reference (M70 candidate)
+# JudasJS — current API reference (M71 candidate)
 
 JUDAS PROVIDES ENGINE PRIMITIVES. JAVASCRIPT PROVIDES GAME BEHAVIOUR.
 
-This reference includes the M70 candidate built on accepted checkpoint
-`934c5d3f0556c920cc7cae8b80dc4677d8cbf87b`. M70 human review remains pending. It is not an eternal
+This reference includes the M71 candidate built on accepted checkpoint
+`fb31f0244c9f41f74c439afd99855e3707937edd`. M71 human review remains pending. It is not an eternal
 compatibility/semantic-version promise. Source authority is `src/ScriptSystem.cpp`
 and the runtime systems it calls; demos do not define API.
 M67 is checkpointed provisionally by operator authorization; proper human validation
@@ -19,14 +19,25 @@ through `Entity.presentedTransform` / `presentationUpdate(dt, alpha)`; the
 
 M59 added optional additive residency through [scenes streaming](judasjs/streaming.md).
 
+## Start writing a game
+
+[Making a game by hand](judasjs/getting-started.md) walks through creating a project,
+tracking/attaching scripts, inspector properties, fixed/presentation phases, IDE
+completion and export. Use the [executed cookbook](judasjs/cookbook.md) for complete
+small scripts and the subsystem pages below for exact arguments/errors. Engine
+assets/components must be authored before component handles can control them;
+calling an API does not silently construct missing gameplay machinery.
+
 ## Find an API
 
 | Topic | Reference |
 |---|---|
+| Create a project, attach JS, edit properties, set up completion, export | [Making a game by hand](judasjs/getting-started.md) |
 | Imports, properties, start/restore/update/fixedUpdate/presentationUpdate/uiUpdate/destroy | [Lifecycle](judasjs/lifecycle.md) |
 | Fracture, physical parts, interface failure and explicit removal | [Fracture](judasjs/fracture.md) |
 | Deformable, cloth/solid forces, attachments and current-surface picking | [Deformables](judasjs/deformables.md) |
 | Entity, transform, tags, spawnPrefab | [Entities/prefabs](judasjs/entities.md) |
+| Entity.motionType, kinematic target/velocity commands and point velocity | [Kinematic bodies](judasjs/entities.md#kinematic-motion-m71) · [Executed example](judasjs/examples/kinematic.js) |
 | profiler.scope / profiler.counter | [Custom diagnostics](judasjs/profiling.md) |
 | input, time, console | [Input/time](judasjs/input.md) |
 | physics.raycast/sphereCast/capsuleCast, their Many batches, boxCast/closestPoint, Entity.collider, Joint, contacts/triggers | [Physics](judasjs/physics.md) · [Collider inspection](judasjs/entities.md#entitycollider) |
@@ -127,3 +138,13 @@ Accepted M66: [model import workflow](MODEL_IMPORT.md), [imported model cookbook
 physical drives consume that reference before ordinary physics resolves the actual
 body pose. Scripts select targets, regions and authority transitions. No balance,
 automatic recovery or procedural gait is supplied.
+
+## M71 kinematic bodies
+
+[Motion authority and fixed-step commands](judasjs/entities.md#kinematic-motion-m71)
+cover ordinary static/dynamic/kinematic bodies, complete pose targets, persistent
+world COM/angular velocity commands and actual point velocity. The
+[copyable example](judasjs/examples/kinematic.js) executes through the normal VM;
+the [kinematic lab](../projects/kinematic_lab/) supplies ordinary authored content.
+Modern saves and additive streaming preserve current authority, physical state
+and remaining commands. [Cookbook setup](judasjs/cookbook.md#kinematic-bodies-m71).

@@ -1,0 +1,36 @@
+PASS ordinary isolated streaming project: 
+PASS stream project settings persist
+PASS ordinary root and kinematic region sources persist
+PASS normal region manifest validates
+PASS stream bootstrap builds
+PASS actual staged coordinator publishes prescribed region
+PASS independent target, velocity, traveller and stopped commands accepted
+PASS adoption preserves qualified identity and native trajectory owner
+PASS capture expected retained command 10
+PASS capture expected retained command 20
+PASS capture expected retained command 40
+PASS capture expected adopted root command
+PASS actual coordinator snapshots and retires region
+PASS suspended kinematic intent selects v4 while adopted traveller stays live
+PASS root participant captures adopted prescribed body
+PASS complete stream/root snapshot survives durable encoding
+PASS cold native root reconstruction restores adopted intent: 
+PASS cold coordinator restores root adoption and suspended residency
+PASS adopted root command restores exactly
+PASS v4 retained region reconstructs through actual coordinator revisit
+PASS adoption tombstone prevents duplicate traveller source on revisit
+PASS v4 publication restores exact command and resolved velocities 10
+PASS v4 revisit reconstructs no preceding trajectory history 10
+PASS v4 publication restores exact command and resolved velocities 20
+PASS v4 revisit reconstructs no preceding trajectory history 20
+PASS v4 publication restores exact command and resolved velocities 40
+PASS v4 revisit reconstructs no preceding trajectory history 40
+PASS first resumed target advances only its remaining fixed interval
+PASS first resumed regional velocity continues once
+PASS first resumed adopted root velocity continues once
+PASS retained stopped intent overrides authored initial velocity
+PASS restored target finishes then holds
+INCOMPLETE_REJECTION retained kinematic intent does not match snapshot components
+PASS incomplete v4 kinematic intent refuses before publication
+PASS retained kinematic intent refuses lossy older archive writes
+SUMMARY streaming 34 checks 0 failures

@@ -45,6 +45,18 @@ struct BodyTransform {
     glm::quat rotation{1.0f, 0.0f, 0.0f, 0.0f};  // identity
 };
 
+// Motion authority is separate from inverse mass: a prescribed body supplies
+// external work but receives no force/contact impulse integration of its own.
+enum class BodyMotionType { Static, Dynamic, Kinematic };
+enum class KinematicControl { Stopped, Target, Velocity };
+struct KinematicMotionState {
+    KinematicControl control=KinematicControl::Stopped;
+    BodyTransform target;
+    glm::vec3 linearVelocity{0}, angularVelocity{0}; // world COM m/s; world rad/s
+    float remainingSeconds=0;
+    bool targetNextStep=false;
+};
+
 // One box of a rigid body's collision geometry after transforming it into
 // simulation/world space. Ordinary boxes return one entry; compound bodies
 // return their children in stable order; spheres return none. Consumers such
@@ -294,6 +306,18 @@ public:
     // object" apart from "static world geometry" without needing to
     // remember which handles it created dynamic vs. static itself.
     bool IsDynamicBody(BodyHandle handle) const;
+    bool IsKinematicBody(BodyHandle handle) const;
+    BodyMotionType GetMotionType(BodyHandle handle) const;
+    bool SetMotionType(BodyHandle,BodyMotionType,float dynamicMass=1,bool preserveVelocity=false);
+    // Target is the authored pivot pose; zero seconds means the next fixed
+    // interval. Positive durations are bounded to 60 s. Last command wins.
+    bool MoveKinematic(BodyHandle,const BodyTransform&,float seconds=0);
+    bool SetKinematicVelocity(BodyHandle,const glm::vec3& worldCOMLinear,const glm::vec3& worldAngular);
+    bool StopKinematic(BodyHandle);
+    bool GetKinematicMotion(BodyHandle,KinematicMotionState&) const;
+    void PersistKinematic(class SaveArchive&,BodyHandle);
+    glm::vec3 GetPointVelocity(BodyHandle,const glm::vec3& worldPoint) const;
+    glm::vec3 GetPreviousPointVelocity(BodyHandle,const glm::vec3& worldPoint) const;
     float GetMass(BodyHandle handle) const;
     bool SetMassDistribution(BodyHandle,float,const glm::mat3&);
     void PersistJointSolverState(SaveArchive&,JointHandle);
@@ -439,6 +463,7 @@ public:
         glm::vec3 linearVelocity{0}, angularVelocity{0};
         bool movable = false;
         glm::vec3 pivotOffset{0}; // COM-relative authored pivot, value owned
+        bool prescribed = false; // exponential rotation; dynamic Euler unchanged
     };
     std::vector<BodyMotionSegment> GetBodyMotionSegments(BodyHandle handle) const;
     // Uses the authoritative anchored position integrator, never restarts

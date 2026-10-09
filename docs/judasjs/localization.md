@@ -1,6 +1,6 @@
 # `localization` — project messages and horizontal Unicode text
 
-M58 localization API, current through M64, using ICU4C 76.1 MessageFormat and number data. Import
+Current localization API (introduced in M58), using ICU4C 76.1 MessageFormat and number data. Import
 `localization` from the virtual `judas` module. QuickJS has no `Intl` requirement.
 Judas owns primitives; projects supply fonts/catalogs; scripts choose language policy.
 

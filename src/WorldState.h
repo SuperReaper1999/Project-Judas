@@ -73,6 +73,9 @@ struct WorldState {
 
 // Captures every difference between the running world and its baseline.
 WorldState CaptureWorldState(const RuntimeWorld& world);
+// The legacy pose-delta format cannot retain prescribed intent or changed
+// authority. Modern slots own those durable participants.
+bool CanCaptureLegacyWorldState(const RuntimeWorld& world,std::string& error);
 
 // Validates the whole delta against `world` (ids exist, created ids are
 // runtime-range and unused, definitions instantiable), then applies it.

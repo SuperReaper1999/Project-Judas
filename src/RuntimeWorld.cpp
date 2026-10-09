@@ -38,7 +38,7 @@ EntityPhysicalState StateFromDefinition(const SceneObject& o) {
     EntityPhysicalState state;
     state.position = o.transform.position;
     state.rotation = glm::normalize(o.transform.rotation);
-    if (o.body) state.linearVelocity = o.body->initialLinearVelocity;
+    if (o.body) {state.linearVelocity = o.body->initialLinearVelocity;state.angularVelocity=o.body->initialAngularVelocity;}
     return state;
 }
 }  // namespace
@@ -52,6 +52,7 @@ RuntimeWorld::~RuntimeWorld() {
 bool RuntimeWorld::EntityRequiresFull(const SceneObject& o) {
     if (o.vehicle || o.combustible || o.characterMotor || o.deformable || o.liquidContainer || o.liquidInteraction || !o.scripts.empty()) return true;
     if (o.body && o.body->shape == SceneShape::Compound) return true;
+    if (o.body && o.body->motion != SceneBodyMotion::Dynamic) return true;
     return false;
 }
 
@@ -143,6 +144,16 @@ bool RuntimeWorld::InstantiateEntityBody(EntityRecord& record, const EntityPhysi
     m_physics.ResetBody(handle, state.position, state.rotation);
     m_physics.SetLinearVelocity(handle, state.linearVelocity);
     m_physics.SetAngularVelocity(handle, state.angularVelocity);
+    if(b.motion!=SceneBodyMotion::Dynamic){
+        const auto motion=b.motion==SceneBodyMotion::Kinematic?BodyMotionType::Kinematic:BodyMotionType::Static;
+        if(!m_physics.SetMotionType(handle,motion,b.mass,false)){
+            m_physics.DestroyBody(handle);if(outError)*outError="unsupported prescribed body authority";return false;
+        }
+        if(motion==BodyMotionType::Kinematic&&b.enabled&&(state.linearVelocity!=glm::vec3(0)||state.angularVelocity!=glm::vec3(0))&&
+           !m_physics.SetKinematicVelocity(handle,state.linearVelocity,state.angularVelocity)){
+            m_physics.DestroyBody(handle);if(outError)*outError="unusable initial prescribed velocity";return false;
+        }
+    }
     DynamicBody& slot = m_dynamicBodies[record.slot];
     slot.Rebind(handle);
     slot.SetPoseFromState(state.position, state.rotation);
@@ -780,9 +791,12 @@ void RuntimeWorld::RestoreAuthoredState() {
         e.forcedFidelity.reset();
         if (e.fidelity == SimulationFidelity::Full) {
             const BodyHandle handle = m_dynamicBodies[e.slot].Handle();
+            const auto mode=e.definition.body->motion;
+            m_physics.SetMotionType(handle,mode==SceneBodyMotion::Dynamic?BodyMotionType::Dynamic:mode==SceneBodyMotion::Kinematic?BodyMotionType::Kinematic:BodyMotionType::Static,e.definition.body->mass,false);
             m_physics.ResetBody(handle, authored.position, authored.rotation);
             m_physics.SetLinearVelocity(handle, authored.linearVelocity);
             m_physics.SetAngularVelocity(handle, authored.angularVelocity);
+            if(mode==SceneBodyMotion::Kinematic)m_physics.SetKinematicVelocity(handle,authored.linearVelocity,authored.angularVelocity);
             m_dynamicBodies[e.slot].SetPoseFromState(authored.position, authored.rotation);
             m_dynamicBodies[e.slot].SnapPresentation();
         } else {
@@ -810,7 +824,7 @@ void RuntimeWorld::RestoreAuthoredState() {
         }
     }
     for(auto& [id,d]:m_scriptDefinitions)if(const auto* record=FindEntity(id))if(record->authored&&record->definition.body&&d.body){
-        d.body->enabled=record->definition.body->enabled;
+        d.body->enabled=record->definition.body->enabled;d.body->motion=record->definition.body->motion;
         m_physics.SetBodyEnabled(RuntimeBody(id),d.body->enabled);
     }
     ++m_entityVersion;
@@ -908,6 +922,7 @@ bool RuntimeWorld::SetEntityState(EntityId id, const EntityPhysicalState& state)
         m_physics.ResetBody(handle, state.position, state.rotation);
         m_physics.SetLinearVelocity(handle, state.linearVelocity);
         m_physics.SetAngularVelocity(handle, state.angularVelocity);
+        if(m_physics.IsKinematicBody(handle))m_physics.SetKinematicVelocity(handle,state.linearVelocity,state.angularVelocity);
     }
     m_dynamicBodies[e->slot].SetPoseFromState(state.position, state.rotation);
     m_dynamicBodies[e->slot].SnapPresentation();
@@ -1129,7 +1144,7 @@ EntityId RuntimeWorld::CreateEntity(const SceneObject& definitionIn, const Entit
         definition.transform.rotation=glm::normalize(parentPose.rotation*local.transform.rotation);definition.transform.scale*=parentPose.scale;
     }
     if(state){definition.transform.position=state->position;definition.transform.rotation=state->rotation;
-        if(definition.body)definition.body->initialLinearVelocity=state->linearVelocity;}
+        if(definition.body){definition.body->initialLinearVelocity=state->linearVelocity;definition.body->initialAngularVelocity=state->angularVelocity;}}
     Scene batch;batch.Settings()=m_settings;batch.InsertObject(definition);
     FidelityPolicyContext context;
     if(!AppendSceneObjects(batch,false,context,error)){if(outError)*outError=error;return 0;}
@@ -1153,8 +1168,9 @@ EntityId RuntimeWorld::SpawnPrefab(const AssetId& asset,const SceneTransform& pl
     auto* rootDefinition=instance.Find(root);if(!rootDefinition){error="prefab root missing";return 0;}
     if(options.scripts.size()>256){error="prefab initialization exceeds 256 script slots";return 0;}
     auto finite=[](glm::vec3 v){return std::isfinite(glm::dot(v,v));};if((options.velocity&&!finite(*options.velocity))||(options.angularVelocity&&!finite(*options.angularVelocity))){error="finite initial motion required";return 0;}
-    if((options.velocity||options.angularVelocity)&&(!rootDefinition->body||rootDefinition->body->motion!=SceneBodyMotion::Dynamic)){error="initial motion requires a dynamic prefab root";return 0;}
+    if((options.velocity||options.angularVelocity)&&(!rootDefinition->body||rootDefinition->body->motion==SceneBodyMotion::Static)){error="initial motion requires a dynamic or kinematic prefab root";return 0;}
     if(options.velocity)rootDefinition->body->initialLinearVelocity=*options.velocity;
+    if(options.angularVelocity)rootDefinition->body->initialAngularVelocity=*options.angularVelocity;
     std::map<std::pair<EntityId,uint64_t>,std::string> states;std::set<std::pair<EntityId,uint64_t>> initialized;
     for(const auto& init:options.scripts){auto target=root;if(init.source){auto found=rootDefinition->prefabIds.find(init.source);if(found==rootDefinition->prefabIds.end()){error="unknown prefab source entity";return 0;}target=found->second;}auto* object=instance.Find(target);auto slot=std::find_if(object->scripts.begin(),object->scripts.end(),[&](const auto& v){return v.id==init.slot;});if(slot==object->scripts.end()||!slot->enabled||!initialized.emplace(target,init.slot).second){error="unknown/disabled/duplicate prefab script slot";return 0;}
         if(!init.properties.empty())slot->properties=init.properties;
@@ -1296,7 +1312,7 @@ LightSwitch* RuntimeWorld::FindLightSwitch(SceneObjectId id) {
 }
 
 void RuntimeWorld::Destroy() {
-    m_regionPending.clear();m_regionAssets.clear();m_composed=false;
+    m_regionPending.clear();m_regionKinematicCommands.clear();m_regionAssets.clear();m_composed=false;
  JUDAS_PROFILE_SCOPE("World destroy"); PerformanceProfiler::Get().Boundary("World destroy");
     m_scripts.reset();spawnStates.clear();
     m_ragdolls.clear();m_ragdollReturns.clear();m_ragdollAutostarted.clear();

@@ -1,0 +1,2 @@
+FAIL fresh process decodes complete modern snapshot: 
+FAIL fresh process restores command state and current physical state: truncated save field

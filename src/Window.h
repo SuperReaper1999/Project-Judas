@@ -44,6 +44,9 @@ public:
     float InputAxis(const std::string& name) const;
     bool ConsumeNamedAction(const std::string& name);
     bool ShouldClose() const { return m_shouldClose; }
+    // Desktop applications may defer a close request while an unsaved-document
+    // dialog is shown. Runtime games retain the normal close behavior.
+    void CancelCloseRequest() { m_shouldClose = false; }
     void SwapBuffers();
 
     bool IsActionActive(Action action) const;

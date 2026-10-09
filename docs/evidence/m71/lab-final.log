@@ -1,0 +1,2 @@
+terminate called after throwing an instance of 'std::runtime_error'
+  what():  asset metadata already exists: /home/conner/Documents/GitHub/Project-Judas/build/m71-lab-tests/Assets/control.js.judasmeta

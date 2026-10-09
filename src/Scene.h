@@ -82,7 +82,7 @@ struct SceneRenderComponent {
     SceneObjectId textureCamera = kInvalidSceneObjectId;
 };
 
-enum class SceneBodyMotion { Static, Dynamic };
+enum class SceneBodyMotion { Static, Dynamic, Kinematic };
 
 // Explicit body-local fluid interior. Membership is geometric; it never
 // depends on an object name, particle velocity or body mass. The bounds
@@ -109,10 +109,11 @@ struct SceneBodyComponent {
     // Terrain: identifier of a surface the engine can construct (see
     // src/TerrainLibrary.h). A scene never embeds the elevation function.
     std::string terrainSurface;
-    float mass = 1.0f;  // Dynamic only
+    float mass = 1.0f;  // Dynamic, or the mass to use on an explicit authority change.
     float friction = 0.6f;
     float restitution = 0.1f;
-    glm::vec3 initialLinearVelocity{0.0f};  // Dynamic only
+    glm::vec3 initialLinearVelocity{0.0f};  // World COM m/s; dynamic or prescribed velocity.
+    glm::vec3 initialAngularVelocity{0.0f}; // World rad/s; zero keeps legacy content unchanged.
     // Gameplay eligibility for the existing M18 pick-up/throw interaction.
     bool pickable = false;
     // Milestone 29: whether the scene's fidelity policy may move this

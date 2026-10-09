@@ -1,0 +1,96 @@
+{
+  "pass": true,
+  "utc": "2026-10-09T01:08:11.206692+00:00",
+  "accepted_base": "fb31f0244c9f41f74c439afd99855e3707937edd",
+  "scope": "Only affected lab target compiled; selected actual WorldStreaming v4 archive/adoption/revisit check, existing lab VM checks and separate-process cold write/read. Coordinator archive test reconstructs a fresh RuntimeWorld and coordinator from durable encoded bytes in one process; separate cold commands are distinct processes. No application or broad suite rerun.",
+  "build": {
+    "command": [
+      "cmake",
+      "--build",
+      "build",
+      "--target",
+      "judas_kinematic_lab_tests",
+      "-j2"
+    ],
+    "exit_code": 0,
+    "log": "streaming-build-after-guard.log",
+    "warnings": 0
+  },
+  "original_failure": {
+    "log": "streaming-before-guard.log",
+    "metadata": "streaming-before-guard.json",
+    "exit_code": 1,
+    "checks": 33,
+    "failures": 1,
+    "failure": "incomplete v4 kinematic intent accepted"
+  },
+  "runs": [
+    {
+      "name": "streaming",
+      "command": [
+        "build/judas_kinematic_lab_tests",
+        "--stream"
+      ],
+      "exit_code": 0,
+      "checks": 34,
+      "failures": 0,
+      "log": "streaming-after-guard.log"
+    },
+    {
+      "name": "lab",
+      "command": [
+        "build/judas_kinematic_lab_tests"
+      ],
+      "exit_code": 0,
+      "checks": 36,
+      "failures": 0,
+      "log": "lab-after-stream-guard.log"
+    },
+    {
+      "name": "cold-write",
+      "command": [
+        "build/judas_kinematic_lab_tests",
+        "--write",
+        "build/m71-stream-guard-cold/snapshot.save"
+      ],
+      "exit_code": 0,
+      "checks": 4,
+      "failures": 0,
+      "log": "cold-write-after-stream-guard.log"
+    },
+    {
+      "name": "cold-read",
+      "command": [
+        "build/judas_kinematic_lab_tests",
+        "--read",
+        "build/m71-stream-guard-cold/snapshot.save"
+      ],
+      "exit_code": 0,
+      "checks": 8,
+      "failures": 0,
+      "log": "cold-read-after-stream-guard.log"
+    }
+  ],
+  "checks_total": 82,
+  "coverage": [
+    "actual budgeted WorldStreaming activation and retirement",
+    "v4 conditional intent archive and durable encoding",
+    "same-process cold root and coordinator reconstruction",
+    "regional target, persistent velocity and stopped intent restore exact command and last resolved velocity bytes",
+    "adopted root qualified identity and live command survive; source tombstone avoids duplication",
+    "first resumed intervals advance once without previous trajectory history",
+    "incomplete retained intent refuses before publication",
+    "lossy pre-v4 writer downgrade refuses",
+    "existing real VM lab and separate-process modern snapshot checks"
+  ],
+  "source_sha256": {
+    "src/WorldStreaming.cpp": "08f4bb182713df3fd2c66dce9b674c25ddd29b988448f9b46595d9b196b08d32",
+    "tests/KinematicLabTests.cpp": "a593ad5405930245967c07e4c0eac7023e3aa177f006379cd6d31e700eeeb71c",
+    "src/WorldPersistence.cpp": "25c51aa52b6d329d29bff2a2c37458eae135728cc927b9241cb56e454c63d6a9",
+    "src/WorldRegions.cpp": "3c2a3eb644685d522b147685e09ed9351e2fa5ecfe4594e77e20fd0a322ec6ac",
+    "src/SaveService.cpp": "92e8c877b4b397cb876be4db2b1609af6f33158bb242ce9cacf75b2e71c51a17",
+    "build/judas_kinematic_lab_tests": "06b125043a707c39fbdcd7ba6b26e7311f4eb3084477ced801ed2ce6622b8f40",
+    "build/m71-kinematic-stream-tests/stream.save": "4c1293d35a410828b3f3f06f23bf5ab0deeddf7ca1b1ce99dddacd83047e08d1",
+    "build/m71-stream-guard-cold/snapshot.save": "a38afb5b28bf74b9a28058771c06377e84940da85e1382b019d26af085e6d9d9"
+  }
+}

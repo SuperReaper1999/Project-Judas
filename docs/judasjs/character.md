@@ -48,9 +48,12 @@ motor, including an initial overlap at distance zero. For environment probes
 
 Current limits: query-only motors don't physically block each other; endpoint sensors and coalesced
 sweep/support contacts now produce normal M42 events without fabricated mass/impulse;
-unit entity scale, no simultaneous root rigid body/ragdoll, bounded recovery/slide,
+unit entity scale, no simultaneous root rigid-body authority, bounded recovery/slide,
 short lip probe can add up to0.08m reported travel, approximate capped dynamic push,
 teleported supports aren't continuous motion. Skeleton/animation is independent.
+M70 explicitly supports selected physical limbs alongside motor-owned locomotion;
+full dynamic articulation requires [motor authority handoff](animation-ragdolls.md#partial-physical-animation-m70).
+This is not two systems simultaneously owning the root motion.
 Disabling/removing scripts does not inherently disable their motor; last velocity
 and gravity remain until explicitly changed/disabled. No fluid solver is owned.
 

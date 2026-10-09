@@ -3,6 +3,7 @@
 #include "ResourceManager.h"
 #include "PhysicalMaterial.h"
 #include "InputSystem.h"
+#include <algorithm>
 #include <cmath>
 #include <limits>
 
@@ -70,6 +71,58 @@ bool RuntimeWorld::SetRuntimeTransform(EntityId id,const SceneTransform& t){
     for(auto& e:m_particleEmitters)if(e.id==id)e.transform=transform;
     for(auto& c:m_renderCameras)if(c.id==id)c.transform=transform;
     return true;
+}
+bool RuntimeWorld::SetRuntimeMotionType(EntityId id,SceneBodyMotion motion,bool preserveVelocity,std::string& error){
+    const auto* definition=RuntimeDefinition(id);auto* record=FindEntity(id);auto body=RuntimeBody(id);
+    if(!definition||!definition->body||!body.IsValid()){
+        error="authority change requires a live ordinary rigid body";return false;
+    }
+    if(motion!=SceneBodyMotion::Static&&motion!=SceneBodyMotion::Dynamic&&motion!=SceneBodyMotion::Kinematic){error="invalid body motion type";return false;}
+    if((record&&record->fidelity!=SimulationFidelity::Full)||definition->body->managed||definition->characterMotor||definition->animation||definition->ragdoll||
+       definition->vehicle||definition->combustible||definition->celestial||definition->door||definition->lightSwitch||definition->gravity||
+       definition->atmosphere||definition->fluidVolume||definition->liquidBasin||definition->liquidContainer||definition->deformable||
+       definition->navigationSurface||m_jointParticipants.count(id)){
+        error="this body's component ownership or fidelity does not support authority changes";return false;
+    }
+    const auto native=motion==SceneBodyMotion::Static?BodyMotionType::Static:motion==SceneBodyMotion::Dynamic?BodyMotionType::Dynamic:BodyMotionType::Kinematic;
+    const auto previous=m_physics.GetMotionType(body);
+    if(!m_physics.SetMotionType(body,native,definition->body->mass,preserveVelocity)){
+        error="unsupported shape, mass or body authority transition";return false;
+    }
+    if(!record){
+        // Native consumers may change an otherwise ordinary static actor in a
+        // scene with no scripts. Give it normal identity bookkeeping lazily.
+        EntityRecord retained;retained.id=id;retained.name=definition->name;retained.definition=*definition;
+        retained.state.position=definition->transform.position;retained.state.rotation=definition->transform.rotation;
+        retained.slot=std::numeric_limits<size_t>::max();retained.requiresFull=true;
+        m_extraEntities.push_back(std::move(retained));record=FindEntity(id);
+    }
+    // A static actor acquires the existing moving presentation slot, preserving
+    // its physical handle, tags and touch subscriptions. Slot ownership then
+    // remains stable even when the body is made static again.
+    if(record->slot==std::numeric_limits<size_t>::max()&&native!=BodyMotionType::Static){
+        auto retained=*record;const auto pose=m_physics.GetTransform(body);const auto& settings=*definition->body;
+        DynamicBody::Visual visual;visual.shape=settings.shape==SceneShape::Sphere?DynamicBody::Shape::Sphere:DynamicBody::Shape::Box;
+        visual.halfExtents=settings.halfExtents;visual.radius=settings.radius;if(definition->render)visual.color=definition->render->color;
+        DynamicVisual dv;dv.id=id;dv.name=definition->name;dv.hasRender=bool(definition->render);if(definition->render)dv.render=*definition->render;
+        dv.compoundBoxes=settings.compoundBoxes;dv.scale=definition->transform.scale;dv.initialLinearVelocity=settings.initialLinearVelocity;dv.pickable=settings.pickable;
+        retained.slot=m_dynamicBodies.size();retained.requiresFull=true;
+        m_dynamicBodies.emplace_back(body,visual,pose.position,pose.rotation);m_dynamicVisuals.push_back(std::move(dv));
+        m_extraEntities.erase(std::remove_if(m_extraEntities.begin(),m_extraEntities.end(),[id](const auto& e){return e.id==id;}),m_extraEntities.end());
+        m_entities.push_back(std::move(retained));m_entityIndexVersion=~0u;
+        m_staticBodies.erase(std::remove_if(m_staticBodies.begin(),m_staticBodies.end(),[id](const auto& b){return b.id==id;}),m_staticBodies.end());
+        m_staticRenderables.erase(std::remove_if(m_staticRenderables.begin(),m_staticRenderables.end(),[id](const auto& r){return r.id==id;}),m_staticRenderables.end());
+        record=FindEntity(id);
+    }
+    m_scriptDefinitions.at(id).body->motion=motion;
+    // Baseline authored definitions remain the Stop/reset source. Authority
+    // changes pin their ordinary slot to Full so reconstruction cannot reapply
+    // baseline authority while a command is active.
+    record->requiresFull=true;
+    if(previous!=native&&record->slot!=std::numeric_limits<size_t>::max()){
+        auto& presentation=m_dynamicBodies[record->slot];presentation.SyncFromPhysics(m_physics);presentation.SnapPresentation();
+    }
+    ++m_entityVersion;return true;
 }
 void RuntimeWorld::UpdateScripts(const InputSystem* input,float dt){
     if(!m_scripts){if(!m_hasScripts)return;

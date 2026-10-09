@@ -69,9 +69,14 @@ suspendable state in `state`, and reacquire local handles in `start`; arbitrary
 closures/native handles are not snapshots. Module caches remain in the one VM.
 Do not put a region's unique state only in an imported module singleton.
 
-Liquid groups and skeletal/articulated pose state have no universal lossless
-suspension here. Their regions are pinned with a reason. Adopt travelling actors
-or carried props into the persistent root before releasing their source region.
+Conserved liquid groups remain pinned: they have no lossless suspension participant.
+Ordinary animated owners can suspend their playback, mixer/layers and resolved pose
+through the shared bounded animation snapshot. Active ragdolls, captured-pose
+returns and pending/non-animation physical authority still pin their region with
+a reason. See [pose lifetime](animation-ragdolls.md) and [modern saves](saves.md).
+Adopt compatible travelling actors or carried props into the persistent root
+before releasing their source region; group-owned liquid/articulation cannot be
+adopted separately.
 Incomplete physical assemblies are rejected. Retention pressure pins content
 rather than silently respawning or discarding it.
 
@@ -98,17 +103,27 @@ IDs and handle epochs. An active attachment from another region pins its target
 region; releasing it permits suspension. Manifest reference fields use
 `deformable:<group>` with normal qualified region/local IDs. The selected gravity
 region is retained when live simulated node positions depend on it. Existing
-animation/ragdoll residency restrictions remain; M62 does not pretend a pinned
-region unloaded. See [Deformable](deformables.md) and [save slots](saves.md).
+articulation/liquid residency restrictions above remain; a pinned region is not
+reported as unloaded. See [Deformable](deformables.md) and [save slots](saves.md).
 
 ## M65 visual and script dependencies
 
 Socket targets and typed entity properties use stable scene identity. Streaming
 remaps local references and accepts normal qualified manifest fields (`socket`,
 `script:<slot>:<property>`), rather than storing native handles. An external socket
-or typed reference pins its target region. Animated/IK/articulated regions still
-pin live pose state: M65 does not add lossless pose suspension. Adopt a complete
-hierarchical assembly into root ownership before releasing the residual region;
-partial socket/joint assemblies are rejected. Revisit reconstructs suspended rigid
+or typed reference pins its target region. **Historical M65 restriction, superseded
+for ordinary animation by later snapshot support:** all animated/IK/articulated
+regions pinned live pose state. Current ordinary animation suspension follows the
+policy above; active articulation and return still pin. Compatible adoption requires
+a complete hierarchical/socket/joint assembly; partial assemblies and group-owned
+articulation are rejected. Revisit reconstructs suspended rigid
 bodies/joints awake with fresh safe handles; adopted members do not duplicate.
 See [integration lifecycle proof](../evidence/m65/REPORT.md).
+
+## Prescribed bodies (M71)
+
+Suspending a kinematic body retains its current authority, physical state and
+remaining target/persistent velocity intent. Revisit restores that intent privately
+before publication; unload time does not advance it. Fresh bodies have fresh native
+handles. [Kinematic command semantics](entities.md#kinematic-motion-m71) apply equally
+to a root body and a region-owned body. This does not add physics to preparation jobs.

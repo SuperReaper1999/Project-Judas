@@ -294,6 +294,7 @@ add_executable(judas_editor
     src/editor/EditorMain.cpp
     src/editor/EditorApplication.cpp
     src/editor/EditorCamera.cpp
+    src/editor/EditorPicking.cpp
     src/editor/EditorHistory.cpp
     src/editor/EditorPanels.cpp
     src/editor/WorldTools.cpp
@@ -1437,3 +1438,30 @@ judas_warnings(judas_character_lab_tests)
 add_executable(judas_character_lab_performance tests/CharacterLabPerformance.cpp)
 target_link_libraries(judas_character_lab_performance PRIVATE judas_engine)
 judas_warnings(judas_character_lab_performance)
+
+# M71 prescribed-body timeline, lifecycle, bounded workload and scene-view pan.
+add_executable(judas_kinematic_tests tests/KinematicTests.cpp)
+target_link_libraries(judas_kinematic_tests PRIVATE judas_engine)
+judas_warnings(judas_kinematic_tests)
+add_executable(judas_kinematic_lab_tests tests/KinematicLabTests.cpp)
+target_link_libraries(judas_kinematic_lab_tests PRIVATE judas_engine)
+judas_warnings(judas_kinematic_lab_tests)
+add_executable(judas_kinematic_performance tests/KinematicPerformance.cpp)
+target_link_libraries(judas_kinematic_performance PRIVATE judas_engine)
+judas_warnings(judas_kinematic_performance)
+add_executable(judas_editor_navigation_tests tests/EditorNavigationTests.cpp src/editor/EditorCamera.cpp)
+target_link_libraries(judas_editor_navigation_tests PRIVATE judas_engine)
+judas_warnings(judas_editor_navigation_tests)
+
+add_executable(judas_editor_picking_tests tests/EditorPickingTests.cpp src/editor/EditorPicking.cpp)
+target_link_libraries(judas_editor_picking_tests PRIVATE judas_engine)
+judas_warnings(judas_editor_picking_tests)
+
+add_executable(judas_editor_workspace_tests tests/EditorWorkspaceLayoutTests.cpp)
+target_link_libraries(judas_editor_workspace_tests PRIVATE judas_engine)
+judas_warnings(judas_editor_workspace_tests)
+
+add_executable(judas_editor_widget_tests tests/EditorWidgetTests.cpp
+    src/editor/EditorWidgets.cpp src/editor/EditorHistory.cpp)
+target_link_libraries(judas_editor_widget_tests PRIVATE judas_engine judas_imgui)
+judas_warnings(judas_editor_widget_tests)

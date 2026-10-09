@@ -29,6 +29,7 @@
 #include <glm/gtc/quaternion.hpp>
 
 #include "imgui.h"
+#include "imgui_internal.h"
 
 #include "ComponentEditors.h"
 #include "EditorWidgets.h"
@@ -36,6 +37,73 @@
 #include "RuntimeWorld.h"
 
 namespace {
+constexpr ImGuiWindowFlags kWorkspacePanelFlags = ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize |
+    ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoSavedSettings;
+
+void PlaceWorkspacePanel(const EditorWorkspaceRect& rectangle) {
+    ImGui::SetNextWindowPos({rectangle.position.x, rectangle.position.y}, ImGuiCond_Always);
+    ImGui::SetNextWindowSize({rectangle.size.x, rectangle.size.y}, ImGuiCond_Always);
+}
+
+void ToolbarHint(const char* hint) {
+    if (ImGui::IsItemHovered()) ImGui::SetTooltip("%s", hint);
+}
+
+// Completion is independent of the visible browser tab. Publication still
+// uses the existing project check and occurs only in Edit mode.
+void PublishFinishedEditorImport(EditorPanelState& state, EditorRequests& requests) {
+    if (!state.importTask || !state.importTask->done.load(std::memory_order_acquire)) return;
+    auto& task = *state.importTask;
+    if (task.job.IsValid() && state.importJobs && state.importJobs->IsFinished(task.job)) {
+        state.importJobs->Forget(task.job);
+        task.job = {};
+    }
+    if (!task.success) {
+        if (!state.importPublished) state.status = "Import failed; last good model retained: " + task.error;
+        state.importPublished = true;
+        return;
+    }
+    if (state.mode != EditorMode::Edit || state.importPublished) return;
+    std::string error;
+    const auto relative = std::filesystem::path(task.output).lexically_relative(state.project->RootDir());
+    if (relative.empty() || relative.is_absolute() || *relative.begin() == "..") {
+        task.cancel = true;
+        state.status = "Import belongs to previous project; publication cancelled";
+    } else if (PublishModelImport(task, error)) {
+        state.importAccepted = state.importTask;
+        state.status = task.unchanged ? "Unchanged import; reused accepted model" : "Published complete model; sources retained";
+        requests.rescanAssets = true;
+        if (state.resources) state.resources->Invalidate(task.assetId);
+        state.browserSelection = task.assetId;
+    } else state.status = error;
+    state.importPublished = true;
+}
+
+void WorkspaceSplitter(const char* id, const EditorWorkspaceRect& rectangle, bool vertical, float& dimension,
+                       float direction, float minimum, float maximum) {
+    if (rectangle.size.x <= 0 || rectangle.size.y <= 0) return;
+    PlaceWorkspacePanel(rectangle);
+    ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0, 0));
+    ImGui::PushStyleVar(ImGuiStyleVar_WindowBorderSize, 0.0f);
+    ImGui::PushStyleVar(ImGuiStyleVar_WindowMinSize, ImVec2(0, 0));
+    ImGui::Begin(id, nullptr, kWorkspacePanelFlags | ImGuiWindowFlags_NoTitleBar |
+                 ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoBackground |
+                 ImGuiWindowFlags_NoNavInputs | ImGuiWindowFlags_NoNavFocus);
+    ImGui::InvisibleButton("##resize", {rectangle.size.x, rectangle.size.y});
+    const bool active = ImGui::IsItemActive();
+    if (active || ImGui::IsItemHovered()) {
+        ImGui::SetMouseCursor(vertical ? ImGuiMouseCursor_ResizeEW : ImGuiMouseCursor_ResizeNS);
+        const auto color = ImGui::GetColorU32(active ? ImGuiCol_SeparatorActive : ImGuiCol_SeparatorHovered);
+        ImGui::GetWindowDrawList()->AddRectFilled(ImGui::GetItemRectMin(), ImGui::GetItemRectMax(), color);
+    }
+    if (active) {
+        const auto delta = ImGui::GetIO().MouseDelta;
+        dimension = std::clamp(dimension + direction * (vertical ? delta.x : delta.y), minimum, maximum);
+    }
+    ImGui::End();
+    ImGui::PopStyleVar(3);
+}
+
 void CopyToBuffer(const std::string& s, char* buffer, std::size_t size) {
     std::strncpy(buffer, s.c_str(), size - 1);
     buffer[size - 1] = '\0';
@@ -68,6 +136,109 @@ void DrawAddComponentMenu(EditorDocument& doc, SceneObject& o) {
     ImGui::EndCombo();
 }
 }  // namespace
+
+void UpdateEditorWorkspaceLayout(EditorPanelState& state, glm::vec2 displaySize) {
+    const bool rails = state.mode == EditorMode::Edit || state.playPaused;
+    state.workspace = CalculateEditorWorkspaceLayout(displaySize, state.hierarchyWidth, state.inspectorWidth,
+        state.assetBrowserHeight, state.showAssetBrowser && state.mode == EditorMode::Edit, rails);
+}
+
+void DrawEditorWorkspaceChrome(EditorDocument& doc, EditorPanelState& state, EditorRequests& requests) {
+    const bool editing = state.mode == EditorMode::Edit;
+    const auto display = ImGui::GetIO().DisplaySize;
+    PlaceWorkspacePanel(state.workspace.toolbar);
+    ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(10, 6));
+    ImGui::Begin("##workspaceToolbar", nullptr, kWorkspacePanelFlags | ImGuiWindowFlags_NoTitleBar |
+                 ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoScrollWithMouse);
+    if (ImGui::Button(editing ? "Play" : "Stop", {58, 26})) {
+        if (editing) requests.play = true;
+        else requests.stop = true;
+    }
+    ToolbarHint("F5: play this scene / restore authored scene");
+    ImGui::SameLine();
+    ImGui::BeginDisabled(!editing);
+    if (ImGui::Button("Save", {48, 26})) requests.save = true;
+    ToolbarHint("Ctrl+S: save scene");
+    ImGui::SameLine();
+    if (display.x >= 900.0f) {
+        const auto tool = [&](const char* label, GizmoMode mode, const char* hint) {
+            const bool selected = state.gizmoMode == mode;
+            if (selected) ImGui::PushStyleColor(ImGuiCol_Button, ImGui::GetStyleColorVec4(ImGuiCol_ButtonActive));
+            if (ImGui::Button(label, {0, 26})) state.gizmoMode = mode;
+            if (selected) ImGui::PopStyleColor();
+            ToolbarHint(hint);
+            ImGui::SameLine();
+        };
+        tool("Move", GizmoMode::Translate, "W: move selected objects");
+        tool("Rotate", GizmoMode::Rotate, "E: rotate selected objects");
+        tool("Scale", GizmoMode::Scale, "R: scale selected objects");
+        if (ImGui::Button(state.gizmoSpace == GizmoSpace::World ? "World" : "Local", {55, 26}))
+            state.gizmoSpace = state.gizmoSpace == GizmoSpace::World ? GizmoSpace::Local : GizmoSpace::World;
+        ToolbarHint("X: toggle world/local gizmo axes");
+        ImGui::SameLine();
+        ImGui::Checkbox("Snap", &state.gizmoSnap);
+        ToolbarHint("Ctrl temporarily enables snap");
+        ImGui::SameLine();
+    } else {
+        if (ImGui::Button("Tools", {55, 26})) ImGui::OpenPopup("##compactTools");
+        if (ImGui::BeginPopup("##compactTools")) {
+            if (ImGui::MenuItem("Move", "W", state.gizmoMode == GizmoMode::Translate)) state.gizmoMode = GizmoMode::Translate;
+            if (ImGui::MenuItem("Rotate", "E", state.gizmoMode == GizmoMode::Rotate)) state.gizmoMode = GizmoMode::Rotate;
+            if (ImGui::MenuItem("Scale", "R", state.gizmoMode == GizmoMode::Scale)) state.gizmoMode = GizmoMode::Scale;
+            if (ImGui::MenuItem("Local axes", "X", state.gizmoSpace == GizmoSpace::Local))
+                state.gizmoSpace = state.gizmoSpace == GizmoSpace::Local ? GizmoSpace::World : GizmoSpace::Local;
+            ImGui::MenuItem("Snap", "Ctrl", &state.gizmoSnap);
+            ImGui::EndPopup();
+        }
+        ImGui::SameLine();
+    }
+    ImGui::EndDisabled();
+    if (display.x > 1100.0f) {
+        ImGui::TextDisabled("%s%s", doc.GetScene().Settings().name.c_str(), doc.IsDirty() ? " *" : "");
+        ImGui::SameLine();
+    }
+    const float controlsWidth = 151.0f;
+    if (ImGui::GetCursorPosX() < display.x - controlsWidth) ImGui::SetCursorPosX(display.x - controlsWidth);
+    ImGui::BeginDisabled(!editing);
+    if (ImGui::Button("Scene", {58, 26})) state.showSceneSettings = !state.showSceneSettings;
+    ToolbarHint("Scene settings: name, lighting, world origin and render layers");
+    ImGui::EndDisabled();
+    ImGui::SameLine();
+    if (ImGui::Button("Help", {58, 26})) state.showNavigationHelp = !state.showNavigationHelp;
+    ToolbarHint("Scene navigation and editor shortcuts");
+    ImGui::End();
+    ImGui::PopStyleVar();
+
+    if (state.workspace.showRails) {
+        WorkspaceSplitter("##hierarchySplitter", state.workspace.leftSplitter, true, state.hierarchyWidth,
+                          1.0f, 150.0f, std::max(150.0f, display.x * 0.40f));
+        WorkspaceSplitter("##inspectorSplitter", state.workspace.rightSplitter, true, state.inspectorWidth,
+                          -1.0f, 220.0f, std::max(220.0f, display.x * 0.46f));
+        WorkspaceSplitter("##assetsSplitter", state.workspace.bottomSplitter, false, state.assetBrowserHeight,
+                          -1.0f, 80.0f, std::max(80.0f, display.y * 0.55f));
+    }
+    if (state.showNavigationHelp) {
+        ImGui::SetNextWindowSize({440, 340}, ImGuiCond_FirstUseEver);
+        if (ImGui::Begin("Editor help", &state.showNavigationHelp)) {
+            ImGui::TextUnformatted("SCENE NAVIGATION");
+            ImGui::Separator();
+            ImGui::TextWrapped("Wheel: zoom in / out. Middle drag: pan. Right drag: look; hold WASD / Q / E to fly. Shift flies faster. F frames selection.");
+            ImGui::Spacing();
+            ImGui::TextWrapped("Start a camera drag inside the scene view. Release, Escape or leaving the app ends capture.");
+            ImGui::Spacing();
+            ImGui::TextUnformatted("AUTHORING");
+            ImGui::Separator();
+            ImGui::TextWrapped("W / E / R: move / rotate / scale. X: local / world axes. Ctrl: snap. Left click selects; Ctrl adds; Shift selects a range in the hierarchy.");
+            ImGui::Spacing();
+            ImGui::TextWrapped("Ctrl+S: save. Ctrl+Z / Ctrl+Y: undo / redo. Ctrl+D: duplicate. F5: Play / Stop. Drag the dividers to resize this workspace.");
+            ImGui::Separator();
+            if (ImGui::Button("JudasJS reference")) requests.openJudasJS = true;
+            ImGui::SameLine();
+            if (ImGui::Button("First project guide")) requests.openQuickStart = true;
+        }
+        ImGui::End();
+    }
+}
 
 void DrawEditorMainMenu(EditorDocument& doc, EditorPanelState& state, EditorRequests& requests) {
     if(!doc.ValidationError().empty())state.status="Edit rejected; previous document restored: "+doc.ValidationError();
@@ -128,8 +299,23 @@ void DrawEditorMainMenu(EditorDocument& doc, EditorPanelState& state, EditorRequ
     }
     if (ImGui::BeginMenu("View")) {
         ImGui::MenuItem("Asset Browser", nullptr, &state.showAssetBrowser);
+        ImGui::MenuItem("Scene settings", nullptr, &state.showSceneSettings, editing);
         ImGui::MenuItem("World building / named source", nullptr, &state.showWorldBuilding);
         ImGui::MenuItem("Profiler", nullptr, &state.showProfiler);
+        ImGui::MenuItem("Navigation and shortcuts", nullptr, &state.showNavigationHelp);
+        if (ImGui::MenuItem("JudasJS reference")) requests.openJudasJS = true;
+        if (ImGui::MenuItem("Making your first project")) requests.openQuickStart = true;
+        if (ImGui::MenuItem("Reset workspace layout")) {
+            state.hierarchyWidth = 250; state.inspectorWidth = 340; state.assetBrowserHeight = 200;
+            state.showAssetBrowser = true;
+        }
+        ImGui::Separator();
+        ImGui::TextDisabled("Scene navigation (press in the viewport)");
+        ImGui::TextUnformatted("Mouse wheel: zoom toward / away from focus");
+        ImGui::TextUnformatted("Middle drag: pan in the view plane");
+        ImGui::TextUnformatted("Right drag: look; hold WASD / Q / E to fly");
+        ImGui::TextUnformatted("Shift: faster flight; F: focus selection");
+        ImGui::TextUnformatted("Release or Escape: finish camera drag");
         ImGui::EndMenu();
     }
     if (ImGui::BeginMenu("Debug")) {
@@ -158,30 +344,43 @@ void DrawEditorMainMenu(EditorDocument& doc, EditorPanelState& state, EditorRequ
         if (ImGui::MenuItem("Delete world state (pristine baseline next Play)", "F7", false, !state.worldStatePath.empty())) requests.deleteWorldState = true;
         ImGui::EndMenu();
     }
-    ImGui::Separator();
-    if (editing) {
-        if (ImGui::MenuItem("Play scene", "F5")) requests.play = true;
-        if (ImGui::MenuItem("Run project", nullptr, false, hasProject)) requests.runProject = true;
-    } else {
-        if (ImGui::MenuItem("Stop", "F5")) requests.stop = true;
-        ImGui::TextDisabled(state.playPaused ? "PLAYING (paused - Escape resumes)" : "PLAYING - Escape pauses and frees the mouse");
+    if (ImGui::BeginMenu("Play")) {
+        if (ImGui::MenuItem(editing ? "Play scene" : "Stop", "F5")) {
+            if (editing) requests.play = true; else requests.stop = true;
+        }
+        if (ImGui::MenuItem("Run project", nullptr, false, hasProject && editing)) requests.runProject = true;
+        ImGui::EndMenu();
+    }
+    const char* projectName = hasProject ? state.project->Settings().name.c_str() : "No project";
+    const std::string context = std::string(projectName) + "  /  " +
+        (editing ? "EDIT" : state.playPaused ? "PLAY PAUSED" : "PLAY");
+    const float contextWidth = ImGui::CalcTextSize(context.c_str()).x;
+    if (ImGui::GetContentRegionAvail().x > contextWidth + 20) {
+        ImGui::SameLine(ImGui::GetWindowWidth() - contextWidth - 14.0f);
+        ImGui::TextDisabled("%s", context.c_str());
     }
     ImGui::EndMainMenuBar();
 }
 
 void DrawHierarchyPanel(EditorDocument& doc, EditorPanelState& state, EditorRequests& requests) {
-    ImGui::SetNextWindowPos(ImVec2(0.0f, 24.0f), ImGuiCond_FirstUseEver);
-    ImGui::SetNextWindowSize(ImVec2(300.0f, 356.0f), ImGuiCond_FirstUseEver);
-    if (!ImGui::Begin("Hierarchy")) { ImGui::End(); return; }
+    if (!state.workspace.showRails) return;
+    PlaceWorkspacePanel(state.workspace.hierarchy);
+    if (!ImGui::Begin("Hierarchy", nullptr, kWorkspacePanelFlags)) { ImGui::End(); return; }
     const bool editing = state.mode == EditorMode::Edit;
     Scene& scene = doc.GetScene();
-    char search[256];CopyToBuffer(state.hierarchySearch,search,sizeof(search));if(ImGui::InputText("Search",search,sizeof(search)))state.hierarchySearch=search;
-    ImGui::TextDisabled("%zu objects / %zu selected; Ctrl-click adds", scene.Objects().size(),doc.Selection().size());
+    char search[256]; CopyToBuffer(state.hierarchySearch, search, sizeof(search));
+    ImGui::SetNextItemWidth(std::max(40.0f, ImGui::GetContentRegionAvail().x - 30.0f));
+    if (ImGui::InputTextWithHint("##hierarchySearch", "Search names, tags, folders...", search, sizeof(search)))
+        state.hierarchySearch = search;
+    ImGui::SameLine();
+    if (ImGui::SmallButton("X##clearSearch")) state.hierarchySearch.clear();
+    ToolbarHint("Clear hierarchy search");
+    ImGui::TextDisabled("%zu objects / %zu selected", scene.Objects().size(), doc.Selection().size());
     ImGui::Separator();
     SceneObjectId toDelete = kInvalidSceneObjectId;
     int move = 0;
     SceneObjectId moveId = kInvalidSceneObjectId;
-    ImGui::BeginChild("list", ImVec2(0.0f, -32.0f));
+    ImGui::BeginChild("list", ImVec2(0.0f, -34.0f));
     auto visible=doc.Search(state.hierarchySearch);
     if(state.project&&!state.hierarchySearch.empty()){std::set<SceneObjectId> matches(visible.begin(),visible.end());for(auto& o:doc.GetScene().Objects())for(auto& [id,name]:state.project->Settings().classification.tags.names)if((o.tags&CategoryBit(id))&&name.find(state.hierarchySearch)!=std::string::npos){matches.insert(o.id);for(auto p=o.parent;p;){matches.insert(p);auto* parent=doc.GetScene().Find(p);p=parent?parent->parent:0;}}visible.assign(matches.begin(),matches.end());}
     for (const SceneObject& o : scene.Objects()) {
@@ -206,9 +405,8 @@ void DrawHierarchyPanel(EditorDocument& doc, EditorPanelState& state, EditorRequ
             ImGui::PopID();
             continue;
         }
-        std::string label = (o.authoringFolder.empty()?std::string():o.authoringFolder+" / ")+(o.name.empty()?"(unnamed)":o.name);
+        std::string label = o.name.empty() ? "(unnamed)" : o.name;
         const std::string indicators = ComponentIndicators(o);
-        if (!indicators.empty()) label += "  [" + indicators + "]";
         if (state.runtime) {
             if (const EntityRecord* e = state.runtime->FindEntity(o.id)) {
                 label += e->lifecycle == EntityLifecycle::Destroyed ? "  [destroyed]"
@@ -223,8 +421,16 @@ void DrawHierarchyPanel(EditorDocument& doc, EditorPanelState& state, EditorRequ
         }
         if (broken) label += "  (!)";
         label += "##" + std::to_string(o.id);
+        unsigned depth = 0;
+        for (auto parent = o.parent; parent && depth < 16; ++depth) {
+            const auto* ancestor = scene.Find(parent);
+            if (!ancestor) break;
+            parent = ancestor->parent;
+        }
+        const float indentation = float(std::min(depth, 8u)) * 12.0f;
+        if (indentation > 0) ImGui::Indent(indentation);
         if (broken) ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(1.0f, 0.55f, 0.3f, 1.0f));
-        if (ImGui::Selectable(label.c_str(), selected, ImGuiSelectableFlags_AllowDoubleClick)) {
+        if (ImGui::Selectable(label.c_str(), selected, ImGuiSelectableFlags_AllowDoubleClick, {0, 22})) {
             if(ImGui::GetIO().KeyShift)doc.SelectRange(o.id,visible,ImGui::GetIO().KeyCtrl);else doc.Select(o.id,ImGui::GetIO().KeyCtrl);
             if (editing && ImGui::IsMouseDoubleClicked(ImGuiMouseButton_Left)) {
                 state.renamingId = o.id;
@@ -233,12 +439,20 @@ void DrawHierarchyPanel(EditorDocument& doc, EditorPanelState& state, EditorRequ
         }
         if (broken) ImGui::PopStyleColor();
         if (ImGui::IsItemHovered()) {
-            ImGui::SetTooltip("id %llu%s%s", static_cast<unsigned long long>(o.id),
-                              indicators.empty() ? "" : ("  components: " + indicators).c_str(),
-                              broken ? "\nmesh asset missing or unknown" : "");
+            ImGui::BeginTooltip();
+            ImGui::TextUnformatted(o.name.empty() ? "(unnamed)" : o.name.c_str());
+            ImGui::TextDisabled("ID %llu  /  %s", static_cast<unsigned long long>(o.id),
+                               indicators.empty() ? "empty object" : indicators.c_str());
+            if (!o.authoringFolder.empty()) ImGui::Text("Folder: %s", o.authoringFolder.c_str());
+            if (const auto* parent = scene.Find(o.parent)) ImGui::Text("Parent: %s", parent->name.c_str());
+            if (broken) ImGui::TextColored({1, .55f, .3f, 1}, "Mesh asset is missing or unknown");
+            ImGui::TextDisabled("Ctrl: add selection   Shift: select range");
+            ImGui::EndTooltip();
         }
         if (editing && ImGui::BeginPopupContextItem()) {
-            doc.Select(o.id);
+            if (!selected) doc.Select(o.id);
+            if (ImGui::MenuItem("Focus", "F")) requests.focusSelection = true;
+            ImGui::Separator();
             if (ImGui::MenuItem("Rename")) { state.renamingId = o.id; state.renameBuffer = o.name; }
             if (ImGui::MenuItem("Duplicate")) requests.duplicateId = o.id;
             if (ImGui::MenuItem("Move up")) { move = -1; moveId = o.id; }
@@ -246,16 +460,23 @@ void DrawHierarchyPanel(EditorDocument& doc, EditorPanelState& state, EditorRequ
             if (ImGui::MenuItem("Delete")) toDelete = o.id;
             ImGui::EndPopup();
         }
+        if (indentation > 0) ImGui::Unindent(indentation);
         ImGui::PopID();
     }
     ImGui::EndChild();
     if (editing) {
-        if (ImGui::Button("Delete") && doc.Selected() != kInvalidSceneObjectId) toDelete = doc.Selected();
-        ImGui::SameLine();
-        if(ImGui::Button("Duplicate selection")){std::string error;if(!doc.DuplicateSelection(error))state.status=error;}
-        ImGui::SameLine();if(ImGui::Button("Folder")){std::string error;if(!doc.GroupSelection(error))state.status=error;}
-        ImGui::SameLine();
+        ImGui::BeginDisabled(doc.Selected() == kInvalidSceneObjectId);
         if (ImGui::Button("Focus")) requests.focusSelection = true;
+        ImGui::SameLine();
+        if (ImGui::Button("Actions")) ImGui::OpenPopup("##selectionActions");
+        ToolbarHint("Duplicate, group or delete the selection");
+        if (ImGui::BeginPopup("##selectionActions")) {
+            if (ImGui::MenuItem("Duplicate selection", "Ctrl+D")) { std::string error; if (!doc.DuplicateSelection(error)) state.status = error; }
+            if (ImGui::MenuItem("Group in folder")) { std::string error; if (!doc.GroupSelection(error)) state.status = error; }
+            if (ImGui::MenuItem("Delete selection", "Delete")) toDelete = doc.Selected();
+            ImGui::EndPopup();
+        }
+        ImGui::EndDisabled();
     }
     if (toDelete != kInvalidSceneObjectId) {std::string error;if(!doc.DeleteSelection(error))state.status="Deletion rejected: "+error;else state.status="Deleted selected hierarchies";}
     if (move != 0) {
@@ -267,9 +488,9 @@ void DrawHierarchyPanel(EditorDocument& doc, EditorPanelState& state, EditorRequ
 }
 
 void DrawInspectorPanel(EditorDocument& doc, EditorPanelState& state) {
-    ImGui::SetNextWindowPos(ImVec2(ImGui::GetIO().DisplaySize.x - 400.0f, 24.0f), ImGuiCond_FirstUseEver);
-    ImGui::SetNextWindowSize(ImVec2(400.0f, ImGui::GetIO().DisplaySize.y - 24.0f - 28.0f), ImGuiCond_FirstUseEver);
-    if (!ImGui::Begin("Inspector")) { ImGui::End(); return; }
+    if (!state.workspace.showRails) return;
+    PlaceWorkspacePanel(state.workspace.inspector);
+    if (!ImGui::Begin("Inspector", nullptr, kWorkspacePanelFlags)) { ImGui::End(); return; }
     doc.PruneSelection();
     if(state.mode==EditorMode::Edit&&doc.Selection().size()>1){
         ImGui::Text("%zu selected",doc.Selection().size());static glm::vec3 delta(0),angles(0),factor(1);static bool worldAxes=true,individual=true;
@@ -284,13 +505,26 @@ void DrawInspectorPanel(EditorDocument& doc, EditorPanelState& state) {
         ImGui::InputText("New value",value,sizeof(value));if(ImGui::Button("Apply field")&&!field.empty()&&common.count(field)){std::string error;if(!doc.BatchProperties({{field,value}},error))state.status=error;}
     }
     if(state.mode==EditorMode::Edit&&doc.SelectedObject()){
-        static int component=0;const char* names[]={"render","body","animation","socket","motor","audio","particle","joint","ragdoll","scripts"};ImGui::Combo("Component clipboard",&component,names,10);
+        static int component=0;const char* names[]={"render","body","animation","socket","motor","audio","particle","joint","ragdoll","scripts"};
+        ImGui::TextWrapped("Component clipboard");
+        ImGui::SetNextItemWidth(-1);
+        // Keep the original control identity while its visible label moves
+        // above the full-width selector in the narrow inspector rail.
+        ImGui::PushOverrideID(ImGui::GetID("Component clipboard"));
+        ImGui::Combo("",&component,names,10);
+        ImGui::PopID();
         if(ImGui::Button("Copy component"))doc.CopyComponent(names[component]);
         ImGui::SameLine();if(ImGui::Button("Paste to selection")){std::string error;if(!doc.PasteComponent(error))state.status=error;}
     }
     SceneObject* o = doc.SelectedObject();
     if (!o) {
-        ImGui::TextDisabled("Nothing selected. Click an object in the viewport or the hierarchy.");
+        ImGui::Spacing();
+        ImGui::TextUnformatted("Select an object");
+        ImGui::TextWrapped("Choose an object in the scene or hierarchy to inspect its transform and components.");
+        ImGui::Spacing();
+        ImGui::BeginDisabled(state.mode != EditorMode::Edit);
+        if (ImGui::Button("Scene settings")) state.showSceneSettings = true;
+        ImGui::EndDisabled();
         ImGui::End();
         return;
     }
@@ -396,7 +630,10 @@ void DrawInspectorPanel(EditorDocument& doc, EditorPanelState& state) {
     TextField(doc, "Name", o->name);
     if(!o->prefabRoot){
         const auto* parent=doc.GetScene().Find(o->parent);
-        if(ImGui::BeginCombo("Parent (local transform)",parent?parent->name.c_str():"None")){
+        ImGui::TextWrapped("Parent (local transform)");
+        ImGui::SetNextItemWidth(-1);
+        ImGui::PushOverrideID(ImGui::GetID("Parent (local transform)"));
+        if(ImGui::BeginCombo("",parent?parent->name.c_str():"None")){
             if(ImGui::Selectable("None",!o->parent)){doc.BeginEdit();o->parent=0;doc.CommitEdit();}
             for(const auto& candidate:doc.GetScene().Objects())if(candidate.id!=o->id&&ImGui::Selectable(candidate.name.c_str(),candidate.id==o->parent)){
                 const auto old=o->parent;doc.BeginEdit();o->parent=candidate.id;std::string error;
@@ -404,6 +641,7 @@ void DrawInspectorPanel(EditorDocument& doc, EditorPanelState& state) {
             }
             ImGui::EndCombo();
         }
+        ImGui::PopID();
     }
     if(state.project){const auto& c=state.project->Settings().classification;
         DrawCategoryMask(doc,"Tags",o->tags,c.tags,false);
@@ -422,9 +660,10 @@ void DrawInspectorPanel(EditorDocument& doc, EditorPanelState& state) {
 }
 
 void DrawSceneSettingsPanel(EditorDocument& doc, EditorPanelState& state) {
-    ImGui::SetNextWindowPos(ImVec2(0.0f, 380.0f), ImGuiCond_FirstUseEver);
-    ImGui::SetNextWindowSize(ImVec2(300.0f, 180.0f), ImGuiCond_FirstUseEver);
-    if (!ImGui::Begin("Scene")) { ImGui::End(); return; }
+    if (!state.showSceneSettings) return;
+    const auto display = ImGui::GetIO().DisplaySize;
+    ImGui::SetNextWindowSize({std::min(430.0f, display.x - 40), std::min(540.0f, display.y - 110)}, ImGuiCond_FirstUseEver);
+    if (!ImGui::Begin("Scene settings", &state.showSceneSettings)) { ImGui::End(); return; }
     if (state.mode == EditorMode::Play) ImGui::BeginDisabled();
     SceneSettings& s = doc.GetScene().Settings();
     if(state.project)DrawCategoryMask(doc,"Main/editor camera render mask",s.mainCameraRenderMask,state.project->Settings().classification.render);
@@ -535,11 +774,9 @@ bool BakeEditorCollision(EditorDocument& doc,SceneObjectId target,EditorPanelSta
 }
 
 void DrawAssetBrowserPanel(EditorDocument& doc, EditorPanelState& state, EditorRequests& requests) {
-    (void)doc;
-    if (!state.showAssetBrowser) return;
-    ImGui::SetNextWindowPos(ImVec2(0.0f, 560.0f), ImGuiCond_FirstUseEver);
-    ImGui::SetNextWindowSize(ImVec2(560.0f, 212.0f), ImGuiCond_FirstUseEver);
-    if (!ImGui::Begin("Asset Browser", &state.showAssetBrowser)) { ImGui::End(); return; }
+    if (!state.workspace.showAssets) return;
+    PlaceWorkspacePanel(state.workspace.assets);
+    if (!ImGui::Begin("Asset Browser", &state.showAssetBrowser, kWorkspacePanelFlags)) { ImGui::End(); return; }
     const bool hasProject = state.project && state.project->IsLoaded() && state.assets;
     if (!hasProject) {
         ImGui::TextDisabled("No project open. File > New project / Open project.");
@@ -547,126 +784,52 @@ void DrawAssetBrowserPanel(EditorDocument& doc, EditorPanelState& state, EditorR
         return;
     }
     const AssetDatabase& db = *state.assets;
-    if(ImGui::CollapsingHeader("Model import / reimport",ImGuiTreeNodeFlags_DefaultOpen)){
-        auto text=[](const char* label,std::string& value){std::vector<char> buffer(std::max(size_t(4096),value.size()+256),0);std::copy(value.begin(),value.end(),buffer.begin());if(ImGui::InputText(label,buffer.data(),buffer.size()))value=buffer.data();};
-        ImGui::TextWrapped("FBX / glTF / GLB / OBJ to an ordinary cooked model. Sources and recipes are author-owned; the game loads only cooked content. Reimport publishes only in Edit mode.");
-        text("Original source file",state.modelSource);text("Project-relative runtime output",state.modelOutput);
-        if(state.mode==EditorMode::Edit&&ImGui::Button("Copy source and create import recipe")){std::string error;if(CreateModelRecipe(state.project->RootDir(),state.modelSource,state.modelOutput,state.modelRecipe,error))state.status="Recipe created; review settings then Import";else state.status=error;}
-        text("Import recipe (.judasimport)",state.modelRecipe);
-        if(!state.modelRecipe.empty()&&std::filesystem::is_regular_file(state.modelRecipe))try{
-            using Json=nlohmann::json;std::ifstream file(state.modelRecipe);if(std::filesystem::file_size(state.modelRecipe)>4*1024*1024)throw std::runtime_error("Recipe exceeds 4 MiB");auto recipe=Json::parse(file,[](int depth,Json::parse_event_t,const Json&){if(depth>=48)throw std::runtime_error("Recipe nesting bound");return true;});bool changed=false;auto& settings=recipe["settings"];
-            double units=settings.value("unitMeters",0.0),rate=settings.value("sampleRate",60.0);bool base=settings.value("allowBaseMesh",false);
-            if(ImGui::InputDouble("Source metres per unit (0 = metadata)",&units)){settings["unitMeters"]=units;changed=true;}if(ImGui::InputDouble("Nonlinear bake samples / second",&rate)){settings["sampleRate"]=rate;changed=true;}if(ImGui::Checkbox("Explicit base mesh only (lossy)",&base)){settings["allowBaseMesh"]=base;changed=true;}
-            text("Compatible motion source",state.modelMotionSource);text("Source take",state.modelMotionTake);text("Clip name",state.modelMotionName);
-            if(state.mode==EditorMode::Edit&&ImGui::Button("Copy / add compatible motion")){auto root=std::filesystem::path(state.project->RootDir());auto directory=(root/recipe.at("source").get<std::string>()).parent_path();auto source=std::filesystem::path(state.modelMotionSource);auto owned=directory/source.filename();if(std::filesystem::weakly_canonical(source)!=std::filesystem::weakly_canonical(owned))std::filesystem::copy_file(source,owned,std::filesystem::copy_options::overwrite_existing);recipe["motions"].push_back({{"source",owned.lexically_relative(root).generic_string()},{"take",state.modelMotionTake},{"name",state.modelMotionName},{"jointRemaps",Json::object()}});changed=true;}
-            glm::vec4 basis(0,0,0,1);if(settings.contains("basisRotation")){auto q=settings.at("basisRotation").get<std::vector<float>>();if(q.size()==4)basis={q[0],q[1],q[2],q[3]};}if(ImGui::InputFloat4("Explicit post-metadata basis rotation x/y/z/w",&basis.x)){settings["basisRotation"]={basis.x,basis.y,basis.z,basis.w};changed=true;}
-            text("Remap source name/path",state.modelMapSource);text("Project-relative file or stable alias",state.modelMapTarget);
-            const char* maps[]={"dependencyRemaps","materialAliases","nodeAliases"};for(auto field:maps){ImGui::PushID(field);if(ImGui::Button(field)&&!state.modelMapSource.empty()){settings[field][state.modelMapSource]=state.modelMapTarget;changed=true;}ImGui::PopID();}
-            if(state.importAccepted&&state.importAccepted->preview){auto& preview=*state.importAccepted->preview;
-                if(ImGui::TreeNode("Import part selection (empty = all)")){auto parts=settings.value("selectedParts",std::vector<std::string>{});bool all=parts.empty();if(ImGui::Checkbox("All source parts",&all)&&all){settings["selectedParts"]=Json::array();changed=true;}for(auto& part:preview.primitives){bool selected=all||std::find(parts.begin(),parts.end(),part.part)!=parts.end();if(ImGui::Checkbox(part.part.c_str(),&selected)){if(all){for(auto& p:preview.primitives)parts.push_back(p.part);}if(selected){if(std::find(parts.begin(),parts.end(),part.part)==parts.end())parts.push_back(part.part);}else parts.erase(std::remove(parts.begin(),parts.end(),part.part),parts.end());settings["selectedParts"]=parts;changed=true;}}ImGui::TreePop();}
-                if(ImGui::TreeNode("Source material slots")){for(size_t i=0;i<preview.materialKeys.size();++i)ImGui::BulletText("%zu: %s",i,preview.materialKeys[i].c_str());ImGui::TextWrapped("Author material overrides in the normal Render inspector; imported defaults are separate.");ImGui::TreePop();}
-            }
-            if(recipe.contains("clips"))for(auto& clip:recipe["clips"]){ImGui::PushID(clip.at("sourceClip").get<std::string>().c_str());std::string name=clip.value("name",clip.at("sourceClip").get<std::string>());text("Clip output name",name);if(clip.value("name",std::string())!=name){clip["name"]=name;changed=true;}bool loop=clip.value("loop",false);if(ImGui::Checkbox("Loop metadata",&loop)){clip["loop"]=loop;changed=true;}auto& root=clip["rootMotion"];std::string policy=root.value("policy",std::string("preserve")),node=root.value("node",std::string());if(ImGui::BeginCombo("Root policy",policy.c_str())){for(auto value:{"preserve","inPlace","extract"})if(ImGui::Selectable(value,policy==value)){root["policy"]=value;changed=true;}ImGui::EndCombo();}auto rig=state.importTask&&state.importPublished?state.resources->TryGetSkeletal(state.importTask->assetId):nullptr;if(rig&&ImGui::BeginCombo("Motion node",node.c_str())){for(size_t i=0;i<rig->skeleton.names.size();++i){auto key=SkeletonJointKey(rig->skeleton,int(i));if(ImGui::Selectable(key.c_str(),node==key)){root["node"]=key;changed=true;}}ImGui::EndCombo();}auto axes=root.value("translation",std::vector<bool>{true,false,true});if(axes.size()==3)for(int k=0;k<3;++k){bool axis=axes[k];ImGui::PushID(k);if(ImGui::Checkbox(k==0?"Model X":k==1?"Model Y":"Model Z",&axis)){axes[k]=axis;root["translation"]=axes;changed=true;}ImGui::PopID();ImGui::SameLine();}ImGui::NewLine();glm::vec3 rotationAxis(0);if(root.contains("rotationAxis")){auto v=root["rotationAxis"].get<std::vector<float>>();if(v.size()==3)rotationAxis={v[0],v[1],v[2]};}if(ImGui::InputFloat3("Extract twist around model axis (zero = none)",&rotationAxis.x)){if(glm::length(rotationAxis)>1e-6f)root["rotationAxis"]={rotationAxis.x,rotationAxis.y,rotationAxis.z};else root.erase("rotationAxis");changed=true;}glm::vec2 trim(0,1);if(clip.contains("trim"))trim={clip["trim"][0],clip["trim"][1]};if(ImGui::InputFloat2("Trim begin/end seconds",&trim.x)){clip["trim"]={trim.x,trim.y};changed=true;}ImGui::PopID();}
-            if(state.importTask&&state.importTask->preview&&state.importTask->preview->skeletal&&ImGui::Button("Populate editable clip selections")){recipe["clips"]=Json::array();for(auto& clip:state.importTask->preview->skeletal->clips)recipe["clips"].push_back({{"sourceClip",clip.name},{"name",clip.name},{"loop",clip.loop},{"rootMotion",{{"policy","preserve"}}}});changed=true;}
-            if(changed&&state.mode==EditorMode::Edit){std::ofstream out(state.modelRecipe);out<<recipe.dump(2)<<'\n';state.status="Import recipe saved; accepted runtime content is unchanged until reimport";}
-            if(ImGui::TreeNode("Named recipe / selections / remaps")){auto pretty=recipe.dump(2);ImGui::TextUnformatted(pretty.c_str());ImGui::TreePop();}
-        }catch(const std::exception& e){ImGui::TextWrapped("Recipe: %s",e.what());}
-        bool busy=state.importTask&&!state.importTask->done.load();
-        if(state.mode==EditorMode::Edit&&!busy&&!state.modelRecipe.empty()&&ImGui::Button("Import / reimport / retry")){state.importTask=QueueModelImport(*state.importJobs,state.modelRecipe);state.importPublished=false;}
-        if(busy){ImGui::ProgressBar(float(state.importTask->progress.load())/100);if(ImGui::Button("Cancel import"))state.importTask->cancel=true;}
-        if(state.importTask&&state.importTask->done.load(std::memory_order_acquire)){
-            auto& t=*state.importTask;if(t.job.IsValid()&&state.importJobs->IsFinished(t.job)){state.importJobs->Forget(t.job);t.job={};}if(!t.success)ImGui::TextWrapped("Import failed; last good model retained: %s",t.error.c_str());
-            else if(state.mode==EditorMode::Edit&&!state.importPublished){std::string error;auto relative=std::filesystem::path(t.output).lexically_relative(state.project->RootDir());if(relative.empty()||relative.is_absolute()||*relative.begin()==".."){t.cancel=true;state.status="Import belongs to previous project; publication cancelled";}else if(PublishModelImport(t,error)){state.importAccepted=state.importTask;state.status=t.unchanged?"Unchanged import; reused accepted model":"Published complete model; sources retained";requests.rescanAssets=true;if(state.resources)state.resources->Invalidate(t.assetId);state.browserSelection=t.assetId;}else state.status=error;state.importPublished=true;}
-            else if(state.mode==EditorMode::Play&&!state.importPublished)ImGui::TextWrapped("Cook ready. Stop Play to publish; live skeleton buffers remain unchanged.");
-            }
-        if(state.importAccepted){auto& t=*state.importAccepted;{
-                ImGui::Text("Source bones: %zu; hierarchy nodes: %zu; palette entries: %zu; parts: %zu",t.report.sourceBones,t.report.hierarchyNodes,t.report.skinJoints,t.report.parts);
-                if(ImGui::Button("Place accepted model"))requests.dropMeshAssetId=t.assetId;
-                auto rig=state.resources->TryGetSkeletal(t.assetId);
-                if(rig){
-                    ImGui::Text("Runtime hierarchy: %zu nodes",rig->skeleton.names.size());
-                    if(!rig->clips.empty()){int clip=int(std::min(size_t(state.modelPreviewClip),rig->clips.size()-1));if(ImGui::BeginCombo("Preview clip",rig->clips[clip].name.c_str())){for(size_t i=0;i<rig->clips.size();++i)if(ImGui::Selectable(rig->clips[i].name.c_str(),i==size_t(clip))){state.modelPreviewClip=unsigned(i);state.modelPreviewTime=0;}ImGui::EndCombo();}ImGui::Checkbox("Preview playback",&state.modelPreviewPlaying);ImGui::SliderFloat("Scrub seconds",&state.modelPreviewTime,0,rig->clips[state.modelPreviewClip].duration);}
-                    ImGui::Checkbox("Skeleton overlay",&state.modelPreviewSkeleton);ImGui::SliderFloat("Orbit view",&state.modelPreviewYaw,-3.14f,3.14f);
-                    if(ImGui::TreeNode("Hierarchy / stable joint identities")){for(size_t i=0;i<rig->skeleton.names.size();++i)ImGui::BulletText("%s",SkeletonJointKey(rig->skeleton,int(i)).c_str());ImGui::TreePop();}
-                }
-                if(auto parts=state.resources->TryGetModelParts(t.assetId))for(auto& p:*parts){bool visible=std::find(state.modelPreviewHidden.begin(),state.modelPreviewHidden.end(),p.part)==state.modelPreviewHidden.end();if(ImGui::Checkbox(p.part.c_str(),&visible)){if(visible)state.modelPreviewHidden.erase(std::remove(state.modelPreviewHidden.begin(),state.modelPreviewHidden.end(),p.part),state.modelPreviewHidden.end());else state.modelPreviewHidden.push_back(p.part);}}
-                ImGui::TextWrapped("White ruler = one metre; RGB axes = import model basis; green = hierarchy; orange = extracted root track. These are preview axes, not simulation gravity.");
-                if(state.modelPreviewToken)ImGui::Image((ImTextureID)(intptr_t)state.modelPreviewToken,ImVec2(std::min(600.f,ImGui::GetContentRegionAvail().x),360),ImVec2(0,1),ImVec2(1,0));
-                for(auto& diagnostic:t.report.diagnostics)ImGui::TextWrapped("%s [%s]: %s. %s",diagnostic.severity.c_str(),diagnostic.code.c_str(),diagnostic.message.c_str(),diagnostic.action.c_str());
-            }
-        }
-    }
-
-    if(state.mode==EditorMode::Edit&&ImGui::Button("Create material")){auto directory=std::filesystem::path(db.AssetsDir())/"materials";std::filesystem::create_directories(directory);auto path=directory/"material.judasmat";unsigned n=2;while(std::filesystem::exists(path))path=directory/("material"+std::to_string(n++)+".judasmat");std::string error;if(SaveMaterial(path.string(),MaterialDefinition{},error))requests.trackAssetPath=path.string();else state.status=error;}
-    if(state.mode==EditorMode::Edit&&ImGui::Button("Create reverb settings")){auto directory=std::filesystem::path(db.AssetsDir())/"audio";std::filesystem::create_directories(directory);auto path=directory/"environment.judasreverb";unsigned n=2;while(std::filesystem::exists(path))path=directory/("environment"+std::to_string(n++)+".judasreverb");std::ofstream f(path);f<<SerializeAudioEnvironment({});if(f)requests.trackAssetPath=path.string();else state.status="Cannot write reverb settings";}
-    if(state.mode==EditorMode::Edit&&ImGui::CollapsingHeader("Bake HDR environment")){static char source[1024]{};static int width=128,samples=128;ImGui::InputText("Radiance .hdr source",source,sizeof(source));ImGui::InputInt("Bake width (power of two)",&width);ImGui::InputInt("Bake samples",&samples);ImGui::TextWrapped("Offline bake; may briefly block editor. Derived data is exported, never regenerated during play.");if(ImGui::Button("Bake and register environment")){auto directory=std::filesystem::path(db.AssetsDir())/"environments";std::filesystem::create_directories(directory);auto path=directory/(std::filesystem::path(source).stem().string()+".judasenv");unsigned n=2;while(std::filesystem::exists(path))path=directory/(std::filesystem::path(source).stem().string()+std::to_string(n++)+".judasenv");EnvironmentData data;std::string error;if(BakeEnvironment(source,unsigned(width),unsigned(samples),data,error)&&SaveEnvironment(path.string(),data,error))requests.trackAssetPath=path.string();else state.status=error;}}
-
-    if(state.mode==EditorMode::Edit&&ImGui::CollapsingHeader("Cook physical collider")){
-        static std::string sourceId;static char output[256]="collision/physical.judascollision";static int primitive=0,kind=0;static bool twoSided=false;static glm::vec3 scale(1),offset(0),angles(0);
-        const auto selected=db.Find(sourceId);if(ImGui::BeginCombo("Registered source",selected?selected->relativePath.c_str():"Select OBJ/glTF/GLB")){for(auto& [id,a]:db.Records())if(a.type==AssetType::Mesh&&ImGui::Selectable(a.relativePath.c_str(),id==sourceId))sourceId=id;ImGui::EndCombo();}
-        ImGui::InputInt("Object/group or node/primitive ordinal",&primitive);const char* kinds[]={"Static triangle surface","Convex hull (fills recesses)"};ImGui::Combo("Cook kind",&kind,kinds,2);ImGui::Checkbox("Two-sided triangle surface",&twoSided);ImGui::DragFloat3("Baked positive scale",&scale.x,.01f);ImGui::DragFloat3("Baked translation",&offset.x,.01f);ImGui::DragFloat3("Baked rotation degrees",&angles.x,.5f);ImGui::InputText("Output relative to assets",output,sizeof(output));
-        ImGui::Checkbox("Explicit removal of true degenerates",&state.collisionCleanup.removeDegenerates);ImGui::Checkbox("Explicit orient connected patches",&state.collisionCleanup.orientPatches);ImGui::InputDouble("Collision-only weld metres (0..0.001)",&state.collisionCleanup.weldTolerance);
-        if(!state.collisionDiagnostic.code.empty()){auto& d=state.collisionDiagnostic;ImGui::TextWrapped("%s: %s / source face %u / point %.4f %.4f %.4f",d.code.c_str(),d.node.c_str(),d.sourceFace,d.point.x,d.point.y,d.point.z);if(ImGui::Button("Highlight diagnostic on selected model"))state.modelDiagnosticVisible=true;}
-        ImGui::TextWrapped("Explicit single source selection; glTF node transform is included. Failed cooks preserve the previous file. Use a low-detail physical model where appropriate. Convex mass sums child volumes, including overlaps.");
-        if(ImGui::Button("Cook / replace and register")){std::string error;CollisionAsset asset;ModelCollisionCleanupReport cleanupReport;state.collisionDiagnosticAsset=sourceId;CollisionCookSettings settings;settings.convex=kind==1;settings.twoSided=twoSided;settings.primitive=unsigned(std::max(primitive,0));settings.transform=glm::translate(glm::dmat4(1),glm::dvec3(offset))*glm::mat4_cast(glm::dquat(glm::radians(glm::dvec3(angles))))*glm::scale(glm::dmat4(1),glm::dvec3(scale));auto relative=std::filesystem::path(output).lexically_normal();bool valid=!relative.empty()&&!relative.is_absolute();for(auto& part:relative)if(part=="..")valid=false;auto destination=std::filesystem::path(db.AssetsDir())/relative;
-            if(!selected||selected->missing)error="select an available registered model";else if(!valid||relative.extension()!=".judascollision")error="destination must be an assets-relative .judascollision path";else{std::error_code ec;std::filesystem::create_directories(destination.parent_path(),ec);if(ec)error=ec.message();else if(CookImportedCollisionFile(selected->path,sourceId,settings,state.collisionCleanup,destination.string(),asset,cleanupReport,state.collisionDiagnostic,error)){requests.trackAssetPath=destination.string();for(auto& [id,a]:db.Records())if(a.path==destination.string()&&state.resources)state.resources->Invalidate(id);}}
-            state.status=error.empty()?"Cooked collision; assign it in Body / Cooked geometry":error;
-        }
-        if(ImGui::Button("Cook and assign selected Body")){CollisionCookSettings settings;settings.convex=kind==1;settings.twoSided=twoSided;settings.primitive=unsigned(std::max(primitive,0));settings.transform=glm::translate(glm::dmat4(1),glm::dvec3(offset))*glm::mat4_cast(glm::dquat(glm::radians(glm::dvec3(angles))))*glm::scale(glm::dmat4(1),glm::dvec3(scale));BakeEditorCollision(doc,doc.Selected(),state,sourceId,settings,output);}
-    }
-
-    if(state.mode==EditorMode::Edit&&ImGui::Button("Create UI document")){
-        UIDocument d;UIElement root;root.id="canvas";root.kind=UIKind::Canvas;d.elements.push_back(root);UIElement panel;panel.id="panel";panel.parent="canvas";panel.background={.1f,.12f,.18f,.95f};d.elements.push_back(panel);
-        auto directory=std::filesystem::path(db.AssetsDir())/"ui";std::filesystem::create_directories(directory);auto path=directory/"layout.judasui";int n=2;while(std::filesystem::exists(path))path=directory/("layout"+std::to_string(n++)+".judasui");std::string error;
-        if(SaveUIDocument(path.string(),d,error))requests.trackAssetPath=path.string();else state.status=error;
-    }
-    ImGui::TextDisabled("%s  (%zu assets, %zu untracked, %zu problems)", db.AssetsDir().c_str(), db.Records().size(),
-                        db.Untracked().size(), db.Problems().size());
+    PublishFinishedEditorImport(state, requests);
+    if (ImGui::BeginTabBar("##assetBrowserTabs")) {
+        if (ImGui::BeginTabItem("Assets")) {
+    ImGui::BeginChild("assets", ImVec2(0.0f, 0.0f), ImGuiChildFlags_None);
+    char assetSearch[256]; CopyToBuffer(state.assetSearch, assetSearch, sizeof(assetSearch));
+    const float browserWidth = ImGui::GetContentRegionAvail().x;
+    ImGui::SetNextItemWidth(std::max(60.0f, browserWidth - 290.0f));
+    if (ImGui::InputTextWithHint("##assetSearch", "Search assets, IDs or source...", assetSearch, sizeof(assetSearch)))
+        state.assetSearch = assetSearch;
+    ImGui::SameLine();
+    const char* assetTypes[]={"All types","Mesh","Texture","Font","Audio","Prefab","Script","UI","Navigation","Liquid","Material","Environment","Catalog","World","Audio effect","Deformable","Collision","Physical material"};
+    int selectedType = state.assetTypeFilter + 1;
+    ImGui::SetNextItemWidth(120.0f);
+    if (ImGui::Combo("##assetType", &selectedType, assetTypes, 18)) state.assetTypeFilter = selectedType - 1;
+    ImGui::SameLine();
+    ImGui::Checkbox("Missing", &state.assetMissingOnly);
     ImGui::SameLine();
     if (ImGui::SmallButton("Rescan")) requests.rescanAssets = true;
-
-    if (ImGui::CollapsingHeader("Import", ImGuiTreeNodeFlags_DefaultOpen)) {
-        char source[512], destination[256];
-        CopyToBuffer(state.importSourceInput, source, sizeof(source));
-        CopyToBuffer(state.importDestinationInput, destination, sizeof(destination));
-        if (ImGui::InputTextWithHint("Source file", "/path/to/model.obj | texture.png | font.ttf | sound.wav", source, sizeof(source))) state.importSourceInput = source;
-        if (ImGui::InputTextWithHint("Destination (in assets)", "models/model.obj (empty keeps the file name)", destination, sizeof(destination))) state.importDestinationInput = destination;
-        if (ImGui::Button("Import") && !state.importSourceInput.empty()) {
-            requests.importSource = state.importSourceInput;
-            requests.importDestination = state.importDestinationInput;
-        }
-        ImGui::SameLine();
-        ImGui::TextDisabled("(path field; the editor has no OS file dialog)");
-    }
-
-    ImGui::BeginChild("assets", ImVec2(0.0f, 0.0f), ImGuiChildFlags_None);
-    static char assetSearch[256]{};static int assetTypeFilter=-1;static bool missingOnly=false;
-    ImGui::InputTextWithHint("Asset search","name, stable ID or source",assetSearch,sizeof(assetSearch));
-    const char* assetTypes[]={"All","Mesh","Texture","Font","Audio","Prefab","Script","UI","Navigation","Liquid","Material","Environment","Catalog","World","Audio effect","Deformable","Collision","Physical material"};int selectedType=assetTypeFilter+1;if(ImGui::Combo("Asset type",&selectedType,assetTypes,18))assetTypeFilter=selectedType-1;ImGui::Checkbox("Missing only",&missingOnly);
-    if (ImGui::BeginTable("assetTable", 4, ImGuiTableFlags_RowBg | ImGuiTableFlags_BordersInnerV | ImGuiTableFlags_SizingStretchProp)) {
-        ImGui::TableSetupColumn("Type", ImGuiTableColumnFlags_WidthFixed, 60.0f);
-        ImGui::TableSetupColumn("Path");
-        ImGui::TableSetupColumn("State", ImGuiTableColumnFlags_WidthFixed, 70.0f);
-        ImGui::TableSetupColumn("Id", ImGuiTableColumnFlags_WidthFixed, 130.0f);
+    if (ImGui::IsItemHovered()) ImGui::SetTooltip("Refresh project assets\n%zu registered / %zu untracked / %zu problems",
+                                               db.Records().size(), db.Untracked().size(), db.Problems().size());
+    if (ImGui::BeginTable("assetTable", 3, ImGuiTableFlags_RowBg | ImGuiTableFlags_BordersInnerV |
+                         ImGuiTableFlags_Resizable | ImGuiTableFlags_ScrollY,
+                         {0, std::max(35.0f, ImGui::GetContentRegionAvail().y)})) {
+        ImGui::TableSetupColumn("Name", ImGuiTableColumnFlags_WidthStretch);
+        ImGui::TableSetupColumn("Type", ImGuiTableColumnFlags_WidthFixed, 90.0f);
+        ImGui::TableSetupColumn("State", ImGuiTableColumnFlags_WidthFixed, 95.0f);
+        ImGui::TableSetupScrollFreeze(0, 1);
         ImGui::TableHeadersRow();
         for (const auto& [id, record] : db.Records()) {
             if(*assetSearch&&record.relativePath.find(assetSearch)==std::string::npos&&id.find(assetSearch)==std::string::npos&&record.source.find(assetSearch)==std::string::npos)continue;
-            if(assetTypeFilter>=0&&int(record.type)!=assetTypeFilter)continue;
-            if(missingOnly&&!record.missing)continue;
+            if(state.assetTypeFilter>=0&&int(record.type)!=state.assetTypeFilter)continue;
+            if(state.assetMissingOnly&&!record.missing)continue;
             ImGui::TableNextRow();
             ImGui::TableSetColumnIndex(0);
-            ImGui::TextUnformatted(AssetTypeName(record.type));
-            ImGui::TableSetColumnIndex(1);
             ImGui::PushID(id.c_str());
             const bool selected = state.browserSelection == id;
-            if (ImGui::Selectable(record.relativePath.c_str(), selected, ImGuiSelectableFlags_SpanAllColumns)) {
+            const auto selectAsset = [&] {
                 state.browserSelection = id;
-                state.moveAssetInput = record.relativePath;
-                const std::string assetsRelative = record.path.size() > db.AssetsDir().size() + 1 &&
-                                                           record.path.compare(0, db.AssetsDir().size(), db.AssetsDir()) == 0
-                                                       ? record.path.substr(db.AssetsDir().size() + 1)
-                                                       : record.relativePath;
-                state.moveAssetInput = assetsRelative;
+                state.moveAssetInput = record.path.size() > db.AssetsDir().size() + 1 &&
+                    record.path.compare(0, db.AssetsDir().size(), db.AssetsDir()) == 0
+                    ? record.path.substr(db.AssetsDir().size() + 1) : record.relativePath;
+            };
+            const auto name = std::filesystem::path(record.relativePath).filename().string();
+            if (ImGui::Selectable(name.c_str(), selected, ImGuiSelectableFlags_SpanAllColumns | ImGuiSelectableFlags_AllowDoubleClick)) {
+                selectAsset();
+                if (ImGui::IsMouseDoubleClicked(ImGuiMouseButton_Left)) state.selectAssetDetails = true;
             }
             if (!record.missing && ImGui::BeginDragDropSource()) {
                 ImGui::SetDragDropPayload(kAssetDragPayload, id.data(), id.size());
@@ -675,8 +838,16 @@ void DrawAssetBrowserPanel(EditorDocument& doc, EditorPanelState& state, EditorR
                                                                     : "Drop on a matching inspector field.");
                 ImGui::EndDragDropSource();
             }
-            if (ImGui::IsItemHovered()) ImGui::SetTooltip("%s\nid %s\nsource %s", record.path.c_str(), id.c_str(), record.source.c_str());
+            if (ImGui::IsItemHovered()) ImGui::SetTooltip("%s\nID %s\nSource %s\nDouble-click to inspect; drag to a matching field.", record.path.c_str(), id.c_str(), record.source.c_str());
+            if (ImGui::BeginPopupContextItem("##assetActions")) {
+                if (ImGui::MenuItem("Inspect asset")) { selectAsset(); state.selectAssetDetails = true; }
+                if (ImGui::MenuItem("Copy file path")) ImGui::SetClipboardText(record.path.c_str());
+                if (ImGui::MenuItem("Copy stable ID")) ImGui::SetClipboardText(id.c_str());
+                ImGui::EndPopup();
+            }
             ImGui::PopID();
+            ImGui::TableSetColumnIndex(1);
+            ImGui::TextUnformatted(AssetTypeName(record.type));
             ImGui::TableSetColumnIndex(2);
             if (record.missing) {
                 ImGui::TextColored(ImVec4(1.0f, 0.5f, 0.2f, 1.0f), "MISSING");
@@ -690,28 +861,41 @@ void DrawAssetBrowserPanel(EditorDocument& doc, EditorPanelState& state, EditorR
                         ImGui::TextColored(ImVec4(1.0f, 0.85f, 0.3f, 1.0f), "loading");
                         break;
                     case ResourceState::Ready:
-                        ImGui::TextColored(ImVec4(0.4f, 0.9f, 0.4f, 1.0f), "ready %.1f KB", static_cast<double>(state.resources->BytesOf(id)) / 1024.0);
+                        ImGui::TextColored(ImVec4(0.4f, 0.9f, 0.4f, 1.0f), "ready");
+                        if (ImGui::IsItemHovered()) ImGui::SetTooltip("Resident %.1f KB", static_cast<double>(state.resources->BytesOf(id)) / 1024.0);
                         break;
                     case ResourceState::Failed:
                         ImGui::TextColored(ImVec4(1.0f, 0.4f, 0.3f, 1.0f), "FAILED");
                         if (ImGui::IsItemHovered()) ImGui::SetTooltip("%s", state.resources->ErrorOf(id).c_str());
                         break;
                     default:
-                        ImGui::TextDisabled("unloaded");
+                        ImGui::TextDisabled("registered");
                         break;
                 }
             } else {
                 ImGui::TextDisabled("ok");
             }
-            ImGui::TableSetColumnIndex(3);
-            ImGui::TextDisabled("%.12s...", id.c_str());
         }
         ImGui::EndTable();
     }
+            ImGui::EndChild();
+            ImGui::EndTabItem();
+        }
+        const bool inspectRequested = state.selectAssetDetails;
+        state.selectAssetDetails = false;
+        if (ImGui::BeginTabItem("Selected asset", nullptr, inspectRequested ? ImGuiTabItemFlags_SetSelected : 0)) {
+            ImGui::BeginChild("assetDetails", {0, 0});
+            if (state.browserSelection.empty()) ImGui::TextWrapped("Select an asset to inspect its source, dependencies and editing actions.");
     if (!state.browserSelection.empty()) {
         if (const AssetRecord* record = db.Find(state.browserSelection)) {
             ImGui::Separator();
             ImGui::Text("Selected: %s", record->relativePath.c_str());
+            ImGui::BeginDisabled(record->missing);
+            if (ImGui::Button("Open file")) requests.openExternalPath = record->path;
+            ImGui::EndDisabled();
+            ToolbarHint("Open this file with your desktop's associated application");
+            ImGui::SameLine();
+            if (ImGui::Button("Copy path")) ImGui::SetClipboardText(record->path.c_str());
             ImGui::TextWrapped("Provenance: %s",record->source.empty()?"project-owned":record->source.c_str());
             static uint64_t usersGeneration=~uint64_t(0);static std::string usersAsset;static std::vector<SceneObjectId> users;
             if(usersGeneration!=doc.Generation()||usersAsset!=record->id){users.clear();usersGeneration=doc.Generation();usersAsset=record->id;for(auto& o:doc.GetScene().Objects())for(auto& [key,value]:ObjectProperties(o))if(value.find(record->id)!=std::string::npos){users.push_back(o.id);break;}}
@@ -783,6 +967,97 @@ void DrawAssetBrowserPanel(EditorDocument& doc, EditorPanelState& state, EditorR
             ImGui::TextDisabled("Scene references use the id, so a move keeps them valid.");
         }
     }
+            ImGui::EndChild();
+            ImGui::EndTabItem();
+        }
+        if (ImGui::BeginTabItem("Import & tools")) {
+            ImGui::BeginChild("assetTools", {0, 0});
+    if(ImGui::CollapsingHeader("Model import / reimport",ImGuiTreeNodeFlags_DefaultOpen)){
+        auto text=[](const char* label,std::string& value){std::vector<char> buffer(std::max(size_t(4096),value.size()+256),0);std::copy(value.begin(),value.end(),buffer.begin());if(ImGui::InputText(label,buffer.data(),buffer.size()))value=buffer.data();};
+        ImGui::TextWrapped("FBX / glTF / GLB / OBJ to an ordinary cooked model. Sources and recipes are author-owned; the game loads only cooked content. Reimport publishes only in Edit mode.");
+        text("Original source file",state.modelSource);text("Project-relative runtime output",state.modelOutput);
+        if(state.mode==EditorMode::Edit&&ImGui::Button("Copy source and create import recipe")){std::string error;if(CreateModelRecipe(state.project->RootDir(),state.modelSource,state.modelOutput,state.modelRecipe,error))state.status="Recipe created; review settings then Import";else state.status=error;}
+        text("Import recipe (.judasimport)",state.modelRecipe);
+        if(!state.modelRecipe.empty()&&std::filesystem::is_regular_file(state.modelRecipe))try{
+            using Json=nlohmann::json;std::ifstream file(state.modelRecipe);if(std::filesystem::file_size(state.modelRecipe)>4*1024*1024)throw std::runtime_error("Recipe exceeds 4 MiB");auto recipe=Json::parse(file,[](int depth,Json::parse_event_t,const Json&){if(depth>=48)throw std::runtime_error("Recipe nesting bound");return true;});bool changed=false;auto& settings=recipe["settings"];
+            double units=settings.value("unitMeters",0.0),rate=settings.value("sampleRate",60.0);bool base=settings.value("allowBaseMesh",false);
+            if(ImGui::InputDouble("Source metres per unit (0 = metadata)",&units)){settings["unitMeters"]=units;changed=true;}if(ImGui::InputDouble("Nonlinear bake samples / second",&rate)){settings["sampleRate"]=rate;changed=true;}if(ImGui::Checkbox("Explicit base mesh only (lossy)",&base)){settings["allowBaseMesh"]=base;changed=true;}
+            text("Compatible motion source",state.modelMotionSource);text("Source take",state.modelMotionTake);text("Clip name",state.modelMotionName);
+            if(state.mode==EditorMode::Edit&&ImGui::Button("Copy / add compatible motion")){auto root=std::filesystem::path(state.project->RootDir());auto directory=(root/recipe.at("source").get<std::string>()).parent_path();auto source=std::filesystem::path(state.modelMotionSource);auto owned=directory/source.filename();if(std::filesystem::weakly_canonical(source)!=std::filesystem::weakly_canonical(owned))std::filesystem::copy_file(source,owned,std::filesystem::copy_options::overwrite_existing);recipe["motions"].push_back({{"source",owned.lexically_relative(root).generic_string()},{"take",state.modelMotionTake},{"name",state.modelMotionName},{"jointRemaps",Json::object()}});changed=true;}
+            glm::vec4 basis(0,0,0,1);if(settings.contains("basisRotation")){auto q=settings.at("basisRotation").get<std::vector<float>>();if(q.size()==4)basis={q[0],q[1],q[2],q[3]};}if(ImGui::InputFloat4("Explicit post-metadata basis rotation x/y/z/w",&basis.x)){settings["basisRotation"]={basis.x,basis.y,basis.z,basis.w};changed=true;}
+            text("Remap source name/path",state.modelMapSource);text("Project-relative file or stable alias",state.modelMapTarget);
+            const char* maps[]={"dependencyRemaps","materialAliases","nodeAliases"};for(auto field:maps){ImGui::PushID(field);if(ImGui::Button(field)&&!state.modelMapSource.empty()){settings[field][state.modelMapSource]=state.modelMapTarget;changed=true;}ImGui::PopID();}
+            if(state.importAccepted&&state.importAccepted->preview){auto& preview=*state.importAccepted->preview;
+                if(ImGui::TreeNode("Import part selection (empty = all)")){auto parts=settings.value("selectedParts",std::vector<std::string>{});bool all=parts.empty();if(ImGui::Checkbox("All source parts",&all)&&all){settings["selectedParts"]=Json::array();changed=true;}for(auto& part:preview.primitives){bool selected=all||std::find(parts.begin(),parts.end(),part.part)!=parts.end();if(ImGui::Checkbox(part.part.c_str(),&selected)){if(all){for(auto& p:preview.primitives)parts.push_back(p.part);}if(selected){if(std::find(parts.begin(),parts.end(),part.part)==parts.end())parts.push_back(part.part);}else parts.erase(std::remove(parts.begin(),parts.end(),part.part),parts.end());settings["selectedParts"]=parts;changed=true;}}ImGui::TreePop();}
+                if(ImGui::TreeNode("Source material slots")){for(size_t i=0;i<preview.materialKeys.size();++i)ImGui::BulletText("%zu: %s",i,preview.materialKeys[i].c_str());ImGui::TextWrapped("Author material overrides in the normal Render inspector; imported defaults are separate.");ImGui::TreePop();}
+            }
+            if(recipe.contains("clips"))for(auto& clip:recipe["clips"]){ImGui::PushID(clip.at("sourceClip").get<std::string>().c_str());std::string name=clip.value("name",clip.at("sourceClip").get<std::string>());text("Clip output name",name);if(clip.value("name",std::string())!=name){clip["name"]=name;changed=true;}bool loop=clip.value("loop",false);if(ImGui::Checkbox("Loop metadata",&loop)){clip["loop"]=loop;changed=true;}auto& root=clip["rootMotion"];std::string policy=root.value("policy",std::string("preserve")),node=root.value("node",std::string());if(ImGui::BeginCombo("Root policy",policy.c_str())){for(auto value:{"preserve","inPlace","extract"})if(ImGui::Selectable(value,policy==value)){root["policy"]=value;changed=true;}ImGui::EndCombo();}auto rig=state.importTask&&state.importPublished?state.resources->TryGetSkeletal(state.importTask->assetId):nullptr;if(rig&&ImGui::BeginCombo("Motion node",node.c_str())){for(size_t i=0;i<rig->skeleton.names.size();++i){auto key=SkeletonJointKey(rig->skeleton,int(i));if(ImGui::Selectable(key.c_str(),node==key)){root["node"]=key;changed=true;}}ImGui::EndCombo();}auto axes=root.value("translation",std::vector<bool>{true,false,true});if(axes.size()==3)for(int k=0;k<3;++k){bool axis=axes[k];ImGui::PushID(k);if(ImGui::Checkbox(k==0?"Model X":k==1?"Model Y":"Model Z",&axis)){axes[k]=axis;root["translation"]=axes;changed=true;}ImGui::PopID();ImGui::SameLine();}ImGui::NewLine();glm::vec3 rotationAxis(0);if(root.contains("rotationAxis")){auto v=root["rotationAxis"].get<std::vector<float>>();if(v.size()==3)rotationAxis={v[0],v[1],v[2]};}if(ImGui::InputFloat3("Extract twist around model axis (zero = none)",&rotationAxis.x)){if(glm::length(rotationAxis)>1e-6f)root["rotationAxis"]={rotationAxis.x,rotationAxis.y,rotationAxis.z};else root.erase("rotationAxis");changed=true;}glm::vec2 trim(0,1);if(clip.contains("trim"))trim={clip["trim"][0],clip["trim"][1]};if(ImGui::InputFloat2("Trim begin/end seconds",&trim.x)){clip["trim"]={trim.x,trim.y};changed=true;}ImGui::PopID();}
+            if(state.importTask&&state.importTask->preview&&state.importTask->preview->skeletal&&ImGui::Button("Populate editable clip selections")){recipe["clips"]=Json::array();for(auto& clip:state.importTask->preview->skeletal->clips)recipe["clips"].push_back({{"sourceClip",clip.name},{"name",clip.name},{"loop",clip.loop},{"rootMotion",{{"policy","preserve"}}}});changed=true;}
+            if(changed&&state.mode==EditorMode::Edit){std::ofstream out(state.modelRecipe);out<<recipe.dump(2)<<'\n';state.status="Import recipe saved; accepted runtime content is unchanged until reimport";}
+            if(ImGui::TreeNode("Named recipe / selections / remaps")){auto pretty=recipe.dump(2);ImGui::TextUnformatted(pretty.c_str());ImGui::TreePop();}
+        }catch(const std::exception& e){ImGui::TextWrapped("Recipe: %s",e.what());}
+        bool busy=state.importTask&&!state.importTask->done.load();
+        if(state.mode==EditorMode::Edit&&!busy&&!state.modelRecipe.empty()&&ImGui::Button("Import / reimport / retry")){state.importTask=QueueModelImport(*state.importJobs,state.modelRecipe);state.importPublished=false;}
+        if(busy){ImGui::ProgressBar(float(state.importTask->progress.load())/100);if(ImGui::Button("Cancel import"))state.importTask->cancel=true;}
+        if (state.importTask && state.importTask->done.load(std::memory_order_acquire)) {
+            if (!state.importTask->success) ImGui::TextWrapped("Import failed; last good model retained: %s", state.importTask->error.c_str());
+            else if (!state.importPublished) ImGui::TextWrapped("Cook ready. Stop Play to publish; live skeleton buffers remain unchanged.");
+        }
+        if(state.importAccepted){auto& t=*state.importAccepted;{
+                ImGui::Text("Source bones: %zu; hierarchy nodes: %zu; palette entries: %zu; parts: %zu",t.report.sourceBones,t.report.hierarchyNodes,t.report.skinJoints,t.report.parts);
+                if(ImGui::Button("Place accepted model"))requests.dropMeshAssetId=t.assetId;
+                auto rig=state.resources->TryGetSkeletal(t.assetId);
+                if(rig){
+                    ImGui::Text("Runtime hierarchy: %zu nodes",rig->skeleton.names.size());
+                    if(!rig->clips.empty()){int clip=int(std::min(size_t(state.modelPreviewClip),rig->clips.size()-1));if(ImGui::BeginCombo("Preview clip",rig->clips[clip].name.c_str())){for(size_t i=0;i<rig->clips.size();++i)if(ImGui::Selectable(rig->clips[i].name.c_str(),i==size_t(clip))){state.modelPreviewClip=unsigned(i);state.modelPreviewTime=0;}ImGui::EndCombo();}ImGui::Checkbox("Preview playback",&state.modelPreviewPlaying);ImGui::SliderFloat("Scrub seconds",&state.modelPreviewTime,0,rig->clips[state.modelPreviewClip].duration);}
+                    ImGui::Checkbox("Skeleton overlay",&state.modelPreviewSkeleton);ImGui::SliderFloat("Orbit view",&state.modelPreviewYaw,-3.14f,3.14f);
+                    if(ImGui::TreeNode("Hierarchy / stable joint identities")){for(size_t i=0;i<rig->skeleton.names.size();++i)ImGui::BulletText("%s",SkeletonJointKey(rig->skeleton,int(i)).c_str());ImGui::TreePop();}
+                }
+                if(auto parts=state.resources->TryGetModelParts(t.assetId))for(auto& p:*parts){bool visible=std::find(state.modelPreviewHidden.begin(),state.modelPreviewHidden.end(),p.part)==state.modelPreviewHidden.end();if(ImGui::Checkbox(p.part.c_str(),&visible)){if(visible)state.modelPreviewHidden.erase(std::remove(state.modelPreviewHidden.begin(),state.modelPreviewHidden.end(),p.part),state.modelPreviewHidden.end());else state.modelPreviewHidden.push_back(p.part);}}
+                ImGui::TextWrapped("White ruler = one metre; RGB axes = import model basis; green = hierarchy; orange = extracted root track. These are preview axes, not simulation gravity.");
+                if(state.modelPreviewToken)ImGui::Image((ImTextureID)(intptr_t)state.modelPreviewToken,ImVec2(std::min(600.f,ImGui::GetContentRegionAvail().x),360),ImVec2(0,1),ImVec2(1,0));
+                for(auto& diagnostic:t.report.diagnostics)ImGui::TextWrapped("%s [%s]: %s. %s",diagnostic.severity.c_str(),diagnostic.code.c_str(),diagnostic.message.c_str(),diagnostic.action.c_str());
+            }
+        }
+    }
+
+    if(state.mode==EditorMode::Edit&&ImGui::Button("Create material")){auto directory=std::filesystem::path(db.AssetsDir())/"materials";std::filesystem::create_directories(directory);auto path=directory/"material.judasmat";unsigned n=2;while(std::filesystem::exists(path))path=directory/("material"+std::to_string(n++)+".judasmat");std::string error;if(SaveMaterial(path.string(),MaterialDefinition{},error))requests.trackAssetPath=path.string();else state.status=error;}
+    if(state.mode==EditorMode::Edit&&ImGui::Button("Create reverb settings")){auto directory=std::filesystem::path(db.AssetsDir())/"audio";std::filesystem::create_directories(directory);auto path=directory/"environment.judasreverb";unsigned n=2;while(std::filesystem::exists(path))path=directory/("environment"+std::to_string(n++)+".judasreverb");std::ofstream f(path);f<<SerializeAudioEnvironment({});if(f)requests.trackAssetPath=path.string();else state.status="Cannot write reverb settings";}
+    if(state.mode==EditorMode::Edit&&ImGui::CollapsingHeader("Bake HDR environment")){static char source[1024]{};static int width=128,samples=128;ImGui::InputText("Radiance .hdr source",source,sizeof(source));ImGui::InputInt("Bake width (power of two)",&width);ImGui::InputInt("Bake samples",&samples);ImGui::TextWrapped("Offline bake; may briefly block editor. Derived data is exported, never regenerated during play.");if(ImGui::Button("Bake and register environment")){auto directory=std::filesystem::path(db.AssetsDir())/"environments";std::filesystem::create_directories(directory);auto path=directory/(std::filesystem::path(source).stem().string()+".judasenv");unsigned n=2;while(std::filesystem::exists(path))path=directory/(std::filesystem::path(source).stem().string()+std::to_string(n++)+".judasenv");EnvironmentData data;std::string error;if(BakeEnvironment(source,unsigned(width),unsigned(samples),data,error)&&SaveEnvironment(path.string(),data,error))requests.trackAssetPath=path.string();else state.status=error;}}
+
+    if(state.mode==EditorMode::Edit&&ImGui::CollapsingHeader("Cook physical collider")){
+        static std::string sourceId;static char output[256]="collision/physical.judascollision";static int primitive=0,kind=0;static bool twoSided=false;static glm::vec3 scale(1),offset(0),angles(0);
+        const auto selected=db.Find(sourceId);if(ImGui::BeginCombo("Registered source",selected?selected->relativePath.c_str():"Select OBJ/glTF/GLB")){for(auto& [id,a]:db.Records())if(a.type==AssetType::Mesh&&ImGui::Selectable(a.relativePath.c_str(),id==sourceId))sourceId=id;ImGui::EndCombo();}
+        ImGui::InputInt("Object/group or node/primitive ordinal",&primitive);const char* kinds[]={"Static triangle surface","Convex hull (fills recesses)"};ImGui::Combo("Cook kind",&kind,kinds,2);ImGui::Checkbox("Two-sided triangle surface",&twoSided);ImGui::DragFloat3("Baked positive scale",&scale.x,.01f);ImGui::DragFloat3("Baked translation",&offset.x,.01f);ImGui::DragFloat3("Baked rotation degrees",&angles.x,.5f);ImGui::InputText("Output relative to assets",output,sizeof(output));
+        ImGui::Checkbox("Explicit removal of true degenerates",&state.collisionCleanup.removeDegenerates);ImGui::Checkbox("Explicit orient connected patches",&state.collisionCleanup.orientPatches);ImGui::InputDouble("Collision-only weld metres (0..0.001)",&state.collisionCleanup.weldTolerance);
+        if(!state.collisionDiagnostic.code.empty()){auto& d=state.collisionDiagnostic;ImGui::TextWrapped("%s: %s / source face %u / point %.4f %.4f %.4f",d.code.c_str(),d.node.c_str(),d.sourceFace,d.point.x,d.point.y,d.point.z);if(ImGui::Button("Highlight diagnostic on selected model"))state.modelDiagnosticVisible=true;}
+        ImGui::TextWrapped("Explicit single source selection; glTF node transform is included. Failed cooks preserve the previous file. Use a low-detail physical model where appropriate. Convex mass sums child volumes, including overlaps.");
+        if(ImGui::Button("Cook / replace and register")){std::string error;CollisionAsset asset;ModelCollisionCleanupReport cleanupReport;state.collisionDiagnosticAsset=sourceId;CollisionCookSettings settings;settings.convex=kind==1;settings.twoSided=twoSided;settings.primitive=unsigned(std::max(primitive,0));settings.transform=glm::translate(glm::dmat4(1),glm::dvec3(offset))*glm::mat4_cast(glm::dquat(glm::radians(glm::dvec3(angles))))*glm::scale(glm::dmat4(1),glm::dvec3(scale));auto relative=std::filesystem::path(output).lexically_normal();bool valid=!relative.empty()&&!relative.is_absolute();for(auto& part:relative)if(part=="..")valid=false;auto destination=std::filesystem::path(db.AssetsDir())/relative;
+            if(!selected||selected->missing)error="select an available registered model";else if(!valid||relative.extension()!=".judascollision")error="destination must be an assets-relative .judascollision path";else{std::error_code ec;std::filesystem::create_directories(destination.parent_path(),ec);if(ec)error=ec.message();else if(CookImportedCollisionFile(selected->path,sourceId,settings,state.collisionCleanup,destination.string(),asset,cleanupReport,state.collisionDiagnostic,error)){requests.trackAssetPath=destination.string();for(auto& [id,a]:db.Records())if(a.path==destination.string()&&state.resources)state.resources->Invalidate(id);}}
+            state.status=error.empty()?"Cooked collision; assign it in Body / Cooked geometry":error;
+        }
+        if(ImGui::Button("Cook and assign selected Body")){CollisionCookSettings settings;settings.convex=kind==1;settings.twoSided=twoSided;settings.primitive=unsigned(std::max(primitive,0));settings.transform=glm::translate(glm::dmat4(1),glm::dvec3(offset))*glm::mat4_cast(glm::dquat(glm::radians(glm::dvec3(angles))))*glm::scale(glm::dmat4(1),glm::dvec3(scale));BakeEditorCollision(doc,doc.Selected(),state,sourceId,settings,output);}
+    }
+
+    if(state.mode==EditorMode::Edit&&ImGui::Button("Create UI document")){
+        UIDocument d;UIElement root;root.id="canvas";root.kind=UIKind::Canvas;d.elements.push_back(root);UIElement panel;panel.id="panel";panel.parent="canvas";panel.background={.1f,.12f,.18f,.95f};d.elements.push_back(panel);
+        auto directory=std::filesystem::path(db.AssetsDir())/"ui";std::filesystem::create_directories(directory);auto path=directory/"layout.judasui";int n=2;while(std::filesystem::exists(path))path=directory/("layout"+std::to_string(n++)+".judasui");std::string error;
+        if(SaveUIDocument(path.string(),d,error))requests.trackAssetPath=path.string();else state.status=error;
+    }
+    if (ImGui::CollapsingHeader("Import", ImGuiTreeNodeFlags_DefaultOpen)) {
+        char source[512], destination[256];
+        CopyToBuffer(state.importSourceInput, source, sizeof(source));
+        CopyToBuffer(state.importDestinationInput, destination, sizeof(destination));
+        if (ImGui::InputTextWithHint("Source file", "/path/to/model.obj | texture.png | font.ttf | sound.wav", source, sizeof(source))) state.importSourceInput = source;
+        if (ImGui::InputTextWithHint("Destination (in assets)", "models/model.obj (empty keeps the file name)", destination, sizeof(destination))) state.importDestinationInput = destination;
+        if (ImGui::Button("Import") && !state.importSourceInput.empty()) {
+            requests.importSource = state.importSourceInput;
+            requests.importDestination = state.importDestinationInput;
+        }
+        ImGui::SameLine();
+        ImGui::TextDisabled("(path field; the editor has no OS file dialog)");
+    }
+
     if (!db.Untracked().empty()) {
         ImGui::Separator();
         ImGui::TextDisabled("Untracked files (no .judasmeta; not referenceable until tracked):");
@@ -799,7 +1074,11 @@ void DrawAssetBrowserPanel(EditorDocument& doc, EditorPanelState& state, EditorR
         ImGui::TextColored(ImVec4(1.0f, 0.5f, 0.2f, 1.0f), "Problems:");
         for (const AssetProblem& problem : db.Problems()) ImGui::BulletText("%s: %s", problem.path.c_str(), problem.message.c_str());
     }
-    ImGui::EndChild();
+            ImGui::EndChild();
+            ImGui::EndTabItem();
+        }
+        ImGui::EndTabBar();
+    }
     ImGui::End();
 }
 
@@ -944,8 +1223,9 @@ void DrawProjectSettingsPanel(EditorDocument& doc, EditorPanelState& state, Edit
 
 void DrawProfilerPanel(EditorPanelState& state) {
     if (!state.showProfiler) return;
-    ImGui::SetNextWindowPos(ImVec2(std::max(0.0f, ImGui::GetIO().DisplaySize.x - 850.0f - 12.0f), 24.0f), ImGuiCond_FirstUseEver);
-    ImGui::SetNextWindowSize(ImVec2(850.0f, 700.0f), ImGuiCond_FirstUseEver);
+    const auto display = ImGui::GetIO().DisplaySize;
+    ImGui::SetNextWindowPos({20, 76}, ImGuiCond_FirstUseEver);
+    ImGui::SetNextWindowSize({std::min(850.0f, display.x - 40), std::min(700.0f, display.y - 110)}, ImGuiCond_FirstUseEver);
     ImGui::SetNextWindowBgAlpha(1.0f);
     if (!ImGui::Begin("Profiler", &state.showProfiler)) { ImGui::End(); return; }
     ImGui::Checkbox("Inspect live Play (F8: release cursor)", &state.profilerInspect);
@@ -1005,21 +1285,19 @@ void DrawProfilerPanel(EditorPanelState& state) {
 }
 
 void DrawStatusBar(EditorDocument& doc, EditorPanelState& state) {
-    const ImGuiIO& io = ImGui::GetIO();
-    ImGui::SetNextWindowPos(ImVec2(0.0f, io.DisplaySize.y - 26.0f));
-    ImGui::SetNextWindowSize(ImVec2(io.DisplaySize.x, 26.0f));
+    PlaceWorkspacePanel(state.workspace.status);
+    ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(10, 4));
     ImGui::Begin("##status", nullptr,
                  ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove |
                      ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoSavedSettings);
-    const char* gizmo = state.gizmoMode == GizmoMode::Translate ? "Move" : state.gizmoMode == GizmoMode::Rotate ? "Rotate" : "Scale";
-    ImGui::Text("%s | %s%s | %s | %s/%s%s | %s",
-                state.project && state.project->IsLoaded() ? state.project->Settings().name.c_str() : "(no project)",
-                doc.Path().empty() ? "(unsaved scene)" : doc.Path().c_str(), doc.IsDirty() ? " *" : "",
-                state.mode == EditorMode::Edit ? "Edit" : "Play", gizmo,
-                state.gizmoSpace == GizmoSpace::World ? "world" : "local", state.gizmoSnap ? "/snap" : "",
-                state.status.c_str());
-    if (!state.runtimeInfo.empty()) { ImGui::SameLine(); ImGui::TextDisabled("%s", state.runtimeInfo.c_str()); }
+    const std::string message = std::string(doc.IsDirty() ? "Unsaved edits  |  " : "") + state.status;
+    ImGui::TextUnformatted(message.c_str());
+    if (ImGui::IsItemHovered()) ImGui::SetTooltip("%s\n%s", doc.Path().empty() ? "Unsaved scene" : doc.Path().c_str(), state.status.c_str());
+    if (!state.runtimeInfo.empty() && state.workspace.status.size.x - ImGui::CalcTextSize(message.c_str()).x > 480) {
+        ImGui::SameLine(); ImGui::TextDisabled("%s", state.runtimeInfo.c_str());
+    }
     ImGui::End();
+    ImGui::PopStyleVar();
 }
 
 SceneObjectId CreateObjectOfKind(EditorDocument& doc, const std::string& kind, const glm::vec3& position,

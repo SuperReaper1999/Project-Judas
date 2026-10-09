@@ -1,0 +1,61 @@
+{
+  "publicSymbols": 318,
+  "topLevelExports": 27,
+  "nativeOperations": 221,
+  "callbacks": 15,
+  "typeChecker": "6.0.3",
+  "examples": 36,
+  "negativeDriftChecks": 3,
+  "runtimeEnumeration": true,
+  "pass": true,
+  "utc": "2026-10-09T00:53:23.497877+00:00",
+  "accepted_base": "fb31f0244c9f41f74c439afd99855e3707937edd",
+  "head": "fb31f0244c9f41f74c439afd99855e3707937edd",
+  "source_sha256": {
+    "src/ScriptSystem.cpp": "b1e0f67d86af4e0fd6c6ddfb1bb384a34c937860f09eeeed299e582aab67ee4e",
+    "docs/judas.d.ts": "9ddabbe0aac2e855503a5eef6f0428d29296a6b61548d13f769142e669ad622a",
+    "scripts/check_judasjs_api.mjs": "09a9010adb2e60c047473b4225757d88fdabb4f715d2538a4b35a39850a1b6ab",
+    "docs/judasjs/api-inventory.json": "7e02d1a34294832003ced277c4c068f14157312bc1ebcc162a6d6cb0aecac064",
+    "docs/judasjs/examples/kinematic.js": "447a8f6d9a40182e4c20406fa9b42dd82654e23bc5f5ded607e417a41f22ef74",
+    "docs/judasjs/examples/surface.js": "4f6cafa78009e325a649675f7295c23009870c614091c23732244af47be61a67",
+    "tests/JudasJSExamplesTests.cpp": "a59f211de5791c5b57ba322344c52b150e41bab711f077f827ba1d0ada48cccb",
+    "build/judasjs_examples_tests": "89dc026118ebf94046e66f96b67744a9e309b84a1e0d5ef3724f0e5073608282",
+    "docs/JUDASJS.md": "6de3ae0b445708fc0c4b9dbbc06d04af2d4b5af9c7066e84b47b4433119a2d46",
+    "docs/judasjs/cookbook.md": "c68173b11ea72d2f21284c7b1b87bd1a8035094d8727f1d547f6900f3404e6e7"
+  },
+  "exit_code": 0,
+  "command": [
+    "node",
+    "scripts/check_judasjs_api.mjs",
+    "--typescript",
+    "/tmp/judas-win-linux-ts/node_modules/typescript/lib/typescript.js",
+    "--runtime",
+    "docs/evidence/m71/api/live-vm/surface.json"
+  ],
+  "scope": "Actual registered QuickJS module export, prototype and constructor-field enumeration compared with source/type inventory; 36 example types and 3 negative drift controls; selected surface case only, no full cookbook run",
+  "vm_command": [
+    "build/judasjs_examples_tests",
+    "docs/evidence/m71/api/live-vm",
+    "surface"
+  ],
+  "vm_environment": {
+    "SDL_VIDEODRIVER": "offscreen",
+    "LIBGL_ALWAYS_SOFTWARE": "1",
+    "SDL_AUDIODRIVER": "dummy",
+    "JUDAS_WORLD_STATE": "none"
+  },
+  "vm_exit_code": 0,
+  "vm_checks": 9,
+  "vm_failures": 0,
+  "vm_log": "docs/evidence/m71/api/live-vm-surface.log",
+  "surface_sha256": "97e570bc7ae2091d38fef10e9867149e625cb146eda7dbae30f0ee6e577c0b59",
+  "m71_members_observed": [
+    "Entity.motionType",
+    "Entity.setMotionType",
+    "Entity.moveKinematic",
+    "Entity.setKinematicVelocity",
+    "Entity.stopKinematic",
+    "Entity.kinematicMotion",
+    "Entity.pointVelocity"
+  ]
+}

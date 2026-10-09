@@ -1,0 +1,116 @@
+[
+  {
+    "id": 9000,
+    "name": "Private selection parent",
+    "fields": {
+      "position": [
+        2,
+        0,
+        0
+      ],
+      "rotation": [
+        0.9238795325112867,
+        0,
+        0.3826834323650898,
+        0
+      ],
+      "scale": [
+        2,
+        2,
+        2
+      ]
+    }
+  },
+  {
+    "id": 9001,
+    "name": "Tiny nested box",
+    "fields": {
+      "position": [
+        0,
+        0.75,
+        0
+      ],
+      "rotation": [
+        1,
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "parent": 9000,
+      "render": {
+        "symbol": "box"
+      },
+      "render.half-extents": [
+        0.08,
+        0.08,
+        0.08
+      ],
+      "render.color": [
+        1,
+        0.75,
+        0.1
+      ],
+      "render.radius": 0.5,
+      "render.alpha": 1,
+      "render.secondary-color": [
+        0.8,
+        0.8,
+        0.8
+      ],
+      "render.secondary-alpha": 1,
+      "render.mesh-asset": "",
+      "render.texture-asset": ""
+    }
+  },
+  {
+    "id": 9002,
+    "name": "Tiny nested sphere",
+    "fields": {
+      "position": [
+        1,
+        0.75,
+        0
+      ],
+      "rotation": [
+        1,
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "parent": 9000,
+      "render": {
+        "symbol": "sphere"
+      },
+      "render.radius": 0.08,
+      "render.color": [
+        0.3,
+        1,
+        0.3
+      ],
+      "render.half-extents": [
+        12,
+        0.25,
+        9
+      ],
+      "render.alpha": 1,
+      "render.secondary-color": [
+        0.8,
+        0.8,
+        0.8
+      ],
+      "render.secondary-alpha": 1,
+      "render.mesh-asset": "",
+      "render.texture-asset": ""
+    }
+  }
+]

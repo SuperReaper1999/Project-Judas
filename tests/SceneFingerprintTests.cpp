@@ -163,7 +163,7 @@ int main() {
     invalid = s; invalid.Objects()[0].id = invalid.NextId(); Reject(invalid, "ID at/above NextId rejected");
     invalid = s; invalid.Objects()[0].body->mass = std::numeric_limits<float>::quiet_NaN(); Reject(invalid, "non-finite component rejected");
     invalid = s; invalid.Settings().worldOrigin.z = std::numeric_limits<double>::infinity(); Reject(invalid, "non-finite setting rejected");
-    invalid = s; invalid.Objects()[0].body->motion = static_cast<SceneBodyMotion>(2); Reject(invalid, "invalid enum rejected");
+    invalid = s; invalid.Objects()[0].body->motion = static_cast<SceneBodyMotion>(99); Reject(invalid, "invalid enum rejected");
 
     for (const char* path : {"assets/scenes/classic.judas", "assets/scenes/terrain.judas", "assets/scenes/flat_playground.judas", "assets/scenes/fidelity_demo.judas"}) {
         Scene authored; std::string error;
