@@ -156,6 +156,7 @@ add_library(judas_engine STATIC
     src/WorldRagdoll.cpp
     src/GltfLoader.cpp
     src/WorldCharacter.cpp
+    src/WorldGravity.cpp
     src/WorldStreaming.cpp
     src/WorldRegions.cpp
     src/WorldScripts.cpp
@@ -857,6 +858,9 @@ judas_warnings(judas_async_application_tests)
 
 # FTFT3: serialized authored gravity through RuntimeWorld and StepPlayedWorld.
 add_executable(judas_uniform_gravity_scene_tests tests/UniformGravitySceneTests.cpp)
+add_executable(judas_gravity_selection_tests tests/GravitySelectionTests.cpp src/editor/EditorHistory.cpp)
+target_link_libraries(judas_gravity_selection_tests PRIVATE judas_engine)
+judas_warnings(judas_gravity_selection_tests)
 target_link_libraries(judas_uniform_gravity_scene_tests PRIVATE judas_engine)
 judas_warnings(judas_uniform_gravity_scene_tests)
 

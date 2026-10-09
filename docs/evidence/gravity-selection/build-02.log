@@ -1,0 +1,30 @@
+[  0%] Built target judas_app_icon
+[ 16%] Built target freetype
+[ 22%] Built target judas_icu_build
+[ 27%] Built target judas_quickjs
+[ 33%] Built target judas_navigation_backend
+[ 33%] Built target judas_glad
+[ 38%] Built target judas_profiler
+[ 38%] Built target judas_audio_backend
+[ 38%] Built target harfbuzz
+[ 38%] Built target judas_materials
+[ 38%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldGravity.cpp.o
+[ 38%] Building CXX object CMakeFiles/judas_engine.dir/src/SceneSerialization.cpp.o
+[ 38%] Linking CXX static library libjudas_engine.a
+[100%] Built target judas_engine
+[100%] Building CXX object CMakeFiles/judas_gravity_selection_tests.dir/tests/GravitySelectionTests.cpp.o
+/home/conner/Documents/GitHub/Project-Judas/tests/GravitySelectionTests.cpp: In function ‘int main(int, char**)’:
+/home/conner/Documents/GitHub/Project-Judas/tests/GravitySelectionTests.cpp:61:32: error: no matching function for call to ‘AssetDatabase::WriteMeta(std::__cxx11::basic_string<char>, <brace-enclosed initializer list>, std::string&)’
+   61 |  Check(AssetDatabase::WriteMeta((fixture/"Assets/proof.js").string()+kAssetMetaExtension,{scriptId,AssetType::Script},error),"normal script metadata");
+      |        ~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/conner/Documents/GitHub/Project-Judas/tests/GravitySelectionTests.cpp:61:32: note: there is 1 candidate
+In file included from /home/conner/Documents/GitHub/Project-Judas/src/RuntimeWorld.h:14,
+                 from /home/conner/Documents/GitHub/Project-Judas/tests/GravitySelectionTests.cpp:1:
+/home/conner/Documents/GitHub/Project-Judas/src/AssetDatabase.h:92:17: note: candidate 1: ‘static bool AssetDatabase::WriteMeta(const std::string&, const AssetId&, AssetType, const std::string&, std::string&)’
+   92 |     static bool WriteMeta(const std::string& metaPath, const AssetId& id, AssetType type, const std::string& source,
+      |                 ^~~~~~~~~
+/home/conner/Documents/GitHub/Project-Judas/src/AssetDatabase.h:92:17: note: candidate expects 5 arguments, 3 provided
+gmake[3]: *** [CMakeFiles/judas_gravity_selection_tests.dir/build.make:79: CMakeFiles/judas_gravity_selection_tests.dir/tests/GravitySelectionTests.cpp.o] Error 1
+gmake[2]: *** [CMakeFiles/Makefile2:2618: CMakeFiles/judas_gravity_selection_tests.dir/all] Error 2
+gmake[1]: *** [CMakeFiles/Makefile2:2625: CMakeFiles/judas_gravity_selection_tests.dir/rule] Error 2
+gmake: *** [Makefile:865: judas_gravity_selection_tests] Error 2

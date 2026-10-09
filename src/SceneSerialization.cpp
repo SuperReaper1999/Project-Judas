@@ -141,6 +141,10 @@ void WriteObject(Writer& w, const SceneObject& o) {
     for(const auto& [key,value]:DeformableProperties(o))w.Line(key,Quote(value));
     for(const auto& [key,value]:LiquidProperties(o))w.Line(key,Quote(value));
     for(const auto& [key,value]:NavigationProperties(o))w.Line(key,Quote(value));
+    if(o.gravitySelection){const auto& s=*o.gravitySelection;
+        w.Line("gravity-selection.mode",Quote(s.mode==GravitySelection::Mode::Uniform?"uniform":"field"));
+        w.Line("gravity-selection.source",std::to_string(s.source));
+        w.Line("gravity-selection.acceleration",V(s.acceleration));}
     if(o.characterMotor){const auto& m=*o.characterMotor;
         w.Line("motor.enabled",B(m.enabled));
         w.Line("motor.radius",F(m.radius));
@@ -760,6 +764,14 @@ bool ParseObject(Reader& reader, const std::vector<Token>& header, const Block& 
     std::map<std::string,std::string> navFields;
     for(const auto& [key,tokens]:block.values)if(key.rfind("nav.",0)==0){std::string value;if(!p.String(key,value))return false;navFields[key]=value;}
     std::string navError;if(!ApplyNavigationProperties(navFields,o,navError))return reader.Fail(navError);
+    if(p.Has("gravity-selection.mode")){
+        GravitySelection s;std::string mode,error;
+        if(!p.String("gravity-selection.mode",mode)||!p.Id("gravity-selection.source",s.source)||!p.Vec3("gravity-selection.acceleration",s.acceleration))return false;
+        if(mode!="uniform"&&mode!="field")return reader.Fail("invalid gravity selection mode");
+        s.mode=mode=="uniform"?GravitySelection::Mode::Uniform:GravitySelection::Mode::Field;
+        if(!ValidGravitySelection(s,error))return reader.Fail(error);
+        o.gravitySelection=s;
+    }else if(p.Has("gravity-selection.source")||p.Has("gravity-selection.acceleration"))return reader.Fail("gravity selection has no mode");
     if(p.Has("motor.enabled")){CharacterMotorSettings m;
         if(!p.Bool("motor.enabled",m.enabled)||!p.Float("motor.radius",m.radius)||!p.Float("motor.halfHeight",m.halfHeight)||!p.Vec3("motor.offset",m.offset)||!p.Float("motor.stepHeight",m.stepHeight)||!p.Float("motor.supportDistance",m.supportDistance)||!p.Float("motor.skin",m.skin)||!p.Float("motor.maxSlopeDegrees",m.maxSlopeDegrees)||!p.Float("motor.gravityScale",m.gravityScale)||!p.Float("motor.reorientationDegreesPerSecond",m.reorientationDegreesPerSecond)||!p.Float("motor.interactionMass",m.interactionMass)||!p.Float("motor.maxPushImpulse",m.maxPushImpulse))return false;
         if(!p.Layer("motor.collisionLayer",m.collisionLayer)||!p.Mask("motor.collisionMask",m.collisionMask)||!p.Mask("motor.requiredTags",m.requiredTags)||!p.Mask("motor.excludedTags",m.excludedTags))return false;

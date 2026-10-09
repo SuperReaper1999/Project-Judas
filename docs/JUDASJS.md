@@ -1,11 +1,13 @@
-# JudasJS — current API reference (M72 candidate)
+# JudasJS — current API reference (M72 + gravity-selection follow-up)
 
 JUDAS PROVIDES ENGINE PRIMITIVES. JAVASCRIPT PROVIDES GAME BEHAVIOUR.
 
-This reference includes M72, checkpointed without human validation, built on M71 checkpoint
-`02b540f083bcf3d99b0dc6eb9aa70e63c91a31c3`. M72 human review remains pending. It is not an eternal
-compatibility/semantic-version promise. Source authority is `src/ScriptSystem.cpp`
+This reference includes M72, human validated on Linux on 2026-10-09, and the
+operator-approved gravity-selection follow-up. Native Windows M72 validation
+remains outstanding. It is not an eternal compatibility/semantic-version promise. Source authority is `src/ScriptSystem.cpp`
 and the runtime systems it calls; demos do not define API.
+The follow-up adds optional [per-entity gravity selection](GRAVITY_SELECTION.md),
+with spatial gravity still the default.
 M67 is checkpointed provisionally by operator authorization; proper human validation
 remains deferred rather than claimed complete.
 M67 adds generic camera projection, transient UI layout and prefab construction
@@ -102,7 +104,7 @@ remains authoritative.
 
 [profiler.scope / profiler.counter](judasjs/profiling.md) and [integrated profiler controls](PROFILER.md).
 
-- [Current materials, overrides and scene appearance](judasjs/materials.md) · [M57 foundation](MATERIALS.md) · [M72 candidate](M72.md)
+- [Current materials, overrides and scene appearance](judasjs/materials.md) · [M57 foundation](MATERIALS.md) · [M72](M72.md)
 
 ## M58 Unicode text and localization
 

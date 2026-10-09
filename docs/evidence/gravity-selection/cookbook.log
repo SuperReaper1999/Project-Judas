@@ -1,0 +1,12 @@
+Renderer fragment texture units: 32 (material path uses 12)
+PASS real EngineHost
+PASS gravity-selection normal registered script
+PASS gravity-selection normal project
+PASS gravity-selection ordinary scene
+PASS gravity-selection runtime builds
+PASS gravity-selection ordinary fixed-step session
+PASS gravity-selection real VM callbacks without faults
+EXAMPLE gravity-selection {"spatial":true,"uniform":true,"field":true,"spatialQuery":true,"cleared":true,"fixed":true}
+PASS gravity-selection documented outcome
+PASS gravity-selection teardown
+SUMMARY 9 checks 0 failures

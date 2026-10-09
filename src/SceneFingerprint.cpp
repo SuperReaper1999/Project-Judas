@@ -402,6 +402,11 @@ bool ComputeSceneFingerprint(const Scene& scene, std::string& outFingerprint,
     if(liquid){w.Text("Judas.ConservedLiquid.1");w.U64(liquid);for(const auto& o:scene.Objects()){auto properties=LiquidProperties(o);if(properties.empty())continue;std::string error;if(!ValidateLiquidComponents(o,error))w.Fail(error);w.U64(o.id);w.U64(properties.size());for(auto [k,v]:properties){w.Text(k);w.Text(v);}}}
     size_t navigation=0;for(const auto& o:scene.Objects())navigation+=!NavigationProperties(o).empty();
     if(navigation){w.Text("Judas.Navigation.1");w.U64(navigation);for(const auto& o:scene.Objects()){auto properties=NavigationProperties(o);if(properties.empty())continue;w.U64(o.id);w.U64(properties.size());for(auto [k,v]:properties){w.Text(k);w.Text(v);}}}
+    size_t selectedGravity=0;for(const auto& o:scene.Objects())selectedGravity+=o.gravitySelection.has_value();
+    if(selectedGravity){w.Text("Judas.GravitySelection.1");w.U64(selectedGravity);
+        for(const auto& o:scene.Objects())if(o.gravitySelection){std::string error;
+            if(!ValidGravitySelection(*o.gravitySelection,error))w.Fail(error);
+            w.U64(o.id);w.U32(unsigned(o.gravitySelection->mode));w.U64(o.gravitySelection->source);w.Vector(o.gravitySelection->acceleration);}}
     size_t motors=0;for(const auto& o:scene.Objects())motors+=o.characterMotor.has_value();
     if(motors){w.Text("Judas.CharacterMotor.1");w.U64(motors);for(const auto& o:scene.Objects())if(o.characterMotor){const auto& m=*o.characterMotor;
         std::string error;if(!ValidCharacterMotor(m,error))w.Fail(error);if(o.body||(o.ragdoll&&!o.ragdoll->physicalAnimation))w.Fail("character motor cannot also own a root body/legacy ragdoll; an explicit physical-animation authority policy is required");

@@ -54,13 +54,15 @@ void DynamicBody::ResetToSpawn(PhysicsWorld& physics) {
 
 void PrepareDynamicBodiesForStep(std::vector<DynamicBody>& bodies, const GravityField& gravity,
                                   PhysicsWorld& physics, float fixedDeltaTime,
-                                  BodyHandle excludedFromLocalGravity) {
-    for (DynamicBody& body : bodies) {
+                                  BodyHandle excludedFromLocalGravity,
+                                  const std::function<glm::vec3(size_t,glm::vec3)>& sample) {
+    for (size_t slot=0;slot<bodies.size();++slot) {
+        DynamicBody& body=bodies[slot];
         body.SnapshotPrevious();
         // A slot without a live body (Coarse/Dormant/destroyed entity) has
         // nothing to hand gravity to; CoarseSimulation owns its motion.
         if (!body.IsLive() || body.Handle().id == excludedFromLocalGravity.id || !physics.IsDynamicBody(body.Handle())) continue;
-        const glm::vec3 acceleration = gravity.Sample(body.GetPosition());
+        const glm::vec3 acceleration = sample?sample(slot,body.GetPosition()):gravity.Sample(body.GetPosition());
         physics.ApplyLinearAcceleration(body.Handle(), acceleration, fixedDeltaTime);
     }
 }

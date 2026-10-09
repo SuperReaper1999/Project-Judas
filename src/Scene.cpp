@@ -98,6 +98,9 @@ bool OptEq(const std::optional<T>& a, const std::optional<T>& b, F&& equal) {
 }  // namespace
 
 bool SceneObjectsEqual(const SceneObject& a, const SceneObject& b) {
+    if(a.gravitySelection.has_value()!=b.gravitySelection.has_value())return false;
+    if(a.gravitySelection){const auto& x=*a.gravitySelection;const auto& y=*b.gravitySelection;
+        if(x.mode!=y.mode||x.source!=y.source||x.acceleration!=y.acceleration)return false;}
     if(a.renderVisible!=b.renderVisible)return false;
     if(a.authoringFolder!=b.authoringFolder)return false;
     if(DeformableProperties(a)!=DeformableProperties(b))return false;

@@ -49,7 +49,9 @@ void StepPlayedWorld(GameSession& session, const Window& window, float fixedDelt
         excludedFromLocalGravity = world.GetVehicle()->handle;
     }
     PrepareDynamicBodiesForStep(world.DynamicBodies(), gravity, physics, fixedDeltaTime,
-                                excludedFromLocalGravity);
+                                excludedFromLocalGravity,[&world](size_t slot,glm::vec3 position){
+                                    return world.SampleEntityGravity(world.DynamicVisuals()[slot].id,position);
+                                });
     world.Celestial().ApplyForces(physics);
     // Cross-fidelity forces use the same pre-step geometry and one shared
     // force per pair; the coarse velocity kick precedes both pose advances.

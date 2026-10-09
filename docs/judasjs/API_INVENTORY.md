@@ -1,6 +1,6 @@
 # Current public JudasJS inventory
 
-M72 candidate lighting, visibility and instance-material review of the registered virtual module based on accepted M71 checkpoint `02b540f083bcf3d99b0dc6eb9aa70e63c91a31c3`. M67 human authoring review remains deferred.
+Current M72 and optional gravity-selection follow-up public module based on checkpoint `0f3694bb7142dc38a59abbd7365a113b673bae5e`. M67 human authoring review remains deferred.
 Each row is a runtime export/member (constructors and plain handle fields included).
 Native dispatcher operations are implementation details, not additional JS APIs.
 
@@ -81,6 +81,7 @@ Native dispatcher operations are implementation details, not additional JS APIs.
 | `Entity.deformable` | `deformableExists` | [declaration](../judas.d.ts) | [reference](entities.md) |
 | `Entity.destroy` | `destroy` | [declaration](../judas.d.ts) | [reference](entities.md) |
 | `Entity.fracture` | `fractureExists` | [declaration](../judas.d.ts) | [reference](entities.md) |
+| `Entity.gravity` | JS wrapper/data | [declaration](../judas.d.ts) | [reference](entities.md) |
 | `Entity.hasTag` | `hasTag` | [declaration](../judas.d.ts) | [reference](entities.md) |
 | `Entity.id` | JS wrapper/data | [declaration](../judas.d.ts) | [reference](entities.md) |
 | `Entity.inertiaWorld` | `inertiaWorld` | [declaration](../judas.d.ts) | [reference](entities.md) |
@@ -127,6 +128,14 @@ Native dispatcher operations are implementation details, not additional JS APIs.
 | `Entity.transform` | `setTransform`, `transform` | [declaration](../judas.d.ts) | [reference](entities.md) |
 | `Entity.valid` | `valid` | [declaration](../judas.d.ts) | [reference](entities.md) |
 | `Entity.velocity` | `setVelocity`, `velocity` | [declaration](../judas.d.ts) | [reference](entities.md) |
+| `EntityGravity` | JS wrapper/data | [declaration](../judas.d.ts) | [reference](physics.md) |
+| `EntityGravity.acceleration` | JS wrapper/data | [declaration](../judas.d.ts) | [reference](physics.md) |
+| `EntityGravity.clear` | `entityGravityClear` | [declaration](../judas.d.ts) | [reference](physics.md) |
+| `EntityGravity.constructor` | JS wrapper/data | [declaration](../judas.d.ts) | [reference](physics.md) |
+| `EntityGravity.id` | JS wrapper/data | [declaration](../judas.d.ts) | [reference](physics.md) |
+| `EntityGravity.select` | `entityGravitySelect` | [declaration](../judas.d.ts) | [reference](physics.md) |
+| `EntityGravity.setUniform` | `entityGravityUniform` | [declaration](../judas.d.ts) | [reference](physics.md) |
+| `EntityGravity.state` | `entityGravityState` | [declaration](../judas.d.ts) | [reference](physics.md) |
 | `Fracture` | JS wrapper/data | [declaration](../judas.d.ts) | [reference](fracture.md) |
 | `Fracture.constructor` | JS wrapper/data | [declaration](../judas.d.ts) | [reference](fracture.md) |
 | `Fracture.epoch` | JS wrapper/data | [declaration](../judas.d.ts) | [reference](fracture.md) |

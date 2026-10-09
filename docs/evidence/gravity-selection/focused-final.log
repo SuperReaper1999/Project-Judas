@@ -1,0 +1,69 @@
+Renderer fragment texture units: 32 (material path uses 12)
+PASS oriented root zone builds
+PASS root zone uses authored rotated bounds
+PASS outside rotated zone stays unclaimed
+PASS ordinary real host
+PASS normal script metadata
+PASS ordinary mixed world builds
+PASS actual public VM calls fault-free
+PASS spatial
+PASS field
+PASS motor
+PASS world
+PASS invalid
+PASS nonField
+PASS uniform
+PASS zero
+PASS clear
+PASS unselected neighbour retains FaithfulGravity
+PASS select RadicalGravity without zone membership
+PASS selected RadicalGravity remains position-addressed
+PASS rigid body accepts uniform override
+PASS ordinary fixed-step game begins
+PASS fixedUpdate selection is fault-free
+PASS selected motor lands on physical wall
+PASS capsule up reorients to selected field
+PASS other motor remains on ordinary floor
+PASS normal rigid step applies selected gravity once
+PASS unselected body has no new sideways acceleration
+PASS clear preserves world momentum
+PASS clear restores spatial source
+PASS independent owner setting
+PASS unchanged intent does not wake/rebuild dependencies
+PASS invalid native write is atomic
+PASS modern slot captures gravity intent
+PASS snapshot uses ordinary scene fields
+PASS fresh world restores selection and motion
+PASS restored motor selected gravity
+PASS selected source retirement removes native field safely
+PASS missing source exposes unavailable spatial fallback
+PASS runtime identity cannot alias removed field
+PASS ordinary scene optional-selection round trip
+PASS named scene conversion
+PASS named selection round trip
+PASS non-default intent contributes conditional schema-5 identity
+PASS prefab instance keeps independent uniform intent
+PASS authored prefab field assembly instantiates
+PASS prefab selected-source identity remaps
+PASS editor reports selected-source references
+PASS ordinary editor hierarchy duplication
+PASS duplicate source/consumer references remap together
+PASS undo restores selected-source hierarchy
+PASS redo restores selected-source hierarchy
+FAIL ordinary streamed project
+FAIL normal registered regional scene
+PASS streamed root world
+FAIL field publishes through real asynchronous residency
+FAIL regional source identity remaps at publication
+FAIL regional field remains selected outside volume
+FAIL persistent entity selects streamed field
+FAIL external selection pins field until intent clears
+FAIL clearing selection releases real region retirement
+FAIL retained region returns normally
+FAIL retained selected-source remaps to fresh identity
+FAIL retained selection resolves fresh field without cached pointer
+PERF spatial ns_per_sample 21.479 checksum 0.000
+PERF uniform ns_per_sample 17.403 checksum 20000.000
+PERF field ns_per_sample 56.099 checksum 195687.812
+PASS Stop clears motor and selection world
+SUMMARY 64 checks 11 failures

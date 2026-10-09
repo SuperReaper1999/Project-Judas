@@ -1,4 +1,4 @@
-# Render Control Lab — M72 candidate
+# Render Control Lab — M72
 
 An ordinary project using public JudasJS for lighting, render visibility and
 instance materials. Open `render_control_lab.judasproj` in the editor and Play,
@@ -82,7 +82,7 @@ bend-bar geometry/rig/clips and the licensed font. Content notices remain in
 `Assets/LICENSE.txt`, `Assets/models/LICENSE.txt` and `Assets/fonts/LICENSE.txt`.
 Shared source assets are not rewritten by the controls.
 
-M72 is checkpointed without human validation; desktop review remains pending. Current executed scopes, retained
+M72 received operator desktop acceptance on 2026-10-09. Native Windows validation remains outstanding. Current executed scopes, retained
 failures/corrections and remaining platform/tooling work are listed in
 [M72 validation status](../../docs/M72.md#validation-status). Review the main view,
 editor Undo/Redo and Play/Stop, fresh save/load and moved package separately.

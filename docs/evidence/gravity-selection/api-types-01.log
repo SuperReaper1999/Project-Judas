@@ -1,0 +1,29 @@
+[96mdocs/judasjs/examples/gravity-selection.js[0m:[93m3[0m:[93m15[0m - [91merror[0m[90m TS7031: [0mBinding element 'entity' implicitly has an 'any' type.
+
+[7m3[0m  constructor({entity}){this.entity=entity;this.state={};}
+[7m [0m [91m              ~~~~~~[0m
+[96mdocs/judasjs/examples/gravity-selection.js[0m:[93m6[0m:[93m14[0m - [91merror[0m[90m TS2339: [0mProperty 'spatial' does not exist on type '{}'.
+
+[7m6[0m   this.state.spatial=g.state.mode==='spatial';
+[7m [0m [91m             ~~~~~~~[0m
+[96mdocs/judasjs/examples/gravity-selection.js[0m:[93m8[0m:[93m14[0m - [91merror[0m[90m TS2339: [0mProperty 'uniform' does not exist on type '{}'.
+
+[7m8[0m   this.state.uniform=Math.abs(g.acceleration.x-3)<.0001;
+[7m [0m [91m             ~~~~~~~[0m
+[96mdocs/judasjs/examples/gravity-selection.js[0m:[93m10[0m:[93m42[0m - [91merror[0m[90m TS2339: [0mProperty 'field' does not exist on type '{}'.
+
+[7m10[0m   if(source){g.select(source);this.state.field=g.state.mode==='field'&&g.state.available;}
+[7m  [0m [91m                                         ~~~~~[0m
+[96mdocs/judasjs/examples/gravity-selection.js[0m:[93m12[0m:[93m14[0m - [91merror[0m[90m TS2339: [0mProperty 'spatialQuery' does not exist on type '{}'.
+
+[7m12[0m   this.state.spatialQuery=Number.isFinite(physics.gravity(p).y);
+[7m  [0m [91m             ~~~~~~~~~~~~[0m
+[96mdocs/judasjs/examples/gravity-selection.js[0m:[93m13[0m:[93m24[0m - [91merror[0m[90m TS2339: [0mProperty 'cleared' does not exist on type '{}'.
+
+[7m13[0m   g.clear();this.state.cleared=g.state.mode==='spatial';
+[7m  [0m [91m                       ~~~~~~~[0m
+[96mdocs/judasjs/examples/gravity-selection.js[0m:[93m17[0m:[93m14[0m - [91merror[0m[90m TS2339: [0mProperty 'fixed' does not exist on type '{}'.
+
+[7m17[0m   this.state.fixed=true;
+[7m  [0m [91m             ~~~~~[0m
+

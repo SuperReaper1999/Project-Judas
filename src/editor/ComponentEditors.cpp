@@ -415,6 +415,33 @@ void DrawRagdoll(EditorDocument& doc,SceneObject& object,EditorPanelState& state
     std::string error;if(!ValidRagdollDefinition(r,error))ImGui::TextColored(ImVec4(1,.3f,.2f,1),"%s",error.c_str());
 }
 
+void DrawGravitySelection(EditorDocument& doc,SceneObject& object,EditorPanelState&){
+    auto candidate=*object.gravitySelection;
+    const char* modes[]={"Uniform acceleration","Selected field"};
+    int mode=int(candidate.mode);bool changed=false;
+    if(ImGui::Combo("Gravity selection mode",&mode,modes,2)){
+        GravitySelection next;next.mode=GravitySelection::Mode(mode);
+        if(next.mode==GravitySelection::Mode::Field){
+            for(const auto& source:doc.GetScene().Objects())if(source.gravity){next.source=source.id;break;}
+        }
+        std::string error;
+        if(ValidGravitySelection(next,error)){candidate=next;changed=true;}
+    }
+    if(candidate.mode==GravitySelection::Mode::Uniform)
+        changed|=ImGui::DragFloat3("Acceleration (world m/s^2)",&candidate.acceleration.x,.05f);
+    else{
+        auto* source=doc.GetScene().Find(candidate.source);
+        if(ImGui::BeginCombo("Selected gravity field",source?source->name.c_str():"Missing field")){
+            for(const auto& field:doc.GetScene().Objects())if(field.gravity&&ImGui::Selectable((field.name+" ##"+std::to_string(field.id)).c_str(),field.id==candidate.source)){
+                candidate.source=field.id;changed=true;}
+            ImGui::EndCombo();}
+    }
+    ImGui::TextWrapped("Optional entity-local gravity. Remove this component to restore spatial routing. Does not change children, camera or support ownership. Create a Gravity region before choosing Selected field.");
+    std::string error;
+    if(!ValidGravitySelection(candidate,error)){ImGui::TextColored(ImVec4(1,.3f,.2f,1),"%s",error.c_str());return;}
+    // One valid history action, including mode/source/vector together.
+    if(changed){doc.BeginEdit();object.gravitySelection=candidate;doc.CommitEdit();}
+}
 void DrawJoint(EditorDocument& doc, SceneObject& object, EditorPanelState&) {
     auto& joint=*object.joint;auto& settings=joint.settings;
     const char* names[]={"Fixed","Hinge","Ball/socket","Slider"};
@@ -783,6 +810,7 @@ const std::vector<ComponentEditor>& ComponentEditorRegistry() {
         Make<SceneAudioListenerComponent>("Audio listener", 'N', &SceneObject::audioListener, DrawAudioListener),
         Make<SceneRenderCameraComponent>("Render camera", 'K', &SceneObject::renderCamera, DrawRenderCamera),
         Make<SceneRenderComponent>("Render", 'R', &SceneObject::render, DrawRender),
+        Make<GravitySelection>("Gravity selection",'G',&SceneObject::gravitySelection,DrawGravitySelection),
         Make<CharacterMotorSettings>("Character motor",'M',&SceneObject::characterMotor,DrawCharacter),
         Make<SceneAnimationComponent>("Animation",'A',&SceneObject::animation,DrawAnimation),
         Make<SceneSocketComponent>("Visual socket",'S',&SceneObject::socket,DrawSocket),

@@ -1,0 +1,510 @@
+JudasScene 3
+settings
+  name "Gravity selection room"
+  world-origin 0 0 0
+  sun-color 1 0.98 0.92
+  sun-direction -0.3 0.8 0.5
+  ambient 0.3 0.32 0.35
+  fluid-scale 13
+  fluid-update-rate-hz 20
+  fluid-hydrostatic-drag-rate 2
+  fidelity-policy none
+  next-id 100
+end
+
+object 1 "Default floor"
+  position 0 -0.5 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 10 0.5 10
+  render.color 0.25 0.32 0.4
+  body static box
+  body.half-extents 10 0.5 10
+  body.mass 10
+  body.friction 0.6
+  render.radius 0.5
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body.radius 0.5
+  body.terrain ""
+  body.restitution 0
+  body.initial-velocity 0 0 0
+  body.pickable true
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+object 2 "Ordinary FaithfulGravity"
+  gravity uniform 9.81
+  gravity.region sphere 100
+  position 0 0 0
+  rotation 1 0 0 0
+  scale 1 1 1
+end
+object 3 "RadicalGravity selectable source"
+  position 30 6 0
+  gravity radial 9.81
+  gravity.region sphere 1
+  rotation 1 0 0 0
+  scale 1 1 1
+end
+object 6 "Oblique selectable uniform field"
+  position 30 0 0
+  rotation 0.70710678 0 0 0.70710678
+  gravity uniform 9.81
+  gravity.region sphere 1
+  scale 1 1 1
+end
+object 4 "Amber wall"
+  position 10.5 6 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.5 6 10
+  render.color 0.55 0.34 0.12
+  body static box
+  body.half-extents 0.5 6 10
+  body.mass 10
+  body.friction 0.6
+  render.radius 0.5
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body.radius 0.5
+  body.terrain ""
+  body.restitution 0
+  body.initial-velocity 0 0 0
+  body.pickable true
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+object 5 "Blue wall"
+  position -10.5 6 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.5 6 10
+  render.color 0.16 0.35 0.55
+  body static box
+  body.half-extents 0.5 6 10
+  body.mass 10
+  body.friction 0.6
+  render.radius 0.5
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body.radius 0.5
+  body.terrain ""
+  body.restitution 0
+  body.initial-velocity 0 0 0
+  body.pickable true
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+object 7 "Ceiling"
+  position 0 12.5 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 10 0.5 10
+  render.color 0.36 0.24 0.4
+  body static box
+  body.half-extents 10 0.5 10
+  body.mass 10
+  body.friction 0.6
+  render.radius 0.5
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body.radius 0.5
+  body.terrain ""
+  body.restitution 0
+  body.initial-velocity 0 0 0
+  body.pickable true
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+object 8 "Far wall"
+  position 0 6 -10.5
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 10 6 0.5
+  render.color 0.19 0.42 0.32
+  body static box
+  body.half-extents 10 6 0.5
+  body.mass 10
+  body.friction 0.6
+  render.radius 0.5
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body.radius 0.5
+  body.terrain ""
+  body.restitution 0
+  body.initial-velocity 0 0 0
+  body.pickable true
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+object 9 "Near wall"
+  position 0 6 10.5
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 10 6 0.5
+  render.color 0.22 0.3 0.36
+  body static box
+  body.half-extents 10 6 0.5
+  body.mass 10
+  body.friction 0.6
+  render.radius 0.5
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body.radius 0.5
+  body.terrain ""
+  body.restitution 0
+  body.initial-velocity 0 0 0
+  body.pickable true
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+object 10 "Script controlled capsule"
+  position 0 1.1 6
+  rotation 1 0 0 0
+  scale 1 1 1
+  motor.enabled true
+  motor.radius 0.3
+  motor.halfHeight 0.6
+  motor.offset 0 0 0
+  motor.stepHeight 0.55
+  motor.supportDistance 0.15
+  motor.skin 0.02
+  motor.maxSlopeDegrees 50
+  motor.gravityScale 1
+  motor.reorientationDegreesPerSecond 180
+  motor.interactionMass 80
+  motor.maxPushImpulse 20
+  motor.collisionLayer 0
+  motor.collisionMask 18446744073709551615
+  motor.requiredTags 0
+  motor.excludedTags 0
+  scripts 1
+  script.0.id 1
+  script.0.asset "73737373737373737373737373737311"
+  script.0.enabled true
+  script.0.properties "{}"
+  ui.asset "49494949494949494949494949494901"
+  ui.name "game_ui"
+  ui.enabled true
+end
+
+object 20 "Ordinary falling blue prop"
+  position -2 4 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.4 0.4 0.4
+  render.color 0.08 0.55 0.95
+  body dynamic box
+  body.half-extents 0.4 0.4 0.4
+  body.mass 10
+  body.friction 0.6
+  render.radius 0.5
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body.radius 0.5
+  body.terrain ""
+  body.restitution 0
+  body.initial-velocity 0 0 0
+  body.pickable true
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+object 21 "Selected rising gold prop"
+  position 2 4 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.4 0.4 0.4
+  render.color 0.95 0.6 0.12
+  body dynamic box
+  body.half-extents 0.4 0.4 0.4
+  body.mass 10
+  body.friction 0.6
+  gravity-selection.mode "uniform"
+  gravity-selection.source 0
+  gravity-selection.acceleration 0 9.81 0
+  render.radius 0.5
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body.radius 0.5
+  body.terrain ""
+  body.restitution 0
+  body.initial-velocity 0 0 0
+  body.pickable true
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+object 30 "Floor marker"
+  position -8 0.05 -6
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.06 0.05 2
+  render.color 0.56 0.72 0.78
+  body static box
+  body.half-extents 0.06 0.05 2
+  body.mass 10
+  body.friction 0.6
+  render.radius 0.5
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body.radius 0.5
+  body.terrain ""
+  body.restitution 0
+  body.initial-velocity 0 0 0
+  body.pickable true
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+object 31 "Floor marker"
+  position -6 0.05 -6
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.06 0.05 2
+  render.color 0.56 0.72 0.78
+  body static box
+  body.half-extents 0.06 0.05 2
+  body.mass 10
+  body.friction 0.6
+  render.radius 0.5
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body.radius 0.5
+  body.terrain ""
+  body.restitution 0
+  body.initial-velocity 0 0 0
+  body.pickable true
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+object 32 "Floor marker"
+  position -4 0.05 -6
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.06 0.05 2
+  render.color 0.56 0.72 0.78
+  body static box
+  body.half-extents 0.06 0.05 2
+  body.mass 10
+  body.friction 0.6
+  render.radius 0.5
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body.radius 0.5
+  body.terrain ""
+  body.restitution 0
+  body.initial-velocity 0 0 0
+  body.pickable true
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+object 33 "Floor marker"
+  position -2 0.05 -6
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.06 0.05 2
+  render.color 0.56 0.72 0.78
+  body static box
+  body.half-extents 0.06 0.05 2
+  body.mass 10
+  body.friction 0.6
+  render.radius 0.5
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body.radius 0.5
+  body.terrain ""
+  body.restitution 0
+  body.initial-velocity 0 0 0
+  body.pickable true
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+object 34 "Floor marker"
+  position 0 0.05 -6
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.06 0.05 2
+  render.color 0.56 0.72 0.78
+  body static box
+  body.half-extents 0.06 0.05 2
+  body.mass 10
+  body.friction 0.6
+  render.radius 0.5
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body.radius 0.5
+  body.terrain ""
+  body.restitution 0
+  body.initial-velocity 0 0 0
+  body.pickable true
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+object 35 "Floor marker"
+  position 2 0.05 -6
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.06 0.05 2
+  render.color 0.56 0.72 0.78
+  body static box
+  body.half-extents 0.06 0.05 2
+  body.mass 10
+  body.friction 0.6
+  render.radius 0.5
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body.radius 0.5
+  body.terrain ""
+  body.restitution 0
+  body.initial-velocity 0 0 0
+  body.pickable true
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+object 36 "Floor marker"
+  position 4 0.05 -6
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.06 0.05 2
+  render.color 0.56 0.72 0.78
+  body static box
+  body.half-extents 0.06 0.05 2
+  body.mass 10
+  body.friction 0.6
+  render.radius 0.5
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body.radius 0.5
+  body.terrain ""
+  body.restitution 0
+  body.initial-velocity 0 0 0
+  body.pickable true
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+object 37 "Floor marker"
+  position 6 0.05 -6
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.06 0.05 2
+  render.color 0.56 0.72 0.78
+  body static box
+  body.half-extents 0.06 0.05 2
+  body.mass 10
+  body.friction 0.6
+  render.radius 0.5
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body.radius 0.5
+  body.terrain ""
+  body.restitution 0
+  body.initial-velocity 0 0 0
+  body.pickable true
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+object 38 "Floor marker"
+  position 8 0.05 -6
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.06 0.05 2
+  render.color 0.56 0.72 0.78
+  body static box
+  body.half-extents 0.06 0.05 2
+  body.mass 10
+  body.friction 0.6
+  render.radius 0.5
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body.radius 0.5
+  body.terrain ""
+  body.restitution 0
+  body.initial-velocity 0 0 0
+  body.pickable true
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end

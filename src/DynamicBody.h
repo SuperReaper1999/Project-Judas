@@ -1,6 +1,7 @@
 #pragma once
 
 #include <vector>
+#include <functional>
 
 #include <glm/glm.hpp>
 #include <glm/gtc/quaternion.hpp>
@@ -110,7 +111,8 @@ private:
 // its presentation history is still captured normally.
 void PrepareDynamicBodiesForStep(std::vector<DynamicBody>& bodies, const GravityField& gravity,
                                   PhysicsWorld& physics, float fixedDeltaTime,
-                                  BodyHandle excludedFromLocalGravity = BodyHandle{});
+                                  BodyHandle excludedFromLocalGravity = BodyHandle{},
+                                  const std::function<glm::vec3(size_t,glm::vec3)>& sample = {});
 
 // Called once per fixed step, after PhysicsWorld::Step: reads back each
 // body's fresh authoritative transform.

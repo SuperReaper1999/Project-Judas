@@ -92,3 +92,13 @@ onTriggerEnter(event) { if (event.other?.valid) { /* project checkpoint policy *
 Events dispatch after all motors move at the fixed boundary. Thin sensors crossed
 entirely between endpoints have no full CCD guarantee. Disable/resize/teleport and
 destruction retire pairs through the same safe-handle lifecycle.
+
+### Optional gravity selection
+
+`character.gravity` now reads the motor owner's effective gravity, including
+[Entity.gravity](physics.md#entitygravity--entitygravity). Spatial routing remains
+the default. Changing gravity preserves world momentum and the existing capsule
+reorientation rate. Support normal is still an observed collision normal, not
+the gravity direction. `gravityScale` scales acceleration, not gravity selection;
+zero magnitude retains the motor's last usable up reference. Camera behaviour
+remains project-owned and should use presentationUpdate/presentedTransform.

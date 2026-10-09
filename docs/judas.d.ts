@@ -1,7 +1,8 @@
-/** Current JudasJS through the M71 candidate; reviewed against ScriptSystem.cpp.
- * Based on accepted checkpoint fb31f0244c9f41f74c439afd99855e3707937edd. M71 human review is pending.
- * Tooling only, no TS runtime.
- * See JUDASJS.md. Ordinary returned objects are detached snapshots.
+/** Current JudasJS through M72 and the optional gravity-selection follow-up.
+ * Based on checkpoint 0f3694bb7142dc38a59abbd7365a113b673bae5e.
+ * M72 remains not human validated; this follow-up is awaiting review.
+ * Tooling only, no TS runtime. See JUDASJS.md.
+ * Ordinary returned objects are detached snapshots.
  */
 declare module "judas" {
   export interface LiquidState {entityId:EntityId;entity:Entity|null;enabled:boolean;equilibriumValid:boolean;container:boolean;material:string;density:number;volume:number;capacity:number;stableCapacity:number;coordinate:number;surface:LiquidSurfaceState|null}
@@ -120,6 +121,23 @@ declare module "judas" {
   }
   export interface ModelPart { readonly identity: string; readonly materialSlot: number; readonly triangles: number; readonly visible: boolean }
   export interface RootMotion { readonly translation: Vec3; readonly rotation: Quat; readonly extracted: boolean }
+  export interface EntityGravityState {
+    mode:"spatial"|"uniform"|"field";
+    available:boolean;
+    /** Live selected source ID, null for other modes or missing source. */
+    sourceId:EntityId|null;
+    source:Entity|null;
+    acceleration:Vec3;
+  }
+  /** Optional owner-local intent, no automatic child/articulation inheritance. */
+  export class EntityGravity {
+    constructor(id:EntityId);id:EntityId;
+    readonly state:EntityGravityState;
+    readonly acceleration:Vec3;
+    select(source:Entity):boolean;
+    setUniform(acceleration:Vec3):boolean;
+    clear():boolean;
+  }
   export class Entity {
     /** Local entity render gate; does not hide children or change simulation. */
     renderVisible:boolean;
@@ -135,6 +153,7 @@ declare module "judas" {
     clearSocket():boolean;
     material(slot?:MaterialTarget):Material;
     readonly liquid:LiquidVolume|null;
+    readonly gravity:EntityGravity;
     constructor(id: string | number | bigint);
     id: EntityId;
     readonly valid: boolean;

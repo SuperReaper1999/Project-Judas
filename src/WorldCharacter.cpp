@@ -31,7 +31,7 @@ void RuntimeWorld::UpdateCharacters(float dt,bool onlyM70,bool skipM70){
         m_physics.SetBodyTags(motor.observationBody,d->tags);
         motor.filter.ignoredBodies.erase(std::remove_if(motor.filter.ignoredBodies.begin(),motor.filter.ignoredBodies.end(),[&](auto h){return !m_physics.IsBodyEnabled(h);}),motor.filter.ignoredBodies.end());
         if(std::none_of(motor.filter.ignoredBodies.begin(),motor.filter.ignoredBodies.end(),[&](auto h){return h.id==motor.observationBody.id;}))motor.filter.ignoredBodies.push_back(motor.observationBody);
-        motor.Step(m_physics,m_gravityMap,dt);
+        motor.Step(m_physics,GravityForEntity(id),dt);
         m_physics.ResetBody(motor.observationBody,motor.position+motor.orientation*motor.settings.offset,motor.orientation);
         // Internal resolved motion writes bypass the explicit-teleport/reset API.
         auto& definition=m_scriptDefinitions.at(id);definition.transform.position=motor.position;definition.transform.rotation=motor.orientation;

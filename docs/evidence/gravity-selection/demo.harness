@@ -1,0 +1,14 @@
+FRAMES 380
+LOG_EVERY 60
+ENTITY 10
+SCREENSHOT 20 .cache/gravity-selection/room.png
+ACTION interact 1 40 41
+SCREENSHOT 155 .cache/gravity-selection/wall.png
+ACTION control_toggle 1 190 191
+ACTION igniter 1 245 246
+SCREENSHOT 335 .cache/gravity-selection/oblique.png
+ACTION pause 1 345 346
+EXPECT_PAUSED 1 348
+ACTION pause 1 355 356
+EXPECT_PAUSED 0 358
+ACTION reset 1 365 366

@@ -2,6 +2,7 @@
 #include "Deformable.h"
 #include "Classification.h"
 #include "Material.h"
+#include "GravitySelection.h"
 #include "NavigationTypes.h"
 #include "LiquidTypes.h"
 #include "AudioTypes.h"
@@ -303,6 +304,7 @@ struct SceneSocketComponent {SceneObjectId target=0;std::string joint;SceneTrans
 struct SceneJointComponent {SceneObjectId bodyA=0,bodyB=0;JointSettings settings;};
 
 struct SceneObject {
+    std::optional<GravitySelection> gravitySelection;
     bool renderVisible=true; // local entity scope; does not deactivate children or simulation
     std::optional<DeformableSettings> deformable;
     std::optional<LiquidBasinSettings> liquidBasin;

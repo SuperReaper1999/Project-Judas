@@ -1,5 +1,5 @@
 {
-  "checkpoint": "02b540f083bcf3d99b0dc6eb9aa70e63c91a31c3",
+  "checkpoint": "0f3694bb7142dc38a59abbd7365a113b673bae5e",
   "authority": "src/ScriptSystem.cpp::library + Impl::Native",
   "symbols": [
     {
@@ -788,6 +788,15 @@
       "reference": "docs/judasjs/entities.md"
     },
     {
+      "symbol": "Entity.gravity",
+      "kinds": [
+        "get"
+      ],
+      "native": [],
+      "type": "docs/judas.d.ts:Entity.gravity",
+      "reference": "docs/judasjs/entities.md"
+    },
+    {
       "symbol": "Entity.hasTag",
       "kinds": [
         "call"
@@ -1294,6 +1303,86 @@
       ],
       "type": "docs/judas.d.ts:Entity.velocity",
       "reference": "docs/judasjs/entities.md"
+    },
+    {
+      "symbol": "EntityGravity",
+      "kinds": [
+        "class"
+      ],
+      "native": [],
+      "type": "docs/judas.d.ts:EntityGravity",
+      "reference": "docs/judasjs/physics.md"
+    },
+    {
+      "symbol": "EntityGravity.acceleration",
+      "kinds": [
+        "get"
+      ],
+      "native": [],
+      "type": "docs/judas.d.ts:EntityGravity.acceleration",
+      "reference": "docs/judasjs/physics.md"
+    },
+    {
+      "symbol": "EntityGravity.clear",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "entityGravityClear"
+      ],
+      "type": "docs/judas.d.ts:EntityGravity.clear",
+      "reference": "docs/judasjs/physics.md"
+    },
+    {
+      "symbol": "EntityGravity.constructor",
+      "kinds": [
+        "call"
+      ],
+      "native": [],
+      "type": "docs/judas.d.ts:EntityGravity.constructor",
+      "reference": "docs/judasjs/physics.md"
+    },
+    {
+      "symbol": "EntityGravity.id",
+      "kinds": [
+        "field"
+      ],
+      "native": [],
+      "type": "docs/judas.d.ts:EntityGravity.id",
+      "reference": "docs/judasjs/physics.md"
+    },
+    {
+      "symbol": "EntityGravity.select",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "entityGravitySelect"
+      ],
+      "type": "docs/judas.d.ts:EntityGravity.select",
+      "reference": "docs/judasjs/physics.md"
+    },
+    {
+      "symbol": "EntityGravity.setUniform",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "entityGravityUniform"
+      ],
+      "type": "docs/judas.d.ts:EntityGravity.setUniform",
+      "reference": "docs/judasjs/physics.md"
+    },
+    {
+      "symbol": "EntityGravity.state",
+      "kinds": [
+        "get"
+      ],
+      "native": [
+        "entityGravityState"
+      ],
+      "type": "docs/judas.d.ts:EntityGravity.state",
+      "reference": "docs/judasjs/physics.md"
     },
     {
       "symbol": "Fracture",
@@ -3498,6 +3587,10 @@
     "delta",
     "destroy",
     "elapsed",
+    "entityGravityClear",
+    "entityGravitySelect",
+    "entityGravityState",
+    "entityGravityUniform",
     "fixed",
     "fluidSample",
     "force",

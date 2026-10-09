@@ -1,0 +1,14 @@
+[  0%] Built target judas_app_icon
+[ 17%] Built target judas_icu_build
+[ 23%] Built target freetype
+[ 29%] Built target judas_quickjs
+[ 35%] Built target judas_navigation_backend
+[ 35%] Built target judas_glad
+[ 41%] Built target judas_profiler
+[ 41%] Built target judas_audio_backend
+[ 41%] Built target harfbuzz
+[ 41%] Built target judas_materials
+[100%] Built target judas_engine
+[100%] Building CXX object CMakeFiles/judas_gravity_selection_tests.dir/tests/GravitySelectionTests.cpp.o
+[100%] Linking CXX executable judas_gravity_selection_tests
+[100%] Built target judas_gravity_selection_tests

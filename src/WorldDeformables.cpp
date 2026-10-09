@@ -90,7 +90,7 @@ void RuntimeWorld::UpdateDeformables(double dt){
         if(simulation->asset->fracture&&simulation->asset->fracture->rigid){
             if(!record.rigid.initialized&&!m_restoreConstruction){std::string prepareError;if(!PrepareRigidFracture(id,prepareError)){simulation->error=prepareError;continue;}}
             if(record.rigid.initialized)UpdateRigidFracture(id,dt);
-        }else simulation->Step(dt,m_physics,m_gravityMap,record.targets);
+        }else simulation->Step(dt,m_physics,GravityForEntity(id),record.targets);
         if(simulation->asset->fracture&&!simulation->asset->fracture->rigid&&simulation->settings.enabled)simulation->fracture.Commit(*simulation->asset->fracture);
         ++record.revision;
     }

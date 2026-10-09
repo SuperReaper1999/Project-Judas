@@ -10,16 +10,18 @@ milestones land, rather than kept as a per-milestone snapshot — see
 
 The operator reports that the earlier Windows update was validated and pushed.
 That historical acceptance is distinct from native Windows evidence for later
-M70/M71 changes and this M72 checkpoint awaiting human validation. The current M72 work has no
+M70/M71 changes and the human-accepted Linux M72 checkpoint. The current M72 work has no
 native Windows acceptance yet. [WINDOWS.md](WINDOWS.md) retains native build,
 package and acceptance instructions. Historical platform statements below
 describe the evidence available at their original milestones.
 
 ## Current reference and historical capability overview
 
-Accepted baseline: M71 (`02b540f083bcf3d99b0dc6eb9aa70e63c91a31c3`).
-M71 is the latest operator-accepted engine checkpoint; [M72](M72.md) is the current
-checkpoint authorized without human validation; desktop review remains pending. M70's accepted Linux checkpoint is
+Accepted baseline: M72 (`0f3694bb7142dc38a59abbd7365a113b673bae5e`).
+[M72](M72.md) received operator desktop acceptance on 2026-10-09 after its initial
+checkpoint without human validation. The optional gravity-selection follow-up is
+operator-authorized for checkpointing. Native Windows acceptance remains separate.
+M70's accepted Linux checkpoint is
 `fb31f0244c9f41f74c439afd99855e3707937edd`. M67 remains provisionally checkpointed;
 proper human authoring validation is deferred. M68 and M69 are checkpointed,
 not awaiting review. M69 controller acceptance uses synthetic SDL and real-VM
@@ -687,6 +689,16 @@ gravity of its own; Judas still samples a `GravityField` and hands the
 result to the physics layer as an applied acceleration, exactly as before.
 
 ### Gravity: one interface, interchangeable implementations
+
+**Current gravity-selection follow-up (after M72):** optional per-entity gravity intent
+selects an existing authored GravityField independently of its zone, or provides
+an explicit world-space uniform acceleration. Absence preserves spatial routing.
+Local-gravity consumers share `RuntimeWorld::SampleEntityGravity`; sources are
+stable entity identities resolved at sampling, never durable pointers. This does
+not change support, attachment, camera ownership, liquid equilibrium or pairwise
+celestial forces. [Design, lifecycle, consumers and limits](GRAVITY_SELECTION.md).
+Root and streamed box gravity zones now share oriented bounds; the reproduced
+initial-load inconsistency and regression proof are retained with this follow-up.
 
 **Current extension:** M54 added optional `GravityField::Equilibrium` descriptors
 for conservative liquid geometry. Acceleration still comes from `Sample`; both
@@ -9158,7 +9170,7 @@ without changing M54/M55 behaviour. See [profiler guide](PROFILER.md) and M56 ev
 
 ## M57 optional materials and environment lighting
 
-Reusable `.judasmat` definitions and isolated instance overrides, core glTF primitive slots, PBR/unlit/legacy models and baked `.judasenv` resources use AssetDatabase/async ResourceManager and Renderer-owned GL3.3 lifetime. Opted-in scenes accumulate linear HDR, apply exposure/Reinhard/sRGB once, then display-stage UI. Modern secondary targets carry scene-linear radiance. Physics, liquid simulation and resolved skeletal poses remain independent of material policy. M66 supersedes the original import restrictions; the M72 candidate extends public sun/environment controls, render gates and whole/slot/stable-part material patches through these existing owners. See [Materials](MATERIALS.md) for exact shading, colour/import/pass contracts and [JudasJS material API](judasjs/materials.md). M57 is human-accepted and checkpointed at `ba16c2c`; historical milestone evidence is preserved.
+Reusable `.judasmat` definitions and isolated instance overrides, core glTF primitive slots, PBR/unlit/legacy models and baked `.judasenv` resources use AssetDatabase/async ResourceManager and Renderer-owned GL3.3 lifetime. Opted-in scenes accumulate linear HDR, apply exposure/Reinhard/sRGB once, then display-stage UI. Modern secondary targets carry scene-linear radiance. Physics, liquid simulation and resolved skeletal poses remain independent of material policy. M66 supersedes the original import restrictions; M72 extends public sun/environment controls, render gates and whole/slot/stable-part material patches through these existing owners. See [Materials](MATERIALS.md) for exact shading, colour/import/pass contracts and [JudasJS material API](judasjs/materials.md). M57 is human-accepted and checkpointed at `ba16c2c`; historical milestone evidence is preserved.
 
 ## M58 — shared Unicode text and project localization
 
@@ -9489,7 +9501,7 @@ The combined engine/editor work is accepted at
 `02b540f083bcf3d99b0dc6eb9aa70e63c91a31c3`. Original candidate receipts remain
 preserved in the M71 evidence record; they do not certify later M72 changes.
 
-## M72 — runtime lighting, render visibility and instance materials (candidate)
+## M72 — runtime lighting, render visibility and instance materials (human accepted)
 
 Authored root settings → validated RuntimeWorld appearance → one render-sample
 snapshot → normal direct lighting, supported shadows and environment resolve is
@@ -9524,6 +9536,7 @@ sun trajectories and hiding/material policy; no native day/night system is intro
 See [M72 ownership, authoring, lifecycle and review](M72.md),
 [appearance/material API](judasjs/materials.md) and
 [render-visibility API](judasjs/entities.md#render-visibility-m72).
-M72 is checkpointed by operator instruction without human validation. Executed
-evidence and remaining human/platform acceptance are reported in its handoff;
-checkpointing does not imply visual acceptance.
+M72 was initially checkpointed without human validation. The operator accepted
+the desktop Render Control Lab on 2026-10-09; M72 is now human validated on Linux.
+Original automated evidence retains its scope. Native Windows M72 validation
+remains outstanding.

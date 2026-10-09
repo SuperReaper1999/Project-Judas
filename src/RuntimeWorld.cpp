@@ -21,6 +21,7 @@
 #include "RadialTerrain.h"
 #include "ProductionFluidCoupling.h"
 #include "RadicalGravity.h"
+#include "OrientedGravityVolume.h"
 #include "ResourceManager.h"
 #include "SceneFingerprint.h"
 #include "SphericalVolume.h"
@@ -521,7 +522,7 @@ bool RuntimeWorld::AppendSceneObjects(const Scene& scene, bool authored,
             if (g.regionShape == SceneRegionShape::Sphere) {
                 volume = std::make_unique<SphericalVolume>(position, g.regionRadius);
             } else {
-                volume = std::make_unique<BoxVolume>(position, g.regionHalfExtents);
+                volume = std::make_unique<OrientedGravityVolume>(position, rotation, g.regionHalfExtents);
             }
             m_gravityMap.AddRegion(*field, *volume);
             m_gravityFields.push_back(std::move(field));
@@ -1415,7 +1416,7 @@ void RuntimeWorld::UpdateVisualParticles(float dt){
         if(!IsPublished(e.id))continue;
         if(const auto* entity=FindEntity(e.id))if(entity->lifecycle==EntityLifecycle::Destroyed)continue;
         const auto t=PresentedTransform(e.id,e.transform,1);
-        e.pool.Update(dt,t.position,t.rotation,t.scale,Gravity());
+        e.pool.Update(dt,t.position,t.rotation,t.scale,GravityForEntity(e.id));
     }
 }
 bool RuntimeWorld::EmitParticleBurst(SceneObjectId id,unsigned count){

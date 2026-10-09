@@ -1,0 +1,40 @@
+{
+  "base": "0f3694bb7142dc38a59abbd7365a113b673bae5e",
+  "candidate": "operator-authorized for checkpointing on 2026-10-09",
+  "release": true,
+  "platform": "Linux x86-64, SDL offscreen, dummy audio",
+  "focused": {
+    "checks": 70,
+    "failures": 0,
+    "receipt": "focused-final-70.log"
+  },
+  "regressions": {
+    "character": 32,
+    "worldPersistence": 27,
+    "streaming": 71,
+    "canonicalFingerprint": 140,
+    "uniformGravity": {
+      "checks": 12095,
+      "scenes": 136,
+      "constructions": 272,
+      "steps": 32640
+    }
+  },
+  "cookbook": {
+    "gravity-selection": 9,
+    "liveSurface": 9
+  },
+  "api": {
+    "symbols": 330,
+    "nativeOperations": 228,
+    "examplesTypeChecked": 37,
+    "typeScript": "5.9.3",
+    "liveEnumeration": true,
+    "negativeDriftChecks": 3
+  },
+  "editor": "authored scene IDENTICAL after Play/Stop; save ok",
+  "package": "3 assets, 1 scene; moved /tmp launch and 380 scripted frames, pause/resume/reload/captures passed",
+  "performance": "70-check run: spatial 37.171 ns/sample, uniform 28.642 ns/sample, selected field 98.478 ns/sample; 20000 calls per case in small world. Existing 100-motor regression batch: 3.856439 ms, 120 samples. Indicative observations, not equivalent before/after benchmarks.",
+  "human": "M72 desktop acceptance confirmed 2026-10-09; gravity API checkpoint authorized. No additional gravity-demo or Windows human tests claimed.",
+  "protected": "No protected research/historical evidence or fluid implementation file changed. Pre-existing asset_packs/ and ignored LowPolyAssets untouched."
+}

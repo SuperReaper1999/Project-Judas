@@ -2,19 +2,12 @@
 #include "ResourceManager.h"
 #include "RadicalGravity.h"
 #include "UniformGravity.h"
+#include "OrientedGravityVolume.h"
 #include "FaithfulGravity.h"
 #include "SphericalVolume.h"
 #include "SaveArchive.h"
 #include <algorithm>
 #include <limits>
-namespace {
-// Region boxes must rotate with their physical/content frame, including oblique gravity.
-class OrientedRegionVolume final:public GravityVolume {
-    glm::vec3 p,h;glm::quat inverse;
-public:OrientedRegionVolume(glm::vec3 p_,glm::quat q,glm::vec3 h_):p(p_),h(h_),inverse(glm::inverse(q)){}
-    bool Contains(const glm::vec3& x)const override {auto a=glm::abs(inverse*(x-p));return a.x<=h.x&&a.y<=h.y&&a.z<=h.z;}
-};
-}
 bool RuntimeWorld::StageRegionObject(const SceneObject& definition,const SceneObject& local,std::string& error,const std::string& stableIdentity) {
     if(FindEntity(definition.id)){error="duplicate staged identity";return false;}
     m_regionPending.insert(definition.id);
@@ -124,7 +117,7 @@ void RuntimeWorld::RebuildRegionGravity(const std::map<EntityId,std::string>& or
         else field=std::make_unique<UniformGravity>(o.transform.rotation*glm::vec3(0,-g.magnitude,0));
         std::unique_ptr<GravityVolume> volume;
         if(g.regionShape==SceneRegionShape::Sphere)volume=std::make_unique<SphericalVolume>(o.transform.position,g.regionRadius);
-        else volume=std::make_unique<OrientedRegionVolume>(o.transform.position,o.transform.rotation,g.regionHalfExtents);
+        else volume=std::make_unique<OrientedGravityVolume>(o.transform.position,o.transform.rotation,g.regionHalfExtents);
         m_gravityMap.AddRegion(*field,*volume);m_gravityFields.push_back(std::move(field));m_gravityVolumes.push_back(std::move(volume));m_gravityRegions.push_back({o.id,g,o.transform.position,o.transform.rotation});
     }
 }

@@ -223,3 +223,58 @@ joint's three free angular axes, or a hinge's free angular axis. Fixed/slider
 joints have no free angular axis. It does not drive a rest orientation, alter sleep
 thresholds, or replace hinge motors/springs. The same setting is authored in
 ordinary joints and ragdoll mappings; game scripts decide whether to use it.
+
+## Entity.gravity / EntityGravity
+
+Every live Entity exposes `entity.gravity`. This is independent of CharacterMotor,
+camera, support and attachment. No selection means the existing **spatial**
+GravityField resolver. See [selection design and demo](../GRAVITY_SELECTION.md).
+
+| Member | Result / meaning |
+| --- | --- |
+| `state` | Detached `{mode, available, sourceId, source, acceleration}` snapshot |
+| `acceleration` | Effective world-space acceleration at this entity's authoritative position, m/s² |
+| `select(source)` | `true`; choose a live Entity with an authored Gravity component |
+| `setUniform({x,y,z})` | `true`; explicit world-space acceleration, including zero |
+| `clear()` | `true`; remove intent and resume spatial gravity |
+
+Modes are `spatial`, `uniform`, `field`. Selected fields retain their actual
+FaithfulGravity/uniform or RadicalGravity sampling, independently of zone bounds.
+Source selection is **not** another zone and does not move or rotate the world.
+A source's own selection does not propagate: no selection chains.
+
+Missing/unpublished source gives `available:false`, `source:null`, `sourceId:null`
+and the ordinary spatial acceleration. There is no cached pointer or body-slot
+reference. Streaming pins an externally selected source until intent clears.
+Sources retain the engine's existing authored-field transform/publication rules;
+this is not a new moving-gravity-field API.
+
+Stale owner/source throws ReferenceError. A live non-field source or malformed,
+non-finite uniform vector throws TypeError without changing existing intent.
+Uniform magnitude is bounded at 10000 m/s². Use `{x,y,z}`, not IK array syntax.
+Mutators preserve current world velocity, wake a changed body's ordinary physics,
+and act on subsequent steps. Identical intent is a no-op. Prefer fixedUpdate
+for gameplay selection; no consumer polls input or performs a camera change.
+
+```js
+// Policy belongs in project JS. A real query normal chooses the new floor.
+const hit = physics.raycast(origin, direction, 30, {ignored:[this.entity]});
+if (hit) this.entity.gravity.setUniform({
+  x:-9.81*hit.normal.x, y:-9.81*hit.normal.y, z:-9.81*hit.normal.z
+});
+// Later: restore ordinary zones/fields at the current position.
+this.entity.gravity.clear();
+```
+
+The motor, ordinary full/coarse local-gravity rigid bodies, gravity-enabled visual
+particles and non-rigid deformables sample this owner intent. Kinematic bodies
+remain prescribed; the legacy pairwise/celestial vehicle path, liquids and other
+position-only gravity queries retain existing spatial/pairwise semantics. No
+implicit child/bone inheritance: an articulation can select individual body
+entities explicitly. `physics.gravity(position)` remains a **spatial** query;
+`entity.character.gravity` reports that motor's effective selected gravity.
+
+Scene, prefab, modern snapshots and retained region state serialize optional
+intent with normal entity identities. Stop/reload restores authored intent.
+See [character](character.md), [lifecycle](lifecycle.md) and
+[copyable example](examples/gravity-selection.js).

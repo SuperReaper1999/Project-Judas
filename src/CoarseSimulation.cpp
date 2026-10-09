@@ -72,7 +72,6 @@ void ApplyCoarseCelestialForces(RuntimeWorld& world, float dt) {
 }
 
 void StepCoarseEntities(RuntimeWorld& world, float dt) {
-    const GravityField& gravity = world.Gravity();
     // Motion changes neither IDs nor vector membership. MutableEntities() is
     // reserved for structural edits which really invalidate the identity index.
     for (const EntityRecord& current : world.Entities()) {
@@ -86,7 +85,7 @@ void StepCoarseEntities(RuntimeWorld& world, float dt) {
         // Local fields apply to ordinary Full and Coarse entities alike.
         // Static point-mass sources are selected only by Celestial-mode
         // vehicles, whose capability requires Full fidelity (Simulation).
-        e.state.linearVelocity += gravity.Sample(e.state.position) * dt;
+        e.state.linearVelocity += world.SampleEntityGravity(e.id,e.state.position) * dt;
         e.state.position += e.state.linearVelocity * dt;
         e.state.rotation = IntegrateOrientation(e.state.rotation, e.state.angularVelocity, dt);
         presentation.SetPoseFromState(e.state.position, e.state.rotation);

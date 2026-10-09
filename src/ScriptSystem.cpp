@@ -71,6 +71,7 @@ export class Entity {
  get navigation(){return call("navAgentExists",this.id)?new NavigationAgent(this.id):null}
  get fracture(){const epoch=call("fractureExists",this.id);return epoch?new Fracture(this.id,epoch):null}
  get deformable(){const epoch=call('deformableExists',this.id);return epoch?new Deformable(this.id,epoch):null}
+ get gravity(){return new EntityGravity(this.id)}
  get character(){return call("characterExists",this.id)?new Character(this.id):null}
  get ragdoll(){return call('ragdollExists',this.id)?new Ragdoll(this.id):null}
  get audio(){return call('audioInfo',this.id)}
@@ -153,6 +154,14 @@ export class Deformable {
  attach(group,options){return call('deformableAttach',this.id,this.epoch,group,{...options,targetId:options.target?.id})}
  setMaterial(options){return call('deformableMaterial',this.id,this.epoch,options)}
  raycast(origin,direction,maximum){return call('deformableRaycast',this.id,this.epoch,origin,direction,maximum)}
+}
+export class EntityGravity {
+ constructor(id){this.id=id}
+ get state(){const v=call('entityGravityState',this.id);return {...v,source:entity(v.sourceId)}}
+ get acceleration(){return this.state.acceleration}
+ select(source){return call('entityGravitySelect',this.id,source?.id??'0')}
+ setUniform(acceleration){return call('entityGravityUniform',this.id,acceleration)}
+ clear(){return call('entityGravityClear',this.id)}
 }
 export class Character {
  constructor(id){this.id=id}
@@ -789,7 +798,7 @@ JSValue ScriptSystem::Impl::Native(JSContext* c,JSValueConst,int argc,JSValueCon
         if(op!="characterState")return JS_ThrowTypeError(c,"unknown character operation");
         auto o=JS_NewObject(c);const auto& r=m->result;
         JS_SetPropertyStr(c,o,"velocity",Vec(c,m->velocity));JS_SetPropertyStr(c,o,"actualDisplacement",Vec(c,r.displacement));
-        JS_SetPropertyStr(c,o,"supportNormal",Vec(c,r.supportNormal));JS_SetPropertyStr(c,o,"supportVelocity",Vec(c,r.supportVelocity));JS_SetPropertyStr(c,o,"gravity",Vec(c,world.Gravity().Sample(m->position)));JS_SetPropertyStr(c,o,"up",Vec(c,m->orientation*glm::vec3(0,1,0)));
+        JS_SetPropertyStr(c,o,"supportNormal",Vec(c,r.supportNormal));JS_SetPropertyStr(c,o,"supportVelocity",Vec(c,r.supportVelocity));JS_SetPropertyStr(c,o,"gravity",Vec(c,world.SampleEntityGravity(id,m->position)));JS_SetPropertyStr(c,o,"up",Vec(c,m->orientation*glm::vec3(0,1,0)));
         JS_SetPropertyStr(c,o,"supported",JS_NewBool(c,r.supported));JS_SetPropertyStr(c,o,"collided",JS_NewBool(c,r.collided));
         JS_SetPropertyStr(c,o,"supportEntityId",JS_NewString(c,std::to_string(world.EntityIdOfBody(r.support)).c_str()));
         return o;
@@ -917,6 +926,30 @@ JSValue ScriptSystem::Impl::Native(JSContext* c,JSValueConst,int argc,JSValueCon
     if(op=="valid")return JS_NewBool(c,definition!=nullptr);
     if(!definition)return JS_ThrowReferenceError(c,"stale or invalid entity %llu",(unsigned long long)id);
 
+    if(op=="entityGravityState"){
+        auto o=JS_NewObject(c);const auto& selection=definition->gravitySelection;
+        const char* mode=!selection?"spatial":selection->mode==GravitySelection::Mode::Field?"field":"uniform";
+        JS_SetPropertyStr(c,o,"mode",JS_NewString(c,mode));
+        JS_SetPropertyStr(c,o,"available",JS_NewBool(c,world.GravitySelectionAvailable(id)));
+        auto source=selection&&selection->mode==GravitySelection::Mode::Field?selection->source:0;
+        JS_SetPropertyStr(c,o,"sourceId",world.RuntimeDefinition(source)?JS_NewString(c,std::to_string(source).c_str()):JS_NULL);
+        auto p=world.PresentedTransform(id,definition->transform,1).position;
+        JS_SetPropertyStr(c,o,"acceleration",Vec(c,world.SampleEntityGravity(id,p)));return o;
+    }
+    if(op=="entityGravitySelect"||op=="entityGravityUniform"||op=="entityGravityClear"){
+        std::optional<GravitySelection> selection;std::string error;
+        if(op!="entityGravityClear"){
+            selection=GravitySelection{};
+            if(op=="entityGravityUniform"){
+                if(!ReadVec(c,arg(2),selection->acceleration))return JS_ThrowTypeError(c,"finite acceleration {x,y,z} required");
+            }else{
+                selection->mode=GravitySelection::Mode::Field;
+                try{auto text=String(c,arg(2));size_t end;selection->source=std::stoull(text,&end);if(end!=text.size())selection->source=0;}catch(...){selection->source=0;}
+                if(!world.RuntimeDefinition(selection->source))return JS_ThrowReferenceError(c,"stale gravity source");
+            }
+        }
+        return world.SetGravitySelection(id,selection,error)?JS_TRUE:JS_ThrowTypeError(c,"%s",error.c_str());
+    }
     if(op=="modelParts"||op=="modelPartVisible"){
         auto* parts=definition->render&&world.Resources()?world.Resources()->TryGetModelParts(definition->render->meshAsset):nullptr;
         if(op=="modelPartVisible"){if(!JS_IsString(arg(2))||!JS_IsBool(arg(3)))return JS_ThrowTypeError(c,"part identity and boolean required");return JS_NewBool(c,world.SetModelPartVisible(id,String(c,arg(2)),JS_ToBool(c,arg(3))));}

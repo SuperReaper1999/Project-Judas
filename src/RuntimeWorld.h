@@ -252,6 +252,16 @@ public:
     PhysicsWorld& Physics() { return m_physics; }
     const PhysicsWorld& Physics() const { return m_physics; }
     const GravityField& Gravity() const { return m_gravityMap; }
+    glm::vec3 SampleEntityGravity(EntityId,glm::vec3) const;
+    bool GravitySelectionAvailable(EntityId) const;
+    bool SetGravitySelection(EntityId,std::optional<GravitySelection>,std::string&);
+    class EntityGravityField final:public GravityField {
+        const RuntimeWorld& world;EntityId owner;
+    public:
+        EntityGravityField(const RuntimeWorld& w,EntityId id):world(w),owner(id){}
+        glm::vec3 Sample(const glm::vec3& p)const override {return world.SampleEntityGravity(owner,p);}
+    };
+    EntityGravityField GravityForEntity(EntityId id)const {return EntityGravityField(*this,id);}
 
     std::vector<DynamicBody>& DynamicBodies() { return m_dynamicBodies; }
     const std::vector<DynamicBody>& DynamicBodies() const { return m_dynamicBodies; }
@@ -576,6 +586,7 @@ private:
     std::string m_baselineFingerprint;
     ResourceManager* m_assets = nullptr;
 
+    const GravityField* SelectedGravitySource(EntityId) const;
     std::vector<std::unique_ptr<GravityField>> m_gravityFields;
     std::vector<std::unique_ptr<GravityVolume>> m_gravityVolumes;
     GravityContextMap m_gravityMap;
