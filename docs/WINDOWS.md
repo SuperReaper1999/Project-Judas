@@ -1,18 +1,81 @@
 # Windows editor and exported games
 
-The operator reports that the earlier Windows update was validated and pushed.
-That historical acceptance does not certify later M70/M71 changes or the current
-[M72 checkpoint awaiting human validation](M72.md). Native Windows M72 compilation,
-OpenGL/audio/input, editor authoring, packaging and save durability remain pending.
-The instructions and checklist below support native verification; no Wine result
-is being substituted for it. Earlier evidence retains its original platform scope.
+The earlier Windows update retains its historical operator acceptance. On
+**2026-10-09**, native Windows 10 VM verification passed for checkpoint
+`df0c301f688e62e4baa59a837beb05d42aa75e3c`: accepted [M72](M72.md) plus optional
+per-entity gravity selection. The Release SDK, focused checks, editor and moved
+game packages worked under the qualifications below. This was native Windows,
+not Wine; it does **not** certify hardware graphics/audio/controller support or
+power-loss durability. Those checks and operator Windows acceptance remain
+outstanding. Earlier evidence retains its original platform scope.
+
+## Native Windows VM results — 2026-10-09
+
+Environment: Windows 10 Home 22H2, build 19045, KVM/QXL, four cores and 6 GiB RAM.
+The SDK built with Visual Studio 2022 Build Tools 17.14.41, MSVC 19.44.35229,
+Windows SDK 22621 and CMake 3.31. MSVC/upstream warnings were retained; this is
+not a zero-warning build claim. No Judas runtime/source changes were needed.
+
+| Focused native check | Passed | Failed |
+|---|---:|---:|
+| Windows readiness: paths, save recovery, locks and process handling | 21 | 0 |
+| CharacterMotor | 32 | 0 |
+| Physical animation | 64 | 0 |
+| Shared multi-target IK | 38 | 0 |
+| Gravity selection | 70 | 0 |
+| Actual-GL M72 render controls | 54 | 0 |
+| Character lab, including ragdoll owner-contact delivery | 98 | 0 |
+| **Total** | **377** | **0** |
+
+Checks ran in the ordinary, non-administrator Windows desktop session. The full
+production suite and every historical Linux harness were **not** run on Windows.
+
+- Editor batch authoring/undo, duplicate/undo, Run Project, scene save and
+  Play/Stop passed. The authored scene hash was identical before and after.
+- Render Control Lab, Gravity Selection Lab and Spring Range launched normally.
+  Their harnesses exercised render controls, save/load, gravity selection,
+  shooting, camera switching, pause/resume, localization and reload.
+- All three projects exported and ran after moving to paths containing spaces,
+  `é` and `α`, from an unrelated working directory. Exported saves used
+  `%LOCALAPPDATA%\judas\games\...`, including current/previous save generations.
+- Re-export removed deliberately obsolete content. Removing a manifest-listed
+  ICU DLL from a copied SDK caused export to fail without publishing a package.
+- Virtual keyboard/mouse input into an ordinary Spring Range process opened the
+  pause menu, resumed, switched cameras and registered a scored mouse-click hit.
+  This does not substitute for physical input-device acceptance.
+
+**Graphics qualification:** the stock SDK could not load OpenGL 3.3 Core entry
+points on QXL. An app-local Mesa 26.2.4 llvmpipe fallback supplied software OpenGL
+for the successful renderer/editor/game checks. Only the VM tooling copy, test
+directory and moved VM packages received `opengl32.dll` and
+`libgallium_wgl.dll`; the stock SDK and system OpenGL were unchanged. Ordinary
+exports do not bundle Mesa. These results are not a hardware-GPU performance
+certification, and an unmodified stock package still requires a suitable driver.
+
+Setup failures and corrections were retained: the initial configuration lacked
+the VS developer environment, retired MSYS mirrors required the documented
+native pkgconf workaround, and ICU data generation failed until Python and its
+`py -3` launcher were installed. Individual receipts, screenshots and the report
+are retained locally under `.cache/windows-vm-transfer/reports/` (ignored, not
+distributed with the repository). Temporary test-runner summary and missing-DLL
+probe mistakes were corrected without changing Judas; their original receipts
+remain alongside the corrected results.
 
 ## Build on your Windows install
 
 Use Windows 10 (1903 or newer) / Windows 11, **x64**, with an OpenGL 3.3-capable
 vendor graphics driver. Install Git for Windows and Visual Studio 2022 with
 **Desktop development with C++**, the v143 toolset, Windows SDK, CMake (3.21+),
-and Visual C++ redistributable components. Start **Developer PowerShell for VS 2022**.
+and Visual C++ redistributable components. Install **Python 3 with the Windows
+`py` launcher**, available as `py -3` in the build environment. ICU's upstream
+Windows data-generation tools require it; Python 3.13.16 was used in the VM
+verification. Python is a build prerequisite, not a packaged-game requirement.
+Start **Developer PowerShell for VS 2022** and check the launcher:
+
+```powershell
+py -3 --version
+```
+
 Clone/pull this repository into a normal writable location. Avoid junction/symlink
 save directories. The first build needs internet access for pinned SDL2/GLM via
 vcpkg; the text/physics/script/import dependencies already reside in the repository.
@@ -122,8 +185,14 @@ fixture does **not** validate its Windows-only checks.
 9. Open a project/path containing spaces and non-ASCII characters. Check import,
    save/load and exported startup there too.
 
-Native editor screenshots, hardware/controller/audio acceptance and Windows
-compiler/runtime results are still required before removing the unvalidated label.
+The VM results above establish native compilation and bounded editor/runtime
+verification, including screenshots. **Hardware validation remains outstanding:**
+vendor-GPU graphics/performance, audible audio and device switching, physical
+mouse confinement, controller hardware, real-machine suspend and fault/crash/
+power-loss storage durability. Operator Windows visual/editor acceptance also
+remains outstanding. Retain the unvalidated candidate label until the appropriate
+remaining checks are accepted; VM screenshots and synthetic input do not supply
+that acceptance.
 Historical Linux-only harnesses are not all ported; build the SDK target rather
 than every historical test target. No installers, signing, MSIX or automatic
 updates are supplied. Explorer executable-resource icons are not added in this
