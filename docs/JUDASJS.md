@@ -2,6 +2,8 @@
 
 ## Terrain content
 
+[M76 local mods](MODDING.md) exposes only a detached content catalog; install/trust are tools, not gameplay APIs. See [catalog reference](judasjs/mods.md). M76 is a candidate pending human review.
+
 [M75 terrain authoring](M75.md) creates ordinary cooked assets; scripts consume them through existing entities, physics queries, CharacterMotor, navigation, scenes and saves. There is no runtime brush namespace or new terrain JS API. Gameplay still belongs to projects.
 
 

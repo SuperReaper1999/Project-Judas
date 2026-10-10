@@ -1,5 +1,34 @@
 # Windows editor and exported games
 
+## M76 local modding candidate
+
+The provisional [M76 checkpoint](M76.md), **NOT HUMAN VALIDATED**, based on accepted M75 checkpoint
+`38d345883a541d4eb2faa43c321e940d223fce09`, was compiled and exercised natively
+in the existing Windows 10 VM. **Human M76 review and physical Windows validation
+remain pending.** See [M76 evidence](evidence/m76/REPORT.md) for exact scope.
+
+- Native package/policy/storage: 124 checks passed (three POSIX-specific link cases
+  are Linux-only). Transferred source hashes and refreshed MSVC binaries were checked.
+- Kit export, ordinary Create/Fork/Save/Cook/navigation bake/package worked with
+  original game source unavailable. The actual editor viewport sculpt/paint,
+  Undo/Redo/cancel, manifest publication and Play/Stop passed; scene bytes remained
+  identical after Stop. Its package passed 19 real application checks.
+- The **identical Linux-created A payload** ran in the matching native exported
+  game with B and declared dependency packages: 20 real application checks passed.
+  Fresh save/restore passed 9/11 checks; changed-loadout refusal passed 7 checks.
+  Zero-use/empty selection, explicit trust refusal and removal were also exercised.
+- The actual shipped executable ran from an unrelated working directory in a moved
+  Unicode/spaces path, with all authoring sources hidden and base files read-only.
+  Base hashes remained unchanged; saves/install/cache used ordinary writable user
+  storage. The pristine SDK/export contained no Mesa DLLs.
+
+The VM requires explicit `GALLIUM_DRIVER=llvmpipe` with app-local Mesa in disposable
+test copies. This is software-rendered native execution, not GPU/audio/controller
+hardware acceptance. Existing Windows short-root/long-path limits and inherited
+warnings remain. A full production suite was not rerun for this focused content
+integration; the existing Linux-only save-storage harness was not presented as a
+Windows result.
+
 The earlier Windows update retains its historical operator acceptance. On
 **2026-10-09**, native Windows 10 VM verification passed for checkpoint
 `df0c301f688e62e4baa59a837beb05d42aa75e3c`: accepted [M72](M72.md) plus optional

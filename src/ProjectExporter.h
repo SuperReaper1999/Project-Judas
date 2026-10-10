@@ -19,3 +19,8 @@ struct ProjectExportResult {
 // staging: existing packages are replaced, arbitrary directories are refused.
 bool ExportProject(const Project& project, const ProjectExportOptions& options,
                    ProjectExportResult& result, std::string& error);
+
+class Scene;class AssetDatabase;
+// Shared eager typed reference/freshness validation, used by export and mod
+// preflight. Modules are compiled/resolved, never evaluated here.
+bool ValidateSceneContent(const Scene&,const AssetDatabase&,const ProjectClassification&,const ProjectNavigation&,std::string&);

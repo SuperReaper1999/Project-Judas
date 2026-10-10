@@ -1,0 +1,144 @@
+{
+  "format": 1,
+  "id": "hill-map",
+  "name": "hill-map",
+  "version": "1.0.0",
+  "game": "judas-modding-lab",
+  "gameVersion": "1.0.0",
+  "contractVersion": "1.0.0",
+  "author": "Judas original example",
+  "license": "CC0",
+  "executable": true,
+  "notices": [
+    "NOTICE.txt"
+  ],
+  "files": [],
+  "assets": [],
+  "scenes": [],
+  "dependencies": [],
+  "imports": [
+    {
+      "owner": "base",
+      "name": "asset-2cd7b7f5bf633e4398077ead1db9063c",
+      "reference": {
+        "kind": "texture",
+        "value": "2cd7b7f5bf633e4398077ead1db9063c"
+      }
+    },
+    {
+      "owner": "base",
+      "name": "asset-49ac09ab0f077eefe87c6373c1dbe909",
+      "reference": {
+        "kind": "script",
+        "value": "49ac09ab0f077eefe87c6373c1dbe909"
+      }
+    },
+    {
+      "owner": "base",
+      "name": "asset-4b140c438a54f035aee7b5f4a1f936d0",
+      "reference": {
+        "kind": "texture",
+        "value": "4b140c438a54f035aee7b5f4a1f936d0"
+      }
+    },
+    {
+      "owner": "base",
+      "name": "asset-82d6abae9438ca0b47d8ca9e675737f1",
+      "reference": {
+        "kind": "prefab",
+        "value": "82d6abae9438ca0b47d8ca9e675737f1"
+      }
+    },
+    {
+      "owner": "base",
+      "name": "asset-87616c4bce4aa374105c14e2516a0ca0",
+      "reference": {
+        "kind": "font",
+        "value": "87616c4bce4aa374105c14e2516a0ca0"
+      }
+    },
+    {
+      "owner": "base",
+      "name": "asset-9e3e21ccbab37bb7e7061e8ae17b57bc",
+      "reference": {
+        "kind": "mesh",
+        "value": "9e3e21ccbab37bb7e7061e8ae17b57bc"
+      }
+    },
+    {
+      "owner": "base",
+      "name": "asset-9f9f21593290b466bdca16b72654b8e5",
+      "reference": {
+        "kind": "texture",
+        "value": "9f9f21593290b466bdca16b72654b8e5"
+      }
+    },
+    {
+      "owner": "base",
+      "name": "asset-a5f6a7b8d1a0366eab3881d52fbbc5cd",
+      "reference": {
+        "kind": "ui",
+        "value": "a5f6a7b8d1a0366eab3881d52fbbc5cd"
+      }
+    },
+    {
+      "owner": "base",
+      "name": "asset-c71ecc23446aaa1757bc4c9ff55eecc8",
+      "reference": {
+        "kind": "collision",
+        "value": "c71ecc23446aaa1757bc4c9ff55eecc8"
+      }
+    },
+    {
+      "owner": "base",
+      "name": "asset-e343720d44c6b6b12eb4446dac88e3c9",
+      "reference": {
+        "kind": "navigation",
+        "value": "e343720d44c6b6b12eb4446dac88e3c9"
+      }
+    },
+    {
+      "owner": "base",
+      "name": "player-behaviour",
+      "reference": {
+        "kind": "script",
+        "value": "49ac09ab0f077eefe87c6373c1dbe909"
+      }
+    }
+  ],
+  "exports": {
+    "drop": {
+      "kind": "prefab",
+      "value": "85fda457f09892759868c69fa55f49bb"
+    },
+    "map": {
+      "kind": "scene",
+      "value": "Scenes/main.judas"
+    }
+  },
+  "contributions": [
+    {
+      "point": "maps",
+      "name": "sculpted-hill",
+      "reference": {
+        "kind": "scene",
+        "value": "Scenes/main.judas"
+      },
+      "data": {
+        "label": "Sculpted hill"
+      }
+    },
+    {
+      "point": "props",
+      "name": "signal-prop",
+      "reference": {
+        "kind": "prefab",
+        "value": "85fda457f09892759868c69fa55f49bb"
+      },
+      "data": {
+        "label": "Signal prop"
+      }
+    }
+  ],
+  "replacements": []
+}

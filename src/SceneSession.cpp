@@ -1,4 +1,5 @@
 #include "InputSystem.h"
+#include "modding/ModRuntime.h"
 #include "WorldStreaming.h"
 #include "SaveService.h"
 #include "PerformanceProfiler.h"
@@ -26,6 +27,7 @@ SceneSession::SceneSession(const Project& project,const std::string& current):m_
     if(fs::is_directory(project.ScenesDir(),ec))
         for(fs::recursive_directory_iterator it(project.ScenesDir(),ec),end;it!=end&&!ec;it.increment(ec))
             if(it->is_regular_file(ec))add(it->path());
+    if(project.ModSession())for(auto& [logical,_]:project.ModSession()->sceneFiles)m_scenes.push_back(logical);
     std::sort(m_scenes.begin(),m_scenes.end());
     m_scenes.erase(std::unique(m_scenes.begin(),m_scenes.end()),m_scenes.end());
 }

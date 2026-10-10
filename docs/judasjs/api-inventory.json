@@ -1,5 +1,5 @@
 {
-  "checkpoint": "f1609af0dac863257a0f200cb74ea8a504f9e644",
+  "checkpoint": "38d345883a541d4eb2faa43c321e940d223fce09",
   "authority": "src/ScriptSystem.cpp::library + Impl::Native",
   "symbols": [
     {
@@ -2659,6 +2659,48 @@
       "reference": "docs/judasjs/localization.md"
     },
     {
+      "symbol": "mods",
+      "kinds": [
+        "namespace"
+      ],
+      "native": [],
+      "type": "docs/judas.d.ts:mods",
+      "reference": "docs/judasjs/mods.md"
+    },
+    {
+      "symbol": "mods.active",
+      "kinds": [
+        "get"
+      ],
+      "native": [
+        "modCatalog"
+      ],
+      "type": "docs/judas.d.ts:mods.active",
+      "reference": "docs/judasjs/mods.md"
+    },
+    {
+      "symbol": "mods.contributions",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "modCatalog"
+      ],
+      "type": "docs/judas.d.ts:mods.contributions",
+      "reference": "docs/judasjs/mods.md"
+    },
+    {
+      "symbol": "mods.resolve",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "modCatalog"
+      ],
+      "type": "docs/judas.d.ts:mods.resolve",
+      "reference": "docs/judasjs/mods.md"
+    },
+    {
       "symbol": "navigation",
       "kinds": [
         "namespace"
@@ -3706,6 +3748,7 @@
     "materialClear",
     "materialInfo",
     "materialOverride",
+    "modCatalog",
     "modelPartVisible",
     "modelParts",
     "motionType",

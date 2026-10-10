@@ -1,0 +1,58 @@
+JudasScene 3
+settings
+  name "Permitted landscape"
+  world-origin 0 0 0
+  sun-direction 0.4 0.7 0.35
+  sun-color 1 0.98 0.92
+  ambient 0.16 0.17 0.19
+  fluid-scale 1
+  fluid-update-rate-hz 30
+  fluid-hydrostatic-drag-rate 2
+  fidelity-policy none
+  next-id 6
+end
+
+object 1 "Authored landscape"
+  position 0 0 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render mesh
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.8 0.8 0.8
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset "9e3e21ccbab37bb7e7061e8ae17b57bc"
+  render.texture-asset "4b140c438a54f035aee7b5f4a1f936d0"
+  body static triangle-mesh
+  body.half-extents 0.5 0.5 0.5
+  body.radius 0.5
+  body.terrain ""
+  body.collision-asset "c71ecc23446aaa1757bc4c9ff55eecc8"
+  body.mass 1
+  body.friction 0.6
+  body.restitution 0.1
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 50 "Navigation frame"
+  nav.surface.asset "e343720d44c6b6b12eb4446dac88e3c9"
+  nav.surface.cellHeight "0.100000001"
+  nav.surface.cellSize "0.200000003"
+  nav.surface.enabled "1"
+  nav.surface.halfExtents "16 6 16"
+  nav.surface.includeDynamic "0"
+  nav.surface.minRegion "8"
+  nav.surface.profile "0"
+  nav.surface.simplification "1.29999995"
+  nav.surface.sources "18446744073709551615"
+  nav.surface.tileSize "32"
+  position 0 0 0
+  rotation 1 0 0 0
+  scale 1 1 1
+end

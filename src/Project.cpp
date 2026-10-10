@@ -1,6 +1,8 @@
 #include <iomanip>
 #include <set>
 #include "Project.h"
+#include "AuthoringJSON.h"
+#include "modding/ModRuntime.h"
 #include "NamedAuthoring.h"
 #include "AssetDatabase.h"
 
@@ -57,6 +59,7 @@ std::string Generic(const fs::path& p) { return p.generic_string(); }
 std::string Project::SerializeToString(const ProjectSettings& s) {
     std::string out = "JudasProject " + std::to_string(kProjectFormatVersion) + "\n";
     out += "name " + Quote(s.name) + "\n";
+    if(!s.modContract.empty())out+="mod-contract "+Quote(s.modContract)+"\n";
     if (!s.audio.groups.empty()) out += "audio-groups " + Quote(s.audio.Serialize()) + "\n";
     if (!s.iconAsset.empty()) out += "icon-asset " + Quote(s.iconAsset) + "\n";
     if(!s.worldManifest.empty()) out += "world-manifest " + Quote(s.worldManifest) + "\n";
@@ -128,7 +131,8 @@ bool Project::ParseFromString(const std::string& text, ProjectSettings& outSetti
         }
     }
     for (const auto& [key, value] : values) {
-        if (key == "name") s.name = value;
+        if(key=="mod-contract"){try{if(value.size()>1024*1024||!AuthoringJSON::parse(value).is_object())throw std::runtime_error("invalid bounded mod contract");s.modContract=value;}catch(const std::exception& e){outError=e.what();return false;}}
+        else if (key == "name") s.name = value;
         else if (key == "audio-groups") {if(!ProjectAudioSettings::Parse(value,s.audio,outError))return false;}
         else if (key == "icon-asset") s.iconAsset = value;
         else if(key=="export-asset-policy"){if(value!="all"&&value!="closure"){outError="export asset policy must be all or closure";return false;}s.exportAssetPolicy=value;}
@@ -260,6 +264,7 @@ std::string Project::FindProjectFileFor(const std::string& startPath) {
 
 std::string Project::Resolve(const std::string& projectRelative) const {
     if (projectRelative.empty()) return std::string();
+    if(m_modSession){auto i=m_modSession->sceneFiles.find(projectRelative);if(i!=m_modSession->sceneFiles.end())return i->second;}
     if (fs::path(projectRelative).is_absolute()) return Generic(fs::path(projectRelative).lexically_normal());
     return Generic((fs::path(m_rootDir) / projectRelative).lexically_normal());
 }
@@ -272,6 +277,7 @@ std::string Project::StartupScenePath() const {
 }
 
 std::string Project::MakeRelative(const std::string& path) const {
+    if(m_modSession)for(auto& [logical,physical]:m_modSession->sceneFiles)if(physical==path)return logical;
     std::error_code ec;
     const fs::path absolute = fs::absolute(path, ec).lexically_normal();
     const fs::path root = fs::path(m_rootDir).lexically_normal();

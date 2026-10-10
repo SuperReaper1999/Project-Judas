@@ -48,6 +48,7 @@ public:
     // Once per frame on this thread: installs finished loads (GPU upload)
     // and enforces the resource budget.
     void PumpResources();
+    void OpenContentView(const AssetDatabase&);
 
     AudioSystem& Audio() { return m_audio; }
     Window& GetWindow() { return m_window; }

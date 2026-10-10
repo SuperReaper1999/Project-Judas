@@ -96,3 +96,7 @@ void EngineHost::Shutdown() {
         m_resourceTrace(event);
     }
 }
+
+void EngineHost::OpenContentView(const AssetDatabase& assets){
+    m_audio.StopAll();m_renderer.ResetProjectText();if(m_resources)m_resources->ReleaseAll();m_assetDatabase=assets;
+}

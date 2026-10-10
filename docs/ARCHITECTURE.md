@@ -9580,3 +9580,31 @@ saved facts. Existing observations retain their ordering and are not rebroadcast
 See [M73](M73.md) and [signals reference](judasjs/signals.md) for exact limits,
 returns/errors, ownership and execution evidence. This is an uncommitted candidate,
 not operator acceptance or a networking/durable delivery promise.
+
+## M76 candidate — game-owned optional mod contracts
+
+The accepted foundation includes M74 baked retarget authoring and M75 reusable
+height-patch source editing/cooking. M74 human motion/editor review remains deferred;
+M75 is operator accepted. M73's candidate wording above records its original
+handoff; owned signals are now part of accepted main.
+
+M76 is uncommitted, with human review pending. Modding is OFF by default. An
+immutable project/export contract publishes references, permitted whole-resource
+replacements, bounded extension descriptors and registry/version policy. Explicit
+selected packages resolve once to a frozen effective AssetDatabase, reused by
+ResourceManager, one QuickJS VM, ordinary scene/prefab/region construction, physics,
+navigation and modern saves. Base IDs/installation bytes remain unchanged.
+
+Owner-qualified IDs are assigned before cook/bake, never patched into opaque
+products or JS strings. Curated kits and kit-bound ordinary projects reuse M75
+brushes, source freshness, model cooking and navigation fingerprints. Shared
+validation is used by editor, CLI install/package and runtime before activation.
+Install/list/inspect never evaluate scripts; executable enable trusts exact bytes.
+Trusted scripts retain normal world capabilities: content policy is not a hostile
+code sandbox. No new native game concepts or script lifecycle is introduced.
+
+Versioned user-data storage and resource/session leases retain immutable bytes
+while worlds/jobs use them. Changes apply at fresh session boundaries. Nonempty
+loadouts extend strict modern save context with exact mod/contract/resolution
+identity; empty/unmodded v2 semantics remain. See [modding guide](MODDING.md),
+[catalog API](judasjs/mods.md) and [M76 evidence](M76.md).

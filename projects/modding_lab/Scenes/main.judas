@@ -1,0 +1,116 @@
+JudasScene 3
+settings
+  name "Protected hub"
+  world-origin 0 0 0
+  sun-direction 0.4 0.7 0.35
+  sun-color 1 0.98 0.92
+  ambient 0.16 0.17 0.19
+  fluid-scale 1
+  fluid-update-rate-hz 30
+  fluid-hydrostatic-drag-rate 2
+  fidelity-policy none
+  next-id 6
+end
+
+object 1 "Protected game-owned plinth"
+  position 0 -0.5 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 18 0.5 18
+  render.radius 0.5
+  render.color 0.08 0.17 0.23
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body static box
+  body.half-extents 18 0.5 18
+  body.radius 0.5
+  body.terrain ""
+  body.mass 1
+  body.friction 0.6
+  body.restitution 0.1
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 2 "Uniform field"
+  position 0 0 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  gravity uniform 9.81
+  gravity.region sphere 300
+end
+
+object 10 "Script-controlled visitor"
+  motor.enabled true
+  motor.radius 0.3
+  motor.halfHeight 0.6
+  motor.offset 0 0 0
+  motor.stepHeight 0.55
+  motor.supportDistance 0.15
+  motor.skin 0.02
+  motor.maxSlopeDegrees 50
+  motor.gravityScale 1
+  motor.reorientationDegreesPerSecond 120
+  motor.interactionMass 80
+  motor.maxPushImpulse 20
+  motor.collisionLayer 0
+  motor.collisionMask 18446744073709551615
+  motor.requiredTags 0
+  motor.excludedTags 0
+  ui.asset "a5f6a7b8d1a0366eab3881d52fbbc5cd"
+  ui.name "modding_lab"
+  ui.enabled true
+  scripts 1
+  script.0.id 1
+  script.0.asset "49ac09ab0f077eefe87c6373c1dbe909"
+  script.0.enabled true
+  script.0.properties "{\"hud\":\"modding_lab\",\"drop\":\"82d6abae9438ca0b47d8ca9e675737f1\"}"
+  position 0 2 9
+  rotation 1 0 0 0
+  scale 1 1 1
+end
+
+object 11 "Visitor start"
+  position 0 2 9
+  rotation 1 0 0 0
+  scale 1 1 1
+  player-start third-person
+  player-start.yaw 0
+  player-start.density 950
+  player-start.fluid-drag 2
+  player-start.swim-acceleration 4
+end
+
+object 20 "Protected monument"
+  position 6 2 -4
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 1 2 1
+  render.radius 0.5
+  render.color 0.12 0.65 0.8
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body static box
+  body.half-extents 1 2 1
+  body.radius 0.5
+  body.terrain ""
+  body.mass 1
+  body.friction 0.6
+  body.restitution 0.1
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end

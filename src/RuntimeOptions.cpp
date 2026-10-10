@@ -8,6 +8,7 @@
 #include "GamePackage.h"
 #include "EnginePaths.h"
 #include <filesystem>
+#include <vector>
 
 namespace {
 bool EnvSet(const char* name) {
@@ -44,6 +45,9 @@ bool EndsWith(const std::string& s, const std::string& suffix) {
 
 bool ParseRuntimeOptions(int argc, char** argv, RuntimeOptions& out, std::string& outError) {
     out = RuntimeOptions{};
+    std::vector<char*> filtered{argv[0]};
+    for(int i=1;i<argc;++i){if(std::string(argv[i])=="--no-mods")out.noMods=true;else filtered.push_back(argv[i]);}
+    argc=int(filtered.size());argv=filtered.data();
     if (argc > 2) {
         outError = "usage: judas [project.judasproj | scene.judas]";
         return false;

@@ -300,6 +300,7 @@ export const saves={save:(slot,options={})=>call('saveRequest','save',slot,optio
 export const session={get:key=>call('sessionGet',key),set:(key,value)=>call('sessionSet',key,value),delete:key=>call('sessionDelete',key)};
 export const input={get pointerCapture(){return call('pointerCapture')},set pointerCapture(value){call('setPointerCapture',value)},held:name=>call('held',name),pressed:name=>call('pressed',name),released:name=>call('released',name),axis:name=>call('axis',name),stick:side=>call('stick',side),stickDelta:side=>call('stickDelta',side),vector:name=>call('vector',name),stickSamples:(side,after=0)=>call('stickSamples',side,after)};
 export const profiler={scope:(label,callback)=>call("profileScope",label,callback),counter:(label,value,mode="sum")=>call("profileCounter",label,value,mode)};
+export const mods={get active(){return call('modCatalog').active},contributions:point=>call('modCatalog').contributions.filter(c=>c.point===point),resolve:(owner,name)=>call('modCatalog').exports[owner]?.[name]??null};
 export const time={get elapsed(){return call('elapsed')},get delta(){return call('delta')},get fixed(){return call('fixed')}};
 export const console={log:(...args)=>call('log',args.map(String).join(' '))};
 
@@ -391,10 +392,12 @@ struct ScriptSystem::Impl {
     static char* Normalize(JSContext* c,const char* base,const char* name,void* p){
         auto* s=static_cast<Impl*>(p);std::string result;
         if(std::string(name)=="judas")result="judas";
+        else if(std::string(name).rfind("mod:",0)==0&&s->assets)result=s->assets->PublishedModule(base,name);
         else if(std::string(name).rfind("./",0)==0||std::string(name).rfind("../",0)==0){result=(std::filesystem::path(base).parent_path()/name).lexically_normal().generic_string();}
         else {JS_ThrowReferenceError(c,"only relative registered project modules and judas are allowed");return nullptr;}
         if(result!="judas"&&(!s->assets||!s->assets->FindByRelativePath(result)||s->assets->FindByRelativePath(result)->type!=AssetType::Script)){
             JS_ThrowReferenceError(c,"unregistered script import: %s",result.c_str());return nullptr;}
+        if(result!="judas"&&std::string(base)!="judas"&&!s->assets->ModuleImportAllowed(base,result)){JS_ThrowReferenceError(c,"unpublished cross-owner script import: %s",result.c_str());return nullptr;}
         return js_strdup(c,result.c_str());
     }
     static JSModuleDef* Load(JSContext*,const char* name,void* p){return static_cast<Impl*>(p)->Module(name);}
@@ -474,6 +477,7 @@ JSValue ScriptSystem::Impl::Native(JSContext* c,JSValueConst,int argc,JSValueCon
     if(argc<1)return JS_ThrowTypeError(c,"missing operation");
     auto op=String(c,argv[0]);
     auto arg=[&](int i){return i<argc?argv[i]:JS_UNDEFINED;};
+    if(op=="modCatalog"){const std::string empty="{\"active\":[],\"contributions\":[],\"exports\":{}}";const auto& data=s->assets&&!s->assets->ModCatalog().empty()?s->assets->ModCatalog():empty;return JS_ParseJSON(c,data.data(),data.size(),"mod catalog");}
     if(op=="log"){std::fprintf(stdout,"JS: %s\n",String(c,arg(1)).c_str());return JS_UNDEFINED;}
     if(op=="profileScope"){
         if(!JS_IsString(arg(1))||!JS_IsFunction(c,arg(2)))return JS_ThrowTypeError(c,"profiler.scope requires a string and callback");
@@ -501,7 +505,7 @@ JSValue ScriptSystem::Impl::Native(JSContext* c,JSValueConst,int argc,JSValueCon
             EntityId id=0;if(stream)id=stream->ResolvePersistentKey(key);else if(key.rfind("entity:",0)==0){try{size_t end=0;auto tail=key.substr(7);id=std::stoull(tail,&end);if(end!=tail.size()||!world.RuntimeDefinition(id))id=0;}catch(...){id=0;}}return id?JS_NewString(c,std::to_string(id).c_str()):JS_NULL;
         }
         if(op=="saveRequest"){std::string error,json="{}",name;auto options=arg(3);if(JS_IsObject(options)){auto value=JS_GetPropertyStr(c,options,"name");if(!JS_IsUndefined(value))name=String(c,value);JS_FreeValue(c,value);value=JS_GetPropertyStr(c,options,"metadata");if(!JS_IsUndefined(value)&&!s->Json(value,json,error)){JS_FreeValue(c,value);return JS_ThrowTypeError(c,"%s",error.c_str());}JS_FreeValue(c,value);}auto request=service->Request(String(c,arg(1)),String(c,arg(2)),name,json,error);return request?JS_NewFloat64(c,double(request)):JS_ThrowTypeError(c,"%s",error.c_str());}
-        if(op=="saveList"){auto list=JS_NewArray(c);unsigned i=0;for(auto& slot:service->List()){auto o=JS_NewObject(c);for(auto item:{std::pair<const char*,const std::string*>{"id",&slot.id},{"name",&slot.name},{"scene",&slot.scene},{"status",&slot.status},{"error",&slot.error}})JS_SetPropertyStr(c,o,item.first,JS_NewString(c,item.second->c_str()));JS_SetPropertyStr(c,o,"timestamp",JS_NewFloat64(c,double(slot.timestamp)));JS_SetPropertyStr(c,o,"recovered",JS_NewBool(c,slot.recovered));JS_SetPropertyStr(c,o,"metadata",JS_ParseJSON(c,slot.metadata.empty()?"{}":slot.metadata.c_str(),slot.metadata.empty()?2:slot.metadata.size(),"slot metadata"));JS_SetPropertyUint32(c,list,i++,o);}return list;}
+        if(op=="saveList"){auto list=JS_NewArray(c);unsigned i=0;for(auto& slot:service->List()){auto o=JS_NewObject(c);for(auto item:{std::pair<const char*,const std::string*>{"id",&slot.id},{"name",&slot.name},{"scene",&slot.scene},{"status",&slot.status},{"error",&slot.error}})JS_SetPropertyStr(c,o,item.first,JS_NewString(c,item.second->c_str()));JS_SetPropertyStr(c,o,"modContext",slot.modContext.empty()?JS_NULL:JS_ParseJSON(c,slot.modContext.data(),slot.modContext.size(),"saved mod requirements"));JS_SetPropertyStr(c,o,"timestamp",JS_NewFloat64(c,double(slot.timestamp)));JS_SetPropertyStr(c,o,"recovered",JS_NewBool(c,slot.recovered));JS_SetPropertyStr(c,o,"metadata",JS_ParseJSON(c,slot.metadata.empty()?"{}":slot.metadata.c_str(),slot.metadata.empty()?2:slot.metadata.size(),"slot metadata"));JS_SetPropertyUint32(c,list,i++,o);}return list;}
         double id=0;if(JS_ToFloat64(c,&id,arg(1))<0||!std::isfinite(id)||std::floor(id)!=id||id<0||id>9007199254740991.)return JS_ThrowTypeError(c,"save request token required");if(op=="saveCancel")return JS_NewBool(c,service->Cancel(uint64_t(id)));auto* status=service->Status(uint64_t(id));if(!status)return JS_NULL;auto o=JS_NewObject(c);for(auto item:{std::pair<const char*,const std::string*>{"operation",&status->operation},{"slot",&status->slot},{"state",&status->state},{"error",&status->error}})JS_SetPropertyStr(c,o,item.first,JS_NewString(c,item.second->c_str()));for(auto item:{std::pair<const char*,double>{"id",double(status->id)},{"captureMs",status->captureMs},{"workerMs",status->workerMs},{"restoreMs",status->restoreMs},{"bytes",double(status->bytes)}})JS_SetPropertyStr(c,o,item.first,JS_NewFloat64(c,item.second));JS_SetPropertyStr(c,o,"recovered",JS_NewBool(c,status->recovered));return o;
     }
     if(op=="audioGroup"||op=="audioGroupSet"||op=="audioDiagnostics"){

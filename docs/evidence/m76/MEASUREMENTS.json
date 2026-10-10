@@ -1,0 +1,249 @@
+{
+  "performance-zero-final": {
+    "startup_to_grounded_resource_ready_ms": 631.838454,
+    "outer_frame": {
+      "samples": 4281,
+      "mean_ms": 0.7010614644391021,
+      "p95_ms": 1.2174820294603705,
+      "max_ms": 19.551703706383705
+    },
+    "fixed_step": {
+      "samples": 181,
+      "mean_ms": 0.23836818232044196,
+      "p95_ms": 0.309924,
+      "max_ms": 2.721641
+    },
+    "bodies": 3,
+    "resident_bytes": 759720,
+    "mode": "zero",
+    "note": "Actual uncapped hidden Release application; inclusive M56 timings overlap, no test sleep after readiness."
+  },
+  "performance-empty-final": {
+    "startup_to_grounded_resource_ready_ms": 639.364388,
+    "outer_frame": {
+      "samples": 4353,
+      "mean_ms": 0.6893967867157853,
+      "p95_ms": 1.238659955561161,
+      "max_ms": 11.36737409979105
+    },
+    "fixed_step": {
+      "samples": 180,
+      "mean_ms": 0.22135147222222215,
+      "p95_ms": 0.314018,
+      "max_ms": 0.396567
+    },
+    "bodies": 3,
+    "resident_bytes": 759720,
+    "mode": "empty",
+    "note": "Actual uncapped hidden Release application; inclusive M56 timings overlap, no test sleep after readiness."
+  },
+  "performance-real-final": {
+    "startup_to_grounded_resource_ready_ms": 827.856937,
+    "outer_frame": {
+      "samples": 4269,
+      "mean_ms": 0.70284720363314,
+      "p95_ms": 1.2207370018586516,
+      "max_ms": 6.107273977249861
+    },
+    "fixed_step": {
+      "samples": 180,
+      "mean_ms": 0.317532888888889,
+      "p95_ms": 0.412976,
+      "max_ms": 0.558244
+    },
+    "bodies": 2,
+    "resident_bytes": 1475661,
+    "mode": "performance",
+    "note": "Actual uncapped hidden Release application; inclusive M56 timings overlap, no test sleep after readiness."
+  },
+  "performance-dependencies": {
+    "startup_to_grounded_resource_ready_ms": 827.320939,
+    "outer_frame": {
+      "samples": 4439,
+      "mean_ms": 0.6775209182451346,
+      "p95_ms": 1.2924110051244497,
+      "max_ms": 10.89312694966793
+    },
+    "fixed_step": {
+      "samples": 180,
+      "mean_ms": 0.3036390944444444,
+      "p95_ms": 0.436145,
+      "max_ms": 0.980126
+    },
+    "bodies": 2,
+    "resident_bytes": 1475661,
+    "mode": "performance",
+    "note": "Actual uncapped hidden Release application; inclusive M56 timings overlap, no test sleep after readiness."
+  },
+  "performance-many-small": {
+    "startup_to_grounded_resource_ready_ms": 805.487284,
+    "outer_frame": {
+      "samples": 3996,
+      "mean_ms": 0.7509009898145538,
+      "p95_ms": 1.2617510510608554,
+      "max_ms": 66.0872831940651
+    },
+    "fixed_step": {
+      "samples": 177,
+      "mean_ms": 0.37496888135593215,
+      "p95_ms": 0.435483,
+      "max_ms": 6.353286
+    },
+    "bodies": 2,
+    "resident_bytes": 1475661,
+    "mode": "performance",
+    "note": "Actual uncapped hidden Release application; inclusive M56 timings overlap, no test sleep after readiness."
+  },
+  "operations": [
+    {
+      "args": [
+        "disable",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m76/artifacts/Export/game.judasproj",
+        "consumer"
+      ],
+      "milliseconds": 13.76720600092085,
+      "exit": 0
+    },
+    {
+      "args": [
+        "disable",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m76/artifacts/Export/game.judasproj",
+        "common"
+      ],
+      "milliseconds": 14.947638999728952,
+      "exit": 0
+    },
+    {
+      "args": [
+        "disable",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m76/artifacts/Export/game.judasproj",
+        "hill-map"
+      ],
+      "milliseconds": 14.256119000492617,
+      "exit": 0
+    },
+    {
+      "args": [
+        "disable",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m76/artifacts/Export/game.judasproj",
+        "landscape-fork"
+      ],
+      "milliseconds": 13.585308002802776,
+      "exit": 0
+    },
+    {
+      "args": [
+        "enable",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m76/artifacts/Export/game.judasproj",
+        "hill-map",
+        "1.0.0",
+        "49a39e13583be0cf673081bd3c0f73dfda4ab80fa5d3948a77d49ecece394f2b",
+        "--trust-executable"
+      ],
+      "milliseconds": 22.305006001261063,
+      "exit": 0
+    },
+    {
+      "args": [
+        "enable",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m76/artifacts/Export/game.judasproj",
+        "landscape-fork",
+        "1.0.0",
+        "e32ac8e46564e9a6b53e7986c17715a961d79ad6f0b2acf5a13c962e1e6283b6"
+      ],
+      "milliseconds": 23.930086001200834,
+      "exit": 0
+    },
+    {
+      "args": [
+        "install",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m76/artifacts/Export/game.judasproj",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m76/artifacts/small-assets.judasmod"
+      ],
+      "milliseconds": 236.72150899801636,
+      "exit": 0
+    },
+    {
+      "args": [
+        "enable",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m76/artifacts/Export/game.judasproj",
+        "small-assets",
+        "1.0.0",
+        "18d32c36859fb8d6218378da233b843f6f4de9d6efbc59d61022eed28e3641d0",
+        "--trust-executable"
+      ],
+      "milliseconds": 26.326205999794183,
+      "exit": 0
+    },
+    {
+      "args": [
+        "disable",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m76/artifacts/Export/game.judasproj",
+        "small-assets"
+      ],
+      "milliseconds": 13.827247999870451,
+      "exit": 0
+    },
+    {
+      "args": [
+        "remove",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m76/artifacts/Export/game.judasproj",
+        "small-assets",
+        "1.0.0",
+        "18d32c36859fb8d6218378da233b843f6f4de9d6efbc59d61022eed28e3641d0"
+      ],
+      "milliseconds": 515.605749002134,
+      "exit": 0
+    },
+    {
+      "args": [
+        "enable",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m76/artifacts/Export/game.judasproj",
+        "common",
+        "1.0.0",
+        "a963e294b0ca171fc0652af4022285801ce27546f39d5fd205c459cbdd30285d",
+        "--trust-executable"
+      ],
+      "milliseconds": 24.52345200072159,
+      "exit": 0
+    },
+    {
+      "args": [
+        "enable",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m76/artifacts/Export/game.judasproj",
+        "consumer",
+        "1.0.0",
+        "544c593b060ad24aeb16565376712059d28195c03a39a4ffc12d5b008b43b8cd",
+        "--trust-executable"
+      ],
+      "milliseconds": 28.15505699982168,
+      "exit": 0
+    }
+  ],
+  "packages": {
+    "hill-map.judasmod": {
+      "sha256": "49a39e13583be0cf673081bd3c0f73dfda4ab80fa5d3948a77d49ecece394f2b",
+      "bytes": 377578
+    },
+    "landscape-fork.judasmod": {
+      "sha256": "e32ac8e46564e9a6b53e7986c17715a961d79ad6f0b2acf5a13c962e1e6283b6",
+      "bytes": 366297
+    },
+    "editor-hill.judasmod": {
+      "sha256": "8edf5439c45c0f30cf5986e19e0e31c30aec7643132cc7d26d10a2444c735042",
+      "bytes": 462540
+    },
+    "small-assets.judasmod": {
+      "sha256": "18d32c36859fb8d6218378da233b843f6f4de9d6efbc59d61022eed28e3641d0",
+      "bytes": 32813
+    },
+    "common.judasmod": {
+      "sha256": "a963e294b0ca171fc0652af4022285801ce27546f39d5fd205c459cbdd30285d",
+      "bytes": 1434
+    },
+    "consumer.judasmod": {
+      "sha256": "544c593b060ad24aeb16565376712059d28195c03a39a4ffc12d5b008b43b8cd",
+      "bytes": 2903
+    }
+  }
+}

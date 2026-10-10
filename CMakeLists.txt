@@ -132,6 +132,10 @@ target_include_directories(judas_materials PUBLIC src)
 target_link_libraries(judas_materials PUBLIC ${JUDAS_GLM} judas_profiler)
 
 add_library(judas_engine STATIC
+    src/modding/ModContent.cpp
+    src/modding/ContentStorage.cpp
+    src/modding/ModStore.cpp
+    src/modding/ModRuntime.cpp
     src/WorldFracture.cpp
     src/Fracture.cpp
     src/DeformableAsset.cpp
@@ -301,6 +305,7 @@ add_executable(judas_editor
     src/editor/RetargetPanel.cpp
     src/editor/WorldTools.cpp
     src/editor/TerrainTools.cpp
+    src/editor/ModTools.cpp
     src/editor/ProfilerView.cpp
     src/editor/EditorWidgets.cpp
     src/editor/ComponentEditors.cpp
@@ -1377,7 +1382,7 @@ add_executable(judas_world_building_tests tests/WorldBuildingTests.cpp src/edito
 target_link_libraries(judas_world_building_tests PRIVATE judas_engine)
 judas_warnings(judas_world_building_tests)
 
-add_library(judas_world_authoring STATIC src/authoring/ContentReferences.cpp src/authoring/WorldBuilder.cpp src/authoring/AuthoringDocument.cpp src/authoring/SkeletonAuthoring.cpp src/authoring/RecipePreview.cpp src/authoring/TerrainAuthoring.cpp)
+add_library(judas_world_authoring STATIC src/authoring/ContentReferences.cpp src/authoring/WorldBuilder.cpp src/authoring/AuthoringDocument.cpp src/authoring/SkeletonAuthoring.cpp src/authoring/RecipePreview.cpp src/authoring/TerrainAuthoring.cpp src/authoring/ModAuthoring.cpp)
 target_include_directories(judas_world_authoring PUBLIC src/authoring)
 target_link_libraries(judas_world_authoring PUBLIC judas_engine)
 judas_warnings(judas_world_authoring)
@@ -1442,7 +1447,6 @@ judas_warnings(judas_terrain_application_tests)
 if(WIN32)
     target_link_libraries(judas_engine PUBLIC shell32 ole32)
     target_link_libraries(judas_profiler PUBLIC psapi)
-    include(cmake/JudasWindowsSdk.cmake)
 endif()
 
 # M70 focused pose/physical authority checks; no extra runtime dependency.
@@ -1531,3 +1535,24 @@ judas_warnings(judas_retarget_application_tests)
 add_executable(judas_retarget_lab_tests tests/RetargetLabTests.cpp)
 target_link_libraries(judas_retarget_lab_tests PRIVATE judas_model_import)
 judas_warnings(judas_retarget_lab_tests)
+
+add_executable(judas_mod_content_tests tests/ModContentTests.cpp)
+target_link_libraries(judas_mod_content_tests PRIVATE judas_engine)
+judas_warnings(judas_mod_content_tests)
+
+add_executable(judas_mod tools/ModTool.cpp)
+target_link_libraries(judas_mod PRIVATE judas_world_authoring)
+judas_warnings(judas_mod)
+
+# M76 navigation authoring shares kit registries and owner-qualified IDs.
+target_link_libraries(judas_navigation_bake PRIVATE judas_world_authoring)
+add_executable(judas_mod_lab_builder tools/ModLabBuilder.cpp)
+target_link_libraries(judas_mod_lab_builder PRIVATE judas_world_authoring judas_navigation_baker)
+judas_warnings(judas_mod_lab_builder)
+add_executable(judas_mod_application_tests tests/ModApplicationTests.cpp src/Application.cpp src/RuntimeOptions.cpp src/RuntimeDiagnostics.cpp src/TestHarness.cpp)
+target_link_libraries(judas_mod_application_tests PRIVATE judas_engine)
+judas_warnings(judas_mod_application_tests)
+
+if(WIN32)
+    include(cmake/JudasWindowsSdk.cmake)
+endif()

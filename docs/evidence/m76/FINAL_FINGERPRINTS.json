@@ -1,0 +1,631 @@
+{
+  "base": "38d345883a541d4eb2faa43c321e940d223fce09",
+  "candidateFileCount": 105,
+  "exclusions": [
+    "This manifest cannot hash itself.",
+    "Unrelated POST_M73_REPORT.txt, ignored backups/research/library/video work and other projects.",
+    "Build intermediates, installed/cache/save trees, temporary packages, development copies and all screenshots/raw logs are not exhaustively covered.",
+    "Hashes identify recorded bytes, not human/hardware validation or future files."
+  ],
+  "files": {
+    "CMakeLists.txt": "3dcaf2e90e04369e90d3ac76cbb57f58603688e608b32d234c7cc49919c8da45",
+    "cmake/JudasWindowsSdk.cmake": "bae46b9708259ecc681097caaccf9b629e0e54b9a95d4e2a53fd22cb6a9d659b",
+    "docs/ARCHITECTURE.md": "974fde8af3a34a68c9b8b2baecdef8c79d417b6482ab9f920a81212d7173d681",
+    "docs/EDITOR_GUIDE.md": "7021f1fc973011903d6d861d4b6105bcbe315c40d6ff2e305f27dd06915848bc",
+    "docs/JUDASJS.md": "5d7de804c602b47abfa6fd3ab828531c9c50aa9ac938a9256c85501e9238074f",
+    "docs/M38.md": "f6f3bb149ffb895101b704abcebaace04c83fd575bf43f63248a27a06abb18f5",
+    "docs/M76.md": "6e395b9842618c81419088caf1dbfecac8fa86fb6f683b6bcc48819c06997842",
+    "docs/MODDING.md": "a0c0af72d6456f1418834a620285c2f730ef443c8087b2cd258d20a564a20844",
+    "docs/WINDOWS.md": "4ae335db173ebd7d83e76d6e19f396ebbd56794f54cf5f67182ee1f5aabe4b3d",
+    "docs/evidence/m76/CHANGED_FILES.txt": "bd1c31b219b512bbb10fbd1de80c3cb8712b49c3f77e022e9ebe47275d04e51e",
+    "docs/evidence/m76/DEVELOPMENT.md": "a3c49057d0166b802b0bce8c870132d824713414609fa24955711e058b0d484b",
+    "docs/evidence/m76/MEASUREMENTS.json": "7024986ca00df3d92329d55c7cbc039acf905483c00e25f6f1000367f71dbbd8",
+    "docs/evidence/m76/REPORT.md": "7f0b2b81fe18554bfd65e5bf498a8cb584bbd88aa604937b2fd273d150ba3970",
+    "docs/evidence/m76/RESULTS.json": "644a2268b5a68b27255c81e05957b2c44690e647cade0b7eeeab7775613d0f7b",
+    "docs/evidence/m76/UX_REVIEW.md": "aecbe211501c77d72b980c603c5bcd72cc60106303d97fdb0499d0b55717fd43",
+    "docs/evidence/m76/linux-ux-editor.log": "a4c228a30ae0ea66cf95164a1c9d7c616e0d9104308f9336cf7b3e4c135cb1be",
+    "docs/evidence/m76/linux-ux-roundtrip.log": "9f84d08c440515eb44492854376809b4243e74cb392937bd60b63f8803e3b6ec",
+    "docs/evidence/m76/windows-editor-package-runtime.stdout.log": "2ad81c2391ae1fd487148e3435baea0b174fa303e6f2d7b03a21279d87f34a0c",
+    "docs/evidence/m76/windows-final-dependency-probe.stdout.log": "1629f27262a746cf6d731f1385b1f4b77a506a6515078eedeb959fb6e485afa1",
+    "docs/evidence/m76/windows-final-save-read.stdout.log": "aec68a33b613a0ddaaa98219bef39ef23e9cea3dc733f83c122b3533c8e047e0",
+    "docs/evidence/m76/windows-prop-height-failure.log": "d0213c1e9e2dc89d95698f4b872521261396ad014511dce90d0db5a2d0588684",
+    "docs/judas.d.ts": "5f4af9a807b71cb3d73bfbdc3d893e707be8f632a8bbbc688392239631141d26",
+    "docs/judasjs/API_INVENTORY.md": "b8d0c7ee6658cd9d6eb1f2593c724ada80bae3d1cbd52df845afadb2a124cd2b",
+    "docs/judasjs/api-inventory.json": "322283f2ce0fe73ebf508c309fa8fa473c0ba8fe2f2ea8b500e4a02a0c3fa775",
+    "docs/judasjs/mods.md": "9ded18767b943b6bcfbe5756501223a501ddcd95c4b39872843e9c7f9f138771",
+    "docs/judasmod.example.json": "c718a23df07ef0a72134f3826b3b3338fdc75386982c8648c81a60411ca02c9c",
+    "projects/modding_lab/Assets/Terrain/b70884841af5a329c87f7d2c112c73c2/terrain.judascollision": "707f1a1599e4c35503f581c90947e3ab6f07dfa4e94bba2ac7cee72ab9a926b2",
+    "projects/modding_lab/Assets/Terrain/b70884841af5a329c87f7d2c112c73c2/terrain.judascollision.judasmeta": "433799230448dbda4939b2e063758127f969612a2dad4bb94c9732aadf45b31c",
+    "projects/modding_lab/Assets/Terrain/b70884841af5a329c87f7d2c112c73c2/terrain.judasmodel": "cf966dccbb0a466d8c6a98e05371bfdb42de1027820512869a65aac0d8818a34",
+    "projects/modding_lab/Assets/Terrain/b70884841af5a329c87f7d2c112c73c2/terrain.judasmodel.judasmeta": "f4c985f029466ead493365be23ae9941188e45b55ddadb1ee94318812569f1c3",
+    "projects/modding_lab/Assets/Terrain/b70884841af5a329c87f7d2c112c73c2/terrain.receipt.json": "a1deb0bc572d057d1b4fcb7b54a6467099b500a773c40b8bc75c20f02fc64646",
+    "projects/modding_lab/Assets/Terrain/b70884841af5a329c87f7d2c112c73c2/terrain.tga": "13e7e672fc015eccfea986002b861e2ded330c373f57f9fb06d510cb77dd5798",
+    "projects/modding_lab/Assets/Terrain/b70884841af5a329c87f7d2c112c73c2/terrain.tga.judasmeta": "8c4884b8b43ded69d4e8617f49c2571b5e001bc66aee57a4ab0262b5f807c165",
+    "projects/modding_lab/Assets/fonts/DejaVuSans.ttf": "b4c632e3cdf9acc7f28758fb5a323c8524d7fc6660d46904d9b6cbe2809c419c",
+    "projects/modding_lab/Assets/fonts/DejaVuSans.ttf.judasmeta": "35736176cede066c485da04d07dd6f44bbb8b5d4f8dbf4ae6625b9f9a470457a",
+    "projects/modding_lab/Assets/fonts/LICENSE.txt": "63d3ba759d12804c5b31a9d5940d855c1820d1f5999e6b0872eb1c7ff045fbc9",
+    "projects/modding_lab/Assets/navigation/landscape.judasnav": "65a1251c38005942d6c51470b0cb33aff703b02e1618986b1ff9e9da2ec5358e",
+    "projects/modding_lab/Assets/navigation/landscape.judasnav.judasmeta": "b6a091bbf5a8c92e729446c77e9db1df3bb8470dc318008c2f20ef6ad55f86c8",
+    "projects/modding_lab/Assets/prefabs/drop.judasprefab": "d162b19e7a90ff346f35afe60be51ad45ccabdd60547a1521affbfe644d0a671",
+    "projects/modding_lab/Assets/prefabs/drop.judasprefab.judasmeta": "498919b5e770981c14ded4e361e0e4b934085b87978349a2c274ac8a0f40d5b4",
+    "projects/modding_lab/Assets/scripts/controller.js": "51db2523e93e19cca227b7b2a310c328ac16b4c1ed648d8ca6c118cd9dcca8c3",
+    "projects/modding_lab/Assets/scripts/controller.js.judasmeta": "465f33a24c13fee8c41ed0187b7991bc5a1e566753c2c8a5f934dd2965d5cac2",
+    "projects/modding_lab/Assets/textures/grass.png": "0d9d77a1eeed7721b0e9a63ba02af592cb5a85d470a50436757cf00bdd8d00c6",
+    "projects/modding_lab/Assets/textures/grass.png.judasmeta": "b0a19d2dea9110600395dc08b785875396e777f1667a998068703bca1da97a73",
+    "projects/modding_lab/Assets/textures/stone.png": "e87faa8b0e3b89c96c7c89313e0d6e86ee69ab7dcdef494a1d09c5a8091c8c23",
+    "projects/modding_lab/Assets/textures/stone.png.judasmeta": "26c414921fcc0ca81a498d559a23a29f7b473460a8327aa1315ea909c33ba4d6",
+    "projects/modding_lab/Assets/ui/lab.judasui": "86e075610906558998e577051daf34608b90c2b16b4f439d945ba517aa4e19d7",
+    "projects/modding_lab/Assets/ui/lab.judasui.judasmeta": "49d4bde692bfa896764093a10b48629b26e5915048606b7311b8011c240cef07",
+    "projects/modding_lab/Assets/world/lab.judasworld": "80ee5d34b6ea4ee954e6ff3b100a3c1a23fa1978fc03bd02f48281862c3156ad",
+    "projects/modding_lab/Assets/world/lab.judasworld.judasmeta": "2c8372a834920be7f1a7eb591c177f76c6bbda21b10777a4eaac17a857f28ae1",
+    "projects/modding_lab/Imports/landscape.judasterrain": "f48dc93f016f735578b0c655df4e91a5916efeb92c8ee8677ca1815962a0d9ea",
+    "projects/modding_lab/NOTICE.txt": "cc2e8814d4736758e4849f063b68181272f628c8546fd73e847a28b921f4d02e",
+    "projects/modding_lab/Scenes/landscape.judas": "d7150629096216aad3789bbcb7e86ba6770d820f01a54f3d73d0c08a8b0bd124",
+    "projects/modding_lab/Scenes/main.judas": "3c156fe78f4d42facfbb0a652619deb2b99d7a3782c02940c5a35612b78357c3",
+    "projects/modding_lab/Scenes/region.judas": "91974a37e28cc5e6f73f9d8a47e9de61d7ccb45e71edb6cc5ce91ebd6ccba1f0",
+    "projects/modding_lab/modding_lab.judasproj": "52e616b41f67d40052d89d82b6fde48a81d0952e36c743ea7b65e8589335e475",
+    "scripts/check_judasjs_api.mjs": "6b55ebd83476457b4d664474d9f74dfd331934ce87bdeeb9a8382b8f57fa76a1",
+    "scripts/m76_dependency_fixtures.py": "445a5226b6299167321d52c8d0c22d27b5038d7b1ab31f6bb176d9084c54a2b3",
+    "scripts/m76_negative_fixtures.py": "91cde7806f59bf8edd3494d5bacfe939a384d98a575e459167ca46fc4e1511ff",
+    "scripts/m76_runtime_rejections.py": "328b342c5e9e9feadefbbaf64fe03f22fe779dda664addf2e91fa9089511f741",
+    "scripts/m76_small_asset_fixture.py": "37557647f8a1547f80729c86d86252120d1be4f16cec1e3cf1fbd3e93f56ab65",
+    "src/Application.cpp": "752b26046f3e88c53920b53ae734beb3dd13792ebf2f1d2bb7686c90a1834ae0",
+    "src/AssetDatabase.cpp": "eafd82d6bae3492b91c7281517889f4015ee35527c558aab6a12c339d78b57ad",
+    "src/AssetDatabase.h": "5f5d9d05a9f626f2abe89f8be963a0856f7690567ecc1bc695a1ca5e2157a93b",
+    "src/EngineHost.cpp": "ddd0d4027f8f96d7c7f53a54fa68f161a337236f6ae904941a044c33c1bc6f42",
+    "src/EngineHost.h": "0cd23c77f4224b78e2dc43e6d19ceb71d151eebcf88d88ca057a9c3df5c013c1",
+    "src/ModelCook.cpp": "235d3bac8adfd96dde497c41410c110f9c02ccf33289b2f2c7db6af583a39c93",
+    "src/NamedAuthoring.cpp": "b50e32b8e023927d4499edc2e0681d082017dba1b0e57fb76b066fc4c446da99",
+    "src/Project.cpp": "77cb0043469bf0250f22d98cdd76b9657fea80c4b7cc963ceb4c219434d0ccfe",
+    "src/Project.h": "a6840f27de0fd1a65611148922aabb3a881c1599b3a321203dafd7743f7b3e47",
+    "src/ProjectExporter.cpp": "8bd8496c376c5d45ffe16d8a1c7ed90a6978e349f89521aac397383bf996d53f",
+    "src/ProjectExporter.h": "fe709a1d733cc9c0af01e1112c8698d0f32d0e465e7a5b4d2c810af820811ddf",
+    "src/RuntimeOptions.cpp": "dcb18ceff20cee92c4eda479efc3e70765ee55e2ee84c60bf1dfdf5454f363ff",
+    "src/RuntimeOptions.h": "585daf4b86fa04c36bf10d05bf1315c805620496b9c63d632524a98f09d01a9d",
+    "src/SaveService.cpp": "ca376c47082b214baba125d93f95e3cd84004133cedb80cf8859b039ba498303",
+    "src/SaveStorage.cpp": "c38a37d4d29c05027da836588b885b37fdb000774afee3266034335922fb256a",
+    "src/SaveStorage.h": "164169fd2e1326ed48624734fc1cb2ced77da5d34af2408f77a6523d59a9b0f4",
+    "src/SceneSession.cpp": "e387eb0b507498fa07530a72ecedbf646dcac532e224e10bb0170f26a1ec32d1",
+    "src/ScriptSystem.cpp": "134678baab49f0be5f022747e12f04896eceaad828149028c145e5b30d562f50",
+    "src/WorldStreaming.cpp": "28d5d1455ce77b4bf9cb29c6a27c03cd97b726c8d234c7cbb79919c2ac30cf52",
+    "src/authoring/AuthoringDocument.cpp": "271ce62241a0a07b446d84ea636e2ea74c641359578e99d0d6ec71003f4acead",
+    "src/authoring/ModAuthoring.cpp": "a93370fb2fb7de4af9b456f96a352841000a1404453973a7e32640b05ba73856",
+    "src/authoring/ModAuthoring.h": "eecedc830ce57ad5aea9210e55a847fa06b8f809e15b8265ada7106f5780c2d6",
+    "src/editor/EditorApplication.cpp": "797b7c048a30d70284971460c9931d7ea9f305a47096803b3b5888567dde2514",
+    "src/editor/EditorApplication.h": "d114bcf4d1dc744fd5d01381eefcb5e428ed80315daa1e11604be7192dabf86e",
+    "src/editor/EditorPanels.cpp": "d3ef6df1fef48fcac219bc4a87e117c0c9968c8ffc00dcd9d95b5865adefde20",
+    "src/editor/EditorPanels.h": "e95865006c0d6e9a00899f9a5dac1487f2d597719b6929f7b75b05d6dd551279",
+    "src/editor/ModTools.cpp": "1609df2076d905be4dad91d108dd8dee61f4230bd1ad3fdb62a949d0d0891b6a",
+    "src/editor/ModTools.h": "fe03669d3179dfdfe0439006446e2f1c660dc09223e489bdc2f40c9b757d0205",
+    "src/editor/TerrainTools.cpp": "852d1801f3ae5fb523a9eb64159e570172c0c6ccc9f6705477fe224f18bdb8da",
+    "src/modding/ContentStorage.cpp": "dfcdcce6dff6f8249f7378b6a66b813d90740121ad485e0ab34519d204084313",
+    "src/modding/ContentStorage.h": "c9d165ebcc0a396455524c096a2e931b1e7fdbcd4fa8fdd2da0c6caf782d59c2",
+    "src/modding/ModContent.cpp": "ee54d86c46881b09475d2e367975f1538eee4b140fa25ba88e443b229bb221a1",
+    "src/modding/ModContent.h": "b7266a79991e9ab6a8e7f0b20728886d427c7f1591e59a2d9e842273639dff3b",
+    "src/modding/ModRuntime.cpp": "81e4b8bf77a56cfd91722a23a7126fbacb41e2761c6fde13260785b8f482b06c",
+    "src/modding/ModRuntime.h": "79423ed8e86ca206ce1e947cfdb0e5820155966961f99c9530b47c601555f1c5",
+    "src/modding/ModStore.cpp": "37db68ef0c96ae308fb9f3b42576e1fbc33e75fdcacf5d72c15e930ff4ed26b2",
+    "src/modding/ModStore.h": "41621eacad2e96cb5472b9295d2194c8b121c556510327d764ab55665048d866",
+    "tests/ModApplicationTests.cpp": "35fb9e9402e26ebdf1147fdf01ab07f7286636e7e44389b18524505709486aed",
+    "tests/ModContentTests.cpp": "98a1c70c28280fe8dce19372516e35c93a054a1eea97bc1e423d2141627a7585",
+    "tools/ModLabBuilder.cpp": "aa12081d4e66006739de1f7087f7dae90274ca50a9720a52081f1b87bdc3fccb",
+    "tools/ModTool.cpp": "9ee9d04a062e05c951a112d96d6c4e4cb2a5ee7ede83fbf70111956247124755",
+    "tools/NavigationBake.cpp": "5edd35b93713b3a42269c0c02fa01bed65d7237782d38760c58fa7d030f351da",
+    "tools/TerrainAuthor.cpp": "126aaa90b1bc9c03799830de1f757af21697be99299344ff6e385311ee140bc9"
+  },
+  "generatedArtifacts": {
+    ".cache/m76/artifacts/Dependencies/common.judasmod": {
+      "bytes": 1434,
+      "sha256": "a963e294b0ca171fc0652af4022285801ce27546f39d5fd205c459cbdd30285d"
+    },
+    ".cache/m76/artifacts/Dependencies/consumer.judasmod": {
+      "bytes": 2903,
+      "sha256": "544c593b060ad24aeb16565376712059d28195c03a39a4ffc12d5b008b43b8cd"
+    },
+    ".cache/m76/artifacts/Export/game.judasproj": {
+      "bytes": 3730,
+      "sha256": "52e616b41f67d40052d89d82b6fde48a81d0952e36c743ea7b65e8589335e475"
+    },
+    ".cache/m76/artifacts/FinalKit/Assets/Terrain/b70884841af5a329c87f7d2c112c73c2/terrain.judascollision": {
+      "bytes": 118508,
+      "sha256": "707f1a1599e4c35503f581c90947e3ab6f07dfa4e94bba2ac7cee72ab9a926b2"
+    },
+    ".cache/m76/artifacts/FinalKit/Assets/Terrain/b70884841af5a329c87f7d2c112c73c2/terrain.judascollision.judasmeta": {
+      "bytes": 103,
+      "sha256": "48a639e6b2a8714566dbf6c7574dc0c6611d5fe997fa082a73bea95cc216dd48"
+    },
+    ".cache/m76/artifacts/FinalKit/Assets/Terrain/b70884841af5a329c87f7d2c112c73c2/terrain.judasmodel": {
+      "bytes": 78441,
+      "sha256": "cf966dccbb0a466d8c6a98e05371bfdb42de1027820512869a65aac0d8818a34"
+    },
+    ".cache/m76/artifacts/FinalKit/Assets/Terrain/b70884841af5a329c87f7d2c112c73c2/terrain.judasmodel.judasmeta": {
+      "bytes": 98,
+      "sha256": "104e979991d122c178abbdb84b4e15934f74cb1c6f21de74c7fb78711f623890"
+    },
+    ".cache/m76/artifacts/FinalKit/Assets/Terrain/b70884841af5a329c87f7d2c112c73c2/terrain.tga": {
+      "bytes": 65554,
+      "sha256": "13e7e672fc015eccfea986002b861e2ded330c373f57f9fb06d510cb77dd5798"
+    },
+    ".cache/m76/artifacts/FinalKit/Assets/Terrain/b70884841af5a329c87f7d2c112c73c2/terrain.tga.judasmeta": {
+      "bytes": 101,
+      "sha256": "a701da3017478037f6b5d678e5f6bbb0a3fdde4f7f8426eb37bb10d92061ee63"
+    },
+    ".cache/m76/artifacts/FinalKit/Assets/fonts/DejaVuSans.ttf": {
+      "bytes": 759720,
+      "sha256": "b4c632e3cdf9acc7f28758fb5a323c8524d7fc6660d46904d9b6cbe2809c419c"
+    },
+    ".cache/m76/artifacts/FinalKit/Assets/fonts/DejaVuSans.ttf.judasmeta": {
+      "bytes": 98,
+      "sha256": "52f9bcba2b3132b1f040d20500116ae6b97cdbef219efc943cfdcc677b8a961e"
+    },
+    ".cache/m76/artifacts/FinalKit/Assets/fonts/LICENSE.txt": {
+      "bytes": 3859,
+      "sha256": "63d3ba759d12804c5b31a9d5940d855c1820d1f5999e6b0872eb1c7ff045fbc9"
+    },
+    ".cache/m76/artifacts/FinalKit/Assets/navigation/landscape.judasnav": {
+      "bytes": 78477,
+      "sha256": "65a1251c38005942d6c51470b0cb33aff703b02e1618986b1ff9e9da2ec5358e"
+    },
+    ".cache/m76/artifacts/FinalKit/Assets/navigation/landscape.judasnav.judasmeta": {
+      "bytes": 104,
+      "sha256": "7c9ef2a694b2cdfa69af20fd5af678b60ed4e3575df7a463fc536d9858140afa"
+    },
+    ".cache/m76/artifacts/FinalKit/Assets/prefabs/drop.judasprefab": {
+      "bytes": 827,
+      "sha256": "d162b19e7a90ff346f35afe60be51ad45ccabdd60547a1521affbfe644d0a671"
+    },
+    ".cache/m76/artifacts/FinalKit/Assets/prefabs/drop.judasprefab.judasmeta": {
+      "bytes": 100,
+      "sha256": "65d3473d00b71f860088f0ee14254901598e88004c9fba8784c8ccc6f7b8bdb5"
+    },
+    ".cache/m76/artifacts/FinalKit/Assets/scripts/controller.js": {
+      "bytes": 4591,
+      "sha256": "51db2523e93e19cca227b7b2a310c328ac16b4c1ed648d8ca6c118cd9dcca8c3"
+    },
+    ".cache/m76/artifacts/FinalKit/Assets/scripts/controller.js.judasmeta": {
+      "bytes": 100,
+      "sha256": "6d6562e9285e998194d2ceaad2571413582318e44040b986c15e74ee8fafa5fb"
+    },
+    ".cache/m76/artifacts/FinalKit/Assets/textures/grass.png": {
+      "bytes": 1598,
+      "sha256": "0d9d77a1eeed7721b0e9a63ba02af592cb5a85d470a50436757cf00bdd8d00c6"
+    },
+    ".cache/m76/artifacts/FinalKit/Assets/textures/grass.png.judasmeta": {
+      "bytes": 101,
+      "sha256": "926423d13d44a9761014f50e40e23831b4d169fc1b6f41b119eb0446cdc36c17"
+    },
+    ".cache/m76/artifacts/FinalKit/Assets/textures/stone.png": {
+      "bytes": 2407,
+      "sha256": "e87faa8b0e3b89c96c7c89313e0d6e86ee69ab7dcdef494a1d09c5a8091c8c23"
+    },
+    ".cache/m76/artifacts/FinalKit/Assets/textures/stone.png.judasmeta": {
+      "bytes": 101,
+      "sha256": "23cfed5508cb109f85e69de4a177cff0ac2bf1413317961606f92e10efa5c5c2"
+    },
+    ".cache/m76/artifacts/FinalKit/Assets/ui/lab.judasui": {
+      "bytes": 1138,
+      "sha256": "86e075610906558998e577051daf34608b90c2b16b4f439d945ba517aa4e19d7"
+    },
+    ".cache/m76/artifacts/FinalKit/Assets/ui/lab.judasui.judasmeta": {
+      "bytes": 96,
+      "sha256": "52cf20bd608e5920dd9e8260a55feba6e2ea23ea43527b9791b4f23ae9d2bb0d"
+    },
+    ".cache/m76/artifacts/FinalKit/Documentation/JUDASJS.md": {
+      "bytes": 11043,
+      "sha256": "5d7de804c602b47abfa6fd3ab828531c9c50aa9ac938a9256c85501e9238074f"
+    },
+    ".cache/m76/artifacts/FinalKit/Documentation/M76.md": {
+      "bytes": 9160,
+      "sha256": "6e395b9842618c81419088caf1dbfecac8fa86fb6f683b6bcc48819c06997842"
+    },
+    ".cache/m76/artifacts/FinalKit/Documentation/MODDING.md": {
+      "bytes": 11073,
+      "sha256": "a0c0af72d6456f1418834a620285c2f730ef443c8087b2cd258d20a564a20844"
+    },
+    ".cache/m76/artifacts/FinalKit/Documentation/judas.d.ts": {
+      "bytes": 39896,
+      "sha256": "5f4af9a807b71cb3d73bfbdc3d893e707be8f632a8bbbc688392239631141d26"
+    },
+    ".cache/m76/artifacts/FinalKit/Documentation/judasjs/API_INVENTORY.md": {
+      "bytes": 35466,
+      "sha256": "b8d0c7ee6658cd9d6eb1f2593c724ada80bae3d1cbd52df845afadb2a124cd2b"
+    },
+    ".cache/m76/artifacts/FinalKit/Documentation/judasjs/animation-ragdolls.md": {
+      "bytes": 26415,
+      "sha256": "f2e7eda18eed90dec88d26dd0b0b2fc4a4c36ec445be4609c7f93e1bb0b320d0"
+    },
+    ".cache/m76/artifacts/FinalKit/Documentation/judasjs/audio.md": {
+      "bytes": 10712,
+      "sha256": "779f1277f18e4f63bdd3cabf3107f5140fea030f2198a60e0e4f35137ecfa080"
+    },
+    ".cache/m76/artifacts/FinalKit/Documentation/judasjs/character.md": {
+      "bytes": 6330,
+      "sha256": "1fb6b915bf485907c031803d4a87e9047a536cb200cb26ecacd15caf542a1515"
+    },
+    ".cache/m76/artifacts/FinalKit/Documentation/judasjs/cookbook.md": {
+      "bytes": 12197,
+      "sha256": "8d6dc3d8e0777ffd4a3dc39c99418c2a6a9cf3f65dbd512de167fd1437c25f1c"
+    },
+    ".cache/m76/artifacts/FinalKit/Documentation/judasjs/deformables.md": {
+      "bytes": 4915,
+      "sha256": "0ca6ce4105310a5fbd3fd6b8f5e2e5f3c07c4aced9949fc96d4f478918059029"
+    },
+    ".cache/m76/artifacts/FinalKit/Documentation/judasjs/effects-camera.md": {
+      "bytes": 5279,
+      "sha256": "4a963f01831304c4a4b044b7504dc4bbce17ac2c8c5ffe9822998715844c7409"
+    },
+    ".cache/m76/artifacts/FinalKit/Documentation/judasjs/entities.md": {
+      "bytes": 21577,
+      "sha256": "1227bd78e07e5204d86aed82b1f1dd73a9d0c72233b847b56f586f64ea810608"
+    },
+    ".cache/m76/artifacts/FinalKit/Documentation/judasjs/examples/animation.js": {
+      "bytes": 665,
+      "sha256": "842ff8e38f9b91fcc5da48398e8b37d4bfaa1c1e88444149dc788bcba4fc04ae"
+    },
+    ".cache/m76/artifacts/FinalKit/Documentation/judasjs/examples/audio.js": {
+      "bytes": 978,
+      "sha256": "177229445fd446b71fabc1a00f505adb73ed5354b8e69507e6321030b846f1ab"
+    },
+    ".cache/m76/artifacts/FinalKit/Documentation/judasjs/examples/authoring-runtime.js": {
+      "bytes": 2554,
+      "sha256": "f4fae6b5a563343295d253737c6e8f9c9c694a79f6e97108b7f8dac80859ffec"
+    },
+    ".cache/m76/artifacts/FinalKit/Documentation/judasjs/examples/character.js": {
+      "bytes": 1534,
+      "sha256": "a3b9ef259b93fa17ba76b1a72f29f10af3730c623e7b447df3cb4e12693e8ae9"
+    },
+    ".cache/m76/artifacts/FinalKit/Documentation/judasjs/examples/contacts.js": {
+      "bytes": 630,
+      "sha256": "b0c7ad4c250c875b8a89e69c8930e9d2e15164b3bba004eb80f1dd36707b3434"
+    },
+    ".cache/m76/artifacts/FinalKit/Documentation/judasjs/examples/deformable.js": {
+      "bytes": 645,
+      "sha256": "5de995a15d3651b00f93cc1f0b36db08539dc41ec468315865ecffb93e1ab94a"
+    },
+    ".cache/m76/artifacts/FinalKit/Documentation/judasjs/examples/developer-integration.js": {
+      "bytes": 1419,
+      "sha256": "4ced7832c27daa7be7dd594cb6005f5663f7c305dc06b0325a66bd96f9692301"
+    },
+    ".cache/m76/artifacts/FinalKit/Documentation/judasjs/examples/fracture.js": {
+      "bytes": 1364,
+      "sha256": "b41c9e09d86fc80be0844040556ce52087a198e3d222855ffe9a6a4d1a878144"
+    },
+    ".cache/m76/artifacts/FinalKit/Documentation/judasjs/examples/gravity-selection.js": {
+      "bytes": 903,
+      "sha256": "91c449745fb115861c54d26f15621981764d1428d06ef11a6303ea4f5713f368"
+    },
+    ".cache/m76/artifacts/FinalKit/Documentation/judasjs/examples/imported-model.js": {
+      "bytes": 954,
+      "sha256": "d17881e90864e829f87e1d08108ac91e16aa7e2717d25ebca99a8186c0babf12"
+    },
+    ".cache/m76/artifacts/FinalKit/Documentation/judasjs/examples/impulse-point.js": {
+      "bytes": 778,
+      "sha256": "b267518e1e2726782d73d8324d1865091f08a311a58a6a15504d30b36076a993"
+    },
+    ".cache/m76/artifacts/FinalKit/Documentation/judasjs/examples/input-motion.js": {
+      "bytes": 581,
+      "sha256": "8ad6e9db63f0969226df95015daa88e993e0c8b2060e9252505f2350432493d4"
+    },
+    ".cache/m76/artifacts/FinalKit/Documentation/judasjs/examples/joint.js": {
+      "bytes": 524,
+      "sha256": "f2c3e99115376ed83c499d3eadd86f5f08bef01a6bd09b0785e7794fbf08bbbd"
+    },
+    ".cache/m76/artifacts/FinalKit/Documentation/judasjs/examples/kinematic.js": {
+      "bytes": 2312,
+      "sha256": "447a8f6d9a40182e4c20406fa9b42dd82654e23bc5f5ded607e417a41f22ef74"
+    },
+    ".cache/m76/artifacts/FinalKit/Documentation/judasjs/examples/liquid-surface.js": {
+      "bytes": 1090,
+      "sha256": "b865b1c3a999655393204ab0e5b21c2590ff048fd807a38ec0dc97d90d88c5d6"
+    },
+    ".cache/m76/artifacts/FinalKit/Documentation/judasjs/examples/liquid.js": {
+      "bytes": 628,
+      "sha256": "0b2e357938d1d497bb931c029eb5f01d9ac35d65a557a357154fd888d9c2cc68"
+    },
+    ".cache/m76/artifacts/FinalKit/Documentation/judasjs/examples/localization.js": {
+      "bytes": 1106,
+      "sha256": "d8ebb5e89ffd181aa7be696e235664c99daeaa1c44856b900db5ac7b45c8d077"
+    },
+    ".cache/m76/artifacts/FinalKit/Documentation/judasjs/examples/materials.js": {
+      "bytes": 2894,
+      "sha256": "8f1d452b81d9df9fad8dcb0553be1598f8ff317bf9f6195f48a48da43f9af138"
+    },
+    ".cache/m76/artifacts/FinalKit/Documentation/judasjs/examples/minimal.js": {
+      "bytes": 529,
+      "sha256": "28ce94e56a153e55b7a91ca6735a72eb543ed40b16a5b4bb0736f31fe73de1a9"
+    },
+    ".cache/m76/artifacts/FinalKit/Documentation/judasjs/examples/multi-target-ik.js": {
+      "bytes": 2364,
+      "sha256": "bf1ca7ca20517bf10e0700aa40565163ec3c24b22723f33deeaed6114fb34669"
+    },
+    ".cache/m76/artifacts/FinalKit/Documentation/judasjs/examples/navigation.js": {
+      "bytes": 1360,
+      "sha256": "1516f8c32deacf647a33877017dfce11b9cc9d1c7eac18f52c18ac81429843b2"
+    },
+    ".cache/m76/artifacts/FinalKit/Documentation/judasjs/examples/paired-stick.js": {
+      "bytes": 1544,
+      "sha256": "b4a08922fefbe9d71cf30ad7e9449eeda3fbe10e39ad6c2543547c8d8f34e27f"
+    },
+    ".cache/m76/artifacts/FinalKit/Documentation/judasjs/examples/particles.js": {
+      "bytes": 291,
+      "sha256": "0a668d156c337e5a8beb9b433334f020481c7ba92818dcaa4b98eba0d3bfda1f"
+    },
+    ".cache/m76/artifacts/FinalKit/Documentation/judasjs/examples/physical-animation.js": {
+      "bytes": 1728,
+      "sha256": "989ab1ed2759333fa99fbe91d99f10058db986b92fe72d32dcf0f8adc67027d0"
+    },
+    ".cache/m76/artifacts/FinalKit/Documentation/judasjs/examples/physical-control.js": {
+      "bytes": 887,
+      "sha256": "94b724d84212a9b3fedd05dd94d9e2e2bdb35336bbce194410d329098d4fb56d"
+    },
+    ".cache/m76/artifacts/FinalKit/Documentation/judasjs/examples/presentation.js": {
+      "bytes": 764,
+      "sha256": "553b43fda8274e8ec26d7a2b89b9a5c213951b259ff55b635bd4f9980b0b76b1"
+    },
+    ".cache/m76/artifacts/FinalKit/Documentation/judasjs/examples/profiling.js": {
+      "bytes": 776,
+      "sha256": "d7b8c13c7c3de265b5ed6aa71944fd9bb789165bc894f5727d4eb417317c7dc9"
+    },
+    ".cache/m76/artifacts/FinalKit/Documentation/judasjs/examples/queries.js": {
+      "bytes": 913,
+      "sha256": "4c905a1c994ecc9900c7e5fa3b12868a6763034fd685a3302c0a1e03d1c2f7a9"
+    },
+    ".cache/m76/artifacts/FinalKit/Documentation/judasjs/examples/ragdoll.js": {
+      "bytes": 502,
+      "sha256": "630acb523409965f78c5e3b29cb5a2def2d75f76d0dd49d1f7955bfd8ab2f445"
+    },
+    ".cache/m76/artifacts/FinalKit/Documentation/judasjs/examples/ray-fan.js": {
+      "bytes": 3247,
+      "sha256": "ec0699e4cdce11f65e3c4614e2ea4a1ebe2d6e793e33a4e2fad9390b7e94e0dd"
+    },
+    ".cache/m76/artifacts/FinalKit/Documentation/judasjs/examples/saves.js": {
+      "bytes": 1445,
+      "sha256": "39dd8e6dade63a947c62adecac8fa0c40e55cdf9cf1a8e9fe779ac6d26cb5741"
+    },
+    ".cache/m76/artifacts/FinalKit/Documentation/judasjs/examples/scene-session.js": {
+      "bytes": 355,
+      "sha256": "f815541ae10fdcc869e5ab81af11f5b6e2967fae641c710a8abc611e23f5760c"
+    },
+    ".cache/m76/artifacts/FinalKit/Documentation/judasjs/examples/signals.js": {
+      "bytes": 1198,
+      "sha256": "76eef56106331942e0238f8c574b8ba9406e789ae438e800809ccfb52cad305e"
+    },
+    ".cache/m76/artifacts/FinalKit/Documentation/judasjs/examples/spawn.js": {
+      "bytes": 612,
+      "sha256": "97a719502e768d2031e17aecf700389067852528d7718c3e23995047454cdbeb"
+    },
+    ".cache/m76/artifacts/FinalKit/Documentation/judasjs/examples/stale-handle.js": {
+      "bytes": 850,
+      "sha256": "e3feebd9f464fc7a391d977ee0749de538d40d266a45305e23a96eff452868ac"
+    },
+    ".cache/m76/artifacts/FinalKit/Documentation/judasjs/examples/streaming.js": {
+      "bytes": 562,
+      "sha256": "08c3be43a63fb4f0776f93b3ee765fbe886110f0eb253555b4be8da273aae18a"
+    },
+    ".cache/m76/artifacts/FinalKit/Documentation/judasjs/examples/surface.js": {
+      "bytes": 789,
+      "sha256": "4f6cafa78009e325a649675f7295c23009870c614091c23732244af47be61a67"
+    },
+    ".cache/m76/artifacts/FinalKit/Documentation/judasjs/examples/ui.js": {
+      "bytes": 873,
+      "sha256": "d6c67adc40d0240f5c33d6d4c96ca5c6c4b73a237be003dc64c868c32830c8e7"
+    },
+    ".cache/m76/artifacts/FinalKit/Documentation/judasjs/fracture.md": {
+      "bytes": 6170,
+      "sha256": "1d1070484c64d0338f8477c810adb7d19ab60c32ebd386a8065ceac48c344313"
+    },
+    ".cache/m76/artifacts/FinalKit/Documentation/judasjs/getting-started.md": {
+      "bytes": 9738,
+      "sha256": "9b04fe623cc6671b9a423b644234d1cdf2cfc9addd46f24f994dae95f9b4f7c5"
+    },
+    ".cache/m76/artifacts/FinalKit/Documentation/judasjs/input.md": {
+      "bytes": 8420,
+      "sha256": "6d09ed651ab6682a6948e9485e5d0334dbd6a12eb45741500834a5107b4141a8"
+    },
+    ".cache/m76/artifacts/FinalKit/Documentation/judasjs/lifecycle.md": {
+      "bytes": 10056,
+      "sha256": "b6484002a793dfe8d9d593f988f9216924e0bb5cedb81b843b2fbd5f176c00aa"
+    },
+    ".cache/m76/artifacts/FinalKit/Documentation/judasjs/liquid.md": {
+      "bytes": 6976,
+      "sha256": "7340ae47216778c3328dc688b74e4425ece2a873f3baf6f7521a7e6ed6f3fcb7"
+    },
+    ".cache/m76/artifacts/FinalKit/Documentation/judasjs/localization.md": {
+      "bytes": 7261,
+      "sha256": "03a59294c94147f99413f51719f6859262c779d66b8ccd6a2387270b781d7e02"
+    },
+    ".cache/m76/artifacts/FinalKit/Documentation/judasjs/materials.md": {
+      "bytes": 9374,
+      "sha256": "d14e6e581ad3cdb028bd3a2c94b65aae54674727d41e147c9314780bd2a1e9c0"
+    },
+    ".cache/m76/artifacts/FinalKit/Documentation/judasjs/mods.md": {
+      "bytes": 1962,
+      "sha256": "9ded18767b943b6bcfbe5756501223a501ddcd95c4b39872843e9c7f9f138771"
+    },
+    ".cache/m76/artifacts/FinalKit/Documentation/judasjs/navigation.md": {
+      "bytes": 9224,
+      "sha256": "46047770a8b16e0ed9e2bedcb3f577822fc30eba71ae770633525b5cc51460f1"
+    },
+    ".cache/m76/artifacts/FinalKit/Documentation/judasjs/physics.md": {
+      "bytes": 17714,
+      "sha256": "9faf2ecce3b037ce23ea59cd1125228f7705cd40c154f7efc7e5c1ae697ddefc"
+    },
+    ".cache/m76/artifacts/FinalKit/Documentation/judasjs/practices.md": {
+      "bytes": 3236,
+      "sha256": "5387797e0cad7a4ba1f1f8be59c4b86e42c8a78aeff2fe0b8b49d20304527a36"
+    },
+    ".cache/m76/artifacts/FinalKit/Documentation/judasjs/profiling.md": {
+      "bytes": 2390,
+      "sha256": "42e8255e2537c23934f4eaa9f1b5e394db2ea0af2d8bde85853aaf427c81b7b4"
+    },
+    ".cache/m76/artifacts/FinalKit/Documentation/judasjs/saves.md": {
+      "bytes": 8096,
+      "sha256": "48d783f14fe5b910baf3dbbc4068548cfec8edf0befe4005d223e6c51dfa2004"
+    },
+    ".cache/m76/artifacts/FinalKit/Documentation/judasjs/scenes-state.md": {
+      "bytes": 7208,
+      "sha256": "8cef5184b949f7444f0b17206574d67ccf6c8de25888eb91e3f96565a41d6d76"
+    },
+    ".cache/m76/artifacts/FinalKit/Documentation/judasjs/signals.md": {
+      "bytes": 6646,
+      "sha256": "7689cfc2ac7f1268799b2fcac56f5e65c95a31daa9ddaf287b1a5741efc4d72e"
+    },
+    ".cache/m76/artifacts/FinalKit/Documentation/judasjs/streaming.md": {
+      "bytes": 8810,
+      "sha256": "d7c728c218550e2a1e98edd144b4002c410d15d7557b94e210f45adb87926163"
+    },
+    ".cache/m76/artifacts/FinalKit/Documentation/judasjs/ui.md": {
+      "bytes": 5018,
+      "sha256": "3f7ee24d28e6877834b8ee08dab33fc94b919af864c2a6a7db0e9200edd32207"
+    },
+    ".cache/m76/artifacts/FinalKit/Documentation/judasmod.example.json": {
+      "bytes": 3226,
+      "sha256": "c718a23df07ef0a72134f3826b3b3338fdc75386982c8648c81a60411ca02c9c"
+    },
+    ".cache/m76/artifacts/FinalKit/Imports/landscape.judasterrain": {
+      "bytes": 71467,
+      "sha256": "f48dc93f016f735578b0c655df4e91a5916efeb92c8ee8677ca1815962a0d9ea"
+    },
+    ".cache/m76/artifacts/FinalKit/NOTICE.txt": {
+      "bytes": 109,
+      "sha256": "cc2e8814d4736758e4849f063b68181272f628c8546fd73e847a28b921f4d02e"
+    },
+    ".cache/m76/artifacts/FinalKit/README.txt": {
+      "bytes": 271,
+      "sha256": "4da7902cbb9e7023a9ae818df4b7a0713305b6ab3bce78eecf72ac5edc837112"
+    },
+    ".cache/m76/artifacts/FinalKit/Scenes/landscape.judas": {
+      "bytes": 2598,
+      "sha256": "d7150629096216aad3789bbcb7e86ba6770d820f01a54f3d73d0c08a8b0bd124"
+    },
+    ".cache/m76/artifacts/FinalKit/Scenes/region.judas": {
+      "bytes": 1452,
+      "sha256": "91974a37e28cc5e6f73f9d8a47e9de61d7ccb45e71edb6cc5ce91ebd6ccba1f0"
+    },
+    ".cache/m76/artifacts/FinalKit/kit.json": {
+      "bytes": 27815,
+      "sha256": "91e484610d7925991d2ac089d376b392ffd6a946f66071b3b9324b85443fb6f9"
+    },
+    ".cache/m76/artifacts/editor-hill.judasmod": {
+      "bytes": 462540,
+      "sha256": "8edf5439c45c0f30cf5986e19e0e31c30aec7643132cc7d26d10a2444c735042"
+    },
+    ".cache/m76/artifacts/hill-map.judasmod": {
+      "bytes": 377578,
+      "sha256": "49a39e13583be0cf673081bd3c0f73dfda4ab80fa5d3948a77d49ecece394f2b"
+    },
+    ".cache/m76/artifacts/landscape-fork.judasmod": {
+      "bytes": 366297,
+      "sha256": "e32ac8e46564e9a6b53e7986c17715a961d79ad6f0b2acf5a13c962e1e6283b6"
+    },
+    ".cache/m76/artifacts/small-assets.judasmod": {
+      "bytes": 32813,
+      "sha256": "18d32c36859fb8d6218378da233b843f6f4de9d6efbc59d61022eed28e3641d0"
+    }
+  },
+  "linuxReleaseTools": {
+    "build/judas": "bccb696ecac60d4b3b40e933c929c799bf9d21e998ddb5d9b514652c8559db41",
+    "build/judas_editor": "0c5cb78e0194c17a2547d630c33d85794bb957fac45beb3489c5e919b186cb21",
+    "build/judas_mod": "9e8573978f5bb33cf4af2ce902abdba1e5b2ae92b8ea97cd7fbce12fb7d7ded7",
+    "build/judas_mod_application_tests": "4de9b5a27a63e99cf680ed8adfd364a677a74eae0eff49e4cadca61e844a817a",
+    "build/judas_mod_content_tests": "d1b219240b8d58d07fb3bff2b49803ecb486dc2525c0b30b1709cd2aa85ef67c",
+    "build/judas_mod_lab_builder": "cc8f2fc767f741a72cd66191911bc113c1d9c8819099f91897f96b9d8a0860ab",
+    "build/judas_navigation_bake": "e583b7bfb93c1a30df718964ed855e2a385e79eedc3bc36645f871bb041cbd1d",
+    "build/judas_terrain_author": "0ac5f3453d940b8023e94810aba926cc1c8a9b32fe677e03d3bb0ecbe86d0fb3"
+  },
+  "nativeWindows": {
+    "binaries": {
+      "judas": "f369b6063c3bbb3286e6889ce2f25b136cc21652507301b3eb84ea371aedd3d5",
+      "judas_editor": "a6e6375526476d6cd58ee43ed5108a495229e762d694145791d0c84fdad79156",
+      "judas_mod": "4a78f928a5fa9afa304b02faf53069f2428b58317e276ac36dc173635b368570",
+      "judas_mod_application_tests": "5afa96a0dacc6292bd865c3004828c697af93e877211d272e2ac029f8ca4ac31",
+      "judas_mod_content_tests": "f0caaf8c81506b1d6bcbf0e2d922893bc64886ef898243b5c8d014c8235b9b0b",
+      "judas_navigation_bake": "0dd8919e53031a9f0c029f9e590671fdb8a25c4eecb7ce9420b21df500efbaff",
+      "judas_terrain_author": "d10e758051e2add55676f131e928b387ff3a72ed74469831db2c6bc1317519be"
+    },
+    "docsPublished": true,
+    "freeBytes": 58548224,
+    "pristineSdkMesa": false,
+    "sourceCount": 75,
+    "sources": {
+      "CMakeLists.txt": "3dcaf2e90e04369e90d3ac76cbb57f58603688e608b32d234c7cc49919c8da45",
+      "cmake/JudasWindowsSdk.cmake": "bae46b9708259ecc681097caaccf9b629e0e54b9a95d4e2a53fd22cb6a9d659b",
+      "projects/modding_lab/Assets/Terrain/b70884841af5a329c87f7d2c112c73c2/terrain.judascollision": "707f1a1599e4c35503f581c90947e3ab6f07dfa4e94bba2ac7cee72ab9a926b2",
+      "projects/modding_lab/Assets/Terrain/b70884841af5a329c87f7d2c112c73c2/terrain.judascollision.judasmeta": "433799230448dbda4939b2e063758127f969612a2dad4bb94c9732aadf45b31c",
+      "projects/modding_lab/Assets/Terrain/b70884841af5a329c87f7d2c112c73c2/terrain.judasmodel": "cf966dccbb0a466d8c6a98e05371bfdb42de1027820512869a65aac0d8818a34",
+      "projects/modding_lab/Assets/Terrain/b70884841af5a329c87f7d2c112c73c2/terrain.judasmodel.judasmeta": "f4c985f029466ead493365be23ae9941188e45b55ddadb1ee94318812569f1c3",
+      "projects/modding_lab/Assets/Terrain/b70884841af5a329c87f7d2c112c73c2/terrain.receipt.json": "a1deb0bc572d057d1b4fcb7b54a6467099b500a773c40b8bc75c20f02fc64646",
+      "projects/modding_lab/Assets/Terrain/b70884841af5a329c87f7d2c112c73c2/terrain.tga": "13e7e672fc015eccfea986002b861e2ded330c373f57f9fb06d510cb77dd5798",
+      "projects/modding_lab/Assets/Terrain/b70884841af5a329c87f7d2c112c73c2/terrain.tga.judasmeta": "8c4884b8b43ded69d4e8617f49c2571b5e001bc66aee57a4ab0262b5f807c165",
+      "projects/modding_lab/Assets/fonts/DejaVuSans.ttf": "b4c632e3cdf9acc7f28758fb5a323c8524d7fc6660d46904d9b6cbe2809c419c",
+      "projects/modding_lab/Assets/fonts/DejaVuSans.ttf.judasmeta": "35736176cede066c485da04d07dd6f44bbb8b5d4f8dbf4ae6625b9f9a470457a",
+      "projects/modding_lab/Assets/fonts/LICENSE.txt": "63d3ba759d12804c5b31a9d5940d855c1820d1f5999e6b0872eb1c7ff045fbc9",
+      "projects/modding_lab/Assets/navigation/landscape.judasnav": "65a1251c38005942d6c51470b0cb33aff703b02e1618986b1ff9e9da2ec5358e",
+      "projects/modding_lab/Assets/navigation/landscape.judasnav.judasmeta": "b6a091bbf5a8c92e729446c77e9db1df3bb8470dc318008c2f20ef6ad55f86c8",
+      "projects/modding_lab/Assets/prefabs/drop.judasprefab": "d162b19e7a90ff346f35afe60be51ad45ccabdd60547a1521affbfe644d0a671",
+      "projects/modding_lab/Assets/prefabs/drop.judasprefab.judasmeta": "498919b5e770981c14ded4e361e0e4b934085b87978349a2c274ac8a0f40d5b4",
+      "projects/modding_lab/Assets/scripts/controller.js": "51db2523e93e19cca227b7b2a310c328ac16b4c1ed648d8ca6c118cd9dcca8c3",
+      "projects/modding_lab/Assets/scripts/controller.js.judasmeta": "465f33a24c13fee8c41ed0187b7991bc5a1e566753c2c8a5f934dd2965d5cac2",
+      "projects/modding_lab/Assets/textures/grass.png": "0d9d77a1eeed7721b0e9a63ba02af592cb5a85d470a50436757cf00bdd8d00c6",
+      "projects/modding_lab/Assets/textures/grass.png.judasmeta": "b0a19d2dea9110600395dc08b785875396e777f1667a998068703bca1da97a73",
+      "projects/modding_lab/Assets/textures/stone.png": "e87faa8b0e3b89c96c7c89313e0d6e86ee69ab7dcdef494a1d09c5a8091c8c23",
+      "projects/modding_lab/Assets/textures/stone.png.judasmeta": "26c414921fcc0ca81a498d559a23a29f7b473460a8327aa1315ea909c33ba4d6",
+      "projects/modding_lab/Assets/ui/lab.judasui": "86e075610906558998e577051daf34608b90c2b16b4f439d945ba517aa4e19d7",
+      "projects/modding_lab/Assets/ui/lab.judasui.judasmeta": "49d4bde692bfa896764093a10b48629b26e5915048606b7311b8011c240cef07",
+      "projects/modding_lab/Assets/world/lab.judasworld": "80ee5d34b6ea4ee954e6ff3b100a3c1a23fa1978fc03bd02f48281862c3156ad",
+      "projects/modding_lab/Assets/world/lab.judasworld.judasmeta": "2c8372a834920be7f1a7eb591c177f76c6bbda21b10777a4eaac17a857f28ae1",
+      "projects/modding_lab/Imports/landscape.judasterrain": "f48dc93f016f735578b0c655df4e91a5916efeb92c8ee8677ca1815962a0d9ea",
+      "projects/modding_lab/NOTICE.txt": "cc2e8814d4736758e4849f063b68181272f628c8546fd73e847a28b921f4d02e",
+      "projects/modding_lab/Scenes/landscape.judas": "d7150629096216aad3789bbcb7e86ba6770d820f01a54f3d73d0c08a8b0bd124",
+      "projects/modding_lab/Scenes/main.judas": "3c156fe78f4d42facfbb0a652619deb2b99d7a3782c02940c5a35612b78357c3",
+      "projects/modding_lab/Scenes/region.judas": "91974a37e28cc5e6f73f9d8a47e9de61d7ccb45e71edb6cc5ce91ebd6ccba1f0",
+      "projects/modding_lab/modding_lab.judasproj": "52e616b41f67d40052d89d82b6fde48a81d0952e36c743ea7b65e8589335e475",
+      "src/Application.cpp": "752b26046f3e88c53920b53ae734beb3dd13792ebf2f1d2bb7686c90a1834ae0",
+      "src/AssetDatabase.cpp": "eafd82d6bae3492b91c7281517889f4015ee35527c558aab6a12c339d78b57ad",
+      "src/AssetDatabase.h": "5f5d9d05a9f626f2abe89f8be963a0856f7690567ecc1bc695a1ca5e2157a93b",
+      "src/EngineHost.cpp": "ddd0d4027f8f96d7c7f53a54fa68f161a337236f6ae904941a044c33c1bc6f42",
+      "src/EngineHost.h": "0cd23c77f4224b78e2dc43e6d19ceb71d151eebcf88d88ca057a9c3df5c013c1",
+      "src/ModelCook.cpp": "235d3bac8adfd96dde497c41410c110f9c02ccf33289b2f2c7db6af583a39c93",
+      "src/NamedAuthoring.cpp": "b50e32b8e023927d4499edc2e0681d082017dba1b0e57fb76b066fc4c446da99",
+      "src/Project.cpp": "77cb0043469bf0250f22d98cdd76b9657fea80c4b7cc963ceb4c219434d0ccfe",
+      "src/Project.h": "a6840f27de0fd1a65611148922aabb3a881c1599b3a321203dafd7743f7b3e47",
+      "src/ProjectExporter.cpp": "8bd8496c376c5d45ffe16d8a1c7ed90a6978e349f89521aac397383bf996d53f",
+      "src/ProjectExporter.h": "fe709a1d733cc9c0af01e1112c8698d0f32d0e465e7a5b4d2c810af820811ddf",
+      "src/RuntimeOptions.cpp": "dcb18ceff20cee92c4eda479efc3e70765ee55e2ee84c60bf1dfdf5454f363ff",
+      "src/RuntimeOptions.h": "585daf4b86fa04c36bf10d05bf1315c805620496b9c63d632524a98f09d01a9d",
+      "src/SaveService.cpp": "ca376c47082b214baba125d93f95e3cd84004133cedb80cf8859b039ba498303",
+      "src/SaveStorage.cpp": "c38a37d4d29c05027da836588b885b37fdb000774afee3266034335922fb256a",
+      "src/SaveStorage.h": "164169fd2e1326ed48624734fc1cb2ced77da5d34af2408f77a6523d59a9b0f4",
+      "src/SceneSession.cpp": "e387eb0b507498fa07530a72ecedbf646dcac532e224e10bb0170f26a1ec32d1",
+      "src/ScriptSystem.cpp": "134678baab49f0be5f022747e12f04896eceaad828149028c145e5b30d562f50",
+      "src/WorldStreaming.cpp": "28d5d1455ce77b4bf9cb29c6a27c03cd97b726c8d234c7cbb79919c2ac30cf52",
+      "src/authoring/AuthoringDocument.cpp": "271ce62241a0a07b446d84ea636e2ea74c641359578e99d0d6ec71003f4acead",
+      "src/authoring/ModAuthoring.cpp": "a93370fb2fb7de4af9b456f96a352841000a1404453973a7e32640b05ba73856",
+      "src/authoring/ModAuthoring.h": "eecedc830ce57ad5aea9210e55a847fa06b8f809e15b8265ada7106f5780c2d6",
+      "src/editor/EditorApplication.cpp": "797b7c048a30d70284971460c9931d7ea9f305a47096803b3b5888567dde2514",
+      "src/editor/EditorApplication.h": "d114bcf4d1dc744fd5d01381eefcb5e428ed80315daa1e11604be7192dabf86e",
+      "src/editor/EditorPanels.cpp": "d3ef6df1fef48fcac219bc4a87e117c0c9968c8ffc00dcd9d95b5865adefde20",
+      "src/editor/EditorPanels.h": "e95865006c0d6e9a00899f9a5dac1487f2d597719b6929f7b75b05d6dd551279",
+      "src/editor/ModTools.cpp": "1609df2076d905be4dad91d108dd8dee61f4230bd1ad3fdb62a949d0d0891b6a",
+      "src/editor/ModTools.h": "fe03669d3179dfdfe0439006446e2f1c660dc09223e489bdc2f40c9b757d0205",
+      "src/editor/TerrainTools.cpp": "852d1801f3ae5fb523a9eb64159e570172c0c6ccc9f6705477fe224f18bdb8da",
+      "src/modding/ContentStorage.cpp": "dfcdcce6dff6f8249f7378b6a66b813d90740121ad485e0ab34519d204084313",
+      "src/modding/ContentStorage.h": "c9d165ebcc0a396455524c096a2e931b1e7fdbcd4fa8fdd2da0c6caf782d59c2",
+      "src/modding/ModContent.cpp": "ee54d86c46881b09475d2e367975f1538eee4b140fa25ba88e443b229bb221a1",
+      "src/modding/ModContent.h": "b7266a79991e9ab6a8e7f0b20728886d427c7f1591e59a2d9e842273639dff3b",
+      "src/modding/ModRuntime.cpp": "81e4b8bf77a56cfd91722a23a7126fbacb41e2761c6fde13260785b8f482b06c",
+      "src/modding/ModRuntime.h": "79423ed8e86ca206ce1e947cfdb0e5820155966961f99c9530b47c601555f1c5",
+      "src/modding/ModStore.cpp": "37db68ef0c96ae308fb9f3b42576e1fbc33e75fdcacf5d72c15e930ff4ed26b2",
+      "src/modding/ModStore.h": "41621eacad2e96cb5472b9295d2194c8b121c556510327d764ab55665048d866",
+      "tests/ModApplicationTests.cpp": "35fb9e9402e26ebdf1147fdf01ab07f7286636e7e44389b18524505709486aed",
+      "tests/ModContentTests.cpp": "98a1c70c28280fe8dce19372516e35c93a054a1eea97bc1e423d2141627a7585",
+      "tools/ModLabBuilder.cpp": "aa12081d4e66006739de1f7087f7dae90274ca50a9720a52081f1b87bdc3fccb",
+      "tools/ModTool.cpp": "9ee9d04a062e05c951a112d96d6c4e4cb2a5ee7ede83fbf70111956247124755",
+      "tools/NavigationBake.cpp": "5edd35b93713b3a42269c0c02fa01bed65d7237782d38760c58fa7d030f351da",
+      "tools/TerrainAuthor.cpp": "126aaa90b1bc9c03799830de1f757af21697be99299344ff6e385311ee140bc9"
+    }
+  },
+  "scope": "Every candidate file listed in CHANGED_FILES.txt except this self-referential manifest. Native source/fixture checks are recorded separately; generated kit/package/export inputs and compiled tools have explicit artifact hashes.",
+  "source_document_tool_fixture_hash_count": 104,
+  "status": "provisional checkpoint authorized; NOT HUMAN VALIDATED"
+}

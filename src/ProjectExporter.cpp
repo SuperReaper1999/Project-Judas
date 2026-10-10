@@ -7,6 +7,7 @@
 #include "Deformable.h"
 #include "AsyncFile.h"
 #include "ProjectExporter.h"
+#include "modding/ModRuntime.h"
 #include "AssetDependencies.h"
 #include "../third_party/nlohmann/json.hpp"
 #include "CollisionAsset.h"
@@ -150,6 +151,8 @@ bool ExportProject(const Project& project, const ProjectExportOptions& options,
         Require(fs::is_regular_file(engineRoot / "assets/fonts/DejaVuSans.ttf"), "Missing engine UI font");
         Require(fs::is_regular_file(engineRoot / "third_party/RUNTIME_NOTICES.txt"), "Missing runtime dependency license notices");
         AssetDatabase assets; assets.Scan(project.RootDir(), project.AssetsDir());
+        JudasMods::Contract modContract;const bool hasModContract=!project.Settings().modContract.empty();
+        if(hasModContract){Require(JudasMods::ParseContract(project.Settings().modContract,modContract,error),error);Require(modContract.registries==JudasMods::RegistryIdentity(project),"mod contract registry identity mismatch");}
         std::string iconPath;
         if (!project.Settings().iconAsset.empty()) {
             const auto* icon = assets.Find(project.Settings().iconAsset);
@@ -180,6 +183,7 @@ bool ExportProject(const Project& project, const ProjectExportOptions& options,
             scenes.clear();for(const auto& name:project.Settings().exportScenes){auto path=(root/name).lexically_normal();Require(registeredScenes.count(path),"Included scene is not registered: "+name);scenes.insert(path);}
         }
         for(const auto& name:project.Settings().excludeScenes){auto path=(root/name).lexically_normal();Require(registeredScenes.count(path),"Excluded scene is not registered: "+name);scenes.erase(path);}
+        if(hasModContract&&modContract.enabled){for(auto& [_,r]:modContract.published)if(r.kind=="scene")Require(scenes.count(fs::path(project.Resolve(r.value))),"published mod scene is excluded/missing: "+r.value);for(auto& [_,r]:modContract.replacements)if(r.target.kind=="scene")Require(scenes.count(fs::path(project.Resolve(r.target.value))),"replacement mod scene is excluded/missing: "+r.target.value);}
         Require(scenes.count(startup),"Startup scene is excluded from export");
         const auto safeContentPath = [&](const fs::path& relative) {
             Require(!relative.empty() && !relative.is_absolute() && Inside((root / relative).lexically_normal(), root), "Unsafe package content path: " + relative.string());
@@ -203,6 +207,7 @@ bool ExportProject(const Project& project, const ProjectExportOptions& options,
         std::set<std::string> auxiliary;
         auto include=[&](const AssetId& id,const std::string& reason){if(id.empty())return;auto* r=assets.Find(id);Require(r&&!r->missing,"Missing required asset "+id+" ("+reason+")");included[id].insert(reason);};
         if(project.Settings().exportAssetPolicy=="all")for(const auto& [id,_]:assets.Records())include(id,"conservative registered asset policy");
+        if(hasModContract&&modContract.enabled){for(auto& [_,r]:modContract.published)if(r.kind!="scene")include(r.value,"published mod contract reference");for(auto& [_,r]:modContract.replacements)if(r.target.kind!="scene")include(r.target.value,"explicit mod replacement target");}
         for(const auto& id:project.Settings().runtimeAssets)include(id,"explicit runtime/save root");
         include(project.Settings().iconAsset,"project icon");include(project.Settings().worldManifest,"composed world manifest");
         for(const auto& id:project.Settings().localization.fonts)include(id,"project localization");
@@ -370,3 +375,5 @@ bool ExportProject(const Project& project, const ProjectExportOptions& options,
         error = "Export failed: " + std::string(exception.what()); return false;
     }
 }
+
+bool ValidateSceneContent(const Scene& scene,const AssetDatabase& assets,const ProjectClassification& classification,const ProjectNavigation& navigation,std::string& error){try{References(scene,assets,classification,navigation);error.clear();return true;}catch(const std::exception& e){error=e.what();return false;}}

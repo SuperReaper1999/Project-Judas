@@ -609,6 +609,7 @@ declare module "judas" {
     readonly id: string; readonly name: string; readonly scene: string; readonly timestamp: number;
     readonly metadata: JSONValue; readonly status: "compatible" | "incompatible" | "corrupt";
     readonly error: string; readonly recovered: boolean;
+    readonly modContext: {format: 1; signature: string; contractSha256: string; active: {id: string; version: string; sha256: string}[]} | null;
   }
   export interface SaveRequest {
     readonly id: number; readonly operation: "save" | "load" | "delete" | "list"; readonly slot: string;
@@ -665,6 +666,16 @@ declare module "judas" {
     scope<T>(label: string, callback: () => T): T;
     /** Finite value; sum resets per captured outer frame, latest is newest timestamp, max is largest observation. */
     counter(label: string, value: number, mode?: "sum" | "latest" | "max"): void;
+  };
+
+  export interface ModReference {readonly kind: string; readonly value: string;}
+  export interface ActiveMod {readonly id: string; readonly name: string; readonly version: string; readonly sha256: string; readonly executable: boolean;}
+  export interface ModContribution {readonly owner: string; readonly point: string; readonly name: string; readonly reference: ModReference; readonly data: Record<string, unknown>;}
+  /** Detached bounded catalog for the frozen session. Content policy is not a JS sandbox. */
+  export const mods: {
+    readonly active: ActiveMod[];
+    contributions(point: string): ModContribution[];
+    resolve(owner: string, name: string): ModReference | null;
   };
 
 }

@@ -45,6 +45,7 @@ struct RuntimeOptions {
     // Milestone 30: the launched project (IsLoaded() false when the scene
     // sits outside any project) and the resolved scene file path.
     Project project;
+    bool noMods=false;
     std::string scenePath;
     std::optional<glm::dvec3> worldOriginOverride;
     std::string testScriptPath;  // empty: interactive

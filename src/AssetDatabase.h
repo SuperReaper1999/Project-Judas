@@ -1,6 +1,8 @@
 #pragma once
 
 #include <map>
+#include <set>
+#include <functional>
 #include <string>
 #include <vector>
 
@@ -40,6 +42,8 @@ struct AssetRecord {
     std::string relativePath;  // project-relative, generic slashes
     std::string source;        // provenance recorded at import
     bool missing = false;      // sidecar present, asset file absent
+    bool readOnly = false;
+    std::string owner{}; // empty = base; mod context is not an AssetId
 };
 
 struct AssetProblem {
@@ -87,6 +91,15 @@ public:
     bool Move(const AssetId& id, const std::string& newRelative, std::string& outError);
     bool Remove(const AssetId& id, std::string& outError);
 
+    void SetIdentityQualifier(std::function<AssetId(const AssetId&)> qualifier){m_identityQualifier=std::move(qualifier);}
+    bool SetEffectiveRecords(std::map<AssetId,AssetRecord>,std::string catalog,
+        std::map<std::string,std::set<std::string>> imports,std::string& error);
+    bool ModuleImportAllowed(const std::string& from,const std::string& to)const;
+    // mod:base/name or mod:dependency-id/name selects an explicitly published
+    // script export; the requesting owner still needs a declared import.
+    std::string PublishedModule(const std::string& from,const std::string& spec)const;
+    const std::string& ModCatalog()const{return m_modCatalog;}
+
     static bool ReadMeta(const std::string& metaPath, AssetId& outId, AssetType& outType, std::string& outSource,
                          std::string& outError);
     static bool WriteMeta(const std::string& metaPath, const AssetId& id, AssetType type, const std::string& source,
@@ -101,4 +114,7 @@ private:
     std::map<AssetId, AssetRecord> m_records;
     std::vector<std::string> m_untracked;
     std::vector<AssetProblem> m_problems;
+    std::string m_modCatalog;
+    std::function<AssetId(const AssetId&)> m_identityQualifier;
+    std::map<std::string,std::set<std::string>> m_modImports;
 };

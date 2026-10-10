@@ -1,6 +1,7 @@
 #include "PerformanceProfiler.h"
 #include "Application.h"
 #include "AppIcon.h"
+#include "modding/ModRuntime.h"
 
 #include <SDL2/SDL.h>
 
@@ -49,6 +50,9 @@ int Application::Run(int argc, char** argv, ApplicationControl* control) {
     // The scene is parsed before any engine system exists so a bad file
     // is reported and exits cleanly rather than leaving partially built
     // state behind — the same fail-early rule every asset load follows.
+    const auto originalScene=options.project.MakeRelative(options.scenePath);
+    if(!JudasMods::PrepareSession(options.project,options.noMods,error)){std::fprintf(stderr,"%s\n",error.c_str());return 1;}
+    if(options.project.ModSession())options.scenePath=options.project.Resolve(originalScene);
     Scene scene;
     if (!LoadSceneFromFile(options.scenePath, scene, error)) {
         std::fprintf(stderr, "%s\n", error.c_str());
@@ -68,7 +72,8 @@ int Application::Run(int argc, char** argv, ApplicationControl* control) {
     // Milestone 30: the project's assets are the only ones a scene can
     // reference; a scene outside any project resolves nothing.
     if (options.project.IsLoaded()) {
-        host.OpenProjectAssets(options.project.RootDir(), options.project.AssetsDir());
+        if(options.project.ModSession())host.OpenContentView(options.project.ModSession()->assets);
+        else host.OpenProjectAssets(options.project.RootDir(), options.project.AssetsDir());
 
         const auto& iconId = options.project.Settings().iconAsset;
         if (!iconId.empty()) {

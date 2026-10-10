@@ -105,6 +105,7 @@ struct EditorPanelState {
     bool showSceneSettings = false;
     bool showRetarget = false;
     bool showTerrain = false;
+    bool showMods = false;
     std::shared_ptr<RetargetPanelState> retarget;
     bool showNavigationHelp = false;
     std::string assetSearch;

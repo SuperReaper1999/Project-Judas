@@ -1,3 +1,4 @@
+#include "modding/ModRuntime.h"
 #include "NamedAuthoring.h"
 #include "WorldPersistence.h"
 #include "ScriptSystem.h"
@@ -54,7 +55,7 @@ bool ParseWorldManifest(const std::string& text,WorldManifest& out,std::string& 
     out=std::move(m);return true;
 }
 bool LoadWorldManifest(const std::string& path,WorldManifest& out,std::string& error){std::string text;return read(path,text,error,1024*1024)&&ParseWorldManifest(text,out,error);}
-bool ValidateWorldManifest(const WorldManifest& m,const Project& project,std::string& error){namespace fs=std::filesystem;if(project.Settings().legacyGameplay){error="World manifests require project-owned scripted control (legacy-gameplay false)";return false;}for(auto& [id,r]:m.regions){fs::path path(r.scene);auto real=fs::weakly_canonical(project.Resolve(r.scene));auto root=fs::weakly_canonical(project.ScenesDir());auto relative=real.lexically_relative(root);if(path.is_absolute()||path.extension()!=".judas"||relative.empty()||*relative.begin()==".."||!fs::is_regular_file(real)){error="region "+id+" source is not a registered project scene";return false;}}return true;}
+bool ValidateWorldManifest(const WorldManifest& m,const Project& project,std::string& error){namespace fs=std::filesystem;if(project.Settings().legacyGameplay){error="World manifests require project-owned scripted control (legacy-gameplay false)";return false;}for(auto& [id,r]:m.regions){fs::path path(r.scene);auto real=fs::weakly_canonical(project.Resolve(r.scene));auto root=fs::weakly_canonical(project.ScenesDir());auto relative=real.lexically_relative(root);bool mounted=project.ModSession()&&project.ModSession()->sceneFiles.count(r.scene);if(path.is_absolute()||path.extension()!=".judas"||(!mounted&&(relative.empty()||*relative.begin()==".."))||!fs::is_regular_file(real)){error="region "+id+" source is not a registered project scene";return false;}}return true;}
 bool PrepareWorldRegion(const WorldRegion& region,const Project& project,const AssetDatabase& assets,PreparedWorldRegion& out,std::string& error,const JobContext* context){
     auto cancelled=[&]{if(context&&context->CancelRequested()){error="cancelled";return true;}return false;};
     std::string text;if(cancelled()||!read(project.Resolve(region.scene),text,error))return false;

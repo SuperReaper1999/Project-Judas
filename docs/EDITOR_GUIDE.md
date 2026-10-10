@@ -179,3 +179,15 @@ and [wheel/picking follow-up](evidence/m71/editor-picking-zoom/README.md).
 Those receipts describe accepted M71 work. [M72 review](M72.md#human-review)
 adds lighting, hiding and material checks; current results are reported there.
 Offscreen checks do not establish physical desktop capture or human usability.
+
+## Local mods and game kits (M76 candidate)
+
+Open **View / Local mods / game kits**. Export only a game's explicitly published
+kit. Create a separate kit-bound project and open it normally. Published Kit/base
+references are read-only; fork terrain into Imports before sculpting. The ordinary
+Terrain sculpt / paint panel, Save/Cook and navigation Bake remain the workflow.
+The manifest draft has validation, Undo/Redo, cancel/reopen and guarded Save;
+Package is a separate publication. The same panel inspects/installs local packages,
+requires explicit exact-payload script trust, selects versions and launches an
+installed game with or without mods. Selection changes apply next session/launch.
+See [full contracts, limits and CLI commands](MODDING.md).

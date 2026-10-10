@@ -1,0 +1,22 @@
+PASS required composed terrain/body ready through normal resource path
+PASS ordinary authored UI published
+PASS normal renderer capture
+PASS frozen catalog reaches normal script/resource database
+PASS motor grounded above actual terrain
+MOTOR 0,2.50331,2.89874 support=1
+PASS script-driven motor walked onto actual sculpted collision height
+PASS game spawns contributed prefab through public JS
+PASS ordinary spawned body makes authoritative contact with sculpted collision geometry
+PASS published dependency module executed with independent same-filename ownership
+PASS ordinary signal changes saved mod fact
+PASS query sees edited terrain, no hidden flat collider
+PASS normal Detour routes over composed terrain bake
+PASS ordinary additive region demand accepted
+PASS region uses permitted replacement collision
+PASS normal region unload requested
+PASS region unload retires old collider handle
+PASS revisit uses safe remapped body identity
+PASS normal whole scene reload queued
+PASS reload cleans contributed runtime instances
+PASS normal Application shutdown
+20 checks, 0 failures

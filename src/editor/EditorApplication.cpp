@@ -8,6 +8,8 @@
 #include "ComponentEditors.h"
 #include "EditorApplication.h"
 #include "TerrainTools.h"
+#include "ModTools.h"
+#include "ModAuthoring.h"
 #include "ModelArchive.h"
 #include "AsyncFile.h"
 #include "EditorTheme.h"
@@ -381,9 +383,11 @@ bool EditorApplication::OpenProject(const std::string& projectFile, std::string&
     if (!project.Load(projectFile, outError)) return false;
     if(m_terrain){m_terrain->Shutdown(m_host->GetRenderer(),m_panels.importJobs);m_terrain.reset();}
     RetireRetargetProject(m_panels);
+    auto retiringContent=m_project.ModSession(); // retain leases until old jobs are joined
     m_project = project;
     m_scenePicker.Clear();
     m_host->OpenProjectAssets(m_project.RootDir(), m_project.AssetsDir());
+    {std::string assetError;if(!JudasMods::OpenAuthorAssets(m_project,m_host->Assets(),assetError))m_panels.status=assetError;}
     if(!m_host->GetWindow().Input().SetMap(m_project.Settings().input,outError))return false;
     RefreshProjectLists();
     m_panels.showProjectSettings = false;
@@ -478,15 +482,24 @@ bool EditorApplication::RunProject(std::string& outMessage) {
 bool EditorApplication::StartPlay(std::string& outError) {
     if(m_terrain&&!m_terrain->Guard(m_panels)){outError=m_terrain->error;return false;}
     // Source freshness is an editor/export check; packaged runtime needs only products.
-    for(const auto& o:m_document.GetScene().Objects())if(o.render&&!o.render->meshAsset.empty()){auto* a=m_host->Assets().Find(o.render->meshAsset);if(a&&fs::path(a->path).extension()==".judasmodel"){std::vector<uint8_t> bytes;std::string record;std::vector<MaterialDefinition> materials;if(ReadWholeFile(a->path,bytes,outError)&&ReadModelArchiveMetadata(bytes.data(),bytes.size(),record,materials,outError)&&!record.empty()){auto provenance=nlohmann::json::parse(record);if(provenance.value("kind",std::string())=="terrain"&&!VerifyImportedModelFresh(m_project.RootDir(),a->path,outError))return false;}}}
+    for(const auto& o:m_document.GetScene().Objects())if(o.render&&!o.render->meshAsset.empty()){auto* a=m_host->Assets().Find(o.render->meshAsset);if(a&&!a->readOnly&&fs::path(a->path).extension()==".judasmodel"){std::vector<uint8_t> bytes;std::string record;std::vector<MaterialDefinition> materials;if(ReadWholeFile(a->path,bytes,outError)&&ReadModelArchiveMetadata(bytes.data(),bytes.size(),record,materials,outError)&&!record.empty()){auto provenance=nlohmann::json::parse(record);if(provenance.value("kind",std::string())=="terrain"&&!VerifyImportedModelFresh(m_project.RootDir(),a->path,outError))return false;}}}
+    Project playedProject=m_project;
+    if(!JudasMods::PrepareSession(playedProject,false,outError))return false;
+    Scene playedScene=m_document.GetScene();
+    if(playedProject.ModSession()){
+        const auto logical=m_project.MakeRelative(m_document.Path());
+        if(playedProject.ModSession()->sceneFiles.count(logical)&&!LoadSceneFromFile(playedProject.Resolve(logical),playedScene,outError))return false;
+        m_host->OpenContentView(playedProject.ModSession()->assets);
+        m_project.SetModSession(playedProject.ModSession());
+    }
     CancelCameraNavigation();
     m_world = std::make_unique<RuntimeWorld>();
     m_world->legacyGameplay = m_project.Settings().legacyGameplay;
     m_world->audioGroups=m_project.Settings().audio;
     m_world->SetSceneControl(std::make_shared<SceneSession>(m_project,m_document.Path()));
     m_world->SceneControl()->SetEditorSaveIsolation(true);
-    if (!m_world->Build(m_document.GetScene(), &m_host->Resources(), outError, &m_project.Settings().classification, &m_project.Settings().navigation)) {
-        m_world.reset();
+    if (!m_world->Build(playedScene, &m_host->Resources(), outError, &m_project.Settings().classification, &m_project.Settings().navigation)) {
+        StopPlay();
         return false;
     }
     // Milestone 29: a saved world-state delta for this scene file layers
@@ -495,14 +508,14 @@ bool EditorApplication::StartPlay(std::string& outError) {
     bool stateApplied = false;
     if(m_world->IsComposed())m_panels.worldStatePath.clear();
     if (!ApplyWorldStateFileIfPresent(*m_world, m_panels.worldStatePath, stateApplied, outError)) {
-        m_world.reset();
+        StopPlay();
         return false;
     }
-    if(m_project.IsLoaded()&&!m_host->GetWindow().Input().SetMap(m_project.Settings().input,outError))return false;
+    if(m_project.IsLoaded()&&!m_host->GetWindow().Input().SetMap(m_project.Settings().input,outError)){StopPlay();return false;}
     m_play = std::make_unique<InteractivePlay>();
-    if (!m_play->Begin(*m_world, WorldCoordinates(m_document.GetScene().Settings().worldOrigin), outError)) {
+    if (!m_play->Begin(*m_world, WorldCoordinates(playedScene.Settings().worldOrigin), outError)) {
         m_play.reset();
-        m_world.reset();
+        StopPlay();
         return false;
     }
     m_play->SetWorldStatePath(m_panels.worldStatePath, stateApplied);
@@ -535,6 +548,12 @@ void EditorApplication::StopPlay() {
     if (m_play) m_play->End();
     m_play.reset();
     m_world.reset();  // the authored Scene was never written; nothing to revert
+    if(m_project.ModSession()){
+        auto retiringContent=m_project.ModSession(); // ResourceManager release joins late readers
+        m_host->OpenProjectAssets(m_project.RootDir(),m_project.AssetsDir());
+        m_project.SetModSession({});
+        std::string error;if(!JudasMods::OpenAuthorAssets(m_project,m_host->Assets(),error))m_panels.status=error;
+    }
     m_panels.runtime = nullptr;
     m_panels.renderPreviewHistory.reset();
     m_panels.mode = EditorMode::Edit;
@@ -664,7 +683,7 @@ void EditorApplication::HandleRequests(EditorRequests& r) {
         assetsChanged = true;
     }
     if (r.rescanAssets || assetsChanged) {
-        if (r.rescanAssets) m_host->OpenProjectAssets(m_project.RootDir(), m_project.AssetsDir());
+        if (r.rescanAssets){m_host->OpenProjectAssets(m_project.RootDir(), m_project.AssetsDir());std::string assetError;if(!JudasMods::OpenAuthorAssets(m_project,m_host->Assets(),assetError))m_panels.status=assetError;}
         RefreshProjectLists();
     }
 
@@ -1517,6 +1536,8 @@ int EditorApplication::Run(int argc, char** argv) {
         if (m_panels.mode == EditorMode::Edit) {
             if(!m_terrain)m_terrain=std::make_unique<TerrainEditor>();
             m_terrain->Panel(m_document,m_panels,requests);
+            if(!m_modTools)m_modTools=std::make_unique<ModTools>();
+            m_modTools->Panel(m_panels,requests);
             DrawWorldBuildingPanel(m_document, m_panels);
             DrawSceneSettingsPanel(m_document, m_panels);
             DrawAssetBrowserPanel(m_document, m_panels, requests);
@@ -1651,9 +1672,10 @@ int EditorApplication::Run(int argc, char** argv) {
                     std::string error;terrainCheck(m_terrain->draft.Save(error),"save actual editable sculpt and paint");TerrainCookResult result;
                     terrainCheck(CookTerrain(m_terrain->draft.source,m_terrain->draft.Path(),m_project.RootDir(),host.Assets(),result,error),"same CPU cook publishes runtime geometry and appearance");
                     terrainPainted=m_terrain->draft.source.weights;deferredRequests.rescanAssets=true;m_terrain->editing=false;m_panels.showTerrain=true;
-                    MeshData gpu;terrainCheck(renderer.ReadMeshForDiagnostics(m_terrain->mesh,gpu)&&gpu.vertices.size()==m_terrain->preview->vertices.size()&&glm::length(gpu.vertices[2112].position-m_terrain->preview->vertices[2112].position)<1e-6f,"actual GL mesh matches current draft geometry");
+                    MeshData gpu;terrainCheck(renderer.ReadMeshForDiagnostics(m_terrain->mesh,gpu)&&gpu.vertices.size()==m_terrain->preview->vertices.size()&&glm::length(gpu.vertices[gpu.vertices.size()/2].position-m_terrain->preview->vertices[gpu.vertices.size()/2].position)<1e-6f,"actual GL mesh matches current draft geometry");
+                }else if(autotestFrame==18&&std::getenv("JUDAS_EDITOR_AUTOTEST_MOD_PACKAGE")){std::vector<SceneObjectId> surfaces;for(const auto& object:m_document.GetScene().Objects())if(object.navigationSurface)surfaces.push_back(object.id);for(auto id:surfaces)terrainCheck(BakeEditorNavigation(m_document,id,m_panels),"editor rebakes navigation against newly cooked owned geometry");std::string error;terrainCheck(m_document.Save(error),"save rebaked ordinary mod scene");SaveSceneToString(m_document.GetScene(),autotestBaseline);
                 }else if(autotestFrame==21)terrainCheck(m_panels.mode==EditorMode::Play,"saved/cooked terrain enters normal Play");
-                else if(autotestFrame==150){terrainCheck(m_panels.mode==EditorMode::Edit&&m_terrain->draft.source.weights==terrainPainted&&!m_terrain->draft.Dirty(),"Stop preserves saved editable paint state");std::fprintf(stderr,"[M75 terrain editor] failures %d\n",terrainFailures);}
+                else if(autotestFrame==150){terrainCheck(m_panels.mode==EditorMode::Edit&&m_terrain->draft.source.weights==terrainPainted&&!m_terrain->draft.Dirty(),"Stop preserves saved editable paint state");if(const char* output=std::getenv("JUDAS_EDITOR_AUTOTEST_MOD_PACKAGE")){std::string error;AuthoringDocument manifest;terrainCheck(manifest.Load("modmanifest",m_project.Resolve("mod.json"),error),"editor opens saved mod manifest");auto json=AuthoringJSON::parse(manifest.Source());json["name"]="Editor packaged map";auto previous=manifest.Source();terrainCheck(manifest.Replace(json.dump(2),error)&&manifest.Undo()&&manifest.Source()==previous&&manifest.Redo(),"manifest draft Undo/Redo");terrainCheck(manifest.Save(error),"explicit editor manifest save");JudasMods::Manifest draft;JudasMods::Package package;terrainCheck(JudasMods::ParseManifest(manifest.Source(),draft,error,true)&&JudasMods::AuthorPackage(m_project,draft,package,error)&&JudasMods::WritePackage(output,package,error),"editor shared packaging after actual viewport sculpt/paint/cook/bake/Play-Stop");if(!error.empty())std::fprintf(stderr,"[M76 editor package] %s\n",error.c_str());}std::fprintf(stderr,"[M75 terrain editor] failures %d\n",terrainFailures);}
             }
             if(retargetAutotest && autotestFrame==1) screenshot(std::string(autotest)+".retarget.png");
             if(importRecipe&&autotestFrame==1)std::fprintf(stderr,"[editor autotest] shared import + GPU preview PASS (%zu parts)\n",m_panels.importAccepted->preview->primitives.size());
@@ -1936,7 +1958,7 @@ int EditorApplication::Run(int argc, char** argv) {
     ImGui::DestroyContext();
     m_previewLocalization.reset();
     m_host = nullptr;
-    return navigationFailures || (m_stabilization && m_stabilization->failures) ? 1 : 0;
+    return terrainFailures || navigationFailures || (m_stabilization && m_stabilization->failures) ? 1 : 0;
 }
 
 void EditorApplication::DrawUIAuthoringPreview(){

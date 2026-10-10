@@ -1,0 +1,29 @@
+Installed; not enabled. Changes apply next launch. c6dac060de6975c805eefafdb9464119dd59d4c062e7e13f45fe5d0874347524
+Enabled exact payload; restart the game.
+Renderer fragment texture units: 32 (material path uses 12)
+World state: legacy .judasstate (F6/F7) saves disabled for additive compositions; save slots remain available
+Project: modding_lab (/home/conner/Documents/GitHub/Project-Judas/.cache/m76/artifacts/Export/game.judasproj)
+Scene: Sculpted mod hill (/home/conner/Documents/GitHub/Project-Judas/.cache/m76/ux-checkpoint/runtime-user/judas/mods/judas-modding-lab/Cache/3fe42850979e964e0235dcb2b2b38498889779bdee23bcc36d879bebda3a8d35.judas)
+World origin (m): 0.000, 0.000, 0.000
+PASS required composed terrain/body ready through normal resource path
+PASS ordinary authored UI published
+PASS normal renderer capture
+PASS frozen catalog reaches normal script/resource database
+PASS motor grounded above actual terrain
+MOTOR -0.189981,2.60345,2.6694 support=1
+PASS script-driven motor walked onto actual sculpted collision height
+PASS game spawns contributed prefab through public JS
+PASS ordinary spawned body makes authoritative contact with sculpted collision geometry
+PASS published dependency module executed with independent same-filename ownership
+PASS ordinary signal changes saved mod fact
+PASS query sees edited terrain, no hidden flat collider
+PASS normal Detour routes over composed terrain bake
+PASS ordinary additive region demand accepted
+PASS region uses permitted replacement collision
+PASS normal region unload requested
+PASS region unload retires old collider handle
+PASS revisit uses safe remapped body identity
+PASS normal whole scene reload queued
+PASS reload cleans contributed runtime instances
+PASS normal Application shutdown
+20 checks, 0 failures

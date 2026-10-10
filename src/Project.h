@@ -1,6 +1,8 @@
 #pragma once
 
 #include <string>
+#include <memory>
+namespace JudasMods {struct Session;}
 #include "InputSystem.h"
 #include "Classification.h"
 #include "NavigationTypes.h"
@@ -32,6 +34,7 @@
 struct ProjectSettings {
     // Missing field preserves historical projects; newly created projects opt out.
     bool legacyGameplay = true;
+    std::string modContract; // optional immutable game-authored JSON; absent = no mod service
     InputMap input = InputMap::Defaults();
     ProjectClassification classification;
     ProjectNavigation navigation;
@@ -93,6 +96,9 @@ public:
     // Runtime-only save root; never serialized into authored project data.
     void SetRuntimeSaveDirectory(const std::string& path) { m_runtimeSaveDirectory = path; }
 
+    void SetModSession(std::shared_ptr<const JudasMods::Session> session) {m_modSession=std::move(session);}
+    const std::shared_ptr<const JudasMods::Session>& ModSession()const{return m_modSession;}
+
     static bool ParseFromString(const std::string& text, ProjectSettings& outSettings, std::string& outError);
     static std::string SerializeToString(const ProjectSettings& settings);
 
@@ -103,4 +109,5 @@ private:
     std::string m_rootDir;
     ProjectSettings m_settings;
     std::string m_runtimeSaveDirectory;
+    std::shared_ptr<const JudasMods::Session> m_modSession;
 };

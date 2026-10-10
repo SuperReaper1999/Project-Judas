@@ -1,4 +1,5 @@
 #include "WorldStreaming.h"
+#include "../third_party/nlohmann/json.hpp"
 #include "AudioEnvironment.h"
 #include "NavigationAsset.h"
 #include "LiquidTypes.h"
@@ -261,6 +262,7 @@ bool AssetDatabase::ReadMeta(const std::string& metaPath, AssetId& outId, AssetT
 }
 
 void AssetDatabase::Scan(const std::string& projectRoot, const std::string& assetsDir) {
+    m_modCatalog.clear();m_modImports.clear();m_identityQualifier={};
     m_projectRoot = Generic(fs::absolute(projectRoot));
     m_assetsDir = Generic(fs::absolute(assetsDir));
     m_records.clear();
@@ -332,7 +334,8 @@ bool AssetDatabase::Track(const std::string& assetPath, AssetRecord& outRecord, 
         return false;
     }
     if (!ValidateAssetFile(Generic(absolute), type, outError)) return false;
-    const AssetId id = forcedId.empty() ? MintAssetId() : forcedId;
+    const auto local=MintAssetId();
+    AssetId id;try{id=forcedId.empty()?(m_identityQualifier?m_identityQualifier(local):local):forcedId;}catch(const std::exception& e){outError=e.what();return false;}
     if (!IsValidAssetId(id)) { outError = "invalid asset id"; return false; }
     if (m_records.count(id)) { outError = "asset id already in use: " + id; return false; }
     if (!WriteMeta(metaPath, id, type, Generic(absolute), outError)) return false;
@@ -366,11 +369,12 @@ bool AssetDatabase::Import(const std::string& sourcePath, const std::string& des
     if (fs::exists(destination, ec)) { outError = "destination already exists: " + Generic(destination); return false; }
     const std::string metaPath = Generic(destination) + kAssetMetaExtension;
     if (!CanCreateMetadata(metaPath, outError)) return false;
+    AssetId id;try{const auto local=MintAssetId();id=m_identityQualifier?m_identityQualifier(local):local;}catch(const std::exception& e){outError=e.what();return false;}
+    if(!IsValidAssetId(id)||m_records.count(id)){outError="invalid/duplicate imported asset identity";return false;}
     fs::create_directories(destination.parent_path(), ec);
     fs::copy_file(source, destination, ec);
     if (ec) { outError = "could not copy asset into the project: " + ec.message(); return false; }
     AssetRecord record;
-    const AssetId id = MintAssetId();
     if (!WriteMeta(metaPath, id, type, Generic(source), outError)) {
         fs::remove(destination, ec);
         return false;
@@ -386,6 +390,7 @@ bool AssetDatabase::Import(const std::string& sourcePath, const std::string& des
 }
 
 bool AssetDatabase::Move(const AssetId& id, const std::string& newRelative, std::string& outError) {
+    if(auto* record=Find(id);record&&record->readOnly){outError="published base/mod content is read-only; fork owned content first";return false;}
     const auto it = m_records.find(id);
     if (it == m_records.end()) { outError = "unknown asset id " + id; return false; }
     AssetRecord& record = it->second;
@@ -412,6 +417,7 @@ bool AssetDatabase::Move(const AssetId& id, const std::string& newRelative, std:
 }
 
 bool AssetDatabase::Remove(const AssetId& id, std::string& outError) {
+    if(auto* record=Find(id);record&&record->readOnly){outError="published base/mod content is read-only; fork owned content first";return false;}
     const auto it = m_records.find(id);
     if (it == m_records.end()) { outError = "unknown asset id " + id; return false; }
     std::error_code ec;
@@ -419,4 +425,34 @@ bool AssetDatabase::Remove(const AssetId& id, std::string& outError) {
     fs::remove(it->second.path + kAssetMetaExtension, ec);
     m_records.erase(it);
     return true;
+}
+
+bool AssetDatabase::SetEffectiveRecords(std::map<AssetId,AssetRecord> records,std::string catalog,std::map<std::string,std::set<std::string>> imports,std::string& error){
+ std::map<std::string,const AssetRecord*> paths;
+ for(const auto& [id,r]:records){
+  if(id!=r.id||!IsValidAssetId(id)||r.missing||r.path.empty()){error="invalid effective asset record";return false;}
+  auto [previous,inserted]=paths.emplace(r.relativePath,&r);
+  if(!inserted){const auto& other=*previous->second;if(other.owner!=r.owner||other.path!=r.path||other.type!=r.type){error="ambiguous effective asset path: "+r.relativePath;return false;}}
+ }
+ // Replacement aliases can share provider paths; FindByRelativePath must identify
+ // the owned module rather than whichever logical replacement key sorts first.
+ m_records=std::move(records);m_modCatalog=std::move(catalog);m_modImports=std::move(imports);error.clear();return true;
+}
+bool AssetDatabase::ModuleImportAllowed(const std::string& from,const std::string& to)const{
+ if(m_modCatalog.empty())return true;
+ auto* a=FindByRelativePath(from);auto* b=FindByRelativePath(to);if(!a||!b)return false;
+ if(a->owner==b->owner)return true;
+ if(a->owner.empty())return false;
+ auto i=m_modImports.find(a->owner);return i!=m_modImports.end()&&i->second.count(to)>0;
+}
+std::string AssetDatabase::PublishedModule(const std::string& from,const std::string& spec)const{
+ if(spec.rfind("mod:",0)!=0||m_modCatalog.empty())return {};
+ auto slash=spec.find('/',4);if(slash==std::string::npos)return {};
+ try{
+  auto catalog=nlohmann::json::parse(m_modCatalog);
+  const auto& reference=catalog.at("exports").at(spec.substr(4,slash-4)).at(spec.substr(slash+1));
+  if(reference.at("kind")!="script")return {};
+  auto* record=Find(reference.at("value").get<std::string>());
+  return record&&ModuleImportAllowed(from,record->relativePath)?record->relativePath:std::string();
+ }catch(const std::exception&){return {};}
 }

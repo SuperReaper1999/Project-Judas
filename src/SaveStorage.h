@@ -6,12 +6,12 @@
 
 struct SaveChunk {uint32_t version=1;std::string data;void Save(SaveArchive& a){a(version,data);}};
 struct GameSnapshot {
- std::string project,scene,content,displayName,metadata="{}",diagnosticBuild="Judas M61";
+ std::string project,scene,content,displayName,metadata="{}",diagnosticBuild="Judas M61",modContext;
  uint64_t timestamp=0;uint32_t gameVersion=1;
  std::map<std::string,SaveChunk> participants;
- void Save(SaveArchive& a){a(project,scene,content,displayName,metadata,timestamp,gameVersion,diagnosticBuild,participants);}
+ void Save(SaveArchive& a){a(project,scene,content,displayName,metadata,timestamp,gameVersion,diagnosticBuild,participants,modContext);}
 };
-struct SaveSlotInfo {std::string id,name,scene,metadata,status,error;uint64_t timestamp=0;bool recovered=false;};
+struct SaveSlotInfo {std::string id,name,scene,metadata,status,error,modContext;uint64_t timestamp=0;bool recovered=false;};
 // One scoped directory; POSIX descriptor-relative operations and Windows pinned
 // directory handles reject symlinks/reparse points.
 // A worker can own this storage independently of the requesting scene.

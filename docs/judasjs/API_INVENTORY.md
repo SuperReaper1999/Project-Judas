@@ -1,6 +1,6 @@
 # Current public JudasJS inventory
 
-Current M73 candidate public module based on checkpoint `f1609af0dac863257a0f200cb74ea8a504f9e644`. M67 human authoring review remains deferred.
+Current M76 candidate public module based on checkpoint `38d345883a541d4eb2faa43c321e940d223fce09`. M67 human authoring review remains deferred.
 Each row is a runtime export/member (constructors and plain handle fields included).
 Native dispatcher operations are implementation details, not additional JS APIs.
 
@@ -256,6 +256,10 @@ Native dispatcher operations are implementation details, not additional JS APIs.
 | `localization.reload` | `localeReload` | [declaration](../judas.d.ts) | [reference](localization.md) |
 | `localization.revision` | `localeInfo` | [declaration](../judas.d.ts) | [reference](localization.md) |
 | `localization.setLocale` | `localeChoose` | [declaration](../judas.d.ts) | [reference](localization.md) |
+| `mods` | JS wrapper/data | [declaration](../judas.d.ts) | [reference](mods.md) |
+| `mods.active` | `modCatalog` | [declaration](../judas.d.ts) | [reference](mods.md) |
+| `mods.contributions` | `modCatalog` | [declaration](../judas.d.ts) | [reference](mods.md) |
+| `mods.resolve` | `modCatalog` | [declaration](../judas.d.ts) | [reference](mods.md) |
 | `navigation` | JS wrapper/data | [declaration](../judas.d.ts) | [reference](navigation.md) |
 | `navigation.areas` | `navAreas` | [declaration](../judas.d.ts) | [reference](navigation.md) |
 | `navigation.errors` | `navErrors` | [declaration](../judas.d.ts) | [reference](navigation.md) |

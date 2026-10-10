@@ -1,0 +1,393 @@
+{
+  "linux": {
+    "package_storage_checks": 127,
+    "existing_save_storage_checks": 28,
+    "cli_negative_cases": [
+      {
+        "case": "protected",
+        "exit": 1,
+        "diagnostic": "mod publication: mod preflight: protected/unpublished replacement: hill-map -> protected-hub",
+        "lastGood": true
+      },
+      {
+        "case": "missing-dependency",
+        "exit": 1,
+        "diagnostic": "mod publication: author assets: missing/incompatible author dependency: absent",
+        "lastGood": true
+      },
+      {
+        "case": "hidden-executable",
+        "exit": 1,
+        "diagnostic": "mod publication: effective mod content: mod references: hidden executable script in data-only scene/prefab: hill-map",
+        "lastGood": true
+      },
+      {
+        "case": "undeclared-references",
+        "exit": 1,
+        "diagnostic": "mod publication: effective mod content: mod references: undeclared/private/missing asset reference: hill-map -> 2cd7b7f5bf633e4398077ead1db9063c",
+        "lastGood": true
+      },
+      {
+        "case": "changed-kit-identity",
+        "exit": 1,
+        "diagnostic": "mod publication: kit binding identity/count",
+        "lastGood": true
+      },
+      {
+        "case": "stale-terrain",
+        "exit": 1,
+        "diagnostic": "mod publication: stale mod mesh: stale terrain source/product: Imports/landscape.judasterrain; save and recook before export",
+        "lastGood": true
+      },
+      {
+        "case": "corrupt-navigation",
+        "exit": 1,
+        "diagnostic": "mod publication: invalid/truncated navigation asset",
+        "lastGood": true
+      },
+      {
+        "case": "stale-navigation",
+        "exit": 1,
+        "diagnostic": "mod publication: Scenes/main.judas: Stale navigation bake:",
+        "lastGood": true
+      },
+      {
+        "case": "incompatible-game",
+        "exit": 1,
+        "diagnostic": "mod publication: manifest does not match bound kit/mod",
+        "lastGood": true
+      }
+    ],
+    "runtime_negative_cases": [
+      {
+        "case": "missing-published-reference",
+        "exit": 1,
+        "diagnostic": "FAIL normal Application shutdown\n1 checks, 1 failures\nmod session: mod preflight: unpublished/changed import: landscape-fork -> base/unpublished-reference",
+        "worldNeverReady": true
+      },
+      {
+        "case": "data-only-property-schema",
+        "exit": 1,
+        "diagnostic": "FAIL normal Application shutdown\n1 checks, 1 failures\nmod session: effective mod content: mod references: published behavior properties: landscape-fork:",
+        "worldNeverReady": true
+      },
+      {
+        "case": "wrong-asset-type",
+        "exit": 1,
+        "diagnostic": "FAIL normal Application shutdown\n1 checks, 1 failures\nmod session: mod decode: mod manifest: asset extension/type mismatch: Assets/Terrain/a4ec335cebe4dad08aa04f0ae1527c2a/terrain.judascollision",
+        "worldNeverReady": true
+      }
+    ],
+    "actual_application_dependency_checks": 20,
+    "editor_package_actual_application_checks": 20,
+    "fresh_save_checks": 9,
+    "fresh_load_checks": 11,
+    "changed_loadout_checks": 7,
+    "live_api": {
+      "publicSymbols": 340,
+      "topLevelExports": 30,
+      "nativeOperations": 234,
+      "callbacks": 16,
+      "typeChecker": "5.9.3",
+      "examples": 38,
+      "negativeDriftChecks": 3,
+      "runtimeEnumeration": true,
+      "pass": true
+    },
+    "editor": "viewport sculpt/paint/Undo/Redo/cancel/Save/Cook/nav-bake/package; failures 0; Play/Stop IDENTICAL",
+    "shipped": "actual Export/judas from /tmp with original/kit/mod-authoring sources hidden; EXPECT_SCENE passed"
+  },
+  "windows": {
+    "package_storage_checks": 124,
+    "posix_only_cases_excluded": 3,
+    "native_build": {
+      "sources": {
+        "src/authoring/ModAuthoring.cpp": "a93370fb2fb7de4af9b456f96a352841000a1404453973a7e32640b05ba73856",
+        "tests/ModApplicationTests.cpp": "35fb9e9402e26ebdf1147fdf01ab07f7286636e7e44389b18524505709486aed",
+        "cmake/JudasWindowsSdk.cmake": "bae46b9708259ecc681097caaccf9b629e0e54b9a95d4e2a53fd22cb6a9d659b",
+        "docs/judasmod.example.json": "c718a23df07ef0a72134f3826b3b3338fdc75386982c8648c81a60411ca02c9c"
+      },
+      "build": 0,
+      "freeBytes": 119721984,
+      "sampleInSdk": true,
+      "binaries": {
+        "judas": "f369b6063c3bbb3286e6889ce2f25b136cc21652507301b3eb84ea371aedd3d5",
+        "judas_mod": "4a78f928a5fa9afa304b02faf53069f2428b58317e276ac36dc173635b368570",
+        "judas_editor": "a6e6375526476d6cd58ee43ed5108a495229e762d694145791d0c84fdad79156",
+        "judas_mod_application_tests": "5afa96a0dacc6292bd865c3004828c697af93e877211d272e2ac029f8ca4ac31"
+      }
+    },
+    "editor": {
+      "sourceHidden": true,
+      "package": "b8db7359c4483528c51b4e3ced204a7891eae55a408376a19df17808d98a86d6",
+      "playStop": "IDENTICAL",
+      "exit": 0
+    },
+    "final_game": {
+      "readOnlyUnchanged": true,
+      "kitNotices": true,
+      "shipped": 0,
+      "linuxPayload": "49a39e13583be0cf673081bd3c0f73dfda4ab80fa5d3948a77d49ecece394f2b",
+      "sourceHidden": true,
+      "hardware": "pending",
+      "freeBytes": 6553600,
+      "checks": [
+        {
+          "case": "final-export",
+          "milliseconds": 802.8706000000001,
+          "exit": 0
+        },
+        {
+          "case": "final-kit",
+          "milliseconds": 387.636,
+          "exit": 0
+        },
+        {
+          "case": "install-editor-package",
+          "milliseconds": 287.5006,
+          "exit": 0
+        },
+        {
+          "case": "enable-editor-package",
+          "milliseconds": 169.34380000000002,
+          "exit": 0
+        },
+        {
+          "case": "restore-B",
+          "milliseconds": 159.8375,
+          "exit": 0
+        },
+        {
+          "case": "editor-package-runtime",
+          "milliseconds": 6464.978,
+          "exit": 0
+        },
+        {
+          "case": "restore-identical-A",
+          "milliseconds": 318.38300000000004,
+          "exit": 0
+        },
+        {
+          "case": "trust-final-A",
+          "milliseconds": 121.16520000000001,
+          "exit": 0
+        },
+        {
+          "case": "install-common",
+          "milliseconds": 189.5491,
+          "exit": 0
+        },
+        {
+          "case": "enable-common",
+          "milliseconds": 131.5295,
+          "exit": 0
+        },
+        {
+          "case": "install-consumer",
+          "milliseconds": 254.6619,
+          "exit": 0
+        },
+        {
+          "case": "enable-consumer",
+          "milliseconds": 139.6724,
+          "exit": 0
+        },
+        {
+          "case": "final-dependency-probe",
+          "milliseconds": 7183.670800000001,
+          "exit": 0
+        },
+        {
+          "case": "final-save-write",
+          "milliseconds": 3736.5647000000004,
+          "exit": 0
+        },
+        {
+          "case": "final-save-read",
+          "milliseconds": 3616.2545,
+          "exit": 0
+        }
+      ]
+    },
+    "earlier_moved_save_context_checks": {
+      "freeBytes": 42377216,
+      "hardware": "pending",
+      "checks": [
+        {
+          "case": "application-probe",
+          "milliseconds": 7502.2024,
+          "exit": 0
+        },
+        {
+          "case": "save-write",
+          "milliseconds": 4231.0173,
+          "exit": 0
+        },
+        {
+          "case": "save-fresh-read",
+          "milliseconds": 4177.279,
+          "exit": 0
+        },
+        {
+          "case": "disable-B",
+          "milliseconds": 49.459,
+          "exit": 0
+        },
+        {
+          "case": "save-mismatch",
+          "milliseconds": 3827.0660000000003,
+          "exit": 0
+        },
+        {
+          "case": "reenable-B",
+          "milliseconds": 61.273900000000005,
+          "exit": 0
+        },
+        {
+          "case": "no-mods",
+          "milliseconds": 6873.4656,
+          "exit": 0
+        },
+        {
+          "case": "disable-B-final",
+          "milliseconds": 35.8221,
+          "exit": 0
+        },
+        {
+          "case": "disable-A-final",
+          "milliseconds": 41.4016,
+          "exit": 0
+        },
+        {
+          "case": "empty",
+          "milliseconds": 6935.3885,
+          "exit": 0
+        },
+        {
+          "case": "remove-A",
+          "milliseconds": 99.211,
+          "exit": 0
+        }
+      ],
+      "readOnlyBaseUnchanged": true,
+      "native": true,
+      "linuxPayload": "49a39e13583be0cf673081bd3c0f73dfda4ab80fa5d3948a77d49ecece394f2b",
+      "user": "Conner"
+    },
+    "hardware_acceptance": "pending",
+    "editor_package_checks": 19,
+    "dependency_checks": 20,
+    "fresh_save_checks": 9,
+    "fresh_load_checks": 11,
+    "final_source_audit": {
+      "pristineSdkMesa": false,
+      "binaries": {
+        "judas_mod_application_tests": "5afa96a0dacc6292bd865c3004828c697af93e877211d272e2ac029f8ca4ac31",
+        "judas_terrain_author": "d10e758051e2add55676f131e928b387ff3a72ed74469831db2c6bc1317519be",
+        "judas_editor": "a6e6375526476d6cd58ee43ed5108a495229e762d694145791d0c84fdad79156",
+        "judas_navigation_bake": "0dd8919e53031a9f0c029f9e590671fdb8a25c4eecb7ce9420b21df500efbaff",
+        "judas": "f369b6063c3bbb3286e6889ce2f25b136cc21652507301b3eb84ea371aedd3d5",
+        "judas_mod": "4a78f928a5fa9afa304b02faf53069f2428b58317e276ac36dc173635b368570"
+      },
+      "sources": {
+        "src/Project.cpp": "77cb0043469bf0250f22d98cdd76b9657fea80c4b7cc963ceb4c219434d0ccfe",
+        "projects/modding_lab/modding_lab.judasproj": "52e616b41f67d40052d89d82b6fde48a81d0952e36c743ea7b65e8589335e475",
+        "src/editor/TerrainTools.cpp": "852d1801f3ae5fb523a9eb64159e570172c0c6ccc9f6705477fe224f18bdb8da",
+        "src/SaveStorage.h": "164169fd2e1326ed48624734fc1cb2ced77da5d34af2408f77a6523d59a9b0f4",
+        "src/authoring/ModAuthoring.cpp": "a93370fb2fb7de4af9b456f96a352841000a1404453973a7e32640b05ba73856",
+        "src/EngineHost.cpp": "ddd0d4027f8f96d7c7f53a54fa68f161a337236f6ae904941a044c33c1bc6f42",
+        "src/modding/ContentStorage.h": "c9d165ebcc0a396455524c096a2e931b1e7fdbcd4fa8fdd2da0c6caf782d59c2",
+        "src/RuntimeOptions.cpp": "dcb18ceff20cee92c4eda479efc3e70765ee55e2ee84c60bf1dfdf5454f363ff",
+        "tests/ModContentTests.cpp": "98a1c70c28280fe8dce19372516e35c93a054a1eea97bc1e423d2141627a7585",
+        "src/modding/ModStore.cpp": "37db68ef0c96ae308fb9f3b42576e1fbc33e75fdcacf5d72c15e930ff4ed26b2",
+        "projects/modding_lab/Assets/fonts/DejaVuSans.ttf": "b4c632e3cdf9acc7f28758fb5a323c8524d7fc6660d46904d9b6cbe2809c419c",
+        "src/AssetDatabase.cpp": "eafd82d6bae3492b91c7281517889f4015ee35527c558aab6a12c339d78b57ad",
+        "src/Project.h": "a6840f27de0fd1a65611148922aabb3a881c1599b3a321203dafd7743f7b3e47",
+        "src/Application.cpp": "752b26046f3e88c53920b53ae734beb3dd13792ebf2f1d2bb7686c90a1834ae0",
+        "projects/modding_lab/Assets/Terrain/b70884841af5a329c87f7d2c112c73c2/terrain.tga": "13e7e672fc015eccfea986002b861e2ded330c373f57f9fb06d510cb77dd5798",
+        "src/modding/ModContent.h": "b7266a79991e9ab6a8e7f0b20728886d427c7f1591e59a2d9e842273639dff3b",
+        "src/modding/ContentStorage.cpp": "dfcdcce6dff6f8249f7378b6a66b813d90740121ad485e0ab34519d204084313",
+        "src/editor/EditorApplication.h": "d114bcf4d1dc744fd5d01381eefcb5e428ed80315daa1e11604be7192dabf86e",
+        "src/SceneSession.cpp": "e387eb0b507498fa07530a72ecedbf646dcac532e224e10bb0170f26a1ec32d1",
+        "src/editor/EditorApplication.cpp": "797b7c048a30d70284971460c9931d7ea9f305a47096803b3b5888567dde2514",
+        "src/ScriptSystem.cpp": "134678baab49f0be5f022747e12f04896eceaad828149028c145e5b30d562f50",
+        "src/NamedAuthoring.cpp": "b50e32b8e023927d4499edc2e0681d082017dba1b0e57fb76b066fc4c446da99",
+        "projects/modding_lab/Assets/fonts/DejaVuSans.ttf.judasmeta": "35736176cede066c485da04d07dd6f44bbb8b5d4f8dbf4ae6625b9f9a470457a",
+        "projects/modding_lab/Assets/prefabs/drop.judasprefab.judasmeta": "498919b5e770981c14ded4e361e0e4b934085b87978349a2c274ac8a0f40d5b4",
+        "projects/modding_lab/Assets/world/lab.judasworld.judasmeta": "2c8372a834920be7f1a7eb591c177f76c6bbda21b10777a4eaac17a857f28ae1",
+        "src/editor/EditorPanels.cpp": "d3ef6df1fef48fcac219bc4a87e117c0c9968c8ffc00dcd9d95b5865adefde20",
+        "cmake/JudasWindowsSdk.cmake": "bae46b9708259ecc681097caaccf9b629e0e54b9a95d4e2a53fd22cb6a9d659b",
+        "projects/modding_lab/Assets/textures/stone.png": "e87faa8b0e3b89c96c7c89313e0d6e86ee69ab7dcdef494a1d09c5a8091c8c23",
+        "projects/modding_lab/Assets/scripts/controller.js.judasmeta": "465f33a24c13fee8c41ed0187b7991bc5a1e566753c2c8a5f934dd2965d5cac2",
+        "src/ProjectExporter.h": "fe709a1d733cc9c0af01e1112c8698d0f32d0e465e7a5b4d2c810af820811ddf",
+        "src/modding/ModRuntime.h": "79423ed8e86ca206ce1e947cfdb0e5820155966961f99c9530b47c601555f1c5",
+        "src/SaveStorage.cpp": "c38a37d4d29c05027da836588b885b37fdb000774afee3266034335922fb256a",
+        "src/authoring/AuthoringDocument.cpp": "271ce62241a0a07b446d84ea636e2ea74c641359578e99d0d6ec71003f4acead",
+        "projects/modding_lab/Imports/landscape.judasterrain": "f48dc93f016f735578b0c655df4e91a5916efeb92c8ee8677ca1815962a0d9ea",
+        "projects/modding_lab/Assets/Terrain/b70884841af5a329c87f7d2c112c73c2/terrain.judasmodel": "cf966dccbb0a466d8c6a98e05371bfdb42de1027820512869a65aac0d8818a34",
+        "projects/modding_lab/Assets/textures/grass.png": "0d9d77a1eeed7721b0e9a63ba02af592cb5a85d470a50436757cf00bdd8d00c6",
+        "tools/TerrainAuthor.cpp": "126aaa90b1bc9c03799830de1f757af21697be99299344ff6e385311ee140bc9",
+        "tests/ModApplicationTests.cpp": "35fb9e9402e26ebdf1147fdf01ab07f7286636e7e44389b18524505709486aed",
+        "projects/modding_lab/Scenes/main.judas": "3c156fe78f4d42facfbb0a652619deb2b99d7a3782c02940c5a35612b78357c3",
+        "src/ProjectExporter.cpp": "8bd8496c376c5d45ffe16d8a1c7ed90a6978e349f89521aac397383bf996d53f",
+        "projects/modding_lab/Assets/Terrain/b70884841af5a329c87f7d2c112c73c2/terrain.receipt.json": "a1deb0bc572d057d1b4fcb7b54a6467099b500a773c40b8bc75c20f02fc64646",
+        "projects/modding_lab/Assets/ui/lab.judasui": "86e075610906558998e577051daf34608b90c2b16b4f439d945ba517aa4e19d7",
+        "tools/ModTool.cpp": "9ee9d04a062e05c951a112d96d6c4e4cb2a5ee7ede83fbf70111956247124755",
+        "projects/modding_lab/NOTICE.txt": "cc2e8814d4736758e4849f063b68181272f628c8546fd73e847a28b921f4d02e",
+        "src/SaveService.cpp": "ca376c47082b214baba125d93f95e3cd84004133cedb80cf8859b039ba498303",
+        "src/modding/ModStore.h": "41621eacad2e96cb5472b9295d2194c8b121c556510327d764ab55665048d866",
+        "tools/ModLabBuilder.cpp": "aa12081d4e66006739de1f7087f7dae90274ca50a9720a52081f1b87bdc3fccb",
+        "projects/modding_lab/Assets/textures/grass.png.judasmeta": "b0a19d2dea9110600395dc08b785875396e777f1667a998068703bca1da97a73",
+        "projects/modding_lab/Assets/navigation/landscape.judasnav.judasmeta": "b6a091bbf5a8c92e729446c77e9db1df3bb8470dc318008c2f20ef6ad55f86c8",
+        "src/editor/EditorPanels.h": "e95865006c0d6e9a00899f9a5dac1487f2d597719b6929f7b75b05d6dd551279",
+        "projects/modding_lab/Assets/Terrain/b70884841af5a329c87f7d2c112c73c2/terrain.judascollision": "707f1a1599e4c35503f581c90947e3ab6f07dfa4e94bba2ac7cee72ab9a926b2",
+        "src/editor/ModTools.cpp": "1609df2076d905be4dad91d108dd8dee61f4230bd1ad3fdb62a949d0d0891b6a",
+        "src/AssetDatabase.h": "5f5d9d05a9f626f2abe89f8be963a0856f7690567ecc1bc695a1ca5e2157a93b",
+        "tools/NavigationBake.cpp": "5edd35b93713b3a42269c0c02fa01bed65d7237782d38760c58fa7d030f351da",
+        "projects/modding_lab/Assets/navigation/landscape.judasnav": "65a1251c38005942d6c51470b0cb33aff703b02e1618986b1ff9e9da2ec5358e",
+        "src/EngineHost.h": "0cd23c77f4224b78e2dc43e6d19ceb71d151eebcf88d88ca057a9c3df5c013c1",
+        "src/modding/ModContent.cpp": "ee54d86c46881b09475d2e367975f1538eee4b140fa25ba88e443b229bb221a1",
+        "projects/modding_lab/Assets/world/lab.judasworld": "80ee5d34b6ea4ee954e6ff3b100a3c1a23fa1978fc03bd02f48281862c3156ad",
+        "projects/modding_lab/Assets/textures/stone.png.judasmeta": "26c414921fcc0ca81a498d559a23a29f7b473460a8327aa1315ea909c33ba4d6",
+        "projects/modding_lab/Assets/Terrain/b70884841af5a329c87f7d2c112c73c2/terrain.judascollision.judasmeta": "433799230448dbda4939b2e063758127f969612a2dad4bb94c9732aadf45b31c",
+        "CMakeLists.txt": "3dcaf2e90e04369e90d3ac76cbb57f58603688e608b32d234c7cc49919c8da45",
+        "projects/modding_lab/Scenes/region.judas": "91974a37e28cc5e6f73f9d8a47e9de61d7ccb45e71edb6cc5ce91ebd6ccba1f0",
+        "projects/modding_lab/Assets/fonts/LICENSE.txt": "63d3ba759d12804c5b31a9d5940d855c1820d1f5999e6b0872eb1c7ff045fbc9",
+        "src/editor/ModTools.h": "fe03669d3179dfdfe0439006446e2f1c660dc09223e489bdc2f40c9b757d0205",
+        "projects/modding_lab/Scenes/landscape.judas": "d7150629096216aad3789bbcb7e86ba6770d820f01a54f3d73d0c08a8b0bd124",
+        "src/WorldStreaming.cpp": "28d5d1455ce77b4bf9cb29c6a27c03cd97b726c8d234c7cbb79919c2ac30cf52",
+        "src/authoring/ModAuthoring.h": "eecedc830ce57ad5aea9210e55a847fa06b8f809e15b8265ada7106f5780c2d6",
+        "projects/modding_lab/Assets/scripts/controller.js": "51db2523e93e19cca227b7b2a310c328ac16b4c1ed648d8ca6c118cd9dcca8c3",
+        "src/RuntimeOptions.h": "585daf4b86fa04c36bf10d05bf1315c805620496b9c63d632524a98f09d01a9d",
+        "projects/modding_lab/Assets/Terrain/b70884841af5a329c87f7d2c112c73c2/terrain.tga.judasmeta": "8c4884b8b43ded69d4e8617f49c2571b5e001bc66aee57a4ab0262b5f807c165",
+        "projects/modding_lab/Assets/ui/lab.judasui.judasmeta": "49d4bde692bfa896764093a10b48629b26e5915048606b7311b8011c240cef07",
+        "src/ModelCook.cpp": "235d3bac8adfd96dde497c41410c110f9c02ccf33289b2f2c7db6af583a39c93",
+        "src/modding/ModRuntime.cpp": "81e4b8bf77a56cfd91722a23a7126fbacb41e2761c6fde13260785b8f482b06c",
+        "projects/modding_lab/Assets/Terrain/b70884841af5a329c87f7d2c112c73c2/terrain.judasmodel.judasmeta": "f4c985f029466ead493365be23ae9941188e45b55ddadb1ee94318812569f1c3",
+        "projects/modding_lab/Assets/prefabs/drop.judasprefab": "d162b19e7a90ff346f35afe60be51ad45ccabdd60547a1521affbfe644d0a671"
+      },
+      "docsPublished": true,
+      "sourceCount": 75,
+      "freeBytes": 58548224
+    },
+    "final_kit": {
+      "inclusions": 93,
+      "bytes": 1588434,
+      "identity": "fd1c2c990a0a5546f9811292e295ee7b2132ecdfb2ea1b0776a1428f0d219302",
+      "exit": 0
+    }
+  },
+  "checkpoint_validation": {
+    "human": "NOT HUMAN VALIDATED",
+    "operator_authorized_provisional_checkpoint": true,
+    "automated_ux_assertions": 19,
+    "editor_exit": 0,
+    "editor_failures": 0,
+    "authored_play_stop": "IDENTICAL",
+    "published_package_actual_game_checks": 20,
+    "game_failures": 0,
+    "captures_inspected": true,
+    "limitation": "Tall terrain panel requires scrolling at 1280x800; some long text clips.",
+    "runtime_changes_in_followup": false
+  }
+}

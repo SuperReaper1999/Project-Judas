@@ -1,4 +1,5 @@
 #include "SaveService.h"
+#include "modding/ModRuntime.h"
 #include "SceneSession.h"
 #include "WorldPersistence.h"
 #include "WorldStreaming.h"
@@ -18,13 +19,16 @@ namespace {
 using Clock=std::chrono::steady_clock;
 double ms(Clock::time_point t){return std::chrono::duration<double,std::milli>(Clock::now()-t).count();}
 std::atomic<uint64_t> nextRequest{1};
+std::string ModSaveContext(const Project& p){if(!p.ModSession())return {};const auto& r=p.ModSession()->snapshot.resolution;auto active=nlohmann::json::array();for(auto& selected:r.ordered){auto& m=selected.package->manifest;active.push_back({{"id",m.id},{"version",m.version},{"sha256",selected.package->hash}});}return nlohmann::json({{"format",1},{"signature",r.signature},{"contractSha256",SceneFingerprintSha256(p.Settings().modContract)},{"active",active}}).dump();}
+
 }
 bool ComputeSaveContentFingerprint(const Project& project,const AssetDatabase& assets,
  const std::vector<std::string>& scenes,std::string& result,std::string& error,const JobContext* cancel){
  try{
-  auto settings=project.Settings();settings.saveIdentity.clear();settings.exportAssetPolicy="all";settings.runtimeAssets.clear();
+  auto settings=project.Settings();settings.modContract.clear();settings.saveIdentity.clear();settings.exportAssetPolicy="all";settings.runtimeAssets.clear();
   std::string bytes="Judas.SaveContent.1:"+Project::SerializeToString(settings),digest;
   for(const auto& scene:scenes){if(cancel&&cancel->CancelRequested())return false;if(!SceneFingerprintSha256File(project.Resolve(scene),digest,error))return false;bytes+=scene+":"+digest;}
+  if(project.ModSession())bytes+="Judas.ModContext.1:"+project.ModSession()->snapshot.resolution.signature;
   std::map<AssetId,std::pair<std::string,std::string>> records;
   for(const auto& [id,a]:assets.Records()){
    if(cancel&&cancel->CancelRequested())return false;
@@ -88,7 +92,7 @@ void SaveService::Advance(std::unique_ptr<RuntimeWorld>& world,InteractivePlay& 
    if(m_session.m_project.Settings().legacyGameplay){error="modern slots require legacy-gameplay false; built-in legacy player/control state uses the separate .judasstate contract";Finish(error);return;}
    if(m_session.m_streaming&&!m_session.m_streaming->SaveReady())return;
    if(!WorldPersistence::Prepare(*world,error)){if(error=="loading"&&ms(m_restoreStart)<=30000){error.clear();return;}if(error=="loading")error="required save participants failed to prepare within 30 seconds";Finish(error);return;}
-   snapshot.project=m_identity;snapshot.scene=m_session.Current();snapshot.content=m_content;snapshot.displayName=m_name;snapshot.metadata=m_metadata;snapshot.timestamp=uint64_t(std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()).count());
+   snapshot.modContext=ModSaveContext(m_session.m_project);snapshot.project=m_identity;snapshot.scene=m_session.Current();snapshot.content=m_content;snapshot.displayName=m_name;snapshot.metadata=m_metadata;snapshot.timestamp=uint64_t(std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()).count());
    if(!WorldPersistence::Capture(*world,snapshot.participants,error)){Finish(error);return;}
    try{SaveArchive a;auto values=m_session.m_values;auto locale=m_session.Localization(&m_resources).Locale();a(values,locale);snapshot.participants["session"]={1,std::move(a.bytes)};
     SaveArchive stream;unsigned streamVersion=1;bool composed=m_session.ComposedProject();stream(composed);if(composed){std::string e;auto* coordinator=m_session.Streaming(*world,e);if(!coordinator)throw std::runtime_error(e);streamVersion=coordinator->ArchiveVersion();coordinator->Persist(stream,streamVersion);}snapshot.participants["streaming"]={streamVersion,std::move(stream.bytes)};
@@ -113,6 +117,7 @@ void SaveService::Advance(std::unique_ptr<RuntimeWorld>& world,InteractivePlay& 
   if(!m_product->error.empty()){error=m_product->error;Finish(error);return;}
   if(s.operation!="load"){Finish("");return;}
   auto& saved=m_product->snapshot;
+  if(saved.modContext!=ModSaveContext(m_session.m_project)){error="save requires a different exact mod loadout/contract; select the saved IDs, versions and content hashes before loading (no automatic trust or substitution)";Finish(error);return;}
   if(saved.project!=m_identity||saved.content!=m_content||std::find(m_session.Scenes().begin(),m_session.Scenes().end(),saved.scene)==m_session.Scenes().end()){error="save incompatible with registered project/content";Finish(error);return;}
   if(saved.gameVersion!=1||(saved.participants.size()<11||saved.participants.size()>16)){error="unsupported save game/participant schema";Finish(error);return;}
   Scene scene;if(!WorldPersistence::SceneFrom(saved.participants,scene,error)){Finish(error);return;}
