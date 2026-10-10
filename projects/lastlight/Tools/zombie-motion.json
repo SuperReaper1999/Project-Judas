@@ -1,0 +1,30 @@
+{
+  "source": "Assets/models/character_zombie.glb",
+  "editableSource": "ArtSource/zombie_motion.blend",
+  "output": "Assets/models/zombie_animation.glb",
+  "clips": {
+    "Idle": 2.5,
+    "Walk": 2.0,
+    "Run": 0.8666666666666667,
+    "Jump": 1.0,
+    "ZombieIdle": 2.5,
+    "Shamble": 2.0,
+    "ZombieRun": 0.8666666666666667,
+    "Attack": 0.9,
+    "Stagger": 0.7
+  },
+  "skeleton": "Original starter-pack hierarchy and joint-local bind axes, 17 deform bones",
+  "presentation": {
+    "ZombieIdle": "Arms extended forward with slight asymmetric breathing",
+    "Shamble": "Forward reaching arms, slow asymmetric gait",
+    "ZombieRun": "Forward reaching arms, faster asymmetric pursuit gait",
+    "Attack": "Right-fist windup to 0.243 s; extension peaks at 0.441 s; contact pose through 0.576 s; recovery to 0.9 s"
+  },
+  "limits": [
+    "Placeholder authored clips, not motion capture",
+    "No foot-plant IK",
+    "No dedicated bite, vault, death, or getting-up clips",
+    "No root-motion travel",
+    "Same visual rig for the three gameplay variants; behaviour/speed differ"
+  ]
+}

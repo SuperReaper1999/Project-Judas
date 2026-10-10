@@ -1,0 +1,15 @@
+FRAMES 440
+FRAME_SECONDS .016666667
+LOG_EVERY 0
+WAIT_SERVICES scene 10000 1
+ACTION camera_toggle 1 45 47
+ACTION jump 1 65 67
+AXIS move_y 1 75 105
+ACTION fire 1 115 150
+ACTION pause 1 180 182
+SCREENSHOT 220 /tmp/lastlight-physical-package-pause.png
+POINTER 512 396 250
+ACTION ui_click 1 255 257
+WAIT_SERVICES scene 10000 275
+ACTION camera_toggle 1 305 307
+SCREENSHOT 385 /tmp/lastlight-physical-package-reload.png

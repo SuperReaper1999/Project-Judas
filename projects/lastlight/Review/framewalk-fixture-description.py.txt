@@ -1,0 +1,59 @@
+from pathlib import Path
+import shutil,re
+src=Path('/home/conner/Documents/GitHub/Project-Judas/projects/lastlight')
+repo=src.parents[1]
+def clone(name,position):
+ dst=repo/'.cache'/name
+ if dst.exists():shutil.rmtree(dst)
+ shutil.copytree(src,dst,ignore=shutil.ignore_patterns('Review','ArtSource','Saves','__pycache__'))
+ scene=dst/'Scenes/town.judas';s=scene.read_text()
+ match=re.search(r'object 10 "[^\n]*"\n.*?\nend',s,re.S)
+ block=match.group(0);block=re.sub(r'(?m)^  position [^\n]*','  position '+' '.join(map(str,position)),block)
+ s=s[:match.start()]+block+s[match.end():];scene.write_text(s)
+ p=dst/'Assets/scripts/player.js';p.write_text(p.read_text()+'''\nimport {physics} from 'judas';
+const originalStart=Player.prototype.start;Player.prototype.start=function(){originalStart.call(this);this.inventory.add('framewalk_boots',1,this.props.framewalkBoots);this.inventory.equip('framewalk_boots');};
+const originalUI=Player.prototype.uiUpdate;Player.prototype.uiUpdate=function(){originalUI.call(this);this.previewFrames=(this.previewFrames||0)+1;if(this.previewFrames%10===0){const held=this.grab.held,other=world.entity('702');console.log(JSON.stringify({framewalkMotion:true,frame:this.previewFrames,position:this.entity.transform.position,velocity:this.entity.character.velocity,up:this.entity.character.up,supported:this.entity.character.supported,gravity:this.entity.gravity.state.acceleration,spatial:physics.gravity(this.entity.transform.position),boots:this.state.boots,health:game.health,holding:this.state.holding,heldGravity:held?.valid?held.gravity.state:null,heldPosition:held?.valid?held.transform.position:null,otherGravity:other?.valid?other.gravity.acceleration:null}));}};\n''')
+ return dst
+clone('lastlight-framewalk-wall',(29.5,.08,4))
+clone('lastlight-framewalk-ceiling',(36.5,.15,4))
+p=clone('lastlight-framewalk-held',(29.5,.08,4));scene=p/'Scenes/town.judas';s=scene.read_text();m=re.search(r'object 700 "[^\n]*"\n.*?\nend',s,re.S);b=re.sub(r'(?m)^  position [^\n]*','  position 29.5 .51 2',m.group(0));scene.write_text(s[:m.start()]+b+s[m.end():])
+Path('/tmp/lastlight-framewalk-wall.txt').write_text('''FRAMES 720
+FRAME_SECONDS .016666667
+LOG_EVERY 0
+WAIT_SERVICES scene 10000 1
+LOOK 748 0 35
+ACTION jump 1 80 81
+ACTION jump 1 110 111
+SCREENSHOT 225 /tmp/lastlight-framewalk-wall.png
+AXIS move_y 1 240 395
+SCREENSHOT 440 /tmp/lastlight-framewalk-roof.png
+ACTION gravity_reset 1 540 541
+SCREENSHOT 620 /tmp/lastlight-framewalk-normal.png
+''')
+Path('/tmp/lastlight-framewalk-ceiling.txt').write_text('''FRAMES 820
+FRAME_SECONDS .016666667
+LOG_EVERY 0
+WAIT_SERVICES scene 10000 1
+LOOK 0 -667 35
+ACTION jump 1 80 81
+ACTION jump 1 110 111
+SCREENSHOT 355 /tmp/lastlight-framewalk-ceiling.png
+ACTION jump 1 400 401
+ACTION jump 1 430 431
+SCREENSHOT 650 /tmp/lastlight-framewalk-floor.png
+ACTION gravity_reset 1 710 711
+''')
+Path('/tmp/lastlight-framewalk-held.txt').write_text('''FRAMES 420
+FRAME_SECONDS .016666667
+LOG_EVERY 0
+WAIT_SERVICES scene 10000 1
+LOOK 0 250 30
+ACTION interact 1 50 51
+LOOK 748 -250 65
+ACTION jump 1 90 91
+ACTION jump 1 120 121
+SCREENSHOT 255 /tmp/lastlight-framewalk-held.png
+ACTION interact 1 290 291
+ACTION gravity_reset 1 340 341
+SCREENSHOT 390 /tmp/lastlight-framewalk-held-released.png
+''')

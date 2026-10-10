@@ -1,0 +1,10 @@
+JudasProject 1
+name "Lastlight"
+startup-scene "Scenes/town.judas"
+assets-dir "Assets"
+scenes-dir "Scenes"
+saves-dir "Saves"
+legacy-gameplay "false"
+input-map "1 30 \"move_x\" 1 3 \"key:A\" -1 0 \"key:D\" 1 0 \"stick:LeftX\" 1 .15 \"move_y\" 1 3 \"key:S\" -1 0 \"key:W\" 1 0 \"stick:LeftY\" -1 .15 \"look_x\" 1 1 \"mouse:dx\" 1 0 \"look_y\" 1 1 \"mouse:dy\" 1 0 \"look_stick_x\" 1 1 \"stick:RightX\" 1 .15 \"look_stick_y\" 1 1 \"stick:RightY\" 1 .15 \"fire\" 0 2 \"mouse:Left\" 1 0 \"stick:RightTrigger\" 1 .15 \"jump\" 0 2 \"key:Space\" 1 0 \"pad:South\" 1 0 \"climb\" 0 2 \"key:E\" 1 0 \"pad:West\" 1 0 \"sprint\" 0 1 \"key:Left Shift\" 1 0 \"camera_toggle\" 0 2 \"key:V\" 1 0 \"pad:North\" 1 0 \"reload\" 0 1 \"key:R\" 1 0 \"punch\" 0 1 \"mouse:Right\" 1 0 \"heavy\" 0 1 \"key:F\" 1 0 \"shove\" 0 1 \"key:Q\" 1 0 \"interact\" 0 1 \"key:B\" 1 0 \"rotate\" 0 1 \"key:T\" 1 0 \"pause\" 0 2 \"key:Escape\" 1 0 \"pad:Start\" 1 0 \"ui_click\" 0 1 \"mouse:Left\" 1 0 \"ui_activate\" 0 2 \"key:Return\" 1 0 \"pad:South\" 1 0 \"ui_up\" 0 1 \"key:Up\" 1 0 \"ui_down\" 0 1 \"key:Down\" 1 0 \"aim\" 0 2 \"key:Left Ctrl\" 1 0 \"stick:LeftTrigger\" 1 .15 \"weapon_rifle\" 0 1 \"key:1\" 1 0 \"weapon_launcher\" 0 1 \"key:2\" 1 0 \"grenade\" 0 1 \"key:G\" 1 0 \"vendor\" 0 1 \"key:N\" 1 0 \"inventory\" 0 1 \"key:I\" 1 0 \"collect\" 0 1 \"key:C\" 1 0 \"gravity_reset\" 0 1 \"key:X\" 1 0"
+classification "JudasClassification 1 5 5 0 \"enemy\" 1 \"physical\" 2 \"destructible\" 3 \"vendor\" 4 \"inventory_item\" 1 1 0 \"Default\" 1 1 0 \"Default\" "
+navigation "JudasNavigationProject 1 1 1 0 \"Default\" 1 1 0 \"Default\" 0.3 1.8 48 0.35"

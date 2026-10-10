@@ -1,0 +1,50 @@
+{
+  "context": "Linux Release, active combat in disposable public-API aim/motion capture copy; same arena/rules/assets, initial countdown shortened to2s; 3-5 live enemies in retained sample, 22 authored dynamic props; not a worst-case ragdoll/crowd benchmark",
+  "retained_frames": 120,
+  "frame_ms": {
+    "mean": 13.5212529,
+    "p95": 17.634943,
+    "max": 54.93028
+  },
+  "approximate_fps": 73.9576433778559,
+  "fixed_caps": 0,
+  "scene_static_bodies": 259,
+  "scene_dynamic_props": 22,
+  "counters": {
+    "Script instances": {
+      "min": 28,
+      "max": 30
+    },
+    "Submitted draws all passes": {
+      "min": 1555,
+      "max": 2069
+    }
+  },
+  "cpu_ms": {
+    "Fixed simulation step": {
+      "samples": 97,
+      "mean": 2.8100005773195877,
+      "max": 8.630206
+    },
+    "JavaScript fixedUpdate": {
+      "samples": 97,
+      "mean": 1.3936584329896908,
+      "max": 6.821648
+    },
+    "Navigation update": {
+      "samples": 97,
+      "mean": 0.828563030927835,
+      "max": 1.322353
+    },
+    "Rigid physics": {
+      "samples": 97,
+      "mean": 0.08981949484536082,
+      "max": 0.214582
+    },
+    "World render submission": {
+      "samples": 119,
+      "mean": 10.140783756302522,
+      "max": 16.824559
+    }
+  }
+}

@@ -1,0 +1,100 @@
+JudasScene 3
+settings
+  name "Lastlight"
+  world-origin 0 0 0
+  sun-direction -.4 .8 .3
+  sun-color 2.0 1.65 1.35
+  ambient .38 .43 .5
+  background-color .34 .43 .54
+  fluid-scale 13
+  fluid-update-rate-hz 30
+  fluid-hydrostatic-drag-rate 2
+  fidelity-policy none
+  next-id 2000
+  linear-rendering true
+  exposure 1
+end
+object 1 "Soldier"
+  position 0 0 0
+  rotation 1.0 0 0.0 0
+  scale 1 1 1
+  motor.enabled true
+  motor.radius .3
+  motor.halfHeight .6
+  motor.offset 0 .9 0
+  motor.stepHeight .35
+  motor.supportDistance .15
+  motor.skin .02
+  motor.maxSlopeDegrees 48
+  motor.gravityScale 1
+  motor.reorientationDegreesPerSecond 120
+  motor.interactionMass 80
+  motor.maxPushImpulse 15
+  motor.collisionLayer 0
+  motor.collisionMask 18446744073709551615
+  motor.requiredTags 0
+  motor.excludedTags 0
+  scripts 1
+  script.0.id 1
+  script.0.asset "86973bc282c413226b09fa097346a3b6"
+  script.0.enabled true
+  script.0.properties "{\"kind\":\"soldier\"}"
+  tags 1
+  nav.agent.enabled "1"
+  nav.agent.avoidance "1"
+  nav.agent.profile "0"
+  nav.agent.areas "18446744073709551615"
+  nav.agent.speed "2.8"
+  nav.agent.arrival "0.8"
+  nav.agent.cornerDistance "0.3"
+  nav.agent.repathSeconds "0.6"
+  nav.agent.costs ""
+  audio-emitter
+  audio.asset "08924f66c9e018e14089250adac9146b"
+  audio.enabled true
+  audio.play-on-start false
+  audio.loop false
+  audio.spatial true
+  audio.volume .28
+  audio.pitch 1
+  audio.reference-distance 2
+  audio.maximum-distance 45
+  audio.rolloff 1
+  audio.attenuation inverse
+end
+object 2 "Animated visual"
+  position 0 0 0
+  rotation 1.0 0 0.0 0
+  scale 1 1 1
+  render mesh
+  render.half-extents 0.5 0.5 0.5
+  render.radius .5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset "b350d8a7f05b2b6e56af834a5bfb2dd2"
+  render.texture-asset ""
+  animation.enabled true
+  animation.play-on-start true
+  animation.loop true
+  animation.clip "Idle"
+  animation.speed 1
+  animation.time 0
+  parent 1
+end
+object 3 "Soldier rifle"
+  position 0.26 1.05 0.35
+  rotation 1.0 0 0.0 0
+  scale 0.6 0.6 0.6
+  render mesh
+  render.half-extents 0.5 0.5 0.5
+  render.radius .5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset "4b3c46f834e6c6868d01da048c866632"
+  render.texture-asset ""
+  parent 2
+end

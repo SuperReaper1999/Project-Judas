@@ -1,0 +1,7 @@
+FRAMES 2070
+FRAME_SECONDS .016666667
+LOG_EVERY 0
+WAIT_SERVICES scene 10000 1
+SCREENSHOT 160 /tmp/lastlight-punch-proof.png
+SCREENSHOT 320 /tmp/lastlight-death-proof.png
+SCREENSHOT 760 /tmp/lastlight-corpse-group-proof.png

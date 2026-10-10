@@ -1,0 +1,19 @@
+Renderer fragment texture units: 32 (material path uses 12)
+World state: /home/conner/Documents/GitHub/Project-Judas/.cache/lastlight-playthrough/Saves/town.judasstate (none saved)
+Project: Lastlight (/home/conner/Documents/GitHub/Project-Judas/.cache/lastlight-playthrough/lastlight.judasproj)
+Scene: Lastlight (/home/conner/Documents/GitHub/Project-Judas/.cache/lastlight-playthrough/Scenes/town.judas)
+World origin (m): 0.000, 0.000, 0.000
+step,time,posX,posY,posZ,upX,upY,upZ,grounded,velX,velY,velZ,gravX,gravY,gravZ,controlled,frame,steps,paused,obj0PosX,obj0PosY,obj0PosZ,obj0VelX,obj0VelY,obj0VelZ,obj1PosX,obj1PosY,obj1PosZ,obj1VelX,obj1VelY,obj1VelZ,obj2PosX,obj2PosY,obj2PosZ,obj2VelX,obj2VelY,obj2VelZ,obj3PosX,obj3PosY,obj3PosZ,obj3VelX,obj3VelY,obj3VelZ
+JS: Lastlight ready: WASD, mouse, LMB, Space, E climb, Shift, V view, R reload, Esc menu.
+[TestHarness] service scene ready after 0 wait frames at frame 1
+JS: Wave 1: 6 hostiles
+JS: Wave 1 cleared; score 700
+JS: Wave 2: 8 hostiles
+[TestHarness] Wrote screenshot: /tmp/lastlight-combat.png
+JS: Wave 2 cleared; score 1600
+JS: Wave 3: 10 hostiles
+JS: Wave 3 cleared; score 2800
+JS: Wave 4: 12 hostiles
+JS: Wave 4 cleared; score 4200
+JS: Wave 5: 14 hostiles
+[TestHarness] Wrote screenshot: /tmp/lastlight-round.png

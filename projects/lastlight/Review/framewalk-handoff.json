@@ -1,0 +1,29 @@
+{
+  "source_head": "18650ba23c23eaaab0542d6e0055e33cc14d1049",
+  "content_fingerprints": 180,
+  "compared_project_export_payloads": 77,
+  "compared_sidecar_identity_and_type": 76,
+  "compared_final_export_copy_files": 328,
+  "package_mismatches": [],
+  "review_logs_checked": [
+    "inventory-followup",
+    "wall",
+    "ceiling-floor",
+    "near-wall",
+    "held",
+    "lifecycle",
+    "unequip",
+    "prior-gravity",
+    "door",
+    "package",
+    "active-performance"
+  ],
+  "script_diagnostics": {},
+  "runtime_source_changed": false,
+  "human_review": "pending",
+  "windows_and_controller_hardware": "not performed",
+  "package": "/home/conner/Documents/GitHub/Project-Judas/.cache/Lastlight-Package",
+  "moved_package": "/tmp/judas-lastlight-framewalk-review-20261010",
+  "export_summary": "Exported /home/conner/Documents/GitHub/Project-Judas/.cache/Lastlight-Inventory-Ready: 76 assets, 1 scenes, 57028943 bytes, 0.309 seconds",
+  "performance_limit": "bounded wall-facing exploration/8-enemy retained samples, not a worst-case crowd/ragdoll benchmark"
+}

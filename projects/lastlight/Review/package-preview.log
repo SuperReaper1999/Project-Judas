@@ -1,0 +1,10 @@
+Renderer fragment texture units: 32 (material path uses 12)
+World state: /home/conner/.local/share/judas/games/eb3ed1a49f7082618eaeac35a6470510a85ddc0b9384b61f50620cdeaad619d9/Saves/town.judasstate (none saved)
+Project: Lastlight (/home/conner/Documents/GitHub/Project-Judas/.cache/Lastlight-Package/game.judasproj)
+Scene: Lastlight (/home/conner/Documents/GitHub/Project-Judas/.cache/Lastlight-Package/Scenes/town.judas)
+World origin (m): 0.000, 0.000, 0.000
+step,time,posX,posY,posZ,upX,upY,upZ,grounded,velX,velY,velZ,gravX,gravY,gravZ,controlled,frame,steps,paused,obj0PosX,obj0PosY,obj0PosZ,obj0VelX,obj0VelY,obj0VelZ,obj1PosX,obj1PosY,obj1PosZ,obj1VelX,obj1VelY,obj1VelZ,obj2PosX,obj2PosY,obj2PosZ,obj2VelX,obj2VelY,obj2VelZ,obj3PosX,obj3PosY,obj3PosZ,obj3VelX,obj3VelY,obj3VelZ
+JS: Lastlight ready: WASD, mouse, LMB, Space, E climb, Shift, V view, R reload, Esc menu.
+[TestHarness] service scene ready after 0 wait frames at frame 1
+JS: Wave 1: 6 hostiles
+[TestHarness] Wrote screenshot: /tmp/lastlight-live.png

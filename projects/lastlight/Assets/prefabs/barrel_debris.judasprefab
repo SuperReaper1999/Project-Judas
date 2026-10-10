@@ -1,0 +1,306 @@
+JudasScene 3
+settings
+  name "Lastlight"
+  world-origin 0 0 0
+  sun-direction -.4 .8 .3
+  sun-color 2.0 1.65 1.35
+  ambient .38 .43 .5
+  background-color .34 .43 .54
+  fluid-scale 13
+  fluid-update-rate-hz 30
+  fluid-hydrostatic-drag-rate 2
+  fidelity-policy none
+  next-id 2000
+  linear-rendering true
+  exposure 1
+end
+object 1 "Barrel debris lifetime"
+  position 0 0 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  scripts 1
+  script.0.id 1
+  script.0.asset "cce9a2a698f8c4045386ff069c26f54a"
+  script.0.enabled true
+  script.0.properties "{\"cleanup\":true,\"lifetime\":12}"
+end
+object 2 "Barrel fragment 1"
+  position 0.0 0 0.3
+  rotation 1.0 0 0.0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.115 0.46 0.035
+  render.radius .5
+  render.color 0.39 0.22 0.1
+  render.alpha 1
+  render.secondary-color .25 .14 .06
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body dynamic box
+  body.half-extents 0.115 0.46 0.035
+  body.radius .5
+  body.terrain ""
+  body.mass 2.5
+  body.friction .65
+  body.restitution .05
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+  tags 2
+  parent 1
+end
+object 3 "Barrel fragment 2"
+  position 0.21213203435596423 0 0.21213203435596426
+  rotation 0.9238795325112867 0 0.3826834323650898 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.115 0.46 0.035
+  render.radius .5
+  render.color 0.39 0.22 0.1
+  render.alpha 1
+  render.secondary-color .25 .14 .06
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body dynamic box
+  body.half-extents 0.115 0.46 0.035
+  body.radius .5
+  body.terrain ""
+  body.mass 2.5
+  body.friction .65
+  body.restitution .05
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+  tags 2
+  parent 1
+end
+object 4 "Barrel fragment 3"
+  position 0.3 0 1.8369701987210297e-17
+  rotation 0.7071067811865476 0 0.7071067811865475 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.115 0.46 0.035
+  render.radius .5
+  render.color 0.39 0.22 0.1
+  render.alpha 1
+  render.secondary-color .25 .14 .06
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body dynamic box
+  body.half-extents 0.115 0.46 0.035
+  body.radius .5
+  body.terrain ""
+  body.mass 2.5
+  body.friction .65
+  body.restitution .05
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+  tags 2
+  parent 1
+end
+object 5 "Barrel fragment 4"
+  position 0.21213203435596426 0 -0.21213203435596423
+  rotation 0.38268343236508984 0 0.9238795325112867 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.115 0.46 0.035
+  render.radius .5
+  render.color 0.39 0.22 0.1
+  render.alpha 1
+  render.secondary-color .25 .14 .06
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body dynamic box
+  body.half-extents 0.115 0.46 0.035
+  body.radius .5
+  body.terrain ""
+  body.mass 2.5
+  body.friction .65
+  body.restitution .05
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+  tags 2
+  parent 1
+end
+object 6 "Barrel fragment 5"
+  position 3.6739403974420595e-17 0 -0.3
+  rotation 6.123233995736766e-17 0 1.0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.115 0.46 0.035
+  render.radius .5
+  render.color 0.39 0.22 0.1
+  render.alpha 1
+  render.secondary-color .25 .14 .06
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body dynamic box
+  body.half-extents 0.115 0.46 0.035
+  body.radius .5
+  body.terrain ""
+  body.mass 2.5
+  body.friction .65
+  body.restitution .05
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+  tags 2
+  parent 1
+end
+object 7 "Barrel fragment 6"
+  position -0.21213203435596423 0 -0.2121320343559643
+  rotation -0.3826834323650897 0 0.9238795325112867 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.115 0.46 0.035
+  render.radius .5
+  render.color 0.39 0.22 0.1
+  render.alpha 1
+  render.secondary-color .25 .14 .06
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body dynamic box
+  body.half-extents 0.115 0.46 0.035
+  body.radius .5
+  body.terrain ""
+  body.mass 2.5
+  body.friction .65
+  body.restitution .05
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+  tags 2
+  parent 1
+end
+object 8 "Barrel fragment 7"
+  position -0.3 0 -5.510910596163089e-17
+  rotation -0.7071067811865475 0 0.7071067811865476 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.115 0.46 0.035
+  render.radius .5
+  render.color 0.39 0.22 0.1
+  render.alpha 1
+  render.secondary-color .25 .14 .06
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body dynamic box
+  body.half-extents 0.115 0.46 0.035
+  body.radius .5
+  body.terrain ""
+  body.mass 2.5
+  body.friction .65
+  body.restitution .05
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+  tags 2
+  parent 1
+end
+object 9 "Barrel fragment 8"
+  position -0.2121320343559643 0 0.2121320343559642
+  rotation -0.9238795325112867 0 0.3826834323650899 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.115 0.46 0.035
+  render.radius .5
+  render.color 0.39 0.22 0.1
+  render.alpha 1
+  render.secondary-color .25 .14 .06
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body dynamic box
+  body.half-extents 0.115 0.46 0.035
+  body.radius .5
+  body.terrain ""
+  body.mass 2.5
+  body.friction .65
+  body.restitution .05
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+  tags 2
+  parent 1
+end
+object 10 "Barrel fragment 9"
+  position 0 -0.5 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.25 0.035 0.25
+  render.radius .5
+  render.color 0.39 0.22 0.1
+  render.alpha 1
+  render.secondary-color .25 .14 .06
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body dynamic box
+  body.half-extents 0.25 0.035 0.25
+  body.radius .5
+  body.terrain ""
+  body.mass 2
+  body.friction .65
+  body.restitution .05
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+  tags 2
+  parent 1
+end
+object 11 "Barrel fragment 10"
+  position 0 0.5 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.25 0.035 0.25
+  render.radius .5
+  render.color 0.39 0.22 0.1
+  render.alpha 1
+  render.secondary-color .25 .14 .06
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body dynamic box
+  body.half-extents 0.25 0.035 0.25
+  body.radius .5
+  body.terrain ""
+  body.mass 2
+  body.friction .65
+  body.restitution .05
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+  tags 2
+  parent 1
+end

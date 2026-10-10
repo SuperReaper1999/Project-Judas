@@ -1,0 +1,21 @@
+{
+  "source_head": "18650ba23c23eaaab0542d6e0055e33cc14d1049",
+  "revision": "Lastlight physical deaths/reaching punches/blast forces",
+  "source_content_fingerprints": 181,
+  "compared_project_export_payloads": 77,
+  "compared_sidecar_identity_and_type": 76,
+  "compared_export_and_moved_copy_files": 328,
+  "package_mismatches": [],
+  "script_diagnostics": {},
+  "runtime_source_changed": false,
+  "prior_game_human_review": "accepted by operator before final requested additions",
+  "final_additions_review": "focused actual-application/asset checks; operator explicitly authorized implementation then checkpoint",
+  "windows_and_controller_hardware": "not performed",
+  "package": "/home/conner/Documents/GitHub/Project-Judas/.cache/Lastlight-Package",
+  "moved_package": "/tmp/judas-lastlight-physical-review-20261010",
+  "export_summary": "76 assets, one scene, 57030747 bytes",
+  "physical_corpse_limit": 8,
+  "corpse_lifetime_seconds": 18,
+  "final_death_observations": 17,
+  "performance": "120 retained real-time Release frames with eight settled corpses/88 bodies; mean18.99ms,p95 21.16,max26.06; fixed mean2.60ms; zero capture drops/caps. Wide2750-draw scene, uncontrolled desktop workload; not a full-run activation maximum."
+}

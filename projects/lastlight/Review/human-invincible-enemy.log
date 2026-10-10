@@ -1,0 +1,25 @@
+Started judas-lastlight-human-20261010.service - [systemd-run] /home/conner/Documents/GitHub/Project-Judas/.cache/Lastlight-Package/judas.
+Renderer fragment texture units: 32 (material path uses 12)
+World state: /home/conner/.local/share/judas/games/eb3ed1a49f7082618eaeac35a6470510a85ddc0b9384b61f50620cdeaad619d9/Saves/town.judasstate (none saved)
+Project: Lastlight (/home/conner/Documents/GitHub/Project-Judas/.cache/Lastlight-Package/game.judasproj)
+Scene: Lastlight (/home/conner/Documents/GitHub/Project-Judas/.cache/Lastlight-Package/Scenes/town.judas)
+World origin (m): 0.000, 0.000, 0.000
+script asset=86973bc282c413226b09fa097346a3b6 entity=4611686018427387908 slot=1 fixedUpdate: RangeError: too many interrupted fade contributors
+    at __judas (native)
+    at call (judas:2:51)
+    at crossFade (judas:213:76)
+    at fixedUpdate (Assets/scripts/enemy.js:87:51)
+script asset=86973bc282c413226b09fa097346a3b6 entity=4611686018427387922 slot=1 fixedUpdate: RangeError: too many interrupted fade contributors
+    at __judas (native)
+    at call (judas:2:51)
+    at crossFade (judas:213:76)
+    at fixedUpdate (Assets/scripts/enemy.js:87:51)
+JS: Lastlight ready: WASD, mouse, LMB, Space, E climb, Shift, V view, R reload, RMB punch, F heavy, Q shove, Esc menu.
+JS: Wave 1: 6 hostiles
+JS: Lastlight ready: WASD, mouse, LMB, Space, E climb, Shift, V view, R reload, RMB punch, F heavy, Q shove, Esc menu.
+JS: Wave 1: 6 hostiles
+JS: Lastlight ready: WASD, mouse, LMB, Space, E climb, Shift, V view, R reload, RMB punch, F heavy, Q shove, Esc menu.
+JS: Wave 1: 6 hostiles
+JS: Wave 1 cleared; score 700
+JS: Wave 2: 8 hostiles
+judas-lastlight-human-20261010.service: Consumed 3min 8.352s CPU time over 3min 34.165s wall clock time, 60.8M memory peak.

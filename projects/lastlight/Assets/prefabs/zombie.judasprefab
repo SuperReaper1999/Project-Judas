@@ -1,0 +1,341 @@
+JudasScene 3
+settings
+  name "Lastlight"
+  world-origin 0 0 0
+  sun-direction -.4 .8 .3
+  sun-color 2.0 1.65 1.35
+  ambient .38 .43 .5
+  background-color .34 .43 .54
+  fluid-scale 13
+  fluid-update-rate-hz 30
+  fluid-hydrostatic-drag-rate 2
+  fidelity-policy none
+  next-id 2000
+  linear-rendering true
+  exposure 1
+end
+object 1 "Zombie"
+  position 0 0 0
+  rotation 1.0 0 0.0 0
+  scale 1 1 1
+  motor.enabled true
+  motor.radius .3
+  motor.halfHeight .6
+  motor.offset 0 .9 0
+  motor.stepHeight .35
+  motor.supportDistance .15
+  motor.skin .02
+  motor.maxSlopeDegrees 48
+  motor.gravityScale 1
+  motor.reorientationDegreesPerSecond 120
+  motor.interactionMass 80
+  motor.maxPushImpulse 15
+  motor.collisionLayer 0
+  motor.collisionMask 18446744073709551615
+  motor.requiredTags 0
+  motor.excludedTags 0
+  scripts 1
+  script.0.id 1
+  script.0.asset "86973bc282c413226b09fa097346a3b6"
+  script.0.enabled true
+  script.0.properties "{\"kind\":\"zombie\",\"variant\":\"auto\"}"
+  tags 1
+  nav.agent.enabled "1"
+  nav.agent.avoidance "1"
+  nav.agent.profile "0"
+  nav.agent.areas "18446744073709551615"
+  nav.agent.speed "2.8"
+  nav.agent.arrival "0.8"
+  nav.agent.cornerDistance "0.3"
+  nav.agent.repathSeconds "0.6"
+  nav.agent.costs ""
+end
+object 2 "Animated visual"
+  position 0 0 0
+  rotation 1.0 0 0.0 0
+  scale 1 1 1
+  render mesh
+  render.half-extents 0.5 0.5 0.5
+  render.radius .5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset "8cf067911100744b7650ac1223d2d535"
+  render.texture-asset ""
+  animation.enabled true
+  animation.play-on-start true
+  animation.loop true
+  animation.clip "ZombieIdle"
+  animation.speed 1
+  animation.time 0
+  ragdoll.enabled true
+  ragdoll.play-on-start false
+  ragdoll.self-collision false
+  ragdoll.bones 11
+  ragdoll.bone.0.joint "pelvis"
+  ragdoll.bone.0.parent ""
+  ragdoll.bone.0.shape 0
+  ragdoll.bone.0.offset 0 0.045 0
+  ragdoll.bone.0.orientation 1 0 0 0
+  ragdoll.bone.0.half-extents 0.145 0.1 0.09
+  ragdoll.bone.0.radius 0.06
+  ragdoll.bone.0.mass 10
+  ragdoll.bone.0.friction 0.7
+  ragdoll.bone.0.restitution 0.02
+  ragdoll.bone.0.layer 0
+  ragdoll.bone.0.mask 18446744073709551615
+  ragdoll.bone.0.suppress-parent true
+  ragdoll.bone.0.auto-anchors true
+  ragdoll.bone.0.constraint 2
+  ragdoll.bone.0.enabled true
+  ragdoll.bone.0.anchor-a 0 0 0
+  ragdoll.bone.0.anchor-b 0 0 0
+  ragdoll.bone.0.frame-a 1 0 0 0
+  ragdoll.bone.0.frame-b 1 0 0 0
+  ragdoll.bone.0.limits false
+  ragdoll.bone.0.lower -0.18
+  ragdoll.bone.0.upper 2.15
+  ragdoll.bone.0.rotational-resistance 1.2
+  ragdoll.bone.1.joint "chest"
+  ragdoll.bone.1.parent "pelvis"
+  ragdoll.bone.1.shape 0
+  ragdoll.bone.1.offset 0 0.075 0
+  ragdoll.bone.1.orientation 1 0 0 0
+  ragdoll.bone.1.half-extents 0.185 0.155 0.09
+  ragdoll.bone.1.radius 0.06
+  ragdoll.bone.1.mass 12
+  ragdoll.bone.1.friction 0.7
+  ragdoll.bone.1.restitution 0.02
+  ragdoll.bone.1.layer 0
+  ragdoll.bone.1.mask 18446744073709551615
+  ragdoll.bone.1.suppress-parent true
+  ragdoll.bone.1.auto-anchors true
+  ragdoll.bone.1.constraint 2
+  ragdoll.bone.1.enabled true
+  ragdoll.bone.1.anchor-a 0 0 0
+  ragdoll.bone.1.anchor-b 0 0 0
+  ragdoll.bone.1.frame-a 1 0 0 0
+  ragdoll.bone.1.frame-b 1 0 0 0
+  ragdoll.bone.1.limits false
+  ragdoll.bone.1.lower -0.18
+  ragdoll.bone.1.upper 2.15
+  ragdoll.bone.1.rotational-resistance 1.2
+  ragdoll.bone.2.joint "head"
+  ragdoll.bone.2.parent "chest"
+  ragdoll.bone.2.shape 1
+  ragdoll.bone.2.offset 0 0.12 0
+  ragdoll.bone.2.orientation 1 0 0 0
+  ragdoll.bone.2.half-extents 0.14 0.14 0.14
+  ragdoll.bone.2.radius 0.14
+  ragdoll.bone.2.mass 3
+  ragdoll.bone.2.friction 0.7
+  ragdoll.bone.2.restitution 0.02
+  ragdoll.bone.2.layer 0
+  ragdoll.bone.2.mask 18446744073709551615
+  ragdoll.bone.2.suppress-parent true
+  ragdoll.bone.2.auto-anchors true
+  ragdoll.bone.2.constraint 2
+  ragdoll.bone.2.enabled true
+  ragdoll.bone.2.anchor-a 0 0 0
+  ragdoll.bone.2.anchor-b 0 0 0
+  ragdoll.bone.2.frame-a 1 0 0 0
+  ragdoll.bone.2.frame-b 1 0 0 0
+  ragdoll.bone.2.limits false
+  ragdoll.bone.2.lower -0.18
+  ragdoll.bone.2.upper 2.15
+  ragdoll.bone.2.rotational-resistance 0.8
+  ragdoll.bone.3.joint "upper_arm.L"
+  ragdoll.bone.3.parent "chest"
+  ragdoll.bone.3.shape 0
+  ragdoll.bone.3.offset 0 0.135 0
+  ragdoll.bone.3.orientation 1 0 0 0
+  ragdoll.bone.3.half-extents 0.055 0.13 0.065
+  ragdoll.bone.3.radius 0.06
+  ragdoll.bone.3.mass 3
+  ragdoll.bone.3.friction 0.7
+  ragdoll.bone.3.restitution 0.02
+  ragdoll.bone.3.layer 0
+  ragdoll.bone.3.mask 18446744073709551615
+  ragdoll.bone.3.suppress-parent true
+  ragdoll.bone.3.auto-anchors true
+  ragdoll.bone.3.constraint 2
+  ragdoll.bone.3.enabled true
+  ragdoll.bone.3.anchor-a 0 0 0
+  ragdoll.bone.3.anchor-b 0 0 0
+  ragdoll.bone.3.frame-a 1 0 0 0
+  ragdoll.bone.3.frame-b 1 0 0 0
+  ragdoll.bone.3.limits false
+  ragdoll.bone.3.lower -0.18
+  ragdoll.bone.3.upper 2.15
+  ragdoll.bone.3.rotational-resistance 1.2
+  ragdoll.bone.4.joint "forearm.L"
+  ragdoll.bone.4.parent "upper_arm.L"
+  ragdoll.bone.4.shape 0
+  ragdoll.bone.4.offset 0 0.115 0
+  ragdoll.bone.4.orientation 1 0 0 0
+  ragdoll.bone.4.half-extents 0.048 0.12 0.05
+  ragdoll.bone.4.radius 0.06
+  ragdoll.bone.4.mass 2
+  ragdoll.bone.4.friction 0.7
+  ragdoll.bone.4.restitution 0.02
+  ragdoll.bone.4.layer 0
+  ragdoll.bone.4.mask 18446744073709551615
+  ragdoll.bone.4.suppress-parent true
+  ragdoll.bone.4.auto-anchors true
+  ragdoll.bone.4.constraint 1
+  ragdoll.bone.4.enabled true
+  ragdoll.bone.4.anchor-a 0 0 0
+  ragdoll.bone.4.anchor-b 0 0 0
+  ragdoll.bone.4.frame-a 1 0 0 0
+  ragdoll.bone.4.frame-b 0.9710319042 -0.1251910776 -0.1674498916 0.1156928465
+  ragdoll.bone.4.limits true
+  ragdoll.bone.4.lower -0.18
+  ragdoll.bone.4.upper 2.15
+  ragdoll.bone.4.rotational-resistance 1.2
+  ragdoll.bone.5.joint "upper_arm.R"
+  ragdoll.bone.5.parent "chest"
+  ragdoll.bone.5.shape 0
+  ragdoll.bone.5.offset 0 0.135 0
+  ragdoll.bone.5.orientation 1 0 0 0
+  ragdoll.bone.5.half-extents 0.055 0.13 0.065
+  ragdoll.bone.5.radius 0.06
+  ragdoll.bone.5.mass 3
+  ragdoll.bone.5.friction 0.7
+  ragdoll.bone.5.restitution 0.02
+  ragdoll.bone.5.layer 0
+  ragdoll.bone.5.mask 18446744073709551615
+  ragdoll.bone.5.suppress-parent true
+  ragdoll.bone.5.auto-anchors true
+  ragdoll.bone.5.constraint 2
+  ragdoll.bone.5.enabled true
+  ragdoll.bone.5.anchor-a 0 0 0
+  ragdoll.bone.5.anchor-b 0 0 0
+  ragdoll.bone.5.frame-a 1 0 0 0
+  ragdoll.bone.5.frame-b 1 0 0 0
+  ragdoll.bone.5.limits false
+  ragdoll.bone.5.lower -0.18
+  ragdoll.bone.5.upper 2.15
+  ragdoll.bone.5.rotational-resistance 1.2
+  ragdoll.bone.6.joint "forearm.R"
+  ragdoll.bone.6.parent "upper_arm.R"
+  ragdoll.bone.6.shape 0
+  ragdoll.bone.6.offset 0 0.115 0
+  ragdoll.bone.6.orientation 1 0 0 0
+  ragdoll.bone.6.half-extents 0.048 0.12 0.05
+  ragdoll.bone.6.radius 0.06
+  ragdoll.bone.6.mass 2
+  ragdoll.bone.6.friction 0.7
+  ragdoll.bone.6.restitution 0.02
+  ragdoll.bone.6.layer 0
+  ragdoll.bone.6.mask 18446744073709551615
+  ragdoll.bone.6.suppress-parent true
+  ragdoll.bone.6.auto-anchors true
+  ragdoll.bone.6.constraint 1
+  ragdoll.bone.6.enabled true
+  ragdoll.bone.6.anchor-a 0 0 0
+  ragdoll.bone.6.anchor-b 0 0 0
+  ragdoll.bone.6.frame-a 1 0 0 0
+  ragdoll.bone.6.frame-b 0.9710319042 -0.1251910776 0.1674498916 -0.1156928465
+  ragdoll.bone.6.limits true
+  ragdoll.bone.6.lower -0.18
+  ragdoll.bone.6.upper 2.15
+  ragdoll.bone.6.rotational-resistance 1.2
+  ragdoll.bone.7.joint "thigh.L"
+  ragdoll.bone.7.parent "pelvis"
+  ragdoll.bone.7.shape 0
+  ragdoll.bone.7.offset 0 0.2 0
+  ragdoll.bone.7.orientation 1 0 0 0
+  ragdoll.bone.7.half-extents 0.07 0.185 0.07
+  ragdoll.bone.7.radius 0.06
+  ragdoll.bone.7.mass 5
+  ragdoll.bone.7.friction 0.7
+  ragdoll.bone.7.restitution 0.02
+  ragdoll.bone.7.layer 0
+  ragdoll.bone.7.mask 18446744073709551615
+  ragdoll.bone.7.suppress-parent true
+  ragdoll.bone.7.auto-anchors true
+  ragdoll.bone.7.constraint 2
+  ragdoll.bone.7.enabled true
+  ragdoll.bone.7.anchor-a 0 0 0
+  ragdoll.bone.7.anchor-b 0 0 0
+  ragdoll.bone.7.frame-a 1 0 0 0
+  ragdoll.bone.7.frame-b 1 0 0 0
+  ragdoll.bone.7.limits false
+  ragdoll.bone.7.lower -0.18
+  ragdoll.bone.7.upper 2.15
+  ragdoll.bone.7.rotational-resistance 1.2
+  ragdoll.bone.8.joint "shin.L"
+  ragdoll.bone.8.parent "thigh.L"
+  ragdoll.bone.8.shape 0
+  ragdoll.bone.8.offset 0 0.225 0
+  ragdoll.bone.8.orientation 1 0 0 0
+  ragdoll.bone.8.half-extents 0.055 0.21 0.055
+  ragdoll.bone.8.radius 0.06
+  ragdoll.bone.8.mass 3
+  ragdoll.bone.8.friction 0.7
+  ragdoll.bone.8.restitution 0.02
+  ragdoll.bone.8.layer 0
+  ragdoll.bone.8.mask 18446744073709551615
+  ragdoll.bone.8.suppress-parent true
+  ragdoll.bone.8.auto-anchors true
+  ragdoll.bone.8.constraint 1
+  ragdoll.bone.8.enabled true
+  ragdoll.bone.8.anchor-a 0 0 0
+  ragdoll.bone.8.anchor-b 0 0 0
+  ragdoll.bone.8.frame-a 1 0 0 0
+  ragdoll.bone.8.frame-b 0.9996649027 0.0116606727 -0.0162494387 0.0164351333
+  ragdoll.bone.8.limits true
+  ragdoll.bone.8.lower -0.18
+  ragdoll.bone.8.upper 2.15
+  ragdoll.bone.8.rotational-resistance 1.2
+  ragdoll.bone.9.joint "thigh.R"
+  ragdoll.bone.9.parent "pelvis"
+  ragdoll.bone.9.shape 0
+  ragdoll.bone.9.offset 0 0.2 0
+  ragdoll.bone.9.orientation 1 0 0 0
+  ragdoll.bone.9.half-extents 0.07 0.185 0.07
+  ragdoll.bone.9.radius 0.06
+  ragdoll.bone.9.mass 5
+  ragdoll.bone.9.friction 0.7
+  ragdoll.bone.9.restitution 0.02
+  ragdoll.bone.9.layer 0
+  ragdoll.bone.9.mask 18446744073709551615
+  ragdoll.bone.9.suppress-parent true
+  ragdoll.bone.9.auto-anchors true
+  ragdoll.bone.9.constraint 2
+  ragdoll.bone.9.enabled true
+  ragdoll.bone.9.anchor-a 0 0 0
+  ragdoll.bone.9.anchor-b 0 0 0
+  ragdoll.bone.9.frame-a 1 0 0 0
+  ragdoll.bone.9.frame-b 1 0 0 0
+  ragdoll.bone.9.limits false
+  ragdoll.bone.9.lower -0.18
+  ragdoll.bone.9.upper 2.15
+  ragdoll.bone.9.rotational-resistance 1.2
+  ragdoll.bone.10.joint "shin.R"
+  ragdoll.bone.10.parent "thigh.R"
+  ragdoll.bone.10.shape 0
+  ragdoll.bone.10.offset 0 0.225 0
+  ragdoll.bone.10.orientation 1 0 0 0
+  ragdoll.bone.10.half-extents 0.055 0.21 0.055
+  ragdoll.bone.10.radius 0.06
+  ragdoll.bone.10.mass 3
+  ragdoll.bone.10.friction 0.7
+  ragdoll.bone.10.restitution 0.02
+  ragdoll.bone.10.layer 0
+  ragdoll.bone.10.mask 18446744073709551615
+  ragdoll.bone.10.suppress-parent true
+  ragdoll.bone.10.auto-anchors true
+  ragdoll.bone.10.constraint 1
+  ragdoll.bone.10.enabled true
+  ragdoll.bone.10.anchor-a 0 0 0
+  ragdoll.bone.10.anchor-b 0 0 0
+  ragdoll.bone.10.frame-a 1 0 0 0
+  ragdoll.bone.10.frame-b 0.9996649027 0.0116606727 0.0162494387 -0.0164351333
+  ragdoll.bone.10.limits true
+  ragdoll.bone.10.lower -0.18
+  ragdoll.bone.10.upper 2.15
+  ragdoll.bone.10.rotational-resistance 1.2
+  parent 1
+end

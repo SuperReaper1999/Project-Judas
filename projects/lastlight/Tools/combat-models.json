@@ -1,0 +1,24 @@
+{
+  "assets": [
+    {
+      "path": "Assets/models/character_fighter.glb",
+      "id": "63ba65d37a65ca864181580a17e7955e"
+    },
+    {
+      "path": "Assets/models/fist_forearm.glb",
+      "id": "385744dcb65347839bd2332cff855221"
+    }
+  ],
+  "clips": {
+    "Idle": 2.0,
+    "Walk": 1.0,
+    "Run": 0.8,
+    "Jump": 1.0,
+    "Punch": 0.43333333333333335,
+    "HeavyPunch": 0.8,
+    "Shove": 0.6
+  },
+  "fistBasis": "glTF +Y up, -Z forward; wrist origin, sleeve toward +Z",
+  "source": "Original starter-pack character/helper, additional original Lastlight geometry and clips",
+  "gameplay": "Clips are presentation only. Project scripts decide hit timing and results."
+}

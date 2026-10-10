@@ -1,0 +1,194 @@
+JudasScene 3
+settings
+  name "Lastlight"
+  world-origin 0 0 0
+  sun-direction -.4 .8 .3
+  sun-color 2.0 1.65 1.35
+  ambient .38 .43 .5
+  background-color .34 .43 .54
+  fluid-scale 13
+  fluid-update-rate-hz 30
+  fluid-hydrostatic-drag-rate 2
+  fidelity-policy none
+  next-id 2000
+  linear-rendering true
+  exposure 1
+end
+object 1 "Wooden entry debris lifetime"
+  position 0 0 0
+  rotation 1.0 0 0.0 0
+  scale 1 1 1
+  scripts 1
+  script.0.id 1
+  script.0.asset "cce9a2a698f8c4045386ff069c26f54a"
+  script.0.enabled true
+  script.0.properties "{\"cleanup\":true,\"lifetime\":12}"
+end
+object 2 "Broken entry plank 1"
+  position -0.875 0 0
+  rotation 1.0 0 0.0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.175 1.22 0.085
+  render.radius .5
+  render.color 0.48 0.3 0.15
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body dynamic box
+  body.half-extents 0.175 1.22 0.085
+  body.radius .5
+  body.terrain ""
+  body.mass 4
+  body.friction .7
+  body.restitution .05
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+  tags 2
+  parent 1
+end
+object 3 "Broken entry plank 2"
+  position -0.525 0 0
+  rotation 1.0 0 0.0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.175 1.22 0.085
+  render.radius .5
+  render.color 0.48 0.3 0.15
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body dynamic box
+  body.half-extents 0.175 1.22 0.085
+  body.radius .5
+  body.terrain ""
+  body.mass 4
+  body.friction .7
+  body.restitution .05
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+  tags 2
+  parent 1
+end
+object 4 "Broken entry plank 3"
+  position -0.17500000000000004 0 0
+  rotation 1.0 0 0.0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.175 1.22 0.085
+  render.radius .5
+  render.color 0.48 0.3 0.15
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body dynamic box
+  body.half-extents 0.175 1.22 0.085
+  body.radius .5
+  body.terrain ""
+  body.mass 4
+  body.friction .7
+  body.restitution .05
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+  tags 2
+  parent 1
+end
+object 5 "Broken entry plank 4"
+  position 0.17499999999999982 0 0
+  rotation 1.0 0 0.0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.175 1.22 0.085
+  render.radius .5
+  render.color 0.48 0.3 0.15
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body dynamic box
+  body.half-extents 0.175 1.22 0.085
+  body.radius .5
+  body.terrain ""
+  body.mass 4
+  body.friction .7
+  body.restitution .05
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+  tags 2
+  parent 1
+end
+object 6 "Broken entry plank 5"
+  position 0.5249999999999999 0 0
+  rotation 1.0 0 0.0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.175 1.22 0.085
+  render.radius .5
+  render.color 0.48 0.3 0.15
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body dynamic box
+  body.half-extents 0.175 1.22 0.085
+  body.radius .5
+  body.terrain ""
+  body.mass 4
+  body.friction .7
+  body.restitution .05
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+  tags 2
+  parent 1
+end
+object 7 "Broken entry plank 6"
+  position 0.875 0 0
+  rotation 1.0 0 0.0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.175 1.22 0.085
+  render.radius .5
+  render.color 0.48 0.3 0.15
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body dynamic box
+  body.half-extents 0.175 1.22 0.085
+  body.radius .5
+  body.terrain ""
+  body.mass 4
+  body.friction .7
+  body.restitution .05
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+  tags 2
+  parent 1
+end

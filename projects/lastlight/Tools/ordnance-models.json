@@ -1,0 +1,21 @@
+{
+  "assets": [
+    {
+      "name": "rocket_launcher",
+      "id": "43c306b7547ca4536510834be1b3f7ba",
+      "path": "Assets/models/rocket_launcher.glb"
+    },
+    {
+      "name": "rocket",
+      "id": "54f31462b064187e2a80055ea957afa7",
+      "path": "Assets/models/rocket.glb"
+    },
+    {
+      "name": "grenade",
+      "id": "a57f5804de3abb66f36afcffe12024a0",
+      "path": "Assets/models/grenade.glb"
+    }
+  ],
+  "basis": "glTF +Y up, +Z forward; launcher grip pivot",
+  "source": "Original Lastlight low-poly assets"
+}

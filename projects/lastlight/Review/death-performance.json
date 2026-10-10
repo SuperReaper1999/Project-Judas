@@ -1,0 +1,336 @@
+{
+  "context": "Release Linux, ordinary expanded Lastlight town; eight actual zombie prefab owners killed through range.hit;88 ordinary mapped dynamic bodies. Director disabled in disposable fixture only. Wide third-person street view. Real-time720 render frames; original18-second corpse expiry preserved. M56 profiling enabled; detailed per-script labels disabled; no screenshot during timing. Background desktop workload uncontrolled. No comparable baseline claim.",
+  "retained_frames": 120,
+  "retained_frame_ids": [
+    603,
+    722
+  ],
+  "frame_interval_ms": {
+    "samples": 120,
+    "mean": 18.989228283333333,
+    "p95": 21.157977,
+    "max": 26.059001
+  },
+  "outer_frame_elapsed_ms": {
+    "samples": 120,
+    "mean": 18.868433574999997,
+    "p95": 21.085259,
+    "max": 22.930457
+  },
+  "fixed_step_ms": {
+    "samples": 135,
+    "mean": 2.596968911111111,
+    "p95": 3.165935,
+    "max": 3.640154
+  },
+  "fixed_caps": 0,
+  "discarded_seconds": 0,
+  "cpu_ms": {
+    "Fixed simulation step": {
+      "samples": 135,
+      "mean": 2.597378688888889,
+      "p95": 3.166349,
+      "max": 3.640516
+    },
+    "JavaScript fixedUpdate": {
+      "samples": 135,
+      "mean": 0.388365962962963,
+      "p95": 0.55875,
+      "max": 0.733787
+    },
+    "JavaScript contact events": {
+      "samples": 23760,
+      "mean": 0.00019321637205387205,
+      "p95": 0.000491,
+      "max": 0.034124
+    },
+    "JavaScript presentation": {
+      "samples": 119,
+      "mean": 0.18486402521008405,
+      "p95": 0.239495,
+      "max": 0.329155
+    },
+    "JavaScript UI update": {
+      "samples": 119,
+      "mean": 0.11244589915966387,
+      "p95": 0.102755,
+      "max": 4.229565
+    },
+    "Rigid physics": {
+      "samples": 135,
+      "mean": 0.49320353333333333,
+      "p95": 0.585633,
+      "max": 0.869683
+    },
+    "Ragdoll physics to pose": {
+      "samples": 135,
+      "mean": 0.1429425925925926,
+      "p95": 0.166776,
+      "max": 0.271204
+    },
+    "Animation clip sampling": {
+      "samples": 4590,
+      "mean": 0.0010242566448801743,
+      "p95": 0.00281,
+      "max": 0.014651
+    },
+    "Pose skin matrices": {
+      "samples": 4860,
+      "mean": 0.0013475030864197532,
+      "p95": 0.00206,
+      "max": 0.053976
+    },
+    "World render submission": {
+      "samples": 119,
+      "mean": 15.23094349579832,
+      "p95": 16.140617,
+      "max": 16.883965
+    },
+    "Main camera": {
+      "samples": 119,
+      "mean": 9.227633218487396,
+      "p95": 10.146938,
+      "max": 10.518495
+    },
+    "Shadow pass": {
+      "samples": 0
+    },
+    "Frame presentation": {
+      "samples": 0
+    },
+    "SDL swap window": {
+      "samples": 0
+    }
+  },
+  "counters": {
+    "Awake physics bodies": {
+      "samples": 119,
+      "min": 0,
+      "max": 0
+    },
+    "Character motor instances": {
+      "samples": 119,
+      "min": 9,
+      "max": 9
+    },
+    "Demo corpse bodies": {
+      "samples": 1,
+      "min": 88,
+      "max": 88
+    },
+    "Demo physical corpses": {
+      "samples": 1,
+      "min": 8,
+      "max": 8
+    },
+    "Demo sleeping corpse bodies": {
+      "samples": 1,
+      "min": 88,
+      "max": 88
+    },
+    "Physics bodies last step": {
+      "samples": 119,
+      "min": 454,
+      "max": 454
+    },
+    "Physics candidate pairs last step": {
+      "samples": 119,
+      "min": 125,
+      "max": 125
+    },
+    "Physics contacts last step": {
+      "samples": 119,
+      "min": 0,
+      "max": 0
+    },
+    "Physics joints": {
+      "samples": 119,
+      "min": 80,
+      "max": 80
+    },
+    "Runtime UI draws": {
+      "samples": 119,
+      "min": 7,
+      "max": 7
+    },
+    "Script instances": {
+      "samples": 119,
+      "min": 38,
+      "max": 38
+    },
+    "Sleeping physics bodies": {
+      "samples": 119,
+      "min": 114,
+      "max": 114
+    },
+    "Submitted draws all passes": {
+      "samples": 119,
+      "min": 2750,
+      "max": 2750
+    },
+    "Submitted triangles all passes": {
+      "samples": 119,
+      "min": 76518,
+      "max": 76518
+    },
+    "Visible renderables all passes": {
+      "samples": 119,
+      "min": 619,
+      "max": 619
+    }
+  },
+  "global_diagnostics": {
+    "dropped_events": 0,
+    "exhausted_labels": 0,
+    "exhausted_nodes": 0,
+    "exhausted_threads": 0,
+    "incomplete_scopes": 0,
+    "open_scopes": 0,
+    "truncated_records": 0,
+    "gpu_dropped": 0,
+    "nested_frames": 0
+  },
+  "retained_diagnostics": {
+    "dropped_events": 0,
+    "truncated_records": 0
+  },
+  "retained_spikes": [
+    {
+      "frame_id": 714,
+      "frame_elapsed_ms": 18.713613,
+      "fixed_steps": 1,
+      "fixed_cap": false
+    },
+    {
+      "frame_id": 715,
+      "frame_elapsed_ms": 18.25588,
+      "fixed_steps": 1,
+      "fixed_cap": false
+    },
+    {
+      "frame_id": 716,
+      "frame_elapsed_ms": 19.184215,
+      "fixed_steps": 1,
+      "fixed_cap": false
+    },
+    {
+      "frame_id": 717,
+      "frame_elapsed_ms": 21.278711,
+      "fixed_steps": 2,
+      "fixed_cap": false
+    },
+    {
+      "frame_id": 718,
+      "frame_elapsed_ms": 18.238718,
+      "fixed_steps": 1,
+      "fixed_cap": false
+    },
+    {
+      "frame_id": 719,
+      "frame_elapsed_ms": 17.613762,
+      "fixed_steps": 1,
+      "fixed_cap": false
+    },
+    {
+      "frame_id": 720,
+      "frame_elapsed_ms": 18.791335,
+      "fixed_steps": 1,
+      "fixed_cap": false
+    },
+    {
+      "frame_id": 721,
+      "frame_elapsed_ms": 22.930457,
+      "fixed_steps": 1,
+      "fixed_cap": false
+    }
+  ],
+  "raw_capture": "Review/death-performance-profile.json.gz",
+  "limitations": "The profiler retains only the last120 frames and last8 spikes, not full-run distributions. Nested scopes overlap and must not be added. Global diagnostics can include dense activation/catch-up frames outside retained history; any missing records limit detailed allocation of CPU cost.",
+  "actual_body_observations": [
+    {
+      "deathPerformance": "activation",
+      "time": 1.200000062584877,
+      "count": 8
+    },
+    {
+      "deathPerformance": "sample",
+      "frame": 120,
+      "time": 2.9333334863185883,
+      "owners": 8,
+      "active": 8,
+      "bodies": 88,
+      "sleeping": 0,
+      "score": 800,
+      "kills": 8
+    },
+    {
+      "deathPerformance": "sample",
+      "frame": 240,
+      "time": 5.433333616703749,
+      "owners": 8,
+      "active": 8,
+      "bodies": 88,
+      "sleeping": 22,
+      "score": 800,
+      "kills": 8
+    },
+    {
+      "deathPerformance": "sample",
+      "frame": 360,
+      "time": 7.816667074337602,
+      "owners": 8,
+      "active": 8,
+      "bodies": 88,
+      "sleeping": 88,
+      "score": 800,
+      "kills": 8
+    },
+    {
+      "deathPerformance": "sample",
+      "frame": 480,
+      "time": 10.066667191684246,
+      "owners": 8,
+      "active": 8,
+      "bodies": 88,
+      "sleeping": 88,
+      "score": 800,
+      "kills": 8
+    },
+    {
+      "deathPerformance": "sample",
+      "frame": 600,
+      "time": 12.333333976566792,
+      "owners": 8,
+      "active": 8,
+      "bodies": 88,
+      "sleeping": 88,
+      "score": 800,
+      "kills": 8
+    },
+    {
+      "deathPerformance": "sample",
+      "frame": 720,
+      "time": 14.616667428985238,
+      "owners": 8,
+      "active": 8,
+      "bodies": 88,
+      "sleeping": 88,
+      "score": 800,
+      "kills": 8
+    }
+  ],
+  "approximate_fps": 52.66143442373014,
+  "capture_environment": {
+    "JUDAS_PROFILE": "1",
+    "JUDAS_PROFILE_SCRIPTS": "0",
+    "JUDAS_PROFILE_SPIKE_MS": "16",
+    "JUDAS_PROFILE_OUTPUT": "/tmp/lastlight-death-profile.json",
+    "JUDAS_TEST_SCRIPT": "/tmp/lastlight-death-performance.txt",
+    "binary": ".cache/m72-release/judas"
+  },
+  "historical_captures": {
+    "death-performance-expired-tail.log": "Initial1100 real-time frames exceeded the ordinary18-second corpse lifetime; the final tail contains no corpses and is not used for final FPS claims.",
+    "death-performance-instrumented.log": "Second720-frame capture included screenshot710 and detailed per-script profiling; screenshot stall/catch-up and diagnostic record pressure make it unsuitable for the final timing summary."
+  },
+  "activation_timing": "The final last120-frame history is settled. The spike ring retains the last8 >16ms frames, so initial activation/settling frame distributions are not retained and no full-run max claim is made."
+}

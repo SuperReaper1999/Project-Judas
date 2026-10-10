@@ -1,0 +1,44 @@
+from pathlib import Path
+import shutil
+repo=Path('/home/conner/Documents/GitHub/Project-Judas');src=repo/'projects/lastlight';dst=repo/'.cache/lastlight-death-proof'
+if dst.exists():shutil.rmtree(dst)
+shutil.copytree(src,dst,ignore=shutil.ignore_patterns('Review','ArtSource','Saves','__pycache__'))
+p=dst/'Assets/scripts/player.js'
+p.write_text(p.read_text()+r'''
+import {detonate} from './explosives.js';
+import {tripBones} from './combat.js';
+const proofStart=Player.prototype.start,proofFixed=Player.prototype.fixedUpdate;
+const proofDirector=Player.prototype.director;
+Player.prototype.director=function(){game.phase='wave';game.wave=1;};
+Player.prototype.start=function(){proofStart.call(this);this.proofFrame=0;game.health=1000;};
+function snapshot(label,e){const v=e?.valid?e.children.find(c=>c.valid&&c.ragdoll):null,r=v?.ragdoll;
+ const parts=r?.active?tripBones.map(k=>r.body(k)).filter(b=>b?.valid):[];
+ console.log(JSON.stringify({deathProof:label,valid:!!e?.valid,state:e?.valid?e.scriptState(1):null,active:!!r?.active,bones:parts.length,positions:parts.slice(0,3).map(b=>b.transform.position),velocities:parts.slice(0,3).map(b=>b.velocity),score:game.score,kills:game.kills,playerHealth:game.health}));}
+Player.prototype.fixedUpdate=function(dt){proofFixed.call(this,dt);this.proofFrame++;
+ if(this.proofFrame===30){this.proofEnemy=world.spawnPrefab(this.props.zombie,{position:{x:0,y:.05,z:16.4}},{scripts:[{slot:1,properties:{kind:'zombie',variant:'runner'}}]});game.alive++;}
+ if([100,150,180].includes(this.proofFrame))snapshot('close-punch-'+this.proofFrame,this.proofEnemy);
+ if(this.proofFrame>=200&&this.proofFrame<=260&&this.proofEnemy.valid&&!this.proofEnemy.scriptState(1)?.dead){
+  const p=add(this.proofEnemy.transform.position,{x:0,y:1.05,z:0}),eye=this.camera.pose().eye,to=sub(p,eye);
+  this.state.yaw=Math.atan2(-to.x,-to.z);this.state.pitch=Math.atan2(to.y,Math.hypot(to.x,to.z));this.weapon.fire();
+ }
+ if(this.proofFrame===270)snapshot('rifle-kill',this.proofEnemy);
+ if(this.proofFrame===330){snapshot('fallen',this.proofEnemy);const v=this.proofEnemy.children.find(c=>c.valid&&c.ragdoll),chest=v.ragdoll.body('chest');
+  const score=game.score;detonate(this.entity,this.entity.id,add(chest.transform.position,{x:1,y:.2,z:0}),4,30);snapshot('corpse-blast',this.proofEnemy);console.log(JSON.stringify({deathProof:'corpse-score-stable',before:score,after:game.score}));}
+ if(this.proofFrame===370){this.proofTrip=world.spawnPrefab(this.props.zombie,{position:{x:3,y:.05,z:16}},{scripts:[{slot:1,properties:{kind:'zombie',variant:'brute'}}]});game.alive++;}
+ if(this.proofFrame===405)signals.send(this.proofTrip,'range.hit',{kind:'blast',damage:1,speed:6,direction:{x:0,y:0,z:-1},point:{x:3,y:1,z:16}});
+ if(this.proofFrame===410){snapshot('alive-trip',this.proofTrip);this.proofBodies=tripBones.map(k=>this.proofTrip.children[0].ragdoll.body(k));signals.send(this.proofTrip,'range.hit',{kind:'bullet',damage:300,direction:{x:0,y:0,z:-1},point:{x:3,y:1,z:16}});}
+ if(this.proofFrame===420){snapshot('trip-killed',this.proofTrip);console.log(JSON.stringify({deathProof:'trip-reuses-bodies',same:this.proofBodies.every((b,i)=>b.valid&&b.id===this.proofTrip.children[0].ragdoll.body(tripBones[i]).id)}));}
+ if(this.proofFrame===480){for(const e of [this.proofEnemy,this.proofTrip])if(e.valid)e.destroy();this.proofGroup=[];
+  for(let n=0;n<10;n++){const e=world.spawnPrefab(this.props.zombie,{position:{x:-8+n*1.5,y:.05,z:9}},{scripts:[{slot:1,properties:{kind:'zombie',variant:'runner'}}]});this.proofGroup.push(e);game.alive++;}}
+ if(this.proofFrame===530)for(const e of this.proofGroup)signals.send(e,'range.hit',{kind:'bullet',damage:300,direction:{x:0,y:0,z:-1},point:add(e.transform.position,{x:0,y:1,z:0})});
+ if([540,720,880].includes(this.proofFrame)){const living=this.proofGroup.filter(e=>e.valid),parts=living.flatMap(e=>tripBones.map(k=>e.children[0].ragdoll.body(k)).filter(b=>b?.valid));
+ console.log(JSON.stringify({deathProof:'bounded-group-'+this.proofFrame,validOwners:living.length,bones:parts.length,oldestRetired:this.proofGroup.slice(0,2).every(e=>!e.valid),maxSpeed:Math.max(...parts.map(b=>length(b.velocity))),score:game.score,kills:game.kills}));}
+ if(this.proofFrame===915){this.proofFinal=world.spawnPrefab(this.props.zombie,{position:{x:0,y:.05,z:14}},{scripts:[{slot:1,properties:{kind:'zombie',variant:'runner'}}]});this.enemies=[this.proofFinal];game.alive=1;game.phase='wave';this.toSpawn=0;Player.prototype.director=proofDirector;}
+ if(this.proofFrame===935)signals.send(this.proofFinal,'range.hit',{kind:'bullet',damage:300,direction:{x:0,y:0,z:-1},point:{x:0,y:1,z:14}});
+ if(this.proofFrame===945){snapshot('last-wave-victim',this.proofFinal);console.log(JSON.stringify({deathProof:'wave-clears-with-corpse',phase:game.phase,alive:game.alive,valid:this.proofFinal.valid,active:this.proofFinal.children[0].ragdoll.active}));game.countdown=1000;}
+ if(this.proofFrame===2040)console.log(JSON.stringify({deathProof:'corpse-expiry',valid:this.proofFinal.valid}));
+ if(this.proofFrame===900){const bodies=this.proofGroup.filter(e=>e.valid).flatMap(e=>tripBones.map(k=>e.children[0].ragdoll.body(k)));for(const e of this.proofGroup)if(e.valid)e.destroy();console.log(JSON.stringify({deathProof:'owner-cleanup',retiredBodies:bodies.every(b=>!b.valid),remainingOwners:this.proofGroup.filter(e=>e.valid).length}));}
+};
+''')
+Path('/tmp/lastlight-death-proof.txt').write_text('FRAMES 2070\nFRAME_SECONDS .016666667\nLOG_EVERY 0\nWAIT_SERVICES scene 10000 1\nSCREENSHOT 160 /tmp/lastlight-punch-proof.png\nSCREENSHOT 320 /tmp/lastlight-death-proof.png\nSCREENSHOT 760 /tmp/lastlight-corpse-group-proof.png\n')
+print(dst)

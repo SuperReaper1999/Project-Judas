@@ -1,0 +1,30 @@
+from pathlib import Path
+import shutil,re,json
+repo=Path('/home/conner/Documents/GitHub/Project-Judas');src=repo/'projects/lastlight';dst=repo/'.cache/lastlight-explosion-proof'
+if dst.exists():shutil.rmtree(dst)
+shutil.copytree(src,dst,ignore=shutil.ignore_patterns('Review','ArtSource','Saves','__pycache__'))
+scene=dst/'Scenes/town.judas';s=scene.read_text()
+def block(n,edits):
+ global s
+ m=re.search(rf'object {n} "[^\n]*"\n.*?\nend',s,re.S);b=m.group(0)
+ for key,value in edits.items():b=re.sub(rf'(?m)^  {re.escape(key)} [^\n]*','  '+key+' '+value,b)
+ s=s[:m.start()]+b+s[m.end():]
+block(700,{'position':'-2 .51 0','tags':'0'})
+block(702,{'position':'3 .55 0'})
+block(901,{'position':'1.5 3.58 0'})
+scene.write_text(s)
+p=dst/'Assets/scripts/player.js';p.write_text(p.read_text()+'''
+import {detonate} from './explosives.js';
+const explosionOriginalStart=Player.prototype.start;
+Player.prototype.start=function(){explosionOriginalStart.call(this);this.explosionFrame=0;this.explosionDoor=world.spawnPrefab('''+json.dumps(re.search(r'^id \"([^\"]+)\"', (src/'Assets/prefabs/framewalk_door.judasprefab.judasmeta').read_text(),re.M).group(1))+''',{position:{x:0,y:1.24,z:3}});};
+const explosionOriginalFixed=Player.prototype.fixedUpdate;
+Player.prototype.fixedUpdate=function(dt){explosionOriginalFixed.call(this,dt);this.explosionFrame++;
+ const clear=world.entity('700'),blocked=world.entity('702');
+ if(this.explosionFrame===90){console.log(JSON.stringify({explosionProof:'before',clearVelocity:clear.velocity,clearTags:clear.hasTag('physical'),blockedVelocity:blocked.velocity,doorValid:this.explosionDoor.valid,doorMotion:this.explosionDoor.motionType,score:game.score}));
+ detonate(this.entity,this.entity.id,{x:0,y:.6,z:0},6.5,200);
+ console.log(JSON.stringify({explosionProof:'immediate',clearVelocity:clear.velocity,clearAngular:clear.angularVelocity,blockedVelocity:blocked.velocity,doorHealth:this.explosionDoor.scriptState(1),score:game.score}));}
+ if(this.explosionFrame===100)console.log(JSON.stringify({explosionProof:'after',clearPosition:clear.transform.position,clearVelocity:clear.velocity,blockedPosition:blocked.transform.position,blockedVelocity:blocked.velocity,doorValid:this.explosionDoor.valid,score:game.score}));
+};
+''')
+Path('/tmp/lastlight-explosion-proof.txt').write_text('FRAMES 210\nFRAME_SECONDS .016666667\nLOG_EVERY 0\nWAIT_SERVICES scene 10000 1\nSCREENSHOT 150 /tmp/lastlight-explosion-proof.png\n')
+print(dst)

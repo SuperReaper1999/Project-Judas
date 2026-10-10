@@ -1,0 +1,72 @@
+{
+  "context": "Current expanded town, Release Linux, actual real-time rendering; boots pre-equipped in disposable fixture, only initial countdown shortened2s; eight living enemies in retained sample. No automatic aiming/health changes.",
+  "retained_frames": 120,
+  "frame_ms": {
+    "mean": 8.620343033333333,
+    "p95": 11.510609,
+    "max": 16.716138
+  },
+  "approximate_fps": 116.00466433101072,
+  "fixed_caps": 0,
+  "scene_objects": 598,
+  "scene_static_bodies": 331,
+  "scene_dynamic_bodies": 26,
+  "cpu_ms": {
+    "Fixed simulation step": {
+      "samples": 61,
+      "mean": 3.832721,
+      "max": 7.142385
+    },
+    "JavaScript fixedUpdate": {
+      "samples": 61,
+      "mean": 1.7094785737704918,
+      "max": 3.368589
+    },
+    "Navigation update": {
+      "samples": 61,
+      "mean": 1.1281706721311475,
+      "max": 2.122894
+    },
+    "Rigid physics": {
+      "samples": 61,
+      "mean": 0.16098522950819671,
+      "max": 0.239854
+    },
+    "Character motors": {
+      "samples": 122,
+      "mean": 0.26590590983606555,
+      "max": 0.824556
+    },
+    "World render submission": {
+      "samples": 119,
+      "mean": 5.710368235294117,
+      "max": 11.440738
+    }
+  },
+  "counters": {
+    "Script instances": {
+      "min": 38,
+      "max": 38
+    },
+    "Submitted draws all passes": {
+      "min": 825,
+      "max": 833
+    },
+    "Character motor instances": {
+      "min": 9,
+      "max": 9
+    }
+  },
+  "diagnostics": {
+    "dropped_events": 0,
+    "exhausted_labels": 0,
+    "exhausted_nodes": 0,
+    "exhausted_threads": 0,
+    "incomplete_scopes": 0,
+    "open_scopes": 0,
+    "truncated_records": 0,
+    "gpu_dropped": 0,
+    "nested_frames": 0
+  },
+  "raw_capture": "/home/conner/Documents/GitHub/Project-Judas/.cache/lastlight-framewalk-evidence/active-profile.json"
+}

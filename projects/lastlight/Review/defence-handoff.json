@@ -1,0 +1,23 @@
+{
+  "source_head": "18650ba23c23eaaab0542d6e0055e33cc14d1049",
+  "content_fingerprints": 159,
+  "compared_payloads": 69,
+  "compared_sidecar_identity_and_type": 67,
+  "payload_or_identity_mismatches": [],
+  "review_logs_checked": [
+    "defence-startup.log",
+    "defence-vendor-rocket.log",
+    "defence-rocket-target.log",
+    "defence-grenade-target.log",
+    "defence-house-barricade.log",
+    "defence-five-waves.log",
+    "defence-active-rendering.log",
+    "defence-moved-package.log",
+    "defence-final-equipment.log"
+  ],
+  "script_diagnostics": {},
+  "runtime_source_changed": false,
+  "human_review": "pending",
+  "windows_and_controller_hardware": "not performed",
+  "package": "repo .cache/Lastlight-Package; moved /tmp/judas-lastlight-defense-review-20261010"
+}

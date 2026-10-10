@@ -1,0 +1,28 @@
+from pathlib import Path
+import shutil
+repo=Path('/home/conner/Documents/GitHub/Project-Judas');src=repo/'projects/lastlight';dst=repo/'.cache/lastlight-death-performance'
+if dst.exists():shutil.rmtree(dst)
+shutil.copytree(src,dst,ignore=shutil.ignore_patterns('Review','ArtSource','Saves','__pycache__'))
+p=dst/'Assets/scripts/player.js';p.write_text(p.read_text()+'''
+import {profiler} from 'judas';import {tripBones} from './combat.js';
+Player.prototype.director=function(){};
+const corpseOriginalStart=Player.prototype.start;
+Player.prototype.start=function(){corpseOriginalStart.call(this);this.perfAge=0;this.perfFrames=0;this.perfCorpses=[];this.perfKilled=false;game.phase='breather';game.countdown=10000;};
+const corpseOriginalFixed=Player.prototype.fixedUpdate;
+Player.prototype.fixedUpdate=function(dt){corpseOriginalFixed.call(this,dt);this.perfAge+=dt;
+ if(!this.perfCorpses.length&&this.perfAge>.2){for(const x of [-2,2])for(const z of [10,5,0,-5])this.perfCorpses.push(world.spawnPrefab(this.props.zombie,{position:{x,y:.04,z}},{scripts:[{slot:1,properties:{kind:'zombie',variant:'runner'}}]}));game.alive=8;}
+ if(!this.perfKilled&&this.perfAge>1.2&&this.perfCorpses.length===8&&this.perfCorpses.every(e=>e.children[0].animation?.info.ready)){
+  game.phase='wave';this.perfKilled=true;for(const e of this.perfCorpses)signals.send(e,'range.hit',{kind:'bullet',damage:10000,direction:{x:0,y:0,z:1},point:{...e.transform.position,y:1},source:this.entity.id});
+  console.log(JSON.stringify({deathPerformance:'activation',time:this.perfAge,count:this.perfCorpses.length}));
+ }
+};
+const corpseOriginalUI=Player.prototype.uiUpdate;
+Player.prototype.uiUpdate=function(){corpseOriginalUI.call(this);this.perfFrames++;
+ if(this.perfFrames%120===0){const owners=this.perfCorpses.filter(e=>e.valid),visuals=owners.map(e=>e.children[0]).filter(e=>e?.valid&&e.ragdoll?.active),bodies=visuals.flatMap(e=>tripBones.map(k=>e.ragdoll.body(k)).filter(b=>b?.valid));
+  profiler.counter('Demo physical corpses',visuals.length,'latest');profiler.counter('Demo corpse bodies',bodies.length,'latest');profiler.counter('Demo sleeping corpse bodies',bodies.filter(b=>b.sleeping).length,'latest');
+  console.log(JSON.stringify({deathPerformance:'sample',frame:this.perfFrames,time:this.perfAge,owners:owners.length,active:visuals.length,bodies:bodies.length,sleeping:bodies.filter(b=>b.sleeping).length,score:game.score,kills:game.kills}));
+ }
+};
+''')
+Path('/tmp/lastlight-death-performance.txt').write_text('REALTIME 720\nLOG_EVERY 0\nWAIT_SERVICES scene 10000 1\nLOOK 0 150 35\nACTION camera_toggle 1 45 46\n')
+print(dst)
