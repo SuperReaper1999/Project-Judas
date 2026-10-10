@@ -120,6 +120,31 @@ bool ImportModelSource(const std::string& path,const ModelImportSettings& settin
  if(!GenerateMeshTangents(mesh))throw std::runtime_error("FBX tangent generation failed");
  mesh.skeletal=asset;report.skinJoints=s.skinNodes.size();report.parts=mesh.primitives.size();report.vertices=mesh.vertices.size();report.diagnostics.push_back({"warning","fbx-material-approximation",path,"","Remap material slots for unsupported appearance","FBX factors/maps converted to Judas metallic/roughness; source shader graphs are not reproduced"});result=std::move(mesh);error.clear();return true;
  }catch(const std::exception& e){error=std::string("Model import: ")+e.what();report.diagnostics.push_back({"error","import-failed",path,"","Correct source/settings or remap dependency; last generation remains intact",error});return false;}}
+bool ImportMotionSource(const std::string& path,const ModelImportSettings& settings,MeshData& result,ModelImportReport& report,std::string& error){JUDAS_PROFILE_SCOPE("Motion source normalization");try{
+ if(std::filesystem::file_size(path)>256*1024*1024)throw std::runtime_error("motion source exceeds 256 MiB");
+ auto extension=std::filesystem::path(path).extension().string();MeshData holder;
+ if(extension==".fbx"||extension==".FBX"){
+  auto source=Load(path,settings);auto asset=std::make_shared<SkeletalAsset>();asset->skeleton=Hierarchy(*source);std::map<uint32_t,int> mapping;std::set<std::string> keys;
+  for(size_t i=0;i<source->nodes.count;++i){auto key=Key(asset->skeleton,int(i));if(!keys.insert(key).second)throw std::runtime_error("ambiguous motion hierarchy path: "+key);mapping[source->nodes.data[i]->element_id]=int(i);holder.sourceNodes.push_back(key);}
+  asset->clips=Clips(*source,settings,mapping);holder.skeletal=asset;report.sourceBones=source->bones.count;report.hierarchyNodes=source->nodes.count;report.sourceUnitMeters=source->settings.unit_meters;
+ }else if(extension==".gltf"||extension==".glb"){
+  std::vector<uint8_t> bytes;if(!ReadWholeFile(path,bytes,error)||!ParseGltfMeshSource(bytes.data(),bytes.size(),path,holder,error,&report.dependencies,true,&settings.dependencyRemaps))return false;
+  if(!holder.skeletal)throw std::runtime_error("motion file has no animation hierarchy");
+  if(!std::isfinite(glm::length(settings.basisRotation))||std::abs(glm::length(settings.basisRotation)-1)>1e-4f)throw std::runtime_error("motion basis requires normalized quaternion");
+  float units=settings.sourceUnitMeters>0?float(settings.sourceUnitMeters):1.f;if(!std::isfinite(units)||units<1e-6f||units>1000)throw std::runtime_error("motion unit override bound");
+  auto normalized=std::make_shared<SkeletalAsset>(*holder.skeletal);auto& s=normalized->skeleton;if(s.affine.empty())s.affine.assign(s.names.size(),glm::mat4(1));auto basis=glm::mat4_cast(settings.basisRotation)*glm::scale(glm::mat4(1),glm::vec3(units));for(size_t i=0;i<s.parents.size();++i)if(s.parents[i]<0)s.affine[i]=basis*s.affine[i];holder.skeletal=normalized;
+  report.hierarchyNodes=s.names.size();report.skinJoints=s.skinNodes.size();report.parts=holder.primitives.size();report.vertices=holder.vertices.size();
+ }else if(extension==".judasmodel"){
+  // Already-normalized cooked content is a valid source. Extracted root tracks
+  // are diagnosed by the retarget bake instead of being silently discarded.
+  if(settings.sourceUnitMeters!=0||settings.basisRotation!=glm::quat(1,0,0,0))throw std::runtime_error("cooked motion source is already normalized; remove unit/basis override");
+  if(!LoadModelMesh(path,holder,error))return false;
+  if(!holder.skeletal)throw std::runtime_error("cooked motion source has no skeleton");
+  report.hierarchyNodes=holder.skeletal->skeleton.names.size();report.skinJoints=holder.skeletal->skeleton.skinNodes.size();report.parts=holder.primitives.size();report.vertices=holder.vertices.size();
+ }else throw std::runtime_error("motion source must be FBX, glTF, GLB or judasmodel");
+ if(settings.cancelled&&settings.cancelled())throw std::runtime_error("motion import cancelled");
+ result=std::move(holder);error.clear();return true;
+ }catch(const std::exception& e){error=std::string("Motion import: ")+e.what();return false;}}
 bool ImportCompatibleMotion(const std::string& path,const ModelImportSettings& settings,const Skeleton& target,std::vector<AnimationClip>& result,ModelImportReport& report,std::string& error){JUDAS_PROFILE_SCOPE("Model source normalization");try{
  auto extension=std::filesystem::path(path).extension().string();if(extension==".gltf"||extension==".glb"){
   std::vector<uint8_t> bytes;MeshData holder;if(!ReadWholeFile(path,bytes,error)||!ParseGltfMeshSource(bytes.data(),bytes.size(),path,holder,error,&report.dependencies,true,&settings.dependencyRemaps))return false;

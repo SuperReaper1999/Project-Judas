@@ -1,0 +1,30 @@
+Renderer fragment texture units: 32 (material path uses 12)
+World state: legacy .judasstate (F6/F7) saves disabled for additive compositions; save slots remain available
+Project: Retarget Lab (/home/conner/Documents/GitHub/Project-Judas/.cache/m74/application-project/retarget_lab.judasproj)
+Scene: Borrowed Moves (/home/conner/Documents/GitHub/Project-Judas/.cache/m74/application-project/Scenes/lab.judas)
+World origin (m): 0.000, 0.000, 0.000
+PASS two instances share immutable target but independent mixer
+PASS normal resources publish native and five transferred named clips
+PASS real runtime uses unequal target helper counts
+script asset=1be6c47312fcb1f9bda17ff78d402004 entity=90 slot=1 update: TypeError: partial authority needs selected joints below an animation-owned physical root
+    at __judas (native)
+    at call (judas:2:51)
+    at setMode (judas:194:66)
+    at update (Assets/scripts/lab.js:50:221)
+
+FAULT update TypeError: partial authority needs selected joints below an animation-owned physical root
+    at __judas (native)
+    at call (judas:2:51)
+    at setMode (judas:194:66)
+    at update (Assets/scripts/lab.js:50:221)
+
+FAIL public JS lab lifecycle healthy
+FAULT update TypeError: partial authority needs selected joints below an animation-owned physical root
+    at __judas (native)
+    at call (judas:2:51)
+    at setMode (judas:194:66)
+    at update (Assets/scripts/lab.js:50:221)
+
+FAIL public JS lab lifecycle healthy
+FAIL ordinary application startup/lifecycle/shutdown
+SUMMARY mode=probe checks=6 failures=3 frames=40

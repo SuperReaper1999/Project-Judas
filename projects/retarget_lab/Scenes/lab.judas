@@ -1,0 +1,673 @@
+{
+  "kind": "scene",
+  "schema": 1,
+  "data": {
+    "settings": {
+      "name": "Borrowed Moves",
+      "world-origin": [
+        0,
+        0,
+        0
+      ],
+      "sun-direction": [
+        0.4,
+        0.7,
+        0.35
+      ],
+      "sun-color": [
+        1,
+        0.98,
+        0.92
+      ],
+      "ambient": [
+        0.16,
+        0.17,
+        0.19
+      ],
+      "fluid-scale": 1,
+      "fluid-update-rate-hz": 30,
+      "fluid-hydrostatic-drag-rate": 2,
+      "fidelity-policy": {
+        "mode": {
+          "symbol": "none"
+        }
+      },
+      "next-id": 1000
+    },
+    "objects": [
+      {
+        "id": 1,
+        "name": "Ordinary floor",
+        "fields": {
+          "position": [
+            0,
+            -0.15,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "box"
+          },
+          "render.half-extents": [
+            12,
+            0.15,
+            8
+          ],
+          "render.radius": 0.5,
+          "render.color": [
+            0.12,
+            0.16,
+            0.2
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.half-extents": [
+            12,
+            0.15,
+            8
+          ],
+          "body.radius": 0.5,
+          "body.terrain": "",
+          "body.mass": 1,
+          "body.friction": 0.6,
+          "body.restitution": 0.1,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": false,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0
+        }
+      },
+      {
+        "id": 2,
+        "name": "Uniform lab gravity",
+        "fields": {
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "gravity": {
+            "kind": {
+              "symbol": "uniform"
+            },
+            "magnitude": 9.81
+          },
+          "gravity.region": {
+            "shape": {
+              "symbol": "box"
+            },
+            "halfExtents": [
+              100,
+              100,
+              100
+            ]
+          }
+        }
+      },
+      {
+        "id": 10,
+        "name": "source independent instance",
+        "fields": {
+          "animation.enabled": true,
+          "animation.play-on-start": true,
+          "animation.loop": true,
+          "animation.clip": "Wave",
+          "animation.speed": 1,
+          "animation.time": 0,
+          "position": [
+            -3.2,
+            0,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.half-extents": [
+            0.5,
+            0.5,
+            0.5
+          ],
+          "render.radius": 0.5,
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "beb8f38592b58ed949d342b989230665",
+          "render.texture-asset": ""
+        }
+      },
+      {
+        "id": 11,
+        "name": "broad independent instance",
+        "fields": {
+          "animation.enabled": true,
+          "animation.play-on-start": true,
+          "animation.loop": true,
+          "animation.clip": "Wave",
+          "animation.speed": 1,
+          "animation.time": 0,
+          "ragdoll.enabled": true,
+          "ragdoll.play-on-start": false,
+          "ragdoll.self-collision": true,
+          "ragdoll.bones": 4,
+          "ragdoll.bone.0.joint": "Q02",
+          "ragdoll.bone.0.parent": "",
+          "ragdoll.bone.0.shape": 0,
+          "ragdoll.bone.0.offset": [
+            -0.036607042,
+            0.114279985,
+            0
+          ],
+          "ragdoll.bone.0.orientation": [
+            0.9880116,
+            0,
+            -0.0,
+            0.15438019
+          ],
+          "ragdoll.bone.0.half-extents": [
+            0.03,
+            0.11999996,
+            0.03
+          ],
+          "ragdoll.bone.0.radius": 0.03,
+          "ragdoll.bone.0.mass": 1,
+          "ragdoll.bone.0.friction": 0.6,
+          "ragdoll.bone.0.restitution": 0,
+          "ragdoll.bone.0.layer": 0,
+          "ragdoll.bone.0.mask": 18446744073709551615,
+          "ragdoll.bone.0.suppress-parent": true,
+          "ragdoll.bone.0.auto-anchors": true,
+          "ragdoll.bone.0.constraint": 2,
+          "ragdoll.bone.0.enabled": true,
+          "ragdoll.bone.0.anchor-a": [
+            0,
+            0,
+            0
+          ],
+          "ragdoll.bone.0.anchor-b": [
+            0,
+            0,
+            0
+          ],
+          "ragdoll.bone.0.frame-a": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "ragdoll.bone.0.frame-b": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "ragdoll.bone.0.limits": false,
+          "ragdoll.bone.0.lower": -1,
+          "ragdoll.bone.0.upper": 1,
+          "ragdoll.bone.1.joint": "Q03",
+          "ragdoll.bone.1.parent": "Q02",
+          "ragdoll.bone.1.shape": 0,
+          "ragdoll.bone.1.offset": [
+            0.046892434,
+            0.105005145,
+            0
+          ],
+          "ragdoll.bone.1.orientation": [
+            0.978031,
+            0,
+            0,
+            -0.20846
+          ],
+          "ragdoll.bone.1.half-extents": [
+            0.03,
+            0.11499992,
+            0.03
+          ],
+          "ragdoll.bone.1.radius": 0.03,
+          "ragdoll.bone.1.mass": 1,
+          "ragdoll.bone.1.friction": 0.6,
+          "ragdoll.bone.1.restitution": 0,
+          "ragdoll.bone.1.layer": 0,
+          "ragdoll.bone.1.mask": 18446744073709551615,
+          "ragdoll.bone.1.suppress-parent": true,
+          "ragdoll.bone.1.auto-anchors": true,
+          "ragdoll.bone.1.constraint": 2,
+          "ragdoll.bone.1.enabled": true,
+          "ragdoll.bone.1.anchor-a": [
+            0,
+            0,
+            0
+          ],
+          "ragdoll.bone.1.anchor-b": [
+            0,
+            0,
+            0
+          ],
+          "ragdoll.bone.1.frame-a": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "ragdoll.bone.1.frame-b": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "ragdoll.bone.1.limits": false,
+          "ragdoll.bone.1.lower": -1,
+          "ragdoll.bone.1.upper": 1,
+          "ragdoll.bone.2.joint": "Q08",
+          "ragdoll.bone.2.parent": "Q03",
+          "ragdoll.bone.2.shape": 0,
+          "ragdoll.bone.2.offset": [
+            -0.1404692,
+            -0.044996202,
+            0.019999998
+          ],
+          "ragdoll.bone.2.orientation": [
+            0.59063834,
+            0.11374444,
+            -0.0,
+            0.7988796
+          ],
+          "ragdoll.bone.2.half-extents": [
+            0.03,
+            0.14884976,
+            0.03
+          ],
+          "ragdoll.bone.2.radius": 0.03,
+          "ragdoll.bone.2.mass": 1,
+          "ragdoll.bone.2.friction": 0.6,
+          "ragdoll.bone.2.restitution": 0,
+          "ragdoll.bone.2.layer": 0,
+          "ragdoll.bone.2.mask": 18446744073709551615,
+          "ragdoll.bone.2.suppress-parent": true,
+          "ragdoll.bone.2.auto-anchors": true,
+          "ragdoll.bone.2.constraint": 2,
+          "ragdoll.bone.2.enabled": true,
+          "ragdoll.bone.2.anchor-a": [
+            0,
+            0,
+            0
+          ],
+          "ragdoll.bone.2.anchor-b": [
+            0,
+            0,
+            0
+          ],
+          "ragdoll.bone.2.frame-a": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "ragdoll.bone.2.frame-b": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "ragdoll.bone.2.limits": false,
+          "ragdoll.bone.2.lower": -1,
+          "ragdoll.bone.2.upper": 1,
+          "ragdoll.bone.3.joint": "Q09",
+          "ragdoll.bone.3.parent": "Q08",
+          "ragdoll.bone.3.shape": 0,
+          "ragdoll.bone.3.offset": [
+            -0.016435608,
+            0.0073396564,
+            -0.018
+          ],
+          "ragdoll.bone.3.orientation": [
+            0.8025986,
+            -0.44051096,
+            0,
+            0.40222585
+          ],
+          "ragdoll.bone.3.half-extents": [
+            0.03,
+            0.03,
+            0.03
+          ],
+          "ragdoll.bone.3.radius": 0.03,
+          "ragdoll.bone.3.mass": 1,
+          "ragdoll.bone.3.friction": 0.6,
+          "ragdoll.bone.3.restitution": 0,
+          "ragdoll.bone.3.layer": 0,
+          "ragdoll.bone.3.mask": 18446744073709551615,
+          "ragdoll.bone.3.suppress-parent": true,
+          "ragdoll.bone.3.auto-anchors": true,
+          "ragdoll.bone.3.constraint": 2,
+          "ragdoll.bone.3.enabled": true,
+          "ragdoll.bone.3.anchor-a": [
+            0,
+            0,
+            0
+          ],
+          "ragdoll.bone.3.anchor-b": [
+            0,
+            0,
+            0
+          ],
+          "ragdoll.bone.3.frame-a": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "ragdoll.bone.3.frame-b": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "ragdoll.bone.3.limits": false,
+          "ragdoll.bone.3.lower": -1,
+          "ragdoll.bone.3.upper": 1,
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.half-extents": [
+            0.5,
+            0.5,
+            0.5
+          ],
+          "render.radius": 0.5,
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "da8f0716e3dde83f11aedfa2b1c3937d",
+          "render.texture-asset": ""
+        }
+      },
+      {
+        "id": 12,
+        "name": "tall independent instance",
+        "fields": {
+          "animation.enabled": true,
+          "animation.play-on-start": true,
+          "animation.loop": true,
+          "animation.clip": "Wave",
+          "animation.speed": 1,
+          "animation.time": 0,
+          "position": [
+            3.2,
+            0,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.half-extents": [
+            0.5,
+            0.5,
+            0.5
+          ],
+          "render.radius": 0.5,
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "62ceabb5c480b8b0bbcbfdd1a8cb5841",
+          "render.texture-asset": ""
+        }
+      },
+      {
+        "id": 13,
+        "name": "broad independent instance",
+        "fields": {
+          "animation.enabled": true,
+          "animation.play-on-start": true,
+          "animation.loop": true,
+          "animation.clip": "Wave",
+          "animation.speed": 1,
+          "animation.time": 0,
+          "position": [
+            5.4,
+            0,
+            -2.5
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.half-extents": [
+            0.5,
+            0.5,
+            0.5
+          ],
+          "render.radius": 0.5,
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "da8f0716e3dde83f11aedfa2b1c3937d",
+          "render.texture-asset": ""
+        }
+      },
+      {
+        "id": 30,
+        "name": "Resolved left palm socket",
+        "fields": {
+          "socket.target": 11,
+          "socket.joint": "Q00/Q01/RetainedSpacer71/Q02/Q03/Q06/Q07/RetainedSpacer72/Q08/Q09",
+          "socket.enabled": true,
+          "socket.position": [
+            0,
+            0,
+            0
+          ],
+          "socket.rotation": [
+            0,
+            0,
+            0,
+            1
+          ],
+          "socket.scale": [
+            1,
+            1,
+            1
+          ],
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "box"
+          },
+          "render.half-extents": [
+            0.055,
+            0.055,
+            0.14
+          ],
+          "render.radius": 0.5,
+          "render.color": [
+            1,
+            0.67,
+            0.2
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": ""
+        }
+      },
+      {
+        "id": 90,
+        "name": "Ordinary JS lab controls",
+        "fields": {
+          "ui.asset": "b70cc3682c1386efe4adcf254ed186b2",
+          "ui.name": "retarget_lab",
+          "ui.enabled": true,
+          "scripts": 1,
+          "script.0.id": 1,
+          "script.0.asset": "1be6c47312fcb1f9bda17ff78d402004",
+          "script.0.enabled": true,
+          "script.0.properties": {
+            "json": {
+              "keysJson": "{\"source\":{\"Pivot\":\"OriginHelper/Pivot\",\"Vertebra0\":\"OriginHelper/Pivot/Vertebra0\",\"Vertebra1\":\"OriginHelper/Pivot/Vertebra0/Vertebra1\",\"NeckConnector\":\"OriginHelper/Pivot/Vertebra0/Vertebra1/NeckConnector\",\"Cranial\":\"OriginHelper/Pivot/Vertebra0/Vertebra1/NeckConnector/Cranial\",\"ShoulderA\":\"OriginHelper/Pivot/Vertebra0/Vertebra1/CollarA/ShoulderA\",\"ElbowA\":\"OriginHelper/Pivot/Vertebra0/Vertebra1/CollarA/ShoulderA/ElbowA\",\"PalmA\":\"OriginHelper/Pivot/Vertebra0/Vertebra1/CollarA/ShoulderA/ElbowA/PalmA\",\"ShoulderB\":\"OriginHelper/Pivot/Vertebra0/Vertebra1/CollarB/ShoulderB\",\"ElbowB\":\"OriginHelper/Pivot/Vertebra0/Vertebra1/CollarB/ShoulderB/ElbowB\",\"PalmB\":\"OriginHelper/Pivot/Vertebra0/Vertebra1/CollarB/ShoulderB/ElbowB/PalmB\",\"ThighA\":\"OriginHelper/Pivot/ThighA\",\"ShinA\":\"OriginHelper/Pivot/ThighA/ShinA\",\"SoleA\":\"OriginHelper/Pivot/ThighA/ShinA/SoleA\",\"ThighB\":\"OriginHelper/Pivot/ThighB\",\"ShinB\":\"OriginHelper/Pivot/ThighB/ShinB\",\"SoleB\":\"OriginHelper/Pivot/ThighB/ShinB/SoleB\"},\"broad\":{\"Pivot\":\"Q00/Q01\",\"Vertebra0\":\"Q00/Q01/RetainedSpacer71/Q02\",\"Vertebra1\":\"Q00/Q01/RetainedSpacer71/Q02/Q03\",\"NeckConnector\":\"Q00/Q01/RetainedSpacer71/Q02/Q03/Q04\",\"Cranial\":\"Q00/Q01/RetainedSpacer71/Q02/Q03/Q04/Q05\",\"ShoulderA\":\"Q00/Q01/RetainedSpacer71/Q02/Q03/Q06/Q07\",\"ElbowA\":\"Q00/Q01/RetainedSpacer71/Q02/Q03/Q06/Q07/RetainedSpacer72/Q08\",\"PalmA\":\"Q00/Q01/RetainedSpacer71/Q02/Q03/Q06/Q07/RetainedSpacer72/Q08/Q09\",\"ShoulderB\":\"Q00/Q01/RetainedSpacer71/Q02/Q03/Q29/Q30\",\"ElbowB\":\"Q00/Q01/RetainedSpacer71/Q02/Q03/Q29/Q30/Q31\",\"PalmB\":\"Q00/Q01/RetainedSpacer71/Q02/Q03/Q29/Q30/Q31/Q32\",\"ThighA\":\"Q00/Q01/Q25\",\"ShinA\":\"Q00/Q01/Q25/Q26\",\"SoleA\":\"Q00/Q01/Q25/Q26/Q27\",\"ThighB\":\"Q00/Q01/Q48\",\"ShinB\":\"Q00/Q01/Q48/RetainedSpacer73/Q49\",\"SoleB\":\"Q00/Q01/Q48/RetainedSpacer73/Q49/Q50\"},\"tall\":{\"Pivot\":\"Q00/Q01\",\"Vertebra0\":\"Q00/Q01/RetainedSpacer71/Q02\",\"Vertebra1\":\"Q00/Q01/RetainedSpacer71/Q02/Q03\",\"NeckConnector\":\"Q00/Q01/RetainedSpacer71/Q02/Q03/Q04\",\"Cranial\":\"Q00/Q01/RetainedSpacer71/Q02/Q03/Q04/Q05\",\"ShoulderA\":\"Q00/Q01/RetainedSpacer71/Q02/Q03/Q06/Q07\",\"ElbowA\":\"Q00/Q01/RetainedSpacer71/Q02/Q03/Q06/Q07/Q08\",\"PalmA\":\"Q00/Q01/RetainedSpacer71/Q02/Q03/Q06/Q07/Q08/Q09\",\"ShoulderB\":\"Q00/Q01/RetainedSpacer71/Q02/Q03/Q29/Q30\",\"ElbowB\":\"Q00/Q01/RetainedSpacer71/Q02/Q03/Q29/Q30/Q31\",\"PalmB\":\"Q00/Q01/RetainedSpacer71/Q02/Q03/Q29/Q30/Q31/Q32\",\"ThighA\":\"Q00/Q01/Q25\",\"ShinA\":\"Q00/Q01/Q25/Q26\",\"SoleA\":\"Q00/Q01/Q25/Q26/Q27\",\"ThighB\":\"Q00/Q01/Q48\",\"ShinB\":\"Q00/Q01/Q48/Q49\",\"SoleB\":\"Q00/Q01/Q48/Q49/Q50\"}}",
+              "prefab": "1c71edcd7b765c9ad62cfec4511fd3d3"
+            }
+          },
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ]
+        }
+      }
+    ]
+  }
+}

@@ -6,6 +6,7 @@ accepted M68 cache/readiness changes are described in [Scalability](SCALABILITY.
 Judas normalizes content; scripts decide what the content means.
 [Animation](ANIMATION.md) · [Materials](MATERIALS.md) · [Collision](M64_COLLISION.md)
 · [JudasJS](JUDASJS.md) · [M66 results](evidence/m66/REPORT.md)
+· [Editor/import-time retargeting (M74)](M74.md)
 
 ## Import, inspect, place
 
@@ -41,6 +42,25 @@ take and gives it a project clip name. FBX takes are named by their source; the
 original files use `mixamo.com`. An invalid choice reports available takes. Recipe
 clip entries select, rename, trim, loop and choose root policy. Keep all clips by
 omitting `clips`. No Blender/NLA merge is required.
+
+**Different compatible skeletons:** M74's [retargeting workspace](EDITOR_GUIDE.md#animation-retargeting-m74-candidate)
+uses one reusable `Imports/*.judasretarget` correspondence/reference profile.
+The target recipe adds a `motions[]` entry with `retargetProfile`, source take
+and ordinary output clip name. This extends motion assembly, rather than adding
+a runtime animation-clip attachment system. Different names, proportions, local
+axes and unmapped helpers are handled through explicit full hierarchy keys and
+reference frames; **Copy / add compatible motion** remains the original
+same-compatible-skeleton path.
+
+Source normalization and target normalization are independent authoring inputs.
+Retarget output is resampled **LINEAR** local TRS tracks in the ordinary target
+`.judasmodel`. Animated STEP discontinuities are diagnosed as unsupported for
+this transfer; ordinary importing/playback of STEP tracks remains supported.
+An already-extracted source motion track is explicitly rejected before cooking,
+so the author must choose a source retaining its original skeletal locomotion.
+The transferred operation then uses the existing preserve/in-place/extract root
+policy, not another root-motion system. See [M74](M74.md) for the exact recipe,
+shared CLI, measured tolerances, invalidation and supported limits.
 
 ## Same CLI, same service
 
@@ -120,7 +140,7 @@ weights fail. Loss is never silently attributed to a successfully preserved rig.
 
 Dual-quaternion skins, morph/cache deformations and unsupported extra UV channels
 are rejected. Explicit `allowBaseMesh` permits a lossy undeformed base where
-implemented and reports that choice. No runtime source constraint solver, general
+implemented and reports that choice. No runtime source constraint solver, universal/runtime
 retargeting, Draco, DCC shader graph reproduction or arbitrary FBX deformation.
 Per-part front-face selection assumes consistent reflection within that part;
 mixed per-vertex reflection inside one skinned part is not a fidelity promise.

@@ -1,0 +1,23 @@
+{
+    "extended":  {
+                     "path":  "\\\\?\\C:\\JudasValidation\\Receipts\\M74\\Run-20261010-181316\\Cook\\dense-secondary-trim\\.cache\\model-import\\aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa-bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb.judasmodel.import-staging-1816-98",
+                     "created":  true,
+                     "win32Error":  0,
+                     "length":  265
+                 },
+    "longPathsEnabled":  0,
+    "root":  "C:\\JudasValidation\\Receipts\\M74\\Run-20261010-181316\\Cook\\dense-secondary-trim",
+    "method":  "Same CreateFileW GENERIC_WRITE/share0/CREATE_NEW as staging; temporary probe files use DELETE_ON_CLOSE, accepted products unchanged",
+    "short":  {
+                  "path":  "C:\\JudasValidation\\Receipts\\M74\\Run-20261010-181316\\Cook\\dense-secondary-trim\\.cache\\model-import\\m74-path-probe-1816.tmp",
+                  "created":  true,
+                  "win32Error":  0,
+                  "length":  121
+              },
+    "normal":  {
+                   "path":  "C:\\JudasValidation\\Receipts\\M74\\Run-20261010-181316\\Cook\\dense-secondary-trim\\.cache\\model-import\\aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa-bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb.judasmodel.import-staging-1816-98",
+                   "created":  false,
+                   "win32Error":  3,
+                   "length":  261
+               }
+}

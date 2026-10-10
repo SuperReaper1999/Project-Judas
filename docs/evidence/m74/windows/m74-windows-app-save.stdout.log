@@ -1,0 +1,9 @@
+PASS two instances share immutable target but independent mixer
+PASS normal resources publish native and five transferred named clips
+PASS real runtime uses unequal target helper counts
+PASS save fixture uses three real stable left-arm hierarchy keys
+PASS normal saved layer references baked clip with authored mask and weight
+PASS modern save/load request
+PASS modern slot transaction completed
+PASS ordinary application startup/lifecycle/shutdown
+SUMMARY mode=write checks=8 failures=0 frames=17

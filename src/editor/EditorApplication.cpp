@@ -1,5 +1,6 @@
 #include "Ragdoll.h"
 #include "ModelCook.h"
+#include "RetargetPanel.h"
 #include <glm/gtc/matrix_transform.hpp>
 #include "WorldStreaming.h"
 #include "Prefab.h"
@@ -375,6 +376,7 @@ void EditorApplication::RefreshProjectLists() {
 bool EditorApplication::OpenProject(const std::string& projectFile, std::string& outError) {
     Project project;
     if (!project.Load(projectFile, outError)) return false;
+    RetireRetargetProject(m_panels);
     m_project = project;
     m_scenePicker.Clear();
     m_host->OpenProjectAssets(m_project.RootDir(), m_project.AssetsDir());
@@ -1376,6 +1378,9 @@ int EditorApplication::Run(int argc, char** argv) {
     if (autotest) SaveSceneToString(m_document.GetScene(), autotestBaseline);
     const char* importRecipe=autotest?std::getenv("JUDAS_EDITOR_AUTOTEST_IMPORT"):nullptr;
     if(importRecipe){m_panels.showAssetBrowser=true;m_panels.modelRecipe=importRecipe;m_panels.importTask=QueueModelImport(host.Jobs(),importRecipe);m_panels.importPublished=false;}
+    const char* retargetAutotest=autotest?std::getenv("JUDAS_EDITOR_AUTOTEST_RETARGET"):nullptr;
+    if(retargetAutotest){std::string error;if(!BeginRetargetAutotest(m_panels,retargetAutotest,error)){std::fprintf(stderr,"[M74 editor retarget] FAIL: %s\n",error.c_str());m_quit=true;}}
+    unsigned retargetWaitFrames=0;
     unsigned importWaitFrames=0;
     const auto screenshot = [&](const std::string& path) {
         std::vector<unsigned char> pixels;
@@ -1495,6 +1500,7 @@ int EditorApplication::Run(int argc, char** argv) {
             DrawWorldBuildingPanel(m_document, m_panels);
             DrawSceneSettingsPanel(m_document, m_panels);
             DrawAssetBrowserPanel(m_document, m_panels, requests);
+            DrawRetargetPanel(m_panels, requests);
             DrawProjectSettingsPanel(m_document, m_panels, requests);
         }
         if (m_panels.mode == EditorMode::Edit || m_panels.playPaused)
@@ -1553,6 +1559,7 @@ int EditorApplication::Run(int argc, char** argv) {
         AdvanceStabilizationAutomation();
 
         DrawModelImportPreview(deltaSeconds);
+        UpdateRetargetPreview(m_panels, renderer, deltaSeconds);
         DrawUIAuthoringPreview();
         editorBuildScope.End();
         ImGui::Render();
@@ -1573,7 +1580,9 @@ int EditorApplication::Run(int argc, char** argv) {
         if (autotest) {
             bool waiting=importRecipe&&!m_panels.modelPreviewToken;
             if(waiting&&((m_panels.importTask->done&&!m_panels.importTask->success)||++importWaitFrames>4000)){std::fprintf(stderr,"[editor autotest] import FAIL: %s\n",m_panels.importTask->error.c_str());m_quit=true;}
+            if(retargetAutotest){std::string error;int status=RetargetAutotestStatus(m_panels,error);if(status<0||(status==0&&++retargetWaitFrames>4000)){std::fprintf(stderr,"[M74 editor retarget] FAIL: %s\n",error.c_str());m_quit=true;}waiting=waiting||status==0;}
             if(!waiting)++autotestFrame;
+            if(retargetAutotest && autotestFrame==1) screenshot(std::string(autotest)+".retarget.png");
             if(importRecipe&&autotestFrame==1)std::fprintf(stderr,"[editor autotest] shared import + GPU preview PASS (%zu parts)\n",m_panels.importAccepted->preview->primitives.size());
             if(importRecipe&&autotestFrame==2){auto* placed=m_document.SelectedObject();std::fprintf(stderr,"[editor autotest] ordinary imported placement %s\n",placed&&placed->render&&placed->animation?"PASS":"FAIL");m_document.Undo();std::string restored;SaveSceneToString(m_document.GetScene(),restored);std::fprintf(stderr,"[editor autotest] imported placement one undo %s\n",restored==autotestBaseline?"PASS":"FAIL");}
             if(importRecipe&&autotestFrame==6){m_panels.modelPreviewPlaying=true;m_panels.modelPreviewTime=.5f;}
@@ -1778,7 +1787,7 @@ int EditorApplication::Run(int argc, char** argv) {
                 all.collisionShapes = all.playerCapsule = all.contacts = all.gravity = all.frameAxes = all.lights =
                     all.interactionRanges = all.lifecycle = all.terrainNormals = all.fluidParticles = all.atmosphere = true;
                 m_panels.debug = polishAutotest || pickingAutotest ? DebugViewOptions{} : all;
-                m_panels.showProfiler = !std::getenv("JUDAS_EDITOR_AUTOTEST_AUTHORING") && !polishAutotest && !pickingAutotest;
+                m_panels.showProfiler = !std::getenv("JUDAS_EDITOR_AUTOTEST_AUTHORING") && !retargetAutotest && !polishAutotest && !pickingAutotest;
             } else if (autotestFrame == 10) {
                 // Duplicate + undo must leave the scene exactly as authored.
                 const SceneObjectId selected = m_document.Selected();
@@ -1841,6 +1850,7 @@ int EditorApplication::Run(int argc, char** argv) {
     m_heldAssets.clear();
     window.SetEventHook(nullptr);
     if (m_sceneViewTarget.IsValid()) renderer.DestroyRenderTarget(m_sceneViewTarget);
+    ShutdownRetargetPreview(m_panels, renderer);
     if(m_uiPreviewTarget.IsValid())renderer.DestroyRenderTarget(m_uiPreviewTarget);
     m_uiPreview.reset();
     if(m_modelPreviewTarget.IsValid())renderer.DestroyRenderTarget(m_modelPreviewTarget);

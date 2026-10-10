@@ -1,0 +1,29 @@
+[  4%] Built target judas_app_icon
+[ 18%] Built target freetype
+[ 18%] Built target judas_icu_build
+[ 22%] Built target judas_quickjs
+[ 27%] Built target judas_navigation_backend
+[ 27%] Built target judas_glad
+[ 27%] Built target judas_profiler
+[ 31%] Built target judas_audio_backend
+[ 31%] Built target harfbuzz
+[ 36%] Built target judas_imgui
+[ 40%] Built target judas_ufbx
+[ 40%] Built target judas_materials
+[ 90%] Built target judas_engine
+[ 95%] Built target judas_model_import
+[ 95%] Built target judas_navigation_baker
+[ 95%] Built target judas_world_authoring
+[ 95%] Building CXX object CMakeFiles/judas_editor.dir/src/editor/RetargetPanel.cpp.o
+/home/conner/Documents/GitHub/Project-Judas/src/editor/RetargetPanel.cpp: In function ‘void OpenRetargetPanel(EditorPanelState&, const std::string&, const std::string&, const std::string&)’:
+/home/conner/Documents/GitHub/Project-Judas/src/editor/RetargetPanel.cpp:504:16: warning: unused variable ‘justOpened’ [-Wunused-variable]
+  504 |     const bool justOpened = panels.showRetarget && !state.wasOpen;
+      |                ^~~~~~~~~~
+/home/conner/Documents/GitHub/Project-Judas/src/editor/RetargetPanel.cpp: In function ‘void DrawRetargetPanel(EditorPanelState&, EditorRequests&)’:
+/home/conner/Documents/GitHub/Project-Judas/src/editor/RetargetPanel.cpp:591:9: error: ‘justOpened’ was not declared in this scope
+  591 |     if (justOpened) ImGui::SetNextWindowFocus();
+      |         ^~~~~~~~~~
+gmake[3]: *** [CMakeFiles/judas_editor.dir/build.make:163: CMakeFiles/judas_editor.dir/src/editor/RetargetPanel.cpp.o] Error 1
+gmake[2]: *** [CMakeFiles/Makefile2:1199: CMakeFiles/judas_editor.dir/all] Error 2
+gmake[1]: *** [CMakeFiles/Makefile2:1206: CMakeFiles/judas_editor.dir/rule] Error 2
+gmake: *** [Makefile:345: judas_editor] Error 2

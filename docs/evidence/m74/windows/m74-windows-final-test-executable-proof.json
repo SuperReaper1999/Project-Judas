@@ -1,0 +1,14 @@
+﻿[
+    {
+        "lastWriteUtc":  "2026-10-10T17:19:13.6949706Z",
+        "sha256":  "a700b0c7de326c2f9b66ede8a6481de86d7913e8ad209f9292d55c822b0225a3",
+        "name":  "judas_animation_retarget_tests.exe",
+        "builtAfterStart":  true
+    },
+    {
+        "lastWriteUtc":  "2026-10-10T17:19:27.5231269Z",
+        "sha256":  "dcfb2f2a0d1363d9cd8d33e8c0b618896fc78ad72dfb63b0a11a3b414864ee07",
+        "name":  "judas_retarget_application_tests.exe",
+        "builtAfterStart":  true
+    }
+]

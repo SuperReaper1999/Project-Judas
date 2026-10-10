@@ -1,0 +1,13 @@
+{
+  "assetId": "beb8f38592b58ed949d342b989230665",
+  "format": "JudasImport",
+  "output": "Assets/models/source.judasmodel",
+  "settings": {
+    "allowBaseMesh": false,
+    "dependencyRemaps": {},
+    "sampleRate": 60,
+    "unitMeters": 0
+  },
+  "source": "Sources/source.gltf",
+  "version": 1
+}

@@ -1,0 +1,19 @@
+﻿{
+    "probe":  0,
+    "save":  0,
+    "gpuHardwareValidated":  false,
+    "vmOnlyExtraDlls":  [
+                            "opengl32.dll",
+                            "libgallium_wgl.dll"
+                        ],
+    "moved":  0,
+    "unrelatedWorkingDirectory":  "C:\\JudasValidation\\Unrelated M74 working directory",
+    "export":  0,
+    "spacesAndNonAsciiPath":  true,
+    "stockPackageMesa":  false,
+    "sourceProjectUnavailableDuringMovedRun":  true,
+    "package":  "C:\\JudasValidation\\Packages\\Moved M74 Retarget Lab é α 20261010-182041",
+    "load":  0,
+    "finished":  "2026-10-10T18:21:10.3716808+01:00",
+    "editor":  0
+}

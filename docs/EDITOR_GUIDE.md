@@ -1,7 +1,8 @@
 # Using the Judas editor
 
-Accepted M71 editor foundation; the current [M72 candidate](M72.md) adds runtime
-render controls. M72 human review and native Windows validation remain pending.
+Accepted M71 editor foundation and [M72 render controls](M72.md), with Linux human
+review and native Windows VM checks recorded. Physical Windows GPU/input acceptance
+remains separate. [M74 retargeting](M74.md) is an uncommitted authoring candidate.
 [JudasJS reference](JUDASJS.md) · [Make a game by hand](judasjs/getting-started.md) · [Named authoring](NAMED_AUTHORING.md)
 
 ## Workspace
@@ -78,7 +79,45 @@ OS default handler, which must be configured to open Markdown/scripts usefully.
 Use **View → JudasJS reference** or **Making your first project** for the offline
 reference and [hand-authoring guide](judasjs/getting-started.md).
 
-## Lighting, visibility and materials (M72 candidate)
+## Animation retargeting (M74 candidate)
+
+Open **View → Animation retargeting**, or the retargeting button in **Asset
+Browser → Import & tools**. This is an authoring workspace: it creates no game
+world, runs no scripts and does not mutate the open scene or Play state.
+
+1. Choose a project-relative animation source and a target `Imports/*.judasimport`
+   recipe. Set the source's unit/basis conversion only when source metadata needs
+   explicit conversion, then **Load source + target on worker**.
+2. Create/load an `Imports/*.judasretarget` profile. Add explicit source/target
+   mappings with **full hierarchy keys**. Short ambiguous bone names do not bind.
+   Unmapped target helpers retain their reference/rest local transform.
+3. Set model-frame alignment, positive translation scale, selected translation
+   channels and any static local reference corrections. These controls calibrate
+   correspondence; they do not rewrite the mesh's bind pose or skin weights.
+4. Choose the source take, ordinary output name, trim, sample rate and explicit
+   root policy. **Validate profile**, then **Refresh comparison (CPU only)**.
+   Source and target share preview time and scale; play/pause, scrub, skeleton
+   axes and reference-pose inspection are independent of the game's camera.
+5. **Save profile** and **Save recipe operation** separately. **Bake / reimport
+   target model** uses the normal bounded import job and guarded publication.
+   Existing target geometry, materials and native clips remain ordinary content.
+   Output-name collisions fail unless an existing *retarget operation* is
+   explicitly selected for replacement; a native clip is not silently replaced.
+
+**Undo draft / Redo draft / Cancel draft edits** affect the local mapping and
+operation draft, not scene Undo or filesystem writes. Changed drafts mark the
+comparison stale. Closing the panel or changing project cancels unpublished
+work; failed or stale publication retains the last-good cooked target. Entering
+Play suspends the preview and defers publication until Edit; it does not cancel
+the authoring jobs. Source decoding and comparison baking run on the existing
+worker pool; GPU upload and drawing stay in Renderer on the editor thread.
+
+The game uses the resulting **ordinary named target clip** with the existing
+animation API. It needs no runtime profile, source rig or retargeting service.
+See [M74's transfer convention, bounds and limitations](M74.md) and
+[model import](MODEL_IMPORT.md) for the matching CLI and recipe format.
+
+## Lighting, visibility and materials (M72)
 
 In the ordinary object inspector, **Entity render visible** is a local render
 gate. Under Render, **Render component visible** and imported **Part visible**

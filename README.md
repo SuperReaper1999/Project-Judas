@@ -17,13 +17,16 @@ SDL-created context; generation and license provenance are recorded in
 
 ## JUDAS STATUS: READY FOR NEW FEATURE DEVELOPMENT
 
-Current accepted engine checkpoint: M71 (`02b540f083bcf3d99b0dc6eb9aa70e63c91a31c3`).
-[M72 lighting, render visibility and instance materials](docs/M72.md) is an
-checkpoint authorized without human validation; desktop review remains pending.
-M67 authoring review remains provisional/deferred. M69 controller behaviour was
-accepted using synthetic delivery/VM checks; physical controller feel and Windows
-validation for the later M70/M71/M72 changes remain outstanding. The operator's
-earlier Windows-update acceptance retains its historical scope.
+Current accepted checkpoint: `b7d7f4142b243cd57d9998f4952857e67e5d84a8`
+(Lastlight UI and wall pursuit); M73 owned signals are accepted at
+`18650ba23c23eaaab0542d6e0055e33cc14d1049`. M74 editor-time animation
+retargeting is **checkpointed provisionally; human motion validation is pending**.
+See [retargeting/profile reference](docs/M74.md) and the ordinary
+[Retarget Lab project](projects/retarget_lab/retarget_lab.judasproj).
+M72 desktop review and native Windows VM checks are complete within their recorded
+scope. Physical Windows hardware validation remains outstanding; M67 human authoring
+review remains provisional/deferred. M69 controller acceptance uses synthetic/VM
+checks; hardware feel is untested.
 Start with [Architecture](docs/ARCHITECTURE.md), [JudasJS](docs/JUDASJS.md) and
 [documentation maintenance](docs/DOCUMENTATION_MAINTENANCE.md).
 

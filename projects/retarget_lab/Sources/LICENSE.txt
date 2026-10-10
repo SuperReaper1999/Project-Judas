@@ -1,0 +1,1 @@
+Original M74 fixture geometry and motion: CC0-1.0. Derived only from original CC0 M70 fixture generator. No third-party game art.

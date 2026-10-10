@@ -1,12 +1,14 @@
-# JudasJS — current API reference (M73 candidate)
+# JudasJS — current API reference (M73; M74 authoring candidate)
 
 JUDAS PROVIDES ENGINE PRIMITIVES. JAVASCRIPT PROVIDES GAME BEHAVIOUR.
 
 This reference includes M72, human validated on Linux on 2026-10-09, and the
 operator-approved gravity-selection follow-up. Native Windows M72 VM verification is recorded in [Windows](WINDOWS.md); hardware
 acceptance remains outstanding. M73 adds optional [owned signals](judasjs/signals.md),
-currently awaiting operator review. It is not an eternal compatibility/semantic-version promise. Source authority is `src/ScriptSystem.cpp`
+accepted at `18650ba23c23eaaab0542d6e0055e33cc14d1049`. It is not an eternal compatibility/semantic-version promise. Source authority is `src/ScriptSystem.cpp`
 and the runtime systems it calls; demos do not define API.
+[M74 retargeting](M74.md) is an authoring-only candidate: it bakes ordinary named
+clips, adds no runtime JS exports and leaves this API surface unchanged.
 The follow-up adds optional [per-entity gravity selection](GRAVITY_SELECTION.md),
 with spatial gravity still the default.
 M67 is checkpointed provisionally by operator authorization; proper human validation

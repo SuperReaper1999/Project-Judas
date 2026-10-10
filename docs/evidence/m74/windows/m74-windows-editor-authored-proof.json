@@ -1,0 +1,218 @@
+﻿[
+    {
+        "path":  "projects/retarget_lab/Assets/scripts/math.js",
+        "before":  "3976300eb5aaf6323585b263ec601a3b095185ca3c3e284476155ce37fc69d9d",
+        "matches":  true,
+        "after":  "3976300eb5aaf6323585b263ec601a3b095185ca3c3e284476155ce37fc69d9d"
+    },
+    {
+        "path":  "projects/retarget_lab/Assets/scripts/math.js.judasmeta",
+        "before":  "75fa05657870a96e56e9703ae1df96aaea8d5ae5a5414c9ec57f053fc9b33340",
+        "matches":  true,
+        "after":  "75fa05657870a96e56e9703ae1df96aaea8d5ae5a5414c9ec57f053fc9b33340"
+    },
+    {
+        "path":  "projects/retarget_lab/Assets/world/lab.judasworld.judasmeta",
+        "before":  "b4ac32b78f56b0d0ddb6a3601e8ccc37f6a8ce60b189c0e69aee76eb0a220fee",
+        "matches":  true,
+        "after":  "b4ac32b78f56b0d0ddb6a3601e8ccc37f6a8ce60b189c0e69aee76eb0a220fee"
+    },
+    {
+        "path":  "projects/retarget_lab/Imports/tall.judasretarget",
+        "before":  "ed5be53674c3cc7c6c7f2456b64b41bc0730738ede8491f1f188719118ee666b",
+        "matches":  true,
+        "after":  "ed5be53674c3cc7c6c7f2456b64b41bc0730738ede8491f1f188719118ee666b"
+    },
+    {
+        "path":  "projects/retarget_lab/Assets/ui/lab.judasui",
+        "before":  "dc043f6fb7e3e650b1e1f4b214957ac21e64d51d465c5e57423adac7029fa9c3",
+        "matches":  true,
+        "after":  "dc043f6fb7e3e650b1e1f4b214957ac21e64d51d465c5e57423adac7029fa9c3"
+    },
+    {
+        "path":  "projects/retarget_lab/Assets/models/source.judasmodel.import-report.json",
+        "before":  "363878c682a3e1ac1810415419b38ff9ae4e93f1adebefbca146c0bc4a748507",
+        "matches":  true,
+        "after":  "363878c682a3e1ac1810415419b38ff9ae4e93f1adebefbca146c0bc4a748507"
+    },
+    {
+        "path":  "projects/retarget_lab/Sources/tall.gltf",
+        "before":  "bfb28b5b56935b976858b04435c4bab0bd8bc2ed3d08718ed2be56ab0bf8d27f",
+        "matches":  true,
+        "after":  "bfb28b5b56935b976858b04435c4bab0bd8bc2ed3d08718ed2be56ab0bf8d27f"
+    },
+    {
+        "path":  "projects/retarget_lab/Assets/ui/lab.judasui.judasmeta",
+        "before":  "8f4ae0d1e9d18ae69d52c1ae6795d95caf2cd74c16f571ae6d4b8c16de93f92c",
+        "matches":  true,
+        "after":  "8f4ae0d1e9d18ae69d52c1ae6795d95caf2cd74c16f571ae6d4b8c16de93f92c"
+    },
+    {
+        "path":  "projects/retarget_lab/Assets/fonts/LICENSE.txt",
+        "before":  "63d3ba759d12804c5b31a9d5940d855c1820d1f5999e6b0872eb1c7ff045fbc9",
+        "matches":  true,
+        "after":  "63d3ba759d12804c5b31a9d5940d855c1820d1f5999e6b0872eb1c7ff045fbc9"
+    },
+    {
+        "path":  "projects/retarget_lab/Authoring/roles.json",
+        "before":  "d2387c188244e4b2db9e0625dbc42373e903c96587f58dfcc8567ff79dee22d8",
+        "matches":  true,
+        "after":  "d2387c188244e4b2db9e0625dbc42373e903c96587f58dfcc8567ff79dee22d8"
+    },
+    {
+        "path":  "projects/retarget_lab/Assets/models/tall.judasmodel.judasmeta",
+        "before":  "dd75be23c23be79c8b843508cc88eda335a52e1b744881723b0ff4b6df17fd95",
+        "matches":  true,
+        "after":  "dd75be23c23be79c8b843508cc88eda335a52e1b744881723b0ff4b6df17fd95"
+    },
+    {
+        "path":  "projects/retarget_lab/Assets/models/source.judasmodel.judasmeta",
+        "before":  "4456029327f65e63294962bc6f6db2da58e1c94b02a0afd743690eedeb0aec51",
+        "matches":  true,
+        "after":  "4456029327f65e63294962bc6f6db2da58e1c94b02a0afd743690eedeb0aec51"
+    },
+    {
+        "path":  "projects/retarget_lab/Sources/source.gltf",
+        "before":  "df672f7636952c842fddfb44dac1c4f595eb8dd5fb35ec1df9462410632541b4",
+        "matches":  true,
+        "after":  "df672f7636952c842fddfb44dac1c4f595eb8dd5fb35ec1df9462410632541b4"
+    },
+    {
+        "path":  "projects/retarget_lab/Assets/models/source.judasmodel",
+        "before":  "68b206893347e40b0bb2234dfed23ca8c618453e9ba1d3caa8c35242acceed74",
+        "matches":  true,
+        "after":  "68b206893347e40b0bb2234dfed23ca8c618453e9ba1d3caa8c35242acceed74"
+    },
+    {
+        "path":  "projects/retarget_lab/Assets/models/tall.judasmodel",
+        "before":  "07a6bafb5e0a8235fe3ff0466b4694a60488748058c37f5cbb05f1ff0d317eeb",
+        "matches":  true,
+        "after":  "07a6bafb5e0a8235fe3ff0466b4694a60488748058c37f5cbb05f1ff0d317eeb"
+    },
+    {
+        "path":  "projects/retarget_lab/Imports/broad.judasretarget",
+        "before":  "7f523b4ac743835940ccd7b540cc1157550ec1f69f70cae084cf53b98961c942",
+        "matches":  true,
+        "after":  "7f523b4ac743835940ccd7b540cc1157550ec1f69f70cae084cf53b98961c942"
+    },
+    {
+        "path":  "projects/retarget_lab/Assets/scripts/lab.js",
+        "before":  "3bb46aec7a11b0a440586ad032d5e359e2c9869c0ef9b4f2a2f6a252c6048b49",
+        "matches":  true,
+        "after":  "3bb46aec7a11b0a440586ad032d5e359e2c9869c0ef9b4f2a2f6a252c6048b49"
+    },
+    {
+        "path":  "projects/retarget_lab/Imports/broad.judasimport",
+        "before":  "fe96187915457d37264a4b2763fd31c147c9ac74e6632fe3b4b3f2f42dca00db",
+        "matches":  true,
+        "after":  "fe96187915457d37264a4b2763fd31c147c9ac74e6632fe3b4b3f2f42dca00db"
+    },
+    {
+        "path":  "projects/retarget_lab/Imports/source.judasimport",
+        "before":  "c51409ee33d54a058c7a5e5c394a1dd4c30b639796b8ea9a4e4893538a978825",
+        "matches":  true,
+        "after":  "c51409ee33d54a058c7a5e5c394a1dd4c30b639796b8ea9a4e4893538a978825"
+    },
+    {
+        "path":  "projects/retarget_lab/Sources/broad.gltf",
+        "before":  "599d224b2c0ae800b350406673798db9057e8b917bbe6a4efa4850182cb460bd",
+        "matches":  true,
+        "after":  "599d224b2c0ae800b350406673798db9057e8b917bbe6a4efa4850182cb460bd"
+    },
+    {
+        "path":  "projects/retarget_lab/Assets/models/tall.judasmodel.import-report.json",
+        "before":  "ad444b7d3ea5fc54574ebf02e1803bf413501e4fc05517be0c3ad399ab3456a4",
+        "matches":  true,
+        "after":  "ad444b7d3ea5fc54574ebf02e1803bf413501e4fc05517be0c3ad399ab3456a4"
+    },
+    {
+        "path":  "projects/retarget_lab/Sources/LICENSE.txt",
+        "before":  "26338827f6fc36cbb0e795c4e0ecc6ec4926fc4ebc5c126c89d349c56163ad1b",
+        "matches":  true,
+        "after":  "26338827f6fc36cbb0e795c4e0ecc6ec4926fc4ebc5c126c89d349c56163ad1b"
+    },
+    {
+        "path":  "projects/retarget_lab/Assets/world/lab.judasworld",
+        "before":  "4fdbc8b619023447bb2703ef48f4b073b23d91c4a389849aa177fa2b3fc53117",
+        "matches":  true,
+        "after":  "4fdbc8b619023447bb2703ef48f4b073b23d91c4a389849aa177fa2b3fc53117"
+    },
+    {
+        "path":  "projects/retarget_lab/Assets/models/broad.judasmodel",
+        "before":  "d9132e2b09c16842c4c502f21fcdafdc07322efb03c241baa6f2ebcc1c4d4731",
+        "matches":  true,
+        "after":  "d9132e2b09c16842c4c502f21fcdafdc07322efb03c241baa6f2ebcc1c4d4731"
+    },
+    {
+        "path":  "projects/retarget_lab/Assets/fonts/DejaVuSans.ttf.judasmeta",
+        "before":  "0c0efd3d04211bd44016fd8fc5420a203b1ee02fa2bde18765f4c14e35194157",
+        "matches":  true,
+        "after":  "0c0efd3d04211bd44016fd8fc5420a203b1ee02fa2bde18765f4c14e35194157"
+    },
+    {
+        "path":  "projects/retarget_lab/Assets/scripts/lab.js.judasmeta",
+        "before":  "0acf36a2e34c165e71b501e46c0f0d2c734645e142b3d8d52d195736ce5e7c63",
+        "matches":  true,
+        "after":  "0acf36a2e34c165e71b501e46c0f0d2c734645e142b3d8d52d195736ce5e7c63"
+    },
+    {
+        "path":  "projects/retarget_lab/Assets/models/broad.judasmodel.judasmeta",
+        "before":  "36c8018228478b17d235e6d65c830b44d9e85449fda8eb4b1e6d15d3b7721564",
+        "matches":  true,
+        "after":  "36c8018228478b17d235e6d65c830b44d9e85449fda8eb4b1e6d15d3b7721564"
+    },
+    {
+        "path":  "projects/retarget_lab/Scenes/region.judas",
+        "before":  "d668e193cbd4c15dcf4d75321d2340404efe39fcd24318bac3ebd3743ce643c2",
+        "matches":  true,
+        "after":  "d668e193cbd4c15dcf4d75321d2340404efe39fcd24318bac3ebd3743ce643c2"
+    },
+    {
+        "path":  "projects/retarget_lab/Assets/prefabs/broad.judasprefab",
+        "before":  "d864cd0a8c7349939295366edf19ca72448949f93e19bd46053333b81d19f8f6",
+        "matches":  true,
+        "after":  "d864cd0a8c7349939295366edf19ca72448949f93e19bd46053333b81d19f8f6"
+    },
+    {
+        "path":  "projects/retarget_lab/Assets/models/broad.judasmodel.import-report.json",
+        "before":  "d3f2bdd570dbe08cb7f889520449b849bf7821f2b8d139bf8456aa14c33e95bb",
+        "matches":  true,
+        "after":  "d3f2bdd570dbe08cb7f889520449b849bf7821f2b8d139bf8456aa14c33e95bb"
+    },
+    {
+        "path":  "projects/retarget_lab/Assets/fonts/DejaVuSans.ttf",
+        "before":  "b4c632e3cdf9acc7f28758fb5a323c8524d7fc6660d46904d9b6cbe2809c419c",
+        "matches":  true,
+        "after":  "b4c632e3cdf9acc7f28758fb5a323c8524d7fc6660d46904d9b6cbe2809c419c"
+    },
+    {
+        "path":  "projects/retarget_lab/Imports/tall.judasimport",
+        "before":  "a1c80845ed4414a93f6d5914fc8f6508bfa58f465f23a0e383916e52d78f9fb3",
+        "matches":  true,
+        "after":  "a1c80845ed4414a93f6d5914fc8f6508bfa58f465f23a0e383916e52d78f9fb3"
+    },
+    {
+        "path":  "projects/retarget_lab/Assets/prefabs/broad.judasprefab.judasmeta",
+        "before":  "6617613ced188bc6c77a26d6705f1e5c85844c91409d709c56765a87fb1bc9c3",
+        "matches":  true,
+        "after":  "6617613ced188bc6c77a26d6705f1e5c85844c91409d709c56765a87fb1bc9c3"
+    },
+    {
+        "path":  "projects/retarget_lab/Authoring/joint-keys.json",
+        "before":  "445ee7b079457726ece20d26694b6ffcd9ab049d47859e44f3aab0ff44ff5c5f",
+        "matches":  true,
+        "after":  "445ee7b079457726ece20d26694b6ffcd9ab049d47859e44f3aab0ff44ff5c5f"
+    },
+    {
+        "path":  "projects/retarget_lab/Scenes/lab.judas",
+        "before":  "34ebf24c7c40241beac9ab27237917aff90041dc697012700f517b01a80b2ffa",
+        "matches":  true,
+        "after":  "34ebf24c7c40241beac9ab27237917aff90041dc697012700f517b01a80b2ffa"
+    },
+    {
+        "path":  "projects/retarget_lab/retarget_lab.judasproj",
+        "before":  "d77a4d2a6d21bb8a0f975cd21c010a0a12694322c978514be8a11da93432f031",
+        "matches":  true,
+        "after":  "d77a4d2a6d21bb8a0f975cd21c010a0a12694322c978514be8a11da93432f031"
+    }
+]

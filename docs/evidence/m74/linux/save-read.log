@@ -1,0 +1,14 @@
+Renderer fragment texture units: 32 (material path uses 12)
+World state: legacy .judasstate (F6/F7) saves disabled for additive compositions; save slots remain available
+Project: Retarget Lab (/home/conner/Documents/GitHub/Project-Judas/projects/retarget_lab/retarget_lab.judasproj)
+Scene: Borrowed Moves (/home/conner/Documents/GitHub/Project-Judas/projects/retarget_lab/Scenes/lab.judas)
+World origin (m): 0.000, 0.000, 0.000
+PASS two instances share immutable target but independent mixer
+PASS normal resources publish native and five transferred named clips
+PASS real runtime uses unequal target helper counts
+PASS modern save/load request
+PASS fresh process restores ordinary baked clip and exact clock
+PASS fresh process restores mixer transition, stable joint mask and authored weight
+PASS modern slot transaction completed
+PASS ordinary application startup/lifecycle/shutdown
+SUMMARY mode=read checks=8 failures=0 frames=19

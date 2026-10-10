@@ -1,0 +1,55 @@
+{
+  "angularErrorRadians": 5.420794195742796e-07,
+  "checks": 46,
+  "conditions": [
+    {
+      "authoringBake": {
+        "bufferEstimateOnly": true,
+        "estimatedWorkingBytes": 94608,
+        "milliseconds": 11.481159,
+        "outputKeys": 2178,
+        "samples": 121
+      },
+      "cookedOutputBytes": 420059,
+      "mappedJoints": 17,
+      "offgridAngleRadians": 2.8434047294467555e-07,
+      "offgridPositionMetres": 2.4027400513659813e-07,
+      "pelvisPositionMetres": 9.42432194506182e-08,
+      "referenceAngleRadians": 3.576279254957588e-07,
+      "referencePositionMetres": 3.769728778024728e-07,
+      "rig": "broad",
+      "rootReconstructionMatrixError": 1.5795230865478516e-05,
+      "sourceJoints": 71,
+      "targetJoints": 74,
+      "translationScale": 1.0,
+      "travelPositionMetres": 5.960464477539063e-08
+    },
+    {
+      "authoringBake": {
+        "bufferEstimateOnly": true,
+        "estimatedWorkingBytes": 93984,
+        "milliseconds": 8.86285,
+        "outputKeys": 2178,
+        "samples": 121
+      },
+      "cookedOutputBytes": 418851,
+      "mappedJoints": 17,
+      "offgridAngleRadians": 4.7180839146675716e-07,
+      "offgridPositionMetres": 2.767767739442206e-07,
+      "pelvisPositionMetres": 7.45988799621955e-08,
+      "referenceAngleRadians": 2.7386667511563986e-07,
+      "referencePositionMetres": 2.6679424536268925e-07,
+      "rig": "tall",
+      "rootReconstructionMatrixError": 1.9073486328125e-05,
+      "sourceJoints": 71,
+      "targetJoints": 72,
+      "translationScale": 1.2000000476837158,
+      "travelPositionMetres": 2.6656007889869215e-07
+    }
+  ],
+  "failures": 0,
+  "positionErrorMetres": 2.6656007889869215e-07,
+  "previewBakePositionErrorMetres": 2.767767739442206e-07,
+  "restOffsetErrorMetres": 0.0,
+  "rootReconstructionMatrixError": 1.9073486328125e-05
+}

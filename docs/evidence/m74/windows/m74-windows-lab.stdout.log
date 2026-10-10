@@ -1,0 +1,101 @@
+PASS original multi-part source enters normal M66 glTF boundary
+PASS source retains full helpers and three reusable performances
+PASS target input uses shared recipe normalization and authored identities
+PASS ordinary runtime asset loads target with native and borrowed clips
+PASS one saved correspondence validates for all source performances
+PASS representative authoring bake measures mapped joints, 121 samples and bounded working buffers
+PASS declared source reference transfers transactionally
+PASS declared reference maps to target reference within 20 micrometres / 20 microradians
+PASS target mesh positions/normals/UVs/weights/indices/material and part identities stay exact
+PASS all original target skin palette and inverse binds remain exact
+PASS target rest skeleton and stable names retained without bind-pose calibration rewrite
+PASS target's own native performance remains an ordinary unchanged clip
+PASS asymmetric source reach transfers across target axes and retained helpers
+PASS known source/helper/left-arm rotations match independent target-frame quaternion expectations
+PASS rotation-only asymmetric motion preserves target proportions and all local rest offsets
+PASS asymmetric source reach transfers across target axes and retained helpers
+PASS known source/helper/left-arm rotations match independent target-frame quaternion expectations
+PASS rotation-only asymmetric motion preserves target proportions and all local rest offsets
+PASS selected pelvis bob survives in aligned model frame with explicit translation scale
+PASS preserved locomotion retains analytically expected scaled X/Z displacement
+PASS root turning retains independent 0.8-radian source rotation in the declared alignment frame
+PASS ordinary extracted track reconstructs locomotion once and in-place retains the identical complementary pose
+PASS in-place discards only declared motion track while extraction stays queryable
+PASS off-grid direct preview versus baked local tracks stays within 1 mrad / 0.2 mm
+PASS target input uses shared recipe normalization and authored identities
+PASS ordinary runtime asset loads target with native and borrowed clips
+PASS one saved correspondence validates for all source performances
+PASS representative authoring bake measures mapped joints, 121 samples and bounded working buffers
+PASS declared source reference transfers transactionally
+PASS declared reference maps to target reference within 20 micrometres / 20 microradians
+PASS target mesh positions/normals/UVs/weights/indices/material and part identities stay exact
+PASS all original target skin palette and inverse binds remain exact
+PASS target rest skeleton and stable names retained without bind-pose calibration rewrite
+PASS target's own native performance remains an ordinary unchanged clip
+PASS asymmetric source reach transfers across target axes and retained helpers
+PASS known source/helper/left-arm rotations match independent target-frame quaternion expectations
+PASS rotation-only asymmetric motion preserves target proportions and all local rest offsets
+PASS asymmetric source reach transfers across target axes and retained helpers
+PASS known source/helper/left-arm rotations match independent target-frame quaternion expectations
+PASS rotation-only asymmetric motion preserves target proportions and all local rest offsets
+PASS selected pelvis bob survives in aligned model frame with explicit translation scale
+PASS preserved locomotion retains analytically expected scaled X/Z displacement
+PASS root turning retains independent 0.8-radian source rotation in the declared alignment frame
+PASS ordinary extracted track reconstructs locomotion once and in-place retains the identical complementary pose
+PASS in-place discards only declared motion track while extraction stays queryable
+PASS off-grid direct preview versus baked local tracks stays within 1 mrad / 0.2 mm
+{
+  "angularErrorRadians": 5.420794195742796e-07,
+  "checks": 46,
+  "conditions": [
+    {
+      "authoringBake": {
+        "bufferEstimateOnly": true,
+        "estimatedWorkingBytes": 94608,
+        "milliseconds": 23.091,
+        "outputKeys": 2178,
+        "samples": 121
+      },
+      "cookedOutputBytes": 420059,
+      "mappedJoints": 17,
+      "offgridAngleRadians": 2.8434047294467555e-07,
+      "offgridPositionMetres": 2.4027400513659813e-07,
+      "pelvisPositionMetres": 9.42432194506182e-08,
+      "referenceAngleRadians": 3.576279254957588e-07,
+      "referencePositionMetres": 3.769728778024728e-07,
+      "rig": "broad",
+      "rootReconstructionMatrixError": 1.5795230865478516e-05,
+      "sourceJoints": 71,
+      "targetJoints": 74,
+      "translationScale": 1.0,
+      "travelPositionMetres": 5.960464477539063e-08
+    },
+    {
+      "authoringBake": {
+        "bufferEstimateOnly": true,
+        "estimatedWorkingBytes": 93984,
+        "milliseconds": 23.505,
+        "outputKeys": 2178,
+        "samples": 121
+      },
+      "cookedOutputBytes": 418851,
+      "mappedJoints": 17,
+      "offgridAngleRadians": 4.7180839146675716e-07,
+      "offgridPositionMetres": 2.767767739442206e-07,
+      "pelvisPositionMetres": 7.45988799621955e-08,
+      "referenceAngleRadians": 2.7386667511563986e-07,
+      "referencePositionMetres": 2.6679424536268925e-07,
+      "rig": "tall",
+      "rootReconstructionMatrixError": 1.9073486328125e-05,
+      "sourceJoints": 71,
+      "targetJoints": 72,
+      "translationScale": 1.2000000476837158,
+      "travelPositionMetres": 2.6656007889869215e-07
+    }
+  ],
+  "failures": 0,
+  "positionErrorMetres": 2.6656007889869215e-07,
+  "previewBakePositionErrorMetres": 2.767767739442206e-07,
+  "restOffsetErrorMetres": 0.0,
+  "rootReconstructionMatrixError": 1.9073486328125e-05
+}

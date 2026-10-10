@@ -1,0 +1,9 @@
+PASS two instances share immutable target but independent mixer
+PASS normal resources publish native and five transferred named clips
+PASS real runtime uses unequal target helper counts
+PASS modern save/load request
+PASS fresh process restores ordinary baked clip and exact clock
+PASS fresh process restores mixer transition, stable joint mask and authored weight
+PASS modern slot transaction completed
+PASS ordinary application startup/lifecycle/shutdown
+SUMMARY mode=read checks=8 failures=0 frames=17

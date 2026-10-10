@@ -1,0 +1,92 @@
+{
+  "assetId": "da8f0716e3dde83f11aedfa2b1c3937d",
+  "format": "JudasImport",
+  "output": "Assets/models/broad.judasmodel",
+  "settings": {
+    "allowBaseMesh": false,
+    "dependencyRemaps": {},
+    "sampleRate": 60,
+    "unitMeters": 0
+  },
+  "source": "Sources/broad.gltf",
+  "version": 1,
+  "motions": [
+    {
+      "source": "Sources/source.gltf",
+      "take": "Wave",
+      "name": "Wave",
+      "retargetProfile": "Imports/broad.judasretarget",
+      "sampleRate": 60
+    },
+    {
+      "source": "Sources/source.gltf",
+      "take": "Bob",
+      "name": "Bob",
+      "retargetProfile": "Imports/broad.judasretarget",
+      "sampleRate": 60
+    },
+    {
+      "source": "Sources/source.gltf",
+      "take": "Travel",
+      "name": "TravelPreserve",
+      "retargetProfile": "Imports/broad.judasretarget",
+      "sampleRate": 60,
+      "rootMotion": {
+        "policy": "preserve",
+        "node": "Q00/Q01",
+        "translation": [
+          true,
+          false,
+          true
+        ],
+        "rotationAxis": [
+          0,
+          1,
+          0
+        ]
+      }
+    },
+    {
+      "source": "Sources/source.gltf",
+      "take": "Travel",
+      "name": "TravelExtract",
+      "retargetProfile": "Imports/broad.judasretarget",
+      "sampleRate": 60,
+      "rootMotion": {
+        "policy": "extract",
+        "node": "Q00/Q01",
+        "translation": [
+          true,
+          false,
+          true
+        ],
+        "rotationAxis": [
+          0,
+          1,
+          0
+        ]
+      }
+    },
+    {
+      "source": "Sources/source.gltf",
+      "take": "Travel",
+      "name": "TravelInPlace",
+      "retargetProfile": "Imports/broad.judasretarget",
+      "sampleRate": 60,
+      "rootMotion": {
+        "policy": "inPlace",
+        "node": "Q00/Q01",
+        "translation": [
+          true,
+          false,
+          true
+        ],
+        "rotationAxis": [
+          0,
+          1,
+          0
+        ]
+      }
+    }
+  ]
+}

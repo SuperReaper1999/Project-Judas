@@ -1,0 +1,61 @@
+PASS full-key profile accepts unequal complete hierarchy and helpers
+PASS declared source rest transfers
+PASS reference-to-reference angular error below 0.00002 radians
+PASS explicit calibrated local A/T reference maps exactly to target reference
+PASS same-rig identity preserves descendant global performance with unmapped helper
+PASS animated unmapped source helper participates
+PASS independent asymmetric helper angular transfer uses global correspondence frame
+PASS unmapped target helper retained and opposite limb not moved
+PASS different target bone lengths/offsets/scales remain unchanged
+PASS negative control catches intentionally wrong local-copy/frame transfer
+PASS shared production path negative control detects deliberately wrong correspondence frame
+PASS quaternion sign-equivalent input has same transferred orientation
+PASS near-180 degree transfer remains finite normalized
+PASS stable hierarchy signature independent of transient node array order
+PASS stable full-key mapping survives source array reordering
+PASS legal duplicate hierarchy nodes in multiple bind palettes remain order-independent
+PASS transparent identity motion root does not alter source rig compatibility
+PASS selected root and articulated translation channels transfer separately
+PASS analytic translation scaling preserves distinct root and body-bob components
+PASS selected translation includes unmapped helper bob without doubling mapped root motion
+PASS duplicate mapping fails transactionally without replacing accepted pose
+PASS short-name aliases rejected; full hierarchy keys required
+PASS missing stable joint fails clearly
+PASS conflicting target assignment rejected
+PASS mapped ancestor branch incompatibility rejected
+PASS zero translation scale rejected
+PASS negative translation scale rejected
+PASS nonuniform participating ancestor rejected
+PASS reflected participating ancestor rejected
+PASS sheared participating ancestor rejected
+PASS valid positive uniform static importer normalization accepted
+PASS changed target proportion invalidates profile content signature
+PASS shared authoring bake emits ordinary target clip
+PASS bounded 60 Hz bake preserves duration/name and exact endpoints
+PASS reloaded ordinary clip sampler agrees with independently expected .5s frame
+PASS strict float key times and quaternion sign continuity
+PASS trim and dense near-equal source times produce valid exact output endpoints
+PASS cancelled bake preserves prior accepted output
+PASS already-extracted source motion diagnosed without silently losing track
+PASS animated participating scale rejected before output publication
+PASS constant rest-scale importer channel accepted
+PASS duplicate source times rejected rather than silently repairing invalid archive
+PASS pathological resampling rate rejected before allocation
+PASS animated STEP source fails explicitly instead of silently smoothing discontinuity
+PASS constant STEP channels remain compatible
+PASS versioned profile round-trip retains all authoring choices
+PASS atomic profile save/load with space in path uses shared validation
+PASS wrong profile format rejected
+PASS retarget bounds independent of M70 64-joint IK solve bound
+PASS sparse mapped output cannot evade total sampled hierarchy work bound
+PASS all source/target rest and bind inputs remain immutable
+PASS original five-bone FBX motion imports through ordinary ufbx authoring boundary
+PASS same original FBX skin/bind geometry imports normally
+PASS Blender-created counterpart GLB imports through ordinary cgltf boundary
+PASS explicit full-key profile maps differently wrapped FBX/GLB hierarchy
+PASS actual original FBX performance bakes onto ordinary GLB target clip
+PASS ordinary target skin matrices reflect real FBX asymmetric performance
+FBX_BAKE take=Scene duration_s=1.000000 samples=61 joints=4 keys=305 bake_ms=2.421300 estimated_bytes=13708
+ERRORS reference_angular_rad=8.29870572e-08 helper_angular_rad=3.58698287e-07 baked_sample_angular_rad=3.58698287e-07 wrong_frame_rad=0.691860378 angular_tolerance_rad=0.00002 translation_tolerance_m=0.00002
+PERFORMANCE bake_ms=1.274300 samples=61 mapped_joints=3 output_keys=183 estimated_working_bytes=9396
+SUMMARY 57 checks 0 failures

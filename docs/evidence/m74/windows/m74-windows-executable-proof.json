@@ -1,0 +1,44 @@
+﻿[
+    {
+        "lastWriteUtc":  "2026-10-10T17:11:52.8668633Z",
+        "sha256":  "9e8d815918cc3370f0d49e15903cfa73125b773551f9c64de1a77007e5c476bf",
+        "name":  "judas_editor.exe",
+        "builtAfterStart":  true
+    },
+    {
+        "lastWriteUtc":  "2026-10-10T17:11:00.1949613Z",
+        "sha256":  "73cfd6e28ecb5b1d72f4031d921857f9e087e56251bd2f170487ca7fa14a8aa2",
+        "name":  "judas_model_import_cli.exe",
+        "builtAfterStart":  true
+    },
+    {
+        "lastWriteUtc":  "2026-10-10T17:12:13.6793670Z",
+        "sha256":  "9d63fc6b0f9cbb8460c3990e4b13dad75a65c482c8ecbc8a35886ef2c1390023",
+        "name":  "judas_animation_retarget_tests.exe",
+        "builtAfterStart":  true
+    },
+    {
+        "lastWriteUtc":  "2026-10-10T17:12:26.4293613Z",
+        "sha256":  "976a9239e467ccc91c79c027571209903a5340051cda96be7778d75d80a55439",
+        "name":  "judas_animation_retarget_cook_tests.exe",
+        "builtAfterStart":  true
+    },
+    {
+        "lastWriteUtc":  "2026-10-10T17:12:38.0543298Z",
+        "sha256":  "b727aeefde4a9eff987395bae29d88a798063454d6f851f142f2ccd447a07ce0",
+        "name":  "judas_retarget_lab_tests.exe",
+        "builtAfterStart":  true
+    },
+    {
+        "lastWriteUtc":  "2026-10-10T17:12:46.0387357Z",
+        "sha256":  "116c96de83119d8a07ffd4f567b1c129ebafb6db28fc8b8300983ea9422db210",
+        "name":  "judas_retarget_editor_tests.exe",
+        "builtAfterStart":  true
+    },
+    {
+        "lastWriteUtc":  "2026-10-10T17:13:13.1637047Z",
+        "sha256":  "90f4ea3abd3f799e79c927679ca0858e0d464d71b9ec72f226d1e394f09e4c7c",
+        "name":  "judas_retarget_application_tests.exe",
+        "builtAfterStart":  true
+    }
+]

@@ -1,0 +1,22 @@
+M74 tiny FBX / GLB format fixture
+
+Original procedural geometry and skeletal performance created for Project Judas
+by the accompanying make_fbx_fixture.py with Blender 5.2.1. No downloaded models,
+commercial animation, ignored asset library, or captured performance is used.
+
+The fixture contains five authored bones, different local bone rolls, a helper
+between Base and Reach, asymmetric reach rotation, translated Base locomotion,
+and a separate helper bob. All mesh vertices have one explicit bone weight.
+
+Blender is only the source-art generator/exporter. The production Judas importer,
+profile validator, retarget math and cooker perform all animation transfer.
+
+Geometry, skeleton, generated FBX/GLB and this generator are dedicated to the
+public domain under CC0 1.0 Universal. No attribution is required.
+https://creativecommons.org/publicdomain/zero/1.0/
+
+Regeneration:
+/home/conner/Programs/blender-5.2.1-linux-x64/blender --background --factory-startup --python tests/fixtures/m74/make_fbx_fixture.py
+
+Source import units: Blender metres, FBX encoded unit metadata, normalized by the
+ordinary M66 ufbx entry point. GLB uses its ordinary metre/Y-up normalization.

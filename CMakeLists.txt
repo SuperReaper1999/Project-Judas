@@ -298,6 +298,7 @@ add_executable(judas_editor
     src/editor/EditorPicking.cpp
     src/editor/EditorHistory.cpp
     src/editor/EditorPanels.cpp
+    src/editor/RetargetPanel.cpp
     src/editor/WorldTools.cpp
     src/editor/ProfilerView.cpp
     src/editor/EditorWidgets.cpp
@@ -1351,7 +1352,7 @@ target_link_libraries(judas_post_consumer_ragdoll_tests PRIVATE judas_engine)
 # M66 source import is authoring-only; shipped runtime reads normalized models.
 add_library(judas_ufbx STATIC third_party/ufbx/ufbx.c)
 target_include_directories(judas_ufbx PUBLIC third_party/ufbx)
-add_library(judas_model_import STATIC src/FbxImport.cpp src/ObjImport.cpp src/ModelCook.cpp src/ModelCollision.cpp)
+add_library(judas_model_import STATIC src/FbxImport.cpp src/ObjImport.cpp src/ModelCook.cpp src/ModelCollision.cpp src/AnimationRetarget.cpp)
 target_link_libraries(judas_model_import PUBLIC judas_engine judas_ufbx)
 judas_warnings(judas_model_import)
 add_executable(judas_model_import_cli tools/ModelImportCli.cpp)
@@ -1497,3 +1498,21 @@ judas_warnings(judas_signal_tests)
 add_executable(judas_signal_application_tests tests/SignalApplicationTests.cpp src/Application.cpp src/RuntimeOptions.cpp src/RuntimeDiagnostics.cpp src/TestHarness.cpp)
 target_link_libraries(judas_signal_application_tests PRIVATE judas_engine)
 judas_warnings(judas_signal_application_tests)
+
+# M74 CPU retarget/cook checks link authoring services, never a runtime evaluator.
+add_executable(judas_animation_retarget_tests tests/AnimationRetargetTests.cpp)
+target_link_libraries(judas_animation_retarget_tests PRIVATE judas_model_import)
+judas_warnings(judas_animation_retarget_tests)
+add_executable(judas_animation_retarget_cook_tests tests/AnimationRetargetCookTests.cpp)
+target_link_libraries(judas_animation_retarget_cook_tests PRIVATE judas_model_import)
+judas_warnings(judas_animation_retarget_cook_tests)
+
+add_executable(judas_retarget_editor_tests tests/RetargetEditorTests.cpp)
+target_link_libraries(judas_retarget_editor_tests PRIVATE judas_model_import)
+judas_warnings(judas_retarget_editor_tests)
+add_executable(judas_retarget_application_tests tests/RetargetApplicationTests.cpp src/Application.cpp src/RuntimeOptions.cpp src/RuntimeDiagnostics.cpp src/TestHarness.cpp)
+target_link_libraries(judas_retarget_application_tests PRIVATE judas_engine)
+judas_warnings(judas_retarget_application_tests)
+add_executable(judas_retarget_lab_tests tests/RetargetLabTests.cpp)
+target_link_libraries(judas_retarget_lab_tests PRIVATE judas_model_import)
+judas_warnings(judas_retarget_lab_tests)

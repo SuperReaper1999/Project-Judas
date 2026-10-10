@@ -17,12 +17,21 @@ describe the evidence available at their original milestones.
 
 ## Current reference and historical capability overview
 
-Accepted baseline: M72 (`0f3694bb7142dc38a59abbd7365a113b673bae5e`).
-[M72](M72.md) received operator desktop acceptance on 2026-10-09 after its initial
-checkpoint without human validation. The optional gravity-selection follow-up is
-checkpointed at `df0c301f688e62e4baa59a837beb05d42aa75e3c`. Windows VM
-results are checkpointed at `f1609af0dac863257a0f200cb74ea8a504f9e644`; hardware
-acceptance remains separate. M73 owned signals are a new uncommitted candidate.
+Accepted baseline: `b7d7f4142b243cd57d9998f4952857e67e5d84a8`
+(Lastlight UI/wall pursuit). M73 owned signals were accepted and checkpointed at
+`18650ba23c23eaaab0542d6e0055e33cc14d1049`; subsequent Lastlight work is project
+content plus the accepted generic imported UI-image UV correction.
+[M72](M72.md) received operator desktop acceptance on 2026-10-09. The optional
+gravity-selection follow-up is checkpointed at
+`df0c301f688e62e4baa59a837beb05d42aa75e3c`; Windows VM results at
+`f1609af0dac863257a0f200cb74ea8a504f9e644` remain distinct from hardware acceptance.
+[M74](M74.md) is a provisionally checkpointed **authoring-only retargeting candidate**, with human validation pending:
+explicit reusable full-hierarchy mappings and calibrated reference frames bake
+ordinary target-local clips through M66 recipes. The target retains its geometry,
+rest/bind data and native clips. Runtime pose composition, IK, physical authority,
+skinning and root-motion semantics are unchanged; there is no runtime retargeter
+or new JudasJS binding. Profiles/source rigs are authoring dependencies rather than
+runtime demands. Human motion acceptance is outstanding.
 M70's accepted Linux checkpoint is
 `fb31f0244c9f41f74c439afd99855e3707937edd`. M67 remains provisionally checkpointed;
 proper human authoring validation is deferred. M68 and M69 are checkpointed,

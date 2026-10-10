@@ -1,0 +1,13 @@
+{
+  "runtimeHasAuthoringSymbols": false,
+  "checkedSymbols": [
+    "BakeRetargetClip",
+    "RetargetPose",
+    "ValidateRetargetProfile",
+    "ImportMotionSource",
+    "ufbx_load"
+  ],
+  "ordinaryApplicationLinks": "judas_engine only",
+  "sourceRigNeededForTargetPlayback": false,
+  "newRuntimeBindings": 0
+}

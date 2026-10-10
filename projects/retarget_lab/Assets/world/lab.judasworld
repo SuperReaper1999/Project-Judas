@@ -1,0 +1,42 @@
+{
+  "kind": "world",
+  "schema": 1,
+  "data": {
+    "budget": {
+      "installMilliseconds": 2,
+      "unitsPerFrame": 16,
+      "maxPreparing": 2,
+      "pendingBytes": 33554432,
+      "liveBytes": 67108864,
+      "retainedBytes": 4194304,
+      "resourceCacheBytes": 67108864
+    },
+    "regions": [
+      {
+        "id": "rig",
+        "scene": "Scenes/region.judas",
+        "origin": [
+          0,
+          0,
+          0
+        ],
+        "rotation": [
+          0,
+          0,
+          0,
+          1
+        ],
+        "halfExtents": [
+          10,
+          5,
+          10
+        ],
+        "priority": 1,
+        "policy": "snapshot",
+        "estimatedBytes": 65536,
+        "dependencies": []
+      }
+    ],
+    "references": []
+  }
+}

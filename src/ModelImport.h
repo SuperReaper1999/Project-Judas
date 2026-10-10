@@ -22,6 +22,10 @@ struct ModelImportReport {
 };
 // Authoring service only. CPU work, approved source-relative dependencies.
 bool ImportModelSource(const std::string&,const ModelImportSettings&,MeshData&,ModelImportReport&,std::string& error);
+// Authoring motion inspection preserves the COMPLETE normalized source hierarchy,
+// including animated helpers. Unlike same-rig ImportCompatibleMotion, it makes no
+// target correspondence assumptions and accepts animation-only FBX/glTF inputs.
+bool ImportMotionSource(const std::string&,const ModelImportSettings&,MeshData&,ModelImportReport&,std::string& error);
 bool ImportCompatibleMotion(const std::string&,const ModelImportSettings&,const Skeleton&,std::vector<AnimationClip>&,ModelImportReport&,std::string& error);
 
 bool GatherModelDependencies(const std::string&,std::vector<std::string>&,std::string&,const ModelImportSettings* settings=nullptr);

@@ -1,6 +1,6 @@
 # M46 — skeletal-animation foundation
 
-**M70 candidate extension:** shared multi-target IK and optional partial/full-active
+**Accepted M70 extension:** shared multi-target IK and optional partial/full-active
 physical regions now extend the historical clip/pose/passive-ragdoll scope below.
 The older milestone statements remain their historical contracts. See
 [M70](M70.md) for current phases, authority and limitations, and the
@@ -10,6 +10,21 @@ ownership for physical modes and pending requests.
 
 
 Current public JavaScript signatures, examples and lifetime rules: [JudasJS reference](JUDASJS.md). This document retains milestone architecture and evidence context.
+
+**M74 current authoring extension:** [editor/import-time retargeting](M74.md)
+transfers an existing performance through an explicit reusable profile and bakes
+ordinary target-compatible named clips. The target retains its bind skeleton,
+weights, geometry and existing clips. Runtime consumes the usual immutable
+`SkeletalAsset`; there is no runtime retargeting service or new JudasJS API.
+Crossfade between native and transferred clips on the same animated instance.
+The M46 historical import limits below are not M74's current bounds.
+
+Retarget baking emits LINEAR local TRS samples. Animated STEP discontinuities and
+already-extracted source root-motion tracks fail explicitly; this does not remove
+ordinary STEP playback or ordinary output root-motion queries. Source-preserved
+locomotion can be transferred and then preserved, extracted or made in-place
+through the existing import policy. See [model import](MODEL_IMPORT.md) and the
+[editor workflow](EDITOR_GUIDE.md#animation-retargeting-m74-candidate).
 
 ## Ownership and pipeline
 

@@ -1,0 +1,221 @@
+{
+  "animated_instances": 4,
+  "baseline_fingerprint": "48132221cbf78d3e548d6d429c1fccf617e98e4cae27fe418cb62e166816067f",
+  "cold_peak_resource_bytes": 1481590,
+  "cold_profile_note": "Completed startup/loading scopes and pre-measurement warmup frames; cold_ready_ms is measured separately at actual animation readiness.",
+  "cold_ready_frame": 3,
+  "cold_ready_ms": 946.427642,
+  "cold_resource_misses": 4,
+  "cold_uploads": 3,
+  "comparison_limit": "Same scene/assets/settings; only entity11 Native versus Wave. Track density and pose differ, so timings demonstrate the ordinary runtime path, not an isolated universal zero-overhead claim.",
+  "controlled_entity": 11,
+  "loading_and_warmup_metrics": {
+    "frame_elapsed": {
+      "frames": 62,
+      "max_ms": 624.849326,
+      "mean_ms": 27.421300806451605,
+      "median_ms": 12.654595,
+      "p95_ms": 20.802419
+    },
+    "frame_interval": {
+      "frames": 62,
+      "max_ms": 624.927963,
+      "mean_ms": 27.265700709677414,
+      "median_ms": 12.68414,
+      "p95_ms": 20.83185
+    },
+    "inclusive_scopes": {
+      "Animation clip sampling": {
+        "frames": 62,
+        "max_ms": 0.018569,
+        "mean_ms": 0.009756645161290321,
+        "median_ms": 0.009408,
+        "p95_ms": 0.013875
+      },
+      "Animation instances": {
+        "frames": 62,
+        "max_ms": 0.139118,
+        "mean_ms": 0.08724848387096772,
+        "median_ms": 0.083323,
+        "p95_ms": 0.123347
+      },
+      "Final pose resolution": {
+        "frames": 62,
+        "max_ms": 0.11349500000000001,
+        "mean_ms": 0.05752545161290322,
+        "median_ms": 0.053805000000000006,
+        "p95_ms": 0.086507
+      },
+      "Mesh geometry upload": {
+        "frames": 62,
+        "max_ms": 0.14266700000000002,
+        "mean_ms": 0.0034602903225806453,
+        "median_ms": 0.0,
+        "p95_ms": 0.0
+      },
+      "Pose clip mixing": {
+        "frames": 62,
+        "max_ms": 0.020505,
+        "mean_ms": 0.01124609677419355,
+        "median_ms": 0.010823,
+        "p95_ms": 0.016137
+      },
+      "Pose skin matrices": {
+        "frames": 62,
+        "max_ms": 0.129892,
+        "mean_ms": 0.06137482258064515,
+        "median_ms": 0.057823000000000006,
+        "p95_ms": 0.090594
+      },
+      "Resource completion and budget": {
+        "frames": 62,
+        "max_ms": 0.196256,
+        "mean_ms": 0.005559903225806451,
+        "median_ms": 0.00069,
+        "p95_ms": 0.002343
+      },
+      "Resource installation": {
+        "frames": 62,
+        "max_ms": 0.003952,
+        "mean_ms": 0.00012662903225806453,
+        "median_ms": 0.0,
+        "p95_ms": 0.0
+      },
+      "Resource pump": {
+        "frames": 62,
+        "max_ms": 0.198282,
+        "mean_ms": 0.007399451612903225,
+        "median_ms": 0.002393,
+        "p95_ms": 0.011743
+      },
+      "Resource worker job": {
+        "frames": 62,
+        "max_ms": 31.665240999999998,
+        "mean_ms": 0.8212712903225806,
+        "median_ms": 0.0,
+        "p95_ms": 0.0
+      },
+      "Texture driver texel upload": {
+        "frames": 62,
+        "max_ms": 2.156505,
+        "mean_ms": 0.034782338709677424,
+        "median_ms": 0.0,
+        "p95_ms": 0.0
+      }
+    },
+    "scope_note": "Inclusive named scopes overlap; no sum across scopes. Uncapped hidden Release application, fixed simulation dt 1/60, no test sleep during steady measurement.",
+    "startup_included": true
+  },
+  "measurement_frames": 300,
+  "mode": "performance-native",
+  "other_entities_clips": "10=Wave,12=Wave,13=Wave",
+  "palette_entries": 130,
+  "project": "projects/retarget_lab/retarget_lab.judasproj",
+  "renderer_draw_calls_accumulated": 18826,
+  "renderer_triangles_accumulated": 607920,
+  "retained_steady_frames": 120,
+  "selected_clip": "Native",
+  "selected_clip_duration_seconds": 2.0,
+  "selected_clip_keys": 5,
+  "selected_clip_tracks": 1,
+  "skeleton_nodes": 75,
+  "steady_metrics": {
+    "frame_elapsed": {
+      "frames": 120,
+      "max_ms": 13.415816,
+      "mean_ms": 11.723119983333332,
+      "median_ms": 11.673023,
+      "p95_ms": 12.632409000000001
+    },
+    "frame_interval": {
+      "frames": 120,
+      "max_ms": 13.444129,
+      "mean_ms": 11.75575338333333,
+      "median_ms": 11.704623,
+      "p95_ms": 12.659119
+    },
+    "inclusive_scopes": {
+      "Animation clip sampling": {
+        "frames": 120,
+        "max_ms": 0.021356,
+        "mean_ms": 0.009868366666666666,
+        "median_ms": 0.009511,
+        "p95_ms": 0.010895
+      },
+      "Animation instances": {
+        "frames": 120,
+        "max_ms": 0.128428,
+        "mean_ms": 0.08618089166666666,
+        "median_ms": 0.082443,
+        "p95_ms": 0.110908
+      },
+      "Final pose resolution": {
+        "frames": 120,
+        "max_ms": 0.09017700000000001,
+        "mean_ms": 0.056284825,
+        "median_ms": 0.053905,
+        "p95_ms": 0.076444
+      },
+      "Mesh geometry upload": {
+        "frames": 120,
+        "max_ms": 0.0,
+        "mean_ms": 0.0,
+        "median_ms": 0.0,
+        "p95_ms": 0.0
+      },
+      "Pose clip mixing": {
+        "frames": 120,
+        "max_ms": 0.022704,
+        "mean_ms": 0.011307474999999999,
+        "median_ms": 0.011018,
+        "p95_ms": 0.012508
+      },
+      "Pose skin matrices": {
+        "frames": 120,
+        "max_ms": 0.09348799999999999,
+        "mean_ms": 0.059050508333333356,
+        "median_ms": 0.056975,
+        "p95_ms": 0.074855
+      },
+      "Resource completion and budget": {
+        "frames": 120,
+        "max_ms": 0.001087,
+        "mean_ms": 0.0006919833333333334,
+        "median_ms": 0.000679,
+        "p95_ms": 0.000838
+      },
+      "Resource installation": {
+        "frames": 120,
+        "max_ms": 0.0,
+        "mean_ms": 0.0,
+        "median_ms": 0.0,
+        "p95_ms": 0.0
+      },
+      "Resource pump": {
+        "frames": 120,
+        "max_ms": 0.003056,
+        "mean_ms": 0.0023425916666666665,
+        "median_ms": 0.002337,
+        "p95_ms": 0.002775
+      },
+      "Resource worker job": {
+        "frames": 120,
+        "max_ms": 0.0,
+        "mean_ms": 0.0,
+        "median_ms": 0.0,
+        "p95_ms": 0.0
+      },
+      "Texture driver texel upload": {
+        "frames": 120,
+        "max_ms": 0.0,
+        "mean_ms": 0.0,
+        "median_ms": 0.0,
+        "p95_ms": 0.0
+      }
+    },
+    "scope_note": "Inclusive named scopes overlap; no sum across scopes. Uncapped hidden Release application, fixed simulation dt 1/60, no test sleep during steady measurement.",
+    "startup_included": false
+  },
+  "steady_upload_delta": 0,
+  "warmup_frames": 60
+}

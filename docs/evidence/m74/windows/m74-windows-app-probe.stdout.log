@@ -1,0 +1,31 @@
+PASS two instances share immutable target but independent mixer
+PASS normal resources publish native and five transferred named clips
+PASS real runtime uses unequal target helper counts
+PASS logical JS selects extracted clip, pauses and seeks
+PASS normal JS composes masked arm layer
+PASS independent instance retains different clip/time
+PASS shared physical contribution returns to animation without alternate skinning
+PASS ordinary resolved skeleton drives stable palm socket
+PASS real GL consumes finite target skinning palettes
+PASS actual rendered source/two-target comparison captured
+PASS normal registered animated prefab spawns through RuntimeWorld
+PASS prefab uses normal shared immutable target and independent animation state
+PASS prefab authored baked clip becomes animation-ready through normal resource path
+PASS prefab does not inherit existing instance clock or mixer layer
+PASS runtime prefab baked playback advances with finite ordinary GPU skin matrices
+PASS normal prefab hierarchy destruction succeeds
+PASS destroyed prefab animation handle cannot resolve a live instance
+PASS destroying shared-asset prefab preserves original animated instances
+PASS ordinary world manifest opens
+PASS normal animated region request
+PASS stream instance accepts ordinary baked layer
+PASS capture baked region clip/mixer snapshot
+PASS retire normal animated region
+PASS retired handle cannot alias live animation
+PASS revisit fresh handle restores exact baked clip/mixer payload
+PASS ordinary reload queued at outer boundary
+PASS reload reconstructs authored mixer and physical state
+PASS reload leaves no physical articulation bodies
+PASS bounded M56 runtime profile captured
+PASS ordinary application startup/lifecycle/shutdown
+SUMMARY mode=probe checks=30 failures=0 frames=163

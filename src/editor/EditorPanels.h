@@ -96,12 +96,15 @@ struct ProfilerData {
 
 struct ModelCookTask;
 struct RuntimeRenderHistory;
+struct RetargetPanelState;
 struct EditorPanelState {
     EditorWorkspaceLayout workspace;
     float hierarchyWidth = 250.0f;
     float inspectorWidth = 340.0f;
     float assetBrowserHeight = 200.0f;
     bool showSceneSettings = false;
+    bool showRetarget = false;
+    std::shared_ptr<RetargetPanelState> retarget;
     bool showNavigationHelp = false;
     std::string assetSearch;
     int assetTypeFilter = -1;

@@ -1,0 +1,26 @@
+Renderer fragment texture units: 32 (material path uses 12)
+World state: legacy .judasstate (F6/F7) saves disabled for additive compositions; save slots remain available
+Project: Retarget Lab (/home/conner/Documents/GitHub/Project-Judas/.cache/m74/application-project/retarget_lab.judasproj)
+Scene: Borrowed Moves (/home/conner/Documents/GitHub/Project-Judas/.cache/m74/application-project/Scenes/lab.judas)
+World origin (m): 0.000, 0.000, 0.000
+PASS two instances share immutable target but independent mixer
+PASS normal resources publish native and five transferred named clips
+PASS real runtime uses unequal target helper counts
+PASS logical JS selects extracted clip, pauses and seeks
+PASS normal JS composes masked arm layer
+PASS independent instance retains different clip/time
+PASS shared physical contribution returns to animation without alternate skinning
+PASS ordinary resolved skeleton drives stable palm socket
+PASS real GL consumes finite target skinning palettes
+PASS actual rendered source/two-target comparison captured
+FAIL ordinary world manifest opens
+PASS logical JS selects extracted clip, pauses and seeks
+PASS normal JS composes masked arm layer
+PASS independent instance retains different clip/time
+PASS shared physical contribution returns to animation without alternate skinning
+PASS ordinary resolved skeleton drives stable palm socket
+PASS real GL consumes finite target skinning palettes
+PASS actual rendered source/two-target comparison captured
+FAIL ordinary world manifest opens
+FAIL ordinary application startup/lifecycle/shutdown
+SUMMARY mode=probe checks=20 failures=3 frames=140

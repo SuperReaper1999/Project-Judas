@@ -1,0 +1,172 @@
+{
+  "assetId": "62ceabb5c480b8b0bbcbfdd1a8cb5841",
+  "clips": [
+    {
+      "duration": 2.0,
+      "loop": false,
+      "motionExtracted": false,
+      "name": "Native"
+    },
+    {
+      "duration": 2.0,
+      "loop": false,
+      "motionExtracted": false,
+      "name": "Wave"
+    },
+    {
+      "duration": 2.0,
+      "loop": false,
+      "motionExtracted": false,
+      "name": "Bob"
+    },
+    {
+      "duration": 2.0,
+      "loop": false,
+      "motionExtracted": false,
+      "name": "TravelPreserve"
+    },
+    {
+      "duration": 2.0,
+      "loop": false,
+      "motionExtracted": true,
+      "name": "TravelExtract"
+    },
+    {
+      "duration": 2.0,
+      "loop": false,
+      "motionExtracted": false,
+      "name": "TravelInPlace"
+    }
+  ],
+  "diagnostics": [],
+  "hierarchyNodes": 72,
+  "importRecord": "{\"digest\":\"626d462d1c03768e10dd08f39f1a4ab578ba3bdf15eaeed7f645e8178a06854e\",\"inputs\":{\"Imports/tall.judasretarget\":\"ed5be53674c3cc7c6c7f2456b64b41bc0730738ede8491f1f188719118ee666b\",\"Sources/source.gltf\":\"df672f7636952c842fddfb44dac1c4f595eb8dd5fb35ec1df9462410632541b4\",\"Sources/tall.gltf\":\"bfb28b5b56935b976858b04435c4bab0bd8bc2ed3d08718ed2be56ab0bf8d27f\"},\"manifest\":{\"assetId\":\"62ceabb5c480b8b0bbcbfdd1a8cb5841\",\"clips\":[{\"duration\":2.0,\"loop\":false,\"motionExtracted\":false,\"name\":\"Native\"},{\"duration\":2.0,\"loop\":false,\"motionExtracted\":false,\"name\":\"Wave\"},{\"duration\":2.0,\"loop\":false,\"motionExtracted\":false,\"name\":\"Bob\"},{\"duration\":2.0,\"loop\":false,\"motionExtracted\":false,\"name\":\"TravelPreserve\"},{\"duration\":2.0,\"loop\":false,\"motionExtracted\":true,\"name\":\"TravelExtract\"},{\"duration\":2.0,\"loop\":false,\"motionExtracted\":false,\"name\":\"TravelInPlace\"}],\"diagnostics\":[],\"hierarchyNodes\":72,\"inputs\":{\"Imports/tall.judasretarget\":\"ed5be53674c3cc7c6c7f2456b64b41bc0730738ede8491f1f188719118ee666b\",\"Sources/source.gltf\":\"df672f7636952c842fddfb44dac1c4f595eb8dd5fb35ec1df9462410632541b4\",\"Sources/tall.gltf\":\"bfb28b5b56935b976858b04435c4bab0bd8bc2ed3d08718ed2be56ab0bf8d27f\"},\"joints\":[\"Q00\",\"Q00/Q01\",\"Q00/Q01/RetainedSpacer71/Q02\",\"Q00/Q01/RetainedSpacer71/Q02/Q03\",\"Q00/Q01/RetainedSpacer71/Q02/Q03/Q04\",\"Q00/Q01/RetainedSpacer71/Q02/Q03/Q04/Q05\",\"Q00/Q01/RetainedSpacer71/Q02/Q03/Q06\",\"Q00/Q01/RetainedSpacer71/Q02/Q03/Q06/Q07\",\"Q00/Q01/RetainedSpacer71/Q02/Q03/Q06/Q07/Q08\",\"Q00/Q01/RetainedSpacer71/Q02/Q03/Q06/Q07/Q08/Q09\",\"Q00/Q01/RetainedSpacer71/Q02/Q03/Q06/Q07/Q08/Q09/Q10\",\"Q00/Q01/RetainedSpacer71/Q02/Q03/Q06/Q07/Q08/Q09/Q10/Q11\",\"Q00/Q01/RetainedSpacer71/Q02/Q03/Q06/Q07/Q08/Q09/Q10/Q11/Q12\",\"Q00/Q01/RetainedSpacer71/Q02/Q03/Q06/Q07/Q08/Q09/Q13\",\"Q00/Q01/RetainedSpacer71/Q02/Q03/Q06/Q07/Q08/Q09/Q13/Q14\",\"Q00/Q01/RetainedSpacer71/Q02/Q03/Q06/Q07/Q08/Q09/Q13/Q14/Q15\",\"Q00/Q01/RetainedSpacer71/Q02/Q03/Q06/Q07/Q08/Q09/Q16\",\"Q00/Q01/RetainedSpacer71/Q02/Q03/Q06/Q07/Q08/Q09/Q16/Q17\",\"Q00/Q01/RetainedSpacer71/Q02/Q03/Q06/Q07/Q08/Q09/Q16/Q17/Q18\",\"Q00/Q01/RetainedSpacer71/Q02/Q03/Q06/Q07/Q08/Q09/Q19\",\"Q00/Q01/RetainedSpacer71/Q02/Q03/Q06/Q07/Q08/Q09/Q19/Q20\",\"Q00/Q01/RetainedSpacer71/Q02/Q03/Q06/Q07/Q08/Q09/Q19/Q20/Q21\",\"Q00/Q01/RetainedSpacer71/Q02/Q03/Q06/Q07/Q08/Q09/Q22\",\"Q00/Q01/RetainedSpacer71/Q02/Q03/Q06/Q07/Q08/Q09/Q22/Q23\",\"Q00/Q01/RetainedSpacer71/Q02/Q03/Q06/Q07/Q08/Q09/Q22/Q23/Q24\",\"Q00/Q01/Q25\",\"Q00/Q01/Q25/Q26\",\"Q00/Q01/Q25/Q26/Q27\",\"Q00/Q01/Q25/Q26/Q27/Q28\",\"Q00/Q01/RetainedSpacer71/Q02/Q03/Q29\",\"Q00/Q01/RetainedSpacer71/Q02/Q03/Q29/Q30\",\"Q00/Q01/RetainedSpacer71/Q02/Q03/Q29/Q30/Q31\",\"Q00/Q01/RetainedSpacer71/Q02/Q03/Q29/Q30/Q31/Q32\",\"Q00/Q01/RetainedSpacer71/Q02/Q03/Q29/Q30/Q31/Q32/Q33\",\"Q00/Q01/RetainedSpacer71/Q02/Q03/Q29/Q30/Q31/Q32/Q33/Q34\",\"Q00/Q01/RetainedSpacer71/Q02/Q03/Q29/Q30/Q31/Q32/Q33/Q34/Q35\",\"Q00/Q01/RetainedSpacer71/Q02/Q03/Q29/Q30/Q31/Q32/Q36\",\"Q00/Q01/RetainedSpacer71/Q02/Q03/Q29/Q30/Q31/Q32/Q36/Q37\",\"Q00/Q01/RetainedSpacer71/Q02/Q03/Q29/Q30/Q31/Q32/Q36/Q37/Q38\",\"Q00/Q01/RetainedSpacer71/Q02/Q03/Q29/Q30/Q31/Q32/Q39\",\"Q00/Q01/RetainedSpacer71/Q02/Q03/Q29/Q30/Q31/Q32/Q39/Q40\",\"Q00/Q01/RetainedSpacer71/Q02/Q03/Q29/Q30/Q31/Q32/Q39/Q40/Q41\",\"Q00/Q01/RetainedSpacer71/Q02/Q03/Q29/Q30/Q31/Q32/Q42\",\"Q00/Q01/RetainedSpacer71/Q02/Q03/Q29/Q30/Q31/Q32/Q42/Q43\",\"Q00/Q01/RetainedSpacer71/Q02/Q03/Q29/Q30/Q31/Q32/Q42/Q43/Q44\",\"Q00/Q01/RetainedSpacer71/Q02/Q03/Q29/Q30/Q31/Q32/Q45\",\"Q00/Q01/RetainedSpacer71/Q02/Q03/Q29/Q30/Q31/Q32/Q45/Q46\",\"Q00/Q01/RetainedSpacer71/Q02/Q03/Q29/Q30/Q31/Q32/Q45/Q46/Q47\",\"Q00/Q01/Q48\",\"Q00/Q01/Q48/Q49\",\"Q00/Q01/Q48/Q49/Q50\",\"Q00/Q01/Q48/Q49/Q50/Q51\",\"Q00/Q01/RetainedSpacer71/Q02/Q03/Q52\",\"Q00/Q01/RetainedSpacer71/Q02/Q03/Q04/Q53\",\"Q00/Q01/RetainedSpacer71/Q02/Q03/Q04/Q05/Q54\",\"Q00/Q01/Q55\",\"Q00/Q01/RetainedSpacer71/Q02/Q56\",\"Q00/Q01/RetainedSpacer71/Q02/Q03/Q57\",\"Q00/Q01/RetainedSpacer71/Q02/Q03/Q04/Q58\",\"Q00/Q01/RetainedSpacer71/Q02/Q03/Q04/Q05/Q59\",\"Q00/Q01/Q60\",\"Q00/Q01/RetainedSpacer71/Q02/Q61\",\"Q00/Q01/RetainedSpacer71/Q02/Q03/Q62\",\"Q00/Q01/RetainedSpacer71/Q02/Q03/Q04/Q63\",\"Q00/Q01/RetainedSpacer71/Q02/Q03/Q04/Q05/Q64\",\"VisualPart0\",\"VisualPart1\",\"VisualPart2\",\"VisualPart3\",\"VisualPart4\",\"VisualPart5\",\"Q00/Q01/RetainedSpacer71\",\"__JudasMotionRoot\"],\"materialKeys\":[\"Original part 0\",\"Original part 1\",\"Original part 2\",\"Original part 3\",\"Original part 4\",\"Original part 5\"],\"parts\":[{\"identity\":\"VisualPart0/material/Original part 0\",\"node\":65,\"triangles\":36},{\"identity\":\"VisualPart1/material/Original part 1\",\"node\":66,\"triangles\":24},{\"identity\":\"VisualPart2/material/Original part 2\",\"node\":67,\"triangles\":36},{\"identity\":\"VisualPart3/material/Original part 3\",\"node\":68,\"triangles\":36},{\"identity\":\"VisualPart4/material/Original part 4\",\"node\":69,\"triangles\":36},{\"identity\":\"VisualPart5/material/Original part 5\",\"node\":70,\"triangles\":36}],\"recipeDigest\":\"626d462d1c03768e10dd08f39f1a4ab578ba3bdf15eaeed7f645e8178a06854e\",\"revision\":\"M66-ufbx-0.23.1-cgltf-1.15-cook-10-M74-retarget-1-model-1\",\"skinPaletteEntries\":130,\"sourceBones\":0,\"sourceUnitMeters\":1.0,\"vertices\":612},\"recipe\":\"Imports/tall.judasimport\",\"revision\":\"M66-ufbx-0.23.1-cgltf-1.15-cook-10-M74-retarget-1-model-1\"}",
+  "inputs": {
+    "Imports/tall.judasretarget": "ed5be53674c3cc7c6c7f2456b64b41bc0730738ede8491f1f188719118ee666b",
+    "Sources/source.gltf": "df672f7636952c842fddfb44dac1c4f595eb8dd5fb35ec1df9462410632541b4",
+    "Sources/tall.gltf": "bfb28b5b56935b976858b04435c4bab0bd8bc2ed3d08718ed2be56ab0bf8d27f"
+  },
+  "joints": [
+    "Q00",
+    "Q00/Q01",
+    "Q00/Q01/RetainedSpacer71/Q02",
+    "Q00/Q01/RetainedSpacer71/Q02/Q03",
+    "Q00/Q01/RetainedSpacer71/Q02/Q03/Q04",
+    "Q00/Q01/RetainedSpacer71/Q02/Q03/Q04/Q05",
+    "Q00/Q01/RetainedSpacer71/Q02/Q03/Q06",
+    "Q00/Q01/RetainedSpacer71/Q02/Q03/Q06/Q07",
+    "Q00/Q01/RetainedSpacer71/Q02/Q03/Q06/Q07/Q08",
+    "Q00/Q01/RetainedSpacer71/Q02/Q03/Q06/Q07/Q08/Q09",
+    "Q00/Q01/RetainedSpacer71/Q02/Q03/Q06/Q07/Q08/Q09/Q10",
+    "Q00/Q01/RetainedSpacer71/Q02/Q03/Q06/Q07/Q08/Q09/Q10/Q11",
+    "Q00/Q01/RetainedSpacer71/Q02/Q03/Q06/Q07/Q08/Q09/Q10/Q11/Q12",
+    "Q00/Q01/RetainedSpacer71/Q02/Q03/Q06/Q07/Q08/Q09/Q13",
+    "Q00/Q01/RetainedSpacer71/Q02/Q03/Q06/Q07/Q08/Q09/Q13/Q14",
+    "Q00/Q01/RetainedSpacer71/Q02/Q03/Q06/Q07/Q08/Q09/Q13/Q14/Q15",
+    "Q00/Q01/RetainedSpacer71/Q02/Q03/Q06/Q07/Q08/Q09/Q16",
+    "Q00/Q01/RetainedSpacer71/Q02/Q03/Q06/Q07/Q08/Q09/Q16/Q17",
+    "Q00/Q01/RetainedSpacer71/Q02/Q03/Q06/Q07/Q08/Q09/Q16/Q17/Q18",
+    "Q00/Q01/RetainedSpacer71/Q02/Q03/Q06/Q07/Q08/Q09/Q19",
+    "Q00/Q01/RetainedSpacer71/Q02/Q03/Q06/Q07/Q08/Q09/Q19/Q20",
+    "Q00/Q01/RetainedSpacer71/Q02/Q03/Q06/Q07/Q08/Q09/Q19/Q20/Q21",
+    "Q00/Q01/RetainedSpacer71/Q02/Q03/Q06/Q07/Q08/Q09/Q22",
+    "Q00/Q01/RetainedSpacer71/Q02/Q03/Q06/Q07/Q08/Q09/Q22/Q23",
+    "Q00/Q01/RetainedSpacer71/Q02/Q03/Q06/Q07/Q08/Q09/Q22/Q23/Q24",
+    "Q00/Q01/Q25",
+    "Q00/Q01/Q25/Q26",
+    "Q00/Q01/Q25/Q26/Q27",
+    "Q00/Q01/Q25/Q26/Q27/Q28",
+    "Q00/Q01/RetainedSpacer71/Q02/Q03/Q29",
+    "Q00/Q01/RetainedSpacer71/Q02/Q03/Q29/Q30",
+    "Q00/Q01/RetainedSpacer71/Q02/Q03/Q29/Q30/Q31",
+    "Q00/Q01/RetainedSpacer71/Q02/Q03/Q29/Q30/Q31/Q32",
+    "Q00/Q01/RetainedSpacer71/Q02/Q03/Q29/Q30/Q31/Q32/Q33",
+    "Q00/Q01/RetainedSpacer71/Q02/Q03/Q29/Q30/Q31/Q32/Q33/Q34",
+    "Q00/Q01/RetainedSpacer71/Q02/Q03/Q29/Q30/Q31/Q32/Q33/Q34/Q35",
+    "Q00/Q01/RetainedSpacer71/Q02/Q03/Q29/Q30/Q31/Q32/Q36",
+    "Q00/Q01/RetainedSpacer71/Q02/Q03/Q29/Q30/Q31/Q32/Q36/Q37",
+    "Q00/Q01/RetainedSpacer71/Q02/Q03/Q29/Q30/Q31/Q32/Q36/Q37/Q38",
+    "Q00/Q01/RetainedSpacer71/Q02/Q03/Q29/Q30/Q31/Q32/Q39",
+    "Q00/Q01/RetainedSpacer71/Q02/Q03/Q29/Q30/Q31/Q32/Q39/Q40",
+    "Q00/Q01/RetainedSpacer71/Q02/Q03/Q29/Q30/Q31/Q32/Q39/Q40/Q41",
+    "Q00/Q01/RetainedSpacer71/Q02/Q03/Q29/Q30/Q31/Q32/Q42",
+    "Q00/Q01/RetainedSpacer71/Q02/Q03/Q29/Q30/Q31/Q32/Q42/Q43",
+    "Q00/Q01/RetainedSpacer71/Q02/Q03/Q29/Q30/Q31/Q32/Q42/Q43/Q44",
+    "Q00/Q01/RetainedSpacer71/Q02/Q03/Q29/Q30/Q31/Q32/Q45",
+    "Q00/Q01/RetainedSpacer71/Q02/Q03/Q29/Q30/Q31/Q32/Q45/Q46",
+    "Q00/Q01/RetainedSpacer71/Q02/Q03/Q29/Q30/Q31/Q32/Q45/Q46/Q47",
+    "Q00/Q01/Q48",
+    "Q00/Q01/Q48/Q49",
+    "Q00/Q01/Q48/Q49/Q50",
+    "Q00/Q01/Q48/Q49/Q50/Q51",
+    "Q00/Q01/RetainedSpacer71/Q02/Q03/Q52",
+    "Q00/Q01/RetainedSpacer71/Q02/Q03/Q04/Q53",
+    "Q00/Q01/RetainedSpacer71/Q02/Q03/Q04/Q05/Q54",
+    "Q00/Q01/Q55",
+    "Q00/Q01/RetainedSpacer71/Q02/Q56",
+    "Q00/Q01/RetainedSpacer71/Q02/Q03/Q57",
+    "Q00/Q01/RetainedSpacer71/Q02/Q03/Q04/Q58",
+    "Q00/Q01/RetainedSpacer71/Q02/Q03/Q04/Q05/Q59",
+    "Q00/Q01/Q60",
+    "Q00/Q01/RetainedSpacer71/Q02/Q61",
+    "Q00/Q01/RetainedSpacer71/Q02/Q03/Q62",
+    "Q00/Q01/RetainedSpacer71/Q02/Q03/Q04/Q63",
+    "Q00/Q01/RetainedSpacer71/Q02/Q03/Q04/Q05/Q64",
+    "VisualPart0",
+    "VisualPart1",
+    "VisualPart2",
+    "VisualPart3",
+    "VisualPart4",
+    "VisualPart5",
+    "Q00/Q01/RetainedSpacer71",
+    "__JudasMotionRoot"
+  ],
+  "materialKeys": [
+    "Original part 0",
+    "Original part 1",
+    "Original part 2",
+    "Original part 3",
+    "Original part 4",
+    "Original part 5"
+  ],
+  "outputHash": "07a6bafb5e0a8235fe3ff0466b4694a60488748058c37f5cbb05f1ff0d317eeb",
+  "parts": [
+    {
+      "identity": "VisualPart0/material/Original part 0",
+      "node": 65,
+      "triangles": 36
+    },
+    {
+      "identity": "VisualPart1/material/Original part 1",
+      "node": 66,
+      "triangles": 24
+    },
+    {
+      "identity": "VisualPart2/material/Original part 2",
+      "node": 67,
+      "triangles": 36
+    },
+    {
+      "identity": "VisualPart3/material/Original part 3",
+      "node": 68,
+      "triangles": 36
+    },
+    {
+      "identity": "VisualPart4/material/Original part 4",
+      "node": 69,
+      "triangles": 36
+    },
+    {
+      "identity": "VisualPart5/material/Original part 5",
+      "node": 70,
+      "triangles": 36
+    }
+  ],
+  "recipeDigest": "626d462d1c03768e10dd08f39f1a4ab578ba3bdf15eaeed7f645e8178a06854e",
+  "recordHash": "5c71ac0a4fe02238040bf6249fdc97722b8b31f6eef541706b64cf1ca73c7603",
+  "revision": "M66-ufbx-0.23.1-cgltf-1.15-cook-10-M74-retarget-1-model-1",
+  "skinPaletteEntries": 130,
+  "sourceBones": 0,
+  "sourceUnitMeters": 1.0,
+  "vertices": 612
+}

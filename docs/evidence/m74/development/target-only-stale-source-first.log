@@ -1,0 +1,18 @@
+Renderer fragment texture units: 32 (material path uses 12)
+World state: legacy .judasstate (F6/F7) saves disabled for additive compositions; save slots remain available
+Project: Retarget Lab (/home/conner/Documents/GitHub/Project-Judas/.cache/m74/target-only-export/game.judasproj)
+Scene: Borrowed Moves (/home/conner/Documents/GitHub/Project-Judas/.cache/m74/target-only-export/Scenes/lab.judas)
+World origin (m): 0.000, 0.000, 0.000
+script asset=1be6c47312fcb1f9bda17ff78d402004 entity=90 slot=1 presentationUpdate: ReferenceError: stale or invalid entity 10
+    at __judas (native)
+    at call (judas:2:51)
+    at get animation (judas:30:25)
+    at presentationUpdate (Assets/scripts/lab.js:80:74)
+
+[TestHarness] script callback failed: ReferenceError: stale or invalid entity 10
+    at __judas (native)
+    at call (judas:2:51)
+    at get animation (judas:30:25)
+    at presentationUpdate (Assets/scripts/lab.js:80:74)
+
+step,time,posX,posY,posZ,upX,upY,upZ,grounded,velX,velY,velZ,gravX,gravY,gravZ,controlled,frame,steps,paused

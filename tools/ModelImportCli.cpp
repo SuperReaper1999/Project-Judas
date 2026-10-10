@@ -5,6 +5,7 @@
 #include "ModelCook.h"
 #include "ModelArchive.h"
 #include "ModelCollision.h"
+#include "AnimationRetarget.h"
 #include "AssetDatabase.h"
 #include "SceneFingerprint.h"
 #include "../third_party/nlohmann/json.hpp"
@@ -19,7 +20,25 @@ int main(int argc,char** argv){
   ProfileRun run("Model import CLI");ProfileFrame frame("Model import CLI");
  try{
   std::string error;
-  if(argc==3&&std::string(argv[1])=="--inspect") {MeshData mesh;if(!LoadModelMesh(argv[2],mesh,error))throw std::runtime_error(error);Json j={{"parts",Json::array()},{"clips",Json::array()},{"joints",Json::array()},{"materials",mesh.materialKeys}};for(size_t i=0;i<mesh.primitives.size();++i){auto& p=mesh.primitives[i];j["parts"].push_back({{"ordinal",i},{"identity",p.part},{"triangles",p.count/3},{"material",p.material}});}j["materialDefaults"]=Json::array();for(auto& m:mesh.materials){int low=255,high=0;for(size_t k=3;k<m.maps[0].embedded.pixels.size();k+=4){low=std::min(low,int(m.maps[0].embedded.pixels[k]));high=std::max(high,int(m.maps[0].embedded.pixels[k]));}j["materialDefaults"].push_back({{"factor",{m.baseColor.r,m.baseColor.g,m.baseColor.b,m.baseColor.a}},{"alpha",int(m.alpha)},{"imageAlphaMin",low},{"imageAlphaMax",high}});}if(mesh.skeletal){auto& a=*mesh.skeletal;for(size_t i=0;i<a.skeleton.names.size();++i)j["joints"].push_back(SkeletonJointKey(a.skeleton,int(i)));for(auto& c:a.clips)j["clips"].push_back({{"name",c.name},{"duration",c.duration},{"rootMotion",!c.motion.empty()}});}std::cout<<j.dump(2)<<'\n';return 0;}
+  if(argc==3&&std::string(argv[1])=="--inspect") {MeshData mesh;if(!LoadModelMesh(argv[2],mesh,error))throw std::runtime_error(error);Json j={{"parts",Json::array()},{"clips",Json::array()},{"joints",Json::array()},{"materials",mesh.materialKeys}};for(size_t i=0;i<mesh.primitives.size();++i){auto& p=mesh.primitives[i];j["parts"].push_back({{"ordinal",i},{"identity",p.part},{"triangles",p.count/3},{"material",p.material}});}j["materialDefaults"]=Json::array();for(auto& m:mesh.materials){int low=255,high=0;for(size_t k=3;k<m.maps[0].embedded.pixels.size();k+=4){low=std::min(low,int(m.maps[0].embedded.pixels[k]));high=std::max(high,int(m.maps[0].embedded.pixels[k]));}j["materialDefaults"].push_back({{"factor",{m.baseColor.r,m.baseColor.g,m.baseColor.b,m.baseColor.a}},{"alpha",int(m.alpha)},{"imageAlphaMin",low},{"imageAlphaMax",high}});}if(mesh.skeletal){auto& a=*mesh.skeletal;for(size_t i=0;i<a.skeleton.names.size();++i)j["joints"].push_back(SkeletonJointKey(a.skeleton,int(i)));try{j["skeletonSignature"]=SkeletonRetargetSignature(a.skeleton);}catch(const std::exception& diagnostic){j["skeletonSignatureError"]=diagnostic.what();}for(auto& c:a.clips)j["clips"].push_back({{"name",c.name},{"duration",c.duration},{"rootMotion",!c.motion.empty()}});}std::cout<<j.dump(2)<<'\n';return 0;}
+  if(argc==3&&std::string(argv[1])=="--inspect-motion"){
+   MeshData source;ModelImportSettings settings;ModelImportReport report;if(!ImportMotionSource(argv[2],settings,source,report,error))throw std::runtime_error(error);Json j=Report(report);j["joints"]=Json::array();j["clips"]=Json::array();j["skeletonSignature"]=SkeletonRetargetSignature(source.skeletal->skeleton);for(size_t i=0;i<source.skeletal->skeleton.names.size();++i)j["joints"].push_back(SkeletonJointKey(source.skeletal->skeleton,int(i)));for(const auto& clip:source.skeletal->clips)j["clips"].push_back({{"name",clip.name},{"duration",clip.duration},{"motionExtracted",!clip.motion.empty()}});std::cout<<j.dump(2)<<'\n';return 0;
+  }
+  if((argc==5&&std::string(argv[1])=="--retarget-validate")||(argc==7&&std::string(argv[1])=="--retarget-profile")){
+   ModelImportSettings sourceSettings,targetSettings;ModelImportReport sourceReport,targetReport;MeshData source,target;std::string targetRoot,targetIdentity;
+   if(!ImportMotionSource(argv[2],sourceSettings,source,sourceReport,error))throw std::runtime_error(error);
+   if(std::filesystem::path(argv[3]).extension()==".judasimport"){if(!LoadModelRecipeTarget(argv[3],target,targetSettings,targetRoot,error))throw std::runtime_error(error);std::ifstream recipeFile(argv[3]);targetIdentity=Json::parse(recipeFile).at("assetId");}
+   else if(!ImportModelSource(argv[3],targetSettings,target,targetReport,error))throw std::runtime_error(error);
+   if(!source.skeletal||!target.skeletal)throw std::runtime_error("retarget source and target require skeletal hierarchy");
+   RetargetProfile profile;bool create=std::string(argv[1])=="--retarget-profile";
+   if(create){profile.sourceIdentity=argv[5];profile.targetIdentity=argv[6];profile.sourceSignature=SkeletonRetargetSignature(source.skeletal->skeleton);profile.targetSignature=SkeletonRetargetSignature(target.skeletal->skeleton);if(std::filesystem::exists(argv[4]))throw std::runtime_error("profile already exists; retain it and edit explicit mappings");}
+   else if(!LoadRetargetProfile(argv[4],profile,error)||!ValidateRetargetProfile(source.skeletal->skeleton,target.skeletal->skeleton,profile,error))throw std::runtime_error(error);
+   if(!targetRoot.empty()){auto relative=std::filesystem::weakly_canonical(argv[2]).lexically_relative(targetRoot);if(relative.empty()||relative.is_absolute()||*relative.begin()==".."||profile.sourceIdentity!=relative.generic_string()||profile.targetIdentity!=targetIdentity)throw std::runtime_error("profile source/target identities differ from project-owned recipe inputs");}
+   if(create&&!SaveRetargetProfile(argv[4],profile,error))throw std::runtime_error(error);
+   Json j={{"success",true},{"profile",argv[4]},{"draft",create},{"sourceSignature",SkeletonRetargetSignature(source.skeletal->skeleton)},{"targetSignature",SkeletonRetargetSignature(target.skeletal->skeleton)},{"sourceJoints",Json::array()},{"targetJoints",Json::array()},{"takes",Json::array()}};
+   for(size_t i=0;i<source.skeletal->skeleton.names.size();++i)j["sourceJoints"].push_back(SkeletonJointKey(source.skeletal->skeleton,int(i)));for(size_t i=0;i<target.skeletal->skeleton.names.size();++i)j["targetJoints"].push_back(SkeletonJointKey(target.skeletal->skeleton,int(i)));for(const auto& clip:source.skeletal->clips)j["takes"].push_back({{"name",clip.name},{"duration",clip.duration},{"motionExtracted",!clip.motion.empty()}});
+   std::cout<<j.dump(2)<<'\n';return 0;
+  }
   if(argc==5&&std::string(argv[1])=="--create") {std::string recipe;bool ok=CreateModelRecipe(argv[2],argv[3],argv[4],recipe,error);std::cout<<Json{{"success",ok},{"recipe",recipe},{"error",error}}.dump(2)<<'\n';return ok?0:1;}
   if(argc==3&&std::string(argv[1])=="--recipe") {ModelCookTask task;task.previewRequired=false;bool ok=CookModelRecipe(argv[2],task)&&PublishModelImport(task,error);auto j=Report(task.report);j["success"]=ok;j["unchanged"]=task.unchanged;j["receiptHit"]=task.receiptHit;j["decodedProducts"]=task.decodedProducts;j["output"]=task.output;j["assetId"]=task.assetId;j["error"]=error.empty()?task.error:error;std::cout<<j.dump(2)<<'\n';return !ok?1:task.report.diagnostics.empty()?0:2;}
   if(argc>=5&&std::string(argv[1])=="--collision"){
@@ -31,7 +50,7 @@ int main(int argc,char** argv){
   }
   // Direct source inspection/cook is useful for fixtures. Project publication
   // uses --create / --recipe; this path does not create a second asset registry.
-  if(argc<3){std::cerr<<"Usage: --create PROJECT SOURCE Assets/name.judasmodel | --recipe Imports/name.judasimport | SOURCE OUTPUT [MOTIONS...] | --collision MODEL PART OUTPUT [--orient --remove-degenerates --weld=0.00001 --convex]\n";return 64;}
+  if(argc<3){std::cerr<<"Usage: --retarget-profile SOURCE TARGET_RECIPE PROFILE SOURCE_ID TARGET_ASSET_ID | --retarget-validate SOURCE TARGET_RECIPE PROFILE | --create PROJECT SOURCE Assets/name.judasmodel | --recipe Imports/name.judasimport | SOURCE OUTPUT [MOTIONS...] | --collision MODEL PART OUTPUT [--orient --remove-degenerates --weld=0.00001 --convex]\n";return 64;}
   MeshData mesh;ModelImportReport report;ModelImportSettings settings;
   if(!ImportModelSource(argv[1],settings,mesh,report,error)){auto j=Report(report);j["error"]=error;std::cout<<j.dump(2)<<'\n';return 1;}
   if(argc>3&&mesh.skeletal){auto a=std::make_shared<SkeletalAsset>(*mesh.skeletal);for(int i=3;i<argc;++i){std::vector<AnimationClip> clips;ModelImportReport motion;if(!ImportCompatibleMotion(argv[i],settings,a->skeleton,clips,motion,error)){std::cerr<<error<<'\n';return 1;}for(auto& c:clips){c.name=std::filesystem::path(argv[i]).stem().string()+"/"+c.name;a->clips.push_back(std::move(c));}}mesh.skeletal=a;}

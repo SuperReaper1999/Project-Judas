@@ -1,0 +1,49 @@
+PASS ordinary target recipe copies normalized source fixture
+PASS shared editor/CLI target and complete motion-source inputs decode
+PASS reusable named authoring profile saves through shared bounded serializer
+PASS two retarget operations reuse profile and publish beside native target clip
+PASS ordinary runtime loader sees native and both borrowed named clips
+PASS native clip timing preserved and retarget trim has explicit duration
+PASS trimmed borrowed output samples expected source interval
+PASS ordinary extracted root-motion loop composes without doubled displacement
+PASS shared preview uses production retarget and ordinary root-motion policy
+PASS preview and reloaded recipe bake agree within 1 micrometre matrix tolerance
+PASS unchanged recipe verifies receipt and does not decode or append duplicates
+PASS same reusable profile accepts explicit translation calibration edit
+PASS profile content edit rebakes while retaining logical output identity
+PASS missing mapping fails transactionally and preserves last accepted product
+PASS retarget output collision never overwrites a native target clip
+PASS cancelled cook leaves accepted generation unchanged
+PASS changed operation stages an immutable candidate generation
+PASS profile change between cook and publication rejects stale worker output
+PASS animation-only glTF decodes all ancestor joints without manufactured geometry
+PASS already-extracted source reports unsupported contract without partial output mutation
+PASS restored input bytes reproduce deterministic accepted generation
+PASS lost disposable cache/receipt still preserves validated ordinary output
+PASS unsupported animated STEP discontinuity is explicit and preserves last-good output
+PASS same-mtime legal source/dependency edit invalidates baked motion by content hash
+PASS original GLB target copies through the normal import boundary
+PASS complete original FBX motion and GLB target decode with normal axis/unit normalization
+PASS original FBX source profile retains stable full ancestor keys
+PASS FBX performance bakes and publishes ordinary GLB-compatible named clip
+PASS reloaded FBX recipe output preserves target originals and source playback timing
+PASS dense secondary-trim target uses ordinary recipe infrastructure
+PASS dense profile maps complete stable target hierarchy
+PASS dense retarget fixture genuinely produces hundreds of ordinary tracks
+PASS secondary recipe trim of dense retarget output publishes normally
+PASS dense trimmed output remains an ordinary runtime asset
+PASS secondary trim samples each union pose once, with exact bounded evaluation telemetry
+PASS shared sampling retains prior per-track timestamps, endpoints and exact sampled values
+PASS secondary trim cancellation during shared sampling preserves accepted generation
+{
+  "bakeMs": 23.6648,
+  "bakeSamples": 91,
+  "checks": 37,
+  "failures": 0,
+  "outputBytes": 210913,
+  "previewMatrixMaxError": 0.0,
+  "secondaryTrimFormerPoseSamples": 29412,
+  "secondaryTrimMaxValueError": 0.0,
+  "secondaryTrimNodeEvaluations": 14763,
+  "secondaryTrimPoseSamples": 57
+}

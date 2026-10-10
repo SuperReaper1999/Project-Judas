@@ -1,0 +1,90 @@
+{
+  "format": "JudasRetarget",
+  "version": 1,
+  "sourceIdentity": "Sources/source.gltf",
+  "targetIdentity": "62ceabb5c480b8b0bbcbfdd1a8cb5841",
+  "sourceSignature": "b9d3153fd332740d675db5039168c5eda7ccf4cd844ba76ea07486dc7ecb3c97",
+  "targetSignature": "b61bcf7017e1723dbe9f0d4f02230d8722b2b9eade788539851b679b601f1add",
+  "modelAlignment": [
+    0,
+    0,
+    0,
+    1
+  ],
+  "translationScale": 1.2,
+  "mapping": [
+    {
+      "source": "OriginHelper/Pivot",
+      "target": "Q00/Q01"
+    },
+    {
+      "source": "OriginHelper/Pivot/Vertebra0",
+      "target": "Q00/Q01/RetainedSpacer71/Q02"
+    },
+    {
+      "source": "OriginHelper/Pivot/Vertebra0/Vertebra1",
+      "target": "Q00/Q01/RetainedSpacer71/Q02/Q03"
+    },
+    {
+      "source": "OriginHelper/Pivot/Vertebra0/Vertebra1/NeckConnector",
+      "target": "Q00/Q01/RetainedSpacer71/Q02/Q03/Q04"
+    },
+    {
+      "source": "OriginHelper/Pivot/Vertebra0/Vertebra1/NeckConnector/Cranial",
+      "target": "Q00/Q01/RetainedSpacer71/Q02/Q03/Q04/Q05"
+    },
+    {
+      "source": "OriginHelper/Pivot/Vertebra0/Vertebra1/CollarA/ShoulderA",
+      "target": "Q00/Q01/RetainedSpacer71/Q02/Q03/Q06/Q07"
+    },
+    {
+      "source": "OriginHelper/Pivot/Vertebra0/Vertebra1/CollarA/ShoulderA/ElbowA",
+      "target": "Q00/Q01/RetainedSpacer71/Q02/Q03/Q06/Q07/Q08"
+    },
+    {
+      "source": "OriginHelper/Pivot/Vertebra0/Vertebra1/CollarA/ShoulderA/ElbowA/PalmA",
+      "target": "Q00/Q01/RetainedSpacer71/Q02/Q03/Q06/Q07/Q08/Q09"
+    },
+    {
+      "source": "OriginHelper/Pivot/Vertebra0/Vertebra1/CollarB/ShoulderB",
+      "target": "Q00/Q01/RetainedSpacer71/Q02/Q03/Q29/Q30"
+    },
+    {
+      "source": "OriginHelper/Pivot/Vertebra0/Vertebra1/CollarB/ShoulderB/ElbowB",
+      "target": "Q00/Q01/RetainedSpacer71/Q02/Q03/Q29/Q30/Q31"
+    },
+    {
+      "source": "OriginHelper/Pivot/Vertebra0/Vertebra1/CollarB/ShoulderB/ElbowB/PalmB",
+      "target": "Q00/Q01/RetainedSpacer71/Q02/Q03/Q29/Q30/Q31/Q32"
+    },
+    {
+      "source": "OriginHelper/Pivot/ThighA",
+      "target": "Q00/Q01/Q25"
+    },
+    {
+      "source": "OriginHelper/Pivot/ThighA/ShinA",
+      "target": "Q00/Q01/Q25/Q26"
+    },
+    {
+      "source": "OriginHelper/Pivot/ThighA/ShinA/SoleA",
+      "target": "Q00/Q01/Q25/Q26/Q27"
+    },
+    {
+      "source": "OriginHelper/Pivot/ThighB",
+      "target": "Q00/Q01/Q48"
+    },
+    {
+      "source": "OriginHelper/Pivot/ThighB/ShinB",
+      "target": "Q00/Q01/Q48/Q49"
+    },
+    {
+      "source": "OriginHelper/Pivot/ThighB/ShinB/SoleB",
+      "target": "Q00/Q01/Q48/Q49/Q50"
+    }
+  ],
+  "translationJoints": [
+    "Q00/Q01"
+  ],
+  "sourceReference": [],
+  "targetReference": []
+}

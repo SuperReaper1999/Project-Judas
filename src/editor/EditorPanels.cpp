@@ -13,6 +13,7 @@
 #include "Environment.h"
 #include "ResourceManager.h"
 #include "EditorPanels.h"
+#include "RetargetPanel.h"
 #include "Prefab.h"
 #include "RuntimeUI.h"
 #include "SceneSerialization.h"
@@ -410,6 +411,7 @@ void DrawEditorMainMenu(EditorDocument& doc, EditorPanelState& state, EditorRequ
         ImGui::EndMenu();
     }
     if (ImGui::BeginMenu("View")) {
+        ImGui::MenuItem("Animation retargeting", nullptr, &state.showRetarget);
         ImGui::MenuItem("Asset Browser", nullptr, &state.showAssetBrowser);
         ImGui::MenuItem("Scene settings", nullptr, &state.showSceneSettings, editing);
         ImGui::MenuItem("World building / named source", nullptr, &state.showWorldBuilding);
@@ -1090,6 +1092,7 @@ void DrawAssetBrowserPanel(EditorDocument& doc, EditorPanelState& state, EditorR
         }
         if (ImGui::BeginTabItem("Import & tools")) {
             ImGui::BeginChild("assetTools", {0, 0});
+            if(ImGui::Button("Animation retargeting: map / preview / bake"))OpenRetargetPanel(state,{},state.modelRecipe);
     if(ImGui::CollapsingHeader("Model import / reimport",ImGuiTreeNodeFlags_DefaultOpen)){
         auto text=[](const char* label,std::string& value){std::vector<char> buffer(std::max(size_t(4096),value.size()+256),0);std::copy(value.begin(),value.end(),buffer.begin());if(ImGui::InputText(label,buffer.data(),buffer.size()))value=buffer.data();};
         ImGui::TextWrapped("FBX / glTF / GLB / OBJ to an ordinary cooked model. Sources and recipes are author-owned; the game loads only cooked content. Reimport publishes only in Edit mode.");
