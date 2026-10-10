@@ -1,0 +1,8 @@
+FRAMES 1800
+FRAME_SECONDS .016666667
+LOG_EVERY 0
+WAIT_SERVICES scene 15000 1
+ACTION inventory 1 120 121
+SCREENSHOT 150 /tmp/lastlight-wall-package-inventory.png
+ACTION inventory 1 180 181
+SCREENSHOT 1600 /tmp/lastlight-wall-package-wave.png

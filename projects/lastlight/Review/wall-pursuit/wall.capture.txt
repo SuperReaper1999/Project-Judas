@@ -1,0 +1,8 @@
+FRAMES 950
+FRAME_SECONDS .016666667
+LOG_EVERY 0
+WAIT_SERVICES scene 15000 1
+SCREENSHOT 120 /tmp/lastlight-zombie-wall-approach.png
+SCREENSHOT 300 /tmp/lastlight-zombie-wall-pursuit.png
+SCREENSHOT 540 /tmp/lastlight-zombie-wall-late.png
+SCREENSHOT 850 /tmp/lastlight-zombie-wall-after.png

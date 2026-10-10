@@ -1,0 +1,56 @@
+{
+  "baseCheckpoint": "3b5e5b5d7b62e097208727ee7cdd10526be04c27",
+  "kind": "actual application preview; not operator acceptance",
+  "wall": {
+    "jumps": 1,
+    "wallSupported": true,
+    "healthAtEnd": 978,
+    "corpseBodies": 11,
+    "corpseFirstPelvis": {
+      "x": 30.839405059814453,
+      "y": 2.781092405319214,
+      "z": 24.017459869384766
+    },
+    "corpseLastPelvis": {
+      "x": 30.825483322143555,
+      "y": 0.09141819924116135,
+      "z": 23.827701568603516
+    },
+    "corpseOwnerGravityAtEnd": "spatial"
+  },
+  "return": {
+    "jumps": 2,
+    "lastMode": "ordinary",
+    "lastGravityMode": "spatial",
+    "lastPosition": {
+      "x": 31.527997970581055,
+      "y": 0.017275094985961914,
+      "z": 24.716737747192383
+    },
+    "lastSupported": true,
+    "peakSampledSpeed": 5.900080487334851,
+    "healthAtEnd": 923
+  },
+  "ground": {
+    "jumps": 0,
+    "lastMode": "ordinary",
+    "healthAtEnd": 934
+  },
+  "setup": {
+    "extraPlayerHealth": 1000,
+    "nearbyPrefab": "runner",
+    "playerWallStart": [
+      31.8,
+      4,
+      24
+    ],
+    "zombieWallStart": [
+      29,
+      0.04,
+      24
+    ],
+    "observedWall": 929,
+    "fixedStepSeconds": 0.016666666666666666
+  },
+  "nativeChangesInWallFollowup": []
+}

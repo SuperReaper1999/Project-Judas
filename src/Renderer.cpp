@@ -1629,7 +1629,12 @@ void Renderer::DrawUIImage(glm::vec2 position,glm::vec2 size,TextureHandle textu
     if(fit){const auto* image=texture.id<m_textures.size()&&m_textures[texture.id].alive?&m_textures[texture.id]:nullptr;
         if(image&&image->width>0&&image->height>0){auto scaled=glm::vec2(image->width,image->height);scaled*=std::min(size.x/scaled.x,size.y/scaled.y);position+=(size-scaled)*.5f;size=scaled;}}
     glUniform2f(m_uiUPosition,position.x,position.y);glUniform2f(m_uiUSize,size.x,size.y);
-    glUniform4f(m_uiUColor,tint.r,tint.g,tint.b,tint.a);glUniform2f(m_uiUUVOffset,0,0);glUniform2f(m_uiUUVScale,1,1);
+    // Imported TextureData stores the authored bottom row first for world
+    // materials. UI's unit quad starts at its top-left, so compensate here;
+    // fonts use their separate top-down atlas path. Preserve render-target UVs.
+    const bool imported=texture.id<m_textures.size()&&!m_textures[texture.id].renderTarget;
+    glUniform4f(m_uiUColor,tint.r,tint.g,tint.b,tint.a);
+    glUniform2f(m_uiUUVOffset,0,imported?1:0);glUniform2f(m_uiUUVScale,1,imported?-1:1);
     glBindTexture(GL_TEXTURE_2D,ResolveTexture(texture));glDrawArrays(GL_TRIANGLES,0,6);++m_uiDrawCalls;
 }
 

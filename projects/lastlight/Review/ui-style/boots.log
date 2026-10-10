@@ -1,0 +1,33 @@
+Renderer fragment texture units: 32 (material path uses 12)
+Project: Lastlight (/tmp/lastlight-ui-boots-project/lastlight.judasproj)
+Scene: Lastlight (/tmp/lastlight-ui-boots-project/Scenes/town.judas)
+World origin (m): 0.000, 0.000, 0.000
+JS: Lastlight: WASD, mouse, Ctrl aim, LMB fire, 1 rifle / 2 RPG, G grenade, N stall, I inventory, C collect, X normal gravity, B carry/drop, T turn, Space jump + airborne Space framewalk, E mantle, Shift, V view, R reload, RMB punch, F heavy, Q shove, Esc menu.
+READY normal application, all seven generated textures and two additional fonts, baseline and avatar
+READY field_canvas b18b5ec2ea72369d4bc3830b94036034
+READY hud_canvas 0ddfa1c5fa9c7ee575dd00acd919a874
+READY item_rifle 8d73a3680d7cfcbf848b87ed75425887
+READY item_boots 30786ec7e46418d579b59b98e24d4fa3
+READY item_launcher 987eb61bf8cafb5441005aff4673020c
+READY item_rocket 1c0993c1fa14aabc91d6b8915033ad97
+READY item_grenade d033d610b01dcf6d884aaca7748c4a5d
+READY DejaVuSansMono e7488f75ae8aaae8e44d014ae33bf38b
+READY DejaVuSansCondensed-Bold 6badf73ad4641464892b321658fd4d1d
+CAPTURE /tmp/lastlight-ui-boots-review/hud-1280x720.png requested=1280x720 actual=1280x720 paused=0 fixed=49
+CAPTURE /tmp/lastlight-ui-boots-review/inventory-1280x720.png requested=1280x720 actual=1280x720 paused=1 fixed=49
+ITEM JUDAS FRAMEWALK BOOTS
+SELECT inventory_row_1 at 401,331.5
+CAPTURE /tmp/lastlight-ui-boots-review/inventory-launcher-1280x720.png requested=1280x720 actual=1280x720 paused=1 fixed=49
+ITEM RPG LAUNCHER
+SELECT inventory_row_2 at 401,376.5
+CAPTURE /tmp/lastlight-ui-boots-review/inventory-rockets-1280x720.png requested=1280x720 actual=1280x720 paused=1 fixed=49
+ITEM JUDAS FRAMEWALK BOOTS
+SELECT inventory_row_3 at 401,421.5
+CAPTURE /tmp/lastlight-ui-boots-review/inventory-grenades-1280x720.png requested=1280x720 actual=1280x720 paused=1 fixed=49
+ITEM ROCKETS
+CAPTURE /tmp/lastlight-ui-boots-review/pause-1280x720.png requested=1280x720 actual=1280x720 paused=1 fixed=54
+RESIZE requested=1680x900 actual=1680x900
+CAPTURE /tmp/lastlight-ui-boots-review/hud-1680x900.png requested=1680x900 actual=1680x900 paused=0 fixed=81
+CAPTURE /tmp/lastlight-ui-boots-review/inventory-1680x900.png requested=1680x900 actual=1680x900 paused=1 fixed=81
+CAPTURE /tmp/lastlight-ui-boots-review/pause-1680x900.png requested=1680x900 actual=1680x900 paused=1 fixed=86
+COMPLETE exit=0 captures=9 frames=265

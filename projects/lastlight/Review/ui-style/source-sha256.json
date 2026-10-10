@@ -1,0 +1,9 @@
+{
+  "src/Renderer.cpp": "1bab46fbd2a9343791954e477f827cd509e921a1d986a5321708e63a136b92cc",
+  "projects/lastlight/Assets/scripts/hud.js": "f5aa0cdd99e23e26a803b7fc91789f61d609e6d48c6fe26dfb336f6c8bb37ab9",
+  "projects/lastlight/Assets/scripts/inventory_ui.js": "3e52eff2572dea8091f0230ee601120ea5f09bbe973130a07c8ca1bb95fc2e23",
+  "projects/lastlight/Assets/ui/lastlight.judasui": "b9c399582bd5032631a27817a15f8e3e55da457e8b0e0ed1a13b4bf90e073f96",
+  "projects/lastlight/Tools/build_ui.py": "c1b8a20d791026df57932fb04ac7f468efa81056b35336d71451c04259eee765",
+  "projects/lastlight/Tools/build_town.py": "75ac9f4021ec3187fc9354067942d04de035bbbe6ae76a32cf064b1b1affdbea",
+  "projects/lastlight/Tools/ui-art-prompts.json": "eeac8afaa34a3335d887211e76510192a9bcfdc25e14b1655d25fa421003600f"
+}

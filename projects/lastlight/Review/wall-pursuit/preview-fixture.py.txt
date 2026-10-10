@@ -1,0 +1,49 @@
+from pathlib import Path
+import shutil,re,json
+repo=Path('/home/conner/Documents/GitHub/Project-Judas');source=repo/'projects/lastlight'
+for mode in ['wall','return','ground','ceiling']:
+ dst=Path('/tmp/lastlight-zombie-'+mode)
+ if dst.exists():shutil.rmtree(dst)
+ shutil.copytree(source,dst,ignore=shutil.ignore_patterns('Review','ArtSource','Saves','__pycache__'))
+ scene=dst/'Scenes/town.judas';text=scene.read_text()
+ pos='31.80 4 24' if mode!='ground' else '28 .04 24'
+ rotation='.7071067811865476 0 0 .7071067811865476' if mode!='ground' else '1 0 0 0'
+ def author_player(match):
+  block=match.group(0)
+  block=re.sub(r'(?m)^  position [^\n]+', '  position '+pos,block)
+  return re.sub(r'(?m)^  rotation [^\n]+','  rotation '+rotation,block)
+ text=re.sub(r'object 10 "Town defender"\n.*?\nend',author_player,text,flags=re.S)
+ scene.write_text(text)
+ script=dst/'Assets/scripts/player.js'
+ code=r'''
+// Disposable visual setup: real geometry, prefab, motor, sensing and ragdoll.
+import {physics} from 'judas';
+import {tripBones} from './combat.js';
+const wallPreviewStart=Player.prototype.start,wallPreviewFixed=Player.prototype.fixedUpdate;
+Player.prototype.director=function(){game.phase='wave';game.wave=1;};
+Player.prototype.start=function(){wallPreviewStart.call(this);this.wallPreviewFrame=0;game.health=1000;
+ START_GRAVITY
+};
+Player.prototype.fixedUpdate=function(dt){wallPreviewFixed.call(this,dt);this.wallPreviewFrame++;
+ if(this.wallPreviewFrame===30){this.wallEnemy=world.spawnPrefab(this.props.zombie,{position:SPAWN_POSITION},{scripts:[{slot:1,properties:{kind:'zombie',variant:'runner'}}]});game.alive=1;}
+ if(this.wallPreviewFrame%15===0&&this.wallEnemy?.valid){const e=this.wallEnemy,v=e.children[0],r=v.ragdoll;
+ const bones=r?.active?tripBones.map(k=>r.body(k)).filter(b=>b?.valid):[];
+ console.log(JSON.stringify({wallPreview:MODE,frame:this.wallPreviewFrame,enemy:e.transform.position,up:e.character.up,velocity:e.character.velocity,gravity:e.gravity.state,supported:e.character.supported,state:e.scriptState(1),player:this.entity.transform.position,playerUp:this.entity.character.up,playerHealth:game.health,ragdoll:!!r?.active,bones:bones.length,bonePosition:bones[0]?.transform.position,boneVelocity:bones[0]?.velocity}));}
+ ACTION
+};
+const wallPreviewPresent=Player.prototype.presentationUpdate;
+Player.prototype.presentationUpdate=function(dt,a){wallPreviewPresent.call(this,dt,a);
+ const position={x:25,y:7,z:32},toward=sub({x:31,y:3,z:24},position),yaw=Math.atan2(-toward.x,-toward.z),pitch=Math.atan2(toward.y,Math.hypot(toward.x,toward.z));
+ world.setView({position,rotation:qm(axis({x:0,y:1,z:0},yaw),axis({x:1,y:0,z:0},pitch))},64);
+ this.avatar.renderVisible=true;
+};
+'''
+ code=code.replace('START_GRAVITY',"this.entity.gravity.setUniform({x:9.81,y:0,z:0});" if mode!='ground' else '')
+ code=code.replace('SPAWN_POSITION',"{x:29,y:.04,z:24}" if mode!='ground' else "{x:25,y:.04,z:24}")
+ code=code.replace('MODE',json.dumps(mode))
+ action="if(this.wallPreviewFrame===600&&this.wallEnemy?.valid)signals.send(this.wallEnemy,'range.hit',{kind:'bullet',damage:999,direction:{x:1,y:0,z:0},point:this.wallEnemy.transform.position});" if mode=='wall' else "if(this.wallPreviewFrame===600){this.entity.gravity.clear();console.log('PLAYER RESTORES ORDINARY GRAVITY');}" if mode=='return' else ''
+ code=code.replace('ACTION',action)
+ script.write_text(script.read_text()+code)
+ frames=950 if mode!='return' else 1500
+ Path('/tmp/lastlight-zombie-'+mode+'.capture.txt').write_text(f'FRAMES {frames}\nFRAME_SECONDS .016666667\nLOG_EVERY 0\nWAIT_SERVICES scene 15000 1\nSCREENSHOT 120 /tmp/lastlight-zombie-{mode}-approach.png\nSCREENSHOT 300 /tmp/lastlight-zombie-{mode}-pursuit.png\nSCREENSHOT 540 /tmp/lastlight-zombie-{mode}-late.png\nSCREENSHOT 850 /tmp/lastlight-zombie-{mode}-after.png\n')
+ print(dst)

@@ -73,5 +73,15 @@
   "rockets_pickup": "2520bf890f78b65666086a82645ed7e8",
   "grenades_pickup": "597965bfb383e01e5e0be2f766dcc29d",
   "framewalk_door_debris": "a2388a5a95ba227c838c4d75a305097e",
-  "framewalk_door": "da83fe7927779bdcc15174378046202a"
+  "framewalk_door": "da83fe7927779bdcc15174378046202a",
+  "field_canvas": "b18b5ec2ea72369d4bc3830b94036034",
+  "hud_canvas": "0ddfa1c5fa9c7ee575dd00acd919a874",
+  "item_boots": "30786ec7e46418d579b59b98e24d4fa3",
+  "item_grenade": "d033d610b01dcf6d884aaca7748c4a5d",
+  "item_launcher": "987eb61bf8cafb5441005aff4673020c",
+  "item_rifle": "8d73a3680d7cfcbf848b87ed75425887",
+  "item_rocket": "1c0993c1fa14aabc91d6b8915033ad97",
+  "DejaVuSansCondensed-Bold": "6badf73ad4641464892b321658fd4d1d",
+  "DejaVuSansMono": "e7488f75ae8aaae8e44d014ae33bf38b",
+  "zombie_framewalk": "4ee5abb5c41f597eac1e2c213bc4d832"
 }

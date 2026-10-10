@@ -27,17 +27,21 @@ export default class ZombieAI {
   this.shots=game.shots;this.visible=false;this.memory=8;
   // The wave's alarm gives newly arriving creatures one initial search point,
   // not permanent knowledge of the player's position through every wall.
-  this.lastKnown=player.transform.position;this.goal=this.lastKnown;
+  this.lastKnown=player.transform.position;this.lastKnownUp=player.character.up;this.goal=this.lastKnown;
   this.cooldown=.65+(this.seed%7)*.1;this.searchClock=0;this.searchIndex=0;
   this.flankClock=0;this.flankTime=0;this.flankGoal=null;
   this.obstructionClock=.2;this.blockedTime=0;this.attack=null;
  }
 
  clearAttack(){this.attack=null;this.cooldown=Math.max(this.cooldown,.65);}
- alert(position,urgent=false){this.lastKnown={...position};this.memory=7;if(urgent)this.repath=0;}
+ alert(position,urgent=false,up=null){this.lastKnown={...position};
+  // Remember the observed surface with the observed point, rather than reading
+  // a hidden player's latest gravity selection during pursuit through a wall.
+  this.lastKnownUp=up?norm(up):norm(mul(physics.gravity(position),-1));
+  this.memory=7;if(urgent)this.repath=0;}
  lineOfSight(position,up){
   const from=add(this.entity.transform.position,mul(up,1.35));
-  const to=add(position,mul(up,1.2)),offset=sub(to,from),distance=length(offset);
+  const to=add(position,mul(this.player.character.up,1.2)),offset=sub(to,from),distance=length(offset);
   if(distance<.02)return true;
   const hit=physics.raycast(from,norm(offset),distance+.04,{ignored:[this.entity]});
   return hit?.entity?.id===this.player.id;
@@ -50,7 +54,7 @@ export default class ZombieAI {
   this.visible=distance<34&&this.lineOfSight(position,up);
   const fired=game.shots!==this.shots;this.shots=game.shots;
   const moving=length(tangent(this.player.character.velocity,up))>1.2;
-  if(this.visible)this.alert(position);
+  if(this.visible)this.alert(position,false,this.player.character.up);
   else if(game.noiseTime>0&&game.noisePosition&&length(sub(game.noisePosition,this.entity.transform.position))<43)
    this.alert(game.noisePosition);
   else if(game.footstepTime>0&&game.footstepPosition&&length(sub(game.footstepPosition,this.entity.transform.position))<9)
@@ -128,24 +132,36 @@ export default class ZombieAI {
   return {entity:body,point:hit.point,direction};
  }
 
- update(dt,up,actualSpeed){
+ update(dt,up,actualSpeed,surfaceMode=false,canAttack=true){
   const position=this.player.transform.position;
   const separation=sub(position,this.entity.transform.position),delta=tangent(separation,up),distance=length(delta);
   this.cooldown=Math.max(0,this.cooldown-dt);this.repath-=dt;
-  this.sensePlayer(dt,position,up,distance);
+  this.sensePlayer(dt,position,up,length(separation));
+  if(!canAttack)this.clearAttack();
   if(this.attack)return this.attackStep(dt,position,up);
-  this.chooseGoal(dt,position,up,distance);
-  if(this.repath<=0){this.repath=.48+(this.seed%5)*.045;this.entity.navigation.setDestination(this.goal);}
-  const steering=tangent(this.entity.navigation.state.steering,up);
+  if(surfaceMode){
+   // The town navmesh describes its streets and room floors. Wall motion is a
+   // short local geometric pursuit; never pretend Detour baked these faces.
+   this.goal=this.lastKnown;this.flankGoal=null;this.flankTime=0;
+  }else{
+   this.chooseGoal(dt,position,up,distance);
+   if(this.repath<=0){this.repath=.48+(this.seed%5)*.045;this.entity.navigation.setDestination(this.goal);}
+  }
+  const surfaceOffset=tangent(sub(this.goal,this.entity.transform.position),up),surfaceDistance=length(surfaceOffset);
+  // Surface pursuit has the same near-goal braking that street navigation
+  // supplies. A motor is not a solid obstacle to another motor; don't command
+  // full-speed running through the player while waiting for the next punch.
+  const steering=surfaceMode?(this.memory>0?mul(norm(surfaceOffset),Math.min(this.type.speed,Math.max(0,surfaceDistance-.95)*3)):zero())
+   :tangent(this.entity.navigation.state.steering,up);
   const motion=length(steering)>.08?mul(norm(steering),Math.min(length(steering),this.type.speed)):zero();
   // A short locked-direction lunge has a visible stationary anticipation. It
   // is motor velocity, so an obstruction blocks it rather than being teleported.
   const lungeRange=this.variant==='brute'?2.25:2.8;
-  const aboutToLunge=this.visible&&distance<lungeRange&&Math.abs(dot(separation,up))<=.95&&this.cooldown<=0;
+  const aboutToLunge=canAttack&&this.visible&&distance<lungeRange&&Math.abs(dot(separation,up))<=.95&&this.cooldown<=0;
   // A low barricade can leave chest-height LOS clear while blocking the motor.
   // Probe that actual near-field obstruction before committing to a lunge;
   // otherwise every attack cycle can win priority over the barricade forever.
-  const barrier=this.obstruction(dt,aboutToLunge?mul(norm(delta),this.type.speed):motion,up,actualSpeed,aboutToLunge);
+  const barrier=canAttack?this.obstruction(dt,aboutToLunge?mul(norm(delta),this.type.speed):motion,up,actualSpeed,aboutToLunge):null;
   if(barrier){this.beginAttack(barrier.direction,barrier);return this.attackStep(dt,position,up);}
   if(aboutToLunge){
    this.beginAttack(delta);return this.attackStep(dt,position,up);

@@ -1,0 +1,8 @@
+FRAMES 1500
+FRAME_SECONDS .016666667
+LOG_EVERY 0
+WAIT_SERVICES scene 15000 1
+SCREENSHOT 120 /tmp/lastlight-zombie-return-approach.png
+SCREENSHOT 300 /tmp/lastlight-zombie-return-pursuit.png
+SCREENSHOT 540 /tmp/lastlight-zombie-return-late.png
+SCREENSHOT 850 /tmp/lastlight-zombie-return-after.png

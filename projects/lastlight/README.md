@@ -8,14 +8,21 @@ Move crates into doorways to buy time, watch the rear entrances, and purchase
 explosives at the blue supply stall near the starting area. Collect the optional
 **Judas Framewalk Boots** to change which physical surface acts as your floor.
 Boots begin unequipped; ordinary gravity and movement remain the starting mode.
+Zombies can now jump onto nearby walls to pursue a sensed player using Framewalk.
+They turn with their own gravity, fight on the wall, and fall under ordinary
+gravity when killed. See [WALL_PURSUIT.md](WALL_PURSUIT.md) for behaviour and limits.
 There are no hostile
 soldiers in the active game; their original unused prefab is retained.
 
 ## Play
 
+The current presentation uses a canvas-backed field kit, painted item previews
+and compact live HUD cards. See [UI_STYLE.md](UI_STYLE.md) for artwork, UI
+authoring and the pending visual-review revision.
+
 Open `lastlight.judasproj` in Judas Editor and press Play, or launch the current
 Judas runtime with this project. The Linux standalone is generated at
-`.cache/Lastlight-Package/` in the repository; run its `judas` executable.
+`.cache/Lastlight-FieldKit-Package/` in the repository; run its `judas` executable.
 The package can be moved elsewhere and launched from another working directory.
 
 | Control | Action |

@@ -10,27 +10,14 @@ for name in ['character_fighter','fist_forearm','zombie_animation','rocket_launc
 for path in (A/'audio').glob('*.wav'):track(path,'audio')
 from trip_rig import ragdoll_fields
 from build_breakables import author_assets, scene_entity
-from ui_shop import augment_ui
-from ui_inventory import augment_inventory_ui
+from build_ui import author_ui
 from ordnance_prefabs import author_ordnance
 from build_framewalk_world import author_framewalk_assets, author_framewalk_world
 source=P.parents[1]/'projects/shooter_game/Assets'
 shutil.copy2(source/'textures/soft.png',A/'textures/soft.png');track(A/'textures/soft.png','texture')
-FONT=ids['DejaVuSans'];fontold='be36a149b9918581ce406f3632b79cab'
-lines=(source/'ui/range.judasui').read_text().splitlines();out=[]
-for line in lines[2:]:
- if line.startswith('"language"'):continue
- # Strip localization bindings inherited from Spring Range.
- import re
- line=re.sub(r'"range\.[^"]*"','""',line).replace(fontold,FONT)
- line=line.replace('JUDAS / SPRING RANGE','LASTLIGHT / TOWN DEFENCE').replace('RANGE PAUSED','LASTLIGHT PAUSED')
- line=line.replace('Clear every plate once. Hits score again after the hinge settles.','Hold the neighbourhood against zombie waves. Enter houses and move crates to fortify doorways.')
- line=line.replace('WASD / left stick: move   Mouse / right stick: aim   LMB / RT: fire   Space / A: jump   V / Y: view   R: restart   Esc: pause','WASD move | Ctrl aim | LMB fire | RMB punch | F heavy | Q shove | Space jump | E mantle | B carry/drop | T turn prop | 1/2 weapons | G grenade | N shop | I inventory | C collect | X gravity reset | V view | R reload | Esc menu')
- out.append(line)
-# Hit vignette is a top/bottom red strip; never blocks input.
-hurt=next(l for l in out if l.startswith('"cross_h"')).replace('"cross_h"','"hurt"').replace('0.5 0.5 0.5 0.5 -7 -1 14 2','0 0 1 0 0 0 0 8').replace('0.9 0.96 1 0.9','0.8 0.08 0.06 0.8')
-out.append(hurt);out=augment_ui(out,FONT);out=augment_inventory_ui(out,FONT)
-(A/'ui/lastlight.judasui').write_text('JudasUI 2\n1280 720 1 1 0 '+str(len(out))+'\n'+'\n'.join(out)+'\n');track(A/'ui/lastlight.judasui','ui')
+# The field-kit UI has a standalone authoring tool. Rebuilding town content uses
+# the same document rather than restoring the old inherited demonstration UI.
+author_ui(ids,track)
 def transform(pos=(0,0,0),scale=(1,1,1),yaw=0):return f'  position {" ".join(map(str,pos))}\n  rotation {math.cos(yaw/2)} 0 {math.sin(yaw/2)} 0\n  scale {" ".join(map(str,scale))}\n'
 def render(shape='box',half=(.5,.5,.5),color=(1,1,1),asset=''):
  return f'  render {shape}\n  render.half-extents {" ".join(map(str,half))}\n  render.radius .5\n  render.color {" ".join(map(str,color))}\n  render.alpha 1\n  render.secondary-color .8 .8 .8\n  render.secondary-alpha 1\n  render.mesh-asset "{asset}"\n  render.texture-asset ""\n'

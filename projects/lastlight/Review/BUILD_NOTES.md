@@ -1,11 +1,36 @@
 # Lastlight build notes
 
+## CURRENT — zombie wall pursuit, 10 October 2026
+
+Following the field-kit presentation work, the operator requested zombies that
+can jump onto walls to follow the player. This addition uses project JavaScript,
+the existing gravity selection/queries/CharacterMotor and current passive
+ragdolls. No new native gameplay capability or binding is introduced. Ground
+navigation remains advisory and the normal floor path remains intact.
+See [WALL_PURSUIT.md](../WALL_PURSUIT.md) and
+[wall-pursuit/README.md](wall-pursuit/README.md) for scope, actual application
+previews, the preserved transition failure and the corrected follow-up.
+The combined presentation/gameplay changes remain uncommitted for human review.
+
+## CURRENT — field-kit UI presentation, 10 October 2026
+
+The HUD, inventory, pause and supply stall now use generated painted-look item
+art and stitched canvas with live typography. This uncommitted presentation
+revision retained the accepted gameplay; the separate wall-pursuit follow-up is
+recorded above. See [UI_STYLE.md](../UI_STYLE.md) and
+[ui-style/README.md](ui-style/README.md) for scope, prompts, actual application
+previews and export. The sole engine change corrects inverted imported UI images
+in `Renderer::DrawUIImage`; no public binding or physics semantics changed.
+Human visual acceptance for this new style remains pending.
+
+## HISTORICAL — initial Lastlight engine-demo checkpoint
+
 Built against accepted Judas HEAD `18650ba23c23eaaab0542d6e0055e33cc14d1049`.
 Only `projects/lastlight/` is added; no engine/API implementation change.
 The operator accepted the playable revision and requested this project checkpoint.
 No new engine milestone or engine/API changes belong to this project.
 
-## CURRENT — physical deaths / reaching punches / blast forces, 10 October 2026
+## HISTORICAL — physical deaths / reaching punches / blast forces, 10 October 2026
 
 The human-played inventory/Framewalk candidate was accepted before these final
 requested additions. This revision adds only game-side JS, original animation

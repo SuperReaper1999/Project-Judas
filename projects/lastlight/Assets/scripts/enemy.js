@@ -1,21 +1,25 @@
 import {world,physics,signals,console} from 'judas';import {game} from './game.js';
 import {activeTrips,registerBones,registerCorpse,retireBones,tripBones} from './combat.js';
-import {add,sub,mul,dot,length,norm,axis,tangent} from './math.js';
+import {add,sub,mul,dot,length,norm,axis,tangent,qm,rotate} from './math.js';
 import ZombieAI from './zombie_ai.js';
+import ZombieFramewalk from './zombie_framewalk.js';
 export const properties={kind:{type:'string',default:'zombie'},variant:{type:'string',default:'auto'}};
 const angleDifference=(a,b)=>Math.atan2(Math.sin(b-a),Math.cos(b-a));
+const blendRotation=(a,b,t)=>{const sign=a.w*b.w+a.x*b.x+a.y*b.y+a.z*b.z<0?-1:1;
+ const q={w:a.w*(1-t)+sign*b.w*t,x:a.x*(1-t)+sign*b.x*t,y:a.y*(1-t)+sign*b.y*t,z:a.z*(1-t)+sign*b.z*t};
+ const size=Math.hypot(q.w,q.x,q.y,q.z);return {w:q.w/size,x:q.x/size,y:q.y/size,z:q.z/size};};
 const clipFallback={ZombieIdle:'Idle',Shamble:'Walk',ZombieRun:'Run',Attack:'Idle',Stagger:'Idle'};
 export default class Enemy {
  constructor({entity,properties}){this.entity=entity;this.props=properties;this.state={health:properties.kind==='soldier'?50:75,dead:false,age:0,tripped:false,shoves:0,trips:0,variant:'',awareness:'search',attackPhase:''};this.next=0;this.attack=1.5;this.clip='';this.stun=0;this.knock={x:0,y:0,z:0};this.pushTime=0;this.tripTime=0;this.retry=0;this.animClock=1;this.animRead=0;this.locomoting=false;this.forceTrip=false;}
  start(){
   this.player=world.entity('10');this.token=signals.subscribe('range.hit');this.soldier=this.props.kind==='soldier';this.visual=this.entity.children[0];this.yaw=0;this.previousYaw=0;
-  if(!this.soldier){this.brain=new ZombieAI(this.entity,this.player,this.props.variant);this.state.health=this.brain.type.health;this.state.variant=this.brain.variant;}
+  if(!this.soldier){this.brain=new ZombieAI(this.entity,this.player,this.props.variant);this.surface=new ZombieFramewalk(this.entity,this.brain.seed);this.state.health=this.brain.type.health;this.state.variant=this.brain.variant;}
   this.entity.navigation.configure({speed:this.soldier?2.2:this.brain.type.speed});
  }
  onSignal(e){if(e.name!=='range.hit'||this.state.dead||game.phase!=='wave')return;
   const hit=e.payload;if(typeof hit?.damage!=='number'||!Number.isFinite(hit.damage)||hit.damage<=0)return;
   this.state.health-=hit.damage;
-  if(this.brain){this.brain.alert(this.player.transform.position,true);this.brain.clearAttack();}
+  if(this.brain){this.brain.alert(this.player.transform.position,true,this.player.character.up);this.brain.clearAttack();}
   if(hit.kind==='shove'||hit.kind==='heavy'||hit.kind==='punch'||hit.kind==='blast'){
    this.stun=Math.max(this.stun,hit.kind==='blast' ? .8 : hit.kind==='heavy' ? .65 : hit.kind==='shove' ? .75 : .22);
    this.attack=Math.max(this.attack,this.stun+.3);
@@ -42,7 +46,7 @@ export default class Enemy {
  diePhysical(){const r=this.visual?.valid?this.visual.ragdoll:null;if(!r||!this.visual.animation?.info.ready)return;
   const alreadyActive=r.active;
   if(!alreadyActive){
-   this.visual.transform={position:this.entity.transform.position,rotation:axis({x:0,y:1,z:0},this.yaw)};
+   this.visual.transform={position:this.entity.transform.position,rotation:this.facingRotation()};
    this.visual.animation.pause();r.enter();
    // Judas already inherits recent world/bone motion when entering. Add only
    // this game's killing impact; do not add motor velocity a second time.
@@ -55,16 +59,20 @@ export default class Enemy {
     if(nearest)nearest.applyImpulseAtPoint(mul(norm(hit.direction),magnitude),hit.point);
    }
   }
+  // The passive articulation starts at the current wall-oriented pose. Its
+  // bodies then use normal world gravity; no wall adhesion survives death.
+  this.surface?.clear('dead');this.state.surface='dead';this.state.surfaceReference=null;
   registerBones(this.entity,r);registerCorpse(this.entity);this.state.ragdoll=true;
   this.state.tripped=false;this.deathPending=false;this.deathHit=null;this.pushTime=0;this.returnTime=0;this.brain?.clearAttack();
  }
  trip(){const ragdoll=this.visual.ragdoll;if(this.soldier||!ragdoll||this.state.tripped||!this.visual.animation?.info.ready||activeTrips.size>=6)return false;
-  const t=this.entity.transform;this.visual.transform={position:t.position,rotation:axis({x:0,y:1,z:0},this.yaw)};
+  const t=this.entity.transform;this.visual.transform={position:t.position,rotation:this.facingRotation()};
   this.entity.character.enabled=false;this.entity.navigation.stopped=true;this.visual.animation.pause();
   try{ragdoll.enter();}catch(error){
    this.entity.character.enabled=true;this.entity.navigation.stopped=false;this.visual.animation.resume();
    console.log(`Trip articulation unavailable: ${error.message}`);return false;
   }
+  this.surface?.clear('tripped');this.state.surface='tripped';this.state.surfaceReference=null;
   activeTrips.add(this.entity.id);registerBones(this.entity,ragdoll);
   // One game-authored shove impulse. Afterward ordinary gravity, contacts and
   // passive articulation own the entire fall; no pose drive or fake forces.
@@ -73,27 +81,29 @@ export default class Enemy {
  }
  placement(){const r=this.visual.ragdoll,bodies=tripBones.map(k=>r.body(k)).filter(b=>b?.valid);
   const ignored=[this.entity,...bodies,...world.queryTags(['enemy'])],filter={ignored};
-  const center=this.visual.transform.position,u=this.entity.character.up;
+  const center=this.visual.transform.position,gravity=physics.gravity(center);
+  const u=length(gravity)>.01?norm(mul(gravity,-1)):this.entity.character.up;
+  const rotation=this.surface?.rotationFor(u)||this.entity.transform.rotation;
   const pelvis=r.body('pelvis'),origin=pelvis?.valid?pelvis.transform.position:add(center,mul(u,1));
   for(const offset of [{x:0,y:0,z:0},{x:.65,y:0,z:0},{x:-.65,y:0,z:0},{x:0,y:0,z:.65},{x:0,y:0,z:-.65}]){
-   const above=add(add(center,offset),mul(u,2));const ground=physics.raycast(above,mul(u,-1),4,filter);
+   const above=add(add(center,rotate(rotation,offset)),mul(u,2));const ground=physics.raycast(above,mul(u,-1),4,filter);
    if(!ground||dot(ground.normal,u)<.65)continue;
    const position=add(ground.point,mul(u,.04)),capsule=add(position,mul(u,.9));
-   const occupied=physics.capsuleCast({position:capsule,rotation:this.entity.transform.rotation},.3,.6,u,0,filter);if(occupied)continue;
+   const occupied=physics.capsuleCast({position:capsule,rotation},.3,.6,u,0,filter);if(occupied)continue;
    const to=sub(capsule,origin),distance=length(to);if(distance>.01&&physics.raycast(origin,norm(to),distance,filter))continue;
-   return position;
+   return {position,rotation};
   }
   return null;
  }
  recover(){const r=this.visual.ragdoll;
   if(this.state.dead)return false;
-  const position=this.placement();if(!position)return false;
-  const previous=this.visual.transform.position;
-  r.leave(.45);retireBones(this.entity);this.entity.transform={position};
+  const placement=this.placement();if(!placement)return false;const {position,rotation}=placement;
+  const previous=this.visual.transform.position;this.returnRotation=this.visual.transform.rotation;
+  r.leave(.45);retireBones(this.entity);this.entity.transform={position,rotation};
   // The captured fallen pose uses its old visual origin. Bring that origin
   // toward the safe standing placement during the same visual return fade.
   this.returnOffset=sub(previous,position);this.returnTime=.45;
-  this.visual.transform={position:previous,rotation:axis({x:0,y:1,z:0},this.yaw)};
+  this.visual.transform={position:previous,rotation:this.returnRotation};
   this.entity.character.enabled=true;this.entity.character.velocity={x:0,y:0,z:0};
   this.entity.navigation.stopped=false;this.visual.animation.resume();this.state.tripped=false;this.pushTime=0;this.knock={x:0,y:0,z:0};this.stun=.45;this.next=0;this.clip='';this.animClock=1;this.attack=1;this.forceTrip=false;
   if(this.brain){this.brain.clearAttack();this.brain.repath=0;}return true;
@@ -128,8 +138,10 @@ export default class Enemy {
    try{const fallback=this.clips?.has(wanted)?wanted:clipFallback[wanted]||'Idle';a.loop=true;a.play(fallback);this.clip=fallback;this.animClock=0;}catch(ignored){}
   }
  }
+ facingRotation(rotation=this.entity.transform.rotation){return qm(rotation,axis({x:0,y:1,z:0},this.yaw));}
  turn(direction,dt){if(!direction||length(direction)<.1)return;
-  const wanted=Math.atan2(direction.x,direction.z),delta=angleDifference(this.yaw,wanted);
+  const q=this.entity.transform.rotation,local=rotate({w:q.w,x:-q.x,y:-q.y,z:-q.z},direction);
+  const wanted=Math.atan2(local.x,local.z),delta=angleDifference(this.yaw,wanted);
   const rate=this.soldier?6:this.brain.variant==='brute'?3.2:6;
   this.yaw+=Math.sign(delta)*Math.min(Math.abs(delta),rate*dt);
  }
@@ -158,10 +170,18 @@ export default class Enemy {
   const actualSpeed=length(tangent(m.actualDisplacement,u))/Math.max(.001,dt);
   if(!this.soldier){
    if(this.stun>0){m.velocity=mul(u,dot(m.velocity,u));this.animate('Stagger',1,dt,false);this.state.attackPhase='stunned';return;}
-   const intent=this.brain.update(dt,u,actualSpeed);
+   const surface=this.surface.tick(dt,{goal:this.brain.lastKnown,targetUp:this.brain.lastKnownUp,target:this.player,pursue:this.brain.memory>0,speed:this.brain.type.speed});
+   this.entity.navigation.stopped=surface.active;
+   this.state.surface=surface.mode;this.state.surfaceReference=surface.reference;this.state.surfaceJumps=this.surface.jumps;
+   if(surface.launch)this.brain.clearAttack();
+   const intent=this.brain.update(dt,u,actualSpeed,surface.active,!surface.transitioning);
    // Aggressive intent is still resolved by the same generic motor. Walls,
    // standing props and ledges do not disappear merely because it is an enemy.
-   m.velocity=add(intent.motion,mul(u,dot(m.velocity,u)));this.turn(intent.facing,dt);this.strike(intent.strike);
+   // A locked world-space lunge can gain a normal component when the motor's
+   // up changes. Resolve planar intent in the CURRENT frame before retaining
+   // normal velocity; adding both in full would accumulate it every step.
+   const motion=tangent(surface.motion||intent.motion,u);
+   m.velocity=add(add(motion,mul(u,dot(m.velocity,u))),surface.launch||{x:0,y:0,z:0});this.turn(length(motion)>.1?motion:intent.facing,dt);this.strike(intent.strike);
    this.state.awareness=this.brain.visible?'pursue':this.brain.memory>0?'hunt':'search';this.state.attackPhase=intent.attackPhase;
    if(actualSpeed>.32)this.locomoting=true;else if(actualSpeed<.13)this.locomoting=false;
    const attacking=intent.clip==='Attack';
@@ -186,6 +206,7 @@ export default class Enemy {
  presentationUpdate(dt,alpha=1){if(!this.visual?.valid||this.state.tripped||this.state.dead)return;const t=this.entity.presentedTransform;
   const position=this.returnTime>0?add(t.position,mul(this.returnOffset,this.returnTime/.45)):t.position;
   const yaw=this.previousYaw+angleDifference(this.previousYaw,this.yaw)*Math.max(0,Math.min(1,alpha));
-  this.visual.transform={position,rotation:axis({x:0,y:1,z:0},yaw)};}
- destroy(){retireBones(this.entity);if(this.token)signals.unsubscribe(this.token);}
+  const rotation=qm(t.rotation,axis({x:0,y:1,z:0},yaw));
+  this.visual.transform={position,rotation:this.returnTime>0?blendRotation(this.returnRotation,rotation,1-this.returnTime/.45):rotation};}
+ destroy(){this.surface?.destroy();retireBones(this.entity);if(this.token)signals.unsubscribe(this.token);}
 }
