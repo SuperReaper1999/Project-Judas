@@ -1,0 +1,10 @@
+{
+  "baseAudit": "m75-windows-final-input-proof.json (819 unchanged pre-UI inputs)",
+  "delta": "Three editor files, first native UI build then final local-name warning cleanup; these replace base hashes only for the disclosed UI changes.",
+  "files": {
+    "src/editor/TerrainTools.cpp": "6b365b124746949db08e1bea021bbc61fdea95ff909bb2eb6077efdb7bd20bc9",
+    "src/editor/TerrainTools.h": "39ddc37d6c658c9c23f261c4eaabeb637102e003b1014013322879ca3c0fcfdb",
+    "src/editor/EditorApplication.cpp": "002839623b82f6b159326f7bd7c3723e1d4a9693de741c12ee8b9b889f84b058"
+  },
+  "allMatchCurrentLinuxCandidate": true
+}

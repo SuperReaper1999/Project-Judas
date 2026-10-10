@@ -1,5 +1,10 @@
 # Materials and environment lighting — M57 foundation, M72 candidate
 
+## Terrain base-color painting
+
+[M75](M75.md#representation-and-boundaries) blends up to four registered base-color textures using normalized spatial weights and local metre tiling into one ordinary opaque baked texture. It does not add multilayer PBR, shader graphs or per-texel physical materials. Geometry and appearance revisions are separate.
+
+
 Current optional OpenGL 3.3 material pipeline. Judas owns rendering primitives; projects own appearance, scripts own its meaning. [JudasJS API](judasjs/materials.md), [M72 ownership/review](M72.md), [material lab](../projects/material_lab/material_lab.judasproj), [Spring Range](../projects/shooter_game/shooter_game.judasproj).
 
 M72 extends the existing pipeline with validated runtime sun/ambient/environment

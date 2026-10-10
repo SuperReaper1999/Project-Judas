@@ -28,8 +28,10 @@ public:
                        const ResourceManager* resources = nullptr,
                        std::string* error = nullptr);
     void Clear();
+    void SetDraftMesh(const std::string& id,std::shared_ptr<const MeshData> mesh){m_draftId=id;m_draft=std::move(mesh); }
 
 private:
+    std::string m_draftId;std::shared_ptr<const MeshData> m_draft;
     struct CachedMesh {
         std::string path;
         std::filesystem::file_time_type modified{};

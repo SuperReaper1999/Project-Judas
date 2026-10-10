@@ -1,0 +1,20 @@
+[
+  {
+    "policy": "pristine",
+    "path": "/tmp/M75 moved pristine \u00e9 \u03b1",
+    "files": 51,
+    "sourceUnavailable": true,
+    "probeExit": 0,
+    "standaloneExit": 0,
+    "unrelatedCwd": "/tmp"
+  },
+  {
+    "policy": "all-final",
+    "path": "/tmp/M75 moved all-final \u00e9 \u03b1",
+    "files": 51,
+    "sourceUnavailable": true,
+    "probeExit": 0,
+    "standaloneExit": 0,
+    "unrelatedCwd": "/tmp"
+  }
+]

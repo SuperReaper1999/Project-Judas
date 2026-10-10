@@ -1,5 +1,10 @@
 # M44 — runtime raycasts and shape casts
 
+## Editable terrain products
+
+[M75 local terrain](M75.md) is an ordinary cooked static triangle mesh, including existing ray/sphere/capsule/box casts and closest-point support. No terrain-only raycast or infinite fallback exists. A finite one-sided patch has no underside or volume. Draft edits are author-time only; queries see published content.
+
+
 Current public JavaScript signatures, examples and lifetime rules: [JudasJS reference](JUDASJS.md). This document retains milestone architecture and evidence context.
 
 Judas answers geometric questions; project JavaScript gives the answers meaning.

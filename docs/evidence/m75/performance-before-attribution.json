@@ -1,0 +1,107 @@
+{
+  "scope": "last 20 completed desktop actual-wall frames, 6 bodies, 8192 terrain triangles; diagnostic before bounded overlap adapter",
+  "frames": 20,
+  "cap_frames": 20,
+  "scopes": {
+    "Character motor": {
+      "exclusive_ms_per_frame": 726.9402096,
+      "inclusive_ms_per_frame": 726.9402096,
+      "calls_per_frame": 8.0
+    },
+    "Script asset: Assets/scripts/controller.js": {
+      "exclusive_ms_per_frame": 1.1762396000000002,
+      "inclusive_ms_per_frame": 1.1762396000000002,
+      "calls_per_frame": 19.0
+    },
+    "Physics contacts": {
+      "exclusive_ms_per_frame": 0.19812565,
+      "inclusive_ms_per_frame": 0.19812565,
+      "calls_per_frame": 8.0
+    },
+    "Fixed simulation step": {
+      "exclusive_ms_per_frame": 0.16191404999999998,
+      "inclusive_ms_per_frame": 728.6023516,
+      "calls_per_frame": 8.0
+    },
+    "Swap present wait": {
+      "exclusive_ms_per_frame": 0.16050845000000002,
+      "inclusive_ms_per_frame": 0.16050845000000002,
+      "calls_per_frame": 1.0
+    },
+    "World culling and opaque submission": {
+      "exclusive_ms_per_frame": 0.1197173,
+      "inclusive_ms_per_frame": 0.1197173,
+      "calls_per_frame": 2.0
+    },
+    "Shadow pass submission": {
+      "exclusive_ms_per_frame": 0.0912091,
+      "inclusive_ms_per_frame": 0.15079120000000001,
+      "calls_per_frame": 1.0
+    },
+    "Shaped text submission": {
+      "exclusive_ms_per_frame": 0.08991045,
+      "inclusive_ms_per_frame": 0.08991045,
+      "calls_per_frame": 3.0
+    },
+    "Character motors": {
+      "exclusive_ms_per_frame": 0.06545765,
+      "inclusive_ms_per_frame": 727.00566725,
+      "calls_per_frame": 16.0
+    },
+    "Play frame": {
+      "exclusive_ms_per_frame": 0.0490872,
+      "inclusive_ms_per_frame": 729.2110174,
+      "calls_per_frame": 1.0
+    },
+    "Physics sleeping assessment": {
+      "exclusive_ms_per_frame": 0.04579425,
+      "inclusive_ms_per_frame": 0.04579425,
+      "calls_per_frame": 8.0
+    },
+    "Physics velocity constraints": {
+      "exclusive_ms_per_frame": 0.034541,
+      "inclusive_ms_per_frame": 0.034541,
+      "calls_per_frame": 8.0
+    },
+    "Rigid physics": {
+      "exclusive_ms_per_frame": 0.0330865,
+      "inclusive_ms_per_frame": 0.37185415000000005,
+      "calls_per_frame": 8.0
+    },
+    "World render submission": {
+      "exclusive_ms_per_frame": 0.03011845,
+      "inclusive_ms_per_frame": 0.27542734999999996,
+      "calls_per_frame": 1.0
+    },
+    "Input events": {
+      "exclusive_ms_per_frame": 0.02548515,
+      "inclusive_ms_per_frame": 0.02548515,
+      "calls_per_frame": 1.0
+    },
+    "Physics proxy refresh": {
+      "exclusive_ms_per_frame": 0.02301065,
+      "inclusive_ms_per_frame": 0.02301065,
+      "calls_per_frame": 8.0
+    },
+    "Runtime UI drawing": {
+      "exclusive_ms_per_frame": 0.0175599,
+      "inclusive_ms_per_frame": 0.1157798,
+      "calls_per_frame": 1.0
+    },
+    "JavaScript contact events": {
+      "exclusive_ms_per_frame": 0.01747155,
+      "inclusive_ms_per_frame": 0.049019400000000005,
+      "calls_per_frame": 80.0
+    },
+    "Script synchronization": {
+      "exclusive_ms_per_frame": 0.01703845,
+      "inclusive_ms_per_frame": 0.01703845,
+      "calls_per_frame": 18.0
+    },
+    "Water boundary upload": {
+      "exclusive_ms_per_frame": 0.0169207,
+      "inclusive_ms_per_frame": 0.0169207,
+      "calls_per_frame": 1.0
+    }
+  }
+}

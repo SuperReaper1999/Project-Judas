@@ -1,0 +1,13 @@
+PASS 
+PASS normal three-product asset registration
+PASS 
+PASS normal Recast bake on edited terrain triangles
+PASS appearance settings leave geometry unchanged
+PASS paint appearance does not invalidate navigation
+PASS sculpt accepted geometry publication
+PASS old navigation bake becomes stale after sculpt
+PASS offline rebake refreshes normal navigation
+PASS navigation extracts same source in arbitrary local frame
+PASS rotated navigation geometry equivalent within float precision
+PASS scene roundtrip preserves ordinary terrain references
+FAIL unsupported scaled triangle-mesh terrain rejected by normal validator

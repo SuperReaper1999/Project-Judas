@@ -1,5 +1,10 @@
 # M53 — Navigation and navmesh foundation
 
+## Terrain-derived navigation
+
+[M75](M75.md) supplies ordinary static triangle-mesh terrain to existing Recast extraction. Sculpting changes the geometry fingerprint and makes the old bake stale; a new offline bake provides normal Detour queries. Painting alone retains geometry and does not invalidate navigation. Navigation remains advisory.
+
+
 Navigation answers where an agent may go and proposes routes/steering.
 **CharacterMotor resolves motion. Project JavaScript chooses the destination and
 performs special traversal.** There is no engine EnemySystem, chase rule, input

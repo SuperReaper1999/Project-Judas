@@ -1,0 +1,15 @@
+[  0%] Built target judas_app_icon
+[ 18%] Built target freetype
+[ 18%] Built target judas_quickjs
+[ 25%] Built target judas_icu_build
+[ 25%] Built target judas_glad
+[ 31%] Built target judas_navigation_backend
+[ 31%] Built target judas_profiler
+[ 31%] Built target judas_audio_backend
+[ 31%] Built target harfbuzz
+[ 31%] Built target judas_materials
+[100%] Built target judas_engine
+[100%] Built target judas_world_authoring
+[100%] Building CXX object CMakeFiles/judas_terrain_authoring_tests.dir/tests/TerrainAuthoringTests.cpp.o
+[100%] Linking CXX executable judas_terrain_authoring_tests
+[100%] Built target judas_terrain_authoring_tests

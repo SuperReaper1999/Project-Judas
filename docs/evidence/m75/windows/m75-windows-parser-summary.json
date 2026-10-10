@@ -1,0 +1,45 @@
+{
+    "build":  0,
+    "authoring":  0,
+    "source":  [
+                   {
+                       "path":  "src/authoring/TerrainAuthoring.cpp",
+                       "sha256":  "12e11bbe55443ca26def9f316c3926a1d5f407776055baf59a9c4f8e326a4dd7",
+                       "matches":  true
+                   },
+                   {
+                       "path":  "tests/TerrainAuthoringTests.cpp",
+                       "sha256":  "d7c7b3031318055e7c0869d4a3bf100d409eb9d9ba4dee3b8b459aeb5157a5d2",
+                       "matches":  true
+                   },
+                   {
+                       "path":  "src/editor/TerrainTools.cpp",
+                       "sha256":  "98c15dcada49e62c3b71d62e8b0476e7311ac702f8509ca0c543994d3e43f742",
+                       "matches":  true
+                   },
+                   {
+                       "path":  "tools/TerrainAuthor.cpp",
+                       "sha256":  "28de7c8d09c143152a0beea1f643e18d2273e534a1c2757db29b99abf6b42fc6",
+                       "matches":  true
+                   }
+               ],
+    "executables":  [
+                        {
+                            "lastWriteUtc":  "2026-10-10T19:06:49.9623507Z",
+                            "sha256":  "38564f36026b91f8d29a34db6bd7cc22ad5cf06e1bc92864def6c642de594fda",
+                            "name":  "judas_editor.exe"
+                        },
+                        {
+                            "lastWriteUtc":  "2026-10-10T19:06:41.4779750Z",
+                            "sha256":  "f55f9ab645a33a3ecbbc626fa02398af71739103e0354af043988d78b6230848",
+                            "name":  "judas_terrain_author.exe"
+                        },
+                        {
+                            "lastWriteUtc":  "2026-10-10T19:07:04.5718089Z",
+                            "sha256":  "76ae1302449ee2457175d7aef9b4a600aa3090394453f427cf3132e32b1623ac",
+                            "name":  "judas_terrain_authoring_tests.exe"
+                        }
+                    ],
+    "note":  "Final authoring-only integer bounds, single-read conflict baseline and configured-asset-root support; runtime/geometry/brush/GPU semantics unchanged.",
+    "pipeline":  0
+}

@@ -1,0 +1,73 @@
+MSBuild version 17.14.60+43b635718 for .NET Framework
+
+  harfbuzz.vcxproj -> C:\JudasValidation\Build\_deps\judas_harfbuzz-build\Release\harfbuzz.lib
+  judas_app_icon.vcxproj -> C:\JudasValidation\Build\Release\judas_app_icon.lib
+  judas_audio_backend.vcxproj -> C:\JudasValidation\Build\Release\judas_audio_backend.lib
+  freetype.vcxproj -> C:\JudasValidation\Build\_deps\judas_freetype-build\Release\freetype.lib
+  judas_glad.vcxproj -> C:\JudasValidation\Build\Release\judas_glad.lib
+  judas_navigation_backend.vcxproj -> C:\JudasValidation\Build\Release\judas_navigation_backend.lib
+  judas_profiler.vcxproj -> C:\JudasValidation\Build\Release\judas_profiler.lib
+  judas_materials.vcxproj -> C:\JudasValidation\Build\Release\judas_materials.lib
+  judas_quickjs.vcxproj -> C:\JudasValidation\Build\Release\judas_quickjs.lib
+  judas_ufbx.vcxproj -> C:\JudasValidation\Build\Release\judas_ufbx.lib
+  judas_imgui.vcxproj -> C:\JudasValidation\Build\Release\judas_imgui.lib
+  judas_engine.vcxproj -> C:\JudasValidation\Build\Release\judas_engine.lib
+  judas_navigation_baker.vcxproj -> C:\JudasValidation\Build\Release\judas_navigation_baker.lib
+  judas_model_import.vcxproj -> C:\JudasValidation\Build\Release\judas_model_import.lib
+  TerrainAuthoring.cpp
+  judas_model_import_cli.vcxproj -> C:\JudasValidation\Build\Release\judas_model_import_cli.exe
+  judas.vcxproj -> C:\JudasValidation\Build\Release\judas.exe
+  judas_windows_readiness_tests.vcxproj -> C:\JudasValidation\Build\Release\judas_windows_readiness_tests.exe
+  judas_export.vcxproj -> C:\JudasValidation\Build\Release\judas_export.exe
+  judas_world_authoring.vcxproj -> C:\JudasValidation\Build\Release\judas_world_authoring.lib
+  judas_scene_author.vcxproj -> C:\JudasValidation\Build\Release\judas_scene_author.exe
+  judas_terrain_author.vcxproj -> C:\JudasValidation\Build\Release\judas_terrain_author.exe
+  TerrainTools.cpp
+  judas_editor.vcxproj -> C:\JudasValidation\Build\Release\judas_editor.exe
+MSBuild version 17.14.60+43b635718 for .NET Framework
+
+  harfbuzz.vcxproj -> C:\JudasValidation\Build\_deps\judas_harfbuzz-build\Release\harfbuzz.lib
+  judas_app_icon.vcxproj -> C:\JudasValidation\Build\Release\judas_app_icon.lib
+  judas_audio_backend.vcxproj -> C:\JudasValidation\Build\Release\judas_audio_backend.lib
+  freetype.vcxproj -> C:\JudasValidation\Build\_deps\judas_freetype-build\Release\freetype.lib
+  judas_glad.vcxproj -> C:\JudasValidation\Build\Release\judas_glad.lib
+  judas_profiler.vcxproj -> C:\JudasValidation\Build\Release\judas_profiler.lib
+  judas_navigation_backend.vcxproj -> C:\JudasValidation\Build\Release\judas_navigation_backend.lib
+  judas_materials.vcxproj -> C:\JudasValidation\Build\Release\judas_materials.lib
+  judas_quickjs.vcxproj -> C:\JudasValidation\Build\Release\judas_quickjs.lib
+  judas_engine.vcxproj -> C:\JudasValidation\Build\Release\judas_engine.lib
+  judas_world_authoring.vcxproj -> C:\JudasValidation\Build\Release\judas_world_authoring.lib
+  TerrainAuthoringTests.cpp
+C:\JudasValidation\Source\tests\TerrainAuthoringTests.cpp(53,145): warning C4456: declaration of 'hit' hides previous local declaration [C:\JudasValidation\Build\judas_terrain_authoring_tests.vcxproj]
+      C:\JudasValidation\Source\tests\TerrainAuthoringTests.cpp(24,53):
+      see declaration of 'hit'
+  
+  judas_terrain_authoring_tests.vcxproj -> C:\JudasValidation\Build\Release\judas_terrain_authoring_tests.exe
+MSBuild version 17.14.60+43b635718 for .NET Framework
+
+  harfbuzz.vcxproj -> C:\JudasValidation\Build\_deps\judas_harfbuzz-build\Release\harfbuzz.lib
+  judas_app_icon.vcxproj -> C:\JudasValidation\Build\Release\judas_app_icon.lib
+  judas_audio_backend.vcxproj -> C:\JudasValidation\Build\Release\judas_audio_backend.lib
+  freetype.vcxproj -> C:\JudasValidation\Build\_deps\judas_freetype-build\Release\freetype.lib
+  judas_glad.vcxproj -> C:\JudasValidation\Build\Release\judas_glad.lib
+  judas_profiler.vcxproj -> C:\JudasValidation\Build\Release\judas_profiler.lib
+  judas_navigation_backend.vcxproj -> C:\JudasValidation\Build\Release\judas_navigation_backend.lib
+  judas_materials.vcxproj -> C:\JudasValidation\Build\Release\judas_materials.lib
+  judas_quickjs.vcxproj -> C:\JudasValidation\Build\Release\judas_quickjs.lib
+  judas_engine.vcxproj -> C:\JudasValidation\Build\Release\judas_engine.lib
+  judas_world_authoring.vcxproj -> C:\JudasValidation\Build\Release\judas_world_authoring.lib
+  judas_navigation_baker.vcxproj -> C:\JudasValidation\Build\Release\judas_navigation_baker.lib
+  judas_terrain_pipeline_tests.vcxproj -> C:\JudasValidation\Build\Release\judas_terrain_pipeline_tests.exe
+MSBuild version 17.14.60+43b635718 for .NET Framework
+
+  harfbuzz.vcxproj -> C:\JudasValidation\Build\_deps\judas_harfbuzz-build\Release\harfbuzz.lib
+  judas_app_icon.vcxproj -> C:\JudasValidation\Build\Release\judas_app_icon.lib
+  judas_audio_backend.vcxproj -> C:\JudasValidation\Build\Release\judas_audio_backend.lib
+  freetype.vcxproj -> C:\JudasValidation\Build\_deps\judas_freetype-build\Release\freetype.lib
+  judas_glad.vcxproj -> C:\JudasValidation\Build\Release\judas_glad.lib
+  judas_profiler.vcxproj -> C:\JudasValidation\Build\Release\judas_profiler.lib
+  judas_navigation_backend.vcxproj -> C:\JudasValidation\Build\Release\judas_navigation_backend.lib
+  judas_materials.vcxproj -> C:\JudasValidation\Build\Release\judas_materials.lib
+  judas_quickjs.vcxproj -> C:\JudasValidation\Build\Release\judas_quickjs.lib
+  judas_engine.vcxproj -> C:\JudasValidation\Build\Release\judas_engine.lib
+  judas_terrain_application_tests.vcxproj -> C:\JudasValidation\Build\Release\judas_terrain_application_tests.exe

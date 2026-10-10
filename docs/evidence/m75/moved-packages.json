@@ -1,0 +1,23 @@
+[
+  {
+    "label": "pristine",
+    "path": "/tmp/M75 moved pristine \u00e9 \u03b1",
+    "files": 45,
+    "sourceUnavailable": true,
+    "exit": 0
+  },
+  {
+    "label": "second",
+    "path": "/tmp/M75 moved second \u00e9 \u03b1",
+    "files": 45,
+    "sourceUnavailable": true,
+    "exit": 0
+  },
+  {
+    "label": "all",
+    "path": "/tmp/M75 moved all \u00e9 \u03b1",
+    "files": 45,
+    "sourceUnavailable": true,
+    "exit": 0
+  }
+]

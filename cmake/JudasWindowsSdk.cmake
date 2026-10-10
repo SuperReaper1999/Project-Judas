@@ -27,7 +27,7 @@ add_custom_target(judas_windows_runtime
  COMMAND ${CMAKE_COMMAND} -E copy_if_different "${judas_glm_license}" "$<TARGET_FILE_DIR:judas>/windows-licenses/GLM.txt"
  DEPENDS judas_icu_build
  VERBATIM)
-foreach(target judas judas_editor judas_export judas_model_import_cli judas_scene_author judas_windows_readiness_tests)
+foreach(target judas judas_editor judas_export judas_model_import_cli judas_scene_author judas_navigation_bake judas_terrain_author judas_terrain_authoring_tests judas_terrain_pipeline_tests judas_terrain_application_tests judas_windows_readiness_tests)
  target_link_options(${target} PRIVATE "/MANIFEST:EMBED" "/MANIFESTINPUT:${CMAKE_SOURCE_DIR}/packaging/windows/judas.manifest")
  add_dependencies(${target} judas_windows_runtime)
 endforeach()
@@ -35,7 +35,7 @@ set(JUDAS_WINDOWS_SDK "${CMAKE_BINARY_DIR}/windows-sdk")
 add_custom_target(judas_windows_sdk
  COMMAND ${CMAKE_COMMAND} -E remove_directory "${JUDAS_WINDOWS_SDK}"
  COMMAND ${CMAKE_COMMAND} -E make_directory "${JUDAS_WINDOWS_SDK}" "${JUDAS_WINDOWS_SDK}/windows-runtime" "${JUDAS_WINDOWS_SDK}/windows-licenses"
- COMMAND ${CMAKE_COMMAND} -E copy_if_different "$<TARGET_FILE:judas>" "$<TARGET_FILE:judas_editor>" "$<TARGET_FILE:judas_export>" "$<TARGET_FILE:judas_scene_author>" "$<TARGET_FILE:judas_model_import_cli>" "$<TARGET_FILE:judas_windows_readiness_tests>" "${JUDAS_WINDOWS_SDK}"
+ COMMAND ${CMAKE_COMMAND} -E copy_if_different "$<TARGET_FILE:judas>" "$<TARGET_FILE:judas_editor>" "$<TARGET_FILE:judas_export>" "$<TARGET_FILE:judas_scene_author>" "$<TARGET_FILE:judas_navigation_bake>" "$<TARGET_FILE:judas_terrain_author>" "$<TARGET_FILE:judas_model_import_cli>" "$<TARGET_FILE:judas_windows_readiness_tests>" "${JUDAS_WINDOWS_SDK}"
  COMMAND ${CMAKE_COMMAND} -E copy_if_different ${JUDAS_WINDOWS_DLLS} "${JUDAS_WINDOWS_SDK}"
  COMMAND ${CMAKE_COMMAND} -E copy_if_different ${JUDAS_WINDOWS_DLLS} "${JUDAS_WINDOWS_SDK}/windows-runtime"
  COMMAND ${CMAKE_COMMAND} -E copy_if_different "${CMAKE_BINARY_DIR}/required-dlls.txt" "${JUDAS_WINDOWS_SDK}/windows-runtime/required-dlls.txt"
@@ -47,7 +47,7 @@ add_custom_target(judas_windows_sdk
  COMMAND ${CMAKE_COMMAND} -E copy_if_different "${VCPKG_INSTALLED_DIR}/${VCPKG_TARGET_TRIPLET}/share/glm/copyright" "${JUDAS_WINDOWS_SDK}/windows-licenses/GLM.txt"
  COMMAND ${CMAKE_COMMAND} -E copy_if_different "${CMAKE_SOURCE_DIR}/third_party/imgui/LICENSE.txt" "${JUDAS_WINDOWS_SDK}/windows-licenses/ImGui.txt"
  COMMAND ${CMAKE_COMMAND} -E copy_if_different "${CMAKE_SOURCE_DIR}/docs/WINDOWS.md" "${JUDAS_WINDOWS_SDK}/WINDOWS.md"
- DEPENDS judas judas_editor judas_export judas_scene_author judas_model_import_cli judas_windows_readiness_tests
+ DEPENDS judas judas_editor judas_export judas_scene_author judas_navigation_bake judas_terrain_author judas_model_import_cli judas_windows_readiness_tests
  VERBATIM)
 # Linux-oriented historical harnesses remain available as explicit targets, not
 # prerequisites of the native editor/game SDK. No historical test is rewritten.

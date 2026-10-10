@@ -1,0 +1,33 @@
+
+This GDB supports auto-downloading debuginfo from the following URLs:
+  <https://debuginfod.ubuntu.com>
+Enable debuginfod for this session? (y or [n]) [answered N; input not from terminal]
+Debuginfod has been disabled.
+To make this setting permanent, add 'set debuginfod enabled off' to .gdbinit.
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "/usr/lib/x86_64-linux-gnu/libthread_db.so.1".
+Renderer fragment texture units: 32 (material path uses 12)
+[New Thread 0x7fffeda3f6c0 (LWP 38830)]
+[New Thread 0x7fffed23e6c0 (LWP 38831)]
+[New Thread 0x7fffeca3d6c0 (LWP 38832)]
+[New Thread 0x7fffe7fff6c0 (LWP 38833)]
+[New Thread 0x7fffe77fe6c0 (LWP 38834)]
+[New Thread 0x7fffe6ffd6c0 (LWP 38835)]
+[New Thread 0x7fffe67fc6c0 (LWP 38836)]
+[M75 terrain editor] PASS: open ordinary editable source
+[M75 terrain editor] PASS: native mouse press sculpts current viewport surface
+[M75 terrain editor] PASS: release commits one gesture
+[M75 terrain editor] PASS: one undo restores source
+[M75 terrain editor] PASS: redo restores authored sculpt
+[M75 terrain editor] PASS: Escape cancels real viewport stroke
+[editor autotest] duplicate created id 1000: scene CHANGED; undo restores: IDENTICAL
+[M75 terrain editor] PASS: focus loss safely commits and ends gesture
+[M75 terrain editor] PASS: save actual editable sculpt and paint
+[M75 terrain editor] PASS: same CPU cook publishes runtime geometry and appearance
+
+Thread 1 "judas_editor" received signal SIGSEGV, Segmentation fault.
+0x0000555555e8a7e8 in ImGui::BeginPopupModal(char const*, bool*, int) ()
+#0  0x0000555555e8a7e8 in ImGui::BeginPopupModal(char const*, bool*, int) ()
+#1  0x00005555556d1c14 in EditorApplication::HandleRequests(EditorRequests&) ()
+#2  0x00005555556ddaf8 in EditorApplication::Run(int, char**) ()
+#3  0x00005555556adcc6 in main ()

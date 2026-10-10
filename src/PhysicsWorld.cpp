@@ -1146,7 +1146,12 @@ struct PhysicsWorld::Impl {
                                                             primitive.body.orientation,
                                                             primitive.shape.halfExtents);
                 } else if(primitive.shape.asset) {
-                    const auto d=SegmentGeometry(glm::dvec3(segA),glm::dvec3(segB),capsuleRadius,primitive);
+                    // This sampler only uses distance <= 0 to bracket overlap. A
+                    // triangle outside the capsule AABB cannot overlap it; use
+                    // the cooked BVH instead of scanning the entire mesh at
+                    // every one of the 24 sweep/20 refinement samples. Convex
+                    // containment still takes the evaluator's full inside path.
+                    const auto d=SegmentGeometry(glm::dvec3(segA),glm::dvec3(segB),capsuleRadius,primitive,0);
                     if(!d.valid)continue;
                     capsuleDistance={float(d.gap),glm::vec3(d.normal),glm::vec3(d.point)};
                 } else {continue;}

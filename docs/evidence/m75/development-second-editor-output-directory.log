@@ -1,0 +1,30 @@
+Renderer fragment texture units: 32 (material path uses 12)
+[M75 terrain editor] PASS: open ordinary editable source
+[M75 terrain editor] PASS: native mouse press sculpts current viewport surface
+[M75 terrain editor] PASS: release commits one gesture
+[M75 terrain editor] PASS: one undo restores source
+[M75 terrain editor] PASS: redo restores authored sculpt
+[M75 terrain editor] PASS: Escape cancels real viewport stroke
+[editor autotest] duplicate created id 1000: scene CHANGED; undo restores: IDENTICAL
+[M75 terrain editor] PASS: focus loss safely commits and ends gesture
+[M75 terrain editor] PASS: save actual editable sculpt and paint
+[M75 terrain editor] PASS: same CPU cook publishes runtime geometry and appearance
+[M75 terrain editor] PASS: actual GL mesh matches current draft geometry
+[M75 editor progress] frame 20 step 0.000 ms mode 0
+[editor autotest] FAILED: /home/conner/Documents/GitHub/Project-Judas/.cache/m75/second-editor/native.edit.png
+[editor autotest] edit frame: 7 draw calls, 8240 triangles, 66 debug lines
+[M75 terrain editor] PASS: saved/cooked terrain enters normal Play
+[M75 editor progress] frame 40 step 0.291 ms mode 1
+[M75 editor progress] frame 60 step 0.599 ms mode 1
+[M75 editor progress] frame 80 step 0.427 ms mode 1
+[M75 editor progress] frame 100 step 0.572 ms mode 1
+[M75 editor progress] frame 120 step 0.651 ms mode 1
+[M75 editor progress] frame 140 step 2.250 ms mode 1
+[editor autotest] FAILED: /home/conner/Documents/GitHub/Project-Judas/.cache/m75/second-editor/native.play.png
+[editor autotest] play frame: 1 steps, step 2.250 ms, 6 bodies, 12 contacts, 9 draw calls, 16468 triangles, 1 shadow passes, 0 lights, 0 debug lines, 0 particles
+[editor autotest] resources: 1 meshes, 1 textures, 0 terrain meshes, hits 856, misses 5, failed 0, uploads 2, resident 4669109 bytes
+[editor autotest] jobs: 7 workers, 6 completed, 0 failed, 0 cancelled
+[M75 terrain editor] PASS: Stop preserves saved editable paint state
+[M75 terrain editor] failures 0
+[editor autotest] authored scene after play/stop is IDENTICAL
+[editor autotest] save /home/conner/Documents/GitHub/Project-Judas/.cache/m75/second-editor/native.saved.judas: cannot write staging file /home/conner/Documents/GitHub/Project-Judas/.cache/m75/second-editor/native.saved.judas.authoring-stage-901202fd84c005f86a6c78ea619896d1

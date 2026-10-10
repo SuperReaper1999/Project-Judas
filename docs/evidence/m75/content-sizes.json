@@ -1,0 +1,38 @@
+{
+  "units": "bytes on disk; not resident-memory estimate",
+  "content": {
+    "lab": {
+      "Imports/neutral.judasterrain": 19689,
+      "Imports/landscape.judasterrain": 294413,
+      "Assets/navigation/surface-50.judasnav": 313378,
+      "Assets/navigation/surface-51.judasnav": 313378,
+      "Assets/Terrain/21ba663cb9807bc8a70f565280ce7286/terrain.judascollision": 28447,
+      "Assets/Terrain/21ba663cb9807bc8a70f565280ce7286/terrain.receipt.json": 1483,
+      "Assets/Terrain/21ba663cb9807bc8a70f565280ce7286/terrain.tga": 262162,
+      "Assets/Terrain/21ba663cb9807bc8a70f565280ce7286/terrain.judasmodel": 19868,
+      "Assets/Terrain/landscape/terrain.judascollision": 579473,
+      "Assets/Terrain/landscape/terrain.receipt.json": 1416,
+      "Assets/Terrain/landscape/terrain.tga": 1048594,
+      "Assets/Terrain/landscape/terrain.judasmodel": 309474
+    },
+    "stress": {
+      "Imports/neutral.judasterrain": 19689,
+      "Imports/reused.judasterrain": 1108596,
+      "Assets/navigation/surface-50.judasnav": 313378,
+      "Assets/navigation/surface-51.judasnav": 313378,
+      "Assets/Terrain/21ba663cb9807bc8a70f565280ce7286/terrain.judascollision": 28447,
+      "Assets/Terrain/21ba663cb9807bc8a70f565280ce7286/terrain.receipt.json": 1483,
+      "Assets/Terrain/21ba663cb9807bc8a70f565280ce7286/terrain.tga": 262162,
+      "Assets/Terrain/21ba663cb9807bc8a70f565280ce7286/terrain.judasmodel": 19868,
+      "Assets/Terrain/d8a5f9c14fbacb06dc40df1dee8a471e/terrain.judascollision": 2452949,
+      "Assets/Terrain/d8a5f9c14fbacb06dc40df1dee8a471e/terrain.receipt.json": 1482,
+      "Assets/Terrain/d8a5f9c14fbacb06dc40df1dee8a471e/terrain.tga": 1048594,
+      "Assets/Terrain/d8a5f9c14fbacb06dc40df1dee8a471e/terrain.judasmodel": 1226158
+    }
+  },
+  "bounds": {
+    "mesh_vertices_indices_upper_bytes": 4456448,
+    "max_baked_rgba_bytes": 4194304,
+    "four_max_accepted_decoded_textures_bytes": 67108864
+  }
+}

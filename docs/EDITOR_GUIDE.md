@@ -1,8 +1,13 @@
 # Using the Judas editor
 
+## Local terrain authoring
+
+**View → Terrain sculpt / paint** opens shared-source editing. Select a terrain and open its source, or create/cook a new source and instance. Raise/lower/flatten/smooth/paint use the current draft triangles; Save source and Cook are separate. Draft graphics are not published collision. See [M75 workflow, units and lifetime](M75.md#editor-workflow). No terrain editing during Play.
+
+
 Accepted M71 editor foundation and [M72 render controls](M72.md), with Linux human
 review and native Windows VM checks recorded. Physical Windows GPU/input acceptance
-remains separate. [M74 retargeting](M74.md) is an uncommitted authoring candidate.
+remains separate. [M74 retargeting](M74.md) is provisionally checkpointed, with human validation pending.
 [JudasJS reference](JUDASJS.md) · [Make a game by hand](judasjs/getting-started.md) · [Named authoring](NAMED_AUTHORING.md)
 
 ## Workspace

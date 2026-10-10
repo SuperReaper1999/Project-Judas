@@ -1,6 +1,7 @@
 #include <set>
 #include <charconv>
 #include "SceneSerialization.h"
+#include "CollisionAuthoring.h"
 #include "NamedAuthoring.h"
 #include "AuthoringNumeric.h"
 #include "../third_party/nlohmann/json.hpp"
@@ -994,6 +995,7 @@ bool ParseObject(Reader& reader, const std::vector<Token>& header, const Block& 
         if((b.shape==SceneShape::ConvexHull||b.shape==SceneShape::TriangleMesh)&&b.collisionAsset.empty())return reader.Fail("cooked body requires body.collision-asset");
         if(b.shape==SceneShape::TriangleMesh&&(b.motion!=SceneBodyMotion::Static||b.sensor))return reader.Fail("triangle mesh is static surface, not moving body or volume sensor");
         o.body = b;
+        std::string placementError;if(!ValidateCollisionPlacement(o,placementError))return reader.Fail(placementError);
     } else if (p.Has("body.compound-count") || !p.CompoundBoxes().empty() ||
                p.Has("body.fluid-cavity-count") || !p.FluidCavities().empty()) {
         return reader.Fail("body.* keys require a 'body' header");

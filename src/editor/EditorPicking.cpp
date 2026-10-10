@@ -167,6 +167,7 @@ void PrepareMesh(MeshData& mesh, std::vector<bool>& mirroredParts) {
 }
 
 const MeshData* EditorScenePicker::AssetMesh(const std::string& id, bool collision, const AssetDatabase* assets) {
+    if(!collision&&id==m_draftId&&m_draft)return m_draft.get();
     const auto* record = assets ? assets->Find(id) : nullptr;
     if (!record || record->missing || record->type != (collision ? AssetType::Collision : AssetType::Mesh)) return nullptr;
     std::error_code error;
@@ -294,4 +295,4 @@ EditorPickHit EditorScenePicker::Pick(const Scene& authored, glm::vec3 origin, g
     return best;
 }
 
-void EditorScenePicker::Clear() { m_meshes.clear(); m_terrains.clear(); }
+void EditorScenePicker::Clear() { m_meshes.clear(); m_terrains.clear();m_draft.reset();m_draftId.clear(); }

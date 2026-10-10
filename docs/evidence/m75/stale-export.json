@@ -1,0 +1,6 @@
+{
+  "exit": 1,
+  "error": "Export failed: Imported model: stale terrain source/product: Imports/landscape.judasterrain; save and recook before export",
+  "lastValidPackageBytesUnchanged": true,
+  "files": 51
+}

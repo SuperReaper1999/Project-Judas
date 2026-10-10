@@ -104,6 +104,7 @@ struct EditorPanelState {
     float assetBrowserHeight = 200.0f;
     bool showSceneSettings = false;
     bool showRetarget = false;
+    bool showTerrain = false;
     std::shared_ptr<RetargetPanelState> retarget;
     bool showNavigationHelp = false;
     std::string assetSearch;

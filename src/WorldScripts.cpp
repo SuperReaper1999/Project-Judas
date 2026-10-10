@@ -1,3 +1,4 @@
+#include "CollisionAuthoring.h"
 #include "SceneSession.h"
 #include "RuntimeWorld.h"
 #include "ResourceManager.h"
@@ -45,6 +46,7 @@ std::vector<EntityId> RuntimeWorld::DefinitionIds() const {
 }
 bool RuntimeWorld::SetRuntimeTransform(EntityId id,const SceneTransform& t){
     const auto* authored=RuntimeDefinition(id);if(!authored)return false;
+    SceneObject placement;placement.body=authored->body;placement.transform=t;std::string placementError;if(!ValidateCollisionPlacement(placement,placementError))return false;
     // Baked static capacity data cannot silently follow a runtime teleport.
     if(authored->liquidBasin&&(t.position!=authored->transform.position||t.rotation!=authored->transform.rotation||t.scale!=authored->transform.scale))return false;
     if((authored->liquidContainer||authored->deformable)&&t.scale!=glm::vec3(1))return false;

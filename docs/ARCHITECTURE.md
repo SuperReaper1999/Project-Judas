@@ -1,5 +1,10 @@
 # Architecture
 
+## M75 author-time local terrain
+
+[M75](M75.md) adds finite local height/paint source, shared CPU brushes and guarded cooking into ordinary mesh/texture/static collision assets. Renderer owns GPU publication; runtime uses existing geometry, motor, navigation, region and save paths. Local +Y is an authoring axis, not world up or a gravity field. RadialTerrain remains unchanged; this is no planet sculptor or runtime excavation. Source is separate from immutable cooked content; Play/export reject stale cooks. Linux human acceptance was recorded on 2026-10-10, including the terrain UI activation follow-up; native Windows VM checks passed, with physical Windows GPU/input acceptance still outstanding. M74 is checkpointed at `fccbf84164cb430f78651af64cddb68afeac442a`, provisionally with human review pending.
+
+
 This document explains the technical decisions behind Project Judas and how
 they relate to the engine's long-term purpose. It is meant to be readable by
 someone with no prior context on this project. It is updated in place as

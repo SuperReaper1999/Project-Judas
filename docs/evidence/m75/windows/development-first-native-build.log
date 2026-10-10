@@ -1,0 +1,195 @@
+MSBuild version 17.14.60+43b635718 for .NET Framework
+
+  harfbuzz.vcxproj -> C:\JudasValidation\Build\_deps\judas_harfbuzz-build\Release\harfbuzz.lib
+  judas_app_icon.vcxproj -> C:\JudasValidation\Build\Release\judas_app_icon.lib
+  freetype.vcxproj -> C:\JudasValidation\Build\_deps\judas_freetype-build\Release\freetype.lib
+  judas_audio_backend.vcxproj -> C:\JudasValidation\Build\Release\judas_audio_backend.lib
+  judas_glad.vcxproj -> C:\JudasValidation\Build\Release\judas_glad.lib
+  judas_profiler.vcxproj -> C:\JudasValidation\Build\Release\judas_profiler.lib
+  judas_navigation_backend.vcxproj -> C:\JudasValidation\Build\Release\judas_navigation_backend.lib
+  judas_materials.vcxproj -> C:\JudasValidation\Build\Release\judas_materials.lib
+  judas_quickjs.vcxproj -> C:\JudasValidation\Build\Release\judas_quickjs.lib
+  judas_imgui.vcxproj -> C:\JudasValidation\Build\Release\judas_imgui.lib
+  judas_ufbx.vcxproj -> C:\JudasValidation\Build\Release\judas_ufbx.lib
+  AssetDependencies.cpp
+  CollisionAuthoring.cpp
+  ModelArchive.cpp
+  PhysicsWorld.cpp
+C:\JudasValidation\Source\src\PhysicsWorld.cpp(292,42): warning C4456: declaration of 'b' hides previous local declaration [C:\JudasValidation\Build\judas_engine.vcxproj]
+      C:\JudasValidation\Source\src\PhysicsWorld.cpp(283,19):
+      see declaration of 'b'
+  
+C:\JudasValidation\Source\src\PhysicsWorld.cpp(315,30): warning C4456: declaration of '_' hides previous local declaration [C:\JudasValidation\Build\judas_engine.vcxproj]
+      C:\JudasValidation\Source\src\PhysicsWorld.cpp(313,20):
+      see declaration of '_'
+  
+C:\JudasValidation\Source\src\PhysicsWorld.cpp(2582,304): warning C4244: '=': conversion from 'double' to 'float', possible loss of data [C:\JudasValidation\Build\judas_engine.vcxproj]
+  RuntimeWorld.cpp
+C:\JudasValidation\Source\src\RuntimeWorld.cpp(464,42): warning C4458: declaration of 'view' hides class member [C:\JudasValidation\Build\judas_engine.vcxproj]
+      C:\JudasValidation\Source\src\RuntimeWorld.h(355,32):
+      see declaration of 'RuntimeWorld::view'
+  
+C:\JudasValidation\Source\src\RuntimeWorld.cpp(1286,30): warning C4458: declaration of 'view' hides class member [C:\JudasValidation\Build\judas_engine.vcxproj]
+      C:\JudasValidation\Source\src\RuntimeWorld.h(355,32):
+      see declaration of 'RuntimeWorld::view'
+  
+  SceneSerialization.cpp
+  WorldScripts.cpp
+  Generating Code...
+C:\JudasValidation\Source\src\SceneSerialization.cpp(875,1): warning C4701: potentially uninitialized local variable 'seed' used [C:\JudasValidation\Build\judas_engine.vcxproj]
+  judas_engine.vcxproj -> C:\JudasValidation\Build\Release\judas_engine.lib
+  judas_model_import.vcxproj -> C:\JudasValidation\Build\Release\judas_model_import.lib
+  TerrainAuthoring.cpp
+  judas_navigation_baker.vcxproj -> C:\JudasValidation\Build\Release\judas_navigation_baker.lib
+  judas_model_import_cli.vcxproj -> C:\JudasValidation\Build\Release\judas_model_import_cli.exe
+  judas.vcxproj -> C:\JudasValidation\Build\Release\judas.exe
+  judas_windows_readiness_tests.vcxproj -> C:\JudasValidation\Build\Release\judas_windows_readiness_tests.exe
+  judas_world_authoring.vcxproj -> C:\JudasValidation\Build\Release\judas_world_authoring.lib
+  judas_scene_author.vcxproj -> C:\JudasValidation\Build\Release\judas_scene_author.exe
+  EditorMain.cpp
+  judas_export.vcxproj -> C:\JudasValidation\Build\Release\judas_export.exe
+  EditorApplication.cpp
+  Building Custom Rule C:/JudasValidation/Source/CMakeLists.txt
+  TerrainAuthor.cpp
+  judas_terrain_author.vcxproj -> C:\JudasValidation\Build\Release\judas_terrain_author.exe
+C:\JudasValidation\Source\src\editor\EditorApplication.cpp(865,40): warning C4456: declaration of 'error' hides previous local declaration [C:\JudasValidation\Build\judas_editor.vcxproj]
+      C:\JudasValidation\Source\src\editor\EditorApplication.cpp(852,33):
+      see declaration of 'error'
+  
+C:\JudasValidation\Source\src\editor\EditorApplication.cpp(1119,170): warning C4456: declaration of 'error' hides previous local declaration [C:\JudasValidation\Build\judas_editor.vcxproj]
+      C:\JudasValidation\Source\src\editor\EditorApplication.cpp(1105,14):
+      see declaration of 'error'
+  
+C:\JudasValidation\Source\src\editor\EditorApplication.cpp(1363,38): warning C4244: '=': conversion from 'SDL_WindowEventID' to 'Uint8', possible loss of data [C:\JudasValidation\Build\judas_editor.vcxproj]
+C:\JudasValidation\Source\src\editor\EditorApplication.cpp(1400,38): warning C4456: declaration of 'error' hides previous local declaration [C:\JudasValidation\Build\judas_editor.vcxproj]
+      C:\JudasValidation\Source\src\editor\EditorApplication.cpp(1245,17):
+      see declaration of 'error'
+  
+C:\JudasValidation\Source\src\editor\EditorApplication.cpp(1453,29): warning C4456: declaration of 'error' hides previous local declaration [C:\JudasValidation\Build\judas_editor.vcxproj]
+      C:\JudasValidation\Source\src\editor\EditorApplication.cpp(1245,17):
+      see declaration of 'error'
+  
+C:\JudasValidation\Source\src\editor\EditorApplication.cpp(1603,46): warning C4456: declaration of 'error' hides previous local declaration [C:\JudasValidation\Build\judas_editor.vcxproj]
+      C:\JudasValidation\Source\src\editor\EditorApplication.cpp(1245,17):
+      see declaration of 'error'
+  
+C:\JudasValidation\Source\src\editor\EditorApplication.cpp(1609,77): warning C4456: declaration of 'error' hides previous local declaration [C:\JudasValidation\Build\judas_editor.vcxproj]
+      C:\JudasValidation\Source\src\editor\EditorApplication.cpp(1245,17):
+      see declaration of 'error'
+  
+C:\JudasValidation\Source\src\editor\EditorApplication.cpp(1630,33): warning C4456: declaration of 'error' hides previous local declaration [C:\JudasValidation\Build\judas_editor.vcxproj]
+      C:\JudasValidation\Source\src\editor\EditorApplication.cpp(1245,17):
+      see declaration of 'error'
+  
+C:\JudasValidation\Source\src\editor\EditorApplication.cpp(1830,125): warning C4456: declaration of 'error' hides previous local declaration [C:\JudasValidation\Build\judas_editor.vcxproj]
+      C:\JudasValidation\Source\src\editor\EditorApplication.cpp(1245,17):
+      see declaration of 'error'
+  
+C:\JudasValidation\Source\src\editor\EditorApplication.cpp(1873,80): warning C4456: declaration of 'error' hides previous local declaration [C:\JudasValidation\Build\judas_editor.vcxproj]
+      C:\JudasValidation\Source\src\editor\EditorApplication.cpp(1245,17):
+      see declaration of 'error'
+  
+  EditorPicking.cpp
+  EditorPanels.cpp
+C:\JudasValidation\Source\src\editor\EditorPanels.cpp(1273,764): warning C4456: declaration of 'name' hides previous local declaration [C:\JudasValidation\Build\judas_editor.vcxproj]
+      C:\JudasValidation\Source\src\editor\EditorPanels.cpp(1221,10):
+      see declaration of 'name'
+  
+C:\JudasValidation\Source\src\editor\EditorPanels.cpp(1304,112): warning C4456: declaration of 'name' hides previous local declaration [C:\JudasValidation\Build\judas_editor.vcxproj]
+      C:\JudasValidation\Source\src\editor\EditorPanels.cpp(1221,10):
+      see declaration of 'name'
+  
+C:\JudasValidation\Source\src\editor\EditorPanels.cpp(1306,130): warning C4456: declaration of 'name' hides previous local declaration [C:\JudasValidation\Build\judas_editor.vcxproj]
+      C:\JudasValidation\Source\src\editor\EditorPanels.cpp(1221,10):
+      see declaration of 'name'
+  
+C:\JudasValidation\Source\src\editor\EditorPanels.cpp(1319,62): warning C4456: declaration of 'name' hides previous local declaration [C:\JudasValidation\Build\judas_editor.vcxproj]
+      C:\JudasValidation\Source\src\editor\EditorPanels.cpp(1221,10):
+      see declaration of 'name'
+  
+  RetargetPanel.cpp
+  WorldTools.cpp
+C:\JudasValidation\Source\src\editor\WorldTools.cpp(102,26): warning C4456: declaration of 'id' hides previous local declaration [C:\JudasValidation\Build\judas_editor.vcxproj]
+      C:\JudasValidation\Source\src\editor\WorldTools.cpp(64,14):
+      see declaration of 'id'
+  
+  TerrainTools.cpp
+  ComponentEditors.cpp
+C:\JudasValidation\Source\src\editor\ComponentEditors.cpp(908,37): warning C4456: declaration of 'path' hides previous local declaration [C:\JudasValidation\Build\judas_editor.vcxproj]
+      C:\JudasValidation\Source\src\editor\ComponentEditors.cpp(902,18):
+      see declaration of 'path'
+  
+C:\JudasValidation\Source\src\editor\ComponentEditors.cpp(908,120): warning C4456: declaration of 'relative' hides previous local declaration [C:\JudasValidation\Build\judas_editor.vcxproj]
+      C:\JudasValidation\Source\src\editor\ComponentEditors.cpp(902,106):
+      see declaration of 'relative'
+  
+  Generating Code...
+  judas_editor.vcxproj -> C:\JudasValidation\Build\Release\judas_editor.exe
+MSBuild version 17.14.60+43b635718 for .NET Framework
+
+  harfbuzz.vcxproj -> C:\JudasValidation\Build\_deps\judas_harfbuzz-build\Release\harfbuzz.lib
+  judas_app_icon.vcxproj -> C:\JudasValidation\Build\Release\judas_app_icon.lib
+  judas_audio_backend.vcxproj -> C:\JudasValidation\Build\Release\judas_audio_backend.lib
+  freetype.vcxproj -> C:\JudasValidation\Build\_deps\judas_freetype-build\Release\freetype.lib
+  judas_glad.vcxproj -> C:\JudasValidation\Build\Release\judas_glad.lib
+  judas_profiler.vcxproj -> C:\JudasValidation\Build\Release\judas_profiler.lib
+  judas_materials.vcxproj -> C:\JudasValidation\Build\Release\judas_materials.lib
+  judas_navigation_backend.vcxproj -> C:\JudasValidation\Build\Release\judas_navigation_backend.lib
+  judas_quickjs.vcxproj -> C:\JudasValidation\Build\Release\judas_quickjs.lib
+  judas_engine.vcxproj -> C:\JudasValidation\Build\Release\judas_engine.lib
+  judas_world_authoring.vcxproj -> C:\JudasValidation\Build\Release\judas_world_authoring.lib
+  Building Custom Rule C:/JudasValidation/Source/CMakeLists.txt
+  TerrainAuthoringTests.cpp
+C:\JudasValidation\Source\tests\TerrainAuthoringTests.cpp(47,225): warning C4305: 'argument': truncation from 'double' to 'float' [C:\JudasValidation\Build\judas_terrain_authoring_tests.vcxproj]
+C:\JudasValidation\Source\tests\TerrainAuthoringTests.cpp(51,250): warning C4310: cast truncates constant value [C:\JudasValidation\Build\judas_terrain_authoring_tests.vcxproj]
+C:\JudasValidation\Source\tests\TerrainAuthoringTests.cpp(61,154): warning C4456: declaration of 'work' hides previous local declaration [C:\JudasValidation\Build\judas_terrain_authoring_tests.vcxproj]
+      C:\JudasValidation\Source\tests\TerrainAuthoringTests.cpp(60,483):
+      see declaration of 'work'
+  
+  judas_terrain_authoring_tests.vcxproj -> C:\JudasValidation\Build\Release\judas_terrain_authoring_tests.exe
+MSBuild version 17.14.60+43b635718 for .NET Framework
+
+  harfbuzz.vcxproj -> C:\JudasValidation\Build\_deps\judas_harfbuzz-build\Release\harfbuzz.lib
+  judas_app_icon.vcxproj -> C:\JudasValidation\Build\Release\judas_app_icon.lib
+  freetype.vcxproj -> C:\JudasValidation\Build\_deps\judas_freetype-build\Release\freetype.lib
+  judas_audio_backend.vcxproj -> C:\JudasValidation\Build\Release\judas_audio_backend.lib
+  judas_glad.vcxproj -> C:\JudasValidation\Build\Release\judas_glad.lib
+  judas_navigation_backend.vcxproj -> C:\JudasValidation\Build\Release\judas_navigation_backend.lib
+  judas_profiler.vcxproj -> C:\JudasValidation\Build\Release\judas_profiler.lib
+  judas_materials.vcxproj -> C:\JudasValidation\Build\Release\judas_materials.lib
+  judas_quickjs.vcxproj -> C:\JudasValidation\Build\Release\judas_quickjs.lib
+  judas_engine.vcxproj -> C:\JudasValidation\Build\Release\judas_engine.lib
+  judas_world_authoring.vcxproj -> C:\JudasValidation\Build\Release\judas_world_authoring.lib
+  judas_navigation_baker.vcxproj -> C:\JudasValidation\Build\Release\judas_navigation_baker.lib
+  Building Custom Rule C:/JudasValidation/Source/CMakeLists.txt
+  TerrainPipelineTests.cpp
+  judas_terrain_pipeline_tests.vcxproj -> C:\JudasValidation\Build\Release\judas_terrain_pipeline_tests.exe
+MSBuild version 17.14.60+43b635718 for .NET Framework
+
+  harfbuzz.vcxproj -> C:\JudasValidation\Build\_deps\judas_harfbuzz-build\Release\harfbuzz.lib
+  judas_app_icon.vcxproj -> C:\JudasValidation\Build\Release\judas_app_icon.lib
+  judas_audio_backend.vcxproj -> C:\JudasValidation\Build\Release\judas_audio_backend.lib
+  freetype.vcxproj -> C:\JudasValidation\Build\_deps\judas_freetype-build\Release\freetype.lib
+  judas_glad.vcxproj -> C:\JudasValidation\Build\Release\judas_glad.lib
+  judas_profiler.vcxproj -> C:\JudasValidation\Build\Release\judas_profiler.lib
+  judas_navigation_backend.vcxproj -> C:\JudasValidation\Build\Release\judas_navigation_backend.lib
+  judas_materials.vcxproj -> C:\JudasValidation\Build\Release\judas_materials.lib
+  judas_quickjs.vcxproj -> C:\JudasValidation\Build\Release\judas_quickjs.lib
+  judas_engine.vcxproj -> C:\JudasValidation\Build\Release\judas_engine.lib
+  Building Custom Rule C:/JudasValidation/Source/CMakeLists.txt
+  TerrainApplicationTests.cpp
+  Application.cpp
+C:\JudasValidation\Source\src\RuntimeOptions.h(44,8): warning C4099: 'RuntimeOptions': type name first seen using 'class' now seen using 'struct' [C:\JudasValidation\Build\judas_terrain_application_tests.vcxproj]
+  (compiling source file '../Source/src/Application.cpp')
+      C:\JudasValidation\Source\src\RuntimeOptions.h(44,8):
+      see declaration of 'RuntimeOptions'
+  
+C:\JudasValidation\Source\src\Application.cpp(169,23): warning C4456: declaration of 'world' hides previous local declaration [C:\JudasValidation\Build\judas_terrain_application_tests.vcxproj]
+      C:\JudasValidation\Source\src\Application.cpp(106,19):
+      see declaration of 'world'
+  
+  RuntimeOptions.cpp
+  RuntimeDiagnostics.cpp
+  TestHarness.cpp
+  Generating Code...
+  judas_terrain_application_tests.vcxproj -> C:\JudasValidation\Build\Release\judas_terrain_application_tests.exe

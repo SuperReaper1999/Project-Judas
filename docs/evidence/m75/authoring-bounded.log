@@ -1,0 +1,77 @@
+PASS bounded flat source
+PASS versioned exact source roundtrip
+PASS nonfinite height rejected
+PASS unnormalized paint rejected
+PASS unknown version rejected
+PASS oversized allocation rejected before samples
+PASS fork preserves data with new identities
+PASS raise begin
+PASS analytic center delta and finite footprint
+PASS one stroke undo
+PASS stroke redo
+PASS escape restores entire gesture
+PASS sparse/dense collinear pointer schedules equivalent
+PASS smoothing constant plane unchanged
+PASS flatten level frozen at gesture press
+PASS pick edited triangles off grid
+PASS finite edge miss has no flat fallback
+PASS out-of-patch brush rejects without mutation
+PASS mesh triangle dimensions
+PASS derived finite normalized normals face local height axis
+PASS normal collision cooker accepts exact terrain triangles
+PASS collision vertex population matches mesh
+PASS save source atomically
+PASS fresh source reopening stable identity
+PASS external source conflict refuses overwrite
+PASS guarded ordinary product publication
+PASS terrain export provenance fresh
+PASS unchanged cook does not rebuild products
+PASS uncooked edited source rejects export
+PASS cancelled cook retains exact last-good geometry/collider
+PASS sculpt publishes new geometry/collider
+PASS missing layer failure preserves last good products
+PASS analytic ramp collision cook
+PASS off-grid ray independent analytic point/normal/distance under rigid placement
+PASS sphere cast uses edited physical surface
+PASS capsule cast independent support extent
+PASS box cast matches analytic oriented extent
+PASS closest point uses true finite ramp
+PASS physics finite patch has no hidden infinite floor
+PASS one-sided patch rejects below-surface short cast
+PASS motor rests on edited ramp under independently rotated gravity
+PASS real dynamic sphere settles on ramp without helper floor
+PASS real dynamic box contact rests on ramp
+PASS negative control detects intentionally stale flat collider
+PASS off-grid ray independent analytic point/normal/distance under rigid placement
+PASS sphere cast uses edited physical surface
+PASS capsule cast independent support extent
+PASS box cast matches analytic oriented extent
+PASS closest point uses true finite ramp
+PASS physics finite patch has no hidden infinite floor
+PASS one-sided patch rejects below-surface short cast
+PASS motor rests on edited ramp under independently rotated gravity
+PASS real dynamic sphere settles on ramp without helper floor
+PASS real dynamic box contact rests on ramp
+PASS negative control detects intentionally stale flat collider
+PASS register real terrain palette textures
+PASS publish registered two-layer terrain
+PASS paint never edits geometry revision or heights
+PASS analytic spatial paint blend normalized
+PASS real texture blend produces opaque base color
+PASS paint-only cook preserves exact mesh/collider bytes
+PASS updated paint receipt validates export
+PASS saved source reopens exact paint values
+PASS undo after Save is dirty and does not rewrite disk
+PASS redo and source publication remain usable
+PASS independent fork editing cannot change original source
+PASS changed layer registration during cook retains last good geometry
+PASS restore dependency and recook succeeds
+PASS excessive JSON nesting rejected before DOM allocation
+PASS malformed source rejected without substitute flat surface
+PASS representative large mesh cook
+PASS motor sampled sweep retains analytic overlap boundary
+PASS motor sweep uses BVH bounded triangles rather than full mesh per sample
+MOTOR_BVH nodes 143 triangles 48 / mesh 8192
+PERF 65 grid stroke+normals 1.74173 ms / 4225 vertices
+PERF 129 grid stroke+normals 8.06631 ms / 16641 vertices
+73 checks / 0 failures

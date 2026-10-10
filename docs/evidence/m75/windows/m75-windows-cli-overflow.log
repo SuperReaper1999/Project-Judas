@@ -1,0 +1,7 @@
+judas_terrain_author.exe : terrain sample count must be an integer in 2..257
+At line:14 char:2
++  & $cli create $bad 4294967361 65 64 64 >"$receipts\m75-windows-cli-o ...
++  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (terrain sample ...teger in 2..257:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 

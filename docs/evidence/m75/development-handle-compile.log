@@ -1,0 +1,25 @@
+[  0%] Built target judas_app_icon
+[ 17%] Built target freetype
+[ 23%] Built target judas_icu_build
+[ 23%] Built target judas_quickjs
+[ 29%] Built target judas_navigation_backend
+[ 29%] Built target judas_glad
+[ 29%] Built target judas_profiler
+[ 29%] Built target judas_audio_backend
+[ 29%] Built target harfbuzz
+[ 29%] Built target judas_materials
+[ 94%] Built target judas_engine
+[100%] Building CXX object CMakeFiles/judas_terrain_application_tests.dir/src/Application.cpp.o
+[100%] Building CXX object CMakeFiles/judas_terrain_application_tests.dir/tests/TerrainApplicationTests.cpp.o
+/home/conner/Documents/GitHub/Project-Judas/tests/TerrainApplicationTests.cpp: In lambda function:
+/home/conner/Documents/GitHub/Project-Judas/tests/TerrainApplicationTests.cpp:38:153: error: ‘struct BodyHandle’ has no member named ‘generation’
+   38 |   if(phase==3&&stream&&stream->Resolve("annex",1)){auto next=w.RuntimeBody(stream->Resolve("annex",1));Check(next.IsValid()&&(next.id!=retired.id||next.generation!=retired.generation),"revisit publishes generation-safe replacement body");stream->Release(demand);stream->Unload("annex");Check(w.SceneControl()->Reload(error),"ordinary scene reload queued");before=&w;phase=4;}
+      |                                                                                                                                                         ^~~~~~~~~~
+/home/conner/Documents/GitHub/Project-Judas/tests/TerrainApplicationTests.cpp:38:173: error: ‘struct BodyHandle’ has no member named ‘generation’
+   38 |   if(phase==3&&stream&&stream->Resolve("annex",1)){auto next=w.RuntimeBody(stream->Resolve("annex",1));Check(next.IsValid()&&(next.id!=retired.id||next.generation!=retired.generation),"revisit publishes generation-safe replacement body");stream->Release(demand);stream->Unload("annex");Check(w.SceneControl()->Reload(error),"ordinary scene reload queued");before=&w;phase=4;}
+      |                                                                                                                                                                             ^~~~~~~~~~
+gmake[3]: *** [CMakeFiles/judas_terrain_application_tests.dir/build.make:79: CMakeFiles/judas_terrain_application_tests.dir/tests/TerrainApplicationTests.cpp.o] Error 1
+gmake[3]: *** Waiting for unfinished jobs....
+gmake[2]: *** [CMakeFiles/Makefile2:8666: CMakeFiles/judas_terrain_application_tests.dir/all] Error 2
+gmake[1]: *** [CMakeFiles/Makefile2:8673: CMakeFiles/judas_terrain_application_tests.dir/rule] Error 2
+gmake: *** [Makefile:2724: judas_terrain_application_tests] Error 2

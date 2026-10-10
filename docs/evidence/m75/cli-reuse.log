@@ -1,0 +1,27 @@
+CLI create /home/conner/Documents/GitHub/Project-Judas/.cache/m75/stress/Imports/reused.judasterrain 129 129 64 64  
+dict_keys(['collisionId', 'depth', 'format', 'heights', 'identity', 'layers', 'meshId', 'nx', 'nz', 'productDirectory', 'textureId', 'textureSize', 'version', 'weights', 'width'])
+CLI brush /home/conner/Documents/GitHub/Project-Judas/.cache/m75/stress/Imports/reused.judasterrain raise -8 0 -4 7 2  
+CLI brush /home/conner/Documents/GitHub/Project-Judas/.cache/m75/stress/Imports/reused.judasterrain lower 8 0 4 6 1  
+CLI brush /home/conner/Documents/GitHub/Project-Judas/.cache/m75/stress/Imports/reused.judasterrain flatten 0 0 0 4 0.5  
+CLI brush /home/conner/Documents/GitHub/Project-Judas/.cache/m75/stress/Imports/reused.judasterrain smooth -3 0 -2 5 0.2  
+CLI brush /home/conner/Documents/GitHub/Project-Judas/.cache/m75/stress/Imports/reused.judasterrain paint 0 0 0 5 0.7 2  
+CLI cook /home/conner/Documents/GitHub/Project-Judas/.cache/m75/stress/terrain_lab.judasproj Imports/reused.judasterrain cook 383.724 ms, 4729467 bytes; geometry 1, appearance 1 
+CLI validate /home/conner/Documents/GitHub/Project-Judas/.cache/m75/stress/Imports/reused.judasterrain valid terrain 129 x 129 
+surface 50: 100 layers, 100 polygons, 227.07 ms, source 68e2c6e0cdd825d3b361b3b2247870066a49462e5b012334aa720dbaa8ce951b
+ 
+surface 51: 100 layers, 100 polygons, 242.81 ms, source 6ef0f0abe188f0ad205919c74e924d226055950aa14b9388fe1526b608367b34
+ 
+REUSE stress 423ad3d3816964b432c465ae9441c898 Assets/Terrain/d8a5f9c14fbacb06dc40df1dee8a471e
+CLI fork /home/conner/Documents/GitHub/Project-Judas/.cache/m75/second-project/Imports/landscape.judasterrain /home/conner/Documents/GitHub/Project-Judas/.cache/m75/second-project/Imports/reused.judasterrain  
+CLI brush /home/conner/Documents/GitHub/Project-Judas/.cache/m75/second-project/Imports/reused.judasterrain raise -8 0 -4 7 2  
+CLI brush /home/conner/Documents/GitHub/Project-Judas/.cache/m75/second-project/Imports/reused.judasterrain lower 8 0 4 6 1  
+CLI brush /home/conner/Documents/GitHub/Project-Judas/.cache/m75/second-project/Imports/reused.judasterrain flatten 0 0 0 4 0.5  
+CLI brush /home/conner/Documents/GitHub/Project-Judas/.cache/m75/second-project/Imports/reused.judasterrain smooth -3 0 -2 5 0.2  
+CLI brush /home/conner/Documents/GitHub/Project-Judas/.cache/m75/second-project/Imports/reused.judasterrain paint 0 0 0 5 0.7 2  
+CLI cook /home/conner/Documents/GitHub/Project-Judas/.cache/m75/second-project/terrain_lab.judasproj Imports/reused.judasterrain cook 151.551 ms, 1950133 bytes; geometry 1, appearance 1 
+CLI validate /home/conner/Documents/GitHub/Project-Judas/.cache/m75/second-project/Imports/reused.judasterrain valid terrain 65 x 65 
+surface 50: 100 layers, 100 polygons, 79.15 ms, source 1c2b3b286843c213a45326fce59b202d838a558a4ffae2f32f57aa704528ff95
+ 
+surface 51: 100 layers, 100 polygons, 85.96 ms, source 474c1cf8fe8945516154f223fda6f4d7427634797b30d328c9f91cbde96c726e
+ 
+REUSE second-project 64b949153201676e397feac10b0efd7d Assets/Terrain/867211b1e63413c0a69091d3a6bc8ad9

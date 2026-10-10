@@ -412,6 +412,7 @@ void DrawEditorMainMenu(EditorDocument& doc, EditorPanelState& state, EditorRequ
     }
     if (ImGui::BeginMenu("View")) {
         ImGui::MenuItem("Animation retargeting", nullptr, &state.showRetarget);
+        ImGui::MenuItem("Terrain sculpt / paint", nullptr, &state.showTerrain);
         ImGui::MenuItem("Asset Browser", nullptr, &state.showAssetBrowser);
         ImGui::MenuItem("Scene settings", nullptr, &state.showSceneSettings, editing);
         ImGui::MenuItem("World building / named source", nullptr, &state.showWorldBuilding);

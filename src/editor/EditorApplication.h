@@ -41,6 +41,7 @@ public:
     int Run(int argc, char** argv);
 
 private:
+    std::unique_ptr<struct TerrainEditor> m_terrain;
     std::vector<Scene> m_regionPreview;
     std::string m_regionPreviewKey;
     std::unique_ptr<LocalizationSession> m_previewLocalization;

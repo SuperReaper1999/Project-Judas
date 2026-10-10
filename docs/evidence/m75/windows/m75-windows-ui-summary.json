@@ -1,0 +1,15 @@
+{
+    "terrainAssertions":  13,
+    "hardwareHumanValidated":  false,
+    "editor":  0,
+    "sceneRestored":  true,
+    "source":  [
+                   {
+                       "path":  "src/editor/TerrainTools.cpp",
+                       "sha256":  "6b365b124746949db08e1bea021bbc61fdea95ff909bb2eb6077efdb7bd20bc9",
+                       "matches":  true
+                   }
+               ],
+    "actualUiActivation":  true,
+    "exe":  "924d87f9e11ce342aae3c5f05eb862c6154a94c130cd9945d455963efc5c00d4"
+}

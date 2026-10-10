@@ -1,5 +1,10 @@
 # Content authoring
 
+## Editable terrain
+
+[M75](M75.md) documents `.judasterrain` sources and `judas_terrain_author`. Shared CPU services create/edit/fork/cook finite landscapes into ordinary model/texture/collision assets with guarded hash receipts. Sources remain editable; exported runtime products do not require authoring inputs. This complements named scene authoring and commodity model import.
+
+
 Current M67 candidate: [supported named documents and CLI](NAMED_AUTHORING.md)
 are editable in place through ordinary loaders/editor/export.
 

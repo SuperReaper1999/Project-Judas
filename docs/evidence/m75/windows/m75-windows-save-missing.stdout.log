@@ -1,0 +1,8 @@
+PASS required terrain and ordinary bodies ready through normal resource path
+PASS normal GL draws terrain and surrounding physical objects
+PASS actual ordinary renderer capture
+PASS normal modern save/load request
+PASS changed/missing required terrain fails before replacing live world
+EXPECTED REJECTION save content dependency d7f7905dfd77868a8cb4ffb077e6124b: Cannot hash asset: C:/M75 é α/Project/Assets/Terrain/landscape/terrain.judascollision
+PASS normal application startup and shutdown
+6 checks / 0 failures

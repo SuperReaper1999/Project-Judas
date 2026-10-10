@@ -1,5 +1,10 @@
 # M64 — Mesh, convex and compound collision
 
+## Author-time terrain consumer
+
+[M75](M75.md) cooks its accepted heightfield triangles through this existing static triangle-mesh path. Rendering/picking/query/contact/motor/nav geometry share those triangles; the patch is finite and one-sided. Cooked/mixed collision placements require unit scale, enforced at scene/runtime boundaries. Sculpting invalidates derived geometry, while paint-only cooking retains collider bytes.
+
+
 **Status through M69:** M64 is operator-accepted and checkpointed. Candidate/pending
 statements and measurements below record the original milestone review state,
 not a current outstanding acceptance gate. Later contracts take precedence;

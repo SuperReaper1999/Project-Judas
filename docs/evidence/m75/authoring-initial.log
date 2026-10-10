@@ -1,0 +1,34 @@
+PASS bounded flat source
+PASS versioned exact source roundtrip
+PASS nonfinite height rejected
+PASS unnormalized paint rejected
+PASS unknown version rejected
+PASS oversized allocation rejected before samples
+PASS fork preserves data with new identities
+PASS raise begin
+PASS analytic center delta and finite footprint
+PASS one stroke undo
+PASS stroke redo
+PASS escape restores entire gesture
+PASS sparse/dense collinear pointer schedules equivalent
+PASS smoothing constant plane unchanged
+PASS flatten level frozen at gesture press
+PASS pick edited triangles off grid
+PASS finite edge miss has no flat fallback
+PASS mesh triangle dimensions
+PASS derived finite normalized normals face local height axis
+PASS normal collision cooker accepts exact terrain triangles
+PASS collision vertex population matches mesh
+PASS save source atomically
+PASS fresh source reopening stable identity
+PASS external source conflict refuses overwrite
+PASS guarded ordinary product publication
+PASS terrain export provenance fresh
+PASS unchanged cook does not rebuild products
+PASS uncooked edited source rejects export
+PASS cancelled cook retains exact last-good geometry/collider
+PASS sculpt publishes new geometry/collider
+PASS missing layer failure preserves last good products
+PERF 65 grid stroke+normals 2.06065 ms / 4225 vertices
+PERF 129 grid stroke+normals 8.31221 ms / 16641 vertices
+31 checks / 0 failures

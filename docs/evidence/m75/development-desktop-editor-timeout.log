@@ -1,0 +1,15 @@
+Renderer fragment texture units: 32 (material path uses 12)
+[M75 terrain editor] PASS: open ordinary editable source
+[M75 terrain editor] PASS: native mouse press sculpts current viewport surface
+[M75 terrain editor] PASS: release commits one gesture
+[M75 terrain editor] PASS: one undo restores source
+[M75 terrain editor] PASS: redo restores authored sculpt
+[M75 terrain editor] PASS: Escape cancels real viewport stroke
+[editor autotest] duplicate created id 1000: scene CHANGED; undo restores: IDENTICAL
+[M75 terrain editor] PASS: focus loss safely commits and ends gesture
+[M75 terrain editor] PASS: save actual editable sculpt and paint
+[M75 terrain editor] PASS: same CPU cook publishes runtime geometry and appearance
+[M75 terrain editor] PASS: actual GL mesh matches current draft geometry
+[editor autotest] wrote: /home/conner/Documents/GitHub/Project-Judas/.cache/m75/editor-desktop/native.edit.png
+[editor autotest] edit frame: 7 draw calls, 8240 triangles, 66 debug lines
+[M75 terrain editor] PASS: saved/cooked terrain enters normal Play

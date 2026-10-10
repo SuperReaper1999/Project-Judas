@@ -1,0 +1,44 @@
+[
+    {
+        "lastWriteUtc":  "2026-10-10T18:47:25.1673250Z",
+        "sha256":  "1de9891ab9cb3ce25a6b968f267ad1499ea3559114397bdec94781381df889d0",
+        "name":  "judas.exe",
+        "fresh":  true
+    },
+    {
+        "lastWriteUtc":  "2026-10-10T18:53:55.0969184Z",
+        "sha256":  "6d5e3f9f527b516beec6a003ac3141ec734177254555625ce7fb162026a1f86c",
+        "name":  "judas_editor.exe",
+        "fresh":  true
+    },
+    {
+        "lastWriteUtc":  "2026-10-10T18:53:44.3156445Z",
+        "sha256":  "d077eaaff7efbd76f933e0c4261c05fbedc5d0d8c868ef4cac9a25c62cdd99f3",
+        "name":  "judas_terrain_author.exe",
+        "fresh":  true
+    },
+    {
+        "lastWriteUtc":  "2026-10-10T18:47:38.7766991Z",
+        "sha256":  "cb9cd76fb9aebf230a0a1e2b66fa66b624dfd19ae9bbe56be41ba1f193968a80",
+        "name":  "judas_export.exe",
+        "fresh":  true
+    },
+    {
+        "lastWriteUtc":  "2026-10-10T18:54:09.1438000Z",
+        "sha256":  "0adcac2b189c21779624cebfa637b255f55457229a2678971012c8e25a7a6dd6",
+        "name":  "judas_terrain_authoring_tests.exe",
+        "fresh":  true
+    },
+    {
+        "lastWriteUtc":  "2026-10-10T18:54:16.5344009Z",
+        "sha256":  "f077b2890c8e561d1af23f26371176a000f0ac22749da378db41f5bcbcca39c2",
+        "name":  "judas_terrain_pipeline_tests.exe",
+        "fresh":  true
+    },
+    {
+        "lastWriteUtc":  "2026-10-10T18:49:48.8704506Z",
+        "sha256":  "faf04984b2b4cb73e45ab8cfc74b7a426a398fd2134c556f715a4cb7ea3f250c",
+        "name":  "judas_terrain_application_tests.exe",
+        "fresh":  true
+    }
+]

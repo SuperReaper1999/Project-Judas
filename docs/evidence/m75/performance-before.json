@@ -1,0 +1,13 @@
+{
+  "bodies": 6,
+  "draw_calls": 315,
+  "note": "Measured hidden uncapped Release wall-clock application; no test sleep during steady workload. Inclusive M56 scopes overlap.",
+  "outer_frame": {
+    "max_ms": 919.4836020469666,
+    "mean_ms": 735.3780488173167,
+    "p95_ms": 780.3428769111633,
+    "samples": 30
+  },
+  "resource_bytes": 4356309,
+  "terrain_triangles": 8192
+}

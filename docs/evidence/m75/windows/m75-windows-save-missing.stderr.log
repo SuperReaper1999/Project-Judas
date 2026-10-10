@@ -1,0 +1,6 @@
+Renderer fragment texture units: 32 (material path uses 12)
+World state: legacy .judasstate (F6/F7) saves disabled for additive compositions; save slots remain available
+Project: Terrain Lab (C:/M75 é α/Project/terrain_lab.judasproj)
+Scene: Terrain Lab (C:/M75 é α/Project/Scenes/landscape.judas)
+World origin (m): 0.000, 0.000, 0.000
+Runtime outer services: save content dependency d7f7905dfd77868a8cb4ffb077e6124b: Cannot hash asset: C:/M75 é α/Project/Assets/Terrain/landscape/terrain.judascollision

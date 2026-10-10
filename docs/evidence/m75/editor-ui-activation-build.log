@@ -1,0 +1,19 @@
+[  0%] Built target judas_app_icon
+[ 15%] Built target freetype
+[ 20%] Built target judas_icu_build
+[ 20%] Built target judas_quickjs
+[ 25%] Built target judas_navigation_backend
+[ 25%] Built target judas_glad
+[ 25%] Built target judas_profiler
+[ 25%] Built target judas_audio_backend
+[ 25%] Built target harfbuzz
+[ 25%] Built target judas_imgui
+[ 30%] Built target judas_ufbx
+[ 30%] Built target judas_materials
+[ 85%] Built target judas_engine
+[ 95%] Built target judas_model_import
+[ 95%] Built target judas_navigation_baker
+[ 95%] Built target judas_world_authoring
+[ 95%] Building CXX object CMakeFiles/judas_editor.dir/src/editor/EditorApplication.cpp.o
+[ 95%] Linking CXX executable judas_editor
+[100%] Built target judas_editor

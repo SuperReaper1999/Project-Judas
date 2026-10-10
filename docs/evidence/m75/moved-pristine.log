@@ -1,0 +1,21 @@
+PASS required terrain and ordinary bodies ready through normal resource path
+PASS normal GL draws terrain and surrounding physical objects
+PASS actual ordinary renderer capture
+PASS public logical input moves motor on edited terrain
+PASS game JS spawns real dropped prefab body
+PASS ordinary terrain prefab publishes shared coherent collider
+PASS terrain prefab destruction removes independent physical instance
+PASS ordinary terrain annex demand
+PASS region active boundary has real terrain collider
+PASS ordinary region release/unload
+PASS unload removes collider and rejects stale handle
+PASS revisit publishes generation-safe replacement body
+PASS ordinary scene reload queued
+PASS reload reconstructs clean terrain/body/motor state
+PASS normal application startup and shutdown
+15 checks / 0 failures
+Renderer fragment texture units: 32 (material path uses 12)
+World state: legacy .judasstate (F6/F7) saves disabled for additive compositions; save slots remain available
+Project: Terrain Lab (/tmp/M75 moved pristine é α/game.judasproj)
+Scene: Terrain Lab (/tmp/M75 moved pristine é α/Scenes/landscape.judas)
+World origin (m): 0.000, 0.000, 0.000

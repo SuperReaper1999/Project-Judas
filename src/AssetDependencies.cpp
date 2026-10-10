@@ -9,6 +9,7 @@
 #include "SceneSerialization.h"
 #include "GltfLoader.h"
 #include <filesystem>
+#include "../third_party/nlohmann/json.hpp"
 #include <memory>
 namespace {void add(std::set<AssetId>& ids,const AssetId& id){if(!id.empty())ids.insert(id);}}
 void CollectSceneAssetReferences(const Scene& scene,std::set<AssetId>& ids){
@@ -41,7 +42,7 @@ bool CollectAssetDependencies(const AssetRecord& record,std::set<AssetId>& out,s
  else if(record.type==AssetType::UI){UIDocument d;if(!LoadUIDocument(record.path,d,error))return false;for(auto& e:d.elements){add(ids,e.texture);add(ids,e.font);}}
  else if(record.type==AssetType::Material){MaterialDefinition m;if(!LoadMaterial(record.path,m,error))return false;for(auto& map:m.maps)add(ids,map.asset);}
  else if(record.type==AssetType::Mesh){std::vector<MaterialDefinition> materials;
-  if(std::filesystem::path(record.path).extension()==".judasmodel"){std::vector<uint8_t> bytes;std::string provenance;if(!ReadWholeFile(record.path,bytes,error)||!ReadModelArchiveMetadata(bytes.data(),bytes.size(),provenance,materials,error))return false;}
+  if(std::filesystem::path(record.path).extension()==".judasmodel"){std::vector<uint8_t> bytes;std::string provenance;if(!ReadWholeFile(record.path,bytes,error)||!ReadModelArchiveMetadata(bytes.data(),bytes.size(),provenance,materials,error))return false;if(!provenance.empty()){try{auto p=nlohmann::json::parse(provenance);if(p.value("kind",std::string())=="terrain"){add(ids,p.at("appearance"));for(auto& id:p.at("layers"))add(ids,id);}}catch(const std::exception& x){error=x.what();return false;}}}
   else{MeshData m;if(!LoadModelMesh(record.path,m,error))return false;materials=std::move(m.materials);}
   for(auto& m:materials)for(auto& map:m.maps)add(ids,map.asset);
   auto ext=std::filesystem::path(record.path).extension();

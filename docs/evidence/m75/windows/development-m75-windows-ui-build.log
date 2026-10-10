@@ -1,0 +1,58 @@
+MSBuild version 17.14.60+43b635718 for .NET Framework
+
+  harfbuzz.vcxproj -> C:\JudasValidation\Build\_deps\judas_harfbuzz-build\Release\harfbuzz.lib
+  freetype.vcxproj -> C:\JudasValidation\Build\_deps\judas_freetype-build\Release\freetype.lib
+  judas_app_icon.vcxproj -> C:\JudasValidation\Build\Release\judas_app_icon.lib
+  judas_audio_backend.vcxproj -> C:\JudasValidation\Build\Release\judas_audio_backend.lib
+  judas_glad.vcxproj -> C:\JudasValidation\Build\Release\judas_glad.lib
+  judas_profiler.vcxproj -> C:\JudasValidation\Build\Release\judas_profiler.lib
+  judas_materials.vcxproj -> C:\JudasValidation\Build\Release\judas_materials.lib
+  judas_navigation_backend.vcxproj -> C:\JudasValidation\Build\Release\judas_navigation_backend.lib
+  judas_quickjs.vcxproj -> C:\JudasValidation\Build\Release\judas_quickjs.lib
+  judas_imgui.vcxproj -> C:\JudasValidation\Build\Release\judas_imgui.lib
+  judas_ufbx.vcxproj -> C:\JudasValidation\Build\Release\judas_ufbx.lib
+  judas_engine.vcxproj -> C:\JudasValidation\Build\Release\judas_engine.lib
+  judas_model_import.vcxproj -> C:\JudasValidation\Build\Release\judas_model_import.lib
+  judas_world_authoring.vcxproj -> C:\JudasValidation\Build\Release\judas_world_authoring.lib
+  judas_navigation_baker.vcxproj -> C:\JudasValidation\Build\Release\judas_navigation_baker.lib
+  EditorApplication.cpp
+C:\JudasValidation\Source\src\editor\EditorApplication.cpp(865,40): warning C4456: declaration of 'error' hides previous local declaration [C:\JudasValidation\Build\judas_editor.vcxproj]
+      C:\JudasValidation\Source\src\editor\EditorApplication.cpp(852,33):
+      see declaration of 'error'
+  
+C:\JudasValidation\Source\src\editor\EditorApplication.cpp(1119,170): warning C4456: declaration of 'error' hides previous local declaration [C:\JudasValidation\Build\judas_editor.vcxproj]
+      C:\JudasValidation\Source\src\editor\EditorApplication.cpp(1105,14):
+      see declaration of 'error'
+  
+C:\JudasValidation\Source\src\editor\EditorApplication.cpp(1363,38): warning C4244: '=': conversion from 'SDL_WindowEventID' to 'Uint8', possible loss of data [C:\JudasValidation\Build\judas_editor.vcxproj]
+C:\JudasValidation\Source\src\editor\EditorApplication.cpp(1400,38): warning C4456: declaration of 'error' hides previous local declaration [C:\JudasValidation\Build\judas_editor.vcxproj]
+      C:\JudasValidation\Source\src\editor\EditorApplication.cpp(1245,17):
+      see declaration of 'error'
+  
+C:\JudasValidation\Source\src\editor\EditorApplication.cpp(1453,29): warning C4456: declaration of 'error' hides previous local declaration [C:\JudasValidation\Build\judas_editor.vcxproj]
+      C:\JudasValidation\Source\src\editor\EditorApplication.cpp(1245,17):
+      see declaration of 'error'
+  
+C:\JudasValidation\Source\src\editor\EditorApplication.cpp(1603,46): warning C4456: declaration of 'error' hides previous local declaration [C:\JudasValidation\Build\judas_editor.vcxproj]
+      C:\JudasValidation\Source\src\editor\EditorApplication.cpp(1245,17):
+      see declaration of 'error'
+  
+C:\JudasValidation\Source\src\editor\EditorApplication.cpp(1651,33): warning C4456: declaration of 'error' hides previous local declaration [C:\JudasValidation\Build\judas_editor.vcxproj]
+      C:\JudasValidation\Source\src\editor\EditorApplication.cpp(1245,17):
+      see declaration of 'error'
+  
+C:\JudasValidation\Source\src\editor\EditorApplication.cpp(1851,125): warning C4456: declaration of 'error' hides previous local declaration [C:\JudasValidation\Build\judas_editor.vcxproj]
+      C:\JudasValidation\Source\src\editor\EditorApplication.cpp(1245,17):
+      see declaration of 'error'
+  
+C:\JudasValidation\Source\src\editor\EditorApplication.cpp(1894,80): warning C4456: declaration of 'error' hides previous local declaration [C:\JudasValidation\Build\judas_editor.vcxproj]
+      C:\JudasValidation\Source\src\editor\EditorApplication.cpp(1245,17):
+      see declaration of 'error'
+  
+  TerrainTools.cpp
+C:\JudasValidation\Source\src\editor\TerrainTools.cpp(50,51): warning C4456: declaration of 'selected' hides previous local declaration [C:\JudasValidation\Build\judas_editor.vcxproj]
+      C:\JudasValidation\Source\src\editor\TerrainTools.cpp(24,8):
+      see declaration of 'selected'
+  
+  Generating Code...
+  judas_editor.vcxproj -> C:\JudasValidation\Build\Release\judas_editor.exe

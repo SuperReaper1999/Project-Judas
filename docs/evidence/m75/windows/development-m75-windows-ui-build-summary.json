@@ -1,0 +1,25 @@
+{
+    "exe":  {
+                "lastWriteUtc":  "2026-10-10T19:26:32.2123449Z",
+                "sha256":  "ed13bf41bcf792bcd89a04ce4c806a4b01f3bc477662dab372d4b9370a9af403"
+            },
+    "build":  0,
+    "source":  [
+                   {
+                       "path":  "src/editor/TerrainTools.cpp",
+                       "sha256":  "1349b9afb2885ace79c4ec3eeefbc3e9c814bf88cfe460fa3cd28a56cfd7cd17",
+                       "matches":  true
+                   },
+                   {
+                       "path":  "src/editor/TerrainTools.h",
+                       "sha256":  "39ddc37d6c658c9c23f261c4eaabeb637102e003b1014013322879ca3c0fcfdb",
+                       "matches":  true
+                   },
+                   {
+                       "path":  "src/editor/EditorApplication.cpp",
+                       "sha256":  "002839623b82f6b159326f7bd7c3723e1d4a9693de741c12ee8b9b889f84b058",
+                       "matches":  true
+                   }
+               ],
+    "freeBytes":  38289408
+}

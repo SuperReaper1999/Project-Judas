@@ -7,6 +7,9 @@
 #include "PerformanceProfiler.h"
 #include "ComponentEditors.h"
 #include "EditorApplication.h"
+#include "TerrainTools.h"
+#include "ModelArchive.h"
+#include "AsyncFile.h"
 #include "EditorTheme.h"
 #include "Prefab.h"
 
@@ -376,6 +379,7 @@ void EditorApplication::RefreshProjectLists() {
 bool EditorApplication::OpenProject(const std::string& projectFile, std::string& outError) {
     Project project;
     if (!project.Load(projectFile, outError)) return false;
+    if(m_terrain){m_terrain->Shutdown(m_host->GetRenderer(),m_panels.importJobs);m_terrain.reset();}
     RetireRetargetProject(m_panels);
     m_project = project;
     m_scenePicker.Clear();
@@ -472,6 +476,9 @@ bool EditorApplication::RunProject(std::string& outMessage) {
 }
 
 bool EditorApplication::StartPlay(std::string& outError) {
+    if(m_terrain&&!m_terrain->Guard(m_panels)){outError=m_terrain->error;return false;}
+    // Source freshness is an editor/export check; packaged runtime needs only products.
+    for(const auto& o:m_document.GetScene().Objects())if(o.render&&!o.render->meshAsset.empty()){auto* a=m_host->Assets().Find(o.render->meshAsset);if(a&&fs::path(a->path).extension()==".judasmodel"){std::vector<uint8_t> bytes;std::string record;std::vector<MaterialDefinition> materials;if(ReadWholeFile(a->path,bytes,outError)&&ReadModelArchiveMetadata(bytes.data(),bytes.size(),record,materials,outError)&&!record.empty()){auto provenance=nlohmann::json::parse(record);if(provenance.value("kind",std::string())=="terrain"&&!VerifyImportedModelFresh(m_project.RootDir(),a->path,outError))return false;}}}
     CancelCameraNavigation();
     m_world = std::make_unique<RuntimeWorld>();
     m_world->legacyGameplay = m_project.Settings().legacyGameplay;
@@ -547,6 +554,8 @@ void EditorApplication::HandleRequests(EditorRequests& r) {
         approvedDocumentAction = true;
     }
     if (r.quit && m_document.IsDirty() && m_panels.mode == EditorMode::Play) StopPlay();
+    const bool terrainReplaces = r.quit || r.newScene || r.open || r.newProject || r.openProject || r.play || r.runProject || r.exportProject || !r.openSceneRelative.empty();
+    if(terrainReplaces&&m_terrain&&!m_terrain->Guard(m_panels))return;
     const bool replacesDocument = r.quit || r.newScene || r.open || r.newProject || r.openProject ||
                                   !r.openSceneRelative.empty();
     if (replacesDocument && m_document.IsDirty() && !approvedDocumentAction) {
@@ -673,8 +682,8 @@ void EditorApplication::HandleRequests(EditorRequests& r) {
             RefreshProjectLists();
         }
     }
-    if (r.undo) m_document.Undo();
-    if (r.redo) m_document.Redo();
+    if (r.undo) {if(m_terrain&&m_terrain->loaded&&m_terrain->editing)m_terrain->draft.Undo();else m_document.Undo();}
+    if (r.redo) {if(m_terrain&&m_terrain->loaded&&m_terrain->editing)m_terrain->draft.Redo();else m_document.Redo();}
     if (!r.createKind.empty()) {
         std::string defaultMesh;
         for (const auto& [id, record] : m_host->Assets().Records()) {
@@ -998,8 +1007,11 @@ void EditorApplication::FrameEditMode(float deltaSeconds) {
     // owns the mouse only when no panel does and no camera drag owns it.
     const bool viewportOwnsMouse = insideViewport && !io.WantCaptureMouse &&
         m_cameraGesture.Active() == EditorCameraGesture::None && !navigation.middleDown && !navigation.rightDown;
-    UpdateGizmo(viewportOwnsMouse);
-    if (viewportOwnsMouse && !m_drag.Active() && m_hoverAxis == GizmoAxis::None &&
+    bool brushOwns=false;
+    if(m_terrain&&m_terrain->loaded){m_terrain->Prepare(renderer,m_panels);m_scenePicker.SetDraftMesh(m_terrain->draft.source.meshId,m_terrain->preview);
+        Scene flat;std::string error;if(FlattenHierarchy(m_document.GetScene(),flat,error)){glm::vec3 ro,rd;ViewportRay(int(io.MousePos.x),int(io.MousePos.y),ro,rd);brushOwns=m_terrain->Stroke(flat,m_document.Selected(),ro,rd,viewportOwnsMouse&&ImGui::IsMouseClicked(ImGuiMouseButton_Left),viewportOwnsMouse&&io.MouseDown[ImGuiMouseButton_Left],ImGui::IsKeyPressed(ImGuiKey_Escape),m_viewportFocused&&!m_terrain->Busy(m_panels),m_panels.status);}}
+    UpdateGizmo(viewportOwnsMouse&&!brushOwns);
+    if (viewportOwnsMouse && !brushOwns && !m_drag.Active() && m_hoverAxis == GizmoAxis::None &&
         ImGui::IsMouseClicked(ImGuiMouseButton_Left)) {
         PickAtPixel(static_cast<int>(io.MousePos.x), static_cast<int>(io.MousePos.y));
     }
@@ -1052,6 +1064,7 @@ void EditorApplication::FrameEditMode(float deltaSeconds) {
     }
     renderer.SetCamera(m_camera.ViewMatrix(), m_camera.ProjectionMatrix(aspect));
     renderer.SetDynamicLights(BuildAuthoredLights(scene));
+    if(m_terrain)m_terrain->Draw(renderer,scene,m_host->Resources());
     DrawAuthoredScene(renderer, scene, m_host->Resources());
     if(m_panels.worldPreview&&!m_project.Settings().worldManifest.empty()){
         auto key=m_project.ProjectFile()+m_document.Path()+std::to_string(m_panels.worldPreviewRevision);
@@ -1071,6 +1084,7 @@ void EditorApplication::FrameEditMode(float deltaSeconds) {
         for(auto& region:m_regionPreview)DrawAuthoredScene(renderer,region,m_host->Resources());
     }else {m_regionPreview.clear();m_regionPreviewKey.clear();}
     DrawEditOverlay(renderer, scene);
+    if(m_terrain)renderer.DrawDebugLines(m_terrain->footprint.Lines(),true);
     renderer.EndFrame();
     renderer.EndRenderTarget();
     renderer.BeginFrame(window.Width(), window.Height());
@@ -1378,6 +1392,10 @@ int EditorApplication::Run(int argc, char** argv) {
     if (autotest) SaveSceneToString(m_document.GetScene(), autotestBaseline);
     const char* importRecipe=autotest?std::getenv("JUDAS_EDITOR_AUTOTEST_IMPORT"):nullptr;
     if(importRecipe){m_panels.showAssetBrowser=true;m_panels.modelRecipe=importRecipe;m_panels.importTask=QueueModelImport(host.Jobs(),importRecipe);m_panels.importPublished=false;}
+    const char* terrainAutotest=autotest?std::getenv("JUDAS_EDITOR_AUTOTEST_TERRAIN"):nullptr;
+    std::vector<float> terrainInitial,terrainEdited;std::vector<std::array<float,4>> terrainPainted;
+    int terrainFailures=0,terrainUiFrame=0;bool terrainUiReady=false;
+    const auto terrainCheck=[&](bool value,const char* label){if(!value)++terrainFailures;std::fprintf(stderr,"[M75 terrain editor] %s: %s\n",value?"PASS":"FAIL",label);};
     const char* retargetAutotest=autotest?std::getenv("JUDAS_EDITOR_AUTOTEST_RETARGET"):nullptr;
     if(retargetAutotest){std::string error;if(!BeginRetargetAutotest(m_panels,retargetAutotest,error)){std::fprintf(stderr,"[M74 editor retarget] FAIL: %s\n",error.c_str());m_quit=true;}}
     unsigned retargetWaitFrames=0;
@@ -1497,6 +1515,8 @@ int EditorApplication::Run(int argc, char** argv) {
             DrawHierarchyPanel(m_document, m_panels, requests);
         }
         if (m_panels.mode == EditorMode::Edit) {
+            if(!m_terrain)m_terrain=std::make_unique<TerrainEditor>();
+            m_terrain->Panel(m_document,m_panels,requests);
             DrawWorldBuildingPanel(m_document, m_panels);
             DrawSceneSettingsPanel(m_document, m_panels);
             DrawAssetBrowserPanel(m_document, m_panels, requests);
@@ -1581,7 +1601,60 @@ int EditorApplication::Run(int argc, char** argv) {
             bool waiting=importRecipe&&!m_panels.modelPreviewToken;
             if(waiting&&((m_panels.importTask->done&&!m_panels.importTask->success)||++importWaitFrames>4000)){std::fprintf(stderr,"[editor autotest] import FAIL: %s\n",m_panels.importTask->error.c_str());m_quit=true;}
             if(retargetAutotest){std::string error;int status=RetargetAutotestStatus(m_panels,error);if(status<0||(status==0&&++retargetWaitFrames>4000)){std::fprintf(stderr,"[M74 editor retarget] FAIL: %s\n",error.c_str());m_quit=true;}waiting=waiting||status==0;}
+            if(terrainAutotest&&!terrainUiReady){
+                // Exercise the human-facing activation button, not direct
+                // mutation of loaded/editing as the original smoke did.
+                waiting=true;++terrainUiFrame;
+                if(terrainUiFrame==1){m_document.Select(1);m_panels.showTerrain=true;navigationFocus(true);}
+                if(terrainUiFrame==2){
+                    const auto p=m_terrain->editButtonCenter;SDL_WarpMouseInWindow(window.NativeWindow(),int(p.x),int(p.y));
+                    SDL_Event event{};event.type=SDL_MOUSEMOTION;event.motion.windowID=SDL_GetWindowID(window.NativeWindow());event.motion.x=int(p.x);event.motion.y=int(p.y);SDL_PushEvent(&event);
+                }
+                if(terrainUiFrame==4||terrainUiFrame==6){
+                    const auto p=m_terrain->editButtonCenter;
+                    SDL_WarpMouseInWindow(window.NativeWindow(),int(p.x),int(p.y));
+                    SDL_Event event{};event.type=terrainUiFrame==4?SDL_MOUSEBUTTONDOWN:SDL_MOUSEBUTTONUP;
+                    event.button.windowID=SDL_GetWindowID(window.NativeWindow());event.button.button=SDL_BUTTON_LEFT;
+                    event.button.state=terrainUiFrame==4?SDL_PRESSED:SDL_RELEASED;event.button.x=int(p.x);event.button.y=int(p.y);SDL_PushEvent(&event);
+                }
+                if(terrainUiFrame==9){
+                    screenshot(std::string(autotest)+".activation.png");
+                    terrainCheck(m_terrain->loaded&&m_terrain->editing,"real panel click opens selected source and activates brush");
+                    if(!m_terrain->loaded){m_quit=true;}else terrainUiReady=true;
+                }
+            }
             if(!waiting)++autotestFrame;
+            if(terrainAutotest&&terrainUiReady&&!waiting){
+                if(autotestFrame%20==0)std::fprintf(stderr,"[M75 editor progress] frame %d step %.3f ms mode %d\n",autotestFrame,m_panels.profiler.fixedStepMilliseconds,int(m_panels.mode));
+                const auto mouse=[&](bool down){SDL_Event event{};event.type=down?SDL_MOUSEBUTTONDOWN:SDL_MOUSEBUTTONUP;event.button.windowID=SDL_GetWindowID(window.NativeWindow());event.button.button=SDL_BUTTON_LEFT;event.button.state=down?SDL_PRESSED:SDL_RELEASED;event.button.x=int(io.MousePos.x);event.button.y=int(io.MousePos.y);SDL_PushEvent(&event);};
+                if(autotestFrame==1){
+                    terrainCheck(m_terrain->draft.Path()==m_project.Resolve(terrainAutotest),"panel opened the ordinary selected source");
+                    m_terrain->brush.radius=3;m_terrain->brush.strength=.7f;
+                    terrainInitial=m_terrain->draft.source.heights;m_document.Select(1);m_panels.showTerrain=false;m_panels.debug={};
+                    auto& view=m_panels.workspace.viewport;auto clip=m_camera.ProjectionMatrix(view.size.x/view.size.y)*m_camera.ViewMatrix()*glm::vec4(0,0,10,1);
+                    int x=int(view.position.x+(clip.x/clip.w+1)*.5f*view.size.x),y=int(view.position.y+(1-clip.y/clip.w)*.5f*view.size.y);
+                    SDL_WarpMouseInWindow(window.NativeWindow(),x,y);navigationFocus(true);
+                }else if(autotestFrame==3)mouse(true);
+                else if(autotestFrame==4)terrainCheck(m_terrain->draft.Active()&&m_terrain->draft.source.heights!=terrainInitial,"native mouse press sculpts current viewport surface");
+                else if(autotestFrame==5)mouse(false);
+                else if(autotestFrame==6){terrainEdited=m_terrain->draft.source.heights;terrainCheck(!m_terrain->draft.Active(),"release commits one gesture");terrainCheck(m_terrain->draft.Undo()&&m_terrain->draft.source.heights==terrainInitial,"one undo restores source");}
+                else if(autotestFrame==7)terrainCheck(m_terrain->draft.Redo()&&m_terrain->draft.source.heights==terrainEdited,"redo restores authored sculpt");
+                else if(autotestFrame==8)mouse(true);
+                else if(autotestFrame==9)io.AddKeyEvent(ImGuiKey_Escape,true);
+                else if(autotestFrame==10){io.AddKeyEvent(ImGuiKey_Escape,false);mouse(false);terrainCheck(!m_terrain->draft.Active()&&m_terrain->draft.source.heights==terrainEdited,"Escape cancels real viewport stroke");m_terrain->editing=true;}
+                else if(autotestFrame==11)mouse(true);
+                else if(autotestFrame==12)navigationFocus(false);
+                else if(autotestFrame==13){terrainCheck(!m_terrain->draft.Active(),"focus loss safely commits and ends gesture");mouse(false);navigationFocus(true);m_terrain->brush.kind=TerrainBrushKind::Paint;m_terrain->brush.layer=1;}
+                else if(autotestFrame==14)mouse(true);
+                else if(autotestFrame==15)mouse(false);
+                else if(autotestFrame==16){
+                    std::string error;terrainCheck(m_terrain->draft.Save(error),"save actual editable sculpt and paint");TerrainCookResult result;
+                    terrainCheck(CookTerrain(m_terrain->draft.source,m_terrain->draft.Path(),m_project.RootDir(),host.Assets(),result,error),"same CPU cook publishes runtime geometry and appearance");
+                    terrainPainted=m_terrain->draft.source.weights;deferredRequests.rescanAssets=true;m_terrain->editing=false;m_panels.showTerrain=true;
+                    MeshData gpu;terrainCheck(renderer.ReadMeshForDiagnostics(m_terrain->mesh,gpu)&&gpu.vertices.size()==m_terrain->preview->vertices.size()&&glm::length(gpu.vertices[2112].position-m_terrain->preview->vertices[2112].position)<1e-6f,"actual GL mesh matches current draft geometry");
+                }else if(autotestFrame==21)terrainCheck(m_panels.mode==EditorMode::Play,"saved/cooked terrain enters normal Play");
+                else if(autotestFrame==150){terrainCheck(m_panels.mode==EditorMode::Edit&&m_terrain->draft.source.weights==terrainPainted&&!m_terrain->draft.Dirty(),"Stop preserves saved editable paint state");std::fprintf(stderr,"[M75 terrain editor] failures %d\n",terrainFailures);}
+            }
             if(retargetAutotest && autotestFrame==1) screenshot(std::string(autotest)+".retarget.png");
             if(importRecipe&&autotestFrame==1)std::fprintf(stderr,"[editor autotest] shared import + GPU preview PASS (%zu parts)\n",m_panels.importAccepted->preview->primitives.size());
             if(importRecipe&&autotestFrame==2){auto* placed=m_document.SelectedObject();std::fprintf(stderr,"[editor autotest] ordinary imported placement %s\n",placed&&placed->render&&placed->animation?"PASS":"FAIL");m_document.Undo();std::string restored;SaveSceneToString(m_document.GetScene(),restored);std::fprintf(stderr,"[editor autotest] imported placement one undo %s\n",restored==autotestBaseline?"PASS":"FAIL");}
@@ -1786,8 +1859,8 @@ int EditorApplication::Run(int argc, char** argv) {
                 DebugViewOptions all;
                 all.collisionShapes = all.playerCapsule = all.contacts = all.gravity = all.frameAxes = all.lights =
                     all.interactionRanges = all.lifecycle = all.terrainNormals = all.fluidParticles = all.atmosphere = true;
-                m_panels.debug = polishAutotest || pickingAutotest ? DebugViewOptions{} : all;
-                m_panels.showProfiler = !std::getenv("JUDAS_EDITOR_AUTOTEST_AUTHORING") && !retargetAutotest && !polishAutotest && !pickingAutotest;
+                m_panels.debug = terrainAutotest || polishAutotest || pickingAutotest ? DebugViewOptions{} : all;
+                m_panels.showProfiler = !std::getenv("JUDAS_EDITOR_AUTOTEST_AUTHORING") && !terrainAutotest && !retargetAutotest && !polishAutotest && !pickingAutotest;
             } else if (autotestFrame == 10) {
                 // Duplicate + undo must leave the scene exactly as authored.
                 const SceneObjectId selected = m_document.Selected();
@@ -1850,6 +1923,7 @@ int EditorApplication::Run(int argc, char** argv) {
     m_heldAssets.clear();
     window.SetEventHook(nullptr);
     if (m_sceneViewTarget.IsValid()) renderer.DestroyRenderTarget(m_sceneViewTarget);
+    if(m_terrain){m_terrain->Shutdown(renderer,m_panels.importJobs);m_terrain.reset();}
     ShutdownRetargetPreview(m_panels, renderer);
     if(m_uiPreviewTarget.IsValid())renderer.DestroyRenderTarget(m_uiPreviewTarget);
     m_uiPreview.reset();

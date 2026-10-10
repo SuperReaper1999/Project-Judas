@@ -1,0 +1,40 @@
+[  5%] Built target judas_app_icon
+[ 10%] Built target judas_icu_build
+[ 15%] Built target judas_quickjs
+[ 30%] Built target freetype
+[ 30%] Built target judas_glad
+[ 35%] Built target judas_navigation_backend
+[ 40%] Built target judas_profiler
+[ 45%] Built target judas_audio_backend
+[ 45%] Built target harfbuzz
+[ 45%] Built target judas_materials
+[ 45%] Building CXX object CMakeFiles/judas_engine.dir/src/AssetDependencies.cpp.o
+[ 45%] Building CXX object CMakeFiles/judas_engine.dir/src/ModelArchive.cpp.o
+[ 45%] Linking CXX static library libjudas_engine.a
+[100%] Built target judas_engine
+[100%] Building CXX object CMakeFiles/judas_world_authoring.dir/src/authoring/TerrainAuthoring.cpp.o
+/home/conner/Documents/GitHub/Project-Judas/src/authoring/TerrainAuthoring.cpp: In function ‘bool PaintTerrainTexture(const TerrainSource&, const AssetDatabase&, TextureData&, std::string&)’:
+/home/conner/Documents/GitHub/Project-Judas/src/authoring/TerrainAuthoring.cpp:46:2: warning: this ‘for’ clause does not guard... [-Wmisleading-indentation]
+   46 |  for(unsigned z=0;z<t.textureSize;++z)for(unsigned x=0;x<t.textureSize;++x){float u=float(x)/(t.textureSize-1),v=float(z)/(t.textureSize-1),gx=u*(t.nx-1),gz=v*(t.nz-1);unsigned ix=std::min(unsigned(gx),t.nx-2),iz=std::min(unsigned(gz),t.nz-2);float fx=gx-ix,fz=gz-iz;glm::vec3 color{.35f,.5f,.25f};if(!textures.empty()){color={0,0,0};for(unsigned k=0;k<textures.size();++k){float w=(1-fz)*((1-fx)*t.weights[iz*t.nx+ix][k]+fx*t.weights[iz*t.nx+ix+1][k])+fz*((1-fx)*t.weights[(iz+1)*t.nx+ix][k]+fx*t.weights[(iz+1)*t.nx+ix+1][k]);auto& tex=textures[k];float tx=u*t.width/t.layers[k].tileMetres,tz=v*t.depth/t.layers[k].tileMetres;unsigned px=std::min(unsigned((tx-std::floor(tx))*tex.width),unsigned(tex.width-1)),pz=std::min(unsigned((tz-std::floor(tz))*tex.height),unsigned(tex.height-1));size_t p=(size_t(pz)*tex.width+px)*4;for(unsigned c=0;c<3;++c)color[c]+=w*std::pow(float(tex.pixels[p+c])/255,2.2f);}for(unsigned c=0;c<3;++c)color[c]=std::pow(std::clamp(color[c],0.f,1.f),1/2.2f);}size_t p=(size_t(z)*t.textureSize+x)*4;for(unsigned c=0;c<3;++c)result.pixels[p+c]=uint8_t(std::round(std::clamp(color[c],0.f,1.f)*255));result.pixels[p+3]=255;}out=std::move(result);e.clear();return true;}catch(const std::exception& x){e=x.what();return false;}}
+      |  ^~~
+/home/conner/Documents/GitHub/Project-Judas/src/authoring/TerrainAuthoring.cpp:46:1149: note: ...this statement, but the latter is misleadingly indented as if it were guarded by the ‘for’
+   46 |  for(unsigned z=0;z<t.textureSize;++z)for(unsigned x=0;x<t.textureSize;++x){float u=float(x)/(t.textureSize-1),v=float(z)/(t.textureSize-1),gx=u*(t.nx-1),gz=v*(t.nz-1);unsigned ix=std::min(unsigned(gx),t.nx-2),iz=std::min(unsigned(gz),t.nz-2);float fx=gx-ix,fz=gz-iz;glm::vec3 color{.35f,.5f,.25f};if(!textures.empty()){color={0,0,0};for(unsigned k=0;k<textures.size();++k){float w=(1-fz)*((1-fx)*t.weights[iz*t.nx+ix][k]+fx*t.weights[iz*t.nx+ix+1][k])+fz*((1-fx)*t.weights[(iz+1)*t.nx+ix][k]+fx*t.weights[(iz+1)*t.nx+ix+1][k]);auto& tex=textures[k];float tx=u*t.width/t.layers[k].tileMetres,tz=v*t.depth/t.layers[k].tileMetres;unsigned px=std::min(unsigned((tx-std::floor(tx))*tex.width),unsigned(tex.width-1)),pz=std::min(unsigned((tz-std::floor(tz))*tex.height),unsigned(tex.height-1));size_t p=(size_t(pz)*tex.width+px)*4;for(unsigned c=0;c<3;++c)color[c]+=w*std::pow(float(tex.pixels[p+c])/255,2.2f);}for(unsigned c=0;c<3;++c)color[c]=std::pow(std::clamp(color[c],0.f,1.f),1/2.2f);}size_t p=(size_t(z)*t.textureSize+x)*4;for(unsigned c=0;c<3;++c)result.pixels[p+c]=uint8_t(std::round(std::clamp(color[c],0.f,1.f)*255));result.pixels[p+3]=255;}out=std::move(result);e.clear();return true;}catch(const std::exception& x){e=x.what();return false;}}
+      |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             ^~~
+/home/conner/Documents/GitHub/Project-Judas/src/authoring/TerrainAuthoring.cpp: In function ‘bool CookTerrain(const TerrainSource&, const std::string&, const std::string&, const AssetDatabase&, TerrainCookResult&, std::string&, const std::function<bool()>&)’:
+/home/conner/Documents/GitHub/Project-Judas/src/authoring/TerrainAuthoring.cpp:67:2: warning: this ‘if’ clause does not guard... [-Wmisleading-indentation]
+   67 |  if(geometryChanged)output(modelPath,meshBytes);if(appearanceChanged)output(texturePath,textureBytes);
+      |  ^~
+/home/conner/Documents/GitHub/Project-Judas/src/authoring/TerrainAuthoring.cpp:67:49: note: ...this statement, but the latter is misleadingly indented as if it were guarded by the ‘if’
+   67 |  if(geometryChanged)output(modelPath,meshBytes);if(appearanceChanged)output(texturePath,textureBytes);
+      |                                                 ^~
+[100%] Linking CXX static library libjudas_world_authoring.a
+[100%] Built target judas_world_authoring
+[100%] Building CXX object CMakeFiles/judas_terrain_authoring_tests.dir/tests/TerrainAuthoringTests.cpp.o
+/home/conner/Documents/GitHub/Project-Judas/tests/TerrainAuthoringTests.cpp: In function ‘int main(int, char**)’:
+/home/conner/Documents/GitHub/Project-Judas/tests/TerrainAuthoringTests.cpp:18:138: error: ‘all_of’ is not a member of ‘std’
+   18 |  b.kind=TerrainBrushKind::Smooth;draft.source=t;for(auto& h:draft.source.heights)h=2;draft.Begin({0,2,0},b,error);draft.End();Check(std::all_of(draft.source.heights.begin(),draft.source.heights.end(),[](float h){return h==2;}),"smoothing constant plane unchanged");b.kind=TerrainBrushKind::Flatten;draft.source=t;draft.Begin({0,3,0},b,error);draft.Continue({1,99,0},error);draft.End();Check(draft.source.heights[8*17+8]<3&&draft.source.heights[8*17+8]>0,"flatten level frozen at gesture press");
+      |                                                                                                                                          ^~~~~~
+gmake[3]: *** [CMakeFiles/judas_terrain_authoring_tests.dir/build.make:79: CMakeFiles/judas_terrain_authoring_tests.dir/tests/TerrainAuthoringTests.cpp.o] Error 1
+gmake[2]: *** [CMakeFiles/Makefile2:9507: CMakeFiles/judas_terrain_authoring_tests.dir/all] Error 2
+gmake[1]: *** [CMakeFiles/Makefile2:9514: CMakeFiles/judas_terrain_authoring_tests.dir/rule] Error 2
+gmake: *** [Makefile:2984: judas_terrain_authoring_tests] Error 2

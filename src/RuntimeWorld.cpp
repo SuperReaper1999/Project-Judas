@@ -387,7 +387,7 @@ bool RuntimeWorld::AppendSceneObjects(const Scene& scene, bool authored,
 
     const bool particleWater=!m_fluidVolumes.empty()||std::any_of(scene.Objects().begin(),scene.Objects().end(),[](const auto& o){return bool(o.fluidVolume);});
     for (const SceneObject& o : scene.Objects()) {
-        if(!ValidateCollisionFluid(o,particleWater,outError))return fail(o,outError);
+        if(!ValidateCollisionPlacement(o,outError)||!ValidateCollisionFluid(o,particleWater,outError))return fail(o,outError);
         if(o.ui&&o.ui->enabled){std::string uiError;if(!UI().Load(o.ui->asset,o.ui->name,o.id,uiError))return fail(o,uiError);}
         m_hasScripts|=!o.scripts.empty();
         if(o.deformable){if(o.body||o.animation||o.ragdoll||o.characterMotor||o.transform.scale!=glm::vec3(1))return fail(o,"deformable owns node motion; owner cannot have another motion producer or nonunit scale");std::string error;if(!ValidDeformableSettings(*o.deformable,error)||!ValidateVisualAssets(o,error))return fail(o,error);if(m_assets){m_assets->AddRef(o.deformable->asset);m_referencedAssets.push_back(o.deformable->asset);m_assets->RequestDeformable(o.deformable->asset);}}
@@ -1106,7 +1106,7 @@ bool RuntimeWorld::ValidateEntityDefinition(const SceneObject& definition, std::
 
 bool RuntimeWorld::ValidateEntityCreation(const SceneObject& definition, std::string& error) const {
     if (!m_built) { error = "no world"; return false; }
-    if(!ValidateCollisionFluid(definition,!m_fluidVolumes.empty(),error))return false;
+    if(!ValidateCollisionPlacement(definition,error)||!ValidateCollisionFluid(definition,!m_fluidVolumes.empty(),error))return false;
     if(definition.ui&&definition.ui->enabled){
         const auto* db=m_assets?m_assets->Assets():nullptr;const auto* asset=db?db->Find(definition.ui->asset):nullptr;UIDocument doc;
         if(!asset||asset->missing||asset->type!=AssetType::UI){error="missing UI document asset";return false;}
@@ -1197,7 +1197,7 @@ EntityId RuntimeWorld::SpawnPrefab(const AssetId& asset,const SceneTransform& pl
     // ordinary data; runtime state and saved creations never depend on a live source.
     for(auto& o:flat.Objects()){
         o.prefabAsset.clear();o.prefabRoot=o.prefabSource=0;o.prefabIds.clear();o.prefabOverrides.clear();
-        if(!ValidateCollisionFluid(o,!m_fluidVolumes.empty(),error)||!ValidateEntityDefinition(o,error)||!ValidateVisualAssets(o,error))return 0;
+        if(!ValidateCollisionPlacement(o,error)||!ValidateCollisionFluid(o,!m_fluidVolumes.empty(),error)||!ValidateEntityDefinition(o,error)||!ValidateVisualAssets(o,error))return 0;
     }
     for(const auto& o:instance.Objects())if(o.joint){m_jointParticipants.insert(o.joint->bodyA);if(o.joint->bodyB)m_jointParticipants.insert(o.joint->bodyB);}
     std::vector<EntityId> created;

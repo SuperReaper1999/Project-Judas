@@ -1,0 +1,38 @@
+[
+    {
+        "path":  "C:\\JudasValidation\\VmSdk",
+        "purpose":  "Disposable copies of previously validated SDK/packages; receipts and toolchains retained",
+        "files":  40,
+        "bytes":  193080860
+    },
+    {
+        "path":  "C:\\JudasValidation\\NegativeSdk",
+        "purpose":  "Disposable copies of previously validated SDK/packages; receipts and toolchains retained",
+        "files":  39,
+        "bytes":  190540828
+    },
+    {
+        "path":  "C:\\JudasValidation\\Packages\\Moved Gravity Selection é α",
+        "purpose":  "Disposable copies of previously validated SDK/packages; receipts and toolchains retained",
+        "files":  34,
+        "bytes":  113353478
+    },
+    {
+        "path":  "C:\\JudasValidation\\Packages\\Moved Render Controls é α",
+        "purpose":  "Disposable copies of previously validated SDK/packages; receipts and toolchains retained",
+        "files":  96,
+        "bytes":  113559972
+    },
+    {
+        "path":  "C:\\JudasValidation\\Packages\\Moved Signals Lab M73 é α",
+        "purpose":  "Disposable copies of previously validated SDK/packages; receipts and toolchains retained",
+        "files":  41,
+        "bytes":  113388865
+    },
+    {
+        "path":  "C:\\JudasValidation\\Packages\\Moved Spring Range é α",
+        "purpose":  "Disposable copies of previously validated SDK/packages; receipts and toolchains retained",
+        "files":  100,
+        "bytes":  118669721
+    }
+]

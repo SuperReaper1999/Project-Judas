@@ -1,5 +1,10 @@
 # JudasJS — current API reference (M73; M74 authoring candidate)
 
+## Terrain content
+
+[M75 terrain authoring](M75.md) creates ordinary cooked assets; scripts consume them through existing entities, physics queries, CharacterMotor, navigation, scenes and saves. There is no runtime brush namespace or new terrain JS API. Gameplay still belongs to projects.
+
+
 JUDAS PROVIDES ENGINE PRIMITIVES. JAVASCRIPT PROVIDES GAME BEHAVIOUR.
 
 This reference includes M72, human validated on Linux on 2026-10-09, and the

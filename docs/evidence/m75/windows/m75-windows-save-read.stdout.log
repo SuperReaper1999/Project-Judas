@@ -1,0 +1,9 @@
+PASS required terrain and ordinary bodies ready through normal resource path
+PASS normal GL draws terrain and surrounding physical objects
+PASS actual ordinary renderer capture
+PASS normal modern save/load request
+PASS fresh-process modern load restores exact motor position
+PASS fresh-process load resolves required terrain collision
+PASS modern slot transaction completes
+PASS normal application startup and shutdown
+8 checks / 0 failures

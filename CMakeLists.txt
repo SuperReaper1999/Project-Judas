@@ -300,6 +300,7 @@ add_executable(judas_editor
     src/editor/EditorPanels.cpp
     src/editor/RetargetPanel.cpp
     src/editor/WorldTools.cpp
+    src/editor/TerrainTools.cpp
     src/editor/ProfilerView.cpp
     src/editor/EditorWidgets.cpp
     src/editor/ComponentEditors.cpp
@@ -1376,7 +1377,7 @@ add_executable(judas_world_building_tests tests/WorldBuildingTests.cpp src/edito
 target_link_libraries(judas_world_building_tests PRIVATE judas_engine)
 judas_warnings(judas_world_building_tests)
 
-add_library(judas_world_authoring STATIC src/authoring/ContentReferences.cpp src/authoring/WorldBuilder.cpp src/authoring/AuthoringDocument.cpp src/authoring/SkeletonAuthoring.cpp src/authoring/RecipePreview.cpp)
+add_library(judas_world_authoring STATIC src/authoring/ContentReferences.cpp src/authoring/WorldBuilder.cpp src/authoring/AuthoringDocument.cpp src/authoring/SkeletonAuthoring.cpp src/authoring/RecipePreview.cpp src/authoring/TerrainAuthoring.cpp)
 target_include_directories(judas_world_authoring PUBLIC src/authoring)
 target_link_libraries(judas_world_authoring PUBLIC judas_engine)
 judas_warnings(judas_world_authoring)
@@ -1423,6 +1424,20 @@ judas_warnings(judas_physics_batch_script_tests -Wpedantic)
 add_executable(judas_windows_readiness_tests tests/WindowsReadinessTests.cpp)
 target_link_libraries(judas_windows_readiness_tests PRIVATE judas_engine)
 judas_warnings(judas_windows_readiness_tests)
+
+# M75 shared CPU terrain authoring and focused checks.
+add_executable(judas_terrain_author tools/TerrainAuthor.cpp)
+target_link_libraries(judas_terrain_author PRIVATE judas_world_authoring)
+judas_warnings(judas_terrain_author)
+add_executable(judas_terrain_authoring_tests tests/TerrainAuthoringTests.cpp)
+target_link_libraries(judas_terrain_authoring_tests PRIVATE judas_world_authoring)
+judas_warnings(judas_terrain_authoring_tests)
+add_executable(judas_terrain_pipeline_tests tests/TerrainPipelineTests.cpp)
+target_link_libraries(judas_terrain_pipeline_tests PRIVATE judas_world_authoring judas_navigation_baker)
+judas_warnings(judas_terrain_pipeline_tests)
+add_executable(judas_terrain_application_tests tests/TerrainApplicationTests.cpp src/Application.cpp src/RuntimeOptions.cpp src/RuntimeDiagnostics.cpp src/TestHarness.cpp)
+target_link_libraries(judas_terrain_application_tests PRIVATE judas_engine)
+judas_warnings(judas_terrain_application_tests)
 
 if(WIN32)
     target_link_libraries(judas_engine PUBLIC shell32 ole32)

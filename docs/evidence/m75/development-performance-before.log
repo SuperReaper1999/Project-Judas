@@ -1,0 +1,14 @@
+Renderer fragment texture units: 32 (material path uses 12)
+World state: legacy .judasstate (F6/F7) saves disabled for additive compositions; save slots remain available
+Project: Terrain Lab (/home/conner/Documents/GitHub/Project-Judas/projects/terrain_lab/terrain_lab.judasproj)
+Scene: Terrain Lab (/home/conner/Documents/GitHub/Project-Judas/projects/terrain_lab/Scenes/landscape.judas)
+World origin (m): 0.000, 0.000, 0.000
+PASS required terrain and ordinary bodies ready through normal resource path
+PASS normal GL draws terrain and surrounding physical objects
+PASS actual ordinary renderer capture
+PERF frame 0 wall 754 fixed 111.181 ms
+PERF frame 30 wall 712.222 fixed 88.2098 ms
+PASS static terrain has zero steady resource uploads
+PASS actual M56 performance capture
+PASS normal application startup and shutdown
+6 checks / 0 failures

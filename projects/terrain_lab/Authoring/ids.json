@@ -1,0 +1,20 @@
+{
+  "mesh": "4bc81f0ea8329eb72afd0feade359a03",
+  "collision": "d7f7905dfd77868a8cb4ffb077e6124b",
+  "blend": "4d307445b0bf74e3235f606ac1768039",
+  "terrain": "8929b52f62995f994bfa6fb6ff324aa4",
+  "grass": "fad38f84d31b812139ae28ed069773cf",
+  "soil": "d1927d7c81edc1db6e719b19e1b2cce0",
+  "stone": "bb38a6821c8da5a7a73dcf3cf5ee8819",
+  "sand": "f7115fb8dd742354b31ebf94c2df55b9",
+  "drop": "ca7848d55e08f6bb5a042f38dbc8a311",
+  "controller": "500075e4a6da9cdff9c79cd0d29c8e16",
+  "ui": "12a0688c2d345b907bec3326c74b2550",
+  "neutral": {
+    "source": "21ba663cb9807bc8a70f565280ce7286",
+    "mesh": "8e4e860a5307740229b3b7062bcc89b6",
+    "collision": "6843bbc110a49677572f9f1d5c627f6b",
+    "blend": "81e26dfdd6048ecdc75676a64dada16d"
+  },
+  "terrainPrefab": "29d6bfaf62bde2b067ed096cd5f30a36"
+}

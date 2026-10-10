@@ -1,0 +1,78 @@
+CMake is re-running because C:/JudasValidation/Build/CMakeFiles/generate.stamp is out-of-date.
+  the file 'C:/JudasValidation/Source/cmake/JudasWindowsSdk.cmake'
+  is newer than 'C:/JudasValidation/Build/CMakeFiles/generate.stamp.depend'
+  result='-1'
+-- Running vcpkg install
+Detecting compiler hash for triplet x64-windows-static-md...
+Compiler found: C:/JudasValidation/VS2022/VC/Tools/MSVC/14.44.35207/bin/Hostx64/x64/cl.exe
+All requested packages are currently installed.
+Total install time: 1.93 ms
+The package glm provides CMake targets:
+
+    find_package(glm CONFIG REQUIRED)
+    target_link_libraries(main PRIVATE glm::glm)
+
+    # Or use the header-only version
+    find_package(glm CONFIG REQUIRED)
+    target_link_libraries(main PRIVATE glm::glm-header-only)
+
+sdl2 provides CMake targets:
+
+    find_package(SDL2 CONFIG REQUIRED)
+    target_link_libraries(main
+        PRIVATE
+        $<TARGET_NAME_IF_EXISTS:SDL2::SDL2main>
+        $<IF:$<TARGET_EXISTS:SDL2::SDL2>,SDL2::SDL2,SDL2::SDL2-static>
+    )
+
+-- Running vcpkg install - done
+-- Selecting Windows SDK version 10.0.22621.0 to target Windows 10.0.19045.
+cmake.exe : WARNHarfBuzz has a Meson port and tries to migrate all the other build systems to it, please consider 
+using it as we might remove our cmake port soon.
+At line:9 char:2
++  & cmake --build "$root\Build" --config Release --target judas_window ...
++  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (WARNHarfBuzz ha...make port soon.:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+Building introspection files on Windows requires BUILD_SHARED_LIBS to be enabled.
+CMake Deprecation Warning at C:/JudasValidation/Build/_deps/judas_freetype-src/CMakeLists.txt:113 
+(cmake_minimum_required):
+  Compatibility with CMake < 3.10 will be removed from a future version of
+  CMake.
+
+  Update the VERSION argument <min> value.  Or, use the <min>...<max> syntax
+  to tell CMake that the project requires at least <min> but has been updated
+  to work with policies introduced by <max> or earlier.
+
+
+-- Configuring done (12.0s)
+-- Generating done (9.3s)
+-- Build files have been written to: C:/JudasValidation/Build
+MSBuild version 17.14.60+43b635718 for .NET Framework
+
+  harfbuzz.vcxproj -> C:\JudasValidation\Build\_deps\judas_harfbuzz-build\Release\harfbuzz.lib
+  judas_app_icon.vcxproj -> C:\JudasValidation\Build\Release\judas_app_icon.lib
+  freetype.vcxproj -> C:\JudasValidation\Build\_deps\judas_freetype-build\Release\freetype.lib
+  judas_audio_backend.vcxproj -> C:\JudasValidation\Build\Release\judas_audio_backend.lib
+  judas_glad.vcxproj -> C:\JudasValidation\Build\Release\judas_glad.lib
+  judas_profiler.vcxproj -> C:\JudasValidation\Build\Release\judas_profiler.lib
+  judas_materials.vcxproj -> C:\JudasValidation\Build\Release\judas_materials.lib
+  judas_navigation_backend.vcxproj -> C:\JudasValidation\Build\Release\judas_navigation_backend.lib
+  judas_quickjs.vcxproj -> C:\JudasValidation\Build\Release\judas_quickjs.lib
+  judas_ufbx.vcxproj -> C:\JudasValidation\Build\Release\judas_ufbx.lib
+  judas_imgui.vcxproj -> C:\JudasValidation\Build\Release\judas_imgui.lib
+  judas_engine.vcxproj -> C:\JudasValidation\Build\Release\judas_engine.lib
+  judas_world_authoring.vcxproj -> C:\JudasValidation\Build\Release\judas_world_authoring.lib
+  judas_navigation_baker.vcxproj -> C:\JudasValidation\Build\Release\judas_navigation_baker.lib
+  judas_export.vcxproj -> C:\JudasValidation\Build\Release\judas_export.exe
+  judas_windows_readiness_tests.vcxproj -> C:\JudasValidation\Build\Release\judas_windows_readiness_tests.exe
+  judas_terrain_author.vcxproj -> C:\JudasValidation\Build\Release\judas_terrain_author.exe
+  judas.vcxproj -> C:\JudasValidation\Build\Release\judas.exe
+  Building Custom Rule C:/JudasValidation/Source/CMakeLists.txt
+  judas_model_import.vcxproj -> C:\JudasValidation\Build\Release\judas_model_import.lib
+  judas_model_import_cli.vcxproj -> C:\JudasValidation\Build\Release\judas_model_import_cli.exe
+  judas_scene_author.vcxproj -> C:\JudasValidation\Build\Release\judas_scene_author.exe
+  NavigationBake.cpp
+  judas_editor.vcxproj -> C:\JudasValidation\Build\Release\judas_editor.exe
+  judas_navigation_bake.vcxproj -> C:\JudasValidation\Build\Release\judas_navigation_bake.exe

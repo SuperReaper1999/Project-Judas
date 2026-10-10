@@ -1,0 +1,21 @@
+[  0%] Built target judas_app_icon
+[ 18%] Built target freetype
+[ 25%] Built target judas_icu_build
+[ 25%] Built target judas_quickjs
+[ 31%] Built target judas_navigation_backend
+[ 31%] Built target judas_glad
+[ 31%] Built target judas_profiler
+[ 31%] Built target judas_audio_backend
+[ 31%] Built target harfbuzz
+[ 31%] Built target judas_materials
+[100%] Built target judas_engine
+[100%] Built target judas_world_authoring
+[100%] Building CXX object CMakeFiles/judas_terrain_authoring_tests.dir/tests/TerrainAuthoringTests.cpp.o
+/home/conner/Documents/GitHub/Project-Judas/tests/TerrainAuthoringTests.cpp: In function ‘int main(int, char**)’:
+/home/conner/Documents/GitHub/Project-Judas/tests/TerrainAuthoringTests.cpp:67:770: error: ‘geometryWork’ was not declared in this scope
+   67 |  auto large=CreateTerrain(65,65,64,64);CollisionAsset largeAsset;Check(CookCollision(BuildTerrainMesh(large),{},largeAsset,error),"representative large mesh cook");PhysicsWorld motorGeometry;motorGeometry.Init();motorGeometry.CreateShape(Shape::Cooked(std::make_shared<CollisionAsset>(largeAsset),"large"),{{0,0,0},glm::quat(1,0,0,0)},false,0,.5f,0);ResetCollisionGeometryStats();auto sweep=motorGeometry.SweepCapsuleMotion(.3f,.6f,{.17f,1,.31f},glm::quat(1,0,0,0),{0,-.3f,0});auto work=GetCollisionGeometryStats();Check(sweep.hit&&std::abs(sweep.distance-.1f)<2e-4,"motor sampled sweep retains analytic overlap boundary");Check(work.nodes>0&&work.triangles<2000,"motor sweep uses BVH bounded triangles rather than full mesh per sample");std::cout<<"MOTOR_BVH nodes "<<geometryWork.nodes<<" triangles "<<geometryWork.triangles<<" / mesh 8192\n";
+      |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  ^~~~~~~~~~~~
+gmake[3]: *** [CMakeFiles/judas_terrain_authoring_tests.dir/build.make:79: CMakeFiles/judas_terrain_authoring_tests.dir/tests/TerrainAuthoringTests.cpp.o] Error 1
+gmake[2]: *** [CMakeFiles/Makefile2:8580: CMakeFiles/judas_terrain_authoring_tests.dir/all] Error 2
+gmake[1]: *** [CMakeFiles/Makefile2:8587: CMakeFiles/judas_terrain_authoring_tests.dir/rule] Error 2
+gmake: *** [Makefile:2698: judas_terrain_authoring_tests] Error 2

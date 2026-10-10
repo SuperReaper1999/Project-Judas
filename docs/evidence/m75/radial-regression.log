@@ -1,0 +1,7 @@
+Terrain physics: normal, rotated and translated worlds
+  settled box minimum corner/face clearance -0.0022 m
+  settled box minimum corner/face clearance -0.0023 m
+Player traversal over authored hills/basins
+  clearance [0.0001, 0.0574] m, delta 0.0058 m; camera steps 0.0893/0.0878 m, up step 0.0491 deg, slope 43.57 deg, elevation span 5.768 m, airborne 0, still drift 0.00000 m
+  transformed local endpoint error 0.0102 m, clearance delta 0.0062 m; player update 0.445 ms/step
+Terrain physics: PASS (0 failures)

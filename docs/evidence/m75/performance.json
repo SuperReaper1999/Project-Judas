@@ -1,0 +1,601 @@
+{
+  "performance-final-candidate": {
+    "bodies": 7,
+    "draw_calls_per_frame": 8.998541565386486,
+    "elapsed_ms": 5000.194855791051,
+    "fixed_step": {
+      "max_ms": 0.599538,
+      "mean_ms": 0.3258912000000001,
+      "p95_ms": 0.475368,
+      "samples": 180
+    },
+    "note": "Measured hidden uncapped Release wall-clock application; no test sleep during steady workload. Inclusive M56 scopes overlap.",
+    "outer_frame": {
+      "max_ms": 6.074469070881605,
+      "mean_ms": 0.4862390226620974,
+      "p95_ms": 0.7169530144892633,
+      "samples": 6171
+    },
+    "resource_bytes": 5156578,
+    "submitted_triangles_per_frame": 16465.33138875385,
+    "terrain_triangles": 8192,
+    "recent_M56_inclusive_scopes": {
+      "World render submission": {
+        "samples": 120,
+        "mean_ms": 0.19275045833333332,
+        "p95_ms": 0.25782,
+        "max_ms": 0.331588
+      },
+      "JavaScript fixedUpdate": {
+        "samples": 3,
+        "mean_ms": 0.089632,
+        "p95_ms": 0.087001,
+        "max_ms": 0.117937
+      },
+      "Rigid physics": {
+        "samples": 3,
+        "mean_ms": 0.03155033333333333,
+        "p95_ms": 0.023302,
+        "max_ms": 0.052032
+      },
+      "Character motor": {
+        "samples": 3,
+        "mean_ms": 0.161859,
+        "p95_ms": 0.157833,
+        "max_ms": 0.17382
+      }
+    },
+    "recent_gpu_passes": {
+      "Shadow": {
+        "samples": 120,
+        "mean_ms": 0.0459432,
+        "p95_ms": 0.046912,
+        "max_ms": 0.050784
+      },
+      "Main camera": {
+        "samples": 120,
+        "mean_ms": 0.11513946666666668,
+        "p95_ms": 0.119136,
+        "max_ms": 0.127104
+      },
+      "Runtime UI": {
+        "samples": 120,
+        "mean_ms": 0.0012386666666666666,
+        "p95_ms": 0.001312,
+        "max_ms": 0.007072
+      }
+    },
+    "capture_diagnostics": {
+      "dropped_events": 0,
+      "exhausted_labels": 0,
+      "exhausted_nodes": 0,
+      "exhausted_threads": 0,
+      "incomplete_scopes": 0,
+      "open_scopes": 7,
+      "truncated_records": 0,
+      "gpu_dropped": 0,
+      "nested_frames": 0
+    },
+    "startup_retained_spike_scopes": [
+      {
+        "frame": 1,
+        "scopes": [
+          {
+            "name": "Resource file IO",
+            "milliseconds": 0.714906
+          },
+          {
+            "name": "Resource decode",
+            "milliseconds": 15.837976
+          },
+          {
+            "name": "Resource load",
+            "milliseconds": 16.555154
+          },
+          {
+            "name": "Resource file IO",
+            "milliseconds": 0.752194
+          },
+          {
+            "name": "Resource decode",
+            "milliseconds": 18.297077
+          },
+          {
+            "name": "Resource load",
+            "milliseconds": 19.051561
+          },
+          {
+            "name": "Resource file IO",
+            "milliseconds": 1.634774
+          },
+          {
+            "name": "Resource decode",
+            "milliseconds": 0.444437
+          },
+          {
+            "name": "Resource load",
+            "milliseconds": 2.080684
+          },
+          {
+            "name": "Resource file IO",
+            "milliseconds": 0.634104
+          },
+          {
+            "name": "Resource decode",
+            "milliseconds": 0.079168
+          },
+          {
+            "name": "Resource load",
+            "milliseconds": 0.714353
+          },
+          {
+            "name": "Resource file IO",
+            "milliseconds": 0.568258
+          },
+          {
+            "name": "Resource decode",
+            "milliseconds": 0.864197
+          },
+          {
+            "name": "Resource load",
+            "milliseconds": 1.434069
+          },
+          {
+            "name": "Resource installation",
+            "milliseconds": 0.000561
+          },
+          {
+            "name": "Resource file IO",
+            "milliseconds": 0.382094
+          },
+          {
+            "name": "Resource decode",
+            "milliseconds": 1.372906
+          },
+          {
+            "name": "Resource load",
+            "milliseconds": 1.757483
+          },
+          {
+            "name": "Resource installation",
+            "milliseconds": 0.000603
+          },
+          {
+            "name": "Texture driver texel upload",
+            "milliseconds": 2.867483
+          },
+          {
+            "name": "Resource installation",
+            "milliseconds": 3.944437
+          },
+          {
+            "name": "Texture driver texel upload",
+            "milliseconds": 5.117858
+          }
+        ],
+        "memory": {
+          "profiler_reserved_estimate_bytes": 15629280,
+          "linux_resident_bytes": 127369216,
+          "linux_virtual_bytes": 778133504
+        }
+      },
+      {
+        "frame": 2,
+        "scopes": [
+          {
+            "name": "Resource file IO",
+            "milliseconds": 0.701005
+          },
+          {
+            "name": "Resource decode",
+            "milliseconds": 6.86327
+          },
+          {
+            "name": "Resource load",
+            "milliseconds": 7.565596
+          },
+          {
+            "name": "Resource file IO",
+            "milliseconds": 0.682589
+          },
+          {
+            "name": "Resource decode",
+            "milliseconds": 0.120222
+          },
+          {
+            "name": "Resource load",
+            "milliseconds": 0.804261
+          },
+          {
+            "name": "Mesh geometry upload",
+            "milliseconds": 0.583931
+          },
+          {
+            "name": "Resource installation",
+            "milliseconds": 0.000695
+          },
+          {
+            "name": "Resource installation",
+            "milliseconds": 0.000925
+          }
+        ],
+        "memory": {
+          "profiler_reserved_estimate_bytes": 16119648,
+          "linux_resident_bytes": 127369216,
+          "linux_virtual_bytes": 778133504
+        }
+      }
+    ]
+  },
+  "performance-rotated": {
+    "bodies": 7,
+    "draw_calls_per_frame": 8.998569839504212,
+    "elapsed_ms": 5000.277674000245,
+    "fixed_step": {
+      "max_ms": 1.022343,
+      "mean_ms": 0.649312738888889,
+      "p95_ms": 0.840031,
+      "samples": 180
+    },
+    "note": "Measured hidden uncapped Release wall-clock application; no test sleep during steady workload. Inclusive M56 scopes overlap.",
+    "outer_frame": {
+      "max_ms": 1.705056056380272,
+      "mean_ms": 0.47677715240369306,
+      "p95_ms": 0.6769719766452909,
+      "samples": 6293
+    },
+    "resource_bytes": 5156578,
+    "submitted_triangles_per_frame": 16465.38312410615,
+    "terrain_triangles": 8192,
+    "recent_M56_inclusive_scopes": {
+      "World render submission": {
+        "samples": 120,
+        "mean_ms": 0.16842758333333335,
+        "p95_ms": 0.246438,
+        "max_ms": 0.271764
+      },
+      "JavaScript fixedUpdate": {
+        "samples": 3,
+        "mean_ms": 0.10218766666666666,
+        "p95_ms": 0.076568,
+        "max_ms": 0.165926
+      },
+      "Rigid physics": {
+        "samples": 3,
+        "mean_ms": 0.019758,
+        "p95_ms": 0.019746,
+        "max_ms": 0.019795
+      },
+      "Character motor": {
+        "samples": 3,
+        "mean_ms": 0.4761303333333333,
+        "p95_ms": 0.450509,
+        "max_ms": 0.537557
+      }
+    },
+    "recent_gpu_passes": {
+      "Shadow": {
+        "samples": 120,
+        "mean_ms": 0.041593333333333336,
+        "p95_ms": 0.042816,
+        "max_ms": 0.045888
+      },
+      "Main camera": {
+        "samples": 120,
+        "mean_ms": 0.11561253333333334,
+        "p95_ms": 0.119552,
+        "max_ms": 0.12192
+      },
+      "Runtime UI": {
+        "samples": 120,
+        "mean_ms": 0.0012477333333333334,
+        "p95_ms": 0.001376,
+        "max_ms": 0.00368
+      }
+    },
+    "capture_diagnostics": {
+      "dropped_events": 0,
+      "exhausted_labels": 0,
+      "exhausted_nodes": 0,
+      "exhausted_threads": 0,
+      "incomplete_scopes": 0,
+      "open_scopes": 7,
+      "truncated_records": 0,
+      "gpu_dropped": 0,
+      "nested_frames": 0
+    },
+    "startup_retained_spike_scopes": [
+      {
+        "frame": 2,
+        "scopes": [
+          {
+            "name": "Resource file IO",
+            "milliseconds": 0.548768
+          },
+          {
+            "name": "Resource decode",
+            "milliseconds": 5.926061
+          },
+          {
+            "name": "Resource load",
+            "milliseconds": 6.476133
+          },
+          {
+            "name": "Resource file IO",
+            "milliseconds": 0.90747
+          },
+          {
+            "name": "Resource decode",
+            "milliseconds": 0.17162
+          },
+          {
+            "name": "Resource load",
+            "milliseconds": 1.080455
+          },
+          {
+            "name": "Mesh geometry upload",
+            "milliseconds": 0.6988
+          },
+          {
+            "name": "Resource installation",
+            "milliseconds": 0.001045
+          },
+          {
+            "name": "Resource installation",
+            "milliseconds": 0.001237
+          }
+        ],
+        "memory": {
+          "profiler_reserved_estimate_bytes": 16086752,
+          "linux_resident_bytes": 127426560,
+          "linux_virtual_bytes": 778141696
+        }
+      },
+      {
+        "frame": 198,
+        "scopes": [],
+        "memory": {
+          "profiler_reserved_estimate_bytes": 70549424,
+          "linux_resident_bytes": 127426560,
+          "linux_virtual_bytes": 778141696
+        }
+      }
+    ]
+  },
+  "performance-zero-final": {
+    "bodies": 6,
+    "draw_calls_per_frame": 8.998648648648649,
+    "elapsed_ms": 5000.197773100808,
+    "fixed_step": {
+      "max_ms": 0.302045,
+      "mean_ms": 0.16066685555555552,
+      "p95_ms": 0.255135,
+      "samples": 180
+    },
+    "note": "Measured hidden uncapped Release wall-clock application; no test sleep during steady workload. Inclusive M56 scopes overlap.",
+    "outer_frame": {
+      "max_ms": 4.675402771681547,
+      "mean_ms": 0.45048592533226134,
+      "p95_ms": 0.6148159736767411,
+      "samples": 6660
+    },
+    "resource_bytes": 759720,
+    "submitted_triangles_per_frame": 107.98378378378378,
+    "terrain_triangles": 0,
+    "recent_M56_inclusive_scopes": {
+      "World render submission": {
+        "samples": 120,
+        "mean_ms": 0.1682915,
+        "p95_ms": 0.202068,
+        "max_ms": 0.230595
+      },
+      "JavaScript fixedUpdate": {
+        "samples": 3,
+        "mean_ms": 0.06484766666666666,
+        "p95_ms": 0.062816,
+        "max_ms": 0.071608
+      },
+      "Rigid physics": {
+        "samples": 3,
+        "mean_ms": 0.021413333333333336,
+        "p95_ms": 0.020983,
+        "max_ms": 0.029877
+      },
+      "Character motor": {
+        "samples": 3,
+        "mean_ms": 0.043961,
+        "p95_ms": 0.047851,
+        "max_ms": 0.048879
+      }
+    },
+    "recent_gpu_passes": {
+      "Shadow": {
+        "samples": 120,
+        "mean_ms": 0.04338906666666666,
+        "p95_ms": 0.043488,
+        "max_ms": 0.047168
+      },
+      "Main camera": {
+        "samples": 120,
+        "mean_ms": 0.1354704,
+        "p95_ms": 0.13776,
+        "max_ms": 0.142176
+      },
+      "Runtime UI": {
+        "samples": 120,
+        "mean_ms": 0.0013178666666666668,
+        "p95_ms": 0.00144,
+        "max_ms": 0.003328
+      }
+    },
+    "capture_diagnostics": {
+      "dropped_events": 0,
+      "exhausted_labels": 0,
+      "exhausted_nodes": 0,
+      "exhausted_threads": 0,
+      "incomplete_scopes": 0,
+      "open_scopes": 1,
+      "truncated_records": 0,
+      "gpu_dropped": 0,
+      "nested_frames": 0
+    },
+    "startup_retained_spike_scopes": [
+      {
+        "frame": 233,
+        "scopes": [],
+        "memory": {
+          "profiler_reserved_estimate_bytes": 70525920,
+          "linux_resident_bytes": 111427584,
+          "linux_virtual_bytes": 773812224
+        }
+      }
+    ]
+  },
+  "performance-stress-final": {
+    "bodies": 7,
+    "draw_calls_per_frame": 8.998494731560461,
+    "elapsed_ms": 5000.209120422369,
+    "fixed_step": {
+      "max_ms": 9.784548,
+      "mean_ms": 1.2588582666666663,
+      "p95_ms": 6.444551,
+      "samples": 180
+    },
+    "note": "Measured hidden uncapped Release wall-clock application; no test sleep during steady workload. Inclusive M56 scopes overlap.",
+    "outer_frame": {
+      "max_ms": 10.660410858690739,
+      "mean_ms": 0.501843125853475,
+      "p95_ms": 0.7200440159067512,
+      "samples": 5979
+    },
+    "resource_bytes": 11746018,
+    "submitted_triangles_per_frame": 65609.02492055528,
+    "terrain_triangles": 32768,
+    "recent_M56_inclusive_scopes": {
+      "World render submission": {
+        "samples": 120,
+        "mean_ms": 0.180293725,
+        "p95_ms": 0.26736,
+        "max_ms": 0.296143
+      },
+      "JavaScript fixedUpdate": {
+        "samples": 3,
+        "mean_ms": 0.08253133333333333,
+        "p95_ms": 0.078554,
+        "max_ms": 0.102204
+      },
+      "Rigid physics": {
+        "samples": 3,
+        "mean_ms": 0.020705333333333333,
+        "p95_ms": 0.019826,
+        "max_ms": 0.022573
+      },
+      "Character motor": {
+        "samples": 3,
+        "mean_ms": 0.15172866666666668,
+        "p95_ms": 0.150544,
+        "max_ms": 0.159255
+      }
+    },
+    "recent_gpu_passes": {
+      "Shadow": {
+        "samples": 120,
+        "mean_ms": 0.062832,
+        "p95_ms": 0.064384,
+        "max_ms": 0.070112
+      },
+      "Main camera": {
+        "samples": 120,
+        "mean_ms": 0.13673893333333334,
+        "p95_ms": 0.140416,
+        "max_ms": 0.145536
+      },
+      "Runtime UI": {
+        "samples": 120,
+        "mean_ms": 0.0013762666666666667,
+        "p95_ms": 0.001536,
+        "max_ms": 0.007616
+      }
+    },
+    "capture_diagnostics": {
+      "dropped_events": 0,
+      "exhausted_labels": 0,
+      "exhausted_nodes": 0,
+      "exhausted_threads": 0,
+      "incomplete_scopes": 0,
+      "open_scopes": 7,
+      "truncated_records": 0,
+      "gpu_dropped": 0,
+      "nested_frames": 0
+    },
+    "startup_retained_spike_scopes": [
+      {
+        "frame": 2,
+        "scopes": [
+          {
+            "name": "Resource file IO",
+            "milliseconds": 2.20266
+          },
+          {
+            "name": "Resource decode",
+            "milliseconds": 5.880581
+          },
+          {
+            "name": "Resource load",
+            "milliseconds": 8.085837
+          },
+          {
+            "name": "Resource decode",
+            "milliseconds": 75.309379
+          },
+          {
+            "name": "Resource load",
+            "milliseconds": 77.023029
+          },
+          {
+            "name": "Resource file IO",
+            "milliseconds": 0.768935
+          },
+          {
+            "name": "Resource decode",
+            "milliseconds": 0.127079
+          },
+          {
+            "name": "Resource load",
+            "milliseconds": 0.897462
+          },
+          {
+            "name": "Texture driver texel upload",
+            "milliseconds": 0.413178
+          },
+          {
+            "name": "Resource installation",
+            "milliseconds": 1.19789
+          },
+          {
+            "name": "Mesh geometry upload",
+            "milliseconds": 0.044508
+          },
+          {
+            "name": "Resource installation",
+            "milliseconds": 0.000684
+          }
+        ],
+        "memory": {
+          "profiler_reserved_estimate_bytes": 16086752,
+          "linux_resident_bytes": 140406784,
+          "linux_virtual_bytes": 773931008
+        }
+      },
+      {
+        "frame": 168,
+        "scopes": [],
+        "memory": {
+          "profiler_reserved_estimate_bytes": 70550176,
+          "linux_resident_bytes": 140406784,
+          "linux_virtual_bytes": 773931008
+        }
+      }
+    ]
+  }
+}

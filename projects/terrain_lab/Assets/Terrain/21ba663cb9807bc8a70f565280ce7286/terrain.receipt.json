@@ -1,0 +1,21 @@
+{
+  "format": "JudasTerrainCook",
+  "inputs": {
+    "Assets/textures/grass.png": "0d9d77a1eeed7721b0e9a63ba02af592cb5a85d470a50436757cf00bdd8d00c6",
+    "Assets/textures/grass.png.judasmeta": "86a8a648f0d3d5178668bbf5679c877064034ab5622cc2cbddfe643fa60c370f",
+    "Assets/textures/sand.png": "c48303e20af5cbd1a6e19ee638faf5385e39fd0a61ef9046e0818e539b2d98d5",
+    "Assets/textures/sand.png.judasmeta": "96aeeba2a558433b32f906f37ca5e5fe4291ba09fad13cd853d22bb64cb0027d",
+    "Assets/textures/soil.png": "1150fc0896878f55268d2573de11c368ed9a3e0f298c1eb17f5df463f43ce403",
+    "Assets/textures/soil.png.judasmeta": "5390d07593497c1e69fd25090db4a7f425323f46093c6af5fef5d7954feae9bb",
+    "Assets/textures/stone.png": "e87faa8b0e3b89c96c7c89313e0d6e86ee69ab7dcdef494a1d09c5a8091c8c23",
+    "Assets/textures/stone.png.judasmeta": "538f129214c80c29c4e14280f409006971e184667dacd0b062a5f350f6aac383",
+    "Imports/neutral.judasterrain": "8f4df80f9a13275d17ac75ac0ed84244ea6d381001d8762ed41032873a6ad518"
+  },
+  "products": {
+    "Assets/Terrain/21ba663cb9807bc8a70f565280ce7286/terrain.judascollision": "295d476f16324646090a22fb6958b1bcdd1e0a0621ec513ef889ddda12a82398",
+    "Assets/Terrain/21ba663cb9807bc8a70f565280ce7286/terrain.judasmodel": "d7e7112a3de9e37f474281ff8a70d4c1bb2b7e7291411b5f8e8d959212118fbe",
+    "Assets/Terrain/21ba663cb9807bc8a70f565280ce7286/terrain.tga": "19fb2b64f59ad3abd0ad810366475248db34e03b1ad362d5afb8b2b7dab6c5ed"
+  },
+  "revision": "M75-1",
+  "version": 1
+}

@@ -18,3 +18,11 @@ bool ValidateCollisionFluid(const SceneObject& o,bool legacyParticleWater,std::s
  }
  return true;
 }
+
+// Cooked coordinates are already physical metres. Until instance-scale baking
+// is provided, rejecting unsupported placement prevents visual/physical mismatch.
+bool ValidateCollisionPlacement(const SceneObject& o,std::string& error){
+ if(o.body&&(o.body->shape==SceneShape::TriangleMesh||o.body->shape==SceneShape::ConvexHull||ExtendedCompound(*o.body))&&o.transform.scale!=glm::vec3(1)){
+  error="cooked/mixed collision requires rigid unit-scale placement; bake scale into the source geometry";return false;
+ }return true;
+}
