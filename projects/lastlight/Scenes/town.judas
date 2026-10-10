@@ -16,7 +16,7 @@ settings
   fluid-update-rate-hz 30
   fluid-hydrostatic-drag-rate 2
   fidelity-policy none
-  next-id 2000
+  next-id 7000
 end
 
 object 1 "Neighbourhood foundation"
@@ -13344,5 +13344,3089 @@ object 1543 "Supply case stripe"
   render.secondary-color 0.8 0.8 0.8
   render.secondary-alpha 1
   render.mesh-asset ""
+  render.texture-asset ""
+end
+
+object 3000 "WAYFARER / walkable spacecraft"
+  position 0 0.18 48
+  rotation 1 0 0 0
+  scale 1 1 1
+  body dynamic compound
+  body.half-extents 2.4 1.5 4
+  body.radius 0.5
+  body.terrain ""
+  body.mass 1200
+  body.friction 0.8
+  body.restitution 0
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 17
+  body.compound-box 0 0 0 2.4 0.15 4
+  body.compound-box -2.3 1.5 0 0.1 1.35 4
+  body.compound-box 2.3 1.5 0 0.1 1.35 4
+  body.compound-box 0 3 0 2.4 0.12 4
+  body.compound-box -1.68 1.5 3.9 0.58 1.35 0.1
+  body.compound-box 1.68 1.5 3.9 0.58 1.35 0.1
+  body.compound-box 0 2.7 3.9 1.1 0.15 0.1
+  body.compound-box 0 0.42 -3.9 2.3 0.27 0.1
+  body.compound-box 0 2.7 -3.9 2.3 0.3 0.1
+  body.compound-box -2.05 1.5 -3.9 0.25 0.95 0.1
+  body.compound-box 2.05 1.5 -3.9 0.25 0.95 0.1
+  body.compound-box 0 1.5 -3.9 1.8 0.95 0.1
+  body.compound-box 0 0.68 -2.85 0.85 0.53 0.4
+  body.compound-box 0 0.5 -1.65 0.42 0.13 0.42
+  body.compound-box 0 0.92 -1.22 0.42 0.43 0.1
+  body.compound-box -1.35 0.55 1 0.5 0.2 1.05
+  body.compound-box 1.35 0.55 1 0.5 0.2 1.05
+  body.fluid-cavity-count 0
+end
+
+object 3020 "Wayfarer cabin hull"
+  parent 3000
+  position 0 0 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 2.4 0.15 4
+  render.radius 0.5
+  render.color 0.26 0.32 0.35
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+
+object 3021 "Wayfarer cabin hull"
+  parent 3000
+  position -2.3 1.5 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.1 1.35 4
+  render.radius 0.5
+  render.color 0.18 0.28 0.32
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+
+object 3022 "Wayfarer cabin hull"
+  parent 3000
+  position 2.3 1.5 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.1 1.35 4
+  render.radius 0.5
+  render.color 0.18 0.28 0.32
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+
+object 3023 "Wayfarer cabin hull"
+  parent 3000
+  position 0 3 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 2.4 0.12 4
+  render.radius 0.5
+  render.color 0.18 0.28 0.32
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+
+object 3024 "Wayfarer cabin hull"
+  parent 3000
+  position -1.68 1.5 3.9
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.58 1.35 0.1
+  render.radius 0.5
+  render.color 0.18 0.28 0.32
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+
+object 3025 "Wayfarer cabin hull"
+  parent 3000
+  position 1.68 1.5 3.9
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.58 1.35 0.1
+  render.radius 0.5
+  render.color 0.18 0.28 0.32
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+
+object 3026 "Wayfarer cabin hull"
+  parent 3000
+  position 0 2.7 3.9
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 1.1 0.15 0.1
+  render.radius 0.5
+  render.color 0.18 0.28 0.32
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+
+object 3027 "Wayfarer cabin hull"
+  parent 3000
+  position 0 0.42 -3.9
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 2.3 0.27 0.1
+  render.radius 0.5
+  render.color 0.18 0.28 0.32
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+
+object 3028 "Wayfarer cabin hull"
+  parent 3000
+  position 0 2.7 -3.9
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 2.3 0.3 0.1
+  render.radius 0.5
+  render.color 0.18 0.28 0.32
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+
+object 3029 "Wayfarer cabin hull"
+  parent 3000
+  position -2.05 1.5 -3.9
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.25 0.95 0.1
+  render.radius 0.5
+  render.color 0.18 0.28 0.32
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+
+object 3030 "Wayfarer cabin hull"
+  parent 3000
+  position 2.05 1.5 -3.9
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.25 0.95 0.1
+  render.radius 0.5
+  render.color 0.18 0.28 0.32
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+
+object 3031 "Wayfarer windshield"
+  parent 3000
+  position 0 1.5 -3.9
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 1.8 0.95 0.1
+  render.radius 0.5
+  render.color 0.38 0.68 0.78
+  render.alpha 0.18
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+
+object 3032 "Wayfarer cabin hull"
+  parent 3000
+  position 0 0.68 -2.85
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.85 0.53 0.4
+  render.radius 0.5
+  render.color 0.18 0.28 0.32
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+
+object 3033 "Wayfarer cabin hull"
+  parent 3000
+  position 0 0.5 -1.65
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.42 0.13 0.42
+  render.radius 0.5
+  render.color 0.18 0.28 0.32
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+
+object 3034 "Wayfarer cabin hull"
+  parent 3000
+  position 0 0.92 -1.22
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.42 0.43 0.1
+  render.radius 0.5
+  render.color 0.18 0.28 0.32
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+
+object 3035 "Wayfarer cabin hull"
+  parent 3000
+  position -1.35 0.55 1
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.5 0.2 1.05
+  render.radius 0.5
+  render.color 0.18 0.28 0.32
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+
+object 3036 "Wayfarer cabin hull"
+  parent 3000
+  position 1.35 0.55 1
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.5 0.2 1.05
+  render.radius 0.5
+  render.color 0.18 0.28 0.32
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+
+object 3037 "Copper hull stripe"
+  parent 3000
+  position -2.42 1.8 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.03 0.13 3.7
+  render.radius 0.5
+  render.color 0.92 0.48 0.17
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+
+object 3038 "Engine nacelle"
+  parent 3000
+  position -3.025 0.35 1.3
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.45 0.5 1.65
+  render.radius 0.5
+  render.color 0.12 0.19 0.24
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+
+object 3039 "Engine cyan exhaust"
+  parent 3000
+  position -3.025 0.35 3
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.3 0.3 0.04
+  render.radius 0.5
+  render.color 0.18 0.8 0.95
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+
+object 3040 "Copper hull stripe"
+  parent 3000
+  position 2.42 1.8 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.03 0.13 3.7
+  render.radius 0.5
+  render.color 0.92 0.48 0.17
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+
+object 3041 "Engine nacelle"
+  parent 3000
+  position 3.025 0.35 1.3
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.45 0.5 1.65
+  render.radius 0.5
+  render.color 0.12 0.19 0.24
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+
+object 3042 "Engine cyan exhaust"
+  parent 3000
+  position 3.025 0.35 3
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.3 0.3 0.04
+  render.radius 0.5
+  render.color 0.18 0.8 0.95
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+
+object 3043 "Deck aisle lighting"
+  parent 3000
+  position 0 0.157 -3.2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.65 0.006 0.13
+  render.radius 0.5
+  render.color 0.35 0.8 0.85
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+
+object 3044 "Deck aisle lighting"
+  parent 3000
+  position 0 0.157 2.7
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.65 0.006 0.13
+  render.radius 0.5
+  render.color 0.35 0.8 0.85
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+
+object 3045 "Captain chair seat"
+  parent 3000
+  position 0 0.5 -1.65
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.42 0.13 0.42
+  render.radius 0.5
+  render.color 0.63 0.3 0.16
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+
+object 3046 "Captain chair back"
+  parent 3000
+  position 0 0.92 -1.22
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.42 0.43 0.1
+  render.radius 0.5
+  render.color 0.63 0.3 0.16
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+
+object 3047 "Cabin bench"
+  parent 3000
+  position -1.35 0.55 1
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.5 0.2 1.05
+  render.radius 0.5
+  render.color 0.48 0.56 0.5
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+
+object 3048 "Cabin bench back"
+  parent 3000
+  position -1.89 1.1 1
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.08 0.5 1.05
+  render.radius 0.5
+  render.color 0.3 0.4 0.38
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+
+object 3049 "Cabin bench"
+  parent 3000
+  position 1.35 0.55 1
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.5 0.2 1.05
+  render.radius 0.5
+  render.color 0.48 0.56 0.5
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+
+object 3050 "Cabin bench back"
+  parent 3000
+  position 1.89 1.1 1
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.08 0.5 1.05
+  render.radius 0.5
+  render.color 0.3 0.4 0.38
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+
+object 3004 "Seated captain"
+  parent 3000
+  animation.enabled true
+  animation.play-on-start true
+  animation.loop true
+  animation.clip "PilotSeat"
+  animation.speed 1
+  animation.time 0
+  position 0 0 -1.7
+  rotation 0 0 1 0
+  scale 1 1 1
+  render mesh
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset "e84d487d32bd7f25fce220465e69516f"
+  render.texture-asset ""
+  render.visible false
+end
+
+object 3003 "Command console / E to sit"
+  parent 3000
+  position 0 1.3 -2.8
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.75 0.08 0.35
+  render.radius 0.5
+  render.color 0.22 0.8 0.78
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+
+object 3001 "Wayfarer boarding door"
+  position 0 1.53 51.96
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.98 1.17 0.08
+  render.radius 0.5
+  render.color 0.77 0.44 0.17
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body dynamic box
+  body.half-extents 0.98 1.17 0.08
+  body.radius 0.5
+  body.terrain ""
+  body.mass 22
+  body.friction 0.8
+  body.restitution 0
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 3002 "Wayfarer ordinary physical door hinge"
+  joint 1
+  joint.body-a 3001
+  joint.body-b 3000
+  joint.anchor-a 1 0 0
+  joint.anchor-b 1 1.35 3.96
+  joint.frame-a 0.70710677 0 0 0.70710677
+  joint.frame-b 0.70710677 0 0 0.70710677
+  joint.enabled true
+  joint.limits true
+  joint.motor false
+  joint.spring true
+  joint.lower -0.05
+  joint.upper 1.6
+  joint.speed 0
+  joint.max-force 0
+  joint.rest 0
+  joint.stiffness 450
+  joint.damping 90
+  position 0 0 0
+  rotation 1 0 0 0
+  scale 1 1 1
+end
+
+object 4000 "Cedar island planet"
+  position 260 -8 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sphere
+  render.half-extents 25 25 25
+  render.radius 25
+  render.color 0.3 0.52 0.28
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body static sphere
+  body.half-extents 25 25 25
+  body.radius 25
+  body.terrain ""
+  body.mass 10
+  body.friction 0.8
+  body.restitution 0
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+  gravity radial 9.81
+  gravity.region sphere 95
+end
+
+object 3051 "Cedar landing plaza"
+  position 260 17.12 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 6 0.12 5
+  render.radius 0.5
+  render.color 0.38 0.43 0.45
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body static box
+  body.half-extents 6 0.12 5
+  body.radius 0.5
+  body.terrain ""
+  body.mass 10
+  body.friction 0.8
+  body.restitution 0
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 3052 "Cedar landing beacon"
+  position 254.5 17.4 4.5
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.25 0.4 0.25
+  render.radius 0.5
+  render.color 0.3 0.9 0.82
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+
+object 3053 "Cedar landing beacon"
+  position 265.5 17.4 4.5
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.25 0.4 0.25
+  render.radius 0.5
+  render.color 0.3 0.9 0.82
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+
+object 3054 "Cedar refuge floor"
+  position 249.976 14.615175 -4.0096
+  rotation 0.9753054 -0.082025595 0 0.20506398
+  scale 1 1 1
+  render box
+  render.half-extents 3 0.12 3
+  render.radius 0.5
+  render.color 0.36 0.4 0.4
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body static box
+  body.half-extents 3 0.12 3
+  body.radius 0.5
+  body.terrain ""
+  body.mass 10
+  body.friction 0.8
+  body.restitution 0
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 3055 "Cedar refuge roof"
+  position 248.72 17.44884 -4.512
+  rotation 0.9753054 -0.082025595 0 0.20506398
+  scale 1 1 1
+  render box
+  render.half-extents 3.2 0.16 3.2
+  render.radius 0.5
+  render.color 0.22 0.25 0.3
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body static box
+  body.half-extents 3.2 0.16 3.2
+  body.radius 0.5
+  body.terrain ""
+  body.mass 10
+  body.friction 0.8
+  body.restitution 0
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 3056 "Cedar refuge wall"
+  position 246.6839 14.890057 -4.166441
+  rotation 0.9753054 -0.082025595 0 0.20506398
+  scale 1 1 1
+  render box
+  render.half-extents 0.1 1.5 3
+  render.radius 0.5
+  render.color 0.61 0.58 0.45
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body static box
+  body.half-extents 0.1 1.5 3
+  body.radius 0.5
+  body.terrain ""
+  body.mass 10
+  body.friction 0.8
+  body.restitution 0
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 3057 "Cedar refuge wall"
+  position 251.99611 17.210056 -4.361559
+  rotation 0.9753054 -0.082025595 0 0.20506398
+  scale 1 1 1
+  render box
+  render.half-extents 0.1 1.5 3
+  render.radius 0.5
+  render.color 0.61 0.58 0.45
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body static box
+  body.half-extents 0.1 1.5 3
+  body.radius 0.5
+  body.terrain ""
+  body.mass 10
+  body.friction 0.8
+  body.restitution 0
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 3058 "Cedar refuge rear wall"
+  position 249.43756 15.586056 -7.1249766
+  rotation 0.9753054 -0.082025595 0 0.20506398
+  scale 1 1 1
+  render box
+  render.half-extents 3 1.5 0.1
+  render.radius 0.5
+  render.color 0.61 0.58 0.45
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body static box
+  body.half-extents 3 1.5 0.1
+  body.radius 0.5
+  body.terrain ""
+  body.mass 10
+  body.friction 0.8
+  body.restitution 0
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 3059 "Cedar refuge open doorway"
+  position 247.45644 15.734056 -1.3374236
+  rotation 0.9753054 -0.082025595 0 0.20506398
+  scale 1 1 1
+  render box
+  render.half-extents 1.05 1.5 0.1
+  render.radius 0.5
+  render.color 0.61 0.58 0.45
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body static box
+  body.half-extents 1.05 1.5 0.1
+  body.radius 0.5
+  body.terrain ""
+  body.mass 10
+  body.friction 0.8
+  body.restitution 0
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 3060 "Cedar refuge open doorway"
+  position 251.02844 17.294056 -1.4686235
+  rotation 0.9753054 -0.082025595 0 0.20506398
+  scale 1 1 1
+  render box
+  render.half-extents 1.05 1.5 0.1
+  render.radius 0.5
+  render.color 0.61 0.58 0.45
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body static box
+  body.half-extents 1.05 1.5 0.1
+  body.radius 0.5
+  body.terrain ""
+  body.mass 10
+  body.friction 0.8
+  body.restitution 0
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 3061 "Cedar refuge door lintel"
+  position 248.78244 17.551863 -1.5870235
+  rotation 0.9753054 -0.082025595 0 0.20506398
+  scale 1 1 1
+  render box
+  render.half-extents 0.9 0.35 0.1
+  render.radius 0.5
+  render.color 0.61 0.58 0.45
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body static box
+  body.half-extents 0.9 0.35 0.1
+  body.radius 0.5
+  body.terrain ""
+  body.mass 10
+  body.friction 0.8
+  body.restitution 0
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 3062 "Cedar refuge table"
+  position 251.10431 15.642982 -5.658277
+  rotation 0.9753054 -0.082025595 0 0.20506398
+  scale 1 1 1
+  render box
+  render.half-extents 0.6 0.8 0.5
+  render.radius 0.5
+  render.color 0.45 0.3 0.19
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body static box
+  body.half-extents 0.6 0.8 0.5
+  body.radius 0.5
+  body.terrain ""
+  body.mass 10
+  body.friction 0.8
+  body.restitution 0
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 3063 "Cedar refuge bed"
+  position 248.79138 14.202004 -5.503446
+  rotation 0.9753054 -0.082025595 0 0.20506398
+  scale 1 1 1
+  render box
+  render.half-extents 0.7 0.4 1
+  render.radius 0.5
+  render.color 0.57 0.6 0.52
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body static box
+  body.half-extents 0.7 0.4 1
+  body.radius 0.5
+  body.terrain ""
+  body.mass 10
+  body.friction 0.8
+  body.restitution 0
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 3064 "Cedar watch house floor"
+  position 270.024 14.414346 -5.012
+  rotation 0.973249 -0.10274863 0 -0.20549726
+  scale 1 1 1
+  render box
+  render.half-extents 3 0.12 3
+  render.radius 0.5
+  render.color 0.36 0.4 0.4
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body static box
+  body.half-extents 3 0.12 3
+  body.radius 0.5
+  body.terrain ""
+  body.mass 10
+  body.friction 0.8
+  body.restitution 0
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 3065 "Cedar watch house roof"
+  position 271.28 17.222847 -5.64
+  rotation 0.973249 -0.10274863 0 -0.20549726
+  scale 1 1 1
+  render box
+  render.half-extents 3.2 0.16 3.2
+  render.radius 0.5
+  render.color 0.22 0.25 0.3
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body static box
+  body.half-extents 3.2 0.16 3.2
+  body.radius 0.5
+  body.terrain ""
+  body.mass 10
+  body.friction 0.8
+  body.restitution 0
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 3066 "Cedar watch house wall"
+  position 268.00494 16.996485 -5.4524646
+  rotation 0.973249 -0.10274863 0 -0.20549726
+  scale 1 1 1
+  render box
+  render.half-extents 0.1 1.5 3
+  render.radius 0.5
+  render.color 0.44 0.5 0.52
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body static box
+  body.half-extents 0.1 1.5 3
+  body.radius 0.5
+  body.terrain ""
+  body.mass 10
+  body.friction 0.8
+  body.restitution 0
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 3067 "Cedar watch house wall"
+  position 273.31506 14.676485 -5.2075357
+  rotation 0.973249 -0.10274863 0 -0.20549726
+  scale 1 1 1
+  render box
+  render.half-extents 0.1 1.5 3
+  render.radius 0.5
+  render.color 0.44 0.5 0.52
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body static box
+  body.half-extents 0.1 1.5 3
+  body.radius 0.5
+  body.terrain ""
+  body.mass 10
+  body.friction 0.8
+  body.restitution 0
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 3068 "Cedar watch house rear wall"
+  position 270.53754 15.256485 -8.168768
+  rotation 0.973249 -0.10274863 0 -0.20549726
+  scale 1 1 1
+  render box
+  render.half-extents 3 1.5 0.1
+  render.radius 0.5
+  render.color 0.44 0.5 0.52
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body static box
+  body.half-extents 3 1.5 0.1
+  body.radius 0.5
+  body.terrain ""
+  body.mass 10
+  body.friction 0.8
+  body.restitution 0
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 3069 "Cedar watch house open doorway"
+  position 268.99716 17.196486 -2.573579
+  rotation 0.973249 -0.10274863 0 -0.20549726
+  scale 1 1 1
+  render box
+  render.half-extents 1.05 1.5 0.1
+  render.radius 0.5
+  render.color 0.44 0.5 0.52
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body static box
+  body.half-extents 1.05 1.5 0.1
+  body.radius 0.5
+  body.terrain ""
+  body.mass 10
+  body.friction 0.8
+  body.restitution 0
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 3070 "Cedar watch house open doorway"
+  position 272.56778 15.636485 -2.4088855
+  rotation 0.973249 -0.10274863 0 -0.20549726
+  scale 1 1 1
+  render box
+  render.half-extents 1.05 1.5 0.1
+  render.radius 0.5
+  render.color 0.44 0.5 0.52
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body static box
+  body.half-extents 1.05 1.5 0.1
+  body.radius 0.5
+  body.terrain ""
+  body.mass 10
+  body.friction 0.8
+  body.restitution 0
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 3071 "Cedar watch house door lintel"
+  position 271.24246 17.445076 -2.7212322
+  rotation 0.973249 -0.10274863 0 -0.20549726
+  scale 1 1 1
+  render box
+  render.half-extents 0.9 0.35 0.1
+  render.radius 0.5
+  render.color 0.44 0.5 0.52
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body static box
+  body.half-extents 0.9 0.35 0.1
+  body.radius 0.5
+  body.terrain ""
+  body.mass 10
+  body.friction 0.8
+  body.restitution 0
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 3072 "Cedar watch house table"
+  position 271.62997 14.176222 -6.5649843
+  rotation 0.973249 -0.10274863 0 -0.20549726
+  scale 1 1 1
+  render box
+  render.half-extents 0.6 0.8 0.5
+  render.radius 0.5
+  render.color 0.45 0.3 0.19
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body static box
+  body.half-extents 0.6 0.8 0.5
+  body.radius 0.5
+  body.terrain ""
+  body.mass 10
+  body.friction 0.8
+  body.restitution 0
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 3073 "Cedar watch house bed"
+  position 268.99802 14.898451 -6.5990033
+  rotation 0.973249 -0.10274863 0 -0.20549726
+  scale 1 1 1
+  render box
+  render.half-extents 0.7 0.4 1
+  render.radius 0.5
+  render.color 0.57 0.6 0.52
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body static box
+  body.half-extents 0.7 0.4 1
+  body.radius 0.5
+  body.terrain ""
+  body.mass 10
+  body.friction 0.8
+  body.restitution 0
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 3074 "Cedar tree"
+  position 248 11.519221 10
+  rotation 0.94360185 0.2119538 0 0.25434455
+  scale 1 1 1
+  render mesh
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset "d0b9f8516e4a2fcfb075fb1acedd6dea"
+  render.texture-asset ""
+end
+
+object 3075 "Cedar tree"
+  position 272 11.519221 10
+  rotation 0.94360185 0.2119538 0 -0.25434455
+  scale 1 1 1
+  render mesh
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset "d0b9f8516e4a2fcfb075fb1acedd6dea"
+  render.texture-asset ""
+end
+
+object 3076 "Cedar tree"
+  position 244 11.183326 1
+  rotation 0.9400354 0.021275794 0 0.3404127
+  scale 1 1 1
+  render mesh
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset "d0b9f8516e4a2fcfb075fb1acedd6dea"
+  render.texture-asset ""
+end
+
+object 3077 "Cedar tree"
+  position 276 11.2093725 0
+  rotation 0.94031245 0 0 -0.34031242
+  scale 1 1 1
+  render mesh
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset "d0b9f8516e4a2fcfb075fb1acedd6dea"
+  render.texture-asset ""
+end
+
+object 3078 "Cedar tree"
+  position 256 10.788294 -16
+  rotation 0.9358236 -0.34194478 0 0.085486196
+  scale 1 1 1
+  render mesh
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset "d0b9f8516e4a2fcfb075fb1acedd6dea"
+  render.texture-asset ""
+end
+
+object 3079 "Cedar tree"
+  position 264 9.888544 -17
+  rotation 0.9261592 -0.3671075 0 -0.08637824
+  scale 1 1 1
+  render mesh
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset "d0b9f8516e4a2fcfb075fb1acedd6dea"
+  render.texture-asset ""
+end
+
+object 3080 "Cedar tree"
+  position 252 11.104973 14
+  rotation 0.9392015 0.2981256 0 0.17035748
+  scale 1 1 1
+  render mesh
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset "d0b9f8516e4a2fcfb075fb1acedd6dea"
+  render.texture-asset ""
+end
+
+object 3081 "Cedar tree"
+  position 268 11.104973 14
+  rotation 0.9392015 0.2981256 0 -0.17035748
+  scale 1 1 1
+  render mesh
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset "d0b9f8516e4a2fcfb075fb1acedd6dea"
+  render.texture-asset ""
+end
+
+object 3082 "Cedar tree"
+  position 260 10.330303 17
+  rotation 0.9309168 0.36523136 0 -0
+  scale 1 1 1
+  render mesh
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset "d0b9f8516e4a2fcfb075fb1acedd6dea"
+  render.texture-asset ""
+end
+
+object 3083 "Cedar supply crate"
+  position 256 15.937418 -6
+  rotation 0.9893171 -0.12129579 0 0.080863856
+  scale 1 1 1
+  render mesh
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset "e1f5185e773a9784c5020572c598e026"
+  render.texture-asset ""
+end
+
+object 3084 "Cedar supply crate"
+  position 264 15.937418 -6
+  rotation 0.9893171 -0.12129579 0 -0.080863856
+  scale 1 1 1
+  render mesh
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset "e1f5185e773a9784c5020572c598e026"
+  render.texture-asset ""
+end
+
+object 3085 "Cedar supply crate"
+  position 253 15.47339 5
+  rotation 0.98461556 0.101562485 0 0.14218748
+  scale 1 1 1
+  render mesh
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset "e1f5185e773a9784c5020572c598e026"
+  render.texture-asset ""
+end
+
+object 3086 "Cedar supply crate"
+  position 267 15.47339 5
+  rotation 0.98461556 0.101562485 0 -0.14218748
+  scale 1 1 1
+  render mesh
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset "e1f5185e773a9784c5020572c598e026"
+  render.texture-asset ""
+end
+
+object 5000 "Ember island planet"
+  position -230 15 -130
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sphere
+  render.half-extents 28 28 28
+  render.radius 28
+  render.color 0.55 0.32 0.2
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body static sphere
+  body.half-extents 28 28 28
+  body.radius 28
+  body.terrain ""
+  body.mass 10
+  body.friction 0.8
+  body.restitution 0
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+  gravity radial 9.81
+  gravity.region sphere 98
+end
+
+object 3087 "Ember landing plaza"
+  position -230 43.12 -130
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 6 0.12 5
+  render.radius 0.5
+  render.color 0.38 0.43 0.45
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body static box
+  body.half-extents 6 0.12 5
+  body.radius 0.5
+  body.terrain ""
+  body.mass 10
+  body.friction 0.8
+  body.restitution 0
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 3088 "Ember landing beacon"
+  position -235.5 43.4 -125.5
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.25 0.4 0.25
+  render.radius 0.5
+  render.color 0.3 0.9 0.82
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+
+object 3089 "Ember landing beacon"
+  position -224.5 43.4 -125.5
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.25 0.4 0.25
+  render.radius 0.5
+  render.color 0.3 0.9 0.82
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+
+object 3090 "Ember refuge floor"
+  position -240.02142 40.90108 -134.00858
+  rotation 0.9805765 -0.07284345 0 0.18210861
+  scale 1 1 1
+  render box
+  render.half-extents 3 0.12 3
+  render.radius 0.5
+  render.color 0.36 0.4 0.4
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body static box
+  body.half-extents 3 0.12 3
+  body.radius 0.5
+  body.terrain ""
+  body.mass 10
+  body.friction 0.8
+  body.restitution 0
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 3091 "Ember refuge roof"
+  position -241.14285 43.799488 -134.45714
+  rotation 0.9805765 -0.07284345 0 0.18210861
+  scale 1 1 1
+  render box
+  render.half-extents 3.2 0.16 3.2
+  render.radius 0.5
+  render.color 0.22 0.25 0.3
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body static box
+  body.half-extents 3.2 0.16 3.2
+  body.radius 0.5
+  body.terrain ""
+  body.mass 10
+  body.friction 0.8
+  body.restitution 0
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 3092 "Ember refuge wall"
+  position -243.29694 41.33303 -134.15877
+  rotation 0.9805765 -0.07284345 0 0.18210861
+  scale 1 1 1
+  render box
+  render.half-extents 0.1 1.5 3
+  render.radius 0.5
+  render.color 0.61 0.58 0.45
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body static box
+  body.half-extents 0.1 1.5 3
+  body.radius 0.5
+  body.terrain ""
+  body.mass 10
+  body.friction 0.8
+  body.restitution 0
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 3093 "Ember refuge wall"
+  position -237.88164 43.40446 -134.31265
+  rotation 0.9805765 -0.07284345 0 0.18210861
+  scale 1 1 1
+  render box
+  render.half-extents 0.1 1.5 3
+  render.radius 0.5
+  render.color 0.61 0.58 0.45
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body static box
+  body.half-extents 0.1 1.5 3
+  body.radius 0.5
+  body.terrain ""
+  body.mass 10
+  body.friction 0.8
+  body.restitution 0
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 3094 "Ember refuge rear wall"
+  position -240.51234 41.95446 -137.10493
+  rotation 0.9805765 -0.07284345 0 0.18210861
+  scale 1 1 1
+  render box
+  render.half-extents 3 1.5 0.1
+  render.radius 0.5
+  render.color 0.61 0.58 0.45
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body static box
+  body.half-extents 3 1.5 0.1
+  body.radius 0.5
+  body.terrain ""
+  body.mass 10
+  body.friction 0.8
+  body.restitution 0
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 3095 "Ember refuge open doorway"
+  position -242.4869 42.0866 -131.31476
+  rotation 0.9805765 -0.07284345 0 0.18210861
+  scale 1 1 1
+  render box
+  render.half-extents 1.05 1.5 0.1
+  render.radius 0.5
+  render.color 0.61 0.58 0.45
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body static box
+  body.half-extents 1.05 1.5 0.1
+  body.radius 0.5
+  body.terrain ""
+  body.mass 10
+  body.friction 0.8
+  body.restitution 0
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 3096 "Ember refuge open doorway"
+  position -238.84557 43.47946 -131.41823
+  rotation 0.9805765 -0.07284345 0 0.18210861
+  scale 1 1 1
+  render box
+  render.half-extents 1.05 1.5 0.1
+  render.radius 0.5
+  render.color 0.61 0.58 0.45
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body static box
+  body.half-extents 1.05 1.5 0.1
+  body.radius 0.5
+  body.terrain ""
+  body.mass 10
+  body.friction 0.8
+  body.restitution 0
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 3097 "Ember refuge door lintel"
+  position -241.07693 43.84455 -131.53078
+  rotation 0.9805765 -0.07284345 0 0.18210861
+  scale 1 1 1
+  render box
+  render.half-extents 0.9 0.35 0.1
+  render.radius 0.5
+  render.color 0.61 0.58 0.45
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body static box
+  body.half-extents 0.9 0.35 0.1
+  body.radius 0.5
+  body.terrain ""
+  body.mass 10
+  body.friction 0.8
+  body.restitution 0
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 3098 "Ember refuge table"
+  position -238.84541 41.905575 -135.63817
+  rotation 0.9805765 -0.07284345 0 0.18210861
+  scale 1 1 1
+  render box
+  render.half-extents 0.6 0.8 0.5
+  render.radius 0.5
+  render.color 0.45 0.3 0.19
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body static box
+  body.half-extents 0.6 0.8 0.5
+  body.radius 0.5
+  body.terrain ""
+  body.mass 10
+  body.friction 0.8
+  body.restitution 0
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 3099 "Ember refuge bed"
+  position -241.22346 40.572063 -135.50938
+  rotation 0.9805765 -0.07284345 0 0.18210861
+  scale 1 1 1
+  render box
+  render.half-extents 0.7 0.4 1
+  render.radius 0.5
+  render.color 0.57 0.6 0.52
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body static box
+  body.half-extents 0.7 0.4 1
+  body.radius 0.5
+  body.terrain ""
+  body.mass 10
+  body.friction 0.8
+  body.restitution 0
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 3100 "Ember watch house floor"
+  position -219.97858 40.726006 -135.01071
+  rotation 0.9789845 -0.09120238 0 -0.18240476
+  scale 1 1 1
+  render box
+  render.half-extents 3 0.12 3
+  render.radius 0.5
+  render.color 0.36 0.4 0.4
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body static box
+  body.half-extents 3 0.12 3
+  body.radius 0.5
+  body.terrain ""
+  body.mass 10
+  body.friction 0.8
+  body.restitution 0
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 3101 "Ember watch house roof"
+  position -218.85715 43.604824 -135.57143
+  rotation 0.9789845 -0.09120238 0 -0.18240476
+  scale 1 1 1
+  render box
+  render.half-extents 3.2 0.16 3.2
+  render.radius 0.5
+  render.color 0.22 0.25 0.3
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body static box
+  body.half-extents 3.2 0.16 3.2
+  body.radius 0.5
+  body.terrain ""
+  body.mass 10
+  body.friction 0.8
+  body.restitution 0
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 3102 "Ember watch house wall"
+  position -222.11774 43.219463 -135.39113
+  rotation 0.9789845 -0.09120238 0 -0.18240476
+  scale 1 1 1
+  render box
+  render.half-extents 0.1 1.5 3
+  render.radius 0.5
+  render.color 0.44 0.5 0.52
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body static box
+  body.half-extents 0.1 1.5 3
+  body.radius 0.5
+  body.terrain ""
+  body.mass 10
+  body.friction 0.8
+  body.restitution 0
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 3103 "Ember watch house wall"
+  position -216.70369 41.148037 -135.19815
+  rotation 0.9789845 -0.09120238 0 -0.18240476
+  scale 1 1 1
+  render box
+  render.half-extents 0.1 1.5 3
+  render.radius 0.5
+  render.color 0.44 0.5 0.52
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body static box
+  body.half-extents 0.1 1.5 3
+  body.radius 0.5
+  body.terrain ""
+  body.mass 10
+  body.friction 0.8
+  body.restitution 0
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 3104 "Ember watch house rear wall"
+  position -219.5072 41.665894 -138.1464
+  rotation 0.9789845 -0.09120238 0 -0.18240476
+  scale 1 1 1
+  render box
+  render.half-extents 3 1.5 0.1
+  render.radius 0.5
+  render.color 0.44 0.5 0.52
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body static box
+  body.half-extents 3 1.5 0.1
+  body.radius 0.5
+  body.terrain ""
+  body.mass 10
+  body.friction 0.8
+  body.restitution 0
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 3105 "Ember watch house open doorway"
+  position -221.13448 43.398037 -132.50777
+  rotation 0.9789845 -0.09120238 0 -0.18240476
+  scale 1 1 1
+  render box
+  render.half-extents 1.05 1.5 0.1
+  render.radius 0.5
+  render.color 0.44 0.5 0.52
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body static box
+  body.half-extents 1.05 1.5 0.1
+  body.radius 0.5
+  body.terrain ""
+  body.mass 10
+  body.friction 0.8
+  body.restitution 0
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 3106 "Ember watch house open doorway"
+  position -217.49399 42.00518 -132.378
+  rotation 0.9789845 -0.09120238 0 -0.18240476
+  scale 1 1 1
+  render box
+  render.half-extents 1.05 1.5 0.1
+  render.radius 0.5
+  render.color 0.44 0.5 0.52
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body static box
+  body.half-extents 1.05 1.5 0.1
+  body.radius 0.5
+  body.terrain ""
+  body.mass 10
+  body.friction 0.8
+  body.restitution 0
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 3107 "Ember watch house door lintel"
+  position -218.90352 43.75595 -132.64824
+  rotation 0.9789845 -0.09120238 0 -0.18240476
+  scale 1 1 1
+  render box
+  render.half-extents 0.9 0.35 0.1
+  render.radius 0.5
+  render.color 0.44 0.5 0.52
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body static box
+  body.half-extents 0.9 0.35 0.1
+  body.radius 0.5
+  body.terrain ""
+  body.mass 10
+  body.friction 0.8
+  body.restitution 0
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 3108 "Ember watch house table"
+  position -218.36401 40.60088 -136.568
+  rotation 0.9789845 -0.09120238 0 -0.18240476
+  scale 1 1 1
+  render box
+  render.half-extents 0.6 0.8 0.5
+  render.radius 0.5
+  render.color 0.45 0.3 0.19
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body static box
+  body.half-extents 0.6 0.8 0.5
+  body.radius 0.5
+  body.terrain ""
+  body.mass 10
+  body.friction 0.8
+  body.restitution 0
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 3109 "Ember watch house bed"
+  position -221.02719 41.198437 -136.5864
+  rotation 0.9789845 -0.09120238 0 -0.18240476
+  scale 1 1 1
+  render box
+  render.half-extents 0.7 0.4 1
+  render.radius 0.5
+  render.color 0.57 0.6 0.52
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body static box
+  body.half-extents 0.7 0.4 1
+  body.radius 0.5
+  body.terrain ""
+  body.mass 10
+  body.friction 0.8
+  body.restitution 0
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 3110 "Ember tree"
+  position -242 38.2379 -120
+  rotation 0.9565367 0.18668538 0 0.22402246
+  scale 1 1 1
+  render mesh
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset "d0b9f8516e4a2fcfb075fb1acedd6dea"
+  render.texture-asset ""
+end
+
+object 3111 "Ember tree"
+  position -218 38.2379 -120
+  rotation 0.9565367 0.18668538 0 -0.22402246
+  scale 1 1 1
+  render mesh
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset "d0b9f8516e4a2fcfb075fb1acedd6dea"
+  render.texture-asset ""
+end
+
+object 3112 "Ember tree"
+  position -246 37.956482 -129
+  rotation 0.95390624 0.018720018 0 0.29952028
+  scale 1 1 1
+  render mesh
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset "d0b9f8516e4a2fcfb075fb1acedd6dea"
+  render.texture-asset ""
+end
+
+object 3113 "Ember tree"
+  position -214 37.978252 -130
+  rotation 0.95411 0 0 -0.29945633
+  scale 1 1 1
+  render mesh
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset "d0b9f8516e4a2fcfb075fb1acedd6dea"
+  render.texture-asset ""
+end
+
+object 3114 "Ember tree"
+  position -234 37.62742 -146
+  rotation 0.9508212 -0.3004921 0 0.07512303
+  scale 1 1 1
+  render mesh
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset "d0b9f8516e4a2fcfb075fb1acedd6dea"
+  render.texture-asset ""
+end
+
+object 3115 "Ember tree"
+  position -226 36.88607 -147
+  rotation 0.943834 -0.32163647 0 -0.07567917
+  scale 1 1 1
+  render mesh
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset "d0b9f8516e4a2fcfb075fb1acedd6dea"
+  render.texture-asset ""
+end
+
+object 3116 "Ember tree"
+  position -238 37.891045 -116
+  rotation 0.9532936 0.2622487 0 0.14985639
+  scale 1 1 1
+  render mesh
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset "d0b9f8516e4a2fcfb075fb1acedd6dea"
+  render.texture-asset ""
+end
+
+object 3117 "Ember tree"
+  position -222 37.891045 -116
+  rotation 0.9532936 0.2622487 0 -0.14985639
+  scale 1 1 1
+  render mesh
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset "d0b9f8516e4a2fcfb075fb1acedd6dea"
+  render.texture-asset ""
+end
+
+object 3118 "Ember tree"
+  position -230 37.248596 -113
+  rotation 0.9472573 0.32047412 0 -0
+  scale 1 1 1
+  render mesh
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset "d0b9f8516e4a2fcfb075fb1acedd6dea"
+  render.texture-asset ""
+end
+
+object 3119 "Ember supply crate"
+  position -234 42.0555 -136
+  rotation 0.9915311 -0.10805799 0 0.07203866
+  scale 1 1 1
+  render mesh
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset "e1f5185e773a9784c5020572c598e026"
+  render.texture-asset ""
+end
+
+object 3120 "Ember supply crate"
+  position -226 42.0555 -136
+  rotation 0.9915311 -0.10805799 0 -0.07203866
+  scale 1 1 1
+  render mesh
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset "e1f5185e773a9784c5020572c598e026"
+  render.texture-asset ""
+end
+
+object 3121 "Ember supply crate"
+  position -237 41.645824 -125
+  rotation 0.98783517 0.090385236 0 0.12653933
+  scale 1 1 1
+  render mesh
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset "e1f5185e773a9784c5020572c598e026"
+  render.texture-asset ""
+end
+
+object 3122 "Ember supply crate"
+  position -223 41.645824 -125
+  rotation 0.98783517 0.090385236 0 -0.12653933
+  scale 1 1 1
+  render mesh
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset "e1f5185e773a9784c5020572c598e026"
+  render.texture-asset ""
+end
+
+object 6000 "Frost island planet"
+  position 70 65 -310
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sphere
+  render.half-extents 24 24 24
+  render.radius 24
+  render.color 0.48 0.65 0.69
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body static sphere
+  body.half-extents 24 24 24
+  body.radius 24
+  body.terrain ""
+  body.mass 10
+  body.friction 0.8
+  body.restitution 0
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+  gravity radial 9.81
+  gravity.region sphere 94
+end
+
+object 3123 "Frost landing plaza"
+  position 70 89.12 -310
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 6 0.12 5
+  render.radius 0.5
+  render.color 0.38 0.43 0.45
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body static box
+  body.half-extents 6 0.12 5
+  body.radius 0.5
+  body.terrain ""
+  body.mass 10
+  body.friction 0.8
+  body.restitution 0
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 3124 "Frost landing beacon"
+  position 64.5 89.4 -305.5
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.25 0.4 0.25
+  render.radius 0.5
+  render.color 0.3 0.9 0.82
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+
+object 3125 "Frost landing beacon"
+  position 75.5 89.4 -305.5
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.25 0.4 0.25
+  render.radius 0.5
+  render.color 0.3 0.9 0.82
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+
+object 3126 "Frost refuge floor"
+  position 59.975 86.50123 -314.01
+  rotation 0.97304946 -0.085641414 0 0.21410355
+  scale 1 1 1
+  render box
+  render.half-extents 3 0.12 3
+  render.radius 0.5
+  render.color 0.36 0.4 0.4
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body static box
+  body.half-extents 3 0.12 3
+  body.radius 0.5
+  body.terrain ""
+  body.mass 10
+  body.friction 0.8
+  body.restitution 0
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 3127 "Frost refuge roof"
+  position 58.666668 89.30729 -314.53333
+  rotation 0.97304946 -0.085641414 0 0.21410355
+  scale 1 1 1
+  render box
+  render.half-extents 3.2 0.16 3.2
+  render.radius 0.5
+  render.color 0.22 0.25 0.3
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body static box
+  body.half-extents 3.2 0.16 3.2
+  body.radius 0.5
+  body.terrain ""
+  body.mass 10
+  body.friction 0.8
+  body.restitution 0
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 3128 "Frost refuge wall"
+  position 56.678375 86.7138 -314.16864
+  rotation 0.97304946 -0.085641414 0 0.21410355
+  scale 1 1 1
+  render box
+  render.half-extents 0.1 1.5 3
+  render.radius 0.5
+  render.color 0.61 0.58 0.45
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body static box
+  body.half-extents 0.1 1.5 3
+  body.radius 0.5
+  body.terrain ""
+  body.mass 10
+  body.friction 0.8
+  body.restitution 0
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 3129 "Frost refuge wall"
+  position 61.946625 89.13047 -314.38135
+  rotation 0.97304946 -0.085641414 0 0.21410355
+  scale 1 1 1
+  render box
+  render.half-extents 0.1 1.5 3
+  render.radius 0.5
+  render.color 0.61 0.58 0.45
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body static box
+  body.half-extents 0.1 1.5 3
+  body.radius 0.5
+  body.terrain ""
+  body.mass 10
+  body.friction 0.8
+  body.restitution 0
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 3130 "Frost refuge rear wall"
+  position 59.41885 87.4388 -317.13245
+  rotation 0.97304946 -0.085641414 0 0.21410355
+  scale 1 1 1
+  render box
+  render.half-extents 3 1.5 0.1
+  render.radius 0.5
+  render.color 0.61 0.58 0.45
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body static box
+  body.half-extents 3 1.5 0.1
+  body.radius 0.5
+  body.terrain ""
+  body.mass 10
+  body.friction 0.8
+  body.restitution 0
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 3131 "Frost refuge open doorway"
+  position 57.43493 87.592964 -311.34604
+  rotation 0.97304946 -0.085641414 0 0.21410355
+  scale 1 1 1
+  render box
+  render.half-extents 1.05 1.5 0.1
+  render.radius 0.5
+  render.color 0.61 0.58 0.45
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body static box
+  body.half-extents 1.05 1.5 0.1
+  body.radius 0.5
+  body.terrain ""
+  body.mass 10
+  body.friction 0.8
+  body.restitution 0
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 3132 "Frost refuge open doorway"
+  position 60.977375 89.217964 -311.48904
+  rotation 0.97304946 -0.085641414 0 0.21410355
+  scale 1 1 1
+  render box
+  render.half-extents 1.05 1.5 0.1
+  render.radius 0.5
+  render.color 0.61 0.58 0.45
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body static box
+  body.half-extents 1.05 1.5 0.1
+  body.radius 0.5
+  body.terrain ""
+  body.mass 10
+  body.friction 0.8
+  body.restitution 0
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 3133 "Frost refuge door lintel"
+  position 58.726982 89.43317 -311.6092
+  rotation 0.97304946 -0.085641414 0 0.21410355
+  scale 1 1 1
+  render box
+  render.half-extents 0.9 0.35 0.1
+  render.radius 0.5
+  render.color 0.61 0.58 0.45
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body static box
+  body.half-extents 0.9 0.35 0.1
+  body.radius 0.5
+  body.terrain ""
+  body.mass 10
+  body.friction 0.8
+  body.restitution 0
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 3134 "Frost refuge table"
+  position 61.084152 87.53753 -315.66635
+  rotation 0.97304946 -0.085641414 0 0.21410355
+  scale 1 1 1
+  render box
+  render.half-extents 0.6 0.8 0.5
+  render.radius 0.5
+  render.color 0.45 0.3 0.19
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body static box
+  body.half-extents 0.6 0.8 0.5
+  body.radius 0.5
+  body.terrain ""
+  body.mass 10
+  body.friction 0.8
+  body.restitution 0
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 3135 "Frost refuge bed"
+  position 58.79836 86.05507 -315.50067
+  rotation 0.97304946 -0.085641414 0 0.21410355
+  scale 1 1 1
+  render box
+  render.half-extents 0.7 0.4 1
+  render.radius 0.5
+  render.color 0.57 0.6 0.52
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body static box
+  body.half-extents 0.7 0.4 1
+  body.radius 0.5
+  body.terrain ""
+  body.mass 10
+  body.friction 0.8
+  body.restitution 0
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 3136 "Frost watch house floor"
+  position 80.025 86.289856 -315.0125
+  rotation 0.9707896 -0.10730097 0 -0.21460193
+  scale 1 1 1
+  render box
+  render.half-extents 3 0.12 3
+  render.radius 0.5
+  render.color 0.36 0.4 0.4
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body static box
+  body.half-extents 3 0.12 3
+  body.radius 0.5
+  body.terrain ""
+  body.mass 10
+  body.friction 0.8
+  body.restitution 0
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 3137 "Frost watch house roof"
+  position 81.333336 89.06833 -315.66666
+  rotation 0.9707896 -0.10730097 0 -0.21460193
+  scale 1 1 1
+  render box
+  render.half-extents 3.2 0.16 3.2
+  render.radius 0.5
+  render.color 0.22 0.25 0.3
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body static box
+  body.half-extents 3.2 0.16 3.2
+  body.radius 0.5
+  body.terrain ""
+  body.mass 10
+  body.friction 0.8
+  body.restitution 0
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 3138 "Frost watch house wall"
+  position 78.05461 88.90512 -315.4773
+  rotation 0.9707896 -0.10730097 0 -0.21460193
+  scale 1 1 1
+  render box
+  render.half-extents 0.1 1.5 3
+  render.radius 0.5
+  render.color 0.44 0.5 0.52
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body static box
+  body.half-extents 0.1 1.5 3
+  body.radius 0.5
+  body.terrain ""
+  body.mass 10
+  body.friction 0.8
+  body.restitution 0
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 3139 "Frost watch house wall"
+  position 83.32039 86.48846 -315.2102
+  rotation 0.9707896 -0.10730097 0 -0.21460193
+  scale 1 1 1
+  render box
+  render.half-extents 0.1 1.5 3
+  render.radius 0.5
+  render.color 0.44 0.5 0.52
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body static box
+  body.half-extents 0.1 1.5 3
+  body.radius 0.5
+  body.terrain ""
+  body.mass 10
+  body.friction 0.8
+  body.restitution 0
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 3140 "Frost watch house rear wall"
+  position 80.55394 87.09262 -318.17697
+  rotation 0.9707896 -0.10730097 0 -0.21460193
+  scale 1 1 1
+  render box
+  render.half-extents 3 1.5 0.1
+  render.radius 0.5
+  render.color 0.44 0.5 0.52
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body static box
+  body.half-extents 3 1.5 0.1
+  body.radius 0.5
+  body.terrain ""
+  body.mass 10
+  body.friction 0.8
+  body.restitution 0
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 3141 "Frost watch house open doorway"
+  position 79.05067 89.11346 -312.60034
+  rotation 0.9707896 -0.10730097 0 -0.21460193
+  scale 1 1 1
+  render box
+  render.half-extents 1.05 1.5 0.1
+  render.radius 0.5
+  render.color 0.44 0.5 0.52
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body static box
+  body.half-extents 1.05 1.5 0.1
+  body.radius 0.5
+  body.terrain ""
+  body.mass 10
+  body.friction 0.8
+  body.restitution 0
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 3142 "Frost watch house open doorway"
+  position 82.591446 87.48846 -312.42072
+  rotation 0.9707896 -0.10730097 0 -0.21460193
+  scale 1 1 1
+  render box
+  render.half-extents 1.05 1.5 0.1
+  render.radius 0.5
+  render.color 0.44 0.5 0.52
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body static box
+  body.half-extents 1.05 1.5 0.1
+  body.radius 0.5
+  body.terrain ""
+  body.mass 10
+  body.friction 0.8
+  body.restitution 0
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 3143 "Frost watch house door lintel"
+  position 81.300224 89.31855 -312.75012
+  rotation 0.9707896 -0.10730097 0 -0.21460193
+  scale 1 1 1
+  render box
+  render.half-extents 0.9 0.35 0.1
+  render.radius 0.5
+  render.color 0.44 0.5 0.52
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body static box
+  body.half-extents 0.9 0.35 0.1
+  body.radius 0.5
+  body.terrain ""
+  body.mass 10
+  body.friction 0.8
+  body.restitution 0
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 3144 "Frost watch house table"
+  position 81.62609 86.00716 -316.56305
+  rotation 0.9707896 -0.10730097 0 -0.21460193
+  scale 1 1 1
+  render box
+  render.half-extents 0.6 0.8 0.5
+  render.radius 0.5
+  render.color 0.45 0.3 0.19
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body static box
+  body.half-extents 0.6 0.8 0.5
+  body.radius 0.5
+  body.terrain ""
+  body.mass 10
+  body.friction 0.8
+  body.restitution 0
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 3145 "Frost watch house bed"
+  position 79.00812 86.778206 -316.60406
+  rotation 0.9707896 -0.10730097 0 -0.21460193
+  scale 1 1 1
+  render box
+  render.half-extents 0.7 0.4 1
+  render.radius 0.5
+  render.color 0.57 0.6 0.52
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body static box
+  body.half-extents 0.7 0.4 1
+  body.radius 0.5
+  body.terrain ""
+  body.mass 10
+  body.friction 0.8
+  body.restitution 0
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 3146 "Frost tree"
+  position 58 83.22087 -300
+  rotation 0.9378707 0.2221344 0 0.26656127
+  scale 1 1 1
+  render mesh
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset "03290f931d81c6620701e3484c0e0848"
+  render.texture-asset ""
+end
+
+object 3147 "Frost tree"
+  position 82 83.22087 -300
+  rotation 0.9378707 0.2221344 0 -0.26656127
+  scale 1 1 1
+  render mesh
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset "03290f931d81c6620701e3484c0e0848"
+  render.texture-asset ""
+end
+
+object 3148 "Frost tree"
+  position 54 82.86057 -309
+  rotation 0.9338604 0.02230883 0 0.35694128
+  scale 1 1 1
+  render mesh
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset "03290f931d81c6620701e3484c0e0848"
+  render.texture-asset ""
+end
+
+object 3149 "Frost tree"
+  position 86 82.88854 -310
+  rotation 0.93417233 0 0 -0.3568221
+  scale 1 1 1
+  render mesh
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset "03290f931d81c6620701e3484c0e0848"
+  render.texture-asset ""
+end
+
+object 3150 "Frost tree"
+  position 66 82.43559 -326
+  rotation 0.92910796 -0.35876706 0 0.089691766
+  scale 1 1 1
+  render mesh
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset "03290f931d81c6620701e3484c0e0848"
+  render.texture-asset ""
+end
+
+object 3151 "Frost tree"
+  position 74 81.462074 -327
+  rotation 0.9181285 -0.38574848 0 -0.090764344
+  scale 1 1 1
+  render mesh
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset "03290f931d81c6620701e3484c0e0848"
+  render.texture-asset ""
+end
+
+object 3152 "Frost tree"
+  position 62 82.77639 -296
+  rotation 0.93292093 0.31263813 0 0.17865036
+  scale 1 1 1
+  render mesh
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset "03290f931d81c6620701e3484c0e0848"
+  render.texture-asset ""
+end
+
+object 3153 "Frost tree"
+  position 78 82.77639 -296
+  rotation 0.93292093 0.31263813 0 -0.17865036
+  scale 1 1 1
+  render mesh
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset "03290f931d81c6620701e3484c0e0848"
+  render.texture-asset ""
+end
+
+object 3154 "Frost tree"
+  position 70 81.94107 -293
+  rotation 0.92354697 0.38348526 0 -0
+  scale 1 1 1
+  render mesh
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset "03290f931d81c6620701e3484c0e0848"
+  render.texture-asset ""
+end
+
+object 3155 "Frost supply crate"
+  position 66 87.891045 -316
+  rotation 0.9883809 -0.12646946 0 0.084312975
+  scale 1 1 1
+  render mesh
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset "e1f5185e773a9784c5020572c598e026"
+  render.texture-asset ""
+end
+
+object 3156 "Frost supply crate"
+  position 74 87.891045 -316
+  rotation 0.9883809 -0.12646946 0 -0.084312975
+  scale 1 1 1
+  render mesh
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset "e1f5185e773a9784c5020572c598e026"
+  render.texture-asset ""
+end
+
+object 3157 "Frost supply crate"
+  position 63 87.40536 -305
+  rotation 0.98324883 0.10594131 0 0.14831783
+  scale 1 1 1
+  render mesh
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset "e1f5185e773a9784c5020572c598e026"
+  render.texture-asset ""
+end
+
+object 3158 "Frost supply crate"
+  position 77 87.40536 -305
+  rotation 0.98324883 0.10594131 0 -0.14831783
+  scale 1 1 1
+  render mesh
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset "e1f5185e773a9784c5020572c598e026"
   render.texture-asset ""
 end

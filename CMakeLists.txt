@@ -295,8 +295,34 @@ add_library(judas_imgui STATIC
 target_include_directories(judas_imgui PUBLIC third_party/imgui third_party/imgui/backends ${SDL2_INCLUDE_DIRS})
 target_link_libraries(judas_imgui PUBLIC SDL2::SDL2)
 
+# Identify the editor's built milestone; ordinary fixes/docs are not milestones.
+# Archives without Git metadata retain the current released milestone fallback.
+set(JUDAS_EDITOR_MILESTONE 76)
+execute_process(COMMAND git log -100 --format=%s
+    WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}"
+    OUTPUT_VARIABLE JUDAS_MILESTONE_SUBJECTS ERROR_QUIET OUTPUT_STRIP_TRAILING_WHITESPACE)
+string(REPLACE "\n" ";" JUDAS_MILESTONE_SUBJECTS "${JUDAS_MILESTONE_SUBJECTS}")
+foreach(subject IN LISTS JUDAS_MILESTONE_SUBJECTS)
+    if(subject MATCHES "^(Add|Implement|Complete|Checkpoint) M[0-9]+|^M[0-9]+|^Milestone [0-9]+")
+        string(REGEX MATCHALL "M[0-9]+|Milestone [0-9]+" milestones "${subject}")
+        foreach(milestone IN LISTS milestones)
+            string(REGEX REPLACE "[^0-9]" "" number "${milestone}")
+            if(number GREATER JUDAS_EDITOR_MILESTONE)
+                set(JUDAS_EDITOR_MILESTONE ${number})
+            endif()
+        endforeach()
+    endif()
+endforeach()
+foreach(ref .git/HEAD .git/refs/heads/main .git/packed-refs)
+    if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/${ref}")
+        set_property(DIRECTORY APPEND PROPERTY CMAKE_CONFIGURE_DEPENDS "${ref}")
+    endif()
+endforeach()
+configure_file(cmake/JudasEditorMilestone.h.in generated/JudasEditorMilestone.h @ONLY)
+
 add_executable(judas_editor
     src/editor/EditorMain.cpp
+    src/editor/EditorMilestoneNotice.cpp
     src/editor/EditorApplication.cpp
     src/editor/EditorCamera.cpp
     src/editor/EditorPicking.cpp
@@ -312,6 +338,7 @@ add_executable(judas_editor
     src/editor/GizmoMath.cpp
 )
 target_link_libraries(judas_editor PRIVATE judas_engine judas_imgui judas_navigation_baker judas_model_import)
+target_include_directories(judas_editor PRIVATE "${CMAKE_CURRENT_BINARY_DIR}/generated")
 judas_warnings(judas_editor)
 
 # Milestone 30: the scene authoring tool that writes the shipped demonstration

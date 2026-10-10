@@ -191,3 +191,24 @@ Package is a separate publication. The same panel inspects/installs local packag
 requires explicit exact-payload script trust, selects versions and launches an
 installed game with or without mods. Selection changes apply next session/launch.
 See [full contracts, limits and CLI commands](MODDING.md).
+
+## Milestone notifications
+
+The editor checks once at startup for a newer numbered milestone on GitHub main,
+and shows a small dismissible **New milestone available** notice. Use
+**View / Check for new milestones** to check again. **View milestone** opens
+the checkpoint in your browser. This never downloads, installs, fetches or merges
+anything, and ordinary fix/documentation commits do not trigger a notice.
+
+The optional check uses the installed GitHub CLI (`gh`), with its existing sign-in
+for private repository access. It never prompts for credentials. Missing CLI,
+offline access or unavailable authentication leaves startup quiet; a manual
+check reports that it could not check. Requests run in the background with an
+eight-second timeout. The comparison uses milestone checkpoint titles among
+the latest 100 main commits, against the milestone embedded when the editor
+was built. Source archives without Git metadata use the maintained build fallback
+(currently M76); this is a milestone notification, not a release compatibility promise.
+
+Windows VM checks confirmed missing/unsigned-in CLI leaves startup and manual
+checks responsive, without a crash or credential prompt; both editor runs exited
+cleanly. See [native verification](evidence/editor-milestone-notice/RESULTS.md).

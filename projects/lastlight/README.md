@@ -238,3 +238,10 @@ revision evidence. These checks do not replace your human gameplay review.
 
 Actual application captures and retained development records:
 [Review/BUILD_NOTES.md](Review/BUILD_NOTES.md).
+
+## Wayfarer and planet villages
+
+The current game also includes a walkable, physical spacecraft and three small
+inhabited island planets. See [EXPEDITION.md](EXPEDITION.md) for boarding, simple
+flight/cruise controls, architecture and review limitations. The ship is at the
+southern end of the main street; use E at its orange rear door and captain's chair.

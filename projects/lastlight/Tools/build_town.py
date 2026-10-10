@@ -256,3 +256,8 @@ project='JudasProject 1\nname "Lastlight"\nstartup-scene "Scenes/town.judas"\nas
 project+='classification '+json.dumps('JudasClassification 1 5 5 0 "enemy" 1 "physical" 2 "destructible" 3 "vendor" 4 "inventory_item" 1 1 0 "Default" 1 1 0 "Default" ')+'\n'
 project+='navigation '+json.dumps('JudasNavigationProject 1 1 1 0 "Default" 1 1 0 "Default" 0.3 1.8 48 0.35')+'\n'
 (P/'lastlight.judasproj').write_text(project);(A/'ids.json').write_text(json.dumps(ids,indent=2));print('Authored',len(objects),'town entities')
+
+# The current game includes its ordinary spacecraft and planet outposts.
+# Keep regeneration complete; navigation baking remains a separate authoring step.
+import runpy
+runpy.run_path(str(P/'Tools/build_expedition.py'),run_name='__main__')

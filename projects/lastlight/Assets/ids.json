@@ -83,5 +83,8 @@
   "item_rocket": "1c0993c1fa14aabc91d6b8915033ad97",
   "DejaVuSansCondensed-Bold": "6badf73ad4641464892b321658fd4d1d",
   "DejaVuSansMono": "e7488f75ae8aaae8e44d014ae33bf38b",
-  "zombie_framewalk": "4ee5abb5c41f597eac1e2c213bc4d832"
+  "zombie_framewalk": "4ee5abb5c41f597eac1e2c213bc4d832",
+  "ship": "014fbd928ee224e5fa0bd7556ea006d2",
+  "expedition": "671a79eb6a4a84bb70e24eb34f2f4dcb",
+  "pilot_seated": "e84d487d32bd7f25fce220465e69516f"
 }

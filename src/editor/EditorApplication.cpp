@@ -564,6 +564,7 @@ void EditorApplication::StopPlay() {
 }
 
 void EditorApplication::HandleRequests(EditorRequests& r) {
+    if (r.checkMilestones) { m_milestoneNotice.Check(true); m_panels.status = "Checking for new milestones..."; }
     std::string error;
     bool approvedDocumentAction = false;
     if (m_documentActionApproved) {
@@ -1281,6 +1282,7 @@ int EditorApplication::Run(int argc, char** argv) {
     if (fs::is_regular_file(editorFont)) io.Fonts->AddFontFromFileTTF(editorFont.c_str(), 15.0f);
     ApplyEditorTheme();
     LoadEditorPreferences();
+    if (!std::getenv("JUDAS_EDITOR_AUTOTEST")) m_milestoneNotice.Check();
     ImGui_ImplSDL2_InitForOpenGL(window.NativeWindow(), window.NativeGLContext());
     ImGui_ImplOpenGL3_Init("#version 330 core");
     window.SetEventHook([this, editorWindowId = SDL_GetWindowID(window.NativeWindow())](const SDL_Event& event) {
@@ -1549,6 +1551,7 @@ int EditorApplication::Run(int argc, char** argv) {
         DrawStreamingPanel(m_document,m_panels,requests);
         { JUDAS_PROFILE_SCOPE("Profiler UI"); DrawProfilerPanel(m_panels); }
         DrawStatusBar(m_document, m_panels);
+        m_milestoneNotice.Draw(m_panels.status);
 
         // Requests raised by the automation hook on the previous frame,
         // after that frame's UI had already been rendered.

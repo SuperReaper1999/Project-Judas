@@ -43,16 +43,18 @@ export default class HUD {
   this.doc.get('enemies').text=`${game.alive} ENEMIES`;
   this.doc.get('score').text=`SCORE ${game.score}`;
   this.doc.get('points').text=`${game.points} POINTS`;
-  this.doc.get('weapon').text=w.mode==='rpg'?'RPG LAUNCHER':'RIFLE';
-  this.doc.get('ammo').text=ammo;
+  this.doc.get('weapon_image').visible=!this.player.ship?.piloting;
+  this.doc.get('weapon').text=this.player.ship?.piloting?'WAYFARER':w.mode==='rpg'?'RPG LAUNCHER':'RIFLE';
+  this.doc.get('ammo').text=this.player.ship?.piloting?'FLIGHT ASSIST ON':ammo;
   this.doc.get('grenades').text=`GRENADES ${game.grenades}`;
   const art=w.mode==='rpg'?'987eb61bf8cafb5441005aff4673020c':'8d73a3680d7cfcbf848b87ed75425887';
   if(art!==this.weaponArt){this.doc.get('weapon_image').texture=art;this.weaponArt=art;}
   const equipment=this.player.inventory?.hasEquipment('framewalk_boots')?' / FRAMEWALK':'';
-  this.doc.get('progress').text=`${this.player.camera.third?'THIRD PERSON':'FIRST PERSON'}${equipment}`;
-  this.doc.get('controls').text=this.player.grab?.held?'B  DROP     T  ROTATE     I  PACK':
-   this.player.vendor?.near?'N  SUPPLY STALL     I  PACK     ESC  PAUSE':'I  PACK     V  VIEW     ESC  PAUSE';
-  this.doc.get('message').text=game.phase==='breather'?`${Math.ceil(game.countdown)}s TO NEXT WAVE | ${game.message}`:game.message;
+  this.doc.get('pause_controls').text=this.player.ship?.piloting?'WASD forward / strafe\nMOUSE steer / V chase view\nSPACE rise / CTRL descend\nSHIFT boost / R auto level\nRelease controls to brake/hover\nT choose planet / N cruise + land\nE leave chair after stopping\nWalk to orange door / E open': 'WASD move / SHIFT faster\nSPACE jump / E mantle or ship use\nLEFT MOUSE fire / R reload\nRIGHT MOUSE punch / F heavy / Q shove\n1 rifle / 2 launcher / G grenade\nB carry / T rotate / C collect\nI pack / N supplies / V view\nX release gravity / E ship door, chair';
+  this.doc.get('progress').text=this.player.ship?.piloting?`WAYFARER / ${this.player.camera.third?'CHASE VIEW':'COCKPIT'}`:`${this.player.camera.third?'THIRD PERSON':'FIRST PERSON'}${equipment} / SHIP ${Math.round(Math.hypot(this.player.entity.transform.position.x-this.player.ship.hull.transform.position.x,this.player.entity.transform.position.y-this.player.ship.hull.transform.position.y,this.player.entity.transform.position.z-this.player.ship.hull.transform.position.z))}m`;
+  this.doc.get('controls').text=this.player.ship?.prompt|| (this.player.grab?.held?'B  DROP     T  ROTATE     I  PACK':
+   this.player.vendor?.near?'N  SUPPLY STALL     I  PACK     ESC  PAUSE':'I  PACK     V  VIEW     ESC  PAUSE');
+  this.doc.get('message').text=this.player.ship?.piloting?this.player.ship.status+' | MOUSE STEER / SHIFT BOOST / R LEVEL / V VIEW':this.player.ship?.location?`${this.player.ship.location.name} | clear the village, explore its houses, return to your ship`:game.phase==='breather'?`${Math.ceil(game.countdown)}s TO NEXT WAVE | ${game.message}`:game.message;
   this.doc.get('message_backing').visible=!!this.doc.get('message').text;
   this.doc.get('hitmark').visible=game.flash>0;this.doc.get('hurt').visible=game.hurt>0;
   if(this.shopping){

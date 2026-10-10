@@ -1,0 +1,35 @@
+{
+  "results": {
+    "unsigned": {
+      "apiExit": 4,
+      "authExit": 1,
+      "startupResponsive": true,
+      "manualResponsive": true,
+      "exit": 0,
+      "config": "C:\\JudasValidation\\Receipts\\MilestoneNotice\\empty-gh-config"
+    },
+    "time": "2026-10-11T00:02:48.3175904+01:00",
+    "missing": {
+      "cliAbsent": true,
+      "manualResponsive": true,
+      "startupResponsive": true,
+      "exit": 0
+    },
+    "editor": "5A00F5F8B9F07E7B16343D5ED904C0E5D46D164D47D8B24AF73EA0021FAF4D50"
+  },
+  "build": {
+    "free": 181620736,
+    "build": 0,
+    "source": {
+      "CMakeLists.txt": "59c094a50829d4a40330bd14e44a5df2356aa2b9a4b85b7e2cd3a7de4e634ac5",
+      "cmake/JudasEditorMilestone.h.in": "1a66d0aa747dd94b36d646f41944d462b5254dd03281d859cf36b31de637e519",
+      "src/editor/EditorMilestoneNotice.h": "53fabe5847a83c3070e33abb45f1d9e8c28379df50bbaf0e8412ffab7c7e6273",
+      "src/editor/EditorMilestoneNotice.cpp": "1addf130df96912789b71268ab2cbc2acc6353ad1a569778378653d6a15b9ae7",
+      "src/editor/EditorApplication.h": "0d61d4142d2d0c8d1fada243b2d907f732c9642e10c14ef9eeeabdddc0e1aa1d",
+      "src/editor/EditorApplication.cpp": "8a75b2bf408bc6f179c4f3e46256af2d3cfce9161a22b2b5f8bfb6652e33ee51",
+      "src/editor/EditorPanels.h": "44fad992e4fc03cf32de8f7625d02804d3f3bb35a0722de5bdaac7aac18afad3",
+      "src/editor/EditorPanels.cpp": "09cd19cba173010883bb499d0139f0e2bb6437c78126eaa45ca2436414da844f"
+    },
+    "editor": "5a00f5f8b9f07e7b16343d5ed904c0e5d46d164d47d8b24af73ea0021faf4d50"
+  }
+}

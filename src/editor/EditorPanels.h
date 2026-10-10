@@ -51,6 +51,7 @@ struct EditorRequests {
     bool rescanAssets = false;
     bool openJudasJS = false;
     bool openQuickStart = false;
+    bool checkMilestones = false;
     std::string openExternalPath;
     std::string openSceneRelative;  // open this project-relative scene
     std::string importSource;       // Asset Browser: import this file

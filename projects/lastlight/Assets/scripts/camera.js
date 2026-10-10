@@ -2,7 +2,7 @@ import {world,physics} from 'judas';
 import {add,mul,length,norm,qm,axis,rotate} from './math.js';
 export default class Camera {
  constructor(player){this.player=player;this.third=false;}
- pose(presented=false){const t=presented?this.player.entity.presentedTransform:this.player.entity.transform,s=this.player.state;
+ pose(presented=false){if(this.player.ship?.piloting)return this.player.ship.pose(presented);const t=presented?this.player.entity.presentedTransform:this.player.entity.transform,s=this.player.state;
   const rotation=qm(qm(t.rotation,axis({x:0,y:1,z:0},s.yaw)),axis({x:1,y:0,z:0},s.pitch));
   const eye=add(t.position,rotate(t.rotation,{x:0,y:1.65,z:0})),direction=rotate(rotation,{x:0,y:0,z:-1});
   let position=eye;
@@ -11,5 +11,5 @@ export default class Camera {
    position=add(eye,mul(backwards,obstruction?Math.max(0,obstruction.distance-.1):distance));}
   return {position,rotation,direction,eye};
  }
- publish(presented=false){const p=this.pose(presented);world.setView(p,74-(this.player.weapon?.aimBlend||0)*12);return p;}
+ publish(presented=false){const p=this.pose(presented);world.setView(p,74-(this.player.weapon?.aimBlend||0)*12,{near:.06,far:1400});return p;}
 }

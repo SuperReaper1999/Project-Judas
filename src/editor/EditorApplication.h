@@ -6,6 +6,7 @@
 
 #include "DebugDraw.h"
 #include "EditorCamera.h"
+#include "EditorMilestoneNotice.h"
 #include "EditorDocument.h"
 #include "EditorPanels.h"
 #include "EditorPicking.h"
@@ -41,6 +42,7 @@ public:
     int Run(int argc, char** argv);
 
 private:
+    EditorMilestoneNotice m_milestoneNotice;
     std::unique_ptr<struct TerrainEditor> m_terrain;
     std::unique_ptr<struct ModTools> m_modTools;
     std::vector<Scene> m_regionPreview;

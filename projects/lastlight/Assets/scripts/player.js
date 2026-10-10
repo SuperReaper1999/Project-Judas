@@ -1,22 +1,23 @@
 import {input,world,signals,navigation,console} from 'judas';
 import Camera from './camera.js';import Weapon from './weapon.js';import HUD from './hud.js';import Climb from './climb.js';import Melee from './melee.js';import Grab from './grab.js';import Vendor from './vendor.js';
+import Ship from './ship.js';import {destinations} from './expedition.js';
 import Inventory from './inventory.js';import Framewalk from './framewalk.js';
 import {throwGrenade} from './explosives.js';import {game,spawns} from './game.js';import {add,mul,sub,dot,length,norm,tangent,qm,axis,rotate} from './math.js';
 export const properties={speed:{type:'number',default:4.8},jumpSpeed:{type:'number',default:5.8},zombie:{type:'string',default:''},rocket:{type:'string',default:''},grenade:{type:'string',default:''},framewalkBoots:{type:'string',default:''},rocketsPickup:{type:'string',default:''},grenadesPickup:{type:'string',default:''}};
 export default class Player {
  constructor({entity,properties}){this.entity=entity;this.props=properties;this.state={yaw:0,pitch:0,wave:0,score:0,health:100,climbing:false,view:'first',holding:null};this.enemies=[];this.toSpawn=0;this.spawnClock=0;this.spawnIndex=0;this.clip='';this.animClock=1;this.moving=false;this.grenadeCooldown=0;}
- start(){this.inventory=new Inventory(this);this.boots=new Framewalk(this);this.camera=new Camera(this);this.weapon=new Weapon(this);this.hud=new HUD(this);this.climb=new Climb(this);this.melee=new Melee(this);this.grab=new Grab(this);this.vendor=new Vendor(this);this.hud.start();this.camera.publish();this.token=signals.subscribe('player.hurt');this.avatar=world.entity('11');this.gun=world.entity('12');console.log('Lastlight: WASD, mouse, Ctrl aim, LMB fire, 1 rifle / 2 RPG, G grenade, N stall, I inventory, C collect, X normal gravity, B carry/drop, T turn, Space jump + airborne Space framewalk, E mantle, Shift, V view, R reload, RMB punch, F heavy, Q shove, Esc menu.');}
- update(dt){if(this.hud.doc.modal)return;const scale=this.weapon.lookScale;
+ start(){this.inventory=new Inventory(this);this.boots=new Framewalk(this);this.camera=new Camera(this);this.weapon=new Weapon(this);this.hud=new HUD(this);this.climb=new Climb(this);this.melee=new Melee(this);this.grab=new Grab(this);this.vendor=new Vendor(this);this.hud.start();this.ship=new Ship(this);this.camera.publish();this.token=signals.subscribe('player.hurt');this.avatar=world.entity('11');this.gun=world.entity('12');console.log('Lastlight: WASD, mouse, Ctrl aim, LMB fire, 1 rifle / 2 RPG, G grenade, N stall, I inventory, C collect, X normal gravity, B carry/drop, T turn, Space jump + airborne Space framewalk, E mantle, Shift, V view, R reload, RMB punch, F heavy, Q shove, Esc menu.');}
+ update(dt){if(this.hud.doc.modal)return;if(this.ship.look(dt)){if(input.pressed('camera_toggle'))this.camera.third=!this.camera.third;return;}const scale=this.weapon.lookScale;
   this.state.yaw-=(input.axis('look_x')*.0021+input.axis('look_stick_x')*2.2*dt)*scale;
   this.state.pitch=Math.max(-1.4,Math.min(1.4,this.state.pitch-(input.axis('look_y')*.0021+input.axis('look_stick_y')*2.2*dt)*scale));
   if(input.pressed('camera_toggle'))this.camera.third=!this.camera.third;
  }
  onSignal(e){if(e.name!=='player.hurt'||game.phase==='dead'||game.phase==='victory')return;game.health=Math.max(0,game.health-e.payload.damage);game.hurt=.18;
   if(game.health===0){game.phase='dead';game.message='The town fell. Fortify a house and try again.';this.grab.drop();this.entity.character.velocity={x:0,y:0,z:0};}}
- director(dt){if(game.phase==='dead'||game.phase==='victory')return;
+ director(dt){this.planetPopulation();if(game.phase==='dead'||game.phase==='victory')return;
   if(game.phase==='breather'){game.countdown-=dt;if(game.countdown<=0){game.wave++;game.phase='wave';this.toSpawn=6+game.wave*2;this.spawnClock=0;game.message='ZOMBIES APPROACH - watch the back streets and doorways';console.log(`Wave ${game.wave}: ${this.toSpawn} zombies`);}}
   if(game.phase==='wave'){
-   this.spawnClock-=dt;if(this.toSpawn>0&&this.spawnClock<=0){let point=spawns[this.spawnIndex++%spawns.length];
+   if(this.ship.location||this.ship.piloting)return;this.spawnClock-=dt;if(this.toSpawn>0&&this.spawnClock<=0){let point=spawns[this.spawnIndex++%spawns.length];
     // Avoid spawning on top of a player who has reached an outer lane.
     for(let n=0;n<spawns.length&&length(sub({x:point[0],y:0,z:point[2]},this.entity.transform.position))<12;n++)point=spawns[this.spawnIndex++%spawns.length];
     const sample=navigation.sample({x:point[0],y:point[1],z:point[2]},3);
@@ -27,6 +28,15 @@ export default class Player {
    // must not destroy its final victim before its pending ragdoll activation.
    if(this.toSpawn===0&&game.alive===0){this.enemies=[];
     if(game.wave===5){game.phase='victory';game.message='You held Lastlight.';}else{game.phase='breather';game.countdown=12;game.health=Math.min(100,game.health+25);game.message='WAVE CLEAR - repair your barricade, buy supplies, reload';console.log(`Wave ${game.wave} cleared; score ${game.score}`);}}
+  }
+ }
+ planetPopulation(){if(!this.ship||game.phase==='dead'||game.phase==='victory')return;this.visited=this.visited||new Set();
+  const d=this.ship.location;if(!d||this.visited.has(d.name))return;this.visited.add(d.name);
+  // Inhabited outposts are independent of the town's five-wave round count.
+  for(const [x,z] of [[-5,-6],[5,-6],[-8,6],[8,6],[-11,1],[11,1]]){
+   const y=Math.sqrt(d.radius*d.radius-x*x-z*z),up={x:x/d.radius,y:y/d.radius,z:z/d.radius};
+   const w=Math.sqrt((1+up.y)/2),rotation={w,x:up.z/(2*w),y:0,z:-up.x/(2*w)};
+   world.spawnPrefab(this.props.zombie,{position:add(d.center,{x,y:y+.08,z}),rotation},{scripts:[{slot:1,properties:{kind:'zombie',variant:z<0?'stalker':'runner',island:true}}]});
   }
  }
  animate(dt){this.animClock+=dt;const m=this.entity.character,u=m.up;
@@ -40,11 +50,11 @@ export default class Player {
  }
  fixedUpdate(dt){this.director(dt);game.flash=Math.max(0,game.flash-dt);game.hurt=Math.max(0,game.hurt-dt);game.noiseTime=Math.max(0,game.noiseTime-dt);game.footstepTime=Math.max(0,game.footstepTime-dt);this.grenadeCooldown=Math.max(0,this.grenadeCooldown-dt);
   if(game.phase==='dead'||game.phase==='victory')return;
-  this.weapon.tick(dt);this.vendor.tick();if(this.hud.doc.modal)return;this.inventory.tick();this.boots.tick(dt);
+  if(this.hud.doc.modal)return;const shipUsed=this.ship.tick(dt);if(this.ship.piloting)return;this.weapon.tick(dt);this.vendor.tick();if(this.hud.doc.modal)return;this.inventory.tick();if(!this.ship.inside)this.boots.tick(dt);
   const m=this.entity.character,t=this.entity.transform,u=m.up;
   const heading=qm(t.rotation,axis({x:0,y:1,z:0},this.state.yaw));
   const f=norm(tangent(rotate(heading,{x:0,y:0,z:-1}),u)),r=norm(tangent(rotate(heading,{x:1,y:0,z:0}),u));
-  if(input.pressed('climb')&&!this.melee.busy&&!this.grab.held&&!this.boots.state.transitioning)this.climb.begin(f);
+  if(!shipUsed&&input.pressed('climb')&&!this.melee.busy&&!this.grab.held&&!this.boots.state.transitioning)this.climb.begin(f);
   if(!this.climb.step(dt)){
    let dir=add(mul(f,input.axis('move_y')),mul(r,input.axis('move_x')));if(length(dir)>1)dir=norm(dir);
    const pace=this.grab.held?3.3:this.weapon.aimed?3.1:input.held('sprint')?7:this.props.speed;
@@ -60,11 +70,11 @@ export default class Player {
    if(input.pressed('grenade')&&!this.melee.busy&&!this.climb.active&&this.grenadeCooldown<=0&&throwGrenade(this))this.grenadeCooldown=1;}
   this.animate(dt);this.state.wave=game.wave;this.state.score=game.score;this.state.health=game.health;this.state.climbing=!!this.climb.active;this.state.view=this.camera.third?'third':'first';
  }
- presentationUpdate(){const t=this.entity.presentedTransform,view=this.camera.publish(true);
+ presentationUpdate(){if(this.ship.piloting){const view=this.camera.publish(true);this.avatar.renderVisible=false;this.gun.renderVisible=false;this.weapon.launcher.renderVisible=false;for(const id of ['13','14'])world.entity(id).renderVisible=false;return;}const t=this.entity.presentedTransform,view=this.camera.publish(true);
   this.avatar.renderVisible=this.camera.third;
   this.avatar.transform={position:t.position,rotation:qm(qm(t.rotation,axis({x:0,y:1,z:0},this.state.yaw)),axis({x:0,y:1,z:0},Math.PI))};
   this.weapon.present(view);if(this.grab.held){this.gun.renderVisible=false;this.weapon.launcher.renderVisible=false;}this.melee.present(view);
  }
  uiUpdate(){this.hud.update();}onUI(e){this.hud.event(e);}
- destroy(){this.grab?.destroy();this.boots?.destroy();if(this.token)signals.unsubscribe(this.token);input.pointerCapture=false;world.clearView();}
+ destroy(){this.ship?.destroy();this.grab?.destroy();this.boots?.destroy();if(this.token)signals.unsubscribe(this.token);input.pointerCapture=false;world.clearView();}
 }

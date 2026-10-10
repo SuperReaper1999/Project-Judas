@@ -3,7 +3,7 @@ import {activeTrips,registerBones,registerCorpse,retireBones,tripBones} from './
 import {add,sub,mul,dot,length,norm,axis,tangent,qm,rotate} from './math.js';
 import ZombieAI from './zombie_ai.js';
 import ZombieFramewalk from './zombie_framewalk.js';
-export const properties={kind:{type:'string',default:'zombie'},variant:{type:'string',default:'auto'}};
+export const properties={kind:{type:'string',default:'zombie'},variant:{type:'string',default:'auto'},island:{type:'boolean',default:false}};
 const angleDifference=(a,b)=>Math.atan2(Math.sin(b-a),Math.cos(b-a));
 const blendRotation=(a,b,t)=>{const sign=a.w*b.w+a.x*b.x+a.y*b.y+a.z*b.z<0?-1:1;
  const q={w:a.w*(1-t)+sign*b.w*t,x:a.x*(1-t)+sign*b.x*t,y:a.y*(1-t)+sign*b.y*t,z:a.z*(1-t)+sign*b.z*t};
@@ -16,7 +16,7 @@ export default class Enemy {
   if(!this.soldier){this.brain=new ZombieAI(this.entity,this.player,this.props.variant);this.surface=new ZombieFramewalk(this.entity,this.brain.seed);this.state.health=this.brain.type.health;this.state.variant=this.brain.variant;}
   this.entity.navigation.configure({speed:this.soldier?2.2:this.brain.type.speed});
  }
- onSignal(e){if(e.name!=='range.hit'||this.state.dead||game.phase!=='wave')return;
+ onSignal(e){if(e.name!=='range.hit'||this.state.dead||(!this.props.island&&game.phase!=='wave'))return;
   const hit=e.payload;if(typeof hit?.damage!=='number'||!Number.isFinite(hit.damage)||hit.damage<=0)return;
   this.state.health-=hit.damage;
   if(this.brain){this.brain.alert(this.player.transform.position,true,this.player.character.up);this.brain.clearAttack();}
@@ -35,7 +35,7 @@ export default class Enemy {
    // accounting or disable this script's subsequent damage callbacks.
    try{this.visual.animation?.pause();}catch(error){this.animationWarning(error);}
    const reward=this.soldier?150:this.brain.variant==='brute'?175:this.brain.variant==='stalker'?125:100;
-   game.alive--;game.kills++;game.score+=reward;game.points=(game.points||0)+reward;
+   if(!this.props.island)game.alive--;game.kills++;game.score+=reward;game.points=(game.points||0)+reward;
    game.message=`${this.soldier?'SOLDIER':this.brain.variant.toUpperCase()} DOWN +${reward}`;
    for(const c of this.visual.children)if(c.valid)c.renderVisible=false;
    // Activate at the next authoritative script step, from the current resolved
@@ -161,7 +161,8 @@ export default class Enemy {
    this.corpseAge+=dt;if(this.corpseAge>=18)this.entity.destroy();return;
   }
   if(this.state.tripped){this.tripTime-=dt;this.retry-=dt;if(this.tripTime<=0&&this.retry<=0){this.retry=.25;this.recover();}return;}
-  if(this.state.dead||!this.player.valid||game.phase!=='wave')return;
+  if(this.state.dead||!this.player.valid||game.phase==='dead'||game.phase==='victory'||(!this.props.island&&game.phase!=='wave'))return;
+  if(this.props.island&&length(sub(this.player.transform.position,this.entity.transform.position))>55){this.entity.character.velocity={x:0,y:0,z:0};return;}
   this.next-=dt;this.attack-=dt;this.stun=Math.max(0,this.stun-dt);
   const m=this.entity.character,t=this.entity.transform,p=this.player.transform.position,u=m.up;
   if((this.forceTrip||this.shouldTrip(dt))&&this.trip()){this.forceTrip=false;return;}
@@ -174,7 +175,7 @@ export default class Enemy {
    this.entity.navigation.stopped=surface.active;
    this.state.surface=surface.mode;this.state.surfaceReference=surface.reference;this.state.surfaceJumps=this.surface.jumps;
    if(surface.launch)this.brain.clearAttack();
-   const intent=this.brain.update(dt,u,actualSpeed,surface.active,!surface.transitioning);
+   const intent=this.brain.update(dt,u,actualSpeed,surface.active||this.props.island,!surface.transitioning);
    // Aggressive intent is still resolved by the same generic motor. Walls,
    // standing props and ledges do not disappear merely because it is an enemy.
    // A locked world-space lunge can gain a normal component when the motor's
