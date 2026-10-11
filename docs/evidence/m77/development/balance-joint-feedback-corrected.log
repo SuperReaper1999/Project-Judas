@@ -1,0 +1,10 @@
+step=0 rootHeight=1.1979 com=0.0000,0.9647,0.0047 speed=0.0000 up=1.0000 contacts=8
+step=60 rootHeight=1.1898 com=-0.0085,0.9557,0.0214 speed=0.1204 up=0.9999 contacts=6
+step=120 rootHeight=1.1989 com=-0.0091,0.9634,0.0299 speed=0.0745 up=0.9996 contacts=8
+step=180 rootHeight=1.1970 com=0.0119,0.9617,0.0300 speed=0.1908 up=0.9996 contacts=8
+step=240 rootHeight=1.1927 com=-0.0265,0.9589,0.0222 speed=0.0927 up=0.9998 contacts=5
+step=300 rootHeight=1.2009 com=0.0256,0.9656,0.0309 speed=0.0277 up=0.9997 contacts=4
+step=360 rootHeight=1.2001 com=0.0067,0.9643,0.0453 speed=0.3258 up=0.9989 contacts=8
+step=420 rootHeight=1.2153 com=0.0443,0.9810,0.0364 speed=0.2887 up=0.9990 contacts=2
+step=480 rootHeight=1.2146 com=0.0533,0.9791,0.0719 speed=0.0539 up=0.9985 contacts=3
+step=540 rootHeight=1.2091 com=0.0005,0.9731,0.0914 speed=0.4807 up=0.9994 contacts=4

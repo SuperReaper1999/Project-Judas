@@ -1,0 +1,10 @@
+﻿{
+    "label":  "core-character_motor",
+    "exitcode":  0,
+    "command":  "C:\\JudasValidation\\M77TestBinFollowup\\judas_character_motor_tests.exe",
+    "arguments":  [
+
+                  ],
+    "cwd":  "C:\\JudasValidation\\Source",
+    "seconds":  0.8693282
+}

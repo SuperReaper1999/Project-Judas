@@ -1,0 +1,11 @@
+﻿{
+    "label":  "lab-recovery",
+    "exitcode":  0,
+    "command":  "C:\\JudasValidation\\M77TestBin\\judas_balance_lab_tests.exe",
+    "arguments":  [
+                      "C:\\JudasValidation\\M77Results\\recovery",
+                      "recovery"
+                  ],
+    "cwd":  "C:\\JudasValidation\\Source",
+    "seconds":  4.0429189
+}

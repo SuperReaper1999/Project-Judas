@@ -343,7 +343,8 @@ resistance and physical materials remain. `poseWeight` blends the simulated skel
 contribution visually; a value below one is an explicit approximation whose displayed
 pose can differ from collision geometry. Inspect `ragdoll.body(key).transform` for the
 actual body and `physicalState.drives` for target error/saturation. A drive does not
-imply that the body reached the requested pose. No balance/get-up controller exists.
+imply that the body reached the requested pose. M70 region drives alone provide no balance/get-up controller. The separately authored
+[M77 physical-balance task](#ragdollconfigurebalance-requestbalance-cancelbalance-balancestate-m77-candidate) supplies bounded native control.
 
 `ragdoll.setMode(mode,options={}) → boolean` queues an explicit authority request;
 validate before publication, apply at the safe fixed boundary. Modes:
@@ -401,3 +402,72 @@ disable/destroy, streamed unload/adoption and scene transitions invalidate mappi
 Declared IK targets/physical settings and authority state participate in normal named
 scene/prefab/save paths; disposable solve caches and GPU matrices are not serialized.
 [Save ownership](saves.md) · [CharacterMotor](character.md) · [Physics](physics.md).
+
+
+## Ragdoll.configureBalance, requestBalance, cancelBalance, balanceState (M77 candidate)
+
+Judas plans bounded physical corrections; game scripts decide whether to attempt
+standing/recovery and whether to permit corrective steps. Configuration is explicit,
+optional and inactive until requested. These APIs belong to the uncommitted M77 review candidate. The bounded mechanical
+rig envelope and platform results are in [M77](../M77.md); human acceptance is
+pending. They do not provide a general humanoid gait or recovery guarantee.
+
+- `configureBalance(configuration | null)` replaces inactive configuration. Requires
+  a ready animated ragdoll; active ownership must be cancelled first. Six unique
+  skeleton keys identify two root → upper → lower → foot physical chains. Feet are
+  boxes with explicit local contact patches and conservative clearance extents.
+  `up`/`forward` are orthonormal **physical root-local** axes. Vector input accepts
+  `{x,y,z}` or three-number arrays. Named scene field: `ragdoll.balance` (embedded JSON).
+- `requestBalance('stand' | 'recover', {stepping=true, effort=true,
+  motorHandoff=false})` queues the existing full-dynamic physical handoff and task at
+  the fixed boundary. An enabled CharacterMotor requires `motorHandoff:true`.
+  It does not resume the motor automatically. Configuration, topology, gravity,
+  contacts, effort and finite deadlines can make a request fail.
+- `cancelBalance()` stops M77 joint actuation without moving bodies or resetting
+  velocities. The articulation stays physical; ordinary `setMode`/`leave` remain
+  separate explicit authority operations. A successful ordinary mode request
+  cancels balance ownership. Shared IK target replacement and physical-drive
+  reconfiguration reject during M77 ownership; project clip/layer settings remain.
+- `balanceState` is a snapshot of the **previous completed pre-step observation**:
+  `task`, `status`, `pending`, `diagnostic`, `available`, COM/velocity/gravity/up,
+  mass (kg), root height relative to observed support (m), upright dot, relative
+  speed (m/s), saturated joint count, attempt/dwell/reference clocks (s), two
+  supports, and step state. Supports include safe entity handles, actual contact
+  point/normal, support point velocity, previous solved normal impulse (N s), and
+  bounded contact count. No ray hit grants support. `step.landing` is a planned
+  world-space body-origin reference, **not** an achieved contact; it is null when
+  its supporting body is unavailable. `foot` is chain index 0/1 or null. Observations
+  are unavailable until reacquired following restoration.
+
+Balance settings use SI metres, seconds and radians: stiffness N m/rad, damping
+N m s/rad, maxTorque N m; positionResponse rad/m, velocityResponse rad s/m.
+Defaults: stiffness 800, damping 80, maxTorque 150, positionResponse .8,
+velocityResponse .3, maximumLean .25; leg/trunk lean fractions 1;
+plantedOrientationWeight 0 (physical contacting face) through 1 (authored upright foot orientation);
+standingHeight 1.2, tolerance .18, standingSpeed .16, dwell 1, attempt 15,
+initial reference fade 3; per-body gravity direction coherence .96; step trigger .18,
+reach .4, height .18, reference duration .7, touchdown tolerance .12; load fraction .6,
+patch-radius fraction .75, transfer deadline 2, maximum landings 3 (cap 8).
+Near-equal support impulses (within .1% of their sum) use stable authored chain
+order for the discrete swing choice; meaningfully lighter support still wins.
+Foothold filters use M39 numeric masks (`includeLayers`, `excludeLayers`,
+`requiredTags`, `excludedTags`); omit includeLayers for all layers. Queries reject
+sensors and ignore the entire physical articulation. Author exact masks in JSON;
+JavaScript numbers cannot represent arbitrary 64-bit mask integers exactly.
+
+No owner gravity override is inherited implicitly: each physical bone uses its
+ordinary entity gravity selection. Gravity, support normal and a reference frame
+remain separate. A game script fault leaves an explicitly native-owned task running;
+entity/component destruction, disable, cancellation or authority change retires it.
+The final pose uses the ordinary M47 physical contribution at full weight while
+M77 owns actuation. Selected references never overwrite physics or skin matrices.
+
+A separate `setMode('animation', {placement, resumeMotor:true, fade})` may follow
+measured standing. Existing capsule placement/path checks can refuse it; refusal
+leaves the physical task intact. Root velocity inheritance is the existing handoff
+policy, not a claim of whole-articulation momentum conservation.
+
+`ragdoll.balanceDiagnostics` toggles collider/COM/contact/foot-plan lines only.
+It requires an authored balance configuration and changes no physics. At most 128
+native balance participants are admitted per world. Cancel/reconfigure or destroy
+the owner to retire its record; unrelated animation layers remain untouched.

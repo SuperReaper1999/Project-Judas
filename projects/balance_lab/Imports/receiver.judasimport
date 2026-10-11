@@ -1,0 +1,14 @@
+{
+  "assetId": "ff4c2e71c9f6145a0a820a5b27f9d59a",
+  "format": "JudasImport",
+  "motions": [],
+  "output": "Assets/models/receiver.judasmodel",
+  "settings": {
+    "allowBaseMesh": false,
+    "dependencyRemaps": {},
+    "sampleRate": 60,
+    "unitMeters": 0
+  },
+  "source": "Sources/ff4c2e71c9f6145a0a820a5b27f9d59a/receiver.gltf",
+  "version": 1
+}

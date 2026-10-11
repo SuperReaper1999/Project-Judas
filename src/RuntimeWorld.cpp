@@ -786,7 +786,7 @@ void RuntimeWorld::RestoreAuthoredState() {
     // Destroy callbacks may still inspect lazy runtime components. Retire
     // scripts before clearing them so callbacks cannot recreate reset state.
     m_scripts.reset();spawnStates.clear();
-    m_ragdollReturns.clear();m_ragdollAutostarted.clear();ClearDeformables();ClearCharacters();m_animationInstances.clear();m_physicalAnimations.clear();
+    m_ragdollReturns.clear();m_ragdollAutostarted.clear();ClearDeformables();ClearCharacters();m_animationInstances.clear();m_physicalAnimations.clear();m_balances.clear();
     m_ui.reset();m_localization.reset();pointerCapture=false;m_touchEntityHistory.clear();m_touchArticulationHistory.clear();m_physics.ClearTouchHistory();
     if (!m_built) return;
     for(const auto& o:ScriptObjects())if(o.ui&&o.ui->enabled){std::string error;UI().Load(o.ui->asset,o.ui->name,o.id,error);}
@@ -1014,7 +1014,7 @@ bool RuntimeWorld::DestroyEntity(EntityId id, std::string* outError) {
     for(auto it=spawnStates.begin();it!=spawnStates.end();)if(it->first.first==id)it=spawnStates.erase(it);else++it;
     RemoveDeformable(id);m_deformableOwners.erase(id);
     m_liquid->Remove(m_liquid->Handle(id));
-    LeaveRagdoll(id,0,error);m_physicalAnimations.erase(id);
+    LeaveRagdoll(id,0,error);m_physicalAnimations.erase(id);m_balances.erase(id);
     EntityRecord* e = FindEntity(id);
     if (e->lifecycle == EntityLifecycle::Destroyed) return true;
     const bool extra=e->slot==std::numeric_limits<std::size_t>::max();
@@ -1330,7 +1330,7 @@ void RuntimeWorld::Destroy() {
     m_ragdolls.clear();m_ragdollReturns.clear();m_ragdollAutostarted.clear();
     ClearDeformables();m_deformableOwners.clear();
     ClearCharacters();
-    m_animationInstances.clear();m_physicalAnimations.clear();m_animationOwners.clear();
+    m_animationInstances.clear();m_physicalAnimations.clear();m_balances.clear();m_animationOwners.clear();
     m_jointOwners.clear();m_jointParticipants.clear();m_runtimeJoints.clear();
     m_liquid=std::make_unique<LiquidSystem>();m_hasLiquid=false;m_navigation.reset();m_ui.reset();m_localization.reset();pointerCapture=false;m_scriptDefinitions.clear();m_scriptOwners.clear();m_characterOwners.clear();m_touchEntityHistory.clear();m_touchArticulationHistory.clear();m_hasScripts=false;m_hasNavigation=false;
     EndAudio();

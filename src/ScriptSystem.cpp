@@ -238,6 +238,12 @@ export class Ragdoll {
  configurePhysical(settings){return call('ragdollPhysicalConfigure',this.id,settings)}
  setMode(mode,options={}){return call('ragdollMode',this.id,mode,options)}
  get physicalState(){return call('ragdollPhysicalState',this.id)}
+ get balanceDiagnostics(){return call('ragdollBalanceDiagnostics',this.id)}
+ set balanceDiagnostics(enabled){call('ragdollBalanceDiagnostics',this.id,enabled)}
+ configureBalance(settings){return call('ragdollBalanceConfigure',this.id,settings)}
+ requestBalance(task='stand',options={}){return call('ragdollBalanceRequest',this.id,task,options)}
+ cancelBalance(){return call('ragdollBalanceCancel',this.id)}
+ get balanceState(){const r=call('ragdollBalanceState',this.id);return {...r,supports:r.supports.map(s=>({...s,entity:entity(s.entityId)}))}}
 }
 export class Animation {
  constructor(entityId){this.entityId=entityId}
@@ -1026,6 +1032,36 @@ JSValue ScriptSystem::Impl::Native(JSContext* c,JSValueConst,int argc,JSValueCon
             if(argc<3)return JS_NewBool(c,definition->ragdoll->receiveContactEvents);
             if(!JS_IsBool(arg(2)))return JS_ThrowTypeError(c,"boolean required");
             return JS_NewBool(c,world.SetRagdollContactEvents(id,JS_ToBool(c,arg(2))));
+        }
+        if(op=="ragdollBalanceDiagnostics"){
+            if(!definition->ragdoll->balance)return JS_ThrowTypeError(c,"balance configuration unavailable");
+            if(argc<3)return JS_NewBool(c,definition->ragdoll->balance->visualize);
+            if(!JS_IsBool(arg(2)))return JS_ThrowTypeError(c,"balance diagnostics requires boolean");
+            return JS_NewBool(c,world.SetPhysicalBalanceDiagnostics(id,JS_ToBool(c,arg(2))));
+        }
+        if(op=="ragdollBalanceConfigure"){
+            std::optional<BalanceDefinition> settings;std::string error,json;
+            if(!JS_IsNull(arg(2))){BalanceDefinition parsed;if(!s->Json(arg(2),json,error)||!ParseBalanceDefinition(json,parsed,error))return JS_ThrowTypeError(c,"balance settings: %s",error.c_str());settings=std::move(parsed);}
+            return world.ConfigurePhysicalBalance(id,settings,error)?JS_TRUE:JS_ThrowTypeError(c,"%s",error.c_str());
+        }
+        if(op=="ragdollBalanceCancel"){world.CancelPhysicalBalance(id);return JS_TRUE;}
+        if(op=="ragdollBalanceRequest"){
+            RuntimeWorld::BalanceRequest request;const auto task=String(c,arg(2));if(task=="stand")request.task=BalanceTask::Stand;else if(task=="recover")request.task=BalanceTask::Recover;else return JS_ThrowTypeError(c,"balance task must be stand/recover");
+            std::string error,json;if(!s->Json(arg(3),json,error))return JS_ThrowTypeError(c,"%s",error.c_str());
+            try{auto options=nlohmann::json::parse(json);if(!options.is_object())throw std::runtime_error("balance options must be an object");for(auto it=options.begin();it!=options.end();++it)if(it.key()!="stepping"&&it.key()!="effort"&&it.key()!="motorHandoff")throw std::runtime_error("unknown balance option: "+it.key());request.stepping=options.value("stepping",true);request.effort=options.value("effort",true);request.motorHandoff=options.value("motorHandoff",false);}catch(const std::exception& e){return JS_ThrowTypeError(c,"%s",e.what());}
+            return world.RequestPhysicalBalance(id,request,error)?JS_TRUE:JS_ThrowTypeError(c,"%s",error.c_str());
+        }
+        if(op=="ragdollBalanceState"){
+            const auto* state=world.PhysicalBalanceSnapshot(id);BalanceHistory history;BalanceObservation observation;if(state){history=state->controller.History();observation=state->controller.Observation();}
+            const char* statuses[]={"idle","executing","succeeded","failed","cancelled"};const char* tasks[]={"none","stand","recover"};auto o=JS_NewObject(c);
+            JS_SetPropertyStr(c,o,"task",JS_NewString(c,tasks[int(history.task)]));JS_SetPropertyStr(c,o,"status",JS_NewString(c,statuses[int(history.progress)]));JS_SetPropertyStr(c,o,"pending",state&&state->pending?JS_NewString(c,tasks[int(state->pending->task)]):JS_NULL);
+            JS_SetPropertyStr(c,o,"diagnostic",JS_NewString(c,state?state->diagnostic.c_str():""));JS_SetPropertyStr(c,o,"available",JS_NewBool(c,observation.available));
+            JS_SetPropertyStr(c,o,"com",Vec(c,observation.com));JS_SetPropertyStr(c,o,"velocity",Vec(c,observation.velocity));JS_SetPropertyStr(c,o,"gravity",Vec(c,observation.gravity));JS_SetPropertyStr(c,o,"up",Vec(c,observation.up));
+            JS_SetPropertyStr(c,o,"mass",JS_NewFloat64(c,observation.mass));JS_SetPropertyStr(c,o,"height",JS_NewFloat64(c,observation.height));JS_SetPropertyStr(c,o,"upright",JS_NewFloat64(c,observation.upright));JS_SetPropertyStr(c,o,"speed",JS_NewFloat64(c,observation.speed));JS_SetPropertyStr(c,o,"saturated",JS_NewUint32(c,observation.saturated));
+            JS_SetPropertyStr(c,o,"elapsed",JS_NewFloat64(c,history.elapsed));JS_SetPropertyStr(c,o,"settled",JS_NewFloat64(c,history.settled));JS_SetPropertyStr(c,o,"referenceTime",JS_NewFloat64(c,history.referenceTime));
+            auto supports=JS_NewArray(c);for(unsigned f=0;f<2;++f){const auto& support=observation.supports[f];auto v=JS_NewObject(c);JS_SetPropertyStr(c,v,"entityId",JS_NewString(c,std::to_string(world.EntityIdOfBody(support.body)).c_str()));JS_SetPropertyStr(c,v,"point",Vec(c,support.point));JS_SetPropertyStr(c,v,"normal",Vec(c,support.normal));JS_SetPropertyStr(c,v,"velocity",Vec(c,support.velocity));JS_SetPropertyStr(c,v,"loadImpulse",JS_NewFloat64(c,support.load));JS_SetPropertyStr(c,v,"contacts",JS_NewUint32(c,support.contacts));JS_SetPropertyUint32(c,supports,f,v);}JS_SetPropertyStr(c,o,"supports",supports);
+            auto step=JS_NewObject(c);JS_SetPropertyStr(c,step,"foot",history.swing>=0?JS_NewInt32(c,history.swing):JS_NULL);JS_SetPropertyStr(c,step,"time",JS_NewFloat64(c,history.swingTime));JS_SetPropertyStr(c,step,"lifted",JS_NewBool(c,history.lifted));JS_SetPropertyStr(c,step,"landings",JS_NewUint32(c,history.landings));
+            auto target=world.Physics().GetTransform(history.plannedSupport);JS_SetPropertyStr(c,step,"landing",world.Physics().IsBodyEnabled(history.plannedSupport)?Vec(c,target.position+target.rotation*history.landingLocal):JS_NULL);JS_SetPropertyStr(c,o,"step",step);return o;
         }
         if(op=="ragdollPhysicalConfigure"){
             std::optional<PhysicalAnimationSettings> settings;std::string error,json;

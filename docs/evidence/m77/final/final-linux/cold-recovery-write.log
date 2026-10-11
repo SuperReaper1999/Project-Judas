@@ -1,0 +1,23 @@
+Renderer fragment texture units: 32 (material path uses 12)
+PASS actual GL host: 
+PASS normal project loads: 
+PASS logical project controls: 
+PASS normal authored/captured scene: 
+PASS normal immutable assets and world publish: 
+PASS ordinary game starts: 
+PASS authored configuration does not activate physical authority
+PASS shared immutable asset and distinct second rig use ordinary resource sharing
+PASS capture contains an owned native task
+PASS atomic save retains physical and native task state: 
+PASS active task declares its required save participant
+PASS detached restore candidate is ready
+PASS missing/newer/truncated native task participant is rejected
+PASS detached restore candidate is ready
+PASS missing/newer/truncated native task participant is rejected
+PASS detached restore candidate is ready
+PASS missing/newer/truncated native task participant is rejected
+PASS failed detached restores leave live physical state untouched
+PASS ordinary lab callback health matches deliberate fault policy
+PASS real final pose/skinning and diagnostic rendering path executes
+PASS Stop destroys the owned runtime world
+SUMMARY 21 checks 0 failures

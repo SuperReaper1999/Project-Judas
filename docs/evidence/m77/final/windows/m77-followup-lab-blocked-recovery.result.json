@@ -1,0 +1,11 @@
+﻿{
+    "label":  "lab-blocked-recovery",
+    "exitcode":  0,
+    "command":  "C:\\JudasValidation\\M77TestBinFollowup\\judas_balance_lab_tests.exe",
+    "arguments":  [
+                      "C:\\JudasValidation\\M77ResultsFollowup\\blocked-recovery",
+                      "blocked-recovery"
+                  ],
+    "cwd":  "C:\\JudasValidation\\Source",
+    "seconds":  3.0864336999999997
+}

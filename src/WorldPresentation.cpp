@@ -133,6 +133,7 @@ void DrawWorldGeometry(Renderer& r, const RuntimeWorld& world, const GameSession
         DrawRenderable(r, world.Resources(), s.render, t.position, t.rotation, t.scale, 1.0f, world.CameraTexture(s.render.textureCamera),world.AnimationSkin(s.id,alpha));
     }
     world.DrawDeformables(r,alpha);
+    world.DrawPhysicalBalances(r);
     r.SetMaterialBindings({});
     if (options.includeTerrain) {
         for (const RuntimeWorld::Terrain& t : world.Terrains()) {

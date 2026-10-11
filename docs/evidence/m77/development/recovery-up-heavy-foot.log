@@ -1,0 +1,80 @@
+JOINT 0 torque=0.000,0.000,0.000 active=1 target=1.00,0.00,0.00,0.00
+JOINT 1 torque=0.000,0.000,0.000 active=1 target=1.00,0.00,0.00,0.00
+JOINT 2 torque=0.000,0.000,0.000 active=1 target=1.00,0.00,0.00,0.00
+BODY 0 step=0 pos=-0.000,0.397,-0.000 up=0.000 contacts=0 valid=1 impulse=0.000
+BODY 3 step=0 pos=-0.180,0.317,-1.100 up=0.000 contacts=0 valid=1 impulse=0.000
+BODY 6 step=0 pos=0.180,0.317,-1.100 up=0.000 contacts=0 valid=1 impulse=0.000
+step=0 rootHeight=0.3973 com=0.0000,0.3429,-0.8643 speed=0.0000 up=0.0000 contacts=0
+step=60 rootHeight=0.1500 com=0.0004,0.2584,-0.8725 speed=0.0002 up=0.0004 contacts=16
+JOINT 0 torque=-0.000,-0.000,0.000 active=1 target=1.00,0.08,-0.00,0.00
+JOINT 1 torque=0.000,0.000,0.000 active=1 target=0.90,-0.43,0.00,0.00
+JOINT 2 torque=-0.000,-0.000,-0.000 active=1 target=0.94,0.35,0.00,-0.00
+BODY 0 step=120 pos=0.001,0.150,-0.050 up=0.000 contacts=3 valid=1 impulse=0.890
+BODY 3 step=120 pos=-0.180,0.298,-1.098 up=-0.008 contacts=4 valid=1 impulse=1.844
+BODY 6 step=120 pos=0.180,0.298,-1.097 up=-0.008 contacts=4 valid=1 impulse=1.844
+step=120 rootHeight=0.1500 com=0.0004,0.2584,-0.8725 speed=0.0000 up=0.0004 contacts=16
+step=180 rootHeight=0.6532 com=0.0002,0.3645,-0.8746 speed=0.1241 up=0.4503 contacts=8
+JOINT 0 torque=-1.388,0.001,0.623 active=1 target=1.00,0.03,-0.00,0.00
+JOINT 1 torque=-6.013,0.000,0.000 active=1 target=0.99,-0.15,0.00,0.00
+JOINT 2 torque=-13.855,0.510,0.239 active=1 target=0.91,-0.42,-0.00,-0.00
+BODY 0 step=240 pos=0.000,1.115,-0.452 up=0.856 contacts=0 valid=1 impulse=0.000
+BODY 3 step=240 pos=-0.180,0.298,-1.098 up=-0.007 contacts=4 valid=1 impulse=2.292
+BODY 6 step=240 pos=0.180,0.298,-1.098 up=-0.007 contacts=4 valid=1 impulse=2.250
+step=240 rootHeight=1.1150 com=0.0004,0.4639,-0.9530 speed=0.1210 up=0.8564 contacts=8
+step=300 rootHeight=1.2512 com=-0.0002,0.4918,-1.0645 speed=0.1114 up=0.9988 contacts=8
+JOINT 0 torque=0.239,0.134,0.206 active=1 target=1.00,0.00,-0.00,0.00
+JOINT 1 torque=-0.076,0.000,0.000 active=1 target=1.00,0.00,0.00,0.00
+JOINT 2 torque=2.895,-0.505,-0.041 active=1 target=0.70,-0.71,-0.00,-0.00
+BODY 0 step=360 pos=-0.000,1.245,-1.044 up=1.000 contacts=0 valid=1 impulse=0.000
+BODY 3 step=360 pos=-0.180,0.298,-1.098 up=-0.006 contacts=4 valid=1 impulse=2.310
+BODY 6 step=360 pos=0.180,0.298,-1.098 up=-0.006 contacts=4 valid=1 impulse=2.266
+step=360 rootHeight=1.2453 com=0.0001,0.4899,-1.0812 speed=0.0042 up=0.9999 contacts=8
+step=420 rootHeight=1.2453 com=0.0002,0.4899,-1.0814 speed=0.0009 up=0.9998 contacts=8
+JOINT 0 torque=0.329,0.137,0.144 active=1 target=1.00,0.00,-0.00,0.00
+JOINT 1 torque=0.217,0.000,0.000 active=1 target=1.00,0.00,0.00,0.00
+JOINT 2 torque=3.327,0.119,-0.139 active=1 target=0.70,-0.71,0.00,0.00
+BODY 0 step=480 pos=0.000,1.245,-1.045 up=1.000 contacts=0 valid=1 impulse=0.000
+BODY 3 step=480 pos=-0.180,0.298,-1.098 up=-0.006 contacts=4 valid=1 impulse=2.293
+BODY 6 step=480 pos=0.180,0.298,-1.098 up=-0.006 contacts=4 valid=1 impulse=2.285
+step=480 rootHeight=1.2453 com=0.0002,0.4899,-1.0814 speed=0.0006 up=0.9998 contacts=8
+step=540 rootHeight=1.2453 com=0.0002,0.4899,-1.0814 speed=0.0002 up=0.9998 contacts=8
+JOINT 0 torque=0.329,0.135,0.161 active=1 target=1.00,0.00,-0.00,0.00
+JOINT 1 torque=0.219,0.000,0.000 active=1 target=1.00,0.00,0.00,0.00
+JOINT 2 torque=3.352,-0.019,-0.117 active=1 target=0.70,-0.71,0.00,-0.00
+BODY 0 step=600 pos=0.000,1.245,-1.045 up=1.000 contacts=0 valid=1 impulse=0.000
+BODY 3 step=600 pos=-0.180,0.298,-1.098 up=-0.006 contacts=4 valid=1 impulse=2.297
+BODY 6 step=600 pos=0.180,0.298,-1.098 up=-0.006 contacts=4 valid=1 impulse=2.281
+step=600 rootHeight=1.2453 com=0.0002,0.4899,-1.0814 speed=0.0001 up=0.9998 contacts=8
+step=660 rootHeight=1.2453 com=0.0002,0.4899,-1.0814 speed=0.0000 up=0.9998 contacts=8
+JOINT 0 torque=0.329,0.135,0.157 active=1 target=1.00,0.00,-0.00,0.00
+JOINT 1 torque=0.219,0.000,0.000 active=1 target=1.00,0.00,0.00,0.00
+JOINT 2 torque=3.348,0.008,-0.121 active=1 target=0.70,-0.71,0.00,-0.00
+BODY 0 step=720 pos=0.000,1.245,-1.045 up=1.000 contacts=0 valid=1 impulse=0.000
+BODY 3 step=720 pos=-0.180,0.298,-1.098 up=-0.006 contacts=4 valid=1 impulse=2.296
+BODY 6 step=720 pos=0.180,0.298,-1.098 up=-0.006 contacts=4 valid=1 impulse=2.282
+step=720 rootHeight=1.2453 com=0.0002,0.4899,-1.0814 speed=0.0000 up=0.9998 contacts=8
+step=780 rootHeight=1.2453 com=0.0002,0.4899,-1.0814 speed=0.0000 up=0.9998 contacts=8
+JOINT 0 torque=0.329,0.135,0.158 active=1 target=1.00,0.00,-0.00,0.00
+JOINT 1 torque=0.219,0.000,0.000 active=1 target=1.00,0.00,0.00,0.00
+JOINT 2 torque=3.348,0.003,-0.120 active=1 target=0.70,-0.71,0.00,-0.00
+BODY 0 step=840 pos=0.000,1.245,-1.045 up=1.000 contacts=0 valid=1 impulse=0.000
+BODY 3 step=840 pos=-0.180,0.298,-1.098 up=-0.006 contacts=4 valid=1 impulse=2.296
+BODY 6 step=840 pos=0.180,0.298,-1.098 up=-0.006 contacts=4 valid=1 impulse=2.282
+step=840 rootHeight=1.2453 com=0.0002,0.4899,-1.0814 speed=0.0000 up=0.9998 contacts=8
+step=900 rootHeight=1.2453 com=0.0002,0.4899,-1.0814 speed=0.0000 up=0.9998 contacts=8
+JOINT 0 torque=0.329,0.135,0.158 active=1 target=1.00,0.00,-0.00,0.00
+JOINT 1 torque=0.219,0.000,0.000 active=1 target=1.00,0.00,0.00,0.00
+JOINT 2 torque=3.348,0.004,-0.120 active=1 target=0.70,-0.71,0.00,-0.00
+BODY 0 step=960 pos=0.000,1.245,-1.045 up=1.000 contacts=0 valid=1 impulse=0.000
+BODY 3 step=960 pos=-0.180,0.298,-1.098 up=-0.006 contacts=4 valid=1 impulse=2.296
+BODY 6 step=960 pos=0.180,0.298,-1.098 up=-0.006 contacts=4 valid=1 impulse=2.282
+step=960 rootHeight=1.2453 com=0.0002,0.4899,-1.0814 speed=0.0000 up=0.9998 contacts=8
+step=1020 rootHeight=1.2453 com=0.0002,0.4899,-1.0814 speed=0.0000 up=0.9998 contacts=8
+JOINT 0 torque=0.329,0.135,0.158 active=1 target=1.00,0.00,-0.00,0.00
+JOINT 1 torque=0.219,0.000,0.000 active=1 target=1.00,0.00,0.00,0.00
+JOINT 2 torque=3.348,0.004,-0.120 active=1 target=0.70,-0.71,0.00,-0.00
+BODY 0 step=1080 pos=0.000,1.245,-1.045 up=1.000 contacts=0 valid=1 impulse=0.000
+BODY 3 step=1080 pos=-0.180,0.298,-1.098 up=-0.006 contacts=4 valid=1 impulse=2.296
+BODY 6 step=1080 pos=0.180,0.298,-1.098 up=-0.006 contacts=4 valid=1 impulse=2.282
+step=1080 rootHeight=1.2453 com=0.0002,0.4899,-1.0814 speed=0.0000 up=0.9998 contacts=8
+step=1140 rootHeight=1.2453 com=0.0002,0.4899,-1.0814 speed=0.0000 up=0.9998 contacts=8

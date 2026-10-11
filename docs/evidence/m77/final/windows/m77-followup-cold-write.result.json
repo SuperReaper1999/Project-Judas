@@ -1,0 +1,11 @@
+﻿{
+    "label":  "cold-write",
+    "exitcode":  0,
+    "command":  "C:\\JudasValidation\\M77TestBinFollowup\\judas_balance_lab_tests.exe",
+    "arguments":  [
+                      "C:\\JudasValidation\\M77ResultsFollowup\\cold-",
+                      "cold-write"
+                  ],
+    "cwd":  "C:\\JudasValidation\\Source",
+    "seconds":  2.3964662999999997
+}

@@ -1,0 +1,11 @@
+﻿{
+    "freeBytes":  41893888,
+    "verifiedFiles":  853,
+    "sourceRestored":  true,
+    "removedBytes":  null,
+    "removedOwnedICUObjectFiles":  0,
+    "mismatches":  [
+
+                   ],
+    "preserved":  "sources, SDK/tools, libraries, native executables, licenses, projects, receipts"
+}

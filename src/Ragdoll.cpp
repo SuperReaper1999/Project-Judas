@@ -3,6 +3,7 @@
 #include <set>
 #include <cmath>
 bool ValidRagdollDefinition(const RagdollDefinition& d,std::string& error){
+    if(d.balance&&!ValidBalanceDefinition(*d.balance,error))return false;
     if(d.physicalAnimation&&!ValidPhysicalAnimationSettings(*d.physicalAnimation,error))return false;
     if(d.bones.empty()||d.bones.size()>32){error="ragdoll needs 1..32 mapped bones";return false;}
     std::set<std::string> keys;unsigned roots=0;
@@ -20,6 +21,7 @@ bool ValidRagdollDefinition(const RagdollDefinition& d,std::string& error){
     return true;
 }
 bool RagdollDefinitionsEqual(const RagdollDefinition& a,const RagdollDefinition& b){
+    if(bool(a.balance)!=bool(b.balance)||(a.balance&&SerializeBalanceDefinition(*a.balance)!=SerializeBalanceDefinition(*b.balance)))return false;
     if(bool(a.physicalAnimation)!=bool(b.physicalAnimation)||(a.physicalAnimation&&!PhysicalAnimationSettingsEqual(*a.physicalAnimation,*b.physicalAnimation)))return false;
     if(a.enabled!=b.enabled||a.playOnStart!=b.playOnStart||a.selfCollision!=b.selfCollision||a.receiveContactEvents!=b.receiveContactEvents||a.bones.size()!=b.bones.size())return false;
     for(size_t i=0;i<a.bones.size();++i){const auto& x=a.bones[i];const auto& y=b.bones[i];

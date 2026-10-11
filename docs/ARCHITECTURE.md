@@ -1,5 +1,21 @@
 # Architecture
 
+## M77 physical-balance candidate (uncommitted; human review pending)
+
+[M77](M77.md) adds explicit two-chain physical balance, bounded corrective steps
+and rest-reference get-up tasks. Configuration is default-off and does not activate
+physics. Actual per-body gravity, COM/motion and solved contacts feed bounded paired
+M45 joint drives; normal PhysicsWorld integrates once. The root and feet remain
+fully dynamic and unpinned. A planned foothold/reference is never physical support.
+M77 owns mapped posture while opted in; M70/shared IK cannot also command those
+actuators. Clips/layers continue for unmapped joints and later visual return; actual
+physical pose publishes through M47, interpolation and normal skinning/sockets.
+Modern saves retain semantic task history and real bodies, reacquiring observations
+on resume. Whole-articulation region ownership is retained; individual-bone adoption
+is refused. This is a bounded mechanical-rig capability, not universal humanoid
+recovery, a gait generator or a motor root servo. Candidate/platform/human status
+and inherited numerical limitations are recorded in M77; no acceptance is implied.
+
 ## M75 author-time local terrain
 
 [M75](M75.md) adds finite local height/paint source, shared CPU brushes and guarded cooking into ordinary mesh/texture/static collision assets. Renderer owns GPU publication; runtime uses existing geometry, motor, navigation, region and save paths. Local +Y is an authoring axis, not world up or a gravity field. RadialTerrain remains unchanged; this is no planet sculptor or runtime excavation. Source is separate from immutable cooked content; Play/export reject stale cooks. Linux human acceptance was recorded on 2026-10-10, including the terrain UI activation follow-up; native Windows VM checks passed, with physical Windows GPU/input acceptance still outstanding. M74 is checkpointed at `fccbf84164cb430f78651af64cddb68afeac442a`, provisionally with human review pending.
@@ -22,8 +38,10 @@ describe the evidence available at their original milestones.
 
 ## Current reference and historical capability overview
 
-Accepted baseline: `b7d7f4142b243cd57d9998f4952857e67e5d84a8`
-(Lastlight UI/wall pursuit). M73 owned signals were accepted and checkpointed at
+Current accepted source baseline: `ab3dfbab13585680a9e6cc92fa318c8d95012979`
+(post-M76 housekeeping/demo game). M76 human validation remains pending.
+Historical Lastlight UI/wall-pursuit checkpoint:
+`b7d7f4142b243cd57d9998f4952857e67e5d84a8`. M73 owned signals were accepted and checkpointed at
 `18650ba23c23eaaab0542d6e0055e33cc14d1049`; subsequent Lastlight work is project
 content plus the accepted generic imported UI-image UV correction.
 [M72](M72.md) received operator desktop acceptance on 2026-10-09. The optional

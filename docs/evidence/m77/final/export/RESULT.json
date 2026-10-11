@@ -1,0 +1,33 @@
+{
+  "command": [
+    "bwrap",
+    "--ro-bind",
+    "/",
+    "/",
+    "--bind",
+    "/tmp",
+    "/tmp",
+    "--dev-bind",
+    "/dev",
+    "/dev",
+    "--tmpfs",
+    "/home/conner/Documents/GitHub/Project-Judas",
+    "--chdir",
+    "/tmp/Judas M77 moved package \u03a9/unrelated cwd",
+    "--setenv",
+    "XDG_DATA_HOME",
+    "/tmp/Judas M77 moved package \u03a9/data",
+    "--setenv",
+    "XDG_CONFIG_HOME",
+    "/tmp/Judas M77 moved package \u03a9/config",
+    "--setenv",
+    "JUDAS_TEST_SCRIPT",
+    "/tmp/Judas M77 moved package \u03a9/services.harness",
+    "/tmp/Judas M77 moved package \u03a9/Balance Lab/judas"
+  ],
+  "exitcode": 0,
+  "seconds": 0.004040342000280361,
+  "source_hidden": true,
+  "moved_package": "/tmp/Judas M77 moved package \u03a9/Balance Lab",
+  "run": "process-only namespace succeeded outside restricted execution sandbox; source checkout inaccessible"
+}

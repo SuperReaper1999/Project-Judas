@@ -1,0 +1,25 @@
+Renderer fragment texture units: 32 (material path uses 12)
+PASS actual GL host: 
+PASS normal project loads: 
+PASS logical project controls: 
+PASS normal authored/captured scene: 
+PASS normal immutable assets and world publish: 
+PASS ordinary benchmark game starts
+PASS benchmark explicit passive authority
+PASS benchmark explicit passive authority
+PASS benchmark explicit passive authority
+PASS benchmark explicit passive authority
+PASS benchmark explicit native task
+PASS benchmark explicit native task
+PASS benchmark explicit native task
+PASS benchmark explicit native task
+ACTOR 10 status=2 root=-2.99802,1.39876,-0.000559746 height=1.39919 up=0.999991 speed=4.27315e-07 supports=4/4 landings=0 reason=measured supported physical standing
+ACTOR 11 status=2 root=0.00321032,1.34846,-0.00383134 height=1.34917 up=0.999995 speed=1.85407e-07 supports=4/4 landings=0 reason=measured supported physical standing
+ACTOR 12 status=2 root=3.00012,1.4178,0.00176857 height=1.41834 up=0.999928 speed=1.73471e-06 supports=4/4 landings=0 reason=measured supported physical standing
+ACTOR 13 status=2 root=6.00198,1.39875,-0.000631289 height=1.39919 up=0.999991 speed=4.70453e-07 supports=4/4 landings=0 reason=measured supported physical standing
+ACTOR 10 status=2 root=-2.99802,1.39876,-0.000559746 height=1.39919 up=0.999991 speed=4.27315e-07 supports=4/4 landings=0 reason=measured supported physical standing
+PASS bounded profiler records representative workload without dropped events
+PASS ordinary lab callback health matches deliberate fault policy
+PASS real final pose/skinning and diagnostic rendering path executes
+PASS Stop destroys the owned runtime world
+SUMMARY 18 checks 0 failures

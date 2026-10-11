@@ -1,0 +1,20 @@
+PASS actual GL host: 
+PASS normal project loads: 
+PASS logical project controls: 
+PASS normal authored/captured scene: 
+PASS normal immutable assets and world publish: 
+PASS ordinary game starts: 
+PASS authored configuration does not activate physical authority
+PASS shared immutable asset and distinct second rig use ordinary resource sharing
+ACTOR 10 status=2 root=-3.04586,101.347,0.0130082 height=1.39554 up=0.999993 speed=0.028616 supports=1/1 landings=0 reason=measured supported physical standing
+PASS real JS request makes full dynamic authority with explicit motor handoff
+PASS normal resource/JS path reaches actual standing
+PASS ordinary owner zero-gravity selection accepted
+PASS physical balance samples actual bone gravity without inheriting owner override
+PASS ordinary mapped-body gravity selection accepted
+PASS incoherent/zero mapped-body gravity refuses physical standing honestly
+PASS cancel releases actuators and preserves physical articulation
+PASS ordinary lab callback health matches deliberate fault policy
+PASS real final pose/skinning and diagnostic rendering path executes
+PASS Stop destroys the owned runtime world
+SUMMARY 18 checks 0 failures

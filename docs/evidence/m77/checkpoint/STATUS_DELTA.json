@@ -1,0 +1,18 @@
+{
+  "implementationBase": "ab3dfbab13585680a9e6cc92fa318c8d95012979",
+  "authorization": "M78 Phase 0 authorizes provisional M77 checkpoint and normal push; not human acceptance",
+  "verifiedPreEditFingerprintCount": 1254,
+  "preEditMismatches": [],
+  "historicalManifest": "docs/evidence/m77/checkpoint/PRE_CHECKPOINT_FINGERPRINTS.json",
+  "statusOnlyEdits": [
+    {
+      "path": "docs/M77.md",
+      "before": "d311eafa89bd19cce8c9ba1ec81d3037bd436cc1b45ee6458a4a67b39201448b",
+      "after": "b9826b6866a1e189fbe17fe4c89072f595aeab199153d8ed191ab3e5654e51fd"
+    }
+  ],
+  "implementationChanges": [],
+  "historicalReceipts": "Original candidate observations and REPOSITORY_STATUS.json remain historical pre-checkpoint receipts.",
+  "humanValidation": "NOT HUMAN VALIDATED / NOT HUMAN TESTED",
+  "physicalWindowsAcceptance": "outstanding"
+}

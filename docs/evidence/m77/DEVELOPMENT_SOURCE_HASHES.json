@@ -1,0 +1,14 @@
+{
+  "status": "INCOMPLETE DEVELOPMENT STATE - NOT FINAL CANDIDATE",
+  "base": "ab3dfbab13585680a9e6cc92fa318c8d95012979",
+  "sha256": {
+    "CMakeLists.txt": "47f351cd8995bd39b5f67e66b156cb34b2c7f6d09b444abad5c9f17f258101e6",
+    "src/JointSolver.cpp": "72e43f81cb8c773a8029528fc0ac290b41966614a405a468c93cc45132726444",
+    "src/JointTypes.h": "dae374f7a6318dc35eed94283db7e04c5b7a034f8cb0c78c0ec766cf8b320b18",
+    "src/PhysicsWorld.cpp": "e805ec3cf6fa86fe4e6fc78ab6576e2324283bf47153561b0d8ffee1a71916ae",
+    "src/PhysicsWorld.h": "003f3db7ac86e6624db127fa1571219c785cd95773be2cab397b701d19029086",
+    "tests/PhysicalBalanceFoundationTests.cpp": "24dccf04c515e5e5b71f74a8ecbaefee000e390242fde4192007d151d8b70605",
+    "docs/M77.md": "1fbcaf34887e486f9b1020a34991584a9c2133cfd47db306677296174cd2315e",
+    "docs/evidence/m77/DEVELOPMENT.md": "6f12d7d5cefe7f5bd3f81d66e1af12ca1ff5ee0c47abb0663af2ce29c94ababb"
+  }
+}

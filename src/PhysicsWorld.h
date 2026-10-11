@@ -117,6 +117,7 @@ public:
     bool DestroyJoint(JointHandle handle);
     bool GetJoint(JointHandle handle,JointState& state) const;
     bool SetJoint(JointHandle handle,const JointSettings& settings);
+    bool SetJointAngularDrive(JointHandle, const JointAngularDrive&);
 
     bool Init();
     void Shutdown();
@@ -189,6 +190,16 @@ public:
         float normalImpulse=0; // available accumulated support impulse
     };
     const std::vector<TouchEvent>& LastStepTouchEvents() const;
+    struct BodyContactSample {
+        BodyHandle other;
+        glm::vec3 point{0},normal{0},supportVelocity{0}; // normal toward queried body
+        float normalImpulse=0,separation=0;
+        bool sleeping=false;
+    };
+    // Native fixed-boundary observation of completed solver rows, not a ray or
+    // synthetic support test. False means stale owner or bounded sample overflow.
+    bool ReadBodyContactSample(BodyHandle,std::vector<BodyContactSample>&,
+        unsigned maximumContacts=32,unsigned maximumCandidates=64) const;
     void ClearTouchHistory();
     // Massless character geometry participates in queries/events, never rigid response.
     BodyHandle CreateQueryCapsule(float radius,float halfHeight,const BodyTransform&);
@@ -319,6 +330,7 @@ public:
     glm::vec3 GetPointVelocity(BodyHandle,const glm::vec3& worldPoint) const;
     glm::vec3 GetPreviousPointVelocity(BodyHandle,const glm::vec3& worldPoint) const;
     float GetMass(BodyHandle handle) const;
+    glm::vec3 GetCenterOfMass(BodyHandle handle) const;
     bool SetMassDistribution(BodyHandle,float,const glm::mat3&);
     void PersistJointSolverState(SaveArchive&,JointHandle);
     void ApplyLinearImpulse(BodyHandle handle, const glm::vec3& impulse);    void ApplyImpulseAtPoint(BodyHandle handle, const glm::vec3& impulse,

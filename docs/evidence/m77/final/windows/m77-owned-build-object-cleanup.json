@@ -1,0 +1,7 @@
+﻿{
+    "scope":  "C:\\JudasValidation\\Build\\**\\*.obj",
+    "freeBytes":  158171136,
+    "preserved":  "source, headers, SDK/tools, libraries, native executables, final packages, user data and receipts",
+    "removedFiles":  267,
+    "removedBytes":  115829677
+}

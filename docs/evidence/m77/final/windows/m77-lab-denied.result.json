@@ -1,0 +1,11 @@
+﻿{
+    "label":  "lab-denied",
+    "exitcode":  0,
+    "command":  "C:\\JudasValidation\\M77TestBin\\judas_balance_lab_tests.exe",
+    "arguments":  [
+                      "C:\\JudasValidation\\M77Results\\denied",
+                      "denied"
+                  ],
+    "cwd":  "C:\\JudasValidation\\Source",
+    "seconds":  3.4952726999999997
+}

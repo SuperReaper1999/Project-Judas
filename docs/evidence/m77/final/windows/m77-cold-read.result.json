@@ -1,0 +1,11 @@
+﻿{
+    "label":  "cold-read",
+    "exitcode":  1,
+    "command":  "C:\\JudasValidation\\M77TestBin\\judas_balance_lab_tests.exe",
+    "arguments":  [
+                      "C:\\JudasValidation\\M77Results\\cold-",
+                      "cold-read"
+                  ],
+    "cwd":  "C:\\JudasValidation\\Source",
+    "seconds":  2.4332758
+}

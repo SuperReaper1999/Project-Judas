@@ -27,6 +27,7 @@ private:
  static void Articulation(RuntimeWorld&,SaveArchive&);
  static void ArticulationExtended(RuntimeWorld&,SaveArchive&,unsigned);
  static void PhysicalAnimation(RuntimeWorld&,SaveArchive&);
+ static void PhysicalBalance(RuntimeWorld&,SaveArchive&);
  static void Navigation(RuntimeWorld&,SaveArchive&);
  static void Deformables(RuntimeWorld&,SaveArchive&);
  static void Audio(RuntimeWorld&,SaveArchive&);

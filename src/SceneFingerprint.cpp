@@ -409,7 +409,7 @@ bool ComputeSceneFingerprint(const Scene& scene, std::string& outFingerprint,
             w.U64(o.id);w.U32(unsigned(o.gravitySelection->mode));w.U64(o.gravitySelection->source);w.Vector(o.gravitySelection->acceleration);}}
     size_t motors=0;for(const auto& o:scene.Objects())motors+=o.characterMotor.has_value();
     if(motors){w.Text("Judas.CharacterMotor.1");w.U64(motors);for(const auto& o:scene.Objects())if(o.characterMotor){const auto& m=*o.characterMotor;
-        std::string error;if(!ValidCharacterMotor(m,error))w.Fail(error);if(o.body||(o.ragdoll&&!o.ragdoll->physicalAnimation))w.Fail("character motor cannot also own a root body/legacy ragdoll; an explicit physical-animation authority policy is required");
+        std::string error;if(!ValidCharacterMotor(m,error))w.Fail(error);if(o.body||(o.ragdoll&&!o.ragdoll->physicalAnimation&&!o.ragdoll->balance))w.Fail("character motor cannot also own a root body/legacy ragdoll; an explicit physical-animation authority policy is required");
         if(o.transform.scale!=glm::vec3(1))w.Fail("character motor dimensions are in simulation metres; entity scale must be one");
         w.U64(o.id);
         w.Boolean(m.enabled);
@@ -438,6 +438,7 @@ bool ComputeSceneFingerprint(const Scene& scene, std::string& outFingerprint,
     // Optional extensions preserve canonical schema-5 fingerprints for older content.
     for(const auto& o:scene.Objects()){
         if(o.animation&&o.animation->fullBodyIK){w.Text("Judas.FullBodyIK.1");w.U64(o.id);w.Text(SerializeFullBodyIKSettings(*o.animation->fullBodyIK));}
+        if(o.ragdoll&&o.ragdoll->balance){w.Text("Judas.PhysicalBalance.1");w.U64(o.id);w.Text(SerializeBalanceDefinition(*o.ragdoll->balance));}
         if(o.ragdoll&&o.ragdoll->physicalAnimation){w.Text("Judas.PhysicalAnimation.1");w.U64(o.id);w.Text(SerializePhysicalAnimationSettings(*o.ragdoll->physicalAnimation));}
         if(o.ragdoll&&o.ragdoll->receiveContactEvents){w.Text("Judas.RagdollContactEvents.1");w.U64(o.id);w.Boolean(true);}
     }

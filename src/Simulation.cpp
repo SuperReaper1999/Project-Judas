@@ -35,6 +35,7 @@ void StepPlayedWorld(GameSession& session, const Window& window, float fixedDelt
     world.UpdateCharacters(fixedDeltaTime,true,false);
     world.PrepareAnimationReferences(fixedDeltaTime);
     world.PreparePhysicalAnimations(fixedDeltaTime);
+    world.PreparePhysicalBalances(fixedDeltaTime);
     world.UpdateLiquids(fixedDeltaTime);
     PhysicsWorld& physics = world.Physics();
     const GravityField& gravity = world.Gravity();

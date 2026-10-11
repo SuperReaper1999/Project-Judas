@@ -1,0 +1,10 @@
+﻿{
+    "label":  "application-services",
+    "exitcode":  0,
+    "command":  "C:\\JudasValidation\\M77TestBinFollowup\\judas.exe",
+    "arguments":  [
+                      "C:\\JudasValidation\\Source\\projects\\balance_lab\\balance_lab.judasproj"
+                  ],
+    "cwd":  "C:\\JudasValidation\\Source",
+    "seconds":  2.1185723999999997
+}

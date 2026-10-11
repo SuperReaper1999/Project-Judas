@@ -1,0 +1,17 @@
+﻿[
+    {
+        "TimeCreated":  "\/Date(1791682380065)\/",
+        "Id":  6005,
+        "Message":  "The Event log service was started."
+    },
+    {
+        "TimeCreated":  "\/Date(1791682358567)\/",
+        "Id":  6006,
+        "Message":  "The Event log service was stopped."
+    },
+    {
+        "TimeCreated":  "\/Date(1791682315770)\/",
+        "Id":  1074,
+        "Message":  "The process C:\\Windows\\system32\\svchost.exe (DESKTOP-935HKD1) has initiated the restart of computer DESKTOP-935HKD1 on behalf of user NT AUTHORITY\\SYSTEM for the following reason: Operating System: Service pack (Planned)\r\n Reason Code: 0x80020010\r\n Shutdown Type: restart\r\n Comment: "
+    }
+]

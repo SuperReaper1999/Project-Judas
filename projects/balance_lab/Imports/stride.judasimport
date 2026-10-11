@@ -1,0 +1,14 @@
+{
+  "assetId": "ef577ba3b3430811e4d8e6b80f7bbf3e",
+  "format": "JudasImport",
+  "motions": [],
+  "output": "Assets/models/stride.judasmodel",
+  "settings": {
+    "allowBaseMesh": false,
+    "dependencyRemaps": {},
+    "sampleRate": 60,
+    "unitMeters": 0
+  },
+  "source": "Sources/ef577ba3b3430811e4d8e6b80f7bbf3e/stride.gltf",
+  "version": 1
+}

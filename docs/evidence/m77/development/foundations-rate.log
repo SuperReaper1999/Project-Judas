@@ -1,0 +1,31 @@
+PASS opt-in paired angular drive accepted
+PASS ordinary joint state remains readable
+PASS three-axis drive respects magnitude effort cap
+PASS drive creates no net external angular impulse about shared axis
+PASS angular drive invents no linear motion on shared-axis fixture
+PASS bounded drive approaches relative orientation without root anchor
+PASS nonfinite target rejected
+PASS negative effort rejected
+PASS invalid update leaves target unchanged
+PASS quaternion antipode accepted as same target
+PASS relative target-rate reference accepted
+FAIL implicit damping follows target rate rather than treating it as static
+PASS nonfinite reference rate rejected atomically
+PASS explicit disable releases effort
+PASS disable clears only angular-drive warm history
+PASS destroyed joint handle rejected
+PASS physical controller drive refuses world-anchor actuator
+PASS hinge shares existing limit and drive solve
+PASS actual hinge limit resists out-of-range drive reference
+PASS nearby geometry alone is not observed support
+PASS completed solver contacts provide actual support
+PASS contact point normal body identity and load originate in solver
+PASS invalid observation budget rejected
+PASS invalid observation cannot leave old contacts in output
+PASS teleport invalidates observations without changing ordinary solver cache policy
+PASS suppressed pair cannot grant support from cached rows
+PASS sensor cannot grant physical support
+PASS disabled observer rejects observations
+PASS stale generation cannot alias reused body slot
+PASS replacement inherits no old support
+Physical balance foundations: 30 checks, 1 failures

@@ -1,0 +1,14 @@
+{
+  "assetId": "13d9c04e155aa9002ce3009285a660b7",
+  "format": "JudasImport",
+  "motions": [],
+  "output": "Assets/models/anchor.judasmodel",
+  "settings": {
+    "allowBaseMesh": false,
+    "dependencyRemaps": {},
+    "sampleRate": 60,
+    "unitMeters": 0
+  },
+  "source": "Sources/13d9c04e155aa9002ce3009285a660b7/anchor.gltf",
+  "version": 1
+}

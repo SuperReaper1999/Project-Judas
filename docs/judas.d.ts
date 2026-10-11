@@ -380,6 +380,36 @@ declare module "judas" {
     mode: PhysicalAnimationMode; pending: PhysicalAnimationMode | null;
     diagnostic: string; drives: PhysicalAnimationDrive[];
   }
+  /** Explicit two-leg physical control; local authored axes, SI metres/seconds/N m. */
+  export interface BalanceContactPatch { offset: Vec3 | [number,number,number]; normal: Vec3 | [number,number,number]; radius: number }
+  export interface BalanceChain {
+    upper: string; lower: string; foot: string;
+    contactOffset: Vec3 | [number,number,number]; halfExtents: Vec3 | [number,number,number];
+    normalAcceptance?: number; patches: BalanceContactPatch[];
+  }
+  export interface BalanceConfiguration {
+    enabled?: boolean; visualize?: boolean; up?: Vec3 | [number,number,number]; forward?: Vec3 | [number,number,number];
+    chains: [BalanceChain,BalanceChain];
+    stiffness?: number; damping?: number; maxTorque?: number;
+    positionResponse?: number; velocityResponse?: number; maximumLean?: number;
+    legLeanFraction?: number; trunkLeanFraction?: number; plantedOrientationWeight?: number;
+    standingHeight?: number; standingTolerance?: number; standingSpeed?: number;
+    settleSeconds?: number; attemptSeconds?: number; referenceSeconds?: number; gravityCoherence?: number;
+    stepTrigger?: number; stepReach?: number; stepHeight?: number; stepSeconds?: number; touchdownTolerance?: number;
+    transferLoadFraction?: number; transferRadiusFraction?: number; transferSeconds?: number; maximumSteps?: number;
+    /** Numeric M39 masks; planning excludes sensors and the whole articulation. */
+    includeLayers?: number; excludeLayers?: number; requiredTags?: number; excludedTags?: number;
+  }
+  export interface BalanceOptions { stepping?: boolean; effort?: boolean; motorHandoff?: boolean }
+  export interface BalanceState {
+    task: 'none' | 'stand' | 'recover'; status: 'idle' | 'executing' | 'succeeded' | 'failed' | 'cancelled';
+    pending: 'stand' | 'recover' | null; diagnostic: string; available: boolean;
+    com: Vec3; velocity: Vec3; gravity: Vec3; up: Vec3;
+    mass: number; height: number; upright: number; speed: number; saturated: number;
+    elapsed: number; settled: number; referenceTime: number;
+    supports: {entityId: EntityId;entity: Entity|null;point: Vec3;normal: Vec3;velocity: Vec3;loadImpulse: number;contacts: number}[];
+    step: {foot: 0|1|null;time: number;lifted: boolean;landings: number;landing: Vec3|null};
+  }
   export class Ragdoll {
     constructor(id: EntityId);
     id: EntityId;
@@ -394,6 +424,12 @@ declare module "judas" {
     configurePhysical(settings: PhysicalAnimationSettings | null): boolean;
     setMode(mode: PhysicalAnimationMode, options?: PhysicalAnimationModeOptions): boolean;
     readonly physicalState: PhysicalAnimationState;
+    configureBalance(settings: BalanceConfiguration | null): boolean;
+    requestBalance(task?: 'stand'|'recover', options?: BalanceOptions): boolean;
+    cancelBalance(): boolean;
+    readonly balanceState: BalanceState;
+    /** Debug colliders/COM/support/planned foot; presentation only. */
+    balanceDiagnostics: boolean;
   }
   export interface ClipInfo { name: string; duration: number }
   export interface AnimationLayerInfo { id: string; clip: string; weight: number; enabled: boolean; additive: boolean }

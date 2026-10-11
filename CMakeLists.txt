@@ -155,6 +155,8 @@ add_library(judas_engine STATIC
     src/NavigationAsset.cpp
     src/FullBodyIK.cpp
     src/PhysicalAnimation.cpp
+    src/PhysicalBalance.cpp
+    src/WorldPhysicalBalance.cpp
     src/WorldAnimation.cpp
     src/PoseComposition.cpp
     src/WorldRagdoll.cpp
@@ -1483,6 +1485,16 @@ judas_warnings(judas_multi_target_ik_tests)
 add_executable(judas_physical_animation_tests tests/PhysicalAnimationTests.cpp)
 target_link_libraries(judas_physical_animation_tests PRIVATE judas_engine)
 judas_warnings(judas_physical_animation_tests)
+# M77 opt-in actuation/contact foundations. Controller acceptance is separate.
+add_executable(judas_physical_balance_foundation_tests tests/PhysicalBalanceFoundationTests.cpp)
+target_link_libraries(judas_physical_balance_foundation_tests PRIVATE judas_engine)
+judas_warnings(judas_physical_balance_foundation_tests)
+add_executable(judas_physical_balance_controller_tests tests/PhysicalBalanceControllerTests.cpp)
+target_link_libraries(judas_physical_balance_controller_tests PRIVATE judas_engine)
+judas_warnings(judas_physical_balance_controller_tests)
+add_executable(judas_balance_lab_tests tests/BalanceLabTests.cpp)
+target_link_libraries(judas_balance_lab_tests PRIVATE judas_engine)
+judas_warnings(judas_balance_lab_tests)
 add_executable(judas_character_lab_tests tests/CharacterLabTests.cpp)
 target_link_libraries(judas_character_lab_tests PRIVATE judas_engine)
 judas_warnings(judas_character_lab_tests)

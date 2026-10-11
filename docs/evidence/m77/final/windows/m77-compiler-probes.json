@@ -1,0 +1,12 @@
+[
+    {
+        "exitcode":  2,
+        "seconds":  21.493392699999998,
+        "mode":  "aggregate"
+    },
+    {
+        "exitcode":  0,
+        "seconds":  1.3702566,
+        "mode":  "constructor"
+    }
+]

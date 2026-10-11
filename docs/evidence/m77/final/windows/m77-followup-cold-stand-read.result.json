@@ -1,0 +1,11 @@
+﻿{
+    "label":  "cold-stand-read",
+    "exitcode":  0,
+    "command":  "C:\\JudasValidation\\M77TestBinFollowup\\judas_balance_lab_tests.exe",
+    "arguments":  [
+                      "C:\\JudasValidation\\M77ResultsFollowup\\cold-stand-",
+                      "cold-stand-read"
+                  ],
+    "cwd":  "C:\\JudasValidation\\Source",
+    "seconds":  2.2340980999999998
+}

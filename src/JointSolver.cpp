@@ -56,6 +56,25 @@ void JointSolver::Prepare(const std::vector<JointInput>& inputs,float dt,bool wa
     else if(coordinate>=s.upper||(!impact&&coordinate+velocity*dt>s.upper))axisRow(coordinate>s.upper?std::min(coordinate-s.upper,maxCorrection):5*(coordinate-s.upper),-inf,0);}
 
   }
+  const auto& drive=input.state->angularDrive;
+  if(!impact&&drive.enabled&&drive.maxTorque>0&&(drive.stiffness>0||drive.damping>0)){
+   // Relative quaternion logarithm. Equal/opposite angular rows are internal
+   // effort; neither COM nor an owner transform receives an external servo.
+   auto error=glm::normalize((qb*glm::inverse(qa*drive.target)));
+   if(error.w<0)error=-error;
+   glm::vec3 vector(error.x,error.y,error.z);float length=glm::length(vector);
+   auto rotationError=length>1e-7f?vector*(2*std::atan2(length,error.w)/length):2.f*vector;
+   const float denominator=dt*(drive.damping+dt*drive.stiffness);
+   const float gamma=1/denominator;
+   const int axes=s.type==JointType::Hinge?1:3;
+   const float cap=drive.maxTorque*dt/std::sqrt(float(axes));
+   for(int k=0;k<axes;++k){auto n=basis[k];float stiffnessBias=(glm::dot(rotationError,n)*dt*drive.stiffness-glm::dot(drive.relativeAngularVelocity,n)*dt*drive.damping)*gamma;
+    float effective=glm::dot(n,(ia+ib)*n);if(effective+gamma<=0)continue;
+    auto* cache=&input.state->angularDrive.impulses[k];float lambda=warm?std::clamp(*cache,-cap,cap):0;
+    m_rows.push_back({&a,&b,{0,0,0},{0,0,0},-n,n,ia,ib,1/(effective+gamma),stiffnessBias,gamma,-cap,cap,lambda,cache,nullptr,input.state});
+    if(lambda!=0){Apply(m_rows.back(),lambda);input.state->reactionAngularImpulse-=n*lambda;}
+   }
+  }
   // Passive viscous joint resistance is solved implicitly with contacts and
   // anchors. It opposes relative angular motion, never drives a rest pose.
   if(!impact&&s.rotationalResistance>0&&(s.type==JointType::Ball||s.type==JointType::Hinge)){

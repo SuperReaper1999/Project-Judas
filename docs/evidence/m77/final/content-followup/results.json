@@ -1,0 +1,18 @@
+[
+  {
+    "mode": "supports",
+    "exitcode": 0
+  },
+  {
+    "mode": "variants",
+    "exitcode": 0
+  },
+  {
+    "mode": "blocked-recovery",
+    "exitcode": 0
+  },
+  {
+    "mode": "recovery",
+    "exitcode": 0
+  }
+]

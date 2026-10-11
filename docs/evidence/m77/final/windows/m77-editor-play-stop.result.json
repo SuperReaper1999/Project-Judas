@@ -1,0 +1,10 @@
+﻿{
+    "label":  "editor-play-stop",
+    "exitcode":  0,
+    "command":  "C:\\JudasValidation\\M77TestBin\\judas_editor.exe",
+    "arguments":  [
+                      "C:\\JudasValidation\\M77EditorProject\\balance_lab.judasproj"
+                  ],
+    "cwd":  "C:\\JudasValidation\\Source",
+    "seconds":  7.4058522999999994
+}

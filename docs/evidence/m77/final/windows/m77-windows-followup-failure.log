@@ -1,0 +1,8 @@
+﻿build 1
+At line:12 char:405
++ ... ceipts\m77-windows-build-followup.log";if($code){throw "build $code"}
++                                                      ~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (build 1:String) [], RuntimeException
+    + FullyQualifiedErrorId : build 1
+ 
+

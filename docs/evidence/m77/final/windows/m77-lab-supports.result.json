@@ -1,0 +1,11 @@
+﻿{
+    "label":  "lab-supports",
+    "exitcode":  0,
+    "command":  "C:\\JudasValidation\\M77TestBin\\judas_balance_lab_tests.exe",
+    "arguments":  [
+                      "C:\\JudasValidation\\M77Results\\supports",
+                      "supports"
+                  ],
+    "cwd":  "C:\\JudasValidation\\Source",
+    "seconds":  2.19901
+}

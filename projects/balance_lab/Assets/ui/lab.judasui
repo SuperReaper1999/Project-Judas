@@ -1,0 +1,540 @@
+{
+  "kind": "ui",
+  "schema": 1,
+  "data": {
+    "reference": [
+      1280.0,
+      720.0
+    ],
+    "visible": true,
+    "enabled": true,
+    "modal": false,
+    "elements": [
+      {
+        "id": "canvas",
+        "parent": "",
+        "text": "",
+        "texture": "",
+        "font": "",
+        "textKey": "",
+        "textLogicalAlign": -1,
+        "mirrorRow": false,
+        "visible": true,
+        "enabled": true,
+        "clip": false,
+        "wrap": false,
+        "fit": true,
+        "spacing": 8.0,
+        "fontSize": 22.0,
+        "value": 0.0,
+        "minimum": 0.0,
+        "maximum": 1.0,
+        "kind": 0,
+        "flow": 0,
+        "direction": 0,
+        "anchorMin": [
+          0.0,
+          0.0
+        ],
+        "anchorMax": [
+          1,
+          1
+        ],
+        "offset": [
+          0.0,
+          0.0
+        ],
+        "size": [
+          0,
+          0
+        ],
+        "relativeSize": [
+          0.0,
+          0.0
+        ],
+        "align": [
+          0.0,
+          0.0
+        ],
+        "textAlign": [
+          0.0,
+          0.0
+        ],
+        "margin": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "padding": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "background": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "color": [
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      {
+        "id": "title",
+        "parent": "canvas",
+        "text": "BALANCE LAB / M77",
+        "texture": "",
+        "font": "a34c6d7600f71602085419bdbc451b83",
+        "textKey": "",
+        "textLogicalAlign": -1,
+        "mirrorRow": false,
+        "visible": true,
+        "enabled": true,
+        "clip": false,
+        "wrap": false,
+        "fit": true,
+        "spacing": 8.0,
+        "fontSize": 24,
+        "value": 0.0,
+        "minimum": 0.0,
+        "maximum": 1.0,
+        "kind": 2,
+        "flow": 0,
+        "direction": 0,
+        "anchorMin": [
+          0.0,
+          0.0
+        ],
+        "anchorMax": [
+          0,
+          0
+        ],
+        "offset": [
+          20,
+          15
+        ],
+        "size": [
+          1100,
+          32
+        ],
+        "relativeSize": [
+          0.0,
+          0.0
+        ],
+        "align": [
+          0.0,
+          0.0
+        ],
+        "textAlign": [
+          0.0,
+          0.0
+        ],
+        "margin": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "padding": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "background": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "color": [
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      {
+        "id": "help",
+        "parent": "canvas",
+        "text": "F1 standing | F2 supports | F3 fallen | F4 radial | Tab select | B stand | G recover\nU weak | J push | K severe push | Q rotate / E reverse push | T steps | Y effort | P release | N motor | O partial | L layer\nF5 colliders/COM/contact/plan | Z spawn | Delete support | F6/F7 save/load | R reload | Esc pause",
+        "texture": "",
+        "font": "a34c6d7600f71602085419bdbc451b83",
+        "textKey": "",
+        "textLogicalAlign": -1,
+        "mirrorRow": false,
+        "visible": true,
+        "enabled": true,
+        "clip": false,
+        "wrap": true,
+        "fit": true,
+        "spacing": 8.0,
+        "fontSize": 18,
+        "value": 0.0,
+        "minimum": 0.0,
+        "maximum": 1.0,
+        "kind": 2,
+        "flow": 0,
+        "direction": 0,
+        "anchorMin": [
+          0.0,
+          0.0
+        ],
+        "anchorMax": [
+          0,
+          0
+        ],
+        "offset": [
+          20,
+          54
+        ],
+        "size": [
+          1240,
+          88
+        ],
+        "relativeSize": [
+          0.0,
+          0.0
+        ],
+        "align": [
+          0.0,
+          0.0
+        ],
+        "textAlign": [
+          0.0,
+          0.0
+        ],
+        "margin": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "padding": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "background": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "color": [
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      {
+        "id": "status",
+        "parent": "canvas",
+        "text": "Loading ordinary physical fixtures\u2026",
+        "texture": "",
+        "font": "a34c6d7600f71602085419bdbc451b83",
+        "textKey": "",
+        "textLogicalAlign": -1,
+        "mirrorRow": false,
+        "visible": true,
+        "enabled": true,
+        "clip": false,
+        "wrap": true,
+        "fit": true,
+        "spacing": 8.0,
+        "fontSize": 18,
+        "value": 0.0,
+        "minimum": 0.0,
+        "maximum": 1.0,
+        "kind": 2,
+        "flow": 0,
+        "direction": 0,
+        "anchorMin": [
+          0.0,
+          0.0
+        ],
+        "anchorMax": [
+          0,
+          0
+        ],
+        "offset": [
+          20,
+          154
+        ],
+        "size": [
+          1180,
+          170
+        ],
+        "relativeSize": [
+          0.0,
+          0.0
+        ],
+        "align": [
+          0.0,
+          0.0
+        ],
+        "textAlign": [
+          0.0,
+          0.0
+        ],
+        "margin": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "padding": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "background": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "color": [
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      {
+        "id": "pause",
+        "parent": "canvas",
+        "text": "",
+        "texture": "",
+        "font": "a34c6d7600f71602085419bdbc451b83",
+        "textKey": "",
+        "textLogicalAlign": -1,
+        "mirrorRow": false,
+        "visible": false,
+        "enabled": true,
+        "clip": false,
+        "wrap": false,
+        "fit": true,
+        "spacing": 8.0,
+        "fontSize": 18,
+        "value": 0.0,
+        "minimum": 0.0,
+        "maximum": 1.0,
+        "kind": 1,
+        "flow": 2,
+        "direction": 0,
+        "anchorMin": [
+          0.5,
+          0.5
+        ],
+        "anchorMax": [
+          0.5,
+          0.5
+        ],
+        "offset": [
+          0,
+          0
+        ],
+        "size": [
+          360,
+          180
+        ],
+        "relativeSize": [
+          0.0,
+          0.0
+        ],
+        "align": [
+          0.5,
+          0.5
+        ],
+        "textAlign": [
+          0.0,
+          0.0
+        ],
+        "margin": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "padding": [
+          15,
+          15,
+          15,
+          15
+        ],
+        "background": [
+          0.04,
+          0.09,
+          0.12,
+          0.96
+        ],
+        "color": [
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      {
+        "id": "resume",
+        "parent": "pause",
+        "text": "RESUME",
+        "texture": "",
+        "font": "a34c6d7600f71602085419bdbc451b83",
+        "textKey": "",
+        "textLogicalAlign": -1,
+        "mirrorRow": false,
+        "visible": true,
+        "enabled": true,
+        "clip": false,
+        "wrap": false,
+        "fit": true,
+        "spacing": 8.0,
+        "fontSize": 18,
+        "value": 0.0,
+        "minimum": 0.0,
+        "maximum": 1.0,
+        "kind": 4,
+        "flow": 0,
+        "direction": 0,
+        "anchorMin": [
+          0.0,
+          0.0
+        ],
+        "anchorMax": [
+          0,
+          0
+        ],
+        "offset": [
+          0,
+          0
+        ],
+        "size": [
+          330,
+          55
+        ],
+        "relativeSize": [
+          0.0,
+          0.0
+        ],
+        "align": [
+          0.0,
+          0.0
+        ],
+        "textAlign": [
+          0.0,
+          0.0
+        ],
+        "margin": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "padding": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "background": [
+          0.14,
+          0.32,
+          0.42,
+          1
+        ],
+        "color": [
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      {
+        "id": "reload",
+        "parent": "pause",
+        "text": "RELOAD LAB",
+        "texture": "",
+        "font": "a34c6d7600f71602085419bdbc451b83",
+        "textKey": "",
+        "textLogicalAlign": -1,
+        "mirrorRow": false,
+        "visible": true,
+        "enabled": true,
+        "clip": false,
+        "wrap": false,
+        "fit": true,
+        "spacing": 8.0,
+        "fontSize": 18,
+        "value": 0.0,
+        "minimum": 0.0,
+        "maximum": 1.0,
+        "kind": 4,
+        "flow": 0,
+        "direction": 0,
+        "anchorMin": [
+          0.0,
+          0.0
+        ],
+        "anchorMax": [
+          0,
+          0
+        ],
+        "offset": [
+          0,
+          0
+        ],
+        "size": [
+          330,
+          55
+        ],
+        "relativeSize": [
+          0.0,
+          0.0
+        ],
+        "align": [
+          0.0,
+          0.0
+        ],
+        "textAlign": [
+          0.0,
+          0.0
+        ],
+        "margin": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "padding": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "background": [
+          0.14,
+          0.32,
+          0.42,
+          1
+        ],
+        "color": [
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      }
+    ]
+  }
+}

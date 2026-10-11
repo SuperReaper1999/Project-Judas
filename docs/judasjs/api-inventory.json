@@ -1,5 +1,5 @@
 {
-  "checkpoint": "38d345883a541d4eb2faa43c321e940d223fce09",
+  "checkpoint": "ab3dfbab13585680a9e6cc92fa318c8d95012979",
   "authority": "src/ScriptSystem.cpp::library + Impl::Native",
   "symbols": [
     {
@@ -1918,6 +1918,29 @@
       "reference": "docs/judasjs/animation-ragdolls.md"
     },
     {
+      "symbol": "Ragdoll.balanceDiagnostics",
+      "kinds": [
+        "get",
+        "set"
+      ],
+      "native": [
+        "ragdollBalanceDiagnostics"
+      ],
+      "type": "docs/judas.d.ts:Ragdoll.balanceDiagnostics",
+      "reference": "docs/judasjs/animation-ragdolls.md"
+    },
+    {
+      "symbol": "Ragdoll.balanceState",
+      "kinds": [
+        "get"
+      ],
+      "native": [
+        "ragdollBalanceState"
+      ],
+      "type": "docs/judas.d.ts:Ragdoll.balanceState",
+      "reference": "docs/judasjs/animation-ragdolls.md"
+    },
+    {
       "symbol": "Ragdoll.body",
       "kinds": [
         "call"
@@ -1926,6 +1949,28 @@
         "ragdollBody"
       ],
       "type": "docs/judas.d.ts:Ragdoll.body",
+      "reference": "docs/judasjs/animation-ragdolls.md"
+    },
+    {
+      "symbol": "Ragdoll.cancelBalance",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "ragdollBalanceCancel"
+      ],
+      "type": "docs/judas.d.ts:Ragdoll.cancelBalance",
+      "reference": "docs/judasjs/animation-ragdolls.md"
+    },
+    {
+      "symbol": "Ragdoll.configureBalance",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "ragdollBalanceConfigure"
+      ],
+      "type": "docs/judas.d.ts:Ragdoll.configureBalance",
       "reference": "docs/judasjs/animation-ragdolls.md"
     },
     {
@@ -2011,6 +2056,17 @@
         "ragdollContactEvents"
       ],
       "type": "docs/judas.d.ts:Ragdoll.receiveContactEvents",
+      "reference": "docs/judasjs/animation-ragdolls.md"
+    },
+    {
+      "symbol": "Ragdoll.requestBalance",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "ragdollBalanceRequest"
+      ],
+      "type": "docs/judas.d.ts:Ragdoll.requestBalance",
       "reference": "docs/judasjs/animation-ragdolls.md"
     },
     {
@@ -3785,6 +3841,11 @@
     "projectViewport",
     "queryTags",
     "ragdollActive",
+    "ragdollBalanceCancel",
+    "ragdollBalanceConfigure",
+    "ragdollBalanceDiagnostics",
+    "ragdollBalanceRequest",
+    "ragdollBalanceState",
     "ragdollBody",
     "ragdollContactEvents",
     "ragdollEnabled",

@@ -1,0 +1,20 @@
+PASS actual GL host: 
+PASS normal project loads: 
+PASS logical project controls: 
+PASS normal authored/captured scene: 
+PASS normal immutable assets and world publish: 
+PASS ordinary game starts: 
+PASS authored configuration does not activate physical authority
+PASS shared immutable asset and distinct second rig use ordinary resource sharing
+ACTOR 12 status=2 root=3.00044,1.41782,0.00232618 height=1.41836 up=0.999932 speed=0.00092997 supports=4/4 landings=0 reason=measured supported physical standing
+PASS real JS request makes full dynamic authority with explicit motor handoff
+PASS normal resource/JS path reaches actual standing
+POST IMPULSE {"effort":true,"elapsed":8.800000458955765,"impulseBody":"4611686018427387904","impulseVelocity":{"x":-1.646720920689404e-05,"y":9.47219887166284e-05,"z":2.9015679359436035},"pitch":-0.12,"pushAngle":0,"pushes":1,"refusal":"","selected":2,"spawned":[],"stepping":false,"yaw":0}
+ACTOR 12 status=1 root=3.00032,1.4215,0.0755924 height=1.4197 up=0.999292 speed=1.23279 supports=3/3 landings=0 reason=measured supported physical standing
+ACTOR 12 status=1 root=2.92352,0.185823,0.813424 height=0 up=-0.089039 speed=0.0798309 supports=0/0 landings=0 reason=measured supported physical standing
+PASS same public impulse with stepping denied exceeds standing envelope
+PASS cancel releases actuators and preserves physical articulation
+PASS ordinary lab callback health matches deliberate fault policy
+PASS real final pose/skinning and diagnostic rendering path executes
+PASS Stop destroys the owned runtime world
+SUMMARY 15 checks 0 failures

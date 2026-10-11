@@ -1,0 +1,52 @@
+{
+  "base": "ab3dfbab13585680a9e6cc92fa318c8d95012979",
+  "refs": {
+    "HEAD": "ab3dfbab13585680a9e6cc92fa318c8d95012979",
+    "main": "ab3dfbab13585680a9e6cc92fa318c8d95012979",
+    "origin/main": "ab3dfbab13585680a9e6cc92fa318c8d95012979"
+  },
+  "stagedFiles": [],
+  "modifiedTrackedFiles": [
+    "CMakeLists.txt",
+    "docs/ARCHITECTURE.md",
+    "docs/judas.d.ts",
+    "docs/judasjs/API_INVENTORY.md",
+    "docs/judasjs/animation-ragdolls.md",
+    "docs/judasjs/api-inventory.json",
+    "docs/judasjs/cookbook.md",
+    "scripts/check_judasjs_api.mjs",
+    "src/JointSolver.cpp",
+    "src/JointTypes.h",
+    "src/PerformanceProfiler.cpp",
+    "src/PhysicsWorld.cpp",
+    "src/PhysicsWorld.h",
+    "src/Ragdoll.cpp",
+    "src/Ragdoll.h",
+    "src/RuntimeWorld.cpp",
+    "src/RuntimeWorld.h",
+    "src/SaveService.cpp",
+    "src/SaveStorage.cpp",
+    "src/SceneFingerprint.cpp",
+    "src/SceneSerialization.cpp",
+    "src/ScriptSystem.cpp",
+    "src/Simulation.cpp",
+    "src/WorldAnimation.cpp",
+    "src/WorldPersistence.cpp",
+    "src/WorldPersistence.h",
+    "src/WorldPresentation.cpp",
+    "src/WorldRagdoll.cpp",
+    "src/WorldRegions.cpp",
+    "src/WorldStreaming.cpp",
+    "src/editor/ComponentEditors.cpp",
+    "tests/PerformanceProfilerTests.cpp"
+  ],
+  "protectedHistoricalTrackedChanges": [],
+  "fluidImplementationChanges": [],
+  "roadmapPresent": false,
+  "unrelatedUntrackedPreserved": [
+    "POST_M73_REPORT.txt"
+  ],
+  "humanValidation": "pending",
+  "M78": "not started",
+  "commitPushTag": "not performed"
+}

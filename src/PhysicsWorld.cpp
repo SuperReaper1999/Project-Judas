@@ -96,6 +96,8 @@ struct CachedContact {
     glm::vec3 normal{0.0f};
     float normalImpulse = 0.0f;
     glm::vec3 tangentImpulse{0.0f};
+    float separation=0;
+    uint64_t observationRevisionA=0,observationRevisionB=0;
 };
 
 std::vector<BodyBox> BoxesAt(const Shape& shape, const glm::vec3& position,
@@ -194,6 +196,7 @@ struct PhysicsWorld::Impl {
         // in the handle's upper bits makes a handle from a previous
         // occupant of the same slot invalid instead of aliasing the new one.
         unsigned int generation = 0;
+        uint64_t contactObservationRevision=0; // invalidates only native observations, not solver warm starts
         // Milestone 32: this body's leaf in the broadphase tree.
         int proxy = DynamicAabbTree::kNull;
     };
@@ -1471,6 +1474,11 @@ float PhysicsWorld::GetMass(BodyHandle handle) const {
                ? 1.0f / body->rigidBody.inverseMass
                : 0.0f;
 }
+glm::vec3 PhysicsWorld::GetCenterOfMass(BodyHandle handle) const {
+    if(!m_impl)return glm::vec3(0);
+    const auto* body=m_impl->Get(handle);
+    return body?body->rigidBody.position:glm::vec3(0);
+}
 
 void PhysicsWorld::ApplyLinearImpulse(BodyHandle handle, const glm::vec3& impulse) {
     Impl::Body* body = m_impl->Get(handle);
@@ -2089,7 +2097,7 @@ void PhysicsWorld::Step(float fixedDeltaTime) {
                     w.solver.AddContact(a.rigidBody,b.rigidBody,contact,friction,0,
                         warmNormal,warmTangent,&orientationA.rotation,&orientationB.rotation);
                     if(w.solver.Constraints().size()>constraint) {
-                        w.pendingCache.push_back({key,anchor,contact.normal,0,glm::vec3(0)});
+                        w.pendingCache.push_back({key,anchor,contact.normal,0,glm::vec3(0),float(gap),a.contactObservationRevision,b.contactObservationRevision});
                         w.startContacts.push_back({slotA,slotB,constraint,friction,warmNormal,warmTangent,
                             best<0 && gap<=0 && Impl::NormalSpeed(contact,a.rigidBody,b.rigidBody)<-0.5});
                     }
@@ -2366,6 +2374,7 @@ void PhysicsWorld::ResetBody(BodyHandle handle, const glm::vec3& position,
         const auto bounds=m_impl->CurrentBound(*body);auto slots=m_impl->QuerySlots(bounds);for(auto i:slots)if(m_impl->bodies[i].sleeping)m_impl->Wake(i);
     }
     for(auto& j:m_impl->joints)if(j.state.settings.bodyA.id==handle.id||j.state.settings.bodyB.id==handle.id)j.warm.fill(0);
+    ++body->contactObservationRevision;
     body->rigidBody.position = position+rotation*body->shape.pivotOffset;
     body->rigidBody.orientation = rotation;
     body->previousPosition = body->rigidBody.position;
@@ -2522,12 +2531,39 @@ bool PhysicsWorld::GetCollisionFilter(BodyHandle handle,unsigned& layer,Category
 bool PhysicsWorld::SetBodyTags(BodyHandle handle,CategoryMask tags){auto* b=m_impl->Get(handle);if(!b)return false;b->tags=tags;return true;}
 void PhysicsWorld::SetPlayerCollisionFilter(unsigned layer,CategoryMask mask){if(layer<64){m_impl->playerCollisionLayer=layer;m_impl->playerCollisionMask=mask;}}
 
+bool PhysicsWorld::ReadBodyContactSample(BodyHandle handle,std::vector<BodyContactSample>& output,unsigned maximumContacts,unsigned maximumCandidates) const {
+    output.clear();auto* body=m_impl?m_impl->Get(handle):nullptr;
+    if(!body||!body->enabled||body->sensor||body->queryOnly||maximumContacts==0||maximumContacts>64||maximumCandidates==0||maximumCandidates>128)return false;
+    const auto slot=handle.id&Impl::kSlotMask;unsigned count=0;bool overflow=false;
+    // Existing broadphase only selects the cache ranges to inspect. A nearby
+    // candidate without an authoritative cached solver row is NOT a contact.
+    m_impl->tree.Query(m_impl->tree.FatAabb(body->proxy),[&](int proxy){
+        const auto other=m_impl->tree.UserData(proxy);if(other==slot)return;
+        if(++count>maximumCandidates){overflow=true;return;}
+        auto& support=m_impl->bodies[other];if(!support.alive||!m_impl->CanCollide(slot,other)||support.sensor||support.queryOnly)return;
+        const auto first=std::min(slot,other),second=std::max(slot,other);
+        ContactKey key{first,second,m_impl->bodies[first].generation,m_impl->bodies[second].generation,-1,-1};
+        const auto begin=std::lower_bound(m_impl->contactCache.begin(),m_impl->contactCache.end(),key,[](const auto& cached,const auto& target){return cached.key<target;});
+        for(auto it=begin;it!=m_impl->contactCache.end()&&it->key.slotA==first&&it->key.slotB==second;++it){
+            const auto& cached=*it;if(!cached.key.SameBodies(ContactKey{first,second,key.generationA,key.generationB,cached.key.partA,cached.key.partB})||cached.normalImpulse<=0||cached.observationRevisionA!=m_impl->bodies[first].contactObservationRevision||cached.observationRevisionB!=m_impl->bodies[second].contactObservationRevision)continue;
+            if(output.size()>=maximumContacts){overflow=true;break;}
+            const auto& a=m_impl->bodies[first];auto point=glm::vec3(glm::dvec3(a.rigidBody.position)+glm::mat3_cast(glm::dquat(a.rigidBody.orientation))*cached.localAnchorA);
+            BodyContactSample sample;sample.other=m_impl->MakeHandle(other);sample.point=point;
+            sample.normal=slot==first?cached.normal:-cached.normal;sample.normalImpulse=cached.normalImpulse;sample.separation=cached.separation;
+            sample.supportVelocity=support.rigidBody.linearVelocity+glm::cross(support.rigidBody.angularVelocity,point-support.rigidBody.position);
+            sample.sleeping=body->sleeping&&(support.sleeping||support.rigidBody.IsStatic());output.push_back(sample);
+        }
+    });
+    if(overflow){output.clear();return false;}
+    std::stable_sort(output.begin(),output.end(),[](const auto& a,const auto& b){return std::tie(a.other.id,a.point.x,a.point.y,a.point.z)<std::tie(b.other.id,b.point.x,b.point.y,b.point.z);});
+    return true;
+}
 const std::vector<PhysicsWorld::TouchEvent>& PhysicsWorld::LastStepTouchEvents() const {return m_impl->touchEvents;}
-bool PhysicsWorld::SetBodySensor(BodyHandle h,bool value){auto* b=m_impl->Get(h);if(!b|| (value&&b->shape.type==ShapeType::TriangleMesh))return false;if(b->sensor!=value)m_impl->Wake(h.id&Impl::kSlotMask);b->sensor=value;return true;}
+bool PhysicsWorld::SetBodySensor(BodyHandle h,bool value){auto* b=m_impl->Get(h);if(!b|| (value&&b->shape.type==ShapeType::TriangleMesh))return false;if(b->sensor!=value)m_impl->Wake(h.id&Impl::kSlotMask);if(b->sensor!=value)++b->contactObservationRevision;b->sensor=value;return true;}
 bool PhysicsWorld::IsBodySensor(BodyHandle h) const {auto* b=m_impl->Get(h);return b&&b->sensor;}
 bool PhysicsWorld::SetBodyQueriesEnabled(BodyHandle h,bool enabled){auto* body=m_impl->Get(h);if(!body)return false;body->queriesEnabled=enabled;return true;}
 
-bool PhysicsWorld::SetBodyEnabled(BodyHandle h,bool value){auto* b=m_impl->Get(h);if(!b)return false;if(b->enabled==value)return true;m_impl->Wake(h.id&Impl::kSlotMask);b->enabled=value;
+bool PhysicsWorld::SetBodyEnabled(BodyHandle h,bool value){auto* b=m_impl->Get(h);if(!b)return false;if(b->enabled==value)return true;m_impl->Wake(h.id&Impl::kSlotMask);++b->contactObservationRevision;b->enabled=value;
  if(!value&&b->isKinematic){b->kinematic={};b->kinematicActiveDuration=0;b->motion.Clear();b->rigidBody.linearVelocity=b->rigidBody.angularVelocity=glm::vec3(0);b->previousPosition=b->rigidBody.position;b->previousOrientation=b->rigidBody.orientation;}
  for(auto& j:m_impl->joints)if(j.state.settings.bodyA.id==h.id||j.state.settings.bodyB.id==h.id)j.warm.fill(0);
  return true;}
@@ -2594,15 +2630,36 @@ JointHandle PhysicsWorld::CreateJoint(const JointSettings& settings) {
     if(!a||(settings.bodyB.IsValid()&&!b)||(b&&a==b)||(a->rigidBody.IsStatic()&&(!b||b->rigidBody.IsStatic())))return {};
     static std::atomic<std::uint64_t> next{1};JointHandle handle{next.fetch_add(1)};
     Wake(settings.bodyA);Wake(settings.bodyB);
-    m_impl->joints.push_back({handle,{settings,false,0,0},{}});return handle;
+    JointState state;state.settings=settings;
+    m_impl->joints.push_back({handle,state,{}});return handle;
 }
 bool PhysicsWorld::DestroyJoint(JointHandle handle){JointState old;if(GetJoint(handle,old)){Wake(old.settings.bodyA);Wake(old.settings.bodyB);}if(!m_impl)return false;auto& joints=m_impl->joints;auto it=std::find_if(joints.begin(),joints.end(),[&](const auto& j){return j.handle.id==handle.id;});if(it==joints.end())return false;joints.erase(it);return true;}
 bool PhysicsWorld::GetJoint(JointHandle handle,JointState& state)const{if(!m_impl)return false;for(auto& joint:m_impl->joints)if(joint.handle.id==handle.id){if(!m_impl->Get(joint.state.settings.bodyA)||(joint.state.settings.bodyB.IsValid()&&!m_impl->Get(joint.state.settings.bodyB)))return false;state=joint.state;state.active=m_impl->JointActive(joint);return true;}return false;}
+bool PhysicsWorld::SetJointAngularDrive(JointHandle handle,const JointAngularDrive& request) {
+    if(!m_impl)return false;
+    if(!std::isfinite(glm::dot(request.relativeAngularVelocity,request.relativeAngularVelocity))||glm::length(request.relativeAngularVelocity)>1000||!std::isfinite(glm::dot(request.target,request.target))||glm::dot(request.target,request.target)<1e-12f||
+       !std::isfinite(request.stiffness)||request.stiffness<0||request.stiffness>10000||
+       !std::isfinite(request.damping)||request.damping<0||request.damping>1000||
+       !std::isfinite(request.maxTorque)||request.maxTorque<0||request.maxTorque>10000)return false;
+    for(auto& joint:m_impl->joints)if(joint.handle.id==handle.id){
+        const auto& settings=joint.state.settings;
+        if(request.enabled&&(!m_impl->Get(settings.bodyB)||(settings.type!=JointType::Ball&&settings.type!=JointType::Hinge)||settings.motor||settings.spring))return false;
+        auto target=glm::normalize(request.target);auto& previous=joint.state.angularDrive;
+        bool changed=previous.enabled!=request.enabled||std::abs(glm::dot(previous.target,target))<1-1e-7f||
+            previous.relativeAngularVelocity!=request.relativeAngularVelocity||previous.stiffness!=request.stiffness||previous.damping!=request.damping||previous.maxTorque!=request.maxTorque;
+        if(!changed)return true;
+        auto candidate=request;candidate.target=target;candidate.impulses=previous.impulses;
+        if(previous.enabled!=request.enabled)candidate.impulses={0,0,0};
+        previous=candidate;
+        m_impl->Wake(settings.bodyA.id&Impl::kSlotMask);if(m_impl->Get(settings.bodyB))m_impl->Wake(settings.bodyB.id&Impl::kSlotMask);
+        return true;
+    }return false;
+}
 bool PhysicsWorld::SetJoint(JointHandle handle,const JointSettings& settings){JointState previous;if(!GetJoint(handle,previous)||!ValidJointSettings(settings)||settings.bodyA.id!=previous.settings.bodyA.id||settings.bodyB.id!=previous.settings.bodyB.id)return false;for(auto& joint:m_impl->joints)if(joint.handle.id==handle.id){if(JointSettingsEqual(joint.state.settings,settings))return true;m_impl->Wake(settings.bodyA.id&Impl::kSlotMask);if(m_impl->Get(settings.bodyB))m_impl->Wake(settings.bodyB.id&Impl::kSlotMask);joint.state.settings=settings;joint.warm.fill(0);return true;}return false;}
 
 bool PhysicsWorld::SetPairCollisionEnabled(BodyHandle a,BodyHandle b,bool enabled){
     if(!m_impl||a.id==b.id||!m_impl->Get(a)||!m_impl->Get(b))return false;
-    auto pair=std::minmax(a.id,b.id);if((m_impl->suppressedPairs.count(pair)==0)==enabled)return true;Wake(a);Wake(b);if(enabled)m_impl->suppressedPairs.erase(pair);else m_impl->suppressedPairs.insert(pair);return true;
+    auto pair=std::minmax(a.id,b.id);if((m_impl->suppressedPairs.count(pair)==0)==enabled)return true;Wake(a);Wake(b);++m_impl->Get(a)->contactObservationRevision;++m_impl->Get(b)->contactObservationRevision;if(enabled)m_impl->suppressedPairs.erase(pair);else m_impl->suppressedPairs.insert(pair);return true;
 }
 
 void PhysicsWorld::PersistTouches(SaveArchive& a,const std::function<uint64_t(BodyHandle)>& identity,const std::function<BodyHandle(uint64_t)>& resolve,const std::function<bool(BodyHandle)>& include){

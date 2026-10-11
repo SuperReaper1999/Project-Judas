@@ -402,9 +402,20 @@ public:
     EntityId RagdollBody(EntityId,const std::string& key)const;
     void UpdateRagdolls(float dt);
     bool ConfigurePhysicalAnimation(EntityId,const std::optional<PhysicalAnimationSettings>&,std::string&);
-    bool RequestPhysicalAnimation(EntityId,const PhysicalAnimationRequest&,std::string&);
+    bool RequestPhysicalAnimation(EntityId,const PhysicalAnimationRequest&,std::string&,bool preserveBalanceRequest=false);
     void PreparePhysicalAnimations(float dt);
     PhysicalAnimationState PhysicalAnimationSnapshot(EntityId) const;
+    struct BalanceRequest {BalanceTask task=BalanceTask::Stand;bool stepping=true,effort=true,motorHandoff=false;};
+    struct BalanceRuntime {PhysicalBalanceController controller;std::optional<BalanceRequest> pending;bool configured=false;std::string diagnostic;std::shared_ptr<const SkeletalAsset> asset;std::vector<glm::vec3> gravityScratch;};
+    bool ConfigurePhysicalBalance(EntityId,const std::optional<BalanceDefinition>&,std::string&);
+    bool RequestPhysicalBalance(EntityId,const BalanceRequest&,std::string&);
+    bool BuildPhysicalBalance(EntityId,PhysicalBalanceController&,std::string&);
+    void CancelPhysicalBalance(EntityId);
+    void PreparePhysicalBalances(float dt);
+    bool SetPhysicalBalanceDiagnostics(EntityId,bool);
+    void DrawPhysicalBalances(Renderer&)const;
+    const BalanceRuntime* PhysicalBalanceSnapshot(EntityId)const;
+    bool PhysicalBalanceOwnsJoints(EntityId)const;
     std::pair<EntityId,std::string> ArticulatedIdentity(EntityId) const;
     bool SetTransientEntity(EntityId id,bool transient,std::string& error);
     bool IsTransientEntity(EntityId id)const {const auto* e=FindEntity(id);return e&&e->transient;}
@@ -563,6 +574,7 @@ private:
     std::map<EntityId,CharacterInstance> m_characters;
     std::map<EntityId,AnimationInstance> m_animationInstances;
     std::map<EntityId,RagdollInstance> m_ragdolls;
+    std::map<EntityId,BalanceRuntime> m_balances;
     std::map<EntityId,PhysicalAnimationState> m_physicalAnimations;
     struct RagdollReturn {float elapsed=0,duration=0;};
     std::map<EntityId,RagdollReturn> m_ragdollReturns;

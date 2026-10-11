@@ -1,0 +1,10 @@
+﻿{
+    "label":  "core-physical_balance_controller",
+    "exitcode":  0,
+    "command":  "C:\\JudasValidation\\M77TestBin\\judas_physical_balance_controller_tests.exe",
+    "arguments":  [
+
+                  ],
+    "cwd":  "C:\\JudasValidation\\Source",
+    "seconds":  6.0509878
+}

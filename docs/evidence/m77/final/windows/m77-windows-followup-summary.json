@@ -1,0 +1,303 @@
+﻿{
+    "vmOnlyMesa":  [
+                       "opengl32.dll",
+                       "libgallium_wgl.dll"
+                   ],
+    "freeBytes":  42520576,
+    "failed":  0,
+    "session":  1,
+    "package":  "C:\\JudasValidation\\Packages\\Moved M77 Followup é α",
+    "admin":  false,
+    "rows":  [
+                 {
+                     "label":  "core-profiler",
+                     "exitcode":  0,
+                     "command":  "C:\\JudasValidation\\M77TestBinFollowup\\judas_profiler_tests.exe",
+                     "arguments":  [
+
+                                   ],
+                     "cwd":  "C:\\JudasValidation\\Source",
+                     "seconds":  1.1105924
+                 },
+                 {
+                     "label":  "core-physical_balance_foundation",
+                     "exitcode":  0,
+                     "command":  "C:\\JudasValidation\\M77TestBinFollowup\\judas_physical_balance_foundation_tests.exe",
+                     "arguments":  [
+
+                                   ],
+                     "cwd":  "C:\\JudasValidation\\Source",
+                     "seconds":  0.3918277
+                 },
+                 {
+                     "label":  "core-physical_balance_controller",
+                     "exitcode":  0,
+                     "command":  "C:\\JudasValidation\\M77TestBinFollowup\\judas_physical_balance_controller_tests.exe",
+                     "arguments":  [
+
+                                   ],
+                     "cwd":  "C:\\JudasValidation\\Source",
+                     "seconds":  6.0247445
+                 },
+                 {
+                     "label":  "core-physical_animation",
+                     "exitcode":  0,
+                     "command":  "C:\\JudasValidation\\M77TestBinFollowup\\judas_physical_animation_tests.exe",
+                     "arguments":  [
+
+                                   ],
+                     "cwd":  "C:\\JudasValidation\\Source",
+                     "seconds":  0.3116499
+                 },
+                 {
+                     "label":  "core-character_motor",
+                     "exitcode":  0,
+                     "command":  "C:\\JudasValidation\\M77TestBinFollowup\\judas_character_motor_tests.exe",
+                     "arguments":  [
+
+                                   ],
+                     "cwd":  "C:\\JudasValidation\\Source",
+                     "seconds":  0.8693282
+                 },
+                 {
+                     "label":  "lab-standing",
+                     "exitcode":  0,
+                     "command":  "C:\\JudasValidation\\M77TestBinFollowup\\judas_balance_lab_tests.exe",
+                     "arguments":  [
+                                       "C:\\JudasValidation\\M77ResultsFollowup\\standing",
+                                       "standing"
+                                   ],
+                     "cwd":  "C:\\JudasValidation\\Source",
+                     "seconds":  2.9806835
+                 },
+                 {
+                     "label":  "lab-denied",
+                     "exitcode":  0,
+                     "command":  "C:\\JudasValidation\\M77TestBinFollowup\\judas_balance_lab_tests.exe",
+                     "arguments":  [
+                                       "C:\\JudasValidation\\M77ResultsFollowup\\denied",
+                                       "denied"
+                                   ],
+                     "cwd":  "C:\\JudasValidation\\Source",
+                     "seconds":  3.4749451
+                 },
+                 {
+                     "label":  "lab-supports",
+                     "exitcode":  0,
+                     "command":  "C:\\JudasValidation\\M77TestBinFollowup\\judas_balance_lab_tests.exe",
+                     "arguments":  [
+                                       "C:\\JudasValidation\\M77ResultsFollowup\\supports",
+                                       "supports"
+                                   ],
+                     "cwd":  "C:\\JudasValidation\\Source",
+                     "seconds":  2.2038056999999998
+                 },
+                 {
+                     "label":  "lab-variants",
+                     "exitcode":  0,
+                     "command":  "C:\\JudasValidation\\M77TestBinFollowup\\judas_balance_lab_tests.exe",
+                     "arguments":  [
+                                       "C:\\JudasValidation\\M77ResultsFollowup\\variants",
+                                       "variants"
+                                   ],
+                     "cwd":  "C:\\JudasValidation\\Source",
+                     "seconds":  6.5133885
+                 },
+                 {
+                     "label":  "lab-recovery",
+                     "exitcode":  0,
+                     "command":  "C:\\JudasValidation\\M77TestBinFollowup\\judas_balance_lab_tests.exe",
+                     "arguments":  [
+                                       "C:\\JudasValidation\\M77ResultsFollowup\\recovery",
+                                       "recovery"
+                                   ],
+                     "cwd":  "C:\\JudasValidation\\Source",
+                     "seconds":  3.9441469
+                 },
+                 {
+                     "label":  "lab-blocked-recovery",
+                     "exitcode":  0,
+                     "command":  "C:\\JudasValidation\\M77TestBinFollowup\\judas_balance_lab_tests.exe",
+                     "arguments":  [
+                                       "C:\\JudasValidation\\M77ResultsFollowup\\blocked-recovery",
+                                       "blocked-recovery"
+                                   ],
+                     "cwd":  "C:\\JudasValidation\\Source",
+                     "seconds":  3.0864336999999997
+                 },
+                 {
+                     "label":  "lab-low-grip",
+                     "exitcode":  0,
+                     "command":  "C:\\JudasValidation\\M77TestBinFollowup\\judas_balance_lab_tests.exe",
+                     "arguments":  [
+                                       "C:\\JudasValidation\\M77ResultsFollowup\\low-grip",
+                                       "low-grip"
+                                   ],
+                     "cwd":  "C:\\JudasValidation\\Source",
+                     "seconds":  4.1544191999999995
+                 },
+                 {
+                     "label":  "lab-radial",
+                     "exitcode":  0,
+                     "command":  "C:\\JudasValidation\\M77TestBinFollowup\\judas_balance_lab_tests.exe",
+                     "arguments":  [
+                                       "C:\\JudasValidation\\M77ResultsFollowup\\radial",
+                                       "radial"
+                                   ],
+                     "cwd":  "C:\\JudasValidation\\Source",
+                     "seconds":  2.6582073999999998
+                 },
+                 {
+                     "label":  "lab-lifecycle",
+                     "exitcode":  0,
+                     "command":  "C:\\JudasValidation\\M77TestBinFollowup\\judas_balance_lab_tests.exe",
+                     "arguments":  [
+                                       "C:\\JudasValidation\\M77ResultsFollowup\\lifecycle",
+                                       "lifecycle"
+                                   ],
+                     "cwd":  "C:\\JudasValidation\\Source",
+                     "seconds":  2.7803964999999997
+                 },
+                 {
+                     "label":  "lab-regions",
+                     "exitcode":  0,
+                     "command":  "C:\\JudasValidation\\M77TestBinFollowup\\judas_balance_lab_tests.exe",
+                     "arguments":  [
+                                       "C:\\JudasValidation\\M77ResultsFollowup\\regions",
+                                       "regions"
+                                   ],
+                     "cwd":  "C:\\JudasValidation\\Source",
+                     "seconds":  1.9621004
+                 },
+                 {
+                     "label":  "lab-fault",
+                     "exitcode":  0,
+                     "command":  "C:\\JudasValidation\\M77TestBinFollowup\\judas_balance_lab_tests.exe",
+                     "arguments":  [
+                                       "C:\\JudasValidation\\M77ResultsFollowup\\fault",
+                                       "fault"
+                                   ],
+                     "cwd":  "C:\\JudasValidation\\Source",
+                     "seconds":  2.38023
+                 },
+                 {
+                     "label":  "lab-cookbook",
+                     "exitcode":  0,
+                     "command":  "C:\\JudasValidation\\M77TestBinFollowup\\judas_balance_lab_tests.exe",
+                     "arguments":  [
+                                       "C:\\JudasValidation\\M77ResultsFollowup\\cookbook",
+                                       "cookbook"
+                                   ],
+                     "cwd":  "C:\\JudasValidation\\Source",
+                     "seconds":  2.1757184
+                 },
+                 {
+                     "label":  "cold-write",
+                     "exitcode":  0,
+                     "command":  "C:\\JudasValidation\\M77TestBinFollowup\\judas_balance_lab_tests.exe",
+                     "arguments":  [
+                                       "C:\\JudasValidation\\M77ResultsFollowup\\cold-",
+                                       "cold-write"
+                                   ],
+                     "cwd":  "C:\\JudasValidation\\Source",
+                     "seconds":  2.3964662999999997
+                 },
+                 {
+                     "label":  "cold-read",
+                     "exitcode":  0,
+                     "command":  "C:\\JudasValidation\\M77TestBinFollowup\\judas_balance_lab_tests.exe",
+                     "arguments":  [
+                                       "C:\\JudasValidation\\M77ResultsFollowup\\cold-",
+                                       "cold-read"
+                                   ],
+                     "cwd":  "C:\\JudasValidation\\Source",
+                     "seconds":  2.3585315
+                 },
+                 {
+                     "label":  "cold-stand-write",
+                     "exitcode":  0,
+                     "command":  "C:\\JudasValidation\\M77TestBinFollowup\\judas_balance_lab_tests.exe",
+                     "arguments":  [
+                                       "C:\\JudasValidation\\M77ResultsFollowup\\cold-stand-",
+                                       "cold-stand-write"
+                                   ],
+                     "cwd":  "C:\\JudasValidation\\Source",
+                     "seconds":  2.3552291
+                 },
+                 {
+                     "label":  "cold-stand-read",
+                     "exitcode":  0,
+                     "command":  "C:\\JudasValidation\\M77TestBinFollowup\\judas_balance_lab_tests.exe",
+                     "arguments":  [
+                                       "C:\\JudasValidation\\M77ResultsFollowup\\cold-stand-",
+                                       "cold-stand-read"
+                                   ],
+                     "cwd":  "C:\\JudasValidation\\Source",
+                     "seconds":  2.2340980999999998
+                 },
+                 {
+                     "label":  "cold-recovery-write",
+                     "exitcode":  0,
+                     "command":  "C:\\JudasValidation\\M77TestBinFollowup\\judas_balance_lab_tests.exe",
+                     "arguments":  [
+                                       "C:\\JudasValidation\\M77ResultsFollowup\\cold-recovery-",
+                                       "cold-recovery-write"
+                                   ],
+                     "cwd":  "C:\\JudasValidation\\Source",
+                     "seconds":  2.2267520999999997
+                 },
+                 {
+                     "label":  "cold-recovery-read",
+                     "exitcode":  0,
+                     "command":  "C:\\JudasValidation\\M77TestBinFollowup\\judas_balance_lab_tests.exe",
+                     "arguments":  [
+                                       "C:\\JudasValidation\\M77ResultsFollowup\\cold-recovery-",
+                                       "cold-recovery-read"
+                                   ],
+                     "cwd":  "C:\\JudasValidation\\Source",
+                     "seconds":  2.3839633
+                 },
+                 {
+                     "label":  "application-services",
+                     "exitcode":  0,
+                     "command":  "C:\\JudasValidation\\M77TestBinFollowup\\judas.exe",
+                     "arguments":  [
+                                       "C:\\JudasValidation\\Source\\projects\\balance_lab\\balance_lab.judasproj"
+                                   ],
+                     "cwd":  "C:\\JudasValidation\\Source",
+                     "seconds":  2.1185723999999997
+                 },
+                 {
+                     "label":  "editor-play-stop",
+                     "exitcode":  0,
+                     "command":  "C:\\JudasValidation\\M77TestBinFollowup\\judas_editor.exe",
+                     "arguments":  [
+                                       "C:\\JudasValidation\\M77EditorProjectFollowup\\balance_lab.judasproj"
+                                   ],
+                     "cwd":  "C:\\JudasValidation\\Source",
+                     "seconds":  7.2548157
+                 },
+                 {
+                     "label":  "export",
+                     "exitcode":  0,
+                     "command":  "C:\\JudasValidation\\M77TestBinFollowup\\judas_export.exe",
+                     "arguments":  [
+                                       "C:\\JudasValidation\\Source\\projects\\balance_lab\\balance_lab.judasproj",
+                                       "C:\\JudasValidation\\Packages\\M77PristineFollowup",
+                                       "C:\\JudasValidation\\Build\\Release\\judas.exe"
+                                   ],
+                     "cwd":  "C:\\JudasValidation\\Source",
+                     "seconds":  0.4970056
+                 },
+                 {
+                     "label":  "moved-source-hidden",
+                     "exitcode":  0,
+                     "command":  "C:\\JudasValidation\\Packages\\Moved M77 Followup é α\\judas.exe",
+                     "arguments":  [
+
+                                   ],
+                     "cwd":  "C:\\JudasValidation\\M77UnrelatedCwd",
+                     "seconds":  2.1973986
+                 }
+             ]
+}

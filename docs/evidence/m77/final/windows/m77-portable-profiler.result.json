@@ -1,0 +1,10 @@
+﻿{
+    "label":  "portable-profiler",
+    "exitcode":  0,
+    "command":  "C:\\JudasValidation\\M77TestBin\\judas_profiler_tests.exe",
+    "arguments":  [
+
+                  ],
+    "cwd":  "C:\\JudasValidation\\Source",
+    "seconds":  1.0869682999999999
+}

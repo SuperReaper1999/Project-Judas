@@ -1,0 +1,6 @@
+{
+    "exitcode":  1,
+    "freeBytes":  643813376,
+    "compilerDeviation":  "Only judas_profiler.cpp /Od /Ob0; remaining targets normal Release. No source/VM configuration change.",
+    "profiler":  1
+}

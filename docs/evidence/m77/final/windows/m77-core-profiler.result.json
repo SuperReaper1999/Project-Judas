@@ -1,0 +1,10 @@
+﻿{
+    "label":  "core-profiler",
+    "exitcode":  1,
+    "command":  "C:\\JudasValidation\\M77TestBin\\judas_profiler_tests.exe",
+    "arguments":  [
+
+                  ],
+    "cwd":  "C:\\JudasValidation\\Source",
+    "seconds":  1.1525231
+}

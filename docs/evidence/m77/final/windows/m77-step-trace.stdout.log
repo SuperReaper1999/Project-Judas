@@ -1,0 +1,4 @@
+PASS actual GL host: 
+PASS normal project loads: 
+PASS logical project controls: 
+FAIL normal authored/captured scene: could not open scene file: C:\JudasValidation\M77Results\step-trace\project\Scenes\step-trace.judas

@@ -1,0 +1,37 @@
+[
+  {
+    "mode": "perf-zero",
+    "exitcode": 0,
+    "wall_seconds": 5.667849195000599
+  },
+  {
+    "mode": "perf-passive",
+    "exitcode": 0,
+    "wall_seconds": 6.101169042995025
+  },
+  {
+    "mode": "perf-one",
+    "exitcode": 0,
+    "wall_seconds": 5.748241296001652
+  },
+  {
+    "mode": "perf-four",
+    "exitcode": 0,
+    "wall_seconds": 7.086155416000111
+  },
+  {
+    "mode": "perf-activation",
+    "exitcode": 0,
+    "wall_seconds": 5.351856365996355
+  },
+  {
+    "mode": "perf-step",
+    "exitcode": 0,
+    "wall_seconds": 5.902328641997883
+  },
+  {
+    "mode": "perf-recovery",
+    "exitcode": 0,
+    "wall_seconds": 10.392919635996805
+  }
+]

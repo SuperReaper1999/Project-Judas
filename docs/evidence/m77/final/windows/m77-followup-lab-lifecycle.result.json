@@ -1,0 +1,11 @@
+﻿{
+    "label":  "lab-lifecycle",
+    "exitcode":  0,
+    "command":  "C:\\JudasValidation\\M77TestBinFollowup\\judas_balance_lab_tests.exe",
+    "arguments":  [
+                      "C:\\JudasValidation\\M77ResultsFollowup\\lifecycle",
+                      "lifecycle"
+                  ],
+    "cwd":  "C:\\JudasValidation\\Source",
+    "seconds":  2.7803964999999997
+}

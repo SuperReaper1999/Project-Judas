@@ -69,7 +69,7 @@ void RuntimeWorld::ResolveAnimationPose(AnimationInstance& instance,float dt){
 }
 void RuntimeWorld::PrepareAnimationReferences(float dt){
  for(auto id:m_animationOwners){const auto* d=RuntimeDefinition(id);if(!d||!d->animation||!d->animation->enabled)continue;
-  bool enabled=(d->animation->fullBodyIK&&d->animation->fullBodyIK->enabled)||(d->ragdoll&&d->ragdoll->physicalAnimation&&d->ragdoll->physicalAnimation->enabled);if(!enabled){auto found=m_animationInstances.find(id);if(found!=m_animationInstances.end())found->second.preparedM70=false;continue;}
+  bool enabled=(d->ragdoll&&d->ragdoll->balance&&d->ragdoll->balance->enabled)||(d->animation->fullBodyIK&&d->animation->fullBodyIK->enabled)||(d->ragdoll&&d->ragdoll->physicalAnimation&&d->ragdoll->physicalAnimation->enabled);if(!enabled){auto found=m_animationInstances.find(id);if(found!=m_animationInstances.end())found->second.preparedM70=false;continue;}
   auto* a=RuntimeAnimation(id);if(!a||!a->asset)continue;a->previousFinalPose=a->finalPose;if(a->fullBodyIK){a->fullBodyIK->sampledTargets=a->fullBodyIK->settings.targets;a->fullBodyIK->hasSample=true;}a->preparedM70=false;ResolveAnimationPose(*a,dt);a->preparedM70=true;
  }
 }
@@ -118,6 +118,7 @@ bool RuntimeWorld::SetLimbIK(EntityId id,const LimbIKSettings& k,bool remove,std
  m_scriptDefinitions.at(id).animation=settings;a->preparedM70=false;ResolveAnimationPose(*a,0);return true;
 }
 bool RuntimeWorld::ConfigureFullBodyIK(EntityId id,const std::optional<FullBodyIKSettings>& settings,std::string& error){
+ if(PhysicalBalanceOwnsJoints(id)){error="physical balance owns the mapped posture; cancel it before replacing shared IK configuration";return false;}
  auto* d=RuntimeDefinition(id);if(!d||!d->animation){error="entity has no animation";return false;}auto* a=RuntimeAnimation(id);if(!a||!a->asset){error="IK skeleton is not ready";return false;}
  std::optional<FullBodyIKRuntime> pending;
  if(settings){FullBodyIKRuntime candidate;candidate.settings=*settings;if(!PrepareFullBodyIK(a->asset->skeleton,candidate.settings,candidate.mapping,error))return false;candidate.prepared=true;
@@ -128,6 +129,7 @@ bool RuntimeWorld::ConfigureFullBodyIK(EntityId id,const std::optional<FullBodyI
  m_scriptDefinitions.at(id).animation->fullBodyIK=settings;a->fullBodyIK=std::move(pending);a->preparedM70=false;a->error.clear();return true;
 }
 bool RuntimeWorld::SetFullBodyIKTargets(EntityId id,const std::vector<FullBodyIKTarget>& targets,std::string& error){
+ if(PhysicalBalanceOwnsJoints(id)){error="physical balance owns the mapped posture; cancel it before replacing shared IK targets";return false;}
  auto* d=RuntimeDefinition(id);auto* a=RuntimeAnimation(id);if(!d||!d->animation||!a||!a->asset||!a->fullBodyIK){error="IK configuration/skeleton is unavailable";return false;}auto settings=a->fullBodyIK->settings;settings.targets=targets;
  if(!ValidFullBodyIKSettings(settings,error))return false;
  auto transform=PresentedTransform(id,d->transform,1);std::vector<FullBodyIKTarget> converted;if(!FullBodyIKTargetsToModel(targets,glm::dvec3(transform.position),transform.rotation,transform.scale,converted,error))return false;

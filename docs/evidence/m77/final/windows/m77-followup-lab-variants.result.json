@@ -1,0 +1,11 @@
+﻿{
+    "label":  "lab-variants",
+    "exitcode":  0,
+    "command":  "C:\\JudasValidation\\M77TestBinFollowup\\judas_balance_lab_tests.exe",
+    "arguments":  [
+                      "C:\\JudasValidation\\M77ResultsFollowup\\variants",
+                      "variants"
+                  ],
+    "cwd":  "C:\\JudasValidation\\Source",
+    "seconds":  6.5133885
+}

@@ -1,0 +1,16 @@
+$ErrorActionPreference='Stop';$ProgressPreference='SilentlyContinue';$root='C:\JudasValidation';$base='http://192.168.122.1:8872';$receipts="$root\Receipts\M77"
+function Upload($p){Invoke-WebRequest -UseBasicParsing "$base/$([IO.Path]::GetFileName($p))" -Method Post -InFile $p|Out-Null}
+try{
+ Invoke-WebRequest -UseBasicParsing "$base/m77-final-validation-delta.json" -OutFile "$root\m77-final-validation-delta.json";Invoke-WebRequest -UseBasicParsing "$base/m77-final-validation-delta.zip" -OutFile "$root\m77-final-validation-delta.zip"
+ Add-Type -AssemblyName System.IO.Compression.FileSystem;$archive=[IO.Compression.ZipFile]::OpenRead("$root\m77-final-validation-delta.zip");$changed=Get-Content "$root\m77-final-validation-delta.json" -Raw|ConvertFrom-Json
+ try{foreach($file in $changed.files){$dest=Join-Path "$root\Source" $file.path;New-Item -ItemType Directory -Force ([IO.Path]::GetDirectoryName($dest))|Out-Null;[IO.Compression.ZipFileExtensions]::ExtractToFile($archive.GetEntry($file.path),$dest,$true);if((Get-FileHash $dest).Hash.ToLower() -ne $file.sha256){throw "delta mismatch $($file.path)"}}}finally{$archive.Dispose()}
+ Invoke-WebRequest -UseBasicParsing "$base/m77-source-verified-final.json" -OutFile "$root\m77-source-verified-final.json";$expected=Get-Content "$root\m77-source-verified-final.json" -Raw|ConvertFrom-Json;foreach($file in $expected.files){if((Get-FileHash (Join-Path "$root\Source" $file.path)).Hash.ToLower() -ne $file.sha256){throw "final source mismatch $($file.path)"}}
+ @{verifiedFiles=$expected.files.Count;deltaFiles=$changed.files.Count;freeBytes=(Get-PSDrive C).Free}|ConvertTo-Json|Set-Content "$receipts\m77-windows-validation-source-proof.json" -Encoding UTF8;Upload "$receipts\m77-windows-validation-source-proof.json";Remove-Item "$root\m77-final-validation-delta.zip"
+
+}catch{throw $_}
+
+$ErrorActionPreference='Stop';$root='C:\JudasValidation';$base='http://192.168.122.1:8872';$receipts="$root\Receipts\M77"
+function Upload($p){Invoke-WebRequest -UseBasicParsing "$base/$([IO.Path]::GetFileName($p))" -Method Post -InFile $p|Out-Null}
+Get-CimInstance Win32_OperatingSystem|Select-Object FreePhysicalMemory,FreeVirtualMemory,TotalVirtualMemorySize|ConvertTo-Json|Set-Content "$receipts\m77-windows-memory.json";Upload "$receipts\m77-windows-memory.json"
+Import-Module "$root\VS2022\Common7\Tools\Microsoft.VisualStudio.DevShell.dll";Enter-VsDevShell -VsInstallPath "$root\VS2022" -SkipAutomaticLocation -DevCmdArguments '-arch=x64 -host_arch=x64';$env:PATH="$root\Git\cmd;$root\VS2022\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin;$env:PATH";$ErrorActionPreference='Continue'
+& cmake --build "$root\Build" --config Release --target judas_profiler_tests judas judas_editor judas_export judas_physical_balance_foundation_tests judas_physical_balance_controller_tests judas_balance_lab_tests judas_physical_animation_tests judas_character_motor_tests --parallel 1 -- /p:PreferredToolArchitecture=x64 2>&1|Tee-Object "$receipts\m77-windows-step-tie-build.log";$code=$LASTEXITCODE;Upload "$receipts\m77-windows-step-tie-build.log";@{exitcode=$code;freeBytes=(Get-PSDrive C).Free}|ConvertTo-Json|Set-Content "$receipts\m77-windows-step-tie-build-summary.json";Upload "$receipts\m77-windows-step-tie-build-summary.json";exit $code

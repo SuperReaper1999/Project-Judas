@@ -1,0 +1,38 @@
+﻿[
+    {
+        "sha256":  "bfa0aa9b6a28829c73e6917231b4a170c5fa3e82965974f3eb1a47d2950a4895",
+        "path":  "judas_profiler_tests.exe"
+    },
+    {
+        "sha256":  "0e3ab4eedc9ddc4f37e26536a9af01ebb15d88539b379dc0fc557d0992ff196e",
+        "path":  "judas.exe"
+    },
+    {
+        "sha256":  "12b08ed177e9dd44326db497f90560e87f2b48e838f54d20f796a212d11d1e66",
+        "path":  "judas_editor.exe"
+    },
+    {
+        "sha256":  "2b27ce19c51d574ff50640f0e31aa9e7bd900167a69375897402b870a7e59e14",
+        "path":  "judas_export.exe"
+    },
+    {
+        "sha256":  "c1e3e6bbbd914f0e7e392a0b5663be33924078a916207f2b376fa454a218e2a1",
+        "path":  "judas_physical_balance_foundation_tests.exe"
+    },
+    {
+        "sha256":  "01a8baf713987fdb09467880a14886b6bb91f80f5def2bb1378476a5c2344ad7",
+        "path":  "judas_physical_balance_controller_tests.exe"
+    },
+    {
+        "sha256":  "61e5eafe728d892561e82b82aaa527ed7c2351fbc9a4e299f9c7a48d09312be3",
+        "path":  "judas_balance_lab_tests.exe"
+    },
+    {
+        "sha256":  "28154804f6dcb24f48cca0f20fa3b1376e03a26dcb55ea2682758b052afed3e6",
+        "path":  "judas_physical_animation_tests.exe"
+    },
+    {
+        "sha256":  "c7ebfc5ed13bc5ff4b55403c1d4144e7b3e213c9195fa126a657e9bac4af63fa",
+        "path":  "judas_character_motor_tests.exe"
+    }
+]

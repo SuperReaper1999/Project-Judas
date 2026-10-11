@@ -1,0 +1,27 @@
+Renderer fragment texture units: 32 (material path uses 12)
+PASS actual GL host: 
+PASS normal project loads: 
+PASS logical project controls: 
+PASS normal authored/captured scene: 
+PASS normal immutable assets and world publish: 
+PASS ordinary game starts: 
+PASS authored configuration does not activate physical authority
+PASS shared immutable asset and distinct second rig use ordinary resource sharing
+ACTOR 12 status=2 root=3.00051,1.41778,0.00190531 height=1.41833 up=0.999927 speed=0.000138232 supports=4/4 landings=0 reason=measured supported physical standing
+PASS real JS request makes full dynamic authority with explicit motor handoff
+PASS normal resource/JS path reaches actual standing
+PASS capture contains an owned native task
+PASS capture while corrective step is actually in progress
+PASS atomic save retains physical and native task state: 
+PASS active task declares its required save participant
+PASS detached restore candidate is ready
+PASS missing/newer/truncated native task participant is rejected
+PASS detached restore candidate is ready
+PASS missing/newer/truncated native task participant is rejected
+PASS detached restore candidate is ready
+PASS missing/newer/truncated native task participant is rejected
+PASS failed detached restores leave live physical state untouched
+PASS ordinary lab callback health matches deliberate fault policy
+PASS real final pose/skinning and diagnostic rendering path executes
+PASS Stop destroys the owned runtime world
+SUMMARY 24 checks 0 failures

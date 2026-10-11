@@ -1,0 +1,9 @@
+$ErrorActionPreference='Stop';$ProgressPreference='SilentlyContinue';$root='C:\JudasValidation';$base='http://192.168.122.1:8872';$receipts="$root\Receipts\M77"
+function Upload($p){Invoke-WebRequest -UseBasicParsing "$base/$([IO.Path]::GetFileName($p))" -Method Post -InFile $p|Out-Null}
+Import-Module "$root\VS2022\Common7\Tools\Microsoft.VisualStudio.DevShell.dll";Enter-VsDevShell -VsInstallPath "$root\VS2022" -SkipAutomaticLocation -DevCmdArguments '-arch=x64 -host_arch=x64';$env:PATH="$root\VS2022\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin;$env:PATH";$ErrorActionPreference='Continue'
+# Local compiler option only for this existing profiler translation unit; no source, VM or runtime model change.
+$env:_CL_='/Od /Ob0'
+& cmake --build "$root\Build" --config Release --target judas_profiler --parallel 1 -- /p:PreferredToolArchitecture=x64 2>&1|Tee-Object "$receipts\m77-windows-profiler-noinline.log";$profiler=$LASTEXITCODE;Upload "$receipts\m77-windows-profiler-noinline.log"
+Remove-Item Env:\_CL_
+if($profiler -eq 0){& cmake --build "$root\Build" --config Release --target judas judas_editor judas_export judas_physical_balance_foundation_tests judas_physical_balance_controller_tests judas_balance_lab_tests judas_physical_animation_tests judas_character_motor_tests --parallel 1 -- /p:PreferredToolArchitecture=x64 2>&1|Tee-Object "$receipts\m77-windows-standard-release-followup.log";$code=$LASTEXITCODE;Upload "$receipts\m77-windows-standard-release-followup.log"}else{$code=$profiler}
+@{profiler=$profiler;exitcode=$code;freeBytes=(Get-PSDrive C).Free;compilerDeviation='Only judas_profiler.cpp /Od /Ob0; remaining targets normal Release. No source/VM configuration change.'}|ConvertTo-Json|Set-Content "$receipts\m77-windows-profiler-noinline-summary.json";Upload "$receipts\m77-windows-profiler-noinline-summary.json";exit $code

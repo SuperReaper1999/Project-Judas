@@ -1,0 +1,11 @@
+﻿{
+    "label":  "lab-cookbook",
+    "exitcode":  0,
+    "command":  "C:\\JudasValidation\\M77TestBinFollowup\\judas_balance_lab_tests.exe",
+    "arguments":  [
+                      "C:\\JudasValidation\\M77ResultsFollowup\\cookbook",
+                      "cookbook"
+                  ],
+    "cwd":  "C:\\JudasValidation\\Source",
+    "seconds":  2.1757184
+}

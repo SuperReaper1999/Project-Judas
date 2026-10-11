@@ -3,6 +3,7 @@
 #include "JointTypes.h"
 #include "Classification.h"
 #include "PhysicalAnimation.h"
+#include "PhysicalBalance.h"
 
 // Authored geometry in joint-local metres. Skeleton joints and physical joints
 // have separate identities: each mapping explicitly names both relationships.
@@ -25,6 +26,7 @@ struct RagdollDefinition {
     bool receiveContactEvents=false;
     std::vector<RagdollBone> bones;
     std::optional<PhysicalAnimationSettings> physicalAnimation;
+    std::optional<BalanceDefinition> balance;
 };
 bool ValidRagdollDefinition(const RagdollDefinition&,std::string& error);
 bool RagdollDefinitionsEqual(const RagdollDefinition&,const RagdollDefinition&);

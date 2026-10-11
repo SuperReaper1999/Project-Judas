@@ -1,0 +1,10 @@
+{
+  "exportExit": 0,
+  "movedApplicationExit": 0,
+  "project": "projects/balance_lab/balance_lab.judasproj",
+  "package": "/tmp/Judas M77 final package \u03a9/Balance Lab",
+  "unrelatedCwd": "/tmp/Judas M77 final package \u03a9/unrelated cwd",
+  "sourceHidden": "process-only bwrap --tmpfs repository",
+  "runtimeSHA256": "15e4b91ba847e14ef84f7c8805b88314cd71fd65081210d8dc87d843105197f8",
+  "packageRuntimeSHA256": "15e4b91ba847e14ef84f7c8805b88314cd71fd65081210d8dc87d843105197f8"
+}

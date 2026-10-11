@@ -1,0 +1,4830 @@
+[
+  {
+    "mode": "perf-activation",
+    "allocated_bodies_including_motor_proxies": 12,
+    "actors": [
+      {
+        "id": 12,
+        "owns": true,
+        "standing": true,
+        "status": 2
+      }
+    ],
+    "statistics": {
+      "Animation clip sampling inclusive_ms": {
+        "median": 0.001209,
+        "p95": 0.001684,
+        "max": 0.011705,
+        "steady_after_60_frames": {
+          "median": 0.0012064999999999999,
+          "p95": 0.001658,
+          "max": 0.011705
+        }
+      },
+      "Animation instances inclusive_ms": {
+        "median": 0.011278,
+        "p95": 0.021302,
+        "max": 0.700469,
+        "steady_after_60_frames": {
+          "median": 0.011243,
+          "p95": 0.021302,
+          "max": 0.700469
+        }
+      },
+      "Character motor inclusive_ms": {
+        "median": 0.1054155,
+        "p95": 0.15065800000000001,
+        "max": 0.22688699999999998,
+        "steady_after_60_frames": {
+          "median": 0.10531499999999999,
+          "p95": 0.146013,
+          "max": 0.22688699999999998
+        }
+      },
+      "Character motors inclusive_ms": {
+        "median": 0.115513,
+        "p95": 0.164554,
+        "max": 0.238407,
+        "steady_after_60_frames": {
+          "median": 0.115272,
+          "p95": 0.15970900000000002,
+          "max": 0.238407
+        }
+      },
+      "Final pose resolution inclusive_ms": {
+        "median": 0.0190215,
+        "p95": 0.031681,
+        "max": 0.104497,
+        "steady_after_60_frames": {
+          "median": 0.0189,
+          "p95": 0.031403,
+          "max": 0.104497
+        }
+      },
+      "Fixed simulation step inclusive_ms": {
+        "median": 0.3553345,
+        "p95": 0.475812,
+        "max": 1.429261,
+        "steady_after_60_frames": {
+          "median": 0.3542545,
+          "p95": 0.466712,
+          "max": 1.429261
+        }
+      },
+      "JavaScript UI update inclusive_ms": {
+        "median": 0.020685000000000002,
+        "p95": 0.034249,
+        "max": 0.672646,
+        "steady_after_60_frames": {
+          "median": 0.020396499999999998,
+          "p95": 0.033969,
+          "max": 0.672646
+        }
+      },
+      "JavaScript contact events inclusive_ms": {
+        "median": 0.000892,
+        "p95": 0.001187,
+        "max": 0.011446,
+        "steady_after_60_frames": {
+          "median": 0.000892,
+          "p95": 0.001133,
+          "max": 0.011446
+        }
+      },
+      "JavaScript fixedUpdate inclusive_ms": {
+        "median": 0.0665845,
+        "p95": 0.109045,
+        "max": 0.992709,
+        "steady_after_60_frames": {
+          "median": 0.066247,
+          "p95": 0.105909,
+          "max": 0.992709
+        }
+      },
+      "JavaScript presentation inclusive_ms": {
+        "median": 0.1146105,
+        "p95": 0.17598,
+        "max": 0.369139,
+        "steady_after_60_frames": {
+          "median": 0.1143925,
+          "p95": 0.17199,
+          "max": 0.369139
+        }
+      },
+      "JavaScript update inclusive_ms": {
+        "median": 0.030001,
+        "p95": 0.053191,
+        "max": 0.187347,
+        "steady_after_60_frames": {
+          "median": 0.029887,
+          "p95": 0.052152,
+          "max": 0.187347
+        }
+      },
+      "M77 human intent inclusive_ms": {
+        "median": 0.028756,
+        "p95": 0.054066,
+        "max": 0.946695,
+        "steady_after_60_frames": {
+          "median": 0.0287185,
+          "p95": 0.052297,
+          "max": 0.946695
+        }
+      },
+      "Main camera inclusive_ms": {
+        "median": 5.873753,
+        "p95": 7.382663,
+        "max": 576.089366,
+        "steady_after_60_frames": {
+          "median": 5.846197,
+          "p95": 7.067129,
+          "max": 15.814226
+        }
+      },
+      "Particles and water presentation inclusive_ms": {
+        "median": 0.00044,
+        "p95": 0.000681,
+        "max": 0.001009,
+        "steady_after_60_frames": {
+          "median": 0.0004355,
+          "p95": 0.00065,
+          "max": 0.001009
+        }
+      },
+      "Physical animation drives inclusive_ms": {
+        "median": 0.005079500000000001,
+        "p95": 0.007773,
+        "max": 0.567552,
+        "steady_after_60_frames": {
+          "median": 0.0050605,
+          "p95": 0.007217,
+          "max": 0.027109
+        }
+      },
+      "Physical balance controller inclusive_ms": {
+        "median": 0.0125375,
+        "p95": 0.022581,
+        "max": 0.080283,
+        "steady_after_60_frames": {
+          "median": 0.012541,
+          "p95": 0.021997,
+          "max": 0.080283
+        }
+      },
+      "Physical balance observations inclusive_ms": {
+        "median": 0.006117,
+        "p95": 0.009244,
+        "max": 0.073954,
+        "steady_after_60_frames": {
+          "median": 0.0060875,
+          "p95": 0.009004,
+          "max": 0.073954
+        }
+      },
+      "Physics broadphase inclusive_ms": {
+        "median": 0.0012245,
+        "p95": 0.001505,
+        "max": 0.018746,
+        "steady_after_60_frames": {
+          "median": 0.001223,
+          "p95": 0.001452,
+          "max": 0.018746
+        }
+      },
+      "Physics contact and joint solver inclusive_ms": {
+        "median": 0.040134500000000004,
+        "p95": 0.064411,
+        "max": 0.126257,
+        "steady_after_60_frames": {
+          "median": 0.040045,
+          "p95": 0.062224,
+          "max": 0.126257
+        }
+      },
+      "Physics contacts inclusive_ms": {
+        "median": 0.029933500000000002,
+        "p95": 0.050414,
+        "max": 0.0781,
+        "steady_after_60_frames": {
+          "median": 0.029901999999999998,
+          "p95": 0.048577,
+          "max": 0.068445
+        }
+      },
+      "Physics continuous impacts inclusive_ms": {
+        "median": 0.002036,
+        "p95": 0.002891,
+        "max": 0.024848,
+        "steady_after_60_frames": {
+          "median": 0.0020334999999999997,
+          "p95": 0.002764,
+          "max": 0.024848
+        }
+      },
+      "Physics initial impacts inclusive_ms": {
+        "median": 0.000135,
+        "p95": 0.000183,
+        "max": 0.000436,
+        "steady_after_60_frames": {
+          "median": 0.000135,
+          "p95": 0.000182,
+          "max": 0.000436
+        }
+      },
+      "Physics position constraints inclusive_ms": {
+        "median": 0.007513,
+        "p95": 0.013595,
+        "max": 0.032205,
+        "steady_after_60_frames": {
+          "median": 0.0074895,
+          "p95": 0.012046,
+          "max": 0.032205
+        }
+      },
+      "Physics proxy refresh inclusive_ms": {
+        "median": 0.005834000000000001,
+        "p95": 0.009895,
+        "max": 0.029627,
+        "steady_after_60_frames": {
+          "median": 0.0058165000000000005,
+          "p95": 0.009863,
+          "max": 0.029627
+        }
+      },
+      "Physics sleeping assessment inclusive_ms": {
+        "median": 0.004711,
+        "p95": 0.007082,
+        "max": 0.064061,
+        "steady_after_60_frames": {
+          "median": 0.0046984999999999996,
+          "p95": 0.006759,
+          "max": 0.064061
+        }
+      },
+      "Physics velocity constraints inclusive_ms": {
+        "median": 0.024820500000000002,
+        "p95": 0.037515,
+        "max": 0.109404,
+        "steady_after_60_frames": {
+          "median": 0.0247045,
+          "p95": 0.036389,
+          "max": 0.109404
+        }
+      },
+      "Pose clip mixing inclusive_ms": {
+        "median": 0.0025085000000000003,
+        "p95": 0.003406,
+        "max": 0.013786000000000001,
+        "steady_after_60_frames": {
+          "median": 0.0025025000000000004,
+          "p95": 0.003348,
+          "max": 0.013786000000000001
+        }
+      },
+      "Pose skin matrices inclusive_ms": {
+        "median": 0.021364,
+        "p95": 0.032036999999999996,
+        "max": 0.11716,
+        "steady_after_60_frames": {
+          "median": 0.021249000000000004,
+          "p95": 0.031031000000000006,
+          "max": 0.11716
+        }
+      },
+      "Ragdoll physics to pose inclusive_ms": {
+        "median": 0.011769499999999999,
+        "p95": 0.020921,
+        "max": 0.039888,
+        "steady_after_60_frames": {
+          "median": 0.0117145,
+          "p95": 0.020921,
+          "max": 0.039888
+        }
+      },
+      "Resource wait inclusive_ms": {
+        "median": 0.000115,
+        "p95": 0.0002,
+        "max": 0.000299,
+        "steady_after_60_frames": {
+          "median": 0.000114,
+          "p95": 0.000196,
+          "max": 0.000299
+        }
+      },
+      "Rigid physics inclusive_ms": {
+        "median": 0.083987,
+        "p95": 0.128233,
+        "max": 0.203401,
+        "steady_after_60_frames": {
+          "median": 0.08383550000000001,
+          "p95": 0.122493,
+          "max": 0.203401
+        }
+      },
+      "Script asset: Assets/scripts/lab.js inclusive_ms": {
+        "median": 0.2345395,
+        "p95": 0.34341700000000003,
+        "max": 1.233692,
+        "steady_after_60_frames": {
+          "median": 0.23347649999999998,
+          "p95": 0.327947,
+          "max": 1.233692
+        }
+      },
+      "Script lifecycle callback inclusive_ms": {
+        "median": 0.2353865,
+        "p95": 0.344693,
+        "max": 1.2348279999999998,
+        "steady_after_60_frames": {
+          "median": 0.2344105,
+          "p95": 0.33021100000000003,
+          "max": 1.2348279999999998
+        }
+      },
+      "Script synchronization inclusive_ms": {
+        "median": 0.002381,
+        "p95": 0.003608,
+        "max": 0.012329999999999999,
+        "steady_after_60_frames": {
+          "median": 0.0023639999999999998,
+          "p95": 0.0035240000000000002,
+          "max": 0.012329999999999999
+        }
+      },
+      "Shadow pass submission inclusive_ms": {
+        "median": 0.375517,
+        "p95": 0.442352,
+        "max": 177.877637,
+        "steady_after_60_frames": {
+          "median": 0.375517,
+          "p95": 0.432546,
+          "max": 3.89243
+        }
+      },
+      "Simulation systems inclusive_ms": {
+        "median": 0.3556815,
+        "p95": 0.476323,
+        "max": 1.429602,
+        "steady_after_60_frames": {
+          "median": 0.35455400000000004,
+          "p95": 0.467235,
+          "max": 1.429602
+        }
+      },
+      "Visual particle simulation inclusive_ms": {
+        "median": 4.6e-05,
+        "p95": 0.000124,
+        "max": 0.000281,
+        "steady_after_60_frames": {
+          "median": 4.6e-05,
+          "p95": 0.000113,
+          "max": 0.000281
+        }
+      },
+      "Water boundary upload inclusive_ms": {
+        "median": 5.362294,
+        "p95": 6.707643,
+        "max": 14.874441,
+        "steady_after_60_frames": {
+          "median": 5.3463995,
+          "p95": 6.544467,
+          "max": 14.874441
+        }
+      },
+      "Water optical paths inclusive_ms": {
+        "median": 0.0133755,
+        "p95": 0.013781,
+        "max": 0.73505,
+        "steady_after_60_frames": {
+          "median": 0.0133665,
+          "p95": 0.013769,
+          "max": 0.73505
+        }
+      },
+      "World culling and opaque submission inclusive_ms": {
+        "median": 0.7997525000000001,
+        "p95": 1.0636160000000001,
+        "max": 753.617138,
+        "steady_after_60_frames": {
+          "median": 0.796123,
+          "p95": 1.03341,
+          "max": 4.300121
+        }
+      },
+      "World render submission inclusive_ms": {
+        "median": 6.26825,
+        "p95": 7.760925,
+        "max": 754.034724,
+        "steady_after_60_frames": {
+          "median": 6.2374565,
+          "p95": 7.411972,
+          "max": 16.222196
+        }
+      },
+      "fixed_wall_ms": {
+        "median": 0.3560425,
+        "p95": 0.476735,
+        "max": 1.430131,
+        "steady_after_60_frames": {
+          "median": 0.3549905,
+          "p95": 0.467762,
+          "max": 1.430131
+        }
+      },
+      "frame_wall_ms": {
+        "median": 6.888751,
+        "p95": 8.434227,
+        "max": 755.204186,
+        "steady_after_60_frames": {
+          "median": 6.8554695,
+          "p95": 8.071343,
+          "max": 17.288426
+        }
+      },
+      "render_cpu_ms": {
+        "median": 6.3142344999999995,
+        "p95": 7.803824,
+        "max": 754.064327,
+        "steady_after_60_frames": {
+          "median": 6.284796999999999,
+          "p95": 7.448697,
+          "max": 16.276601
+        }
+      }
+    },
+    "largest_frame_outliers": [
+      {
+        "Animation clip sampling inclusive_ms": 0.00043400000000000003,
+        "Animation instances inclusive_ms": 0.025646,
+        "Character motor inclusive_ms": 0.114539,
+        "Character motors inclusive_ms": 0.121875,
+        "Final pose resolution inclusive_ms": 0.032064,
+        "Fixed simulation step inclusive_ms": 0.954719,
+        "JavaScript UI update inclusive_ms": 0.007546,
+        "JavaScript contact events inclusive_ms": 0.000835,
+        "JavaScript fixedUpdate inclusive_ms": 0.044923,
+        "JavaScript presentation inclusive_ms": 0.133836,
+        "JavaScript update inclusive_ms": 0.028171,
+        "M77 human intent inclusive_ms": 0.025658,
+        "Main camera inclusive_ms": 576.089366,
+        "Particles and water presentation inclusive_ms": 0.0008,
+        "Physical animation drives inclusive_ms": 0.567552,
+        "Physical balance controller inclusive_ms": 0.06747,
+        "Physical balance observations inclusive_ms": 0.002332,
+        "Physics broadphase inclusive_ms": 0.00132,
+        "Physics contact and joint solver inclusive_ms": 0.040359,
+        "Physics contacts inclusive_ms": 0.023546,
+        "Physics continuous impacts inclusive_ms": 0.001676,
+        "Physics initial impacts inclusive_ms": 7.2e-05,
+        "Physics position constraints inclusive_ms": 0.007299,
+        "Physics proxy refresh inclusive_ms": 0.008265,
+        "Physics sleeping assessment inclusive_ms": 0.00426,
+        "Physics velocity constraints inclusive_ms": 0.025371,
+        "Pose clip mixing inclusive_ms": 0.0012799999999999999,
+        "Pose skin matrices inclusive_ms": 0.043821,
+        "Ragdoll physics to pose inclusive_ms": 0.034141000000000005,
+        "Resource wait inclusive_ms": 7.5e-05,
+        "Rigid physics inclusive_ms": 0.078729,
+        "Script asset: Assets/scripts/lab.js inclusive_ms": 0.21046900000000002,
+        "Script lifecycle callback inclusive_ms": 0.212685,
+        "Script synchronization inclusive_ms": 0.001522,
+        "Shadow pass submission inclusive_ms": 177.877637,
+        "Simulation systems inclusive_ms": 0.955266,
+        "Visual particle simulation inclusive_ms": 8e-05,
+        "Water boundary upload inclusive_ms": 0.065226,
+        "Water optical paths inclusive_ms": 0.017731,
+        "World culling and opaque submission inclusive_ms": 753.617138,
+        "World render submission inclusive_ms": 754.034724,
+        "fixed_wall_ms": 0.955871,
+        "frame": 0,
+        "frame_wall_ms": 755.204186,
+        "render_cpu_ms": 754.064327
+      },
+      {
+        "Animation clip sampling inclusive_ms": 0.001598,
+        "Animation instances inclusive_ms": 0.031251,
+        "Character motor inclusive_ms": 0.198534,
+        "Character motors inclusive_ms": 0.215716,
+        "Final pose resolution inclusive_ms": 0.043489,
+        "Fixed simulation step inclusive_ms": 0.666865,
+        "JavaScript UI update inclusive_ms": 0.034825,
+        "JavaScript contact events inclusive_ms": 0.0012580000000000002,
+        "JavaScript fixedUpdate inclusive_ms": 0.13498,
+        "JavaScript presentation inclusive_ms": 0.212521,
+        "JavaScript update inclusive_ms": 0.051831,
+        "M77 human intent inclusive_ms": 0.048868,
+        "Main camera inclusive_ms": 15.814226,
+        "Particles and water presentation inclusive_ms": 0.000858,
+        "Physical animation drives inclusive_ms": 0.008655,
+        "Physical balance controller inclusive_ms": 0.020166,
+        "Physical balance observations inclusive_ms": 0.009633,
+        "Physics broadphase inclusive_ms": 0.001698,
+        "Physics contact and joint solver inclusive_ms": 0.081279,
+        "Physics contacts inclusive_ms": 0.06492,
+        "Physics continuous impacts inclusive_ms": 0.003256,
+        "Physics initial impacts inclusive_ms": 0.000242,
+        "Physics position constraints inclusive_ms": 0.021307,
+        "Physics proxy refresh inclusive_ms": 0.010072,
+        "Physics sleeping assessment inclusive_ms": 0.007714,
+        "Physics velocity constraints inclusive_ms": 0.047644,
+        "Pose clip mixing inclusive_ms": 0.0036,
+        "Pose skin matrices inclusive_ms": 0.034574,
+        "Ragdoll physics to pose inclusive_ms": 0.021143,
+        "Resource wait inclusive_ms": 8.1e-05,
+        "Rigid physics inclusive_ms": 0.167834,
+        "Script asset: Assets/scripts/lab.js inclusive_ms": 0.429848,
+        "Script lifecycle callback inclusive_ms": 0.431209,
+        "Script synchronization inclusive_ms": 0.0038699999999999997,
+        "Shadow pass submission inclusive_ms": 0.392604,
+        "Simulation systems inclusive_ms": 0.667583,
+        "Visual particle simulation inclusive_ms": 0.000143,
+        "Water boundary upload inclusive_ms": 14.874441,
+        "Water optical paths inclusive_ms": 0.013871,
+        "World culling and opaque submission inclusive_ms": 1.260156,
+        "World render submission inclusive_ms": 16.222196,
+        "fixed_wall_ms": 0.668049,
+        "frame": 142,
+        "frame_wall_ms": 17.288426,
+        "render_cpu_ms": 16.276601
+      },
+      {
+        "Animation clip sampling inclusive_ms": 0.0017790000000000002,
+        "Animation instances inclusive_ms": 0.020373,
+        "Character motor inclusive_ms": 0.18509499999999998,
+        "Character motors inclusive_ms": 0.20161400000000002,
+        "Final pose resolution inclusive_ms": 0.032222999999999995,
+        "Fixed simulation step inclusive_ms": 0.561785,
+        "JavaScript UI update inclusive_ms": 0.032312,
+        "JavaScript contact events inclusive_ms": 0.001573,
+        "JavaScript fixedUpdate inclusive_ms": 0.105909,
+        "JavaScript presentation inclusive_ms": 0.182664,
+        "JavaScript update inclusive_ms": 0.049327,
+        "M77 human intent inclusive_ms": 0.050069,
+        "Main camera inclusive_ms": 14.064021,
+        "Particles and water presentation inclusive_ms": 0.000598,
+        "Physical animation drives inclusive_ms": 0.009975,
+        "Physical balance controller inclusive_ms": 0.019008,
+        "Physical balance observations inclusive_ms": 0.009108,
+        "Physics broadphase inclusive_ms": 0.001895,
+        "Physics contact and joint solver inclusive_ms": 0.060436,
+        "Physics contacts inclusive_ms": 0.044298,
+        "Physics continuous impacts inclusive_ms": 0.003095,
+        "Physics initial impacts inclusive_ms": 0.000156,
+        "Physics position constraints inclusive_ms": 0.012387,
+        "Physics proxy refresh inclusive_ms": 0.009807,
+        "Physics sleeping assessment inclusive_ms": 0.006759,
+        "Physics velocity constraints inclusive_ms": 0.036753,
+        "Pose clip mixing inclusive_ms": 0.0035139999999999998,
+        "Pose skin matrices inclusive_ms": 0.03461500000000001,
+        "Ragdoll physics to pose inclusive_ms": 0.020921,
+        "Resource wait inclusive_ms": 6e-05,
+        "Rigid physics inclusive_ms": 0.125977,
+        "Script asset: Assets/scripts/lab.js inclusive_ms": 0.366135,
+        "Script lifecycle callback inclusive_ms": 0.367529,
+        "Script synchronization inclusive_ms": 0.004154,
+        "Shadow pass submission inclusive_ms": 0.403656,
+        "Simulation systems inclusive_ms": 0.562236,
+        "Visual particle simulation inclusive_ms": 0.000125,
+        "Water boundary upload inclusive_ms": 13.2011,
+        "Water optical paths inclusive_ms": 0.013187,
+        "World culling and opaque submission inclusive_ms": 1.186895,
+        "World render submission inclusive_ms": 14.482586,
+        "fixed_wall_ms": 0.562714,
+        "frame": 145,
+        "frame_wall_ms": 15.408482,
+        "render_cpu_ms": 14.544765
+      },
+      {
+        "Animation clip sampling inclusive_ms": 0.001683,
+        "Animation instances inclusive_ms": 0.035052,
+        "Character motor inclusive_ms": 0.175089,
+        "Character motors inclusive_ms": 0.208784,
+        "Final pose resolution inclusive_ms": 0.045499,
+        "Fixed simulation step inclusive_ms": 0.691161,
+        "JavaScript UI update inclusive_ms": 0.042737,
+        "JavaScript contact events inclusive_ms": 0.002538,
+        "JavaScript fixedUpdate inclusive_ms": 0.120476,
+        "JavaScript presentation inclusive_ms": 0.369139,
+        "JavaScript update inclusive_ms": 0.089933,
+        "M77 human intent inclusive_ms": 0.052297,
+        "Main camera inclusive_ms": 13.037966,
+        "Particles and water presentation inclusive_ms": 0.000693,
+        "Physical animation drives inclusive_ms": 0.009058,
+        "Physical balance controller inclusive_ms": 0.020878,
+        "Physical balance observations inclusive_ms": 0.01027,
+        "Physics broadphase inclusive_ms": 0.001188,
+        "Physics contact and joint solver inclusive_ms": 0.084736,
+        "Physics contacts inclusive_ms": 0.053306,
+        "Physics continuous impacts inclusive_ms": 0.005927,
+        "Physics initial impacts inclusive_ms": 0.000287,
+        "Physics position constraints inclusive_ms": 0.018327,
+        "Physics proxy refresh inclusive_ms": 0.016527,
+        "Physics sleeping assessment inclusive_ms": 0.013639,
+        "Physics velocity constraints inclusive_ms": 0.044313,
+        "Pose clip mixing inclusive_ms": 0.004146,
+        "Pose skin matrices inclusive_ms": 0.038016,
+        "Ragdoll physics to pose inclusive_ms": 0.039119,
+        "Resource wait inclusive_ms": 9.4e-05,
+        "Rigid physics inclusive_ms": 0.166895,
+        "Script asset: Assets/scripts/lab.js inclusive_ms": 0.616142,
+        "Script lifecycle callback inclusive_ms": 0.618074,
+        "Script synchronization inclusive_ms": 0.0066289999999999995,
+        "Shadow pass submission inclusive_ms": 0.665451,
+        "Simulation systems inclusive_ms": 0.691857,
+        "Visual particle simulation inclusive_ms": 0.000175,
+        "Water boundary upload inclusive_ms": 12.493488,
+        "Water optical paths inclusive_ms": 0.013598,
+        "World culling and opaque submission inclusive_ms": 1.090652,
+        "World render submission inclusive_ms": 13.73502,
+        "fixed_wall_ms": 0.692625,
+        "frame": 475,
+        "frame_wall_ms": 15.169041,
+        "render_cpu_ms": 13.92971
+      },
+      {
+        "Animation clip sampling inclusive_ms": 0.001114,
+        "Animation instances inclusive_ms": 0.010705,
+        "Character motor inclusive_ms": 0.10911,
+        "Character motors inclusive_ms": 0.119609,
+        "Final pose resolution inclusive_ms": 0.019080000000000003,
+        "Fixed simulation step inclusive_ms": 0.360109,
+        "JavaScript UI update inclusive_ms": 0.024348,
+        "JavaScript contact events inclusive_ms": 0.0009109999999999999,
+        "JavaScript fixedUpdate inclusive_ms": 0.071666,
+        "JavaScript presentation inclusive_ms": 0.113116,
+        "JavaScript update inclusive_ms": 0.032176,
+        "M77 human intent inclusive_ms": 0.030016,
+        "Main camera inclusive_ms": 11.450839,
+        "Particles and water presentation inclusive_ms": 0.000951,
+        "Physical animation drives inclusive_ms": 0.005593,
+        "Physical balance controller inclusive_ms": 0.013562,
+        "Physical balance observations inclusive_ms": 0.006692,
+        "Physics broadphase inclusive_ms": 0.001206,
+        "Physics contact and joint solver inclusive_ms": 0.042246,
+        "Physics contacts inclusive_ms": 0.032963,
+        "Physics continuous impacts inclusive_ms": 0.002185,
+        "Physics initial impacts inclusive_ms": 0.00014,
+        "Physics position constraints inclusive_ms": 0.007741,
+        "Physics proxy refresh inclusive_ms": 0.006096,
+        "Physics sleeping assessment inclusive_ms": 0.004865,
+        "Physics velocity constraints inclusive_ms": 0.026388,
+        "Pose clip mixing inclusive_ms": 0.002494,
+        "Pose skin matrices inclusive_ms": 0.026933000000000002,
+        "Ragdoll physics to pose inclusive_ms": 0.012437,
+        "Resource wait inclusive_ms": 0.000184,
+        "Rigid physics inclusive_ms": 0.089249,
+        "Script asset: Assets/scripts/lab.js inclusive_ms": 0.238363,
+        "Script lifecycle callback inclusive_ms": 0.239321,
+        "Script synchronization inclusive_ms": 0.002095,
+        "Shadow pass submission inclusive_ms": 0.359738,
+        "Simulation systems inclusive_ms": 0.360412,
+        "Visual particle simulation inclusive_ms": 4.5e-05,
+        "Water boundary upload inclusive_ms": 7.573785,
+        "Water optical paths inclusive_ms": 0.01436,
+        "World culling and opaque submission inclusive_ms": 1.128412,
+        "World render submission inclusive_ms": 11.821265,
+        "fixed_wall_ms": 0.360748,
+        "frame": 144,
+        "frame_wall_ms": 12.426285,
+        "render_cpu_ms": 11.869754
+      }
+    ]
+  },
+  {
+    "mode": "perf-four",
+    "allocated_bodies_including_motor_proxies": 33,
+    "actors": [
+      {
+        "id": 10,
+        "owns": true,
+        "standing": true,
+        "status": 2
+      },
+      {
+        "id": 11,
+        "owns": true,
+        "standing": true,
+        "status": 2
+      },
+      {
+        "id": 12,
+        "owns": true,
+        "standing": true,
+        "status": 2
+      },
+      {
+        "id": 13,
+        "owns": true,
+        "standing": true,
+        "status": 2
+      }
+    ],
+    "statistics": {
+      "Animation clip sampling inclusive_ms": {
+        "median": 0.0011974999999999998,
+        "p95": 0.0017490000000000001,
+        "max": 0.019576999999999997,
+        "steady_after_60_frames": {
+          "median": 0.001204,
+          "p95": 0.001761,
+          "max": 0.019576999999999997
+        }
+      },
+      "Animation instances inclusive_ms": {
+        "median": 0.0133,
+        "p95": 0.025708,
+        "max": 0.050477,
+        "steady_after_60_frames": {
+          "median": 0.013382999999999999,
+          "p95": 0.025981,
+          "max": 0.050477
+        }
+      },
+      "Character motor inclusive_ms": {
+        "median": 0.00028,
+        "p95": 0.00049,
+        "max": 0.0013779999999999999,
+        "steady_after_60_frames": {
+          "median": 0.000283,
+          "p95": 0.000492,
+          "max": 0.0013779999999999999
+        }
+      },
+      "Character motors inclusive_ms": {
+        "median": 0.016998,
+        "p95": 0.029656000000000002,
+        "max": 0.073758,
+        "steady_after_60_frames": {
+          "median": 0.017171,
+          "p95": 0.030306,
+          "max": 0.073758
+        }
+      },
+      "Final pose resolution inclusive_ms": {
+        "median": 0.030112499999999997,
+        "p95": 0.054935000000000005,
+        "max": 0.07920899999999999,
+        "steady_after_60_frames": {
+          "median": 0.030226500000000003,
+          "p95": 0.055491,
+          "max": 0.07920899999999999
+        }
+      },
+      "Fixed simulation step inclusive_ms": {
+        "median": 0.585744,
+        "p95": 0.919735,
+        "max": 1.555486,
+        "steady_after_60_frames": {
+          "median": 0.587703,
+          "p95": 0.924877,
+          "max": 1.555486
+        }
+      },
+      "JavaScript UI update inclusive_ms": {
+        "median": 0.026120499999999998,
+        "p95": 0.044363,
+        "max": 0.189205,
+        "steady_after_60_frames": {
+          "median": 0.0262835,
+          "p95": 0.044539,
+          "max": 0.189205
+        }
+      },
+      "JavaScript contact events inclusive_ms": {
+        "median": 0.0018264999999999998,
+        "p95": 0.002887,
+        "max": 0.019101999999999997,
+        "steady_after_60_frames": {
+          "median": 0.0018314999999999998,
+          "p95": 0.0028870000000000002,
+          "max": 0.019101999999999997
+        }
+      },
+      "JavaScript fixedUpdate inclusive_ms": {
+        "median": 0.0749735,
+        "p95": 0.132965,
+        "max": 0.813205,
+        "steady_after_60_frames": {
+          "median": 0.07580600000000001,
+          "p95": 0.134205,
+          "max": 0.813205
+        }
+      },
+      "JavaScript presentation inclusive_ms": {
+        "median": 0.127666,
+        "p95": 0.210702,
+        "max": 1.080495,
+        "steady_after_60_frames": {
+          "median": 0.1284185,
+          "p95": 0.21272,
+          "max": 1.080495
+        }
+      },
+      "JavaScript update inclusive_ms": {
+        "median": 0.0325985,
+        "p95": 0.067749,
+        "max": 0.118807,
+        "steady_after_60_frames": {
+          "median": 0.032666,
+          "p95": 0.067749,
+          "max": 0.107388
+        }
+      },
+      "M77 human intent inclusive_ms": {
+        "median": 0.0306845,
+        "p95": 0.06431,
+        "max": 0.68357,
+        "steady_after_60_frames": {
+          "median": 0.030760000000000003,
+          "p95": 0.06529,
+          "max": 0.68357
+        }
+      },
+      "Main camera inclusive_ms": {
+        "median": 7.700921,
+        "p95": 10.682622,
+        "max": 544.106618,
+        "steady_after_60_frames": {
+          "median": 7.799951,
+          "p95": 10.763269,
+          "max": 20.047351
+        }
+      },
+      "Particles and water presentation inclusive_ms": {
+        "median": 0.00063,
+        "p95": 0.000908,
+        "max": 0.017631,
+        "steady_after_60_frames": {
+          "median": 0.000633,
+          "p95": 0.000901,
+          "max": 0.017631
+        }
+      },
+      "Physical animation drives inclusive_ms": {
+        "median": 0.0190215,
+        "p95": 0.03643,
+        "max": 0.15803,
+        "steady_after_60_frames": {
+          "median": 0.019187000000000003,
+          "p95": 0.036606,
+          "max": 0.15803
+        }
+      },
+      "Physical balance controller inclusive_ms": {
+        "median": 0.0365065,
+        "p95": 0.062046,
+        "max": 0.231363,
+        "steady_after_60_frames": {
+          "median": 0.036626,
+          "p95": 0.061961,
+          "max": 0.231363
+        }
+      },
+      "Physical balance observations inclusive_ms": {
+        "median": 0.020520999999999998,
+        "p95": 0.032933000000000004,
+        "max": 0.21084599999999998,
+        "steady_after_60_frames": {
+          "median": 0.020657000000000002,
+          "p95": 0.033502,
+          "max": 0.21084599999999998
+        }
+      },
+      "Physics broadphase inclusive_ms": {
+        "median": 0.008292500000000001,
+        "p95": 0.011814,
+        "max": 0.101381,
+        "steady_after_60_frames": {
+          "median": 0.008319,
+          "p95": 0.011814,
+          "max": 0.101381
+        }
+      },
+      "Physics contact and joint solver inclusive_ms": {
+        "median": 0.1175195,
+        "p95": 0.19987,
+        "max": 0.78061,
+        "steady_after_60_frames": {
+          "median": 0.11705399999999999,
+          "p95": 0.201107,
+          "max": 0.78061
+        }
+      },
+      "Physics contacts inclusive_ms": {
+        "median": 0.150434,
+        "p95": 0.261485,
+        "max": 0.804655,
+        "steady_after_60_frames": {
+          "median": 0.1529315,
+          "p95": 0.263265,
+          "max": 0.804655
+        }
+      },
+      "Physics continuous impacts inclusive_ms": {
+        "median": 0.004786,
+        "p95": 0.006538,
+        "max": 0.027407,
+        "steady_after_60_frames": {
+          "median": 0.0048125,
+          "p95": 0.006552,
+          "max": 0.027407
+        }
+      },
+      "Physics initial impacts inclusive_ms": {
+        "median": 0.00018,
+        "p95": 0.000252,
+        "max": 0.001664,
+        "steady_after_60_frames": {
+          "median": 0.000181,
+          "p95": 0.000256,
+          "max": 0.001664
+        }
+      },
+      "Physics position constraints inclusive_ms": {
+        "median": 0.0248905,
+        "p95": 0.057607,
+        "max": 0.104133,
+        "steady_after_60_frames": {
+          "median": 0.024951,
+          "p95": 0.057989,
+          "max": 0.104133
+        }
+      },
+      "Physics proxy refresh inclusive_ms": {
+        "median": 0.012507,
+        "p95": 0.022939,
+        "max": 0.051707,
+        "steady_after_60_frames": {
+          "median": 0.012548,
+          "p95": 0.023466,
+          "max": 0.051707
+        }
+      },
+      "Physics sleeping assessment inclusive_ms": {
+        "median": 0.0119145,
+        "p95": 0.02063,
+        "max": 0.593313,
+        "steady_after_60_frames": {
+          "median": 0.0119705,
+          "p95": 0.020989,
+          "max": 0.593313
+        }
+      },
+      "Physics velocity constraints inclusive_ms": {
+        "median": 0.07392,
+        "p95": 0.116448,
+        "max": 0.196805,
+        "steady_after_60_frames": {
+          "median": 0.0720715,
+          "p95": 0.116053,
+          "max": 0.196805
+        }
+      },
+      "Pose clip mixing inclusive_ms": {
+        "median": 0.002606,
+        "p95": 0.003855,
+        "max": 0.022553000000000004,
+        "steady_after_60_frames": {
+          "median": 0.0026215,
+          "p95": 0.003886,
+          "max": 0.022553000000000004
+        }
+      },
+      "Pose skin matrices inclusive_ms": {
+        "median": 0.029260500000000002,
+        "p95": 0.044247,
+        "max": 0.11658,
+        "steady_after_60_frames": {
+          "median": 0.0294625,
+          "p95": 0.04453300000000001,
+          "max": 0.11658
+        }
+      },
+      "Ragdoll physics to pose inclusive_ms": {
+        "median": 0.0370755,
+        "p95": 0.067687,
+        "max": 0.133207,
+        "steady_after_60_frames": {
+          "median": 0.037457500000000005,
+          "p95": 0.067817,
+          "max": 0.133207
+        }
+      },
+      "Resource wait inclusive_ms": {
+        "median": 6.7e-05,
+        "p95": 0.000162,
+        "max": 0.000388,
+        "steady_after_60_frames": {
+          "median": 6.7e-05,
+          "p95": 0.000165,
+          "max": 0.000388
+        }
+      },
+      "Rigid physics inclusive_ms": {
+        "median": 0.317713,
+        "p95": 0.512044,
+        "max": 1.114084,
+        "steady_after_60_frames": {
+          "median": 0.31834300000000004,
+          "p95": 0.513799,
+          "max": 1.114084
+        }
+      },
+      "Script asset: Assets/scripts/lab.js inclusive_ms": {
+        "median": 0.26947150000000003,
+        "p95": 0.44352199999999997,
+        "max": 1.2829300000000001,
+        "steady_after_60_frames": {
+          "median": 0.27092550000000004,
+          "p95": 0.449317,
+          "max": 1.2829300000000001
+        }
+      },
+      "Script lifecycle callback inclusive_ms": {
+        "median": 0.2706495,
+        "p95": 0.444936,
+        "max": 1.284495,
+        "steady_after_60_frames": {
+          "median": 0.272157,
+          "p95": 0.45091099999999995,
+          "max": 1.284495
+        }
+      },
+      "Script synchronization inclusive_ms": {
+        "median": 0.0026864999999999997,
+        "p95": 0.004326,
+        "max": 0.12090100000000001,
+        "steady_after_60_frames": {
+          "median": 0.002727,
+          "p95": 0.004341,
+          "max": 0.12090100000000001
+        }
+      },
+      "Shadow pass submission inclusive_ms": {
+        "median": 0.39563250000000005,
+        "p95": 2.574528,
+        "max": 161.021135,
+        "steady_after_60_frames": {
+          "median": 0.39729349999999997,
+          "p95": 2.889554,
+          "max": 8.899976
+        }
+      },
+      "Simulation systems inclusive_ms": {
+        "median": 0.586024,
+        "p95": 0.920271,
+        "max": 1.556013,
+        "steady_after_60_frames": {
+          "median": 0.588055,
+          "p95": 0.925323,
+          "max": 1.556013
+        }
+      },
+      "Visual particle simulation inclusive_ms": {
+        "median": 5.7e-05,
+        "p95": 0.00015,
+        "max": 0.009195,
+        "steady_after_60_frames": {
+          "median": 5.7e-05,
+          "p95": 0.000149,
+          "max": 0.009195
+        }
+      },
+      "Water boundary upload inclusive_ms": {
+        "median": 6.954291,
+        "p95": 9.693182,
+        "max": 18.760297,
+        "steady_after_60_frames": {
+          "median": 7.0575195,
+          "p95": 9.796026,
+          "max": 18.760297
+        }
+      },
+      "Water optical paths inclusive_ms": {
+        "median": 0.013269,
+        "p95": 0.014138,
+        "max": 3.027542,
+        "steady_after_60_frames": {
+          "median": 0.013246,
+          "p95": 0.014137,
+          "max": 3.027542
+        }
+      },
+      "World culling and opaque submission inclusive_ms": {
+        "median": 1.0143495,
+        "p95": 2.631213,
+        "max": 704.810375,
+        "steady_after_60_frames": {
+          "median": 1.02035,
+          "p95": 2.9572380000000003,
+          "max": 9.812897
+        }
+      },
+      "World render submission inclusive_ms": {
+        "median": 8.19521,
+        "p95": 11.482344,
+        "max": 705.197123,
+        "steady_after_60_frames": {
+          "median": 8.326986999999999,
+          "p95": 11.683883,
+          "max": 21.592183
+        }
+      },
+      "fixed_wall_ms": {
+        "median": 0.58633,
+        "p95": 0.920693,
+        "max": 1.5566,
+        "steady_after_60_frames": {
+          "median": 0.5884050000000001,
+          "p95": 0.925835,
+          "max": 1.5566
+        }
+      },
+      "frame_wall_ms": {
+        "median": 9.1843825,
+        "p95": 12.786605,
+        "max": 705.802325,
+        "steady_after_60_frames": {
+          "median": 9.297978,
+          "p95": 12.805877,
+          "max": 22.691237
+        }
+      },
+      "render_cpu_ms": {
+        "median": 8.266594,
+        "p95": 11.720252,
+        "max": 705.225498,
+        "steady_after_60_frames": {
+          "median": 8.401785499999999,
+          "p95": 11.82217,
+          "max": 21.670394
+        }
+      }
+    },
+    "largest_frame_outliers": [
+      {
+        "Animation clip sampling inclusive_ms": 0.00056,
+        "Animation instances inclusive_ms": 0.011595,
+        "Character motor inclusive_ms": 0.000193,
+        "Character motors inclusive_ms": 0.010425,
+        "Final pose resolution inclusive_ms": 0.022053,
+        "Fixed simulation step inclusive_ms": 0.431713,
+        "JavaScript UI update inclusive_ms": 0.007464,
+        "JavaScript contact events inclusive_ms": 0.001388,
+        "JavaScript fixedUpdate inclusive_ms": 0.038533,
+        "JavaScript presentation inclusive_ms": 0.084144,
+        "JavaScript update inclusive_ms": 0.019722,
+        "M77 human intent inclusive_ms": 0.0195,
+        "Main camera inclusive_ms": 544.106618,
+        "Particles and water presentation inclusive_ms": 0.000755,
+        "Physical animation drives inclusive_ms": 0.00928,
+        "Physical balance controller inclusive_ms": 0.02668,
+        "Physical balance observations inclusive_ms": 0.011559999999999999,
+        "Physics broadphase inclusive_ms": 0.007924,
+        "Physics contact and joint solver inclusive_ms": 0.104328,
+        "Physics contacts inclusive_ms": 0.129207,
+        "Physics continuous impacts inclusive_ms": 0.003136,
+        "Physics initial impacts inclusive_ms": 9.5e-05,
+        "Physics position constraints inclusive_ms": 0.02289,
+        "Physics proxy refresh inclusive_ms": 0.012951,
+        "Physics sleeping assessment inclusive_ms": 0.008711,
+        "Physics velocity constraints inclusive_ms": 0.067755,
+        "Pose clip mixing inclusive_ms": 0.001472,
+        "Pose skin matrices inclusive_ms": 0.02812,
+        "Ragdoll physics to pose inclusive_ms": 0.031835,
+        "Resource wait inclusive_ms": 4.4e-05,
+        "Rigid physics inclusive_ms": 0.270135,
+        "Script asset: Assets/scripts/lab.js inclusive_ms": 0.146087,
+        "Script lifecycle callback inclusive_ms": 0.148029,
+        "Script synchronization inclusive_ms": 0.0015860000000000002,
+        "Shadow pass submission inclusive_ms": 161.021135,
+        "Simulation systems inclusive_ms": 0.432415,
+        "Visual particle simulation inclusive_ms": 5.7e-05,
+        "Water boundary upload inclusive_ms": 0.067037,
+        "Water optical paths inclusive_ms": 0.023165,
+        "World culling and opaque submission inclusive_ms": 704.810375,
+        "World render submission inclusive_ms": 705.197123,
+        "fixed_wall_ms": 0.432868,
+        "frame": 0,
+        "frame_wall_ms": 705.802325,
+        "render_cpu_ms": 705.225498
+      },
+      {
+        "Animation clip sampling inclusive_ms": 0.0013640000000000002,
+        "Animation instances inclusive_ms": 0.024606,
+        "Character motor inclusive_ms": 0.000445,
+        "Character motors inclusive_ms": 0.025006,
+        "Final pose resolution inclusive_ms": 0.058148,
+        "Fixed simulation step inclusive_ms": 0.784456,
+        "JavaScript UI update inclusive_ms": 0.0283,
+        "JavaScript contact events inclusive_ms": 0.001939,
+        "JavaScript fixedUpdate inclusive_ms": 0.077344,
+        "JavaScript presentation inclusive_ms": 0.142251,
+        "JavaScript update inclusive_ms": 0.035428,
+        "M77 human intent inclusive_ms": 0.031207,
+        "Main camera inclusive_ms": 20.047351,
+        "Particles and water presentation inclusive_ms": 0.000653,
+        "Physical animation drives inclusive_ms": 0.021469,
+        "Physical balance controller inclusive_ms": 0.047885,
+        "Physical balance observations inclusive_ms": 0.02624,
+        "Physics broadphase inclusive_ms": 0.01002,
+        "Physics contact and joint solver inclusive_ms": 0.166026,
+        "Physics contacts inclusive_ms": 0.220995,
+        "Physics continuous impacts inclusive_ms": 0.005769,
+        "Physics initial impacts inclusive_ms": 0.000195,
+        "Physics position constraints inclusive_ms": 0.036418,
+        "Physics proxy refresh inclusive_ms": 0.021186,
+        "Physics sleeping assessment inclusive_ms": 0.017727,
+        "Physics velocity constraints inclusive_ms": 0.104445,
+        "Pose clip mixing inclusive_ms": 0.0027530000000000002,
+        "Pose skin matrices inclusive_ms": 0.044185,
+        "Ragdoll physics to pose inclusive_ms": 0.066198,
+        "Resource wait inclusive_ms": 0.000154,
+        "Rigid physics inclusive_ms": 0.444238,
+        "Script asset: Assets/scripts/lab.js inclusive_ms": 0.280257,
+        "Script lifecycle callback inclusive_ms": 0.281253,
+        "Script synchronization inclusive_ms": 0.003167,
+        "Shadow pass submission inclusive_ms": 1.522614,
+        "Simulation systems inclusive_ms": 0.785013,
+        "Visual particle simulation inclusive_ms": 4.9e-05,
+        "Water boundary upload inclusive_ms": 18.760297,
+        "Water optical paths inclusive_ms": 0.013503,
+        "World culling and opaque submission inclusive_ms": 2.631213,
+        "World render submission inclusive_ms": 21.592183,
+        "fixed_wall_ms": 0.78536,
+        "frame": 128,
+        "frame_wall_ms": 22.691237,
+        "render_cpu_ms": 21.670394
+      },
+      {
+        "Animation clip sampling inclusive_ms": 0.0017240000000000003,
+        "Animation instances inclusive_ms": 0.025981,
+        "Character motor inclusive_ms": 0.000402,
+        "Character motors inclusive_ms": 0.024904000000000003,
+        "Final pose resolution inclusive_ms": 0.051030000000000006,
+        "Fixed simulation step inclusive_ms": 0.87726,
+        "JavaScript UI update inclusive_ms": 0.034116,
+        "JavaScript contact events inclusive_ms": 0.0027300000000000002,
+        "JavaScript fixedUpdate inclusive_ms": 0.124128,
+        "JavaScript presentation inclusive_ms": 0.215977,
+        "JavaScript update inclusive_ms": 0.072276,
+        "M77 human intent inclusive_ms": 0.057379,
+        "Main camera inclusive_ms": 11.439096,
+        "Particles and water presentation inclusive_ms": 0.000475,
+        "Physical animation drives inclusive_ms": 0.032585,
+        "Physical balance controller inclusive_ms": 0.052412,
+        "Physical balance observations inclusive_ms": 0.028335,
+        "Physics broadphase inclusive_ms": 0.010482,
+        "Physics contact and joint solver inclusive_ms": 0.19395,
+        "Physics contacts inclusive_ms": 0.22149,
+        "Physics continuous impacts inclusive_ms": 0.005872,
+        "Physics initial impacts inclusive_ms": 0.000221,
+        "Physics position constraints inclusive_ms": 0.053794,
+        "Physics proxy refresh inclusive_ms": 0.020033,
+        "Physics sleeping assessment inclusive_ms": 0.029841,
+        "Physics velocity constraints inclusive_ms": 0.102746,
+        "Pose clip mixing inclusive_ms": 0.0036910000000000003,
+        "Pose skin matrices inclusive_ms": 0.039063,
+        "Ragdoll physics to pose inclusive_ms": 0.061641,
+        "Resource wait inclusive_ms": 6.7e-05,
+        "Rigid physics inclusive_ms": 0.472664,
+        "Script asset: Assets/scripts/lab.js inclusive_ms": 0.441856,
+        "Script lifecycle callback inclusive_ms": 0.443394,
+        "Script synchronization inclusive_ms": 0.004649,
+        "Shadow pass submission inclusive_ms": 6.496222,
+        "Simulation systems inclusive_ms": 0.877818,
+        "Visual particle simulation inclusive_ms": 0.000124,
+        "Water boundary upload inclusive_ms": 10.75875,
+        "Water optical paths inclusive_ms": 0.016855,
+        "World culling and opaque submission inclusive_ms": 1.050008,
+        "World render submission inclusive_ms": 17.970174,
+        "fixed_wall_ms": 0.878843,
+        "frame": 124,
+        "frame_wall_ms": 19.332987,
+        "render_cpu_ms": 18.084041
+      },
+      {
+        "Animation clip sampling inclusive_ms": 0.002124,
+        "Animation instances inclusive_ms": 0.02907,
+        "Character motor inclusive_ms": 0.00046899999999999996,
+        "Character motors inclusive_ms": 0.028426,
+        "Final pose resolution inclusive_ms": 0.058939000000000005,
+        "Fixed simulation step inclusive_ms": 0.990406,
+        "JavaScript UI update inclusive_ms": 0.03733,
+        "JavaScript contact events inclusive_ms": 0.002887,
+        "JavaScript fixedUpdate inclusive_ms": 0.145796,
+        "JavaScript presentation inclusive_ms": 0.231878,
+        "JavaScript update inclusive_ms": 0.06699,
+        "M77 human intent inclusive_ms": 0.070463,
+        "Main camera inclusive_ms": 3.813072,
+        "Particles and water presentation inclusive_ms": 0.000974,
+        "Physical animation drives inclusive_ms": 0.037881,
+        "Physical balance controller inclusive_ms": 0.079097,
+        "Physical balance observations inclusive_ms": 0.049498,
+        "Physics broadphase inclusive_ms": 0.011988,
+        "Physics contact and joint solver inclusive_ms": 0.199086,
+        "Physics contacts inclusive_ms": 0.239995,
+        "Physics continuous impacts inclusive_ms": 0.006301,
+        "Physics initial impacts inclusive_ms": 0.000223,
+        "Physics position constraints inclusive_ms": 0.059662,
+        "Physics proxy refresh inclusive_ms": 0.023941,
+        "Physics sleeping assessment inclusive_ms": 0.020253,
+        "Physics velocity constraints inclusive_ms": 0.110613,
+        "Pose clip mixing inclusive_ms": 0.005496999999999999,
+        "Pose skin matrices inclusive_ms": 0.05131,
+        "Ragdoll physics to pose inclusive_ms": 0.072362,
+        "Resource wait inclusive_ms": 6.7e-05,
+        "Rigid physics inclusive_ms": 0.504865,
+        "Script asset: Assets/scripts/lab.js inclusive_ms": 0.47733099999999995,
+        "Script lifecycle callback inclusive_ms": 0.47880100000000003,
+        "Script synchronization inclusive_ms": 0.004305,
+        "Shadow pass submission inclusive_ms": 8.899976,
+        "Simulation systems inclusive_ms": 0.990927,
+        "Visual particle simulation inclusive_ms": 0.00012,
+        "Water boundary upload inclusive_ms": 2.788988,
+        "Water optical paths inclusive_ms": 0.012287,
+        "World culling and opaque submission inclusive_ms": 9.812897,
+        "World render submission inclusive_ms": 12.743509,
+        "fixed_wall_ms": 0.991496,
+        "frame": 129,
+        "frame_wall_ms": 15.986046,
+        "render_cpu_ms": 14.61445
+      },
+      {
+        "Animation clip sampling inclusive_ms": 0.002142,
+        "Animation instances inclusive_ms": 0.023126,
+        "Character motor inclusive_ms": 0.0006500000000000001,
+        "Character motors inclusive_ms": 0.026202999999999997,
+        "Final pose resolution inclusive_ms": 0.050859,
+        "Fixed simulation step inclusive_ms": 0.909374,
+        "JavaScript UI update inclusive_ms": 0.034735,
+        "JavaScript contact events inclusive_ms": 0.0028589999999999996,
+        "JavaScript fixedUpdate inclusive_ms": 0.125746,
+        "JavaScript presentation inclusive_ms": 0.207902,
+        "JavaScript update inclusive_ms": 0.059298,
+        "M77 human intent inclusive_ms": 0.062735,
+        "Main camera inclusive_ms": 10.62748,
+        "Particles and water presentation inclusive_ms": 0.000861,
+        "Physical animation drives inclusive_ms": 0.030887,
+        "Physical balance controller inclusive_ms": 0.053259,
+        "Physical balance observations inclusive_ms": 0.029629,
+        "Physics broadphase inclusive_ms": 0.011101,
+        "Physics contact and joint solver inclusive_ms": 0.1894,
+        "Physics contacts inclusive_ms": 0.254621,
+        "Physics continuous impacts inclusive_ms": 0.006066,
+        "Physics initial impacts inclusive_ms": 0.000239,
+        "Physics position constraints inclusive_ms": 0.05531,
+        "Physics proxy refresh inclusive_ms": 0.022273,
+        "Physics sleeping assessment inclusive_ms": 0.018205,
+        "Physics velocity constraints inclusive_ms": 0.108128,
+        "Pose clip mixing inclusive_ms": 0.004484,
+        "Pose skin matrices inclusive_ms": 0.0436,
+        "Ragdoll physics to pose inclusive_ms": 0.064857,
+        "Resource wait inclusive_ms": 0.000165,
+        "Rigid physics inclusive_ms": 0.504421,
+        "Script asset: Assets/scripts/lab.js inclusive_ms": 0.42323599999999995,
+        "Script lifecycle callback inclusive_ms": 0.424638,
+        "Script synchronization inclusive_ms": 0.003857,
+        "Shadow pass submission inclusive_ms": 3.562831,
+        "Simulation systems inclusive_ms": 0.909861,
+        "Visual particle simulation inclusive_ms": 0.000134,
+        "Water boundary upload inclusive_ms": 9.48892,
+        "Water optical paths inclusive_ms": 0.012665,
+        "World culling and opaque submission inclusive_ms": 4.531937,
+        "World render submission inclusive_ms": 14.217042,
+        "fixed_wall_ms": 0.91025,
+        "frame": 162,
+        "frame_wall_ms": 15.550031,
+        "render_cpu_ms": 14.298697
+      }
+    ]
+  },
+  {
+    "mode": "perf-one",
+    "allocated_bodies_including_motor_proxies": 12,
+    "actors": [
+      {
+        "id": 12,
+        "owns": true,
+        "standing": true,
+        "status": 2
+      }
+    ],
+    "statistics": {
+      "Animation clip sampling inclusive_ms": {
+        "median": 0.0010655,
+        "p95": 0.001589,
+        "max": 0.015371000000000001,
+        "steady_after_60_frames": {
+          "median": 0.0010580000000000001,
+          "p95": 0.00159,
+          "max": 0.015371000000000001
+        }
+      },
+      "Animation instances inclusive_ms": {
+        "median": 0.0116095,
+        "p95": 0.022518,
+        "max": 0.101617,
+        "steady_after_60_frames": {
+          "median": 0.011629,
+          "p95": 0.022561,
+          "max": 0.101617
+        }
+      },
+      "Character motor inclusive_ms": {
+        "median": 0.1053685,
+        "p95": 0.15524100000000002,
+        "max": 0.716338,
+        "steady_after_60_frames": {
+          "median": 0.1054075,
+          "p95": 0.15836,
+          "max": 0.716338
+        }
+      },
+      "Character motors inclusive_ms": {
+        "median": 0.11478250000000001,
+        "p95": 0.17196,
+        "max": 0.7402230000000001,
+        "steady_after_60_frames": {
+          "median": 0.114814,
+          "p95": 0.174134,
+          "max": 0.7402230000000001
+        }
+      },
+      "Final pose resolution inclusive_ms": {
+        "median": 0.0192065,
+        "p95": 0.034601,
+        "max": 0.107313,
+        "steady_after_60_frames": {
+          "median": 0.019194,
+          "p95": 0.035040999999999996,
+          "max": 0.107313
+        }
+      },
+      "Fixed simulation step inclusive_ms": {
+        "median": 0.355826,
+        "p95": 0.550957,
+        "max": 1.110147,
+        "steady_after_60_frames": {
+          "median": 0.3556015,
+          "p95": 0.553218,
+          "max": 1.027346
+        }
+      },
+      "JavaScript UI update inclusive_ms": {
+        "median": 0.017167,
+        "p95": 0.033222,
+        "max": 0.048409,
+        "steady_after_60_frames": {
+          "median": 0.017154,
+          "p95": 0.033445,
+          "max": 0.048409
+        }
+      },
+      "JavaScript contact events inclusive_ms": {
+        "median": 0.001029,
+        "p95": 0.0015050000000000003,
+        "max": 0.021831999999999994,
+        "steady_after_60_frames": {
+          "median": 0.0010265,
+          "p95": 0.001516,
+          "max": 0.021831999999999994
+        }
+      },
+      "JavaScript fixedUpdate inclusive_ms": {
+        "median": 0.06271399999999999,
+        "p95": 0.11514,
+        "max": 0.766335,
+        "steady_after_60_frames": {
+          "median": 0.06257,
+          "p95": 0.11478,
+          "max": 0.260454
+        }
+      },
+      "JavaScript presentation inclusive_ms": {
+        "median": 0.1157455,
+        "p95": 0.188583,
+        "max": 0.298131,
+        "steady_after_60_frames": {
+          "median": 0.1157455,
+          "p95": 0.188583,
+          "max": 0.298131
+        }
+      },
+      "JavaScript update inclusive_ms": {
+        "median": 0.028824,
+        "p95": 0.054382,
+        "max": 0.108815,
+        "steady_after_60_frames": {
+          "median": 0.0287525,
+          "p95": 0.055084,
+          "max": 0.108815
+        }
+      },
+      "M77 human intent inclusive_ms": {
+        "median": 0.027979999999999998,
+        "p95": 0.05856,
+        "max": 0.120293,
+        "steady_after_60_frames": {
+          "median": 0.027979999999999998,
+          "p95": 0.058567,
+          "max": 0.120293
+        }
+      },
+      "Main camera inclusive_ms": {
+        "median": 5.9881744999999995,
+        "p95": 7.917349,
+        "max": 566.289464,
+        "steady_after_60_frames": {
+          "median": 5.9818535,
+          "p95": 8.006377,
+          "max": 28.105649
+        }
+      },
+      "Particles and water presentation inclusive_ms": {
+        "median": 0.000445,
+        "p95": 0.000713,
+        "max": 0.009118,
+        "steady_after_60_frames": {
+          "median": 0.000445,
+          "p95": 0.000726,
+          "max": 0.009118
+        }
+      },
+      "Physical animation drives inclusive_ms": {
+        "median": 0.0046705,
+        "p95": 0.008477,
+        "max": 0.025363,
+        "steady_after_60_frames": {
+          "median": 0.0046705,
+          "p95": 0.008832,
+          "max": 0.025363
+        }
+      },
+      "Physical balance controller inclusive_ms": {
+        "median": 0.0126315,
+        "p95": 0.022089,
+        "max": 0.109773,
+        "steady_after_60_frames": {
+          "median": 0.012518,
+          "p95": 0.021851,
+          "max": 0.109773
+        }
+      },
+      "Physical balance observations inclusive_ms": {
+        "median": 0.0064305000000000005,
+        "p95": 0.010753,
+        "max": 0.102299,
+        "steady_after_60_frames": {
+          "median": 0.0064265,
+          "p95": 0.010866,
+          "max": 0.102299
+        }
+      },
+      "Physics broadphase inclusive_ms": {
+        "median": 0.001724,
+        "p95": 0.00225,
+        "max": 0.020855,
+        "steady_after_60_frames": {
+          "median": 0.0017245,
+          "p95": 0.002251,
+          "max": 0.020855
+        }
+      },
+      "Physics contact and joint solver inclusive_ms": {
+        "median": 0.035265000000000005,
+        "p95": 0.060852,
+        "max": 0.128038,
+        "steady_after_60_frames": {
+          "median": 0.034907,
+          "p95": 0.060852,
+          "max": 0.128038
+        }
+      },
+      "Physics contacts inclusive_ms": {
+        "median": 0.040945499999999996,
+        "p95": 0.068084,
+        "max": 0.165489,
+        "steady_after_60_frames": {
+          "median": 0.040997500000000006,
+          "p95": 0.068084,
+          "max": 0.165489
+        }
+      },
+      "Physics continuous impacts inclusive_ms": {
+        "median": 0.001837,
+        "p95": 0.003005,
+        "max": 0.021586,
+        "steady_after_60_frames": {
+          "median": 0.00183,
+          "p95": 0.003019,
+          "max": 0.0117
+        }
+      },
+      "Physics initial impacts inclusive_ms": {
+        "median": 0.00010449999999999999,
+        "p95": 0.000199,
+        "max": 0.000378,
+        "steady_after_60_frames": {
+          "median": 0.000105,
+          "p95": 0.0002,
+          "max": 0.000378
+        }
+      },
+      "Physics position constraints inclusive_ms": {
+        "median": 0.0072675,
+        "p95": 0.015564,
+        "max": 0.030292,
+        "steady_after_60_frames": {
+          "median": 0.00727,
+          "p95": 0.015835,
+          "max": 0.030292
+        }
+      },
+      "Physics proxy refresh inclusive_ms": {
+        "median": 0.0055825,
+        "p95": 0.010146,
+        "max": 0.026359,
+        "steady_after_60_frames": {
+          "median": 0.005545,
+          "p95": 0.010146,
+          "max": 0.026359
+        }
+      },
+      "Physics sleeping assessment inclusive_ms": {
+        "median": 0.0047745,
+        "p95": 0.007321,
+        "max": 0.095002,
+        "steady_after_60_frames": {
+          "median": 0.004779,
+          "p95": 0.007429,
+          "max": 0.095002
+        }
+      },
+      "Physics velocity constraints inclusive_ms": {
+        "median": 0.019969,
+        "p95": 0.034211,
+        "max": 0.063825,
+        "steady_after_60_frames": {
+          "median": 0.0196825,
+          "p95": 0.034017,
+          "max": 0.063825
+        }
+      },
+      "Pose clip mixing inclusive_ms": {
+        "median": 0.0022005,
+        "p95": 0.003491,
+        "max": 0.01659,
+        "steady_after_60_frames": {
+          "median": 0.0021975,
+          "p95": 0.003543,
+          "max": 0.01659
+        }
+      },
+      "Pose skin matrices inclusive_ms": {
+        "median": 0.020501,
+        "p95": 0.032211,
+        "max": 0.10506199999999997,
+        "steady_after_60_frames": {
+          "median": 0.0205085,
+          "p95": 0.032221,
+          "max": 0.10506199999999997
+        }
+      },
+      "Ragdoll physics to pose inclusive_ms": {
+        "median": 0.0112095,
+        "p95": 0.02107,
+        "max": 0.093442,
+        "steady_after_60_frames": {
+          "median": 0.0112095,
+          "p95": 0.021001,
+          "max": 0.093442
+        }
+      },
+      "Resource wait inclusive_ms": {
+        "median": 8.7e-05,
+        "p95": 0.00014,
+        "max": 0.000378,
+        "steady_after_60_frames": {
+          "median": 8.7e-05,
+          "p95": 0.00014,
+          "max": 0.000378
+        }
+      },
+      "Rigid physics inclusive_ms": {
+        "median": 0.091266,
+        "p95": 0.146648,
+        "max": 0.222004,
+        "steady_after_60_frames": {
+          "median": 0.0908805,
+          "p95": 0.146648,
+          "max": 0.222004
+        }
+      },
+      "Script asset: Assets/scripts/lab.js inclusive_ms": {
+        "median": 0.226722,
+        "p95": 0.36673,
+        "max": 0.9965829999999999,
+        "steady_after_60_frames": {
+          "median": 0.226858,
+          "p95": 0.36673,
+          "max": 0.593425
+        }
+      },
+      "Script lifecycle callback inclusive_ms": {
+        "median": 0.22757850000000002,
+        "p95": 0.36794800000000005,
+        "max": 0.997571,
+        "steady_after_60_frames": {
+          "median": 0.22769250000000002,
+          "p95": 0.36794800000000005,
+          "max": 0.594777
+        }
+      },
+      "Script synchronization inclusive_ms": {
+        "median": 0.002197,
+        "p95": 0.0035979999999999996,
+        "max": 0.020705,
+        "steady_after_60_frames": {
+          "median": 0.0021939999999999998,
+          "p95": 0.0036699999999999997,
+          "max": 0.020705
+        }
+      },
+      "Shadow pass submission inclusive_ms": {
+        "median": 0.36827350000000003,
+        "p95": 0.435387,
+        "max": 179.419892,
+        "steady_after_60_frames": {
+          "median": 0.367853,
+          "p95": 0.435869,
+          "max": 3.35989
+        }
+      },
+      "Simulation systems inclusive_ms": {
+        "median": 0.3561225,
+        "p95": 0.551331,
+        "max": 1.110433,
+        "steady_after_60_frames": {
+          "median": 0.3558935,
+          "p95": 0.553681,
+          "max": 1.02763
+        }
+      },
+      "Visual particle simulation inclusive_ms": {
+        "median": 5.6e-05,
+        "p95": 0.000135,
+        "max": 0.000279,
+        "steady_after_60_frames": {
+          "median": 5.6e-05,
+          "p95": 0.000135,
+          "max": 0.000279
+        }
+      },
+      "Water boundary upload inclusive_ms": {
+        "median": 5.5040295,
+        "p95": 7.2194,
+        "max": 27.227165,
+        "steady_after_60_frames": {
+          "median": 5.510705,
+          "p95": 7.270897,
+          "max": 27.227165
+        }
+      },
+      "Water optical paths inclusive_ms": {
+        "median": 0.013121500000000001,
+        "p95": 0.013911,
+        "max": 0.124884,
+        "steady_after_60_frames": {
+          "median": 0.01312,
+          "p95": 0.013911,
+          "max": 0.124884
+        }
+      },
+      "World culling and opaque submission inclusive_ms": {
+        "median": 0.7652905,
+        "p95": 1.0735350000000001,
+        "max": 745.318961,
+        "steady_after_60_frames": {
+          "median": 0.7645065,
+          "p95": 1.0894490000000001,
+          "max": 2.614267
+        }
+      },
+      "World render submission inclusive_ms": {
+        "median": 6.367398,
+        "p95": 8.29206,
+        "max": 745.773946,
+        "steady_after_60_frames": {
+          "median": 6.365272,
+          "p95": 8.304292,
+          "max": 28.645109
+        }
+      },
+      "fixed_wall_ms": {
+        "median": 0.35644450000000005,
+        "p95": 0.551731,
+        "max": 1.110862,
+        "steady_after_60_frames": {
+          "median": 0.356174,
+          "p95": 0.554074,
+          "max": 1.028076
+        }
+      },
+      "frame_wall_ms": {
+        "median": 6.9688975,
+        "p95": 9.12407,
+        "max": 746.269451,
+        "steady_after_60_frames": {
+          "median": 6.962337,
+          "p95": 9.180096,
+          "max": 29.804181
+        }
+      },
+      "render_cpu_ms": {
+        "median": 6.4116599999999995,
+        "p95": 8.340437,
+        "max": 745.824899,
+        "steady_after_60_frames": {
+          "median": 6.411093,
+          "p95": 8.35343,
+          "max": 28.783317
+        }
+      }
+    },
+    "largest_frame_outliers": [
+      {
+        "Animation clip sampling inclusive_ms": 0.0005830000000000001,
+        "Animation instances inclusive_ms": 0.010077,
+        "Character motor inclusive_ms": 0.101746,
+        "Character motors inclusive_ms": 0.10754000000000001,
+        "Final pose resolution inclusive_ms": 0.015051000000000002,
+        "Fixed simulation step inclusive_ms": 0.289367,
+        "JavaScript UI update inclusive_ms": 0.008151,
+        "JavaScript contact events inclusive_ms": 0.000831,
+        "JavaScript fixedUpdate inclusive_ms": 0.039965,
+        "JavaScript presentation inclusive_ms": 0.08467,
+        "JavaScript update inclusive_ms": 0.020609,
+        "M77 human intent inclusive_ms": 0.020382,
+        "Main camera inclusive_ms": 566.289464,
+        "Particles and water presentation inclusive_ms": 0.000424,
+        "Physical animation drives inclusive_ms": 0.003284,
+        "Physical balance controller inclusive_ms": 0.010951,
+        "Physical balance observations inclusive_ms": 0.003319,
+        "Physics broadphase inclusive_ms": 0.001733,
+        "Physics contact and joint solver inclusive_ms": 0.031992,
+        "Physics contacts inclusive_ms": 0.033785,
+        "Physics continuous impacts inclusive_ms": 0.00116,
+        "Physics initial impacts inclusive_ms": 7.2e-05,
+        "Physics position constraints inclusive_ms": 0.006895,
+        "Physics proxy refresh inclusive_ms": 0.007519,
+        "Physics sleeping assessment inclusive_ms": 0.002694,
+        "Physics velocity constraints inclusive_ms": 0.019485,
+        "Pose clip mixing inclusive_ms": 0.0014950000000000002,
+        "Pose skin matrices inclusive_ms": 0.023379999999999998,
+        "Ragdoll physics to pose inclusive_ms": 0.009176,
+        "Resource wait inclusive_ms": 6.8e-05,
+        "Rigid physics inclusive_ms": 0.080817,
+        "Script asset: Assets/scripts/lab.js inclusive_ms": 0.14954800000000001,
+        "Script lifecycle callback inclusive_ms": 0.151756,
+        "Script synchronization inclusive_ms": 0.001387,
+        "Shadow pass submission inclusive_ms": 179.419892,
+        "Simulation systems inclusive_ms": 0.290038,
+        "Visual particle simulation inclusive_ms": 5.4e-05,
+        "Water boundary upload inclusive_ms": 0.107459,
+        "Water optical paths inclusive_ms": 0.020327,
+        "World culling and opaque submission inclusive_ms": 745.318961,
+        "World render submission inclusive_ms": 745.773946,
+        "fixed_wall_ms": 0.290462,
+        "frame": 0,
+        "frame_wall_ms": 746.269451,
+        "render_cpu_ms": 745.824899
+      },
+      {
+        "Animation clip sampling inclusive_ms": 0.0019010000000000001,
+        "Animation instances inclusive_ms": 0.024719,
+        "Character motor inclusive_ms": 0.162892,
+        "Character motors inclusive_ms": 0.182252,
+        "Final pose resolution inclusive_ms": 0.038642,
+        "Fixed simulation step inclusive_ms": 0.635973,
+        "JavaScript UI update inclusive_ms": 0.039583,
+        "JavaScript contact events inclusive_ms": 0.0017109999999999998,
+        "JavaScript fixedUpdate inclusive_ms": 0.138478,
+        "JavaScript presentation inclusive_ms": 0.2318,
+        "JavaScript update inclusive_ms": 0.0689,
+        "M77 human intent inclusive_ms": 0.065724,
+        "Main camera inclusive_ms": 28.105649,
+        "Particles and water presentation inclusive_ms": 0.00076,
+        "Physical animation drives inclusive_ms": 0.009997,
+        "Physical balance controller inclusive_ms": 0.023814,
+        "Physical balance observations inclusive_ms": 0.012411,
+        "Physics broadphase inclusive_ms": 0.002309,
+        "Physics contact and joint solver inclusive_ms": 0.067457,
+        "Physics contacts inclusive_ms": 0.073959,
+        "Physics continuous impacts inclusive_ms": 0.00375,
+        "Physics initial impacts inclusive_ms": 0.000199,
+        "Physics position constraints inclusive_ms": 0.016208,
+        "Physics proxy refresh inclusive_ms": 0.010667,
+        "Physics sleeping assessment inclusive_ms": 0.008312,
+        "Physics velocity constraints inclusive_ms": 0.037313,
+        "Pose clip mixing inclusive_ms": 0.004159,
+        "Pose skin matrices inclusive_ms": 0.038558,
+        "Ragdoll physics to pose inclusive_ms": 0.022918,
+        "Resource wait inclusive_ms": 0.000138,
+        "Rigid physics inclusive_ms": 0.166432,
+        "Script asset: Assets/scripts/lab.js inclusive_ms": 0.47424900000000003,
+        "Script lifecycle callback inclusive_ms": 0.475587,
+        "Script synchronization inclusive_ms": 0.00477,
+        "Shadow pass submission inclusive_ms": 0.519266,
+        "Simulation systems inclusive_ms": 0.636453,
+        "Visual particle simulation inclusive_ms": 0.000161,
+        "Water boundary upload inclusive_ms": 27.227165,
+        "Water optical paths inclusive_ms": 0.01162,
+        "World culling and opaque submission inclusive_ms": 1.303193,
+        "World render submission inclusive_ms": 28.645109,
+        "fixed_wall_ms": 0.637003,
+        "frame": 436,
+        "frame_wall_ms": 29.804181,
+        "render_cpu_ms": 28.783317
+      },
+      {
+        "Animation clip sampling inclusive_ms": 0.0018009999999999999,
+        "Animation instances inclusive_ms": 0.024841,
+        "Character motor inclusive_ms": 0.164713,
+        "Character motors inclusive_ms": 0.183695,
+        "Final pose resolution inclusive_ms": 0.038159,
+        "Fixed simulation step inclusive_ms": 0.676739,
+        "JavaScript UI update inclusive_ms": 0.033071,
+        "JavaScript contact events inclusive_ms": 0.001539,
+        "JavaScript fixedUpdate inclusive_ms": 0.185123,
+        "JavaScript presentation inclusive_ms": 0.210531,
+        "JavaScript update inclusive_ms": 0.06864,
+        "M77 human intent inclusive_ms": 0.120293,
+        "Main camera inclusive_ms": 21.906481,
+        "Particles and water presentation inclusive_ms": 0.000712,
+        "Physical animation drives inclusive_ms": 0.009735,
+        "Physical balance controller inclusive_ms": 0.022089,
+        "Physical balance observations inclusive_ms": 0.010566,
+        "Physics broadphase inclusive_ms": 0.002313,
+        "Physics contact and joint solver inclusive_ms": 0.065978,
+        "Physics contacts inclusive_ms": 0.072029,
+        "Physics continuous impacts inclusive_ms": 0.003598,
+        "Physics initial impacts inclusive_ms": 0.000236,
+        "Physics position constraints inclusive_ms": 0.016343,
+        "Physics proxy refresh inclusive_ms": 0.011069,
+        "Physics sleeping assessment inclusive_ms": 0.008394,
+        "Physics velocity constraints inclusive_ms": 0.035928,
+        "Pose clip mixing inclusive_ms": 0.003889,
+        "Pose skin matrices inclusive_ms": 0.038007,
+        "Ragdoll physics to pose inclusive_ms": 0.023455,
+        "Resource wait inclusive_ms": 0.000141,
+        "Rigid physics inclusive_ms": 0.16238,
+        "Script asset: Assets/scripts/lab.js inclusive_ms": 0.49283299999999997,
+        "Script lifecycle callback inclusive_ms": 0.49408699999999994,
+        "Script synchronization inclusive_ms": 0.004334,
+        "Shadow pass submission inclusive_ms": 0.467625,
+        "Simulation systems inclusive_ms": 0.677123,
+        "Visual particle simulation inclusive_ms": 0.000147,
+        "Water boundary upload inclusive_ms": 21.070474,
+        "Water optical paths inclusive_ms": 0.013868,
+        "World culling and opaque submission inclusive_ms": 1.223333,
+        "World render submission inclusive_ms": 22.392046,
+        "fixed_wall_ms": 0.677687,
+        "frame": 439,
+        "frame_wall_ms": 24.251218,
+        "render_cpu_ms": 23.146149
+      },
+      {
+        "Animation clip sampling inclusive_ms": 0.00158,
+        "Animation instances inclusive_ms": 0.023219,
+        "Character motor inclusive_ms": 0.16445500000000002,
+        "Character motors inclusive_ms": 0.181827,
+        "Final pose resolution inclusive_ms": 0.03725,
+        "Fixed simulation step inclusive_ms": 0.60448,
+        "JavaScript UI update inclusive_ms": 0.034841,
+        "JavaScript contact events inclusive_ms": 0.001794,
+        "JavaScript fixedUpdate inclusive_ms": 0.125902,
+        "JavaScript presentation inclusive_ms": 0.212967,
+        "JavaScript update inclusive_ms": 0.065826,
+        "M77 human intent inclusive_ms": 0.062059,
+        "Main camera inclusive_ms": 19.321161,
+        "Particles and water presentation inclusive_ms": 0.00068,
+        "Physical animation drives inclusive_ms": 0.009507,
+        "Physical balance controller inclusive_ms": 0.02174,
+        "Physical balance observations inclusive_ms": 0.011252,
+        "Physics broadphase inclusive_ms": 0.002599,
+        "Physics contact and joint solver inclusive_ms": 0.062481,
+        "Physics contacts inclusive_ms": 0.071151,
+        "Physics continuous impacts inclusive_ms": 0.003149,
+        "Physics initial impacts inclusive_ms": 0.00021,
+        "Physics position constraints inclusive_ms": 0.016339,
+        "Physics proxy refresh inclusive_ms": 0.009869,
+        "Physics sleeping assessment inclusive_ms": 0.007225,
+        "Physics velocity constraints inclusive_ms": 0.034111,
+        "Pose clip mixing inclusive_ms": 0.0035930000000000003,
+        "Pose skin matrices inclusive_ms": 0.041005,
+        "Ragdoll physics to pose inclusive_ms": 0.021654,
+        "Resource wait inclusive_ms": 6e-05,
+        "Rigid physics inclusive_ms": 0.1576,
+        "Script asset: Assets/scripts/lab.js inclusive_ms": 0.434608,
+        "Script lifecycle callback inclusive_ms": 0.43614600000000003,
+        "Script synchronization inclusive_ms": 0.003837,
+        "Shadow pass submission inclusive_ms": 0.614182,
+        "Simulation systems inclusive_ms": 0.604918,
+        "Visual particle simulation inclusive_ms": 0.000183,
+        "Water boundary upload inclusive_ms": 18.387697,
+        "Water optical paths inclusive_ms": 0.013697,
+        "World culling and opaque submission inclusive_ms": 1.459365,
+        "World render submission inclusive_ms": 19.954997,
+        "fixed_wall_ms": 0.605408,
+        "frame": 437,
+        "frame_wall_ms": 23.942277,
+        "render_cpu_ms": 22.983629
+      },
+      {
+        "Animation clip sampling inclusive_ms": 0.001588,
+        "Animation instances inclusive_ms": 0.022776,
+        "Character motor inclusive_ms": 0.162466,
+        "Character motors inclusive_ms": 0.17979900000000001,
+        "Final pose resolution inclusive_ms": 0.035456,
+        "Fixed simulation step inclusive_ms": 0.59457,
+        "JavaScript UI update inclusive_ms": 0.042634,
+        "JavaScript contact events inclusive_ms": 0.0016760000000000002,
+        "JavaScript fixedUpdate inclusive_ms": 0.125577,
+        "JavaScript presentation inclusive_ms": 0.206125,
+        "JavaScript update inclusive_ms": 0.063522,
+        "M77 human intent inclusive_ms": 0.062769,
+        "Main camera inclusive_ms": 21.268931,
+        "Particles and water presentation inclusive_ms": 0.000658,
+        "Physical animation drives inclusive_ms": 0.00902,
+        "Physical balance controller inclusive_ms": 0.02046,
+        "Physical balance observations inclusive_ms": 0.010196,
+        "Physics broadphase inclusive_ms": 0.002465,
+        "Physics contact and joint solver inclusive_ms": 0.0616,
+        "Physics contacts inclusive_ms": 0.070067,
+        "Physics continuous impacts inclusive_ms": 0.003124,
+        "Physics initial impacts inclusive_ms": 0.000184,
+        "Physics position constraints inclusive_ms": 0.016181,
+        "Physics proxy refresh inclusive_ms": 0.010146,
+        "Physics sleeping assessment inclusive_ms": 0.007437,
+        "Physics velocity constraints inclusive_ms": 0.033489,
+        "Pose clip mixing inclusive_ms": 0.003711,
+        "Pose skin matrices inclusive_ms": 0.03731300000000001,
+        "Ragdoll physics to pose inclusive_ms": 0.021649,
+        "Resource wait inclusive_ms": 0.000131,
+        "Rigid physics inclusive_ms": 0.154282,
+        "Script asset: Assets/scripts/lab.js inclusive_ms": 0.43336700000000006,
+        "Script lifecycle callback inclusive_ms": 0.434629,
+        "Script synchronization inclusive_ms": 0.0036699999999999997,
+        "Shadow pass submission inclusive_ms": 0.41286,
+        "Simulation systems inclusive_ms": 0.595013,
+        "Visual particle simulation inclusive_ms": 0.000155,
+        "Water boundary upload inclusive_ms": 20.360199,
+        "Water optical paths inclusive_ms": 0.013436,
+        "World culling and opaque submission inclusive_ms": 1.243694,
+        "World render submission inclusive_ms": 21.698577,
+        "fixed_wall_ms": 0.595453,
+        "frame": 440,
+        "frame_wall_ms": 22.758187,
+        "render_cpu_ms": 21.812021
+      }
+    ]
+  },
+  {
+    "mode": "perf-passive",
+    "allocated_bodies_including_motor_proxies": 33,
+    "actors": [
+      {
+        "id": 10,
+        "owns": false,
+        "standing": false,
+        "status": 0
+      },
+      {
+        "id": 11,
+        "owns": false,
+        "standing": false,
+        "status": 0
+      },
+      {
+        "id": 12,
+        "owns": false,
+        "standing": false,
+        "status": 0
+      },
+      {
+        "id": 13,
+        "owns": false,
+        "standing": false,
+        "status": 0
+      }
+    ],
+    "statistics": {
+      "Animation clip sampling inclusive_ms": {
+        "median": 0.0011025,
+        "p95": 0.001682,
+        "max": 0.020810000000000002,
+        "steady_after_60_frames": {
+          "median": 0.0011129999999999998,
+          "p95": 0.001708,
+          "max": 0.020810000000000002
+        }
+      },
+      "Animation instances inclusive_ms": {
+        "median": 0.0138,
+        "p95": 0.023877,
+        "max": 0.044579,
+        "steady_after_60_frames": {
+          "median": 0.0138885,
+          "p95": 0.024274,
+          "max": 0.044579
+        }
+      },
+      "Character motor inclusive_ms": {
+        "median": 0.000286,
+        "p95": 0.00047000000000000004,
+        "max": 0.009219,
+        "steady_after_60_frames": {
+          "median": 0.000286,
+          "p95": 0.00048,
+          "max": 0.009219
+        }
+      },
+      "Character motors inclusive_ms": {
+        "median": 0.020382,
+        "p95": 0.031448000000000004,
+        "max": 0.6613020000000001,
+        "steady_after_60_frames": {
+          "median": 0.0204235,
+          "p95": 0.03248,
+          "max": 0.6613020000000001
+        }
+      },
+      "Final pose resolution inclusive_ms": {
+        "median": 0.03080750000000001,
+        "p95": 0.05013,
+        "max": 0.16865499999999992,
+        "steady_after_60_frames": {
+          "median": 0.0310335,
+          "p95": 0.05093999999999999,
+          "max": 0.16865499999999992
+        }
+      },
+      "Fixed simulation step inclusive_ms": {
+        "median": 0.6614549999999999,
+        "p95": 0.921525,
+        "max": 1.406843,
+        "steady_after_60_frames": {
+          "median": 0.6626685,
+          "p95": 0.938568,
+          "max": 1.406843
+        }
+      },
+      "JavaScript UI update inclusive_ms": {
+        "median": 0.023166,
+        "p95": 0.036972,
+        "max": 0.061576,
+        "steady_after_60_frames": {
+          "median": 0.0232655,
+          "p95": 0.037017,
+          "max": 0.061576
+        }
+      },
+      "JavaScript contact events inclusive_ms": {
+        "median": 0.0040575,
+        "p95": 0.006647000000000001,
+        "max": 0.02279399999999999,
+        "steady_after_60_frames": {
+          "median": 0.0040620000000000005,
+          "p95": 0.006723999999999999,
+          "max": 0.02279399999999999
+        }
+      },
+      "JavaScript fixedUpdate inclusive_ms": {
+        "median": 0.067441,
+        "p95": 0.115208,
+        "max": 0.180978,
+        "steady_after_60_frames": {
+          "median": 0.0676865,
+          "p95": 0.116677,
+          "max": 0.180978
+        }
+      },
+      "JavaScript presentation inclusive_ms": {
+        "median": 0.1114595,
+        "p95": 0.175161,
+        "max": 0.239204,
+        "steady_after_60_frames": {
+          "median": 0.1128435,
+          "p95": 0.177152,
+          "max": 0.239204
+        }
+      },
+      "JavaScript update inclusive_ms": {
+        "median": 0.0308375,
+        "p95": 0.060329,
+        "max": 0.130339,
+        "steady_after_60_frames": {
+          "median": 0.030735,
+          "p95": 0.060329,
+          "max": 0.130339
+        }
+      },
+      "M77 human intent inclusive_ms": {
+        "median": 0.0289465,
+        "p95": 0.057017,
+        "max": 0.129626,
+        "steady_after_60_frames": {
+          "median": 0.029027999999999998,
+          "p95": 0.05719,
+          "max": 0.129626
+        }
+      },
+      "Main camera inclusive_ms": {
+        "median": 6.281113,
+        "p95": 8.445412,
+        "max": 515.128476,
+        "steady_after_60_frames": {
+          "median": 6.3129135000000005,
+          "p95": 8.485395,
+          "max": 12.9972
+        }
+      },
+      "Particles and water presentation inclusive_ms": {
+        "median": 0.0005265000000000001,
+        "p95": 0.000833,
+        "max": 0.001193,
+        "steady_after_60_frames": {
+          "median": 0.00053,
+          "p95": 0.000833,
+          "max": 0.001193
+        }
+      },
+      "Physical animation drives inclusive_ms": {
+        "median": 0.0198985,
+        "p95": 0.032011,
+        "max": 0.088662,
+        "steady_after_60_frames": {
+          "median": 0.019975,
+          "p95": 0.032066,
+          "max": 0.088662
+        }
+      },
+      "Physics broadphase inclusive_ms": {
+        "median": 0.009041500000000001,
+        "p95": 0.012417,
+        "max": 0.06249,
+        "steady_after_60_frames": {
+          "median": 0.0090505,
+          "p95": 0.01221,
+          "max": 0.032103
+        }
+      },
+      "Physics contact and joint solver inclusive_ms": {
+        "median": 0.1099485,
+        "p95": 0.176594,
+        "max": 0.231868,
+        "steady_after_60_frames": {
+          "median": 0.1100725,
+          "p95": 0.177868,
+          "max": 0.231868
+        }
+      },
+      "Physics contacts inclusive_ms": {
+        "median": 0.2546505,
+        "p95": 0.388159,
+        "max": 0.620732,
+        "steady_after_60_frames": {
+          "median": 0.254861,
+          "p95": 0.400406,
+          "max": 0.620732
+        }
+      },
+      "Physics continuous impacts inclusive_ms": {
+        "median": 0.004845,
+        "p95": 0.006318,
+        "max": 0.021758,
+        "steady_after_60_frames": {
+          "median": 0.00485,
+          "p95": 0.006422,
+          "max": 0.021758
+        }
+      },
+      "Physics initial impacts inclusive_ms": {
+        "median": 0.000161,
+        "p95": 0.000214,
+        "max": 0.010318,
+        "steady_after_60_frames": {
+          "median": 0.000161,
+          "p95": 0.000216,
+          "max": 0.010318
+        }
+      },
+      "Physics position constraints inclusive_ms": {
+        "median": 0.0252975,
+        "p95": 0.053247,
+        "max": 0.081679,
+        "steady_after_60_frames": {
+          "median": 0.0253235,
+          "p95": 0.053607,
+          "max": 0.081679
+        }
+      },
+      "Physics proxy refresh inclusive_ms": {
+        "median": 0.0122915,
+        "p95": 0.021463,
+        "max": 0.055398,
+        "steady_after_60_frames": {
+          "median": 0.012314,
+          "p95": 0.02142,
+          "max": 0.055398
+        }
+      },
+      "Physics sleeping assessment inclusive_ms": {
+        "median": 0.014583,
+        "p95": 0.024687,
+        "max": 0.042114,
+        "steady_after_60_frames": {
+          "median": 0.014619,
+          "p95": 0.024614,
+          "max": 0.042114
+        }
+      },
+      "Physics velocity constraints inclusive_ms": {
+        "median": 0.063296,
+        "p95": 0.095439,
+        "max": 0.162061,
+        "steady_after_60_frames": {
+          "median": 0.0633025,
+          "p95": 0.096698,
+          "max": 0.162061
+        }
+      },
+      "Pose clip mixing inclusive_ms": {
+        "median": 0.002399,
+        "p95": 0.0035629999999999998,
+        "max": 0.111586,
+        "steady_after_60_frames": {
+          "median": 0.002411,
+          "p95": 0.003639,
+          "max": 0.111586
+        }
+      },
+      "Pose skin matrices inclusive_ms": {
+        "median": 0.026909999999999996,
+        "p95": 0.040445999999999996,
+        "max": 0.22034499999999999,
+        "steady_after_60_frames": {
+          "median": 0.026971,
+          "p95": 0.040506999999999994,
+          "max": 0.22034499999999999
+        }
+      },
+      "Ragdoll physics to pose inclusive_ms": {
+        "median": 0.038242,
+        "p95": 0.066182,
+        "max": 0.644138,
+        "steady_after_60_frames": {
+          "median": 0.038387000000000004,
+          "p95": 0.066456,
+          "max": 0.644138
+        }
+      },
+      "Resource wait inclusive_ms": {
+        "median": 4.3e-05,
+        "p95": 9.9e-05,
+        "max": 0.012957,
+        "steady_after_60_frames": {
+          "median": 4.3e-05,
+          "p95": 0.000101,
+          "max": 0.012957
+        }
+      },
+      "Rigid physics inclusive_ms": {
+        "median": 0.4248555,
+        "p95": 0.59298,
+        "max": 0.874997,
+        "steady_after_60_frames": {
+          "median": 0.4253095,
+          "p95": 0.603339,
+          "max": 0.874997
+        }
+      },
+      "Script asset: Assets/scripts/lab.js inclusive_ms": {
+        "median": 0.237531,
+        "p95": 0.347688,
+        "max": 0.46688699999999994,
+        "steady_after_60_frames": {
+          "median": 0.239008,
+          "p95": 0.35620399999999997,
+          "max": 0.46688699999999994
+        }
+      },
+      "Script lifecycle callback inclusive_ms": {
+        "median": 0.238546,
+        "p95": 0.34860599999999997,
+        "max": 0.468447,
+        "steady_after_60_frames": {
+          "median": 0.2398895,
+          "p95": 0.357514,
+          "max": 0.468447
+        }
+      },
+      "Script synchronization inclusive_ms": {
+        "median": 0.0023940000000000003,
+        "p95": 0.003733,
+        "max": 0.022452,
+        "steady_after_60_frames": {
+          "median": 0.002401,
+          "p95": 0.003831,
+          "max": 0.022452
+        }
+      },
+      "Shadow pass submission inclusive_ms": {
+        "median": 0.37437699999999996,
+        "p95": 0.426133,
+        "max": 156.691203,
+        "steady_after_60_frames": {
+          "median": 0.37435549999999995,
+          "p95": 0.426377,
+          "max": 0.735153
+        }
+      },
+      "Simulation systems inclusive_ms": {
+        "median": 0.661761,
+        "p95": 0.921802,
+        "max": 1.407315,
+        "steady_after_60_frames": {
+          "median": 0.662971,
+          "p95": 0.938901,
+          "max": 1.407315
+        }
+      },
+      "Visual particle simulation inclusive_ms": {
+        "median": 4.6e-05,
+        "p95": 0.000127,
+        "max": 0.000176,
+        "steady_after_60_frames": {
+          "median": 4.6e-05,
+          "p95": 0.00013,
+          "max": 0.000176
+        }
+      },
+      "Water boundary upload inclusive_ms": {
+        "median": 5.7926265,
+        "p95": 7.790698,
+        "max": 12.488902,
+        "steady_after_60_frames": {
+          "median": 5.810566,
+          "p95": 7.873513,
+          "max": 12.488902
+        }
+      },
+      "Water optical paths inclusive_ms": {
+        "median": 0.01345,
+        "p95": 0.014374,
+        "max": 0.523056,
+        "steady_after_60_frames": {
+          "median": 0.0134225,
+          "p95": 0.013814,
+          "max": 0.523056
+        }
+      },
+      "World culling and opaque submission inclusive_ms": {
+        "median": 0.7600195000000001,
+        "p95": 1.007127,
+        "max": 671.4906920000001,
+        "steady_after_60_frames": {
+          "median": 0.762155,
+          "p95": 1.015738,
+          "max": 2.320952
+        }
+      },
+      "World render submission inclusive_ms": {
+        "median": 6.651594,
+        "p95": 8.780521,
+        "max": 671.883429,
+        "steady_after_60_frames": {
+          "median": 6.6799515,
+          "p95": 8.826234,
+          "max": 13.44442
+        }
+      },
+      "fixed_wall_ms": {
+        "median": 0.662172,
+        "p95": 0.922266,
+        "max": 1.407863,
+        "steady_after_60_frames": {
+          "median": 0.6633855,
+          "p95": 0.939413,
+          "max": 1.407863
+        }
+      },
+      "frame_wall_ms": {
+        "median": 7.581602,
+        "p95": 10.031128,
+        "max": 672.592343,
+        "steady_after_60_frames": {
+          "median": 7.6152725,
+          "p95": 10.153322,
+          "max": 14.957449
+        }
+      },
+      "render_cpu_ms": {
+        "median": 6.6953775,
+        "p95": 8.849039,
+        "max": 671.912375,
+        "steady_after_60_frames": {
+          "median": 6.715201,
+          "p95": 8.878365,
+          "max": 13.494959
+        }
+      }
+    },
+    "largest_frame_outliers": [
+      {
+        "Animation clip sampling inclusive_ms": 0.0005139999999999999,
+        "Animation instances inclusive_ms": 0.012369,
+        "Character motor inclusive_ms": 0.00020399999999999997,
+        "Character motors inclusive_ms": 0.018888,
+        "Final pose resolution inclusive_ms": 0.022952,
+        "Fixed simulation step inclusive_ms": 0.527048,
+        "JavaScript UI update inclusive_ms": 0.007599,
+        "JavaScript contact events inclusive_ms": 0.00534,
+        "JavaScript fixedUpdate inclusive_ms": 0.038994,
+        "JavaScript presentation inclusive_ms": 0.08962,
+        "JavaScript update inclusive_ms": 0.020185,
+        "M77 human intent inclusive_ms": 0.019606,
+        "Main camera inclusive_ms": 515.128476,
+        "Particles and water presentation inclusive_ms": 0.00055,
+        "Physical animation drives inclusive_ms": 0.009846,
+        "Physics broadphase inclusive_ms": 0.008704,
+        "Physics contact and joint solver inclusive_ms": 0.095556,
+        "Physics contacts inclusive_ms": 0.228396,
+        "Physics continuous impacts inclusive_ms": 0.003178,
+        "Physics initial impacts inclusive_ms": 8.6e-05,
+        "Physics position constraints inclusive_ms": 0.024245,
+        "Physics proxy refresh inclusive_ms": 0.012951,
+        "Physics sleeping assessment inclusive_ms": 0.011634,
+        "Physics velocity constraints inclusive_ms": 0.054743,
+        "Pose clip mixing inclusive_ms": 0.001399,
+        "Pose skin matrices inclusive_ms": 0.030028,
+        "Ragdoll physics to pose inclusive_ms": 0.032758,
+        "Resource wait inclusive_ms": 5.8e-05,
+        "Rigid physics inclusive_ms": 0.362897,
+        "Script asset: Assets/scripts/lab.js inclusive_ms": 0.152316,
+        "Script lifecycle callback inclusive_ms": 0.154494,
+        "Script synchronization inclusive_ms": 0.001604,
+        "Shadow pass submission inclusive_ms": 156.691203,
+        "Simulation systems inclusive_ms": 0.527549,
+        "Visual particle simulation inclusive_ms": 4.5e-05,
+        "Water boundary upload inclusive_ms": 0.092927,
+        "Water optical paths inclusive_ms": 0.017659,
+        "World culling and opaque submission inclusive_ms": 671.4906920000001,
+        "World render submission inclusive_ms": 671.883429,
+        "fixed_wall_ms": 0.528163,
+        "frame": 0,
+        "frame_wall_ms": 672.592343,
+        "render_cpu_ms": 671.912375
+      },
+      {
+        "Animation clip sampling inclusive_ms": 0.001708,
+        "Animation instances inclusive_ms": 0.027538,
+        "Character motor inclusive_ms": 0.00046800000000000005,
+        "Character motors inclusive_ms": 0.033254,
+        "Final pose resolution inclusive_ms": 0.057548,
+        "Fixed simulation step inclusive_ms": 1.128205,
+        "JavaScript UI update inclusive_ms": 0.033328,
+        "JavaScript contact events inclusive_ms": 0.007393000000000001,
+        "JavaScript fixedUpdate inclusive_ms": 0.126063,
+        "JavaScript presentation inclusive_ms": 0.195897,
+        "JavaScript update inclusive_ms": 0.06427,
+        "M77 human intent inclusive_ms": 0.059592,
+        "Main camera inclusive_ms": 12.9972,
+        "Particles and water presentation inclusive_ms": 0.000557,
+        "Physical animation drives inclusive_ms": 0.030955,
+        "Physics broadphase inclusive_ms": 0.012564,
+        "Physics contact and joint solver inclusive_ms": 0.218442,
+        "Physics contacts inclusive_ms": 0.437624,
+        "Physics continuous impacts inclusive_ms": 0.006664,
+        "Physics initial impacts inclusive_ms": 0.000207,
+        "Physics position constraints inclusive_ms": 0.068304,
+        "Physics proxy refresh inclusive_ms": 0.02298,
+        "Physics sleeping assessment inclusive_ms": 0.02484,
+        "Physics velocity constraints inclusive_ms": 0.116762,
+        "Pose clip mixing inclusive_ms": 0.0036199999999999995,
+        "Pose skin matrices inclusive_ms": 0.045696999999999995,
+        "Ragdoll physics to pose inclusive_ms": 0.071487,
+        "Resource wait inclusive_ms": 0.000122,
+        "Rigid physics inclusive_ms": 0.727468,
+        "Script asset: Assets/scripts/lab.js inclusive_ms": 0.414901,
+        "Script lifecycle callback inclusive_ms": 0.416242,
+        "Script synchronization inclusive_ms": 0.003638,
+        "Shadow pass submission inclusive_ms": 0.43234,
+        "Simulation systems inclusive_ms": 1.128813,
+        "Visual particle simulation inclusive_ms": 0.000146,
+        "Water boundary upload inclusive_ms": 11.020695,
+        "Water optical paths inclusive_ms": 0.013414,
+        "World culling and opaque submission inclusive_ms": 2.320952,
+        "World render submission inclusive_ms": 13.44442,
+        "fixed_wall_ms": 1.129252,
+        "frame": 552,
+        "frame_wall_ms": 14.957449,
+        "render_cpu_ms": 13.494959
+      },
+      {
+        "Animation clip sampling inclusive_ms": 0.001032,
+        "Animation instances inclusive_ms": 0.013983,
+        "Character motor inclusive_ms": 0.000301,
+        "Character motors inclusive_ms": 0.021310000000000003,
+        "Final pose resolution inclusive_ms": 0.030212,
+        "Fixed simulation step inclusive_ms": 0.634593,
+        "JavaScript UI update inclusive_ms": 0.024801,
+        "JavaScript contact events inclusive_ms": 0.004279000000000001,
+        "JavaScript fixedUpdate inclusive_ms": 0.068414,
+        "JavaScript presentation inclusive_ms": 0.119067,
+        "JavaScript update inclusive_ms": 0.031594,
+        "M77 human intent inclusive_ms": 0.02871,
+        "Main camera inclusive_ms": 12.965551,
+        "Particles and water presentation inclusive_ms": 0.000409,
+        "Physical animation drives inclusive_ms": 0.021237,
+        "Physics broadphase inclusive_ms": 0.008903,
+        "Physics contact and joint solver inclusive_ms": 0.110289,
+        "Physics contacts inclusive_ms": 0.247417,
+        "Physics continuous impacts inclusive_ms": 0.004815,
+        "Physics initial impacts inclusive_ms": 0.000158,
+        "Physics position constraints inclusive_ms": 0.02559,
+        "Physics proxy refresh inclusive_ms": 0.012679,
+        "Physics sleeping assessment inclusive_ms": 0.014344,
+        "Physics velocity constraints inclusive_ms": 0.064391,
+        "Pose clip mixing inclusive_ms": 0.0023049999999999998,
+        "Pose skin matrices inclusive_ms": 0.027085000000000005,
+        "Ragdoll physics to pose inclusive_ms": 0.038193,
+        "Resource wait inclusive_ms": 2.5e-05,
+        "Rigid physics inclusive_ms": 0.405703,
+        "Script asset: Assets/scripts/lab.js inclusive_ms": 0.241269,
+        "Script lifecycle callback inclusive_ms": 0.24214399999999997,
+        "Script synchronization inclusive_ms": 0.002385,
+        "Shadow pass submission inclusive_ms": 0.383016,
+        "Simulation systems inclusive_ms": 0.635029,
+        "Visual particle simulation inclusive_ms": 4.6e-05,
+        "Water boundary upload inclusive_ms": 12.488902,
+        "Water optical paths inclusive_ms": 0.013144,
+        "World culling and opaque submission inclusive_ms": 0.766477,
+        "World render submission inclusive_ms": 13.359588,
+        "fixed_wall_ms": 0.635335,
+        "frame": 174,
+        "frame_wall_ms": 14.234588,
+        "render_cpu_ms": 13.398571
+      },
+      {
+        "Animation clip sampling inclusive_ms": 0.001521,
+        "Animation instances inclusive_ms": 0.021978,
+        "Character motor inclusive_ms": 0.000427,
+        "Character motors inclusive_ms": 0.029047,
+        "Final pose resolution inclusive_ms": 0.04882399999999999,
+        "Fixed simulation step inclusive_ms": 1.225625,
+        "JavaScript UI update inclusive_ms": 0.041731,
+        "JavaScript contact events inclusive_ms": 0.006051999999999998,
+        "JavaScript fixedUpdate inclusive_ms": 0.116557,
+        "JavaScript presentation inclusive_ms": 0.171318,
+        "JavaScript update inclusive_ms": 0.057595,
+        "M77 human intent inclusive_ms": 0.05719,
+        "Main camera inclusive_ms": 11.542066,
+        "Particles and water presentation inclusive_ms": 0.000786,
+        "Physical animation drives inclusive_ms": 0.028797,
+        "Physics broadphase inclusive_ms": 0.011395,
+        "Physics contact and joint solver inclusive_ms": 0.183269,
+        "Physics contacts inclusive_ms": 0.620732,
+        "Physics continuous impacts inclusive_ms": 0.006315,
+        "Physics initial impacts inclusive_ms": 0.0002,
+        "Physics position constraints inclusive_ms": 0.05955,
+        "Physics proxy refresh inclusive_ms": 0.02036,
+        "Physics sleeping assessment inclusive_ms": 0.021278,
+        "Physics velocity constraints inclusive_ms": 0.094206,
+        "Pose clip mixing inclusive_ms": 0.00339,
+        "Pose skin matrices inclusive_ms": 0.033818,
+        "Ragdoll physics to pose inclusive_ms": 0.059571,
+        "Resource wait inclusive_ms": 0.000137,
+        "Rigid physics inclusive_ms": 0.874997,
+        "Script asset: Assets/scripts/lab.js inclusive_ms": 0.383108,
+        "Script lifecycle callback inclusive_ms": 0.38429800000000003,
+        "Script synchronization inclusive_ms": 0.0035810000000000004,
+        "Shadow pass submission inclusive_ms": 0.422989,
+        "Simulation systems inclusive_ms": 1.226142,
+        "Visual particle simulation inclusive_ms": 0.000146,
+        "Water boundary upload inclusive_ms": 11.065,
+        "Water optical paths inclusive_ms": 0.012313,
+        "World culling and opaque submission inclusive_ms": 0.811132,
+        "World render submission inclusive_ms": 11.978206,
+        "fixed_wall_ms": 1.226553,
+        "frame": 252,
+        "frame_wall_ms": 13.708225,
+        "render_cpu_ms": 12.029279
+      },
+      {
+        "Animation clip sampling inclusive_ms": 0.0017159999999999999,
+        "Animation instances inclusive_ms": 0.033845,
+        "Character motor inclusive_ms": 0.000414,
+        "Character motors inclusive_ms": 0.037116,
+        "Final pose resolution inclusive_ms": 0.063974,
+        "Fixed simulation step inclusive_ms": 1.18123,
+        "JavaScript UI update inclusive_ms": 0.040612,
+        "JavaScript contact events inclusive_ms": 0.007337999999999997,
+        "JavaScript fixedUpdate inclusive_ms": 0.126108,
+        "JavaScript presentation inclusive_ms": 0.239204,
+        "JavaScript update inclusive_ms": 0.063125,
+        "M77 human intent inclusive_ms": 0.057252,
+        "Main camera inclusive_ms": 8.445412,
+        "Particles and water presentation inclusive_ms": 0.000568,
+        "Physical animation drives inclusive_ms": 0.036042,
+        "Physics broadphase inclusive_ms": 0.01132,
+        "Physics contact and joint solver inclusive_ms": 0.219141,
+        "Physics contacts inclusive_ms": 0.449719,
+        "Physics continuous impacts inclusive_ms": 0.007844,
+        "Physics initial impacts inclusive_ms": 0.000222,
+        "Physics position constraints inclusive_ms": 0.056149,
+        "Physics proxy refresh inclusive_ms": 0.024423,
+        "Physics sleeping assessment inclusive_ms": 0.034233,
+        "Physics velocity constraints inclusive_ms": 0.118281,
+        "Pose clip mixing inclusive_ms": 0.004102,
+        "Pose skin matrices inclusive_ms": 0.04939399999999999,
+        "Ragdoll physics to pose inclusive_ms": 0.078606,
+        "Resource wait inclusive_ms": 6.5e-05,
+        "Rigid physics inclusive_ms": 0.743726,
+        "Script asset: Assets/scripts/lab.js inclusive_ms": 0.463999,
+        "Script lifecycle callback inclusive_ms": 0.465564,
+        "Script synchronization inclusive_ms": 0.004659,
+        "Shadow pass submission inclusive_ms": 0.590614,
+        "Simulation systems inclusive_ms": 1.18181,
+        "Visual particle simulation inclusive_ms": 0.000176,
+        "Water boundary upload inclusive_ms": 7.885483,
+        "Water optical paths inclusive_ms": 0.012388,
+        "World culling and opaque submission inclusive_ms": 1.050012,
+        "World render submission inclusive_ms": 9.060327,
+        "fixed_wall_ms": 1.182632,
+        "frame": 583,
+        "frame_wall_ms": 13.489576,
+        "render_cpu_ms": 11.920189
+      }
+    ]
+  },
+  {
+    "mode": "perf-recovery",
+    "allocated_bodies_including_motor_proxies": 13,
+    "actors": [
+      {
+        "id": 10,
+        "owns": true,
+        "standing": true,
+        "status": 2
+      }
+    ],
+    "statistics": {
+      "Animation clip sampling inclusive_ms": {
+        "median": 0.001092,
+        "p95": 0.0014,
+        "max": 0.010012,
+        "steady_after_60_frames": {
+          "median": 0.0010929999999999998,
+          "p95": 0.001414,
+          "max": 0.010012
+        }
+      },
+      "Animation instances inclusive_ms": {
+        "median": 0.010786,
+        "p95": 0.017728,
+        "max": 0.0385,
+        "steady_after_60_frames": {
+          "median": 0.0107825,
+          "p95": 0.017728,
+          "max": 0.0385
+        }
+      },
+      "Character motor inclusive_ms": {
+        "median": 0.038552,
+        "p95": 0.058257,
+        "max": 0.103794,
+        "steady_after_60_frames": {
+          "median": 0.038551999999999996,
+          "p95": 0.058187,
+          "max": 0.103794
+        }
+      },
+      "Character motors inclusive_ms": {
+        "median": 0.048829000000000004,
+        "p95": 0.072629,
+        "max": 0.124039,
+        "steady_after_60_frames": {
+          "median": 0.0488495,
+          "p95": 0.072469,
+          "max": 0.124039
+        }
+      },
+      "Final pose resolution inclusive_ms": {
+        "median": 0.019276,
+        "p95": 0.029628,
+        "max": 0.06663699999999999,
+        "steady_after_60_frames": {
+          "median": 0.019298000000000003,
+          "p95": 0.029538000000000002,
+          "max": 0.06663699999999999
+        }
+      },
+      "Fixed simulation step inclusive_ms": {
+        "median": 0.3174995,
+        "p95": 0.410628,
+        "max": 0.554113,
+        "steady_after_60_frames": {
+          "median": 0.316382,
+          "p95": 0.411792,
+          "max": 0.554113
+        }
+      },
+      "JavaScript UI update inclusive_ms": {
+        "median": 0.023166,
+        "p95": 0.034801,
+        "max": 0.06561,
+        "steady_after_60_frames": {
+          "median": 0.0231825,
+          "p95": 0.03512,
+          "max": 0.06561
+        }
+      },
+      "JavaScript contact events inclusive_ms": {
+        "median": 0.000755,
+        "p95": 0.000888,
+        "max": 0.01889,
+        "steady_after_60_frames": {
+          "median": 0.000755,
+          "p95": 0.00088,
+          "max": 0.01889
+        }
+      },
+      "JavaScript fixedUpdate inclusive_ms": {
+        "median": 0.076234,
+        "p95": 0.117072,
+        "max": 0.186658,
+        "steady_after_60_frames": {
+          "median": 0.076268,
+          "p95": 0.117145,
+          "max": 0.186658
+        }
+      },
+      "JavaScript presentation inclusive_ms": {
+        "median": 0.1048045,
+        "p95": 0.152295,
+        "max": 0.399981,
+        "steady_after_60_frames": {
+          "median": 0.10477449999999999,
+          "p95": 0.153693,
+          "max": 0.399981
+        }
+      },
+      "JavaScript update inclusive_ms": {
+        "median": 0.0296695,
+        "p95": 0.051296,
+        "max": 0.671331,
+        "steady_after_60_frames": {
+          "median": 0.029616,
+          "p95": 0.053064,
+          "max": 0.671331
+        }
+      },
+      "M77 human intent inclusive_ms": {
+        "median": 0.0373135,
+        "p95": 0.067908,
+        "max": 0.147362,
+        "steady_after_60_frames": {
+          "median": 0.037321499999999994,
+          "p95": 0.068265,
+          "max": 0.147362
+        }
+      },
+      "Main camera inclusive_ms": {
+        "median": 7.5210825,
+        "p95": 8.686595,
+        "max": 548.163751,
+        "steady_after_60_frames": {
+          "median": 7.5317264999999995,
+          "p95": 8.686595,
+          "max": 11.19648
+        }
+      },
+      "Particles and water presentation inclusive_ms": {
+        "median": 0.00046,
+        "p95": 0.000678,
+        "max": 0.01001,
+        "steady_after_60_frames": {
+          "median": 0.000461,
+          "p95": 0.000678,
+          "max": 0.01001
+        }
+      },
+      "Physical animation drives inclusive_ms": {
+        "median": 0.005383499999999999,
+        "p95": 0.007937,
+        "max": 0.064512,
+        "steady_after_60_frames": {
+          "median": 0.0053855,
+          "p95": 0.00804,
+          "max": 0.064512
+        }
+      },
+      "Physical balance controller inclusive_ms": {
+        "median": 0.0140275,
+        "p95": 0.027909,
+        "max": 0.076275,
+        "steady_after_60_frames": {
+          "median": 0.013948499999999999,
+          "p95": 0.027313,
+          "max": 0.069877
+        }
+      },
+      "Physical balance observations inclusive_ms": {
+        "median": 0.007323,
+        "p95": 0.010666,
+        "max": 0.031623,
+        "steady_after_60_frames": {
+          "median": 0.007319,
+          "p95": 0.010666,
+          "max": 0.031623
+        }
+      },
+      "Physics broadphase inclusive_ms": {
+        "median": 0.001564,
+        "p95": 0.001847,
+        "max": 0.02309,
+        "steady_after_60_frames": {
+          "median": 0.001559,
+          "p95": 0.001758,
+          "max": 0.02309
+        }
+      },
+      "Physics contact and joint solver inclusive_ms": {
+        "median": 0.037376,
+        "p95": 0.059299,
+        "max": 0.121943,
+        "steady_after_60_frames": {
+          "median": 0.037063,
+          "p95": 0.059224,
+          "max": 0.121943
+        }
+      },
+      "Physics contacts inclusive_ms": {
+        "median": 0.046645,
+        "p95": 0.075464,
+        "max": 0.19721,
+        "steady_after_60_frames": {
+          "median": 0.0465475,
+          "p95": 0.075165,
+          "max": 0.19721
+        }
+      },
+      "Physics continuous impacts inclusive_ms": {
+        "median": 0.002151,
+        "p95": 0.002979,
+        "max": 0.019152,
+        "steady_after_60_frames": {
+          "median": 0.002151,
+          "p95": 0.002963,
+          "max": 0.019152
+        }
+      },
+      "Physics initial impacts inclusive_ms": {
+        "median": 0.000307,
+        "p95": 0.000419,
+        "max": 0.063031,
+        "steady_after_60_frames": {
+          "median": 0.000307,
+          "p95": 0.000419,
+          "max": 0.063031
+        }
+      },
+      "Physics position constraints inclusive_ms": {
+        "median": 0.0073355,
+        "p95": 0.01203,
+        "max": 0.045665,
+        "steady_after_60_frames": {
+          "median": 0.00735,
+          "p95": 0.011912,
+          "max": 0.045665
+        }
+      },
+      "Physics proxy refresh inclusive_ms": {
+        "median": 0.0060505,
+        "p95": 0.008498,
+        "max": 0.027952,
+        "steady_after_60_frames": {
+          "median": 0.0060444999999999995,
+          "p95": 0.008481,
+          "max": 0.027952
+        }
+      },
+      "Physics sleeping assessment inclusive_ms": {
+        "median": 0.0044,
+        "p95": 0.006288,
+        "max": 0.023261,
+        "steady_after_60_frames": {
+          "median": 0.004407,
+          "p95": 0.006288,
+          "max": 0.023261
+        }
+      },
+      "Physics velocity constraints inclusive_ms": {
+        "median": 0.021803,
+        "p95": 0.036534,
+        "max": 0.083464,
+        "steady_after_60_frames": {
+          "median": 0.021626,
+          "p95": 0.036413,
+          "max": 0.083464
+        }
+      },
+      "Pose clip mixing inclusive_ms": {
+        "median": 0.002339,
+        "p95": 0.003095,
+        "max": 0.021883,
+        "steady_after_60_frames": {
+          "median": 0.0023404999999999997,
+          "p95": 0.003154,
+          "max": 0.021883
+        }
+      },
+      "Pose skin matrices inclusive_ms": {
+        "median": 0.0213595,
+        "p95": 0.0302,
+        "max": 0.050270999999999996,
+        "steady_after_60_frames": {
+          "median": 0.021375,
+          "p95": 0.029872999999999997,
+          "max": 0.050270999999999996
+        }
+      },
+      "Ragdoll physics to pose inclusive_ms": {
+        "median": 0.012431999999999999,
+        "p95": 0.02004,
+        "max": 0.047042,
+        "steady_after_60_frames": {
+          "median": 0.012441,
+          "p95": 0.020151,
+          "max": 0.047042
+        }
+      },
+      "Resource wait inclusive_ms": {
+        "median": 3.7e-05,
+        "p95": 5.9e-05,
+        "max": 0.008792,
+        "steady_after_60_frames": {
+          "median": 3.7e-05,
+          "p95": 5.6e-05,
+          "max": 0.000279
+        }
+      },
+      "Rigid physics inclusive_ms": {
+        "median": 0.0997615,
+        "p95": 0.14355,
+        "max": 0.254397,
+        "steady_after_60_frames": {
+          "median": 0.099383,
+          "p95": 0.14355,
+          "max": 0.254397
+        }
+      },
+      "Script asset: Assets/scripts/lab.js inclusive_ms": {
+        "median": 0.23659999999999998,
+        "p95": 0.31894900000000004,
+        "max": 0.949008,
+        "steady_after_60_frames": {
+          "median": 0.23659999999999998,
+          "p95": 0.323187,
+          "max": 0.949008
+        }
+      },
+      "Script lifecycle callback inclusive_ms": {
+        "median": 0.23770950000000002,
+        "p95": 0.320094,
+        "max": 0.9501109999999999,
+        "steady_after_60_frames": {
+          "median": 0.23770950000000002,
+          "p95": 0.32420499999999997,
+          "max": 0.9501109999999999
+        }
+      },
+      "Script synchronization inclusive_ms": {
+        "median": 0.00224,
+        "p95": 0.002928,
+        "max": 0.023815,
+        "steady_after_60_frames": {
+          "median": 0.002241,
+          "p95": 0.0029630000000000004,
+          "max": 0.023815
+        }
+      },
+      "Shadow pass submission inclusive_ms": {
+        "median": 0.38770950000000004,
+        "p95": 0.445643,
+        "max": 159.589463,
+        "steady_after_60_frames": {
+          "median": 0.3877485,
+          "p95": 0.445191,
+          "max": 4.031127
+        }
+      },
+      "Simulation systems inclusive_ms": {
+        "median": 0.3179155,
+        "p95": 0.410948,
+        "max": 0.554582,
+        "steady_after_60_frames": {
+          "median": 0.3168175,
+          "p95": 0.412075,
+          "max": 0.554582
+        }
+      },
+      "Visual particle simulation inclusive_ms": {
+        "median": 5.8e-05,
+        "p95": 8e-05,
+        "max": 0.010181,
+        "steady_after_60_frames": {
+          "median": 5.8e-05,
+          "p95": 0.000111,
+          "max": 0.010181
+        }
+      },
+      "Water boundary upload inclusive_ms": {
+        "median": 6.992298,
+        "p95": 8.128334,
+        "max": 10.452658,
+        "steady_after_60_frames": {
+          "median": 7.0002055,
+          "p95": 8.131868,
+          "max": 10.452658
+        }
+      },
+      "Water optical paths inclusive_ms": {
+        "median": 0.013478,
+        "p95": 0.013908,
+        "max": 0.124542,
+        "steady_after_60_frames": {
+          "median": 0.013478500000000001,
+          "p95": 0.013908,
+          "max": 0.124542
+        }
+      },
+      "World culling and opaque submission inclusive_ms": {
+        "median": 0.835244,
+        "p95": 1.0065080000000002,
+        "max": 707.489203,
+        "steady_after_60_frames": {
+          "median": 0.83544,
+          "p95": 1.013338,
+          "max": 4.774525
+        }
+      },
+      "World render submission inclusive_ms": {
+        "median": 7.9224005,
+        "p95": 9.08781,
+        "max": 707.814973,
+        "steady_after_60_frames": {
+          "median": 7.9244354999999995,
+          "p95": 9.092515,
+          "max": 11.455858
+        }
+      },
+      "fixed_wall_ms": {
+        "median": 0.31831050000000005,
+        "p95": 0.411503,
+        "max": 0.554981,
+        "steady_after_60_frames": {
+          "median": 0.31727249999999996,
+          "p95": 0.412404,
+          "max": 0.554981
+        }
+      },
+      "frame_wall_ms": {
+        "median": 8.491136000000001,
+        "p95": 9.695686,
+        "max": 708.326581,
+        "steady_after_60_frames": {
+          "median": 8.493952,
+          "p95": 9.698964,
+          "max": 12.084772
+        }
+      },
+      "render_cpu_ms": {
+        "median": 7.96976,
+        "p95": 9.144516,
+        "max": 707.843121,
+        "steady_after_60_frames": {
+          "median": 7.9721235,
+          "p95": 9.144765,
+          "max": 11.507115
+        }
+      }
+    },
+    "largest_frame_outliers": [
+      {
+        "Animation clip sampling inclusive_ms": 0.000562,
+        "Animation instances inclusive_ms": 0.009822,
+        "Character motor inclusive_ms": 0.034295,
+        "Character motors inclusive_ms": 0.039845000000000005,
+        "Final pose resolution inclusive_ms": 0.014409,
+        "Fixed simulation step inclusive_ms": 0.3364,
+        "JavaScript UI update inclusive_ms": 0.008014,
+        "JavaScript contact events inclusive_ms": 0.0006879999999999999,
+        "JavaScript fixedUpdate inclusive_ms": 0.04554,
+        "JavaScript presentation inclusive_ms": 0.081418,
+        "JavaScript update inclusive_ms": 0.020203,
+        "M77 human intent inclusive_ms": 0.025836,
+        "Main camera inclusive_ms": 548.163751,
+        "Particles and water presentation inclusive_ms": 0.000368,
+        "Physical animation drives inclusive_ms": 0.015375,
+        "Physical balance controller inclusive_ms": 0.076275,
+        "Physical balance observations inclusive_ms": 0.00502,
+        "Physics broadphase inclusive_ms": 0.001688,
+        "Physics contact and joint solver inclusive_ms": 0.04155,
+        "Physics contacts inclusive_ms": 0.05852,
+        "Physics continuous impacts inclusive_ms": 0.006466,
+        "Physics initial impacts inclusive_ms": 9.9e-05,
+        "Physics position constraints inclusive_ms": 0.00586,
+        "Physics proxy refresh inclusive_ms": 0.007576,
+        "Physics sleeping assessment inclusive_ms": 0.002595,
+        "Physics velocity constraints inclusive_ms": 0.024814,
+        "Pose clip mixing inclusive_ms": 0.001366,
+        "Pose skin matrices inclusive_ms": 0.025220000000000003,
+        "Ragdoll physics to pose inclusive_ms": 0.009127,
+        "Resource wait inclusive_ms": 5e-05,
+        "Rigid physics inclusive_ms": 0.114849,
+        "Script asset: Assets/scripts/lab.js inclusive_ms": 0.15118399999999999,
+        "Script lifecycle callback inclusive_ms": 0.153397,
+        "Script synchronization inclusive_ms": 0.001392,
+        "Shadow pass submission inclusive_ms": 159.589463,
+        "Simulation systems inclusive_ms": 0.336906,
+        "Visual particle simulation inclusive_ms": 5.6e-05,
+        "Water boundary upload inclusive_ms": 0.092863,
+        "Water optical paths inclusive_ms": 0.015817,
+        "World culling and opaque submission inclusive_ms": 707.489203,
+        "World render submission inclusive_ms": 707.814973,
+        "fixed_wall_ms": 0.337377,
+        "frame": 0,
+        "frame_wall_ms": 708.326581,
+        "render_cpu_ms": 707.843121
+      },
+      {
+        "Animation clip sampling inclusive_ms": 0.0011070000000000001,
+        "Animation instances inclusive_ms": 0.011164,
+        "Character motor inclusive_ms": 0.039061000000000005,
+        "Character motors inclusive_ms": 0.050217,
+        "Final pose resolution inclusive_ms": 0.02205,
+        "Fixed simulation step inclusive_ms": 0.407765,
+        "JavaScript UI update inclusive_ms": 0.029002,
+        "JavaScript contact events inclusive_ms": 0.00084,
+        "JavaScript fixedUpdate inclusive_ms": 0.127689,
+        "JavaScript presentation inclusive_ms": 0.108695,
+        "JavaScript update inclusive_ms": 0.031875,
+        "M77 human intent inclusive_ms": 0.066401,
+        "Main camera inclusive_ms": 11.121252,
+        "Particles and water presentation inclusive_ms": 0.000602,
+        "Physical animation drives inclusive_ms": 0.00571,
+        "Physical balance controller inclusive_ms": 0.01505,
+        "Physical balance observations inclusive_ms": 0.008372,
+        "Physics broadphase inclusive_ms": 0.001712,
+        "Physics contact and joint solver inclusive_ms": 0.041087,
+        "Physics contacts inclusive_ms": 0.05777,
+        "Physics continuous impacts inclusive_ms": 0.002543,
+        "Physics initial impacts inclusive_ms": 0.000604,
+        "Physics position constraints inclusive_ms": 0.007516,
+        "Physics proxy refresh inclusive_ms": 0.006724,
+        "Physics sleeping assessment inclusive_ms": 0.004613,
+        "Physics velocity constraints inclusive_ms": 0.024884,
+        "Pose clip mixing inclusive_ms": 0.002886,
+        "Pose skin matrices inclusive_ms": 0.022053,
+        "Ragdoll physics to pose inclusive_ms": 0.032884,
+        "Resource wait inclusive_ms": 3.7e-05,
+        "Rigid physics inclusive_ms": 0.115447,
+        "Script asset: Assets/scripts/lab.js inclusive_ms": 0.29352100000000003,
+        "Script lifecycle callback inclusive_ms": 0.294729,
+        "Script synchronization inclusive_ms": 0.0024859999999999995,
+        "Shadow pass submission inclusive_ms": 0.288804,
+        "Simulation systems inclusive_ms": 0.40814,
+        "Visual particle simulation inclusive_ms": 5.5e-05,
+        "Water boundary upload inclusive_ms": 10.255067,
+        "Water optical paths inclusive_ms": 0.009435,
+        "World culling and opaque submission inclusive_ms": 1.082423,
+        "World render submission inclusive_ms": 11.419225,
+        "fixed_wall_ms": 0.408523,
+        "frame": 432,
+        "frame_wall_ms": 12.084772,
+        "render_cpu_ms": 11.477344
+      },
+      {
+        "Animation clip sampling inclusive_ms": 0.001138,
+        "Animation instances inclusive_ms": 0.010511,
+        "Character motor inclusive_ms": 0.038535,
+        "Character motors inclusive_ms": 0.048901,
+        "Final pose resolution inclusive_ms": 0.019164999999999998,
+        "Fixed simulation step inclusive_ms": 0.313194,
+        "JavaScript UI update inclusive_ms": 0.024521,
+        "JavaScript contact events inclusive_ms": 0.000657,
+        "JavaScript fixedUpdate inclusive_ms": 0.087178,
+        "JavaScript presentation inclusive_ms": 0.102748,
+        "JavaScript update inclusive_ms": 0.04315,
+        "M77 human intent inclusive_ms": 0.037515,
+        "Main camera inclusive_ms": 11.19648,
+        "Particles and water presentation inclusive_ms": 0.000766,
+        "Physical animation drives inclusive_ms": 0.005387,
+        "Physical balance controller inclusive_ms": 0.01427,
+        "Physical balance observations inclusive_ms": 0.007726,
+        "Physics broadphase inclusive_ms": 0.001607,
+        "Physics contact and joint solver inclusive_ms": 0.035225,
+        "Physics contacts inclusive_ms": 0.047386,
+        "Physics continuous impacts inclusive_ms": 0.002063,
+        "Physics initial impacts inclusive_ms": 0.000325,
+        "Physics position constraints inclusive_ms": 0.007326,
+        "Physics proxy refresh inclusive_ms": 0.006132,
+        "Physics sleeping assessment inclusive_ms": 0.00432,
+        "Physics velocity constraints inclusive_ms": 0.02029,
+        "Pose clip mixing inclusive_ms": 0.002553,
+        "Pose skin matrices inclusive_ms": 0.019968999999999997,
+        "Ragdoll physics to pose inclusive_ms": 0.012826,
+        "Resource wait inclusive_ms": 3.8e-05,
+        "Rigid physics inclusive_ms": 0.097492,
+        "Script asset: Assets/scripts/lab.js inclusive_ms": 0.254209,
+        "Script lifecycle callback inclusive_ms": 0.255369,
+        "Script synchronization inclusive_ms": 0.0026590000000000003,
+        "Shadow pass submission inclusive_ms": 0.250151,
+        "Simulation systems inclusive_ms": 0.313507,
+        "Visual particle simulation inclusive_ms": 5.5e-05,
+        "Water boundary upload inclusive_ms": 10.452658,
+        "Water optical paths inclusive_ms": 0.008881,
+        "World culling and opaque submission inclusive_ms": 0.9337890000000001,
+        "World render submission inclusive_ms": 11.455858,
+        "fixed_wall_ms": 0.313956,
+        "frame": 783,
+        "frame_wall_ms": 12.027492,
+        "render_cpu_ms": 11.507115
+      },
+      {
+        "Animation clip sampling inclusive_ms": 0.001232,
+        "Animation instances inclusive_ms": 0.011058,
+        "Character motor inclusive_ms": 0.039331,
+        "Character motors inclusive_ms": 0.05153,
+        "Final pose resolution inclusive_ms": 0.020004,
+        "Fixed simulation step inclusive_ms": 0.335811,
+        "JavaScript UI update inclusive_ms": 0.02544,
+        "JavaScript contact events inclusive_ms": 0.000797,
+        "JavaScript fixedUpdate inclusive_ms": 0.078793,
+        "JavaScript presentation inclusive_ms": 0.109003,
+        "JavaScript update inclusive_ms": 0.031068,
+        "M77 human intent inclusive_ms": 0.03817,
+        "Main camera inclusive_ms": 10.638712,
+        "Particles and water presentation inclusive_ms": 0.000223,
+        "Physical animation drives inclusive_ms": 0.005736,
+        "Physical balance controller inclusive_ms": 0.014469,
+        "Physical balance observations inclusive_ms": 0.007818,
+        "Physics broadphase inclusive_ms": 0.001603,
+        "Physics contact and joint solver inclusive_ms": 0.049114,
+        "Physics contacts inclusive_ms": 0.058621,
+        "Physics continuous impacts inclusive_ms": 0.011442,
+        "Physics initial impacts inclusive_ms": 0.000354,
+        "Physics position constraints inclusive_ms": 0.007384,
+        "Physics proxy refresh inclusive_ms": 0.006491,
+        "Physics sleeping assessment inclusive_ms": 0.00488,
+        "Physics velocity constraints inclusive_ms": 0.02417,
+        "Pose clip mixing inclusive_ms": 0.002617,
+        "Pose skin matrices inclusive_ms": 0.029469999999999996,
+        "Ragdoll physics to pose inclusive_ms": 0.012827,
+        "Resource wait inclusive_ms": 4.6e-05,
+        "Rigid physics inclusive_ms": 0.123375,
+        "Script asset: Assets/scripts/lab.js inclusive_ms": 0.240879,
+        "Script lifecycle callback inclusive_ms": 0.242077,
+        "Script synchronization inclusive_ms": 0.002653,
+        "Shadow pass submission inclusive_ms": 0.269173,
+        "Simulation systems inclusive_ms": 0.336136,
+        "Visual particle simulation inclusive_ms": 5.9e-05,
+        "Water boundary upload inclusive_ms": 10.058584,
+        "Water optical paths inclusive_ms": 0.019841,
+        "World culling and opaque submission inclusive_ms": 0.7782479999999999,
+        "World render submission inclusive_ms": 10.91718,
+        "fixed_wall_ms": 0.33645,
+        "frame": 431,
+        "frame_wall_ms": 11.469112,
+        "render_cpu_ms": 10.930529
+      },
+      {
+        "Animation clip sampling inclusive_ms": 0.0016700000000000003,
+        "Animation instances inclusive_ms": 0.018326,
+        "Character motor inclusive_ms": 0.055511,
+        "Character motors inclusive_ms": 0.072469,
+        "Final pose resolution inclusive_ms": 0.030557,
+        "Fixed simulation step inclusive_ms": 0.537578,
+        "JavaScript UI update inclusive_ms": 0.034467,
+        "JavaScript contact events inclusive_ms": 0.001087,
+        "JavaScript fixedUpdate inclusive_ms": 0.165045,
+        "JavaScript presentation inclusive_ms": 0.19293,
+        "JavaScript update inclusive_ms": 0.05931,
+        "M77 human intent inclusive_ms": 0.103759,
+        "Main camera inclusive_ms": 9.719873,
+        "Particles and water presentation inclusive_ms": 0.000378,
+        "Physical animation drives inclusive_ms": 0.00823,
+        "Physical balance controller inclusive_ms": 0.019791,
+        "Physical balance observations inclusive_ms": 0.010409,
+        "Physics broadphase inclusive_ms": 0.002136,
+        "Physics contact and joint solver inclusive_ms": 0.078714,
+        "Physics contacts inclusive_ms": 0.070986,
+        "Physics continuous impacts inclusive_ms": 0.012041,
+        "Physics initial impacts inclusive_ms": 0.000173,
+        "Physics position constraints inclusive_ms": 0.015634,
+        "Physics proxy refresh inclusive_ms": 0.008777,
+        "Physics sleeping assessment inclusive_ms": 0.006711,
+        "Physics velocity constraints inclusive_ms": 0.043023,
+        "Pose clip mixing inclusive_ms": 0.003607,
+        "Pose skin matrices inclusive_ms": 0.02689,
+        "Ragdoll physics to pose inclusive_ms": 0.019711,
+        "Resource wait inclusive_ms": 6.9e-05,
+        "Rigid physics inclusive_ms": 0.170349,
+        "Script asset: Assets/scripts/lab.js inclusive_ms": 0.446702,
+        "Script lifecycle callback inclusive_ms": 0.44821900000000003,
+        "Script synchronization inclusive_ms": 0.0038059999999999995,
+        "Shadow pass submission inclusive_ms": 0.455202,
+        "Simulation systems inclusive_ms": 0.538019,
+        "Visual particle simulation inclusive_ms": 0.000156,
+        "Water boundary upload inclusive_ms": 9.198739,
+        "Water optical paths inclusive_ms": 0.01346,
+        "World culling and opaque submission inclusive_ms": 0.894537,
+        "World render submission inclusive_ms": 10.199204,
+        "fixed_wall_ms": 0.538504,
+        "frame": 433,
+        "frame_wall_ms": 11.13616,
+        "render_cpu_ms": 10.271103
+      }
+    ]
+  },
+  {
+    "mode": "perf-step",
+    "allocated_bodies_including_motor_proxies": 12,
+    "actors": [
+      {
+        "id": 12,
+        "owns": true,
+        "standing": true,
+        "status": 2
+      }
+    ],
+    "statistics": {
+      "Animation clip sampling inclusive_ms": {
+        "median": 0.0011584999999999998,
+        "p95": 0.001635,
+        "max": 0.017505,
+        "steady_after_60_frames": {
+          "median": 0.001154,
+          "p95": 0.00161,
+          "max": 0.011145
+        }
+      },
+      "Animation instances inclusive_ms": {
+        "median": 0.0114335,
+        "p95": 0.022296,
+        "max": 0.045264,
+        "steady_after_60_frames": {
+          "median": 0.011398499999999999,
+          "p95": 0.022239,
+          "max": 0.045264
+        }
+      },
+      "Character motor inclusive_ms": {
+        "median": 0.10647499999999999,
+        "p95": 0.15382200000000001,
+        "max": 0.268677,
+        "steady_after_60_frames": {
+          "median": 0.10649549999999999,
+          "p95": 0.15205800000000003,
+          "max": 0.268677
+        }
+      },
+      "Character motors inclusive_ms": {
+        "median": 0.1172725,
+        "p95": 0.17092,
+        "max": 0.280438,
+        "steady_after_60_frames": {
+          "median": 0.117311,
+          "p95": 0.166369,
+          "max": 0.280438
+        }
+      },
+      "Final pose resolution inclusive_ms": {
+        "median": 0.0197595,
+        "p95": 0.033399,
+        "max": 0.056161,
+        "steady_after_60_frames": {
+          "median": 0.019727,
+          "p95": 0.032702999999999996,
+          "max": 0.056161
+        }
+      },
+      "Fixed simulation step inclusive_ms": {
+        "median": 0.39993100000000004,
+        "p95": 0.634421,
+        "max": 1.469733,
+        "steady_after_60_frames": {
+          "median": 0.397839,
+          "p95": 0.532618,
+          "max": 0.805251
+        }
+      },
+      "JavaScript UI update inclusive_ms": {
+        "median": 0.022683500000000002,
+        "p95": 0.037855,
+        "max": 0.063024,
+        "steady_after_60_frames": {
+          "median": 0.0226205,
+          "p95": 0.03682,
+          "max": 0.063024
+        }
+      },
+      "JavaScript contact events inclusive_ms": {
+        "median": 0.0011709999999999997,
+        "p95": 0.0017050000000000001,
+        "max": 0.014419000000000001,
+        "steady_after_60_frames": {
+          "median": 0.0011790000000000001,
+          "p95": 0.0017050000000000001,
+          "max": 0.014419000000000001
+        }
+      },
+      "JavaScript fixedUpdate inclusive_ms": {
+        "median": 0.0674025,
+        "p95": 0.111967,
+        "max": 0.253982,
+        "steady_after_60_frames": {
+          "median": 0.067148,
+          "p95": 0.109958,
+          "max": 0.221295
+        }
+      },
+      "JavaScript presentation inclusive_ms": {
+        "median": 0.11797099999999999,
+        "p95": 0.183729,
+        "max": 0.341783,
+        "steady_after_60_frames": {
+          "median": 0.1177645,
+          "p95": 0.176901,
+          "max": 0.277216
+        }
+      },
+      "JavaScript update inclusive_ms": {
+        "median": 0.029928,
+        "p95": 0.058644,
+        "max": 0.204007,
+        "steady_after_60_frames": {
+          "median": 0.02985,
+          "p95": 0.054045,
+          "max": 0.10406
+        }
+      },
+      "M77 human intent inclusive_ms": {
+        "median": 0.0291585,
+        "p95": 0.056949,
+        "max": 0.146445,
+        "steady_after_60_frames": {
+          "median": 0.029128,
+          "p95": 0.055725,
+          "max": 0.09472
+        }
+      },
+      "Main camera inclusive_ms": {
+        "median": 6.1372205,
+        "p95": 7.929627,
+        "max": 736.513905,
+        "steady_after_60_frames": {
+          "median": 6.111743000000001,
+          "p95": 7.762526,
+          "max": 12.407433
+        }
+      },
+      "Particles and water presentation inclusive_ms": {
+        "median": 0.000488,
+        "p95": 0.000766,
+        "max": 0.001911,
+        "steady_after_60_frames": {
+          "median": 0.0004875,
+          "p95": 0.000757,
+          "max": 0.001911
+        }
+      },
+      "Physical animation drives inclusive_ms": {
+        "median": 0.005473499999999999,
+        "p95": 0.008317,
+        "max": 0.02817,
+        "steady_after_60_frames": {
+          "median": 0.005463,
+          "p95": 0.007945,
+          "max": 0.02817
+        }
+      },
+      "Physical balance controller inclusive_ms": {
+        "median": 0.018404499999999997,
+        "p95": 0.035471,
+        "max": 0.097644,
+        "steady_after_60_frames": {
+          "median": 0.018154,
+          "p95": 0.032026,
+          "max": 0.097644
+        }
+      },
+      "Physical balance observations inclusive_ms": {
+        "median": 0.007365,
+        "p95": 0.01117,
+        "max": 0.032264,
+        "steady_after_60_frames": {
+          "median": 0.007412,
+          "p95": 0.011002,
+          "max": 0.032264
+        }
+      },
+      "Physical balance step references inclusive_ms": {
+        "median": 0.0029735,
+        "p95": 0.005195,
+        "max": 0.02146,
+        "steady_after_60_frames": {
+          "median": 0.002957,
+          "p95": 0.004904,
+          "max": 0.019762
+        }
+      },
+      "Physics broadphase inclusive_ms": {
+        "median": 0.0017475,
+        "p95": 0.00225,
+        "max": 0.011399,
+        "steady_after_60_frames": {
+          "median": 0.001748,
+          "p95": 0.002162,
+          "max": 0.011399
+        }
+      },
+      "Physics contact and joint solver inclusive_ms": {
+        "median": 0.040695499999999996,
+        "p95": 0.078054,
+        "max": 1.127223,
+        "steady_after_60_frames": {
+          "median": 0.040367,
+          "p95": 0.06682,
+          "max": 0.361359
+        }
+      },
+      "Physics contacts inclusive_ms": {
+        "median": 0.0555075,
+        "p95": 0.08846,
+        "max": 0.163567,
+        "steady_after_60_frames": {
+          "median": 0.055530499999999997,
+          "p95": 0.08846,
+          "max": 0.163567
+        }
+      },
+      "Physics continuous impacts inclusive_ms": {
+        "median": 0.0022355,
+        "p95": 0.023207,
+        "max": 1.101776,
+        "steady_after_60_frames": {
+          "median": 0.002213,
+          "p95": 0.003357,
+          "max": 0.324991
+        }
+      },
+      "Physics initial impacts inclusive_ms": {
+        "median": 0.000141,
+        "p95": 0.000196,
+        "max": 0.022013,
+        "steady_after_60_frames": {
+          "median": 0.00014150000000000002,
+          "p95": 0.000189,
+          "max": 0.022013
+        }
+      },
+      "Physics position constraints inclusive_ms": {
+        "median": 0.007366,
+        "p95": 0.015672,
+        "max": 0.033372,
+        "steady_after_60_frames": {
+          "median": 0.007386,
+          "p95": 0.015672,
+          "max": 0.033372
+        }
+      },
+      "Physics proxy refresh inclusive_ms": {
+        "median": 0.006108,
+        "p95": 0.010051,
+        "max": 0.038524,
+        "steady_after_60_frames": {
+          "median": 0.0061224999999999995,
+          "p95": 0.009828,
+          "max": 0.038524
+        }
+      },
+      "Physics sleeping assessment inclusive_ms": {
+        "median": 0.0052725,
+        "p95": 0.007448,
+        "max": 0.025366,
+        "steady_after_60_frames": {
+          "median": 0.005307,
+          "p95": 0.007421,
+          "max": 0.025366
+        }
+      },
+      "Physics velocity constraints inclusive_ms": {
+        "median": 0.024013,
+        "p95": 0.040849,
+        "max": 0.096645,
+        "steady_after_60_frames": {
+          "median": 0.0243005,
+          "p95": 0.041087,
+          "max": 0.096645
+        }
+      },
+      "Pose clip mixing inclusive_ms": {
+        "median": 0.0024964999999999996,
+        "p95": 0.00356,
+        "max": 0.022537,
+        "steady_after_60_frames": {
+          "median": 0.0024895,
+          "p95": 0.0034990000000000004,
+          "max": 0.022537
+        }
+      },
+      "Pose skin matrices inclusive_ms": {
+        "median": 0.021568,
+        "p95": 0.03139600000000001,
+        "max": 0.210829,
+        "steady_after_60_frames": {
+          "median": 0.0215505,
+          "p95": 0.031062,
+          "max": 0.210829
+        }
+      },
+      "Ragdoll physics to pose inclusive_ms": {
+        "median": 0.0116785,
+        "p95": 0.023206,
+        "max": 0.113076,
+        "steady_after_60_frames": {
+          "median": 0.011658,
+          "p95": 0.022407,
+          "max": 0.113076
+        }
+      },
+      "Resource wait inclusive_ms": {
+        "median": 8.8e-05,
+        "p95": 0.000122,
+        "max": 0.000406,
+        "steady_after_60_frames": {
+          "median": 8.8e-05,
+          "p95": 0.000118,
+          "max": 0.000406
+        }
+      },
+      "Rigid physics inclusive_ms": {
+        "median": 0.11305,
+        "p95": 0.183238,
+        "max": 1.196356,
+        "steady_after_60_frames": {
+          "median": 0.111902,
+          "p95": 0.16592,
+          "max": 0.432337
+        }
+      },
+      "Script asset: Assets/scripts/lab.js inclusive_ms": {
+        "median": 0.2404775,
+        "p95": 0.36199800000000004,
+        "max": 0.7249749999999999,
+        "steady_after_60_frames": {
+          "median": 0.24037300000000003,
+          "p95": 0.347236,
+          "max": 0.507134
+        }
+      },
+      "Script lifecycle callback inclusive_ms": {
+        "median": 0.241345,
+        "p95": 0.362865,
+        "max": 0.726485,
+        "steady_after_60_frames": {
+          "median": 0.24123650000000002,
+          "p95": 0.348434,
+          "max": 0.5086
+        }
+      },
+      "Script synchronization inclusive_ms": {
+        "median": 0.002274,
+        "p95": 0.0036390000000000003,
+        "max": 0.012821,
+        "steady_after_60_frames": {
+          "median": 0.002241,
+          "p95": 0.003566,
+          "max": 0.012821
+        }
+      },
+      "Shadow pass submission inclusive_ms": {
+        "median": 0.376776,
+        "p95": 0.449964,
+        "max": 156.645625,
+        "steady_after_60_frames": {
+          "median": 0.3752495,
+          "p95": 0.439299,
+          "max": 3.365182
+        }
+      },
+      "Simulation systems inclusive_ms": {
+        "median": 0.400217,
+        "p95": 0.634761,
+        "max": 1.470077,
+        "steady_after_60_frames": {
+          "median": 0.3981165,
+          "p95": 0.532804,
+          "max": 0.805661
+        }
+      },
+      "Visual particle simulation inclusive_ms": {
+        "median": 5.6e-05,
+        "p95": 0.000137,
+        "max": 0.000371,
+        "steady_after_60_frames": {
+          "median": 5.55e-05,
+          "p95": 0.000132,
+          "max": 0.000371
+        }
+      },
+      "Water boundary upload inclusive_ms": {
+        "median": 5.573662000000001,
+        "p95": 7.310846,
+        "max": 23.286752,
+        "steady_after_60_frames": {
+          "median": 5.5578965,
+          "p95": 7.127616,
+          "max": 11.779117
+        }
+      },
+      "Water optical paths inclusive_ms": {
+        "median": 0.013305,
+        "p95": 0.013938,
+        "max": 0.032088,
+        "steady_after_60_frames": {
+          "median": 0.0133025,
+          "p95": 0.013904,
+          "max": 0.029769
+        }
+      },
+      "World culling and opaque submission inclusive_ms": {
+        "median": 0.8277700000000001,
+        "p95": 1.1445319999999999,
+        "max": 892.868198,
+        "steady_after_60_frames": {
+          "median": 0.825569,
+          "p95": 1.082378,
+          "max": 2.7884740000000003
+        }
+      },
+      "World render submission inclusive_ms": {
+        "median": 6.5327684999999995,
+        "p95": 8.319188,
+        "max": 893.237406,
+        "steady_after_60_frames": {
+          "median": 6.5054195,
+          "p95": 8.09285,
+          "max": 12.798571
+        }
+      },
+      "fixed_wall_ms": {
+        "median": 0.400631,
+        "p95": 0.635396,
+        "max": 1.470588,
+        "steady_after_60_frames": {
+          "median": 0.3985645,
+          "p95": 0.53323,
+          "max": 0.806064
+        }
+      },
+      "frame_wall_ms": {
+        "median": 7.203333,
+        "p95": 9.156153,
+        "max": 893.700087,
+        "steady_after_60_frames": {
+          "median": 7.163009,
+          "p95": 8.879042,
+          "max": 13.444626
+        }
+      },
+      "render_cpu_ms": {
+        "median": 6.586284,
+        "p95": 8.38819,
+        "max": 893.265081,
+        "steady_after_60_frames": {
+          "median": 6.555539,
+          "p95": 8.134174,
+          "max": 12.846874
+        }
+      }
+    },
+    "largest_frame_outliers": [
+      {
+        "Animation clip sampling inclusive_ms": 0.000486,
+        "Animation instances inclusive_ms": 0.010067,
+        "Character motor inclusive_ms": 0.09928000000000001,
+        "Character motors inclusive_ms": 0.10502,
+        "Final pose resolution inclusive_ms": 0.014891999999999999,
+        "Fixed simulation step inclusive_ms": 0.287619,
+        "JavaScript UI update inclusive_ms": 0.007994,
+        "JavaScript contact events inclusive_ms": 0.000804,
+        "JavaScript fixedUpdate inclusive_ms": 0.037384,
+        "JavaScript presentation inclusive_ms": 0.081602,
+        "JavaScript update inclusive_ms": 0.019818,
+        "M77 human intent inclusive_ms": 0.019259,
+        "Main camera inclusive_ms": 736.513905,
+        "Particles and water presentation inclusive_ms": 0.001174,
+        "Physical animation drives inclusive_ms": 0.003335,
+        "Physical balance controller inclusive_ms": 0.022543,
+        "Physical balance observations inclusive_ms": 0.002899,
+        "Physical balance step references inclusive_ms": 0.00192,
+        "Physics broadphase inclusive_ms": 0.001583,
+        "Physics contact and joint solver inclusive_ms": 0.02854,
+        "Physics contacts inclusive_ms": 0.03018,
+        "Physics continuous impacts inclusive_ms": 0.001138,
+        "Physics initial impacts inclusive_ms": 7.7e-05,
+        "Physics position constraints inclusive_ms": 0.006791,
+        "Physics proxy refresh inclusive_ms": 0.00772,
+        "Physics sleeping assessment inclusive_ms": 0.002451,
+        "Physics velocity constraints inclusive_ms": 0.016468,
+        "Pose clip mixing inclusive_ms": 0.0013679999999999999,
+        "Pose skin matrices inclusive_ms": 0.027672,
+        "Ragdoll physics to pose inclusive_ms": 0.00877,
+        "Resource wait inclusive_ms": 4.9e-05,
+        "Rigid physics inclusive_ms": 0.074176,
+        "Script asset: Assets/scripts/lab.js inclusive_ms": 0.142403,
+        "Script lifecycle callback inclusive_ms": 0.145132,
+        "Script synchronization inclusive_ms": 0.001289,
+        "Shadow pass submission inclusive_ms": 156.645625,
+        "Simulation systems inclusive_ms": 0.288106,
+        "Visual particle simulation inclusive_ms": 6e-05,
+        "Water boundary upload inclusive_ms": 0.08994,
+        "Water optical paths inclusive_ms": 0.032088,
+        "World culling and opaque submission inclusive_ms": 892.868198,
+        "World render submission inclusive_ms": 893.237406,
+        "fixed_wall_ms": 0.288556,
+        "frame": 0,
+        "frame_wall_ms": 893.700087,
+        "render_cpu_ms": 893.265081
+      },
+      {
+        "Animation clip sampling inclusive_ms": 0.0017829999999999999,
+        "Animation instances inclusive_ms": 0.019731,
+        "Character motor inclusive_ms": 0.160931,
+        "Character motors inclusive_ms": 0.177862,
+        "Final pose resolution inclusive_ms": 0.036325,
+        "Fixed simulation step inclusive_ms": 0.630768,
+        "JavaScript UI update inclusive_ms": 0.035969,
+        "JavaScript contact events inclusive_ms": 0.0018970000000000002,
+        "JavaScript fixedUpdate inclusive_ms": 0.12161,
+        "JavaScript presentation inclusive_ms": 0.201018,
+        "JavaScript update inclusive_ms": 0.059891,
+        "M77 human intent inclusive_ms": 0.056949,
+        "Main camera inclusive_ms": 24.263846,
+        "Particles and water presentation inclusive_ms": 0.000855,
+        "Physical animation drives inclusive_ms": 0.010621,
+        "Physical balance controller inclusive_ms": 0.052754,
+        "Physical balance observations inclusive_ms": 0.010684,
+        "Physical balance step references inclusive_ms": 0.005498,
+        "Physics broadphase inclusive_ms": 0.002316,
+        "Physics contact and joint solver inclusive_ms": 0.064279,
+        "Physics contacts inclusive_ms": 0.066914,
+        "Physics continuous impacts inclusive_ms": 0.003441,
+        "Physics initial impacts inclusive_ms": 0.000207,
+        "Physics position constraints inclusive_ms": 0.015239,
+        "Physics proxy refresh inclusive_ms": 0.009495,
+        "Physics sleeping assessment inclusive_ms": 0.007907,
+        "Physics velocity constraints inclusive_ms": 0.036056,
+        "Pose clip mixing inclusive_ms": 0.004141,
+        "Pose skin matrices inclusive_ms": 0.037743000000000006,
+        "Ragdoll physics to pose inclusive_ms": 0.021297,
+        "Resource wait inclusive_ms": 0.000153,
+        "Rigid physics inclusive_ms": 0.156126,
+        "Script asset: Assets/scripts/lab.js inclusive_ms": 0.414208,
+        "Script lifecycle callback inclusive_ms": 0.41558700000000004,
+        "Script synchronization inclusive_ms": 0.003614,
+        "Shadow pass submission inclusive_ms": 0.475166,
+        "Simulation systems inclusive_ms": 0.631246,
+        "Visual particle simulation inclusive_ms": 8.2e-05,
+        "Water boundary upload inclusive_ms": 23.286752,
+        "Water optical paths inclusive_ms": 0.012469,
+        "World culling and opaque submission inclusive_ms": 1.363641,
+        "World render submission inclusive_ms": 24.7612,
+        "fixed_wall_ms": 0.63175,
+        "frame": 1,
+        "frame_wall_ms": 25.835428,
+        "render_cpu_ms": 24.864181
+      },
+      {
+        "Animation clip sampling inclusive_ms": 0.00116,
+        "Animation instances inclusive_ms": 0.010973,
+        "Character motor inclusive_ms": 0.116562,
+        "Character motors inclusive_ms": 0.12616,
+        "Final pose resolution inclusive_ms": 0.019029,
+        "Fixed simulation step inclusive_ms": 0.407552,
+        "JavaScript UI update inclusive_ms": 0.023611,
+        "JavaScript contact events inclusive_ms": 0.000861,
+        "JavaScript fixedUpdate inclusive_ms": 0.06917,
+        "JavaScript presentation inclusive_ms": 0.117516,
+        "JavaScript update inclusive_ms": 0.031658,
+        "M77 human intent inclusive_ms": 0.029405,
+        "Main camera inclusive_ms": 16.097224,
+        "Particles and water presentation inclusive_ms": 0.001126,
+        "Physical animation drives inclusive_ms": 0.005458,
+        "Physical balance controller inclusive_ms": 0.038915,
+        "Physical balance observations inclusive_ms": 0.006428,
+        "Physical balance step references inclusive_ms": 0.003269,
+        "Physics broadphase inclusive_ms": 0.001699,
+        "Physics contact and joint solver inclusive_ms": 0.04107,
+        "Physics contacts inclusive_ms": 0.047251,
+        "Physics continuous impacts inclusive_ms": 0.002811,
+        "Physics initial impacts inclusive_ms": 0.000139,
+        "Physics position constraints inclusive_ms": 0.007583,
+        "Physics proxy refresh inclusive_ms": 0.006837,
+        "Physics sleeping assessment inclusive_ms": 0.005821,
+        "Physics velocity constraints inclusive_ms": 0.023794,
+        "Pose clip mixing inclusive_ms": 0.002607,
+        "Pose skin matrices inclusive_ms": 0.028115,
+        "Ragdoll physics to pose inclusive_ms": 0.011908,
+        "Resource wait inclusive_ms": 0.000112,
+        "Rigid physics inclusive_ms": 0.106685,
+        "Script asset: Assets/scripts/lab.js inclusive_ms": 0.239257,
+        "Script lifecycle callback inclusive_ms": 0.240132,
+        "Script synchronization inclusive_ms": 0.002372,
+        "Shadow pass submission inclusive_ms": 3.589618,
+        "Simulation systems inclusive_ms": 0.407818,
+        "Visual particle simulation inclusive_ms": 5.4e-05,
+        "Water boundary upload inclusive_ms": 15.461823,
+        "Water optical paths inclusive_ms": 0.014064,
+        "World culling and opaque submission inclusive_ms": 4.149106,
+        "World render submission inclusive_ms": 19.71111,
+        "fixed_wall_ms": 0.408382,
+        "frame": 7,
+        "frame_wall_ms": 20.444277,
+        "render_cpu_ms": 19.835032
+      },
+      {
+        "Animation clip sampling inclusive_ms": 0.001362,
+        "Animation instances inclusive_ms": 0.011638,
+        "Character motor inclusive_ms": 0.112542,
+        "Character motors inclusive_ms": 0.125174,
+        "Final pose resolution inclusive_ms": 0.024276000000000002,
+        "Fixed simulation step inclusive_ms": 0.458972,
+        "JavaScript UI update inclusive_ms": 0.034305,
+        "JavaScript contact events inclusive_ms": 0.0010220000000000001,
+        "JavaScript fixedUpdate inclusive_ms": 0.088199,
+        "JavaScript presentation inclusive_ms": 0.133705,
+        "JavaScript update inclusive_ms": 0.038478,
+        "M77 human intent inclusive_ms": 0.037372,
+        "Main camera inclusive_ms": 13.724869,
+        "Particles and water presentation inclusive_ms": 0.00086,
+        "Physical animation drives inclusive_ms": 0.007598,
+        "Physical balance controller inclusive_ms": 0.045666,
+        "Physical balance observations inclusive_ms": 0.009023,
+        "Physical balance step references inclusive_ms": 0.004373,
+        "Physics broadphase inclusive_ms": 0.001664,
+        "Physics contact and joint solver inclusive_ms": 0.043089,
+        "Physics contacts inclusive_ms": 0.050743,
+        "Physics continuous impacts inclusive_ms": 0.00309,
+        "Physics initial impacts inclusive_ms": 0.000134,
+        "Physics position constraints inclusive_ms": 0.008024,
+        "Physics proxy refresh inclusive_ms": 0.008734,
+        "Physics sleeping assessment inclusive_ms": 0.006227,
+        "Physics velocity constraints inclusive_ms": 0.024536,
+        "Pose clip mixing inclusive_ms": 0.003398,
+        "Pose skin matrices inclusive_ms": 0.031124000000000002,
+        "Ragdoll physics to pose inclusive_ms": 0.014459,
+        "Resource wait inclusive_ms": 6.6e-05,
+        "Rigid physics inclusive_ms": 0.114668,
+        "Script asset: Assets/scripts/lab.js inclusive_ms": 0.291528,
+        "Script lifecycle callback inclusive_ms": 0.292836,
+        "Script synchronization inclusive_ms": 0.003122,
+        "Shadow pass submission inclusive_ms": 0.558337,
+        "Simulation systems inclusive_ms": 0.45931,
+        "Visual particle simulation inclusive_ms": 5.9e-05,
+        "Water boundary upload inclusive_ms": 12.851976,
+        "Water optical paths inclusive_ms": 0.015255,
+        "World culling and opaque submission inclusive_ms": 1.3302209999999999,
+        "World render submission inclusive_ms": 14.308182,
+        "fixed_wall_ms": 0.459709,
+        "frame": 8,
+        "frame_wall_ms": 20.191558,
+        "render_cpu_ms": 19.470997
+      },
+      {
+        "Animation clip sampling inclusive_ms": 0.001681,
+        "Animation instances inclusive_ms": 0.018929,
+        "Character motor inclusive_ms": 0.168581,
+        "Character motors inclusive_ms": 0.18379600000000001,
+        "Final pose resolution inclusive_ms": 0.033438999999999997,
+        "Fixed simulation step inclusive_ms": 0.642335,
+        "JavaScript UI update inclusive_ms": 0.038691,
+        "JavaScript contact events inclusive_ms": 0.001388,
+        "JavaScript fixedUpdate inclusive_ms": 0.126604,
+        "JavaScript presentation inclusive_ms": 0.206931,
+        "JavaScript update inclusive_ms": 0.065823,
+        "M77 human intent inclusive_ms": 0.061308,
+        "Main camera inclusive_ms": 15.220507,
+        "Particles and water presentation inclusive_ms": 0.000688,
+        "Physical animation drives inclusive_ms": 0.009349,
+        "Physical balance controller inclusive_ms": 0.056539,
+        "Physical balance observations inclusive_ms": 0.010393,
+        "Physical balance step references inclusive_ms": 0.005832,
+        "Physics broadphase inclusive_ms": 0.002263,
+        "Physics contact and joint solver inclusive_ms": 0.065476,
+        "Physics contacts inclusive_ms": 0.074208,
+        "Physics continuous impacts inclusive_ms": 0.003281,
+        "Physics initial impacts inclusive_ms": 0.000179,
+        "Physics position constraints inclusive_ms": 0.016391,
+        "Physics proxy refresh inclusive_ms": 0.01004,
+        "Physics sleeping assessment inclusive_ms": 0.008194,
+        "Physics velocity constraints inclusive_ms": 0.03609,
+        "Pose clip mixing inclusive_ms": 0.004196,
+        "Pose skin matrices inclusive_ms": 0.032473,
+        "Ragdoll physics to pose inclusive_ms": 0.020164,
+        "Resource wait inclusive_ms": 0.000122,
+        "Rigid physics inclusive_ms": 0.165641,
+        "Script asset: Assets/scripts/lab.js inclusive_ms": 0.433415,
+        "Script lifecycle callback inclusive_ms": 0.434802,
+        "Script synchronization inclusive_ms": 0.0038710000000000003,
+        "Shadow pass submission inclusive_ms": 0.460678,
+        "Simulation systems inclusive_ms": 0.643079,
+        "Visual particle simulation inclusive_ms": 0.000167,
+        "Water boundary upload inclusive_ms": 14.423415,
+        "Water optical paths inclusive_ms": 0.013507,
+        "World culling and opaque submission inclusive_ms": 1.1775259999999999,
+        "World render submission inclusive_ms": 15.697321,
+        "fixed_wall_ms": 0.643498,
+        "frame": 9,
+        "frame_wall_ms": 16.77548,
+        "render_cpu_ms": 15.776243
+      }
+    ]
+  },
+  {
+    "mode": "perf-zero",
+    "allocated_bodies_including_motor_proxies": 5,
+    "actors": [
+      {
+        "id": 12,
+        "owns": false,
+        "standing": false,
+        "status": 0
+      }
+    ],
+    "statistics": {
+      "Animation clip sampling inclusive_ms": {
+        "median": 0.0011225,
+        "p95": 0.001616,
+        "max": 0.020269,
+        "steady_after_60_frames": {
+          "median": 0.0011160000000000002,
+          "p95": 0.001614,
+          "max": 0.020269
+        }
+      },
+      "Animation instances inclusive_ms": {
+        "median": 0.0088425,
+        "p95": 0.016609,
+        "max": 0.04533,
+        "steady_after_60_frames": {
+          "median": 0.008826500000000001,
+          "p95": 0.016609,
+          "max": 0.04533
+        }
+      },
+      "Character motor inclusive_ms": {
+        "median": 0.14151249999999999,
+        "p95": 0.203476,
+        "max": 0.9823350000000001,
+        "steady_after_60_frames": {
+          "median": 0.14140200000000003,
+          "p95": 0.19978400000000002,
+          "max": 0.9823350000000001
+        }
+      },
+      "Character motors inclusive_ms": {
+        "median": 0.14942450000000002,
+        "p95": 0.216197,
+        "max": 0.994184,
+        "steady_after_60_frames": {
+          "median": 0.149125,
+          "p95": 0.21304,
+          "max": 0.994184
+        }
+      },
+      "Final pose resolution inclusive_ms": {
+        "median": 0.012203499999999999,
+        "p95": 0.02111,
+        "max": 0.04536500000000001,
+        "steady_after_60_frames": {
+          "median": 0.012164999999999999,
+          "p95": 0.021009999999999997,
+          "max": 0.04536500000000001
+        }
+      },
+      "Fixed simulation step inclusive_ms": {
+        "median": 0.285486,
+        "p95": 0.423114,
+        "max": 1.144003,
+        "steady_after_60_frames": {
+          "median": 0.2850515,
+          "p95": 0.417775,
+          "max": 1.144003
+        }
+      },
+      "JavaScript UI update inclusive_ms": {
+        "median": 0.0234865,
+        "p95": 0.035014,
+        "max": 0.087376,
+        "steady_after_60_frames": {
+          "median": 0.0233,
+          "p95": 0.034844,
+          "max": 0.057249
+        }
+      },
+      "JavaScript contact events inclusive_ms": {
+        "median": 0.0007120000000000001,
+        "p95": 0.001067,
+        "max": 0.013040999999999999,
+        "steady_after_60_frames": {
+          "median": 0.0007105,
+          "p95": 0.001039,
+          "max": 0.013040999999999999
+        }
+      },
+      "JavaScript fixedUpdate inclusive_ms": {
+        "median": 0.0761845,
+        "p95": 0.133918,
+        "max": 0.194791,
+        "steady_after_60_frames": {
+          "median": 0.07595,
+          "p95": 0.132126,
+          "max": 0.194791
+        }
+      },
+      "JavaScript presentation inclusive_ms": {
+        "median": 0.102887,
+        "p95": 0.170906,
+        "max": 0.463341,
+        "steady_after_60_frames": {
+          "median": 0.102404,
+          "p95": 0.170732,
+          "max": 0.463341
+        }
+      },
+      "JavaScript update inclusive_ms": {
+        "median": 0.030902,
+        "p95": 0.060971,
+        "max": 0.216304,
+        "steady_after_60_frames": {
+          "median": 0.030727499999999998,
+          "p95": 0.059925,
+          "max": 0.216304
+        }
+      },
+      "M77 human intent inclusive_ms": {
+        "median": 0.037428,
+        "p95": 0.074173,
+        "max": 0.139842,
+        "steady_after_60_frames": {
+          "median": 0.037344,
+          "p95": 0.074173,
+          "max": 0.139842
+        }
+      },
+      "Main camera inclusive_ms": {
+        "median": 5.8706885,
+        "p95": 7.967619,
+        "max": 542.876925,
+        "steady_after_60_frames": {
+          "median": 5.8226320000000005,
+          "p95": 7.785512,
+          "max": 26.131544
+        }
+      },
+      "Particles and water presentation inclusive_ms": {
+        "median": 0.00047349999999999996,
+        "p95": 0.000725,
+        "max": 0.01037,
+        "steady_after_60_frames": {
+          "median": 0.000466,
+          "p95": 0.00073,
+          "max": 0.01037
+        }
+      },
+      "Physical animation drives inclusive_ms": {
+        "median": 0.000316,
+        "p95": 0.00058,
+        "max": 0.007012,
+        "steady_after_60_frames": {
+          "median": 0.000316,
+          "p95": 0.000572,
+          "max": 0.007012
+        }
+      },
+      "Physics broadphase inclusive_ms": {
+        "median": 0.000326,
+        "p95": 0.000406,
+        "max": 0.001787,
+        "steady_after_60_frames": {
+          "median": 0.0003255,
+          "p95": 0.0004,
+          "max": 0.001787
+        }
+      },
+      "Physics contact and joint solver inclusive_ms": {
+        "median": 0.00396,
+        "p95": 0.005459,
+        "max": 0.02471,
+        "steady_after_60_frames": {
+          "median": 0.0039355,
+          "p95": 0.005459,
+          "max": 0.02471
+        }
+      },
+      "Physics contacts inclusive_ms": {
+        "median": 0.000704,
+        "p95": 0.000911,
+        "max": 0.010063,
+        "steady_after_60_frames": {
+          "median": 0.0007025,
+          "p95": 0.000914,
+          "max": 0.010063
+        }
+      },
+      "Physics continuous impacts inclusive_ms": {
+        "median": 0.001036,
+        "p95": 0.001425,
+        "max": 0.010764,
+        "steady_after_60_frames": {
+          "median": 0.001029,
+          "p95": 0.001424,
+          "max": 0.010764
+        }
+      },
+      "Physics initial impacts inclusive_ms": {
+        "median": 0.000189,
+        "p95": 0.000254,
+        "max": 0.000693,
+        "steady_after_60_frames": {
+          "median": 0.000188,
+          "p95": 0.000254,
+          "max": 0.000693
+        }
+      },
+      "Physics position constraints inclusive_ms": {
+        "median": 0.000207,
+        "p95": 0.00028,
+        "max": 0.009247,
+        "steady_after_60_frames": {
+          "median": 0.000207,
+          "p95": 0.000276,
+          "max": 0.009247
+        }
+      },
+      "Physics proxy refresh inclusive_ms": {
+        "median": 0.001395,
+        "p95": 0.002004,
+        "max": 0.011677,
+        "steady_after_60_frames": {
+          "median": 0.00139,
+          "p95": 0.001943,
+          "max": 0.011677
+        }
+      },
+      "Physics sleeping assessment inclusive_ms": {
+        "median": 0.000802,
+        "p95": 0.001023,
+        "max": 0.011484,
+        "steady_after_60_frames": {
+          "median": 0.0007995000000000001,
+          "p95": 0.001002,
+          "max": 0.011484
+        }
+      },
+      "Physics velocity constraints inclusive_ms": {
+        "median": 0.0009635,
+        "p95": 0.00138,
+        "max": 0.011166,
+        "steady_after_60_frames": {
+          "median": 0.00095,
+          "p95": 0.001338,
+          "max": 0.011166
+        }
+      },
+      "Pose clip mixing inclusive_ms": {
+        "median": 0.002384,
+        "p95": 0.003581,
+        "max": 0.021724999999999998,
+        "steady_after_60_frames": {
+          "median": 0.0023745,
+          "p95": 0.0035529999999999997,
+          "max": 0.021724999999999998
+        }
+      },
+      "Pose skin matrices inclusive_ms": {
+        "median": 0.019715000000000003,
+        "p95": 0.029075,
+        "max": 0.050307,
+        "steady_after_60_frames": {
+          "median": 0.0196045,
+          "p95": 0.028977000000000003,
+          "max": 0.050307
+        }
+      },
+      "Ragdoll physics to pose inclusive_ms": {
+        "median": 0.000426,
+        "p95": 0.000627,
+        "max": 0.001643,
+        "steady_after_60_frames": {
+          "median": 0.000425,
+          "p95": 0.000593,
+          "max": 0.001643
+        }
+      },
+      "Resource wait inclusive_ms": {
+        "median": 0.000107,
+        "p95": 0.000149,
+        "max": 0.000395,
+        "steady_after_60_frames": {
+          "median": 0.000105,
+          "p95": 0.000149,
+          "max": 0.000395
+        }
+      },
+      "Rigid physics inclusive_ms": {
+        "median": 0.010143,
+        "p95": 0.014345,
+        "max": 0.041872,
+        "steady_after_60_frames": {
+          "median": 0.0101195,
+          "p95": 0.014291,
+          "max": 0.041872
+        }
+      },
+      "Script asset: Assets/scripts/lab.js inclusive_ms": {
+        "median": 0.2387345,
+        "p95": 0.384373,
+        "max": 0.717001,
+        "steady_after_60_frames": {
+          "median": 0.237817,
+          "p95": 0.371938,
+          "max": 0.717001
+        }
+      },
+      "Script lifecycle callback inclusive_ms": {
+        "median": 0.23969,
+        "p95": 0.385521,
+        "max": 0.7208019999999999,
+        "steady_after_60_frames": {
+          "median": 0.2387305,
+          "p95": 0.373155,
+          "max": 0.7208019999999999
+        }
+      },
+      "Script synchronization inclusive_ms": {
+        "median": 0.002201,
+        "p95": 0.003589,
+        "max": 0.07492800000000001,
+        "steady_after_60_frames": {
+          "median": 0.002194,
+          "p95": 0.003579,
+          "max": 0.07492800000000001
+        }
+      },
+      "Shadow pass submission inclusive_ms": {
+        "median": 0.3666735,
+        "p95": 0.425941,
+        "max": 330.737435,
+        "steady_after_60_frames": {
+          "median": 0.3666735,
+          "p95": 0.421975,
+          "max": 4.580926
+        }
+      },
+      "Simulation systems inclusive_ms": {
+        "median": 0.28592300000000004,
+        "p95": 0.423599,
+        "max": 1.14433,
+        "steady_after_60_frames": {
+          "median": 0.2855985,
+          "p95": 0.418125,
+          "max": 1.14433
+        }
+      },
+      "Visual particle simulation inclusive_ms": {
+        "median": 4.85e-05,
+        "p95": 0.000137,
+        "max": 0.000391,
+        "steady_after_60_frames": {
+          "median": 4.7e-05,
+          "p95": 0.000135,
+          "max": 0.000391
+        }
+      },
+      "Water boundary upload inclusive_ms": {
+        "median": 5.4068275,
+        "p95": 7.351136,
+        "max": 25.666307,
+        "steady_after_60_frames": {
+          "median": 5.348461,
+          "p95": 7.153813,
+          "max": 25.666307
+        }
+      },
+      "Water optical paths inclusive_ms": {
+        "median": 0.0133105,
+        "p95": 0.014178,
+        "max": 0.478853,
+        "steady_after_60_frames": {
+          "median": 0.013295999999999999,
+          "p95": 0.01408,
+          "max": 0.058077
+        }
+      },
+      "World culling and opaque submission inclusive_ms": {
+        "median": 0.7525809999999999,
+        "p95": 1.027532,
+        "max": 873.2987989999999,
+        "steady_after_60_frames": {
+          "median": 0.7495430000000001,
+          "p95": 1.020125,
+          "max": 5.032013
+        }
+      },
+      "World render submission inclusive_ms": {
+        "median": 6.2441875,
+        "p95": 8.295684,
+        "max": 873.69823,
+        "steady_after_60_frames": {
+          "median": 6.197654999999999,
+          "p95": 8.205258,
+          "max": 26.522682
+        }
+      },
+      "fixed_wall_ms": {
+        "median": 0.2863045,
+        "p95": 0.423984,
+        "max": 1.144917,
+        "steady_after_60_frames": {
+          "median": 0.28592300000000004,
+          "p95": 0.418482,
+          "max": 1.144917
+        }
+      },
+      "frame_wall_ms": {
+        "median": 6.783752,
+        "p95": 9.038444,
+        "max": 874.34754,
+        "steady_after_60_frames": {
+          "median": 6.74062,
+          "p95": 8.792446,
+          "max": 27.319254
+        }
+      },
+      "render_cpu_ms": {
+        "median": 6.292861,
+        "p95": 8.404074,
+        "max": 873.739497,
+        "steady_after_60_frames": {
+          "median": 6.2501505,
+          "p95": 8.243748,
+          "max": 26.542594
+        }
+      }
+    },
+    "largest_frame_outliers": [
+      {
+        "Animation clip sampling inclusive_ms": 0.0008219999999999998,
+        "Animation instances inclusive_ms": 0.014358,
+        "Character motor inclusive_ms": 0.206589,
+        "Character motors inclusive_ms": 0.212811,
+        "Final pose resolution inclusive_ms": 0.025047999999999997,
+        "Fixed simulation step inclusive_ms": 0.386309,
+        "JavaScript UI update inclusive_ms": 0.013293,
+        "JavaScript contact events inclusive_ms": 0.0009889999999999999,
+        "JavaScript fixedUpdate inclusive_ms": 0.093443,
+        "JavaScript presentation inclusive_ms": 0.135253,
+        "JavaScript update inclusive_ms": 0.047583,
+        "M77 human intent inclusive_ms": 0.059274,
+        "Main camera inclusive_ms": 542.876925,
+        "Particles and water presentation inclusive_ms": 0.000394,
+        "Physical animation drives inclusive_ms": 0.000829,
+        "Physics broadphase inclusive_ms": 0.000473,
+        "Physics contact and joint solver inclusive_ms": 0.00437,
+        "Physics contacts inclusive_ms": 0.00031,
+        "Physics continuous impacts inclusive_ms": 0.000427,
+        "Physics initial impacts inclusive_ms": 0.000106,
+        "Physics position constraints inclusive_ms": 0.000153,
+        "Physics proxy refresh inclusive_ms": 0.011659,
+        "Physics sleeping assessment inclusive_ms": 0.000343,
+        "Physics velocity constraints inclusive_ms": 0.00034,
+        "Pose clip mixing inclusive_ms": 0.008878999999999998,
+        "Pose skin matrices inclusive_ms": 0.030305,
+        "Ragdoll physics to pose inclusive_ms": 0.000401,
+        "Resource wait inclusive_ms": 6.7e-05,
+        "Rigid physics inclusive_ms": 0.020721,
+        "Script asset: Assets/scripts/lab.js inclusive_ms": 0.284222,
+        "Script lifecycle callback inclusive_ms": 0.286975,
+        "Script synchronization inclusive_ms": 0.002202,
+        "Shadow pass submission inclusive_ms": 330.737435,
+        "Simulation systems inclusive_ms": 0.387079,
+        "Visual particle simulation inclusive_ms": 5.8e-05,
+        "Water boundary upload inclusive_ms": 0.091193,
+        "Water optical paths inclusive_ms": 0.018175,
+        "World culling and opaque submission inclusive_ms": 873.2987989999999,
+        "World render submission inclusive_ms": 873.69823,
+        "fixed_wall_ms": 0.387762,
+        "frame": 0,
+        "frame_wall_ms": 874.34754,
+        "render_cpu_ms": 873.739497
+      },
+      {
+        "Animation clip sampling inclusive_ms": 0.002058,
+        "Animation instances inclusive_ms": 0.016148,
+        "Character motor inclusive_ms": 0.216879,
+        "Character motors inclusive_ms": 0.228538,
+        "Final pose resolution inclusive_ms": 0.021214,
+        "Fixed simulation step inclusive_ms": 0.444236,
+        "JavaScript UI update inclusive_ms": 0.03606,
+        "JavaScript contact events inclusive_ms": 0.001291,
+        "JavaScript fixedUpdate inclusive_ms": 0.133918,
+        "JavaScript presentation inclusive_ms": 0.194802,
+        "JavaScript update inclusive_ms": 0.063106,
+        "M77 human intent inclusive_ms": 0.072283,
+        "Main camera inclusive_ms": 26.131544,
+        "Particles and water presentation inclusive_ms": 0.000479,
+        "Physical animation drives inclusive_ms": 0.000607,
+        "Physics broadphase inclusive_ms": 0.000473,
+        "Physics contact and joint solver inclusive_ms": 0.005436,
+        "Physics contacts inclusive_ms": 0.000843,
+        "Physics continuous impacts inclusive_ms": 0.001536,
+        "Physics initial impacts inclusive_ms": 0.000235,
+        "Physics position constraints inclusive_ms": 0.000262,
+        "Physics proxy refresh inclusive_ms": 0.001943,
+        "Physics sleeping assessment inclusive_ms": 0.001072,
+        "Physics velocity constraints inclusive_ms": 0.001378,
+        "Pose clip mixing inclusive_ms": 0.004196999999999999,
+        "Pose skin matrices inclusive_ms": 0.0259,
+        "Ragdoll physics to pose inclusive_ms": 0.000598,
+        "Resource wait inclusive_ms": 0.000195,
+        "Rigid physics inclusive_ms": 0.014251,
+        "Script asset: Assets/scripts/lab.js inclusive_ms": 0.42345600000000005,
+        "Script lifecycle callback inclusive_ms": 0.424861,
+        "Script synchronization inclusive_ms": 0.00365,
+        "Shadow pass submission inclusive_ms": 0.379301,
+        "Simulation systems inclusive_ms": 0.444731,
+        "Visual particle simulation inclusive_ms": 0.000155,
+        "Water boundary upload inclusive_ms": 25.666307,
+        "Water optical paths inclusive_ms": 0.013783,
+        "World culling and opaque submission inclusive_ms": 0.7775369999999999,
+        "World render submission inclusive_ms": 26.522682,
+        "fixed_wall_ms": 0.445114,
+        "frame": 529,
+        "frame_wall_ms": 27.319254,
+        "render_cpu_ms": 26.542594
+      },
+      {
+        "Animation clip sampling inclusive_ms": 0.0014759999999999999,
+        "Animation instances inclusive_ms": 0.015253,
+        "Character motor inclusive_ms": 0.217022,
+        "Character motors inclusive_ms": 0.227825,
+        "Final pose resolution inclusive_ms": 0.020279000000000002,
+        "Fixed simulation step inclusive_ms": 0.49775,
+        "JavaScript UI update inclusive_ms": 0.03065,
+        "JavaScript contact events inclusive_ms": 0.0011810000000000002,
+        "JavaScript fixedUpdate inclusive_ms": 0.194791,
+        "JavaScript presentation inclusive_ms": 0.172433,
+        "JavaScript update inclusive_ms": 0.058688,
+        "M77 human intent inclusive_ms": 0.139842,
+        "Main camera inclusive_ms": 19.256925,
+        "Particles and water presentation inclusive_ms": 0.00076,
+        "Physical animation drives inclusive_ms": 0.000648,
+        "Physics broadphase inclusive_ms": 0.000485,
+        "Physics contact and joint solver inclusive_ms": 0.004842,
+        "Physics contacts inclusive_ms": 0.000816,
+        "Physics continuous impacts inclusive_ms": 0.001301,
+        "Physics initial impacts inclusive_ms": 0.000228,
+        "Physics position constraints inclusive_ms": 0.000296,
+        "Physics proxy refresh inclusive_ms": 0.00213,
+        "Physics sleeping assessment inclusive_ms": 0.000882,
+        "Physics velocity constraints inclusive_ms": 0.001217,
+        "Pose clip mixing inclusive_ms": 0.0035529999999999997,
+        "Pose skin matrices inclusive_ms": 0.029183,
+        "Ragdoll physics to pose inclusive_ms": 0.000811,
+        "Resource wait inclusive_ms": 0.00011,
+        "Rigid physics inclusive_ms": 0.012687,
+        "Script asset: Assets/scripts/lab.js inclusive_ms": 0.452644,
+        "Script lifecycle callback inclusive_ms": 0.45391099999999995,
+        "Script synchronization inclusive_ms": 0.003181,
+        "Shadow pass submission inclusive_ms": 0.382633,
+        "Simulation systems inclusive_ms": 0.498261,
+        "Visual particle simulation inclusive_ms": 0.000137,
+        "Water boundary upload inclusive_ms": 18.545087,
+        "Water optical paths inclusive_ms": 0.013521,
+        "World culling and opaque submission inclusive_ms": 1.029906,
+        "World render submission inclusive_ms": 19.651238,
+        "fixed_wall_ms": 0.498624,
+        "frame": 532,
+        "frame_wall_ms": 20.552618,
+        "render_cpu_ms": 19.756468
+      },
+      {
+        "Animation clip sampling inclusive_ms": 0.0016729999999999998,
+        "Animation instances inclusive_ms": 0.016108,
+        "Character motor inclusive_ms": 0.216304,
+        "Character motors inclusive_ms": 0.227518,
+        "Final pose resolution inclusive_ms": 0.020469,
+        "Fixed simulation step inclusive_ms": 0.476883,
+        "JavaScript UI update inclusive_ms": 0.033403,
+        "JavaScript contact events inclusive_ms": 0.0011020000000000001,
+        "JavaScript fixedUpdate inclusive_ms": 0.171521,
+        "JavaScript presentation inclusive_ms": 0.174667,
+        "JavaScript update inclusive_ms": 0.060408,
+        "M77 human intent inclusive_ms": 0.074963,
+        "Main camera inclusive_ms": 18.033372,
+        "Particles and water presentation inclusive_ms": 0.000758,
+        "Physical animation drives inclusive_ms": 0.0006,
+        "Physics broadphase inclusive_ms": 0.000377,
+        "Physics contact and joint solver inclusive_ms": 0.005072,
+        "Physics contacts inclusive_ms": 0.000779,
+        "Physics continuous impacts inclusive_ms": 0.001492,
+        "Physics initial impacts inclusive_ms": 0.000236,
+        "Physics position constraints inclusive_ms": 0.000252,
+        "Physics proxy refresh inclusive_ms": 0.002145,
+        "Physics sleeping assessment inclusive_ms": 0.000861,
+        "Physics velocity constraints inclusive_ms": 0.00131,
+        "Pose clip mixing inclusive_ms": 0.0037,
+        "Pose skin matrices inclusive_ms": 0.029981000000000004,
+        "Ragdoll physics to pose inclusive_ms": 0.000593,
+        "Resource wait inclusive_ms": 0.000121,
+        "Rigid physics inclusive_ms": 0.012684,
+        "Script asset: Assets/scripts/lab.js inclusive_ms": 0.43593899999999997,
+        "Script lifecycle callback inclusive_ms": 0.437316,
+        "Script synchronization inclusive_ms": 0.0034539999999999996,
+        "Shadow pass submission inclusive_ms": 0.40579,
+        "Simulation systems inclusive_ms": 0.477409,
+        "Visual particle simulation inclusive_ms": 0.000149,
+        "Water boundary upload inclusive_ms": 17.312282,
+        "Water optical paths inclusive_ms": 0.013279,
+        "World culling and opaque submission inclusive_ms": 1.057592,
+        "World render submission inclusive_ms": 18.451389,
+        "fixed_wall_ms": 0.478115,
+        "frame": 528,
+        "frame_wall_ms": 19.320091,
+        "render_cpu_ms": 18.536821
+      },
+      {
+        "Animation clip sampling inclusive_ms": 0.001248,
+        "Animation instances inclusive_ms": 0.009848,
+        "Character motor inclusive_ms": 0.15977,
+        "Character motors inclusive_ms": 0.16842200000000002,
+        "Final pose resolution inclusive_ms": 0.013179999999999999,
+        "Fixed simulation step inclusive_ms": 0.322215,
+        "JavaScript UI update inclusive_ms": 0.027022,
+        "JavaScript contact events inclusive_ms": 0.000864,
+        "JavaScript fixedUpdate inclusive_ms": 0.090145,
+        "JavaScript presentation inclusive_ms": 0.118062,
+        "JavaScript update inclusive_ms": 0.038085,
+        "M77 human intent inclusive_ms": 0.03899,
+        "Main camera inclusive_ms": 18.078823,
+        "Particles and water presentation inclusive_ms": 0.00073,
+        "Physical animation drives inclusive_ms": 0.000383,
+        "Physics broadphase inclusive_ms": 0.000343,
+        "Physics contact and joint solver inclusive_ms": 0.004068,
+        "Physics contacts inclusive_ms": 0.000761,
+        "Physics continuous impacts inclusive_ms": 0.001159,
+        "Physics initial impacts inclusive_ms": 0.000236,
+        "Physics position constraints inclusive_ms": 0.000216,
+        "Physics proxy refresh inclusive_ms": 0.0014,
+        "Physics sleeping assessment inclusive_ms": 0.000676,
+        "Physics velocity constraints inclusive_ms": 0.000973,
+        "Pose clip mixing inclusive_ms": 0.0026100000000000003,
+        "Pose skin matrices inclusive_ms": 0.023365,
+        "Ragdoll physics to pose inclusive_ms": 0.000462,
+        "Resource wait inclusive_ms": 3.3e-05,
+        "Rigid physics inclusive_ms": 0.010318,
+        "Script asset: Assets/scripts/lab.js inclusive_ms": 0.270349,
+        "Script lifecycle callback inclusive_ms": 0.271349,
+        "Script synchronization inclusive_ms": 0.00247,
+        "Shadow pass submission inclusive_ms": 0.402307,
+        "Simulation systems inclusive_ms": 0.322486,
+        "Visual particle simulation inclusive_ms": 5.2e-05,
+        "Water boundary upload inclusive_ms": 17.397217,
+        "Water optical paths inclusive_ms": 0.01318,
+        "World culling and opaque submission inclusive_ms": 1.01814,
+        "World render submission inclusive_ms": 18.493727,
+        "fixed_wall_ms": 0.322813,
+        "frame": 530,
+        "frame_wall_ms": 19.090498,
+        "render_cpu_ms": 18.556068
+      }
+    ]
+  }
+]

@@ -1,0 +1,10 @@
+Second rig recovery: root 1.2568 up 1.0000 speed 0.0000 contacts 4/4, reason measured supported physical standing
+Second rig recovery: root 1.2566 up 1.0000 speed 0.0000 contacts 4/4, reason measured supported physical standing
+Step comparison: lift 0.1771 m, stance travel 0.1853 m, landings 1, denied root 0.1869 m, allowed root 1.3810 m
+Moving support: root travel 0.29903 m, relative speed 0.00004 m/s, height 1.39819 m, supports 4/4
+Slope: height 1.39848 up 0.99999 speed 0.00000 contacts 4/4
+Radial: height 1.39665 up 0.99999 speed 0.00437 contacts 1/1
+Radial status 2 settled 1.00000 root speed 0.00358
+Free-flight internal-effort residual: linear 2.8846739e-06 kg m/s, angular 0.0408133939 kg m2/s
+FAIL no-contact powered internal articulation does not manufacture external momentum
+Physical balance controller development: 87 checks, 1 failures

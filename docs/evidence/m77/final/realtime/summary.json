@@ -1,0 +1,119 @@
+{
+  "retained_frames": 120,
+  "frame_interval_ms": {
+    "median": 12.964621000000001,
+    "p95": 14.628911,
+    "max": 16.724503
+  },
+  "mean_interval_fps": 76.35327237173962,
+  "fixed_scope_ms": {
+    "median": 0.38615900000000003,
+    "p95": 0.467119,
+    "max": 0.611421
+  },
+  "discarded_seconds_in_retained_frames": 0,
+  "cap_reached_in_retained_frames": 0,
+  "profiler_diagnostics": {
+    "dropped_events": 0,
+    "exhausted_labels": 0,
+    "exhausted_nodes": 0,
+    "exhausted_threads": 0,
+    "incomplete_scopes": 0,
+    "open_scopes": 0,
+    "truncated_records": 0,
+    "gpu_dropped": 0,
+    "nested_frames": 0
+  },
+  "spikes": [
+    {
+      "id": 1,
+      "work_ms": 297.252403,
+      "largest_scopes": [
+        {
+          "name": "Host startup",
+          "ms": 190.546396
+        },
+        {
+          "name": "World build",
+          "ms": 63.40924
+        },
+        {
+          "name": "Resource load",
+          "ms": 6.585243
+        },
+        {
+          "name": "Resource decode",
+          "ms": 6.158342
+        },
+        {
+          "name": "Resource load",
+          "ms": 2.196901
+        },
+        {
+          "name": "Resource load",
+          "ms": 2.130944
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "work_ms": 1089.418845,
+      "largest_scopes": [
+        {
+          "name": "Play frame",
+          "ms": 1089.098276
+        },
+        {
+          "name": "World render submission",
+          "ms": 872.586563
+        },
+        {
+          "name": "Main camera",
+          "ms": 581.736663
+        },
+        {
+          "name": "World culling and opaque submission",
+          "ms": 581.626387
+        },
+        {
+          "name": "Shadow pass submission",
+          "ms": 290.661772
+        },
+        {
+          "name": "World culling and opaque submission",
+          "ms": 290.474808
+        }
+      ]
+    },
+    {
+      "id": 242,
+      "work_ms": 74.598483,
+      "largest_scopes": [
+        {
+          "name": "Play frame",
+          "ms": 74.536177
+        },
+        {
+          "name": "World render submission",
+          "ms": 58.896083
+        },
+        {
+          "name": "Main camera",
+          "ms": 58.468034
+        },
+        {
+          "name": "World culling and opaque submission",
+          "ms": 41.392491
+        },
+        {
+          "name": "Water boundary upload",
+          "ms": 17.035749
+        },
+        {
+          "name": "Runtime UI drawing",
+          "ms": 14.619209
+        }
+      ]
+    }
+  ]
+}

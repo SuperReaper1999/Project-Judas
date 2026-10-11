@@ -1,0 +1,28 @@
+FAIL actual dynamic root and mass reach physical standing
+FAIL success requires sustained measured physical standing
+FAIL actual dynamic root and mass reach physical standing
+FAIL success requires sustained measured physical standing
+FAIL actual dynamic root and mass reach physical standing
+FAIL success requires sustained measured physical standing
+FAIL actual dynamic root and mass reach physical standing
+FAIL success requires sustained measured physical standing
+FAIL actual dynamic root and mass reach physical standing
+FAIL success requires sustained measured physical standing
+Second rig recovery: root 0.1799 up 0.0004 speed 0.0000 contacts 3/3, reason physical standing deadline exceeded
+FAIL actual dynamic root and mass reach physical standing
+FAIL success requires sustained measured physical standing
+Second rig recovery: root 0.1792 up 0.0003 speed 0.0000 contacts 3/3, reason physical standing deadline exceeded
+FAIL actual dynamic root and mass reach physical standing
+FAIL success requires sustained measured physical standing
+FAIL actual step extends measured physical recovery envelope
+FAIL touchdown requires returned solver contact
+FAIL post-step physical standing settles before success
+Step comparison: lift 0.3968 m, stance travel 0.7873 m, landings 0, denied root 0.2086 m, allowed root 0.1475 m
+Moving support: root travel 0.30080 m, relative speed 0.00001 m/s, height 1.39873 m, supports 4/4
+Slope: height 1.40209 up 0.99869 speed 0.00000 contacts 4/4
+Radial: height 1.39665 up 0.99999 speed 0.00437 contacts 1/1
+Radial status 2 settled 1.00000 root speed 0.00358
+FAIL restored in-progress physical recovery continues to actual standing
+Free-flight internal-effort residual: linear 1.35979935e-05 kg m/s, angular 0.123630673 kg m2/s
+FAIL no-contact powered internal articulation does not manufacture external momentum
+Physical balance controller development: 87 checks, 19 failures

@@ -1,0 +1,11 @@
+﻿{
+    "label":  "cold-recovery-write",
+    "exitcode":  0,
+    "command":  "C:\\JudasValidation\\M77TestBin\\judas_balance_lab_tests.exe",
+    "arguments":  [
+                      "C:\\JudasValidation\\M77Results\\cold-recovery-",
+                      "cold-recovery-write"
+                  ],
+    "cwd":  "C:\\JudasValidation\\Source",
+    "seconds":  2.1488424999999998
+}

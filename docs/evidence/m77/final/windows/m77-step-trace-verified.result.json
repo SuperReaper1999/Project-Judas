@@ -1,0 +1,11 @@
+﻿{
+    "label":  "step-trace-verified",
+    "exitcode":  1,
+    "command":  "C:\\JudasValidation\\M77TestBin\\judas_balance_lab_tests.exe",
+    "arguments":  [
+                      "C:\\JudasValidation\\M77Results\\step-trace-verified",
+                      "step-trace"
+                  ],
+    "cwd":  "C:\\JudasValidation\\Source",
+    "seconds":  3.5568033999999997
+}

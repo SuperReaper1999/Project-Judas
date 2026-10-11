@@ -1,0 +1,11 @@
+﻿{
+    "label":  "lab-radial",
+    "exitcode":  0,
+    "command":  "C:\\JudasValidation\\M77TestBin\\judas_balance_lab_tests.exe",
+    "arguments":  [
+                      "C:\\JudasValidation\\M77Results\\radial",
+                      "radial"
+                  ],
+    "cwd":  "C:\\JudasValidation\\Source",
+    "seconds":  2.6698999
+}

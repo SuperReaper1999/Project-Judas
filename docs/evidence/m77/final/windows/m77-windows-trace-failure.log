@@ -1,0 +1,10 @@
+Copy-Item : Cannot find path 'C:\JudasValidation\M77Results\step-trace\step-trace.jsonl' because 
+it does not exist.
+At C:\JudasValidation\m77-step-trace.ps1:16 char:2
++  Copy-Item "$root\M77Results\step-trace\step-trace.jsonl" "$receipt\m ...
++  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : ObjectNotFound: (C:\JudasValidat...tep-trace.jsonl:String) [Copy-It 
+   em], ItemNotFoundException
+    + FullyQualifiedErrorId : PathNotFound,Microsoft.PowerShell.Commands.CopyItemCommand
+ 
+

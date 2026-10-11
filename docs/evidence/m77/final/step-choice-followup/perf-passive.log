@@ -1,0 +1,21 @@
+Renderer fragment texture units: 32 (material path uses 12)
+PASS actual GL host: 
+PASS normal project loads: 
+PASS logical project controls: 
+PASS normal authored/captured scene: 
+PASS normal immutable assets and world publish: 
+PASS ordinary benchmark game starts
+PASS benchmark explicit passive authority
+PASS benchmark explicit passive authority
+PASS benchmark explicit passive authority
+PASS benchmark explicit passive authority
+ACTOR 10 no controller
+ACTOR 11 no controller
+ACTOR 12 no controller
+ACTOR 13 no controller
+ACTOR 10 no controller
+PASS bounded profiler records representative workload without dropped events
+PASS ordinary lab callback health matches deliberate fault policy
+PASS real final pose/skinning and diagnostic rendering path executes
+PASS Stop destroys the owned runtime world
+SUMMARY 14 checks 0 failures

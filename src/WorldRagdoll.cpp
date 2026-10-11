@@ -64,6 +64,7 @@ bool CaptureActualArticulationPose(const Skeleton& skeleton,const SkeletalPose& 
 }
 }
 bool RuntimeWorld::ConfigurePhysicalAnimation(EntityId id,const std::optional<PhysicalAnimationSettings>& settings,std::string& error){
+    if(PhysicalBalanceOwnsJoints(id)){error="cancel balance before replacing physical-animation actuator configuration";return false;}
     const auto* definition=RuntimeDefinition(id);auto* animation=RuntimeAnimation(id);
     if(!definition||!definition->ragdoll||!animation||!animation->asset){error="physical animation needs a ready animated ragdoll mapping";return false;}
     if(settings){if(!ValidPhysicalAnimationSettings(*settings,error))return false;std::vector<int> mapping;
@@ -85,7 +86,7 @@ bool RuntimeWorld::ConfigurePhysicalAnimation(EntityId id,const std::optional<Ph
     if(!settings||!settings->enabled){PhysicalAnimationRequest request;state.pending=request;}
     return true;
 }
-bool RuntimeWorld::RequestPhysicalAnimation(EntityId id,const PhysicalAnimationRequest& request,std::string& error){
+bool RuntimeWorld::RequestPhysicalAnimation(EntityId id,const PhysicalAnimationRequest& request,std::string& error,bool preserveBalanceRequest){
     if(!ValidPhysicalAnimationRequest(request,error))return false;
     const auto* definition=RuntimeDefinition(id);auto* animation=RuntimeAnimation(id);
     if(!definition||!definition->ragdoll||!definition->ragdoll->enabled||!animation||!animation->asset||!definition->animation->enabled||definition->body){error="physical authority needs an enabled ready animated ragdoll mapping without a separate root collider";return false;}
@@ -119,6 +120,7 @@ bool RuntimeWorld::RequestPhysicalAnimation(EntityId id,const PhysicalAnimationR
         auto path=m_physics.SweepCapsuleMotion(motor->settings.radius,motor->settings.halfHeight,start,p.rotation,displacement,false,0,1,&filter,motor->settings.collisionLayer,motor->settings.collisionMask);
         if(path.hit&&path.distance+motor->settings.skin<glm::length(displacement)){error="physical return refused: requested motor placement path is blocked";return false;}
     }
+    if(!preserveBalanceRequest)CancelPhysicalBalance(id);
     m_physicalAnimations[id].pending=request;return true;
 }
 PhysicalAnimationState RuntimeWorld::PhysicalAnimationSnapshot(EntityId id)const{
@@ -152,7 +154,7 @@ void RuntimeWorld::PreparePhysicalAnimations(float dt){
         if(!definition->ragdoll->enabled||!definition->animation->enabled){std::string error;LeaveRagdoll(id,0,error);state.pending.reset();continue;}
         if(state.pending){auto request=*state.pending;state.pending.reset();std::string error;
             // Revalidate at publication: another callback may have moved geometry.
-            if(!RequestPhysicalAnimation(id,request,error)){state.pending.reset();state.diagnostic=error;continue;}state.pending.reset();
+            if(!RequestPhysicalAnimation(id,request,error,true)){state.pending.reset();state.diagnostic=error;continue;}state.pending.reset();
             const bool wantPartial=request.mode==PhysicalAnimationMode::Partial;
             auto articulation=m_ragdolls.find(id);
             const bool topologyChange=articulation!=m_ragdolls.end()&&(articulation->second.partial!=wantPartial||state.rebuild);
@@ -200,6 +202,7 @@ void RuntimeWorld::PreparePhysicalAnimations(float dt){
                 else {m_physics.SetLinearVelocity(mapped.body,glm::vec3(0));m_physics.SetAngularVelocity(mapped.body,glm::vec3(0));}
             }
         }
+        if(PhysicalBalanceOwnsJoints(id))continue; // M77 is the sole actuator owner.
         if(state.previousDriveTargets.size()!=instance.bodies.size())state.previousDriveTargets.assign(instance.bodies.size(),glm::quat(0,0,0,0));
         for(size_t i=0;i<instance.bodies.size();++i){auto& child=instance.bodies[i];if(!instance.dynamic[i]||child.parent<0||i>=regions.size()||regions[i]<0||!settings)continue;
             const auto& region=settings->regions[size_t(regions[i])];auto& parent=instance.bodies[size_t(child.parent)];PhysicalDriveObservation observation;observation.joint=state.mappedJointKeys[i];observation.region=region.id;
@@ -317,6 +320,7 @@ bool RuntimeWorld::EnterRagdoll(EntityId id,std::string& error){
 }
 bool RuntimeWorld::LeaveRagdoll(EntityId id,float seconds,std::string& error){
     if(!std::isfinite(seconds)||seconds<0||seconds>3600){error="invalid ragdoll return duration";return false;}
+    CancelPhysicalBalance(id);
     auto it=m_ragdolls.find(id);if(it==m_ragdolls.end())return true;
     auto instance=std::move(it->second);m_ragdolls.erase(it); // callbacks/destruction cannot see a half articulation
     if(auto physical=m_physicalAnimations.find(id);physical!=m_physicalAnimations.end()){physical->second.mode=PhysicalAnimationMode::Animation;physical->second.previousDriveTargets.clear();physical->second.observations.clear();physical->second.pending.reset();}
@@ -378,7 +382,7 @@ void RuntimeWorld::UpdateRagdolls(float dt){
                 if(!skeleton.affine.empty())local=glm::inverse(skeleton.affine.at(node))*local;
                 JointTransform actual;if(!DecomposeRigidPose(local,actual,error)){animation->error=error;valid=false;break;}
                 globals[node]=global;mask.push_back(node);
-                float weight=1;if(regions&&mappedIndex<regions->size()&&regions->at(mappedIndex)>=0)weight=definition->ragdoll->physicalAnimation->regions[size_t(regions->at(mappedIndex))].poseWeight;
+                float weight=1;if(!PhysicalBalanceOwnsJoints(id)&&regions&&mappedIndex<regions->size()&&regions->at(mappedIndex)>=0)weight=definition->ragdoll->physicalAnimation->regions[size_t(regions->at(mappedIndex))].poseWeight;
                 const auto& referenceLocal=pose.local[node];actual.translation=glm::mix(referenceLocal.translation,actual.translation,weight);actual.scale=glm::mix(referenceLocal.scale,actual.scale,weight);actual.rotation=glm::normalize(glm::slerp(referenceLocal.rotation,actual.rotation,weight));pose.local[node]=actual;
             }else {const auto& t=pose.local[node];auto local=glm::translate(glm::mat4(1),t.translation)*glm::mat4_cast(t.rotation)*glm::scale(glm::mat4(1),t.scale);if(!skeleton.affine.empty())local=skeleton.affine.at(node)*local;globals[node]=skeleton.parents[node]<0?local:globals[skeleton.parents[node]]*local;}
         }

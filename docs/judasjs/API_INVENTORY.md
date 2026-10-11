@@ -1,6 +1,6 @@
 # Current public JudasJS inventory
 
-Current M76 candidate public module based on checkpoint `38d345883a541d4eb2faa43c321e940d223fce09`. M67 human authoring review remains deferred.
+Current M77 uncommitted candidate public module based on checkpoint `ab3dfbab13585680a9e6cc92fa318c8d95012979`. M67 human authoring review remains deferred.
 Each row is a runtime export/member (constructors and plain handle fields included).
 Native dispatcher operations are implementation details, not additional JS APIs.
 
@@ -188,7 +188,11 @@ Native dispatcher operations are implementation details, not additional JS APIs.
 | `NavigationAgent.stopped` | `navStopped` | [declaration](../judas.d.ts) | [reference](navigation.md) |
 | `Ragdoll` | JS wrapper/data | [declaration](../judas.d.ts) | [reference](animation-ragdolls.md) |
 | `Ragdoll.active` | `ragdollActive` | [declaration](../judas.d.ts) | [reference](animation-ragdolls.md) |
+| `Ragdoll.balanceDiagnostics` | `ragdollBalanceDiagnostics` | [declaration](../judas.d.ts) | [reference](animation-ragdolls.md) |
+| `Ragdoll.balanceState` | `ragdollBalanceState` | [declaration](../judas.d.ts) | [reference](animation-ragdolls.md) |
 | `Ragdoll.body` | `ragdollBody` | [declaration](../judas.d.ts) | [reference](animation-ragdolls.md) |
+| `Ragdoll.cancelBalance` | `ragdollBalanceCancel` | [declaration](../judas.d.ts) | [reference](animation-ragdolls.md) |
+| `Ragdoll.configureBalance` | `ragdollBalanceConfigure` | [declaration](../judas.d.ts) | [reference](animation-ragdolls.md) |
 | `Ragdoll.configurePhysical` | `ragdollPhysicalConfigure` | [declaration](../judas.d.ts) | [reference](animation-ragdolls.md) |
 | `Ragdoll.constructor` | JS wrapper/data | [declaration](../judas.d.ts) | [reference](animation-ragdolls.md) |
 | `Ragdoll.enabled` | `ragdollEnabled` | [declaration](../judas.d.ts) | [reference](animation-ragdolls.md) |
@@ -197,6 +201,7 @@ Native dispatcher operations are implementation details, not additional JS APIs.
 | `Ragdoll.leave` | `ragdollLeave` | [declaration](../judas.d.ts) | [reference](animation-ragdolls.md) |
 | `Ragdoll.physicalState` | `ragdollPhysicalState` | [declaration](../judas.d.ts) | [reference](animation-ragdolls.md) |
 | `Ragdoll.receiveContactEvents` | `ragdollContactEvents` | [declaration](../judas.d.ts) | [reference](animation-ragdolls.md) |
+| `Ragdoll.requestBalance` | `ragdollBalanceRequest` | [declaration](../judas.d.ts) | [reference](animation-ragdolls.md) |
 | `Ragdoll.setMode` | `ragdollMode` | [declaration](../judas.d.ts) | [reference](animation-ragdolls.md) |
 | `UIDocument` | JS wrapper/data | [declaration](../judas.d.ts) | [reference](ui.md) |
 | `UIDocument.constructor` | JS wrapper/data | [declaration](../judas.d.ts) | [reference](ui.md) |

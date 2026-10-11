@@ -1,0 +1,8 @@
+export failed
+At C:\JudasValidation\m77-final-validation.ps1:33 char:38
++  if($script:rows[-1].exitcode -ne 0){throw 'export failed'}
++                                      ~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (export failed:String) [], RuntimeException
+    + FullyQualifiedErrorId : export failed
+ 
+

@@ -1,0 +1,10 @@
+﻿{
+    "label":  "core-physical_animation",
+    "exitcode":  0,
+    "command":  "C:\\JudasValidation\\M77TestBin\\judas_physical_animation_tests.exe",
+    "arguments":  [
+
+                  ],
+    "cwd":  "C:\\JudasValidation\\Source",
+    "seconds":  0.335765
+}

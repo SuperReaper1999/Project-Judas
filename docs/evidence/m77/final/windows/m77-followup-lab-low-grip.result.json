@@ -1,0 +1,11 @@
+﻿{
+    "label":  "lab-low-grip",
+    "exitcode":  0,
+    "command":  "C:\\JudasValidation\\M77TestBinFollowup\\judas_balance_lab_tests.exe",
+    "arguments":  [
+                      "C:\\JudasValidation\\M77ResultsFollowup\\low-grip",
+                      "low-grip"
+                  ],
+    "cwd":  "C:\\JudasValidation\\Source",
+    "seconds":  4.1544191999999995
+}

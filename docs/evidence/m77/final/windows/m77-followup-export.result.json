@@ -1,0 +1,12 @@
+﻿{
+    "label":  "export",
+    "exitcode":  0,
+    "command":  "C:\\JudasValidation\\M77TestBinFollowup\\judas_export.exe",
+    "arguments":  [
+                      "C:\\JudasValidation\\Source\\projects\\balance_lab\\balance_lab.judasproj",
+                      "C:\\JudasValidation\\Packages\\M77PristineFollowup",
+                      "C:\\JudasValidation\\Build\\Release\\judas.exe"
+                  ],
+    "cwd":  "C:\\JudasValidation\\Source",
+    "seconds":  0.4970056
+}

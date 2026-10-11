@@ -23,6 +23,10 @@ struct Event {unsigned kind=0,node=0,parent=0,depth=0,mode=0;std::uint64_t threa
 struct Open {unsigned node=0,parent=0;std::uint64_t sequence=0,epoch=0,start=0,children=0,frame=0;bool wait=false;};
 struct Cache {std::uint64_t key=0;unsigned node=0;};
 struct Lane {
+    // Keep each lane's existing member initialization in a constructor call.
+    // Nested aggregate initialization of all lanes exhausts MSVC's compiler
+    // heap even with optimization disabled; this changes no buffer or value.
+    Lane() noexcept {}
     std::atomic<bool> claimed{false};std::uint64_t id=0;char name[64]{};
     std::array<Event,ProfileLimits::LaneEvents> events{};
     std::atomic<std::uint64_t> write{0},read{0};
