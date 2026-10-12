@@ -939,6 +939,10 @@ target_link_libraries(judas_impact_timing_tests PRIVATE judas_engine)
 add_executable(judas_impact_mesh_cost_tests tests/ImpactMeshCostTests.cpp)
 target_link_libraries(judas_impact_mesh_cost_tests PRIVATE judas_engine)
 judas_warnings(judas_impact_mesh_cost_tests)
+# Fast small bodies: impact spin-up must not throw; thin boxes must not cross tilted supports.
+add_executable(judas_impact_robustness_tests tests/ImpactRobustnessTests.cpp)
+target_link_libraries(judas_impact_robustness_tests PRIVATE judas_engine)
+judas_warnings(judas_impact_robustness_tests)
 
 # FTFT6: ordinary standalone application on a tiny authored project.
 add_executable(judas_project_application_tests
