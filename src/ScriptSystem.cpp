@@ -69,7 +69,7 @@ export class Entity {
  get sleeping(){return call('sleeping',this.id)}
  get physicalMaterial(){return call('physicalMaterialInfo',this.id)}
  setPhysicalMaterial(asset=null,parameters={}){return call('physicalMaterialSet',this.id,asset,parameters)}
- setSocket(target,joint,offset={}){return call('socketSet',this.id,target?.id??'0',joint,offset)}
+ setSocket(target,joint,offset={}){return target==null?call('socketClear',this.id):call('socketSet',this.id,target.id,joint,offset)}
  clearSocket(){return call('socketClear',this.id)}
  get classification(){return call('classification',this.id)}
  get animation(){return call('animationExists',this.id)?new Animation(this.id):null}
