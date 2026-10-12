@@ -1,0 +1,3 @@
+Skeletal initial observer: SIGSEGV at PhysicsWorld::IsBodyEnabled, caller main, after world.Destroy/PhysicsWorld::Shutdown. Corrected observer checks retired RuntimeWorld ownership.
+Composed initial observer: SIGSEGV at JobSystem::Submit called by WorldStreaming constructor; ResourceManager had no JobSystem. Corrected ordinary resource owner supplies two workers.
+First sandbox debugger could not ptrace; authorized rerun supplied the above stacks.

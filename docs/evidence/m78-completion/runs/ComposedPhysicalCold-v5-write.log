@@ -1,0 +1,38 @@
+PASS ordinary owned project
+PASS shared rig asset registered
+PASS original articulation fixture read
+PASS ordinary registered region scene
+PASS normal world construction
+PASS actual articulation active
+PASS ordinary region active
+PASS regional actual motor instantiated
+PASS region suspension requested
+PASS region fully suspended at capture boundary
+PASS suspended body handle cannot stay live
+PASS simple runtime actor excluded through public ownership
+PASS moving static anchor authored motion
+PASS moving static anchor authored motion
+PASS moving static anchor authored motion
+PASS moving static anchor authored motion
+PASS moving static anchor authored motion
+PASS moving static anchor authored motion
+PASS moving static anchor authored motion
+PASS moving static anchor authored motion
+PASS moving static anchor authored motion
+PASS moving static anchor authored motion
+PASS moving static anchor authored motion
+PASS moving static anchor authored motion
+PASS composed actual articulation/anchor/exclusion snapshot
+PASS observed physical body exists
+PASS observed physical body exists
+PASS observed physical body exists
+PASS observed physical body exists
+PASS observed physical body exists
+PASS real joint state available
+PASS observed physical body exists
+PASS observed physical body exists
+PASS observed physical body exists
+PASS observed physical body exists
+PASS observed physical body exists
+PASS real joint state available
+SUMMARY 37 checks / 0 failures

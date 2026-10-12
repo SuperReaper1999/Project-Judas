@@ -1,0 +1,138 @@
+{
+  "checks": [
+    {
+      "name": "effective owned module catalog published",
+      "passed": true
+    },
+    {
+      "name": "same owner fresh catalog",
+      "passed": true
+    },
+    {
+      "name": "same owner normal world",
+      "passed": true
+    },
+    {
+      "name": "same owner executes actual imported value",
+      "passed": true
+    },
+    {
+      "name": "same owner preserves independent script execution",
+      "passed": true
+    },
+    {
+      "name": "published dependency alias fresh catalog",
+      "passed": true
+    },
+    {
+      "name": "published dependency alias normal world",
+      "passed": true
+    },
+    {
+      "name": "published dependency alias executes actual imported value",
+      "passed": true
+    },
+    {
+      "name": "published dependency alias preserves independent script execution",
+      "passed": true
+    },
+    {
+      "name": "declared dependency relative path fresh catalog",
+      "passed": true
+    },
+    {
+      "name": "declared dependency relative path normal world",
+      "passed": true
+    },
+    {
+      "name": "declared dependency relative path executes actual imported value",
+      "passed": true
+    },
+    {
+      "name": "declared dependency relative path preserves independent script execution",
+      "passed": true
+    },
+    {
+      "name": "private alias denied fresh catalog",
+      "passed": true
+    },
+    {
+      "name": "private alias denied normal world",
+      "passed": true
+    },
+    {
+      "name": "private alias denied fails before imported code executes",
+      "passed": true
+    },
+    {
+      "name": "private alias denied preserves independent script execution",
+      "passed": true
+    },
+    {
+      "name": "private relative path denied fresh catalog",
+      "passed": true
+    },
+    {
+      "name": "private relative path denied normal world",
+      "passed": true
+    },
+    {
+      "name": "private relative path denied fails before imported code executes",
+      "passed": true
+    },
+    {
+      "name": "private relative path denied preserves independent script execution",
+      "passed": true
+    },
+    {
+      "name": "base cannot import mod fresh catalog",
+      "passed": true
+    },
+    {
+      "name": "base cannot import mod normal world",
+      "passed": true
+    },
+    {
+      "name": "base cannot import mod fails before imported code executes",
+      "passed": true
+    },
+    {
+      "name": "base cannot import mod preserves independent script execution",
+      "passed": true
+    },
+    {
+      "name": "undeclared owner denied fresh catalog",
+      "passed": true
+    },
+    {
+      "name": "undeclared owner denied normal world",
+      "passed": true
+    },
+    {
+      "name": "undeclared owner denied fails before imported code executes",
+      "passed": true
+    },
+    {
+      "name": "undeclared owner denied preserves independent script execution",
+      "passed": true
+    },
+    {
+      "name": "unregistered traversal denied fresh catalog",
+      "passed": true
+    },
+    {
+      "name": "unregistered traversal denied normal world",
+      "passed": true
+    },
+    {
+      "name": "unregistered traversal denied fails before imported code executes",
+      "passed": true
+    },
+    {
+      "name": "unregistered traversal denied preserves independent script execution",
+      "passed": true
+    }
+  ],
+  "failures": 0,
+  "scope": "QuickJS published dependency, private import, undeclared owner, base isolation and module fault isolation; not a security sandbox or package-store crash test"
+}

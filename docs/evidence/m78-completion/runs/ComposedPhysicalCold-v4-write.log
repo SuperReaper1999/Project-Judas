@@ -1,0 +1,10 @@
+PASS ordinary owned project
+PASS shared rig asset registered
+PASS original articulation fixture read
+PASS ordinary registered region scene
+PASS normal world construction
+PASS actual articulation active
+REGION region failed region region: session-owned/unsupported component on 1
+FAIL ordinary region active
+FAIL ordinary region active: 
+SUMMARY 8 checks / 2 failures

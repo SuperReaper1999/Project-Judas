@@ -1,0 +1,88 @@
+WARNHarfBuzz has a Meson port and tries to migrate all the other build systems to it, please consider using it as we might remove our cmake port soon.
+CMake Deprecation Warning at build/_deps/judas_freetype-src/CMakeLists.txt:113 (cmake_minimum_required):
+  Compatibility with CMake < 3.10 will be removed from a future version of
+  CMake.
+
+  Update the VERSION argument <min> value.  Or, use the <min>...<max> syntax
+  to tell CMake that the project requires at least <min> but has been updated
+  to work with policies introduced by <max> or earlier.
+
+
+-- Configuring done (1.2s)
+-- Generating done (0.9s)
+-- Build files have been written to: /home/conner/Documents/GitHub/Project-Judas/build
+[  0%] Built target judas_app_icon
+[  6%] Built target judas_icu_build
+[ 25%] Built target freetype
+[ 25%] Built target judas_quickjs
+[ 25%] Built target judas_glad
+[ 31%] Built target judas_navigation_backend
+[ 31%] Built target judas_audio_backend
+[ 31%] Built target judas_profiler
+[ 31%] Built target judas_materials
+[ 31%] Built target harfbuzz
+[100%] Built target judas_engine
+[100%] Built target judas_balance_lab_tests
+[  0%] Built target judas_app_icon
+[ 18%] Built target freetype
+[ 25%] Built target judas_icu_build
+[ 25%] Built target judas_quickjs
+[ 31%] Built target judas_navigation_backend
+[ 31%] Built target judas_glad
+[ 31%] Built target judas_profiler
+[ 31%] Built target judas_audio_backend
+[ 31%] Built target harfbuzz
+[ 31%] Built target judas_materials
+[100%] Built target judas_engine
+[100%] Built target judas_physical_animation_tests
+[  0%] Built target judas_app_icon
+[ 18%] Built target freetype
+[ 25%] Built target judas_icu_build
+[ 25%] Built target judas_quickjs
+[ 31%] Built target judas_navigation_backend
+[ 31%] Built target judas_glad
+[ 31%] Built target judas_profiler
+[ 31%] Built target judas_audio_backend
+[ 31%] Built target harfbuzz
+[ 31%] Built target judas_materials
+[100%] Built target judas_engine
+[100%] Building CXX object CMakeFiles/judas_world_persistence_tests.dir/tests/WorldPersistenceTests.cpp.o
+[100%] Linking CXX executable judas_world_persistence_tests
+[100%] Built target judas_world_persistence_tests
+[  0%] Built target judas_app_icon
+[ 18%] Built target freetype
+[ 25%] Built target judas_icu_build
+[ 25%] Built target judas_quickjs
+[ 31%] Built target judas_navigation_backend
+[ 31%] Built target judas_glad
+[ 31%] Built target judas_profiler
+[ 31%] Built target judas_audio_backend
+[ 31%] Built target harfbuzz
+[ 31%] Built target judas_materials
+[100%] Built target judas_engine
+[100%] Built target judas_character_motor_tests
+[  0%] Built target judas_app_icon
+[ 17%] Built target freetype
+[ 23%] Built target judas_icu_build
+[ 23%] Built target judas_quickjs
+[ 29%] Built target judas_navigation_backend
+[ 29%] Built target judas_glad
+[ 29%] Built target judas_profiler
+[ 29%] Built target judas_audio_backend
+[ 29%] Built target harfbuzz
+[ 29%] Built target judas_materials
+[ 94%] Built target judas_engine
+[100%] Linking CXX executable judas_mod_content_tests
+[100%] Built target judas_mod_content_tests
+[  0%] Built target judas_app_icon
+[ 18%] Built target freetype
+[ 25%] Built target judas_icu_build
+[ 25%] Built target judas_quickjs
+[ 31%] Built target judas_navigation_backend
+[ 31%] Built target judas_glad
+[ 31%] Built target judas_profiler
+[ 31%] Built target judas_audio_backend
+[ 31%] Built target harfbuzz
+[ 31%] Built target judas_materials
+[100%] Built target judas_engine
+[100%] Built target judas_impact_robustness_tests

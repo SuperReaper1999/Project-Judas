@@ -1,0 +1,182 @@
+{
+  "checks": [
+    {
+      "name": "ordinary owned project",
+      "passed": true
+    },
+    {
+      "name": "actual GL/async host",
+      "passed": true
+    },
+    {
+      "name": "ordinary skeletal asset registration",
+      "passed": true
+    },
+    {
+      "name": "independent late/new completion workers available",
+      "passed": true
+    },
+    {
+      "name": "initial real skeletal asset ready",
+      "passed": true
+    },
+    {
+      "name": "initial immutable skeleton identity",
+      "passed": true
+    },
+    {
+      "name": "ordinary authored articulation fixture",
+      "passed": true
+    },
+    {
+      "name": "normal shared-asset world",
+      "passed": true
+    },
+    {
+      "name": "two actual runtime consumers share first asset",
+      "passed": true
+    },
+    {
+      "name": "socket installed through normal identity validation",
+      "passed": true
+    },
+    {
+      "name": "initial resolved joint available",
+      "passed": true
+    },
+    {
+      "name": "socket consumes actual final joint pose",
+      "passed": true
+    },
+    {
+      "name": "shared IK configured on old hierarchy",
+      "passed": true
+    },
+    {
+      "name": "physical articulation uses actual old rig",
+      "passed": true
+    },
+    {
+      "name": "old mapped physical body exists",
+      "passed": true
+    },
+    {
+      "name": "real old decode held before publication",
+      "passed": true
+    },
+    {
+      "name": "invalidated in-flight asset cannot remain resolved on either consumer",
+      "passed": true
+    },
+    {
+      "name": "invalidated skeleton retires physical authority and old body handles",
+      "passed": true
+    },
+    {
+      "name": "pending skeleton cannot accept old IK target mapping",
+      "passed": true
+    },
+    {
+      "name": "unresolved socket retains last transform rather than fabricating a joint",
+      "passed": true
+    },
+    {
+      "name": "invalidation actually retires old GPU handle",
+      "passed": true
+    },
+    {
+      "name": "single same-length authored identity replacement fixture",
+      "passed": true
+    },
+    {
+      "name": "commodity importer independently confirms replacement content",
+      "passed": true
+    },
+    {
+      "name": "new replacement publishes while old decode remains held",
+      "passed": true
+    },
+    {
+      "name": "new immutable skeleton—not cached old source—published",
+      "passed": true
+    },
+    {
+      "name": "all actual consumers resolve new immutable asset",
+      "passed": true
+    },
+    {
+      "name": "resolved joint identity follows actual replacement",
+      "passed": true
+    },
+    {
+      "name": "removed socket identity does not attach to a replacement index",
+      "passed": true
+    },
+    {
+      "name": "old IK identity cannot silently remap to renamed root",
+      "passed": true
+    },
+    {
+      "name": "incompatible authored ragdoll mapping rejects new skeleton",
+      "passed": true
+    },
+    {
+      "name": "explicit new socket key can bind replacement",
+      "passed": true
+    },
+    {
+      "name": "replacement resolved joint available",
+      "passed": true
+    },
+    {
+      "name": "rebound socket follows new final pose",
+      "passed": true
+    },
+    {
+      "name": "late old skeletal completion discarded without overwriting new resource",
+      "passed": true
+    },
+    {
+      "name": "retained immutable old reference is not mutated in place",
+      "passed": true
+    },
+    {
+      "name": "malformed replacement visibly fails decode",
+      "passed": true
+    },
+    {
+      "name": "failed replacement cannot silently retain a live old skeleton",
+      "passed": true
+    },
+    {
+      "name": "malformed replacement diagnostic retained",
+      "passed": true
+    },
+    {
+      "name": "valid source recovers after failed replacement",
+      "passed": true
+    },
+    {
+      "name": "recovered source resolves both live consumers normally",
+      "passed": true
+    },
+    {
+      "name": "recovered original mapping can reenter physical authority",
+      "passed": true
+    },
+    {
+      "name": "recovered articulation does not alias retired body generation",
+      "passed": true
+    },
+    {
+      "name": "world teardown retires animation and articulation ownership",
+      "passed": true
+    },
+    {
+      "name": "teardown retires all fixture CPU/GPU residency",
+      "passed": true
+    }
+  ],
+  "failures": 0,
+  "scope": "Actual async GLB publication with sockets, shared IK, physical articulation, incompatible identity rejection and teardown; not all asset families or editor gestures"
+}

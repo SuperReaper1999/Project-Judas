@@ -1,0 +1,154 @@
+{
+  "checks": [
+    {
+      "name": "ordinary owned project",
+      "passed": true
+    },
+    {
+      "name": "shared rig asset registered",
+      "passed": true
+    },
+    {
+      "name": "original articulation fixture read",
+      "passed": true
+    },
+    {
+      "name": "ordinary registered region scene",
+      "passed": true
+    },
+    {
+      "name": "normal world construction",
+      "passed": true
+    },
+    {
+      "name": "actual articulation active",
+      "passed": true
+    },
+    {
+      "name": "ordinary region active",
+      "passed": true
+    },
+    {
+      "name": "regional actual motor instantiated",
+      "passed": true
+    },
+    {
+      "name": "region suspension requested",
+      "passed": true
+    },
+    {
+      "name": "region fully suspended at capture boundary",
+      "passed": true
+    },
+    {
+      "name": "suspended body handle cannot stay live",
+      "passed": true
+    },
+    {
+      "name": "simple runtime actor excluded through public ownership",
+      "passed": true
+    },
+    {
+      "name": "moving static anchor authored motion",
+      "passed": true
+    },
+    {
+      "name": "moving static anchor authored motion",
+      "passed": true
+    },
+    {
+      "name": "moving static anchor authored motion",
+      "passed": true
+    },
+    {
+      "name": "moving static anchor authored motion",
+      "passed": true
+    },
+    {
+      "name": "moving static anchor authored motion",
+      "passed": true
+    },
+    {
+      "name": "moving static anchor authored motion",
+      "passed": true
+    },
+    {
+      "name": "moving static anchor authored motion",
+      "passed": true
+    },
+    {
+      "name": "moving static anchor authored motion",
+      "passed": true
+    },
+    {
+      "name": "moving static anchor authored motion",
+      "passed": true
+    },
+    {
+      "name": "moving static anchor authored motion",
+      "passed": true
+    },
+    {
+      "name": "moving static anchor authored motion",
+      "passed": true
+    },
+    {
+      "name": "moving static anchor authored motion",
+      "passed": true
+    },
+    {
+      "name": "composed actual articulation/anchor/exclusion snapshot",
+      "passed": true
+    },
+    {
+      "name": "observed physical body exists",
+      "passed": true
+    },
+    {
+      "name": "observed physical body exists",
+      "passed": true
+    },
+    {
+      "name": "observed physical body exists",
+      "passed": true
+    },
+    {
+      "name": "observed physical body exists",
+      "passed": true
+    },
+    {
+      "name": "observed physical body exists",
+      "passed": true
+    },
+    {
+      "name": "real joint state available",
+      "passed": true
+    },
+    {
+      "name": "observed physical body exists",
+      "passed": true
+    },
+    {
+      "name": "observed physical body exists",
+      "passed": true
+    },
+    {
+      "name": "observed physical body exists",
+      "passed": true
+    },
+    {
+      "name": "observed physical body exists",
+      "passed": true
+    },
+    {
+      "name": "observed physical body exists",
+      "passed": true
+    },
+    {
+      "name": "real joint state available",
+      "passed": true
+    }
+  ],
+  "failures": 0,
+  "scope": "Fresh-process native participant composition with active articulation, moving static anchor, excluded runtime body and retained region; SaveService admission and OS durability are separate contracts"
+}

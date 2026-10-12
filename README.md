@@ -1010,7 +1010,7 @@ piloted, and the selected player view returns on release. See
 
 Native Windows VM builds and focused functional/editor/export checks have
 recorded bounded results; see [Windows build, SDK and export testing](docs/WINDOWS.md)
-and the [current M78 handoff](docs/M78_FINAL.md). Physical Windows GPU/input/audio
+and the [current M78 handoff](docs/M78_COMPLETION.md). Physical Windows GPU/input/audio
 acceptance remains outstanding. VM execution is not a hardware-performance gate.
 
 ### Linux requirements
@@ -1573,10 +1573,11 @@ current scripting API for all of them is [JUDASJS.md](docs/JUDASJS.md).
 | M74 (provisional) | Editor-time retarget profiles and clip baking | [M74.md](docs/M74.md) | `projects/retarget_lab` |
 | M75 (human accepted) | Finite local terrain sculpt/paint/fork/cook | [M75.md](docs/M75.md) | `projects/terrain_lab` |
 | M76 (provisional) | Optional local mod contracts, packages and terrain-capable kits | [M76.md](docs/M76.md), [modding guide](docs/MODDING.md) | `projects/modding_lab` |
-| M77 (human pending) | Default-off two-chain physical balance, bounded corrective steps and recovery | [M77.md](docs/M77.md), [current corrective handoff](docs/M78_FINAL.md) | `projects/balance_lab` |
+| M77 (human pending) | Default-off two-chain physical balance, bounded corrective steps and recovery | [M77.md](docs/M77.md), [M78 final audit handoff](docs/M78_COMPLETION.md) | `projects/balance_lab` |
 
-M78 remains a combined corrective candidate and incomplete audit, not another
-accepted feature milestone. New-format cold continuation passes do not repair
-missing historical snapshot bytes; legacy PBF settling, immediate streamed-motor
-query publication, excluded-dynamic-body save restoration and measured physics
-tails remain qualified in the final handoff.
+M78 has a [completed audit handoff](docs/M78_COMPLETION.md) with explicit coverage
+limits and unresolved defects; it is not comprehensive certification or new human
+validation. Streamed-motor metadata/tags and excluded-body restoration are corrected.
+Legacy PBF settling and missing historical cold-save data remain deferred, and
+fast curved-mesh CCD still has a recorded failure. New development uses
+`Experimental`; promotion to `Stable` requires explicit human acceptance.

@@ -1,0 +1,154 @@
+{
+  "checks": [
+    {
+      "name": "same ordinary project in fresh process",
+      "passed": true
+    },
+    {
+      "name": "exact saved scene decodes",
+      "passed": true
+    },
+    {
+      "name": "normal world construction",
+      "passed": true
+    },
+    {
+      "name": "fresh process restores actual participant state",
+      "passed": true
+    },
+    {
+      "name": "observed physical body exists",
+      "passed": true
+    },
+    {
+      "name": "observed physical body exists",
+      "passed": true
+    },
+    {
+      "name": "observed physical body exists",
+      "passed": true
+    },
+    {
+      "name": "observed physical body exists",
+      "passed": true
+    },
+    {
+      "name": "observed physical body exists",
+      "passed": true
+    },
+    {
+      "name": "real joint state available",
+      "passed": true
+    },
+    {
+      "name": "actual restored body transforms/momentum/joint endpoint match exactly",
+      "passed": true
+    },
+    {
+      "name": "excluded body does not resurrect beside mapped bodies",
+      "passed": true
+    },
+    {
+      "name": "restored articulation owns real mapped physics",
+      "passed": true
+    },
+    {
+      "name": "observed physical body exists",
+      "passed": true
+    },
+    {
+      "name": "observed physical body exists",
+      "passed": true
+    },
+    {
+      "name": "observed physical body exists",
+      "passed": true
+    },
+    {
+      "name": "observed physical body exists",
+      "passed": true
+    },
+    {
+      "name": "observed physical body exists",
+      "passed": true
+    },
+    {
+      "name": "real joint state available",
+      "passed": true
+    },
+    {
+      "name": "first three resumed physical steps match uninterrupted endpoints",
+      "passed": true
+    },
+    {
+      "name": "cold suspended region reactivates normally",
+      "passed": true
+    },
+    {
+      "name": "actual reconstructed regional motor retains velocity",
+      "passed": true
+    },
+    {
+      "name": "observed physical body exists",
+      "passed": true
+    },
+    {
+      "name": "observed physical body exists",
+      "passed": true
+    },
+    {
+      "name": "observed physical body exists",
+      "passed": true
+    },
+    {
+      "name": "observed physical body exists",
+      "passed": true
+    },
+    {
+      "name": "observed physical body exists",
+      "passed": true
+    },
+    {
+      "name": "real joint state available",
+      "passed": true
+    },
+    {
+      "name": "independent private rejected candidate prepared",
+      "passed": true
+    },
+    {
+      "name": "truncated articulation rejected before any live publication",
+      "passed": true
+    },
+    {
+      "name": "observed physical body exists",
+      "passed": true
+    },
+    {
+      "name": "observed physical body exists",
+      "passed": true
+    },
+    {
+      "name": "observed physical body exists",
+      "passed": true
+    },
+    {
+      "name": "observed physical body exists",
+      "passed": true
+    },
+    {
+      "name": "observed physical body exists",
+      "passed": true
+    },
+    {
+      "name": "real joint state available",
+      "passed": true
+    },
+    {
+      "name": "rejected private candidate preserves live physical and streamed state",
+      "passed": true
+    }
+  ],
+  "failures": 0,
+  "scope": "Fresh-process native participant composition with active articulation, moving static anchor, excluded runtime body and retained region; SaveService admission and OS durability are separate contracts"
+}

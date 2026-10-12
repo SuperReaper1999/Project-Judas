@@ -1,0 +1,39 @@
+PASS same ordinary project in fresh process
+PASS exact saved scene decodes
+PASS normal world construction
+PASS fresh process restores actual participant state
+PASS observed physical body exists
+PASS observed physical body exists
+PASS observed physical body exists
+PASS observed physical body exists
+PASS observed physical body exists
+PASS real joint state available
+PASS actual restored body transforms/momentum/joint endpoint match exactly
+PASS excluded body does not resurrect beside mapped bodies
+PASS restored articulation owns real mapped physics
+PASS observed physical body exists
+PASS observed physical body exists
+PASS observed physical body exists
+PASS observed physical body exists
+PASS observed physical body exists
+PASS real joint state available
+PASS first three resumed physical steps match uninterrupted endpoints
+MAX_CONTINUATION_ERROR 0
+PASS cold suspended region reactivates normally
+PASS actual reconstructed regional motor retains velocity
+PASS observed physical body exists
+PASS observed physical body exists
+PASS observed physical body exists
+PASS observed physical body exists
+PASS observed physical body exists
+PASS real joint state available
+PASS independent private rejected candidate prepared
+PASS truncated articulation rejected before any live publication
+PASS observed physical body exists
+PASS observed physical body exists
+PASS observed physical body exists
+PASS observed physical body exists
+PASS observed physical body exists
+PASS real joint state available
+PASS rejected private candidate preserves live physical and streamed state
+SUMMARY 37 checks / 0 failures

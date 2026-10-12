@@ -1,0 +1,42 @@
+{
+  "animation": {
+    "sha256": "e88494fb60644a61f5f2fbebda427c136e4419ea41f0a88ea4a5665968490b9d",
+    "version": 1
+  },
+  "articulation": {
+    "sha256": "bd794866ebf4f035500cb9c526c525b6f144c6165ad03242560313a67b363280",
+    "version": 4
+  },
+  "audio": {
+    "sha256": "af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc",
+    "version": 1
+  },
+  "contacts": {
+    "sha256": "ad2a8fe23f7c1c9d16b7bce1b6dab9a3050fe382fce9d3b8420fd28e2f0bcd38",
+    "version": 2
+  },
+  "entities": {
+    "sha256": "ce1d78b007d10c43c413aa810446fd353d5a67ebd19945b743aadb4447a4bbd2",
+    "version": 1
+  },
+  "liquid": {
+    "sha256": "5a0bfcbbd6b8715fdb73e8a7ad7363f34cf0214252719984e0a2b5b3c4ec14b9",
+    "version": 1
+  },
+  "motors": {
+    "sha256": "a209dda398f8207e104519bba1313d1cba98612ef5641711e134c761a145ec2a",
+    "version": 1
+  },
+  "navigation": {
+    "sha256": "df3f619804a92fdb4057192dc43dd748ea778adc52bc498ce80524c014b81119",
+    "version": 1
+  },
+  "scripts": {
+    "sha256": "df3f619804a92fdb4057192dc43dd748ea778adc52bc498ce80524c014b81119",
+    "version": 1
+  },
+  "sleep": {
+    "sha256": "e294b4a8e6d0bdd328a18db71d6df849465bb4cea4deb5165796cf199c63dc00",
+    "version": 1
+  }
+}

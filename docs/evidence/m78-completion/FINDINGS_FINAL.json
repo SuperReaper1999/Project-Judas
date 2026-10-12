@@ -1,0 +1,87 @@
+{
+  "subject": "f20cb40cc4ac3f9eb19357eabf4920578b594b6a",
+  "originalFindingInventory": "docs/evidence/m78/FINDINGS.json",
+  "originalFindingSHA256": "cd19f1f75f161473e8f944a059684ee7cbd15b1bcefa70793f8a2d1e6c749281",
+  "findings": [
+    {
+      "id": "CCD-CURVED-001",
+      "priority": "P1 in affected high-speed/curved-mesh envelope",
+      "status": "OPEN",
+      "result": "Fast curved-trough probe retains 24/24 crossings; separate from planar timing gate and repaired finite face/edge semantics.",
+      "evidence": "docs/evidence/impact-robustness-repair/performance.json",
+      "boundary": "Generic curved-mesh continuous collision/contact response; keep original thin shapes, mesh, speed, cadence and fidelity. Dedicated correction scope, no demo-specific clamps."
+    },
+    {
+      "id": "FLU-001",
+      "priority": "deferred numerical/contract review",
+      "status": "FAILED_UNCHANGED_DEFERRED",
+      "result": "Original legacy-PBF rotated settling deadline failed; no fluid code/research/threshold changes. M54/M55 quantity/surface systems are distinct.",
+      "evidence": "docs/evidence/m78/FINDINGS.json",
+      "boundary": "Separate accepted future review; no scope authorization from this audit."
+    },
+    {
+      "id": "LEG-001",
+      "priority": "documented historical compatibility limit",
+      "status": "PRESERVED_FAILURE",
+      "result": "Exact a106 snapshot lacks historical continuation state. New-format cold saves pass; cannot invent absent old state.",
+      "evidence": "docs/M78_COLD_CONTINUATION.md",
+      "boundary": "Explicit version/history limitation, not retuned test or falsely retroactive compatibility."
+    },
+    {
+      "id": "PHY-002",
+      "priority": "planar gate closed within measured workload; geometry tails still relevant",
+      "status": "SCOPED_GATE_PASS",
+      "result": "Same preserved four-rig planar workload p95 3.639378/max15.676195 ms; original and intermediate misses preserved. No causal single-change or universal performance claim.",
+      "evidence": "docs/evidence/m78-completion/PERFORMANCE.json",
+      "boundary": "Keep curved-trough CCD failure and all other performance envelopes independent."
+    },
+    {
+      "id": "TST-001",
+      "priority": "resource footprint limitation",
+      "status": "ORIGINAL_TEST_ASSUMPTION_ADJUDICATED",
+      "result": "Retained snapshot budget pins oversized snapshots intentionally; capacity-correct controls retire. No deadlock established; footprint/fault matrix remains partial.",
+      "evidence": "docs/evidence/m78/FINDINGS.json"
+    },
+    {
+      "id": "LIF-001",
+      "status": "CORRECTED_SCOPED_LINUX",
+      "result": "Actual streamed motor classification/enabled/shape publication repaired; subsequent public/physical composition receipts retained.",
+      "evidence": "docs/M78_LIFECYCLE_CLOSURE.md"
+    },
+    {
+      "id": "LIF-002",
+      "status": "CORRECTED_SCOPED_LINUX",
+      "result": "Excluded ordinary actor no longer produces an orphan sleep restoration record; mapped required articulation ownership preserved. New final composition confirms absent excluded owner.",
+      "evidence": "docs/evidence/m78-completion/artifacts/composed/RESULT-read.json"
+    },
+    {
+      "id": "LIF-003",
+      "status": "CORRECTED_SCOPED_LINUX",
+      "result": "Runtime tag mutation updates actual query-capsule classification; original 20/5 failure retained separately from later passing correction.",
+      "evidence": "docs/evidence/m78-next-risk/README.md"
+    },
+    {
+      "id": "AUDIT-COVERAGE",
+      "priority": "verification backlog",
+      "status": "EXPLICIT_PARTIAL_COVERAGE",
+      "result": "Per-member/all-field/input-space proof, 58 original briefs, OS crash/resource races and full editor/hardware gestures remain gaps. Audit handoff complete; certification unclaimed.",
+      "evidence": "docs/evidence/m78-completion/REMAINING_COVERAGE.md"
+    },
+    {
+      "id": "WINDOWS-FINAL",
+      "status": "INFORMATIONAL_NONBLOCKING_UNEXECUTED",
+      "result": "Existing VM win10 powered off at final preflight; new completion probes Linux-only. Older native receipts keep own sources/scopes. Physical hardware remains outstanding.",
+      "evidence": "docs/evidence/m78-completion/runs/windows-preflight.log"
+    }
+  ],
+  "otherOriginalDispositions": {
+    "PHY-001": "corrected free-body momentum envelope, later fast-spin fallback retained; constrained dynamics approximate",
+    "PERF-001": "source-rank construction correction checkpointed, original timings preserved",
+    "WORK-001": "explicit owned dependent-navigation rebuild added; stale rejection remains",
+    "DOC-001": "current README/architecture/M78 landing reconciled; historical prose labeled",
+    "REQ-001": "M77 recovered, original missing-at-time observation preserved; other 58 briefs remain unavailable",
+    "ENV-001": "historical guest limitations remain, current VM off/new probes unexecuted",
+    "OBS-001": "invalid audit observer declaration corrected, not product failure",
+    "OBS-002": "original prerequisites/source assets unavailable in some copies; exact successful prerequisite receipts retained"
+  }
+}

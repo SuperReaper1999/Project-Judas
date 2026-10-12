@@ -1,0 +1,46 @@
+Renderer fragment texture units: 32 (material path uses 12)
+PASS ordinary owned project
+PASS actual GL/async host
+PASS ordinary skeletal asset registration
+PASS independent late/new completion workers available
+PASS initial real skeletal asset ready
+PASS initial immutable skeleton identity
+PASS ordinary authored articulation fixture
+PASS normal shared-asset world
+PASS two actual runtime consumers share first asset
+PASS socket installed through normal identity validation
+PASS initial resolved joint available
+PASS socket consumes actual final joint pose
+PASS shared IK configured on old hierarchy
+PASS physical articulation uses actual old rig
+PASS old mapped physical body exists
+PASS real old decode held before publication
+PASS invalidated in-flight asset cannot remain resolved on either consumer
+PASS invalidated skeleton retires physical authority and old body handles
+PASS pending skeleton cannot accept old IK target mapping
+PASS unresolved socket retains last transform rather than fabricating a joint
+PASS invalidation actually retires old GPU handle
+PASS single same-length authored identity replacement fixture
+PASS commodity importer independently confirms replacement content
+PASS new replacement publishes while old decode remains held
+PASS new immutable skeleton—not cached old source—published
+PASS all actual consumers resolve new immutable asset
+PASS resolved joint identity follows actual replacement
+PASS removed socket identity does not attach to a replacement index
+PASS old IK identity cannot silently remap to renamed root
+PASS incompatible authored ragdoll mapping rejects new skeleton
+PASS explicit new socket key can bind replacement
+PASS replacement resolved joint available
+PASS rebound socket follows new final pose
+PASS late old skeletal completion discarded without overwriting new resource
+PASS retained immutable old reference is not mutated in place
+PASS malformed replacement visibly fails decode
+PASS failed replacement cannot silently retain a live old skeleton
+PASS malformed replacement diagnostic retained
+PASS valid source recovers after failed replacement
+PASS recovered source resolves both live consumers normally
+PASS recovered original mapping can reenter physical authority
+PASS recovered articulation does not alias retired body generation
+PASS world teardown retires animation and articulation ownership
+PASS teardown retires all fixture CPU/GPU residency
+SUMMARY 44 checks / 0 failures

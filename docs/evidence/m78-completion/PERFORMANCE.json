@@ -1,0 +1,72 @@
+{
+  "rows": [
+    {
+      "case": "box-1",
+      "steps": 900,
+      "hz": 60,
+      "rigBodies": 13,
+      "meshTriangles": 0,
+      "medianMs": 0.151207,
+      "p95Ms": 0.242157,
+      "maxMs": 2.312788,
+      "first120MaxMs": 2.312788,
+      "contactRows": 13801,
+      "ccdIterations": 941,
+      "ccdLimits": 0,
+      "minimumBoneCenterY": 0.0493287928,
+      "sleeping": 13
+    },
+    {
+      "case": "box-4",
+      "steps": 900,
+      "hz": 60,
+      "rigBodies": 52,
+      "meshTriangles": 0,
+      "medianMs": 0.616769,
+      "p95Ms": 0.927804,
+      "maxMs": 10.271547,
+      "first120MaxMs": 10.271547,
+      "contactRows": 55204,
+      "ccdIterations": 3764,
+      "ccdLimits": 0,
+      "minimumBoneCenterY": 0.0493287928,
+      "sleeping": 52
+    },
+    {
+      "case": "mesh-1",
+      "steps": 900,
+      "hz": 60,
+      "rigBodies": 13,
+      "meshTriangles": 8192,
+      "medianMs": 0.18158,
+      "p95Ms": 0.376343,
+      "maxMs": 6.073886,
+      "first120MaxMs": 6.073886,
+      "contactRows": 15677,
+      "ccdIterations": 2248,
+      "ccdLimits": 0,
+      "minimumBoneCenterY": 0.0489002839,
+      "sleeping": 0
+    },
+    {
+      "case": "mesh-4",
+      "steps": 900,
+      "hz": 60,
+      "rigBodies": 52,
+      "meshTriangles": 8192,
+      "medianMs": 0.674771,
+      "p95Ms": 3.639378,
+      "maxMs": 15.676195,
+      "first120MaxMs": 15.676195,
+      "contactRows": 56576,
+      "ccdIterations": 18127,
+      "ccdLimits": 0,
+      "minimumBoneCenterY": 0.0447216108,
+      "sleeping": 26
+    }
+  ],
+  "platform": "native Linux host; offscreen presentation",
+  "gateMs": 16.67,
+  "fourRigP95Pass": true,
+  "note": "Same preserved fixture, 900 fixed steps per case at 60 Hz. Maxima and CCD budgets retained. No Windows VM performance gate."
+}

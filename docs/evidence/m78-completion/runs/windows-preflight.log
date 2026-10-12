@@ -1,0 +1,3 @@
+2026-10-13 native Windows best-effort preflight
+virsh -c qemu:///system list --all: win10 shut off
+No VM configuration/start/disk change. New completion probes not executed on Windows; nonblocking.

@@ -1,0 +1,54 @@
+script asset=11111111111111111111111111111111 entity=1 slot=1 module: ReferenceError: unregistered script import: 
+
+script asset=11111111111111111111111111111111 entity=1 slot=1 module: ReferenceError: unpublished cross-owner script import: Assets/dep/private.js
+
+script asset=11111111111111111111111111111111 entity=1 slot=1 module: ReferenceError: unregistered script import: 
+
+script asset=11111111111111111111111111111111 entity=1 slot=1 module: ReferenceError: unregistered script import: 
+
+script asset=11111111111111111111111111111111 entity=1 slot=1 module: ReferenceError: unregistered script import: secret.js
+
+PASS effective owned module catalog published
+PASS same owner fresh catalog
+PASS same owner normal world
+PASS same owner executes actual imported value
+PASS same owner preserves independent script execution
+PASS published dependency alias fresh catalog
+PASS published dependency alias normal world
+PASS published dependency alias executes actual imported value
+PASS published dependency alias preserves independent script execution
+PASS declared dependency relative path fresh catalog
+PASS declared dependency relative path normal world
+PASS declared dependency relative path executes actual imported value
+PASS declared dependency relative path preserves independent script execution
+PASS private alias denied fresh catalog
+PASS private alias denied normal world
+PASS private alias denied fails before imported code executes
+PASS private alias denied preserves independent script execution
+DIAGNOSTIC private alias denied: ReferenceError: unregistered script import: 
+
+PASS private relative path denied fresh catalog
+PASS private relative path denied normal world
+PASS private relative path denied fails before imported code executes
+PASS private relative path denied preserves independent script execution
+DIAGNOSTIC private relative path denied: ReferenceError: unpublished cross-owner script import: Assets/dep/private.js
+
+PASS base cannot import mod fresh catalog
+PASS base cannot import mod normal world
+PASS base cannot import mod fails before imported code executes
+PASS base cannot import mod preserves independent script execution
+DIAGNOSTIC base cannot import mod: ReferenceError: unregistered script import: 
+
+PASS undeclared owner denied fresh catalog
+PASS undeclared owner denied normal world
+PASS undeclared owner denied fails before imported code executes
+PASS undeclared owner denied preserves independent script execution
+DIAGNOSTIC undeclared owner denied: ReferenceError: unregistered script import: 
+
+PASS unregistered traversal denied fresh catalog
+PASS unregistered traversal denied normal world
+PASS unregistered traversal denied fails before imported code executes
+PASS unregistered traversal denied preserves independent script execution
+DIAGNOSTIC unregistered traversal denied: ReferenceError: unregistered script import: secret.js
+
+SUMMARY 33 checks / 0 failures

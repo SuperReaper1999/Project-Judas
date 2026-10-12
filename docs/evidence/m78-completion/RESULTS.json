@@ -1,0 +1,879 @@
+{
+  "checkpoint": "f20cb40cc4ac3f9eb19357eabf4920578b594b6a",
+  "archiveSHA256": "8f158e502de3dd0380af526acd32c143afeb351b720e33db73b381c9635f1c72",
+  "binaries": {
+    "ModImports": {
+      "sha256": "158eb695a83aad71b55d7f88296dd2638d9c19ced06801fba84f5abe51fe82f1",
+      "sourceSHA256": "c4d82a9f047b96d95e243b1c486ceac9809336444d6005dd6d88b5ff2b534f47",
+      "objectSHA256": "831a8c8c51e81b92e174bff00792d73f31a1aaa7af02d9a202c678af51fc0a6b"
+    },
+    "SkeletalDependencies": {
+      "sha256": "f97a0aeda0d97646a49b0b249ca31013ea1a7859803e17588d14718d8d3abdb8",
+      "sourceSHA256": "083502aab4690313c9455995fce5ea2b9cd70126680a93f02f792e5cb8948f5f",
+      "objectSHA256": "17539715d9467a643ed8480322e875f6bebc81ac58508e5f946b6d4556bad30d"
+    },
+    "ComposedPhysicalCold": {
+      "sha256": "2cd3e54ff37acebe72fd96b7d1d0e6f04d0c65a1f3992c5655a3d77ef0f4d407",
+      "sourceSHA256": "e75171e7c5b9d2e8272c55501dc4ec99435ba6e6e30c2fd9a3cbdc6fba3392a4",
+      "objectSHA256": "ad3a31546b5b65977c7a02260554804ab9a5a260ec76c7f47e75db88ed31fb76"
+    },
+    "judas_world_persistence_tests": {
+      "sha256": "5c26426af7d749fd7b1ea9536480a87a9d6e7248f424fb4eb36d3cddffb83451"
+    },
+    "judas_character_motor_tests": {
+      "sha256": "d3a491b5d79f7d6eae42f747a7bb8c7362071f8c89ffd25e6e472b4c370ed1ac"
+    },
+    "judas_physical_animation_tests": {
+      "sha256": "9a6dae8ba3aa5fd51777a916f3aa5b9a10d23ef4d21f1060d79d2153f763658d"
+    },
+    "judas_impact_robustness_tests": {
+      "sha256": "5ec2485986f6314572a451b9ae1161c43590ba34c988d3236abafbb330c7ed77"
+    },
+    "judas_balance_lab_tests": {
+      "sha256": "7fb0c0c44594a31956212656b654bf91c1cd799464a0e51ce45dc094920fbfa0"
+    },
+    "mesh-performance": {
+      "sha256": "22e140b36132fe74598b468e7e7ac5f24c9a8e3f3494d55bfa11839bd5fbd52b",
+      "sourceSHA256": "f0ce020eb47613ae82bb2619cdc03e6b477782b744576be2b9a36a52f5079136",
+      "objectSHA256": "a05684dd55b90f757926c0b58eed48b06f8807bf3678b3a3a6a655b4a2b57715"
+    }
+  },
+  "runs": [
+    {
+      "name": "ModImports-v2-compile",
+      "command": [
+        "c++",
+        "-DDT_VIRTUAL_QUERYFILTER",
+        "-DMA_NO_ENCODING",
+        "-DMA_NO_GENERATION",
+        "-DMA_NO_RESOURCE_MANAGER",
+        "-I/home/conner/Documents/GitHub/Project-Judas/src",
+        "-I/home/conner/Documents/GitHub/Project-Judas/third_party/glad/include",
+        "-I/home/conner/Documents/GitHub/Project-Judas/third_party/miniaudio",
+        "-I/home/conner/Documents/GitHub/Project-Judas/third_party/verblib",
+        "-I/home/conner/Documents/GitHub/Project-Judas/build/_deps/judas_freetype-build/include",
+        "-I/home/conner/Documents/GitHub/Project-Judas/build/_deps/judas_freetype-src/include",
+        "-I/home/conner/Documents/GitHub/Project-Judas/build/_deps/judas_harfbuzz-src/src",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/third_party/quickhull",
+        "-isystem",
+        "/usr/include/SDL2",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/third_party/recastnavigation/Detour/Include",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/third_party/recastnavigation/DetourTileCache/Include",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/third_party/recastnavigation/DetourCrowd/Include",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/third_party/quickjs",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/build/unicode/icu/include",
+        "-O3",
+        "-DNDEBUG",
+        "-std=gnu++17",
+        "-Wall",
+        "-Wextra",
+        "-c",
+        "/home/conner/Documents/GitHub/Project-Judas/docs/evidence/m78-completion/probes/ModImports.cpp",
+        "-o",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-completion/ModImports.o"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+      "exitCode": 0,
+      "seconds": 8.452141334000771,
+      "logSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "summary": []
+    },
+    {
+      "name": "ModImports-v2-link",
+      "command": [
+        "/usr/bin/c++",
+        "-O3",
+        "-DNDEBUG",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-completion/ModImports.o",
+        "-o",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-completion/ModImports",
+        "libjudas_engine.a",
+        "libjudas_profiler.a",
+        "libjudas_app_icon.a",
+        "libjudas_materials.a",
+        "libjudas_profiler.a",
+        "/usr/lib/x86_64-linux-gnu/libSDL2.so",
+        "libjudas_glad.a",
+        "libjudas_audio_backend.a",
+        "libjudas_navigation_backend.a",
+        "libjudas_quickjs.a",
+        "-lm",
+        "_deps/judas_freetype-build/libfreetype.a",
+        "_deps/judas_harfbuzz-build/libharfbuzz.a",
+        "unicode/icu/lib/libicui18n.a",
+        "unicode/icu/lib/libicuuc.a",
+        "unicode/icu/lib/libicudata.a",
+        "-ldl"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas/build",
+      "exitCode": 0,
+      "seconds": 0.7450172590033617,
+      "logSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "summary": []
+    },
+    {
+      "name": "ModImports-v2-run",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-completion/ModImports",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-completion/ModImports-v2-fixture"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+      "exitCode": 0,
+      "seconds": 0.04871197699685581,
+      "logSHA256": "145e6a673894e2f5d64ac523044dcae286b15c167d7b684cf1a31706e6cf2aa4",
+      "summary": [
+        "SUMMARY 33 checks / 0 failures"
+      ]
+    },
+    {
+      "name": "SkeletalDependencies-v2-compile",
+      "command": [
+        "c++",
+        "-DDT_VIRTUAL_QUERYFILTER",
+        "-DMA_NO_ENCODING",
+        "-DMA_NO_GENERATION",
+        "-DMA_NO_RESOURCE_MANAGER",
+        "-I/home/conner/Documents/GitHub/Project-Judas/src",
+        "-I/home/conner/Documents/GitHub/Project-Judas/third_party/glad/include",
+        "-I/home/conner/Documents/GitHub/Project-Judas/third_party/miniaudio",
+        "-I/home/conner/Documents/GitHub/Project-Judas/third_party/verblib",
+        "-I/home/conner/Documents/GitHub/Project-Judas/build/_deps/judas_freetype-build/include",
+        "-I/home/conner/Documents/GitHub/Project-Judas/build/_deps/judas_freetype-src/include",
+        "-I/home/conner/Documents/GitHub/Project-Judas/build/_deps/judas_harfbuzz-src/src",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/third_party/quickhull",
+        "-isystem",
+        "/usr/include/SDL2",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/third_party/recastnavigation/Detour/Include",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/third_party/recastnavigation/DetourTileCache/Include",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/third_party/recastnavigation/DetourCrowd/Include",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/third_party/quickjs",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/build/unicode/icu/include",
+        "-O3",
+        "-DNDEBUG",
+        "-std=gnu++17",
+        "-Wall",
+        "-Wextra",
+        "-c",
+        "/home/conner/Documents/GitHub/Project-Judas/docs/evidence/m78-completion/probes/SkeletalDependencies.cpp",
+        "-o",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-completion/SkeletalDependencies.o"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+      "exitCode": 0,
+      "seconds": 10.98544917199979,
+      "logSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "summary": []
+    },
+    {
+      "name": "SkeletalDependencies-v2-link",
+      "command": [
+        "/usr/bin/c++",
+        "-O3",
+        "-DNDEBUG",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-completion/SkeletalDependencies.o",
+        "-o",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-completion/SkeletalDependencies",
+        "libjudas_engine.a",
+        "libjudas_profiler.a",
+        "libjudas_app_icon.a",
+        "libjudas_materials.a",
+        "libjudas_profiler.a",
+        "/usr/lib/x86_64-linux-gnu/libSDL2.so",
+        "libjudas_glad.a",
+        "libjudas_audio_backend.a",
+        "libjudas_navigation_backend.a",
+        "libjudas_quickjs.a",
+        "-lm",
+        "_deps/judas_freetype-build/libfreetype.a",
+        "_deps/judas_harfbuzz-build/libharfbuzz.a",
+        "unicode/icu/lib/libicui18n.a",
+        "unicode/icu/lib/libicuuc.a",
+        "unicode/icu/lib/libicudata.a",
+        "-ldl"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas/build",
+      "exitCode": 0,
+      "seconds": 0.8158742669984349,
+      "logSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "summary": []
+    },
+    {
+      "name": "SkeletalDependencies-v2-run",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-completion/SkeletalDependencies",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-completion/SkeletalDependencies-v2-fixture"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+      "exitCode": 0,
+      "seconds": 0.2636312899994664,
+      "logSHA256": "4ddfd0f8fa9e44188fc6b2d80b6f7aa4d08385d547b8193ec331e5b5e815f094",
+      "summary": [
+        "SUMMARY 44 checks / 0 failures"
+      ]
+    },
+    {
+      "name": "ComposedPhysicalCold-compile",
+      "command": [
+        "c++",
+        "-DDT_VIRTUAL_QUERYFILTER",
+        "-DMA_NO_ENCODING",
+        "-DMA_NO_GENERATION",
+        "-DMA_NO_RESOURCE_MANAGER",
+        "-I/home/conner/Documents/GitHub/Project-Judas/src",
+        "-I/home/conner/Documents/GitHub/Project-Judas/third_party/glad/include",
+        "-I/home/conner/Documents/GitHub/Project-Judas/third_party/miniaudio",
+        "-I/home/conner/Documents/GitHub/Project-Judas/third_party/verblib",
+        "-I/home/conner/Documents/GitHub/Project-Judas/build/_deps/judas_freetype-build/include",
+        "-I/home/conner/Documents/GitHub/Project-Judas/build/_deps/judas_freetype-src/include",
+        "-I/home/conner/Documents/GitHub/Project-Judas/build/_deps/judas_harfbuzz-src/src",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/third_party/quickhull",
+        "-isystem",
+        "/usr/include/SDL2",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/third_party/recastnavigation/Detour/Include",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/third_party/recastnavigation/DetourTileCache/Include",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/third_party/recastnavigation/DetourCrowd/Include",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/third_party/quickjs",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/build/unicode/icu/include",
+        "-O3",
+        "-DNDEBUG",
+        "-std=gnu++17",
+        "-Wall",
+        "-Wextra",
+        "-c",
+        "/home/conner/Documents/GitHub/Project-Judas/docs/evidence/m78-completion/probes/ComposedPhysicalCold.cpp",
+        "-o",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-completion/ComposedPhysicalCold.o"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+      "exitCode": 1,
+      "seconds": 3.9216179690010904,
+      "logSHA256": "78a3e2e817aa3c79970f987d64fa40d77f52b639d631fd2426f90c4d1cdc8992",
+      "summary": []
+    },
+    {
+      "name": "ComposedPhysicalCold-v2-compile",
+      "command": [
+        "c++",
+        "-DDT_VIRTUAL_QUERYFILTER",
+        "-DMA_NO_ENCODING",
+        "-DMA_NO_GENERATION",
+        "-DMA_NO_RESOURCE_MANAGER",
+        "-I/home/conner/Documents/GitHub/Project-Judas/src",
+        "-I/home/conner/Documents/GitHub/Project-Judas/third_party/glad/include",
+        "-I/home/conner/Documents/GitHub/Project-Judas/third_party/miniaudio",
+        "-I/home/conner/Documents/GitHub/Project-Judas/third_party/verblib",
+        "-I/home/conner/Documents/GitHub/Project-Judas/build/_deps/judas_freetype-build/include",
+        "-I/home/conner/Documents/GitHub/Project-Judas/build/_deps/judas_freetype-src/include",
+        "-I/home/conner/Documents/GitHub/Project-Judas/build/_deps/judas_harfbuzz-src/src",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/third_party/quickhull",
+        "-isystem",
+        "/usr/include/SDL2",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/third_party/recastnavigation/Detour/Include",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/third_party/recastnavigation/DetourTileCache/Include",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/third_party/recastnavigation/DetourCrowd/Include",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/third_party/quickjs",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/build/unicode/icu/include",
+        "-O3",
+        "-DNDEBUG",
+        "-std=gnu++17",
+        "-Wall",
+        "-Wextra",
+        "-c",
+        "/home/conner/Documents/GitHub/Project-Judas/docs/evidence/m78-completion/probes/ComposedPhysicalCold.cpp",
+        "-o",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-completion/ComposedPhysicalCold.o"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+      "exitCode": 0,
+      "seconds": 10.244578584999545,
+      "logSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "summary": []
+    },
+    {
+      "name": "ComposedPhysicalCold-v2-link",
+      "command": [
+        "/usr/bin/c++",
+        "-O3",
+        "-DNDEBUG",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-completion/ComposedPhysicalCold.o",
+        "-o",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-completion/ComposedPhysicalCold",
+        "libjudas_engine.a",
+        "libjudas_profiler.a",
+        "libjudas_app_icon.a",
+        "libjudas_materials.a",
+        "libjudas_profiler.a",
+        "/usr/lib/x86_64-linux-gnu/libSDL2.so",
+        "libjudas_glad.a",
+        "libjudas_audio_backend.a",
+        "libjudas_navigation_backend.a",
+        "libjudas_quickjs.a",
+        "-lm",
+        "_deps/judas_freetype-build/libfreetype.a",
+        "_deps/judas_harfbuzz-build/libharfbuzz.a",
+        "unicode/icu/lib/libicui18n.a",
+        "unicode/icu/lib/libicuuc.a",
+        "unicode/icu/lib/libicudata.a",
+        "-ldl"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas/build",
+      "exitCode": 0,
+      "seconds": 0.65507507899747,
+      "logSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "summary": []
+    },
+    {
+      "name": "ComposedPhysicalCold-write",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-completion/ComposedPhysicalCold",
+        "write",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-completion/composed-fixture"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+      "exitCode": -11,
+      "seconds": 0.18880187800095882,
+      "logSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "summary": []
+    },
+    {
+      "name": "ComposedPhysicalCold-v3-compile",
+      "command": [
+        "c++",
+        "-DDT_VIRTUAL_QUERYFILTER",
+        "-DMA_NO_ENCODING",
+        "-DMA_NO_GENERATION",
+        "-DMA_NO_RESOURCE_MANAGER",
+        "-I/home/conner/Documents/GitHub/Project-Judas/src",
+        "-I/home/conner/Documents/GitHub/Project-Judas/third_party/glad/include",
+        "-I/home/conner/Documents/GitHub/Project-Judas/third_party/miniaudio",
+        "-I/home/conner/Documents/GitHub/Project-Judas/third_party/verblib",
+        "-I/home/conner/Documents/GitHub/Project-Judas/build/_deps/judas_freetype-build/include",
+        "-I/home/conner/Documents/GitHub/Project-Judas/build/_deps/judas_freetype-src/include",
+        "-I/home/conner/Documents/GitHub/Project-Judas/build/_deps/judas_harfbuzz-src/src",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/third_party/quickhull",
+        "-isystem",
+        "/usr/include/SDL2",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/third_party/recastnavigation/Detour/Include",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/third_party/recastnavigation/DetourTileCache/Include",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/third_party/recastnavigation/DetourCrowd/Include",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/third_party/quickjs",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/build/unicode/icu/include",
+        "-O3",
+        "-DNDEBUG",
+        "-std=gnu++17",
+        "-Wall",
+        "-Wextra",
+        "-c",
+        "/home/conner/Documents/GitHub/Project-Judas/docs/evidence/m78-completion/probes/ComposedPhysicalCold.cpp",
+        "-o",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-completion/ComposedPhysicalCold.o"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+      "exitCode": 0,
+      "seconds": 10.149037839000812,
+      "logSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "summary": []
+    },
+    {
+      "name": "ComposedPhysicalCold-v3-link",
+      "command": [
+        "/usr/bin/c++",
+        "-O3",
+        "-DNDEBUG",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-completion/ComposedPhysicalCold.o",
+        "-o",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-completion/ComposedPhysicalCold",
+        "libjudas_engine.a",
+        "libjudas_profiler.a",
+        "libjudas_app_icon.a",
+        "libjudas_materials.a",
+        "libjudas_profiler.a",
+        "/usr/lib/x86_64-linux-gnu/libSDL2.so",
+        "libjudas_glad.a",
+        "libjudas_audio_backend.a",
+        "libjudas_navigation_backend.a",
+        "libjudas_quickjs.a",
+        "-lm",
+        "_deps/judas_freetype-build/libfreetype.a",
+        "_deps/judas_harfbuzz-build/libharfbuzz.a",
+        "unicode/icu/lib/libicui18n.a",
+        "unicode/icu/lib/libicuuc.a",
+        "unicode/icu/lib/libicudata.a",
+        "-ldl"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas/build",
+      "exitCode": 0,
+      "seconds": 0.6647608970015426,
+      "logSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "summary": []
+    },
+    {
+      "name": "ComposedPhysicalCold-v3-write",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-completion/ComposedPhysicalCold",
+        "write",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-completion/composed-v3-fixture"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+      "exitCode": 1,
+      "seconds": 4.391202130998863,
+      "logSHA256": "02ace2f1e4782eaa20f54045daf15caf08db9c26cf698df6f1b3225a825fbe5f",
+      "summary": [
+        "SUMMARY 8 checks / 2 failures"
+      ]
+    },
+    {
+      "name": "ComposedPhysicalCold-v4-compile",
+      "command": [
+        "c++",
+        "-DDT_VIRTUAL_QUERYFILTER",
+        "-DMA_NO_ENCODING",
+        "-DMA_NO_GENERATION",
+        "-DMA_NO_RESOURCE_MANAGER",
+        "-I/home/conner/Documents/GitHub/Project-Judas/src",
+        "-I/home/conner/Documents/GitHub/Project-Judas/third_party/glad/include",
+        "-I/home/conner/Documents/GitHub/Project-Judas/third_party/miniaudio",
+        "-I/home/conner/Documents/GitHub/Project-Judas/third_party/verblib",
+        "-I/home/conner/Documents/GitHub/Project-Judas/build/_deps/judas_freetype-build/include",
+        "-I/home/conner/Documents/GitHub/Project-Judas/build/_deps/judas_freetype-src/include",
+        "-I/home/conner/Documents/GitHub/Project-Judas/build/_deps/judas_harfbuzz-src/src",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/third_party/quickhull",
+        "-isystem",
+        "/usr/include/SDL2",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/third_party/recastnavigation/Detour/Include",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/third_party/recastnavigation/DetourTileCache/Include",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/third_party/recastnavigation/DetourCrowd/Include",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/third_party/quickjs",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/build/unicode/icu/include",
+        "-O3",
+        "-DNDEBUG",
+        "-std=gnu++17",
+        "-Wall",
+        "-Wextra",
+        "-c",
+        "/home/conner/Documents/GitHub/Project-Judas/docs/evidence/m78-completion/probes/ComposedPhysicalCold.cpp",
+        "-o",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-completion/ComposedPhysicalCold.o"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+      "exitCode": 0,
+      "seconds": 10.131915205998666,
+      "logSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "summary": []
+    },
+    {
+      "name": "ComposedPhysicalCold-v4-link",
+      "command": [
+        "/usr/bin/c++",
+        "-O3",
+        "-DNDEBUG",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-completion/ComposedPhysicalCold.o",
+        "-o",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-completion/ComposedPhysicalCold",
+        "libjudas_engine.a",
+        "libjudas_profiler.a",
+        "libjudas_app_icon.a",
+        "libjudas_materials.a",
+        "libjudas_profiler.a",
+        "/usr/lib/x86_64-linux-gnu/libSDL2.so",
+        "libjudas_glad.a",
+        "libjudas_audio_backend.a",
+        "libjudas_navigation_backend.a",
+        "libjudas_quickjs.a",
+        "-lm",
+        "_deps/judas_freetype-build/libfreetype.a",
+        "_deps/judas_harfbuzz-build/libharfbuzz.a",
+        "unicode/icu/lib/libicui18n.a",
+        "unicode/icu/lib/libicuuc.a",
+        "unicode/icu/lib/libicudata.a",
+        "-ldl"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas/build",
+      "exitCode": 0,
+      "seconds": 0.6536931080008799,
+      "logSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "summary": []
+    },
+    {
+      "name": "ComposedPhysicalCold-v4-write",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-completion/ComposedPhysicalCold",
+        "write",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-completion/composed-v4-fixture"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+      "exitCode": 1,
+      "seconds": 4.399009447002754,
+      "logSHA256": "00a5a531b567fbd369760e22edb70f44d13fbf69333468bc9382d5d38576461b",
+      "summary": [
+        "SUMMARY 8 checks / 2 failures"
+      ]
+    },
+    {
+      "name": "current-focused-build",
+      "command": [
+        "cmake",
+        "--build",
+        "/home/conner/Documents/GitHub/Project-Judas/build",
+        "--target",
+        "judas_balance_lab_tests",
+        "judas_physical_animation_tests",
+        "judas_world_persistence_tests",
+        "judas_character_motor_tests",
+        "judas_mod_content_tests",
+        "judas_impact_robustness_tests",
+        "-j2"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+      "exitCode": 0,
+      "seconds": 8.793183516998397,
+      "logSHA256": "766bc6df73803abdca3bdbb62854299f71d8df418decccc5702cc0dd180e6ece",
+      "summary": []
+    },
+    {
+      "name": "judas_world_persistence_tests",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_world_persistence_tests"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+      "exitCode": 0,
+      "seconds": 0.019409967000683537,
+      "logSHA256": "b3bd7fbfcc31661e27c06fa311a93dd8ec5dacd983a5d2ba482deec3d616786e",
+      "summary": [
+        "SUMMARY 27 checks 0 failures"
+      ]
+    },
+    {
+      "name": "judas_character_motor_tests",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_character_motor_tests"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+      "exitCode": 0,
+      "seconds": 0.49495985499743256,
+      "logSHA256": "adbb78be1acffecbd82053e15ee5120e8a2ec806b6fca606c4b71ee879429188",
+      "summary": [
+        "SUMMARY 32 checks 0 failures"
+      ]
+    },
+    {
+      "name": "judas_physical_animation_tests",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_physical_animation_tests"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+      "exitCode": 0,
+      "seconds": 0.08396864499809453,
+      "logSHA256": "723361e89434065106ed53b66ac5d7429839b56e9c734deb423a55843fd075da",
+      "summary": [
+        "SUMMARY 64 checks 0 failures"
+      ]
+    },
+    {
+      "name": "judas_impact_robustness_tests",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_impact_robustness_tests"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+      "exitCode": 0,
+      "seconds": 1.0822623510030098,
+      "logSHA256": "77e2df594d9a19a39ffe6a685f1785b81fdfdbe4a5c6d1e64f61d49ba846e295",
+      "summary": [
+        "checks 4412 failures 0"
+      ]
+    },
+    {
+      "name": "judas_balance_lab_tests-standing",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_balance_lab_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-completion/balance-standing",
+        "standing"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+      "exitCode": 0,
+      "seconds": 1.480066217998683,
+      "logSHA256": "a01d87cd21bd426671b65ba76c1aa734e1ea5583abc300745c75fcee66f3e20b",
+      "summary": [
+        "SUMMARY 15 checks 0 failures"
+      ]
+    },
+    {
+      "name": "judas_balance_lab_tests-cold-write",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_balance_lab_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-completion/balance-cold",
+        "cold-write"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+      "exitCode": 0,
+      "seconds": 1.2208257130005222,
+      "logSHA256": "fd2ab4390de9e7849b46ae5b0f49410a4aca6e3c8f62f0faa5154b77cf38aef4",
+      "summary": [
+        "SUMMARY 24 checks 0 failures"
+      ]
+    },
+    {
+      "name": "judas_balance_lab_tests-cold-read",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_balance_lab_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-completion/balance-cold",
+        "cold-read"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+      "exitCode": 0,
+      "seconds": 1.1998617299977923,
+      "logSHA256": "18bdefe025488f71e5dbf73746c613f2df873720a3f581779931bafb22bce318",
+      "summary": [
+        "SUMMARY 13 checks 0 failures"
+      ]
+    },
+    {
+      "name": "api-drift",
+      "command": [
+        "node",
+        "scripts/check_judasjs_api.mjs",
+        "--typescript",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m73/typescript/node_modules/typescript"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+      "exitCode": 0,
+      "seconds": 1.1466041130006488,
+      "logSHA256": "2e0805ef9e1b9fef2d30ecc345600563a60e829ee447e4ec9241ad3abc569180",
+      "summary": []
+    },
+    {
+      "name": "mesh-performance-compile",
+      "command": [
+        "c++",
+        "-DDT_VIRTUAL_QUERYFILTER",
+        "-DMA_NO_ENCODING",
+        "-DMA_NO_GENERATION",
+        "-DMA_NO_RESOURCE_MANAGER",
+        "-I/home/conner/Documents/GitHub/Project-Judas/src",
+        "-I/home/conner/Documents/GitHub/Project-Judas/third_party/glad/include",
+        "-I/home/conner/Documents/GitHub/Project-Judas/third_party/miniaudio",
+        "-I/home/conner/Documents/GitHub/Project-Judas/third_party/verblib",
+        "-I/home/conner/Documents/GitHub/Project-Judas/build/_deps/judas_freetype-build/include",
+        "-I/home/conner/Documents/GitHub/Project-Judas/build/_deps/judas_freetype-src/include",
+        "-I/home/conner/Documents/GitHub/Project-Judas/build/_deps/judas_harfbuzz-src/src",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/third_party/quickhull",
+        "-isystem",
+        "/usr/include/SDL2",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/third_party/recastnavigation/Detour/Include",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/third_party/recastnavigation/DetourTileCache/Include",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/third_party/recastnavigation/DetourCrowd/Include",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/third_party/quickjs",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/build/unicode/icu/include",
+        "-O3",
+        "-DNDEBUG",
+        "-std=gnu++17",
+        "-Wall",
+        "-Wextra",
+        "-c",
+        "/home/conner/Documents/GitHub/Project-Judas/docs/evidence/m78-followup/probes/concave_final.cpp",
+        "-o",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-completion/mesh-performance.o"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+      "exitCode": 0,
+      "seconds": 6.727673374000005,
+      "logSHA256": "d9bc9c2a6f675dd08f117afb2a2d49672a5325e1b8b12b0cbf07feeb1224e837",
+      "summary": []
+    },
+    {
+      "name": "mesh-performance-link",
+      "command": [
+        "/usr/bin/c++",
+        "-O3",
+        "-DNDEBUG",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-completion/mesh-performance.o",
+        "-o",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-completion/mesh-performance",
+        "libjudas_engine.a",
+        "libjudas_profiler.a",
+        "libjudas_app_icon.a",
+        "libjudas_materials.a",
+        "libjudas_profiler.a",
+        "/usr/lib/x86_64-linux-gnu/libSDL2.so",
+        "libjudas_glad.a",
+        "libjudas_audio_backend.a",
+        "libjudas_navigation_backend.a",
+        "libjudas_quickjs.a",
+        "-lm",
+        "_deps/judas_freetype-build/libfreetype.a",
+        "_deps/judas_harfbuzz-build/libharfbuzz.a",
+        "unicode/icu/lib/libicui18n.a",
+        "unicode/icu/lib/libicuuc.a",
+        "unicode/icu/lib/libicudata.a",
+        "-ldl"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas/build",
+      "exitCode": 0,
+      "seconds": 0.6550605070005986,
+      "logSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "summary": []
+    },
+    {
+      "name": "mesh-performance",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-completion/mesh-performance",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-completion/performance"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+      "exitCode": 0,
+      "seconds": 6.053487564000534,
+      "logSHA256": "7759877262ed17d43b98740a41ea47a8ab4cd5f1b6fb128b7aa99939e95454c1",
+      "summary": []
+    },
+    {
+      "name": "ComposedPhysicalCold-v5-compile",
+      "command": [
+        "c++",
+        "-DDT_VIRTUAL_QUERYFILTER",
+        "-DMA_NO_ENCODING",
+        "-DMA_NO_GENERATION",
+        "-DMA_NO_RESOURCE_MANAGER",
+        "-I/home/conner/Documents/GitHub/Project-Judas/src",
+        "-I/home/conner/Documents/GitHub/Project-Judas/third_party/glad/include",
+        "-I/home/conner/Documents/GitHub/Project-Judas/third_party/miniaudio",
+        "-I/home/conner/Documents/GitHub/Project-Judas/third_party/verblib",
+        "-I/home/conner/Documents/GitHub/Project-Judas/build/_deps/judas_freetype-build/include",
+        "-I/home/conner/Documents/GitHub/Project-Judas/build/_deps/judas_freetype-src/include",
+        "-I/home/conner/Documents/GitHub/Project-Judas/build/_deps/judas_harfbuzz-src/src",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/third_party/quickhull",
+        "-isystem",
+        "/usr/include/SDL2",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/third_party/recastnavigation/Detour/Include",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/third_party/recastnavigation/DetourTileCache/Include",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/third_party/recastnavigation/DetourCrowd/Include",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/third_party/quickjs",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/build/unicode/icu/include",
+        "-O3",
+        "-DNDEBUG",
+        "-std=gnu++17",
+        "-Wall",
+        "-Wextra",
+        "-c",
+        "/home/conner/Documents/GitHub/Project-Judas/docs/evidence/m78-completion/probes/ComposedPhysicalCold.cpp",
+        "-o",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-completion/ComposedPhysicalCold.o"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+      "exitCode": 0,
+      "seconds": 10.339123549998476,
+      "logSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "summary": []
+    },
+    {
+      "name": "ComposedPhysicalCold-v5-link",
+      "command": [
+        "/usr/bin/c++",
+        "-O3",
+        "-DNDEBUG",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-completion/ComposedPhysicalCold.o",
+        "-o",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-completion/ComposedPhysicalCold",
+        "libjudas_engine.a",
+        "libjudas_profiler.a",
+        "libjudas_app_icon.a",
+        "libjudas_materials.a",
+        "libjudas_profiler.a",
+        "/usr/lib/x86_64-linux-gnu/libSDL2.so",
+        "libjudas_glad.a",
+        "libjudas_audio_backend.a",
+        "libjudas_navigation_backend.a",
+        "libjudas_quickjs.a",
+        "-lm",
+        "_deps/judas_freetype-build/libfreetype.a",
+        "_deps/judas_harfbuzz-build/libharfbuzz.a",
+        "unicode/icu/lib/libicui18n.a",
+        "unicode/icu/lib/libicuuc.a",
+        "unicode/icu/lib/libicudata.a",
+        "-ldl"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas/build",
+      "exitCode": 0,
+      "seconds": 0.6601528169994708,
+      "logSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "summary": []
+    },
+    {
+      "name": "ComposedPhysicalCold-v5-write",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-completion/ComposedPhysicalCold",
+        "write",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-completion/composed-v5-fixture"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+      "exitCode": 0,
+      "seconds": 0.02363965500262566,
+      "logSHA256": "1f2c6047d0f5b30011726e90462f59d320a8307fb957579bb026babfc7c6bd3b",
+      "summary": [
+        "SUMMARY 37 checks / 0 failures"
+      ]
+    },
+    {
+      "name": "ComposedPhysicalCold-v5-read",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-completion/ComposedPhysicalCold",
+        "read",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-completion/composed-v5-fixture"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+      "exitCode": 0,
+      "seconds": 0.02110698999968008,
+      "logSHA256": "c9cac8fe5f32d3ac0bd1d52eddc566d3e6d5b4eabc537eaf0f06f8d8b5cf615a",
+      "summary": [
+        "SUMMARY 37 checks / 0 failures"
+      ]
+    }
+  ]
+}

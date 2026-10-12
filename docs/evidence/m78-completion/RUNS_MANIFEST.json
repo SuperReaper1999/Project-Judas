@@ -1,0 +1,246 @@
+{
+  "subject": "f20cb40cc4ac3f9eb19357eabf4920578b594b6a",
+  "logs": [
+    {
+      "file": "runs/ComposedPhysicalCold-compile.log",
+      "sha256": "78a3e2e817aa3c79970f987d64fa40d77f52b639d631fd2426f90c4d1cdc8992",
+      "bytes": 1594,
+      "finalAcceptedRun": false
+    },
+    {
+      "file": "runs/ComposedPhysicalCold-v2-compile.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "finalAcceptedRun": false
+    },
+    {
+      "file": "runs/ComposedPhysicalCold-v2-link.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "finalAcceptedRun": false
+    },
+    {
+      "file": "runs/ComposedPhysicalCold-v3-compile.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "finalAcceptedRun": false
+    },
+    {
+      "file": "runs/ComposedPhysicalCold-v3-link.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "finalAcceptedRun": false
+    },
+    {
+      "file": "runs/ComposedPhysicalCold-v3-write.log",
+      "sha256": "02ace2f1e4782eaa20f54045daf15caf08db9c26cf698df6f1b3225a825fbe5f",
+      "bytes": 290,
+      "finalAcceptedRun": false
+    },
+    {
+      "file": "runs/ComposedPhysicalCold-v4-compile.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "finalAcceptedRun": false
+    },
+    {
+      "file": "runs/ComposedPhysicalCold-v4-link.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "finalAcceptedRun": false
+    },
+    {
+      "file": "runs/ComposedPhysicalCold-v4-write.log",
+      "sha256": "00a5a531b567fbd369760e22edb70f44d13fbf69333468bc9382d5d38576461b",
+      "bytes": 367,
+      "finalAcceptedRun": false
+    },
+    {
+      "file": "runs/ComposedPhysicalCold-v5-compile.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "finalAcceptedRun": false
+    },
+    {
+      "file": "runs/ComposedPhysicalCold-v5-link.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "finalAcceptedRun": false
+    },
+    {
+      "file": "runs/ComposedPhysicalCold-v5-read.log",
+      "sha256": "c9cac8fe5f32d3ac0bd1d52eddc566d3e6d5b4eabc537eaf0f06f8d8b5cf615a",
+      "bytes": 1598,
+      "finalAcceptedRun": true
+    },
+    {
+      "file": "runs/ComposedPhysicalCold-v5-write.log",
+      "sha256": "1f2c6047d0f5b30011726e90462f59d320a8307fb957579bb026babfc7c6bd3b",
+      "bytes": 1464,
+      "finalAcceptedRun": true
+    },
+    {
+      "file": "runs/ComposedPhysicalCold-write.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "finalAcceptedRun": false
+    },
+    {
+      "file": "runs/ModImports-compile.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "finalAcceptedRun": false
+    },
+    {
+      "file": "runs/ModImports-link.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "finalAcceptedRun": false
+    },
+    {
+      "file": "runs/ModImports-run.log",
+      "sha256": "1ebeb1f1664b6f6bbbd0eaaac0d4611a673e69e2756cb20364f9592aa52cc99b",
+      "bytes": 2914,
+      "finalAcceptedRun": false
+    },
+    {
+      "file": "runs/ModImports-v2-compile.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "finalAcceptedRun": false
+    },
+    {
+      "file": "runs/ModImports-v2-link.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "finalAcceptedRun": false
+    },
+    {
+      "file": "runs/ModImports-v2-run.log",
+      "sha256": "145e6a673894e2f5d64ac523044dcae286b15c167d7b684cf1a31706e6cf2aa4",
+      "bytes": 2913,
+      "finalAcceptedRun": true
+    },
+    {
+      "file": "runs/SkeletalDependencies-compile.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "finalAcceptedRun": false
+    },
+    {
+      "file": "runs/SkeletalDependencies-debug.log",
+      "sha256": "aabf94b9d85c6d46ea66bec5330d4320d6b6525ae407a5250d8c852edcc2ad64",
+      "bytes": 2298,
+      "finalAcceptedRun": false
+    },
+    {
+      "file": "runs/SkeletalDependencies-link.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "finalAcceptedRun": false
+    },
+    {
+      "file": "runs/SkeletalDependencies-run.log",
+      "sha256": "33a4fb65eed7445ce35f49945ea5356db78bb4c31a9ef5316db8bfcb863b1571",
+      "bytes": 60,
+      "finalAcceptedRun": false
+    },
+    {
+      "file": "runs/SkeletalDependencies-v2-compile.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "finalAcceptedRun": false
+    },
+    {
+      "file": "runs/SkeletalDependencies-v2-link.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "finalAcceptedRun": false
+    },
+    {
+      "file": "runs/SkeletalDependencies-v2-run.log",
+      "sha256": "4ddfd0f8fa9e44188fc6b2d80b6f7aa4d08385d547b8193ec331e5b5e815f094",
+      "bytes": 2446,
+      "finalAcceptedRun": true
+    },
+    {
+      "file": "runs/api-drift.log",
+      "sha256": "2e0805ef9e1b9fef2d30ecc345600563a60e829ee447e4ec9241ad3abc569180",
+      "bytes": 217,
+      "finalAcceptedRun": true
+    },
+    {
+      "file": "runs/current-focused-build.log",
+      "sha256": "766bc6df73803abdca3bdbb62854299f71d8df418decccc5702cc0dd180e6ece",
+      "bytes": 3499,
+      "finalAcceptedRun": true
+    },
+    {
+      "file": "runs/judas_balance_lab_tests-cold-read.log",
+      "sha256": "18bdefe025488f71e5dbf73746c613f2df873720a3f581779931bafb22bce318",
+      "bytes": 849,
+      "finalAcceptedRun": true
+    },
+    {
+      "file": "runs/judas_balance_lab_tests-cold-write.log",
+      "sha256": "fd2ab4390de9e7849b46ae5b0f49410a4aca6e3c8f62f0faa5154b77cf38aef4",
+      "bytes": 1504,
+      "finalAcceptedRun": true
+    },
+    {
+      "file": "runs/judas_balance_lab_tests-standing.log",
+      "sha256": "a01d87cd21bd426671b65ba76c1aa734e1ea5583abc300745c75fcee66f3e20b",
+      "bytes": 1635,
+      "finalAcceptedRun": true
+    },
+    {
+      "file": "runs/judas_character_motor_tests.log",
+      "sha256": "adbb78be1acffecbd82053e15ee5120e8a2ec806b6fca606c4b71ee879429188",
+      "bytes": 1869,
+      "finalAcceptedRun": true
+    },
+    {
+      "file": "runs/judas_impact_robustness_tests.log",
+      "sha256": "77e2df594d9a19a39ffe6a685f1785b81fdfdbe4a5c6d1e64f61d49ba846e295",
+      "bytes": 4890,
+      "finalAcceptedRun": true
+    },
+    {
+      "file": "runs/judas_physical_animation_tests.log",
+      "sha256": "723361e89434065106ed53b66ac5d7429839b56e9c734deb423a55843fd075da",
+      "bytes": 7433,
+      "finalAcceptedRun": true
+    },
+    {
+      "file": "runs/judas_world_persistence_tests.log",
+      "sha256": "b3bd7fbfcc31661e27c06fa311a93dd8ec5dacd983a5d2ba482deec3d616786e",
+      "bytes": 1510,
+      "finalAcceptedRun": true
+    },
+    {
+      "file": "runs/mesh-performance-compile.log",
+      "sha256": "d9bc9c2a6f675dd08f117afb2a2d49672a5325e1b8b12b0cbf07feeb1224e837",
+      "bytes": 1467,
+      "finalAcceptedRun": true
+    },
+    {
+      "file": "runs/mesh-performance-link.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "finalAcceptedRun": true
+    },
+    {
+      "file": "runs/mesh-performance.log",
+      "sha256": "7759877262ed17d43b98740a41ea47a8ab4cd5f1b6fb128b7aa99939e95454c1",
+      "bytes": 1278,
+      "finalAcceptedRun": true
+    },
+    {
+      "file": "runs/windows-preflight.log",
+      "sha256": "1cc947022d3efbdfc73d82abb1855c170d06a4e934c6d03b83d8ff366ee4967b",
+      "bytes": 198,
+      "finalAcceptedRun": false
+    }
+  ],
+  "note": "Earlier setup/compiler/post-shutdown observer failures are preserved, not engine findings. Exact command recipes in probes and RESULTS.json; earlier version logs retain diagnostics."
+}
