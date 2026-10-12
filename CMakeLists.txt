@@ -935,6 +935,10 @@ add_executable(judas_impact_solver_tests tests/ImpactSolverTests.cpp)
 target_link_libraries(judas_impact_solver_tests PRIVATE judas_engine)
 add_executable(judas_impact_timing_tests tests/ImpactTimingTests.cpp)
 target_link_libraries(judas_impact_timing_tests PRIVATE judas_engine)
+# Continuous-impact cost of a jointed ragdoll resting in static triangle meshes (timings reported, not asserted).
+add_executable(judas_impact_mesh_cost_tests tests/ImpactMeshCostTests.cpp)
+target_link_libraries(judas_impact_mesh_cost_tests PRIVATE judas_engine)
+judas_warnings(judas_impact_mesh_cost_tests)
 
 # FTFT6: ordinary standalone application on a tiny authored project.
 add_executable(judas_project_application_tests
