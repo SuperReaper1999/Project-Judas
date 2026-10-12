@@ -1,0 +1,127 @@
+[
+  {
+    "name": "impact_robustness",
+    "exit": 0,
+    "seconds": 1.1529350269993301
+  },
+  {
+    "name": "collision_geometry",
+    "exit": 0,
+    "seconds": 0.7193025629967451
+  },
+  {
+    "name": "impact_solver",
+    "exit": 0,
+    "seconds": 0.00208089100124198
+  },
+  {
+    "name": "impact_timing",
+    "exit": 0,
+    "seconds": 0.015163590000156546
+  },
+  {
+    "name": "rigid_motion",
+    "exit": 0,
+    "seconds": 0.03241145799984224
+  },
+  {
+    "name": "contact_lifecycle",
+    "exit": 0,
+    "seconds": 0.030098711999016814
+  },
+  {
+    "name": "contact_cache",
+    "exit": 0,
+    "seconds": 0.03173342599984608
+  },
+  {
+    "name": "kinematic",
+    "exit": 0,
+    "seconds": 0.029513556000893004
+  },
+  {
+    "name": "joint",
+    "exit": 0,
+    "seconds": 0.0411320050006907
+  },
+  {
+    "name": "character_motor",
+    "exit": 0,
+    "seconds": 0.5826142660007463
+  },
+  {
+    "name": "physical_animation",
+    "exit": 0,
+    "seconds": 0.07732808199943975
+  },
+  {
+    "name": "physical_balance_controller",
+    "exit": 0,
+    "seconds": 2.958421378996718
+  },
+  {
+    "name": "physics_continuation",
+    "exit": 0,
+    "seconds": 0.016455475000839215
+  },
+  {
+    "name": "post_consumer_ragdoll",
+    "exit": 0,
+    "seconds": 27.310132506998343
+  },
+  {
+    "name": "impact_mesh_cost",
+    "exit": 0,
+    "seconds": 20.909117579998565
+  },
+  {
+    "name": "rigid_contact",
+    "exit": 0,
+    "seconds": 2.0350185120005335
+  },
+  {
+    "name": "broadphase",
+    "exit": 0,
+    "seconds": 28.07903045200146
+  },
+  {
+    "name": "gravity_selection",
+    "exit": 0,
+    "seconds": 0.2866519300005166
+  },
+  {
+    "name": "post_consumer_query",
+    "exit": 0,
+    "seconds": 0.01027322400113917
+  },
+  {
+    "name": "balance-standing",
+    "exit": 0,
+    "seconds": 1.7453226699981315
+  },
+  {
+    "name": "balance-supports",
+    "exit": 0,
+    "seconds": 1.3066620680001506
+  },
+  {
+    "name": "balance-recovery",
+    "exit": 0,
+    "seconds": 2.0970725180013687
+  },
+  {
+    "name": "balance-radial",
+    "exit": 0,
+    "seconds": 1.5872050929974648
+  },
+  {
+    "name": "balance-cold-write",
+    "exit": 0,
+    "seconds": 1.4806295730013517
+  },
+  {
+    "name": "balance-cold-read",
+    "exit": 0,
+    "seconds": 1.5845098220015643
+  }
+]

@@ -426,6 +426,7 @@ struct PhysicsWorld::Impl {
     std::vector<StartContact> startContacts;
     std::vector<std::array<unsigned,4>> separatedPairs;
     std::vector<std::array<unsigned,4>> supportPairs;
+    std::vector<std::array<unsigned,4>> spinningPairs; // sorted; continuous search with a penetration target
     struct ScheduledImpact { std::array<unsigned,4> key; double time; };
     std::vector<ScheduledImpact> scheduledImpacts;
     std::vector<unsigned> impactCounts;
@@ -506,6 +507,13 @@ struct PhysicsWorld::Impl {
         return ComputeContacts(PrimitiveAt(bodies[a].shape,aa.pose,pa,&*aa.orientation),
             PrimitiveAt(bodies[b].shape,bb.pose,pb,&*bb.orientation),margin,&*aa.orientation,&*bb.orientation);
     }
+    // Deepest actual (zero-margin) penetration of the pair at `time`, metres.
+    double PairPenetration(unsigned a,unsigned b,int pa,int pb,double time) {
+        const auto manifold=PairAt(a,b,pa,pb,time,0);double deepest=0;
+        for(int k=0;k<manifold.count;++k){const auto& c=manifold.points[k];
+            deepest=std::max(deepest,c.hasLocalAnchors?-c.signedSeparation:double(c.penetration));}
+        return deepest;
+    }
     bool PairTouches(unsigned a,unsigned b,int pa,int pb,double time) {
         const auto& aa=ImpactPoseAt(a,time);const auto& bb=ImpactPoseAt(b,time);
         const auto posa=PrimitiveAt(bodies[a].shape,aa.pose,pa,&*aa.orientation);
@@ -584,13 +592,55 @@ struct PhysicsWorld::Impl {
     // Conservative advancement along a separating plane. Translation projected
     // onto that plane plus |omega|*radius bounds its possible closing speed.
     // Anchored quaternion interpolation turns no faster than |omega|.
-    double ImpactTime(unsigned a,unsigned b,int pa,int pb,double start,double finish) {
+    // Half the thinnest dimension of a primitive (sphere radius); infinite for
+    // terrain and meshes, which use the other primitive's size.
+    double PrimitiveFeature(unsigned slot,int part) const {
+        const Shape& shape=bodies[slot].shape;
+        auto primitive=PrimitiveAt(shape,bodies[slot].rigidBody,part);
+        if(primitive.shape.type==ShapeType::Sphere) return double(primitive.shape.radius);
+        if(primitive.shape.type==ShapeType::ConvexHull){auto extent=primitive.shape.asset->maximum-primitive.shape.asset->minimum;return std::min({extent.x,extent.y,extent.z})*.5;}
+        const glm::vec3 half=shape.type==ShapeType::CompoundBoxes
+            ? shape.boxes[std::size_t(part)].halfExtents : shape.halfExtents;
+        if(shape.type==ShapeType::Box || shape.type==ShapeType::CompoundBoxes)
+            return double(std::min({half.x,half.y,half.z}));
+        // Terrain uses the other, finite rigid primitive's feature size.
+        return std::numeric_limits<double>::infinity();
+    }
+    // A touching pair is normally left to the contact solver (support pair).
+    // That holds while rotation cannot carry other features of a non-round
+    // primitive through the support within the interval; a light body spun up
+    // by an off-centre impact can turn several radians in one step. When the
+    // rotation can sweep a point further than half the thinnest primitive's
+    // thickness, the pair stays under continuous search with a penetration
+    // target instead. (A lower bound also catches ragdoll limbs knocked about
+    // on the ground, and changes how they come to rest.)
+    bool SpinsThroughSupport(const std::array<unsigned,4>& key,double remaining) const {
+        double sweep=0;
+        for(int side=0;side<2;++side){
+            const unsigned slot=key[std::size_t(side)];const auto& body=bodies[slot];
+            if(!body.HasMotion()||PrimitiveAt(body.shape,body.rigidBody,int(key[std::size_t(2+side)])).shape.type==ShapeType::Sphere)continue;
+            sweep+=double(glm::length(body.rigidBody.angularVelocity))*body.boundingRadius*remaining;
+        }
+        const double feature=std::min(PrimitiveFeature(key[0],int(key[2])),PrimitiveFeature(key[1],int(key[3])));
+        return std::isfinite(feature)&&sweep>feature;
+    }
+    // A quarter of the existing half-dimension feature (one eighth of the
+    // full thickness for boxes), measured relative to the current overlap.
+    double SpinPenetrationTarget(const std::array<unsigned,4>& key) const {
+        return .25*std::min(PrimitiveFeature(key[0],int(key[2])),PrimitiveFeature(key[1],int(key[3])));
+    }
+    // target>0: find the first time the pair's deepest penetration exceeds
+    // its depth at `start` by target (a pair already touching, e.g. pivoting
+    // on one corner), rather than the first touch. Measuring from the start
+    // depth lets the search continue after an event that ended at the target.
+    double ImpactTime(unsigned a,unsigned b,int pa,int pb,double start,double finish,double target=0) {
         // A target can finish inside the step. Never certify a plane across
         // its velocity discontinuity; search the two real ledger intervals.
         for(auto slot:{a,b})if(bodies[slot].isKinematic)for(const auto& s:bodies[slot].motion.Segments())
-            if(s.end>start&&s.end<finish){auto first=ImpactTime(a,b,pa,pb,start,s.end);
-                return first<=s.end?first:ImpactTime(a,b,pa,pb,s.end,finish);}
+            if(s.end>start&&s.end<finish){auto first=ImpactTime(a,b,pa,pb,start,s.end,target);
+                return first<=s.end?first:ImpactTime(a,b,pa,pb,s.end,finish,target);}
         ++stats.impactQueries;
+        if(target>0)target+=PairPenetration(a,b,pa,pb,start);
         const auto& ba=bodies[a]; const auto& bb=bodies[b];
         const auto posa=PoseAt(a,start),posb=PoseAt(b,start);
         const glm::dvec3 relative=glm::dvec3(ba.HasMotion()?posa.linearVelocity:glm::vec3(0))-glm::dvec3(bb.HasMotion()?posb.linearVelocity:glm::vec3(0));
@@ -623,7 +673,7 @@ struct PhysicsWorld::Impl {
             const std::array<float,14> represented={aa.position.x,aa.position.y,aa.position.z,aa.orientation.w,aa.orientation.x,aa.orientation.y,aa.orientation.z,
                 bb.position.x,bb.position.y,bb.position.z,bb.orientation.w,bb.orientation.x,bb.orientation.y,bb.orientation.z};
             for(const auto& old:actualTruth)if(old.valid&&std::memcmp(old.pose.data(),represented.data(),sizeof(represented))==0){++impactTruthReuses;return old.touching;}
-            const bool touching=PairTouches(a,b,pa,pb,at);
+            const bool touching=target>0?PairPenetration(a,b,pa,pb,at)>target:PairTouches(a,b,pa,pb,at);
             actualTruth[nextTruth]={represented,true,touching};nextTruth=(nextTruth+1)%actualTruth.size();return touching;
         };
         double time=start, previous=start;
@@ -634,14 +684,23 @@ struct PhysicsWorld::Impl {
         // consecutive advances, stop paying full proximity queries and finish
         // with the bounded sampling below, as the 64-iteration limit already does.
         int stalledAdvances=0;
-        for (int iteration=0;iteration<64;++iteration) {
+        // Conservative advancement needs a separating plane. A pair searched
+        // to a penetration target is already in contact, where no single
+        // contact normal bounds the approach of every feature; go straight to
+        // the bounded sampling below.
+        const int advanceIterations=target>0?0:64;
+        for (int iteration=0;iteration<advanceIterations;++iteration) {
             ++stats.impactSearchIterations;stats.impactPeakIterations=std::max(stats.impactPeakIterations,std::size_t(iteration+1));
             const float reach=std::nextafter(static_cast<float>(speed*(finish-time)),
                                              std::numeric_limits<float>::infinity());
             // Margin manifolds contain proximity features, not necessarily the
             // zero-margin contact set. Contact truth must use the latter.
             if(touchingAt(time)) {
-                if(time==start) return finish+1;
+                // A pair touching at the start is left to the contact solver,
+                // unless its spin can turn another feature through the support
+                // before the interval ends: then search to a penetration target.
+                if(time==start) return target==0&&SpinsThroughSupport({a,b,unsigned(pa),unsigned(pb)},finish-start) ?
+                    ImpactTime(a,b,pa,pb,start,finish,SpinPenetrationTarget({a,b,unsigned(pa),unsigned(pb)})) : finish+1;
                 double lo=previous,hi=time;
                 for(int k=0;k<32;++k) {
                     const double mid=(lo+hi)*.5;
@@ -681,7 +740,7 @@ struct PhysicsWorld::Impl {
             if(stalledAdvances>=kImpactStallAdvances){stalled=true;break;}
         }
         if(stalled) ++stats.impactSearchStalls;
-        else if(!uncertifiedAdvance) ++stats.impactSearchLimit;
+        else if(!uncertifiedAdvance&&target==0) ++stats.impactSearchLimit;
         ++stats.impactSamplingFallbacks;
         // Rotating grazing features can keep a fixed separating-plane bound
         // arbitrarily short. Finish this PAIR query with a bounded temporal
@@ -699,19 +758,7 @@ struct PhysicsWorld::Impl {
         if(touchingAt(time)) return firstContact(previous,time);
         const double remaining=finish-time;
         if(!(remaining>0)) return finish+1;
-        auto primitiveFeature=[&](unsigned slot,int part) {
-            const Shape& shape=bodies[slot].shape;
-            auto primitive=PrimitiveAt(shape,bodies[slot].rigidBody,part);
-            if(primitive.shape.type==ShapeType::Sphere) return double(primitive.shape.radius);
-            if(primitive.shape.type==ShapeType::ConvexHull){auto extent=primitive.shape.asset->maximum-primitive.shape.asset->minimum;return std::min({extent.x,extent.y,extent.z})*.5;}
-            const glm::vec3 half=shape.type==ShapeType::CompoundBoxes
-                ? shape.boxes[std::size_t(part)].halfExtents : shape.halfExtents;
-            if(shape.type==ShapeType::Box || shape.type==ShapeType::CompoundBoxes)
-                return double(std::min({half.x,half.y,half.z}));
-            // Terrain uses the other, finite rigid primitive's feature size.
-            return std::numeric_limits<double>::infinity();
-        };
-        const double feature=std::min(primitiveFeature(a,pa),primitiveFeature(b,pb));
+        const double feature=std::min(PrimitiveFeature(a,pa),PrimitiveFeature(b,pb));
         if(!(feature>0)) throw std::runtime_error("invalid primitive feature in impact sampling");
         const double angularSpeed=(ba.HasMotion()?glm::length(glm::dvec3(DriftGenerator(a,start))):0)+
                                   (bb.HasMotion()?glm::length(glm::dvec3(DriftGenerator(b,start))):0);
@@ -815,18 +862,27 @@ struct PhysicsWorld::Impl {
                     for(int pb=0;pb<PrimitiveCount(bodies[pair.second].shape);++pb)
                         separatedPairs.push_back({pair.first,pair.second,unsigned(pa),unsigned(pb)});
         }
+        // Support pairs whose rotation over the step could carry a feature
+        // through the support remain under continuous search.
+        spinningPairs.clear();
+        for(const auto& key:supportPairs)if(SpinsThroughSupport(key,dt))spinningPairs.push_back(key);
+        if(!spinningPairs.empty())supportPairs.erase(std::remove_if(supportPairs.begin(),supportPairs.end(),
+            [&](const auto& key){return std::binary_search(spinningPairs.begin(),spinningPairs.end(),key);}),supportPairs.end());
         double now=0;
         scheduledImpacts.clear();
         std::map<std::array<unsigned,4>,std::size_t> scheduledIndex;
         auto schedule=[&](const std::array<unsigned,4>& key) {
             if(!CanRespond(key[0],key[1]))return;
             const double time=std::binary_search(supportPairs.begin(),supportPairs.end(),key) ? double(dt)+1 :
+                std::binary_search(spinningPairs.begin(),spinningPairs.end(),key) ?
+                ImpactTime(key[0],key[1],int(key[2]),int(key[3]),now,dt,SpinPenetrationTarget(key)) :
                 ImpactTime(key[0],key[1],int(key[2]),int(key[3]),now,dt);
             const auto found=scheduledIndex.find(key);
             if(found!=scheduledIndex.end()) scheduledImpacts[found->second].time=time;
             else {scheduledIndex.emplace(key,scheduledImpacts.size());scheduledImpacts.push_back({key,time});}
         };
         for(const auto& key:separatedPairs) schedule(key);
+        for(const auto& key:spinningPairs) schedule(key);
         for (;;) {
             double earliest=double(dt)+1; unsigned seedA=0,seedB=0;
             std::array<unsigned,4> selected{};
@@ -873,8 +929,10 @@ struct PhysicsWorld::Impl {
             // when a cached support point currently has a small positive gap.
             // This only chooses restitution zero: separated support geometry
             // is never inserted into the actual-contact impulse rows below.
-            const bool supportedIsland=std::any_of(supportPairs.begin(),supportPairs.end(),
-                [&](const auto& pair){return included[pair[0]] || included[pair[1]];});
+            // Spinning support pairs are still supports.
+            const auto supports=[&](const auto& pair){return included[pair[0]] || included[pair[1]];};
+            const bool supportedIsland=std::any_of(supportPairs.begin(),supportPairs.end(),supports) ||
+                std::any_of(spinningPairs.begin(),spinningPairs.end(),supports);
             bool capture=supportedIsland;
             std::vector<std::pair<glm::vec3,glm::vec3>> oldVelocities;
             oldVelocities.reserve(island.size());
@@ -934,8 +992,16 @@ struct PhysicsWorld::Impl {
             std::stable_sort(completedContactObservations.begin(),completedContactObservations.end(),
                 [](const CachedContact& a,const CachedContact& b){return a.key<b.key;});
             if(result.effectiveRestitution==0) {
-                supportPairs.insert(supportPairs.end(),eventPairs.begin(),eventPairs.end());
-                std::sort(supportPairs.begin(),supportPairs.end());supportPairs.erase(std::unique(supportPairs.begin(),supportPairs.end()),supportPairs.end());
+                // An inelastic event leaves the pair touching. It becomes a
+                // support pair unless its new spin can still turn a feature
+                // through the support before the step ends.
+                for(const auto& key:eventPairs){
+                    const bool spinning=SpinsThroughSupport(key,double(dt)-now);
+                    auto& into=spinning?spinningPairs:supportPairs;auto& from=spinning?supportPairs:spinningPairs;
+                    from.erase(std::remove(from.begin(),from.end(),key),from.end());
+                    into.insert(std::upper_bound(into.begin(),into.end(),key),key);
+                    into.erase(std::unique(into.begin(),into.end()),into.end());
+                }
             }
             ++stats.impactEvents;stats.impactSafetyFallback+=result.safetyFallback;
             contactCache.erase(std::remove_if(contactCache.begin(),contactCache.end(),

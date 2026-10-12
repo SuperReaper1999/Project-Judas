@@ -50,15 +50,31 @@ glm::vec3 AngularDriftGenerator(const glm::mat3& inverseInertiaLocal,
  // rotation preserves both the momentum norm and quadratic kinetic energy.
  // Newton solves the three-component midpoint, within a fixed iteration cap.
  // Failure is explicit; there is no unconserved predictor fallback.
- for(int iteration=0;iteration<12;++iteration){
-  const auto omega=inverseBody*middle;
-  const auto residual=middle-m0-half*glm::cross(middle,omega);
-  if(glm::length(residual)<=1e-12*std::max(glm::length(m0),1e-12))
-   return glm::vec3(R*omega);
-  glm::dmat3 J(1);
-  for(int axis=0;axis<3;++axis){glm::dvec3 e(0);e[axis]=1;
-   J[axis]=e-half*(glm::cross(e,omega)+glm::cross(middle,inverseBody*e));}
-  middle-=glm::inverse(J)*residual;
+ const double tolerance=1e-12*std::max(glm::length(m0),1e-12);
+ // One Newton solve of the midpoint equation for half-interval h from `guess`.
+ const auto solve=[&](double h,glm::dvec3& m,int iterations){
+  for(int iteration=0;iteration<iterations;++iteration){
+   const auto omega=inverseBody*m;
+   const auto residual=m-m0-h*glm::cross(m,omega);
+   if(glm::length(residual)<=tolerance)return true;
+   glm::dmat3 J(1);
+   for(int axis=0;axis<3;++axis){glm::dvec3 e(0);e[axis]=1;
+    J[axis]=e-h*(glm::cross(e,omega)+glm::cross(m,inverseBody*e));}
+   m-=glm::inverse(J)*residual;
+  }
+  return false;
+ };
+ if(solve(half,middle,12))return glm::vec3(R*(inverseBody*middle));
+ // A fast spin (|omega| dt of several radians, e.g. a small light body spun
+ // up by a hard off-centre impact) can leave the cold-started solve outside
+ // Newton's basin. Solve the same equation by continuation in the interval:
+ // each stage starts from the converged midpoint of a slightly shorter one,
+ // which follows the root that grows continuously from m0 at h=0. The answer
+ // meets the same residual tolerance, so the same invariants hold.
+ for(int stages=8;stages<=4096;stages*=8){
+  glm::dvec3 m=m0;bool solved=true;
+  for(int stage=1;stage<=stages&&solved;++stage)solved=solve(half*double(stage)/double(stages),m,24);
+  if(solved)return glm::vec3(R*(inverseBody*m));
  }
  throw std::runtime_error("angular midpoint did not converge");
 }

@@ -130,7 +130,20 @@ void reduce(std::vector<Contact>& contacts,ContactManifold& out) {
 template<class Consumer>
 bool visitCookedPolyContacts(const PrimitivePose& a,const PrimitivePose& b,double margin,Consumer consume) {
  V origin=PrimitiveCenter(b);Poly pa=poly(a,origin);auto test=[&](const Poly& pb){
-  auto s=sat(pa,pb);if(s.gap>margin)return false;
+  auto s=sat(pa,pb);
+  // SAT separation is authoritative. Choosing a response normal must never
+  // turn an edge-separated finite triangle into an overlapping infinite plane.
+  if(s.gap>margin)return false;
+  // A triangle only pushes toward its front (the side the query centre is on;
+  // reversed for a two-sided sheet seen from behind). Deep in a thin body,
+  // sat()'s least-overlap axis can be one of the body's own faces pointing the
+  // other way, which would drive the body through the sheet. Use the
+  // triangle's face axis then; lateral edge axes (perpendicular) still stand.
+  if(pb.triangle&&s.gap<=0&&glm::dot(s.normal,pb.normals[0])<-1e-3){
+   const V n=unit(pb.normals[0]);double alo=INFINITY;for(V p:pa.points)alo=std::min(alo,glm::dot(p,n));
+   double bhi=-INFINITY;for(V p:pb.points)bhi=std::max(bhi,glm::dot(p,n));
+   s={alo-bhi,n,false};
+  }
   bool faceWitness=false;
   const auto pairs=witnesses(pa,pb,s,&faceWitness);
   for(auto [x,y]:pairs){

@@ -1,0 +1,146 @@
+FAIL captured fast spin 0 solves: angular midpoint did not converge
+FAIL captured fast spin 1 solves: angular midpoint did not converge
+FAIL captured fast spin 2 solves: angular midpoint did not converge
+FAIL captured fast spin 3 solves: angular midpoint did not converge
+FAIL captured fast spin 4 solves: angular midpoint did not converge
+FAIL captured fast spin 5 solves: angular midpoint did not converge
+FAIL captured fast spin 6 solves: angular midpoint did not converge
+FAIL captured fast spin 7 solves: angular midpoint did not converge
+FAIL captured fast spin 8 solves: angular midpoint did not converge
+spin-up drops onto a horizontal support
+  slab down 20 side 0 spin 0 maxSpin 6.50398e-05 centre below 0 corner below 4.09782e-08
+  slab down 20 side 0 spin 15 maxSpin 159.805 centre below 0 corner below 0.0100104
+  slab down 20 side 0 spin 45 maxSpin 190.395 centre below 0 corner below 0.0181165
+  slab down 20 side 30 spin 0 maxSpin 0 centre below 0 corner below 0
+  slab down 20 side 30 spin 15 maxSpin 18.9188 centre below 0 corner below 0
+  slab down 20 side 30 spin 45 maxSpin 56.7558 centre below 0 corner below 0
+  slab down 40 side 0 spin 0 maxSpin 0.000190712 centre below 0 corner below 5.02914e-08
+  slab down 40 side 0 spin 15 maxSpin 976.907 centre below 0.0723622 corner below 0.101497
+FAIL slab down 40 side 0 spin 15: box does not pass through the support
+FAIL slab down 40 side 0 spin 15: no corner sinks a box depth into the support
+  slab down 40 side 0 spin 45 maxSpin 175.793 centre below 0 corner below 0.00274383
+  slab down 40 side 30 spin 0 maxSpin 0.0911451 centre below 0 corner below 5.60563e-06
+  slab down 40 side 30 spin 15 maxSpin 1018.23 centre below 0.0740836 corner below 0.0997408
+FAIL slab down 40 side 30 spin 15: box does not pass through the support
+FAIL slab down 40 side 30 spin 15: no corner sinks a box depth into the support
+  slab down 40 side 30 spin 45 maxSpin 834.381 centre below 0 corner below 0.0189101
+  mesh down 20 side 0 spin 0 maxSpin 0 centre below 0 corner below 9.31323e-09
+  mesh down 20 side 0 spin 15 maxSpin 176.33 centre below 1.17379 corner below 1.21053
+FAIL mesh down 20 side 0 spin 15: box does not pass through the support
+FAIL mesh down 20 side 0 spin 15: no corner sinks a box depth into the support
+  mesh down 20 side 0 spin 45 maxSpin 190.395 centre below 0.305534 corner below 0.328979
+FAIL mesh down 20 side 0 spin 45: box does not pass through the support
+FAIL mesh down 20 side 0 spin 45: no corner sinks a box depth into the support
+  mesh down 20 side 30 spin 0 maxSpin 0 centre below 0 corner below 0
+  mesh down 20 side 30 spin 15 maxSpin 18.9188 centre below 0 corner below 0
+  mesh down 20 side 30 spin 45 maxSpin 56.7558 centre below 0 corner below 0
+  mesh down 40 side 0 spin 0 maxSpin 0 centre below 0 corner below 9.31323e-09
+  mesh down 40 side 0 spin 15 maxSpin 976.907 centre below 1.27382 corner below 1.31069 THREW angular midpoint did not converge
+FAIL mesh down 40 side 0 spin 15: Step does not throw (angular midpoint did not converge)
+FAIL mesh down 40 side 0 spin 15: box does not pass through the support
+FAIL mesh down 40 side 0 spin 15: no corner sinks a box depth into the support
+  mesh down 40 side 0 spin 45 maxSpin 175.793 centre below 0 corner below 0.00274383
+  mesh down 40 side 30 spin 0 maxSpin 108.413 centre below 0 corner below 0.0150691
+  mesh down 40 side 30 spin 15 maxSpin 1023.83 centre below 0.478742 corner below 0.509182 THREW angular midpoint did not converge
+FAIL mesh down 40 side 30 spin 15: Step does not throw (angular midpoint did not converge)
+FAIL mesh down 40 side 30 spin 15: box does not pass through the support
+FAIL mesh down 40 side 30 spin 15: no corner sinks a box depth into the support
+  mesh down 40 side 30 spin 45 maxSpin 834.381 centre below 0.0869523 corner below 0.123131 THREW angular midpoint did not converge
+FAIL mesh down 40 side 30 spin 45: Step does not throw (angular midpoint did not converge)
+FAIL mesh down 40 side 30 spin 45: box does not pass through the support
+FAIL mesh down 40 side 30 spin 45: no corner sinks a box depth into the support
+tilted supports
+  slab tilt 0 speed 10 maxSpin 6.90736e-05 centre below 0 corner below 2.6077e-08
+  slab tilt 0 speed 20 maxSpin 6.50398e-05 centre below 0 corner below 4.09782e-08
+  slab tilt 0 speed 40 maxSpin 0.000190712 centre below 0 corner below 5.02914e-08
+  slab tilt 5 speed 10 maxSpin 254.75 centre below 0.0212299 corner below 0.051621
+FAIL slab tilt 5 speed 10: box does not pass through the support
+FAIL slab tilt 5 speed 10: no corner sinks a box depth into the support
+  slab tilt 5 speed 20 maxSpin 472.142 centre below 0.0991838 corner below 0.13019
+FAIL slab tilt 5 speed 20: box does not pass through the support
+FAIL slab tilt 5 speed 20: no corner sinks a box depth into the support
+  slab tilt 5 speed 40 maxSpin 921.833 centre below 0.0865414 corner below 0.118009
+FAIL slab tilt 5 speed 40: box does not pass through the support
+FAIL slab tilt 5 speed 40: no corner sinks a box depth into the support
+  slab tilt 15 speed 10 maxSpin 250.756 centre below 0 corner below 0.00811065
+  slab tilt 15 speed 20 maxSpin 464.726 centre below 0.0634948 corner below 0.0947006
+FAIL slab tilt 15 speed 20: box does not pass through the support
+FAIL slab tilt 15 speed 20: no corner sinks a box depth into the support
+  slab tilt 15 speed 40 maxSpin 907.377 centre below 0.0521697 corner below 0.0823123
+FAIL slab tilt 15 speed 40: box does not pass through the support
+FAIL slab tilt 15 speed 40: no corner sinks a box depth into the support
+  slab tilt 30 speed 10 maxSpin 254.439 centre below 0.0108449 corner below 0.0400802
+FAIL slab tilt 30 speed 10: box does not pass through the support
+FAIL slab tilt 30 speed 10: no corner sinks a box depth into the support
+  slab tilt 30 speed 20 maxSpin 487.573 centre below 0.0725165 corner below 0.097003
+FAIL slab tilt 30 speed 20: box does not pass through the support
+FAIL slab tilt 30 speed 20: no corner sinks a box depth into the support
+  slab tilt 30 speed 40 maxSpin 911.069 centre below 0.286892 corner below 0.315273
+FAIL slab tilt 30 speed 40: box does not pass through the support
+FAIL slab tilt 30 speed 40: no corner sinks a box depth into the support
+  slab tilt 45 speed 10 maxSpin 261.808 centre below 0.0224375 corner below 0.0542024
+FAIL slab tilt 45 speed 10: box does not pass through the support
+FAIL slab tilt 45 speed 10: no corner sinks a box depth into the support
+  slab tilt 45 speed 20 maxSpin 468.403 centre below 0 corner below 0.0048672
+  slab tilt 45 speed 40 maxSpin 911.057 centre below 0.0859834 corner below 0.117627 THREW angular midpoint did not converge
+FAIL slab tilt 45 speed 40: Step does not throw (angular midpoint did not converge)
+FAIL slab tilt 45 speed 40: box does not pass through the support
+FAIL slab tilt 45 speed 40: no corner sinks a box depth into the support
+  mesh tilt 0 speed 10 maxSpin 0 centre below 0 corner below 9.31323e-09
+  mesh tilt 0 speed 20 maxSpin 0 centre below 0 corner below 9.31323e-09
+  mesh tilt 0 speed 40 maxSpin 0 centre below 0 corner below 9.31323e-09
+  mesh tilt 5 speed 10 maxSpin 254.841 centre below 0.147082 corner below 0.161057 THREW angular midpoint did not converge
+FAIL mesh tilt 5 speed 10: Step does not throw (angular midpoint did not converge)
+FAIL mesh tilt 5 speed 10: box does not pass through the support
+FAIL mesh tilt 5 speed 10: no corner sinks a box depth into the support
+  mesh tilt 5 speed 20 maxSpin 510.222 centre below 3.8479 corner below 3.8782 THREW angular midpoint did not converge
+FAIL mesh tilt 5 speed 20: Step does not throw (angular midpoint did not converge)
+FAIL mesh tilt 5 speed 20: box does not pass through the support
+FAIL mesh tilt 5 speed 20: no corner sinks a box depth into the support
+  mesh tilt 5 speed 40 maxSpin 959.646 centre below 3.74872 corner below 3.76828 THREW angular midpoint did not converge
+FAIL mesh tilt 5 speed 40: Step does not throw (angular midpoint did not converge)
+FAIL mesh tilt 5 speed 40: box does not pass through the support
+FAIL mesh tilt 5 speed 40: no corner sinks a box depth into the support
+  mesh tilt 15 speed 10 maxSpin 283.259 centre below 1.54592 corner below 1.57491
+FAIL mesh tilt 15 speed 10: box does not pass through the support
+FAIL mesh tilt 15 speed 10: no corner sinks a box depth into the support
+  mesh tilt 15 speed 20 maxSpin 510.946 centre below 1.79341 corner below 1.82474 THREW angular midpoint did not converge
+FAIL mesh tilt 15 speed 20: Step does not throw (angular midpoint did not converge)
+FAIL mesh tilt 15 speed 20: box does not pass through the support
+FAIL mesh tilt 15 speed 20: no corner sinks a box depth into the support
+  mesh tilt 15 speed 40 maxSpin 917.125 centre below 1.67481 corner below 1.69863 THREW angular midpoint did not converge
+FAIL mesh tilt 15 speed 40: Step does not throw (angular midpoint did not converge)
+FAIL mesh tilt 15 speed 40: box does not pass through the support
+FAIL mesh tilt 15 speed 40: no corner sinks a box depth into the support
+  mesh tilt 30 speed 10 maxSpin 254.446 centre below 0.0108499 corner below 0.0400443 THREW angular midpoint did not converge
+FAIL mesh tilt 30 speed 10: Step does not throw (angular midpoint did not converge)
+FAIL mesh tilt 30 speed 10: box does not pass through the support
+FAIL mesh tilt 30 speed 10: no corner sinks a box depth into the support
+  mesh tilt 30 speed 20 maxSpin 487.433 centre below 0.455909 corner below 0.485053
+FAIL mesh tilt 30 speed 20: box does not pass through the support
+FAIL mesh tilt 30 speed 20: no corner sinks a box depth into the support
+  mesh tilt 30 speed 40 maxSpin 958.33 centre below 0.607829 corner below 0.638856
+FAIL mesh tilt 30 speed 40: box does not pass through the support
+FAIL mesh tilt 30 speed 40: no corner sinks a box depth into the support
+  mesh tilt 45 speed 10 maxSpin 261.788 centre below 0.0860944 corner below 0.10881
+FAIL mesh tilt 45 speed 10: box does not pass through the support
+FAIL mesh tilt 45 speed 10: no corner sinks a box depth into the support
+  mesh tilt 45 speed 20 maxSpin 468.394 centre below 0.0117732 corner below 0.0417817
+FAIL mesh tilt 45 speed 20: box does not pass through the support
+FAIL mesh tilt 45 speed 20: no corner sinks a box depth into the support
+  mesh tilt 45 speed 40 maxSpin 911.037 centre below 0.0860423 corner below 0.117658
+FAIL mesh tilt 45 speed 40: box does not pass through the support
+FAIL mesh tilt 45 speed 40: no corner sinks a box depth into the support
+gentle slides
+  slab slide 15 maxSpin 4.21542e-05 centre below 0 corner below 1.81608e-08
+  slab slide 30 maxSpin 1.88522 centre below 0 corner below 3.50177e-07
+  slab slide 45 maxSpin 3.58187 centre below 0 corner below 0.000790238
+  mesh slide 15 maxSpin 0.199084 centre below 0 corner below 0.000241172
+  mesh slide 30 maxSpin 14.1064 centre below 0.178034 corner below 0.206319
+FAIL mesh slide 30: box does not pass through the support
+FAIL mesh slide 30: no corner sinks a box depth into the support
+  mesh slide 45 maxSpin 14.4536 centre below 0.851808 corner below 0.882188
+FAIL mesh slide 45: box does not pass through the support
+FAIL mesh slide 45: no corner sinks a box depth into the support
+deepest corner below any support 3.8782 m
+checks 219 failures 81

@@ -1,0 +1,106 @@
+{
+  "steps": 300,
+  "cadenceHz": 60,
+  "throwSpeed": 1.2,
+  "method": "One run per scenario plus deterministic repeat; reported time from first run. Same source fixture and host; sequential workloads. Stress measurements, not general game FPS.",
+  "before": {
+    "box primitive floor": {
+      "totalMs": 433.02,
+      "worstStepMs": 6.44,
+      "maxPenetrationMm": 41.96,
+      "fastBoxesThrough": 0.0,
+      "fastBoxesThrew": 0.0,
+      "impactEvents": 933.0
+    },
+    "flat sheet 6x6": {
+      "totalMs": 431.06,
+      "worstStepMs": 7.88,
+      "maxPenetrationMm": 29.38,
+      "fastBoxesThrough": 0.0,
+      "fastBoxesThrew": 0.0,
+      "impactEvents": 762.0
+    },
+    "flat sheet 60x60": {
+      "totalMs": 1561.13,
+      "worstStepMs": 55.79,
+      "maxPenetrationMm": 24.58,
+      "fastBoxesThrough": 3.0,
+      "fastBoxesThrew": 0.0,
+      "impactEvents": 698.0
+    },
+    "trough 2x26 coarse": {
+      "totalMs": 2147.89,
+      "worstStepMs": 40.8,
+      "maxPenetrationMm": 8.95,
+      "fastBoxesThrough": 24.0,
+      "fastBoxesThrew": 0.0,
+      "impactEvents": 1305.0
+    },
+    "trough 30x30": {
+      "totalMs": 1609.29,
+      "worstStepMs": 64.07,
+      "maxPenetrationMm": 8.63,
+      "fastBoxesThrough": 24.0,
+      "fastBoxesThrew": 0.0,
+      "impactEvents": 784.0
+    },
+    "trough 60x60 dense": {
+      "totalMs": 1607.19,
+      "worstStepMs": 79.32,
+      "maxPenetrationMm": 12.19,
+      "fastBoxesThrough": 24.0,
+      "fastBoxesThrew": 0.0,
+      "impactEvents": 249.0
+    }
+  },
+  "after": {
+    "box primitive floor": {
+      "totalMs": 283.85,
+      "worstStepMs": 7.96,
+      "maxPenetrationMm": 14.86,
+      "fastBoxesThrough": 0.0,
+      "fastBoxesThrew": 0.0,
+      "impactEvents": 538.0
+    },
+    "flat sheet 6x6": {
+      "totalMs": 335.88,
+      "worstStepMs": 8.77,
+      "maxPenetrationMm": 11.32,
+      "fastBoxesThrough": 0.0,
+      "fastBoxesThrew": 0.0,
+      "impactEvents": 547.0
+    },
+    "flat sheet 60x60": {
+      "totalMs": 1668.25,
+      "worstStepMs": 45.31,
+      "maxPenetrationMm": 17.58,
+      "fastBoxesThrough": 0.0,
+      "fastBoxesThrew": 0.0,
+      "impactEvents": 684.0
+    },
+    "trough 2x26 coarse": {
+      "totalMs": 953.95,
+      "worstStepMs": 25.0,
+      "maxPenetrationMm": 9.92,
+      "fastBoxesThrough": 24.0,
+      "fastBoxesThrew": 0.0,
+      "impactEvents": 452.0
+    },
+    "trough 30x30": {
+      "totalMs": 1853.26,
+      "worstStepMs": 46.56,
+      "maxPenetrationMm": 10.8,
+      "fastBoxesThrough": 24.0,
+      "fastBoxesThrew": 0.0,
+      "impactEvents": 790.0
+    },
+    "trough 60x60 dense": {
+      "totalMs": 4564.88,
+      "worstStepMs": 82.6,
+      "maxPenetrationMm": 13.21,
+      "fastBoxesThrough": 24.0,
+      "fastBoxesThrew": 0.0,
+      "impactEvents": 1284.0
+    }
+  }
+}

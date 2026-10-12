@@ -1,0 +1,120 @@
+Fast-spin / planar-support repair (independent correction of PR #14)
+=================================================================
+Base main: 2272f288144efeb3edada591a706b88ec48356a5
+Reviewed PR #14: 2cab95832641cf674824176ecc0f630618f88e24
+Platform: native Linux, Release. Uncommitted candidate; human and Windows validation pending.
+
+Mechanisms and correction
+-------------------------
+1. A light anisotropic box spun up by off-centre impacts can leave the original
+12-iteration angular Newton solve outside its convergence basin. Retained
+Claude's interval-continuation fallback, which solves the SAME midpoint equation
+m_mid - m0 - (dt/2) cross(m_mid, I^-1 m_mid) = 0. It activates only after the
+original solve fails, follows roots from zero interval, and retains explicit
+failure if bounded continuation cannot converge. It does not clamp angular
+velocity, substitute an unconserved predictor, change the physics timestep, or
+simulate hidden substeps. Momentum norm and kinetic energy follow from dotting
+the midpoint equation with m_mid and I^-1 m_mid respectively. The committed
+fixture checks the equation's residual as well as both invariants after float
+rounding. The original successful Newton path remains unchanged in 20,000
+independent sampled inputs (bit-exact returned generators).
+
+2. Touching pairs were excluded from continuous impact searches even when spin
+could sweep another corner through the support during the remaining step.
+Retained Claude's generic spinning-support classification and penetration-target
+search. Sweep threshold is the existing primitive HALF-dimension feature (half
+full box thickness); target increase is .25 of that feature (one eighth full
+box thickness). Target is relative to actual starting penetration, not a global
+rest-pose reset. Existing bounded temporal sampling and impact budgets remain;
+spinning pairs still count as supports for inelastic restitution. No change to
+controller settings, mesh, mass, cadence, CCD quality or gameplay APIs.
+
+3. In deep actual overlap, the mesh SAT response normal can oppose the selected
+triangle front and push a thin body farther through. Retained the front-normal
+correction ONLY AFTER SAT separation rejection and ONLY for actual overlap
+(s.gap <= 0). Separated speculative contacts retain their separation and normal.
+PR #14 replaced the SAT result before rejecting separated finite triangles,
+creating ghost contacts on the triangle's infinite plane. This correction keeps
+finite edge separation, contact margins, one-sided culling and two-sided reversal
+intact. Both full manifolds and Boolean existence use this same corrected path.
+
+Independent reproduction and negative controls
+---------------------------------------------
+- Original main: unchanged PR robustness fixture, 219 checks / 81 failures,
+  including the captured angular failures and planar crossing/sliding failures.
+- Original PR #14: expanded test linked against an isolated archive with ONLY
+  its faulty CollisionGeometry object substituted: 4,412 checks / 326 failures.
+  This proves the new negative controls detect the faulty mechanism.
+- Final repair: 4,412 checks / 0 failures. Original thresholds unchanged: centre
+  no more than 5 mm below support, deepest corner no more than 3 cm below.
+  Deepest corner observed: 15.0281 mm. All nine captured midpoint cases solve.
+- Arbitrarily rotated world/drop/gravity fixture: 237 checks / 0 failures;
+  deepest corner 14.8938 mm (same original acceptance thresholds).
+- Independent 50,000-pose finite-triangle probe: final 0 false contacts.
+  Original PR had 2,479 false contacts with two-sided triangles, 1,736 with
+  one-sided triangles; original main had zero in either corpus.
+- Minimal reproduced miss: independent analytic separation lower bound .863284 m,
+  exact geometric distance .872741 m. Main reports no contact; original PR
+  reports a contact and true Boolean existence. See preserved source/logs.
+- New native tests cover finite misses, positive overlap, backfaces, two-sided
+  geometry, arbitrary rotation and 0/.01/.1 m margins. Random negative controls
+  are checked against the unchanged independent PolyGeometry evaluator.
+
+Combined native Linux checks
+----------------------------
+25 runs all pass: robustness, collision geometry, impact solver/timing, rigid
+motion, contact lifecycle/cache, kinematic motion, joints, CharacterMotor,
+M70 physical animation, M77 balance controller, physics continuation, real
+imported Skate ragdoll sleep/wake/resettle/cold-save/support removal, mesh impact
+cost/determinism, rigid contact, broadphase, gravity selection, consumer queries;
+application balance standing (actual corrective step), supports, recovery,
+radial, cold-write and fresh-process cold-read. Cold-read verifies the actual
+restored physical endpoint, not just cached controller status.
+
+The robustness test received a narrow rerun after adding its nine explicit
+midpoint residual assertions; engine source remained unchanged. combined-results
+records the preceding complete batch; the final robustness log has 4,412 checks.
+Release editor/game and affected targets build successfully. API source/type
+check passes: 345 public symbols, 30 exports, TypeScript 5.9.3. No binding change.
+No full production-suite repetition or Windows execution claimed.
+
+Performance and limitations
+---------------------------
+See performance.json for all six identical 300-step / 60 Hz / 1.2 m/s stress
+fixtures, measured sequentially with deterministic repeats. This is one timing
+sample per scenario, not a general game-FPS certification. Combined reported
+scenario time 7,789.58 -> 9,660.07 ms. Costs are mixed: dense flat sheet
+1,561.13 -> 1,668.25 ms; dense curved trough 1,607.19 -> 4,564.88 ms, worst step
+79.32 -> 82.60 ms, with more impact events. This cost is NOT hidden or claimed
+as a universal speed improvement. Ragdoll floor maximum penetration improves
+41.96 -> 14.86 mm, flat sheet 29.38 -> 11.32 mm (6x6) and 24.58 -> 17.58 mm
+(60x60). Dense flat-sheet fast-box crossings 3/24 -> 0/24.
+
+Curved-trough fast-box tunnelling remains 24/24 in this corpus: concave-mesh
+conservative advancement and centroid-based one-sided culling are separate known
+limitations, not repaired or certified here. Trajectories/contact timing change;
+only the ordinary successful angular solve is claimed bit-exact. Bounded
+sampling and convergence limits still exist. FLU-001, old-save limitations and
+incomplete M78 coverage remain unchanged. No fluid code/research changes.
+
+Reproduction
+------------
+cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
+cmake --build build -j2 --target judas_impact_robustness_tests judas_impact_mesh_cost_tests
+build/judas_impact_robustness_tests
+build/judas_impact_mesh_cost_tests 300 "" 1.2
+Additional focused target names and result receipts are in combined-results.json.
+Application tests require an offscreen display or SDL_VIDEODRIVER=offscreen and
+SDL_AUDIODRIVER=dummy. Balance cold-write/cold-read must use the same newly owned
+output directory, in separate processes.
+
+Change scope and review
+-----------------------
+CMakeLists.txt; src/{RigidBody,PhysicsWorld,CollisionGeometry}.cpp;
+tests/ImpactRobustnessTests.cpp; this new evidence directory.
+No existing evidence rewritten. PR #14 remains unmerged; source provenance is
+explicitly retained above. No commit, push, tag or branch creation.
+Suggested human checks: drop/throw small boxes onto slopes; bail the Skate rig
+onto ordinary ground and the half-pipe; confirm limbs remain stable and settle;
+check mesh boundaries do not act as invisible walls; exercise M77 corrective
+steps and save/resume; note dense curved-mesh hitching remains a limitation.
