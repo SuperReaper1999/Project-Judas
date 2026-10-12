@@ -3,7 +3,7 @@
 // (Skate & Parkour art half-pipe) without game content: a 12-body ragdoll is thrown into a
 // procedurally cooked trough (curved) or onto a flat sheet, at several triangle densities.
 // Prints per-scenario step time, impact counters, collision-geometry work and a bit-exact
-// trajectory digest. The digest is the evidence that a pure performance change preserved the
+// trajectory digest, and checks that fast thin boxes fired at each sheet never tunnel. The digest is the evidence that a pure performance change preserved the
 // simulation; timings are reported, never asserted.
 #include "CollisionAsset.h"
 #include "CollisionGeometry.h"
@@ -84,8 +84,8 @@ double Penetration(const BodyTransform& t,const Part& part,bool curved){
     return deepest;
 }
 // The ragdoll is laid on its back along the trough, 0.75 m up, thrown along +z (a bail into the
-// ramp, rocking up the far wall) with a little spin, then left to settle for `steps` fixed steps.
-Result Run(const std::shared_ptr<CollisionAsset>& ground,bool curved,int steps){
+// ramp, rocking up the far wall; 1.2 m/s unless given) with a little spin, then left to settle for `steps` fixed steps.
+Result Run(const std::shared_ptr<CollisionAsset>& ground,bool curved,int steps,float throwSpeed){
     PhysicsWorld w;w.Init();
     if(ground)w.CreateShape(Shape::Cooked(ground,"impact cost sheet"),{},false,1,.6f,0);
     else w.CreateStaticBox({0,-.5f,0},{1.5f,.5f,1.5f},.6f,0);
@@ -96,7 +96,7 @@ Result Run(const std::shared_ptr<CollisionAsset>& ground,bool curved,int steps){
         const glm::vec3 at=lie*p.position+offset;
         BodyHandle h=p.sphere?w.CreateDynamicSphere(at,p.half.x,p.mass,.6f,0):w.CreateDynamicBox(at,p.half,p.mass,.6f,0);
         w.ResetBody(h,at,lie);
-        w.SetLinearVelocity(h,{0,-.5f,1.2f});w.SetAngularVelocity(h,{1.5f,0,.8f});bodies.push_back(h);
+        w.SetLinearVelocity(h,{0,-.5f,throwSpeed});w.SetAngularVelocity(h,{1.5f,0,.8f});bodies.push_back(h);
     }
     // Like WorldRagdoll without self-collision: bones never collide with each other.
     for(std::size_t a=0;a<bodies.size();++a)for(std::size_t b=a+1;b<bodies.size();++b)w.SetPairCollisionEnabled(bodies[a],bodies[b],false);
@@ -113,7 +113,7 @@ Result Run(const std::shared_ptr<CollisionAsset>& ground,bool curved,int steps){
         const double ms=std::chrono::duration<double,std::milli>(std::chrono::steady_clock::now()-begin).count();
         r.totalMs+=ms;r.worstMs=std::max(r.worstMs,ms);
         const auto& s=w.LastStepStats();
-        r.impacts.impactQueries+=s.impactQueries;r.impacts.impactSearchIterations+=s.impactSearchIterations;r.impacts.impactSearchLimit+=s.impactSearchLimit;
+        r.impacts.impactQueries+=s.impactQueries;r.impacts.impactSearchIterations+=s.impactSearchIterations;r.impacts.impactSearchLimit+=s.impactSearchLimit;r.impacts.impactSearchStalls+=s.impactSearchStalls;
         r.impacts.impactSamplingFallbacks+=s.impactSamplingFallbacks;r.impacts.impactSamplingTests+=s.impactSamplingTests;r.impacts.impactEvents+=s.impactEvents;
         double deepest=0;for(std::size_t i=0;i<bodies.size();++i)deepest=std::max(deepest,Penetration(w.GetTransform(bodies[i]),kParts[i],curved));
         r.meanPenetration+=deepest/steps;if(deepest>r.maxPenetration){r.maxPenetration=deepest;r.deepestStep=step;}
@@ -127,9 +127,39 @@ Result Run(const std::shared_ptr<CollisionAsset>& ground,bool curved,int steps){
 }
 }
 
+// Tunnelling comparison: small, thin boxes fired fast at the sheet, from steep to grazing, each
+// in its own world. One-sided meshes stop nothing from behind, so a box that ever gets more than
+// 5 cm beneath the surface (over the sheet) has crossed it; boxes leaving over the trough lip
+// just fly off. Reported, not asserted: at 3bdf09e9 these boxes already cross sloped and curved
+// meshes, and impacts like these can spin such a box past 500 rad/s, where the angular midpoint
+// solve throws (both reported separately, in docs/evidence/ccd-mesh-contacts). The counts let a
+// continuous-impact change show it crosses no more than before.
+struct FastBoxes {int through=0,threw=0;};
+FastBoxes FireFastBoxes(const std::shared_ptr<CollisionAsset>& ground,bool curved){
+    FastBoxes result;
+    for(int i=0;i<24;++i){
+        PhysicsWorld w;w.Init();w.CreateShape(Shape::Cooked(ground,"impact cost sheet"),{},false,1,.6f,0);
+        const float along=-1.2f+.1f*float(i),grazing=float(i%6)*6.f;   // 0..30 m/s across, 40 m/s down
+        auto h=w.CreateDynamicBox({along,1.2f,-1.f},{.02f,.01f,.03f},.2f,.4f,0);w.SetLinearVelocity(h,{0,-40.f,grazing});
+        bool crossed=false;
+        try{
+            for(int step=0;step<90&&!crossed;++step){
+                w.ApplyLinearAcceleration(h,{0,-9.81f,0},1.f/60.f);w.Step(1.f/60.f);
+                const auto p=w.GetTransform(h).position;const bool over=std::abs(p.x)<=1.5f&&std::abs(p.z)<=1.5f;
+                const double below=curved?std::hypot(double(p.y)-1.6,double(p.z))-1.6:-double(p.y);
+                crossed=!std::isfinite(p.y)||(over&&below>.05);
+            }
+        }catch(const std::runtime_error&){++result.threw;continue;}
+        result.through+=crossed;
+    }
+    return result;
+}
+
 int main(int argc,char** argv){
-    // Optional: step count, then a scenario-name filter (substring).
+    // Optional: step count, a scenario-name filter (substring, "" for all), the ragdoll's throw
+    // speed in m/s (vary it to see run-to-run spread; trajectories are chaotic).
     const int steps=argc>1?std::max(1,std::atoi(argv[1])):300;const std::string only=argc>2?argv[2]:"";
+    const float throwSpeed=argc>3?float(std::atof(argv[3])):1.2f;
     struct Scenario {const char* name;int cellsX,cellsZ;bool curved,primitive;};
     const std::vector<Scenario> scenarios={{"box primitive floor",0,0,false,true},{"flat sheet 6x6",6,6,false,false},{"flat sheet 60x60",60,60,false,false},
         {"trough 2x26 coarse",2,26,true,false},{"trough 30x30",30,30,true,false},{"trough 60x60 dense",60,60,true,false}};
@@ -137,15 +167,16 @@ int main(int argc,char** argv){
     for(const auto& s:scenarios){
         if(!only.empty()&&std::string(s.name).find(only)==std::string::npos)continue;
         auto ground=s.primitive?nullptr:Sheet(s.cellsX,s.cellsZ,s.curved);
-        const auto a=Run(ground,s.curved,steps),b=Run(ground,s.curved,steps);
+        const auto a=Run(ground,s.curved,steps,throwSpeed),b=Run(ground,s.curved,steps,throwSpeed);
         Check(a.digest==b.digest,std::string(s.name)+" is deterministic run to run");
+        const FastBoxes fast=ground?FireFastBoxes(ground,s.curved):FastBoxes{};
         std::cout<<"SCENARIO \""<<s.name<<"\" triangles "<<(ground?ground->faces.size():0)<<" steps "<<steps
                  <<" totalMs "<<a.totalMs<<" worstStepMs "<<a.worstMs<<" maxPenetrationMm "<<a.maxPenetration*1000<<" atStep "<<a.deepestStep<<" meanDeepestMm "<<a.meanPenetration*1000
                  <<" impactQueries "<<a.impacts.impactQueries<<" searchIterations "<<a.impacts.impactSearchIterations
-                 <<" searchLimits "<<a.impacts.impactSearchLimit<<" samplingFallbacks "<<a.impacts.impactSamplingFallbacks
+                 <<" searchLimits "<<a.impacts.impactSearchLimit<<" searchStalls "<<a.impacts.impactSearchStalls<<" samplingFallbacks "<<a.impacts.impactSamplingFallbacks
                  <<" samplingTests "<<a.impacts.impactSamplingTests<<" impactEvents "<<a.impacts.impactEvents
                  <<" convexTests "<<a.convexTests<<" meshTriangles "<<a.triangles<<" bvhNodes "<<a.nodes
-                 <<" digest "<<std::hex<<a.digest<<std::dec<<'\n';
+                 <<" fastBoxesThrough "<<fast.through<<" fastBoxesThrew "<<fast.threw<<" digest "<<std::hex<<a.digest<<std::dec<<'\n';
     }
     std::cout<<"checks "<<checks<<" failures "<<failures<<'\n';
     return failures?1:0;
