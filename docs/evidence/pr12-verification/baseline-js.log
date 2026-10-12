@@ -1,0 +1,18 @@
+Renderer fragment texture units: 32 (material path uses 12)
+script asset=d2e308046fad65768baf0a32ab6c5514 entity=101 slot=1 fixedUpdate: TypeError: visual socket cannot own physical motion
+    at __judas (native)
+    at call (judas:2:51)
+    at setSocket (judas:27:90)
+    at fixedUpdate (Assets/example.js:15:41)
+
+PASS real EngineHost
+PASS developer-integration normal registered script
+PASS developer-integration normal project
+PASS developer-integration ordinary scene
+PASS developer-integration runtime builds
+PASS developer-integration ordinary fixed-step session
+FAIL developer-integration real VM callbacks without faults
+EXAMPLE developer-integration 
+FAIL developer-integration documented outcome
+PASS developer-integration teardown
+SUMMARY 9 checks 2 failures

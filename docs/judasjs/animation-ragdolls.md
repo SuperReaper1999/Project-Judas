@@ -151,7 +151,7 @@ Authored/runtime settings persist; solver caches do not.
 
 `entity.setSocket(target, joint, offset={}) → true` assigns a visual-only attachment.
 Target is a safe animated Entity. Use `entity.clearSocket() → true` to remove the
-attachment; `setSocket(null, ...)` is invalid and throws TypeError. Offset is partial local
+attachment; `setSocket(null)` or `setSocket(undefined)` also removes it. Offset is partial local
 position/rotation/scale relative to that joint. Reads are ordinary transform /
 presentedTransform. Missing joints/invalid cycles/conflicting physics ownership
 throw; no fallback to guessed clip or bind transforms. Target-first evaluation

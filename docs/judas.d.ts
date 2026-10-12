@@ -163,6 +163,7 @@ declare module "judas" {
     readonly physicalMaterial:{asset:AssetId|null;friction:number;restitution:number};
     setPhysicalMaterial(asset?:AssetId|null,parameters?:{friction?:number;restitution?:number}):boolean;
     setSocket(target:Entity,joint:string,offset?:TransformPatch):boolean;
+    setSocket(target:null|undefined):boolean;
     clearSocket():boolean;
     material(slot?:MaterialTarget):Material;
     readonly liquid:LiquidVolume|null;

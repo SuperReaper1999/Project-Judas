@@ -1,0 +1,14 @@
+Renderer fragment texture units: 32 (material path uses 12)
+PASS real EngineHost
+PASS developer-integration normal registered script
+PASS developer-integration normal project
+PASS developer-integration ordinary scene
+PASS developer-integration runtime builds
+PASS developer-integration ordinary fixed-step session
+PASS developer-integration real VM callbacks without faults
+PASS null/undefined removal clears actual runtime socket, invalid target does not reattach
+EXAMPLE developer-integration {"pose":true,"ik":true,"socket":true,"unsocket":true,"gravity":true,"material":true,"joint":true,"stale":true,"undefinedRemoval":true,"invalidTarget":true}
+PASS developer-integration documented outcome
+PASS undefined removal and invalid-target negative control through real QuickJS
+PASS developer-integration teardown
+SUMMARY 11 checks 0 failures

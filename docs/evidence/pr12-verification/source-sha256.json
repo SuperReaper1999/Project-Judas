@@ -1,0 +1,13 @@
+{
+  "src/ModelCook.cpp": "b77c4f0811a3268f4f1e26c403e34d8ca8cf4aaf82ae244593011d6bb928c3f7",
+  "src/ScriptSystem.cpp": "9bd7308eed33d447824be77a802f17383768e19f46ae481150c60eb973cdcb39",
+  "tests/ModelReimportTests.cpp": "471226538886b23f62a29f32fc4ec10b3d42a81e27081f952db94e972c3bde2c",
+  "tests/JudasJSExamplesTests.cpp": "ed7a6545af1f375e427af82bfdaa40d016ea6668cfc5483e908bde29cf358d62",
+  "docs/judasjs/examples/developer-integration.js": "e9c0cda76144d3d822c568fb98ccc5e61138edefbf5b629e3d952e448d689e5b",
+  "tests/fixtures/m66/dense60.gltf": "a5ecde5191db02152f971dab011879ba72ebc4941ef450a30c257ad820324047",
+  "docs/judas.d.ts": "97ef770bc9390de8153ce16a4e623837131e4ff5a32e8ae76ee5d12fe344f452",
+  "docs/judasjs/entities.md": "92709d191cb8e397052b21a85e0c307412666d010e26e5893e75af4abd3b6b1c",
+  "docs/judasjs/animation-ragdolls.md": "e2f7f19b2868d2be546c5054dc1067c802acca5efce399199a35956b9da00f59",
+  "docs/judasjs/API_INVENTORY.md": "9d1b43c2b71f1723991d3dacc9d2b1edd8f3f994b7483d74514ae3f22b39802d",
+  "docs/judasjs/api-inventory.json": "6f97329e4376e75737af620fe00d4551ffac5a1d9d230a31af9c57c4a30c73b4"
+}

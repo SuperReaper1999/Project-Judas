@@ -1,0 +1,16 @@
+Renderer fragment texture units: 32 (material path uses 12)
+script asset=d8116fa0b8dfb55195326ca77b10e7f6 entity=101 slot=1 module: ReferenceError: unregistered script import: Assets/pr12-base.js
+
+PASS real EngineHost
+PASS developer-integration normal registered script
+PASS developer-integration normal project
+PASS developer-integration ordinary scene
+PASS developer-integration runtime builds
+PASS developer-integration ordinary fixed-step session
+FAIL developer-integration real VM callbacks without faults
+FAIL null/undefined removal clears actual runtime socket, invalid target does not reattach
+EXAMPLE developer-integration 
+FAIL developer-integration documented outcome
+FAIL undefined removal and invalid-target negative control through real QuickJS
+PASS developer-integration teardown
+SUMMARY 11 checks 4 failures

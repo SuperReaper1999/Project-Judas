@@ -121,7 +121,7 @@ See [queries](physics.md#physicsclosestpoint) and [collision assets](../M64_COLL
 ## M65 references and physical/presentation consumers
 
 `setSocket(target,joint,offset={})` assigns a visual attachment and `clearSocket()`
-removes it; null is not a valid `setSocket` target. See
+removes it; `setSocket(null)` or `setSocket(undefined)` also removes it. See
 [resolved pose/socket semantics](animation-ragdolls.md#resolved-joint-reads-visual-sockets-and-limb-ik-m65).
 `physicalMaterial`, `setPhysicalMaterial` and read-only `sleeping` use
 [normal physical state](physics.md#gravity-physical-materials-and-runtime-joint-configuration-m65).

@@ -121,7 +121,7 @@ Native dispatcher operations are implementation details, not additional JS APIs.
 | `Entity.setPartVisible` | `modelPartVisible` | [declaration](../judas.d.ts) | [reference](entities.md) |
 | `Entity.setParticles` | `particles` | [declaration](../judas.d.ts) | [reference](entities.md) |
 | `Entity.setPhysicalMaterial` | `physicalMaterialSet` | [declaration](../judas.d.ts) | [reference](entities.md) |
-| `Entity.setSocket` | `socketSet` | [declaration](../judas.d.ts) | [reference](entities.md) |
+| `Entity.setSocket` | `socketClear`, `socketSet` | [declaration](../judas.d.ts) | [reference](entities.md) |
 | `Entity.sleeping` | `sleeping` | [declaration](../judas.d.ts) | [reference](entities.md) |
 | `Entity.stopAudio` | `stopAudio` | [declaration](../judas.d.ts) | [reference](audio.md) |
 | `Entity.stopKinematic` | `kinematicStop` | [declaration](../judas.d.ts) | [reference](entities.md) |

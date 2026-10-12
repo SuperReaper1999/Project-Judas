@@ -1229,6 +1229,7 @@
         "call"
       ],
       "native": [
+        "socketClear",
         "socketSet"
       ],
       "type": "docs/judas.d.ts:Entity.setSocket",
