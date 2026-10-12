@@ -1,5 +1,9 @@
 # Two pre-existing issues found while testing continuous impacts
 
+> **Status:** Issue 2 is fixed, and issue 1 is fixed for planar slopes (sheets and slabs). Fast
+> boxes still cross the curved troughs, for separate reasons. See
+> `docs/evidence/impact-robustness/RESULTS.md`.
+
 Both were found while building a tunnelling check for the stall-triggered fallback in this PR.
 Both reproduce on unmodified `3bdf09e9` (Linux, Release). They are reported here and **not
 changed by this PR**. The probes below are self-contained `PhysicsWorld` snippets.
