@@ -1,0 +1,34 @@
+PASS fresh output argument
+PASS fresh fixture
+PASS ordinary project
+PASS ordinary imported skeletal fixture
+PASS known direct chain positive fixture
+PASS actual GL resource owner
+PASS registered imported model
+PASS normal resource pipeline publishes shared immutable skeleton
+PASS registered public IK script
+PASS normal runtime world
+PASS public configure has no uncaught errors
+PASS configure validates but does not publish a fictitious completed solve
+PASS joint read missing and invalid-space negative controls
+PASS actual resolved joint reads
+FAIL independent analytic world target and orientation, oblique uniformly scaled root
+PASS shared asset instance without IK retains bind pose
+PASS public status snapshot is detached
+FAIL public target submission preserves previous completed solve until fixed boundary
+PASS invalid batch/config are rejected through real JS
+PASS invalid later target/config cannot partially publish
+PASS next fixed reference phase publishes exactly the valid batch
+PASS current resolved mapped bone before physical entry
+PASS actual ordinary ragdoll activates from IK pose
+PASS actual generation-safe mapped physical body
+PASS physical entry starts at current resolved joint, not bind pose
+PASS final physical joint remains readable after target evaluation
+PASS shared IK does not overwrite actual dynamic mapped-body final pose
+PASS instances really share one immutable asset
+PASS IK/physics does not mutate shared rest asset
+PASS physical deactivation uses normal resolver
+PASS remove IK
+PASS resolved joint after removing producer
+PASS removing IK/physics leaves no accumulated final-pose contamination
+SUMMARY 33 checks 2 failures

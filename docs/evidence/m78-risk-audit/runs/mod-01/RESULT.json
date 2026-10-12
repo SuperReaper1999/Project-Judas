@@ -1,0 +1,155 @@
+{
+  "checks": 36,
+  "failures": 0,
+  "assertions": [
+    {
+      "name": "publish initial mutable file",
+      "passed": true
+    },
+    {
+      "name": "injected pre-publication failure reported",
+      "passed": true
+    },
+    {
+      "name": "interrupted replacement preserves exact last-good bytes",
+      "passed": true
+    },
+    {
+      "name": "valid replacement after interruption succeeds",
+      "passed": true
+    },
+    {
+      "name": "positive replacement changes bytes",
+      "passed": true
+    },
+    {
+      "name": "path traversal rejects before external publication",
+      "passed": true
+    },
+    {
+      "name": "data package installed",
+      "passed": true
+    },
+    {
+      "name": "data package selected without executable trust",
+      "passed": true
+    },
+    {
+      "name": "ordinary freeze publishes selected data session",
+      "passed": true
+    },
+    {
+      "name": "frozen cache contains exact decoded payload",
+      "passed": true
+    },
+    {
+      "name": "second store changes next-launch selection",
+      "passed": true
+    },
+    {
+      "name": "new session observes disabled selection",
+      "passed": true
+    },
+    {
+      "name": "live snapshot remains fixed after next-launch disable",
+      "passed": true
+    },
+    {
+      "name": "cross-store uninstall blocked by active session lease",
+      "passed": true
+    },
+    {
+      "name": "failed uninstall preserves active materialized file",
+      "passed": true
+    },
+    {
+      "name": "release session permits uninstall",
+      "passed": true
+    },
+    {
+      "name": "uninstall leaves consistent empty index and loadout",
+      "passed": true
+    },
+    {
+      "name": "executable package can install without starting code",
+      "passed": true
+    },
+    {
+      "name": "untrusted executable selection rejected",
+      "passed": true
+    },
+    {
+      "name": "trust rejection leaves prior loadout unchanged",
+      "passed": true
+    },
+    {
+      "name": "exact-hash explicit trust permits executable selection",
+      "passed": true
+    },
+    {
+      "name": "frozen executable session retains exact trusted identity",
+      "passed": true
+    },
+    {
+      "name": "game permission denial leaves caller snapshot unpublished",
+      "passed": true
+    },
+    {
+      "name": "disable executable before next package test",
+      "passed": true
+    },
+    {
+      "name": "install dependent metadata without resolving absent dependency",
+      "passed": true
+    },
+    {
+      "name": "absent dependency blocks selection",
+      "passed": true
+    },
+    {
+      "name": "dependency failure cannot publish partial loadout",
+      "passed": true
+    },
+    {
+      "name": "interruption after immutable payload reports failure",
+      "passed": true
+    },
+    {
+      "name": "interruption retains exact previous installed membership",
+      "passed": true
+    },
+    {
+      "name": "exact orphan payload reusable after interrupted install",
+      "passed": true
+    },
+    {
+      "name": "pre-publication cancellation rejects install",
+      "passed": true
+    },
+    {
+      "name": "cancelled install retains existing index/loadout",
+      "passed": true
+    },
+    {
+      "name": "restore positive executable control",
+      "passed": true
+    },
+    {
+      "name": "read installed file identities",
+      "passed": true
+    },
+    {
+      "name": "audit can deliberately corrupt unleased owned fixture",
+      "passed": true
+    },
+    {
+      "name": "corrupt selected payload fails without replacing output snapshot",
+      "passed": true
+    }
+  ],
+  "observations": {
+    "leasedRemovalDiagnostic": "content version is in use",
+    "corruptFreezeDiagnostic": "mod decode: bounded/truncated mod field"
+  },
+  "scope": "Native storage/admission/session leases; not JS execution, process crash or complete export integration"
+}

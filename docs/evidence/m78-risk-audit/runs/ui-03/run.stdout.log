@@ -1,0 +1,36 @@
+PASS fresh output argument
+PASS output not reused
+PASS ordinary project
+PASS ordinary UI asset
+PASS registered UI
+PASS registered owner script
+PASS registered observer
+PASS world builds
+PASS actual public UI scripts have no unhandled exception
+PASS public JS missing
+PASS public JS detached
+PASS public JS badKey
+PASS public JS badSize
+PASS public JS nonfinite
+PASS public JS changed
+PASS public JS badValue
+PASS public JS badFlag
+PASS independent documents sharing immutable asset
+PASS public modal true owns pause
+PASS independent computed hit geometry observes public patch
+PASS old button rectangle cannot activate after layout move
+PASS new button rectangle activates actual JS callback
+PASS hidden independent document receives no targeted click
+PASS disabled control does not click
+PASS normal owner destruction
+PASS owner destroy unloads only owned UI
+PASS modal owner removal releases pause
+PASS retained public handles throw after owner destruction
+PASS other instance retains state after owner destruction
+PASS normal slot synchronization disables only that slot-owned UI
+PASS authored UI reload
+PASS runtime UI changes do not rewrite asset
+PASS Stop releases UI and VM
+PASS fresh world rebuild
+PASS new world has fresh scripts/documents without stale owner state
+SUMMARY 35 checks 0 failures

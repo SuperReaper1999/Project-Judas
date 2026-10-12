@@ -1,0 +1,154 @@
+{
+  "checks": [
+    {
+      "name": "fresh output argument",
+      "passed": true
+    },
+    {
+      "name": "output not reused",
+      "passed": true
+    },
+    {
+      "name": "ordinary project",
+      "passed": true
+    },
+    {
+      "name": "ordinary UI asset",
+      "passed": true
+    },
+    {
+      "name": "registered UI",
+      "passed": true
+    },
+    {
+      "name": "registered owner script",
+      "passed": true
+    },
+    {
+      "name": "registered observer",
+      "passed": true
+    },
+    {
+      "name": "world builds",
+      "passed": true
+    },
+    {
+      "name": "actual public UI scripts have no unhandled exception",
+      "passed": true
+    },
+    {
+      "name": "public JS missing",
+      "passed": true
+    },
+    {
+      "name": "public JS detached",
+      "passed": true
+    },
+    {
+      "name": "public JS badKey",
+      "passed": true
+    },
+    {
+      "name": "public JS badSize",
+      "passed": true
+    },
+    {
+      "name": "public JS nonfinite",
+      "passed": true
+    },
+    {
+      "name": "public JS changed",
+      "passed": true
+    },
+    {
+      "name": "public JS badValue",
+      "passed": true
+    },
+    {
+      "name": "public JS badFlag",
+      "passed": true
+    },
+    {
+      "name": "independent documents sharing immutable asset",
+      "passed": true
+    },
+    {
+      "name": "public modal true owns pause",
+      "passed": true
+    },
+    {
+      "name": "independent computed hit geometry observes public patch",
+      "passed": true
+    },
+    {
+      "name": "old button rectangle cannot activate after layout move",
+      "passed": true
+    },
+    {
+      "name": "new button rectangle activates actual JS callback",
+      "passed": true
+    },
+    {
+      "name": "hidden independent document receives no targeted click",
+      "passed": true
+    },
+    {
+      "name": "disabled control does not click",
+      "passed": true
+    },
+    {
+      "name": "normal owner destruction",
+      "passed": true
+    },
+    {
+      "name": "owner destroy unloads only owned UI",
+      "passed": true
+    },
+    {
+      "name": "modal owner removal releases pause",
+      "passed": true
+    },
+    {
+      "name": "retained public handles throw after owner destruction",
+      "passed": true
+    },
+    {
+      "name": "other instance retains state after owner destruction",
+      "passed": true
+    },
+    {
+      "name": "normal slot synchronization disables only that slot-owned UI",
+      "passed": true
+    },
+    {
+      "name": "authored UI reload",
+      "passed": true
+    },
+    {
+      "name": "runtime UI changes do not rewrite asset",
+      "passed": true
+    },
+    {
+      "name": "Stop releases UI and VM",
+      "passed": true
+    },
+    {
+      "name": "fresh world rebuild",
+      "passed": true
+    },
+    {
+      "name": "new world has fresh scripts/documents without stale owner state",
+      "passed": true
+    }
+  ],
+  "failures": 0,
+  "observations": {
+    "oldRectangleEvents": [
+      {
+        "element": "button",
+        "type": "focus"
+      }
+    ]
+  },
+  "scope": "Public QuickJS UI mutation/lifetime + native input/layout effects; no renderer pixels or all scene-transition paths"
+}

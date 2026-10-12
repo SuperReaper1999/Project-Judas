@@ -1,0 +1,26 @@
+PASS ordinary owned project
+PASS actual GL/async host
+PASS ordinary skeletal asset registration
+PASS independent late/new completion workers available
+PASS initial real skeletal asset ready
+PASS initial immutable skeleton identity
+PASS normal shared-asset world
+PASS two actual runtime consumers share first asset
+PASS real old decode held before publication
+PASS invalidated in-flight asset cannot remain resolved on either consumer
+PASS invalidation actually retires old GPU handle
+PASS single same-length authored identity replacement fixture
+PASS commodity importer independently confirms replacement content
+PASS new replacement publishes while old decode remains held
+PASS new immutable skeleton—not cached old source—published
+PASS all actual consumers resolve new immutable asset
+PASS resolved joint identity follows actual replacement
+PASS late old skeletal completion discarded without overwriting new resource
+PASS retained immutable old reference is not mutated in place
+PASS malformed replacement visibly fails decode
+PASS failed replacement cannot silently retain a live old skeleton
+PASS malformed replacement diagnostic retained
+PASS valid source recovers after failed replacement
+PASS recovered source resolves both live consumers normally
+PASS teardown retires all fixture CPU/GPU residency
+SUMMARY 25 checks / 0 failures

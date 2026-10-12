@@ -1,0 +1,30 @@
+libEGL warning: Not allowed to force software rendering when API explicitly selects a hardware device.
+Renderer fragment texture units: 32 (material path uses 12)
+World state: /home/conner/Documents/GitHub/Project-Judas/.cache/m78-next-risk/async-owned/build/ftft2-fixtures/project-close/a/Saves/main.judasstate (none saved)
+Project: FTFT2 async (/home/conner/Documents/GitHub/Project-Judas/.cache/m78-next-risk/async-owned/build/ftft2-fixtures/project-close/a/main.judasproj)
+Scene: FTFT2 async application (/home/conner/Documents/GitHub/Project-Judas/.cache/m78-next-risk/async-owned/build/ftft2-fixtures/project-close/a/Scenes/main.judas)
+World origin (m): 0.000, 0.000, 0.000
+PASS normal application has async workers and real renderer (no headless residency)
+ASYNC enabled=1 workers=7 renderer_present=1
+PASS actual GL mesh buffers are resident for asset 1
+PASS GPU vertex contents match current asset, max x=1.000000
+PASS old project decode is held outstanding at project replacement entry
+PASS project replacement drains old work before database handoff
+PASS old project resource is unavailable after closure
+PASS application scene/session handoff uses real world lifecycle: 
+PASS closed project data cannot return in subsequent normal pump
+PASS normal application returned cleanly
+PASS literal decode/read operations run on workers; GPU creation/destruction on owning thread with current context
+PASS shutdown order: resources drained, workers joined, renderer destroyed, then context destroyed
+PASS all traced mesh/texture objects destroyed exactly once before renderer/context destruction
+PASS no decoder operation after worker join
+PASS no decoder operation after worker join
+PASS no decoder operation after worker join
+PASS no decoder operation after worker join
+PASS no decoder operation after worker join
+PASS no decoder operation after worker join
+PASS no decoder operation after worker join
+OWNERSHIP main=125791786749696 decode_events=4 GPU_created=5 GPU_destroyed=5 trace_events=32
+PASS case completed every required assertion phase
+CASE project-close PASS frames=1 seconds=0.866471
+FTFT2 integration: 20 checks, 0 failures

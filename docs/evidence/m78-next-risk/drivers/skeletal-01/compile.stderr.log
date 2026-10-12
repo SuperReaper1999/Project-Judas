@@ -1,0 +1,20 @@
+/home/conner/Documents/GitHub/Project-Judas/docs/evidence/m78-next-risk/probes/SkeletalReplacement.cpp:12:38: error: ‘nlohmann’ does not name a type
+   12 | namespace fs=std::filesystem;using J=nlohmann::json;
+      |                                      ^~~~~~~~
+/home/conner/Documents/GitHub/Project-Judas/docs/evidence/m78-next-risk/probes/SkeletalReplacement.cpp:13:1: error: ‘J’ does not name a type
+   13 | J rows=J::array();unsigned failures=0;void Check(bool x,const char*n){rows.push_back({{"name",n},{"passed",x}});failures+=!x;std::cout<<(x?"PASS ":"FAIL ")<<n<<'\n';}
+      | ^
+/home/conner/Documents/GitHub/Project-Judas/docs/evidence/m78-next-risk/probes/SkeletalReplacement.cpp: In function ‘void Check(bool, const char*)’:
+/home/conner/Documents/GitHub/Project-Judas/docs/evidence/m78-next-risk/probes/SkeletalReplacement.cpp:13:71: error: ‘rows’ was not declared in this scope
+   13 | J rows=J::array();unsigned failures=0;void Check(bool x,const char*n){rows.push_back({{"name",n},{"passed",x}});failures+=!x;std::cout<<(x?"PASS ":"FAIL ")<<n<<'\n';}
+      |                                                                       ^~~~
+/home/conner/Documents/GitHub/Project-Judas/docs/evidence/m78-next-risk/probes/SkeletalReplacement.cpp: In function ‘int main(int, char**)’:
+/home/conner/Documents/GitHub/Project-Judas/docs/evidence/m78-next-risk/probes/SkeletalReplacement.cpp:24:121: error: ‘J’ was not declared in this scope
+   24 |  }catch(const std::exception&e){Check(false,e.what());}gate.Release();host.Shutdown();std::ofstream(out/"RESULT.json")<<J{{"checks",rows},{"failures",failures},{"scope","Actual async GLB publication, live shared skeletal consumers, stale generation, malformed source and recovery; no hot reload or arbitrary asset-family certification"}}.dump(2)<<'\n';std::cout<<"SUMMARY "<<rows.size()<<" checks / "<<failures<<" failures\n";return failures?1:0;}
+      |                                                                                                                         ^
+/home/conner/Documents/GitHub/Project-Judas/docs/evidence/m78-next-risk/probes/SkeletalReplacement.cpp:24:338: error: expected primary-expression before ‘.’ token
+   24 |  }catch(const std::exception&e){Check(false,e.what());}gate.Release();host.Shutdown();std::ofstream(out/"RESULT.json")<<J{{"checks",rows},{"failures",failures},{"scope","Actual async GLB publication, live shared skeletal consumers, stale generation, malformed source and recovery; no hot reload or arbitrary asset-family certification"}}.dump(2)<<'\n';std::cout<<"SUMMARY "<<rows.size()<<" checks / "<<failures<<" failures\n";return failures?1:0;}
+      |                                                                                                                                                                                                                                                                                                                                                  ^
+/home/conner/Documents/GitHub/Project-Judas/docs/evidence/m78-next-risk/probes/SkeletalReplacement.cpp:24:376: error: ‘rows’ was not declared in this scope
+   24 |  }catch(const std::exception&e){Check(false,e.what());}gate.Release();host.Shutdown();std::ofstream(out/"RESULT.json")<<J{{"checks",rows},{"failures",failures},{"scope","Actual async GLB publication, live shared skeletal consumers, stale generation, malformed source and recovery; no hot reload or arbitrary asset-family certification"}}.dump(2)<<'\n';std::cout<<"SUMMARY "<<rows.size()<<" checks / "<<failures<<" failures\n";return failures?1:0;}
+      |                                                                                                                                                                                                                                                                                                                                                                                        ^~~~

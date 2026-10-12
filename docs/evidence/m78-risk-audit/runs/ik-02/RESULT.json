@@ -1,0 +1,265 @@
+{
+  "checks": [
+    {
+      "name": "fresh output argument",
+      "passed": true
+    },
+    {
+      "name": "fresh fixture",
+      "passed": true
+    },
+    {
+      "name": "ordinary project",
+      "passed": true
+    },
+    {
+      "name": "ordinary imported skeletal fixture",
+      "passed": true
+    },
+    {
+      "name": "known direct chain positive fixture",
+      "passed": true
+    },
+    {
+      "name": "actual GL resource owner",
+      "passed": true
+    },
+    {
+      "name": "registered imported model",
+      "passed": true
+    },
+    {
+      "name": "normal resource pipeline publishes shared immutable skeleton",
+      "passed": true
+    },
+    {
+      "name": "registered public IK script",
+      "passed": true
+    },
+    {
+      "name": "normal runtime world",
+      "passed": true
+    },
+    {
+      "name": "public configure has no uncaught errors",
+      "passed": true
+    },
+    {
+      "name": "configure validates but does not publish a fictitious completed solve",
+      "passed": true
+    },
+    {
+      "name": "joint read missing and invalid-space negative controls",
+      "passed": true
+    },
+    {
+      "name": "actual resolved joint reads",
+      "passed": true
+    },
+    {
+      "name": "independent analytic world target and orientation, oblique uniformly scaled root",
+      "passed": true
+    },
+    {
+      "name": "shared asset instance without IK retains bind pose",
+      "passed": true
+    },
+    {
+      "name": "public status snapshot is detached",
+      "passed": true
+    },
+    {
+      "name": "public target submission preserves previous completed solve until fixed boundary",
+      "passed": true
+    },
+    {
+      "name": "invalid batch/config are rejected through real JS",
+      "passed": true
+    },
+    {
+      "name": "invalid later target/config cannot partially publish",
+      "passed": true
+    },
+    {
+      "name": "next fixed reference phase publishes exactly the valid batch",
+      "passed": true
+    },
+    {
+      "name": "current resolved mapped bone before physical entry",
+      "passed": true
+    },
+    {
+      "name": "actual ordinary ragdoll activates from IK pose",
+      "passed": true
+    },
+    {
+      "name": "actual generation-safe mapped physical body",
+      "passed": true
+    },
+    {
+      "name": "physical entry starts at current resolved joint, not bind pose",
+      "passed": true
+    },
+    {
+      "name": "final physical joint remains readable after target evaluation",
+      "passed": true
+    },
+    {
+      "name": "shared IK does not overwrite actual dynamic mapped-body final pose",
+      "passed": true
+    },
+    {
+      "name": "instances really share one immutable asset",
+      "passed": true
+    },
+    {
+      "name": "IK/physics does not mutate shared rest asset",
+      "passed": true
+    },
+    {
+      "name": "physical deactivation uses normal resolver",
+      "passed": true
+    },
+    {
+      "name": "remove IK",
+      "passed": true
+    },
+    {
+      "name": "resolved joint after removing producer",
+      "passed": true
+    },
+    {
+      "name": "removing IK/physics leaves no accumulated final-pose contamination",
+      "passed": true
+    }
+  ],
+  "failures": 0,
+  "observations": {
+    "bodyPosition": [
+      3.292372465133667,
+      4.008308410644531,
+      -1.6143677234649658
+    ],
+    "finalJointPosition": [
+      3.292372703552246,
+      4.008308410644531,
+      -1.6143677234649658
+    ],
+    "initialJS": {
+      "configured": true,
+      "missing": true,
+      "pre": {
+        "converged": false,
+        "diagnostic": "",
+        "enabled": true,
+        "iterations": 0,
+        "ready": true,
+        "rootCorrection": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "solveMicroseconds": 0,
+        "targets": []
+      },
+      "space": true
+    },
+    "names": [
+      "Root",
+      "Elbow",
+      "Tip",
+      "Mesh"
+    ],
+    "orientationError": 0.0,
+    "positionError": 6.65866855342756e-06,
+    "submittedJS": {
+      "accepted": true,
+      "badConfig": true,
+      "before": {
+        "converged": true,
+        "diagnostic": "",
+        "enabled": true,
+        "iterations": 3,
+        "ready": true,
+        "rootCorrection": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "solveMicroseconds": 8.837,
+        "targets": [
+          {
+            "actualOrientation": {
+              "w": 0.9747925400733948,
+              "x": 0,
+              "y": 0,
+              "z": 0.22311314940452576
+            },
+            "actualPosition": {
+              "x": -0.4349609315395355,
+              "y": 1.900449275970459,
+              "z": 0
+            },
+            "id": "reach",
+            "orientationError": 1.3947486877441406e-05,
+            "positionError": 5.066394805908203e-06,
+            "status": "reached"
+          }
+        ]
+      },
+      "configured": true,
+      "detached": true,
+      "missing": true,
+      "pending": {
+        "converged": true,
+        "diagnostic": "",
+        "enabled": true,
+        "iterations": 3,
+        "ready": true,
+        "rootCorrection": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "solveMicroseconds": 8.837,
+        "targets": [
+          {
+            "actualOrientation": {
+              "w": 0.9747925400733948,
+              "x": 0,
+              "y": 0,
+              "z": 0.22311314940452576
+            },
+            "actualPosition": {
+              "x": -0.4349609315395355,
+              "y": 1.900449275970459,
+              "z": 0
+            },
+            "id": "reach",
+            "orientationError": 1.3947486877441406e-05,
+            "positionError": 5.066394805908203e-06,
+            "status": "reached"
+          }
+        ]
+      },
+      "pre": {
+        "converged": false,
+        "diagnostic": "",
+        "enabled": true,
+        "iterations": 0,
+        "ready": true,
+        "rootCorrection": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "solveMicroseconds": 0,
+        "targets": []
+      },
+      "rejected": true,
+      "space": true,
+      "tested": true
+    }
+  },
+  "scope": "Public IK configuration/state + actual resolved pose and dynamic body ownership, tiny imported fixture only"
+}

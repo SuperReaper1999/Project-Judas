@@ -1,0 +1,27 @@
+libEGL warning: Not allowed to force software rendering when API explicitly selects a hardware device.
+Renderer fragment texture units: 32 (material path uses 12)
+World state: legacy .judasstate (F6/F7) saves disabled for additive compositions; save slots remain available
+Project: modding_lab (/home/conner/Documents/GitHub/Project-Judas/.cache/m78-next-risk/mod-package/game.judasproj)
+Scene: Protected hub (/home/conner/Documents/GitHub/Project-Judas/.cache/m78-next-risk/mod-package/Scenes/main.judas)
+World origin (m): 0.000, 0.000, 0.000
+PASS required composed terrain/body ready through normal resource path
+PASS ordinary authored UI published
+PASS normal renderer capture
+PASS frozen catalog reaches normal script/resource database
+PASS motor grounded above actual terrain
+MOTOR 0,0.917275,2.75 support=1
+FAIL script-driven motor walked onto actual sculpted collision height
+PASS game spawns contributed prefab through public JS
+PASS ordinary spawned body makes authoritative contact with sculpted collision geometry
+PASS ordinary signal changes saved mod fact
+FAIL query sees edited terrain, no hidden flat collider
+FAIL normal Detour routes over composed terrain bake
+PASS ordinary additive region demand accepted
+PASS region uses permitted replacement collision
+PASS normal region unload requested
+PASS region unload retires old collider handle
+PASS revisit uses safe remapped body identity
+PASS normal whole scene reload queued
+PASS reload cleans contributed runtime instances
+PASS normal Application shutdown
+19 checks, 3 failures

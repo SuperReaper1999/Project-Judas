@@ -1,0 +1,29 @@
+libEGL warning: Not allowed to force software rendering when API explicitly selects a hardware device.
+Renderer fragment texture units: 32 (material path uses 12)
+World state: /home/conner/Documents/GitHub/Project-Judas/.cache/m78-next-risk/async-owned/build/ftft2-fixtures/shutdown-outstanding/a/Saves/main.judasstate (none saved)
+Project: FTFT2 async (/home/conner/Documents/GitHub/Project-Judas/.cache/m78-next-risk/async-owned/build/ftft2-fixtures/shutdown-outstanding/a/main.judasproj)
+Scene: FTFT2 async application (/home/conner/Documents/GitHub/Project-Judas/.cache/m78-next-risk/async-owned/build/ftft2-fixtures/shutdown-outstanding/a/Scenes/main.judas)
+World origin (m): 0.000, 0.000, 0.000
+PASS normal application has async workers and real renderer (no headless residency)
+ASYNC enabled=1 workers=7 renderer_present=1
+PASS actual GL mesh buffers are resident for asset 1
+PASS GPU vertex contents match current asset, max x=1.000000
+PASS shutdown fixture holds real CPU-ready data
+PASS shutdown has simultaneous running read and queued resource work
+PASS application exits with CPU-ready work unconsumed
+PASS normal application returned cleanly
+PASS literal decode/read operations run on workers; GPU creation/destruction on owning thread with current context
+PASS shutdown order: resources drained, workers joined, renderer destroyed, then context destroyed
+PASS all traced mesh/texture objects destroyed exactly once before renderer/context destruction
+PASS no decoder operation after worker join
+PASS no decoder operation after worker join
+PASS no decoder operation after worker join
+PASS no decoder operation after worker join
+PASS no decoder operation after worker join
+PASS no decoder operation after worker join
+PASS no decoder operation after worker join
+OWNERSHIP main=132236248936192 decode_events=4 GPU_created=5 GPU_destroyed=5 trace_events=41
+PASS shutdown cancels queued work and running read before decoding
+PASS case completed every required assertion phase
+CASE shutdown-outstanding PASS frames=3 seconds=0.865019
+FTFT2 integration: 19 checks, 0 failures

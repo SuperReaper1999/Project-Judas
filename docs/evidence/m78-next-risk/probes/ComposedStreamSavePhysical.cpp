@@ -1,0 +1,74 @@
+#include "Application.h"
+#include "TestInput.h"
+#include "EngineHost.h"
+#include "InteractivePlay.h"
+#include "RuntimeWorld.h"
+#include "SceneSession.h"
+#include "WorldStreaming.h"
+#include "SaveService.h"
+#include "WorldPersistence.h"
+#include "ScriptSystem.h"
+#include <SDL2/SDL.h>
+#include <filesystem>
+#include <thread>
+#include <cstdio>
+#include <cmath>
+namespace{int checks=0,failures=0;void Check(bool v,const char* s){++checks;failures+=!v;std::printf("%s %s\n",v?"PASS":"FAIL",s);std::fflush(stdout);}void Quit(){SDL_Event e{};e.type=SDL_QUIT;SDL_PushEvent(&e);}}
+
+void CheckMotorMetadata(RuntimeWorld& w,bool inspectScript=true){
+ unsigned live=0;const int tag=w.Categories().tags.Find("AuditMotor");
+ Check(tag>=0,"authored audit registry available after composition");
+ if(tag<0)return;
+ for(auto& o:w.ScriptObjects())if(auto* m=w.RuntimeCharacter(o.id)){
+  if(!m->settings.enabled||!w.Physics().IsBodyEnabled(m->observationBody))continue;
+  ++live;Check(w.HasTag(o.id,unsigned(tag)),"restored live motor has public runtime tag");
+  PhysicsQueryFilter f;f.requiredTags=CategoryBit(unsigned(tag));for(auto& other:w.ScriptObjects())if(other.id!=o.id)if(auto* c=w.RuntimeCharacter(other.id))f.ignoredBodies.push_back(c->observationBody);
+  auto pose=w.Physics().GetTransform(m->observationBody);auto axis=pose.rotation*glm::vec3(0,1,0);auto hit=w.Physics().Raycast(pose.position+axis*3.f,-axis,6.f,f);
+  Check(hit.hit&&hit.body.id==m->observationBody.id&&hit.body.world==m->observationBody.world,"actual tagged capsule remains queryable at reconstructed physical pose");
+  f.excludedTags=f.requiredTags;Check(!w.Physics().Raycast(pose.position+axis*3.f,-axis,6.f,f).hit,"excluded runtime tag rejects capsule after composition");
+  bool once=false;for(auto& state:w.Scripts()->Capture())if(state.entity==o.id&&state.slot==123)once=state.json.find("\"starts\":1")!=std::string::npos;
+  if(inspectScript)Check(once,"saved tag script state is restored without replaying start");
+ }Check(live>0,"composition observes at least one live motor, not vacuous success");
+}
+
+int main(int argc,char** argv){if(argc<4){std::fprintf(stderr,"usage: %s <project.judasproj> <write|read|read-b> <output-dir>\n",argv[0]);return 2;}std::string path=argv[1],mode=argv[2],out=argv[3];std::filesystem::create_directories(out);bool read=mode!="write",second=mode=="read-b";unsigned frames=0,phase=0;bool frozen=false;uint64_t demand=0,request=0;EntityId traveller=0,changed=0,defeated=0;unsigned gameFrame=0;bool gameVerified=false;std::string key,error;RuntimeWorld* initial=nullptr;ApplicationControl control;control.hidden=true;
+ control.hostReady=[](EngineHost& host){host.GetWindow().SetTestInputMode(true);SDL_GL_SetSwapInterval(0);std::string error;host.Audio().Init(error,true);};control.frameSeconds=[&](float){return frozen?0.f:1.f/60;};control.worldReady=[&](EngineHost&,RuntimeWorld& w,InteractivePlay&){initial=&w;};
+ control.beforeFrame=[&](EngineHost& host,RuntimeWorld& w,InteractivePlay&){
+  if(read&&phase==1)host.GetWindow().Input().SetPhysical("pad:South",true);
+  if(!read&&gameFrame&&!gameVerified){
+   const auto elapsed=frames-gameFrame;
+   if(elapsed==0||elapsed==1){SDL_Event key{};key.type=elapsed==0?SDL_KEYDOWN:SDL_KEYUP;key.key.keysym.scancode=SDL_SCANCODE_N;key.key.keysym.sym=SDLK_n;QueueTestKey(host.GetWindow(),key.key.keysym.scancode,key.type==SDL_KEYDOWN);}
+   // Drive the game's real logical look/fire, not native script invocation.
+   if(elapsed<28){EntityPhysicalState player;w.GetEntityState(10,player);std::vector<EntityId> children;for(auto& child:w.ScriptObjects())if(child.parent==defeated)children.push_back(child.id);if(!children.empty()){auto target=w.Physics().GetTransform(w.RuntimeBody(children.front())).position;auto direction=glm::normalize(target-(player.position+glm::vec3(0,.7f,0)));auto old=w.view->pose.rotation*glm::vec3(0,0,-1);SDL_Event motion{};motion.type=SDL_MOUSEMOTION;motion.motion.xrel=int(std::round(-(std::atan2(-direction.x,-direction.z)-std::atan2(-old.x,-old.z))/.0021f));motion.motion.yrel=int(std::round(-(std::asin(direction.y)-std::asin(old.y))/.0021f));host.GetWindow().QueueTestPhysical("mouse:dx",float(motion.motion.xrel));host.GetWindow().QueueTestPhysical("mouse:dy",float(motion.motion.yrel));}}
+   if(elapsed==3||elapsed==4||elapsed==21||elapsed==22){SDL_Event click{};click.type=elapsed==3||elapsed==21?SDL_MOUSEBUTTONDOWN:SDL_MOUSEBUTTONUP;click.button.button=SDL_BUTTON_LEFT;host.GetWindow().QueueTestPhysical("mouse:Left",click.type==SDL_MOUSEBUTTONDOWN?1.f:0.f);}
+  }
+if(read&&&w!=initial&&phase==1){Check(!host.GetWindow().Input().Action("jump").pressed,"held UI activation is not reintroduced as a post-load jump edge");host.GetWindow().Input().SetPhysical("pad:South",false);auto* stream=w.SceneControl()->Streaming(w,error);traveller=stream->ResolvePersistentKey("region:gallery-0:30");Check(traveller&&stream->Owner(traveller)=="root","fresh process adopted prop retains qualified origin and root ownership");auto ledger=w.SceneControl()->Get("persistFacts");Check(ledger=="{\"score\":345,\"timer\":12.5}","game data restored before callbacks");Check(w.SceneControl()->Localization(w.Resources()).Locale()=="de","selected locale restored at publication");bool suspended=false;for(auto& r:stream->Regions())if(r.id=="gallery-0")suspended=r.state=="unloaded"&&r.retained>0;Check(second||suspended,"changed nonresident region restored suspended without loading universe");auto restoredBody=w.RuntimeBody(traveller);Check(restoredBody.IsValid()&&glm::length(w.Physics().GetTransform(restoredBody).position-glm::vec3(2,4,-65))<1e-5f,"adopted prop actual restored world pose matches independently authored save input");Check(glm::length(w.Physics().GetLinearVelocity(restoredBody)-glm::vec3(1,2,3))<1e-5f,"adopted prop actual velocity survives cold restoration");Check(stream->Stats().active<stream->Regions().size(),"only saved initial resident subset built");CheckMotorMetadata(w,false);phase=2;}}
+ ;control.afterFrame=[&](EngineHost& host,RuntimeWorld& w,InteractivePlay&){++frames;auto* session=w.SceneControl().get();auto* stream=session->Streaming(w,error);auto* saves=session->Saves(host.Resources());auto active=[&](const char* id){for(auto& r:stream->Regions())if(r.id==id)return r.state=="active";return false;};
+ if(w.Scripts()&&!w.Scripts()->Diagnostics().empty()){for(auto& d:w.Scripts()->Diagnostics())std::printf("FAULT %llu %s\n",(unsigned long long)d.entity,d.message.c_str());Check(false,"streamed project scripts remain healthy");Quit();return;}
+ if(!read&&phase==0&&frames>60&&active("gallery-0")&&!saves->Busy()&&!gameFrame){
+  for(auto& o:w.ScriptObjects())if(o.navigationAgent&&w.RuntimeCharacter(o.id)){defeated=o.id;break;}
+  if(defeated){auto pose=w.RuntimeDefinition(10)->transform;pose.position=w.RuntimeDefinition(defeated)->transform.position+glm::vec3(0,0,4);pose.position.y=.9f;w.SetRuntimeTransform(10,pose);w.RuntimeCharacter(10)->velocity={};gameFrame=frames;}
+ }
+ if(!read&&gameFrame&&!gameVerified&&frames>=gameFrame+28){
+  auto states=w.Scripts()->Capture();auto record=[&](EntityId id){for(auto& r:states)if(r.entity==id)return r.json;return std::string{};};
+  Check(record(defeated).find("\"defeated\":true")!=std::string::npos,"real project look/fire defeats an enemy before save");
+  Check(record(10).find("\"score\":250")!=std::string::npos,"real gameplay awards score before save");
+  bool spawned=false;for(auto& r:states)spawned|=r.json.find("\"spawned\":1")!=std::string::npos;Check(spawned,"real N action spawns an independent prefab participant");
+  auto ref=stream->PersistentKey(defeated);session->Set("defeatedRef","\""+ref+"\"",error);gameVerified=true;
+ }
+ if(phase==0&&frames>60&&active("gallery-0")&&!saves->Busy()&&(read||gameVerified)){
+  if(read){request=saves->Request("load",second?"stream-b":"stream-a","","{}",error);Check(request!=0,"load can start from ordinary boot world");frozen=true;phase=1;}
+  else{CheckMotorMetadata(w);traveller=stream->Resolve("gallery-0",30);key=stream->PersistentKey(traveller);Check(key=="region:gallery-0:30"&&stream->Adopt(traveller,"root",error)&&stream->PersistentKey(traveller)==key,"adoption changes ownership without changing durable identity");auto t=w.RuntimeDefinition(traveller)->transform;t.position={2,4,-65};w.SetRuntimeTransform(traveller,t);w.Physics().SetLinearVelocity(w.RuntimeBody(traveller),{1,2,3});Check(w.DestroyEntity(stream->Resolve("gallery-0",101),&error)&&w.DestroyEntity(stream->Resolve("gallery-0",100),&error),"ordinary target and joint destruction becomes tombstone");changed=stream->Resolve("gallery-0",103);if(!changed)changed=stream->Resolve("gallery-0",110);if(changed){auto t=w.RuntimeDefinition(changed)->transform;t.position.x+=.4;w.SetRuntimeTransform(changed,t);}Check(changed!=0,"representative changed region entity");session->Set("persistFacts","{\"score\":345,\"timer\":12.5}",error);session->Localization(&host.Resources()).SetLocale("de",error);auto player=w.RuntimeDefinition(10)->transform;player.position={5,1,-65};w.SetRuntimeTransform(10,player);for(auto& o:w.ScriptObjects())if(o.navigationAgent){w.Navigation().ClearDestination(o.id);if(auto* a=w.Navigation().Agent(o.id))a->stopped=true;if(auto* c=w.RuntimeCharacter(o.id)){c->result.support={};c->result.supported=false;}}
+   // Real logical release updates the game's own retained-demand state.
+   host.GetWindow().Input().SetPhysical("key:F10",true);frozen=true;phase=1;}
+ }else if(!read&&phase==1){host.GetWindow().Input().SetPhysical("key:F10",false);stream->RemoveInterest("range-travel");stream->ReleaseRequester(10,1);for(auto& o:w.ScriptObjects())if(o.navigationAgent){w.Navigation().ClearDestination(o.id);if(auto* a=w.Navigation().Agent(o.id)){a->stopped=true;a->path={};}}if(stream->Unload("gallery-0"))phase=2;
+ }else if(!read&&phase==2){bool absent=true;for(auto& r:stream->Regions())if(r.id=="gallery-0")absent=r.state=="unloaded";if(absent){Check(stream->Stats().retainedBytes>0,"actual unload retains changed state and tombstones");request=saves->Request("save","stream-a","Régions — 日本語","{\"review\":true}",error);Check(request!=0,"normal composed slot request");phase=3;}}
+ else if(!read&&phase==3){auto* status=saves->Status(request);if(status&&status->state=="failed"){Check(false,status->error.c_str());Quit();}if(status&&status->state=="completed"){Check(stream->ResolvePersistentKey(key)==traveller,"save does not change travelling identity");std::printf("SAVE capture_ms=%.5f worker_ms=%.5f bytes=%zu active=%zu suspended_bytes=%zu\n",status->captureMs,status->workerMs,status->bytes,stream->Stats().active,stream->Stats().retainedBytes);Check(saves->List().size()>=1,"slot metadata refreshed after real commit");phase=4;Quit();}}
+ else if(read&&phase==1){auto* status=saves->Status(request);if(status&&status->state=="failed"){Check(false,status->error.c_str());Quit();}}
+ else if(read&&phase==2){CheckMotorMetadata(w);frozen=true;demand=stream->Request("gallery-0",false,error);Check(demand!=0,"ordinary revisit requests saved suspended region");phase=3;}
+ else if(read&&phase==3&&active("gallery-0")&&!saves->Busy()){Check(!stream->Resolve("gallery-0",100)&&!stream->Resolve("gallery-0",101),"destroyed region target and joint never respawn after process exit");auto* prop=w.RuntimeDefinition(traveller);Check(prop&&stream->ResolvePersistentKey("region:gallery-0:30")==traveller,"adopted traveller not duplicated by region revisit");Check(!stream->Resolve("gallery-0",30),"authored adopted source remains tombstoned");Check(w.Scripts()->Diagnostics().empty(),"qualified joint/scripts restore through normal activation");auto changedProp=stream->Resolve("gallery-0",103);Check(changedProp&&std::abs(w.Physics().GetTransform(w.RuntimeBody(changedProp)).position.x+1.6f)<1e-4,"changed suspended prop restored on revisit");Check(session->Get("persistFacts")=="{\"score\":345,\"timer\":12.5}","backtracking retains independent game data");auto ref=session->Get("defeatedRef");if(ref.size()>2)ref=ref.substr(1,ref.size()-2);auto enemy=stream->ResolvePersistentKey(ref);auto states=w.Scripts()->Capture();bool defeat=false,score=false,spawn=false;for(auto& state:states){defeat|=state.entity==enemy&&state.json.find("\"defeated\":true")!=std::string::npos;score|=state.entity==10&&state.json.find("\"score\":250")!=std::string::npos;spawn|=state.json.find("\"spawned\":1")!=std::string::npos;}Check(enemy&&defeat,"defeated enemy survives fresh load without gameplay resurrection");CheckMotorMetadata(w);Check(score&&spawn,"actual score and spawned prefab count survive fresh load");stream->Release(demand);request=saves->Request("save","stream-b","Second region slot","{}",error);Check(request!=0,"load/backtrack can save a second independent slot");frozen=true;phase=5;}
+ else if(read&&phase==5){auto* status=saves->Status(request);if(status&&status->state=="failed"){Check(false,status->error.c_str());Quit();}if(status&&status->state=="completed"){Check(saves->List().size()>=2,"two committed composed-world slots independent");phase=4;Quit();}}
+ if(frames%150==0){for(auto& r:stream->Regions())std::printf("REGION %s %s pins=%zu %s\n",r.id.c_str(),r.state.c_str(),r.pins.size(),r.error.c_str());if(auto* s=saves->Status(request))std::printf("REQUEST %s %s\n",s->state.c_str(),s->error.c_str());}
+ std::this_thread::sleep_for(std::chrono::milliseconds(1));if(frames>1000){Check(false,"streamed save/load bounded deadline");Quit();}
+ };
+ Application app;char name[]="judas";char* args[]={name,path.data()};Check(app.Run(2,args,&control)==0&&phase==4,"fresh standalone streamed process exits cleanly");std::printf("SUMMARY %s checks=%d failures=%d frames=%u\n",mode.c_str(),checks,failures,frames);return failures?1:0;}

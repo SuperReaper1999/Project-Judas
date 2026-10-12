@@ -1,0 +1,32 @@
+libEGL warning: Not allowed to force software rendering when API explicitly selects a hardware device.
+Renderer fragment texture units: 32 (material path uses 12)
+World state: /home/conner/Documents/GitHub/Project-Judas/.cache/m78-next-risk/async-owned/build/ftft2-fixtures/missing-recovery/a/Saves/main.judasstate (none saved)
+Project: FTFT2 async (/home/conner/Documents/GitHub/Project-Judas/.cache/m78-next-risk/async-owned/build/ftft2-fixtures/missing-recovery/a/main.judasproj)
+Scene: FTFT2 async application (/home/conner/Documents/GitHub/Project-Judas/.cache/m78-next-risk/async-owned/build/ftft2-fixtures/missing-recovery/a/Scenes/main.judas)
+World origin (m): 0.000, 0.000, 0.000
+PASS normal application has async workers and real renderer (no headless residency)
+ASYNC enabled=1 workers=7 renderer_present=1
+PASS actual GL mesh buffers are resident for asset 1
+PASS GPU vertex contents match current asset, max x=1.000000
+PASS real missing/corrupt load fails with a visible error
+PASS actual GL mesh buffers are resident for asset 11
+PASS GPU vertex contents match current asset, max x=1.000000
+PASS actual GL mesh buffers are resident for asset 8
+PASS GPU vertex contents match current asset, max x=4.000000
+PASS actual GL mesh buffers are resident for asset 11
+PASS GPU vertex contents match current asset, max x=1.000000
+PASS normal application returned cleanly
+PASS literal decode/read operations run on workers; GPU creation/destruction on owning thread with current context
+PASS shutdown order: resources drained, workers joined, renderer destroyed, then context destroyed
+PASS all traced mesh/texture objects destroyed exactly once before renderer/context destruction
+PASS no decoder operation after worker join
+PASS no decoder operation after worker join
+PASS no decoder operation after worker join
+PASS no decoder operation after worker join
+PASS no decoder operation after worker join
+PASS no decoder operation after worker join
+PASS no decoder operation after worker join
+OWNERSHIP main=137147959066368 decode_events=6 GPU_created=7 GPU_destroyed=7 trace_events=43
+PASS case completed every required assertion phase
+CASE missing-recovery PASS frames=3 seconds=0.868841
+FTFT2 integration: 22 checks, 0 failures

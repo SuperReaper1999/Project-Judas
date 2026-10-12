@@ -1,0 +1,15 @@
+/home/conner/Documents/GitHub/Project-Judas/docs/evidence/m78-risk-audit/probes/PublicUILifetime.cpp: In function ‘int main(int, char**)’:
+/home/conner/Documents/GitHub/Project-Judas/docs/evidence/m78-risk-audit/probes/PublicUILifetime.cpp:24:80: error: invalid initialization of reference of type ‘const std::string&’ {aka ‘const std::__cxx11::basic_string<char>&’} from expression of type ‘UIDocument’
+   24 |  auto uiPath=fs::path(project.AssetsDir())/"audit.judasui";Need(SaveUIDocument(d,uiPath.string(),error),"ordinary UI asset",error);std::string authored=SerializeUIDocument(d);
+      |                                                                                ^
+In file included from /home/conner/Documents/GitHub/Project-Judas/src/RuntimeWorld.h:34,
+                 from /home/conner/Documents/GitHub/Project-Judas/docs/evidence/m78-risk-audit/probes/PublicUILifetime.cpp:4:
+/home/conner/Documents/GitHub/Project-Judas/src/RuntimeUI.h:25:40: note: in passing argument 1 of ‘bool SaveUIDocument(const std::string&, const UIDocument&, std::string&)’
+   25 | bool SaveUIDocument(const std::string& path,const UIDocument& doc,std::string& error);
+      |                     ~~~~~~~~~~~~~~~~~~~^~~~
+/home/conner/Documents/GitHub/Project-Judas/docs/evidence/m78-risk-audit/probes/PublicUILifetime.cpp:59:2: warning: this ‘if’ clause does not guard... [-Wmisleading-indentation]
+   59 |  if(!out.empty()&&fs::exists(out))std::ofstream(out/"RESULT.json")<<J{{"checks",rows},{"failures",failures},{"scope","Public QuickJS UI mutation/lifetime + native input/layout effects; no renderer pixels or all scene-transition paths"}}.dump(2)<<'\n';std::cout<<"SUMMARY "<<rows.size()<<" checks "<<failures<<" failures\n";return failures?1:0;}
+      |  ^~
+/home/conner/Documents/GitHub/Project-Judas/docs/evidence/m78-risk-audit/probes/PublicUILifetime.cpp:59:252: note: ...this statement, but the latter is misleadingly indented as if it were guarded by the ‘if’
+   59 |  if(!out.empty()&&fs::exists(out))std::ofstream(out/"RESULT.json")<<J{{"checks",rows},{"failures",failures},{"scope","Public QuickJS UI mutation/lifetime + native input/layout effects; no renderer pixels or all scene-transition paths"}}.dump(2)<<'\n';std::cout<<"SUMMARY "<<rows.size()<<" checks "<<failures<<" failures\n";return failures?1:0;}
+      |                                                                                                                                                                                                                                                            ^~~

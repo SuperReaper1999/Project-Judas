@@ -1,0 +1,37 @@
+PASS publish initial mutable file
+PASS injected pre-publication failure reported
+PASS interrupted replacement preserves exact last-good bytes
+PASS valid replacement after interruption succeeds
+PASS positive replacement changes bytes
+PASS path traversal rejects before external publication
+PASS data package installed
+PASS data package selected without executable trust
+PASS ordinary freeze publishes selected data session
+PASS frozen cache contains exact decoded payload
+PASS second store changes next-launch selection
+PASS new session observes disabled selection
+PASS live snapshot remains fixed after next-launch disable
+PASS cross-store uninstall blocked by active session lease
+PASS failed uninstall preserves active materialized file
+PASS release session permits uninstall
+PASS uninstall leaves consistent empty index and loadout
+PASS executable package can install without starting code
+PASS untrusted executable selection rejected
+PASS trust rejection leaves prior loadout unchanged
+PASS exact-hash explicit trust permits executable selection
+PASS frozen executable session retains exact trusted identity
+PASS game permission denial leaves caller snapshot unpublished
+PASS disable executable before next package test
+PASS install dependent metadata without resolving absent dependency
+PASS absent dependency blocks selection
+PASS dependency failure cannot publish partial loadout
+PASS interruption after immutable payload reports failure
+PASS interruption retains exact previous installed membership
+PASS exact orphan payload reusable after interrupted install
+PASS pre-publication cancellation rejects install
+PASS cancelled install retains existing index/loadout
+PASS restore positive executable control
+PASS read installed file identities
+PASS audit can deliberately corrupt unleased owned fixture
+PASS corrupt selected payload fails without replacing output snapshot
+SUMMARY 36 checks / 0 failures

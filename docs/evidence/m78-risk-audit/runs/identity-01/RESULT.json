@@ -1,0 +1,13 @@
+{
+  "passed": false,
+  "counts": {
+    "evidenceFiles": 80,
+    "sourceInputs": 28,
+    "localBinaryOutputs": 13
+  },
+  "failures": [
+    "new evidence inventory differs"
+  ],
+  "rootCause": "Inventory was generated before CHANGED_FILES.txt existed, omitting itself. All 121 checked file identities passed.",
+  "correction": "Include inventory itself and newly preserved identity failure records; no source/output hashes changed."
+}

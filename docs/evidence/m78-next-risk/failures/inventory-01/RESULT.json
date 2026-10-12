@@ -1,0 +1,9 @@
+{
+  "passed": false,
+  "fileHashesPassed": true,
+  "failures": [
+    "new evidence inventory differs"
+  ],
+  "rootCause": "New inventory was generated before its own filename existed. No expected source/binary hash failed.",
+  "correction": "Include the inventory filename and preserve this packaging failure."
+}
