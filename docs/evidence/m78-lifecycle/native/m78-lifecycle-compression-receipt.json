@@ -1,0 +1,22 @@
+﻿{
+    "minimumBuildPreflightBytes":  26214400,
+    "path":  "C:\\JudasValidation\\M78ContinuationBuild\\cold-repair-final-v2\\judas_engine.lib",
+    "logicalBytes":  67019246,
+    "freeAfter":  45973504,
+    "freeBefore":  2994176,
+    "attributesBefore":  "Archive",
+    "scope":  "Exactly one named frozen native archive. Per-file NTFS compression only, independently archived on host; no deletion, VM/global settings or source/test changes",
+    "sha256":  "71a722dded64cfcc634d679e55ddbd257058da888ada914f7f7150b8d88c2d62",
+    "exitCode":  0,
+    "logicalBytesBeforeAfterEqual":  true,
+    "attributesAfter":  "Archive, Compressed",
+    "compactOutput":  [
+                          "",
+                          " Compressing files in C:\\JudasValidation\\M78ContinuationBuild\\cold-repair-final-v2\\",
+                          "",
+                          "",
+                          "1 files within 1 directories were compressed.",
+                          "67,019,246 total bytes of data are stored in 24,043,520 bytes.",
+                          "The compression ratio is 2.8 to 1."
+                      ]
+}

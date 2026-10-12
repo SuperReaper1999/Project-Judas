@@ -1,0 +1,25 @@
+﻿{
+    "scope":  "Only named generated output bytes independently archived and host SHA/size verified; frozen engine archive, source, results, snapshots and existing packages unchanged",
+    "freeBefore":  30261248,
+    "removed":  [
+                    {
+                        "path":  "C:\\JudasValidation\\Build\\Release\\m78-lifecycle-balance_lab.exe",
+                        "sha256":  "758e9b67b09328ac1031af07e1a94237ab49144ae66e581136cbafbfb4d8d4a1",
+                        "name":  "m78-lifecycle-balance_lab.exe",
+                        "bytes":  9507328
+                    },
+                    {
+                        "path":  "C:\\JudasValidation\\M78LifecycleBuild\\objects\\balance_lab-0.obj",
+                        "sha256":  "77fc4508993e1c8ee4896b33c35454c23fdf425b13a73dd1b160725769cf36ff",
+                        "name":  "balance_lab-0.obj",
+                        "bytes":  2230400
+                    },
+                    {
+                        "path":  "C:\\JudasValidation\\M78LifecycleResults\\m78-lifecycle-balance_lab-link.log",
+                        "sha256":  "61d492d07c0da71ea667719940fa833962016af0a61a99e5e1cbd7045c8b807c",
+                        "name":  "m78-lifecycle-balance_lab-link.log",
+                        "bytes":  33930
+                    }
+                ],
+    "freeAfter":  42041344
+}

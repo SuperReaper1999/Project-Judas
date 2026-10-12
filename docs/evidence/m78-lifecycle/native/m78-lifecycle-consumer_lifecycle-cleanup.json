@@ -1,0 +1,49 @@
+﻿{
+    "scope":  "Only named generated output bytes independently archived and host SHA/size verified; frozen engine archive, source, results, snapshots and existing packages unchanged",
+    "freeBefore":  35291136,
+    "removed":  [
+                    {
+                        "path":  "C:\\JudasValidation\\Build\\Release\\m78-lifecycle-consumer_lifecycle.exe",
+                        "sha256":  "8c209bb1cce74f6efb90cb20cd40a44c3f231d0731ec0aa633b4004f053576bc",
+                        "name":  "m78-lifecycle-consumer_lifecycle.exe",
+                        "bytes":  10516480
+                    },
+                    {
+                        "path":  "C:\\JudasValidation\\M78LifecycleBuild\\objects\\consumer_lifecycle-0.obj",
+                        "sha256":  "c922b3f0fdfd7a1fb7522dc2f5f6443d8cd5aa068fe89ef96fab99e2fd8ea53c",
+                        "name":  "consumer_lifecycle-0.obj",
+                        "bytes":  2006612
+                    },
+                    {
+                        "path":  "C:\\JudasValidation\\M78LifecycleBuild\\objects\\runtime-1.obj",
+                        "sha256":  "6494f91d10083a1c1635c6355152ad3777ef479a87788c3c813d84b15f6146d6",
+                        "name":  "runtime-1.obj",
+                        "bytes":  295887
+                    },
+                    {
+                        "path":  "C:\\JudasValidation\\M78LifecycleBuild\\objects\\runtime-2.obj",
+                        "sha256":  "746c33d85f3cf3f83b4d9b93eabbedac2264456a9e7efe26a01dd29e6a1b4e26",
+                        "name":  "runtime-2.obj",
+                        "bytes":  229861
+                    },
+                    {
+                        "path":  "C:\\JudasValidation\\M78LifecycleBuild\\objects\\runtime-3.obj",
+                        "sha256":  "dd51a50e14ab20dc62c2bf1b79ed8e271e532b31faf70eb5ff75a246189beeef",
+                        "name":  "runtime-3.obj",
+                        "bytes":  20401
+                    },
+                    {
+                        "path":  "C:\\JudasValidation\\M78LifecycleBuild\\objects\\runtime-4.obj",
+                        "sha256":  "560e035b88abfecc7dfd27bd572bebd75d3ba404280a881db5dd4931fd5e3daf",
+                        "name":  "runtime-4.obj",
+                        "bytes":  340964
+                    },
+                    {
+                        "path":  "C:\\JudasValidation\\M78LifecycleResults\\m78-lifecycle-consumer_lifecycle-link.log",
+                        "sha256":  "61d492d07c0da71ea667719940fa833962016af0a61a99e5e1cbd7045c8b807c",
+                        "name":  "m78-lifecycle-consumer_lifecycle-link.log",
+                        "bytes":  33930
+                    }
+                ],
+    "freeAfter":  48750592
+}

@@ -1,0 +1,48 @@
+JudasScene 3
+settings
+  name ""
+  world-origin 0 0 0
+  sun-direction 0.4 0.7 0.35
+  sun-color 1 0.98 0.92
+  ambient 0.16 0.17 0.19
+  fluid-scale 1
+  fluid-update-rate-hz 30
+  fluid-hydrostatic-drag-rate 2
+  fidelity-policy none
+  next-id 3
+end
+
+object 1 "Root"
+  scripts 1
+  script.0.id 1
+  script.0.asset "e149023886f126c7abfaf0cc1cf6c861"
+  script.0.enabled true
+  script.0.properties "{\"kind\":\"root\"}"
+  position 0 0 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  body dynamic box
+  body.half-extents 0.5 0.5 0.5
+  body.radius 0.5
+  body.terrain ""
+  body.mass 2
+  body.friction 0.6
+  body.restitution 0.1
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 2 "Child"
+  parent 1
+  scripts 1
+  script.0.id 1
+  script.0.asset "e149023886f126c7abfaf0cc1cf6c861"
+  script.0.enabled true
+  script.0.properties "{\"kind\":\"child\",\"internal\":{\"entity\":\"1\"}}"
+  position 0 2 0
+  rotation 1 0 0 0
+  scale 1 1 1
+end

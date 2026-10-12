@@ -1,0 +1,31 @@
+{
+  "status": "source proof and non-motor control prepared; not compiled or executed",
+  "checkpoint": "0695433b949df0c1d05ac6798bf118121cc53e2b",
+  "files": {
+    "src/RuntimeWorld.cpp": {
+      "sha256": "1e9400f8276ba4e86a1f030610fe50a87c9e76d9777e628dd609ea58c4f6fc02",
+      "bytes": 97444
+    },
+    "src/WorldCharacter.cpp": {
+      "sha256": "0c87e03acfba2a1c837da183e7731e35f70df98497d61a864c96ba5e21b064ae",
+      "bytes": 5492
+    },
+    "src/WorldScripts.cpp": {
+      "sha256": "ec660e35570c269b11a1ff88b75d5c79b0b2a96efe0f1cdbe32199c9157bfef1",
+      "bytes": 19880
+    },
+    "src/ScriptSystem.cpp": {
+      "sha256": "f436312f4a54a4330b8c7759a96aec1c655467f6fe4d0d22867e57771042daec",
+      "bytes": 202536
+    },
+    "docs/evidence/m78-lifecycle/motor-runtime-tags/DynamicMotorTags.cpp": {
+      "sha256": "07d43fdc41ac54d5a75680aa90abdb70c04789f31be7cb77b07490ff7d197cbb",
+      "bytes": 5666
+    },
+    "docs/evidence/m78-lifecycle/motor-runtime-tags/SOURCE_PROOF.md": {
+      "sha256": "b852dddeefab6f54ec12b29251ec182ef7ca78d9472a2914aed23eafb0255bee",
+      "bytes": 2679
+    }
+  },
+  "supersedesUnexecutedProbeIdentity": "PREPARED_IDENTITY.json"
+}

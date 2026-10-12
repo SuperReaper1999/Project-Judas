@@ -1,0 +1,25 @@
+{
+  "scope": "Independent host SHA/size verification of exact named generated case before retirement",
+  "hostVerified": true,
+  "case": "character_publication",
+  "files": [
+    {
+      "path": "C:\\JudasValidation\\Build\\Release\\m78-lifecycle-character_publication.exe",
+      "sha256": "a22de84d52a6c8bf856e2df444f5174e866659911fe43648aeedead5f5a277e1",
+      "name": "m78-lifecycle-character_publication.exe",
+      "bytes": 7774720
+    },
+    {
+      "path": "C:\\JudasValidation\\M78LifecycleBuild\\objects\\character_publication-0.obj",
+      "sha256": "e86c5046892a84b0c070d3c82129a34df013929ffa16193315975628ef0091cd",
+      "name": "character_publication-0.obj",
+      "bytes": 1805180
+    },
+    {
+      "path": "C:\\JudasValidation\\M78LifecycleResults\\m78-lifecycle-character_publication-link.log",
+      "sha256": "61d492d07c0da71ea667719940fa833962016af0a61a99e5e1cbd7045c8b807c",
+      "name": "m78-lifecycle-character_publication-link.log",
+      "bytes": 33930
+    }
+  ]
+}

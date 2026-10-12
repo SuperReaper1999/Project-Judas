@@ -1,0 +1,18 @@
+{
+  "phase": "Authorized compression completed; native build/test preparation beginning. No deletion is permitted.",
+  "permission": "HUMAN_COMPRESSION_APPROVAL.json",
+  "historicalPreparation": "DISK_APPROVAL.json and CPU_GO_RECEIPT.json are assistant preflight/coordination receipts, not trusted human disk-mutation authorization. PREPARATION_BLOCK.json retains both automatic review rejections.",
+  "transferFailure": {
+    "guestPid": 5864,
+    "exitCode": 1,
+    "boundary": "Script did not download because prior task-owned transfer server was no longer running. Read-only subsequent archive attributes/hash proved no compression or archive mutation. Task-owned transfer server restarted; exact approved compression repeated once.",
+    "guestReadOnlyPid": 9096,
+    "archiveSHAUnchanged": true
+  },
+  "compressionReceipt": "m78-lifecycle-compression-receipt.json",
+  "freeAfter": 45973504,
+  "compressedPhysicalBytes": 24043520,
+  "logicalSHA256": "71a722dded64cfcc634d679e55ddbd257058da888ada914f7f7150b8d88c2d62",
+  "noDeletion": true,
+  "noVMConfigurationChange": true
+}

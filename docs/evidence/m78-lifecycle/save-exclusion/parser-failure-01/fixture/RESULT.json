@@ -1,0 +1,281 @@
+{
+  "checks": [
+    {
+      "details": {
+        "error": ""
+      },
+      "name": "retained normal source construction",
+      "passed": true
+    },
+    {
+      "details": {
+        "error": ""
+      },
+      "name": "retained ordinary runtime dynamic actor",
+      "passed": true
+    },
+    {
+      "details": {
+        "error": ""
+      },
+      "name": "retained actor reaches real ordinary sleep",
+      "passed": true
+    },
+    {
+      "details": {},
+      "name": "retained source ownership matches requested policy",
+      "passed": true
+    },
+    {
+      "details": {
+        "error": ""
+      },
+      "name": "retained ordinary full capture",
+      "passed": true
+    },
+    {
+      "details": {
+        "error": ""
+      },
+      "name": "retained scene participant decode",
+      "passed": true
+    },
+    {
+      "details": {},
+      "name": "retained scene contains exactly the retained owners",
+      "passed": true
+    },
+    {
+      "details": {
+        "error": "nonfinite saved number"
+      },
+      "name": "retained unexpected exception",
+      "passed": false
+    },
+    {
+      "details": {
+        "error": ""
+      },
+      "name": "excluded normal source construction",
+      "passed": true
+    },
+    {
+      "details": {
+        "error": ""
+      },
+      "name": "excluded ordinary runtime dynamic actor",
+      "passed": true
+    },
+    {
+      "details": {
+        "error": ""
+      },
+      "name": "excluded actor reaches real ordinary sleep",
+      "passed": true
+    },
+    {
+      "details": {
+        "error": ""
+      },
+      "name": "excluded public simple-actor exclusion accepted",
+      "passed": true
+    },
+    {
+      "details": {},
+      "name": "excluded source ownership matches requested policy",
+      "passed": true
+    },
+    {
+      "details": {
+        "error": ""
+      },
+      "name": "excluded ordinary full capture",
+      "passed": true
+    },
+    {
+      "details": {
+        "error": ""
+      },
+      "name": "excluded scene participant decode",
+      "passed": true
+    },
+    {
+      "details": {},
+      "name": "excluded scene contains exactly the retained owners",
+      "passed": true
+    },
+    {
+      "details": {
+        "error": "nonfinite saved number"
+      },
+      "name": "excluded unexpected exception",
+      "passed": false
+    },
+    {
+      "details": {
+        "error": ""
+      },
+      "name": "reincluded normal source construction",
+      "passed": true
+    },
+    {
+      "details": {
+        "error": ""
+      },
+      "name": "reincluded ordinary runtime dynamic actor",
+      "passed": true
+    },
+    {
+      "details": {
+        "error": ""
+      },
+      "name": "reincluded actor reaches real ordinary sleep",
+      "passed": true
+    },
+    {
+      "details": {
+        "error": ""
+      },
+      "name": "reincluded public simple-actor exclusion accepted",
+      "passed": true
+    },
+    {
+      "details": {
+        "error": ""
+      },
+      "name": "reincluded public reinclusion accepted",
+      "passed": true
+    },
+    {
+      "details": {},
+      "name": "reincluded source ownership matches requested policy",
+      "passed": true
+    },
+    {
+      "details": {
+        "error": ""
+      },
+      "name": "reincluded ordinary full capture",
+      "passed": true
+    },
+    {
+      "details": {
+        "error": ""
+      },
+      "name": "reincluded scene participant decode",
+      "passed": true
+    },
+    {
+      "details": {},
+      "name": "reincluded scene contains exactly the retained owners",
+      "passed": true
+    },
+    {
+      "details": {
+        "error": "nonfinite saved number"
+      },
+      "name": "reincluded unexpected exception",
+      "passed": false
+    },
+    {
+      "details": {
+        "error": ""
+      },
+      "name": "articulation original project asset registered",
+      "passed": true
+    },
+    {
+      "details": {
+        "error": ""
+      },
+      "name": "articulation real skeleton decode without GPU substitute",
+      "passed": true
+    },
+    {
+      "details": {
+        "error": ""
+      },
+      "name": "articulation ordinary original scene loads",
+      "passed": true
+    },
+    {
+      "details": {
+        "error": ""
+      },
+      "name": "articulation original three-bone definition exists",
+      "passed": true
+    },
+    {
+      "details": {
+        "error": ""
+      },
+      "name": "articulation ordinary owner inserted with normal scene identity",
+      "passed": true
+    },
+    {
+      "details": {
+        "error": ""
+      },
+      "name": "articulation normal source world",
+      "passed": true
+    },
+    {
+      "details": {
+        "error": ""
+      },
+      "name": "articulation real public physical activation",
+      "passed": true
+    },
+    {
+      "details": {
+        "error": ""
+      },
+      "name": "articulation required owner cannot be publicly excluded",
+      "passed": true
+    },
+    {
+      "details": {
+        "error": ""
+      },
+      "name": "articulation Root is a genuine mapped transient dynamic body",
+      "passed": true
+    },
+    {
+      "details": {
+        "error": ""
+      },
+      "name": "articulation Elbow is a genuine mapped transient dynamic body",
+      "passed": true
+    },
+    {
+      "details": {
+        "error": ""
+      },
+      "name": "articulation Tip is a genuine mapped transient dynamic body",
+      "passed": true
+    },
+    {
+      "details": {
+        "error": ""
+      },
+      "name": "articulation full capture",
+      "passed": true
+    },
+    {
+      "details": {
+        "error": ""
+      },
+      "name": "articulation scene participant decode",
+      "passed": true
+    },
+    {
+      "details": {
+        "error": "truncated save field"
+      },
+      "name": "articulated unexpected exception",
+      "passed": false
+    }
+  ],
+  "contract": "LIF-002 saved sleep ownership follows scene/contact ownership; required articulation bodies remain retained and malformed records reject",
+  "failures": 4
+}

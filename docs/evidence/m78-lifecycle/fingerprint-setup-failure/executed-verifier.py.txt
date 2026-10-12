@@ -1,0 +1,113 @@
+#!/usr/bin/env python3
+"""Read-only verification of this frozen handoff; never regenerates expected hashes.
+
+Run from any working directory. Local hash-only build outputs require this host;
+--source-only verifies the portable source/evidence inventory instead. Neither
+mode runs engine tests, stages files, or modifies the repository.
+"""
+import argparse
+import hashlib
+import json
+from pathlib import Path
+import subprocess
+import sys
+
+HERE = Path(__file__).resolve().parent
+ROOT = HERE.parents[2]
+
+
+def digest(path):
+    h = hashlib.sha256()
+    with path.open("rb") as stream:
+        for block in iter(lambda: stream.read(1024 * 1024), b""):
+            h.update(block)
+    return {"bytes": path.stat().st_size, "sha256": h.hexdigest()}
+
+
+def check_files(label, records, failures):
+    checked = 0
+    for name, expected in records.items():
+        path = Path(name)
+        if not path.is_absolute():
+            path = ROOT / path
+        if not path.is_file():
+            failures.append(f"{label}: missing {name}")
+            continue
+        actual = digest(path)
+        if any(actual[key] != expected[key] for key in ("bytes", "sha256")):
+            failures.append(f"{label}: changed {name}")
+        checked += 1
+    return checked
+
+
+def git(*args):
+    return subprocess.check_output(["git", *args], cwd=ROOT).decode().strip()
+
+
+def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--source-only", action="store_true")
+    args = parser.parse_args()
+    manifest_path = HERE / "FINAL_FINGERPRINTS.json"
+    manifest = json.loads(manifest_path.read_text())
+    failures = []
+    counts = {"currentFiles": check_files("current", manifest["files"], failures)}
+    prior_path = ROOT / manifest["preservation"]["priorManifest"]
+    expected_prior = manifest["preservation"]["priorManifestIdentity"]
+    if digest(prior_path) != expected_prior:
+        failures.append("prior manifest identity changed")
+    prior = json.loads(prior_path.read_text())
+    allowed = set(manifest["trackedChanges"])
+    unchanged = {p: value for p, value in prior["files"].items() if p not in allowed}
+    counts["priorUnchangedFiles"] = check_files("prior", unchanged, failures)
+    if not args.source_only:
+        counts["priorExcludedArtifacts"] = check_files(
+            "prior excluded", prior["excludedUntrackedHashOnly"], failures)
+        counts["laterExcludedArtifacts"] = check_files(
+            "later excluded", manifest["excludedUntrackedHashOnly"], failures)
+        counts["localOutputs"] = check_files(
+            "local outputs", manifest["binaryOutputsHashOnly"], failures)
+        counts["priorLocalOutputs"] = check_files(
+            "prior local outputs", prior["binaryOutputsHashOnly"], failures)
+    expected_inventory = sorted(manifest["changedFiles"])
+    listed = sorted((HERE / "CHANGED_FILES.txt").read_text().splitlines())
+    if listed != expected_inventory:
+        failures.append("exact changed-file list differs")
+    actual_tracked = set(filter(None, git("diff", "--name-only", "HEAD").splitlines()))
+    if actual_tracked != allowed:
+        failures.append("tracked diff is outside/different from intended scope")
+    if git("diff", "--cached", "--name-only"):
+        failures.append("index is not empty")
+    for ref in ("HEAD", "main", "origin/main"):
+        if git("rev-parse", ref) != manifest["checkpoint"]:
+            failures.append(f"{ref} moved from the corrective checkpoint")
+    current_evidence = {
+        str(p.relative_to(ROOT)) for p in HERE.rglob("*") if p.is_file()
+        and "__pycache__" not in p.parts
+        and p.name not in ("FINAL_FINGERPRINTS.json", "FINAL_VERIFICATION.json")
+    }
+    recorded_evidence = {p for p in manifest["files"]
+                         if p.startswith("docs/evidence/m78-lifecycle/")}
+    if current_evidence != recorded_evidence:
+        failures.append("new lifecycle evidence inventory changed")
+    known_untracked = (set(manifest["changedFiles"])
+                       | set(prior["excludedUntrackedHashOnly"])
+                       | set(manifest["excludedUntrackedHashOnly"]))
+    actual_untracked = set(filter(None, git("ls-files", "--others", "--exclude-standard").splitlines()))
+    if actual_untracked - known_untracked:
+        failures.append("unexplained untracked files: " + ", ".join(sorted(actual_untracked - known_untracked)))
+    result = {
+        "passed": not failures,
+        "mode": "portable source/evidence" if args.source_only else "local source/evidence/binaries",
+        "checkpoint": manifest["checkpoint"],
+        "manifestIdentity": digest(manifest_path),
+        "counts": counts,
+        "failures": failures,
+        "scope": "Fingerprints and repository scope only; not engine correctness or human acceptance.",
+    }
+    print(json.dumps(result, indent=2))
+    return 0 if not failures else 1
+
+
+if __name__ == "__main__":
+    sys.exit(main())

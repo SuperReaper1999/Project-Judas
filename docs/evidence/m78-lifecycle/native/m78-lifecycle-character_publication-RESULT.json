@@ -1,0 +1,529 @@
+{
+  "checks": [
+    {
+      "name": "ordinary owned project",
+      "passed": true
+    },
+    {
+      "name": "authored project classification",
+      "passed": true
+    },
+    {
+      "name": "project saved",
+      "passed": true
+    },
+    {
+      "name": "ordinary lazy world builds",
+      "passed": true
+    },
+    {
+      "name": "lazy creation motor exists",
+      "passed": true
+    },
+    {
+      "name": "lazy creation proxy follows root plus oblique offset",
+      "passed": true
+    },
+    {
+      "name": "lazy creation authored enabled state is already published",
+      "passed": true
+    },
+    {
+      "name": "lazy creation authored bilateral filter is already published",
+      "passed": true
+    },
+    {
+      "name": "lazy creation isolated layer query",
+      "passed": true
+    },
+    {
+      "name": "lazy creation isolated tag query",
+      "passed": true
+    },
+    {
+      "name": "lazy creation excluded tag negative control",
+      "passed": true
+    },
+    {
+      "name": "lazy creation unrelated layer negative control",
+      "passed": true
+    },
+    {
+      "name": "lazy disabled creation motor exists",
+      "passed": true
+    },
+    {
+      "name": "lazy disabled creation proxy follows root plus oblique offset",
+      "passed": true
+    },
+    {
+      "name": "lazy disabled creation authored enabled state is already published",
+      "passed": true
+    },
+    {
+      "name": "lazy disabled creation authored bilateral filter is already published",
+      "passed": true
+    },
+    {
+      "name": "lazy disabled creation isolated layer query",
+      "passed": true
+    },
+    {
+      "name": "lazy disabled creation isolated tag query",
+      "passed": true
+    },
+    {
+      "name": "lazy disabled creation excluded tag negative control",
+      "passed": true
+    },
+    {
+      "name": "lazy disabled creation unrelated layer negative control",
+      "passed": true
+    },
+    {
+      "name": "normal shape/offset configuration",
+      "passed": true
+    },
+    {
+      "name": "shape replacement motor exists",
+      "passed": true
+    },
+    {
+      "name": "shape replacement proxy follows root plus oblique offset",
+      "passed": true
+    },
+    {
+      "name": "shape replacement authored enabled state is already published",
+      "passed": true
+    },
+    {
+      "name": "shape replacement authored bilateral filter is already published",
+      "passed": true
+    },
+    {
+      "name": "shape replacement isolated layer query",
+      "passed": true
+    },
+    {
+      "name": "shape replacement isolated tag query",
+      "passed": true
+    },
+    {
+      "name": "shape replacement excluded tag negative control",
+      "passed": true
+    },
+    {
+      "name": "shape replacement unrelated layer negative control",
+      "passed": true
+    },
+    {
+      "name": "replacement has a fresh native generation",
+      "passed": true
+    },
+    {
+      "name": "retired shape handle cannot alias replacement",
+      "passed": true
+    },
+    {
+      "name": "offset-only configuration without a step",
+      "passed": true
+    },
+    {
+      "name": "offset-only change motor exists",
+      "passed": true
+    },
+    {
+      "name": "offset-only change proxy follows root plus oblique offset",
+      "passed": true
+    },
+    {
+      "name": "offset-only change authored enabled state is already published",
+      "passed": true
+    },
+    {
+      "name": "offset-only change authored bilateral filter is already published",
+      "passed": true
+    },
+    {
+      "name": "offset-only change isolated layer query",
+      "passed": true
+    },
+    {
+      "name": "offset-only change isolated tag query",
+      "passed": true
+    },
+    {
+      "name": "offset-only change excluded tag negative control",
+      "passed": true
+    },
+    {
+      "name": "offset-only change unrelated layer negative control",
+      "passed": true
+    },
+    {
+      "name": "offset change preserves native identity and motor velocity",
+      "passed": true
+    },
+    {
+      "name": "ordinary oblique teleport",
+      "passed": true
+    },
+    {
+      "name": "teleport before a step motor exists",
+      "passed": true
+    },
+    {
+      "name": "teleport before a step proxy follows root plus oblique offset",
+      "passed": true
+    },
+    {
+      "name": "teleport before a step authored enabled state is already published",
+      "passed": true
+    },
+    {
+      "name": "teleport before a step authored bilateral filter is already published",
+      "passed": true
+    },
+    {
+      "name": "teleport before a step isolated layer query",
+      "passed": true
+    },
+    {
+      "name": "teleport before a step isolated tag query",
+      "passed": true
+    },
+    {
+      "name": "teleport before a step excluded tag negative control",
+      "passed": true
+    },
+    {
+      "name": "teleport before a step unrelated layer negative control",
+      "passed": true
+    },
+    {
+      "name": "all lazy observations use zero elapsed simulation",
+      "passed": true
+    },
+    {
+      "name": "registered first-frame query script",
+      "passed": true
+    },
+    {
+      "name": "ordinary scripted frame world builds",
+      "passed": true
+    },
+    {
+      "name": "actual public query callback has no runtime error",
+      "passed": true
+    },
+    {
+      "name": "first callback publishes script state",
+      "passed": true
+    },
+    {
+      "name": "first frame callback sees another motor before any fixed step",
+      "passed": true
+    },
+    {
+      "name": "frame publication advances no physics",
+      "passed": true
+    },
+    {
+      "name": "ordinary UI-only scripted world builds",
+      "passed": true
+    },
+    {
+      "name": "first UI-only callback sees another motor before any fixed step",
+      "passed": true
+    },
+    {
+      "name": "UI-only query does not advance simulation",
+      "passed": true
+    },
+    {
+      "name": "private staging world builds",
+      "passed": true
+    },
+    {
+      "name": "normal private region staging",
+      "passed": true
+    },
+    {
+      "name": "normal private retained reconstruction",
+      "passed": true
+    },
+    {
+      "name": "staged actor has no public entity/body access",
+      "passed": true
+    },
+    {
+      "name": "private reconstructed capsule is absent from broadphase queries",
+      "passed": true
+    },
+    {
+      "name": "atomic publication motor exists",
+      "passed": true
+    },
+    {
+      "name": "atomic publication proxy follows root plus oblique offset",
+      "passed": true
+    },
+    {
+      "name": "atomic publication authored enabled state is already published",
+      "passed": true
+    },
+    {
+      "name": "atomic publication authored bilateral filter is already published",
+      "passed": true
+    },
+    {
+      "name": "atomic publication isolated layer query",
+      "passed": true
+    },
+    {
+      "name": "atomic publication isolated tag query",
+      "passed": true
+    },
+    {
+      "name": "atomic publication excluded tag negative control",
+      "passed": true
+    },
+    {
+      "name": "atomic publication unrelated layer negative control",
+      "passed": true
+    },
+    {
+      "name": "hidden region is immediately query-invisible",
+      "passed": true
+    },
+    {
+      "name": "republished staged motor motor exists",
+      "passed": true
+    },
+    {
+      "name": "republished staged motor proxy follows root plus oblique offset",
+      "passed": true
+    },
+    {
+      "name": "republished staged motor authored enabled state is already published",
+      "passed": true
+    },
+    {
+      "name": "republished staged motor authored bilateral filter is already published",
+      "passed": true
+    },
+    {
+      "name": "republished staged motor isolated layer query",
+      "passed": true
+    },
+    {
+      "name": "republished staged motor isolated tag query",
+      "passed": true
+    },
+    {
+      "name": "republished staged motor excluded tag negative control",
+      "passed": true
+    },
+    {
+      "name": "republished staged motor unrelated layer negative control",
+      "passed": true
+    },
+    {
+      "name": "normal streaming source saved",
+      "passed": true
+    },
+    {
+      "name": "streamed world builds",
+      "passed": true
+    },
+    {
+      "name": "ordinary demand accepted",
+      "passed": true
+    },
+    {
+      "name": "ordinary active publication",
+      "passed": true
+    },
+    {
+      "name": "first streaming activation motor exists",
+      "passed": true
+    },
+    {
+      "name": "first streaming activation proxy follows root plus oblique offset",
+      "passed": true
+    },
+    {
+      "name": "first streaming activation authored enabled state is already published",
+      "passed": true
+    },
+    {
+      "name": "first streaming activation authored bilateral filter is already published",
+      "passed": true
+    },
+    {
+      "name": "first streaming activation isolated layer query",
+      "passed": true
+    },
+    {
+      "name": "first streaming activation isolated tag query",
+      "passed": true
+    },
+    {
+      "name": "first streaming activation excluded tag negative control",
+      "passed": true
+    },
+    {
+      "name": "first streaming activation unrelated layer negative control",
+      "passed": true
+    },
+    {
+      "name": "disabled streaming activation motor exists",
+      "passed": true
+    },
+    {
+      "name": "disabled streaming activation proxy follows root plus oblique offset",
+      "passed": true
+    },
+    {
+      "name": "disabled streaming activation authored enabled state is already published",
+      "passed": true
+    },
+    {
+      "name": "disabled streaming activation authored bilateral filter is already published",
+      "passed": true
+    },
+    {
+      "name": "disabled streaming activation isolated layer query",
+      "passed": true
+    },
+    {
+      "name": "disabled streaming activation isolated tag query",
+      "passed": true
+    },
+    {
+      "name": "disabled streaming activation excluded tag negative control",
+      "passed": true
+    },
+    {
+      "name": "disabled streaming activation unrelated layer negative control",
+      "passed": true
+    },
+    {
+      "name": "ordinary root state reads",
+      "passed": true
+    },
+    {
+      "name": "ordinary root velocity write",
+      "passed": true
+    },
+    {
+      "name": "release own region demand",
+      "passed": true
+    },
+    {
+      "name": "ordinary retained retirement",
+      "passed": true
+    },
+    {
+      "name": "retirement destroys all owned query capsules",
+      "passed": true
+    },
+    {
+      "name": "retirement invalidates native body generation",
+      "passed": true
+    },
+    {
+      "name": "ordinary demand accepted",
+      "passed": true
+    },
+    {
+      "name": "ordinary active publication",
+      "passed": true
+    },
+    {
+      "name": "revisit creates fresh entity and body generations",
+      "passed": true
+    },
+    {
+      "name": "revisit retains actual authoritative velocity",
+      "passed": true
+    },
+    {
+      "name": "retained streaming revisit motor exists",
+      "passed": true
+    },
+    {
+      "name": "retained streaming revisit proxy follows root plus oblique offset",
+      "passed": true
+    },
+    {
+      "name": "retained streaming revisit authored enabled state is already published",
+      "passed": true
+    },
+    {
+      "name": "retained streaming revisit authored bilateral filter is already published",
+      "passed": true
+    },
+    {
+      "name": "retained streaming revisit isolated layer query",
+      "passed": true
+    },
+    {
+      "name": "retained streaming revisit isolated tag query",
+      "passed": true
+    },
+    {
+      "name": "retained streaming revisit excluded tag negative control",
+      "passed": true
+    },
+    {
+      "name": "retained streaming revisit unrelated layer negative control",
+      "passed": true
+    },
+    {
+      "name": "disabled retained revisit motor exists",
+      "passed": true
+    },
+    {
+      "name": "disabled retained revisit proxy follows root plus oblique offset",
+      "passed": true
+    },
+    {
+      "name": "disabled retained revisit authored enabled state is already published",
+      "passed": true
+    },
+    {
+      "name": "disabled retained revisit authored bilateral filter is already published",
+      "passed": true
+    },
+    {
+      "name": "disabled retained revisit isolated layer query",
+      "passed": true
+    },
+    {
+      "name": "disabled retained revisit isolated tag query",
+      "passed": true
+    },
+    {
+      "name": "disabled retained revisit excluded tag negative control",
+      "passed": true
+    },
+    {
+      "name": "disabled retained revisit unrelated layer negative control",
+      "passed": true
+    },
+    {
+      "name": "stage/retire/revisit does not advance physics",
+      "passed": true
+    },
+    {
+      "name": "final retirement completes",
+      "passed": true
+    },
+    {
+      "name": "repeated visits do not accumulate query bodies",
+      "passed": true
+    }
+  ],
+  "failures": 0
+}

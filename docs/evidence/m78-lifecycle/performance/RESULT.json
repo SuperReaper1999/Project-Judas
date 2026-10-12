@@ -1,0 +1,18 @@
+{
+  "wallMedianMs": 1.08558,
+  "wallP95Ms": 7.12169,
+  "wallMaxMs": 71.359,
+  "threadCpuP95Ms": 7.03735,
+  "wallStepsOver16_67": 24,
+  "gateMs": 16.67,
+  "gatePassed": true,
+  "aggregatePhysical": {
+    "contacts": 56576,
+    "ccdIterations": 19163,
+    "ccdLimit": 7
+  },
+  "samples": 900,
+  "archiveSHA256": "e2e4aec5ed13c6a6e5eb4db0f528682671ad879ae27080665699d8b61681618f",
+  "binarySHA256": "e8537d9f447d8f56668a574505227edd397b173f26c072cd8938604ffdeb7b5e",
+  "scope": "Existing unchanged four original articulations/52 bodies/48 constraints/8192-triangle floor, 900 steps60Hz; full contact/CCD, observational CPUclock. Serial host run; no Windows workload or scheduling/resource edits. External host load uncontrolled. Maxima retained; no causal speedup claim."
+}

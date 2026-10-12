@@ -17,24 +17,28 @@ loaded with the vendored GLAD 2.0.8 OpenGL 3.3 Core loader through the
 SDL-created context; generation and license provenance are recorded in
 [`third_party/glad/README.md`](third_party/glad/README.md).
 
-## Current status — M77 checkpoint and M78 corrective candidate
+## Current status — M78 corrective checkpoint and continued audit
 
-Current checkpoint: `9e77b2226edcf217ab789fe4f0fea42a3415a72d` (M77).
-M77 is **not human validated**. The combined M78 corrective implementation and
-continued capability audit are **uncommitted / unstaged; human acceptance pending**.
-Use [M78 final handoff](docs/M78_FINAL.md) for current correction status, exact
-execution/performance evidence, unresolved findings and the human checklist.
-Earlier M78 reports retain their original failures and source identities.
+Prior corrective checkpoint: `0695433b949df0c1d05ac6798bf118121cc53e2b`.
+This checkpoints the reviewed corrections and evidence; it does **not** complete
+M78 or confer human validation. M77 remains **not human validated**.
+The subsequent motor-publication/save-exclusion/runtime-tag corrections pass
+focused native Linux acceptance and are authorized for checkpointing. Human
+acceptance and comprehensive M78 coverage remain pending. Windows is best-effort
+functional validation, not a checkpoint gate. Use the
+[current lifecycle handoff](docs/M78_LIFECYCLE_CLOSURE.md) for those results and
+the [checkpoint handoff](docs/M78_FINAL.md) for its original source/evidence scope.
+Earlier reports and failure inputs retain their exact bytes and identities.
 
 M78 addresses generic angular/contact/CCD mechanisms, Boolean query cost, prefab
 ordering, navigation dependencies and cold joint/static/motor continuation. Its
 closure additionally corrects independent query-proxy invalidation of restored
 physical observations. These are bounded repairs, not a completed engine audit.
-The [coverage overlay](docs/evidence/m78-closure/coverage/README.md) preserves
+The [current coverage overlay](docs/evidence/m78-lifecycle/coverage/README.md) preserves
 485 overlapping discovery rows (345 public JS members, 89 mechanism groups,
 34 components and 17 asset families); source locations, API presence and related
 suite passes do not prove every member or supported combination. See
-[remaining coverage](docs/evidence/m78-closure/coverage/REMAINING_COVERAGE.md).
+[remaining coverage](docs/evidence/m78-lifecycle/coverage/REMAINING_COVERAGE.md).
 
 [M75 local terrain authoring](docs/M75.md) is human accepted.
 [M76 local mod packages/game-owned kits](docs/M76.md) and

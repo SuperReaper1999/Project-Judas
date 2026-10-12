@@ -1,0 +1,1 @@
+import {physics} from 'judas'; export default class {constructor(){this.state={};} start(){const hit=physics.raycast({"x":1.0760610103607178,"y":3.443498373031616,"z":4.663058280944824},{"x":0.7876453399658203,"y":-0.18730652332305908,"z":-0.5869677066802979},4,{includeLayers:['Actor'],requiredTags:['Motor']});this.state.hit=!!hit;}}

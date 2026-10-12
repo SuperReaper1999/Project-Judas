@@ -1,0 +1,79 @@
+{
+  "scope": "Narrow UI-only start registration follow-up to first lifecycle build; other three translation units reused byte-for-byte.",
+  "startingHEAD": "0695433b949df0c1d05ac6798bf118121cc53e2b",
+  "priorArchiveSHA256": "b1db0ee108387fbed4e21ff9627176225de5d3e38c2b9c4484b428e76fae31db",
+  "archive": {
+    "path": ".cache/m78-lifecycle/final-build-v2/libjudas_engine.a",
+    "sha256": "e2e4aec5ed13c6a6e5eb4db0f528682671ad879ae27080665699d8b61681618f"
+  },
+  "sourceSHA256": {
+    "src/WorldCharacter.cpp": "0c87e03acfba2a1c837da183e7731e35f70df98497d61a864c96ba5e21b064ae",
+    "src/WorldRegions.cpp": "5fa0cec1229c970acc0a593c0f795ac98edb4dfb96d0f9bd49757aa07fc90002",
+    "src/WorldScripts.cpp": "ec660e35570c269b11a1ff88b75d5c79b0b2a96efe0f1cdbe32199c9157bfef1",
+    "src/WorldPersistence.cpp": "1a02f42c466ea035be981c52d38d38bddeb0cb85eaa7c8b07fcfc8d9746d1101"
+  },
+  "objectSHA256": {
+    ".cache/m78-lifecycle/final-build/WorldCharacter.cpp.o": "cfaffe6bcd6317fac0b9c9d0db6dac62bd681d71dd1b23d7987b8742029a8751",
+    ".cache/m78-lifecycle/final-build/WorldRegions.cpp.o": "66c762f772967aec6380554481433d45ee04fe318e78603725a2296abf3b9450",
+    ".cache/m78-lifecycle/final-build/WorldScripts.cpp.o": "56947fca0579b5a439ba70216b0be0689cd433683a1292c8f9ba6d7e93006fe5",
+    ".cache/m78-lifecycle/final-build/WorldPersistence.cpp.o": "50d5b3808e4e33e2ee4066194ebf1035ea311290450b828a76c1f76cdd341413",
+    ".cache/m78-lifecycle/final-build-v2/WorldScripts.cpp.o": "63534dd30f67341e6a8ffba805008340300b302b3ba76f9229aead3729a9f7ac"
+  },
+  "steps": [
+    {
+      "name": "compile",
+      "command": [
+        "c++",
+        "-DDT_VIRTUAL_QUERYFILTER",
+        "-DMA_NO_ENCODING",
+        "-DMA_NO_GENERATION",
+        "-DMA_NO_RESOURCE_MANAGER",
+        "-I/home/conner/Documents/GitHub/Project-Judas/src",
+        "-I/home/conner/Documents/GitHub/Project-Judas/third_party/glad/include",
+        "-I/home/conner/Documents/GitHub/Project-Judas/third_party/miniaudio",
+        "-I/home/conner/Documents/GitHub/Project-Judas/third_party/verblib",
+        "-I/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/_deps/judas_freetype-build/include",
+        "-I/home/conner/Documents/GitHub/Project-Judas/build/_deps/judas_freetype-src/include",
+        "-I/home/conner/Documents/GitHub/Project-Judas/build/_deps/judas_harfbuzz-src/src",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/third_party/quickhull",
+        "-isystem",
+        "/usr/include/SDL2",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/third_party/cgltf",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/third_party/recastnavigation/Detour/Include",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/third_party/recastnavigation/DetourTileCache/Include",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/third_party/recastnavigation/DetourCrowd/Include",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/third_party/quickjs",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/unicode/icu/include",
+        "-O3",
+        "-DNDEBUG",
+        "-std=gnu++17",
+        "-Wall",
+        "-Wextra",
+        "-c",
+        "/home/conner/Documents/GitHub/Project-Judas/src/WorldScripts.cpp",
+        "-o",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-lifecycle/final-build-v2/WorldScripts.cpp.o"
+      ],
+      "exit": 0,
+      "seconds": 7.352971767999406
+    },
+    {
+      "name": "archive",
+      "command": [
+        "ar",
+        "r",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-lifecycle/final-build-v2/libjudas_engine.a",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-lifecycle/final-build-v2/WorldScripts.cpp.o"
+      ],
+      "exit": 0,
+      "seconds": 0.1079078760012635
+    }
+  ]
+}

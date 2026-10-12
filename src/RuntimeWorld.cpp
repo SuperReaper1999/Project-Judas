@@ -1432,11 +1432,21 @@ unsigned RuntimeWorld::RenderLayerOf(EntityId id)const{const auto it=m_entityCat
 bool RuntimeWorld::AddTag(EntityId id,unsigned tag){
     auto it=m_entityCategories.find(id);const auto* entity=FindEntity(id);
     if(it==m_entityCategories.end()||!m_categories.tags.names.count(tag)||(entity&&entity->lifecycle==EntityLifecycle::Destroyed))return false;
-    it->second.tags|=CategoryBit(tag);m_physics.SetBodyTags(it->second.body,it->second.tags);return true;
+    it->second.tags|=CategoryBit(tag);m_physics.SetBodyTags(it->second.body,it->second.tags);
+    // A motor's query capsule is separate from its ordinary rigid body. Do
+    // not instantiate a lazy motor here; construction publishes TagsOf(id).
+    if(auto motor=m_characters.find(id);motor!=m_characters.end())
+        m_physics.SetBodyTags(motor->second.motor.observationBody,it->second.tags);
+    return true;
 }
 bool RuntimeWorld::RemoveTag(EntityId id,unsigned tag){
     auto it=m_entityCategories.find(id);if(it==m_entityCategories.end()||tag>=64)return false;
-    it->second.tags&=~CategoryBit(tag);m_physics.SetBodyTags(it->second.body,it->second.tags);return true;
+    it->second.tags&=~CategoryBit(tag);m_physics.SetBodyTags(it->second.body,it->second.tags);
+    // A motor's query capsule is separate from its ordinary rigid body. Do
+    // not instantiate a lazy motor here; construction publishes TagsOf(id).
+    if(auto motor=m_characters.find(id);motor!=m_characters.end())
+        m_physics.SetBodyTags(motor->second.motor.observationBody,it->second.tags);
+    return true;
 }
 std::vector<EntityId> RuntimeWorld::QueryEntities(CategoryMask required,CategoryMask excluded,const std::vector<EntityId>* candidates)const{
     std::vector<EntityId> result;

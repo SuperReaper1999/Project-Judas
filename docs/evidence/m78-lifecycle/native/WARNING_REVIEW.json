@@ -1,0 +1,67 @@
+{
+  "scope": "Raw original logs preserved. Prior WorldPersistence C4244, unchanged CharacterMotor C4305 and observer C4100 warnings retained; no unrelated cleanup. Three fresh drivers have no warnings.",
+  "warnings": [
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-WorldPersistence.obj-compile.log",
+      "message": "C:\\JudasValidation\\VS2022\\VC\\Tools\\MSVC\\14.44.35207\\include\\utility(274,54): warning C4244: 'initializing': conversion from 'const SceneObjectId' to '_Ty2', possible loss of data"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-WorldPersistence.obj-compile.log",
+      "message": "C:\\JudasValidation\\VS2022\\VC\\Tools\\MSVC\\14.44.35207\\include\\utility(274,54): warning C4244: 'initializing': conversion from 'EntityId' to '_Ty2', possible loss of data"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-mixed_endpoint-mixed-endpoint-0.obj-compile.log",
+      "message": "C:\\JudasValidation\\M78LifecycleBuild\\source\\docs\\evidence\\m78-closure\\review-physics\\MixedCurrentPhysicalEndpointObserver.cpp(161,101): warning C4100: 'snapshot': unreferenced parameter"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-motor-motor-0.obj-compile.log",
+      "message": "C:\\JudasValidation\\M78LifecycleBuild\\source\\tests\\CharacterMotorTests.cpp(20,121): warning C4305: 'argument': truncation from 'double' to 'float'"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-motor-motor-0.obj-compile.log",
+      "message": "C:\\JudasValidation\\M78LifecycleBuild\\source\\tests\\CharacterMotorTests.cpp(22,156): warning C4305: 'argument': truncation from 'double' to 'float'"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-motor-motor-0.obj-compile.log",
+      "message": "C:\\JudasValidation\\M78LifecycleBuild\\source\\tests\\CharacterMotorTests.cpp(23,37): warning C4305: 'argument': truncation from 'double' to 'float'"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-motor-motor-0.obj-compile.log",
+      "message": "C:\\JudasValidation\\M78LifecycleBuild\\source\\tests\\CharacterMotorTests.cpp(24,37): warning C4305: 'argument': truncation from 'double' to 'float'"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-motor-motor-0.obj-compile.log",
+      "message": "C:\\JudasValidation\\M78LifecycleBuild\\source\\tests\\CharacterMotorTests.cpp(26,80): warning C4305: 'argument': truncation from 'double' to 'float'"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-motor-motor-0.obj-compile.log",
+      "message": "C:\\JudasValidation\\M78LifecycleBuild\\source\\tests\\CharacterMotorTests.cpp(26,128): warning C4305: 'argument': truncation from 'double' to 'float'"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-motor-motor-0.obj-compile.log",
+      "message": "C:\\JudasValidation\\M78LifecycleBuild\\source\\tests\\CharacterMotorTests.cpp(29,140): warning C4305: 'argument': truncation from 'double' to 'float'"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-motor-motor-0.obj-compile.log",
+      "message": "C:\\JudasValidation\\M78LifecycleBuild\\source\\tests\\CharacterMotorTests.cpp(30,104): warning C4305: 'argument': truncation from 'double' to 'float'"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-motor-motor-0.obj-compile.log",
+      "message": "C:\\JudasValidation\\M78LifecycleBuild\\source\\tests\\CharacterMotorTests.cpp(34,100): warning C4305: 'argument': truncation from 'double' to 'float'"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-motor-motor-0.obj-compile.log",
+      "message": "C:\\JudasValidation\\M78LifecycleBuild\\source\\tests\\CharacterMotorTests.cpp(36,73): warning C4305: 'argument': truncation from 'double' to 'float'"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-motor-motor-0.obj-compile.log",
+      "message": "C:\\JudasValidation\\M78LifecycleBuild\\source\\tests\\CharacterMotorTests.cpp(37,88): warning C4305: 'argument': truncation from 'double' to 'float'"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-motor-motor-0.obj-compile.log",
+      "message": "C:\\JudasValidation\\M78LifecycleBuild\\source\\tests\\CharacterMotorTests.cpp(49,102): warning C4305: 'argument': truncation from 'double' to 'float'"
+    }
+  ],
+  "C4456Present": false,
+  "hostReportParserFollowup": "Original host report reader assumed UTF8 but MSVC/Tee logs may be UTF16. BOM-aware reading corrected only metadata generation, no test rerun or raw-byte rewrite."
+}

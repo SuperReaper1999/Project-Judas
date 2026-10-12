@@ -1,0 +1,7 @@
+libEGL warning: Not allowed to force software rendering when API explicitly selects a hardware device.
+Renderer fragment texture units: 32 (material path uses 12)
+World state: /home/conner/Documents/GitHub/Project-Judas/.cache/m78-lifecycle/public-after-01/fixture/project/Saves/audit.judasstate (none saved)
+Project: Public lifecycle audit (/home/conner/Documents/GitHub/Project-Judas/.cache/m78-lifecycle/public-after-01/fixture/project/Public_lifecycle_audit.judasproj)
+Scene: Public lifecycle audit (/home/conner/Documents/GitHub/Project-Judas/.cache/m78-lifecycle/public-after-01/fixture/project/Scenes/audit.judas)
+World origin (m): 0.000, 0.000, 0.000
+Runtime outer services: required participant missing/newer: motors

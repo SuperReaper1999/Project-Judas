@@ -1,0 +1,62 @@
+{
+  "BINARY_SHA256.txt": {
+    "bytes": 65,
+    "sha256": "1d8f8d37d79f78d52c14aa71a1dbb88449d1ac39c524066084a78c4770ed82fa"
+  },
+  "IDENTITY.json": {
+    "bytes": 6311,
+    "sha256": "9094f21933b62c8aed0764eb2300adfe385c2fa5bfc3d6e3bef8e0c22d514737"
+  },
+  "RECEIPTS.json": {
+    "bytes": 4011,
+    "sha256": "2794bf5fc595864b0b67518f423ace8f57938fa9ec27ea017e7e6559e60a017e"
+  },
+  "compile.stderr.log": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "compile.stdout.log": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "compiled-source.cpp": {
+    "bytes": 12930,
+    "sha256": "ca1f5b84fcdf665d26a55957c979514c4a1ddecfc9c802db2632ab17192272d7"
+  },
+  "fixture/RESULT.json": {
+    "bytes": 5959,
+    "sha256": "9859ad78b9630dd212b0b9e12ce01a4579acc9811c98c28655e3a5dd75e6443e"
+  },
+  "fixture/articulated/sleep.participant": {
+    "bytes": 82,
+    "sha256": "76d4bd868f79eadc05fb5b8c0083c6a4fb27fa67276137345408ecbdda23dfc6"
+  },
+  "fixture/excluded/sleep.participant": {
+    "bytes": 56,
+    "sha256": "e8ca0599129db91012583fe2b2e8f0f3857cd6228174919c6f89a8e7453043ca"
+  },
+  "fixture/reincluded/sleep.participant": {
+    "bytes": 56,
+    "sha256": "e8ca0599129db91012583fe2b2e8f0f3857cd6228174919c6f89a8e7453043ca"
+  },
+  "fixture/retained/sleep.participant": {
+    "bytes": 56,
+    "sha256": "e8ca0599129db91012583fe2b2e8f0f3857cd6228174919c6f89a8e7453043ca"
+  },
+  "link.stderr.log": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "link.stdout.log": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "run.stderr.log": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "run.stdout.log": {
+    "bytes": 2014,
+    "sha256": "621b6884f376af502ec046dc4e85c283e08d7ab0ee8a39ba74362c4875dee7b7"
+  }
+}

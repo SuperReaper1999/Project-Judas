@@ -1,0 +1,46 @@
+{
+  "archiveSHA256": "e2e4aec5ed13c6a6e5eb4db0f528682671ad879ae27080665699d8b61681618f",
+  "sourceSHA256": "cbf43606ee2db01e38d2bf16480d02ea7fefab8e68d471fbba67d17901aa1e55",
+  "objectSHA256": "4e90d09e939d4bd4a281eea30799db01952235e9cfefcca5fd32753a11b6d2f6",
+  "results": [
+    {
+      "name": "link",
+      "command": [
+        "/usr/bin/c++",
+        "-O3",
+        "-DNDEBUG",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-closure/cpu-observer/observer.o",
+        "-o",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-lifecycle/performance/observer",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-lifecycle/final-build-v2/libjudas_engine.a",
+        "libjudas_profiler.a",
+        "libjudas_app_icon.a",
+        "libjudas_materials.a",
+        "libjudas_profiler.a",
+        "/usr/lib/x86_64-linux-gnu/libSDL2.so",
+        "libjudas_glad.a",
+        "libjudas_audio_backend.a",
+        "libjudas_navigation_backend.a",
+        "libjudas_quickjs.a",
+        "-lm",
+        "_deps/judas_freetype-build/libfreetype.a",
+        "_deps/judas_harfbuzz-build/libharfbuzz.a",
+        "unicode/icu/lib/libicui18n.a",
+        "unicode/icu/lib/libicuuc.a",
+        "unicode/icu/lib/libicudata.a",
+        "-ldl"
+      ],
+      "exit": 0,
+      "seconds": 0.7058661060000304
+    },
+    {
+      "name": "run",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-lifecycle/performance/observer",
+        "/home/conner/Documents/GitHub/Project-Judas/docs/evidence/m78-lifecycle/performance/raw"
+      ],
+      "exit": 0,
+      "seconds": 7.590150034004182
+    }
+  ]
+}

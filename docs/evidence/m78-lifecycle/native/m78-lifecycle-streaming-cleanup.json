@@ -1,0 +1,25 @@
+﻿{
+    "scope":  "Only named generated output bytes independently archived and host SHA/size verified; frozen engine archive, source, results, snapshots and existing packages unchanged",
+    "freeBefore":  37748736,
+    "removed":  [
+                    {
+                        "path":  "C:\\JudasValidation\\Build\\Release\\m78-lifecycle-streaming.exe",
+                        "sha256":  "d6d7ad981e78fbdd4dc152ce370be2a7775ba7a66977c680d063f7046264e39e",
+                        "name":  "m78-lifecycle-streaming.exe",
+                        "bytes":  8039424
+                    },
+                    {
+                        "path":  "C:\\JudasValidation\\M78LifecycleBuild\\objects\\streaming-0.obj",
+                        "sha256":  "53e017296d0e83bff433fd6d402c87e9b2e2301224252d322e58baa80f36711a",
+                        "name":  "streaming-0.obj",
+                        "bytes":  1100935
+                    },
+                    {
+                        "path":  "C:\\JudasValidation\\M78LifecycleResults\\m78-lifecycle-streaming-link.log",
+                        "sha256":  "61d492d07c0da71ea667719940fa833962016af0a61a99e5e1cbd7045c8b807c",
+                        "name":  "m78-lifecycle-streaming-link.log",
+                        "bytes":  33930
+                    }
+                ],
+    "freeAfter":  46927872
+}

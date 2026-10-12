@@ -1,0 +1,6 @@
+PASS ordinary owned project
+PASS authored project classification
+PASS project saved
+FAIL ordinary lazy world builds
+FAIL fixture exception: ordinary lazy world builds: unregistered motor layer/tags
+CHARACTER_PUBLICATION 5 checks 2 failures

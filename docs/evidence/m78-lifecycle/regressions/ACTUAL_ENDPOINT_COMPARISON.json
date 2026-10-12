@@ -1,0 +1,10 @@
+{
+  "equalAfterNativeHandleAndArrayOrderExclusion": true,
+  "uninterruptedSHA256": "d97409cef3c13eecd9c265b5b5c584189d2b9f06eb610193b251760680ba0ecc",
+  "restoredSHA256": "db773ab9d2098345563992fec3f14ae61abc79f2927392fe7e8debc0db522581",
+  "exclusions": [
+    "nativeHandle",
+    "array traversal order"
+  ],
+  "saveSHA256": "cb6868798e948e0426ec65fcc6e76d1a07604f01fb0dae39e19eed49e6eb85f3"
+}

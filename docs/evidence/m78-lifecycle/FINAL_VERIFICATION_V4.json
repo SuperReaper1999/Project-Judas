@@ -1,0 +1,19 @@
+{
+  "passed": true,
+  "counts": {
+    "current": 888,
+    "frozenManifests": 5,
+    "protectedOriginalFiles": 4849,
+    "preservedV2Files": 656,
+    "localOutputs": 113,
+    "priorLocalOutputs": 94,
+    "priorExcluded": 72,
+    "laterExcluded": 1
+  },
+  "failures": [],
+  "manifestIdentity": {
+    "bytes": 285903,
+    "sha256": "f5a2792a7220083bff4c7cc4d42b5f8550fbdb185e1294059aa2b2759a378ea6"
+  },
+  "scope": "Identity only; not human or comprehensive validation."
+}

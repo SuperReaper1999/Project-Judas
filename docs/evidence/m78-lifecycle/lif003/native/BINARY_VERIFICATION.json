@@ -1,0 +1,25 @@
+{
+  "outputs": [
+    {
+      "path": ".cache/m78-lifecycle/lif003-native/m78-lif003-publication-m78-lif003-publication.exe.bin",
+      "bytes": 7843328,
+      "sha256": "c7b558a3743e6205ac8426cd11abae2137adef29cdb732b6eb472df62c14b9b1"
+    },
+    {
+      "path": ".cache/m78-lifecycle/lif003-native/m78-lif003-publication-publication.obj.bin",
+      "bytes": 1836310,
+      "sha256": "7af4723c6747187a0a9333e7e969e72966428d5d5b108472926a61feb2fb7f71"
+    },
+    {
+      "path": ".cache/m78-lifecycle/lif003-native/m78-lif003-tags-m78-lif003-tags.exe.bin",
+      "bytes": 7321600,
+      "sha256": "2bafa737194edbd5ffed68505f8c16fe76f35e1b0b176612e821604112cda426"
+    },
+    {
+      "path": ".cache/m78-lifecycle/lif003-native/m78-lif003-tags-tags.obj.bin",
+      "bytes": 609475,
+      "sha256": "c0a17ad824581064d10913d4033f699d226f8537960e040c64f837e552594e29"
+    }
+  ],
+  "scope": "Native functional only; Windows outcomes do not gate Linux checkpoint."
+}

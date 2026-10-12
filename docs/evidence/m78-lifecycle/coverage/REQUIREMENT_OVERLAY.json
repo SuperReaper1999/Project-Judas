@@ -1,0 +1,1282 @@
+{
+  "schema": 1,
+  "status": "SCOPED LINUX/NATIVE RECEIPTS ATTACHED — unresolved Linux LIF-003, human/hardware gaps, original baseline unchanged",
+  "frozenCrosswalk": {
+    "path": "docs/evidence/m78/REQUIREMENT_CROSSWALK.json",
+    "sha256": "bbecc6c6fa7ec19e470565da3df4df5f7b4aace46ecd9a88e6848bdd403ca658",
+    "bytes": 94858
+  },
+  "frozenCheckpoint": "9e77b2226edcf217ab789fe4f0fea42a3415a72d",
+  "originalM77Brief": {
+    "path": "docs/evidence/m78-followup/M77_PROMPT.txt",
+    "sha256": "e2ba1ffe8d9b8db4019ec120d425cbcda41ce03746003bb0943286e53802622b",
+    "bytes": 42415
+  },
+  "policy": "All 77 milestone identities retained. Original availability is distinct from original-requirement fulfilment. Do not use later docs as an original specification. The first M78 follow-up reconciliation is a historical stage and is not edited.",
+  "availableOriginalBriefMilestones": [
+    55,
+    56,
+    57,
+    58,
+    59,
+    60,
+    61,
+    62,
+    63,
+    64,
+    65,
+    66,
+    67,
+    69,
+    70,
+    71,
+    72,
+    76,
+    77
+  ],
+  "missingOriginalBriefMilestones": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27,
+    28,
+    29,
+    30,
+    31,
+    32,
+    33,
+    34,
+    35,
+    36,
+    37,
+    38,
+    39,
+    40,
+    41,
+    42,
+    43,
+    44,
+    45,
+    46,
+    47,
+    48,
+    49,
+    50,
+    51,
+    52,
+    53,
+    54,
+    68,
+    73,
+    74,
+    75
+  ],
+  "m77CurrentReconciliation": "docs/evidence/m78-closure/coverage/M77_RECONCILIATION.md",
+  "milestones": [
+    {
+      "milestone": 1,
+      "frozenStatus": "partially reconciled; original-brief gap",
+      "frozenMissingOriginalBrief": true,
+      "availableOriginalBriefs": [],
+      "missingOriginalBrief": true,
+      "status": "partially reconciled; original-brief gap",
+      "featureIds": [],
+      "availabilityChange": "none; original availability and claim-level gaps retained",
+      "lifecycleCaseIds": [],
+      "lifecycleMeaning": "No new lifecycle claim; original availability and all remaining requirement gaps retained."
+    },
+    {
+      "milestone": 2,
+      "frozenStatus": "partially reconciled; original-brief gap",
+      "frozenMissingOriginalBrief": true,
+      "availableOriginalBriefs": [],
+      "missingOriginalBrief": true,
+      "status": "partially reconciled; original-brief gap",
+      "featureIds": [],
+      "availabilityChange": "none; original availability and claim-level gaps retained",
+      "lifecycleCaseIds": [],
+      "lifecycleMeaning": "No new lifecycle claim; original availability and all remaining requirement gaps retained."
+    },
+    {
+      "milestone": 3,
+      "frozenStatus": "partially reconciled; original-brief gap",
+      "frozenMissingOriginalBrief": true,
+      "availableOriginalBriefs": [],
+      "missingOriginalBrief": true,
+      "status": "partially reconciled; original-brief gap",
+      "featureIds": [],
+      "availabilityChange": "none; original availability and claim-level gaps retained",
+      "lifecycleCaseIds": [],
+      "lifecycleMeaning": "No new lifecycle claim; original availability and all remaining requirement gaps retained."
+    },
+    {
+      "milestone": 4,
+      "frozenStatus": "partially reconciled; original-brief gap",
+      "frozenMissingOriginalBrief": true,
+      "availableOriginalBriefs": [],
+      "missingOriginalBrief": true,
+      "status": "partially reconciled; original-brief gap",
+      "featureIds": [],
+      "availabilityChange": "none; original availability and claim-level gaps retained",
+      "lifecycleCaseIds": [],
+      "lifecycleMeaning": "No new lifecycle claim; original availability and all remaining requirement gaps retained."
+    },
+    {
+      "milestone": 5,
+      "frozenStatus": "partially reconciled; original-brief gap",
+      "frozenMissingOriginalBrief": true,
+      "availableOriginalBriefs": [],
+      "missingOriginalBrief": true,
+      "status": "partially reconciled; original-brief gap",
+      "featureIds": [],
+      "availabilityChange": "none; original availability and claim-level gaps retained",
+      "lifecycleCaseIds": [],
+      "lifecycleMeaning": "No new lifecycle claim; original availability and all remaining requirement gaps retained."
+    },
+    {
+      "milestone": 6,
+      "frozenStatus": "partially reconciled; original-brief gap",
+      "frozenMissingOriginalBrief": true,
+      "availableOriginalBriefs": [],
+      "missingOriginalBrief": true,
+      "status": "partially reconciled; original-brief gap",
+      "featureIds": [],
+      "availabilityChange": "none; original availability and claim-level gaps retained",
+      "lifecycleCaseIds": [],
+      "lifecycleMeaning": "No new lifecycle claim; original availability and all remaining requirement gaps retained."
+    },
+    {
+      "milestone": 7,
+      "frozenStatus": "partially reconciled; original-brief gap",
+      "frozenMissingOriginalBrief": true,
+      "availableOriginalBriefs": [],
+      "missingOriginalBrief": true,
+      "status": "partially reconciled; original-brief gap",
+      "featureIds": [],
+      "availabilityChange": "none; original availability and claim-level gaps retained",
+      "lifecycleCaseIds": [],
+      "lifecycleMeaning": "No new lifecycle claim; original availability and all remaining requirement gaps retained."
+    },
+    {
+      "milestone": 8,
+      "frozenStatus": "partially reconciled; original-brief gap",
+      "frozenMissingOriginalBrief": true,
+      "availableOriginalBriefs": [],
+      "missingOriginalBrief": true,
+      "status": "partially reconciled; original-brief gap",
+      "featureIds": [],
+      "availabilityChange": "none; original availability and claim-level gaps retained",
+      "lifecycleCaseIds": [],
+      "lifecycleMeaning": "No new lifecycle claim; original availability and all remaining requirement gaps retained."
+    },
+    {
+      "milestone": 9,
+      "frozenStatus": "partially reconciled; original-brief gap",
+      "frozenMissingOriginalBrief": true,
+      "availableOriginalBriefs": [],
+      "missingOriginalBrief": true,
+      "status": "partially reconciled; original-brief gap",
+      "featureIds": [],
+      "availabilityChange": "none; original availability and claim-level gaps retained",
+      "lifecycleCaseIds": [],
+      "lifecycleMeaning": "No new lifecycle claim; original availability and all remaining requirement gaps retained."
+    },
+    {
+      "milestone": 10,
+      "frozenStatus": "partially reconciled; original-brief gap",
+      "frozenMissingOriginalBrief": true,
+      "availableOriginalBriefs": [],
+      "missingOriginalBrief": true,
+      "status": "partially reconciled; original-brief gap",
+      "featureIds": [],
+      "availabilityChange": "none; original availability and claim-level gaps retained",
+      "lifecycleCaseIds": [],
+      "lifecycleMeaning": "No new lifecycle claim; original availability and all remaining requirement gaps retained."
+    },
+    {
+      "milestone": 11,
+      "frozenStatus": "partially reconciled; original-brief gap",
+      "frozenMissingOriginalBrief": true,
+      "availableOriginalBriefs": [],
+      "missingOriginalBrief": true,
+      "status": "partially reconciled; original-brief gap",
+      "featureIds": [],
+      "availabilityChange": "none; original availability and claim-level gaps retained",
+      "lifecycleCaseIds": [],
+      "lifecycleMeaning": "No new lifecycle claim; original availability and all remaining requirement gaps retained."
+    },
+    {
+      "milestone": 12,
+      "frozenStatus": "partially reconciled; original-brief gap",
+      "frozenMissingOriginalBrief": true,
+      "availableOriginalBriefs": [],
+      "missingOriginalBrief": true,
+      "status": "partially reconciled; original-brief gap",
+      "featureIds": [],
+      "availabilityChange": "none; original availability and claim-level gaps retained",
+      "lifecycleCaseIds": [],
+      "lifecycleMeaning": "No new lifecycle claim; original availability and all remaining requirement gaps retained."
+    },
+    {
+      "milestone": 13,
+      "frozenStatus": "partially reconciled; original-brief gap",
+      "frozenMissingOriginalBrief": true,
+      "availableOriginalBriefs": [],
+      "missingOriginalBrief": true,
+      "status": "partially reconciled; original-brief gap",
+      "featureIds": [],
+      "availabilityChange": "none; original availability and claim-level gaps retained",
+      "lifecycleCaseIds": [],
+      "lifecycleMeaning": "No new lifecycle claim; original availability and all remaining requirement gaps retained."
+    },
+    {
+      "milestone": 14,
+      "frozenStatus": "partially reconciled; original-brief gap",
+      "frozenMissingOriginalBrief": true,
+      "availableOriginalBriefs": [],
+      "missingOriginalBrief": true,
+      "status": "partially reconciled; original-brief gap",
+      "featureIds": [],
+      "availabilityChange": "none; original availability and claim-level gaps retained",
+      "lifecycleCaseIds": [],
+      "lifecycleMeaning": "No new lifecycle claim; original availability and all remaining requirement gaps retained."
+    },
+    {
+      "milestone": 15,
+      "frozenStatus": "partially reconciled; original-brief gap",
+      "frozenMissingOriginalBrief": true,
+      "availableOriginalBriefs": [],
+      "missingOriginalBrief": true,
+      "status": "partially reconciled; original-brief gap",
+      "featureIds": [],
+      "availabilityChange": "none; original availability and claim-level gaps retained",
+      "lifecycleCaseIds": [],
+      "lifecycleMeaning": "No new lifecycle claim; original availability and all remaining requirement gaps retained."
+    },
+    {
+      "milestone": 16,
+      "frozenStatus": "partially reconciled; original-brief gap",
+      "frozenMissingOriginalBrief": true,
+      "availableOriginalBriefs": [],
+      "missingOriginalBrief": true,
+      "status": "partially reconciled; original-brief gap",
+      "featureIds": [],
+      "availabilityChange": "none; original availability and claim-level gaps retained",
+      "lifecycleCaseIds": [],
+      "lifecycleMeaning": "No new lifecycle claim; original availability and all remaining requirement gaps retained."
+    },
+    {
+      "milestone": 17,
+      "frozenStatus": "partially reconciled; original-brief gap",
+      "frozenMissingOriginalBrief": true,
+      "availableOriginalBriefs": [],
+      "missingOriginalBrief": true,
+      "status": "partially reconciled; original-brief gap",
+      "featureIds": [],
+      "availabilityChange": "none; original availability and claim-level gaps retained",
+      "lifecycleCaseIds": [],
+      "lifecycleMeaning": "No new lifecycle claim; original availability and all remaining requirement gaps retained."
+    },
+    {
+      "milestone": 18,
+      "frozenStatus": "partially reconciled; original-brief gap",
+      "frozenMissingOriginalBrief": true,
+      "availableOriginalBriefs": [],
+      "missingOriginalBrief": true,
+      "status": "partially reconciled; original-brief gap",
+      "featureIds": [],
+      "availabilityChange": "none; original availability and claim-level gaps retained",
+      "lifecycleCaseIds": [],
+      "lifecycleMeaning": "No new lifecycle claim; original availability and all remaining requirement gaps retained."
+    },
+    {
+      "milestone": 19,
+      "frozenStatus": "partially reconciled; original-brief gap",
+      "frozenMissingOriginalBrief": true,
+      "availableOriginalBriefs": [],
+      "missingOriginalBrief": true,
+      "status": "partially reconciled; original-brief gap",
+      "featureIds": [],
+      "availabilityChange": "none; original availability and claim-level gaps retained",
+      "lifecycleCaseIds": [],
+      "lifecycleMeaning": "No new lifecycle claim; original availability and all remaining requirement gaps retained."
+    },
+    {
+      "milestone": 20,
+      "frozenStatus": "partially reconciled; original-brief gap",
+      "frozenMissingOriginalBrief": true,
+      "availableOriginalBriefs": [],
+      "missingOriginalBrief": true,
+      "status": "partially reconciled; original-brief gap",
+      "featureIds": [],
+      "availabilityChange": "none; original availability and claim-level gaps retained",
+      "lifecycleCaseIds": [],
+      "lifecycleMeaning": "No new lifecycle claim; original availability and all remaining requirement gaps retained."
+    },
+    {
+      "milestone": 21,
+      "frozenStatus": "partially reconciled; original-brief gap",
+      "frozenMissingOriginalBrief": true,
+      "availableOriginalBriefs": [],
+      "missingOriginalBrief": true,
+      "status": "partially reconciled; original-brief gap",
+      "featureIds": [],
+      "availabilityChange": "none; original availability and claim-level gaps retained",
+      "lifecycleCaseIds": [],
+      "lifecycleMeaning": "No new lifecycle claim; original availability and all remaining requirement gaps retained."
+    },
+    {
+      "milestone": 22,
+      "frozenStatus": "partially reconciled; original-brief gap",
+      "frozenMissingOriginalBrief": true,
+      "availableOriginalBriefs": [],
+      "missingOriginalBrief": true,
+      "status": "partially reconciled; original-brief gap",
+      "featureIds": [],
+      "availabilityChange": "none; original availability and claim-level gaps retained",
+      "lifecycleCaseIds": [],
+      "lifecycleMeaning": "No new lifecycle claim; original availability and all remaining requirement gaps retained."
+    },
+    {
+      "milestone": 23,
+      "frozenStatus": "partially reconciled; original-brief gap",
+      "frozenMissingOriginalBrief": true,
+      "availableOriginalBriefs": [],
+      "missingOriginalBrief": true,
+      "status": "partially reconciled; original-brief gap",
+      "featureIds": [],
+      "availabilityChange": "none; original availability and claim-level gaps retained",
+      "lifecycleCaseIds": [],
+      "lifecycleMeaning": "No new lifecycle claim; original availability and all remaining requirement gaps retained."
+    },
+    {
+      "milestone": 24,
+      "frozenStatus": "partially reconciled; original-brief gap",
+      "frozenMissingOriginalBrief": true,
+      "availableOriginalBriefs": [],
+      "missingOriginalBrief": true,
+      "status": "partially reconciled; original-brief gap",
+      "featureIds": [],
+      "availabilityChange": "none; original availability and claim-level gaps retained",
+      "lifecycleCaseIds": [],
+      "lifecycleMeaning": "No new lifecycle claim; original availability and all remaining requirement gaps retained."
+    },
+    {
+      "milestone": 25,
+      "frozenStatus": "partially reconciled; original-brief gap",
+      "frozenMissingOriginalBrief": true,
+      "availableOriginalBriefs": [],
+      "missingOriginalBrief": true,
+      "status": "partially reconciled; original-brief gap",
+      "featureIds": [],
+      "availabilityChange": "none; original availability and claim-level gaps retained",
+      "lifecycleCaseIds": [],
+      "lifecycleMeaning": "No new lifecycle claim; original availability and all remaining requirement gaps retained."
+    },
+    {
+      "milestone": 26,
+      "frozenStatus": "partially reconciled; original-brief gap",
+      "frozenMissingOriginalBrief": true,
+      "availableOriginalBriefs": [],
+      "missingOriginalBrief": true,
+      "status": "partially reconciled; original-brief gap",
+      "featureIds": [],
+      "availabilityChange": "none; original availability and claim-level gaps retained",
+      "lifecycleCaseIds": [],
+      "lifecycleMeaning": "No new lifecycle claim; original availability and all remaining requirement gaps retained."
+    },
+    {
+      "milestone": 27,
+      "frozenStatus": "partially reconciled; original-brief gap",
+      "frozenMissingOriginalBrief": true,
+      "availableOriginalBriefs": [],
+      "missingOriginalBrief": true,
+      "status": "partially reconciled; original-brief gap",
+      "featureIds": [],
+      "availabilityChange": "none; original availability and claim-level gaps retained",
+      "lifecycleCaseIds": [],
+      "lifecycleMeaning": "No new lifecycle claim; original availability and all remaining requirement gaps retained."
+    },
+    {
+      "milestone": 28,
+      "frozenStatus": "partially reconciled; original-brief gap",
+      "frozenMissingOriginalBrief": true,
+      "availableOriginalBriefs": [],
+      "missingOriginalBrief": true,
+      "status": "partially reconciled; original-brief gap",
+      "featureIds": [],
+      "availabilityChange": "none; original availability and claim-level gaps retained",
+      "lifecycleCaseIds": [],
+      "lifecycleMeaning": "No new lifecycle claim; original availability and all remaining requirement gaps retained."
+    },
+    {
+      "milestone": 29,
+      "frozenStatus": "partially reconciled; original-brief gap",
+      "frozenMissingOriginalBrief": true,
+      "availableOriginalBriefs": [],
+      "missingOriginalBrief": true,
+      "status": "partially reconciled; original-brief gap",
+      "featureIds": [],
+      "availabilityChange": "none; original availability and claim-level gaps retained",
+      "lifecycleCaseIds": [],
+      "lifecycleMeaning": "No new lifecycle claim; original availability and all remaining requirement gaps retained."
+    },
+    {
+      "milestone": 30,
+      "frozenStatus": "partially reconciled; original-brief gap",
+      "frozenMissingOriginalBrief": true,
+      "availableOriginalBriefs": [],
+      "missingOriginalBrief": true,
+      "status": "partially reconciled; original-brief gap",
+      "featureIds": [],
+      "availabilityChange": "none; original availability and claim-level gaps retained",
+      "lifecycleCaseIds": [],
+      "lifecycleMeaning": "No new lifecycle claim; original availability and all remaining requirement gaps retained."
+    },
+    {
+      "milestone": 31,
+      "frozenStatus": "partially reconciled; original-brief gap",
+      "frozenMissingOriginalBrief": true,
+      "availableOriginalBriefs": [],
+      "missingOriginalBrief": true,
+      "status": "partially reconciled; original-brief gap",
+      "featureIds": [],
+      "availabilityChange": "none; original availability and claim-level gaps retained",
+      "lifecycleCaseIds": [],
+      "lifecycleMeaning": "No new lifecycle claim; original availability and all remaining requirement gaps retained."
+    },
+    {
+      "milestone": 32,
+      "frozenStatus": "partially reconciled; original-brief gap",
+      "frozenMissingOriginalBrief": true,
+      "availableOriginalBriefs": [],
+      "missingOriginalBrief": true,
+      "status": "partially reconciled; original-brief gap",
+      "featureIds": [],
+      "availabilityChange": "none; original availability and claim-level gaps retained",
+      "lifecycleCaseIds": [],
+      "lifecycleMeaning": "No new lifecycle claim; original availability and all remaining requirement gaps retained."
+    },
+    {
+      "milestone": 33,
+      "frozenStatus": "partially reconciled; original-brief gap",
+      "frozenMissingOriginalBrief": true,
+      "availableOriginalBriefs": [],
+      "missingOriginalBrief": true,
+      "status": "partially reconciled; original-brief gap",
+      "featureIds": [
+        "F.08"
+      ],
+      "availabilityChange": "none; original availability and claim-level gaps retained",
+      "lifecycleCaseIds": [],
+      "lifecycleMeaning": "No new lifecycle claim; original availability and all remaining requirement gaps retained."
+    },
+    {
+      "milestone": 34,
+      "frozenStatus": "partially reconciled; original-brief gap",
+      "frozenMissingOriginalBrief": true,
+      "availableOriginalBriefs": [],
+      "missingOriginalBrief": true,
+      "status": "partially reconciled; original-brief gap",
+      "featureIds": [
+        "H.01"
+      ],
+      "availabilityChange": "none; original availability and claim-level gaps retained",
+      "lifecycleCaseIds": [],
+      "lifecycleMeaning": "No new lifecycle claim; original availability and all remaining requirement gaps retained."
+    },
+    {
+      "milestone": 35,
+      "frozenStatus": "partially reconciled; original-brief gap",
+      "frozenMissingOriginalBrief": true,
+      "availableOriginalBriefs": [],
+      "missingOriginalBrief": true,
+      "status": "partially reconciled; original-brief gap",
+      "featureIds": [
+        "H.05"
+      ],
+      "availabilityChange": "none; original availability and claim-level gaps retained",
+      "lifecycleCaseIds": [],
+      "lifecycleMeaning": "No new lifecycle claim; original availability and all remaining requirement gaps retained."
+    },
+    {
+      "milestone": 36,
+      "frozenStatus": "partially reconciled; original-brief gap",
+      "frozenMissingOriginalBrief": true,
+      "availableOriginalBriefs": [],
+      "missingOriginalBrief": true,
+      "status": "partially reconciled; original-brief gap",
+      "featureIds": [
+        "A.05"
+      ],
+      "availabilityChange": "none; original availability and claim-level gaps retained",
+      "lifecycleCaseIds": [],
+      "lifecycleMeaning": "No new lifecycle claim; original availability and all remaining requirement gaps retained."
+    },
+    {
+      "milestone": 37,
+      "frozenStatus": "partially reconciled; original-brief gap",
+      "frozenMissingOriginalBrief": true,
+      "availableOriginalBriefs": [],
+      "missingOriginalBrief": true,
+      "status": "partially reconciled; original-brief gap",
+      "featureIds": [
+        "F.05",
+        "F.07"
+      ],
+      "availabilityChange": "none; original availability and claim-level gaps retained",
+      "lifecycleCaseIds": [],
+      "lifecycleMeaning": "No new lifecycle claim; original availability and all remaining requirement gaps retained."
+    },
+    {
+      "milestone": 38,
+      "frozenStatus": "partially reconciled; original-brief gap",
+      "frozenMissingOriginalBrief": true,
+      "availableOriginalBriefs": [],
+      "missingOriginalBrief": true,
+      "status": "partially reconciled; original-brief gap",
+      "featureIds": [
+        "J.08"
+      ],
+      "availabilityChange": "none; original availability and claim-level gaps retained",
+      "lifecycleCaseIds": [],
+      "lifecycleMeaning": "No new lifecycle claim; original availability and all remaining requirement gaps retained."
+    },
+    {
+      "milestone": 39,
+      "frozenStatus": "partially reconciled; original-brief gap",
+      "frozenMissingOriginalBrief": true,
+      "availableOriginalBriefs": [],
+      "missingOriginalBrief": true,
+      "status": "partially reconciled; original-brief gap",
+      "featureIds": [
+        "C.06"
+      ],
+      "availabilityChange": "none; original availability and claim-level gaps retained",
+      "lifecycleCaseIds": [],
+      "lifecycleMeaning": "No new lifecycle claim; original availability and all remaining requirement gaps retained."
+    },
+    {
+      "milestone": 40,
+      "frozenStatus": "partially reconciled; original-brief gap",
+      "frozenMissingOriginalBrief": true,
+      "availableOriginalBriefs": [],
+      "missingOriginalBrief": true,
+      "status": "partially reconciled; original-brief gap",
+      "featureIds": [
+        "H.06",
+        "H.07"
+      ],
+      "availabilityChange": "none; original availability and claim-level gaps retained",
+      "lifecycleCaseIds": [],
+      "lifecycleMeaning": "No new lifecycle claim; original availability and all remaining requirement gaps retained."
+    },
+    {
+      "milestone": 41,
+      "frozenStatus": "partially reconciled; original-brief gap",
+      "frozenMissingOriginalBrief": true,
+      "availableOriginalBriefs": [],
+      "missingOriginalBrief": true,
+      "status": "partially reconciled; original-brief gap",
+      "featureIds": [
+        "H.03"
+      ],
+      "availabilityChange": "none; original availability and claim-level gaps retained",
+      "lifecycleCaseIds": [],
+      "lifecycleMeaning": "No new lifecycle claim; original availability and all remaining requirement gaps retained."
+    },
+    {
+      "milestone": 42,
+      "frozenStatus": "partially reconciled; original-brief gap",
+      "frozenMissingOriginalBrief": true,
+      "availableOriginalBriefs": [],
+      "missingOriginalBrief": true,
+      "status": "partially reconciled; original-brief gap",
+      "featureIds": [
+        "C.05"
+      ],
+      "availabilityChange": "none; original availability and claim-level gaps retained",
+      "lifecycleCaseIds": [],
+      "lifecycleMeaning": "No new lifecycle claim; original availability and all remaining requirement gaps retained."
+    },
+    {
+      "milestone": 43,
+      "frozenStatus": "partially reconciled; original-brief gap",
+      "frozenMissingOriginalBrief": true,
+      "availableOriginalBriefs": [],
+      "missingOriginalBrief": true,
+      "status": "partially reconciled; original-brief gap",
+      "featureIds": [
+        "A.01",
+        "I.03"
+      ],
+      "availabilityChange": "none; original availability and claim-level gaps retained",
+      "lifecycleCaseIds": [],
+      "lifecycleMeaning": "No new lifecycle claim; original availability and all remaining requirement gaps retained."
+    },
+    {
+      "milestone": 44,
+      "frozenStatus": "partially reconciled; original-brief gap",
+      "frozenMissingOriginalBrief": true,
+      "availableOriginalBriefs": [],
+      "missingOriginalBrief": true,
+      "status": "partially reconciled; original-brief gap",
+      "featureIds": [
+        "C.04"
+      ],
+      "availabilityChange": "none; original availability and claim-level gaps retained",
+      "lifecycleCaseIds": [],
+      "lifecycleMeaning": "No new lifecycle claim; original availability and all remaining requirement gaps retained."
+    },
+    {
+      "milestone": 45,
+      "frozenStatus": "partially reconciled; original-brief gap",
+      "frozenMissingOriginalBrief": true,
+      "availableOriginalBriefs": [],
+      "missingOriginalBrief": true,
+      "status": "partially reconciled; original-brief gap",
+      "featureIds": [
+        "C.08"
+      ],
+      "availabilityChange": "none; original availability and claim-level gaps retained",
+      "lifecycleCaseIds": [],
+      "lifecycleMeaning": "No new lifecycle claim; original availability and all remaining requirement gaps retained."
+    },
+    {
+      "milestone": 46,
+      "frozenStatus": "partially reconciled; original-brief gap",
+      "frozenMissingOriginalBrief": true,
+      "availableOriginalBriefs": [],
+      "missingOriginalBrief": true,
+      "status": "partially reconciled; original-brief gap",
+      "featureIds": [
+        "D.02",
+        "D.03"
+      ],
+      "availabilityChange": "none; original availability and claim-level gaps retained",
+      "lifecycleCaseIds": [],
+      "lifecycleMeaning": "No new lifecycle claim; original availability and all remaining requirement gaps retained."
+    },
+    {
+      "milestone": 47,
+      "frozenStatus": "partially reconciled; original-brief gap",
+      "frozenMissingOriginalBrief": true,
+      "availableOriginalBriefs": [],
+      "missingOriginalBrief": true,
+      "status": "partially reconciled; original-brief gap",
+      "featureIds": [
+        "D.03"
+      ],
+      "availabilityChange": "none; original availability and claim-level gaps retained",
+      "lifecycleCaseIds": [],
+      "lifecycleMeaning": "No new lifecycle claim; original availability and all remaining requirement gaps retained."
+    },
+    {
+      "milestone": 48,
+      "frozenStatus": "partially reconciled; original-brief gap",
+      "frozenMissingOriginalBrief": true,
+      "availableOriginalBriefs": [],
+      "missingOriginalBrief": true,
+      "status": "partially reconciled; original-brief gap",
+      "featureIds": [
+        "D.08"
+      ],
+      "availabilityChange": "none; original availability and claim-level gaps retained",
+      "lifecycleCaseIds": [],
+      "lifecycleMeaning": "No new lifecycle claim; original availability and all remaining requirement gaps retained."
+    },
+    {
+      "milestone": 49,
+      "frozenStatus": "partially reconciled; original-brief gap",
+      "frozenMissingOriginalBrief": true,
+      "availableOriginalBriefs": [],
+      "missingOriginalBrief": true,
+      "status": "partially reconciled; original-brief gap",
+      "featureIds": [
+        "D.01"
+      ],
+      "availabilityChange": "none; original availability and claim-level gaps retained",
+      "lifecycleCaseIds": [],
+      "lifecycleMeaning": "No new lifecycle claim; original availability and all remaining requirement gaps retained."
+    },
+    {
+      "milestone": 50,
+      "frozenStatus": "partially reconciled; original-brief gap",
+      "frozenMissingOriginalBrief": true,
+      "availableOriginalBriefs": [],
+      "missingOriginalBrief": true,
+      "status": "partially reconciled; original-brief gap",
+      "featureIds": [
+        "H.06",
+        "K.05"
+      ],
+      "availabilityChange": "none; original availability and claim-level gaps retained",
+      "lifecycleCaseIds": [],
+      "lifecycleMeaning": "No new lifecycle claim; original availability and all remaining requirement gaps retained."
+    },
+    {
+      "milestone": 51,
+      "frozenStatus": "partially reconciled; original-brief gap",
+      "frozenMissingOriginalBrief": true,
+      "availableOriginalBriefs": [],
+      "missingOriginalBrief": true,
+      "status": "partially reconciled; original-brief gap",
+      "featureIds": [
+        "A.08"
+      ],
+      "availabilityChange": "none; original availability and claim-level gaps retained",
+      "lifecycleCaseIds": [],
+      "lifecycleMeaning": "No new lifecycle claim; original availability and all remaining requirement gaps retained."
+    },
+    {
+      "milestone": 52,
+      "frozenStatus": "partially reconciled; original-brief gap",
+      "frozenMissingOriginalBrief": true,
+      "availableOriginalBriefs": [],
+      "missingOriginalBrief": true,
+      "status": "partially reconciled; original-brief gap",
+      "featureIds": [
+        "D.01",
+        "C.04",
+        "C.08",
+        "H.03"
+      ],
+      "availabilityChange": "none; original availability and claim-level gaps retained",
+      "lifecycleCaseIds": [],
+      "lifecycleMeaning": "No new lifecycle claim; original availability and all remaining requirement gaps retained."
+    },
+    {
+      "milestone": 53,
+      "frozenStatus": "partially reconciled; original-brief gap",
+      "frozenMissingOriginalBrief": true,
+      "availableOriginalBriefs": [],
+      "missingOriginalBrief": true,
+      "status": "partially reconciled; original-brief gap",
+      "featureIds": [
+        "G.05",
+        "G.06",
+        "G.07",
+        "G.08"
+      ],
+      "availabilityChange": "none; original availability and claim-level gaps retained",
+      "lifecycleCaseIds": [],
+      "lifecycleMeaning": "No new lifecycle claim; original availability and all remaining requirement gaps retained."
+    },
+    {
+      "milestone": 54,
+      "frozenStatus": "partially reconciled; original-brief gap",
+      "frozenMissingOriginalBrief": true,
+      "availableOriginalBriefs": [],
+      "missingOriginalBrief": true,
+      "status": "partially reconciled; original-brief gap",
+      "featureIds": [
+        "E.02",
+        "E.04"
+      ],
+      "availabilityChange": "none; original availability and claim-level gaps retained",
+      "lifecycleCaseIds": [],
+      "lifecycleMeaning": "No new lifecycle claim; original availability and all remaining requirement gaps retained."
+    },
+    {
+      "milestone": 55,
+      "frozenStatus": "partially reconciled; claim-level completeness unverified",
+      "frozenMissingOriginalBrief": false,
+      "availableOriginalBriefs": [
+        "docs/evidence/m55/research/M55_PROMPT.txt"
+      ],
+      "missingOriginalBrief": false,
+      "status": "partially reconciled; claim-level completeness unverified",
+      "featureIds": [
+        "E.03"
+      ],
+      "availabilityChange": "none; original availability and claim-level gaps retained",
+      "lifecycleCaseIds": [],
+      "lifecycleMeaning": "No new lifecycle claim; original availability and all remaining requirement gaps retained."
+    },
+    {
+      "milestone": 56,
+      "frozenStatus": "partially reconciled; claim-level completeness unverified",
+      "frozenMissingOriginalBrief": false,
+      "availableOriginalBriefs": [
+        "docs/evidence/m78/requirements/M56_PROMPT.txt"
+      ],
+      "missingOriginalBrief": false,
+      "status": "partially reconciled; claim-level completeness unverified",
+      "featureIds": [
+        "K.01"
+      ],
+      "availabilityChange": "none; original availability and claim-level gaps retained",
+      "lifecycleCaseIds": [],
+      "lifecycleMeaning": "No new lifecycle claim; original availability and all remaining requirement gaps retained."
+    },
+    {
+      "milestone": 57,
+      "frozenStatus": "partially reconciled; claim-level completeness unverified",
+      "frozenMissingOriginalBrief": false,
+      "availableOriginalBriefs": [
+        "docs/evidence/m78/requirements/M57_PROMPT.txt"
+      ],
+      "missingOriginalBrief": false,
+      "status": "partially reconciled; claim-level completeness unverified",
+      "featureIds": [
+        "F.01",
+        "F.02",
+        "F.06"
+      ],
+      "availabilityChange": "none; original availability and claim-level gaps retained",
+      "lifecycleCaseIds": [],
+      "lifecycleMeaning": "No new lifecycle claim; original availability and all remaining requirement gaps retained."
+    },
+    {
+      "milestone": 58,
+      "frozenStatus": "partially reconciled; claim-level completeness unverified",
+      "frozenMissingOriginalBrief": false,
+      "availableOriginalBriefs": [
+        "docs/evidence/m78/requirements/M58_PROMPT.txt"
+      ],
+      "missingOriginalBrief": false,
+      "status": "partially reconciled; claim-level completeness unverified",
+      "featureIds": [
+        "H.04"
+      ],
+      "availabilityChange": "none; original availability and claim-level gaps retained",
+      "lifecycleCaseIds": [],
+      "lifecycleMeaning": "No new lifecycle claim; original availability and all remaining requirement gaps retained."
+    },
+    {
+      "milestone": 59,
+      "frozenStatus": "partially reconciled; claim-level completeness unverified",
+      "frozenMissingOriginalBrief": false,
+      "availableOriginalBriefs": [
+        "docs/evidence/m78/requirements/M59_PROMPT.txt"
+      ],
+      "missingOriginalBrief": false,
+      "status": "partially reconciled; claim-level completeness unverified",
+      "featureIds": [
+        "I.04"
+      ],
+      "availabilityChange": "none; original availability and claim-level gaps retained",
+      "lifecycleCaseIds": [],
+      "lifecycleMeaning": "No new lifecycle claim; original availability and all remaining requirement gaps retained."
+    },
+    {
+      "milestone": 60,
+      "frozenStatus": "partially reconciled; claim-level completeness unverified",
+      "frozenMissingOriginalBrief": false,
+      "availableOriginalBriefs": [
+        "docs/evidence/m78/requirements/M60_PROMPT.txt"
+      ],
+      "missingOriginalBrief": false,
+      "status": "partially reconciled; claim-level completeness unverified",
+      "featureIds": [
+        "H.01",
+        "H.02"
+      ],
+      "availabilityChange": "none; original availability and claim-level gaps retained",
+      "lifecycleCaseIds": [],
+      "lifecycleMeaning": "No new lifecycle claim; original availability and all remaining requirement gaps retained."
+    },
+    {
+      "milestone": 61,
+      "frozenStatus": "partially reconciled; claim-level completeness unverified",
+      "frozenMissingOriginalBrief": false,
+      "availableOriginalBriefs": [
+        "docs/evidence/m78/requirements/M61_PROMPT.txt"
+      ],
+      "missingOriginalBrief": false,
+      "status": "partially reconciled; claim-level completeness unverified",
+      "featureIds": [
+        "I.01",
+        "I.03"
+      ],
+      "availabilityChange": "none; original availability and claim-level gaps retained",
+      "lifecycleCaseIds": [
+        "PUBLIC-SAVE-REJECT",
+        "LIF-002-SAVE-EXCLUSION"
+      ],
+      "lifecycleMeaning": "Selected original contract pending scoped current receipts, not complete original-brief fulfilment."
+    },
+    {
+      "milestone": 62,
+      "frozenStatus": "partially reconciled; claim-level completeness unverified",
+      "frozenMissingOriginalBrief": false,
+      "availableOriginalBriefs": [
+        "docs/evidence/m78/requirements/M62_PROMPT.txt"
+      ],
+      "missingOriginalBrief": false,
+      "status": "partially reconciled; claim-level completeness unverified",
+      "featureIds": [
+        "E.07",
+        "E.08"
+      ],
+      "availabilityChange": "none; original availability and claim-level gaps retained",
+      "lifecycleCaseIds": [],
+      "lifecycleMeaning": "No new lifecycle claim; original availability and all remaining requirement gaps retained."
+    },
+    {
+      "milestone": 63,
+      "frozenStatus": "partially reconciled; claim-level completeness unverified",
+      "frozenMissingOriginalBrief": false,
+      "availableOriginalBriefs": [
+        "docs/evidence/m78/requirements/M63_PROMPT.txt"
+      ],
+      "missingOriginalBrief": false,
+      "status": "partially reconciled; claim-level completeness unverified",
+      "featureIds": [
+        "E.09"
+      ],
+      "availabilityChange": "none; original availability and claim-level gaps retained",
+      "lifecycleCaseIds": [],
+      "lifecycleMeaning": "No new lifecycle claim; original availability and all remaining requirement gaps retained."
+    },
+    {
+      "milestone": 64,
+      "frozenStatus": "partially reconciled; claim-level completeness unverified",
+      "frozenMissingOriginalBrief": false,
+      "availableOriginalBriefs": [
+        "docs/evidence/m78/requirements/M64_PROMPT.txt"
+      ],
+      "missingOriginalBrief": false,
+      "status": "partially reconciled; claim-level completeness unverified",
+      "featureIds": [
+        "C.01",
+        "C.02",
+        "C.04"
+      ],
+      "availabilityChange": "none; original availability and claim-level gaps retained",
+      "lifecycleCaseIds": [],
+      "lifecycleMeaning": "No new lifecycle claim; original availability and all remaining requirement gaps retained."
+    },
+    {
+      "milestone": 65,
+      "frozenStatus": "partially reconciled; claim-level completeness unverified",
+      "frozenMissingOriginalBrief": false,
+      "availableOriginalBriefs": [
+        "docs/evidence/m78/requirements/M65_PROMPT.txt"
+      ],
+      "missingOriginalBrief": false,
+      "status": "partially reconciled; claim-level completeness unverified",
+      "featureIds": [
+        "D.01",
+        "D.04",
+        "D.05",
+        "B.04",
+        "C.06",
+        "C.08",
+        "J.01"
+      ],
+      "availabilityChange": "none; original availability and claim-level gaps retained",
+      "lifecycleCaseIds": [],
+      "lifecycleMeaning": "No new lifecycle claim; original availability and all remaining requirement gaps retained."
+    },
+    {
+      "milestone": 66,
+      "frozenStatus": "partially reconciled; claim-level completeness unverified",
+      "frozenMissingOriginalBrief": false,
+      "availableOriginalBriefs": [
+        "docs/evidence/m78/requirements/M66_PROMPT.txt"
+      ],
+      "missingOriginalBrief": false,
+      "status": "partially reconciled; claim-level completeness unverified",
+      "featureIds": [
+        "D.02",
+        "J.04"
+      ],
+      "availabilityChange": "none; original availability and claim-level gaps retained",
+      "lifecycleCaseIds": [],
+      "lifecycleMeaning": "No new lifecycle claim; original availability and all remaining requirement gaps retained."
+    },
+    {
+      "milestone": 67,
+      "frozenStatus": "partially reconciled; claim-level completeness unverified",
+      "frozenMissingOriginalBrief": false,
+      "availableOriginalBriefs": [
+        "docs/evidence/m78/requirements/M67_PROMPT.txt"
+      ],
+      "missingOriginalBrief": false,
+      "status": "partially reconciled; claim-level completeness unverified",
+      "featureIds": [
+        "J.01",
+        "J.03",
+        "J.05"
+      ],
+      "availabilityChange": "none; original availability and claim-level gaps retained",
+      "lifecycleCaseIds": [
+        "PUBLIC-PREFAB-INIT"
+      ],
+      "lifecycleMeaning": "Selected original contract pending scoped current receipts, not complete original-brief fulfilment."
+    },
+    {
+      "milestone": 68,
+      "frozenStatus": "partially reconciled; original-brief gap",
+      "frozenMissingOriginalBrief": true,
+      "availableOriginalBriefs": [],
+      "missingOriginalBrief": true,
+      "status": "partially reconciled; original-brief gap",
+      "featureIds": [
+        "I.04",
+        "I.06",
+        "A.08"
+      ],
+      "availabilityChange": "none; original availability and claim-level gaps retained",
+      "lifecycleCaseIds": [],
+      "lifecycleMeaning": "No new lifecycle claim; original availability and all remaining requirement gaps retained."
+    },
+    {
+      "milestone": 69,
+      "frozenStatus": "partially reconciled; claim-level completeness unverified",
+      "frozenMissingOriginalBrief": false,
+      "availableOriginalBriefs": [
+        "docs/evidence/m78/requirements/M69_PROMPT.txt"
+      ],
+      "missingOriginalBrief": false,
+      "status": "partially reconciled; claim-level completeness unverified",
+      "featureIds": [
+        "C.04",
+        "H.05"
+      ],
+      "availabilityChange": "none; original availability and claim-level gaps retained",
+      "lifecycleCaseIds": [],
+      "lifecycleMeaning": "No new lifecycle claim; original availability and all remaining requirement gaps retained."
+    },
+    {
+      "milestone": 70,
+      "frozenStatus": "partially reconciled; claim-level completeness unverified",
+      "frozenMissingOriginalBrief": false,
+      "availableOriginalBriefs": [
+        "docs/evidence/m78/requirements/M70_PROMPT.txt"
+      ],
+      "missingOriginalBrief": false,
+      "status": "partially reconciled; claim-level completeness unverified",
+      "featureIds": [
+        "D.06",
+        "D.07",
+        "D.08"
+      ],
+      "availabilityChange": "none; original availability and claim-level gaps retained",
+      "lifecycleCaseIds": [],
+      "lifecycleMeaning": "No new lifecycle claim; original availability and all remaining requirement gaps retained."
+    },
+    {
+      "milestone": 71,
+      "frozenStatus": "partially reconciled; claim-level completeness unverified",
+      "frozenMissingOriginalBrief": false,
+      "availableOriginalBriefs": [
+        "docs/evidence/m78/requirements/M71_PROMPT.txt"
+      ],
+      "missingOriginalBrief": false,
+      "status": "partially reconciled; claim-level completeness unverified",
+      "featureIds": [
+        "C.10",
+        "J.02"
+      ],
+      "availabilityChange": "none; original availability and claim-level gaps retained",
+      "lifecycleCaseIds": [],
+      "lifecycleMeaning": "No new lifecycle claim; original availability and all remaining requirement gaps retained."
+    },
+    {
+      "milestone": 72,
+      "frozenStatus": "partially reconciled; claim-level completeness unverified",
+      "frozenMissingOriginalBrief": false,
+      "availableOriginalBriefs": [
+        "docs/evidence/m78/requirements/M72_PROMPT.txt"
+      ],
+      "missingOriginalBrief": false,
+      "status": "partially reconciled; claim-level completeness unverified",
+      "featureIds": [
+        "F.02",
+        "F.03",
+        "F.06"
+      ],
+      "availabilityChange": "none; original availability and claim-level gaps retained",
+      "lifecycleCaseIds": [],
+      "lifecycleMeaning": "No new lifecycle claim; original availability and all remaining requirement gaps retained."
+    },
+    {
+      "milestone": 73,
+      "frozenStatus": "partially reconciled; original-brief gap",
+      "frozenMissingOriginalBrief": true,
+      "availableOriginalBriefs": [],
+      "missingOriginalBrief": true,
+      "status": "partially reconciled; original-brief gap",
+      "featureIds": [
+        "H.08"
+      ],
+      "availabilityChange": "none; original availability and claim-level gaps retained",
+      "lifecycleCaseIds": [],
+      "lifecycleMeaning": "No new lifecycle claim; original availability and all remaining requirement gaps retained."
+    },
+    {
+      "milestone": 74,
+      "frozenStatus": "partially reconciled; original-brief gap",
+      "frozenMissingOriginalBrief": true,
+      "availableOriginalBriefs": [],
+      "missingOriginalBrief": true,
+      "status": "partially reconciled; original-brief gap",
+      "featureIds": [
+        "D.09"
+      ],
+      "availabilityChange": "none; original availability and claim-level gaps retained",
+      "lifecycleCaseIds": [],
+      "lifecycleMeaning": "No new lifecycle claim; original availability and all remaining requirement gaps retained."
+    },
+    {
+      "milestone": 75,
+      "frozenStatus": "partially reconciled; original-brief gap",
+      "frozenMissingOriginalBrief": true,
+      "availableOriginalBriefs": [],
+      "missingOriginalBrief": true,
+      "status": "partially reconciled; original-brief gap",
+      "featureIds": [
+        "G.02",
+        "G.03",
+        "G.04"
+      ],
+      "availabilityChange": "none; original availability and claim-level gaps retained",
+      "lifecycleCaseIds": [],
+      "lifecycleMeaning": "No new lifecycle claim; original availability and all remaining requirement gaps retained."
+    },
+    {
+      "milestone": 76,
+      "frozenStatus": "partially reconciled; claim-level completeness unverified",
+      "frozenMissingOriginalBrief": false,
+      "availableOriginalBriefs": [
+        "docs/evidence/m78/requirements/M76_PROMPT.txt"
+      ],
+      "missingOriginalBrief": false,
+      "status": "partially reconciled; claim-level completeness unverified",
+      "featureIds": [
+        "J.06",
+        "J.07",
+        "J.08"
+      ],
+      "availabilityChange": "none; original availability and claim-level gaps retained",
+      "lifecycleCaseIds": [],
+      "lifecycleMeaning": "No new lifecycle claim; original availability and all remaining requirement gaps retained."
+    },
+    {
+      "milestone": 77,
+      "frozenStatus": "partially reconciled; original-brief gap",
+      "frozenMissingOriginalBrief": true,
+      "availableOriginalBriefs": [
+        "docs/evidence/m78-followup/M77_PROMPT.txt"
+      ],
+      "missingOriginalBrief": false,
+      "status": "original brief recovered; current claim-level reconciliation remains partial",
+      "featureIds": [
+        "D.10"
+      ],
+      "availabilityChange": "The supplied original brief closes availability only; M77_RECONCILIATION.md records supported bounded final Linux/native cases, preserved failures and unresolved coverage/human limits.",
+      "lifecycleCaseIds": [],
+      "lifecycleMeaning": "No new lifecycle claim; original availability and all remaining requirement gaps retained."
+    }
+  ],
+  "previousRequirementOverlay": {
+    "path": "docs/evidence/m78-closure/coverage/REQUIREMENT_OVERLAY.json",
+    "sha256": "e2aa8ce0564a682764e0ca08801e9f92a702be40c089619c229ab6a54df28688",
+    "bytes": 28497
+  },
+  "startingCheckpoint": "0695433b949df0c1d05ac6798bf118121cc53e2b",
+  "currentNative": {
+    "status": "scoped-native-functional-receipts-attached-human-hardware-pending",
+    "scope": "New native Windows functional lifecycle correction evidence only; VM unchanged and no Windows performance/hardware certification. No full suite.",
+    "processRuns": 14,
+    "sharedAssertionCount": 630,
+    "failures": 0,
+    "receipts": [
+      {
+        "path": "docs/evidence/m78-lifecycle/native/SUMMARY.json",
+        "sha256": "ca59f7dc9153d0a329999c5c4064d8e348528c35ab6bda1919851d18a92ee07f",
+        "bytes": 12204
+      },
+      {
+        "path": "docs/evidence/m78-lifecycle/native/REPORT.md",
+        "sha256": "071e09a55490cff03fb8f1f2eb8db534c78d4038dd17a56b83052fb51c4b465a",
+        "bytes": 4980
+      },
+      {
+        "path": "docs/evidence/m78-lifecycle/native/FINAL_BINARY_IDENTITY.json",
+        "sha256": "3d0919c846396cce6d6b067d103ae7251c1dd1a4ce972a00e58cfee2255888cb",
+        "bytes": 110824
+      },
+      {
+        "path": "docs/evidence/m78-lifecycle/native/FINAL_VERIFICATION.json",
+        "sha256": "5baff18160dc9bfba9033239f25ab30800bec6d247df8b40c8ed704ef7504daf",
+        "bytes": 5267
+      }
+    ],
+    "historicalStorageBlock": {
+      "status": "resolved-by-direct-human-authorizations",
+      "meaning": "Earlier automatic approval review rejections remain tooling history. Named archive compression and retirement of copied NEW outputs were explicitly authorized by the operator; no engine assertion is inferred from storage attempts.",
+      "receipts": [
+        {
+          "path": "docs/evidence/m78-lifecycle/native/PREPARATION_BLOCK.json",
+          "sha256": "ae31de98740e151dde246a675f85cbd6ce037a46496162ad026ddeab4d60417c",
+          "bytes": 1891
+        },
+        {
+          "path": "docs/evidence/m78-lifecycle/native/PERMISSION_CHRONOLOGY.json",
+          "sha256": "9495db06545aa3e7f5e76ea94137aaf680cc167eb3339b9fa3c3cff45de9dd79",
+          "bytes": 1081
+        },
+        {
+          "path": "docs/evidence/m78-lifecycle/native/HUMAN_COMPRESSION_APPROVAL.json",
+          "sha256": "b75085096ac0c4e63a56399e6cd6f5b7e6aa77a050909b1922f4fe2c378080b2",
+          "bytes": 478
+        },
+        {
+          "path": "docs/evidence/m78-lifecycle/native/HUMAN_NEW_OUTPUT_RETIREMENT_APPROVAL.json",
+          "sha256": "4d616ea77aa13cdefb5b71a8706905511191ab549126bd76d870b7f9df87009b",
+          "bytes": 643
+        }
+      ]
+    },
+    "outstandingScopes": [
+      "No Windows performance gate or physical GPU validation.",
+      "Native new runtime-tag mutator probe not executed; Linux LIF-003 reproduced and deferred.",
+      "Previously preserved legacy a106 snapshot/FLU-001 failures not reclassified by these lifecycle checks.",
+      "No new native SaveStreaming/Application signals/editor/moved-package rerun in this bounded matrix unless explicitly attached separately."
+    ],
+    "vmConfiguration": "Established Windows10 4vCPU6GiB40GBdisk; llvmpipe software GL functional only.",
+    "identityMeaning": "Five exact production objects precede an immutable archive; object/binary/source identities are attached, not a claim that an old archive alone represents the new source.",
+    "archive": {
+      "path": "C:\\JudasValidation\\M78ContinuationBuild\\cold-repair-final-v2\\judas_engine.lib",
+      "sha256": "71a722dded64cfcc634d679e55ddbd257058da888ada914f7f7150b8d88c2d62",
+      "bytes": 67019246
+    },
+    "expectedProductionSourceSHA256": {
+      "src/WorldCharacter.cpp": "0c87e03acfba2a1c837da183e7731e35f70df98497d61a864c96ba5e21b064ae",
+      "src/WorldRegions.cpp": "5fa0cec1229c970acc0a593c0f795ac98edb4dfb96d0f9bd49757aa07fc90002",
+      "src/WorldScripts.cpp": "ec660e35570c269b11a1ff88b75d5c79b0b2a96efe0f1cdbe32199c9157bfef1",
+      "src/WorldPersistence.cpp": "1a02f42c466ea035be981c52d38d38bddeb0cb85eaa7c8b07fcfc8d9746d1101",
+      "src/PhysicsWorld.cpp": "6a60747e4bb970821e2ebb68adbe78ea89f6fdc3db9137b5160290ca1da2f193"
+    },
+    "caseIndex": "LIFECYCLE_CASES.json"
+  },
+  "currentContractWithoutOriginalBriefClosure": [
+    "LIF-003-RUNTIME-MOTOR-TAGS"
+  ]
+}

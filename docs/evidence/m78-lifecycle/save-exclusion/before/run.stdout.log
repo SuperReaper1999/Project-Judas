@@ -1,0 +1,76 @@
+PASS retained normal source construction
+PASS retained ordinary runtime dynamic actor
+PASS retained actor reaches real ordinary sleep
+PASS retained source ownership matches requested policy
+PASS retained ordinary full capture
+PASS retained scene participant decode
+PASS retained scene contains exactly the retained owners
+PASS retained sleep records contain exactly the retained dynamic owners
+PASS retained full private world restore
+PASS retained retained real velocity survives
+PASS retained restored actor presence matches ownership
+PASS retained actual sleeping actor restores asleep
+PASS retained ordinary actor restores retained ownership
+PASS orphan valid entity participant
+PASS orphan normal private construction
+PASS orphan strict rejection remains
+PASS orphan failed private restore leaves source unchanged
+PASS duplicate valid entity participant
+PASS duplicate normal private construction
+PASS duplicate strict rejection remains
+PASS duplicate failed private restore leaves source unchanged
+PASS truncated valid entity participant
+PASS truncated normal private construction
+PASS truncated strict rejection remains
+PASS truncated failed private restore leaves source unchanged
+PASS excluded normal source construction
+PASS excluded ordinary runtime dynamic actor
+PASS excluded actor reaches real ordinary sleep
+PASS excluded public simple-actor exclusion accepted
+PASS excluded source ownership matches requested policy
+PASS excluded ordinary full capture
+PASS excluded scene participant decode
+PASS excluded scene contains exactly the retained owners
+FAIL excluded sleep records contain exactly the retained dynamic owners
+FAIL excluded full private world restore
+PASS reincluded normal source construction
+PASS reincluded ordinary runtime dynamic actor
+PASS reincluded actor reaches real ordinary sleep
+PASS reincluded public simple-actor exclusion accepted
+PASS reincluded public reinclusion accepted
+PASS reincluded source ownership matches requested policy
+PASS reincluded ordinary full capture
+PASS reincluded scene participant decode
+PASS reincluded scene contains exactly the retained owners
+PASS reincluded sleep records contain exactly the retained dynamic owners
+PASS reincluded full private world restore
+PASS reincluded retained real velocity survives
+PASS reincluded restored actor presence matches ownership
+PASS reincluded actual sleeping actor restores asleep
+PASS reincluded ordinary actor restores retained ownership
+PASS articulation original project asset registered
+PASS articulation real skeleton decode without GPU substitute
+PASS articulation ordinary original scene loads
+PASS articulation original three-bone definition exists
+PASS articulation ordinary owner inserted with normal scene identity
+PASS articulation normal source world
+PASS articulation real public physical activation
+PASS articulation required owner cannot be publicly excluded
+PASS articulation Root is a genuine mapped transient dynamic body
+PASS articulation Elbow is a genuine mapped transient dynamic body
+PASS articulation Tip is a genuine mapped transient dynamic body
+PASS articulation full capture
+PASS articulation scene participant decode
+PASS articulation Elbow engine-transient body remains in scene AND sleep
+PASS articulation Root engine-transient body remains in scene AND sleep
+PASS articulation Tip engine-transient body remains in scene AND sleep
+PASS articulation retains exact existing continuation ownership/schema
+PASS articulation complete strict continuation restore
+PASS articulation Elbow durable owner mapping restores
+PASS articulation Elbow physical and sleep state survive
+PASS articulation Root durable owner mapping restores
+PASS articulation Root physical and sleep state survive
+PASS articulation Tip durable owner mapping restores
+PASS articulation Tip physical and sleep state survive
+PASS articulation restore creates no extra body ownership
+SUMMARY 75 checks 2 failures

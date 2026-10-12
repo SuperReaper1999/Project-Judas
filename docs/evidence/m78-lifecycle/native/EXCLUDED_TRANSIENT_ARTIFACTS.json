@@ -1,0 +1,19 @@
+{
+  "scope": "Only newly generated host lock/pyc duplicates excluded from proposed evidence after exact ignored-cache archival; guest files untouched",
+  "files": [
+    {
+      "evidencePath": "docs/evidence/m78-lifecycle/native/m78-lifecycle-consumer_lifecycle-actual-save-root-.lock",
+      "cachePath": ".cache/m78-lifecycle/excluded-native-artifacts/m78-lifecycle-consumer_lifecycle-actual-save-root-.lock",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "logicalBytesArchivedExactly": true
+    },
+    {
+      "evidencePath": "docs/evidence/m78-lifecycle/native/probes/__pycache__/run_native.cpython-314.pyc",
+      "cachePath": ".cache/m78-lifecycle/excluded-native-artifacts/run_native.cpython-314.pyc",
+      "bytes": 12574,
+      "sha256": "bb56282d5ad7ceceb3d6258e993108ce771b36a6db40171f25aea586a4758bec",
+      "logicalBytesArchivedExactly": true
+    }
+  ]
+}

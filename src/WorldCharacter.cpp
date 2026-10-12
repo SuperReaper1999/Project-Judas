@@ -10,6 +10,11 @@ CharacterMotor* RuntimeWorld::RuntimeCharacter(EntityId id){
     c.motor.settings=*d->characterMotor;
     if(!c.motor.observationBody.IsValid()){
         c.motor.observationBody=m_physics.CreateQueryCapsule(c.motor.settings.radius,c.motor.settings.halfHeight,{c.motor.position+c.motor.orientation*c.motor.settings.offset,c.motor.orientation});
+        // Query geometry is observable before the next fixed update. Publish
+        // its owner's classification and enabled state at construction.
+        m_physics.SetCollisionFilter(c.motor.observationBody,c.motor.settings.collisionLayer,c.motor.settings.collisionMask);
+        m_physics.SetBodyTags(c.motor.observationBody,TagsOf(id));
+        m_physics.SetBodyEnabled(c.motor.observationBody,c.motor.settings.enabled);
     }
     return &c.motor;
 }
@@ -28,7 +33,7 @@ void RuntimeWorld::UpdateCharacters(float dt,bool onlyM70,bool skipM70){
         motor.settings=*d->characterMotor;
         m_physics.SetBodyEnabled(motor.observationBody,motor.settings.enabled);
         m_physics.SetCollisionFilter(motor.observationBody,motor.settings.collisionLayer,motor.settings.collisionMask);
-        m_physics.SetBodyTags(motor.observationBody,d->tags);
+        m_physics.SetBodyTags(motor.observationBody,TagsOf(id));
         motor.filter.ignoredBodies.erase(std::remove_if(motor.filter.ignoredBodies.begin(),motor.filter.ignoredBodies.end(),[&](auto h){return !m_physics.IsBodyEnabled(h);}),motor.filter.ignoredBodies.end());
         if(std::none_of(motor.filter.ignoredBodies.begin(),motor.filter.ignoredBodies.end(),[&](auto h){return h.id==motor.observationBody.id;}))motor.filter.ignoredBodies.push_back(motor.observationBody);
         motor.Step(m_physics,GravityForEntity(id),dt);
@@ -50,7 +55,10 @@ bool RuntimeWorld::SetCharacterSettings(EntityId id,const CharacterMotorSettings
     auto* m=RuntimeCharacter(id);std::string error;if(!m||!ValidCharacterMotor(settings,error))return false;
     const auto old=m->settings;
     if(old.radius!=settings.radius||old.halfHeight!=settings.halfHeight){m_physics.DestroyBody(m->observationBody);m->observationBody=m_physics.CreateQueryCapsule(settings.radius,settings.halfHeight,{m->position+m->orientation*settings.offset,m->orientation});}
+    else if(old.offset!=settings.offset)m_physics.ResetBody(m->observationBody,m->position+m->orientation*settings.offset,m->orientation);
     m_scriptDefinitions.at(id).characterMotor=settings;m->settings=settings;
+    m_physics.SetCollisionFilter(m->observationBody,settings.collisionLayer,settings.collisionMask);
+    m_physics.SetBodyTags(m->observationBody,TagsOf(id));
     m_physics.SetBodyEnabled(m->observationBody,settings.enabled);
     if(!settings.enabled){m->result={};m->acceleration={0,0,0};}return true;
 }

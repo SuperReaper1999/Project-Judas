@@ -46,6 +46,19 @@ motor, including an initial overlap at distance zero. For environment probes
 (walls, ledges, headroom), pass `{ignored: [entity]}` to each cast. The motor's
 `ignore(entities)` setting affects its movement solver, not separate public queries.
 
+The M78 lifecycle correction publishes authored enabled/layer/mask/tag metadata
+when the capsule is constructed and restores enabled state when a retained region
+becomes public. A fixed step is not required to make those authored filters work.
+Capsule resize, local offset changes and explicit teleports update query geometry;
+region retirement destroys its owned capsule and invalidates the old body handle.
+Frame and UI-only script startup register published motor geometry before callbacks.
+
+Known current audit finding: runtime entity tag additions/removals on a motor can
+disagree with capsule tags used by casts. Ordinary rigid-body tag updates pass;
+motor mutation is separately reproduced and remains unresolved. Do not infer
+runtime tag-mutation correctness from authored-filter support. See
+[LIF-003](../evidence/m78-lifecycle/motor-runtime-tags/SOURCE_PROOF.md).
+
 Current limits: query-only motors don't physically block each other; endpoint sensors and coalesced
 sweep/support contacts now produce normal M42 events without fabricated mass/impulse;
 unit entity scale, no simultaneous root rigid-body authority, bounded recovery/slide,
@@ -102,3 +115,12 @@ reorientation rate. Support normal is still an observed collision normal, not
 the gravity direction. `gravityScale` scales acceleration, not gravity selection;
 zero magnitude retains the motor's last usable up reference. Camera behaviour
 remains project-owned and should use presentationUpdate/presentedTransform.
+
+### Runtime tags and query classification
+
+`entity.addTag(name)` / `entity.removeTag(name)` also update an existing motor
+query capsule immediately. Lazy construction, shape replacement and subsequent
+fixed updates use current entity tags. Runtime changes survive retained streamed
+region retirement/revisit. Authored tags supply the initial state; a fixed update
+does not re-add a tag removed by the script. Collision layers/masks and disabled
+state remain separate filters. See [entity classification](entities.md).

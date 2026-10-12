@@ -1,0 +1,32 @@
+{
+  "status": "source proof and reproduction prepared; not compiled or executed",
+  "checkpoint": "0695433b949df0c1d05ac6798bf118121cc53e2b",
+  "files": {
+    "src/RuntimeWorld.cpp": {
+      "sha256": "1e9400f8276ba4e86a1f030610fe50a87c9e76d9777e628dd609ea58c4f6fc02",
+      "bytes": 97444
+    },
+    "src/WorldCharacter.cpp": {
+      "sha256": "0c87e03acfba2a1c837da183e7731e35f70df98497d61a864c96ba5e21b064ae",
+      "bytes": 5492
+    },
+    "src/WorldScripts.cpp": {
+      "sha256": "ec660e35570c269b11a1ff88b75d5c79b0b2a96efe0f1cdbe32199c9157bfef1",
+      "bytes": 19880
+    },
+    "src/ScriptSystem.cpp": {
+      "sha256": "f436312f4a54a4330b8c7759a96aec1c655467f6fe4d0d22867e57771042daec",
+      "bytes": 202536
+    },
+    "docs/evidence/m78-lifecycle/motor-runtime-tags/DynamicMotorTags.cpp": {
+      "sha256": "3c0b1e1c6835de64833594db7d148884d69fd342ad8d9a5bbd0a997e9102e2aa",
+      "bytes": 3613
+    }
+  },
+  "checkpointFiles": {
+    "src/RuntimeWorld.cpp": "1e9400f8276ba4e86a1f030610fe50a87c9e76d9777e628dd609ea58c4f6fc02",
+    "src/WorldCharacter.cpp": "381194ab8c9440e588d54a66a3594e77856924dc661ce77937174602e804817a",
+    "src/WorldScripts.cpp": "3dbb2075270ef0700ce831c08a1e50109a173586651b7e97618e17c971d4688a",
+    "src/ScriptSystem.cpp": "f436312f4a54a4330b8c7759a96aec1c655467f6fe4d0d22867e57771042daec"
+  }
+}

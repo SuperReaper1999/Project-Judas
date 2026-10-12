@@ -1,0 +1,18 @@
+{
+  "scope": "Native Windows functional only, nonblocking Linux acceptance policy.",
+  "results": [
+    {
+      "case": "tags",
+      "exit": 0,
+      "summary": "SUMMARY 31 checks 0 failures",
+      "executableSHA256": "2bafa737194edbd5ffed68505f8c16fe76f35e1b0b176612e821604112cda426"
+    },
+    {
+      "case": "publication",
+      "exit": 0,
+      "summary": "CHARACTER_PUBLICATION 144 checks 0 failures",
+      "executableSHA256": "c7b558a3743e6205ac8426cd11abae2137adef29cdb732b6eb472df62c14b9b1"
+    }
+  ],
+  "missing": "No new native editor, moved-package or full-matrix refresh in this narrow follow-up. Earlier V2 functional matrix remains scoped to its source."
+}

@@ -1,0 +1,7 @@
+{
+  "status": "inspector corrected, rerun pending",
+  "previousSHA256": "ca1f5b84fcdf665d26a55957c979514c4a1ddecfc9c802db2632ab17192272d7",
+  "currentSHA256": "cc3716efd6167845171d9bd2840dc0b2784edb20c076ecf550f66e4d583e0e7d",
+  "change": "Decode existing deferredAcceleration boolean as bool instead of vec3",
+  "preservedFailure": "parser-failure-01/"
+}

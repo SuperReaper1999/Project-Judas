@@ -58,7 +58,11 @@ bool RuntimeWorld::SetRuntimeTransform(EntityId id,const SceneTransform& t){
     auto transform=t;transform.rotation=glm::normalize(t.rotation);
     auto& definition=m_scriptDefinitions.at(id);definition.transform=transform;
     // Explicit transform writes are teleports, not continuous kinematic motion.
-    auto body=RuntimeBody(id);if(body.IsValid())m_physics.ResetBody(body,transform.position,transform.rotation);
+    auto body=RuntimeBody(id);if(body.IsValid()){
+        auto position=transform.position;
+        if(auto motor=m_characters.find(id);motor!=m_characters.end())position+=transform.rotation*motor->second.motor.settings.offset;
+        m_physics.ResetBody(body,position,transform.rotation);
+    }
     if(auto* e=FindEntity(id)){e->state.position=transform.position;e->state.rotation=transform.rotation;
         if(e->slot!=std::numeric_limits<size_t>::max()){m_dynamicBodies[e->slot].SetPoseFromState(transform.position,transform.rotation);m_dynamicBodies[e->slot].SnapPresentation();m_dynamicVisuals[e->slot].scale=transform.scale;}}
     if(auto* o=m_hierarchy.Find(id)){
@@ -129,6 +133,9 @@ bool RuntimeWorld::SetRuntimeMotionType(EntityId id,SceneBodyMotion motion,bool 
 void RuntimeWorld::UpdateScripts(const InputSystem* input,float dt){
     if(!m_scripts){if(!m_hasScripts)return;
         m_scripts=std::make_unique<ScriptSystem>(this,m_assets?m_assets->Assets():nullptr);}
+    // Frame/start callbacks may query other motors before any fixed update.
+    // Registration publishes geometry; it does not advance their simulation.
+    for(auto id:m_characterOwners)RuntimeCharacter(id);
     m_scripts->Synchronize(ScriptSlots());m_scripts->Frame(input,dt);
 }
 void RuntimeWorld::FixedScripts(const InputSystem* input,float dt){
@@ -148,6 +155,7 @@ bool RuntimeWorld::RestoreScriptState(const std::vector<ScriptStateRecord>& reco
 
 void RuntimeWorld::UpdateUIScripts(InputSystem* input,float dt){
     if(!m_scripts){if(!m_hasScripts)return;m_scripts=std::make_unique<ScriptSystem>(this,m_assets?m_assets->Assets():nullptr);}
+    for(auto id:m_characterOwners)RuntimeCharacter(id);
     bool wasPaused=m_ui&&m_ui->Paused();m_scripts->Synchronize(ScriptSlots());m_scripts->UIFrame(input,dt);
     if(input&&!wasPaused&&m_ui&&m_ui->Paused())input->ConsumeBindings({"pause"});
 }

@@ -1,0 +1,24 @@
+{
+  "passed": true,
+  "mode": "local source/evidence/binaries",
+  "checkpoint": "0695433b949df0c1d05ac6798bf118121cc53e2b",
+  "manifestIdentity": {
+    "bytes": 215251,
+    "sha256": "7ccf0935c95bee2e6a712dddb71c5a2b507d94e0057f22bfb6ab9361003e271b"
+  },
+  "counts": {
+    "currentFiles": 664,
+    "priorUnchangedFiles": 4850,
+    "priorExcludedArtifacts": 72,
+    "laterExcludedArtifacts": 1,
+    "localOutputs": 78,
+    "priorLocalOutputs": 94
+  },
+  "failures": [],
+  "scope": "Fingerprints and repository scope only; not engine correctness or human acceptance.",
+  "utc": "2026-10-12T04:05:07.607249+00:00",
+  "changedFileCount": 666,
+  "changedEvidenceSourceBytes": 14157860,
+  "trackedDiffStat": "CMakeLists.txt            |  9 +++++++++\n README.md                 | 20 +++++++++++---------\n docs/ARCHITECTURE.md      |  8 ++++++--\n docs/judasjs/character.md | 13 +++++++++++++\n docs/judasjs/saves.md     | 13 +++++++++----\n src/WorldCharacter.cpp    |  8 ++++++++\n src/WorldPersistence.cpp  | 14 ++++++++++++--\n src/WorldRegions.cpp      |  4 ++++\n src/WorldScripts.cpp      | 10 +++++++++-\n 9 files changed, 81 insertions(+), 18 deletions(-)",
+  "indexEmpty": true
+}

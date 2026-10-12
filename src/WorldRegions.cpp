@@ -54,6 +54,9 @@ void RuntimeWorld::PublishRegion(const std::vector<EntityId>& ids) {
                 m_regionKinematicCommands.erase(pending);
             }
         }
+        // Retained motor proxies remain disabled while staged. Restore their
+        // authored state before callbacks can observe the published region.
+        if(auto* motor=RuntimeCharacter(id))m_physics.SetBodyEnabled(motor->observationBody,motor->settings.enabled);
     }
     for(auto& e:m_audioEmitters)if(std::find(ids.begin(),ids.end(),e.id)!=ids.end())e.wantPlay=e.settings.playOnStart;
     ++m_entityVersion;
@@ -99,6 +102,7 @@ void RuntimeWorld::RemoveRegionObject(EntityId id) {
     auto erase=[&](auto& v){v.erase(std::remove_if(v.begin(),v.end(),[&](const auto& e){return e.id==id;}),v.end());};
     erase(m_entities);erase(m_extraEntities);m_entityIndexVersion=~0u;erase(m_staticBodies);erase(m_staticRenderables);erase(m_staticLights);
     erase(m_audioZones);erase(m_audioEmitters);erase(m_particleEmitters);erase(m_renderCameras);
+    if(auto character=m_characters.find(id);character!=m_characters.end())m_physics.DestroyBody(character->second.motor.observationBody);
     RemoveDeformable(id);m_deformableOwners.erase(id);m_characters.erase(id);m_animationInstances.erase(id);m_physicalAnimations.erase(id);CancelPhysicalBalance(id);m_balances.erase(id);m_animationOwners.erase(id);m_jointOwners.erase(id);m_jointParticipants.erase(id);
     m_scriptDefinitions.erase(id);m_scriptOwners.erase(id);m_characterOwners.erase(id);m_entityCategories.erase(id);m_hierarchy.DestroyObject(id);
     if(auto it=m_regionAssets.find(id);it!=m_regionAssets.end()){

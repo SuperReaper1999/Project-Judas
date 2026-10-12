@@ -1,0 +1,52 @@
+{
+  "animation": {
+    "bytes": 628,
+    "sha256": "4807c8a6e7ddd35ed378c05f488b98c2a74f5bebb9c78399625c4c2ba1bdfeae",
+    "version": 1
+  },
+  "articulation": {
+    "bytes": 1709,
+    "sha256": "5382c7670732306d8490d786fc4c4244a14ba989fd8bd99f9b672e63dea608dc",
+    "version": 4
+  },
+  "audio": {
+    "bytes": 8,
+    "sha256": "af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc",
+    "version": 1
+  },
+  "contacts": {
+    "bytes": 25,
+    "sha256": "b7e5e8391a9b496a8d12c6470fbf12741645b681d4ab45ce33bf7324826aeb16",
+    "version": 2
+  },
+  "entities": {
+    "bytes": 4791,
+    "sha256": "8d316e84fac6a8d26dbd098ecb1148bef0e8a51fc520041567f23633a176bb1d",
+    "version": 1
+  },
+  "liquid": {
+    "bytes": 28,
+    "sha256": "5a0bfcbbd6b8715fdb73e8a7ad7363f34cf0214252719984e0a2b5b3c4ec14b9",
+    "version": 1
+  },
+  "motors": {
+    "bytes": 4,
+    "sha256": "df3f619804a92fdb4057192dc43dd748ea778adc52bc498ce80524c014b81119",
+    "version": 1
+  },
+  "navigation": {
+    "bytes": 4,
+    "sha256": "df3f619804a92fdb4057192dc43dd748ea778adc52bc498ce80524c014b81119",
+    "version": 1
+  },
+  "scripts": {
+    "bytes": 4,
+    "sha256": "df3f619804a92fdb4057192dc43dd748ea778adc52bc498ce80524c014b81119",
+    "version": 1
+  },
+  "sleep": {
+    "bytes": 82,
+    "sha256": "76d4bd868f79eadc05fb5b8c0083c6a4fb27fa67276137345408ecbdda23dfc6",
+    "version": 1
+  }
+}

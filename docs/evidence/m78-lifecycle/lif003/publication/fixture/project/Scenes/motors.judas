@@ -1,0 +1,59 @@
+JudasScene 3
+settings
+  name ""
+  world-origin 0 0 0
+  sun-direction 0.4 0.7 0.35
+  sun-color 1 0.98 0.92
+  ambient 0.16 0.17 0.19
+  fluid-scale 1
+  fluid-update-rate-hz 30
+  fluid-hydrostatic-drag-rate 2
+  fidelity-policy none
+  next-id 3
+end
+
+object 1 "active"
+  motor.enabled true
+  motor.radius 0.3
+  motor.halfHeight 0.6
+  motor.offset 0.8 0.2 -0.1
+  motor.stepHeight 0.55
+  motor.supportDistance 0.15
+  motor.skin 0.02
+  motor.maxSlopeDegrees 50
+  motor.gravityScale 1
+  motor.reorientationDegreesPerSecond 120
+  motor.interactionMass 80
+  motor.maxPushImpulse 20
+  motor.collisionLayer 1
+  motor.collisionMask 2
+  motor.requiredTags 0
+  motor.excludedTags 0
+  tags 1
+  position 2 3 4
+  rotation 0.93412375 0.14572394 0.29144788 -0.14572394
+  scale 1 1 1
+end
+
+object 2 "active"
+  motor.enabled false
+  motor.radius 0.3
+  motor.halfHeight 0.6
+  motor.offset 0.8 0.2 -0.1
+  motor.stepHeight 0.55
+  motor.supportDistance 0.15
+  motor.skin 0.02
+  motor.maxSlopeDegrees 50
+  motor.gravityScale 1
+  motor.reorientationDegreesPerSecond 120
+  motor.interactionMass 80
+  motor.maxPushImpulse 20
+  motor.collisionLayer 1
+  motor.collisionMask 2
+  motor.requiredTags 0
+  motor.excludedTags 0
+  tags 1
+  position -4 2 1
+  rotation 0.93412375 0.14572394 0.29144788 -0.14572394
+  scale 1 1 1
+end

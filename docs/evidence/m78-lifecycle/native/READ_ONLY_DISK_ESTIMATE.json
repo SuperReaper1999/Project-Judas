@@ -1,0 +1,9 @@
+{
+  "scope": "Host read-only heuristic for selecting minimal guest storage request; zlib block estimate is not NTFS/LZNT1 allocation proof",
+  "logicalBytes": 67019246,
+  "sha256": "71a722dded64cfcc634d679e55ddbd257058da888ada914f7f7150b8d88c2d62",
+  "zlib4096BlockEstimate": 16868592,
+  "estimatedSavings": 50150654,
+  "guestFreeMeasuredBytes": 3022848,
+  "noGuestMutation": true
+}

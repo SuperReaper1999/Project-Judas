@@ -1,0 +1,41 @@
+[
+  {
+    "phase": "link",
+    "command": [
+      "/usr/bin/c++",
+      "-O3",
+      "-DNDEBUG",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-lifecycle/save-after-01/driver.o",
+      "-o",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-lifecycle/save-after-01/driver",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-lifecycle/final-build-v2/libjudas_engine.a",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/libjudas_app_icon.a",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/libjudas_materials.a",
+      "/usr/lib/x86_64-linux-gnu/libSDL2.so",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/libjudas_glad.a",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/libjudas_audio_backend.a",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/libjudas_navigation_backend.a",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/libjudas_quickjs.a",
+      "-lm",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/libjudas_profiler.a",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/_deps/judas_freetype-build/libfreetype.a",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/_deps/judas_harfbuzz-build/libharfbuzz.a",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/unicode/icu/lib/libicui18n.a",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/unicode/icu/lib/libicuuc.a",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/unicode/icu/lib/libicudata.a",
+      "-ldl"
+    ],
+    "exit": 0,
+    "seconds": 0.6874280310003087
+  },
+  {
+    "phase": "run",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-lifecycle/save-after-01/driver",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-lifecycle/save-after-01/fixture",
+      "/home/conner/Documents/GitHub/Project-Judas"
+    ],
+    "exit": 0,
+    "seconds": 0.021249858000373933
+  }
+]

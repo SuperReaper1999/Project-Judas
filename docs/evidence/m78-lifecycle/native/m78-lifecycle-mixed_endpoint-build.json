@@ -1,0 +1,437 @@
+﻿{
+    "executableSHA256":  "87aea2462dbb3289f93f859780225d3099481043603f7cdf909ff0226df5c496",
+    "freeBytes":  23429120,
+    "case":  "mixed_endpoint",
+    "runs":  [
+                 {
+                     "archive":  {
+                                     "path":  "C:\\JudasValidation\\M78ContinuationBuild\\cold-repair-final-v2\\judas_engine.lib",
+                                     "sha256":  "71a722dded64cfcc634d679e55ddbd257058da888ada914f7f7150b8d88c2d62",
+                                     "bytes":  67019246
+                                 },
+                     "seconds":  3.0765121,
+                     "freeBytes":  24158208,
+                     "case":  "mixed_endpoint",
+                     "expectedExitCode":  0,
+                     "run":  "mixed-endpoint-write",
+                     "executableSHA256":  "87aea2462dbb3289f93f859780225d3099481043603f7cdf909ff0226df5c496",
+                     "scope":  "Native Windows functional lifecycle correction checks only. Four new production translation units plus accepted current PhysicsWorld object ahead of frozen archive; no ABI changes or Windows performance acceptance.",
+                     "files":  [
+                                   {
+                                       "path":  "C:\\JudasValidation\\M78LifecycleResults\\mixed-endpoint\\actual-drive-sidecar.json",
+                                       "sha256":  "373670052c37cc417b2f86b231cbf7a99624265f9092ceb8b786360a026441cd",
+                                       "bytes":  5482,
+                                       "reportName":  "m78-lifecycle-mixed-endpoint-write-actual-drive-sidecar.json"
+                                   },
+                                   {
+                                       "path":  "C:\\JudasValidation\\M78LifecycleResults\\mixed-endpoint\\cold-write-state.json",
+                                       "sha256":  "500d98ba84fd7c31d3b66d92745ca6339ee266330cedd814b36d4ed5cfc11996",
+                                       "bytes":  365,
+                                       "reportName":  "m78-lifecycle-mixed-endpoint-write-cold-write-state.json"
+                                   },
+                                   {
+                                       "path":  "C:\\JudasValidation\\M78LifecycleResults\\mixed-endpoint\\diagnostic-uninterrupted-trace.jsonl",
+                                       "sha256":  "f648b29e6feee16d19e5ede8f6acfecb9777049856f25c106b397cbf0d6c6434",
+                                       "bytes":  600142,
+                                       "reportName":  "m78-lifecycle-mixed-endpoint-write-diagnostic-uninterrupted-trace.jsonl"
+                                   },
+                                   {
+                                       "path":  "C:\\JudasValidation\\M78LifecycleResults\\mixed-endpoint\\physical-before-save.json",
+                                       "sha256":  "725652b5dac3884e75bef8dfa8fc8e06e1cb5e74f9470533a0b66638b1ca141f",
+                                       "bytes":  49691,
+                                       "reportName":  "m78-lifecycle-mixed-endpoint-write-physical-before-save.json"
+                                   },
+                                   {
+                                       "path":  "C:\\JudasValidation\\M78LifecycleResults\\mixed-endpoint\\physical-final.json",
+                                       "sha256":  "05285a5efbdc79a5a19d8d966aec82c660e8298e631217a752aed107e30f62de",
+                                       "bytes":  58350,
+                                       "reportName":  "m78-lifecycle-mixed-endpoint-write-physical-final.json"
+                                   },
+                                   {
+                                       "path":  "C:\\JudasValidation\\M78LifecycleResults\\mixed-endpoint\\physical-step-1.json",
+                                       "sha256":  "595a5fc9caeef52bc3ca4a686706cb09b9e1b274c65a4286f5db10b4d46e9af0",
+                                       "bytes":  47153,
+                                       "reportName":  "m78-lifecycle-mixed-endpoint-write-physical-step-1.json"
+                                   },
+                                   {
+                                       "path":  "C:\\JudasValidation\\M78LifecycleResults\\mixed-endpoint\\physical-step-10.json",
+                                       "sha256":  "89a07a48dda5ed6a08deab99e71d150ae51f302500fca866ad9eacb2c5e4782e",
+                                       "bytes":  50383,
+                                       "reportName":  "m78-lifecycle-mixed-endpoint-write-physical-step-10.json"
+                                   },
+                                   {
+                                       "path":  "C:\\JudasValidation\\M78LifecycleResults\\mixed-endpoint\\physical-step-2.json",
+                                       "sha256":  "de868674f1a9962ec25d2c91f8b89f1928c798b59dcb6ee1b64e24dc581d4085",
+                                       "bytes":  48940,
+                                       "reportName":  "m78-lifecycle-mixed-endpoint-write-physical-step-2.json"
+                                   },
+                                   {
+                                       "path":  "C:\\JudasValidation\\M78LifecycleResults\\mixed-endpoint\\physical-step-3.json",
+                                       "sha256":  "ead7f29ff2b8816fee94a5ae655aa1967ef2691a16a06dbc7cbf066e2fc6b1a4",
+                                       "bytes":  48906,
+                                       "reportName":  "m78-lifecycle-mixed-endpoint-write-physical-step-3.json"
+                                   },
+                                   {
+                                       "path":  "C:\\JudasValidation\\M78LifecycleResults\\mixed-endpoint\\physical-step-4.json",
+                                       "sha256":  "7a0a700b6bed3ffbda5718f6f52ac1a0bc7eb01da0fc438360610c4aeb592a71",
+                                       "bytes":  50507,
+                                       "reportName":  "m78-lifecycle-mixed-endpoint-write-physical-step-4.json"
+                                   },
+                                   {
+                                       "path":  "C:\\JudasValidation\\M78LifecycleResults\\mixed-endpoint\\physical-step-5.json",
+                                       "sha256":  "57fe7d27c9437475db15fe41b7400cc8eb43024fe4d38a295f74f4e503008fc5",
+                                       "bytes":  50429,
+                                       "reportName":  "m78-lifecycle-mixed-endpoint-write-physical-step-5.json"
+                                   },
+                                   {
+                                       "path":  "C:\\JudasValidation\\M78LifecycleResults\\mixed-endpoint\\physical-step-6.json",
+                                       "sha256":  "c7c13365fcc5d7c227881d44fd81cc21e93469e7edfa62bdb31e42728c16eee1",
+                                       "bytes":  50506,
+                                       "reportName":  "m78-lifecycle-mixed-endpoint-write-physical-step-6.json"
+                                   },
+                                   {
+                                       "path":  "C:\\JudasValidation\\M78LifecycleResults\\mixed-endpoint\\physical-step-7.json",
+                                       "sha256":  "f3f5f35368590579a526c88a773450ba4f5fb23948901aded0013ee4d8fc67e8",
+                                       "bytes":  50421,
+                                       "reportName":  "m78-lifecycle-mixed-endpoint-write-physical-step-7.json"
+                                   },
+                                   {
+                                       "path":  "C:\\JudasValidation\\M78LifecycleResults\\mixed-endpoint\\physical-step-8.json",
+                                       "sha256":  "63e053af510c02847e56ebfdc7318ef123e5f42810a95c8366e9a5a8e76e3636",
+                                       "bytes":  50431,
+                                       "reportName":  "m78-lifecycle-mixed-endpoint-write-physical-step-8.json"
+                                   },
+                                   {
+                                       "path":  "C:\\JudasValidation\\M78LifecycleResults\\mixed-endpoint\\physical-step-9.json",
+                                       "sha256":  "2695e0006f892115da6af1340d6f31a9c4ad218d06e1396e12c29a9332c97d16",
+                                       "bytes":  50452,
+                                       "reportName":  "m78-lifecycle-mixed-endpoint-write-physical-step-9.json"
+                                   },
+                                   {
+                                       "path":  "C:\\JudasValidation\\M78LifecycleResults\\mixed-endpoint\\slots\\m77.save",
+                                       "sha256":  "c955949f94fc0ae05c5e6442a30bbcc944f0f4ecca6bc93a7662f2ea77c6f442",
+                                       "bytes":  64001,
+                                       "reportName":  "m78-lifecycle-mixed-endpoint-write-slots__m77.save"
+                                   }
+                               ],
+                     "arguments":  [
+                                       "C:\\JudasValidation\\M78LifecycleResults\\mixed-endpoint",
+                                       "cold-write"
+                                   ],
+                     "exitCode":  0,
+                     "objects":  [
+                                     {
+                                         "path":  "C:\\JudasValidation\\M78ClosureBuild\\objects\\PhysicsWorld.obj",
+                                         "source":  "src/PhysicsWorld.cpp",
+                                         "sourceSHA256":  "6a60747e4bb970821e2ebb68adbe78ea89f6fdc3db9137b5160290ca1da2f193",
+                                         "sha256":  "6d70c3f9ff8c932ddc8bac2b0a7ab47539813d95e0ea17d7e000e77465702ed1",
+                                         "bytes":  1495011
+                                     },
+                                     {
+                                         "sha256":  "0639f4c85d5032f30c72624c8e2d467b76d131061b5a03422f4e0e1112c467f0",
+                                         "source":  "src/WorldCharacter.cpp",
+                                         "compilerResponse":  "/I\"C:\\JudasValidation\\M78LifecycleBuild\\source\\src\" /I\"C:\\JudasValidation\\M78ContinuationBuild\\cold-repair-final-v2\\source\\src\" /I\"C:\\JudasValidation\\Source\\third_party\" /c /IC:\\JUDASVALIDATION\\SOURCE\\SRC /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\GLAD\\INCLUDE /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\MINIAUDIO /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\VERBLIB /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_FREETYPE-BUILD\\INCLUDE\" /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_FREETYPE-SRC\\INCLUDE\" /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_HARFBUZZ-SRC\\SRC\" /nologo /W4 /WX- /diagnostics:column /O2 /Ob2 /D _MBCS /D WIN32 /D _WINDOWS /D NDEBUG /D NOMINMAX /D WIN32_LEAN_AND_MEAN /D SDL_MAIN_HANDLED /D _CRT_SECURE_NO_WARNINGS /D MA_NO_RESOURCE_MANAGER /D MA_NO_ENCODING /D MA_NO_GENERATION /D DT_VIRTUAL_QUERYFILTER /D \"CMAKE_INTDIR=\\\"Release\\\"\" /EHsc /MD /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /std:c++17 /Fo\"C:\\JudasValidation\\M78LifecycleBuild\\objects\\WorldCharacter.obj\" /Fd\"C:\\JudasValidation\\M78LifecycleBuild\\objects\\compile.pdb\" /external:W0 /Gd /TP  /external:I \"C:/JudasValidation/Source/third_party/quickhull\" /external:I \"C:/JudasValidation/Build/vcpkg_installed/x64-windows-static-md/include\" /external:I \"C:/JudasValidation/Build/vcpkg_installed/x64-windows-static-md/include/SDL2\" /external:I \"C:/JudasValidation/Source/third_party/cgltf\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/Detour/Include\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/DetourTileCache/Include\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/DetourCrowd/Include\" /external:I \"C:/JudasValidation/Source/third_party/quickjs\" /external:I \"C:/JudasValidation/Build/unicode/windows-icu/include\" /utf-8 /bigobj \"C:\\JudasValidation\\M78LifecycleBuild\\source\\src\\WorldCharacter.cpp\"",
+                                         "path":  "C:\\JudasValidation\\M78LifecycleBuild\\objects\\WorldCharacter.obj",
+                                         "sourceSHA256":  "0c87e03acfba2a1c837da183e7731e35f70df98497d61a864c96ba5e21b064ae",
+                                         "bytes":  58951,
+                                         "frozenMember":  "judas_engine.dir\\Release\\WorldCharacter.obj"
+                                     },
+                                     {
+                                         "sha256":  "f750b1741a64545746308e2b10dfe54064a5d87dea0af62462532a7e4d9f76b1",
+                                         "source":  "src/WorldRegions.cpp",
+                                         "compilerResponse":  "/I\"C:\\JudasValidation\\M78LifecycleBuild\\source\\src\" /I\"C:\\JudasValidation\\M78ContinuationBuild\\cold-repair-final-v2\\source\\src\" /I\"C:\\JudasValidation\\Source\\third_party\" /c /IC:\\JUDASVALIDATION\\SOURCE\\SRC /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\GLAD\\INCLUDE /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\MINIAUDIO /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\VERBLIB /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_FREETYPE-BUILD\\INCLUDE\" /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_FREETYPE-SRC\\INCLUDE\" /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_HARFBUZZ-SRC\\SRC\" /nologo /W4 /WX- /diagnostics:column /O2 /Ob2 /D _MBCS /D WIN32 /D _WINDOWS /D NDEBUG /D NOMINMAX /D WIN32_LEAN_AND_MEAN /D SDL_MAIN_HANDLED /D _CRT_SECURE_NO_WARNINGS /D MA_NO_RESOURCE_MANAGER /D MA_NO_ENCODING /D MA_NO_GENERATION /D DT_VIRTUAL_QUERYFILTER /D \"CMAKE_INTDIR=\\\"Release\\\"\" /EHsc /MD /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /std:c++17 /Fo\"C:\\JudasValidation\\M78LifecycleBuild\\objects\\WorldRegions.obj\" /Fd\"C:\\JudasValidation\\M78LifecycleBuild\\objects\\compile.pdb\" /external:W0 /Gd /TP  /external:I \"C:/JudasValidation/Source/third_party/quickhull\" /external:I \"C:/JudasValidation/Build/vcpkg_installed/x64-windows-static-md/include\" /external:I \"C:/JudasValidation/Build/vcpkg_installed/x64-windows-static-md/include/SDL2\" /external:I \"C:/JudasValidation/Source/third_party/cgltf\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/Detour/Include\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/DetourTileCache/Include\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/DetourCrowd/Include\" /external:I \"C:/JudasValidation/Source/third_party/quickjs\" /external:I \"C:/JudasValidation/Build/unicode/windows-icu/include\" /utf-8 /bigobj \"C:\\JudasValidation\\M78LifecycleBuild\\source\\src\\WorldRegions.cpp\"",
+                                         "path":  "C:\\JudasValidation\\M78LifecycleBuild\\objects\\WorldRegions.obj",
+                                         "sourceSHA256":  "5fa0cec1229c970acc0a593c0f795ac98edb4dfb96d0f9bd49757aa07fc90002",
+                                         "bytes":  717931,
+                                         "frozenMember":  "judas_engine.dir\\Release\\WorldRegions.obj"
+                                     },
+                                     {
+                                         "sha256":  "0f21acf19d97d77a4246c90a7e1a5080b840434fa4ff7fae6eaec2063becfe1b",
+                                         "source":  "src/WorldScripts.cpp",
+                                         "compilerResponse":  "/I\"C:\\JudasValidation\\M78LifecycleBuild\\source\\src\" /I\"C:\\JudasValidation\\M78ContinuationBuild\\cold-repair-final-v2\\source\\src\" /I\"C:\\JudasValidation\\Source\\third_party\" /c /IC:\\JUDASVALIDATION\\SOURCE\\SRC /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\GLAD\\INCLUDE /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\MINIAUDIO /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\VERBLIB /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_FREETYPE-BUILD\\INCLUDE\" /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_FREETYPE-SRC\\INCLUDE\" /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_HARFBUZZ-SRC\\SRC\" /nologo /W4 /WX- /diagnostics:column /O2 /Ob2 /D _MBCS /D WIN32 /D _WINDOWS /D NDEBUG /D NOMINMAX /D WIN32_LEAN_AND_MEAN /D SDL_MAIN_HANDLED /D _CRT_SECURE_NO_WARNINGS /D MA_NO_RESOURCE_MANAGER /D MA_NO_ENCODING /D MA_NO_GENERATION /D DT_VIRTUAL_QUERYFILTER /D \"CMAKE_INTDIR=\\\"Release\\\"\" /EHsc /MD /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /std:c++17 /Fo\"C:\\JudasValidation\\M78LifecycleBuild\\objects\\WorldScripts.obj\" /Fd\"C:\\JudasValidation\\M78LifecycleBuild\\objects\\compile.pdb\" /external:W0 /Gd /TP  /external:I \"C:/JudasValidation/Source/third_party/quickhull\" /external:I \"C:/JudasValidation/Build/vcpkg_installed/x64-windows-static-md/include\" /external:I \"C:/JudasValidation/Build/vcpkg_installed/x64-windows-static-md/include/SDL2\" /external:I \"C:/JudasValidation/Source/third_party/cgltf\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/Detour/Include\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/DetourTileCache/Include\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/DetourCrowd/Include\" /external:I \"C:/JudasValidation/Source/third_party/quickjs\" /external:I \"C:/JudasValidation/Build/unicode/windows-icu/include\" /utf-8 /bigobj \"C:\\JudasValidation\\M78LifecycleBuild\\source\\src\\WorldScripts.cpp\"",
+                                         "path":  "C:\\JudasValidation\\M78LifecycleBuild\\objects\\WorldScripts.obj",
+                                         "sourceSHA256":  "ec660e35570c269b11a1ff88b75d5c79b0b2a96efe0f1cdbe32199c9157bfef1",
+                                         "bytes":  604629,
+                                         "frozenMember":  "judas_engine.dir\\Release\\WorldScripts.obj"
+                                     },
+                                     {
+                                         "sha256":  "a3c56eddd5d6298c350f96f7605b6b31b854a01989d9ae364ccc2ba9aab78e83",
+                                         "source":  "src/WorldPersistence.cpp",
+                                         "compilerResponse":  "/I\"C:\\JudasValidation\\M78LifecycleBuild\\source\\src\" /I\"C:\\JudasValidation\\M78ContinuationBuild\\cold-repair-final-v2\\source\\src\" /I\"C:\\JudasValidation\\Source\\third_party\" /c /IC:\\JUDASVALIDATION\\SOURCE\\SRC /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\GLAD\\INCLUDE /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\MINIAUDIO /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\VERBLIB /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_FREETYPE-BUILD\\INCLUDE\" /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_FREETYPE-SRC\\INCLUDE\" /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_HARFBUZZ-SRC\\SRC\" /nologo /W4 /WX- /diagnostics:column /O2 /Ob2 /D _MBCS /D WIN32 /D _WINDOWS /D NDEBUG /D NOMINMAX /D WIN32_LEAN_AND_MEAN /D SDL_MAIN_HANDLED /D _CRT_SECURE_NO_WARNINGS /D MA_NO_RESOURCE_MANAGER /D MA_NO_ENCODING /D MA_NO_GENERATION /D DT_VIRTUAL_QUERYFILTER /D \"CMAKE_INTDIR=\\\"Release\\\"\" /EHsc /MD /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /std:c++17 /Fo\"C:\\JudasValidation\\M78LifecycleBuild\\objects\\WorldPersistence.obj\" /Fd\"C:\\JudasValidation\\M78LifecycleBuild\\objects\\compile.pdb\" /external:W0 /Gd /TP  /external:I \"C:/JudasValidation/Source/third_party/quickhull\" /external:I \"C:/JudasValidation/Build/vcpkg_installed/x64-windows-static-md/include\" /external:I \"C:/JudasValidation/Build/vcpkg_installed/x64-windows-static-md/include/SDL2\" /external:I \"C:/JudasValidation/Source/third_party/cgltf\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/Detour/Include\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/DetourTileCache/Include\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/DetourCrowd/Include\" /external:I \"C:/JudasValidation/Source/third_party/quickjs\" /external:I \"C:/JudasValidation/Build/unicode/windows-icu/include\" /utf-8 /bigobj \"C:\\JudasValidation\\M78LifecycleBuild\\source\\src\\WorldPersistence.cpp\"",
+                                         "path":  "C:\\JudasValidation\\M78LifecycleBuild\\objects\\WorldPersistence.obj",
+                                         "sourceSHA256":  "1a02f42c466ea035be981c52d38d38bddeb0cb85eaa7c8b07fcfc8d9746d1101",
+                                         "bytes":  1272622,
+                                         "frozenMember":  "C:\\JudasValidation\\M78ContinuationBuild\\cold-repair-final-v2\\objects\\WorldPersistence.obj"
+                                     }
+                                 ]
+                 },
+                 {
+                     "archive":  {
+                                     "path":  "C:\\JudasValidation\\M78ContinuationBuild\\cold-repair-final-v2\\judas_engine.lib",
+                                     "sha256":  "71a722dded64cfcc634d679e55ddbd257058da888ada914f7f7150b8d88c2d62",
+                                     "bytes":  67019246
+                                 },
+                     "seconds":  2.3529561,
+                     "freeBytes":  23449600,
+                     "case":  "mixed_endpoint",
+                     "expectedExitCode":  0,
+                     "run":  "mixed-endpoint-read",
+                     "executableSHA256":  "87aea2462dbb3289f93f859780225d3099481043603f7cdf909ff0226df5c496",
+                     "scope":  "Native Windows functional lifecycle correction checks only. Four new production translation units plus accepted current PhysicsWorld object ahead of frozen archive; no ABI changes or Windows performance acceptance.",
+                     "files":  [
+                                   {
+                                       "path":  "C:\\JudasValidation\\M78LifecycleResults\\mixed-endpoint\\actual-drive-sidecar.json",
+                                       "sha256":  "373670052c37cc417b2f86b231cbf7a99624265f9092ceb8b786360a026441cd",
+                                       "bytes":  5482,
+                                       "reportName":  "m78-lifecycle-mixed-endpoint-read-actual-drive-sidecar.json"
+                                   },
+                                   {
+                                       "path":  "C:\\JudasValidation\\M78LifecycleResults\\mixed-endpoint\\cold-read-state.json",
+                                       "sha256":  "500d98ba84fd7c31d3b66d92745ca6339ee266330cedd814b36d4ed5cfc11996",
+                                       "bytes":  365,
+                                       "reportName":  "m78-lifecycle-mixed-endpoint-read-cold-read-state.json"
+                                   },
+                                   {
+                                       "path":  "C:\\JudasValidation\\M78LifecycleResults\\mixed-endpoint\\cold-write-state.json",
+                                       "sha256":  "500d98ba84fd7c31d3b66d92745ca6339ee266330cedd814b36d4ed5cfc11996",
+                                       "bytes":  365,
+                                       "reportName":  "m78-lifecycle-mixed-endpoint-read-cold-write-state.json"
+                                   },
+                                   {
+                                       "path":  "C:\\JudasValidation\\M78LifecycleResults\\mixed-endpoint\\diagnostic-cold-read-trace.jsonl",
+                                       "sha256":  "f648b29e6feee16d19e5ede8f6acfecb9777049856f25c106b397cbf0d6c6434",
+                                       "bytes":  600142,
+                                       "reportName":  "m78-lifecycle-mixed-endpoint-read-diagnostic-cold-read-trace.jsonl"
+                                   },
+                                   {
+                                       "path":  "C:\\JudasValidation\\M78LifecycleResults\\mixed-endpoint\\diagnostic-uninterrupted-trace.jsonl",
+                                       "sha256":  "f648b29e6feee16d19e5ede8f6acfecb9777049856f25c106b397cbf0d6c6434",
+                                       "bytes":  600142,
+                                       "reportName":  "m78-lifecycle-mixed-endpoint-read-diagnostic-uninterrupted-trace.jsonl"
+                                   },
+                                   {
+                                       "path":  "C:\\JudasValidation\\M78LifecycleResults\\mixed-endpoint\\physical-before-save.json",
+                                       "sha256":  "725652b5dac3884e75bef8dfa8fc8e06e1cb5e74f9470533a0b66638b1ca141f",
+                                       "bytes":  49691,
+                                       "reportName":  "m78-lifecycle-mixed-endpoint-read-physical-before-save.json"
+                                   },
+                                   {
+                                       "path":  "C:\\JudasValidation\\M78LifecycleResults\\mixed-endpoint\\physical-final.json",
+                                       "sha256":  "decb189767bb534147f58c9e9724bfad82630e98da8880f8db1211b4b6aae60e",
+                                       "bytes":  58350,
+                                       "reportName":  "m78-lifecycle-mixed-endpoint-read-physical-final.json"
+                                   },
+                                   {
+                                       "path":  "C:\\JudasValidation\\M78LifecycleResults\\mixed-endpoint\\physical-immediately-restored.json",
+                                       "sha256":  "1e501623619ebb4491532a68d4fbcc1075b89f92f6d10dc7c7998d742eb4fa2e",
+                                       "bytes":  49691,
+                                       "reportName":  "m78-lifecycle-mixed-endpoint-read-physical-immediately-restored.json"
+                                   },
+                                   {
+                                       "path":  "C:\\JudasValidation\\M78LifecycleResults\\mixed-endpoint\\physical-step-1.json",
+                                       "sha256":  "b1a7b57b62512b7bec93628eefc48db417cdc6a96de4fa725576bf961288314c",
+                                       "bytes":  47153,
+                                       "reportName":  "m78-lifecycle-mixed-endpoint-read-physical-step-1.json"
+                                   },
+                                   {
+                                       "path":  "C:\\JudasValidation\\M78LifecycleResults\\mixed-endpoint\\physical-step-10.json",
+                                       "sha256":  "71ee1036e6cc64f08d67ce65c136c7861842ea5408b1acd64b4764b03be48073",
+                                       "bytes":  50383,
+                                       "reportName":  "m78-lifecycle-mixed-endpoint-read-physical-step-10.json"
+                                   },
+                                   {
+                                       "path":  "C:\\JudasValidation\\M78LifecycleResults\\mixed-endpoint\\physical-step-2.json",
+                                       "sha256":  "a96a9231e5265fa8b81c75e02c0bc89b40c550cd3ad00f84f7c28930abffc708",
+                                       "bytes":  48940,
+                                       "reportName":  "m78-lifecycle-mixed-endpoint-read-physical-step-2.json"
+                                   },
+                                   {
+                                       "path":  "C:\\JudasValidation\\M78LifecycleResults\\mixed-endpoint\\physical-step-3.json",
+                                       "sha256":  "c889e65a166a4c357550f9fa86689edcdc839cbd9b7634ebea62a3ca176ac6a6",
+                                       "bytes":  48906,
+                                       "reportName":  "m78-lifecycle-mixed-endpoint-read-physical-step-3.json"
+                                   },
+                                   {
+                                       "path":  "C:\\JudasValidation\\M78LifecycleResults\\mixed-endpoint\\physical-step-4.json",
+                                       "sha256":  "b79d582e0d2eed113bbb6424d1df2fad6a8275a7d651254ca58d8c1ed2c7566c",
+                                       "bytes":  50507,
+                                       "reportName":  "m78-lifecycle-mixed-endpoint-read-physical-step-4.json"
+                                   },
+                                   {
+                                       "path":  "C:\\JudasValidation\\M78LifecycleResults\\mixed-endpoint\\physical-step-5.json",
+                                       "sha256":  "b11f4cdcd364cd2093337a83f45bdde8dc172f6b86fda0926ff0df95e9db5b16",
+                                       "bytes":  50429,
+                                       "reportName":  "m78-lifecycle-mixed-endpoint-read-physical-step-5.json"
+                                   },
+                                   {
+                                       "path":  "C:\\JudasValidation\\M78LifecycleResults\\mixed-endpoint\\physical-step-6.json",
+                                       "sha256":  "1a52797c9c87fc60ee4a57c6f5bb8541b2cc1136ebe6fcf7e2a79c0ff464b957",
+                                       "bytes":  50506,
+                                       "reportName":  "m78-lifecycle-mixed-endpoint-read-physical-step-6.json"
+                                   },
+                                   {
+                                       "path":  "C:\\JudasValidation\\M78LifecycleResults\\mixed-endpoint\\physical-step-7.json",
+                                       "sha256":  "b44b425f8da63ccca78270cf2e06bc264d46d6cc01ea7c7d34bd0b631d8ed4a5",
+                                       "bytes":  50421,
+                                       "reportName":  "m78-lifecycle-mixed-endpoint-read-physical-step-7.json"
+                                   },
+                                   {
+                                       "path":  "C:\\JudasValidation\\M78LifecycleResults\\mixed-endpoint\\physical-step-8.json",
+                                       "sha256":  "6a7a85c6e8936512841076d9a64861f945fb98a2719de72b0493add1a20854ea",
+                                       "bytes":  50431,
+                                       "reportName":  "m78-lifecycle-mixed-endpoint-read-physical-step-8.json"
+                                   },
+                                   {
+                                       "path":  "C:\\JudasValidation\\M78LifecycleResults\\mixed-endpoint\\physical-step-9.json",
+                                       "sha256":  "6e7fe21528137dc951512bd103de28fdc17710763e8bfddda7a82db8132a84ce",
+                                       "bytes":  50452,
+                                       "reportName":  "m78-lifecycle-mixed-endpoint-read-physical-step-9.json"
+                                   },
+                                   {
+                                       "path":  "C:\\JudasValidation\\M78LifecycleResults\\mixed-endpoint\\slots\\m77.save",
+                                       "sha256":  "c955949f94fc0ae05c5e6442a30bbcc944f0f4ecca6bc93a7662f2ea77c6f442",
+                                       "bytes":  64001,
+                                       "reportName":  "m78-lifecycle-mixed-endpoint-read-slots__m77.save"
+                                   }
+                               ],
+                     "arguments":  [
+                                       "C:\\JudasValidation\\M78LifecycleResults\\mixed-endpoint",
+                                       "cold-read"
+                                   ],
+                     "exitCode":  0,
+                     "objects":  [
+                                     {
+                                         "path":  "C:\\JudasValidation\\M78ClosureBuild\\objects\\PhysicsWorld.obj",
+                                         "source":  "src/PhysicsWorld.cpp",
+                                         "sourceSHA256":  "6a60747e4bb970821e2ebb68adbe78ea89f6fdc3db9137b5160290ca1da2f193",
+                                         "sha256":  "6d70c3f9ff8c932ddc8bac2b0a7ab47539813d95e0ea17d7e000e77465702ed1",
+                                         "bytes":  1495011
+                                     },
+                                     {
+                                         "sha256":  "0639f4c85d5032f30c72624c8e2d467b76d131061b5a03422f4e0e1112c467f0",
+                                         "source":  "src/WorldCharacter.cpp",
+                                         "compilerResponse":  "/I\"C:\\JudasValidation\\M78LifecycleBuild\\source\\src\" /I\"C:\\JudasValidation\\M78ContinuationBuild\\cold-repair-final-v2\\source\\src\" /I\"C:\\JudasValidation\\Source\\third_party\" /c /IC:\\JUDASVALIDATION\\SOURCE\\SRC /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\GLAD\\INCLUDE /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\MINIAUDIO /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\VERBLIB /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_FREETYPE-BUILD\\INCLUDE\" /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_FREETYPE-SRC\\INCLUDE\" /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_HARFBUZZ-SRC\\SRC\" /nologo /W4 /WX- /diagnostics:column /O2 /Ob2 /D _MBCS /D WIN32 /D _WINDOWS /D NDEBUG /D NOMINMAX /D WIN32_LEAN_AND_MEAN /D SDL_MAIN_HANDLED /D _CRT_SECURE_NO_WARNINGS /D MA_NO_RESOURCE_MANAGER /D MA_NO_ENCODING /D MA_NO_GENERATION /D DT_VIRTUAL_QUERYFILTER /D \"CMAKE_INTDIR=\\\"Release\\\"\" /EHsc /MD /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /std:c++17 /Fo\"C:\\JudasValidation\\M78LifecycleBuild\\objects\\WorldCharacter.obj\" /Fd\"C:\\JudasValidation\\M78LifecycleBuild\\objects\\compile.pdb\" /external:W0 /Gd /TP  /external:I \"C:/JudasValidation/Source/third_party/quickhull\" /external:I \"C:/JudasValidation/Build/vcpkg_installed/x64-windows-static-md/include\" /external:I \"C:/JudasValidation/Build/vcpkg_installed/x64-windows-static-md/include/SDL2\" /external:I \"C:/JudasValidation/Source/third_party/cgltf\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/Detour/Include\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/DetourTileCache/Include\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/DetourCrowd/Include\" /external:I \"C:/JudasValidation/Source/third_party/quickjs\" /external:I \"C:/JudasValidation/Build/unicode/windows-icu/include\" /utf-8 /bigobj \"C:\\JudasValidation\\M78LifecycleBuild\\source\\src\\WorldCharacter.cpp\"",
+                                         "path":  "C:\\JudasValidation\\M78LifecycleBuild\\objects\\WorldCharacter.obj",
+                                         "sourceSHA256":  "0c87e03acfba2a1c837da183e7731e35f70df98497d61a864c96ba5e21b064ae",
+                                         "bytes":  58951,
+                                         "frozenMember":  "judas_engine.dir\\Release\\WorldCharacter.obj"
+                                     },
+                                     {
+                                         "sha256":  "f750b1741a64545746308e2b10dfe54064a5d87dea0af62462532a7e4d9f76b1",
+                                         "source":  "src/WorldRegions.cpp",
+                                         "compilerResponse":  "/I\"C:\\JudasValidation\\M78LifecycleBuild\\source\\src\" /I\"C:\\JudasValidation\\M78ContinuationBuild\\cold-repair-final-v2\\source\\src\" /I\"C:\\JudasValidation\\Source\\third_party\" /c /IC:\\JUDASVALIDATION\\SOURCE\\SRC /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\GLAD\\INCLUDE /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\MINIAUDIO /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\VERBLIB /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_FREETYPE-BUILD\\INCLUDE\" /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_FREETYPE-SRC\\INCLUDE\" /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_HARFBUZZ-SRC\\SRC\" /nologo /W4 /WX- /diagnostics:column /O2 /Ob2 /D _MBCS /D WIN32 /D _WINDOWS /D NDEBUG /D NOMINMAX /D WIN32_LEAN_AND_MEAN /D SDL_MAIN_HANDLED /D _CRT_SECURE_NO_WARNINGS /D MA_NO_RESOURCE_MANAGER /D MA_NO_ENCODING /D MA_NO_GENERATION /D DT_VIRTUAL_QUERYFILTER /D \"CMAKE_INTDIR=\\\"Release\\\"\" /EHsc /MD /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /std:c++17 /Fo\"C:\\JudasValidation\\M78LifecycleBuild\\objects\\WorldRegions.obj\" /Fd\"C:\\JudasValidation\\M78LifecycleBuild\\objects\\compile.pdb\" /external:W0 /Gd /TP  /external:I \"C:/JudasValidation/Source/third_party/quickhull\" /external:I \"C:/JudasValidation/Build/vcpkg_installed/x64-windows-static-md/include\" /external:I \"C:/JudasValidation/Build/vcpkg_installed/x64-windows-static-md/include/SDL2\" /external:I \"C:/JudasValidation/Source/third_party/cgltf\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/Detour/Include\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/DetourTileCache/Include\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/DetourCrowd/Include\" /external:I \"C:/JudasValidation/Source/third_party/quickjs\" /external:I \"C:/JudasValidation/Build/unicode/windows-icu/include\" /utf-8 /bigobj \"C:\\JudasValidation\\M78LifecycleBuild\\source\\src\\WorldRegions.cpp\"",
+                                         "path":  "C:\\JudasValidation\\M78LifecycleBuild\\objects\\WorldRegions.obj",
+                                         "sourceSHA256":  "5fa0cec1229c970acc0a593c0f795ac98edb4dfb96d0f9bd49757aa07fc90002",
+                                         "bytes":  717931,
+                                         "frozenMember":  "judas_engine.dir\\Release\\WorldRegions.obj"
+                                     },
+                                     {
+                                         "sha256":  "0f21acf19d97d77a4246c90a7e1a5080b840434fa4ff7fae6eaec2063becfe1b",
+                                         "source":  "src/WorldScripts.cpp",
+                                         "compilerResponse":  "/I\"C:\\JudasValidation\\M78LifecycleBuild\\source\\src\" /I\"C:\\JudasValidation\\M78ContinuationBuild\\cold-repair-final-v2\\source\\src\" /I\"C:\\JudasValidation\\Source\\third_party\" /c /IC:\\JUDASVALIDATION\\SOURCE\\SRC /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\GLAD\\INCLUDE /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\MINIAUDIO /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\VERBLIB /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_FREETYPE-BUILD\\INCLUDE\" /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_FREETYPE-SRC\\INCLUDE\" /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_HARFBUZZ-SRC\\SRC\" /nologo /W4 /WX- /diagnostics:column /O2 /Ob2 /D _MBCS /D WIN32 /D _WINDOWS /D NDEBUG /D NOMINMAX /D WIN32_LEAN_AND_MEAN /D SDL_MAIN_HANDLED /D _CRT_SECURE_NO_WARNINGS /D MA_NO_RESOURCE_MANAGER /D MA_NO_ENCODING /D MA_NO_GENERATION /D DT_VIRTUAL_QUERYFILTER /D \"CMAKE_INTDIR=\\\"Release\\\"\" /EHsc /MD /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /std:c++17 /Fo\"C:\\JudasValidation\\M78LifecycleBuild\\objects\\WorldScripts.obj\" /Fd\"C:\\JudasValidation\\M78LifecycleBuild\\objects\\compile.pdb\" /external:W0 /Gd /TP  /external:I \"C:/JudasValidation/Source/third_party/quickhull\" /external:I \"C:/JudasValidation/Build/vcpkg_installed/x64-windows-static-md/include\" /external:I \"C:/JudasValidation/Build/vcpkg_installed/x64-windows-static-md/include/SDL2\" /external:I \"C:/JudasValidation/Source/third_party/cgltf\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/Detour/Include\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/DetourTileCache/Include\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/DetourCrowd/Include\" /external:I \"C:/JudasValidation/Source/third_party/quickjs\" /external:I \"C:/JudasValidation/Build/unicode/windows-icu/include\" /utf-8 /bigobj \"C:\\JudasValidation\\M78LifecycleBuild\\source\\src\\WorldScripts.cpp\"",
+                                         "path":  "C:\\JudasValidation\\M78LifecycleBuild\\objects\\WorldScripts.obj",
+                                         "sourceSHA256":  "ec660e35570c269b11a1ff88b75d5c79b0b2a96efe0f1cdbe32199c9157bfef1",
+                                         "bytes":  604629,
+                                         "frozenMember":  "judas_engine.dir\\Release\\WorldScripts.obj"
+                                     },
+                                     {
+                                         "sha256":  "a3c56eddd5d6298c350f96f7605b6b31b854a01989d9ae364ccc2ba9aab78e83",
+                                         "source":  "src/WorldPersistence.cpp",
+                                         "compilerResponse":  "/I\"C:\\JudasValidation\\M78LifecycleBuild\\source\\src\" /I\"C:\\JudasValidation\\M78ContinuationBuild\\cold-repair-final-v2\\source\\src\" /I\"C:\\JudasValidation\\Source\\third_party\" /c /IC:\\JUDASVALIDATION\\SOURCE\\SRC /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\GLAD\\INCLUDE /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\MINIAUDIO /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\VERBLIB /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_FREETYPE-BUILD\\INCLUDE\" /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_FREETYPE-SRC\\INCLUDE\" /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_HARFBUZZ-SRC\\SRC\" /nologo /W4 /WX- /diagnostics:column /O2 /Ob2 /D _MBCS /D WIN32 /D _WINDOWS /D NDEBUG /D NOMINMAX /D WIN32_LEAN_AND_MEAN /D SDL_MAIN_HANDLED /D _CRT_SECURE_NO_WARNINGS /D MA_NO_RESOURCE_MANAGER /D MA_NO_ENCODING /D MA_NO_GENERATION /D DT_VIRTUAL_QUERYFILTER /D \"CMAKE_INTDIR=\\\"Release\\\"\" /EHsc /MD /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /std:c++17 /Fo\"C:\\JudasValidation\\M78LifecycleBuild\\objects\\WorldPersistence.obj\" /Fd\"C:\\JudasValidation\\M78LifecycleBuild\\objects\\compile.pdb\" /external:W0 /Gd /TP  /external:I \"C:/JudasValidation/Source/third_party/quickhull\" /external:I \"C:/JudasValidation/Build/vcpkg_installed/x64-windows-static-md/include\" /external:I \"C:/JudasValidation/Build/vcpkg_installed/x64-windows-static-md/include/SDL2\" /external:I \"C:/JudasValidation/Source/third_party/cgltf\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/Detour/Include\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/DetourTileCache/Include\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/DetourCrowd/Include\" /external:I \"C:/JudasValidation/Source/third_party/quickjs\" /external:I \"C:/JudasValidation/Build/unicode/windows-icu/include\" /utf-8 /bigobj \"C:\\JudasValidation\\M78LifecycleBuild\\source\\src\\WorldPersistence.cpp\"",
+                                         "path":  "C:\\JudasValidation\\M78LifecycleBuild\\objects\\WorldPersistence.obj",
+                                         "sourceSHA256":  "1a02f42c466ea035be981c52d38d38bddeb0cb85eaa7c8b07fcfc8d9746d1101",
+                                         "bytes":  1272622,
+                                         "frozenMember":  "C:\\JudasValidation\\M78ContinuationBuild\\cold-repair-final-v2\\objects\\WorldPersistence.obj"
+                                     }
+                                 ]
+                 }
+             ],
+    "ownedLargeEvidence":  {
+                               "path":  "C:\\JudasValidation\\M78LifecycleResults\\m78-lifecycle-mixed_endpoint-link.log",
+                               "sha256":  "61d492d07c0da71ea667719940fa833962016af0a61a99e5e1cbd7045c8b807c",
+                               "name":  "m78-lifecycle-mixed_endpoint-link.log",
+                               "bytes":  33930
+                           },
+    "diagnosticMapOmittedForBoundedStorage":  true,
+    "replacementObjects":  [
+                               {
+                                   "path":  "C:\\JudasValidation\\M78ClosureBuild\\objects\\PhysicsWorld.obj",
+                                   "source":  "src/PhysicsWorld.cpp",
+                                   "sourceSHA256":  "6a60747e4bb970821e2ebb68adbe78ea89f6fdc3db9137b5160290ca1da2f193",
+                                   "sha256":  "6d70c3f9ff8c932ddc8bac2b0a7ab47539813d95e0ea17d7e000e77465702ed1",
+                                   "bytes":  1495011
+                               },
+                               {
+                                   "sha256":  "0639f4c85d5032f30c72624c8e2d467b76d131061b5a03422f4e0e1112c467f0",
+                                   "source":  "src/WorldCharacter.cpp",
+                                   "compilerResponse":  "/I\"C:\\JudasValidation\\M78LifecycleBuild\\source\\src\" /I\"C:\\JudasValidation\\M78ContinuationBuild\\cold-repair-final-v2\\source\\src\" /I\"C:\\JudasValidation\\Source\\third_party\" /c /IC:\\JUDASVALIDATION\\SOURCE\\SRC /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\GLAD\\INCLUDE /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\MINIAUDIO /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\VERBLIB /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_FREETYPE-BUILD\\INCLUDE\" /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_FREETYPE-SRC\\INCLUDE\" /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_HARFBUZZ-SRC\\SRC\" /nologo /W4 /WX- /diagnostics:column /O2 /Ob2 /D _MBCS /D WIN32 /D _WINDOWS /D NDEBUG /D NOMINMAX /D WIN32_LEAN_AND_MEAN /D SDL_MAIN_HANDLED /D _CRT_SECURE_NO_WARNINGS /D MA_NO_RESOURCE_MANAGER /D MA_NO_ENCODING /D MA_NO_GENERATION /D DT_VIRTUAL_QUERYFILTER /D \"CMAKE_INTDIR=\\\"Release\\\"\" /EHsc /MD /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /std:c++17 /Fo\"C:\\JudasValidation\\M78LifecycleBuild\\objects\\WorldCharacter.obj\" /Fd\"C:\\JudasValidation\\M78LifecycleBuild\\objects\\compile.pdb\" /external:W0 /Gd /TP  /external:I \"C:/JudasValidation/Source/third_party/quickhull\" /external:I \"C:/JudasValidation/Build/vcpkg_installed/x64-windows-static-md/include\" /external:I \"C:/JudasValidation/Build/vcpkg_installed/x64-windows-static-md/include/SDL2\" /external:I \"C:/JudasValidation/Source/third_party/cgltf\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/Detour/Include\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/DetourTileCache/Include\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/DetourCrowd/Include\" /external:I \"C:/JudasValidation/Source/third_party/quickjs\" /external:I \"C:/JudasValidation/Build/unicode/windows-icu/include\" /utf-8 /bigobj \"C:\\JudasValidation\\M78LifecycleBuild\\source\\src\\WorldCharacter.cpp\"",
+                                   "path":  "C:\\JudasValidation\\M78LifecycleBuild\\objects\\WorldCharacter.obj",
+                                   "sourceSHA256":  "0c87e03acfba2a1c837da183e7731e35f70df98497d61a864c96ba5e21b064ae",
+                                   "bytes":  58951,
+                                   "frozenMember":  "judas_engine.dir\\Release\\WorldCharacter.obj"
+                               },
+                               {
+                                   "sha256":  "f750b1741a64545746308e2b10dfe54064a5d87dea0af62462532a7e4d9f76b1",
+                                   "source":  "src/WorldRegions.cpp",
+                                   "compilerResponse":  "/I\"C:\\JudasValidation\\M78LifecycleBuild\\source\\src\" /I\"C:\\JudasValidation\\M78ContinuationBuild\\cold-repair-final-v2\\source\\src\" /I\"C:\\JudasValidation\\Source\\third_party\" /c /IC:\\JUDASVALIDATION\\SOURCE\\SRC /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\GLAD\\INCLUDE /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\MINIAUDIO /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\VERBLIB /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_FREETYPE-BUILD\\INCLUDE\" /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_FREETYPE-SRC\\INCLUDE\" /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_HARFBUZZ-SRC\\SRC\" /nologo /W4 /WX- /diagnostics:column /O2 /Ob2 /D _MBCS /D WIN32 /D _WINDOWS /D NDEBUG /D NOMINMAX /D WIN32_LEAN_AND_MEAN /D SDL_MAIN_HANDLED /D _CRT_SECURE_NO_WARNINGS /D MA_NO_RESOURCE_MANAGER /D MA_NO_ENCODING /D MA_NO_GENERATION /D DT_VIRTUAL_QUERYFILTER /D \"CMAKE_INTDIR=\\\"Release\\\"\" /EHsc /MD /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /std:c++17 /Fo\"C:\\JudasValidation\\M78LifecycleBuild\\objects\\WorldRegions.obj\" /Fd\"C:\\JudasValidation\\M78LifecycleBuild\\objects\\compile.pdb\" /external:W0 /Gd /TP  /external:I \"C:/JudasValidation/Source/third_party/quickhull\" /external:I \"C:/JudasValidation/Build/vcpkg_installed/x64-windows-static-md/include\" /external:I \"C:/JudasValidation/Build/vcpkg_installed/x64-windows-static-md/include/SDL2\" /external:I \"C:/JudasValidation/Source/third_party/cgltf\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/Detour/Include\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/DetourTileCache/Include\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/DetourCrowd/Include\" /external:I \"C:/JudasValidation/Source/third_party/quickjs\" /external:I \"C:/JudasValidation/Build/unicode/windows-icu/include\" /utf-8 /bigobj \"C:\\JudasValidation\\M78LifecycleBuild\\source\\src\\WorldRegions.cpp\"",
+                                   "path":  "C:\\JudasValidation\\M78LifecycleBuild\\objects\\WorldRegions.obj",
+                                   "sourceSHA256":  "5fa0cec1229c970acc0a593c0f795ac98edb4dfb96d0f9bd49757aa07fc90002",
+                                   "bytes":  717931,
+                                   "frozenMember":  "judas_engine.dir\\Release\\WorldRegions.obj"
+                               },
+                               {
+                                   "sha256":  "0f21acf19d97d77a4246c90a7e1a5080b840434fa4ff7fae6eaec2063becfe1b",
+                                   "source":  "src/WorldScripts.cpp",
+                                   "compilerResponse":  "/I\"C:\\JudasValidation\\M78LifecycleBuild\\source\\src\" /I\"C:\\JudasValidation\\M78ContinuationBuild\\cold-repair-final-v2\\source\\src\" /I\"C:\\JudasValidation\\Source\\third_party\" /c /IC:\\JUDASVALIDATION\\SOURCE\\SRC /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\GLAD\\INCLUDE /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\MINIAUDIO /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\VERBLIB /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_FREETYPE-BUILD\\INCLUDE\" /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_FREETYPE-SRC\\INCLUDE\" /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_HARFBUZZ-SRC\\SRC\" /nologo /W4 /WX- /diagnostics:column /O2 /Ob2 /D _MBCS /D WIN32 /D _WINDOWS /D NDEBUG /D NOMINMAX /D WIN32_LEAN_AND_MEAN /D SDL_MAIN_HANDLED /D _CRT_SECURE_NO_WARNINGS /D MA_NO_RESOURCE_MANAGER /D MA_NO_ENCODING /D MA_NO_GENERATION /D DT_VIRTUAL_QUERYFILTER /D \"CMAKE_INTDIR=\\\"Release\\\"\" /EHsc /MD /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /std:c++17 /Fo\"C:\\JudasValidation\\M78LifecycleBuild\\objects\\WorldScripts.obj\" /Fd\"C:\\JudasValidation\\M78LifecycleBuild\\objects\\compile.pdb\" /external:W0 /Gd /TP  /external:I \"C:/JudasValidation/Source/third_party/quickhull\" /external:I \"C:/JudasValidation/Build/vcpkg_installed/x64-windows-static-md/include\" /external:I \"C:/JudasValidation/Build/vcpkg_installed/x64-windows-static-md/include/SDL2\" /external:I \"C:/JudasValidation/Source/third_party/cgltf\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/Detour/Include\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/DetourTileCache/Include\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/DetourCrowd/Include\" /external:I \"C:/JudasValidation/Source/third_party/quickjs\" /external:I \"C:/JudasValidation/Build/unicode/windows-icu/include\" /utf-8 /bigobj \"C:\\JudasValidation\\M78LifecycleBuild\\source\\src\\WorldScripts.cpp\"",
+                                   "path":  "C:\\JudasValidation\\M78LifecycleBuild\\objects\\WorldScripts.obj",
+                                   "sourceSHA256":  "ec660e35570c269b11a1ff88b75d5c79b0b2a96efe0f1cdbe32199c9157bfef1",
+                                   "bytes":  604629,
+                                   "frozenMember":  "judas_engine.dir\\Release\\WorldScripts.obj"
+                               },
+                               {
+                                   "sha256":  "a3c56eddd5d6298c350f96f7605b6b31b854a01989d9ae364ccc2ba9aab78e83",
+                                   "source":  "src/WorldPersistence.cpp",
+                                   "compilerResponse":  "/I\"C:\\JudasValidation\\M78LifecycleBuild\\source\\src\" /I\"C:\\JudasValidation\\M78ContinuationBuild\\cold-repair-final-v2\\source\\src\" /I\"C:\\JudasValidation\\Source\\third_party\" /c /IC:\\JUDASVALIDATION\\SOURCE\\SRC /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\GLAD\\INCLUDE /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\MINIAUDIO /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\VERBLIB /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_FREETYPE-BUILD\\INCLUDE\" /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_FREETYPE-SRC\\INCLUDE\" /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_HARFBUZZ-SRC\\SRC\" /nologo /W4 /WX- /diagnostics:column /O2 /Ob2 /D _MBCS /D WIN32 /D _WINDOWS /D NDEBUG /D NOMINMAX /D WIN32_LEAN_AND_MEAN /D SDL_MAIN_HANDLED /D _CRT_SECURE_NO_WARNINGS /D MA_NO_RESOURCE_MANAGER /D MA_NO_ENCODING /D MA_NO_GENERATION /D DT_VIRTUAL_QUERYFILTER /D \"CMAKE_INTDIR=\\\"Release\\\"\" /EHsc /MD /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /std:c++17 /Fo\"C:\\JudasValidation\\M78LifecycleBuild\\objects\\WorldPersistence.obj\" /Fd\"C:\\JudasValidation\\M78LifecycleBuild\\objects\\compile.pdb\" /external:W0 /Gd /TP  /external:I \"C:/JudasValidation/Source/third_party/quickhull\" /external:I \"C:/JudasValidation/Build/vcpkg_installed/x64-windows-static-md/include\" /external:I \"C:/JudasValidation/Build/vcpkg_installed/x64-windows-static-md/include/SDL2\" /external:I \"C:/JudasValidation/Source/third_party/cgltf\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/Detour/Include\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/DetourTileCache/Include\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/DetourCrowd/Include\" /external:I \"C:/JudasValidation/Source/third_party/quickjs\" /external:I \"C:/JudasValidation/Build/unicode/windows-icu/include\" /utf-8 /bigobj \"C:\\JudasValidation\\M78LifecycleBuild\\source\\src\\WorldPersistence.cpp\"",
+                                   "path":  "C:\\JudasValidation\\M78LifecycleBuild\\objects\\WorldPersistence.obj",
+                                   "sourceSHA256":  "1a02f42c466ea035be981c52d38d38bddeb0cb85eaa7c8b07fcfc8d9746d1101",
+                                   "bytes":  1272622,
+                                   "frozenMember":  "C:\\JudasValidation\\M78ContinuationBuild\\cold-repair-final-v2\\objects\\WorldPersistence.obj"
+                               }
+                           ],
+    "mapSHA256":  null,
+    "executable":  "C:\\JudasValidation\\Build\\Release\\m78-lifecycle-mixed_endpoint.exe",
+    "reusedOrFreshInputs":  [
+                                {
+                                    "sha256":  "cadc8d0fd96cced55e0082916feb4f121f1ba0175819984aa8422eb4c5553aba",
+                                    "name":  "mixed-endpoint-0.obj",
+                                    "bytes":  2930638,
+                                    "source":  "docs/evidence/m78-closure/review-physics/MixedCurrentPhysicalEndpointObserver.cpp",
+                                    "path":  "C:\\JudasValidation\\M78LifecycleBuild\\objects\\mixed-endpoint-0.obj",
+                                    "sourceSHA256":  "df72a228637da53eb48d0628272af1734590331d2875e92b787a1d0ef6b5b4d4",
+                                    "reuseOriginal":  false
+                                }
+                            ],
+    "archive":  {
+                    "path":  "C:\\JudasValidation\\M78ContinuationBuild\\cold-repair-final-v2\\judas_engine.lib",
+                    "sha256":  "71a722dded64cfcc634d679e55ddbd257058da888ada914f7f7150b8d88c2d62",
+                    "bytes":  67019246
+                },
+    "scope":  "Native Windows functional lifecycle correction checks only. Four new production translation units plus accepted current PhysicsWorld object ahead of frozen archive; no ABI changes or Windows performance acceptance.",
+    "executableBytes":  9569792,
+    "linkerResponse":  "\"C:\\JudasValidation\\M78ClosureBuild\\objects\\PhysicsWorld.obj\" \"C:\\JudasValidation\\M78LifecycleBuild\\objects\\WorldCharacter.obj\" \"C:\\JudasValidation\\M78LifecycleBuild\\objects\\WorldRegions.obj\" \"C:\\JudasValidation\\M78LifecycleBuild\\objects\\WorldScripts.obj\" \"C:\\JudasValidation\\M78LifecycleBuild\\objects\\WorldPersistence.obj\" \"C:\\JudasValidation\\M78ContinuationBuild\\cold-repair-final-v2\\judas_engine.lib\" /OUT:\"C:\\JudasValidation\\Build\\Release\\m78-lifecycle-mixed_endpoint.exe\" /INCREMENTAL:NO /NOLOGO  RELEASE\\JUDAS_APP_ICON.LIB RELEASE\\JUDAS_MATERIALS.LIB \"VCPKG_INSTALLED\\X64-WINDOWS-STATIC-MD\\LIB\\SDL2-STATIC.LIB\" KERNEL32.LIB USER32.LIB GDI32.LIB WINMM.LIB IMM32.LIB OLEAUT32.LIB VERSION.LIB UUID.LIB ADVAPI32.LIB SETUPAPI.LIB DINPUT8.LIB \"VCPKG_INSTALLED\\X64-WINDOWS-STATIC-MD\\LIB\\GLM.LIB\" RELEASE\\JUDAS_GLAD.LIB RELEASE\\JUDAS_AUDIO_BACKEND.LIB RELEASE\\JUDAS_NAVIGATION_BACKEND.LIB RELEASE\\JUDAS_QUICKJS.LIB RELEASE\\JUDAS_PROFILER.LIB PSAPI.LIB \"_DEPS\\JUDAS_FREETYPE-BUILD\\RELEASE\\FREETYPE.LIB\" \"_DEPS\\JUDAS_HARFBUZZ-BUILD\\RELEASE\\HARFBUZZ.LIB\" \"UNICODE\\WINDOWS-ICU\\LIB64\\ICUIN.LIB\" \"UNICODE\\WINDOWS-ICU\\LIB64\\ICUUC.LIB\" \"UNICODE\\WINDOWS-ICU\\LIB64\\ICUDT.LIB\" SHELL32.LIB OLE32.LIB KERNEL32.LIB USER32.LIB GDI32.LIB WINSPOOL.LIB SHELL32.LIB OLE32.LIB OLEAUT32.LIB UUID.LIB COMDLG32.LIB ADVAPI32.LIB /MANIFEST /MANIFESTUAC:\"level=\u0027asInvoker\u0027 uiAccess=\u0027false\u0027\" /manifest:embed /PDB:\"C:\\JudasValidation\\M78LifecycleBuild\\objects\\case-link.pdb\" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:\"C:\\JudasValidation\\M78LifecycleBuild\\objects\\case.lib\" /MACHINE:X64  /machine:x64 \"C:\\JudasValidation\\M78LifecycleBuild\\objects\\mixed-endpoint-0.obj\" /VERBOSE:LIB",
+    "generatedFiles":  [
+                           {
+                               "path":  "C:\\JudasValidation\\Build\\Release\\m78-lifecycle-mixed_endpoint.exe",
+                               "sha256":  "87aea2462dbb3289f93f859780225d3099481043603f7cdf909ff0226df5c496",
+                               "name":  "m78-lifecycle-mixed_endpoint.exe",
+                               "bytes":  9569792
+                           },
+                           {
+                               "path":  "C:\\JudasValidation\\M78LifecycleBuild\\objects\\mixed-endpoint-0.obj",
+                               "sha256":  "cadc8d0fd96cced55e0082916feb4f121f1ba0175819984aa8422eb4c5553aba",
+                               "name":  "mixed-endpoint-0.obj",
+                               "bytes":  2930638
+                           }
+                       ],
+    "frozenReplacedMembersNotExtracted":  true
+}

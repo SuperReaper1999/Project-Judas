@@ -1,0 +1,86 @@
+{
+  "checks": [
+    {
+      "name": "ordinary finite project tag classification",
+      "passed": true
+    },
+    {
+      "name": "non-motor control uses ordinary dynamic rigid-body construction",
+      "passed": true
+    },
+    {
+      "name": "non-motor authored-tag positive and absent-runtime-tag negative controls",
+      "passed": true
+    },
+    {
+      "name": "non-motor public AddTag updates entity classification",
+      "passed": true
+    },
+    {
+      "name": "non-motor public AddTag updates actual physics query tag",
+      "passed": true
+    },
+    {
+      "name": "non-motor public RemoveTag updates entity classification",
+      "passed": true
+    },
+    {
+      "name": "non-motor public RemoveTag updates actual physics query tag",
+      "passed": true
+    },
+    {
+      "name": "non-motor added tag can also be removed from physics queries",
+      "passed": true
+    },
+    {
+      "name": "ordinary motor world builds",
+      "passed": true
+    },
+    {
+      "name": "authored tag positive and absent runtime-tag negative controls",
+      "passed": true
+    },
+    {
+      "name": "public runtime AddTag changes logical entity classification",
+      "passed": true
+    },
+    {
+      "name": "public runtime AddTag immediately changes actual physics query tag",
+      "passed": false
+    },
+    {
+      "name": "ordinary zero-time metadata update retains runtime query tag",
+      "passed": false
+    },
+    {
+      "name": "public runtime RemoveTag changes logical entity classification",
+      "passed": true
+    },
+    {
+      "name": "public runtime RemoveTag immediately excludes actual physics query tag",
+      "passed": false
+    },
+    {
+      "name": "ordinary metadata update does not resurrect removed authored query tag",
+      "passed": false
+    },
+    {
+      "name": "second ordinary lazy motor world builds",
+      "passed": true
+    },
+    {
+      "name": "runtime tag can change before lazy capsule construction",
+      "passed": true
+    },
+    {
+      "name": "first lazy capsule construction uses current logical tags",
+      "passed": false
+    },
+    {
+      "name": "all observations occur without elapsed physics time",
+      "passed": true
+    }
+  ],
+  "failures": 5,
+  "scope": "Read-only reproduction of current public motor-tag/query disagreement; no runtime changes"
+}

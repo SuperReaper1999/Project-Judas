@@ -1,0 +1,20 @@
+{
+  "hostVerified": true,
+  "scope": "Only named completed NEW moved runtime duplicate retirement, and approved per-file frozen archive compression; exact logical bytes independently preserved on host",
+  "retire": [
+    {
+      "path": "C:\\JudasValidation\\M78ClosureMovedPackageV2\\judas.exe",
+      "hostPath": ".cache/m78-closure/native-binaries/runtime/m78-closure-runtime.exe",
+      "bytes": 10340864,
+      "sha256": "46b5c697c740c651250c35d0a5a73cabdbae3c0209663f06d88927d4c5a282b9"
+    }
+  ],
+  "compress": [
+    {
+      "path": "C:\\JudasValidation\\M78ContinuationBuild\\cold-repair-final-v2\\judas_engine.lib",
+      "hostPath": ".cache/m78-cold-boundary/native-binaries/final2-repair/judas_engine.lib",
+      "bytes": 67019246,
+      "sha256": "71a722dded64cfcc634d679e55ddbd257058da888ada914f7f7150b8d88c2d62"
+    }
+  ]
+}

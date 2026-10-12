@@ -1,0 +1,7 @@
+{
+  "recordedUTC": "2026-10-12T03:40:33.546255+00:00",
+  "directHumanAnswer": "Yes, compress that build archive",
+  "authorizedExactPath": "C:\\JudasValidation\\M78ContinuationBuild\\cold-repair-final-v2\\judas_engine.lib",
+  "scope": "Compression only; logical bytes unchanged and independently preserved on host. No deletion or VM/global configuration change. Linux heavy work finished; native CPU GO.",
+  "priorDeniedAttempts": "PREPARATION_BLOCK.json preserved unchanged"
+}

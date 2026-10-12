@@ -1,0 +1,56 @@
+PASS FIXTURE.PROJECT ordinary new project: 
+PASS FIXTURE.PROJECT_SAVE normal project registration: 
+PASS FIXTURE.SCRIPT_WRITE original local item script written
+PASS FIXTURE.SCRIPT_ASSET normal script asset: 
+PASS FIXTURE.PREFAB_WRITE normal authored hierarchy: 
+PASS FIXTURE.PREFAB_ASSET normal prefab asset: 
+PASS FIXTURE.DRIVER_WRITE public-API controller script written
+PASS FIXTURE.DRIVER_ASSET normal controller asset: 
+PASS FIXTURE.SCENE normal registered startup scene: 
+PASS PREFAB.BASELINE four ordinary authored entities and one dynamic body
+PASS COMMAND.spawn ordinary project session command: 
+PASS PREFAB.INDEPENDENT_IDS two separate published hierarchies
+PASS PREFAB.INSTANCE_1.PROPERTIES typed per-instance properties visible in constructor
+PASS PREFAB.INSTANCE_1.INITIAL_STATE independent root/child constructor payloads
+PASS PREFAB.INSTANCE_1.REFERENCES published external reference and authored internal reference remapped
+PASS PREFAB.INSTANCE_1.MOTION complete initial motion vectors visible before start/first simulation
+PASS PREFAB.INSTANCE_1.LIFECYCLE each newly published slot starts exactly once
+PASS PREFAB.INSTANCE_2.PROPERTIES typed per-instance properties visible in constructor
+PASS PREFAB.INSTANCE_2.INITIAL_STATE independent root/child constructor payloads
+PASS PREFAB.INSTANCE_2.REFERENCES published external reference and authored internal reference remapped
+PASS PREFAB.INSTANCE_2.MOTION complete initial motion vectors visible before start/first simulation
+PASS PREFAB.INSTANCE_2.LIFECYCLE each newly published slot starts exactly once
+PASS PREFAB.INVALID_SECOND_SLOT later invalid slot rejects after valid first initialization record
+PASS PREFAB.STALE_EXTERNAL destroyed external reference rejects and stable reference returns null
+PASS PREFAB.ATOMIC_REJECTION both rejected attempts leave no published root/child/body/script
+PASS COMMAND.save ordinary project session command: 
+PASS SAVE.COMMITTED_SLOT public save creates readable checksum-valid ordinary slot: 
+PASS SAVE.INVALID_FIXTURE detached slot has checksum-valid unsupported required participant: 
+PASS SAVE.SLOT_BYTES both isolated slot generations retained before rejected load
+PASS COMMAND.reject ordinary project session command: 
+PASS SAVE.REJECTION_DIAGNOSTIC unsupported required participant reports its actual name/version
+PASS SAVE.LIVE_WORLD_UNCHANGED private candidate rejection preserves live identities, physical state, counts and clock
+PASS SAVE.LIVE_GAME_UNCHANGED live JS state/session remain distinct from saved state after rejection
+PASS SAVE.SLOTS_UNCHANGED rejected load rewrites neither good nor invalid slot bytes
+PASS SAVE.LIVE_CALLBACKS_CONTINUE original live project executes ordinary update callbacks after rejection
+PASS SAVE.ONE_FIXED_STEP normal loop executes exactly one scheduled authoritative step after rejection
+PASS SAVE.LIVE_SIMULATION_CONTINUES rejected candidate leaves original dynamic body integrating through ordinary fixed step
+PASS COMMAND.load ordinary project session command: 
+PASS SAVE.RESTORED_PHYSICAL ordinary positive load reconstructs saved entity/body states and counts at paused boundary
+PASS SAVE.RESTORE_NOT_START saved script state is installed before restore and start is not replayed
+PASS SAVE.RESTORED_SESSION saved session marker replaces later live mutation
+PASS SAVE.REFERENCE_REACQUIRED public stable reference resolves freshly in reconstructed world
+PASS SAVE.INSTANCE_1.LIFECYCLE restored prefab slots do not replay spawn payload or fresh start
+PASS SAVE.INSTANCE_1.REFERENCES normal typed references resolve in restored hierarchy
+PASS SAVE.INSTANCE_2.LIFECYCLE restored prefab slots do not replay spawn payload or fresh start
+PASS SAVE.INSTANCE_2.REFERENCES normal typed references resolve in restored hierarchy
+PASS ASSET.UNCHANGED.driver.js runtime construction/load leaves original project asset bytes unchanged
+PASS ASSET.UNCHANGED.driver.js.judasmeta runtime construction/load leaves original project asset bytes unchanged
+PASS ASSET.UNCHANGED.item.js runtime construction/load leaves original project asset bytes unchanged
+PASS ASSET.UNCHANGED.item.js.judasmeta runtime construction/load leaves original project asset bytes unchanged
+PASS ASSET.UNCHANGED.pair.judasprefab runtime construction/load leaves original project asset bytes unchanged
+PASS ASSET.UNCHANGED.pair.judasprefab.judasmeta runtime construction/load leaves original project asset bytes unchanged
+PASS ASSET.UNCHANGED.Public_lifecycle_audit.judasproj runtime construction/load leaves original project asset bytes unchanged
+PASS ASSET.UNCHANGED.audit.judas runtime construction/load leaves original project asset bytes unchanged
+PASS APP.COMPLETED ordinary Application startup/public commands/restore/shutdown
+SUMMARY 55 checks 0 failures; frames=25

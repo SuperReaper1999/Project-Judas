@@ -1,0 +1,79 @@
+{
+  "scope": "Independent actual physical endpoint comparison, within this native pair only. No controller-cached status substitute. No numerical tolerance added. Linux/Windows trajectories are not asserted bit-identical.",
+  "sourceFiles": [
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-mixed-endpoint-write-physical-final.json",
+      "bytes": 58350,
+      "sha256": "05285a5efbdc79a5a19d8d966aec82c660e8298e631217a752aed107e30f62de"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-mixed-endpoint-read-physical-final.json",
+      "bytes": 58350,
+      "sha256": "decb189767bb534147f58c9e9724bfad82630e98da8880f8db1211b4b6aae60e"
+    }
+  ],
+  "rawRecordEquality": false,
+  "excludedIdentityField": "Only bodies[].nativeHandle, a fresh runtime slot identifier, not physical data",
+  "durableBodyRecords": 13,
+  "mappedArticulationRecords": 7,
+  "completedContactRows": 16,
+  "canonicalBodyAndContactOrder": "Entity identity plus deterministic JSON sorting; no rows discarded",
+  "normalizedRecordExactEquality": true,
+  "actualEndpoint": {
+    "actualRelativeComSpeed": 0.0,
+    "actualRootHeightAboveCurrentSupport": 1.3618701696395874,
+    "actualUpright": 0.9986021518707275,
+    "currentPhysicalStanding": true,
+    "gravityUp": [
+      -0.0,
+      1.0,
+      -0.0
+    ],
+    "landings": 1,
+    "massWeightedCom": [
+      3.0581369400024414,
+      0.8696181774139404,
+      0.3709465563297272
+    ],
+    "massWeightedVelocity": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "owned": true,
+    "owner": 12,
+    "progress": 2,
+    "reason": "measured supported physical standing",
+    "rootAngularVelocity": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "rootEntity": 4611686018427387904,
+    "rootLinearVelocity": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "rootPosition": [
+      3.0794835090637207,
+      1.3608317375183105,
+      0.3413321375846863
+    ],
+    "rootRotation": [
+      0.9993501305580139,
+      0.007883614860475063,
+      0.024501387029886246,
+      -0.02523462288081646
+    ],
+    "sampledGravity": [
+      0.0,
+      -9.8100004196167,
+      0.0
+    ],
+    "standingHeight": 1.4199999570846558,
+    "standingSpeed": 0.1599999964237213,
+    "standingTolerance": 0.18000000715255737,
+    "supportFeet": 2
+  }
+}

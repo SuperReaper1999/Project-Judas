@@ -1,0 +1,20 @@
+{
+  "status": "prepared, not compiled or executed",
+  "checkpoint": "0695433b949df0c1d05ac6798bf118121cc53e2b",
+  "files": {
+    "src/WorldPersistence.cpp": {
+      "bytes": 46923,
+      "sha256": "1a02f42c466ea035be981c52d38d38bddeb0cb85eaa7c8b07fcfc8d9746d1101"
+    },
+    "tests/SaveExclusionTests.cpp": {
+      "bytes": 12930,
+      "sha256": "ca1f5b84fcdf665d26a55957c979514c4a1ddecfc9c802db2632ab17192272d7"
+    },
+    "docs/evidence/m78-lifecycle/save-exclusion/PLAN.md": {
+      "bytes": 5039,
+      "sha256": "2b582f981ba64efb56173555b93cba2ef0ebf331e072b18ca30fb86d34c0abff"
+    }
+  },
+  "checkpointWorldPersistenceSHA256": "14a5ce3a78eebb2db801f91ddd91dc35808f23ff637a797c7cbb599d2e756ad4",
+  "scope": "LIF-002 capture ownership; strict restoration and existing formats unchanged"
+}

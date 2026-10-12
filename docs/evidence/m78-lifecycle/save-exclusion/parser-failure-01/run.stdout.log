@@ -1,0 +1,42 @@
+PASS retained normal source construction
+PASS retained ordinary runtime dynamic actor
+PASS retained actor reaches real ordinary sleep
+PASS retained source ownership matches requested policy
+PASS retained ordinary full capture
+PASS retained scene participant decode
+PASS retained scene contains exactly the retained owners
+FAIL retained unexpected exception
+PASS excluded normal source construction
+PASS excluded ordinary runtime dynamic actor
+PASS excluded actor reaches real ordinary sleep
+PASS excluded public simple-actor exclusion accepted
+PASS excluded source ownership matches requested policy
+PASS excluded ordinary full capture
+PASS excluded scene participant decode
+PASS excluded scene contains exactly the retained owners
+FAIL excluded unexpected exception
+PASS reincluded normal source construction
+PASS reincluded ordinary runtime dynamic actor
+PASS reincluded actor reaches real ordinary sleep
+PASS reincluded public simple-actor exclusion accepted
+PASS reincluded public reinclusion accepted
+PASS reincluded source ownership matches requested policy
+PASS reincluded ordinary full capture
+PASS reincluded scene participant decode
+PASS reincluded scene contains exactly the retained owners
+FAIL reincluded unexpected exception
+PASS articulation original project asset registered
+PASS articulation real skeleton decode without GPU substitute
+PASS articulation ordinary original scene loads
+PASS articulation original three-bone definition exists
+PASS articulation ordinary owner inserted with normal scene identity
+PASS articulation normal source world
+PASS articulation real public physical activation
+PASS articulation required owner cannot be publicly excluded
+PASS articulation Root is a genuine mapped transient dynamic body
+PASS articulation Elbow is a genuine mapped transient dynamic body
+PASS articulation Tip is a genuine mapped transient dynamic body
+PASS articulation full capture
+PASS articulation scene participant decode
+FAIL articulated unexpected exception
+SUMMARY 41 checks 4 failures

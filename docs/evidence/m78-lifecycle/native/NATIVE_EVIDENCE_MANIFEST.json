@@ -1,0 +1,1260 @@
+{
+  "scope": "Final native evidence only; no compiled/build/transient artifacts. Exact ignored-cache binaries referenced by identity receipts.",
+  "files": [
+    {
+      "path": "docs/evidence/m78-lifecycle/native/ACTUAL_ENDPOINT_BY_ENTITY.json",
+      "bytes": 2286,
+      "sha256": "1f6c9155c89c36fcc7d802d7d1f5c49742625bb5b86a9104ae0b3fb04bbd3bdf"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/CPU_GO_RECEIPT.json",
+      "bytes": 926,
+      "sha256": "fd225413089238827bf5124967577ab59786a718b1d3f536770143cadd25397c"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/DISK_APPROVAL.json",
+      "bytes": 838,
+      "sha256": "3576174973c4f0ed3428572bd671c9eb925f2dd1a257ddf3afc50728322bc0ae"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/EXCLUDED_TRANSIENT_ARTIFACTS.json",
+      "bytes": 931,
+      "sha256": "dbf8027e7a812b831eb297143b2aeb9d7ca83bb0aed2bd310dc15cac7c4dd7e0"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/FINAL_BINARY_IDENTITY.json",
+      "bytes": 110824,
+      "sha256": "3d0919c846396cce6d6b067d103ae7251c1dd1a4ce972a00e58cfee2255888cb"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/FINAL_VERIFICATION.json",
+      "bytes": 5267,
+      "sha256": "5baff18160dc9bfba9033239f25ab30800bec6d247df8b40c8ed704ef7504daf"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/HOST_RECEIPT_TIMING_FOLLOWUP.json",
+      "bytes": 580,
+      "sha256": "ac2f497cc87422adced773b3a60c4a461b92598c52aeae3808eb2f941550220f"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/HUMAN_COMPRESSION_APPROVAL.json",
+      "bytes": 478,
+      "sha256": "b75085096ac0c4e63a56399e6cd6f5b7e6aa77a050909b1922f4fe2c378080b2"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/HUMAN_NEW_OUTPUT_RETIREMENT_APPROVAL.json",
+      "bytes": 643,
+      "sha256": "4d616ea77aa13cdefb5b71a8706905511191ab549126bd76d870b7f9df87009b"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/PERMISSION_CHRONOLOGY.json",
+      "bytes": 1081,
+      "sha256": "9495db06545aa3e7f5e76ea94137aaf680cc167eb3339b9fa3c3cff45de9dd79"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/PLAN.md",
+      "bytes": 2473,
+      "sha256": "42c98dd014de7f49aa5b5ce40ce9692599eb01d43911c8212d2bc3bd93aad6c0"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/PREPARATION_BLOCK.json",
+      "bytes": 1891,
+      "sha256": "ae31de98740e151dde246a675f85cbd6ce037a46496162ad026ddeab4d60417c"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/PREPARED_INPUTS.json",
+      "bytes": 84644,
+      "sha256": "7365f84b2176d9e196511cf71bc4910da3c1b25999b6817f88e1f73d603139b8"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/READ_ONLY_DISK_ESTIMATE.json",
+      "bytes": 383,
+      "sha256": "2368247cbc7599bcb0a8687f544c518fec2436c55ceedcaee6908d59ac2bedd1"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/REPORT.md",
+      "bytes": 4980,
+      "sha256": "071e09a55490cff03fb8f1f2eb8db534c78d4038dd17a56b83052fb51c4b465a"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/RETIREMENT_INDEX.json",
+      "bytes": 11621,
+      "sha256": "983d33d9a12ac6f266ef2f10dc82e0b6dc6157664fc76d8e5b98c43e1f5b9bbf"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/SUMMARY.json",
+      "bytes": 12204,
+      "sha256": "ca59f7dc9153d0a329999c5c4064d8e348528c35ab6bda1919851d18a92ee07f"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/WARNING_REVIEW.json",
+      "bytes": 4753,
+      "sha256": "c34fd14ea2d81ad35957ec6588c8c33478ff9a071bbc90b152ca19ad1d440913"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-WorldCharacter.obj-compile.log",
+      "bytes": 42,
+      "sha256": "b2b69981b78b5540d8460196071b243cff4704696e2afac9fdfaa18a3ad505dc"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-WorldPersistence.obj-compile.log",
+      "bytes": 9346,
+      "sha256": "bc4d03490dfa7bc4456c0f8d7245f9c6a79fa39a5167a021c896c2a4f2ca37c2"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-WorldRegions.obj-compile.log",
+      "bytes": 38,
+      "sha256": "c0ad5bcba08504c1ac543265f1f5cd10aa5d1827cf8d410213649ddd07d347da"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-WorldScripts.obj-compile.log",
+      "bytes": 38,
+      "sha256": "7834b4b00bea6207437d11d5a09ed4c8d367c5149f1a33be39d68ee2770208a6"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-balance-new-cold-read-cold-read-state.json",
+      "bytes": 365,
+      "sha256": "500d98ba84fd7c31d3b66d92745ca6339ee266330cedd814b36d4ed5cfc11996"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-balance-new-cold-read-cold-write-state.json",
+      "bytes": 364,
+      "sha256": "49f0dfd88c3d229d4a58d9463c8cd5c205e5beb5241e7697371ca918f453ad1a"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-balance-new-cold-read-slots__m77.save",
+      "bytes": 56640,
+      "sha256": "cc73b426266cfa94b946317567ccbc49015594e3dc974a24ca577aa9f9fa2c6d"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-balance-new-cold-read.json",
+      "bytes": 12867,
+      "sha256": "6155338d8db355e3cbab558ab1df76b78692d69fac12a66723a5444ef9d5af8e"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-balance-new-cold-read.stderr.log",
+      "bytes": 61,
+      "sha256": "cc3b08bad5ecb1f3c73515d9f17b39c1361b7561e5570c6e70b55b84b09a3a8e"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-balance-new-cold-read.stdout.log",
+      "bytes": 806,
+      "sha256": "b6642c428def12beb94f72523da4ccac15058cef67ca10ab261dd7d53a41f442"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-balance-new-cold-write-cold-write-state.json",
+      "bytes": 364,
+      "sha256": "49f0dfd88c3d229d4a58d9463c8cd5c205e5beb5241e7697371ca918f453ad1a"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-balance-new-cold-write-slots__m77.save",
+      "bytes": 56640,
+      "sha256": "cc73b426266cfa94b946317567ccbc49015594e3dc974a24ca577aa9f9fa2c6d"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-balance-new-cold-write.json",
+      "bytes": 12466,
+      "sha256": "b53d5f1da3c1fd323f825dca2a00ecace0a82bfc789693a2fddc283991052c3c"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-balance-new-cold-write.stderr.log",
+      "bytes": 61,
+      "sha256": "cc3b08bad5ecb1f3c73515d9f17b39c1361b7561e5570c6e70b55b84b09a3a8e"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-balance-new-cold-write.stdout.log",
+      "bytes": 1470,
+      "sha256": "2a40d9c4e57ce05644785d1faf3fbaa9852ca6ca728f185b8a4dc25cc55745b2"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-balance-step-trace-step-trace-state.json",
+      "bytes": 365,
+      "sha256": "50b5dc0637cb78267fb859cc564483b3646304283e409438aa5ffc3f73e086e2"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-balance-step-trace-step-trace.jsonl",
+      "bytes": 602472,
+      "sha256": "85fbf0274ea7a56d846fbaa1e9e1ba38f7196b67f8a5f8bf2163e6f86ee9cfdb"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-balance-step-trace.json",
+      "bytes": 12462,
+      "sha256": "17e96a3e2b6834c35c5ca3443a1410cd0f6753cc79985da64bf385743bfe6bb6"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-balance-step-trace.stderr.log",
+      "bytes": 61,
+      "sha256": "cc3b08bad5ecb1f3c73515d9f17b39c1361b7561e5570c6e70b55b84b09a3a8e"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-balance-step-trace.stdout.log",
+      "bytes": 1595,
+      "sha256": "45d58c7395497f944c165be42bbdc9a15681a4ec38fc5be9d26db14d22691277"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-balance_lab-approval.json",
+      "bytes": 924,
+      "sha256": "5cc5262fd95fe5ad55480406f49bc8a842e42ea84bf0897a8df312c304cbc2ec"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-balance_lab-build.json",
+      "bytes": 57844,
+      "sha256": "805322302ecb6d142d02c5584d29b00061ee17a5fc50ffd20e3605e7ed6e4bef"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-balance_lab-cleanup.json",
+      "bytes": 1386,
+      "sha256": "e3400eab8ba39b43429cfd52288534153af9083a277c615698cf6ba068c1df53"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-balance_lab-link.log",
+      "bytes": 33930,
+      "sha256": "61d492d07c0da71ea667719940fa833962016af0a61a99e5e1cbd7045c8b807c"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-character-cold-read-cold-read-state.json",
+      "bytes": 286,
+      "sha256": "887affe5f6eeb92a7a885a07d04d20c705014e711c5eb5504d21f722c12af38a"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-character-cold-read-cold-write-state.json",
+      "bytes": 286,
+      "sha256": "cdbbfc0dbde32b7924d1f7d1d274fe4f62b923c8aec03970f24ba21a84fa5351"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-character-cold-read-slots__m70.save",
+      "bytes": 107796,
+      "sha256": "0df3da6365f7c8a035ae1f30992f82633bed56e39cf10bfd9bba1855dc01f4c5"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-character-cold-read.json",
+      "bytes": 12855,
+      "sha256": "ec7a796b4a809cc40184faa1627147a2ae94cbc9ba6062fd1aa7c951dce0f5f7"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-character-cold-read.stderr.log",
+      "bytes": 61,
+      "sha256": "cc3b08bad5ecb1f3c73515d9f17b39c1361b7561e5570c6e70b55b84b09a3a8e"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-character-cold-read.stdout.log",
+      "bytes": 1142,
+      "sha256": "563a482d62d65cd44d49b71e8a411380f5d75378c7f326d3e221fe56afc5090a"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-character-cold-write-cold-write-state.json",
+      "bytes": 286,
+      "sha256": "cdbbfc0dbde32b7924d1f7d1d274fe4f62b923c8aec03970f24ba21a84fa5351"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-character-cold-write-slots__m70.save",
+      "bytes": 107796,
+      "sha256": "0df3da6365f7c8a035ae1f30992f82633bed56e39cf10bfd9bba1855dc01f4c5"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-character-cold-write.json",
+      "bytes": 12466,
+      "sha256": "8cd45c04a8a4bf670e3e1ca8ebfff209186108937420411050279a360c5d3b0c"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-character-cold-write.stderr.log",
+      "bytes": 61,
+      "sha256": "cc3b08bad5ecb1f3c73515d9f17b39c1361b7561e5570c6e70b55b84b09a3a8e"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-character-cold-write.stdout.log",
+      "bytes": 580,
+      "sha256": "9306df96b863e4d6bfa9e312a05903540e73f687752a293276ece6323e8d2fcb"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-character_lab-approval.json",
+      "bytes": 938,
+      "sha256": "2804892270c87e56011de4deb237252509cdc4a3860c5cc90c90da6b2bf3271e"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-character_lab-build.json",
+      "bytes": 44072,
+      "sha256": "bc6fe221ee15eaf46e2b3311a869ba93e240e6e7d4caafd1741dbbecb7e392bd"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-character_lab-cleanup.json",
+      "bytes": 1398,
+      "sha256": "76e0ad33acefffd66de8143ef90897b41c7ddca32b6d3346ef4e15a68f676ce8"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-character_lab-link.log",
+      "bytes": 33930,
+      "sha256": "61d492d07c0da71ea667719940fa833962016af0a61a99e5e1cbd7045c8b807c"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-character_publication-RESULT.json",
+      "bytes": 13590,
+      "sha256": "8c0cc3c77f3b6d576f2da96e107145ef4b4c5ac0b8e12142fe6d1070af64b377"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-character_publication-approval.json",
+      "bytes": 994,
+      "sha256": "fcdbdb4e580ea7578030403bad4d954e915b68ef15b5dcdaff107fccaff2bb1b"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-character_publication-build.json",
+      "bytes": 29351,
+      "sha256": "dbdf073998d4aaa4e46ff1e53fc04fbcb307407e769544b73aed1a8e4aa39391"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-character_publication-character_publication-0.obj-compile.log",
+      "bytes": 64,
+      "sha256": "da06221e39eea5f3f5744382dbfb858d2072da25b1bc89c8d495ca0e43b67742"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-character_publication-cleanup.json",
+      "bytes": 1446,
+      "sha256": "bc36be48f910d113f16d00883557815e83fdd31fae30ab4b3412fa309870e66c"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-character_publication-link.log",
+      "bytes": 33930,
+      "sha256": "61d492d07c0da71ea667719940fa833962016af0a61a99e5e1cbd7045c8b807c"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-character_publication.json",
+      "bytes": 12040,
+      "sha256": "7e0d787ea8abd3f76e4048df399399e845cbe0764cf6f7551ec4bc41fb890efe"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-character_publication.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-character_publication.stdout.log",
+      "bytes": 7173,
+      "sha256": "d029712f844356bfd8208bc898ccd032811d07f00d8b19bcbc3fb48c1f6a9722"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-compression-receipt.json",
+      "bytes": 1150,
+      "sha256": "970ec1425657005bf7a3c6d2059cb8bab683aedaaa58f40029c94b22361692d5"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-consumer_lifecycle-RESULT.json",
+      "bytes": 25603,
+      "sha256": "50b393b8f2e70b42813cd657ce5238eaa0455049852ed788095cb7da64cb50e3"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-consumer_lifecycle-actual-save-root-invalid.save",
+      "bytes": 5772,
+      "sha256": "62cfef1b52e03f2c59f299fb03af45e325aa699269ac0813fceac30131a5826b"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-consumer_lifecycle-actual-save-root-valid.save",
+      "bytes": 5772,
+      "sha256": "1da005b9edc1879348e61e87bf67e47e2b2b28b713a363a062f370874f9d2922"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-consumer_lifecycle-approval.json",
+      "bytes": 1893,
+      "sha256": "68a19d0100b511ba459743dbda608ac657c8226d37bee1fb38e4531e9deeece5"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-consumer_lifecycle-build.json",
+      "bytes": 35781,
+      "sha256": "3c370be9621abec5f15e8318c285cded58bd534b99c4f786423c755ce284055f"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-consumer_lifecycle-cleanup.json",
+      "bytes": 2804,
+      "sha256": "398484e814d8bea1d71c3489ed90c90d6070a4a44d98e779ede6d6825c2ef946"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-consumer_lifecycle-consumer_lifecycle-0.obj-compile.log",
+      "bytes": 68,
+      "sha256": "c2490905bf42c90353f335fe19876daa950c11d210184051875aee42d508985e"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-consumer_lifecycle-link.log",
+      "bytes": 33930,
+      "sha256": "61d492d07c0da71ea667719940fa833962016af0a61a99e5e1cbd7045c8b807c"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-consumer_lifecycle.json",
+      "bytes": 13645,
+      "sha256": "66b4934c3ac9ee1fde276687ac7791c0550883e808d944fd0bf783c345563ec2"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-consumer_lifecycle.stderr.log",
+      "bytes": 536,
+      "sha256": "9d2074a12165ad77f6e770c4c6102aced8e1a2c9f9c8a0f4a9a1190880000431"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-consumer_lifecycle.stdout.log",
+      "bytes": 4842,
+      "sha256": "a63e2a9c7ce40552dd098da4befbb9adefae6071a11265cd850d69a74c40fd46"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-engine.json",
+      "bytes": 11336,
+      "sha256": "2e48c5c5fff4f7e8770beba331f348f1efb12498836e9cd6bf3bc72c829187e9"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-mixed-endpoint-read-actual-drive-sidecar.json",
+      "bytes": 5482,
+      "sha256": "373670052c37cc417b2f86b231cbf7a99624265f9092ceb8b786360a026441cd"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-mixed-endpoint-read-cold-read-state.json",
+      "bytes": 365,
+      "sha256": "500d98ba84fd7c31d3b66d92745ca6339ee266330cedd814b36d4ed5cfc11996"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-mixed-endpoint-read-cold-write-state.json",
+      "bytes": 365,
+      "sha256": "500d98ba84fd7c31d3b66d92745ca6339ee266330cedd814b36d4ed5cfc11996"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-mixed-endpoint-read-diagnostic-cold-read-trace.jsonl",
+      "bytes": 600142,
+      "sha256": "f648b29e6feee16d19e5ede8f6acfecb9777049856f25c106b397cbf0d6c6434"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-mixed-endpoint-read-diagnostic-uninterrupted-trace.jsonl",
+      "bytes": 600142,
+      "sha256": "f648b29e6feee16d19e5ede8f6acfecb9777049856f25c106b397cbf0d6c6434"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-mixed-endpoint-read-physical-before-save.json",
+      "bytes": 49691,
+      "sha256": "725652b5dac3884e75bef8dfa8fc8e06e1cb5e74f9470533a0b66638b1ca141f"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-mixed-endpoint-read-physical-final.json",
+      "bytes": 58350,
+      "sha256": "decb189767bb534147f58c9e9724bfad82630e98da8880f8db1211b4b6aae60e"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-mixed-endpoint-read-physical-immediately-restored.json",
+      "bytes": 49691,
+      "sha256": "1e501623619ebb4491532a68d4fbcc1075b89f92f6d10dc7c7998d742eb4fa2e"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-mixed-endpoint-read-physical-step-1.json",
+      "bytes": 47153,
+      "sha256": "b1a7b57b62512b7bec93628eefc48db417cdc6a96de4fa725576bf961288314c"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-mixed-endpoint-read-physical-step-10.json",
+      "bytes": 50383,
+      "sha256": "71ee1036e6cc64f08d67ce65c136c7861842ea5408b1acd64b4764b03be48073"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-mixed-endpoint-read-physical-step-2.json",
+      "bytes": 48940,
+      "sha256": "a96a9231e5265fa8b81c75e02c0bc89b40c550cd3ad00f84f7c28930abffc708"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-mixed-endpoint-read-physical-step-3.json",
+      "bytes": 48906,
+      "sha256": "c889e65a166a4c357550f9fa86689edcdc839cbd9b7634ebea62a3ca176ac6a6"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-mixed-endpoint-read-physical-step-4.json",
+      "bytes": 50507,
+      "sha256": "b79d582e0d2eed113bbb6424d1df2fad6a8275a7d651254ca58d8c1ed2c7566c"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-mixed-endpoint-read-physical-step-5.json",
+      "bytes": 50429,
+      "sha256": "b11f4cdcd364cd2093337a83f45bdde8dc172f6b86fda0926ff0df95e9db5b16"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-mixed-endpoint-read-physical-step-6.json",
+      "bytes": 50506,
+      "sha256": "1a52797c9c87fc60ee4a57c6f5bb8541b2cc1136ebe6fcf7e2a79c0ff464b957"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-mixed-endpoint-read-physical-step-7.json",
+      "bytes": 50421,
+      "sha256": "b44b425f8da63ccca78270cf2e06bc264d46d6cc01ea7c7d34bd0b631d8ed4a5"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-mixed-endpoint-read-physical-step-8.json",
+      "bytes": 50431,
+      "sha256": "6a7a85c6e8936512841076d9a64861f945fb98a2719de72b0493add1a20854ea"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-mixed-endpoint-read-physical-step-9.json",
+      "bytes": 50452,
+      "sha256": "6e7fe21528137dc951512bd103de28fdc17710763e8bfddda7a82db8132a84ce"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-mixed-endpoint-read-slots__m77.save",
+      "bytes": 64001,
+      "sha256": "c955949f94fc0ae05c5e6442a30bbcc944f0f4ecca6bc93a7662f2ea77c6f442"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-mixed-endpoint-read.json",
+      "bytes": 19254,
+      "sha256": "01341e1a228870c74f36123758b92293a08b05136aed8bdbb1b0e575ec749a60"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-mixed-endpoint-read.stderr.log",
+      "bytes": 61,
+      "sha256": "cc3b08bad5ecb1f3c73515d9f17b39c1361b7561e5570c6e70b55b84b09a3a8e"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-mixed-endpoint-read.stdout.log",
+      "bytes": 23731,
+      "sha256": "4471c77d1b05cd3668ebe02442844d8129b2b3d2a8e7685c6db59462ca74eaaa"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-mixed-endpoint-write-actual-drive-sidecar.json",
+      "bytes": 5482,
+      "sha256": "373670052c37cc417b2f86b231cbf7a99624265f9092ceb8b786360a026441cd"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-mixed-endpoint-write-cold-write-state.json",
+      "bytes": 365,
+      "sha256": "500d98ba84fd7c31d3b66d92745ca6339ee266330cedd814b36d4ed5cfc11996"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-mixed-endpoint-write-diagnostic-uninterrupted-trace.jsonl",
+      "bytes": 600142,
+      "sha256": "f648b29e6feee16d19e5ede8f6acfecb9777049856f25c106b397cbf0d6c6434"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-mixed-endpoint-write-physical-before-save.json",
+      "bytes": 49691,
+      "sha256": "725652b5dac3884e75bef8dfa8fc8e06e1cb5e74f9470533a0b66638b1ca141f"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-mixed-endpoint-write-physical-final.json",
+      "bytes": 58350,
+      "sha256": "05285a5efbdc79a5a19d8d966aec82c660e8298e631217a752aed107e30f62de"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-mixed-endpoint-write-physical-step-1.json",
+      "bytes": 47153,
+      "sha256": "595a5fc9caeef52bc3ca4a686706cb09b9e1b274c65a4286f5db10b4d46e9af0"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-mixed-endpoint-write-physical-step-10.json",
+      "bytes": 50383,
+      "sha256": "89a07a48dda5ed6a08deab99e71d150ae51f302500fca866ad9eacb2c5e4782e"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-mixed-endpoint-write-physical-step-2.json",
+      "bytes": 48940,
+      "sha256": "de868674f1a9962ec25d2c91f8b89f1928c798b59dcb6ee1b64e24dc581d4085"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-mixed-endpoint-write-physical-step-3.json",
+      "bytes": 48906,
+      "sha256": "ead7f29ff2b8816fee94a5ae655aa1967ef2691a16a06dbc7cbf066e2fc6b1a4"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-mixed-endpoint-write-physical-step-4.json",
+      "bytes": 50507,
+      "sha256": "7a0a700b6bed3ffbda5718f6f52ac1a0bc7eb01da0fc438360610c4aeb592a71"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-mixed-endpoint-write-physical-step-5.json",
+      "bytes": 50429,
+      "sha256": "57fe7d27c9437475db15fe41b7400cc8eb43024fe4d38a295f74f4e503008fc5"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-mixed-endpoint-write-physical-step-6.json",
+      "bytes": 50506,
+      "sha256": "c7c13365fcc5d7c227881d44fd81cc21e93469e7edfa62bdb31e42728c16eee1"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-mixed-endpoint-write-physical-step-7.json",
+      "bytes": 50421,
+      "sha256": "f3f5f35368590579a526c88a773450ba4f5fb23948901aded0013ee4d8fc67e8"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-mixed-endpoint-write-physical-step-8.json",
+      "bytes": 50431,
+      "sha256": "63e053af510c02847e56ebfdc7318ef123e5f42810a95c8366e9a5a8e76e3636"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-mixed-endpoint-write-physical-step-9.json",
+      "bytes": 50452,
+      "sha256": "2695e0006f892115da6af1340d6f31a9c4ad218d06e1396e12c29a9332c97d16"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-mixed-endpoint-write-slots__m77.save",
+      "bytes": 64001,
+      "sha256": "c955949f94fc0ae05c5e6442a30bbcc944f0f4ecca6bc93a7662f2ea77c6f442"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-mixed-endpoint-write.json",
+      "bytes": 18039,
+      "sha256": "97a3484d182056e703c9ab1caabeaf794d93c939bc507e71a0b1a176cffdf7f6"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-mixed-endpoint-write.stderr.log",
+      "bytes": 61,
+      "sha256": "cc3b08bad5ecb1f3c73515d9f17b39c1361b7561e5570c6e70b55b84b09a3a8e"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-mixed-endpoint-write.stdout.log",
+      "bytes": 26263,
+      "sha256": "4a0350f07c7b1c26400f22cffaacacd9c97cf64ab5600679dd09832ceeb68161"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-mixed_endpoint-approval.json",
+      "bytes": 945,
+      "sha256": "2c24f18cbfa1a7e0870e488d4d5d3e0816541b6383fcbeae9c8ba5ae633d508d"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-mixed_endpoint-build.json",
+      "bytes": 59171,
+      "sha256": "3a5586af8ca7056bb8fa5805b7615cda752440a43b4bb99041694967a8867e12"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-mixed_endpoint-cleanup.json",
+      "bytes": 1404,
+      "sha256": "58d8915ae544975532ae2d1993c4857a34176e42ab87f8053bef3ff2b1f53d6c"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-mixed_endpoint-link.log",
+      "bytes": 33930,
+      "sha256": "61d492d07c0da71ea667719940fa833962016af0a61a99e5e1cbd7045c8b807c"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-mixed_endpoint-mixed-endpoint-0.obj-compile.log",
+      "bytes": 460,
+      "sha256": "267d9ad60bc3d839341154566c4b3e0a4d9b4c2e44aba2b74eb9be17d1b3cd7a"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-motor-approval.json",
+      "bytes": 881,
+      "sha256": "004038cc72349a6038ae9bc530d71e57ff2a1fdb0c78b2842941ed637f1df234"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-motor-build.json",
+      "bytes": 28531,
+      "sha256": "065fc7b97e860550ba99c41b30abc697ec53bdb30cc7e1ac69ae840d6baee60e"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-motor-cleanup.json",
+      "bytes": 1349,
+      "sha256": "54870407e91cdf1b12294aeeb8b80b83c60e2ad9f7a7e8a042aa56172233f869"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-motor-link.log",
+      "bytes": 33930,
+      "sha256": "61d492d07c0da71ea667719940fa833962016af0a61a99e5e1cbd7045c8b807c"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-motor-motor-0.obj-compile.log",
+      "bytes": 3570,
+      "sha256": "3005033d63fb2073a15ae5b580410cfc6fbb2bc7dcc4f06ea99a672b7db48891"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-motor.json",
+      "bytes": 11539,
+      "sha256": "dd024fd5377b7f727da104ba801564891b9296a17bc38e58843313190c57a38e"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-motor.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-motor.stdout.log",
+      "bytes": 1908,
+      "sha256": "634d55129291fee2e3340d289dea67ab03c589eefbf4f4ea20dacc8c8c727ad5"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-physics-continuation.json",
+      "bytes": 11579,
+      "sha256": "0bb6790996b65ca03f2e8f5fde00977265ed7d255d60d3598a96dd4e30fca1e0"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-physics-continuation.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-physics-continuation.stdout.log",
+      "bytes": 31,
+      "sha256": "d1cfb4716f74651cbfea319c7343b3c27f058ecea842081f0c6c19d03cf03289"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-physics_continuation-approval.json",
+      "bytes": 986,
+      "sha256": "a95aa92d205c2b073830edd3193fb5bee5aa682e33aa4fde4de7145aa165f5a5"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-physics_continuation-build.json",
+      "bytes": 28755,
+      "sha256": "1a6fd0d98354b67574a4359b2f1f6a46a6c6774a0c106250b2e3caefbf863df8"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-physics_continuation-cleanup.json",
+      "bytes": 1439,
+      "sha256": "229c204348d69c75236506594df84809c896c00218cb04e61470d83c400cb230"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-physics_continuation-link.log",
+      "bytes": 33930,
+      "sha256": "61d492d07c0da71ea667719940fa833962016af0a61a99e5e1cbd7045c8b807c"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-save_exclusion-RESULT.json",
+      "bytes": 10698,
+      "sha256": "d3d4e51310d4364f07de7b4c25a383ec8b912318fea5d60232058b83cd23a041"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-save_exclusion-approval.json",
+      "bytes": 945,
+      "sha256": "4a7b2f3b2ad1dd7d98cf5ed7363693f59ad9f9ae61184184388c74113ef86d10"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-save_exclusion-articulated__PARTICIPANTS.json",
+      "bytes": 1370,
+      "sha256": "3ac306ad846f56ec86ad7815d42fa2795eedd599c3dc032addd62ed046e1cc75"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-save_exclusion-articulated__animation.participant",
+      "bytes": 628,
+      "sha256": "4807c8a6e7ddd35ed378c05f488b98c2a74f5bebb9c78399625c4c2ba1bdfeae"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-save_exclusion-articulated__articulation.participant",
+      "bytes": 1709,
+      "sha256": "5382c7670732306d8490d786fc4c4244a14ba989fd8bd99f9b672e63dea608dc"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-save_exclusion-articulated__audio.participant",
+      "bytes": 8,
+      "sha256": "af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-save_exclusion-articulated__contacts.participant",
+      "bytes": 25,
+      "sha256": "b7e5e8391a9b496a8d12c6470fbf12741645b681d4ab45ce33bf7324826aeb16"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-save_exclusion-articulated__entities.participant",
+      "bytes": 4791,
+      "sha256": "8d316e84fac6a8d26dbd098ecb1148bef0e8a51fc520041567f23633a176bb1d"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-save_exclusion-articulated__liquid.participant",
+      "bytes": 28,
+      "sha256": "5a0bfcbbd6b8715fdb73e8a7ad7363f34cf0214252719984e0a2b5b3c4ec14b9"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-save_exclusion-articulated__motors.participant",
+      "bytes": 4,
+      "sha256": "df3f619804a92fdb4057192dc43dd748ea778adc52bc498ce80524c014b81119"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-save_exclusion-articulated__navigation.participant",
+      "bytes": 4,
+      "sha256": "df3f619804a92fdb4057192dc43dd748ea778adc52bc498ce80524c014b81119"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-save_exclusion-articulated__scripts.participant",
+      "bytes": 4,
+      "sha256": "df3f619804a92fdb4057192dc43dd748ea778adc52bc498ce80524c014b81119"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-save_exclusion-articulated__sleep.participant",
+      "bytes": 82,
+      "sha256": "76d4bd868f79eadc05fb5b8c0083c6a4fb27fa67276137345408ecbdda23dfc6"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-save_exclusion-build.json",
+      "bytes": 69819,
+      "sha256": "1e071a00566f3fa8512426f83d0afcf500ebd2abece55ad78da895bf754a1f75"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-save_exclusion-cleanup.json",
+      "bytes": 1404,
+      "sha256": "52d4b9849557d7bdff16113ec13cce0b753839f7b7b6020bbf506644bf826dda"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-save_exclusion-excluded__PARTICIPANTS.json",
+      "bytes": 1364,
+      "sha256": "fbbe9c78b9884c9ca900bb229392cc67d1cde23e1c6b1ee24917f420b54b24c7"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-save_exclusion-excluded__animation.participant",
+      "bytes": 12,
+      "sha256": "15ec7bf0b50732b49f8228e07d24365338f9e3ab994b00af08e5a3bffe55fd8b"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-save_exclusion-excluded__articulation.participant",
+      "bytes": 4,
+      "sha256": "df3f619804a92fdb4057192dc43dd748ea778adc52bc498ce80524c014b81119"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-save_exclusion-excluded__audio.participant",
+      "bytes": 8,
+      "sha256": "af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-save_exclusion-excluded__contacts.participant",
+      "bytes": 4,
+      "sha256": "df3f619804a92fdb4057192dc43dd748ea778adc52bc498ce80524c014b81119"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-save_exclusion-excluded__entities.participant",
+      "bytes": 732,
+      "sha256": "f97e4dbee136ae971b591485c9dc1fe630f41515161641500d846d71f27034ca"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-save_exclusion-excluded__liquid.participant",
+      "bytes": 28,
+      "sha256": "5a0bfcbbd6b8715fdb73e8a7ad7363f34cf0214252719984e0a2b5b3c4ec14b9"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-save_exclusion-excluded__motors.participant",
+      "bytes": 4,
+      "sha256": "df3f619804a92fdb4057192dc43dd748ea778adc52bc498ce80524c014b81119"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-save_exclusion-excluded__navigation.participant",
+      "bytes": 4,
+      "sha256": "df3f619804a92fdb4057192dc43dd748ea778adc52bc498ce80524c014b81119"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-save_exclusion-excluded__scripts.participant",
+      "bytes": 4,
+      "sha256": "df3f619804a92fdb4057192dc43dd748ea778adc52bc498ce80524c014b81119"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-save_exclusion-excluded__sleep.participant",
+      "bytes": 30,
+      "sha256": "e223c3f5488e7444912e30b8743ba0da98adae29977bb7fb5da05e388b668438"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-save_exclusion-link.log",
+      "bytes": 33930,
+      "sha256": "61d492d07c0da71ea667719940fa833962016af0a61a99e5e1cbd7045c8b807c"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-save_exclusion-reincluded__PARTICIPANTS.json",
+      "bytes": 1365,
+      "sha256": "4f1fc9be4a0806379b027f864a53dc1845adffcb8af053ed1bf7cca4e5be6e4f"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-save_exclusion-reincluded__animation.participant",
+      "bytes": 12,
+      "sha256": "15ec7bf0b50732b49f8228e07d24365338f9e3ab994b00af08e5a3bffe55fd8b"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-save_exclusion-reincluded__articulation.participant",
+      "bytes": 4,
+      "sha256": "df3f619804a92fdb4057192dc43dd748ea778adc52bc498ce80524c014b81119"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-save_exclusion-reincluded__audio.participant",
+      "bytes": 8,
+      "sha256": "af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-save_exclusion-reincluded__contacts.participant",
+      "bytes": 4,
+      "sha256": "df3f619804a92fdb4057192dc43dd748ea778adc52bc498ce80524c014b81119"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-save_exclusion-reincluded__entities.participant",
+      "bytes": 1234,
+      "sha256": "b31bd568a39aeed622b9abb75a6d9c811a981fc73b5281bfb768d1d186d8d9bc"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-save_exclusion-reincluded__liquid.participant",
+      "bytes": 28,
+      "sha256": "5a0bfcbbd6b8715fdb73e8a7ad7363f34cf0214252719984e0a2b5b3c4ec14b9"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-save_exclusion-reincluded__motors.participant",
+      "bytes": 4,
+      "sha256": "df3f619804a92fdb4057192dc43dd748ea778adc52bc498ce80524c014b81119"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-save_exclusion-reincluded__navigation.participant",
+      "bytes": 4,
+      "sha256": "df3f619804a92fdb4057192dc43dd748ea778adc52bc498ce80524c014b81119"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-save_exclusion-reincluded__scripts.participant",
+      "bytes": 4,
+      "sha256": "df3f619804a92fdb4057192dc43dd748ea778adc52bc498ce80524c014b81119"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-save_exclusion-reincluded__sleep.participant",
+      "bytes": 56,
+      "sha256": "e8ca0599129db91012583fe2b2e8f0f3857cd6228174919c6f89a8e7453043ca"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-save_exclusion-retained__PARTICIPANTS.json",
+      "bytes": 1365,
+      "sha256": "4f1fc9be4a0806379b027f864a53dc1845adffcb8af053ed1bf7cca4e5be6e4f"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-save_exclusion-retained__animation.participant",
+      "bytes": 12,
+      "sha256": "15ec7bf0b50732b49f8228e07d24365338f9e3ab994b00af08e5a3bffe55fd8b"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-save_exclusion-retained__articulation.participant",
+      "bytes": 4,
+      "sha256": "df3f619804a92fdb4057192dc43dd748ea778adc52bc498ce80524c014b81119"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-save_exclusion-retained__audio.participant",
+      "bytes": 8,
+      "sha256": "af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-save_exclusion-retained__contacts.participant",
+      "bytes": 4,
+      "sha256": "df3f619804a92fdb4057192dc43dd748ea778adc52bc498ce80524c014b81119"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-save_exclusion-retained__entities.participant",
+      "bytes": 1234,
+      "sha256": "b31bd568a39aeed622b9abb75a6d9c811a981fc73b5281bfb768d1d186d8d9bc"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-save_exclusion-retained__liquid.participant",
+      "bytes": 28,
+      "sha256": "5a0bfcbbd6b8715fdb73e8a7ad7363f34cf0214252719984e0a2b5b3c4ec14b9"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-save_exclusion-retained__malformed__duplicate__PARTICIPANTS.json",
+      "bytes": 1365,
+      "sha256": "31fea067d4d0e72a5f260cab6804a2c70bc1c0e293c607ed4705d71305edd537"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-save_exclusion-retained__malformed__duplicate__animation.participant",
+      "bytes": 12,
+      "sha256": "15ec7bf0b50732b49f8228e07d24365338f9e3ab994b00af08e5a3bffe55fd8b"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-save_exclusion-retained__malformed__duplicate__articulation.participant",
+      "bytes": 4,
+      "sha256": "df3f619804a92fdb4057192dc43dd748ea778adc52bc498ce80524c014b81119"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-save_exclusion-retained__malformed__duplicate__audio.participant",
+      "bytes": 8,
+      "sha256": "af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-save_exclusion-retained__malformed__duplicate__contacts.participant",
+      "bytes": 4,
+      "sha256": "df3f619804a92fdb4057192dc43dd748ea778adc52bc498ce80524c014b81119"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-save_exclusion-retained__malformed__duplicate__entities.participant",
+      "bytes": 1234,
+      "sha256": "b31bd568a39aeed622b9abb75a6d9c811a981fc73b5281bfb768d1d186d8d9bc"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-save_exclusion-retained__malformed__duplicate__liquid.participant",
+      "bytes": 28,
+      "sha256": "5a0bfcbbd6b8715fdb73e8a7ad7363f34cf0214252719984e0a2b5b3c4ec14b9"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-save_exclusion-retained__malformed__duplicate__motors.participant",
+      "bytes": 4,
+      "sha256": "df3f619804a92fdb4057192dc43dd748ea778adc52bc498ce80524c014b81119"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-save_exclusion-retained__malformed__duplicate__navigation.participant",
+      "bytes": 4,
+      "sha256": "df3f619804a92fdb4057192dc43dd748ea778adc52bc498ce80524c014b81119"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-save_exclusion-retained__malformed__duplicate__scripts.participant",
+      "bytes": 4,
+      "sha256": "df3f619804a92fdb4057192dc43dd748ea778adc52bc498ce80524c014b81119"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-save_exclusion-retained__malformed__duplicate__sleep.participant",
+      "bytes": 56,
+      "sha256": "e1121d3e59706355867af9f4b457bbb558504adf72b9ce4490d2483c3a58524e"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-save_exclusion-retained__malformed__orphan__PARTICIPANTS.json",
+      "bytes": 1365,
+      "sha256": "294cc8496ca518769fb47a3fd19aa0f3be6ef079e1441ed06f4b2e3dece885d3"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-save_exclusion-retained__malformed__orphan__animation.participant",
+      "bytes": 12,
+      "sha256": "15ec7bf0b50732b49f8228e07d24365338f9e3ab994b00af08e5a3bffe55fd8b"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-save_exclusion-retained__malformed__orphan__articulation.participant",
+      "bytes": 4,
+      "sha256": "df3f619804a92fdb4057192dc43dd748ea778adc52bc498ce80524c014b81119"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-save_exclusion-retained__malformed__orphan__audio.participant",
+      "bytes": 8,
+      "sha256": "af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-save_exclusion-retained__malformed__orphan__contacts.participant",
+      "bytes": 4,
+      "sha256": "df3f619804a92fdb4057192dc43dd748ea778adc52bc498ce80524c014b81119"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-save_exclusion-retained__malformed__orphan__entities.participant",
+      "bytes": 1234,
+      "sha256": "b31bd568a39aeed622b9abb75a6d9c811a981fc73b5281bfb768d1d186d8d9bc"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-save_exclusion-retained__malformed__orphan__liquid.participant",
+      "bytes": 28,
+      "sha256": "5a0bfcbbd6b8715fdb73e8a7ad7363f34cf0214252719984e0a2b5b3c4ec14b9"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-save_exclusion-retained__malformed__orphan__motors.participant",
+      "bytes": 4,
+      "sha256": "df3f619804a92fdb4057192dc43dd748ea778adc52bc498ce80524c014b81119"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-save_exclusion-retained__malformed__orphan__navigation.participant",
+      "bytes": 4,
+      "sha256": "df3f619804a92fdb4057192dc43dd748ea778adc52bc498ce80524c014b81119"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-save_exclusion-retained__malformed__orphan__scripts.participant",
+      "bytes": 4,
+      "sha256": "df3f619804a92fdb4057192dc43dd748ea778adc52bc498ce80524c014b81119"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-save_exclusion-retained__malformed__orphan__sleep.participant",
+      "bytes": 30,
+      "sha256": "2dd439cabd196ac536291bd72d33a5db707aef32e0d4fb132324ed6c0f6c9790"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-save_exclusion-retained__malformed__truncated__PARTICIPANTS.json",
+      "bytes": 1365,
+      "sha256": "bdfab13466a5bacb698e839f84b9c1997667e3f6fb964c018780ca16c3be84c3"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-save_exclusion-retained__malformed__truncated__animation.participant",
+      "bytes": 12,
+      "sha256": "15ec7bf0b50732b49f8228e07d24365338f9e3ab994b00af08e5a3bffe55fd8b"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-save_exclusion-retained__malformed__truncated__articulation.participant",
+      "bytes": 4,
+      "sha256": "df3f619804a92fdb4057192dc43dd748ea778adc52bc498ce80524c014b81119"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-save_exclusion-retained__malformed__truncated__audio.participant",
+      "bytes": 8,
+      "sha256": "af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-save_exclusion-retained__malformed__truncated__contacts.participant",
+      "bytes": 4,
+      "sha256": "df3f619804a92fdb4057192dc43dd748ea778adc52bc498ce80524c014b81119"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-save_exclusion-retained__malformed__truncated__entities.participant",
+      "bytes": 1234,
+      "sha256": "b31bd568a39aeed622b9abb75a6d9c811a981fc73b5281bfb768d1d186d8d9bc"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-save_exclusion-retained__malformed__truncated__liquid.participant",
+      "bytes": 28,
+      "sha256": "5a0bfcbbd6b8715fdb73e8a7ad7363f34cf0214252719984e0a2b5b3c4ec14b9"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-save_exclusion-retained__malformed__truncated__motors.participant",
+      "bytes": 4,
+      "sha256": "df3f619804a92fdb4057192dc43dd748ea778adc52bc498ce80524c014b81119"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-save_exclusion-retained__malformed__truncated__navigation.participant",
+      "bytes": 4,
+      "sha256": "df3f619804a92fdb4057192dc43dd748ea778adc52bc498ce80524c014b81119"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-save_exclusion-retained__malformed__truncated__scripts.participant",
+      "bytes": 4,
+      "sha256": "df3f619804a92fdb4057192dc43dd748ea778adc52bc498ce80524c014b81119"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-save_exclusion-retained__malformed__truncated__sleep.participant",
+      "bytes": 55,
+      "sha256": "f1bde39e70d3c7b186a56574cad2d77d7d9fdda09c67f7d49b83176d271a1831"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-save_exclusion-retained__motors.participant",
+      "bytes": 4,
+      "sha256": "df3f619804a92fdb4057192dc43dd748ea778adc52bc498ce80524c014b81119"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-save_exclusion-retained__navigation.participant",
+      "bytes": 4,
+      "sha256": "df3f619804a92fdb4057192dc43dd748ea778adc52bc498ce80524c014b81119"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-save_exclusion-retained__scripts.participant",
+      "bytes": 4,
+      "sha256": "df3f619804a92fdb4057192dc43dd748ea778adc52bc498ce80524c014b81119"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-save_exclusion-retained__sleep.participant",
+      "bytes": 56,
+      "sha256": "e8ca0599129db91012583fe2b2e8f0f3857cd6228174919c6f89a8e7453043ca"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-save_exclusion-save_exclusion-0.obj-compile.log",
+      "bytes": 50,
+      "sha256": "e8b9682b3f67315afecee7afce24af85a4e6004dbeb4416914a13c9958400452"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-save_exclusion.json",
+      "bytes": 44728,
+      "sha256": "5136040322c73cc095bbcae91346fdb9cb925bbeacc5de51f3933823a4dfd6bf"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-save_exclusion.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-save_exclusion.stdout.log",
+      "bytes": 4095,
+      "sha256": "f0d8fa1faee25cc4150ccfffa6d1d1453b6cbe1796657586927426512bf71d9c"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-streaming-approval.json",
+      "bytes": 910,
+      "sha256": "ea3a8995001dd709ab042d157fe1a941ec2f1891805500799971dc7cb4d2c5d6"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-streaming-build.json",
+      "bytes": 28588,
+      "sha256": "c5349399093fa45ad8db8b706a193934e91de3732d09dfdd5d0ca04d031636a6"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-streaming-cleanup.json",
+      "bytes": 1374,
+      "sha256": "b859cfab9bea70c755b15629e1d1d7ae5e1c09b960161ee99c200187309814de"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-streaming-link.log",
+      "bytes": 33930,
+      "sha256": "61d492d07c0da71ea667719940fa833962016af0a61a99e5e1cbd7045c8b807c"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-streaming.json",
+      "bytes": 11547,
+      "sha256": "3181b38690fa479b0751690a279b5138c1cafd0c74198f748c3349a278796f23"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-streaming.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-streaming.stdout.log",
+      "bytes": 4312,
+      "sha256": "e9b7353c64b6a1de0f5919e51eb28989f650323e86619ef2b92559c550c06d6f"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-world_save-approval.json",
+      "bytes": 916,
+      "sha256": "01c5cc5422a4814eec3fa0980620689cea949b7edd81749df8f51213f8ac533e"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-world_save-build.json",
+      "bytes": 28612,
+      "sha256": "afce55c72de971c158f47a30ec6660cc37b548008dd09793479f48432ecd5a49"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-world_save-cleanup.json",
+      "bytes": 1379,
+      "sha256": "1ec00d18805e5c683acf9a0573a8b1b2a85d975c8efe244bf03745260b4d64dc"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-world_save-link.log",
+      "bytes": 33930,
+      "sha256": "61d492d07c0da71ea667719940fa833962016af0a61a99e5e1cbd7045c8b807c"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-world_save.json",
+      "bytes": 11559,
+      "sha256": "d4d82b62d7e746c478b1577de9a654cd06e3d2a59665a0174dded1067bb95a36"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-world_save.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-world_save.stdout.log",
+      "bytes": 1538,
+      "sha256": "1b3d53077092d9b988558addfc4a9c60fe9db1781f7775cbede21b7918b81b35"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/probes/build_summary.py",
+      "bytes": 6046,
+      "sha256": "009651b06de8328e5334429404002b75c2584689f96f16ecc60ac8dfe9012d72"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/probes/compare_actual_endpoint.py",
+      "bytes": 2204,
+      "sha256": "1044cd747e3e51b1a60375289da934224364620d0c1dae0fc95de914d2d2d4b8"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/probes/historical-tools/9770dac7c2af38cc1c7cca4867f692626dcf7c0ee802c35d03b636fc4ff97d30-m78-lifecycle-windows_prepare.ps1",
+      "bytes": 3442,
+      "sha256": "9770dac7c2af38cc1c7cca4867f692626dcf7c0ee802c35d03b636fc4ff97d30"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/probes/historical-tools/ebabb9de9adb00a471f39c6b4406cbd2996dab6273cdaef439dcf8eacbc5eada-m78-lifecycle-windows_case.ps1",
+      "bytes": 9307,
+      "sha256": "ebabb9de9adb00a471f39c6b4406cbd2996dab6273cdaef439dcf8eacbc5eada"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/probes/prepare_native.py",
+      "bytes": 5759,
+      "sha256": "4a5d7099b2c669f8f731b41a7b36f6b8f5d2f4ab9e59500e620d1f7c035f45e0"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/probes/run_native.py",
+      "bytes": 5688,
+      "sha256": "ac507431b749946a62e8e4f5903300e5a18ab5dac15d61044eadabcf2f2dde16"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/probes/windows_case.ps1",
+      "bytes": 9360,
+      "sha256": "0ab7dcccf219772aec3abf8371d900d443dee8bdf8eb02a5e4cd20fd52abf745"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/probes/windows_cleanup.ps1",
+      "bytes": 1286,
+      "sha256": "1b1cd4004043a967bcff8cfaeb211beeb1e485e14f564f427e10287b8d06868d"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/probes/windows_compress_archive.ps1",
+      "bytes": 2001,
+      "sha256": "199c593c00c772682c5d92efc2f09845ce5d084dfebcbba628caa7df4b5027e9"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/probes/windows_disk.ps1",
+      "bytes": 1654,
+      "sha256": "5d764056329b880addec6432d0044b740681657311e72c669bc0c281173331c7"
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/probes/windows_prepare.ps1",
+      "bytes": 3775,
+      "sha256": "fdce921e90669198be414d5768f5209764a7e5299aff3718455c5bfb1eeb4cc2"
+    }
+  ]
+}

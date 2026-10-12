@@ -1,0 +1,279 @@
+{
+  "scope": "Only direct-human-authorized NEW completed test outputs/log duplicates; each exact logical byte preserved on Linux before guest retirement. No engine overlay/archive/source/fixture/snapshot/original package removed.",
+  "receipts": [
+    {
+      "receipt": "docs/evidence/m78-lifecycle/native/m78-lifecycle-balance_lab-cleanup.json",
+      "removed": [
+        {
+          "path": "C:\\JudasValidation\\Build\\Release\\m78-lifecycle-balance_lab.exe",
+          "sha256": "758e9b67b09328ac1031af07e1a94237ab49144ae66e581136cbafbfb4d8d4a1",
+          "name": "m78-lifecycle-balance_lab.exe",
+          "bytes": 9507328
+        },
+        {
+          "path": "C:\\JudasValidation\\M78LifecycleBuild\\objects\\balance_lab-0.obj",
+          "sha256": "77fc4508993e1c8ee4896b33c35454c23fdf425b13a73dd1b160725769cf36ff",
+          "name": "balance_lab-0.obj",
+          "bytes": 2230400
+        },
+        {
+          "path": "C:\\JudasValidation\\M78LifecycleResults\\m78-lifecycle-balance_lab-link.log",
+          "sha256": "61d492d07c0da71ea667719940fa833962016af0a61a99e5e1cbd7045c8b807c",
+          "name": "m78-lifecycle-balance_lab-link.log",
+          "bytes": 33930
+        }
+      ],
+      "freeBefore": 30261248,
+      "freeAfter": 42041344
+    },
+    {
+      "receipt": "docs/evidence/m78-lifecycle/native/m78-lifecycle-character_lab-cleanup.json",
+      "removed": [
+        {
+          "path": "C:\\JudasValidation\\Build\\Release\\m78-lifecycle-character_lab.exe",
+          "sha256": "520f668ace2e624ec689b52a0a622b9a5004b9b9c46657d3a49a7e0feab70fb6",
+          "name": "m78-lifecycle-character_lab.exe",
+          "bytes": 9198080
+        },
+        {
+          "path": "C:\\JudasValidation\\M78LifecycleBuild\\objects\\character_lab-0.obj",
+          "sha256": "931701684c49fcc0ad188b79dbe010358331654607ef77c0406e7ff51c565c09",
+          "name": "character_lab-0.obj",
+          "bytes": 2208781
+        },
+        {
+          "path": "C:\\JudasValidation\\M78LifecycleResults\\m78-lifecycle-character_lab-link.log",
+          "sha256": "61d492d07c0da71ea667719940fa833962016af0a61a99e5e1cbd7045c8b807c",
+          "name": "m78-lifecycle-character_lab-link.log",
+          "bytes": 33930
+        }
+      ],
+      "freeBefore": 28438528,
+      "freeAfter": 39886848
+    },
+    {
+      "receipt": "docs/evidence/m78-lifecycle/native/m78-lifecycle-character_publication-cleanup.json",
+      "removed": [
+        {
+          "path": "C:\\JudasValidation\\Build\\Release\\m78-lifecycle-character_publication.exe",
+          "sha256": "a22de84d52a6c8bf856e2df444f5174e866659911fe43648aeedead5f5a277e1",
+          "name": "m78-lifecycle-character_publication.exe",
+          "bytes": 7774720
+        },
+        {
+          "path": "C:\\JudasValidation\\M78LifecycleBuild\\objects\\character_publication-0.obj",
+          "sha256": "e86c5046892a84b0c070d3c82129a34df013929ffa16193315975628ef0091cd",
+          "name": "character_publication-0.obj",
+          "bytes": 1805180
+        },
+        {
+          "path": "C:\\JudasValidation\\M78LifecycleResults\\m78-lifecycle-character_publication-link.log",
+          "sha256": "61d492d07c0da71ea667719940fa833962016af0a61a99e5e1cbd7045c8b807c",
+          "name": "m78-lifecycle-character_publication-link.log",
+          "bytes": 33930
+        }
+      ],
+      "freeBefore": 16683008,
+      "freeAfter": 26304512
+    },
+    {
+      "receipt": "docs/evidence/m78-lifecycle/native/m78-lifecycle-consumer_lifecycle-cleanup.json",
+      "removed": [
+        {
+          "path": "C:\\JudasValidation\\Build\\Release\\m78-lifecycle-consumer_lifecycle.exe",
+          "sha256": "8c209bb1cce74f6efb90cb20cd40a44c3f231d0731ec0aa633b4004f053576bc",
+          "name": "m78-lifecycle-consumer_lifecycle.exe",
+          "bytes": 10516480
+        },
+        {
+          "path": "C:\\JudasValidation\\M78LifecycleBuild\\objects\\consumer_lifecycle-0.obj",
+          "sha256": "c922b3f0fdfd7a1fb7522dc2f5f6443d8cd5aa068fe89ef96fab99e2fd8ea53c",
+          "name": "consumer_lifecycle-0.obj",
+          "bytes": 2006612
+        },
+        {
+          "path": "C:\\JudasValidation\\M78LifecycleBuild\\objects\\runtime-1.obj",
+          "sha256": "6494f91d10083a1c1635c6355152ad3777ef479a87788c3c813d84b15f6146d6",
+          "name": "runtime-1.obj",
+          "bytes": 295887
+        },
+        {
+          "path": "C:\\JudasValidation\\M78LifecycleBuild\\objects\\runtime-2.obj",
+          "sha256": "746c33d85f3cf3f83b4d9b93eabbedac2264456a9e7efe26a01dd29e6a1b4e26",
+          "name": "runtime-2.obj",
+          "bytes": 229861
+        },
+        {
+          "path": "C:\\JudasValidation\\M78LifecycleBuild\\objects\\runtime-3.obj",
+          "sha256": "dd51a50e14ab20dc62c2bf1b79ed8e271e532b31faf70eb5ff75a246189beeef",
+          "name": "runtime-3.obj",
+          "bytes": 20401
+        },
+        {
+          "path": "C:\\JudasValidation\\M78LifecycleBuild\\objects\\runtime-4.obj",
+          "sha256": "560e035b88abfecc7dfd27bd572bebd75d3ba404280a881db5dd4931fd5e3daf",
+          "name": "runtime-4.obj",
+          "bytes": 340964
+        },
+        {
+          "path": "C:\\JudasValidation\\M78LifecycleResults\\m78-lifecycle-consumer_lifecycle-link.log",
+          "sha256": "61d492d07c0da71ea667719940fa833962016af0a61a99e5e1cbd7045c8b807c",
+          "name": "m78-lifecycle-consumer_lifecycle-link.log",
+          "bytes": 33930
+        }
+      ],
+      "freeBefore": 35291136,
+      "freeAfter": 48750592
+    },
+    {
+      "receipt": "docs/evidence/m78-lifecycle/native/m78-lifecycle-mixed_endpoint-cleanup.json",
+      "removed": [
+        {
+          "path": "C:\\JudasValidation\\Build\\Release\\m78-lifecycle-mixed_endpoint.exe",
+          "sha256": "87aea2462dbb3289f93f859780225d3099481043603f7cdf909ff0226df5c496",
+          "name": "m78-lifecycle-mixed_endpoint.exe",
+          "bytes": 9569792
+        },
+        {
+          "path": "C:\\JudasValidation\\M78LifecycleBuild\\objects\\mixed-endpoint-0.obj",
+          "sha256": "cadc8d0fd96cced55e0082916feb4f121f1ba0175819984aa8422eb4c5553aba",
+          "name": "mixed-endpoint-0.obj",
+          "bytes": 2930638
+        },
+        {
+          "path": "C:\\JudasValidation\\M78LifecycleResults\\m78-lifecycle-mixed_endpoint-link.log",
+          "sha256": "61d492d07c0da71ea667719940fa833962016af0a61a99e5e1cbd7045c8b807c",
+          "name": "m78-lifecycle-mixed_endpoint-link.log",
+          "bytes": 33930
+        }
+      ],
+      "freeBefore": 25124864,
+      "freeAfter": 37666816
+    },
+    {
+      "receipt": "docs/evidence/m78-lifecycle/native/m78-lifecycle-motor-cleanup.json",
+      "removed": [
+        {
+          "path": "C:\\JudasValidation\\Build\\Release\\m78-lifecycle-motor.exe",
+          "sha256": "a8f93fa29d9712e2491bc1f23a5c714a157251e91f73498516be53184f482b27",
+          "name": "m78-lifecycle-motor.exe",
+          "bytes": 7696384
+        },
+        {
+          "path": "C:\\JudasValidation\\M78LifecycleBuild\\objects\\motor-0.obj",
+          "sha256": "c3ef1dbf3caba5cedc1fc89d23d15ca67817d128be7a4d99a564b7886312ceb8",
+          "name": "motor-0.obj",
+          "bytes": 384497
+        },
+        {
+          "path": "C:\\JudasValidation\\M78LifecycleResults\\m78-lifecycle-motor-link.log",
+          "sha256": "61d492d07c0da71ea667719940fa833962016af0a61a99e5e1cbd7045c8b807c",
+          "name": "m78-lifecycle-motor-link.log",
+          "bytes": 33930
+        }
+      ],
+      "freeBefore": 40525824,
+      "freeAfter": 48644096
+    },
+    {
+      "receipt": "docs/evidence/m78-lifecycle/native/m78-lifecycle-physics_continuation-cleanup.json",
+      "removed": [
+        {
+          "path": "C:\\JudasValidation\\Build\\Release\\m78-lifecycle-physics_continuation.exe",
+          "sha256": "ba21c1c81534b8d4db6ffdfc23cb01bab760c16257d8728f4c04867b531da111",
+          "name": "m78-lifecycle-physics_continuation.exe",
+          "bytes": 7873024
+        },
+        {
+          "path": "C:\\JudasValidation\\M78LifecycleBuild\\objects\\physics_continuation-0.obj",
+          "sha256": "cfb90fc353410b43b6f571d5abae880a377cf2e254eca93b127c9e4aca44cae2",
+          "name": "physics_continuation-0.obj",
+          "bytes": 377108
+        },
+        {
+          "path": "C:\\JudasValidation\\M78LifecycleResults\\m78-lifecycle-physics_continuation-link.log",
+          "sha256": "61d492d07c0da71ea667719940fa833962016af0a61a99e5e1cbd7045c8b807c",
+          "name": "m78-lifecycle-physics_continuation-link.log",
+          "bytes": 33930
+        }
+      ],
+      "freeBefore": 40206336,
+      "freeAfter": 48500736
+    },
+    {
+      "receipt": "docs/evidence/m78-lifecycle/native/m78-lifecycle-save_exclusion-cleanup.json",
+      "removed": [
+        {
+          "path": "C:\\JudasValidation\\Build\\Release\\m78-lifecycle-save_exclusion.exe",
+          "sha256": "a1d9035e74b6884bd493d77060720826e173ae181221b05640b00d51c93d2bed",
+          "name": "m78-lifecycle-save_exclusion.exe",
+          "bytes": 7882240
+        },
+        {
+          "path": "C:\\JudasValidation\\M78LifecycleBuild\\objects\\save_exclusion-0.obj",
+          "sha256": "fe7937029acd5ebe77d90f6f8af47554b14b1f970edd4a1eb9613172cfa9fed4",
+          "name": "save_exclusion-0.obj",
+          "bytes": 1073012
+        },
+        {
+          "path": "C:\\JudasValidation\\M78LifecycleResults\\m78-lifecycle-save_exclusion-link.log",
+          "sha256": "61d492d07c0da71ea667719940fa833962016af0a61a99e5e1cbd7045c8b807c",
+          "name": "m78-lifecycle-save_exclusion-link.log",
+          "bytes": 33930
+        }
+      ],
+      "freeBefore": 26300416,
+      "freeAfter": 35295232
+    },
+    {
+      "receipt": "docs/evidence/m78-lifecycle/native/m78-lifecycle-streaming-cleanup.json",
+      "removed": [
+        {
+          "path": "C:\\JudasValidation\\Build\\Release\\m78-lifecycle-streaming.exe",
+          "sha256": "d6d7ad981e78fbdd4dc152ce370be2a7775ba7a66977c680d063f7046264e39e",
+          "name": "m78-lifecycle-streaming.exe",
+          "bytes": 8039424
+        },
+        {
+          "path": "C:\\JudasValidation\\M78LifecycleBuild\\objects\\streaming-0.obj",
+          "sha256": "53e017296d0e83bff433fd6d402c87e9b2e2301224252d322e58baa80f36711a",
+          "name": "streaming-0.obj",
+          "bytes": 1100935
+        },
+        {
+          "path": "C:\\JudasValidation\\M78LifecycleResults\\m78-lifecycle-streaming-link.log",
+          "sha256": "61d492d07c0da71ea667719940fa833962016af0a61a99e5e1cbd7045c8b807c",
+          "name": "m78-lifecycle-streaming-link.log",
+          "bytes": 33930
+        }
+      ],
+      "freeBefore": 37748736,
+      "freeAfter": 46927872
+    },
+    {
+      "receipt": "docs/evidence/m78-lifecycle/native/m78-lifecycle-world_save-cleanup.json",
+      "removed": [
+        {
+          "path": "C:\\JudasValidation\\Build\\Release\\m78-lifecycle-world_save.exe",
+          "sha256": "234186ea14e1228b4779d40d9f366c176fedfcaa7edcb61c3f56c48f0cbbce08",
+          "name": "m78-lifecycle-world_save.exe",
+          "bytes": 7826432
+        },
+        {
+          "path": "C:\\JudasValidation\\M78LifecycleBuild\\objects\\world_save-0.obj",
+          "sha256": "a9172e014733dfa898694a5fca247c30eaf8b5c646f0778dce84a7a43a6ba322",
+          "name": "world_save-0.obj",
+          "bytes": 202093
+        },
+        {
+          "path": "C:\\JudasValidation\\M78LifecycleResults\\m78-lifecycle-world_save-link.log",
+          "sha256": "61d492d07c0da71ea667719940fa833962016af0a61a99e5e1cbd7045c8b807c",
+          "name": "m78-lifecycle-world_save-link.log",
+          "bytes": 33930
+        }
+      ],
+      "freeBefore": 40263680,
+      "freeAfter": 48332800
+    }
+  ]
+}

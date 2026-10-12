@@ -1,0 +1,25 @@
+{
+  "scope": "Independent host SHA/size verification of exact named generated case before retirement",
+  "hostVerified": true,
+  "case": "save_exclusion",
+  "files": [
+    {
+      "path": "C:\\JudasValidation\\Build\\Release\\m78-lifecycle-save_exclusion.exe",
+      "sha256": "a1d9035e74b6884bd493d77060720826e173ae181221b05640b00d51c93d2bed",
+      "name": "m78-lifecycle-save_exclusion.exe",
+      "bytes": 7882240
+    },
+    {
+      "path": "C:\\JudasValidation\\M78LifecycleBuild\\objects\\save_exclusion-0.obj",
+      "sha256": "fe7937029acd5ebe77d90f6f8af47554b14b1f970edd4a1eb9613172cfa9fed4",
+      "name": "save_exclusion-0.obj",
+      "bytes": 1073012
+    },
+    {
+      "path": "C:\\JudasValidation\\M78LifecycleResults\\m78-lifecycle-save_exclusion-link.log",
+      "sha256": "61d492d07c0da71ea667719940fa833962016af0a61a99e5e1cbd7045c8b807c",
+      "name": "m78-lifecycle-save_exclusion-link.log",
+      "bytes": 33930
+    }
+  ]
+}

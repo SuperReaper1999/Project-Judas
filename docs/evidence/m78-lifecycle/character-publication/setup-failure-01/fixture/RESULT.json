@@ -1,0 +1,25 @@
+{
+  "checks": [
+    {
+      "name": "ordinary owned project",
+      "passed": true
+    },
+    {
+      "name": "authored project classification",
+      "passed": true
+    },
+    {
+      "name": "project saved",
+      "passed": true
+    },
+    {
+      "name": "ordinary lazy world builds",
+      "passed": false
+    },
+    {
+      "name": "fixture exception: ordinary lazy world builds: unregistered motor layer/tags",
+      "passed": false
+    }
+  ],
+  "failures": 2
+}

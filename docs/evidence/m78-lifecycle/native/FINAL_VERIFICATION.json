@@ -1,0 +1,112 @@
+{
+  "scope": "Final frozen-source and exact host binary/object identity; no build/test rerun",
+  "sourceAndFixtureFilesVerified": 223,
+  "allPreparedSourceBytesStillMatch": true,
+  "archiveLogicalIdentity": {
+    "path": "C:\\JudasValidation\\M78ContinuationBuild\\cold-repair-final-v2\\judas_engine.lib",
+    "sha256": "71a722dded64cfcc634d679e55ddbd257058da888ada914f7f7150b8d88c2d62",
+    "bytes": 67019246
+  },
+  "binaries": [
+    {
+      "case": "character_publication",
+      "buildReceipt": "docs/evidence/m78-lifecycle/native/m78-lifecycle-character_publication-build.json",
+      "hostBinaryPath": ".cache/m78-lifecycle/native-binaries/character_publication/m78-lifecycle-character_publication.exe",
+      "bytes": 7774720,
+      "sha256": "a22de84d52a6c8bf856e2df444f5174e866659911fe43648aeedead5f5a277e1",
+      "exactFiveOverrideObjectsOnce": true,
+      "frozenArchiveOnce": true,
+      "frozenOldMembersNotExtracted": true
+    },
+    {
+      "case": "save_exclusion",
+      "buildReceipt": "docs/evidence/m78-lifecycle/native/m78-lifecycle-save_exclusion-build.json",
+      "hostBinaryPath": ".cache/m78-lifecycle/native-binaries/save_exclusion/m78-lifecycle-save_exclusion.exe",
+      "bytes": 7882240,
+      "sha256": "a1d9035e74b6884bd493d77060720826e173ae181221b05640b00d51c93d2bed",
+      "exactFiveOverrideObjectsOnce": true,
+      "frozenArchiveOnce": true,
+      "frozenOldMembersNotExtracted": true
+    },
+    {
+      "case": "consumer_lifecycle",
+      "buildReceipt": "docs/evidence/m78-lifecycle/native/m78-lifecycle-consumer_lifecycle-build.json",
+      "hostBinaryPath": ".cache/m78-lifecycle/native-binaries/consumer_lifecycle/m78-lifecycle-consumer_lifecycle.exe",
+      "bytes": 10516480,
+      "sha256": "8c209bb1cce74f6efb90cb20cd40a44c3f231d0731ec0aa633b4004f053576bc",
+      "exactFiveOverrideObjectsOnce": true,
+      "frozenArchiveOnce": true,
+      "frozenOldMembersNotExtracted": true
+    },
+    {
+      "case": "motor",
+      "buildReceipt": "docs/evidence/m78-lifecycle/native/m78-lifecycle-motor-build.json",
+      "hostBinaryPath": ".cache/m78-lifecycle/native-binaries/motor/m78-lifecycle-motor.exe",
+      "bytes": 7696384,
+      "sha256": "a8f93fa29d9712e2491bc1f23a5c714a157251e91f73498516be53184f482b27",
+      "exactFiveOverrideObjectsOnce": true,
+      "frozenArchiveOnce": true,
+      "frozenOldMembersNotExtracted": true
+    },
+    {
+      "case": "physics_continuation",
+      "buildReceipt": "docs/evidence/m78-lifecycle/native/m78-lifecycle-physics_continuation-build.json",
+      "hostBinaryPath": ".cache/m78-lifecycle/native-binaries/physics_continuation/m78-lifecycle-physics_continuation.exe",
+      "bytes": 7873024,
+      "sha256": "ba21c1c81534b8d4db6ffdfc23cb01bab760c16257d8728f4c04867b531da111",
+      "exactFiveOverrideObjectsOnce": true,
+      "frozenArchiveOnce": true,
+      "frozenOldMembersNotExtracted": true
+    },
+    {
+      "case": "world_save",
+      "buildReceipt": "docs/evidence/m78-lifecycle/native/m78-lifecycle-world_save-build.json",
+      "hostBinaryPath": ".cache/m78-lifecycle/native-binaries/world_save/m78-lifecycle-world_save.exe",
+      "bytes": 7826432,
+      "sha256": "234186ea14e1228b4779d40d9f366c176fedfcaa7edcb61c3f56c48f0cbbce08",
+      "exactFiveOverrideObjectsOnce": true,
+      "frozenArchiveOnce": true,
+      "frozenOldMembersNotExtracted": true
+    },
+    {
+      "case": "streaming",
+      "buildReceipt": "docs/evidence/m78-lifecycle/native/m78-lifecycle-streaming-build.json",
+      "hostBinaryPath": ".cache/m78-lifecycle/native-binaries/streaming/m78-lifecycle-streaming.exe",
+      "bytes": 8039424,
+      "sha256": "d6d7ad981e78fbdd4dc152ce370be2a7775ba7a66977c680d063f7046264e39e",
+      "exactFiveOverrideObjectsOnce": true,
+      "frozenArchiveOnce": true,
+      "frozenOldMembersNotExtracted": true
+    },
+    {
+      "case": "balance_lab",
+      "buildReceipt": "docs/evidence/m78-lifecycle/native/m78-lifecycle-balance_lab-build.json",
+      "hostBinaryPath": ".cache/m78-lifecycle/native-binaries/balance_lab/m78-lifecycle-balance_lab.exe",
+      "bytes": 9507328,
+      "sha256": "758e9b67b09328ac1031af07e1a94237ab49144ae66e581136cbafbfb4d8d4a1",
+      "exactFiveOverrideObjectsOnce": true,
+      "frozenArchiveOnce": true,
+      "frozenOldMembersNotExtracted": true
+    },
+    {
+      "case": "character_lab",
+      "buildReceipt": "docs/evidence/m78-lifecycle/native/m78-lifecycle-character_lab-build.json",
+      "hostBinaryPath": ".cache/m78-lifecycle/native-binaries/character_lab/m78-lifecycle-character_lab.exe",
+      "bytes": 9198080,
+      "sha256": "520f668ace2e624ec689b52a0a622b9a5004b9b9c46657d3a49a7e0feab70fb6",
+      "exactFiveOverrideObjectsOnce": true,
+      "frozenArchiveOnce": true,
+      "frozenOldMembersNotExtracted": true
+    },
+    {
+      "case": "mixed_endpoint",
+      "buildReceipt": "docs/evidence/m78-lifecycle/native/m78-lifecycle-mixed_endpoint-build.json",
+      "hostBinaryPath": ".cache/m78-lifecycle/native-binaries/mixed_endpoint/m78-lifecycle-mixed_endpoint.exe",
+      "bytes": 9569792,
+      "sha256": "87aea2462dbb3289f93f859780225d3099481043603f7cdf909ff0226df5c496",
+      "exactFiveOverrideObjectsOnce": true,
+      "frozenArchiveOnce": true,
+      "frozenOldMembersNotExtracted": true
+    }
+  ]
+}

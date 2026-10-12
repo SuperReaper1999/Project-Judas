@@ -1,0 +1,6 @@
+{
+  "scope": "Host verification tooling only; no engine assertion failure or test rerun",
+  "case": "world_save",
+  "observed": "Guest status reported successful completion while host build receipt was briefly not yet visible; runner stopped with FileNotFoundError. Receipt plus executable/object/log transfers subsequently arrived. Actual unchanged case exits0 and is archived; it is not rerun.",
+  "correction": "Bounded30-second wait for named build receipt before host verification, followed by receipt collection. No runtime, source, test, threshold, solver or VM change."
+}

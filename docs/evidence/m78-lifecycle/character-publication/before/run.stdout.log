@@ -1,0 +1,132 @@
+PASS ordinary owned project
+PASS authored project classification
+PASS project saved
+PASS ordinary lazy world builds
+PASS lazy creation motor exists
+PASS lazy creation proxy follows root plus oblique offset
+PASS lazy creation authored enabled state is already published
+FAIL lazy creation authored bilateral filter is already published
+FAIL lazy creation isolated layer query
+FAIL lazy creation isolated tag query
+PASS lazy creation excluded tag negative control
+PASS lazy creation unrelated layer negative control
+PASS lazy disabled creation motor exists
+PASS lazy disabled creation proxy follows root plus oblique offset
+FAIL lazy disabled creation authored enabled state is already published
+FAIL lazy disabled creation authored bilateral filter is already published
+PASS lazy disabled creation isolated layer query
+PASS lazy disabled creation isolated tag query
+PASS lazy disabled creation excluded tag negative control
+PASS lazy disabled creation unrelated layer negative control
+PASS normal shape/offset configuration
+PASS shape replacement motor exists
+PASS shape replacement proxy follows root plus oblique offset
+PASS shape replacement authored enabled state is already published
+FAIL shape replacement authored bilateral filter is already published
+FAIL shape replacement isolated layer query
+FAIL shape replacement isolated tag query
+PASS shape replacement excluded tag negative control
+PASS shape replacement unrelated layer negative control
+PASS replacement has a fresh native generation
+PASS retired shape handle cannot alias replacement
+PASS offset-only configuration without a step
+PASS offset-only change motor exists
+FAIL offset-only change proxy follows root plus oblique offset
+PASS offset-only change authored enabled state is already published
+FAIL offset-only change authored bilateral filter is already published
+FAIL offset-only change isolated layer query
+FAIL offset-only change isolated tag query
+PASS offset-only change excluded tag negative control
+PASS offset-only change unrelated layer negative control
+PASS offset change preserves native identity and motor velocity
+PASS ordinary oblique teleport
+PASS teleport before a step motor exists
+FAIL teleport before a step proxy follows root plus oblique offset
+PASS teleport before a step authored enabled state is already published
+FAIL teleport before a step authored bilateral filter is already published
+FAIL teleport before a step isolated layer query
+FAIL teleport before a step isolated tag query
+PASS teleport before a step excluded tag negative control
+PASS teleport before a step unrelated layer negative control
+PASS all lazy observations use zero elapsed simulation
+PASS registered first-frame query script
+PASS ordinary scripted frame world builds
+PASS actual public query callback has no runtime error
+PASS first callback publishes script state
+FAIL first frame callback sees another motor before any fixed step
+PASS frame publication advances no physics
+PASS ordinary UI-only scripted world builds
+FAIL first UI-only callback sees another motor before any fixed step
+PASS UI-only query does not advance simulation
+PASS private staging world builds
+PASS normal private region staging
+PASS normal private retained reconstruction
+PASS staged actor has no public entity/body access
+PASS private reconstructed capsule is absent from broadphase queries
+PASS atomic publication motor exists
+PASS atomic publication proxy follows root plus oblique offset
+FAIL atomic publication authored enabled state is already published
+FAIL atomic publication authored bilateral filter is already published
+FAIL atomic publication isolated layer query
+FAIL atomic publication isolated tag query
+PASS atomic publication excluded tag negative control
+PASS atomic publication unrelated layer negative control
+PASS hidden region is immediately query-invisible
+PASS republished staged motor motor exists
+PASS republished staged motor proxy follows root plus oblique offset
+FAIL republished staged motor authored enabled state is already published
+FAIL republished staged motor authored bilateral filter is already published
+FAIL republished staged motor isolated layer query
+FAIL republished staged motor isolated tag query
+PASS republished staged motor excluded tag negative control
+PASS republished staged motor unrelated layer negative control
+PASS normal streaming source saved
+PASS streamed world builds
+PASS ordinary demand accepted
+PASS ordinary active publication
+PASS first streaming activation motor exists
+PASS first streaming activation proxy follows root plus oblique offset
+PASS first streaming activation authored enabled state is already published
+FAIL first streaming activation authored bilateral filter is already published
+FAIL first streaming activation isolated layer query
+FAIL first streaming activation isolated tag query
+PASS first streaming activation excluded tag negative control
+PASS first streaming activation unrelated layer negative control
+PASS disabled streaming activation motor exists
+PASS disabled streaming activation proxy follows root plus oblique offset
+FAIL disabled streaming activation authored enabled state is already published
+FAIL disabled streaming activation authored bilateral filter is already published
+PASS disabled streaming activation isolated layer query
+PASS disabled streaming activation isolated tag query
+PASS disabled streaming activation excluded tag negative control
+PASS disabled streaming activation unrelated layer negative control
+PASS ordinary root state reads
+PASS ordinary root velocity write
+PASS release own region demand
+PASS ordinary retained retirement
+FAIL retirement destroys all owned query capsules
+FAIL retirement invalidates native body generation
+PASS ordinary demand accepted
+PASS ordinary active publication
+PASS revisit creates fresh entity and body generations
+PASS revisit retains actual authoritative velocity
+PASS retained streaming revisit motor exists
+PASS retained streaming revisit proxy follows root plus oblique offset
+FAIL retained streaming revisit authored enabled state is already published
+FAIL retained streaming revisit authored bilateral filter is already published
+FAIL retained streaming revisit isolated layer query
+FAIL retained streaming revisit isolated tag query
+PASS retained streaming revisit excluded tag negative control
+PASS retained streaming revisit unrelated layer negative control
+PASS disabled retained revisit motor exists
+PASS disabled retained revisit proxy follows root plus oblique offset
+PASS disabled retained revisit authored enabled state is already published
+FAIL disabled retained revisit authored bilateral filter is already published
+PASS disabled retained revisit isolated layer query
+PASS disabled retained revisit isolated tag query
+PASS disabled retained revisit excluded tag negative control
+PASS disabled retained revisit unrelated layer negative control
+PASS stage/retire/revisit does not advance physics
+PASS final retirement completes
+FAIL repeated visits do not accumulate query bodies
+CHARACTER_PUBLICATION 131 checks 39 failures

@@ -1,0 +1,1053 @@
+{
+  "applicationExit": 0,
+  "assertions": [
+    {
+      "id": "FIXTURE.PROJECT",
+      "label": "ordinary new project: ",
+      "passed": true
+    },
+    {
+      "id": "FIXTURE.PROJECT_SAVE",
+      "label": "normal project registration: ",
+      "passed": true
+    },
+    {
+      "id": "FIXTURE.SCRIPT_WRITE",
+      "label": "original local item script written",
+      "passed": true
+    },
+    {
+      "id": "FIXTURE.SCRIPT_ASSET",
+      "label": "normal script asset: ",
+      "passed": true
+    },
+    {
+      "id": "FIXTURE.PREFAB_WRITE",
+      "label": "normal authored hierarchy: ",
+      "passed": true
+    },
+    {
+      "id": "FIXTURE.PREFAB_ASSET",
+      "label": "normal prefab asset: ",
+      "passed": true
+    },
+    {
+      "id": "FIXTURE.DRIVER_WRITE",
+      "label": "public-API controller script written",
+      "passed": true
+    },
+    {
+      "id": "FIXTURE.DRIVER_ASSET",
+      "label": "normal controller asset: ",
+      "passed": true
+    },
+    {
+      "id": "FIXTURE.SCENE",
+      "label": "normal registered startup scene: ",
+      "passed": true
+    },
+    {
+      "id": "PREFAB.BASELINE",
+      "label": "four ordinary authored entities and one dynamic body",
+      "passed": true
+    },
+    {
+      "id": "COMMAND.spawn",
+      "label": "ordinary project session command: ",
+      "passed": true
+    },
+    {
+      "id": "PREFAB.INDEPENDENT_IDS",
+      "label": "two separate published hierarchies",
+      "passed": true
+    },
+    {
+      "id": "PREFAB.INSTANCE_1.PROPERTIES",
+      "label": "typed per-instance properties visible in constructor",
+      "passed": true
+    },
+    {
+      "id": "PREFAB.INSTANCE_1.INITIAL_STATE",
+      "label": "independent root/child constructor payloads",
+      "passed": true
+    },
+    {
+      "id": "PREFAB.INSTANCE_1.REFERENCES",
+      "label": "published external reference and authored internal reference remapped",
+      "passed": true
+    },
+    {
+      "id": "PREFAB.INSTANCE_1.MOTION",
+      "label": "complete initial motion vectors visible before start/first simulation",
+      "passed": true
+    },
+    {
+      "id": "PREFAB.INSTANCE_1.LIFECYCLE",
+      "label": "each newly published slot starts exactly once",
+      "passed": true
+    },
+    {
+      "id": "PREFAB.INSTANCE_2.PROPERTIES",
+      "label": "typed per-instance properties visible in constructor",
+      "passed": true
+    },
+    {
+      "id": "PREFAB.INSTANCE_2.INITIAL_STATE",
+      "label": "independent root/child constructor payloads",
+      "passed": true
+    },
+    {
+      "id": "PREFAB.INSTANCE_2.REFERENCES",
+      "label": "published external reference and authored internal reference remapped",
+      "passed": true
+    },
+    {
+      "id": "PREFAB.INSTANCE_2.MOTION",
+      "label": "complete initial motion vectors visible before start/first simulation",
+      "passed": true
+    },
+    {
+      "id": "PREFAB.INSTANCE_2.LIFECYCLE",
+      "label": "each newly published slot starts exactly once",
+      "passed": true
+    },
+    {
+      "id": "PREFAB.INVALID_SECOND_SLOT",
+      "label": "later invalid slot rejects after valid first initialization record",
+      "passed": true
+    },
+    {
+      "id": "PREFAB.STALE_EXTERNAL",
+      "label": "destroyed external reference rejects and stable reference returns null",
+      "passed": true
+    },
+    {
+      "id": "PREFAB.ATOMIC_REJECTION",
+      "label": "both rejected attempts leave no published root/child/body/script",
+      "passed": true
+    },
+    {
+      "id": "COMMAND.save",
+      "label": "ordinary project session command: ",
+      "passed": true
+    },
+    {
+      "id": "SAVE.COMMITTED_SLOT",
+      "label": "public save creates readable checksum-valid ordinary slot: ",
+      "passed": true
+    },
+    {
+      "id": "SAVE.INVALID_FIXTURE",
+      "label": "detached slot has checksum-valid unsupported required participant: ",
+      "passed": true
+    },
+    {
+      "id": "SAVE.SLOT_BYTES",
+      "label": "both isolated slot generations retained before rejected load",
+      "passed": true
+    },
+    {
+      "id": "COMMAND.reject",
+      "label": "ordinary project session command: ",
+      "passed": true
+    },
+    {
+      "id": "SAVE.REJECTION_DIAGNOSTIC",
+      "label": "unsupported required participant reports its actual name/version",
+      "passed": true
+    },
+    {
+      "id": "SAVE.LIVE_WORLD_UNCHANGED",
+      "label": "private candidate rejection preserves live identities, physical state, counts and clock",
+      "passed": true
+    },
+    {
+      "id": "SAVE.LIVE_GAME_UNCHANGED",
+      "label": "live JS state/session remain distinct from saved state after rejection",
+      "passed": true
+    },
+    {
+      "id": "SAVE.SLOTS_UNCHANGED",
+      "label": "rejected load rewrites neither good nor invalid slot bytes",
+      "passed": true
+    },
+    {
+      "id": "SAVE.LIVE_CALLBACKS_CONTINUE",
+      "label": "original live project executes ordinary update callbacks after rejection",
+      "passed": true
+    },
+    {
+      "id": "SAVE.ONE_FIXED_STEP",
+      "label": "normal loop executes exactly one scheduled authoritative step after rejection",
+      "passed": true
+    },
+    {
+      "id": "SAVE.LIVE_SIMULATION_CONTINUES",
+      "label": "rejected candidate leaves original dynamic body integrating through ordinary fixed step",
+      "passed": true
+    },
+    {
+      "id": "COMMAND.load",
+      "label": "ordinary project session command: ",
+      "passed": true
+    },
+    {
+      "id": "SAVE.RESTORED_PHYSICAL",
+      "label": "ordinary positive load reconstructs saved entity/body states and counts at paused boundary",
+      "passed": true
+    },
+    {
+      "id": "SAVE.RESTORE_NOT_START",
+      "label": "saved script state is installed before restore and start is not replayed",
+      "passed": true
+    },
+    {
+      "id": "SAVE.RESTORED_SESSION",
+      "label": "saved session marker replaces later live mutation",
+      "passed": true
+    },
+    {
+      "id": "SAVE.REFERENCE_REACQUIRED",
+      "label": "public stable reference resolves freshly in reconstructed world",
+      "passed": true
+    },
+    {
+      "id": "SAVE.INSTANCE_1.LIFECYCLE",
+      "label": "restored prefab slots do not replay spawn payload or fresh start",
+      "passed": true
+    },
+    {
+      "id": "SAVE.INSTANCE_1.REFERENCES",
+      "label": "normal typed references resolve in restored hierarchy",
+      "passed": true
+    },
+    {
+      "id": "SAVE.INSTANCE_2.LIFECYCLE",
+      "label": "restored prefab slots do not replay spawn payload or fresh start",
+      "passed": true
+    },
+    {
+      "id": "SAVE.INSTANCE_2.REFERENCES",
+      "label": "normal typed references resolve in restored hierarchy",
+      "passed": true
+    },
+    {
+      "id": "ASSET.UNCHANGED.driver.js",
+      "label": "runtime construction/load leaves original project asset bytes unchanged",
+      "passed": true
+    },
+    {
+      "id": "ASSET.UNCHANGED.driver.js.judasmeta",
+      "label": "runtime construction/load leaves original project asset bytes unchanged",
+      "passed": true
+    },
+    {
+      "id": "ASSET.UNCHANGED.item.js",
+      "label": "runtime construction/load leaves original project asset bytes unchanged",
+      "passed": true
+    },
+    {
+      "id": "ASSET.UNCHANGED.item.js.judasmeta",
+      "label": "runtime construction/load leaves original project asset bytes unchanged",
+      "passed": true
+    },
+    {
+      "id": "ASSET.UNCHANGED.pair.judasprefab",
+      "label": "runtime construction/load leaves original project asset bytes unchanged",
+      "passed": true
+    },
+    {
+      "id": "ASSET.UNCHANGED.pair.judasprefab.judasmeta",
+      "label": "runtime construction/load leaves original project asset bytes unchanged",
+      "passed": true
+    },
+    {
+      "id": "ASSET.UNCHANGED.Public_lifecycle_audit.judasproj",
+      "label": "runtime construction/load leaves original project asset bytes unchanged",
+      "passed": true
+    },
+    {
+      "id": "ASSET.UNCHANGED.audit.judas",
+      "label": "runtime construction/load leaves original project asset bytes unchanged",
+      "passed": true
+    },
+    {
+      "id": "APP.COMPLETED",
+      "label": "ordinary Application startup/public commands/restore/shutdown",
+      "passed": true
+    }
+  ],
+  "cases": [
+    "PUBLIC-SAVE-REJECT",
+    "PUBLIC-PREFAB-INIT"
+  ],
+  "checks": 55,
+  "failures": 0,
+  "frames": 28,
+  "observations": {
+    "PREFAB.INSTANCE_1": {
+      "child": {
+        "external": null,
+        "internal": "4611686018427387904",
+        "kind": "child",
+        "label": "authored",
+        "parent": "4611686018427387904",
+        "payload": {
+          "phase": "child",
+          "serial": 1
+        },
+        "restores": 0,
+        "started": 1,
+        "updates": 3
+      },
+      "physical": {
+        "angularVelocity": {
+          "x": 0.0,
+          "y": 0.25,
+          "z": 0.0
+        },
+        "position": {
+          "x": 12.0,
+          "y": 4.0,
+          "z": 0.0
+        },
+        "rotation": {
+          "w": 1.0,
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0
+        },
+        "valid": true,
+        "velocity": {
+          "x": 1.0,
+          "y": 0.0,
+          "z": 0.0
+        }
+      },
+      "root": {
+        "constructedAngularVelocity": {
+          "x": 0,
+          "y": 0.25,
+          "z": 0
+        },
+        "constructedVelocity": {
+          "x": 1,
+          "y": 0,
+          "z": 0
+        },
+        "external": "3",
+        "internal": null,
+        "kind": "root",
+        "label": "Instance 1",
+        "parent": null,
+        "payload": {
+          "phase": "initial",
+          "serial": 1
+        },
+        "restores": 0,
+        "started": 1,
+        "updates": 3
+      }
+    },
+    "PREFAB.INSTANCE_2": {
+      "child": {
+        "external": null,
+        "internal": "4611686018427387906",
+        "kind": "child",
+        "label": "authored",
+        "parent": "4611686018427387906",
+        "payload": {
+          "phase": "child",
+          "serial": 2
+        },
+        "restores": 0,
+        "started": 1,
+        "updates": 3
+      },
+      "physical": {
+        "angularVelocity": {
+          "x": 0.0,
+          "y": 0.5,
+          "z": 0.0
+        },
+        "position": {
+          "x": 20.0,
+          "y": 4.0,
+          "z": 0.0
+        },
+        "rotation": {
+          "w": 1.0,
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0
+        },
+        "valid": true,
+        "velocity": {
+          "x": 2.0,
+          "y": 0.0,
+          "z": 0.0
+        }
+      },
+      "root": {
+        "constructedAngularVelocity": {
+          "x": 0,
+          "y": 0.5,
+          "z": 0
+        },
+        "constructedVelocity": {
+          "x": 2,
+          "y": 0,
+          "z": 0
+        },
+        "external": "3",
+        "internal": null,
+        "kind": "root",
+        "label": "Instance 2",
+        "parent": null,
+        "payload": {
+          "phase": "initial",
+          "serial": 2
+        },
+        "restores": 0,
+        "started": 1,
+        "updates": 3
+      }
+    },
+    "SAVE.INSTANCE_1": {
+      "child": {
+        "external": null,
+        "internal": "4611686018427387904",
+        "kind": "child",
+        "label": "authored",
+        "parent": "4611686018427387904",
+        "payload": {
+          "phase": "child",
+          "serial": 1
+        },
+        "restoreInitialNull": true,
+        "restoreSawRestored": true,
+        "restoredExternal": false,
+        "restoredInternal": true,
+        "restoredParent": "4611686018427387904",
+        "restores": 1,
+        "started": 1,
+        "updates": 5
+      },
+      "root": {
+        "constructedAngularVelocity": {
+          "x": 0,
+          "y": 0.25,
+          "z": 0
+        },
+        "constructedVelocity": {
+          "x": 1,
+          "y": 0,
+          "z": 0
+        },
+        "external": "3",
+        "internal": null,
+        "kind": "root",
+        "label": "Instance 1",
+        "parent": null,
+        "payload": {
+          "phase": "initial",
+          "serial": 1
+        },
+        "restoreInitialNull": true,
+        "restoreSawRestored": true,
+        "restoredExternal": true,
+        "restoredInternal": false,
+        "restoredParent": null,
+        "restores": 1,
+        "started": 1,
+        "updates": 5
+      }
+    },
+    "SAVE.INSTANCE_2": {
+      "child": {
+        "external": null,
+        "internal": "4611686018427387906",
+        "kind": "child",
+        "label": "authored",
+        "parent": "4611686018427387906",
+        "payload": {
+          "phase": "child",
+          "serial": 2
+        },
+        "restoreInitialNull": true,
+        "restoreSawRestored": true,
+        "restoredExternal": false,
+        "restoredInternal": true,
+        "restoredParent": "4611686018427387906",
+        "restores": 1,
+        "started": 1,
+        "updates": 5
+      },
+      "root": {
+        "constructedAngularVelocity": {
+          "x": 0,
+          "y": 0.5,
+          "z": 0
+        },
+        "constructedVelocity": {
+          "x": 2,
+          "y": 0,
+          "z": 0
+        },
+        "external": "3",
+        "internal": null,
+        "kind": "root",
+        "label": "Instance 2",
+        "parent": null,
+        "payload": {
+          "phase": "initial",
+          "serial": 2
+        },
+        "restoreInitialNull": true,
+        "restoreSawRestored": true,
+        "restoredExternal": true,
+        "restoredInternal": false,
+        "restoredParent": null,
+        "restores": 1,
+        "started": 1,
+        "updates": 5
+      }
+    },
+    "loadStatus": {
+      "captureMs": 0.0,
+      "error": "",
+      "id": 3,
+      "operation": "load",
+      "recovered": false,
+      "restoreMs": 7.7636,
+      "slot": "valid",
+      "state": "completed",
+      "workerMs": 2.9115
+    },
+    "postRejectedLoadWorld": {
+      "bodies": {
+        "2": {
+          "angularVelocity": {
+            "x": 0.25,
+            "y": -0.5,
+            "z": 0.75
+          },
+          "position": {
+            "x": 7.0,
+            "y": 9.0,
+            "z": -3.0
+          },
+          "rotation": {
+            "w": 1.0,
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+          },
+          "valid": true,
+          "velocity": {
+            "x": -4.0,
+            "y": 2.0,
+            "z": 3.0
+          }
+        },
+        "4611686018427387904": {
+          "angularVelocity": {
+            "x": 0.0,
+            "y": 0.25,
+            "z": 0.0
+          },
+          "position": {
+            "x": 12.0,
+            "y": 4.0,
+            "z": 0.0
+          },
+          "rotation": {
+            "w": 1.0,
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+          },
+          "valid": true,
+          "velocity": {
+            "x": 1.0,
+            "y": 0.0,
+            "z": 0.0
+          }
+        },
+        "4611686018427387906": {
+          "angularVelocity": {
+            "x": 0.0,
+            "y": 0.5,
+            "z": 0.0
+          },
+          "position": {
+            "x": 20.0,
+            "y": 4.0,
+            "z": 0.0
+          },
+          "rotation": {
+            "w": 1.0,
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+          },
+          "valid": true,
+          "velocity": {
+            "x": 2.0,
+            "y": 0.0,
+            "z": 0.0
+          }
+        }
+      },
+      "bodyCount": 3,
+      "entities": [
+        1,
+        2,
+        3,
+        4611686018427387904,
+        4611686018427387905,
+        4611686018427387906,
+        4611686018427387907
+      ],
+      "scriptCount": 5,
+      "simulationTime": 0.0
+    },
+    "postRejectionResolvedStep": {
+      "bodies": {
+        "2": {
+          "angularVelocity": {
+            "x": 0.25,
+            "y": -0.5,
+            "z": 0.75
+          },
+          "position": {
+            "x": 6.933333396911621,
+            "y": 9.033333778381348,
+            "z": -2.950000047683716
+          },
+          "rotation": {
+            "w": 0.9999697208404541,
+            "x": 0.0020832703448832035,
+            "y": -0.004166540689766407,
+            "z": 0.006249811500310898
+          },
+          "valid": true,
+          "velocity": {
+            "x": -4.0,
+            "y": 2.0,
+            "z": 3.0
+          }
+        },
+        "4611686018427387904": {
+          "angularVelocity": {
+            "x": 0.0,
+            "y": 0.25,
+            "z": 0.0
+          },
+          "position": {
+            "x": 12.016666412353516,
+            "y": 4.0,
+            "z": 0.0
+          },
+          "rotation": {
+            "w": 0.9999978542327881,
+            "x": 0.0,
+            "y": 0.0020833290182054043,
+            "z": 0.0
+          },
+          "valid": true,
+          "velocity": {
+            "x": 1.0,
+            "y": 0.0,
+            "z": 0.0
+          }
+        },
+        "4611686018427387906": {
+          "angularVelocity": {
+            "x": 0.0,
+            "y": 0.5,
+            "z": 0.0
+          },
+          "position": {
+            "x": 20.03333282470703,
+            "y": 4.0,
+            "z": 0.0
+          },
+          "rotation": {
+            "w": 0.9999912977218628,
+            "x": 0.0,
+            "y": 0.004166630562394857,
+            "z": 0.0
+          },
+          "valid": true,
+          "velocity": {
+            "x": 2.0,
+            "y": 0.0,
+            "z": 0.0
+          }
+        }
+      },
+      "bodyCount": 3,
+      "entities": [
+        1,
+        2,
+        3,
+        4611686018427387904,
+        4611686018427387905,
+        4611686018427387906,
+        4611686018427387907
+      ],
+      "scriptCount": 5,
+      "simulationTime": 0.01666666753590107
+    },
+    "preRejectedLoadWorld": {
+      "bodies": {
+        "2": {
+          "angularVelocity": {
+            "x": 0.25,
+            "y": -0.5,
+            "z": 0.75
+          },
+          "position": {
+            "x": 7.0,
+            "y": 9.0,
+            "z": -3.0
+          },
+          "rotation": {
+            "w": 1.0,
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+          },
+          "valid": true,
+          "velocity": {
+            "x": -4.0,
+            "y": 2.0,
+            "z": 3.0
+          }
+        },
+        "4611686018427387904": {
+          "angularVelocity": {
+            "x": 0.0,
+            "y": 0.25,
+            "z": 0.0
+          },
+          "position": {
+            "x": 12.0,
+            "y": 4.0,
+            "z": 0.0
+          },
+          "rotation": {
+            "w": 1.0,
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+          },
+          "valid": true,
+          "velocity": {
+            "x": 1.0,
+            "y": 0.0,
+            "z": 0.0
+          }
+        },
+        "4611686018427387906": {
+          "angularVelocity": {
+            "x": 0.0,
+            "y": 0.5,
+            "z": 0.0
+          },
+          "position": {
+            "x": 20.0,
+            "y": 4.0,
+            "z": 0.0
+          },
+          "rotation": {
+            "w": 1.0,
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+          },
+          "valid": true,
+          "velocity": {
+            "x": 2.0,
+            "y": 0.0,
+            "z": 0.0
+          }
+        }
+      },
+      "bodyCount": 3,
+      "entities": [
+        1,
+        2,
+        3,
+        4611686018427387904,
+        4611686018427387905,
+        4611686018427387906,
+        4611686018427387907
+      ],
+      "scriptCount": 5,
+      "simulationTime": 0.0
+    },
+    "rejectedLoadStatus": {
+      "captureMs": 0.0,
+      "error": "required participant missing/newer: motors",
+      "id": 2,
+      "operation": "load",
+      "recovered": false,
+      "restoreMs": 0.0,
+      "slot": "invalid",
+      "state": "failed",
+      "workerMs": 2.7073
+    },
+    "restoredController": {
+      "instances": [
+        {
+          "child": "4611686018427387905",
+          "root": "4611686018427387904"
+        },
+        {
+          "child": "4611686018427387907",
+          "root": "4611686018427387906"
+        }
+      ],
+      "invalidReference": {
+        "message": "TypeError: spawn: initial properties contain stale/unpublished entity reference",
+        "typeError": true
+      },
+      "invalidSlot": {
+        "message": "TypeError: spawn: unknown/disabled/duplicate prefab script slot",
+        "typeError": true
+      },
+      "request": 1,
+      "resolvedReference": "2",
+      "resolvedValid": true,
+      "restoreSawRestored": true,
+      "restores": 1,
+      "score": 37,
+      "sentinelReference": "entity:2",
+      "spawned": true,
+      "staleReference": null,
+      "staleValid": false,
+      "started": 1,
+      "updates": 7
+    },
+    "restoredWorld": {
+      "bodies": {
+        "2": {
+          "angularVelocity": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+          },
+          "position": {
+            "x": 0.0,
+            "y": 4.0,
+            "z": 0.0
+          },
+          "rotation": {
+            "w": 1.0,
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+          },
+          "valid": true,
+          "velocity": {
+            "x": 1.0,
+            "y": 0.0,
+            "z": 0.0
+          }
+        },
+        "4611686018427387904": {
+          "angularVelocity": {
+            "x": 0.0,
+            "y": 0.25,
+            "z": 0.0
+          },
+          "position": {
+            "x": 12.0,
+            "y": 4.0,
+            "z": 0.0
+          },
+          "rotation": {
+            "w": 1.0,
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+          },
+          "valid": true,
+          "velocity": {
+            "x": 1.0,
+            "y": 0.0,
+            "z": 0.0
+          }
+        },
+        "4611686018427387906": {
+          "angularVelocity": {
+            "x": 0.0,
+            "y": 0.5,
+            "z": 0.0
+          },
+          "position": {
+            "x": 20.0,
+            "y": 4.0,
+            "z": 0.0
+          },
+          "rotation": {
+            "w": 1.0,
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+          },
+          "valid": true,
+          "velocity": {
+            "x": 2.0,
+            "y": 0.0,
+            "z": 0.0
+          }
+        }
+      },
+      "bodyCount": 3,
+      "entities": [
+        1,
+        2,
+        3,
+        4611686018427387904,
+        4611686018427387905,
+        4611686018427387906,
+        4611686018427387907
+      ],
+      "scriptCount": 5,
+      "simulationTime": 0.0
+    },
+    "saveStatus": {
+      "captureMs": 0.9775,
+      "error": "",
+      "id": 1,
+      "operation": "save",
+      "recovered": false,
+      "restoreMs": 0.0,
+      "slot": "valid",
+      "state": "completed",
+      "workerMs": 49.6978
+    },
+    "savedWorld": {
+      "bodies": {
+        "2": {
+          "angularVelocity": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+          },
+          "position": {
+            "x": 0.0,
+            "y": 4.0,
+            "z": 0.0
+          },
+          "rotation": {
+            "w": 1.0,
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+          },
+          "valid": true,
+          "velocity": {
+            "x": 1.0,
+            "y": 0.0,
+            "z": 0.0
+          }
+        },
+        "4611686018427387904": {
+          "angularVelocity": {
+            "x": 0.0,
+            "y": 0.25,
+            "z": 0.0
+          },
+          "position": {
+            "x": 12.0,
+            "y": 4.0,
+            "z": 0.0
+          },
+          "rotation": {
+            "w": 1.0,
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+          },
+          "valid": true,
+          "velocity": {
+            "x": 1.0,
+            "y": 0.0,
+            "z": 0.0
+          }
+        },
+        "4611686018427387906": {
+          "angularVelocity": {
+            "x": 0.0,
+            "y": 0.5,
+            "z": 0.0
+          },
+          "position": {
+            "x": 20.0,
+            "y": 4.0,
+            "z": 0.0
+          },
+          "rotation": {
+            "w": 1.0,
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+          },
+          "valid": true,
+          "velocity": {
+            "x": 2.0,
+            "y": 0.0,
+            "z": 0.0
+          }
+        }
+      },
+      "bodyCount": 3,
+      "entities": [
+        1,
+        2,
+        3,
+        4611686018427387904,
+        4611686018427387905,
+        4611686018427387906,
+        4611686018427387907
+      ],
+      "scriptCount": 5,
+      "simulationTime": 0.0
+    },
+    "spawnController": {
+      "instances": [
+        {
+          "child": "4611686018427387905",
+          "root": "4611686018427387904"
+        },
+        {
+          "child": "4611686018427387907",
+          "root": "4611686018427387906"
+        }
+      ],
+      "invalidReference": {
+        "message": "TypeError: spawn: initial properties contain stale/unpublished entity reference",
+        "typeError": true
+      },
+      "invalidSlot": {
+        "message": "TypeError: spawn: unknown/disabled/duplicate prefab script slot",
+        "typeError": true
+      },
+      "restores": 0,
+      "score": 37,
+      "spawned": true,
+      "staleReference": null,
+      "staleValid": false,
+      "started": 1,
+      "updates": 5
+    }
+  },
+  "project": "C:/JudasValidation/M78LifecycleResults/consumer-lifecycle/project/Public_lifecycle_audit.judasproj",
+  "saveRoot": "C:/Windows/system32/config/systemprofile/AppData/Local/judas/games/4d25781dfa51ae22bd6622d60bc9984066d78b575b062bc861454a2b13290e7d/Saves/Slots",
+  "schema": 1,
+  "scope": "Linux/Application public VM lifecycle; paused publication snapshots, not trajectory, platform or whole-subsystem certification"
+}

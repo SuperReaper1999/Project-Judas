@@ -1,0 +1,245 @@
+{
+  "scope": "New native Windows functional lifecycle correction evidence only; VM unchanged and no Windows performance/hardware certification. No full suite.",
+  "startingHEAD": "0695433b949df0c1d05ac6798bf118121cc53e2b",
+  "cases": [
+    {
+      "id": "character_publication",
+      "receipt": "docs/evidence/m78-lifecycle/native/m78-lifecycle-character_publication-build.json",
+      "executedRuns": [
+        {
+          "run": "character_publication",
+          "exitCode": 0,
+          "checks": 131,
+          "failures": 0,
+          "seconds": 1.4095608,
+          "receipt": "docs/evidence/m78-lifecycle/native/m78-lifecycle-character_publication-build.json",
+          "scope": "Actual authored motor creation/recreation, offsets, teleport, disabled/filter/tag publication and streaming private/publish/retire/revisit. Not runtime tag mutator behavior (separate deferred LIF-003)."
+        }
+      ],
+      "scope": "Actual authored motor creation/recreation, offsets, teleport, disabled/filter/tag publication and streaming private/publish/retire/revisit. Not runtime tag mutator behavior (separate deferred LIF-003)."
+    },
+    {
+      "id": "save_exclusion",
+      "receipt": "docs/evidence/m78-lifecycle/native/m78-lifecycle-save_exclusion-build.json",
+      "executedRuns": [
+        {
+          "run": "save_exclusion",
+          "exitCode": 0,
+          "checks": 77,
+          "failures": 0,
+          "seconds": 0.2084685,
+          "receipt": "docs/evidence/m78-lifecycle/native/m78-lifecycle-save_exclusion-build.json",
+          "scope": "Actual retained/excluded/reincluded dynamic bodies, sleep/scene/contact ownership, strict malformed record rejection and retained mapped articulation restore."
+        }
+      ],
+      "scope": "Actual retained/excluded/reincluded dynamic bodies, sleep/scene/contact ownership, strict malformed record rejection and retained mapped articulation restore."
+    },
+    {
+      "id": "consumer_lifecycle",
+      "receipt": "docs/evidence/m78-lifecycle/native/m78-lifecycle-consumer_lifecycle-build.json",
+      "executedRuns": [
+        {
+          "run": "consumer_lifecycle",
+          "exitCode": 0,
+          "checks": 55,
+          "failures": 0,
+          "seconds": 1.3111062,
+          "receipt": "docs/evidence/m78-lifecycle/native/m78-lifecycle-consumer_lifecycle-build.json",
+          "scope": "Public Application prefab initialization/references, malformed required participant rejection without changing live physical/script/session state, subsequent fixed-step publication and valid restore lifecycle. No whole-prefab/save certificate."
+        }
+      ],
+      "scope": "Public Application prefab initialization/references, malformed required participant rejection without changing live physical/script/session state, subsequent fixed-step publication and valid restore lifecycle. No whole-prefab/save certificate."
+    },
+    {
+      "id": "motor",
+      "receipt": "docs/evidence/m78-lifecycle/native/m78-lifecycle-motor-build.json",
+      "executedRuns": [
+        {
+          "run": "motor",
+          "exitCode": 0,
+          "checks": 32,
+          "failures": 0,
+          "seconds": 1.5211853,
+          "receipt": "docs/evidence/m78-lifecycle/native/m78-lifecycle-motor-build.json",
+          "scope": "Original32 CharacterMotor assertions; unchanged fixture contains incidental1/10/100-motor timings, retained as VM diagnostics only, not performance acceptance."
+        }
+      ],
+      "scope": "Original32 CharacterMotor assertions; unchanged fixture contains incidental1/10/100-motor timings, retained as VM diagnostics only, not performance acceptance."
+    },
+    {
+      "id": "physics_continuation",
+      "receipt": "docs/evidence/m78-lifecycle/native/m78-lifecycle-physics_continuation-build.json",
+      "executedRuns": [
+        {
+          "run": "physics-continuation",
+          "exitCode": 0,
+          "checks": 112,
+          "failures": 0,
+          "seconds": 0.9453720999999999,
+          "receipt": "docs/evidence/m78-lifecycle/native/m78-lifecycle-physics_continuation-build.json",
+          "scope": "Original112 direct continuation contract assertions; unchanged fixture/settings."
+        }
+      ],
+      "scope": "Original112 direct continuation contract assertions; unchanged fixture/settings."
+    },
+    {
+      "id": "world_save",
+      "receipt": "docs/evidence/m78-lifecycle/native/m78-lifecycle-world_save-build.json",
+      "executedRuns": [
+        {
+          "run": "world_save",
+          "exitCode": 0,
+          "checks": 27,
+          "failures": 0,
+          "seconds": 0.7683363999999999,
+          "receipt": "docs/evidence/m78-lifecycle/native/m78-lifecycle-world_save-build.json",
+          "scope": "Original normal persistence27 checks; strict restore and resumed physics."
+        }
+      ],
+      "scope": "Original normal persistence27 checks; strict restore and resumed physics."
+    },
+    {
+      "id": "streaming",
+      "receipt": "docs/evidence/m78-lifecycle/native/m78-lifecycle-streaming-build.json",
+      "executedRuns": [
+        {
+          "run": "streaming",
+          "exitCode": 0,
+          "checks": 82,
+          "failures": 0,
+          "seconds": 7.7112636,
+          "receipt": "docs/evidence/m78-lifecycle/native/m78-lifecycle-streaming-build.json",
+          "scope": "Original streaming82 checks; retained runtime construction/lifetime correction."
+        }
+      ],
+      "scope": "Original streaming82 checks; retained runtime construction/lifetime correction."
+    },
+    {
+      "id": "balance_lab",
+      "receipt": "docs/evidence/m78-lifecycle/native/m78-lifecycle-balance_lab-build.json",
+      "executedRuns": [
+        {
+          "run": "balance-step-trace",
+          "exitCode": 0,
+          "checks": 15,
+          "failures": 0,
+          "seconds": 2.883839,
+          "receipt": "docs/evidence/m78-lifecycle/native/m78-lifecycle-balance_lab-build.json",
+          "scope": "Original M77 corrective step plus new-format cold-save writer/read. Cached controller endpoint acceptance supplemented by separate mixed actual-body observer."
+        },
+        {
+          "run": "balance-new-cold-write",
+          "exitCode": 0,
+          "checks": 24,
+          "failures": 0,
+          "seconds": 2.9831488,
+          "receipt": "docs/evidence/m78-lifecycle/native/m78-lifecycle-balance_lab-build.json",
+          "scope": "Original M77 corrective step plus new-format cold-save writer/read. Cached controller endpoint acceptance supplemented by separate mixed actual-body observer."
+        },
+        {
+          "run": "balance-new-cold-read",
+          "exitCode": 0,
+          "checks": 13,
+          "failures": 0,
+          "seconds": 2.2673411999999997,
+          "receipt": "docs/evidence/m78-lifecycle/native/m78-lifecycle-balance_lab-build.json",
+          "scope": "Original M77 corrective step plus new-format cold-save writer/read. Cached controller endpoint acceptance supplemented by separate mixed actual-body observer."
+        }
+      ],
+      "scope": "Original M77 corrective step plus new-format cold-save writer/read. Cached controller endpoint acceptance supplemented by separate mixed actual-body observer."
+    },
+    {
+      "id": "character_lab",
+      "receipt": "docs/evidence/m78-lifecycle/native/m78-lifecycle-character_lab-build.json",
+      "executedRuns": [
+        {
+          "run": "character-cold-write",
+          "exitCode": 0,
+          "checks": 10,
+          "failures": 0,
+          "seconds": 1.7758311999999998,
+          "receipt": "docs/evidence/m78-lifecycle/native/m78-lifecycle-character_lab-build.json",
+          "scope": "Original M70 new-format cold pair: actual mode authority and finite pose. Not full uninterrupted physical trajectory parity."
+        },
+        {
+          "run": "character-cold-read",
+          "exitCode": 0,
+          "checks": 14,
+          "failures": 0,
+          "seconds": 0.6732952999999999,
+          "receipt": "docs/evidence/m78-lifecycle/native/m78-lifecycle-character_lab-build.json",
+          "scope": "Original M70 new-format cold pair: actual mode authority and finite pose. Not full uninterrupted physical trajectory parity."
+        }
+      ],
+      "scope": "Original M70 new-format cold pair: actual mode authority and finite pose. Not full uninterrupted physical trajectory parity."
+    },
+    {
+      "id": "mixed_endpoint",
+      "receipt": "docs/evidence/m78-lifecycle/native/m78-lifecycle-mixed_endpoint-build.json",
+      "executedRuns": [
+        {
+          "run": "mixed-endpoint-write",
+          "exitCode": 0,
+          "checks": 25,
+          "failures": 0,
+          "seconds": 3.0765121,
+          "receipt": "docs/evidence/m78-lifecycle/native/m78-lifecycle-mixed_endpoint-build.json",
+          "scope": "Same actual-body observer: fresh-process restoration versus uninterrupted endpoint, durable entity identity, all actual body fields/current contacts; only fresh native handles and traversal order excluded."
+        },
+        {
+          "run": "mixed-endpoint-read",
+          "exitCode": 0,
+          "checks": 13,
+          "failures": 0,
+          "seconds": 2.3529561,
+          "receipt": "docs/evidence/m78-lifecycle/native/m78-lifecycle-mixed_endpoint-build.json",
+          "scope": "Same actual-body observer: fresh-process restoration versus uninterrupted endpoint, durable entity identity, all actual body fields/current contacts; only fresh native handles and traversal order excluded."
+        }
+      ],
+      "scope": "Same actual-body observer: fresh-process restoration versus uninterrupted endpoint, durable entity identity, all actual body fields/current contacts; only fresh native handles and traversal order excluded."
+    }
+  ],
+  "exactEngineIdentity": {
+    "receipt": "docs/evidence/m78-lifecycle/native/FINAL_BINARY_IDENTITY.json"
+  },
+  "physicalEndpointComparisons": [
+    {
+      "path": "docs/evidence/m78-lifecycle/native/ACTUAL_ENDPOINT_BY_ENTITY.json",
+      "scope": "Same actual-body observer: fresh-process restoration versus uninterrupted endpoint, durable entity identity, all actual body fields/current contacts; only fresh native handles and traversal order excluded."
+    }
+  ],
+  "outstandingScopes": [
+    "No Windows performance gate or physical GPU validation.",
+    "Native new runtime-tag mutator probe not executed; Linux LIF-003 reproduced and deferred.",
+    "Previously preserved legacy a106 snapshot/FLU-001 failures not reclassified by these lifecycle checks.",
+    "No new native SaveStreaming/Application signals/editor/moved-package rerun in this bounded matrix unless explicitly attached separately."
+  ],
+  "toolingFailures": [
+    {
+      "path": "docs/evidence/m78-lifecycle/native/PREPARATION_BLOCK.json",
+      "scope": "Initial automatic approval review rejections; resolved by direct human compression/necessary-new-output cleanup permission. No engine assertion."
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/PERMISSION_CHRONOLOGY.json",
+      "scope": "First authorized compression download failed because prior task transfer server stopped; archive untouched. Restored task server then authorized compression succeeded."
+    },
+    {
+      "path": "docs/evidence/m78-lifecycle/native/HOST_RECEIPT_TIMING_FOLLOWUP.json",
+      "scope": "Brief world-save host receipt visibility delay interrupted host verification; durable native pass archived without test rerun."
+    }
+  ],
+  "inheritedPriorSourceReceipts": [
+    {
+      "path": "docs/evidence/m78-closure/native/SUMMARY.json",
+      "scope": "Protected accepted previous correction closure evidence; not promoted to new final-source execution."
+    }
+  ],
+  "vmConfiguration": "Established Windows10 4vCPU6GiB40GBdisk; llvmpipe software GL functional only.",
+  "finalVerification": "docs/evidence/m78-lifecycle/native/FINAL_VERIFICATION.json",
+  "permissionChronology": "docs/evidence/m78-lifecycle/native/PERMISSION_CHRONOLOGY.json",
+  "humanAuthorizations": [
+    "docs/evidence/m78-lifecycle/native/HUMAN_COMPRESSION_APPROVAL.json",
+    "docs/evidence/m78-lifecycle/native/HUMAN_NEW_OUTPUT_RETIREMENT_APPROVAL.json"
+  ],
+  "actualConsumerApplicationFrames": 28
+}

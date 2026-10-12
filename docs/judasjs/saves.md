@@ -28,12 +28,17 @@ if (result?.state === 'failed') console.log(result.error);
 | `reference(entity)` | Stable opaque reference string, or `null` for destroyed entity. Full-width IDs never go through Number. |
 | `resolve(key)` | Fresh Entity or `null` if absent/unloaded/destroyed; never loads a region from a getter. |
 
-**Current known defect (M78 audit, LIF-002):** excluding a legally eligible simple
+**Historical defect (M78 checkpoint audit, LIF-002):** excluding a legally eligible simple
 dynamic actor omits its scene entity but retains a sleep record. Full restoration
 then fails with `saved sleep body unavailable/duplicate`. The normal non-excluded
-control passes. This pre-existing defect is recorded, not repaired, in the
+control passes. The original failure remains in the
 [measured reproduction](../evidence/m78-closure/audit-lifecycle/save-exclusion/MEASURED_RESULT.md).
-Do not infer successful dynamic-body exclusion from capture success alone.
+The subsequent M78 correction applies the existing retained-body ownership rule
+to sleep capture as well as contacts. Newly captured eligible exclusions restore;
+required mapped articulation bodies retain their sleep records despite their
+internal transient flag. Sleep format 1 and strict missing/duplicate/truncated
+record rejection are unchanged. Previously emitted orphan-bearing slots are not
+repaired retrospectively. See [current scoped results](../M78_LIFECYCLE_CLOSURE.md).
 
 Slot IDs are 1–64 ASCII letters/digits/underscore/hyphen, not paths. Names are
 independent bounded Unicode strings. Metadata and script/session data must use
@@ -153,7 +158,7 @@ present the remaining subset as complete or empty; the native controller keeps
 its ordinary first-sample wait. A genuinely completed empty publication remains
 distinct from an unpublished one.
 
-An independent character query-proxy refresh does not invalidate another articulation's restored physical publication. A mechanically connected proxy remains part of the physical context. This disk-save reconstruction guarantee does not establish immediate query initialization on streamed-region activation/revisit; the separate gap is recorded in the [final combined handoff](../M78_FINAL.md).
+An independent character query-proxy refresh does not invalidate another articulation's restored physical publication. A mechanically connected proxy remains part of the physical context. The later [lifecycle correction](../M78_LIFECYCLE_CLOSURE.md) separately establishes authored query metadata/enabled publication on streamed activation/revisit; disk reconstruction alone did not prove that contract. Runtime motor tag mutation remains a distinct unresolved finding.
 
 This is not a promise of universal bitwise trajectories or persistence of every
 cache. Old articulation/contact versions remain readable through their previous

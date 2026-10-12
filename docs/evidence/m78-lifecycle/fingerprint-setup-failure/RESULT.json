@@ -1,0 +1,21 @@
+{
+  "passed": false,
+  "mode": "local source/evidence/binaries",
+  "checkpoint": "0695433b949df0c1d05ac6798bf118121cc53e2b",
+  "manifestIdentity": {
+    "bytes": 213901,
+    "sha256": "fae4d0dab21daa5b3d726df1f223f69131bc5656ffa212b4bb5a83e4b671b99a"
+  },
+  "counts": {
+    "currentFiles": 659,
+    "priorUnchangedFiles": 4850,
+    "priorExcludedArtifacts": 72,
+    "laterExcludedArtifacts": 1,
+    "localOutputs": 78,
+    "priorLocalOutputs": 94
+  },
+  "failures": [
+    "new lifecycle evidence inventory changed"
+  ],
+  "scope": "Fingerprints and repository scope only; not engine correctness or human acceptance."
+}

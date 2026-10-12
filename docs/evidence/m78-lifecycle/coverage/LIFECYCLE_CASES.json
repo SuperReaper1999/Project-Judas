@@ -1,0 +1,1828 @@
+{
+  "schema": 1,
+  "status": "SCOPED LINUX/NATIVE RECEIPTS ATTACHED — unresolved Linux LIF-003, human/hardware gaps, original baseline unchanged",
+  "startingCheckpoint": "0695433b949df0c1d05ac6798bf118121cc53e2b",
+  "policy": "Keep all 485 ordered original IDs and 970 frozen Linux/Windows baseline states. Previous closure cases retain their historical scope; current lifecycle cases attach separately only after actual receipts. No member/group promotion from source inspection, suite or symbol presence.",
+  "cases": [
+    {
+      "id": "PUBLIC-SAVE-REJECT",
+      "relatedFeatureIds": [
+        "JS.saves.save",
+        "JS.saves.load",
+        "JS.saves.status",
+        "JS.saves.reference",
+        "JS.saves.resolve",
+        "I.01",
+        "I.03",
+        "H.06"
+      ],
+      "requirements": [
+        "M61 sections 9-10"
+      ],
+      "source": "tests/ConsumerLifecycleAuditTests.cpp",
+      "status": "LINUX/NATIVE PASS WITHIN NAMED PUBLIC VM/APPLICATION ENVELOPE — human/hardware pending",
+      "linuxStatus": "pass-within-envelope",
+      "windowsStatus": "pass-within-named-functional-envelope",
+      "oracle": "Public queued save/load observes exact live body/entity/script/session publication; checksum-valid unsupported required participant rejects privately without changing live state or slot bytes; subsequent callbacks and one real fixed step remain usable; positive load restores state/references without replaying start.",
+      "remaining": [
+        "Only one unsupported required participant; no all-participant/malformed-container/storage/cancellation/migration matrix.",
+        "No late callback side-effect rollback guarantee.",
+        "Paused endpoint observations plus one post-rejection step, not trajectory equality.",
+        "No whole-member/group, native hardware or human acceptance."
+      ],
+      "receipts": [
+        {
+          "path": "docs/evidence/m78-lifecycle/public-audit/linux-after-01/fixture/RESULT.json",
+          "sha256": "f70b6ba0263b91e20da2ed5a704c7500e44a0d170b64601181aca4ba722d3f0e",
+          "bytes": 25686
+        },
+        {
+          "path": "docs/evidence/m78-lifecycle/public-audit/linux-after-01/RECEIPTS.json",
+          "sha256": "68a2995739dfc8333f2e713b4811410c04dddb6c6b6086855ea68f9beaaf1c7d",
+          "bytes": 6049
+        },
+        {
+          "path": "docs/evidence/m78-lifecycle/public-audit/linux-after-01/run.stdout.log",
+          "sha256": "5cb065dd4abd6b89681e60960c9280cba6ad68e76fc708a6969ae9d8f76a14da",
+          "bytes": 4786
+        },
+        {
+          "path": "docs/evidence/m78-lifecycle/public-audit/linux-after-01/compiled-source.cpp",
+          "sha256": "fb31e197643a9b64893bf342740d90919231350d05f9f692864832d0c42a1ff3",
+          "bytes": 27574
+        }
+      ],
+      "sharedDriverChecks": 55,
+      "sharedDriverFailures": 0,
+      "sharedDriverFrames": 23,
+      "applicationExit": 0,
+      "identity": {
+        "sourceSHA256": "fb31e197643a9b64893bf342740d90919231350d05f9f692864832d0c42a1ff3",
+        "archiveSHA256": "e2e4aec5ed13c6a6e5eb4db0f528682671ad879ae27080665699d8b61681618f",
+        "existingLinkInputs": {
+          "/usr/bin/c++": "e6718f7e0c7d057c3ff77b550c603da9bc4030e3ede3c053705acce1293dbe4d",
+          "CMakeFiles/judas.dir/src/Application.cpp.o": "6ee90ff7c2ed96fc31be3aaf7a9ea5218d836e06889b710a2b02f6e87f4fd8a5",
+          "CMakeFiles/judas.dir/src/RuntimeOptions.cpp.o": "f55b64db06b5e18a862b376dca513b1a3853013db12dcb5afdcf3d6ad11f76df",
+          "CMakeFiles/judas.dir/src/RuntimeDiagnostics.cpp.o": "9319bbeb26d171a65986349209435f865f60012fa5fff6838c33f9150832ffe9",
+          "CMakeFiles/judas.dir/src/TestHarness.cpp.o": "7fd6515afac876fac2fb70d66db631c5257a7bca3e94ae56dc86f65174bec4f0",
+          "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-lifecycle/final-build-v2/libjudas_engine.a": "e2e4aec5ed13c6a6e5eb4db0f528682671ad879ae27080665699d8b61681618f",
+          "libjudas_app_icon.a": "1fab532ad9c5dd1fae1c33bda5aabd8d2c584047430e7ab5d6ead6ab4b5d9540",
+          "libjudas_materials.a": "3cea886c6bcb6ece6a20885e2216d26cb8a53b440f404f6c805157cf656936f7",
+          "/usr/lib/x86_64-linux-gnu/libSDL2.so": "3f61932a8856a6ac99b59acee2aaf23a2d72bf75ffb4fe3c53d1ff228210a15a",
+          "libjudas_glad.a": "9d3394b11ea0d111b7e3c5037f820d425e61e4bf503070872d848badcb01bbeb",
+          "libjudas_audio_backend.a": "b23eea1b0d42cca4fe7e766d2fc757fa74ada3196ca65b83e0b90a87be161400",
+          "libjudas_navigation_backend.a": "4d842dc948f96022dcd0458d0c1f6b686f4e914b4e84c373e57075ffb14083f5",
+          "libjudas_quickjs.a": "b1d7868584c82ad5d1cfd016feb4f12f2905405042e1da93a1d791369a09c80e",
+          "libjudas_profiler.a": "822208ed4332718329b2cbbe02a7e8f29839d9c3f0efed03ccb711814ace265d",
+          "_deps/judas_freetype-build/libfreetype.a": "997b0191b40a3289fd301ba87ccf70fad120633d0acc2a8cb2ef79b69d8a07e5",
+          "_deps/judas_harfbuzz-build/libharfbuzz.a": "50a904cb2ef3ff1afcef1ebc93dbfab66ca849117327f4e3eb12f352745d6048",
+          "unicode/icu/lib/libicui18n.a": "3f60224cdf597cd765f69503aee34513a5d69a32f5b267e3cdf1c47e367411f0",
+          "unicode/icu/lib/libicuuc.a": "413af571dfa69d9928c59caed5bac1312d2d48e5362e9d03e68d6184d2a92083",
+          "unicode/icu/lib/libicudata.a": "f62ffb718fbd07e1a5195fd637631358d46882bde564739bbb73dead4b260fc2"
+        },
+        "binarySHA256": "4d1e063842fd20b3b11d8170be0cbd6fc07aa9e134fc6e0d98efb007fe9dc62a",
+        "objectSHA256": "6eac1c794454ebd7f42873a22fecc928d23ebfa9e1e8ec953cb11541be933d45"
+      },
+      "selectedAssertionIds": [
+        "SAVE.COMMITTED_SLOT",
+        "SAVE.INVALID_FIXTURE",
+        "SAVE.SLOT_BYTES",
+        "SAVE.REJECTION_DIAGNOSTIC",
+        "SAVE.LIVE_WORLD_UNCHANGED",
+        "SAVE.LIVE_GAME_UNCHANGED",
+        "SAVE.SLOTS_UNCHANGED",
+        "SAVE.LIVE_CALLBACKS_CONTINUE",
+        "SAVE.ONE_FIXED_STEP",
+        "SAVE.LIVE_SIMULATION_CONTINUES",
+        "SAVE.RESTORED_PHYSICAL",
+        "SAVE.RESTORE_NOT_START",
+        "SAVE.RESTORED_SESSION",
+        "SAVE.REFERENCE_REACQUIRED",
+        "SAVE.INSTANCE_1.LIFECYCLE",
+        "SAVE.INSTANCE_1.REFERENCES",
+        "SAVE.INSTANCE_2.LIFECYCLE",
+        "SAVE.INSTANCE_2.REFERENCES"
+      ],
+      "sharedAssertionsAreNotTwoPassCounts": "One 55-check driver contains fixture/command/asset/shared assertions; do not double count it as 55 independent passes per case.",
+      "native": {
+        "nativeCaseId": "consumer_lifecycle",
+        "scope": "Public Application prefab initialization/references, malformed required participant rejection without changing live physical/script/session state, subsequent fixed-step publication and valid restore lifecycle. No whole-prefab/save certificate.",
+        "executedRuns": [
+          {
+            "run": "consumer_lifecycle",
+            "exitCode": 0,
+            "checks": 55,
+            "failures": 0,
+            "seconds": 1.3111062,
+            "receipt": "docs/evidence/m78-lifecycle/native/m78-lifecycle-consumer_lifecycle-build.json",
+            "scope": "Public Application prefab initialization/references, malformed required participant rejection without changing live physical/script/session state, subsequent fixed-step publication and valid restore lifecycle. No whole-prefab/save certificate."
+          }
+        ],
+        "binarySHA256": "8c209bb1cce74f6efb90cb20cd40a44c3f231d0731ec0aa633b4004f053576bc",
+        "binaryBytes": 10516480,
+        "archive": {
+          "path": "C:\\JudasValidation\\M78ContinuationBuild\\cold-repair-final-v2\\judas_engine.lib",
+          "sha256": "71a722dded64cfcc634d679e55ddbd257058da888ada914f7f7150b8d88c2d62",
+          "bytes": 67019246
+        },
+        "sourceObjects": [
+          {
+            "source": "src/PhysicsWorld.cpp",
+            "sourceSHA256": "6a60747e4bb970821e2ebb68adbe78ea89f6fdc3db9137b5160290ca1da2f193",
+            "sha256": "6d70c3f9ff8c932ddc8bac2b0a7ab47539813d95e0ea17d7e000e77465702ed1",
+            "bytes": 1495011
+          },
+          {
+            "source": "src/WorldCharacter.cpp",
+            "sourceSHA256": "0c87e03acfba2a1c837da183e7731e35f70df98497d61a864c96ba5e21b064ae",
+            "sha256": "0639f4c85d5032f30c72624c8e2d467b76d131061b5a03422f4e0e1112c467f0",
+            "bytes": 58951,
+            "frozenMember": "judas_engine.dir\\Release\\WorldCharacter.obj"
+          },
+          {
+            "source": "src/WorldRegions.cpp",
+            "sourceSHA256": "5fa0cec1229c970acc0a593c0f795ac98edb4dfb96d0f9bd49757aa07fc90002",
+            "sha256": "f750b1741a64545746308e2b10dfe54064a5d87dea0af62462532a7e4d9f76b1",
+            "bytes": 717931,
+            "frozenMember": "judas_engine.dir\\Release\\WorldRegions.obj"
+          },
+          {
+            "source": "src/WorldScripts.cpp",
+            "sourceSHA256": "ec660e35570c269b11a1ff88b75d5c79b0b2a96efe0f1cdbe32199c9157bfef1",
+            "sha256": "0f21acf19d97d77a4246c90a7e1a5080b840434fa4ff7fae6eaec2063becfe1b",
+            "bytes": 604629,
+            "frozenMember": "judas_engine.dir\\Release\\WorldScripts.obj"
+          },
+          {
+            "source": "src/WorldPersistence.cpp",
+            "sourceSHA256": "1a02f42c466ea035be981c52d38d38bddeb0cb85eaa7c8b07fcfc8d9746d1101",
+            "sha256": "a3c56eddd5d6298c350f96f7605b6b31b854a01989d9ae364ccc2ba9aab78e83",
+            "bytes": 1272622,
+            "frozenMember": "C:\\JudasValidation\\M78ContinuationBuild\\cold-repair-final-v2\\objects\\WorldPersistence.obj"
+          }
+        ],
+        "testAndApplicationInputs": [
+          {
+            "source": "tests/ConsumerLifecycleAuditTests.cpp",
+            "sourceSHA256": "fb31e197643a9b64893bf342740d90919231350d05f9f692864832d0c42a1ff3",
+            "sha256": "c922b3f0fdfd7a1fb7522dc2f5f6443d8cd5aa068fe89ef96fab99e2fd8ea53c",
+            "bytes": 2006612,
+            "reuseOriginal": false
+          },
+          {
+            "source": "src/Application.cpp",
+            "sourceSHA256": "752b26046f3e88c53920b53ae734beb3dd13792ebf2f1d2bb7686c90a1834ae0",
+            "sha256": "6494f91d10083a1c1635c6355152ad3777ef479a87788c3c813d84b15f6146d6",
+            "bytes": 295887,
+            "reuseOriginal": true
+          },
+          {
+            "source": "src/RuntimeOptions.cpp",
+            "sourceSHA256": "dcb18ceff20cee92c4eda479efc3e70765ee55e2ee84c60bf1dfdf5454f363ff",
+            "sha256": "746c33d85f3cf3f83b4d9b93eabbedac2264456a9e7efe26a01dd29e6a1b4e26",
+            "bytes": 229861,
+            "reuseOriginal": true
+          },
+          {
+            "source": "src/RuntimeDiagnostics.cpp",
+            "sourceSHA256": "a63c2d3e661c6d938cca894933fa3da32e5807ad8bded98880af388bb27af9d9",
+            "sha256": "dd51a50e14ab20dc62c2bf1b79ed8e271e532b31faf70eb5ff75a246189beeef",
+            "bytes": 20401,
+            "reuseOriginal": true
+          },
+          {
+            "source": "src/TestHarness.cpp",
+            "sourceSHA256": "9c16ca348038ab35fb992dafb43031cc4bfe5c844b680473d73ed56dd6aeedcc",
+            "sha256": "560e035b88abfecc7dfd27bd572bebd75d3ba404280a881db5dd4931fd5e3daf",
+            "bytes": 340964,
+            "reuseOriginal": true
+          }
+        ],
+        "receipts": [
+          {
+            "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-consumer_lifecycle-build.json",
+            "sha256": "3c370be9621abec5f15e8318c285cded58bd534b99c4f786423c755ce284055f",
+            "bytes": 35781
+          },
+          {
+            "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-consumer_lifecycle.json",
+            "sha256": "66b4934c3ac9ee1fde276687ac7791c0550883e808d944fd0bf783c345563ec2",
+            "bytes": 13645
+          },
+          {
+            "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-consumer_lifecycle-RESULT.json",
+            "sha256": "50b393b8f2e70b42813cd657ce5238eaa0455049852ed788095cb7da64cb50e3",
+            "bytes": 25603
+          },
+          {
+            "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-consumer_lifecycle.stdout.log",
+            "sha256": "a63e2a9c7ce40552dd098da4befbb9adefae6071a11265cd850d69a74c40fd46",
+            "bytes": 4842
+          },
+          {
+            "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-consumer_lifecycle-link.log",
+            "sha256": "61d492d07c0da71ea667719940fa833962016af0a61a99e5e1cbd7045c8b807c",
+            "bytes": 33930
+          }
+        ],
+        "identityReceipt": {
+          "path": "docs/evidence/m78-lifecycle/native/FINAL_BINARY_IDENTITY.json",
+          "sha256": "3d0919c846396cce6d6b067d103ae7251c1dd1a4ce972a00e58cfee2255888cb",
+          "bytes": 110824
+        },
+        "meaning": "Native Windows functional execution of this exact bounded driver; no full API/component/asset/mechanism or hardware certification.",
+        "sharedDriverChecks": 55,
+        "sharedDriverFailures": 0,
+        "sharedDriverFrames": 28,
+        "applicationExit": 0,
+        "actualKnownFolderSaveRoot": "C:/Windows/system32/config/systemprofile/AppData/Local/judas/games/4d25781dfa51ae22bd6622d60bc9984066d78b575b062bc861454a2b13290e7d/Saves/Slots",
+        "sharedCountMeaning": "One 55-check driver in 28 frames covers both public cases; not 55 independent passes per case. Embedded RESULT scope says Linux, while actual MSVC/process/binary receipts establish Windows execution."
+      }
+    },
+    {
+      "id": "PUBLIC-PREFAB-INIT",
+      "relatedFeatureIds": [
+        "JS.world.spawnPrefab",
+        "A.05",
+        "ASSET.Prefab",
+        "ASSET.Script",
+        "H.06"
+      ],
+      "requirements": [
+        "M67 section 10C"
+      ],
+      "source": "tests/ConsumerLifecycleAuditTests.cpp",
+      "status": "LINUX/NATIVE PASS WITHIN NAMED PUBLIC VM/APPLICATION ENVELOPE — human/hardware pending",
+      "linuxStatus": "pass-within-envelope",
+      "windowsStatus": "pass-within-named-functional-envelope",
+      "oracle": "Two normal prefab hierarchies sharing one asset receive independent complete properties/payload/motion before start, authored internal reference remapping and a published external ref. Invalid second slot and stale external reference leave no partial published hierarchy/body/script. Saved instance restore does not repeat initial payload/start.",
+      "remaining": [
+        "Authored internal references use normal remapping; no promise that original-source IDs inside replacement JSON remap.",
+        "No nested/all-component, malformed bounds, source revision/resource race or native-allocation rollback matrix.",
+        "No full-subsystem/editor/hardware or human acceptance."
+      ],
+      "receipts": [
+        {
+          "path": "docs/evidence/m78-lifecycle/public-audit/linux-after-01/fixture/RESULT.json",
+          "sha256": "f70b6ba0263b91e20da2ed5a704c7500e44a0d170b64601181aca4ba722d3f0e",
+          "bytes": 25686
+        },
+        {
+          "path": "docs/evidence/m78-lifecycle/public-audit/linux-after-01/RECEIPTS.json",
+          "sha256": "68a2995739dfc8333f2e713b4811410c04dddb6c6b6086855ea68f9beaaf1c7d",
+          "bytes": 6049
+        },
+        {
+          "path": "docs/evidence/m78-lifecycle/public-audit/linux-after-01/run.stdout.log",
+          "sha256": "5cb065dd4abd6b89681e60960c9280cba6ad68e76fc708a6969ae9d8f76a14da",
+          "bytes": 4786
+        },
+        {
+          "path": "docs/evidence/m78-lifecycle/public-audit/linux-after-01/compiled-source.cpp",
+          "sha256": "fb31e197643a9b64893bf342740d90919231350d05f9f692864832d0c42a1ff3",
+          "bytes": 27574
+        }
+      ],
+      "sharedDriverChecks": 55,
+      "sharedDriverFailures": 0,
+      "sharedDriverFrames": 23,
+      "applicationExit": 0,
+      "identity": {
+        "sourceSHA256": "fb31e197643a9b64893bf342740d90919231350d05f9f692864832d0c42a1ff3",
+        "archiveSHA256": "e2e4aec5ed13c6a6e5eb4db0f528682671ad879ae27080665699d8b61681618f",
+        "existingLinkInputs": {
+          "/usr/bin/c++": "e6718f7e0c7d057c3ff77b550c603da9bc4030e3ede3c053705acce1293dbe4d",
+          "CMakeFiles/judas.dir/src/Application.cpp.o": "6ee90ff7c2ed96fc31be3aaf7a9ea5218d836e06889b710a2b02f6e87f4fd8a5",
+          "CMakeFiles/judas.dir/src/RuntimeOptions.cpp.o": "f55b64db06b5e18a862b376dca513b1a3853013db12dcb5afdcf3d6ad11f76df",
+          "CMakeFiles/judas.dir/src/RuntimeDiagnostics.cpp.o": "9319bbeb26d171a65986349209435f865f60012fa5fff6838c33f9150832ffe9",
+          "CMakeFiles/judas.dir/src/TestHarness.cpp.o": "7fd6515afac876fac2fb70d66db631c5257a7bca3e94ae56dc86f65174bec4f0",
+          "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-lifecycle/final-build-v2/libjudas_engine.a": "e2e4aec5ed13c6a6e5eb4db0f528682671ad879ae27080665699d8b61681618f",
+          "libjudas_app_icon.a": "1fab532ad9c5dd1fae1c33bda5aabd8d2c584047430e7ab5d6ead6ab4b5d9540",
+          "libjudas_materials.a": "3cea886c6bcb6ece6a20885e2216d26cb8a53b440f404f6c805157cf656936f7",
+          "/usr/lib/x86_64-linux-gnu/libSDL2.so": "3f61932a8856a6ac99b59acee2aaf23a2d72bf75ffb4fe3c53d1ff228210a15a",
+          "libjudas_glad.a": "9d3394b11ea0d111b7e3c5037f820d425e61e4bf503070872d848badcb01bbeb",
+          "libjudas_audio_backend.a": "b23eea1b0d42cca4fe7e766d2fc757fa74ada3196ca65b83e0b90a87be161400",
+          "libjudas_navigation_backend.a": "4d842dc948f96022dcd0458d0c1f6b686f4e914b4e84c373e57075ffb14083f5",
+          "libjudas_quickjs.a": "b1d7868584c82ad5d1cfd016feb4f12f2905405042e1da93a1d791369a09c80e",
+          "libjudas_profiler.a": "822208ed4332718329b2cbbe02a7e8f29839d9c3f0efed03ccb711814ace265d",
+          "_deps/judas_freetype-build/libfreetype.a": "997b0191b40a3289fd301ba87ccf70fad120633d0acc2a8cb2ef79b69d8a07e5",
+          "_deps/judas_harfbuzz-build/libharfbuzz.a": "50a904cb2ef3ff1afcef1ebc93dbfab66ca849117327f4e3eb12f352745d6048",
+          "unicode/icu/lib/libicui18n.a": "3f60224cdf597cd765f69503aee34513a5d69a32f5b267e3cdf1c47e367411f0",
+          "unicode/icu/lib/libicuuc.a": "413af571dfa69d9928c59caed5bac1312d2d48e5362e9d03e68d6184d2a92083",
+          "unicode/icu/lib/libicudata.a": "f62ffb718fbd07e1a5195fd637631358d46882bde564739bbb73dead4b260fc2"
+        },
+        "binarySHA256": "4d1e063842fd20b3b11d8170be0cbd6fc07aa9e134fc6e0d98efb007fe9dc62a",
+        "objectSHA256": "6eac1c794454ebd7f42873a22fecc928d23ebfa9e1e8ec953cb11541be933d45"
+      },
+      "selectedAssertionIds": [
+        "PREFAB.BASELINE",
+        "PREFAB.INDEPENDENT_IDS",
+        "PREFAB.INSTANCE_1.PROPERTIES",
+        "PREFAB.INSTANCE_1.INITIAL_STATE",
+        "PREFAB.INSTANCE_1.REFERENCES",
+        "PREFAB.INSTANCE_1.MOTION",
+        "PREFAB.INSTANCE_1.LIFECYCLE",
+        "PREFAB.INSTANCE_2.PROPERTIES",
+        "PREFAB.INSTANCE_2.INITIAL_STATE",
+        "PREFAB.INSTANCE_2.REFERENCES",
+        "PREFAB.INSTANCE_2.MOTION",
+        "PREFAB.INSTANCE_2.LIFECYCLE",
+        "PREFAB.INVALID_SECOND_SLOT",
+        "PREFAB.STALE_EXTERNAL",
+        "PREFAB.ATOMIC_REJECTION",
+        "SAVE.INSTANCE_1.LIFECYCLE",
+        "SAVE.INSTANCE_1.REFERENCES",
+        "SAVE.INSTANCE_2.LIFECYCLE",
+        "SAVE.INSTANCE_2.REFERENCES",
+        "ASSET.UNCHANGED.driver.js",
+        "ASSET.UNCHANGED.driver.js.judasmeta",
+        "ASSET.UNCHANGED.item.js",
+        "ASSET.UNCHANGED.item.js.judasmeta",
+        "ASSET.UNCHANGED.pair.judasprefab",
+        "ASSET.UNCHANGED.pair.judasprefab.judasmeta",
+        "ASSET.UNCHANGED.Public_lifecycle_audit.judasproj",
+        "ASSET.UNCHANGED.audit.judas"
+      ],
+      "sharedAssertionsAreNotTwoPassCounts": "One 55-check driver contains fixture/command/asset/shared assertions; do not double count it as 55 independent passes per case.",
+      "native": {
+        "nativeCaseId": "consumer_lifecycle",
+        "scope": "Public Application prefab initialization/references, malformed required participant rejection without changing live physical/script/session state, subsequent fixed-step publication and valid restore lifecycle. No whole-prefab/save certificate.",
+        "executedRuns": [
+          {
+            "run": "consumer_lifecycle",
+            "exitCode": 0,
+            "checks": 55,
+            "failures": 0,
+            "seconds": 1.3111062,
+            "receipt": "docs/evidence/m78-lifecycle/native/m78-lifecycle-consumer_lifecycle-build.json",
+            "scope": "Public Application prefab initialization/references, malformed required participant rejection without changing live physical/script/session state, subsequent fixed-step publication and valid restore lifecycle. No whole-prefab/save certificate."
+          }
+        ],
+        "binarySHA256": "8c209bb1cce74f6efb90cb20cd40a44c3f231d0731ec0aa633b4004f053576bc",
+        "binaryBytes": 10516480,
+        "archive": {
+          "path": "C:\\JudasValidation\\M78ContinuationBuild\\cold-repair-final-v2\\judas_engine.lib",
+          "sha256": "71a722dded64cfcc634d679e55ddbd257058da888ada914f7f7150b8d88c2d62",
+          "bytes": 67019246
+        },
+        "sourceObjects": [
+          {
+            "source": "src/PhysicsWorld.cpp",
+            "sourceSHA256": "6a60747e4bb970821e2ebb68adbe78ea89f6fdc3db9137b5160290ca1da2f193",
+            "sha256": "6d70c3f9ff8c932ddc8bac2b0a7ab47539813d95e0ea17d7e000e77465702ed1",
+            "bytes": 1495011
+          },
+          {
+            "source": "src/WorldCharacter.cpp",
+            "sourceSHA256": "0c87e03acfba2a1c837da183e7731e35f70df98497d61a864c96ba5e21b064ae",
+            "sha256": "0639f4c85d5032f30c72624c8e2d467b76d131061b5a03422f4e0e1112c467f0",
+            "bytes": 58951,
+            "frozenMember": "judas_engine.dir\\Release\\WorldCharacter.obj"
+          },
+          {
+            "source": "src/WorldRegions.cpp",
+            "sourceSHA256": "5fa0cec1229c970acc0a593c0f795ac98edb4dfb96d0f9bd49757aa07fc90002",
+            "sha256": "f750b1741a64545746308e2b10dfe54064a5d87dea0af62462532a7e4d9f76b1",
+            "bytes": 717931,
+            "frozenMember": "judas_engine.dir\\Release\\WorldRegions.obj"
+          },
+          {
+            "source": "src/WorldScripts.cpp",
+            "sourceSHA256": "ec660e35570c269b11a1ff88b75d5c79b0b2a96efe0f1cdbe32199c9157bfef1",
+            "sha256": "0f21acf19d97d77a4246c90a7e1a5080b840434fa4ff7fae6eaec2063becfe1b",
+            "bytes": 604629,
+            "frozenMember": "judas_engine.dir\\Release\\WorldScripts.obj"
+          },
+          {
+            "source": "src/WorldPersistence.cpp",
+            "sourceSHA256": "1a02f42c466ea035be981c52d38d38bddeb0cb85eaa7c8b07fcfc8d9746d1101",
+            "sha256": "a3c56eddd5d6298c350f96f7605b6b31b854a01989d9ae364ccc2ba9aab78e83",
+            "bytes": 1272622,
+            "frozenMember": "C:\\JudasValidation\\M78ContinuationBuild\\cold-repair-final-v2\\objects\\WorldPersistence.obj"
+          }
+        ],
+        "testAndApplicationInputs": [
+          {
+            "source": "tests/ConsumerLifecycleAuditTests.cpp",
+            "sourceSHA256": "fb31e197643a9b64893bf342740d90919231350d05f9f692864832d0c42a1ff3",
+            "sha256": "c922b3f0fdfd7a1fb7522dc2f5f6443d8cd5aa068fe89ef96fab99e2fd8ea53c",
+            "bytes": 2006612,
+            "reuseOriginal": false
+          },
+          {
+            "source": "src/Application.cpp",
+            "sourceSHA256": "752b26046f3e88c53920b53ae734beb3dd13792ebf2f1d2bb7686c90a1834ae0",
+            "sha256": "6494f91d10083a1c1635c6355152ad3777ef479a87788c3c813d84b15f6146d6",
+            "bytes": 295887,
+            "reuseOriginal": true
+          },
+          {
+            "source": "src/RuntimeOptions.cpp",
+            "sourceSHA256": "dcb18ceff20cee92c4eda479efc3e70765ee55e2ee84c60bf1dfdf5454f363ff",
+            "sha256": "746c33d85f3cf3f83b4d9b93eabbedac2264456a9e7efe26a01dd29e6a1b4e26",
+            "bytes": 229861,
+            "reuseOriginal": true
+          },
+          {
+            "source": "src/RuntimeDiagnostics.cpp",
+            "sourceSHA256": "a63c2d3e661c6d938cca894933fa3da32e5807ad8bded98880af388bb27af9d9",
+            "sha256": "dd51a50e14ab20dc62c2bf1b79ed8e271e532b31faf70eb5ff75a246189beeef",
+            "bytes": 20401,
+            "reuseOriginal": true
+          },
+          {
+            "source": "src/TestHarness.cpp",
+            "sourceSHA256": "9c16ca348038ab35fb992dafb43031cc4bfe5c844b680473d73ed56dd6aeedcc",
+            "sha256": "560e035b88abfecc7dfd27bd572bebd75d3ba404280a881db5dd4931fd5e3daf",
+            "bytes": 340964,
+            "reuseOriginal": true
+          }
+        ],
+        "receipts": [
+          {
+            "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-consumer_lifecycle-build.json",
+            "sha256": "3c370be9621abec5f15e8318c285cded58bd534b99c4f786423c755ce284055f",
+            "bytes": 35781
+          },
+          {
+            "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-consumer_lifecycle.json",
+            "sha256": "66b4934c3ac9ee1fde276687ac7791c0550883e808d944fd0bf783c345563ec2",
+            "bytes": 13645
+          },
+          {
+            "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-consumer_lifecycle-RESULT.json",
+            "sha256": "50b393b8f2e70b42813cd657ce5238eaa0455049852ed788095cb7da64cb50e3",
+            "bytes": 25603
+          },
+          {
+            "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-consumer_lifecycle.stdout.log",
+            "sha256": "a63e2a9c7ce40552dd098da4befbb9adefae6071a11265cd850d69a74c40fd46",
+            "bytes": 4842
+          },
+          {
+            "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-consumer_lifecycle-link.log",
+            "sha256": "61d492d07c0da71ea667719940fa833962016af0a61a99e5e1cbd7045c8b807c",
+            "bytes": 33930
+          }
+        ],
+        "identityReceipt": {
+          "path": "docs/evidence/m78-lifecycle/native/FINAL_BINARY_IDENTITY.json",
+          "sha256": "3d0919c846396cce6d6b067d103ae7251c1dd1a4ce972a00e58cfee2255888cb",
+          "bytes": 110824
+        },
+        "meaning": "Native Windows functional execution of this exact bounded driver; no full API/component/asset/mechanism or hardware certification.",
+        "sharedDriverChecks": 55,
+        "sharedDriverFailures": 0,
+        "sharedDriverFrames": 28,
+        "applicationExit": 0,
+        "actualKnownFolderSaveRoot": "C:/Windows/system32/config/systemprofile/AppData/Local/judas/games/4d25781dfa51ae22bd6622d60bc9984066d78b575b062bc861454a2b13290e7d/Saves/Slots",
+        "sharedCountMeaning": "One 55-check driver in 28 frames covers both public cases; not 55 independent passes per case. Embedded RESULT scope says Linux, while actual MSVC/process/binary receipts establish Windows execution."
+      }
+    },
+    {
+      "id": "LIF-001-PUBLICATION",
+      "relatedFeatureIds": [
+        "JS.Character.configure",
+        "JS.Character.enabled",
+        "A.04",
+        "C.04",
+        "C.06",
+        "D.01"
+      ],
+      "requirements": [
+        "Current generic CharacterMotor/query publication contract; original M49 brief unavailable in frozen crosswalk"
+      ],
+      "source": "tests/CharacterPublicationTests.cpp",
+      "status": "LINUX/NATIVE SCOPED CORRECTION PASS — preserved identical-driver Linux checkpoint failures; human/hardware pending",
+      "linuxStatus": "pass-within-envelope",
+      "windowsStatus": "pass-within-named-functional-envelope",
+      "beforeReceipt": "docs/evidence/m78-closure/audit-lifecycle/linux-current-01/run-04/streaming-fixture/RESULT.json",
+      "oracle": "Actual generation-safe proxy pose, enabled state, layer/mask and isolated tags must already match authoring/configuration at creation/replacement/revisit, before ordinary simulation refresh; rejected layer/tag controls must miss.",
+      "remaining": [
+        "No engine-wide filter/all-transition/shape-pair guarantee.",
+        "Old observed 46/8 failure remains unchanged and is not promoted by source inspection.",
+        "Current native functional receipts are attached; human/hardware acceptance and broader combinations remain pending; no whole-group promotion."
+      ],
+      "receipts": [
+        {
+          "path": "docs/evidence/m78-lifecycle/character-publication/before/fixture/RESULT.json",
+          "sha256": "13cee2066ad7454251745b59cbddd2af976532f43a96004dbb0de73c1908eed5",
+          "bytes": 13101
+        },
+        {
+          "path": "docs/evidence/m78-lifecycle/character-publication/before/RECEIPTS.json",
+          "sha256": "c7945240315d1c40d51b2412e37e298bc9a42440c88bf4b8bd979aaae8112b7f",
+          "bytes": 3994
+        },
+        {
+          "path": "docs/evidence/m78-lifecycle/character-publication/before/IDENTITY.json",
+          "sha256": "10a125ecb6deb90f95ada5c76692fd2dea00cf808ca552f71c84da8acd0ce9e7",
+          "bytes": 6426
+        },
+        {
+          "path": "docs/evidence/m78-lifecycle/character-publication/before/run.stdout.log",
+          "sha256": "5a6aec847107beaf1c85b6d1c4e4f316a6c2663cdb4830ea33f7f98c581ba50a",
+          "bytes": 7042
+        },
+        {
+          "path": "docs/evidence/m78-lifecycle/character-publication/before/compiled-source.cpp",
+          "sha256": "29ca396d1a8def143c08ebb42d95b34a959edb05e2fb16520d57f3ee4d1546b6",
+          "bytes": 15351
+        },
+        {
+          "path": "docs/evidence/m78-lifecycle/character-publication/after/fixture/RESULT.json",
+          "sha256": "b967814fd65c6050528ccabbfb229a0de263f3b98e634531d8216f79659a0c70",
+          "bytes": 13061
+        },
+        {
+          "path": "docs/evidence/m78-lifecycle/character-publication/after/RECEIPTS.json",
+          "sha256": "66699c83087a110359500353f03a7085134a004ce0c174ed3f3cafae22aace2c",
+          "bytes": 2146
+        },
+        {
+          "path": "docs/evidence/m78-lifecycle/character-publication/after/IDENTITY.json",
+          "sha256": "c9133b14bf6ad4e3603bfd53169d291bc010aac33a300e5871013d50cd3f9531",
+          "bytes": 6653
+        },
+        {
+          "path": "docs/evidence/m78-lifecycle/character-publication/after/run.stdout.log",
+          "sha256": "b58960853fd42e9825c754bcee7100640a707c1cec7fffee9088e3313ec9895b",
+          "bytes": 7041
+        },
+        {
+          "path": "docs/evidence/m78-lifecycle/character-publication/after/compiled-source.cpp",
+          "sha256": "29ca396d1a8def143c08ebb42d95b34a959edb05e2fb16520d57f3ee4d1546b6",
+          "bytes": 15351
+        }
+      ],
+      "before": {
+        "checks": 131,
+        "failures": 39,
+        "identity": {
+          "source": "/home/conner/Documents/GitHub/Project-Judas/tests/CharacterPublicationTests.cpp",
+          "sourceSHA256": "29ca396d1a8def143c08ebb42d95b34a959edb05e2fb16520d57f3ee4d1546b6",
+          "archive": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-closure/final-build/libjudas_engine.a",
+          "archiveSHA256": "a5ec91426ce0f8476db3bbdbda8ad52f3094d38c37b64a0052c7ef4bd37c2e1f",
+          "templateSHA256": "eba65a1c54a4b525500f38496b146465c946f535d7095f25cd32e20e84ead4b8",
+          "compile": [
+            "/usr/bin/c++",
+            "-DDT_VIRTUAL_QUERYFILTER",
+            "-DMA_NO_ENCODING",
+            "-DMA_NO_GENERATION",
+            "-DMA_NO_RESOURCE_MANAGER",
+            "-I/home/conner/Documents/GitHub/Project-Judas/src",
+            "-I/home/conner/Documents/GitHub/Project-Judas/third_party/glad/include",
+            "-I/home/conner/Documents/GitHub/Project-Judas/third_party/miniaudio",
+            "-I/home/conner/Documents/GitHub/Project-Judas/third_party/verblib",
+            "-I/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/_deps/judas_freetype-build/include",
+            "-I/home/conner/Documents/GitHub/Project-Judas/build/_deps/judas_freetype-src/include",
+            "-I/home/conner/Documents/GitHub/Project-Judas/build/_deps/judas_harfbuzz-src/src",
+            "-isystem",
+            "/home/conner/Documents/GitHub/Project-Judas/third_party/quickhull",
+            "-isystem",
+            "/usr/include/SDL2",
+            "-isystem",
+            "/home/conner/Documents/GitHub/Project-Judas/third_party/recastnavigation/Detour/Include",
+            "-isystem",
+            "/home/conner/Documents/GitHub/Project-Judas/third_party/recastnavigation/DetourTileCache/Include",
+            "-isystem",
+            "/home/conner/Documents/GitHub/Project-Judas/third_party/recastnavigation/DetourCrowd/Include",
+            "-isystem",
+            "/home/conner/Documents/GitHub/Project-Judas/third_party/quickjs",
+            "-isystem",
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/unicode/icu/include",
+            "-O3",
+            "-DNDEBUG",
+            "-std=gnu++17",
+            "-Wall",
+            "-Wextra",
+            "-c",
+            "/home/conner/Documents/GitHub/Project-Judas/tests/CharacterPublicationTests.cpp",
+            "-o",
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-lifecycle/character-before-04/driver.o"
+          ],
+          "link": [
+            "/usr/bin/c++",
+            "-O3",
+            "-DNDEBUG",
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-lifecycle/character-before-04/driver.o",
+            "-o",
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-lifecycle/character-before-04/driver",
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-closure/final-build/libjudas_engine.a",
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/libjudas_app_icon.a",
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/libjudas_materials.a",
+            "/usr/lib/x86_64-linux-gnu/libSDL2.so",
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/libjudas_glad.a",
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/libjudas_audio_backend.a",
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/libjudas_navigation_backend.a",
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/libjudas_quickjs.a",
+            "-lm",
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/libjudas_profiler.a",
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/_deps/judas_freetype-build/libfreetype.a",
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/_deps/judas_harfbuzz-build/libharfbuzz.a",
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/unicode/icu/lib/libicui18n.a",
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/unicode/icu/lib/libicuuc.a",
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/unicode/icu/lib/libicudata.a",
+            "-ldl"
+          ],
+          "linkInputs": {
+            "/usr/bin/c++": "e6718f7e0c7d057c3ff77b550c603da9bc4030e3ede3c053705acce1293dbe4d",
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-closure/final-build/libjudas_engine.a": "a5ec91426ce0f8476db3bbdbda8ad52f3094d38c37b64a0052c7ef4bd37c2e1f",
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/libjudas_app_icon.a": "1fab532ad9c5dd1fae1c33bda5aabd8d2c584047430e7ab5d6ead6ab4b5d9540",
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/libjudas_materials.a": "3cea886c6bcb6ece6a20885e2216d26cb8a53b440f404f6c805157cf656936f7",
+            "/usr/lib/x86_64-linux-gnu/libSDL2.so": "3f61932a8856a6ac99b59acee2aaf23a2d72bf75ffb4fe3c53d1ff228210a15a",
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/libjudas_glad.a": "9d3394b11ea0d111b7e3c5037f820d425e61e4bf503070872d848badcb01bbeb",
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/libjudas_audio_backend.a": "b23eea1b0d42cca4fe7e766d2fc757fa74ada3196ca65b83e0b90a87be161400",
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/libjudas_navigation_backend.a": "4d842dc948f96022dcd0458d0c1f6b686f4e914b4e84c373e57075ffb14083f5",
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/libjudas_quickjs.a": "b1d7868584c82ad5d1cfd016feb4f12f2905405042e1da93a1d791369a09c80e",
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/libjudas_profiler.a": "822208ed4332718329b2cbbe02a7e8f29839d9c3f0efed03ccb711814ace265d",
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/_deps/judas_freetype-build/libfreetype.a": "997b0191b40a3289fd301ba87ccf70fad120633d0acc2a8cb2ef79b69d8a07e5",
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/_deps/judas_harfbuzz-build/libharfbuzz.a": "50a904cb2ef3ff1afcef1ebc93dbfab66ca849117327f4e3eb12f352745d6048",
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/unicode/icu/lib/libicui18n.a": "3f60224cdf597cd765f69503aee34513a5d69a32f5b267e3cdf1c47e367411f0",
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/unicode/icu/lib/libicuuc.a": "413af571dfa69d9928c59caed5bac1312d2d48e5362e9d03e68d6184d2a92083",
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/unicode/icu/lib/libicudata.a": "f62ffb718fbd07e1a5195fd637631358d46882bde564739bbb73dead4b260fc2"
+          },
+          "objectSHA256": "956a902b3692573d93dbc6329151f95b17a1e62d19f192416a9179a3289d7346"
+        }
+      },
+      "after": {
+        "checks": 131,
+        "failures": 0,
+        "identity": {
+          "source": "/home/conner/Documents/GitHub/Project-Judas/tests/CharacterPublicationTests.cpp",
+          "sourceSHA256": "29ca396d1a8def143c08ebb42d95b34a959edb05e2fb16520d57f3ee4d1546b6",
+          "archive": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-lifecycle/final-build-v2/libjudas_engine.a",
+          "archiveSHA256": "e2e4aec5ed13c6a6e5eb4db0f528682671ad879ae27080665699d8b61681618f",
+          "templateSHA256": "eba65a1c54a4b525500f38496b146465c946f535d7095f25cd32e20e84ead4b8",
+          "compile": [
+            "/usr/bin/c++",
+            "-DDT_VIRTUAL_QUERYFILTER",
+            "-DMA_NO_ENCODING",
+            "-DMA_NO_GENERATION",
+            "-DMA_NO_RESOURCE_MANAGER",
+            "-I/home/conner/Documents/GitHub/Project-Judas/src",
+            "-I/home/conner/Documents/GitHub/Project-Judas/third_party/glad/include",
+            "-I/home/conner/Documents/GitHub/Project-Judas/third_party/miniaudio",
+            "-I/home/conner/Documents/GitHub/Project-Judas/third_party/verblib",
+            "-I/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/_deps/judas_freetype-build/include",
+            "-I/home/conner/Documents/GitHub/Project-Judas/build/_deps/judas_freetype-src/include",
+            "-I/home/conner/Documents/GitHub/Project-Judas/build/_deps/judas_harfbuzz-src/src",
+            "-isystem",
+            "/home/conner/Documents/GitHub/Project-Judas/third_party/quickhull",
+            "-isystem",
+            "/usr/include/SDL2",
+            "-isystem",
+            "/home/conner/Documents/GitHub/Project-Judas/third_party/recastnavigation/Detour/Include",
+            "-isystem",
+            "/home/conner/Documents/GitHub/Project-Judas/third_party/recastnavigation/DetourTileCache/Include",
+            "-isystem",
+            "/home/conner/Documents/GitHub/Project-Judas/third_party/recastnavigation/DetourCrowd/Include",
+            "-isystem",
+            "/home/conner/Documents/GitHub/Project-Judas/third_party/quickjs",
+            "-isystem",
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/unicode/icu/include",
+            "-O3",
+            "-DNDEBUG",
+            "-std=gnu++17",
+            "-Wall",
+            "-Wextra",
+            "-c",
+            "/home/conner/Documents/GitHub/Project-Judas/tests/CharacterPublicationTests.cpp",
+            "-o",
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-lifecycle/character-after-01/driver.o"
+          ],
+          "link": [
+            "/usr/bin/c++",
+            "-O3",
+            "-DNDEBUG",
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-lifecycle/character-after-01/driver.o",
+            "-o",
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-lifecycle/character-after-01/driver",
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-lifecycle/final-build-v2/libjudas_engine.a",
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/libjudas_app_icon.a",
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/libjudas_materials.a",
+            "/usr/lib/x86_64-linux-gnu/libSDL2.so",
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/libjudas_glad.a",
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/libjudas_audio_backend.a",
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/libjudas_navigation_backend.a",
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/libjudas_quickjs.a",
+            "-lm",
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/libjudas_profiler.a",
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/_deps/judas_freetype-build/libfreetype.a",
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/_deps/judas_harfbuzz-build/libharfbuzz.a",
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/unicode/icu/lib/libicui18n.a",
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/unicode/icu/lib/libicuuc.a",
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/unicode/icu/lib/libicudata.a",
+            "-ldl"
+          ],
+          "linkInputs": {
+            "/usr/bin/c++": "e6718f7e0c7d057c3ff77b550c603da9bc4030e3ede3c053705acce1293dbe4d",
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-lifecycle/final-build-v2/libjudas_engine.a": "e2e4aec5ed13c6a6e5eb4db0f528682671ad879ae27080665699d8b61681618f",
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/libjudas_app_icon.a": "1fab532ad9c5dd1fae1c33bda5aabd8d2c584047430e7ab5d6ead6ab4b5d9540",
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/libjudas_materials.a": "3cea886c6bcb6ece6a20885e2216d26cb8a53b440f404f6c805157cf656936f7",
+            "/usr/lib/x86_64-linux-gnu/libSDL2.so": "3f61932a8856a6ac99b59acee2aaf23a2d72bf75ffb4fe3c53d1ff228210a15a",
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/libjudas_glad.a": "9d3394b11ea0d111b7e3c5037f820d425e61e4bf503070872d848badcb01bbeb",
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/libjudas_audio_backend.a": "b23eea1b0d42cca4fe7e766d2fc757fa74ada3196ca65b83e0b90a87be161400",
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/libjudas_navigation_backend.a": "4d842dc948f96022dcd0458d0c1f6b686f4e914b4e84c373e57075ffb14083f5",
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/libjudas_quickjs.a": "b1d7868584c82ad5d1cfd016feb4f12f2905405042e1da93a1d791369a09c80e",
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/libjudas_profiler.a": "822208ed4332718329b2cbbe02a7e8f29839d9c3f0efed03ccb711814ace265d",
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/_deps/judas_freetype-build/libfreetype.a": "997b0191b40a3289fd301ba87ccf70fad120633d0acc2a8cb2ef79b69d8a07e5",
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/_deps/judas_harfbuzz-build/libharfbuzz.a": "50a904cb2ef3ff1afcef1ebc93dbfab66ca849117327f4e3eb12f352745d6048",
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/unicode/icu/lib/libicui18n.a": "3f60224cdf597cd765f69503aee34513a5d69a32f5b267e3cdf1c47e367411f0",
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/unicode/icu/lib/libicuuc.a": "413af571dfa69d9928c59caed5bac1312d2d48e5362e9d03e68d6184d2a92083",
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/unicode/icu/lib/libicudata.a": "f62ffb718fbd07e1a5195fd637631358d46882bde564739bbb73dead4b260fc2"
+          },
+          "reusedObject": {
+            "path": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-lifecycle/character-before-04/driver.o",
+            "sha256": "956a902b3692573d93dbc6329151f95b17a1e62d19f192416a9179a3289d7346"
+          },
+          "objectSHA256": "956a902b3692573d93dbc6329151f95b17a1e62d19f192416a9179a3289d7346"
+        }
+      },
+      "identicalTestSourceBeforeAfter": true,
+      "observedResult": "Same test source: 131/39 at checkpoint archive, 131/0 at correction archive.",
+      "mappingScope": "Related mechanism groups are navigation links only. Exact enabled/layer/mask/authored-tag/offset publication assertions do not prove runtime tag mutation, contact events, physical animation or input.",
+      "native": {
+        "nativeCaseId": "character_publication",
+        "scope": "Actual authored motor creation/recreation, offsets, teleport, disabled/filter/tag publication and streaming private/publish/retire/revisit. Not runtime tag mutator behavior (separate deferred LIF-003).",
+        "executedRuns": [
+          {
+            "run": "character_publication",
+            "exitCode": 0,
+            "checks": 131,
+            "failures": 0,
+            "seconds": 1.4095608,
+            "receipt": "docs/evidence/m78-lifecycle/native/m78-lifecycle-character_publication-build.json",
+            "scope": "Actual authored motor creation/recreation, offsets, teleport, disabled/filter/tag publication and streaming private/publish/retire/revisit. Not runtime tag mutator behavior (separate deferred LIF-003)."
+          }
+        ],
+        "binarySHA256": "a22de84d52a6c8bf856e2df444f5174e866659911fe43648aeedead5f5a277e1",
+        "binaryBytes": 7774720,
+        "archive": {
+          "path": "C:\\JudasValidation\\M78ContinuationBuild\\cold-repair-final-v2\\judas_engine.lib",
+          "sha256": "71a722dded64cfcc634d679e55ddbd257058da888ada914f7f7150b8d88c2d62",
+          "bytes": 67019246
+        },
+        "sourceObjects": [
+          {
+            "source": "src/PhysicsWorld.cpp",
+            "sourceSHA256": "6a60747e4bb970821e2ebb68adbe78ea89f6fdc3db9137b5160290ca1da2f193",
+            "sha256": "6d70c3f9ff8c932ddc8bac2b0a7ab47539813d95e0ea17d7e000e77465702ed1",
+            "bytes": 1495011
+          },
+          {
+            "source": "src/WorldCharacter.cpp",
+            "sourceSHA256": "0c87e03acfba2a1c837da183e7731e35f70df98497d61a864c96ba5e21b064ae",
+            "sha256": "0639f4c85d5032f30c72624c8e2d467b76d131061b5a03422f4e0e1112c467f0",
+            "bytes": 58951,
+            "frozenMember": "judas_engine.dir\\Release\\WorldCharacter.obj"
+          },
+          {
+            "source": "src/WorldRegions.cpp",
+            "sourceSHA256": "5fa0cec1229c970acc0a593c0f795ac98edb4dfb96d0f9bd49757aa07fc90002",
+            "sha256": "f750b1741a64545746308e2b10dfe54064a5d87dea0af62462532a7e4d9f76b1",
+            "bytes": 717931,
+            "frozenMember": "judas_engine.dir\\Release\\WorldRegions.obj"
+          },
+          {
+            "source": "src/WorldScripts.cpp",
+            "sourceSHA256": "ec660e35570c269b11a1ff88b75d5c79b0b2a96efe0f1cdbe32199c9157bfef1",
+            "sha256": "0f21acf19d97d77a4246c90a7e1a5080b840434fa4ff7fae6eaec2063becfe1b",
+            "bytes": 604629,
+            "frozenMember": "judas_engine.dir\\Release\\WorldScripts.obj"
+          },
+          {
+            "source": "src/WorldPersistence.cpp",
+            "sourceSHA256": "1a02f42c466ea035be981c52d38d38bddeb0cb85eaa7c8b07fcfc8d9746d1101",
+            "sha256": "a3c56eddd5d6298c350f96f7605b6b31b854a01989d9ae364ccc2ba9aab78e83",
+            "bytes": 1272622,
+            "frozenMember": "C:\\JudasValidation\\M78ContinuationBuild\\cold-repair-final-v2\\objects\\WorldPersistence.obj"
+          }
+        ],
+        "testAndApplicationInputs": [
+          {
+            "source": "tests/CharacterPublicationTests.cpp",
+            "sourceSHA256": "29ca396d1a8def143c08ebb42d95b34a959edb05e2fb16520d57f3ee4d1546b6",
+            "sha256": "e86c5046892a84b0c070d3c82129a34df013929ffa16193315975628ef0091cd",
+            "bytes": 1805180,
+            "reuseOriginal": false
+          }
+        ],
+        "receipts": [
+          {
+            "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-character_publication-build.json",
+            "sha256": "dbdf073998d4aaa4e46ff1e53fc04fbcb307407e769544b73aed1a8e4aa39391",
+            "bytes": 29351
+          },
+          {
+            "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-character_publication.json",
+            "sha256": "7e0d787ea8abd3f76e4048df399399e845cbe0764cf6f7551ec4bc41fb890efe",
+            "bytes": 12040
+          },
+          {
+            "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-character_publication-RESULT.json",
+            "sha256": "8c0cc3c77f3b6d576f2da96e107145ef4b4c5ac0b8e12142fe6d1070af64b377",
+            "bytes": 13590
+          },
+          {
+            "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-character_publication.stdout.log",
+            "sha256": "d029712f844356bfd8208bc898ccd032811d07f00d8b19bcbc3fb48c1f6a9722",
+            "bytes": 7173
+          },
+          {
+            "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-character_publication-link.log",
+            "sha256": "61d492d07c0da71ea667719940fa833962016af0a61a99e5e1cbd7045c8b807c",
+            "bytes": 33930
+          }
+        ],
+        "identityReceipt": {
+          "path": "docs/evidence/m78-lifecycle/native/FINAL_BINARY_IDENTITY.json",
+          "sha256": "3d0919c846396cce6d6b067d103ae7251c1dd1a4ce972a00e58cfee2255888cb",
+          "bytes": 110824
+        },
+        "meaning": "Native Windows functional execution of this exact bounded driver; no full API/component/asset/mechanism or hardware certification."
+      }
+    },
+    {
+      "id": "LIF-002-SAVE-EXCLUSION",
+      "relatedFeatureIds": [
+        "JS.saves.exclude",
+        "I.01",
+        "I.03",
+        "A.06"
+      ],
+      "requirements": [
+        "M61 sections 6 and 10: legal excluded actor ownership and private restore"
+      ],
+      "source": "tests/SaveExclusionTests.cpp",
+      "status": "LINUX/NATIVE SCOPED CORRECTION PASS — preserved identical-driver Linux checkpoint failures; human/hardware pending",
+      "linuxStatus": "pass-within-envelope",
+      "windowsStatus": "pass-within-named-functional-envelope",
+      "beforeReceipt": "docs/evidence/m78-closure/audit-lifecycle/save-exclusion/linux-current-01/fixture/RESULT.json",
+      "oracle": "Retained/excluded/reincluded ordinary actors and real mapped articulation body ownership are captured/restored coherently; legal exclusion omits sleep ownership, while malformed orphan/duplicate/truncated payloads still reject.",
+      "remaining": [
+        "Previously captured orphan-bearing snapshots are not retroactively repaired.",
+        "No whole exclusion/save-participant/streaming lifecycle certificate.",
+        "Current native functional receipts are attached; human/hardware acceptance and broader combinations remain pending; no whole-group promotion."
+      ],
+      "receipts": [
+        {
+          "path": "docs/evidence/m78-lifecycle/save-exclusion/before/fixture/RESULT.json",
+          "sha256": "378107dd304f2b2730c26cb10a5856c368d9b7e1f4f969c9d421dbc312631d02",
+          "bytes": 10502
+        },
+        {
+          "path": "docs/evidence/m78-lifecycle/save-exclusion/before/RECEIPTS.json",
+          "sha256": "7131b11d1e942d609ee94b8812d8ec719cd08a02d3e23cafa37f77d176edd99d",
+          "bytes": 4015
+        },
+        {
+          "path": "docs/evidence/m78-lifecycle/save-exclusion/before/IDENTITY.json",
+          "sha256": "93d94b3cfdcdb3c5b00e883a0a433d2f7cfe10cf9af2583fcf1fa73c133d86be",
+          "bytes": 6397
+        },
+        {
+          "path": "docs/evidence/m78-lifecycle/save-exclusion/before/run.stdout.log",
+          "sha256": "232a5f3b4409b1f6d27425c2768e91ee0730a8e0bb34314d718092e58e738249",
+          "bytes": 3915
+        },
+        {
+          "path": "docs/evidence/m78-lifecycle/save-exclusion/before/compiled-source.cpp",
+          "sha256": "cc3716efd6167845171d9bd2840dc0b2784edb20c076ecf550f66e4d583e0e7d",
+          "bytes": 12933
+        },
+        {
+          "path": "docs/evidence/m78-lifecycle/save-exclusion/after/fixture/RESULT.json",
+          "sha256": "d3d4e51310d4364f07de7b4c25a383ec8b912318fea5d60232058b83cd23a041",
+          "bytes": 10698
+        },
+        {
+          "path": "docs/evidence/m78-lifecycle/save-exclusion/after/RECEIPTS.json",
+          "sha256": "8badda269de6cbb35b0ac3bb82fbd20efe3ce8e61727c1b83a5b844888ab190c",
+          "bytes": 2179
+        },
+        {
+          "path": "docs/evidence/m78-lifecycle/save-exclusion/after/IDENTITY.json",
+          "sha256": "352dd854dd455b872a73ab62678f358e261b277bc1d5ef7195e5047e62becde3",
+          "bytes": 6619
+        },
+        {
+          "path": "docs/evidence/m78-lifecycle/save-exclusion/after/run.stdout.log",
+          "sha256": "9cbdf3d9cf73746cc2cb8f8d9082e8c9bf428fe83293f79cdf8a70c47b35c9ff",
+          "bytes": 4017
+        },
+        {
+          "path": "docs/evidence/m78-lifecycle/save-exclusion/after/compiled-source.cpp",
+          "sha256": "cc3716efd6167845171d9bd2840dc0b2784edb20c076ecf550f66e4d583e0e7d",
+          "bytes": 12933
+        }
+      ],
+      "before": {
+        "checks": 75,
+        "failures": 2,
+        "identity": {
+          "source": "/home/conner/Documents/GitHub/Project-Judas/tests/SaveExclusionTests.cpp",
+          "sourceSHA256": "cc3716efd6167845171d9bd2840dc0b2784edb20c076ecf550f66e4d583e0e7d",
+          "archive": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-closure/final-build/libjudas_engine.a",
+          "archiveSHA256": "a5ec91426ce0f8476db3bbdbda8ad52f3094d38c37b64a0052c7ef4bd37c2e1f",
+          "templateSHA256": "eba65a1c54a4b525500f38496b146465c946f535d7095f25cd32e20e84ead4b8",
+          "compile": [
+            "/usr/bin/c++",
+            "-DDT_VIRTUAL_QUERYFILTER",
+            "-DMA_NO_ENCODING",
+            "-DMA_NO_GENERATION",
+            "-DMA_NO_RESOURCE_MANAGER",
+            "-I/home/conner/Documents/GitHub/Project-Judas/src",
+            "-I/home/conner/Documents/GitHub/Project-Judas/third_party/glad/include",
+            "-I/home/conner/Documents/GitHub/Project-Judas/third_party/miniaudio",
+            "-I/home/conner/Documents/GitHub/Project-Judas/third_party/verblib",
+            "-I/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/_deps/judas_freetype-build/include",
+            "-I/home/conner/Documents/GitHub/Project-Judas/build/_deps/judas_freetype-src/include",
+            "-I/home/conner/Documents/GitHub/Project-Judas/build/_deps/judas_harfbuzz-src/src",
+            "-isystem",
+            "/home/conner/Documents/GitHub/Project-Judas/third_party/quickhull",
+            "-isystem",
+            "/usr/include/SDL2",
+            "-isystem",
+            "/home/conner/Documents/GitHub/Project-Judas/third_party/recastnavigation/Detour/Include",
+            "-isystem",
+            "/home/conner/Documents/GitHub/Project-Judas/third_party/recastnavigation/DetourTileCache/Include",
+            "-isystem",
+            "/home/conner/Documents/GitHub/Project-Judas/third_party/recastnavigation/DetourCrowd/Include",
+            "-isystem",
+            "/home/conner/Documents/GitHub/Project-Judas/third_party/quickjs",
+            "-isystem",
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/unicode/icu/include",
+            "-O3",
+            "-DNDEBUG",
+            "-std=gnu++17",
+            "-Wall",
+            "-Wextra",
+            "-c",
+            "/home/conner/Documents/GitHub/Project-Judas/tests/SaveExclusionTests.cpp",
+            "-o",
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-lifecycle/save-before-02/driver.o"
+          ],
+          "link": [
+            "/usr/bin/c++",
+            "-O3",
+            "-DNDEBUG",
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-lifecycle/save-before-02/driver.o",
+            "-o",
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-lifecycle/save-before-02/driver",
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-closure/final-build/libjudas_engine.a",
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/libjudas_app_icon.a",
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/libjudas_materials.a",
+            "/usr/lib/x86_64-linux-gnu/libSDL2.so",
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/libjudas_glad.a",
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/libjudas_audio_backend.a",
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/libjudas_navigation_backend.a",
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/libjudas_quickjs.a",
+            "-lm",
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/libjudas_profiler.a",
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/_deps/judas_freetype-build/libfreetype.a",
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/_deps/judas_harfbuzz-build/libharfbuzz.a",
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/unicode/icu/lib/libicui18n.a",
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/unicode/icu/lib/libicuuc.a",
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/unicode/icu/lib/libicudata.a",
+            "-ldl"
+          ],
+          "linkInputs": {
+            "/usr/bin/c++": "e6718f7e0c7d057c3ff77b550c603da9bc4030e3ede3c053705acce1293dbe4d",
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-closure/final-build/libjudas_engine.a": "a5ec91426ce0f8476db3bbdbda8ad52f3094d38c37b64a0052c7ef4bd37c2e1f",
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/libjudas_app_icon.a": "1fab532ad9c5dd1fae1c33bda5aabd8d2c584047430e7ab5d6ead6ab4b5d9540",
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/libjudas_materials.a": "3cea886c6bcb6ece6a20885e2216d26cb8a53b440f404f6c805157cf656936f7",
+            "/usr/lib/x86_64-linux-gnu/libSDL2.so": "3f61932a8856a6ac99b59acee2aaf23a2d72bf75ffb4fe3c53d1ff228210a15a",
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/libjudas_glad.a": "9d3394b11ea0d111b7e3c5037f820d425e61e4bf503070872d848badcb01bbeb",
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/libjudas_audio_backend.a": "b23eea1b0d42cca4fe7e766d2fc757fa74ada3196ca65b83e0b90a87be161400",
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/libjudas_navigation_backend.a": "4d842dc948f96022dcd0458d0c1f6b686f4e914b4e84c373e57075ffb14083f5",
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/libjudas_quickjs.a": "b1d7868584c82ad5d1cfd016feb4f12f2905405042e1da93a1d791369a09c80e",
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/libjudas_profiler.a": "822208ed4332718329b2cbbe02a7e8f29839d9c3f0efed03ccb711814ace265d",
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/_deps/judas_freetype-build/libfreetype.a": "997b0191b40a3289fd301ba87ccf70fad120633d0acc2a8cb2ef79b69d8a07e5",
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/_deps/judas_harfbuzz-build/libharfbuzz.a": "50a904cb2ef3ff1afcef1ebc93dbfab66ca849117327f4e3eb12f352745d6048",
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/unicode/icu/lib/libicui18n.a": "3f60224cdf597cd765f69503aee34513a5d69a32f5b267e3cdf1c47e367411f0",
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/unicode/icu/lib/libicuuc.a": "413af571dfa69d9928c59caed5bac1312d2d48e5362e9d03e68d6184d2a92083",
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/unicode/icu/lib/libicudata.a": "f62ffb718fbd07e1a5195fd637631358d46882bde564739bbb73dead4b260fc2"
+          },
+          "objectSHA256": "9ebf9b629c7b479585a0ecb434ed2e2ff7e0a2714f3f99df0066b1f2673e340d"
+        }
+      },
+      "after": {
+        "checks": 77,
+        "failures": 0,
+        "identity": {
+          "source": "/home/conner/Documents/GitHub/Project-Judas/tests/SaveExclusionTests.cpp",
+          "sourceSHA256": "cc3716efd6167845171d9bd2840dc0b2784edb20c076ecf550f66e4d583e0e7d",
+          "archive": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-lifecycle/final-build-v2/libjudas_engine.a",
+          "archiveSHA256": "e2e4aec5ed13c6a6e5eb4db0f528682671ad879ae27080665699d8b61681618f",
+          "templateSHA256": "eba65a1c54a4b525500f38496b146465c946f535d7095f25cd32e20e84ead4b8",
+          "compile": [
+            "/usr/bin/c++",
+            "-DDT_VIRTUAL_QUERYFILTER",
+            "-DMA_NO_ENCODING",
+            "-DMA_NO_GENERATION",
+            "-DMA_NO_RESOURCE_MANAGER",
+            "-I/home/conner/Documents/GitHub/Project-Judas/src",
+            "-I/home/conner/Documents/GitHub/Project-Judas/third_party/glad/include",
+            "-I/home/conner/Documents/GitHub/Project-Judas/third_party/miniaudio",
+            "-I/home/conner/Documents/GitHub/Project-Judas/third_party/verblib",
+            "-I/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/_deps/judas_freetype-build/include",
+            "-I/home/conner/Documents/GitHub/Project-Judas/build/_deps/judas_freetype-src/include",
+            "-I/home/conner/Documents/GitHub/Project-Judas/build/_deps/judas_harfbuzz-src/src",
+            "-isystem",
+            "/home/conner/Documents/GitHub/Project-Judas/third_party/quickhull",
+            "-isystem",
+            "/usr/include/SDL2",
+            "-isystem",
+            "/home/conner/Documents/GitHub/Project-Judas/third_party/recastnavigation/Detour/Include",
+            "-isystem",
+            "/home/conner/Documents/GitHub/Project-Judas/third_party/recastnavigation/DetourTileCache/Include",
+            "-isystem",
+            "/home/conner/Documents/GitHub/Project-Judas/third_party/recastnavigation/DetourCrowd/Include",
+            "-isystem",
+            "/home/conner/Documents/GitHub/Project-Judas/third_party/quickjs",
+            "-isystem",
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/unicode/icu/include",
+            "-O3",
+            "-DNDEBUG",
+            "-std=gnu++17",
+            "-Wall",
+            "-Wextra",
+            "-c",
+            "/home/conner/Documents/GitHub/Project-Judas/tests/SaveExclusionTests.cpp",
+            "-o",
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-lifecycle/save-after-01/driver.o"
+          ],
+          "link": [
+            "/usr/bin/c++",
+            "-O3",
+            "-DNDEBUG",
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-lifecycle/save-after-01/driver.o",
+            "-o",
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-lifecycle/save-after-01/driver",
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-lifecycle/final-build-v2/libjudas_engine.a",
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/libjudas_app_icon.a",
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/libjudas_materials.a",
+            "/usr/lib/x86_64-linux-gnu/libSDL2.so",
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/libjudas_glad.a",
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/libjudas_audio_backend.a",
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/libjudas_navigation_backend.a",
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/libjudas_quickjs.a",
+            "-lm",
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/libjudas_profiler.a",
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/_deps/judas_freetype-build/libfreetype.a",
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/_deps/judas_harfbuzz-build/libharfbuzz.a",
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/unicode/icu/lib/libicui18n.a",
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/unicode/icu/lib/libicuuc.a",
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/unicode/icu/lib/libicudata.a",
+            "-ldl"
+          ],
+          "linkInputs": {
+            "/usr/bin/c++": "e6718f7e0c7d057c3ff77b550c603da9bc4030e3ede3c053705acce1293dbe4d",
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-lifecycle/final-build-v2/libjudas_engine.a": "e2e4aec5ed13c6a6e5eb4db0f528682671ad879ae27080665699d8b61681618f",
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/libjudas_app_icon.a": "1fab532ad9c5dd1fae1c33bda5aabd8d2c584047430e7ab5d6ead6ab4b5d9540",
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/libjudas_materials.a": "3cea886c6bcb6ece6a20885e2216d26cb8a53b440f404f6c805157cf656936f7",
+            "/usr/lib/x86_64-linux-gnu/libSDL2.so": "3f61932a8856a6ac99b59acee2aaf23a2d72bf75ffb4fe3c53d1ff228210a15a",
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/libjudas_glad.a": "9d3394b11ea0d111b7e3c5037f820d425e61e4bf503070872d848badcb01bbeb",
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/libjudas_audio_backend.a": "b23eea1b0d42cca4fe7e766d2fc757fa74ada3196ca65b83e0b90a87be161400",
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/libjudas_navigation_backend.a": "4d842dc948f96022dcd0458d0c1f6b686f4e914b4e84c373e57075ffb14083f5",
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/libjudas_quickjs.a": "b1d7868584c82ad5d1cfd016feb4f12f2905405042e1da93a1d791369a09c80e",
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/libjudas_profiler.a": "822208ed4332718329b2cbbe02a7e8f29839d9c3f0efed03ccb711814ace265d",
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/_deps/judas_freetype-build/libfreetype.a": "997b0191b40a3289fd301ba87ccf70fad120633d0acc2a8cb2ef79b69d8a07e5",
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/_deps/judas_harfbuzz-build/libharfbuzz.a": "50a904cb2ef3ff1afcef1ebc93dbfab66ca849117327f4e3eb12f352745d6048",
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/unicode/icu/lib/libicui18n.a": "3f60224cdf597cd765f69503aee34513a5d69a32f5b267e3cdf1c47e367411f0",
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/unicode/icu/lib/libicuuc.a": "413af571dfa69d9928c59caed5bac1312d2d48e5362e9d03e68d6184d2a92083",
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/unicode/icu/lib/libicudata.a": "f62ffb718fbd07e1a5195fd637631358d46882bde564739bbb73dead4b260fc2"
+          },
+          "reusedObject": {
+            "path": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-lifecycle/save-before-02/driver.o",
+            "sha256": "9ebf9b629c7b479585a0ecb434ed2e2ff7e0a2714f3f99df0066b1f2673e340d"
+          },
+          "objectSHA256": "9ebf9b629c7b479585a0ecb434ed2e2ff7e0a2714f3f99df0066b1f2673e340d"
+        }
+      },
+      "identicalTestSourceBeforeAfter": true,
+      "observedResult": "Same test source: 75/2 at checkpoint archive, 77/0 at correction archive.",
+      "native": {
+        "nativeCaseId": "save_exclusion",
+        "scope": "Actual retained/excluded/reincluded dynamic bodies, sleep/scene/contact ownership, strict malformed record rejection and retained mapped articulation restore.",
+        "executedRuns": [
+          {
+            "run": "save_exclusion",
+            "exitCode": 0,
+            "checks": 77,
+            "failures": 0,
+            "seconds": 0.2084685,
+            "receipt": "docs/evidence/m78-lifecycle/native/m78-lifecycle-save_exclusion-build.json",
+            "scope": "Actual retained/excluded/reincluded dynamic bodies, sleep/scene/contact ownership, strict malformed record rejection and retained mapped articulation restore."
+          }
+        ],
+        "binarySHA256": "a1d9035e74b6884bd493d77060720826e173ae181221b05640b00d51c93d2bed",
+        "binaryBytes": 7882240,
+        "archive": {
+          "path": "C:\\JudasValidation\\M78ContinuationBuild\\cold-repair-final-v2\\judas_engine.lib",
+          "sha256": "71a722dded64cfcc634d679e55ddbd257058da888ada914f7f7150b8d88c2d62",
+          "bytes": 67019246
+        },
+        "sourceObjects": [
+          {
+            "source": "src/PhysicsWorld.cpp",
+            "sourceSHA256": "6a60747e4bb970821e2ebb68adbe78ea89f6fdc3db9137b5160290ca1da2f193",
+            "sha256": "6d70c3f9ff8c932ddc8bac2b0a7ab47539813d95e0ea17d7e000e77465702ed1",
+            "bytes": 1495011
+          },
+          {
+            "source": "src/WorldCharacter.cpp",
+            "sourceSHA256": "0c87e03acfba2a1c837da183e7731e35f70df98497d61a864c96ba5e21b064ae",
+            "sha256": "0639f4c85d5032f30c72624c8e2d467b76d131061b5a03422f4e0e1112c467f0",
+            "bytes": 58951,
+            "frozenMember": "judas_engine.dir\\Release\\WorldCharacter.obj"
+          },
+          {
+            "source": "src/WorldRegions.cpp",
+            "sourceSHA256": "5fa0cec1229c970acc0a593c0f795ac98edb4dfb96d0f9bd49757aa07fc90002",
+            "sha256": "f750b1741a64545746308e2b10dfe54064a5d87dea0af62462532a7e4d9f76b1",
+            "bytes": 717931,
+            "frozenMember": "judas_engine.dir\\Release\\WorldRegions.obj"
+          },
+          {
+            "source": "src/WorldScripts.cpp",
+            "sourceSHA256": "ec660e35570c269b11a1ff88b75d5c79b0b2a96efe0f1cdbe32199c9157bfef1",
+            "sha256": "0f21acf19d97d77a4246c90a7e1a5080b840434fa4ff7fae6eaec2063becfe1b",
+            "bytes": 604629,
+            "frozenMember": "judas_engine.dir\\Release\\WorldScripts.obj"
+          },
+          {
+            "source": "src/WorldPersistence.cpp",
+            "sourceSHA256": "1a02f42c466ea035be981c52d38d38bddeb0cb85eaa7c8b07fcfc8d9746d1101",
+            "sha256": "a3c56eddd5d6298c350f96f7605b6b31b854a01989d9ae364ccc2ba9aab78e83",
+            "bytes": 1272622,
+            "frozenMember": "C:\\JudasValidation\\M78ContinuationBuild\\cold-repair-final-v2\\objects\\WorldPersistence.obj"
+          }
+        ],
+        "testAndApplicationInputs": [
+          {
+            "source": "tests/SaveExclusionTests.cpp",
+            "sourceSHA256": "cc3716efd6167845171d9bd2840dc0b2784edb20c076ecf550f66e4d583e0e7d",
+            "sha256": "fe7937029acd5ebe77d90f6f8af47554b14b1f970edd4a1eb9613172cfa9fed4",
+            "bytes": 1073012,
+            "reuseOriginal": false
+          }
+        ],
+        "receipts": [
+          {
+            "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-save_exclusion-build.json",
+            "sha256": "1e071a00566f3fa8512426f83d0afcf500ebd2abece55ad78da895bf754a1f75",
+            "bytes": 69819
+          },
+          {
+            "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-save_exclusion.json",
+            "sha256": "5136040322c73cc095bbcae91346fdb9cb925bbeacc5de51f3933823a4dfd6bf",
+            "bytes": 44728
+          },
+          {
+            "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-save_exclusion-RESULT.json",
+            "sha256": "d3d4e51310d4364f07de7b4c25a383ec8b912318fea5d60232058b83cd23a041",
+            "bytes": 10698
+          },
+          {
+            "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-save_exclusion.stdout.log",
+            "sha256": "f0d8fa1faee25cc4150ccfffa6d1d1453b6cbe1796657586927426512bf71d9c",
+            "bytes": 4095
+          },
+          {
+            "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-save_exclusion-link.log",
+            "sha256": "61d492d07c0da71ea667719940fa833962016af0a61a99e5e1cbd7045c8b807c",
+            "bytes": 33930
+          }
+        ],
+        "identityReceipt": {
+          "path": "docs/evidence/m78-lifecycle/native/FINAL_BINARY_IDENTITY.json",
+          "sha256": "3d0919c846396cce6d6b067d103ae7251c1dd1a4ce972a00e58cfee2255888cb",
+          "bytes": 110824
+        },
+        "meaning": "Native Windows functional execution of this exact bounded driver; no full API/component/asset/mechanism or hardware certification."
+      }
+    },
+    {
+      "id": "LIF-003-RUNTIME-MOTOR-TAGS",
+      "relatedFeatureIds": [
+        "JS.Entity.addTag",
+        "JS.Entity.removeTag",
+        "JS.Entity.hasTag",
+        "JS.physics.raycast",
+        "C.06",
+        "D.01"
+      ],
+      "requirements": [],
+      "requirementScope": "Current public contract/source path. No newly recovered M39/M49 original brief and no original-brief closure claim.",
+      "source": "docs/evidence/m78-lifecycle/motor-runtime-tags/DynamicMotorTags.cpp",
+      "status": "LINUX MEASURED FAILURE — pre-existing source-traced mismatch; separate correction deferred",
+      "linuxStatus": "failed-within-named-envelope",
+      "windowsStatus": "not-executed-current-candidate",
+      "oracle": "Actual capsule query tags must agree with current public logical AddTag/RemoveTag state immediately, after zero-time normal metadata update and on lazy construction; independent ordinary rigid-body positive/negative controls distinguish motor proxy publication.",
+      "checks": 20,
+      "failures": 5,
+      "runExit": 1,
+      "identity": {
+        "source": "/home/conner/Documents/GitHub/Project-Judas/docs/evidence/m78-lifecycle/motor-runtime-tags/DynamicMotorTags.cpp",
+        "sourceSHA256": "07d43fdc41ac54d5a75680aa90abdb70c04789f31be7cb77b07490ff7d197cbb",
+        "archive": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-lifecycle/final-build-v2/libjudas_engine.a",
+        "archiveSHA256": "e2e4aec5ed13c6a6e5eb4db0f528682671ad879ae27080665699d8b61681618f",
+        "templateSHA256": "eba65a1c54a4b525500f38496b146465c946f535d7095f25cd32e20e84ead4b8",
+        "compile": [
+          "/usr/bin/c++",
+          "-DDT_VIRTUAL_QUERYFILTER",
+          "-DMA_NO_ENCODING",
+          "-DMA_NO_GENERATION",
+          "-DMA_NO_RESOURCE_MANAGER",
+          "-I/home/conner/Documents/GitHub/Project-Judas/src",
+          "-I/home/conner/Documents/GitHub/Project-Judas/third_party/glad/include",
+          "-I/home/conner/Documents/GitHub/Project-Judas/third_party/miniaudio",
+          "-I/home/conner/Documents/GitHub/Project-Judas/third_party/verblib",
+          "-I/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/_deps/judas_freetype-build/include",
+          "-I/home/conner/Documents/GitHub/Project-Judas/build/_deps/judas_freetype-src/include",
+          "-I/home/conner/Documents/GitHub/Project-Judas/build/_deps/judas_harfbuzz-src/src",
+          "-isystem",
+          "/home/conner/Documents/GitHub/Project-Judas/third_party/quickhull",
+          "-isystem",
+          "/usr/include/SDL2",
+          "-isystem",
+          "/home/conner/Documents/GitHub/Project-Judas/third_party/recastnavigation/Detour/Include",
+          "-isystem",
+          "/home/conner/Documents/GitHub/Project-Judas/third_party/recastnavigation/DetourTileCache/Include",
+          "-isystem",
+          "/home/conner/Documents/GitHub/Project-Judas/third_party/recastnavigation/DetourCrowd/Include",
+          "-isystem",
+          "/home/conner/Documents/GitHub/Project-Judas/third_party/quickjs",
+          "-isystem",
+          "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/unicode/icu/include",
+          "-O3",
+          "-DNDEBUG",
+          "-std=gnu++17",
+          "-Wall",
+          "-Wextra",
+          "-c",
+          "/home/conner/Documents/GitHub/Project-Judas/docs/evidence/m78-lifecycle/motor-runtime-tags/DynamicMotorTags.cpp",
+          "-o",
+          "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-lifecycle/motor-tags-final/driver.o"
+        ],
+        "link": [
+          "/usr/bin/c++",
+          "-O3",
+          "-DNDEBUG",
+          "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-lifecycle/motor-tags-final/driver.o",
+          "-o",
+          "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-lifecycle/motor-tags-final/driver",
+          "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-lifecycle/final-build-v2/libjudas_engine.a",
+          "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/libjudas_app_icon.a",
+          "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/libjudas_materials.a",
+          "/usr/lib/x86_64-linux-gnu/libSDL2.so",
+          "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/libjudas_glad.a",
+          "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/libjudas_audio_backend.a",
+          "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/libjudas_navigation_backend.a",
+          "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/libjudas_quickjs.a",
+          "-lm",
+          "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/libjudas_profiler.a",
+          "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/_deps/judas_freetype-build/libfreetype.a",
+          "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/_deps/judas_harfbuzz-build/libharfbuzz.a",
+          "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/unicode/icu/lib/libicui18n.a",
+          "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/unicode/icu/lib/libicuuc.a",
+          "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/unicode/icu/lib/libicudata.a",
+          "-ldl"
+        ],
+        "linkInputs": {
+          "/usr/bin/c++": "e6718f7e0c7d057c3ff77b550c603da9bc4030e3ede3c053705acce1293dbe4d",
+          "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-lifecycle/final-build-v2/libjudas_engine.a": "e2e4aec5ed13c6a6e5eb4db0f528682671ad879ae27080665699d8b61681618f",
+          "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/libjudas_app_icon.a": "1fab532ad9c5dd1fae1c33bda5aabd8d2c584047430e7ab5d6ead6ab4b5d9540",
+          "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/libjudas_materials.a": "3cea886c6bcb6ece6a20885e2216d26cb8a53b440f404f6c805157cf656936f7",
+          "/usr/lib/x86_64-linux-gnu/libSDL2.so": "3f61932a8856a6ac99b59acee2aaf23a2d72bf75ffb4fe3c53d1ff228210a15a",
+          "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/libjudas_glad.a": "9d3394b11ea0d111b7e3c5037f820d425e61e4bf503070872d848badcb01bbeb",
+          "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/libjudas_audio_backend.a": "b23eea1b0d42cca4fe7e766d2fc757fa74ada3196ca65b83e0b90a87be161400",
+          "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/libjudas_navigation_backend.a": "4d842dc948f96022dcd0458d0c1f6b686f4e914b4e84c373e57075ffb14083f5",
+          "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/libjudas_quickjs.a": "b1d7868584c82ad5d1cfd016feb4f12f2905405042e1da93a1d791369a09c80e",
+          "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/libjudas_profiler.a": "822208ed4332718329b2cbbe02a7e8f29839d9c3f0efed03ccb711814ace265d",
+          "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/_deps/judas_freetype-build/libfreetype.a": "997b0191b40a3289fd301ba87ccf70fad120633d0acc2a8cb2ef79b69d8a07e5",
+          "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/_deps/judas_harfbuzz-build/libharfbuzz.a": "50a904cb2ef3ff1afcef1ebc93dbfab66ca849117327f4e3eb12f352745d6048",
+          "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/unicode/icu/lib/libicui18n.a": "3f60224cdf597cd765f69503aee34513a5d69a32f5b267e3cdf1c47e367411f0",
+          "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/unicode/icu/lib/libicuuc.a": "413af571dfa69d9928c59caed5bac1312d2d48e5362e9d03e68d6184d2a92083",
+          "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/unicode/icu/lib/libicudata.a": "f62ffb718fbd07e1a5195fd637631358d46882bde564739bbb73dead4b260fc2"
+        },
+        "objectSHA256": "027d7bb35000c6639ae1a81fcc35e52892dfa1cc49c8646747930dd9dc293ec7"
+      },
+      "preexistingClassification": "Checkpoint AddTag/RemoveTag and motor tag-publication mechanism are source-traced; the current candidate is Linux measured. No identical-fixture checkpoint execution is claimed for this finding.",
+      "publicRoute": "Normal C++ RuntimeWorld API underlying JudasJS; binding dispatch source-traced, not independently JS-VM executed.",
+      "selectedAssertions": [
+        {
+          "name": "ordinary finite project tag classification",
+          "passed": true
+        },
+        {
+          "name": "non-motor control uses ordinary dynamic rigid-body construction",
+          "passed": true
+        },
+        {
+          "name": "non-motor authored-tag positive and absent-runtime-tag negative controls",
+          "passed": true
+        },
+        {
+          "name": "non-motor public AddTag updates entity classification",
+          "passed": true
+        },
+        {
+          "name": "non-motor public AddTag updates actual physics query tag",
+          "passed": true
+        },
+        {
+          "name": "non-motor public RemoveTag updates entity classification",
+          "passed": true
+        },
+        {
+          "name": "non-motor public RemoveTag updates actual physics query tag",
+          "passed": true
+        },
+        {
+          "name": "non-motor added tag can also be removed from physics queries",
+          "passed": true
+        },
+        {
+          "name": "ordinary motor world builds",
+          "passed": true
+        },
+        {
+          "name": "authored tag positive and absent runtime-tag negative controls",
+          "passed": true
+        },
+        {
+          "name": "public runtime AddTag changes logical entity classification",
+          "passed": true
+        },
+        {
+          "name": "public runtime AddTag immediately changes actual physics query tag",
+          "passed": false
+        },
+        {
+          "name": "ordinary zero-time metadata update retains runtime query tag",
+          "passed": false
+        },
+        {
+          "name": "public runtime RemoveTag changes logical entity classification",
+          "passed": true
+        },
+        {
+          "name": "public runtime RemoveTag immediately excludes actual physics query tag",
+          "passed": false
+        },
+        {
+          "name": "ordinary metadata update does not resurrect removed authored query tag",
+          "passed": false
+        },
+        {
+          "name": "second ordinary lazy motor world builds",
+          "passed": true
+        },
+        {
+          "name": "runtime tag can change before lazy capsule construction",
+          "passed": true
+        },
+        {
+          "name": "first lazy capsule construction uses current logical tags",
+          "passed": false
+        },
+        {
+          "name": "all observations occur without elapsed physics time",
+          "passed": true
+        }
+      ],
+      "remaining": [
+        "No correction authorized or made for this separate finding.",
+        "No native Windows or actual JS-VM tag-mutation execution.",
+        "No all-tag/filter/event/query/motor lifecycle matrix; no whole-member/group status promotion."
+      ],
+      "receipts": [
+        {
+          "path": "docs/evidence/m78-lifecycle/motor-runtime-tags/linux-final/fixture/RESULT.json",
+          "sha256": "e0eb605a5e71dd10c13947018679843a0815bb42da8f4d360c6fb6867c11cd4a",
+          "bytes": 2326
+        },
+        {
+          "path": "docs/evidence/m78-lifecycle/motor-runtime-tags/linux-final/RECEIPTS.json",
+          "sha256": "379f57ff906920b120264d8c62d57c0516be5a2f47bf0f9161b02d8625431b9e",
+          "bytes": 4016
+        },
+        {
+          "path": "docs/evidence/m78-lifecycle/motor-runtime-tags/linux-final/IDENTITY.json",
+          "sha256": "d6af33b51276b0ce566ff0f16d225ac19a7ab4aad9a4057005568d2ff8d5833e",
+          "bytes": 6496
+        },
+        {
+          "path": "docs/evidence/m78-lifecycle/motor-runtime-tags/linux-final/run.stdout.log",
+          "sha256": "7f10775016d810740c8445214b6b9cf0645abb362b2058c68cad7aa5626be98c",
+          "bytes": 1288
+        },
+        {
+          "path": "docs/evidence/m78-lifecycle/motor-runtime-tags/linux-final/compiled-source.cpp",
+          "sha256": "07d43fdc41ac54d5a75680aa90abdb70c04789f31be7cb77b07490ff7d197cbb",
+          "bytes": 5666
+        },
+        {
+          "path": "docs/evidence/m78-lifecycle/motor-runtime-tags/linux-final/BINARY_SHA256.txt",
+          "sha256": "696dbcfce07abd88f3f5f5d8b50896a910f41f34851a641160d34250b29ac588",
+          "bytes": 65
+        }
+      ],
+      "preparedIdentity": {
+        "path": "docs/evidence/m78-lifecycle/motor-runtime-tags/PREPARED_IDENTITY.json",
+        "sha256": "f1d336a25f84fdfe93b9ce80b3b36e669302cbde7db4ac8e76685bbc1b0019d7",
+        "bytes": 1331
+      },
+      "mappingScope": "JS tag/query binding paths are source-traced only; native runtime logical tag/query effects are measured. Entity.classification contains layers/mask, not tags, and was not exercised by this case. Related mechanism groups are navigation links, not whole-group evidence."
+    }
+  ],
+  "currentNative": {
+    "status": "scoped-native-functional-receipts-attached-human-hardware-pending",
+    "scope": "New native Windows functional lifecycle correction evidence only; VM unchanged and no Windows performance/hardware certification. No full suite.",
+    "processRuns": 14,
+    "sharedAssertionCount": 630,
+    "failures": 0,
+    "receipts": [
+      {
+        "path": "docs/evidence/m78-lifecycle/native/SUMMARY.json",
+        "sha256": "ca59f7dc9153d0a329999c5c4064d8e348528c35ab6bda1919851d18a92ee07f",
+        "bytes": 12204
+      },
+      {
+        "path": "docs/evidence/m78-lifecycle/native/REPORT.md",
+        "sha256": "071e09a55490cff03fb8f1f2eb8db534c78d4038dd17a56b83052fb51c4b465a",
+        "bytes": 4980
+      },
+      {
+        "path": "docs/evidence/m78-lifecycle/native/FINAL_BINARY_IDENTITY.json",
+        "sha256": "3d0919c846396cce6d6b067d103ae7251c1dd1a4ce972a00e58cfee2255888cb",
+        "bytes": 110824
+      },
+      {
+        "path": "docs/evidence/m78-lifecycle/native/FINAL_VERIFICATION.json",
+        "sha256": "5baff18160dc9bfba9033239f25ab30800bec6d247df8b40c8ed704ef7504daf",
+        "bytes": 5267
+      }
+    ],
+    "historicalStorageBlock": {
+      "status": "resolved-by-direct-human-authorizations",
+      "meaning": "Earlier automatic approval review rejections remain tooling history. Named archive compression and retirement of copied NEW outputs were explicitly authorized by the operator; no engine assertion is inferred from storage attempts.",
+      "receipts": [
+        {
+          "path": "docs/evidence/m78-lifecycle/native/PREPARATION_BLOCK.json",
+          "sha256": "ae31de98740e151dde246a675f85cbd6ce037a46496162ad026ddeab4d60417c",
+          "bytes": 1891
+        },
+        {
+          "path": "docs/evidence/m78-lifecycle/native/PERMISSION_CHRONOLOGY.json",
+          "sha256": "9495db06545aa3e7f5e76ea94137aaf680cc167eb3339b9fa3c3cff45de9dd79",
+          "bytes": 1081
+        },
+        {
+          "path": "docs/evidence/m78-lifecycle/native/HUMAN_COMPRESSION_APPROVAL.json",
+          "sha256": "b75085096ac0c4e63a56399e6cd6f5b7e6aa77a050909b1922f4fe2c378080b2",
+          "bytes": 478
+        },
+        {
+          "path": "docs/evidence/m78-lifecycle/native/HUMAN_NEW_OUTPUT_RETIREMENT_APPROVAL.json",
+          "sha256": "4d616ea77aa13cdefb5b71a8706905511191ab549126bd76d870b7f9df87009b",
+          "bytes": 643
+        }
+      ]
+    },
+    "outstandingScopes": [
+      "No Windows performance gate or physical GPU validation.",
+      "Native new runtime-tag mutator probe not executed; Linux LIF-003 reproduced and deferred.",
+      "Previously preserved legacy a106 snapshot/FLU-001 failures not reclassified by these lifecycle checks.",
+      "No new native SaveStreaming/Application signals/editor/moved-package rerun in this bounded matrix unless explicitly attached separately."
+    ],
+    "vmConfiguration": "Established Windows10 4vCPU6GiB40GBdisk; llvmpipe software GL functional only.",
+    "identityMeaning": "Five exact production objects precede an immutable archive; object/binary/source identities are attached, not a claim that an old archive alone represents the new source.",
+    "archive": {
+      "path": "C:\\JudasValidation\\M78ContinuationBuild\\cold-repair-final-v2\\judas_engine.lib",
+      "sha256": "71a722dded64cfcc634d679e55ddbd257058da888ada914f7f7150b8d88c2d62",
+      "bytes": 67019246
+    },
+    "expectedProductionSourceSHA256": {
+      "src/WorldCharacter.cpp": "0c87e03acfba2a1c837da183e7731e35f70df98497d61a864c96ba5e21b064ae",
+      "src/WorldRegions.cpp": "5fa0cec1229c970acc0a593c0f795ac98edb4dfb96d0f9bd49757aa07fc90002",
+      "src/WorldScripts.cpp": "ec660e35570c269b11a1ff88b75d5c79b0b2a96efe0f1cdbe32199c9157bfef1",
+      "src/WorldPersistence.cpp": "1a02f42c466ea035be981c52d38d38bddeb0cb85eaa7c8b07fcfc8d9746d1101",
+      "src/PhysicsWorld.cpp": "6a60747e4bb970821e2ebb68adbe78ea89f6fdc3db9137b5160290ca1da2f193"
+    },
+    "regressionCases": [
+      {
+        "id": "character_publication",
+        "receipt": "docs/evidence/m78-lifecycle/native/m78-lifecycle-character_publication-build.json",
+        "executedRuns": [
+          {
+            "run": "character_publication",
+            "exitCode": 0,
+            "checks": 131,
+            "failures": 0,
+            "seconds": 1.4095608,
+            "receipt": "docs/evidence/m78-lifecycle/native/m78-lifecycle-character_publication-build.json",
+            "scope": "Actual authored motor creation/recreation, offsets, teleport, disabled/filter/tag publication and streaming private/publish/retire/revisit. Not runtime tag mutator behavior (separate deferred LIF-003)."
+          }
+        ],
+        "scope": "Actual authored motor creation/recreation, offsets, teleport, disabled/filter/tag publication and streaming private/publish/retire/revisit. Not runtime tag mutator behavior (separate deferred LIF-003)."
+      },
+      {
+        "id": "save_exclusion",
+        "receipt": "docs/evidence/m78-lifecycle/native/m78-lifecycle-save_exclusion-build.json",
+        "executedRuns": [
+          {
+            "run": "save_exclusion",
+            "exitCode": 0,
+            "checks": 77,
+            "failures": 0,
+            "seconds": 0.2084685,
+            "receipt": "docs/evidence/m78-lifecycle/native/m78-lifecycle-save_exclusion-build.json",
+            "scope": "Actual retained/excluded/reincluded dynamic bodies, sleep/scene/contact ownership, strict malformed record rejection and retained mapped articulation restore."
+          }
+        ],
+        "scope": "Actual retained/excluded/reincluded dynamic bodies, sleep/scene/contact ownership, strict malformed record rejection and retained mapped articulation restore."
+      },
+      {
+        "id": "consumer_lifecycle",
+        "receipt": "docs/evidence/m78-lifecycle/native/m78-lifecycle-consumer_lifecycle-build.json",
+        "executedRuns": [
+          {
+            "run": "consumer_lifecycle",
+            "exitCode": 0,
+            "checks": 55,
+            "failures": 0,
+            "seconds": 1.3111062,
+            "receipt": "docs/evidence/m78-lifecycle/native/m78-lifecycle-consumer_lifecycle-build.json",
+            "scope": "Public Application prefab initialization/references, malformed required participant rejection without changing live physical/script/session state, subsequent fixed-step publication and valid restore lifecycle. No whole-prefab/save certificate."
+          }
+        ],
+        "scope": "Public Application prefab initialization/references, malformed required participant rejection without changing live physical/script/session state, subsequent fixed-step publication and valid restore lifecycle. No whole-prefab/save certificate."
+      },
+      {
+        "id": "motor",
+        "receipt": "docs/evidence/m78-lifecycle/native/m78-lifecycle-motor-build.json",
+        "executedRuns": [
+          {
+            "run": "motor",
+            "exitCode": 0,
+            "checks": 32,
+            "failures": 0,
+            "seconds": 1.5211853,
+            "receipt": "docs/evidence/m78-lifecycle/native/m78-lifecycle-motor-build.json",
+            "scope": "Original32 CharacterMotor assertions; unchanged fixture contains incidental1/10/100-motor timings, retained as VM diagnostics only, not performance acceptance."
+          }
+        ],
+        "scope": "Original32 CharacterMotor assertions; unchanged fixture contains incidental1/10/100-motor timings, retained as VM diagnostics only, not performance acceptance."
+      },
+      {
+        "id": "physics_continuation",
+        "receipt": "docs/evidence/m78-lifecycle/native/m78-lifecycle-physics_continuation-build.json",
+        "executedRuns": [
+          {
+            "run": "physics-continuation",
+            "exitCode": 0,
+            "checks": 112,
+            "failures": 0,
+            "seconds": 0.9453720999999999,
+            "receipt": "docs/evidence/m78-lifecycle/native/m78-lifecycle-physics_continuation-build.json",
+            "scope": "Original112 direct continuation contract assertions; unchanged fixture/settings."
+          }
+        ],
+        "scope": "Original112 direct continuation contract assertions; unchanged fixture/settings."
+      },
+      {
+        "id": "world_save",
+        "receipt": "docs/evidence/m78-lifecycle/native/m78-lifecycle-world_save-build.json",
+        "executedRuns": [
+          {
+            "run": "world_save",
+            "exitCode": 0,
+            "checks": 27,
+            "failures": 0,
+            "seconds": 0.7683363999999999,
+            "receipt": "docs/evidence/m78-lifecycle/native/m78-lifecycle-world_save-build.json",
+            "scope": "Original normal persistence27 checks; strict restore and resumed physics."
+          }
+        ],
+        "scope": "Original normal persistence27 checks; strict restore and resumed physics."
+      },
+      {
+        "id": "streaming",
+        "receipt": "docs/evidence/m78-lifecycle/native/m78-lifecycle-streaming-build.json",
+        "executedRuns": [
+          {
+            "run": "streaming",
+            "exitCode": 0,
+            "checks": 82,
+            "failures": 0,
+            "seconds": 7.7112636,
+            "receipt": "docs/evidence/m78-lifecycle/native/m78-lifecycle-streaming-build.json",
+            "scope": "Original streaming82 checks; retained runtime construction/lifetime correction."
+          }
+        ],
+        "scope": "Original streaming82 checks; retained runtime construction/lifetime correction."
+      },
+      {
+        "id": "balance_lab",
+        "receipt": "docs/evidence/m78-lifecycle/native/m78-lifecycle-balance_lab-build.json",
+        "executedRuns": [
+          {
+            "run": "balance-step-trace",
+            "exitCode": 0,
+            "checks": 15,
+            "failures": 0,
+            "seconds": 2.883839,
+            "receipt": "docs/evidence/m78-lifecycle/native/m78-lifecycle-balance_lab-build.json",
+            "scope": "Original M77 corrective step plus new-format cold-save writer/read. Cached controller endpoint acceptance supplemented by separate mixed actual-body observer."
+          },
+          {
+            "run": "balance-new-cold-write",
+            "exitCode": 0,
+            "checks": 24,
+            "failures": 0,
+            "seconds": 2.9831488,
+            "receipt": "docs/evidence/m78-lifecycle/native/m78-lifecycle-balance_lab-build.json",
+            "scope": "Original M77 corrective step plus new-format cold-save writer/read. Cached controller endpoint acceptance supplemented by separate mixed actual-body observer."
+          },
+          {
+            "run": "balance-new-cold-read",
+            "exitCode": 0,
+            "checks": 13,
+            "failures": 0,
+            "seconds": 2.2673411999999997,
+            "receipt": "docs/evidence/m78-lifecycle/native/m78-lifecycle-balance_lab-build.json",
+            "scope": "Original M77 corrective step plus new-format cold-save writer/read. Cached controller endpoint acceptance supplemented by separate mixed actual-body observer."
+          }
+        ],
+        "scope": "Original M77 corrective step plus new-format cold-save writer/read. Cached controller endpoint acceptance supplemented by separate mixed actual-body observer."
+      },
+      {
+        "id": "character_lab",
+        "receipt": "docs/evidence/m78-lifecycle/native/m78-lifecycle-character_lab-build.json",
+        "executedRuns": [
+          {
+            "run": "character-cold-write",
+            "exitCode": 0,
+            "checks": 10,
+            "failures": 0,
+            "seconds": 1.7758311999999998,
+            "receipt": "docs/evidence/m78-lifecycle/native/m78-lifecycle-character_lab-build.json",
+            "scope": "Original M70 new-format cold pair: actual mode authority and finite pose. Not full uninterrupted physical trajectory parity."
+          },
+          {
+            "run": "character-cold-read",
+            "exitCode": 0,
+            "checks": 14,
+            "failures": 0,
+            "seconds": 0.6732952999999999,
+            "receipt": "docs/evidence/m78-lifecycle/native/m78-lifecycle-character_lab-build.json",
+            "scope": "Original M70 new-format cold pair: actual mode authority and finite pose. Not full uninterrupted physical trajectory parity."
+          }
+        ],
+        "scope": "Original M70 new-format cold pair: actual mode authority and finite pose. Not full uninterrupted physical trajectory parity."
+      },
+      {
+        "id": "mixed_endpoint",
+        "receipt": "docs/evidence/m78-lifecycle/native/m78-lifecycle-mixed_endpoint-build.json",
+        "executedRuns": [
+          {
+            "run": "mixed-endpoint-write",
+            "exitCode": 0,
+            "checks": 25,
+            "failures": 0,
+            "seconds": 3.0765121,
+            "receipt": "docs/evidence/m78-lifecycle/native/m78-lifecycle-mixed_endpoint-build.json",
+            "scope": "Same actual-body observer: fresh-process restoration versus uninterrupted endpoint, durable entity identity, all actual body fields/current contacts; only fresh native handles and traversal order excluded."
+          },
+          {
+            "run": "mixed-endpoint-read",
+            "exitCode": 0,
+            "checks": 13,
+            "failures": 0,
+            "seconds": 2.3529561,
+            "receipt": "docs/evidence/m78-lifecycle/native/m78-lifecycle-mixed_endpoint-build.json",
+            "scope": "Same actual-body observer: fresh-process restoration versus uninterrupted endpoint, durable entity identity, all actual body fields/current contacts; only fresh native handles and traversal order excluded."
+          }
+        ],
+        "scope": "Same actual-body observer: fresh-process restoration versus uninterrupted endpoint, durable entity identity, all actual body fields/current contacts; only fresh native handles and traversal order excluded."
+      }
+    ],
+    "mixedPhysicalEndpoint": {
+      "receipt": {
+        "path": "docs/evidence/m78-lifecycle/native/ACTUAL_ENDPOINT_BY_ENTITY.json",
+        "sha256": "1f6c9155c89c36fcc7d802d7d1f5c49742625bb5b86a9104ae0b3fb04bbd3bdf",
+        "bytes": 2286
+      },
+      "measurement": {
+        "scope": "Independent actual physical endpoint comparison, within this native pair only. No controller-cached status substitute. No numerical tolerance added. Linux/Windows trajectories are not asserted bit-identical.",
+        "sourceFiles": [
+          {
+            "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-mixed-endpoint-write-physical-final.json",
+            "bytes": 58350,
+            "sha256": "05285a5efbdc79a5a19d8d966aec82c660e8298e631217a752aed107e30f62de"
+          },
+          {
+            "path": "docs/evidence/m78-lifecycle/native/m78-lifecycle-mixed-endpoint-read-physical-final.json",
+            "bytes": 58350,
+            "sha256": "decb189767bb534147f58c9e9724bfad82630e98da8880f8db1211b4b6aae60e"
+          }
+        ],
+        "rawRecordEquality": false,
+        "excludedIdentityField": "Only bodies[].nativeHandle, a fresh runtime slot identifier, not physical data",
+        "durableBodyRecords": 13,
+        "mappedArticulationRecords": 7,
+        "completedContactRows": 16,
+        "canonicalBodyAndContactOrder": "Entity identity plus deterministic JSON sorting; no rows discarded",
+        "normalizedRecordExactEquality": true,
+        "actualEndpoint": {
+          "actualRelativeComSpeed": 0.0,
+          "actualRootHeightAboveCurrentSupport": 1.3618701696395874,
+          "actualUpright": 0.9986021518707275,
+          "currentPhysicalStanding": true,
+          "gravityUp": [
+            -0.0,
+            1.0,
+            -0.0
+          ],
+          "landings": 1,
+          "massWeightedCom": [
+            3.0581369400024414,
+            0.8696181774139404,
+            0.3709465563297272
+          ],
+          "massWeightedVelocity": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "owned": true,
+          "owner": 12,
+          "progress": 2,
+          "reason": "measured supported physical standing",
+          "rootAngularVelocity": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "rootEntity": 4611686018427387904,
+          "rootLinearVelocity": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "rootPosition": [
+            3.0794835090637207,
+            1.3608317375183105,
+            0.3413321375846863
+          ],
+          "rootRotation": [
+            0.9993501305580139,
+            0.007883614860475063,
+            0.024501387029886246,
+            -0.02523462288081646
+          ],
+          "sampledGravity": [
+            0.0,
+            -9.8100004196167,
+            0.0
+          ],
+          "standingHeight": 1.4199999570846558,
+          "standingSpeed": 0.1599999964237213,
+          "standingTolerance": 0.18000000715255737,
+          "supportFeet": 2
+        }
+      },
+      "meaning": "Exact normalized actual body/contact endpoint comparison within this native fresh-process pair; only fresh nativeHandle and traversal ordering excluded. Not bit-identical Linux-versus-Windows trajectories or all-motion certification."
+    }
+  },
+  "currentLinuxPerformance": {
+    "receipt": {
+      "path": "docs/evidence/m78-lifecycle/performance/RESULT.json",
+      "sha256": "c268b726732cf9959c6a1acec5fb3a5482221396c9308c4a17f9a90e594f1067",
+      "bytes": 771
+    },
+    "measurement": {
+      "wallMedianMs": 1.08558,
+      "wallP95Ms": 7.12169,
+      "wallMaxMs": 71.359,
+      "threadCpuP95Ms": 7.03735,
+      "wallStepsOver16_67": 24,
+      "gateMs": 16.67,
+      "gatePassed": true,
+      "aggregatePhysical": {
+        "contacts": 56576,
+        "ccdIterations": 19163,
+        "ccdLimit": 7
+      },
+      "samples": 900,
+      "archiveSHA256": "e2e4aec5ed13c6a6e5eb4db0f528682671ad879ae27080665699d8b61681618f",
+      "binarySHA256": "e8537d9f447d8f56668a574505227edd397b173f26c072cd8938604ffdeb7b5e",
+      "scope": "Existing unchanged four original articulations/52 bodies/48 constraints/8192-triangle floor, 900 steps60Hz; full contact/CCD, observational CPUclock. Serial host run; no Windows workload or scheduling/resource edits. External host load uncontrolled. Maxima retained; no causal speedup claim."
+    },
+    "meaning": "Named 900-step unchanged workload p95 gate passes. 24 late steps and maximum 71.359 ms remain visible; not a uniform responsiveness certificate or a causal before/after speedup claim."
+  }
+}
