@@ -44,10 +44,16 @@ Poly poly(const PrimitivePose& pose,V origin=V(0)) {
  std::set<std::pair<unsigned,unsigned>> edges;for(auto& f:p.faces){p.normals.push_back(unit(glm::cross(p.points[f[1]]-p.points[f[0]],p.points[f[2]]-p.points[f[0]])));for(unsigned i=0;i<f.size();++i)edges.insert(std::minmax(f[i],f[(i+1)%f.size()]));}p.edges.assign(edges.begin(),edges.end());
  return p;
 }
+// Writes the same triangle Poly as triangle() into storage reused across a mesh's
+// candidates, so a contact query does not allocate per triangle. `r` and `center`
+// are that function's PrimitiveRotation(pose) and PrimitiveCenter(pose)-origin.
+void triangleInto(Poly& p,const CollisionAsset& a,unsigned feature,const M& r,V center) {
+ const auto& f=a.faces[feature];p.triangle=true;p.active=f.active;
+ p.points.resize(3);for(unsigned k=0;k<3;++k)p.points[k]=center+r*a.vertices[f.vertices[k]];
+ p.faces.resize(1);p.faces[0].assign({0,1,2});p.normals.assign(1,r*f.normal);p.edges.assign({{0,1},{1,2},{0,2}});
+}
 Poly triangle(const PrimitivePose& pose,unsigned feature,V origin) {
- const auto& a=*pose.shape.asset;auto& f=a.faces[feature];Poly p;p.triangle=true;p.active=f.active;M r=PrimitiveRotation(pose);V center=PrimitiveCenter(pose)-origin;
- for(auto i:f.vertices){p.points.push_back(center+r*a.vertices[i]);}
- p.faces={{0,1,2}};p.normals={r*f.normal};p.edges={{0,1},{1,2},{0,2}};return p;
+ Poly p;triangleInto(p,*pose.shape.asset,feature,PrimitiveRotation(pose),PrimitiveCenter(pose)-origin);return p;
 }
 void reverseTriangleSide(Poly& p,const CollisionAsset& asset,unsigned feature) {
  // Convex and concave creases exchange roles when viewing a two-sided sheet
@@ -63,6 +69,16 @@ void reverseTriangleSide(Poly& p,const CollisionAsset& asset,unsigned feature) {
  p.normals[0]=-p.normals[0];std::reverse(p.faces[0].begin(),p.faces[0].end());
 }
 struct Separation {double gap=-INFINITY;V normal{0};bool edge=false;};
+// True when one face normal of `a` or `b` alone separates them by more than `margin`.
+// Face normals are always allowed sat() axes and this projection is sat()'s own, so
+// then sat(a,b).gap >= that gap > margin: the caller's rejection is unchanged, only
+// reached without the edge-pair axes. Anything else falls through to the full sat().
+bool faceAxesSeparate(const Poly& a,const Poly& b,double margin) {
+ for(const Poly* owner:{&a,&b})for(V n:owner->normals){double len=glm::length(n);if(len<eps)continue;n/=len;double alo=INFINITY,ahi=-INFINITY,blo=INFINITY,bhi=-INFINITY;
+  for(V p:a.points){double x=glm::dot(p,n);alo=std::min(alo,x);ahi=std::max(ahi,x);}for(V p:b.points){double x=glm::dot(p,n);blo=std::min(blo,x);bhi=std::max(bhi,x);}double gap=alo-bhi;if(blo-ahi>gap)gap=blo-ahi;
+  if(gap>margin)return true;}
+ return false;
+}
 Separation sat(const Poly& a,const Poly& b,bool edgeAware=true) {
  ++stats.convexTests;Separation best;double actual=-INFINITY;
  auto axis=[&](V n,bool allowed,bool edge){double len=glm::length(n);if(len<eps)return;n/=len;double alo=INFINITY,ahi=-INFINITY,blo=INFINITY,bhi=-INFINITY;
@@ -113,7 +129,7 @@ void reduce(std::vector<Contact>& contacts,ContactManifold& out) {
 // sidedness, crease handling or the contacts used by a physical solver.
 template<class Consumer>
 bool visitCookedPolyContacts(const PrimitivePose& a,const PrimitivePose& b,double margin,Consumer consume) {
- V origin=PrimitiveCenter(b);Poly pa=poly(a,origin);auto test=[&](Poly pb){
+ V origin=PrimitiveCenter(b);Poly pa=poly(a,origin);auto test=[&](const Poly& pb){
   auto s=sat(pa,pb);if(s.gap>margin)return false;
   bool faceWitness=false;
   const auto pairs=witnesses(pa,pb,s,&faceWitness);
@@ -124,7 +140,13 @@ bool visitCookedPolyContacts(const PrimitivePose& a,const PrimitivePose& b,doubl
   return false;
  };
  if(b.shape.type==ShapeType::ConvexHull||b.shape.type==ShapeType::Box)return test(poly(b,origin));
- if(b.shape.type==ShapeType::TriangleMesh){V lo(INFINITY),hi(-INFINITY),center(0);for(V p:pa.points){lo=glm::min(lo,p+origin);hi=glm::max(hi,p+origin);center+=p;}center/=double(pa.points.size());for(auto i:candidates(b,lo,hi,margin)){++stats.triangles;Poly pb=triangle(b,i,origin);double side=glm::dot(pb.normals[0],center-pb.points[0]);if(!b.shape.asset->twoSided&&side<-eps)continue;if(side<0){reverseTriangleSide(pb,*b.shape.asset,i);}if(test(std::move(pb)))return true;}return false;}
+ if(b.shape.type==ShapeType::TriangleMesh){V lo(INFINITY),hi(-INFINITY),center(0);for(V p:pa.points){lo=glm::min(lo,p+origin);hi=glm::max(hi,p+origin);center+=p;}center/=double(pa.points.size());
+  // Most candidates of a dense mesh are rejected by a face axis; skip their edge axes
+  // (counted as the same convex test) and reuse one triangle's storage throughout.
+  const auto& asset=*b.shape.asset;const M rotation=PrimitiveRotation(b);const V placed=PrimitiveCenter(b)-origin;Poly pb;
+  for(auto i:candidates(b,lo,hi,margin)){++stats.triangles;triangleInto(pb,asset,i,rotation,placed);double side=glm::dot(pb.normals[0],center-pb.points[0]);if(!asset.twoSided&&side<-eps)continue;if(side<0){reverseTriangleSide(pb,asset,i);}
+   if(faceAxesSeparate(pa,pb,margin)){++stats.convexTests;continue;}
+   if(test(pb))return true;}return false;}
  throw std::invalid_argument("unsupported cooked contact target");
 }
 }

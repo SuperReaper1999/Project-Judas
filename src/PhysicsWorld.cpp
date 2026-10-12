@@ -70,6 +70,12 @@ bool KinematicShape(const Shape& shape) {
 // nothing; one that escapes is reinserted. Static bodies use the same
 // margin (only kinematically-driven static bodies such as doors move).
 constexpr float kBroadphaseMargin = 0.1f;
+// Continuous-impact stall cutoff: this many consecutive conservative advances,
+// each covering less than this fraction of the interval still to search. Chosen
+// from a sweep of 2-12 advances and 0.5-5% (docs/evidence/ccd-mesh-contacts):
+// fewer advances also cut off ordinary short stalls on flat meshes, slower there.
+constexpr int kImpactStallAdvances=8;
+constexpr double kImpactStallFraction=.05;
 // Tolerance added to the player sweep's query box.
 constexpr float kSweepQueryEpsilon = 1.0e-3f;
 // Warm starting: a new contact inherits last step's converged impulses from
@@ -621,7 +627,13 @@ struct PhysicsWorld::Impl {
             actualTruth[nextTruth]={represented,true,touching};nextTruth=(nextTruth+1)%actualTruth.size();return touching;
         };
         double time=start, previous=start;
-        bool uncertifiedAdvance=false;
+        bool uncertifiedAdvance=false,stalled=false;
+        // A grazing feature on a concave surface (a limb sliding in a curved
+        // mesh ramp) keeps the gap tiny while the surface keeps closing ahead,
+        // so each advance covers a sliver of the interval. After several such
+        // consecutive advances, stop paying full proximity queries and finish
+        // with the bounded sampling below, as the 64-iteration limit already does.
+        int stalledAdvances=0;
         for (int iteration=0;iteration<64;++iteration) {
             ++stats.impactSearchIterations;stats.impactPeakIterations=std::max(stats.impactPeakIterations,std::size_t(iteration+1));
             const float reach=std::nextafter(static_cast<float>(speed*(finish-time)),
@@ -665,8 +677,11 @@ struct PhysicsWorld::Impl {
             previous=time;
             time=std::min(finish,time+increment);
             if (time<=previous) return finish+1;
+            stalledAdvances=time-previous<kImpactStallFraction*(finish-previous)?stalledAdvances+1:0;
+            if(stalledAdvances>=kImpactStallAdvances){stalled=true;break;}
         }
-        if(!uncertifiedAdvance) ++stats.impactSearchLimit;
+        if(stalled) ++stats.impactSearchStalls;
+        else if(!uncertifiedAdvance) ++stats.impactSearchLimit;
         ++stats.impactSamplingFallbacks;
         // Rotating grazing features can keep a fixed separating-plane bound
         // arbitrarily short. Finish this PAIR query with a bounded temporal
@@ -2337,6 +2352,7 @@ void PhysicsWorld::Step(float fixedDeltaTime) {
     JUDAS_PROFILE_COUNTER("Physics impact sampling fallbacks",double(w.stats.impactSamplingFallbacks),ProfileCounterMode::Latest);
     JUDAS_PROFILE_COUNTER("Physics impact sampling tests",double(w.stats.impactSamplingTests),ProfileCounterMode::Latest);
     JUDAS_PROFILE_COUNTER("Physics impact search limits",double(w.stats.impactSearchLimit),ProfileCounterMode::Latest);
+    JUDAS_PROFILE_COUNTER("Physics impact search stalls",double(w.stats.impactSearchStalls),ProfileCounterMode::Latest);
     JUDAS_PROFILE_COUNTER("Physics impact sampling resolution caps",double(w.stats.impactSamplingResolutionCaps),ProfileCounterMode::Latest);
     JUDAS_PROFILE_COUNTER("Physics impact pose evaluations",double(w.impactPoseEvaluations),ProfileCounterMode::Latest);
     JUDAS_PROFILE_COUNTER("Physics impact pose reuses",double(w.impactPoseReuses),ProfileCounterMode::Latest);

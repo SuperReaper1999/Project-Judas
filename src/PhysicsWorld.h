@@ -248,6 +248,7 @@ public:
         std::size_t impactEvents=0, impactSafetyFallback=0, impactEventCapFallback=0;
         std::size_t impactQueries=0, impactSearchIterations=0, impactPeakIterations=0, impactSearchLimit=0;
         std::size_t impactUncertifiedAdvances=0; // proximity geometry cannot certify an advance
+        std::size_t impactSearchStalls=0; // advancement stopped progressing; finished by sampling
         // Bounded pair-local fallback after conservative-advancement exhaustion.
         // A contact interval shorter than max interval may be missed.
         std::size_t impactSamplingFallbacks=0, impactSamplingTests=0, impactSamplingResolutionCaps=0;
